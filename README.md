@@ -1,11 +1,7 @@
-<p align="right">
-<a>English</a> | <a href="/docs-jp/README.md">日本語</a>
-</p>
-
 <table width="100%">
   <tr width="100%">
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-    <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+    <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
     </td>
  </tr>
  </table>
