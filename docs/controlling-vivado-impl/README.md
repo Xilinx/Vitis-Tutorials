@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -16,7 +16,7 @@ The Vitis™ compiler creates kernel objects from the source code, links the ker
 
 # Tutorial Overview
 
-This tutorial shows you how to control the Vivado tool flows when implementing your project and guides you through the steps in the command line flow.
+This tutorial shows you how to control the Vivado tool flows to implement your project and guides you through the steps in the command line flow.
 
 The Vitis core development kit provides two methods to control the Vivado tool flow:
 
@@ -40,7 +40,7 @@ If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**
 >
->* Before running any of the examples, make sure you have installed the Vitis core development kit as described in the *Vitis Development Environment Installation and Licensing*.
+>* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
 >* Before running this lab, you must be familiar with the [Essential Concepts for Building and Running the Accelerated Application](/docs/Pathway3/) tutorial.
 
@@ -69,7 +69,7 @@ In this section, you will use the following configurations as examples to see th
 
 In this lab, `-–xp` command options are provided in an `design.cfg` file with each option specified on a separate line without the `--xp` switch.
 
-For a full list of parameters and valid values, refer to  the *Vitis Environment Reference Materials*.
+For a full list of parameters and valid values, refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html).
 
 1. Before running any of the examples, ensure you have set up the Vitis core development kit by running these commands:
 

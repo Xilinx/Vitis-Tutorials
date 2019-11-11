@@ -1,11 +1,11 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Methodology for Optimizing Accelerated FPGA Applications
+ <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
  </td>
  </tr>
 </table>
@@ -53,7 +53,7 @@ Use the following instructions to convert the C code into kernel code and conver
         #pragma HLS data_pack variable=inFrame
         #pragma HLS data_pack variable=outFrame
 
-   >**NOTE:** For more details about the pragma meanings, refer to the *Vitis Environment Reference Materials*.
+   >**NOTE:** For more details about the pragma meanings, refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html).
 
 6. Save the `convolve_fpga.cpp` file.
 
@@ -85,7 +85,7 @@ Use the following instructions to convert the C code into kernel code and conver
 1. Use the following command to view the Profile Summary report.
 
     ```
-    make view_prof_report TARGET=hw_emu STEP=baseline
+    make view_run_summary TARGET=hw_emu STEP=baseline
     ```
 
 1. Now, look at the Profile Summary report. In the *Kernel Execution* section, you can see that the kernel execution time is 3.903 ms. This number will be used to measure the performance boost after each optimization step.
@@ -110,7 +110,6 @@ Use the following instructions to convert the C code into kernel code and conver
 | Step          | Image Size | Time (HW-EM)(ms) | Reads (KB) | Writes (KB) | Avg. Read (KB) | Avg. Write (KB) | BW (MBps) |
 | :------------ | :--------- | ---------------: | ---------: | ----------: | -------------: | --------------: | --------: |
 | baseline      | 512x10     | 3.903            | 344        | 20.0        | 0.004          | 0.004           |   5.2     |
-
 ---------------------------------------
 
 [baseline_hwemu_profilesummary]: ./images/191_baseline_hwemu_pfsummary_new_2.JPG "Baseline version hardware emulation profile summary"
@@ -118,7 +117,6 @@ Use the following instructions to convert the C code into kernel code and conver
 ## Next Step
 
 You have created the hardware kernel and run the application in hardware emulation mode. You will now begin to examine data transfers between the host application and the kernel and determine some good strategies for [optimizing memory transfers](./localbuf.md).
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

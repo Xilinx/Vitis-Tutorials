@@ -1,11 +1,11 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Methodology for Optimizing Accelerated FPGA Applications
+ <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
  </td>
  </tr>
 </table>
@@ -52,7 +52,7 @@ Here is the summary of the generated golden output files.
 
 ## Profile the Application and Establish Performance Goals
 
-As stated in the *Vitis Application Methodology*, you can use the `gprof` tool to profile the application and identify potential functions for acceleration.
+As stated in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380), you can use the `gprof` tool to profile the application and identify potential functions for acceleration.
 
 1. Add the `-pg` option in the gcc command line. This is already done in the `Makefile`.
 2. Change directory into the `cpu_src` folder and run `make` to generate the executable file.
@@ -92,7 +92,7 @@ In most FPGA-accelerated systems, the maximum achievable throughput is limited b
 
 ### Establish Overall Acceleration Goals
 
-On the CPU, it takes 55.15 ms to process one 1080p frame. This means you are achieving a performance of 1000/55.15 = 18.13 frames per second (fps). You want your application to achieve a minimum real-time performance of 30 fps, so you need to accelerate it by a factor of ~2x compared to the CPU.
+On the CPU, it takes 19.25 seconds to process 132 1920x1080 frames. This means you are achieving a performance of 132/19.25 = <7 frames per second (fps). You want your application to achieve a minimum real-time performance of 30 fps, so you need to accelerate it by a factor of ~5x compared to the CPU.
 
 Given that the size of a frame is 1920 x 1080 x 4bytes = 8.29 MB, this means that, in absolute terms, your accelerated application must deliver a minimum throughput of 8.29 MB x 30 fps = 249 MB/s.
 
@@ -103,7 +103,6 @@ This throughput goal is well within the bounds of maximum achievable throughput 
 You have identified the functions from the original application that are targets for acceleration and established the performance goals. In the following labs, you will create a baseline of the original `convolve` function running in hardware and perform a series of host and kernel code optimizations to meet your performance goals. You begin by [creating a Vitis core development kit application](./baseline.md) from the original application.
 
 You will use Hardware Emulation runs for measuring performance in each step. As part of the final step, you can run all these steps in hardware to demonstrate how the performance was improved at each step.
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

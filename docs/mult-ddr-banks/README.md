@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -47,7 +47,7 @@ The labs in this tutorial use:
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in the *Vitis Development Environment Installation and Licensing*.
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >* If you will run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
 
 ## Accessing the Tutorial Reference Files
@@ -116,7 +116,7 @@ Now, you will explore how the data transfers can be split across the following:
 
 ## Set v++ Linker Options
 
-You will instruct the v++ Kernel Linker to connect the kernel arguments to the corresponding banks. Use the `--sp` option to map kernel ports or kernel arguments.
+You will instruct the `v++` Kernel Linker to connect the kernel arguments to the corresponding banks. Use the `--sp` option to map kernel ports or kernel arguments.
 
 * **Kernel args**:
 
@@ -197,10 +197,9 @@ vadd_1:m_axi_gmem2-DDR[2]          RD = 0.000 KB               WR = 0.391 KB
 
 This tutorial showed you how to change the default mapping of ports `in1`, `in2`, and `out` of kernel vadd from a single DDR bank to multiple DDR banks. You also learned how to:
 
-* Set v++ linker options using the `--sp` switch to bind kernel arguments to multiple DDR banks.
+* Set `v++` linker options using the `--sp` switch to bind kernel arguments to multiple DDR banks.
 * Build the application and verify DDR mapping.
 * Run HW-Emulation and observe the transfer rate and bandwidth utilization for each port.
-
 </br>
 <hr/>
 <p align= center><b><a href="/README.md">Return to Main Page</a></b></p>

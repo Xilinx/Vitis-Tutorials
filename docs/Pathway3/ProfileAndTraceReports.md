@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -31,9 +31,9 @@ Before running this lab, it is required to run the [Building an Application](./B
 
 ## Generating Emulation Data
 
-The Profile Summary and Application Timeline reports are not enabled by default because the generated emulation data requires more time to run and added disk space. Therefore, you must enable the profiling data collection before running emulation. This is done by setting options in an `xrt.ini` text file, located in the same directory as the host program, in this case the `./reference-files/run` directory. For more information on the `xrt.ini` file, see the *Vitis Reference Materials*.
+The Profile Summary and Application Timeline reports are not enabled by default because the generated emulation data requires more time to run and added disk space. Therefore, you must enable the profiling data collection before running emulation. This is done by setting options in an `xrt.ini` text file, located in the same directory as the host program, in this case the `./reference-files/run` directory. For more information on the `xrt.ini` file, see the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html)
 
-### Create the xrt.ini file
+### Create the xrt.ini File
 
 First, create the `xrt.ini` file, and add the required options.
 
@@ -62,7 +62,7 @@ First, create the `xrt.ini` file, and add the required options.
 
 ### Build and Run Hardware Emulation
 
-With profiling and the timeline trace enabled in the `xrt.ini` file, performance data is gathered during emulation and saved to CSV files. However, it is also necessary to build the kernel using the `--profile_kernel` option during the hardware linking stage to allow performance information to be captured. For more information on `--profile_kernel`, refer to the *Vitis Environment Reference Materials*. The `--profile_kernel` option can also be added in the `design.cfg` file. Now your `design.cfg` file should look like:
+With profiling and the timeline trace enabled in the `xrt.ini` file, performance data is gathered during emulation and saved to CSV files. However, it is also necessary to build the kernel using the `--profile_kernel` option during the hardware linking stage to allow performance information to be captured. For more information on `--profile_kernel`, refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html). The `--profile_kernel` option can also be added in the `design.cfg` file. Now your `design.cfg` file should look like:
 
 ```
 platform=xilinx_u200_xdma_201830_2
@@ -101,12 +101,12 @@ After running emulation, the following two CSV files are generated in the execut
 
 ### View the Profile Summary
 
-To view the Profile Summary, you can use the Vitis analyzer to open the generated report. For more information on the Vitis analyzer, see to the *Using the Vitis Analyzer*.
+The Vitis analyzer can be used to load the `run_summary` file, which can also load the Profile Summary and Timeline Trace. For more information on the Vitis analyzer, see to the [Using the Vitis Analyzer](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/jfn1567005096685.html).
 
 Run the following command:
 
 ```bash
-vitis_analyzer -open ./profile_summary.csv
+vitis_analyzer run.summary
 ```
 
 In the Profile Summary report, as shown in the following figure, you can see information related to kernel execution time, host to global memory data transfer and kernel to global memory data transfer.
@@ -115,26 +115,17 @@ In the Profile Summary report, as shown in the following figure, you can see inf
 
 ### View the Timeline Trace
 
-The Vitis analyzer can also be used to view the Timeline Trace report.
-
-   Run the following command:
-
-   ```bash
-   vitis_analyzer -open ./timeline_trace.csv
-   ```
-
-   The Timeline Trace report will be similar to the following figure.
    ![Timeline](./images/timeline_trace_vitis.png)
 
    In Timeline Trace view, on a timeline base, you will see information about the events including kernel running, data read and write from host, OpenCL API calls, etc.
 
-   For more information about interpreting the Profile Summary and Timeline Trace reports, refer to the *Profiling, Optimizing, and Debugging the Application*.
+   For more information about interpreting the Profile Summary and Timeline Trace reports, refer to the [Profiling, Optimizing, and Debugging the Application](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/wzc1553475252001.html).
 
 ## Putting it All Together
 
 Below is a summary of all the steps necessary to generate and view Profile Summary and Timeline Trace reports.  
 
-1. Create `xrt.ini` file.
+1. Create the `xrt.ini` file.
 
    ```bash
    [Debug]
@@ -168,7 +159,6 @@ Below is a summary of all the steps necessary to generate and view Profile Summa
 # Next Steps
 
 After you perform emulation to check correctness and performance, run application in a real device. The [Execute in Hardware](./HardwareExec.md) lab details how to run application in hardware.
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

@@ -1,12 +1,12 @@
-
+﻿
 <table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Methodology for Optimizing Accelerated FPGA Applications
+ <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
  </td>
  </tr>
 </table>
@@ -153,7 +153,6 @@ Congratulations! You have successfully completed all the modules of this lab to 
 1. You enabled your kernel to run on multiple CUs.
 1. You used the HLS dataflow directive and explored how it affected your application.
 1. You ran the optimized application on the Alveo Data Center accelerator card to see the actual performance gains.
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -14,13 +14,13 @@
 
 ## Introduction
 
-As described in the [Execution Model of an FPGA Accelerated Application](/docs/vitis-execution-model/), an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card and Xilinx FPGA. The sources for both need to be built (compiled and linked) separately. For additional details, see the *Vitis Development Environment Installation and Licensing*.
+As described in the [Execution Model of an FPGA Accelerated Application](/docs/vitis-execution-model/), an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx FPGA. The sources for both need to be built (compiled and linked) separately. For additional details, see [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 
-This tutorial describes how to build both the software and hardware portions of your design using the Xilinx® `g++` compiler and Vitis compiler. It describes various command line options, including how to specify a target platform, and building for hardware or software emulation.
+This tutorial describes how to build both the software and hardware portions of your design using the `g++` compiler and Vitis compiler. It describes various command line options, including how to specify a target platform, and building for hardware or software emulation.
 
 Reference files are provided in the [./reference_files](./reference-files) directory for use with this tutorial.
 
->**IMPORTANT:** Before running the example commands, ensure you have set up the Vitis core development kit by running the following commands, as described in the *Vitis Development Environment Installation and Licensing*.
+>**IMPORTANT:** Before running the example commands, ensure you have set up the Vitis core development kit by running the following commands, as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >
 >   ```bash
 >    #setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.
@@ -31,7 +31,7 @@ Reference files are provided in the [./reference_files](./reference-files) direc
 
 ## Building the Software
 
-The software program is written in C/C++ and uses OpenCL™ API calls to communicate with and control the accelerated kernels. It is built using the standard GCC compiler or using the `g++` compiler, which is a wrapper around GCC.  Each source file is compiled to an object file (.o) and linked with the Xilinx runtime (XRT) shared library to create the executable. For details on GCC and associated command line options, refer to [Using the GNU Compiler Collection (GCC)](https://gcc.gnu.org/onlinedocs/gcc/).
+The software program is written in C/C++ and uses OpenCL™ API calls to communicate and control the accelerated kernels. It is built using the standard GCC compiler or using the `g++` compiler, which is a wrapper around GCC.  Each source file is compiled to an object file (.o) and linked with the Xilinx runtime (XRT) shared library to create the executable. For details on GCC and associated command line options, refer to [Using the GNU Compiler Collection (GCC)](https://gcc.gnu.org/onlinedocs/gcc/).
 
 1. **Compiling the Software Program**
 
@@ -73,9 +73,7 @@ Optionally, the output object file name can be specified with the `-o` option as
 
    >**Command Options and Descriptions**
    >
-   >* `-I../libs`: Include directory:
-   >* `-I$XILINX_XRT/include/`: Include directory
-   >* `-I$XILINX_VIVADO/include/`: Include directory
+   >* `-I../libs`, `-I$XILINX_XRT/include/`, and `-I$XILINX_VIVADO/include/`: Include directory
    >* `-Wall`: Enable all warnings
    >* `-O0`: Optimization option (execute the least optimization)
    >* `-g`: Generate debug info
@@ -83,16 +81,13 @@ Optionally, the output object file name can be specified with the `-o` option as
    >* `../src/host.cpp`: Source files
    >* `-o 'host'`: Output name
    >* `-L$XILINX_XRT/lib/`: Look in XRT library
-   >* `-lOpenCL`: Search the named library during linking.
-   >* `-lpthread`: Search the named library during linking.
-   >* `-lrt`: Search the named library during linking.
-   >* `-lstdc++`: Search the named library during linking.
+   >* `-lOpenCL`, `-lpthread`, `-lrt`, and `-lstdc++`: Search the named library during linking
 
 ## Building the Hardware
 
-Next, you need to build the kernels that run on the hardware accelerator card.  Building the kernels, like building the host application, requires compiling and linking. The hardware kernels can be coded in C/C++, OpenCL C, or RTL. The C/C++ and OpenCL C kernels are compiled using the Vitis compiler, while RTL-coded kernels are compiled using the Xilinx `package_xo` utility.
+Next, you need to build the kernels that run on the hardware accelerator card.  Like building the host application, building kernels also requires compiling and linking. The hardware kernels can be coded in C/C++, OpenCL C, or RTL. The C/C++ and OpenCL C kernels are compiled using the Vitis compiler, while RTL-coded kernels are compiled using the Xilinx `package_xo` utility.
 
-For details on both `v++` and `package_xo`, refer to the *Vitis Environment Reference Materials*. Regardless of how each kernel is compiled, both methods generate a Xilinx object file (XO) as an output.
+For details on both `v++` and `package_xo`, refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html). Regardless of how each kernel is compiled, both methods generate a Xilinx object file (XO) as an output.
 
 The object files are subsequently linked with the shell (hardware platform) through the Vitis compiler to create the FPGA binary file, or xclbin file.
 
@@ -104,7 +99,7 @@ This tutorial is limited to `v++` compilation and does not consider RTL kernels.
 
 ### Hardware Compilation
 
-In hardware compilation, you are compiling hardware kernel source files through the `v++` command `-c` option. While `v++` command has command options, at minimum you must specify the source files, the targeted platform, and the build target. For a complete list of `v++` command options, refer to the *Vitis Environment Reference Materials*.
+In hardware compilation, you are compiling hardware kernel source files through the `v++` command `-c` option. While `v++` command has command options, at minimum you must specify the source files, the targeted platform, and the build target. For a complete list of `v++` command options, refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html).
 
 Optionally, the `-k` or `--kernel` argument can be used to specify the kernel name within the kernel source file to compile, as follows.
 
@@ -121,13 +116,13 @@ There are three different build targets; two emulation targets used for debug an
 
 These build target configurations options are: sw_emu, hw_emu and hw.
 
-In Software Emulation (`sw_emu`), both the host application code and the kernel code are compiled to run on the x86 processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system.  For RTL kernels, software emulation can be supported if a C model is associated with the kernel. When a C model is not available, then hardware emulation must be used to debug the kernel code.
+* In Software Emulation (`sw_emu`), both the host application code and the kernel code are compiled to run on the x86 processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system.  For RTL kernels, software emulation can be supported if a C model is associated with the kernel. When a C model is not available, then hardware emulation must be used to debug the kernel code.
 
-For Hardware Emulation (`hw_emu`) kernel code is compiled into a hardware model, which is run in a hardware simulator, while the rest of the system uses a C simulator. Building and running takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will run in the FPGA and for getting initial performance estimates.
+* For Hardware Emulation (`hw_emu`) kernel code is compiled into a hardware model, which is run in a hardware simulator, while the rest of the system uses a C simulator. Building and running takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will run in the FPGA and for getting initial performance estimates.
 
-Finally, when the target is set to System (`hw`), the kernel code is synthesized and compiled to generate a binary to run on the FPGA.
+* Finally, when the target is set to System (`hw`), the kernel code is synthesized and compiled to generate a binary to run on the FPGA.
 
-Starting in the Vitis core development kit release 19.2, the Vitis compiler will support the notion of configuration files on the command line. This helps manage long command lines with individual switches, as well as to help logically group related switches. In this lab, you will use a `design.cfg` file and put all needed options in that file. Open the `design.cfg` file and look at the content.
+With the Vitis core development kit release 2019.2, the Vitis compiler will support the notion of configuration files on the command line. This helps manage long command lines with individual switches, as well as to help logically group related switches. In this lab, you will use a `design.cfg` file and put all needed options in that file. Open the `design.cfg` file and look at the content.
 
 ```
 platform=xilinx_u200_xdma_201830_2
@@ -154,9 +149,11 @@ The following command compiles the kernel into a *software emulation* target, fr
 >* `../src/mmult.cpp`: Specify source files
 >* `-o mmult.sw_emu.xilinx_u200_xdma_201830_2.xo`: Specify the XO output file name
 
+The `v++` commands also generate the `compile_summary` file that can be used with the Vitis analyzer to visualize relevant reports.
+
 ### Hardware Linking
 
-During hardware linking, you will link one or more kernels with the platform to create an output binary container (xclbin) file. The `v++` command `-l` option is used to link the hardware kernels. Similar to compiling, linking requires several options including specifying the XO object files, the platform, and the build target. For the available linking options, refer to *Vitis Environment Reference Materials*. The platform and build target options used during linking must match those used during compilation.
+During hardware linking, you will link one or more kernels with the platform to create an output binary container (xclbin) file. The `v++` command `-l` option is used to link the hardware kernels. Similar to compiling, linking requires several options including specifying the XO object files, the platform, and the build target. For the available linking options, refer to [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html). The platform and build target options used during linking must match those used during compilation.
 
 The XO object files are specified on the `v++` command by directly listing the object files. Multiple object files can be added.
 
@@ -188,6 +185,8 @@ Now, link the hardware. Notice that you must specify the platform and target as 
 >* `mmult.sw_emu.xilinx_u200_xdma_201830_2.xo`: Input object file
 >* `-o mmult.sw_emu.xilinx_u200_xdma_201830_2.xclbin`: Specify the name of the output xclbin file
 
+The `v++` commands also generate the `link_summary` file that can be used with the Vitis analyzer to visualize relevant reports.
+
 ### Building for Hardware Emulation & the Hardware System
 
 To build the hardware for *hardware emulation*, or for targeting the Alveo Data Center accelerator card *system*, change the `-t` option specifying the <*build_target*> from **sw_emu** to **hw_emu** for hardware emulation, or **hw** to build for the accelerator card.
@@ -212,19 +211,23 @@ The compile and link `v++` commands for both *hardware emulation* and *system* b
 
 ### Reviewing Hardware Build Reports
 
-For both the compilation and linking stages, run Guidance reports are generated. The reports list the command used to compile/link, a report summary, and any violations.
+During the compile, link, and run stages, the guidance is generated that can have several severity levels: errors, advisories, warnings, and critical warnings. These are provided during software emulation, hardware emulation, and system builds.
 
 For *hardware emulation* and *system builds* targeted builds, a `system_estimate_<kernel_name>.<build_target>.<dsa_name>.xtxt` report file is also automatically generated for both the compilation and linking stages. It provides the estimated FPGA resource usage and estimated frequency of the hardware accelerated kernel.
 
-To open the reports, change directory to the associated directory, and use vitis_analyzer to open the profile summary report. It will include a section of the guidance report.
+The Vitis analyzer can be used to open these specific reports or can directly open compile_summary, link_summary, or the run_summary reports generated by the compile, link, and run stage. When these summary reports are opened, the Vitis analyzer automatically opens the relevant reports.
+
+Use the following commands to open these reports.
 
 ```
-vitis_analyzer -open profile_summary.csv
+vitis_analyzer compile_summary
+vitis_analyzer link_summary
+vitis_analyzer run_summary
 ```
 
 ![guidance](images/guidance_vitis.PNG)
 
-* The following figure shows an example of the `system_estimate.xtxt` compilation report, it can be viewed by using vitis_analyzer to open the .link_summary file.
+* The following figure shows an example of the guidance report generated during the run stage. This can be opened using the run_summary report.
 
      ![Hardware compilation guidance report](images/system_estimate_example_report_vitis.png)
 
@@ -266,7 +269,7 @@ The following steps summarize how to build both the software and hardware target
       ```
 
    * Target for *system*
-   >**IMPORTANT:** This step is optional as it may take several hours.
+     >**IMPORTANT:** This step is optional as it can take several hours.
 
      ```bash
      v++ -t hw --config design.cfg -c -k mmult -I'../src' -o'mmult.hw.xilinx_u200_xdma_201830_2.xo' '../src/mmult.cpp'

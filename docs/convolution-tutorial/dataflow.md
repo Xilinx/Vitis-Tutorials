@@ -1,11 +1,11 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Methodology for Optimizing Accelerated FPGA Applications
+ <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
  </td>
  </tr>
 </table>
@@ -22,7 +22,7 @@ While pipelining usually works at the instruction level, the Vitis compiler can 
 
 Without using dataflow, `func_A`, `func_B`, and `func_C` are executed sequentially. With dataflow enabled, the three functions can overlap, which will reduce the total execution time.
 
->**TIP**: This lab relates to "Step 1: Partition the Code into a Load-Compute-Store Pattern" in the *Vitis Application Methodology*.
+>**TIP**: This lab relates to [Step 1: Partition the Code into a Load-Compute-Store Pattern](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#vhk1551127460562) in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380).
 
 In this lab, to implement the functions in dataflow, you first divide the original convolution function into three separate functions:
 
@@ -156,7 +156,7 @@ The three functions will use streams to pass data between them. To understand st
 
    A local buffer `window_mem` is defined to store the necessary lines of data for computing. `>>` operator is used to extract elements from stream. The first few lines of the `window_mem` array should be zeroed out because these represent the padding of the image. This will only be done on the first iteration.
 
-   The computation is implemented in the main loop, and the loop is pipelined because the COEFFICIENT_SIZE variable is predefined at the compile time. For more details about optimizing loops, refer to "Step 4: Improve Loop Latencies" in the *Vitis Application Methodology*.
+   The computation is implemented in the main loop, and the loop is pipelined because the COEFFICIENT_SIZE variable is predefined at the compile time. For more details about optimizing loops, refer to [Step 4: Improve Loop Latencies](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wnz1555544738414) in [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380).
 
    After computation, the `out` value is pushed to a `write_stream` for the downstream function to process.
 
@@ -176,7 +176,7 @@ The three functions will use streams to pass data between them. To understand st
 
 ## Run Hardware Emulation for Dataflow
 
-1. Go to the `makefile` directory and use the following command to run hardware emulation.
+Go to the `makefile` directory and use the following command to run hardware emulation.
 
 ```
 make run TARGET=hw_emu STEP=dataflow SOLUTION=1 NUM_FRAMES=1
@@ -195,15 +195,15 @@ convolve_fpga_1:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.0
 
 ## View the Profile Summary Report for Hardware Emulation
 
-1. Use the following command to view the Profile Summary report.
+Use the following command to view the Profile Summary report.
 
    ```
-   make view_prof_report TARGET=hw_emu STEP=dataflow
+   make view_run_summary TARGET=hw_emu STEP=dataflow
    ```
 
-The kernel execution time is now reduced to 0.059 ms.
+   The kernel execution time is now reduced to 0.059 ms.
 
-Here is the updated table.
+   Here is the updated table.
 
 | Step               | Image Size | Time (HW-EM)(ms) | Reads(KB)       | Writes(KB) | Avg. Read (KB) | Avg. Write (KB) | BW (MBps)  |
 | :---------------   | :--------- | ---------------: | --------------: | ---------: | -------------: | --------------: | ---------: |
@@ -211,7 +211,6 @@ Here is the updated table.
 | localbuf           |     512x10 | 1.574 (2.48x)    | 21  (0.12x)     |       20.0 |          0.064 |           0.064 |    13      |
 | fixed-point data   |     512x10 | 0.46 (3.4x)      | 21              |       20.0 |          0.064 |           0.064 |    44      |
 | dataflow           |     512x10 | 0.059 (7.8x)     | 21              |       20.0 |          0.064 |           0.064 |    347     |
-
 ---------------------------------------
 
 ## Next Step
@@ -221,7 +220,6 @@ You have performed a couple of optimizations on the hardware kernels to improve 
 [function_pipeline]: ./images/4_function_pipelining.png "Function Pipelining"
 [dataflow]: ./images/dataflow.png "Dataflow"
 [dataflow_hwemu_profilesummary]: ./images/191_dataflow_hwemu_pfsummary_new_2.jpg "Dataflow version hardware emulation profile summary"
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
