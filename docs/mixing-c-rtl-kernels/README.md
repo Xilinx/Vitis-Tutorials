@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -36,7 +36,7 @@ This tutorial uses:
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in the *Vitis Development Environment Installation and Licensing*.
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >* If you will run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
 
 Before running any of the examples, ensure you have setup the Vitis core development kit by running the following commands:
@@ -120,7 +120,7 @@ It sets up the platform and defines global memory buffers and connections to the
    q.enqueueTask(krnl_vector_add);
    ```
 
-For complete details on host code programming, refer to _Developing Applications_.
+For complete details on host code programming, refer to [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
 
 ## Build the Application
 
@@ -206,7 +206,7 @@ Similar to the previous section, you will build, emulate, and review the generat
 
 First, you will create and package an RTL-based kernel using the RTL Kernel Wizard. By default, the wizard creates a kernel to increment by one. This kernel will be used in this tutorial. Additionally, the wizard automates the steps needed to package the RTL design into a kernel object file (XO).
 
-You will generate the RTL-based kernel by quickly going through the RTL Kernel Wizard steps without much detail. Review the [Getting Started with RTL Kernels](/docs/getting-started-rtl-kernels/) RTL Kernel Wizard for a thorough tutorial. For complete details on the RTL Kernel Wizard, refer to  _Developing Applications_.
+You will generate the RTL-based kernel by quickly going through the RTL Kernel Wizard steps without much detail. Review the [Getting Started with RTL Kernels](/docs/getting-started-rtl-kernels/) RTL Kernel Wizard for a thorough tutorial. For complete details on the RTL Kernel Wizard, refer to [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
 
 ### Create the Vitis Project
 
@@ -355,8 +355,7 @@ Because a CPP emulation file was packaged with the RTL Kernel (through the RTL W
 
 - For details about the RTL Kernel Wizard:  
   - Review the [Getting Started with RTL Kernels](/docs/getting-started-rtl-kernels/) tutorial.
-  - Review the *RTL Kernel Wizard* section in the _Developing Applications_.
-
+  - Review the [RTL Kernel Wizard](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1162648188.html#ariaid-title10) section in the [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
 </br>
 <hr/>
 <p align= center><b><a href="/README.md">Return to Main Page</a></b></p>

@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Software Development Platform Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -26,7 +26,7 @@ Review and run the [Building an Application](./BuildingAnApplication.md), [Runni
 
 ## Building the Design
 
-Before running applications in Xilinx boards or devices, it is necessary to build the design with `-t hw` option passed to `v++ `while building the hardware.
+Before running applications in Xilinx boards or devices, it is necessary to build the design with "-t hw" option passed to the `v++` command while building the hardware.
 
 The [Building an Application](./BuildingAnApplication.md) lab describes building the host software and hardware and how to specify the *<build_target>*.
 
@@ -82,12 +82,11 @@ Using `xbutil` is optional but convenient tool to do analysis and debug related 
   xbutil query
   ```
 
-The board status, compute unit status, and so on display. For more information about `xbutil`, refer to the *Vitis Environment Reference Materials*.
+The board status, compute unit status, and so on display. For more information about `xbutil`, refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html).
 
 ## Next Steps
 
 You should have an understanding of the steps required for building and running an application in the Vitis core development kit. These include coding the software program and kernel, building the application, running software and hardware emulation, viewing reports, and running the application on an accelerator card. The next steps will be to use this understanding to [build your first program](/docs/my-first-program).
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

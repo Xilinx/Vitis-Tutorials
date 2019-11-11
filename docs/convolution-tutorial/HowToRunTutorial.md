@@ -1,11 +1,11 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Methodology for Optimizing Accelerated FPGA Applications
+ <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
  </td>
  </tr>
 </table>
@@ -62,31 +62,18 @@ make run TARGET=hw_emu STEP=baseline SOLUTION=1 NUM_FRAMES=1
 
 To analyze the performance of the design, you need to look at the reports. For details about the reports, refer to the [Generate Profile and Trace Reports](../Pathway3/ProfileAndTraceReports.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
 
-
 ## Makefile Targets for Viewing Profile and Timeline Trace
 
-1. Use the following command to view the Profile Summary report.
+Use the following command to view the Profile Summary report and Timeline Trace.
 
    ```
-   make view_prof_report TARGET=hw_emu STEP=multicu
+   make view_run_summary TARGET=hw_emu STEP=multicu
    ```
 
-   The makefile uses the following command to open the Profile Summary report.
+   The makefile uses the following command to open the Profile Summary report and Timeline Trace report.
 
    ```
-   vitis_analyzer -open ./sdaccel_profile_summary_hw_emu.csv
-   ```
-
-2. Use the following command to view the Timeline Trace report.
-
-   ```
-   make view_timeline_trace TARGET=hw STEP=multicu
-   ```
-
-   The makefile uses the following command to launch the Vitis IDE and display the Timeline Trace report.
-
-   ```
-   vitis_analyzer -open ./sdaccel_timeline_trace_hw.csv
+   vitis_analyzer run_summary
    ```
 
 ## Makefile Targets for Clean Up
@@ -98,7 +85,6 @@ make clean TARGET=hw_emu STEP=baseline
 ```
 
 This cleans the hardware emulation-generated files for the baseline version design.
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

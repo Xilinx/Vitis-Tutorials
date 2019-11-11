@@ -1,11 +1,11 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Methodology for Optimizing Accelerated FPGA Applications
+ <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
  </td>
  </tr>
 </table>
@@ -183,10 +183,10 @@ convolve_fpga_1:m_axi_gmem2-DDR[0]          RD = 0.035 KB               WR = 0.0
 1. Use the following command to view the Profile Summary report.
 
    ```
-   make view_prof_report TARGET=hw_emu STEP=localbuf
+   make view_run_summary TARGET=hw_emu STEP=localbuf
    ```
 
-The kernel execution time is now 1.574 ms rather than the baseline performance of 3.903 ms (see the following table). This is because you removed all global memory accesses for the calculation and stored image data and coefficients in the local memory.
+   The kernel execution time is now 1.574 ms rather than the baseline performance of 3.903 ms (see the following table). This is because you removed all global memory accesses for the calculation and stored image data and coefficients in the local memory.
 
 2. Capture the performance data from Profile Summary report, and add it to the following table.
 
@@ -196,7 +196,6 @@ Here is the updated table. There is a 2.48x boost on kernel execution time persp
 | :----------------- | :--------- | ---------------: | --------------: | ----------: | -------------: | --------------: | ---------: |
 | baseline           |     512x10 | 3.903            | 344             |        20.0 |          0.004 |           0.004 |    5.2     |
 | localbuf           |     512x10 | 1.574 (2.48x)    | 21  (0.12x)     |        20.0 |          0.064 |           0.064 |    13      |
-
 --------------------------------------------------------------------------------------------
 
 [convolve_fpga_local]: ./images/convolve_fpga_local.png "FPGA kernel using local memory"
@@ -206,7 +205,6 @@ Here is the updated table. There is a 2.48x boost on kernel execution time persp
 ## Next Step
 
 You will now look at optimizing floating point calculations for an FPGA by [optimizing using fixed point datatypes](./fixedtype.md).
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

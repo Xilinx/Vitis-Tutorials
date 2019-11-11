@@ -1,3 +1,7 @@
+﻿<p align="right">
+<a>English</a> | <a href="/docs-jp/README.md">日本語</a>
+</p>
+
 <table width="100%">
   <tr width="100%">
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
@@ -31,6 +35,9 @@ Learn how to [develop accelerated applications using the Vitis™ core developme
  <td>This tutorial demonstrates working with an application containing RTL and OpenCL™ kernels to familiarize yourself with the Vitis core development kit flow, along with various design analysis features.</td>
  </tr>
  <tr>
+ <td align="center"><a href="docs/using-multiple-cu/README.md">Using Multiple Compute Units</a></td>
+ <td align="center">C and RTL</td>
+ <td>This tutorial demonstrates the flexible kernel linking process to increase the number of kernel instances on an FPGA, which improves the parallelism in a combined host-kernel system.</td>
  </tr>
  <tr>
  <td align="center"><a href="docs/host-code-opt/README.md">Host Code Optimization</a></td>
@@ -58,6 +65,5 @@ Learn how to [develop accelerated applications using the Vitis™ core developme
  <td>This tutorial demonstrates how you can control the Vivado® tools flow when implementing your project.</td>
  </tr>
  </table>
-
 <hr/>
 <p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>

@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -99,13 +99,14 @@ As you work through this section, refer to step 1 in the [host.cpp](./reference-
     cl::Program program(context, devices, bins, NULL, &err)
     ```
 
-    This step programs the FPGA with the binary loaded in the `bins` variable. If successful, this function will return `CL_SUCCESS`; make sure to check the return code.    
+    This step programs the FPGA with the binary loaded in the `bins` variable. If successful, this function will return `CL_SUCCESS`; make sure to check the return code. 
 
 5. Next, you must create kernel objects. Kernel objects are handles which the software application will use to pass arguments to the actual hardware kernels and execute them. Kernel objects are created using the `cl::Kernel` API.
 
       ```Cpp
       cl::Kernel krnl_vector_add(program,"vadd", &err)
       ```
+
    > **NOTE**: The mentioned operations are common to most applications and can be reused.
 
 ## Executing the Kernel
@@ -177,7 +178,6 @@ The last step in building the host application is releasing the objects. As you 
 ## Next Step
 
 The next step in this tutorial is to [compile, link, and run the application and the kernel](./building_application.md).
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

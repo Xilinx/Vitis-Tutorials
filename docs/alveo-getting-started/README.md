@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -33,7 +33,7 @@ For Alveo Data Center accelerator card installation, follow the instructions in 
 * Overview of the Alveo Data Center accelerator cards
 * Card bring-up and validation steps
 
-For developing application in-house, install the Vitis core development kit, by following the detailed installation procedures found in *Vitis Development Environment Installation and Licensing*.
+For developing application in-house, install the Vitis core development kit, by following the detailed installation procedures found in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 
 <!--For developing applications for AWS, see one of the following tutorials:
 
@@ -43,7 +43,6 @@ For developing application in-house, install the Vitis core development kit, by 
 ## Next Steps
 
 Understand the [Essential Concepts for Building and Running the Accelerated Application](/docs/Pathway3/) using the Vitis core development kit, including building a software application, building a hardware platform, performing emulation, viewing reports, and executing in hardware.
-
 </br>
 <hr/>
 <p align= center><b><a href="/README.md">Return to Main Page</a> — <a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a></b></p>
