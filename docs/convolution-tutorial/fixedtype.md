@@ -1,12 +1,12 @@
-
+﻿
 <table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Methodology for Optimizing Accelerated FPGA Applications
+ <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
  </td>
  </tr>
 </table>
@@ -110,10 +110,10 @@ Open the `convolve_fpga.cpp` file from `src/fixedpoint` and make the following m
 
 ## View the Profile Summary Report for Hardware Emulation
 
-1. Use the following command to view the Profile Summary report.
+ Use the following command to view the Profile Summary report.
 
 ```
-make view_prof_report TARGET=hw_emu STEP=fixedpoint
+make view_run_summary TARGET=hw_emu STEP=fixedpoint
 ```
 
 The kernel execution time is now reduced to 0.46 ms. The reason for this significant speedup is that the computation for-loop is pipelined when using fixed point operations. Therefore, the total latency is improved significantly.
@@ -125,7 +125,6 @@ Here is the updated table. There is a 3.4x boost on kernel execution time perspe
 | baseline          |     512x10 | 3.903            | 344             |        20.0 |          0.004 |           0.004 |    5.2     |
 | localbuf          |     512x10 | 1.574 (2.48x)    | 21  (0.12x)     |        20.0 |          0.064 |           0.064 |    13      |
 | fixedpoint data   |     512x10 | 0.46 (3.4x)      | 21              |        20.0 |          0.064 |           0.064 |    44      |
-
 -----------------------------------------------------------------------------------
 
 [fixedtype_hwemu_profilesummary]: ./images/191_fixedtype_hwemu_pfsummary_new_2.jpg "Fixed-type data version hardware emulation profile summary"
@@ -133,7 +132,6 @@ Here is the updated table. There is a 3.4x boost on kernel execution time perspe
 ## Next Step
 
 In the next section, you examine how breaking a single function into sub-functions lets you achieve task-level parallelism between the different functions. In this case, you will be [optimizing with dataflow](./dataflow.md).
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

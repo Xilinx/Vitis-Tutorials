@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -98,7 +98,7 @@ In the VADD design, the `size` argument and the `return` value need the followin
 
 Because a kernel can have only one AXI-Lite interface, all `s_axilite` pragmas must use the same `bundle` name. In this example, you are giving the name `control` to the AXI4-Lite interface.
 
-For more information on the HLS INTERFACE pragmas, refer to _HLS Pragmas_ in the _Vitis Environment Reference Materials_.
+For more information on the HLS INTERFACE pragmas, refer to [HLS Pragmas](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1015310854.html#okr1504034364623).
 
 ### Using C Linkage
 
@@ -129,7 +129,6 @@ The `vadd` function can now be compiled into a kernel using the Vitis toolchain.
 ## Next Step
 
 The next step in this tutorial is [coding the host program](./host_program.md).
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

@@ -12,8 +12,8 @@ help::
 	@echo  "  make clean TARGET=<sw_emu/hw_emu/hw> STEP=<baseline/localbuf/fixedpoint/dataflow/multicu>"
 	@echo  "  Command to remove the generated files for specified target and step."
 	@echo  ""
-	@echo  "  make view_prof_report TARGET=<sw_emu/hw_emu/hw> STEP=<baseline/localbuf/fixedpoint/dataflow/multicu>"
-	@echo  "  Command to view profile summary report in vitis_analyzer utility"
+	@echo  "  make view_run_summary TARGET=<sw_emu/hw_emu/hw> STEP=<baseline/localbuf/fixedpoint/dataflow/multicu>"
+	@echo  "  Command to load run summary report in vitis_analyzer utility"
 	@echo  ""
 	@echo  "  make view_timeline_trace TARGET=<sw_emu/hw_emu/hw> STEP=<baseline/localbuf/fixedpoint/dataflow/multicu>"
 	@echo  "  Command to view application timeline report in vitis_analyzer utility"
@@ -59,7 +59,7 @@ else
 SRC_REPO := $(PROJECT_DIR)/src/$(STEP)
 endif
 
-BUILD_DIR := $(PROJECT_DIR)/build/$(STEP)
+BUILD_DIR := $(PROJECT_DIR)/build/$(STEP)/$(TARGET)
 
 
 ## Kernel Parameters
@@ -189,32 +189,25 @@ build: $(BUILD_DIR)/$(HOST_EXE) $(BUILD_DIR)/$(XCLBIN) $(BUILD_DIR)/$(EMCONFIG_F
 run: build
 	cp xrt.ini $(BUILD_DIR);
 ifeq ($(TARGET), hw)
-	cd $(BUILD_DIR) && unset XCL_EMULATION_MODE;    ./$(HOST_EXE)  --kernel_name convolve_fpga $(RUN_OPTS) ../../video.mp4 ./$(XCLBIN) ;
+	cd $(BUILD_DIR) && unset XCL_EMULATION_MODE;    ./$(HOST_EXE)  --kernel_name convolve_fpga $(RUN_OPTS) ../../../video.mp4 ./$(XCLBIN) ;
 else
-	cd $(BUILD_DIR) && XCL_EMULATION_MODE=$(TARGET) ./$(HOST_EXE)  --kernel_name convolve_fpga $(RUN_OPTS) ../../video.mp4 ./$(XCLBIN) ;
+	cd $(BUILD_DIR) && XCL_EMULATION_MODE=$(TARGET) ./$(HOST_EXE)  --kernel_name convolve_fpga $(RUN_OPTS) ../../../video.mp4 ./$(XCLBIN) ;
 endif
-	cd $(BUILD_DIR) && mv ./profile_summary.csv sdaccel_profile_summary_$(TARGET).csv;
-	cd $(BUILD_DIR) && mv ./timeline_trace.csv sdaccel_timeline_trace_$(TARGET).csv;
 ## compare the output result with golden result
 	cmp $(BUILD_DIR)/output.mp4 ../$(GOLDEN_OUT); RETVAL=$$?; \
 	if [ $$RETVAL -eq \0 ];  then \
-	  echo "\n\nPASS : Output Video Matches the Golden Output Results \n\n\n" ; \
+	  echo "PASS : Output Video Matches the Golden Output Results " ; \
 	else \
-	  echo "\n\nFAIL : Output Video Corrupt\n\n\n" ; \
+	  echo "FAIL : Output Video Corrupt" ; \
 	fi
 
 
 
 ## view profile summary report in Vitis Analyzer GUI
 
-view_prof_report:
-	cd $(BUILD_DIR) && vitis_analyzer -open ./sdaccel_profile_summary_$(TARGET).csv
+view_run_summary:
+	cd $(BUILD_DIR) && vitis_analyzer xclbin.run_summary
 
-
-## view timeline trace report in Vitis Analyzer GUI
-
-view_timeline_trace:
-	cd $(BUILD_DIR) && vitis_analyzer -open ./sdaccel_timeline_trace_$(TARGET).csv
 
 ## Clean generated files
 

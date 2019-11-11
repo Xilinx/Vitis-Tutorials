@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -24,7 +24,7 @@ Review and run the [Building an Application](./BuildingAnApplication.md) lab bef
 
 ## Running Software and Hardware Emulation
 
-To help you better debug and optimize your applications, the Vitis core development kit allows you to run your design in both software and hardware emulation. Each provides a different level of insight into the design and are described below. For emulation and optimization details, refer to *Profiling, Optimizing, and Debugging the Application*.
+To help you better debug and optimize your applications, the Vitis core development kit allows you to run your design in both software and hardware emulation. Each provides a different level of insight into the design and are described below. For emulation and optimization details, refer to [Profiling, Optimizing, and Debugging the Application](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/wzc1553475252001.html).
 
 * In software emulation (`sw_emu`), both the host application code and the kernel code are compiled to run on the x86 processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system. For RTL kernels, software emulation can be supported if a C model is associated with the kernel.
 
@@ -68,7 +68,7 @@ At a minimum you need to specify the target platform through the `-f` or `-–pl
 emconfigutil -–platform <platform_target>
 ```
 
-For a list of options, run `emconfigutil --help`, or refer to the _Vitis Envrionment Reference Materials_.
+For a list of options, run `emconfigutil --help`, or refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html).
 
 ### Define the XCL_EMULATION_MODE Environment Variable
 
@@ -92,7 +92,7 @@ Using what you now know, put it all together, and run software emulation on a de
 
 1. Ensure the software and hardware have been built with *build_target* set to `sw_emu`.  
 
-   >**NOTE:** Refer to the [Building an Application](./BuildingAnApplication.md) module for how to build the host software and hardware.
+   >**NOTE:** Refer to the [Building an Application](./BuildingAnApplication.md) lab for how to build the host software and hardware.
 
 2. Generate the emulation configuration file.  
     The generated `emconfig.json` file must be in the same directory as the host executable; ensure you are in the same directory as the host executable, then run the following command.
@@ -114,6 +114,8 @@ Using what you now know, put it all together, and run software emulation on a de
    ```bash
    ./host mmult.sw_emu.xilinx_u200_xdma_201830_2.xclbin
    ```
+   
+   This command can also generate the `run.summary` file that can be used with the Vitis analyzer to visualize relevant reports.
 
   After successfully running software emulation, you will see an output similar to the following in the Console.
 
@@ -128,7 +130,7 @@ Now that you have run software emulation, run hardware emulation on the same des
 
 1. Ensure the software and hardware have been built with *build_target* set to *hw_emu*.  
 
-   >**NOTE:** For instructions on how to build the host software and hardware, refer to the [Building an Application](./BuildingAnApplication.md) module.  
+   >**NOTE:** For instructions on how to build the host software and hardware, refer to the [Building an Application](./BuildingAnApplication.md) lab.  
 
 2. Generate the emulation configuration file.
 
@@ -199,7 +201,6 @@ The following steps summarize the steps necessary to configure and run emulation
 ## Next Step
 
 After you perform emulation, generate the Profile Summary and Timeline Trace reports for further debugging and optimization. For details on how to generate and view these reports, refer to the [Generating Profile and Trace Reports](./ProfileAndTraceReports.md) lab.
-
 </br>
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a></b> — <b><a href="./README.md">Return to Start of Tutorial</a></b></p>

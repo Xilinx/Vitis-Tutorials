@@ -1,11 +1,11 @@
-<p align="right">
+﻿<p align="right">
 <a>English</a> | <a href="/docs-jp/README.md">日本語</a>
 </p>
 
 <table width="100%">
   <tr width="100%">
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-    <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+    <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
     </td>
  </tr>
  </table>
@@ -28,7 +28,7 @@ Alveo Data Center accelerator cards provide compute acceleration performance and
 
 [Read more...](/docs/alveo-getting-started/)
 
-### 3. Building the Accelerated Application - Essential Concepts
+### 3. Building the Accelerated Application — Essential Concepts
 
 The following labs will introduce you to the essential concepts for building and running an accelerated application using the Vitis core development kit.
 
@@ -58,23 +58,13 @@ In this tutorial, you will learn how to do the following:
 
 The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the hardware kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto FPGA kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary compiler options and pragmas to create the kernel architecture needed to achieve the optimized performance target.
 
-In this tutorial, you will learn how to do the following:
-
-- Create a Vitis core development kit application from the C application.
-- Optimize memory transfers.
-- Optimize using fixed point data types.
-- Optimize with dataflow.
-- Use out-of-order queues and multiple compute units.
-- Run the accelerator in hardware.
-
-[Read more...](/docs/convolution-tutorial/)
+* [Convolution Example](/docs/convolution-tutorial/)
+* [Bloom Filter Example](/docs/bloom/)
 
 ### Additional Reading
 
-* _Vitis Application Methodology_
-
+* [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380)
 </br>
 <hr/>
 <p align="center"><b><a href="/README.md">Return to Main Page</a></b></p>
-
 <p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>

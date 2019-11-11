@@ -2,8 +2,8 @@ HEADERS=common.h filters.h types.h kernels.h constants.h
 SOURCES=common.cpp convolve.cpp main.cpp grayscale_kernel.cpp convolve_kernel.cpp
 OBJECTS=$(addprefix build/,$(SOURCES:.cpp=.o))
 
-CXX_FLAGS=-std=c++0x -O3 -pg
-LD_FLAGS=-O3 -pg
+CXX_FLAGS=-std=c++0x -O3
+LD_FLAGS=-O3
 
 convolve: $(OBJECTS)
 	$(CXX) $(LD_FLAGS) $^ -o $@

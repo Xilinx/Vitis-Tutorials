@@ -1,7 +1,7 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See other versions</a>
+   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -44,7 +44,7 @@ If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have the Vitis core development kit installed as described in the *Vitis Development Environment Installation and Licensing*.
+> * Before running any of the examples, make sure you have the Vitis core development kit installed as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >* If you will run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/support/documentation/boards_and_kits/accelerator-cards/ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
 
 ## Accessing the Tutorial Reference Files
@@ -76,7 +76,7 @@ The Vitis core development kit execution model specifically relies on the follow
 - Pointer arguments are transferred through global memory (DDR, HBM, or PLRAM).
 - Base addresses of pointer arguments are passed to the kernel through its AXI4-Lite slave interface.
 - Kernels access pointer arguments in global memory through one or more AXI4 master interfaces.
-- Kernels are started by the host application through its AXI4-Lite interface
+- Kernels are started by the host application through its AXI4-Lite interface.
 - Kernels must notify the host application when they complete the operation through its AXI4-Lite interface or a special interrupt signal.
 
 ## Hardware Interface Requirements
@@ -105,7 +105,7 @@ If the original RTL design uses a different execution model or hardware interfac
 
 ### Additional Information
 
-For more information on the interface requirements for a Vitis core development kit kernel, refer to the _Requirements of an RTL Kernel_ section in _Developing Applications_ .
+For more information on the interface requirements for a Vitis core development kit kernel, refer to the [Requirements of an RTL Kernel](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1162648188.html#qbh1504034323531).
 
 ## Vector-Accumulate RTL IP
 
@@ -117,7 +117,7 @@ For this tutorial, the Vector-Accumulate RTL IP performing `B[i]=A[i]+B[i]` meet
   - The AXI4 masters used in this design do not use wrap, fixed, or narrow burst types.
 - An AXI4-Lite slave control interface:
   - Control register at offset `0x00`
-  - Kernel argument register at offset `0x10` allowing the host to pass a scalar value to the kernel.
+  - Kernel argument register at offset `0x10` allowing the host to pass a scalar value to the kernel
   - Kernel argument register at offset `0x18` allowing the host to pass the base address of A in global memory to the kernel
   - Kernel argument register at offset `0x24` allowing the host to pass the base address of B in global memory to the kernel
 
@@ -185,7 +185,7 @@ The RTL Kernel Wizard guides you through the process of specifying the interface
 Scalar arguments are used to pass input parameters from the host application to the kernel. For the number of input arguments specified, a corresponding register is created to facilitate passing the argument from software to hardware. Each argument is assigned an ID value that is used to access that argument from the host application. This ID value can be found on the Summary page of the wizard.
 
 - **Argument name**: Name of the argument.
-- **Argument type**: Type of the scalar argument expressed as a native C/C++ datatype. For example: (u)char, (u)short or (u)int.
+- **Argument type**: Type of the scalar argument expressed as a native C/C++ datatype. For example, (u)char, (u)short, or (u)int.
 
 1. Keep the default values, and then click **Next**.  
 ![scalar.PNG](./images/scalar.PNG)
@@ -496,7 +496,7 @@ Here are some of the important OpenCL API calls allowing the host application to
   clEnqueueReadBuffer(command_queue, dev_mem_ptr, CL_TRUE, 0, sizeof(int)*number_of_words,host_mem_output_ptr, 0, NULL, &readevent );
   ```
 
-The structure and requirements of the host application are discussed in greater detail in _Developing Applications_.
+The structure and requirements of the host application are discussed in greater detail in [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
 
 ## Build the Project
 
@@ -542,7 +542,6 @@ In the system configuration, the kernel code is implemented onto the FPGA, resul
 
 5. You added the RTL kernel to a host application and built the Hardware Emulation configuration.  
    - In the Vitis IDE, a binary container was created using the XO file, and a xclbin file was compiled.
-
 </br>
 <hr/>
 <p align= center><b><a href="/README.md">Return to Main Page</a></b></p>
