@@ -369,17 +369,17 @@ In previous labs, only one CU is used for the kernel. In this section, you will 
 
 Go to the `makefile` directory and use the following command to run hardware emulation.
 
- ```
-   make run TARGET=hw_emu STEP=multicu SOLUTION=1 NUM_DOCS=100
-   ```
+```
+make run TARGET=hw_emu STEP=multicu SOLUTION=1 NUM_DOCS=100
+```
 
 ## Generate Reports for Hardware Emulation
 
 Use the following command to generate the Profile Summary report and Timeline Trace reports.
 
-    ```
-    make view_report TARGET=hw_emu STEP=multicu
-    ```
+```
+make view_report TARGET=hw_emu STEP=multicu
+```
 
 ## Profile Summary for Hardware Emulation
 
@@ -397,8 +397,7 @@ Use the following command to generate the Profile Summary report and Timeline Tr
    | baseline                   |     100 |           16 |             38|  36.84          |
    | localbuf                  | 100 | 16| 1.67 | 838.323
    |dataflow | 100 | 16 | 1.567 | 893.42
-   | multicu | 100 | 16 | 0.822 |1703.16 |
----------------------------------------
+   | multicu | 100 | 16 | 0.822 |1703.16 |---------------------------------------
 
 ## Timeline Trace for Hardware Emulation
 

@@ -26,7 +26,7 @@ Note the following data:
 
 ## Run the Baseline Application on Hardware
 
->**IMPORTANT**: Make sure the `nk` option in design.cfg was set to 1.
+>**IMPORTANT**: Make sure the `nk` option in `design.cfg` was set to 1.
 
 Use the following command to build and run the baseline design on hardware. At the end of execution, host application will print out the kernel execution time and throughput number. The numbers will be filled into the table for benchmarking comparison.
 

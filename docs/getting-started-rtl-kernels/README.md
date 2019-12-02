@@ -44,7 +44,7 @@ If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have the Vitis core development kit installed as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
+> * Before running any of the examples, make sure you have the Vitis core development kit installed as described in [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >* If you will run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/support/documentation/boards_and_kits/accelerator-cards/ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
 
 ## Accessing the Tutorial Reference Files
@@ -105,7 +105,7 @@ If the original RTL design uses a different execution model or hardware interfac
 
 ### Additional Information
 
-For more information on the interface requirements for a Vitis core development kit kernel, refer to the [Requirements of an RTL Kernel](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1162648188.html#qbh1504034323531).
+For more information on the interface requirements for a Vitis core development kit kernel, refer to the [Requirements of an RTL Kernel](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk851038901.html?hl=requirements%2Crtl#qbh1504034323531).
 
 ## Vector-Accumulate RTL IP
 

@@ -106,15 +106,15 @@ In this tutorial, your goal is to process 100,000 documents (1.6 GB). On the CPU
 
 You want to improve the application throughput so that the execution time takes less than one second because you should be able to compute the scores of documents in real time. With this goal in mind, the first thing to do is to check whether this goal is achievable with the FPGA. Having a 0.6 second execution time for processing 100,000 documents implies that the throughout required is 2.67 GB/s as you are processing documents the size of 1.6 GB. First, determine if this throughput is less than the maximum achievable by the kernel and also whether the throughput goal is within the bounds of maximum achievable throughput of an Alveo Data Center accelerator card.
 
-As explained in [Step 3: Identify Device Parallelization Needs](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#kjk1555544737506) in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380), the maximum throughput achievable from kernel can be approximated as:
+As explained in [Step 3: Identify Device Parallelization Needs](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#kjk1555544737506) in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380), the maximum throughput achievable from kernel can be approximated as:
 
 **Thw = (Frequency / Computational Intensity) = (Frequency * max(VINPUT, VOUTPUT) / VOPS)**
 
 where:
 
-   * **VINPUT**, **VOUTPUT** represent the volume of input and output data processed respectively.
-   * **VOPS** represents the volume of operations processed on the input and output data.
-   * **Computational Intensity** of a function is the ratio of the total number of operations to the maximum amount of input and output data.  In this application, the volume of input data processed is greater than the volume of output data generated (as document score is computed only once per document). Each input word is only used once for computing the document score, hence the computational intensity is 1.
+* **VINPUT**, **VOUTPUT** represent the volume of input and output data processed respectively.
+* **VOPS** represents the volume of operations processed on the input and output data.
+* **Computational Intensity** of a function is the ratio of the total number of operations to the maximum amount of input and output data.  In this application, the volume of input data processed is greater than the volume of output data generated (as document score is computed only once per document). Each input word is only used once for computing the document score, hence the computational intensity is 1.
 
 **Thw = (Frequency\*1)samples**
 
