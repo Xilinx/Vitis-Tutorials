@@ -103,7 +103,7 @@ make view_report TARGET=hw_emu STEP=multiddr
    | dataflow | 100 | 16 | 1.567 | 893.42
    | multicu | 100 | 16 | 0.822 |1703.16 |
    | multiddr | 100 | 16 | 0.55 | 2909.09
-   ---------------------------------------
+---------------------------------------
 
 ## Timeline Trace for Hardware Emulation
 
@@ -112,7 +112,7 @@ The Timeline Trace report in Vitis analyzer displays as follows.
 ![](./images/new_tutorial_bloom_multiddr_timeline_hw_emu.PNG)
 
 * There is overlap of execution between the four compute units.
- * There is overlap between data transfer and compute unit for larger data set.
+* There is overlap between data transfer and compute unit for larger data set.
 
 ## Next Step
 

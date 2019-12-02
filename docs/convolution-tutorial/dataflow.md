@@ -22,7 +22,7 @@ While pipelining usually works at the instruction level, the Vitis compiler can 
 
 Without using dataflow, `func_A`, `func_B`, and `func_C` are executed sequentially. With dataflow enabled, the three functions can overlap, which will reduce the total execution time.
 
->**TIP**: This lab relates to [Step 1: Partition the Code into a Load-Compute-Store Pattern](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#vhk1551127460562) in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380).
+>**TIP**: This lab relates to [Step 1: Partition the Code into a Load-Compute-Store Pattern](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#vhk1551127460562) in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380).
 
 In this lab, to implement the functions in dataflow, you first divide the original convolution function into three separate functions:
 
@@ -156,7 +156,7 @@ The three functions will use streams to pass data between them. To understand st
 
    A local buffer `window_mem` is defined to store the necessary lines of data for computing. `>>` operator is used to extract elements from stream. The first few lines of the `window_mem` array should be zeroed out because these represent the padding of the image. This will only be done on the first iteration.
 
-   The computation is implemented in the main loop, and the loop is pipelined because the COEFFICIENT_SIZE variable is predefined at the compile time. For more details about optimizing loops, refer to [Step 4: Improve Loop Latencies](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wnz1555544738414) in [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380).
+   The computation is implemented in the main loop, and the loop is pipelined because the COEFFICIENT_SIZE variable is predefined at the compile time. For more details about optimizing loops, refer to [Step 4: Improve Loop Latencies](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wnz1555544738414) in [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380).
 
    After computation, the `out` value is pushed to a `write_stream` for the downstream function to process.
 
@@ -188,9 +188,9 @@ You should see the following results.
 Processed 0.02 MB in 29.728s (0.00 MBps)
 
 INFO: [Vitis-EM 22] [Wall clock time: 23:03, Emulation time: 0.108257 ms] Data transfer between kernel(s) and global memory(s)
-convolve_fpga_1:m_axi_gmem1-DDR[0]          RD = 20.000 KB              WR = 0.000 KB        
-convolve_fpga_1:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB       
-convolve_fpga_1:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB  
+convolve_fpga_1:m_axi_gmem1-DDR[0]          RD = 20.000 KB              WR = 0.000 KB
+convolve_fpga_1:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+convolve_fpga_1:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
 ```
 
 ## View the Profile Summary Report for Hardware Emulation

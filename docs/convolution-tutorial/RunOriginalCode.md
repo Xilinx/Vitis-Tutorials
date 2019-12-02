@@ -52,7 +52,7 @@ Here is the summary of the generated golden output files.
 
 ## Profile the Application and Establish Performance Goals
 
-As stated in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380), you can use the `gprof` tool to profile the application and identify potential functions for acceleration.
+As stated in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380), you can use the `gprof` tool to profile the application and identify potential functions for acceleration.
 
 1. Add the `-pg` option in the gcc command line. This is already done in the `Makefile`.
 2. Change directory into the `cpu_src` folder and run `make` to generate the executable file.

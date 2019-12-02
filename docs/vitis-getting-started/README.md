@@ -63,7 +63,7 @@ The methodology for developing optimized accelerated applications is comprised o
 
 ### Additional Reading
 
-* [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380)
+* [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380)
 </br>
 <hr/>
 <p align="center"><b><a href="/README.md">Return to Main Page</a></b></p>

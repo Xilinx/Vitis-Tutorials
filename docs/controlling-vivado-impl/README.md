@@ -40,7 +40,7 @@ If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**
 >
->* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
+>* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
 >* Before running this lab, you must be familiar with the [Essential Concepts for Building and Running the Accelerated Application](/docs/Pathway3/) tutorial.
 

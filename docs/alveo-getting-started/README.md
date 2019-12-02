@@ -33,7 +33,7 @@ For Alveo Data Center accelerator card installation, follow the instructions in 
 * Overview of the Alveo Data Center accelerator cards
 * Card bring-up and validation steps
 
-For developing application in-house, install the Vitis core development kit, by following the detailed installation procedures found in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
+For developing application in-house, install the Vitis core development kit, by following the detailed installation procedures found in [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 
 <!--For developing applications for AWS, see one of the following tutorials:
 

@@ -36,7 +36,7 @@ This tutorial uses:
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >* If you will run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
 
 Before running any of the examples, ensure you have setup the Vitis core development kit by running the following commands:
@@ -355,7 +355,7 @@ Because a CPP emulation file was packaged with the RTL Kernel (through the RTL W
 
 - For details about the RTL Kernel Wizard:  
   - Review the [Getting Started with RTL Kernels](/docs/getting-started-rtl-kernels/) tutorial.
-  - Review the [RTL Kernel Wizard](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1162648188.html#ariaid-title10) section in the [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
+  - Review the [RTL Kernel Wizard](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk851038901.html#ouz1504034324041) section in the [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
 </br>
 <hr/>
 <p align= center><b><a href="/README.md">Return to Main Page</a></b></p>

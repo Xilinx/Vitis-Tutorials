@@ -18,7 +18,7 @@ This tutorial demonstrates a flexible kernel linking process to increase the num
 
 By default, the Vitis™ core development kit creates one CU for each kernel. A host program can use the same kernel multiple times for different sets of data. In these cases, it is useful to generate multiple CUs of the kernel to let those CUs run concurrently and improve the performance of the overall system.  
 
-For more information, see [Creating Multiple Instances of a Kernel](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1291664255.html#yzb1524519238289) in [Building and Running the Application](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/xia1553473418160.html).
+For more information, see [Creating Multiple Instances of a Kernel](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk595166594.html#yzb1524519238289) in [Building and Running the Application](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/xia1553473418160.html).
 
 During this tutorial, you will:
 
@@ -39,7 +39,7 @@ If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
 >
->* Before to running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
+>* Before to running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
 
 ## Accessing the Tutorial Reference Files
