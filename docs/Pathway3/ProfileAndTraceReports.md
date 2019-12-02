@@ -31,7 +31,7 @@ Before running this lab, it is required to run the [Building an Application](./B
 
 ## Generating Emulation Data
 
-The Profile Summary and Application Timeline reports are not enabled by default because the generated emulation data requires more time to run and added disk space. Therefore, you must enable the profiling data collection before running emulation. This is done by setting options in an `xrt.ini` text file, located in the same directory as the host program, in this case the `./reference-files/run` directory. For more information on the `xrt.ini` file, see the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html)
+The Profile Summary and Application Timeline reports are not enabled by default because the generated emulation data requires more time to run and added disk space. Therefore, you must enable the profiling data collection before running emulation. This is done by setting options in an `xrt.ini` text file, located in the same directory as the host program, in this case the `./reference-files/run` directory. For more information on the `xrt.ini` file, see the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html).
 
 ### Create the xrt.ini File
 

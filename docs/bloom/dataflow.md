@@ -29,13 +29,13 @@ The two functions will use streams to pass data between them. To understand stre
 
 ## Host Code Modifications
 
-1. Add an extra argument, `size` to indicate the total size of the data transfer of words in the document because it is helpful while streaming data in the kernel.
+ Add an extra argument, `size` to indicate the total size of the data transfer of words in the document because it is helpful while streaming data in the kernel.
 
  At line 87, add the following line.
 
- ```
- kernel.setArg(7,flag);
- ```
+```
+kernel.setArg(7,flag);
+```
 
 ## Kernel Code Modifications
 
@@ -141,9 +141,9 @@ The two functions will use streams to pass data between them. To understand stre
 
 Go to the `makefile` directory, and use the following command to run hardware emulation.
 
-   ```
-   make run TARGET=hw_emu STEP=dataflow SOLUTION=1 NUM_DOCS=100
-   ```
+```
+make run TARGET=hw_emu STEP=dataflow SOLUTION=1 NUM_DOCS=100
+```
 
 ## Generate Reports for Hardware Emulation
 
@@ -167,7 +167,7 @@ make view_report TARGET=hw_emu STEP=dataflow
    | baseline                   |     100 |           16 |             10.42|  157.236            |
    | localbuf                 | 100 | 16| 1.67 | 981.078 |
    | dataflow                 | 100 | 16|  | 1.56  | 1025.64 |
-   ---------------------------------------
+---------------------------------------
 
  You do not see much performance improvements from this step because the II for the compute loops inside `compute_score` function is already 1, so performance is not largely impacted.
 
@@ -175,17 +175,17 @@ make view_report TARGET=hw_emu STEP=dataflow
 
 Click the Timeline Trace report in the Vitis analyzer which displays as follows.
 
-   ![](./images/profile_dataflow.PNG)
+![](./images/profile_dataflow.PNG)
 
 You can see that compute happens only after entire data transfer is done, and the kernel takes up most of the execution time.
 
-   ![](./images/new_tutorial_bloom_dataflow_timeline_trace.PNG)
+![](./images/new_tutorial_bloom_dataflow_timeline_trace.PNG)
 
 ## Kernel Detail Trace for Hardware Emulation
 
 The Kernel Detail Trace report is automatically generated as part of the hardware emulation run. The following figure in the Kernel Detail Trace shows the CU stalls with the memory transfer optimization.
 
-   ![](images/new_tutorial_bloom_localbuf.PNG)
+![](images/new_tutorial_bloom_localbuf.PNG)
 
 The CU stalls are mainly due to `gemem4`, which corresponds to the `profile_weights` array in DDR memory. The accesses to this memory are not sequential and the size is too large to fit in the local memory. Because these accesses correspond to 1% of total access, the stalls are acceptable.
 

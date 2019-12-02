@@ -26,7 +26,7 @@ Review and run the [Building an Application](./BuildingAnApplication.md), [Runni
 
 ## Building the Design
 
-Before running applications in Xilinx boards or devices, it is necessary to build the design with "-t hw" option passed to the `v++` command while building the hardware.
+Before running applications in Xilinx boards or devices, it is necessary to build the design with `-t hw` option passed to the `v++` command while building the hardware.
 
 The [Building an Application](./BuildingAnApplication.md) lab describes building the host software and hardware and how to specify the *<build_target>*.
 

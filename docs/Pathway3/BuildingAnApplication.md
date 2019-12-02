@@ -14,13 +14,13 @@
 
 ## Introduction
 
-As described in the [Execution Model of an FPGA Accelerated Application](/docs/vitis-execution-model/), an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx FPGA. The sources for both need to be built (compiled and linked) separately. For additional details, see [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
+As described in the [Execution Model of an FPGA Accelerated Application](/docs/vitis-execution-model/), an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx FPGA. The sources for both need to be built (compiled and linked) separately. For additional details, see [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 
 This tutorial describes how to build both the software and hardware portions of your design using the `g++` compiler and Vitis compiler. It describes various command line options, including how to specify a target platform, and building for hardware or software emulation.
 
 Reference files are provided in the [./reference_files](./reference-files) directory for use with this tutorial.
 
->**IMPORTANT:** Before running the example commands, ensure you have set up the Vitis core development kit by running the following commands, as described in [Installation and Licensing](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
+>**IMPORTANT:** Before running the example commands, ensure you have set up the Vitis core development kit by running the following commands, as described in [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
 >
 >   ```bash
 >    #setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.
@@ -95,7 +95,7 @@ The following figure shows the compiling and linking flow for the various types 
 
   ![compiling_and_linking_flow](images/compiling_and_linking_flow.png)  
 
-This tutorial is limited to `v++` compilation and does not consider RTL kernels. For details on building RTL kernels, see the [Getting Started with RTL Kernels](docs/getting-started-rtl-kernels) tutorial.
+This tutorial is limited to `v++` compilation and does not consider RTL kernels. For details on building RTL kernels, see the [Getting Started with RTL Kernels](/docs/getting-started-rtl-kernels) tutorial.
 
 ### Hardware Compilation
 

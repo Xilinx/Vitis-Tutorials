@@ -16,11 +16,11 @@ From the host code, you saw that the `runOnCPU` function is contributing to 73% 
 
 This lab discusses the process for converting a C++ function into a hardware kernel and evaluating its performance. You will also establish the baseline performance numbers for the accelerated application that you will use to compare to each additional optimization in the subsequent labs. You are going to take your first FPGA kernel and run it in hardware emulation. Because you will be running your kernel in hardware emulation, only use 100 documents to keep the an acceptable runtime.
 
-To measure the performance, use the Kernel Detail Trace and Timeline Trace reports. For details about these reports, refer to the [Generating Profile and Trace Reports](./Pathway3/ProfileAndTraceReports.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
+To measure the performance, use the Kernel Detail Trace and Timeline Trace reports. For details about these reports, refer to the [Generating Profile and Trace Reports](../Pathway3/ProfileAndTraceReports.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
 
 ## Host Code
 
-You must determine the number of documents to send from host to FPGA in each iteration. For information about the amount of data that is ideal for sending data from host to FPGA, refer to [Optimize Data Transfers to and from the Device](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#yfz1555544741101) in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1068711200.html#wgb1568690490380).
+You must determine the number of documents to send from host to FPGA in each iteration. For information about the amount of data that is ideal for sending data from host to FPGA, refer to [Optimize Data Transfers to and from the Device](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#yfz1555544741101) in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380).
 
 In practical applications with data analytics, the data can be too large to fit in the FPGA memory. This approach will help transfer the data in chunks from host to FPGA. In this tutorial, you will send 2 MB of data in each iteration because transferring 2 MB of data in one iteration gives the best performance.
 
@@ -71,7 +71,7 @@ Use the following instructions to convert the C++ code into kernel code, and con
 
 3. Rename `cpu_profileScore` array  with `fpga_profileScore`.
 
-3. Add the following HLS INTERFACE pragmas at the beginning of the function, within the braces.
+4. Add the following HLS INTERFACE pragmas at the beginning of the function, within the braces.
 
    ```
    #pragma HLS INTERFACE s_axilite port=return bundle=control
@@ -85,7 +85,7 @@ Use the following instructions to convert the C++ code into kernel code, and con
 
    The FPGA kernel must have a single AXI4-Lite slave control interface (`s_axilite`), which allows the host application to configure and communicate with the kernel. All function arguments including the return must be mapped to this control interface using dedicated pragmas.
 
-4. Each pointer argument must also be mapped to an AXI memory mapped master port (`m_axi`) using a dedicated pragma. Add the following pragmas to the function.
+5. Each pointer argument must also be mapped to an AXI memory mapped master port (`m_axi`) using a dedicated pragma. Add the following pragmas to the function.
 
    ```
    #pragma HLS INTERFACE m_axi port=doc_sizes offset=slave bundle=gmem1
@@ -101,7 +101,7 @@ Use the following instructions to convert the C++ code into kernel code, and con
 
    >**NOTE**: You will be using a single port for "profile_weights" and "fpga_profileScore" because they are not used simultaneously. Although you could have used even fewer ports, you are using four ports because it will create conflicts in later optimizations(dataflow) when you are reading two arrays with same ports in the same function with dataflow enabled.
 
-5. For the inner loop, which iterates over document size, add the following pragma for tripcount.
+6. For the inner loop, which iterates over document size, add the following pragma for tripcount.
 
    ```
    #pragma HLS loop_tripcount min=3000 max=4000 avg=3500
@@ -109,7 +109,7 @@ Use the following instructions to convert the C++ code into kernel code, and con
 
    Although this pragma does not impact the result of the application, it will report the any bottlenecks due to stalling when it knows the size of the loop. In this case, the estimates of the loop size were written based on the document size created from host code.
 
-6. Save the `compute_score_fpga.cpp` file.
+7. Save the `compute_score_fpga.cpp` file.
 
 ## Run Hardware Emulation
 

@@ -98,7 +98,7 @@ In the VADD design, the `size` argument and the `return` value need the followin
 
 Because a kernel can have only one AXI-Lite interface, all `s_axilite` pragmas must use the same `bundle` name. In this example, you are giving the name `control` to the AXI4-Lite interface.
 
-For more information on the HLS INTERFACE pragmas, refer to [HLS Pragmas](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1015310854.html#okr1504034364623).
+For more information on the HLS INTERFACE pragmas, refer to [HLS Pragmas](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk538726301.html#okr1504034364623).
 
 ### Using C Linkage
 
