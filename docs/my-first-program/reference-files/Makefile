@@ -165,6 +165,6 @@ endif
 #Generates profile summary report
 ifeq ($(PROFILE), yes)
 LDCLFLAGS += --profile_kernel data:all:all:all:all
-LDCFLAGS += --profile_kernel  stall:all:all:all:all
-LDCFALGS += --profile_kernel exec:all:all:all:all
+LDCFLAGS += --profile_kernel  stall:all:all:all
+LDCFALGS += --profile_kernel exec:all:all:all
 endif
