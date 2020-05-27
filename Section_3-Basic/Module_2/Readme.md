@@ -1,5 +1,6 @@
 3.2 Setting cross-compilation environment
 -----------------------
+Before we move to the board environment, some work need to be operated on the host side.
 * Download the [sdk.sh](https://www.xilinx.com/bin/public/openDownload?filename=sdk.sh) on host
 * Install the cross-compilation system environment, follow the prompts to install. 
    ```
