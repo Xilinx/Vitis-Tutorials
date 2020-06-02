@@ -74,7 +74,41 @@ inline cv::Mat& gui_background() {
 
 static std::vector<int> g_num_of_threads;
 static std::vector<std::string> g_avi_file;
+inline void usage_video(const char* progname) {
+  std::cout << "usage: " << progname << "      -t <num_of_threads>\n"
+            << "      <video file name>\n"
+            << std::endl;
+  return;
+}
 
+inline void parse_opt(int argc, char* argv[], int start_pos = 1) {
+  int opt = 0;
+  optind = start_pos;
+  while ((opt = getopt(argc, argv, "c:t:")) != -1) {
+    switch (opt) {
+      case 't':
+        g_num_of_threads.emplace_back(std::stoi(optarg));
+        break;
+      case 'c':  // how many channels
+        break;   // do nothing. parse it in outside logic.
+      default:
+        usage_video(argv[0]);
+        exit(1);
+    }
+  }
+  for (int i = optind; i < argc; ++i) {
+    g_avi_file.push_back(std::string(argv[i]));
+  }
+  if (g_avi_file.empty()) {
+    std::cerr << "Expected argument after options\n";
+    exit(EXIT_FAILURE);
+  }
+  if (g_num_of_threads.empty()) {
+    // by default, all channels has at least one thread
+    g_num_of_threads.emplace_back(1);
+  }
+  return;
+}
 inline std::vector<cv::Size>& each_channel_mosaik_size() {
   static std::vector<cv::Size> msize;
   return msize;
@@ -191,18 +225,7 @@ struct DecodeThread : public MyThread {
         video_stream_{},
         queue_{queue},
         videoCapture{V4l2Capture::create(param, V4l2Access::IOTYPE_MMAP)}
-        
-        {
-     
-    //open_stream();
-   // auto& cap = *video_stream_.get();
-    //  auto& cap=v4l2_videoCapture();
-    //if (is_camera_) {
-    //  cap.set(CV_CAP_PROP_FRAME_WIDTH, 640);
-     // cap.set(CV_CAP_PROP_FRAME_HEIGHT, 360);
-    //}
-    
-  }
+        {}
 
   virtual ~DecodeThread() {}
  
@@ -757,12 +780,6 @@ struct SortingThread : public MyThread {
   float fps_;
   float max_fps_;
 };
-inline void usage_video(const char* progname) {
-  std::cout << "usage: " << progname << "      -t <num_of_threads>\n"
-            << "      <video file name>\n"
-            << std::endl;
-  return;
-}
 
 
 }// namespace ai
@@ -882,3 +899,4 @@ static cv::Mat process_result(cv::Mat& image,
 
   return img;
 }
+
