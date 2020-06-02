@@ -48,11 +48,33 @@ For docker installation with nVidia GPU support, please refer to following link:
 
 ### Get Vitis AI Git Repository
 
-Go to your working directory, say ~/workapce, then use following command to get the Vitis AI repository.
+Go to your working directory, say ~/workspace, then use following command to get the Vitis AI repository.
 ~~~
 git clone https://github.com/Xilinx/Vitis-AI.git
 ~~~
+After that, you will get the Vitis AI directory *~/workspace/Vitis-AI*.
 
 ### Prepare Docker
 
+There are two docker available for user to choose: CPU docker is for users without a nVidia graphics card; GPU docker is for those have one. The CPU docker can be pulled [Docker Hub](https://hub.docker.com/r/xilinx/vitis-ai/tags) or you can build it with the provided Dockerfile. For GPU docker, you have to build it by yourself with the provided Dockerfile.
 
+#### CPU Docker
+To get the CPU docker from Docker Hub, use following command:
+~~~
+docker pull xilinx/vitis-ai:latest
+~~~
+
+To build it by yourself, use following comamnd:
+~~~
+~/workspace/Vitis-AI/docker/docker_build_cpu.sh
+~~~
+
+In either way, you could finally get the docker image *vitis-ai:latest* settled on your host.
+
+#### GPU Docker
+You have to build the docker using following comamnd:
+~~~
+~/workspace/Vitis-AI/docker/docker_build_gpu.sh
+~~~
+
+After that, you could get the docker image *vitis-ai-gpu:latest* on your host.
