@@ -23,3 +23,36 @@ Please visit <https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html> 
 Vitis AI is released as [GitHub repository](https://github.com/Xilinx/Vitis-AI) and Docker.
 
 Follow the instructions below to setup the Vitis AI environment step by step.
+
+### Host Requirement
+
+Please use x86 processor based Ubuntu or CentOS as the host operating system. If you have a nVidia graphics card with CUDA support, it will be very helpful to reduce the running time.
+
+Git package is needed at the host machine. For Ubuntu, use following command to install:
+~~~
+sudo apt update
+sudo apt install git
+~~~
+
+For CentOS, use following command to install:
+~~~
+sudo yum install git
+~~~
+
+Docker environment is needed at host side. For docker installation without GPU support, please refer to following link:
+* Ubuntu: <https://docs.docker.com/engine/install/ubuntu>
+* CentOS: <https://docs.docker.com/engine/install/centos> 
+
+For docker installation with nVidia GPU support, please refer to following link:
+* Ubuntu and CentOS: <https://github.com/NVIDIA/nvidia-docker>
+
+### Get Vitis AI Git Repository
+
+Go to your working directory, say ~/workapce, then use following command to get the Vitis AI repository.
+~~~
+git clone https://github.com/Xilinx/Vitis-AI.git
+~~~
+
+### Prepare Docker
+
+
