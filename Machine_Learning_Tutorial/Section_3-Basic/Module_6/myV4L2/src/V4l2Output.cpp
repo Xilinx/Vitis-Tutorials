@@ -1,9 +1,9 @@
 #include <string.h>
 #include <linux/videodev2.h>
 #include <glog/logging.h>
-#include "V4l2Output.h"
-#include "V4l2MmapDevice.h"
-#include "V4l2ReadWriteDevice.h"
+#include "V4l2Output.hpp"
+#include "V4l2MmapDevice.hpp"
+#include "V4l2ReadWriteDevice.hpp"
 
 // -----------------------------------------
 //    create video output interface
