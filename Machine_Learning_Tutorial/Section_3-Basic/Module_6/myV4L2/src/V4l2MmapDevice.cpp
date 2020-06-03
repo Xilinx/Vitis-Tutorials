@@ -10,7 +10,7 @@
 
 // project
 #include <glog/logging.h>
-#include "V4l2MmapDevice.h"
+#include "V4l2MmapDevice.hpp"
 
 V4l2MmapDevice::V4l2MmapDevice(const V4L2DeviceParameters & params, v4l2_buf_type deviceType) : V4l2Device(params, deviceType), n_buffers(0) 
 {
