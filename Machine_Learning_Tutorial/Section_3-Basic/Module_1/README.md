@@ -28,7 +28,7 @@
     <p align="left">
     <img width="600" height="308" src="images/IP.png">
     </p>
-  * Now the board could be operated by using SSH.
+  * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_2) for next step. 
   <p align="left">
   <img width="720" height="660" src="images/ZCU104.png">
   </p>
