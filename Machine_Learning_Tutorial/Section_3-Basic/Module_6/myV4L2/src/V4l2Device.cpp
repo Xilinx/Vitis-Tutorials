@@ -9,7 +9,7 @@
 
 #include <glog/logging.h>
 
-#include "V4l2Device.h"
+#include "V4l2Device.hpp"
 
 std::string fourcc(unsigned int format)
 {
