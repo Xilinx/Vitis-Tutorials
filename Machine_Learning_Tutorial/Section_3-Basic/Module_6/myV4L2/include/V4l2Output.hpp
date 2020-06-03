@@ -1,7 +1,7 @@
 #ifndef V4L2_OUTPUT
 #define V4L2_OUTPUT
 
-#include "V4l2Access.h"
+#include "V4l2Access.hpp"
 
 // ---------------------------------
 // V4L2 Output
@@ -23,3 +23,4 @@ class V4l2Output : public V4l2Access
 };
 
 #endif
+
