@@ -1,9 +1,8 @@
 #include <linux/videodev2.h>
-#include <V4l2Capture.h>
 #include <glog/logging.h>
-#include "V4l2Capture.h"
-#include "V4l2MmapDevice.h"
-#include "V4l2ReadWriteDevice.h"
+#include "V4l2Capture.hpp"
+#include "V4l2MmapDevice.hpp"
+#include "V4l2ReadWriteDevice.hpp"
 #include "opencv2/opencv.hpp"
 
 // -----------------------------------------
@@ -78,6 +77,39 @@ size_t V4l2Capture::read(char* buffer, size_t bufferSize)
     return m_device->readInternal(buffer, bufferSize);
 }
 
+int V4l2Capture::read_images(std::vector<cv::Mat>& readImage)
+{
+    //clear cache
+    if(!readImage.empty()){
+        readImage.clear();
+    }
+    char buffer[this->getBufferSize()];
+    int rsize = this->read(buffer, sizeof(buffer));
+    if (rsize == -1)
+    {
+        return -1;
+    }
+    else
+    {
+     
+        if(m_device->getFormat() == V4L2_PIX_FMT_UYVY){
+            cv::Mat v4l2Mat = cv::Mat( m_device->getHeight(),m_device->getWidth(), CV_8UC2, (void*)buffer);
+            cv::Mat src,dst;
+            cv::cvtColor(v4l2Mat, src, cv::COLOR_YUV2BGR_UYVY);
+            readImage.reserve(2);
+            auto size=cv::Size(640,360);
+            readImage.emplace_back(src);
+            cv::resize(src, dst, size);
+            readImage.emplace_back(dst);
+
+        }
+        else{
+            LOG(FATAL)<<"mismatch format found\n";
+        }
+        return 0;
+    }
+
+}
 int V4l2Capture::read(cv::Mat &readImage)
 {
     //clear cache
@@ -126,7 +158,12 @@ int V4l2Capture::read(cv::Mat &readImage)
          * */
         if(m_device->getFormat() == V4L2_PIX_FMT_UYVY){
             cv::Mat v4l2Mat = cv::Mat( m_device->getHeight(),m_device->getWidth(), CV_8UC2, (void*)buffer);
-            cv::cvtColor(v4l2Mat,readImage,cv::COLOR_YUV2BGR_UYVY);
+            cv::Mat dstimage;
+            cv::cvtColor(v4l2Mat, dstimage, cv::COLOR_YUV2BGR_UYVY);
+            auto size=cv::Size(640,360);
+            
+            cv::resize(dstimage, readImage, size);
+
         }else if(m_device->getFormat() == V4L2_PIX_FMT_MJPEG){
             cv::Mat v4l2Mat = cv::Mat( m_device->getHeight(),m_device->getWidth(), CV_8UC3, (void*)buffer);
             readImage = cv::imdecode(v4l2Mat, 1);
@@ -145,5 +182,3 @@ int V4l2Capture::read(cv::Mat &readImage)
     }
 
 }
-
-				
