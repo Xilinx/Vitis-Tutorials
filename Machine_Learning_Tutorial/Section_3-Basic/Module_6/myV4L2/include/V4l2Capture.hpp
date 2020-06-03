@@ -2,8 +2,9 @@
 #ifndef V4L2_CAPTURE
 #define V4L2_CAPTURE
 
-#include "V4l2Access.h"
+#include "V4l2Access.hpp"
 #include "opencv2/core/core.hpp"
+#include <vector>
 
 
 // ---------------------------------
@@ -26,6 +27,15 @@ class V4l2Capture : public V4l2Access
 		virtual ~V4l2Capture();
 
         size_t read(char* buffer, size_t bufferSize);
+
+
+        /*
+        *   output the vector of images
+        *
+        */
+       int read_images(std::vector<cv::Mat>& readImage);
+
+
         /**
          * @brief read  read images from device
          * @param readImage put the image into readImage
@@ -49,7 +59,7 @@ class V4l2Capture : public V4l2Access
          * @return
          */
         const char * getBusInfo();
-
+        
 };
 
 
