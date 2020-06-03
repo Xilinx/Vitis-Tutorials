@@ -86,7 +86,7 @@ int V4l2Device::initdevice(const char *dev_name,unsigned int mandatoryCapabiliti
 */
     CHECK_GE(m_fd, 0)<<"Cannot open device:"<< m_params.m_devName<<" "<<strerror(errno);
     /*
-     * 查询video的可输入设备数，和对应的名字
+     * check the number of input devices
      */
     struct v4l2_input input;
 
@@ -94,7 +94,7 @@ int V4l2Device::initdevice(const char *dev_name,unsigned int mandatoryCapabiliti
 
     memset (&input, 0, sizeof (input));
 
-    //首先获得当前输入的 index,注意只是 index，要获得具体的信息，就的调用列举操作
+    //get the device index
     input.index = m_params.m_inputIndex;
     /*
     if (-1 == ioctl(m_fd, VIDIOC_S_INPUT, &input)){
@@ -112,7 +112,7 @@ int V4l2Device::initdevice(const char *dev_name,unsigned int mandatoryCapabiliti
     */
     CHECK_NE(ioctl (m_fd, VIDIOC_G_INPUT, &input.index), -1)<< "get VIDIOC_G_INPUT error ";
 
-    //调用列举操作，获得 input.index 对应的输入的具体信息
+    //get the enumerate info of the specific device number
     /*
     if (-1 == ioctl (m_fd, VIDIOC_ENUMINPUT, &input)) {
      LOG(ERROR) << "Get ”VIDIOC_ENUM_INPUT” error";
@@ -126,9 +126,7 @@ int V4l2Device::initdevice(const char *dev_name,unsigned int mandatoryCapabiliti
     memset (&standard, 0, sizeof (standard)); standard.index = 0;
     
 
-    //列举所有的所支持的 standard，如果 standard.id 与当前 input 的 input.std 有共同的
-    //bit flag，意味着当前的输入支持这个 standard,这样将所有驱动所支持的 standard 列举一个
-    //遍，就可以找到该输入所支持的所有 standard 了。
+  //List all supported standards
 
     while (0 == ioctl (m_fd, VIDIOC_ENUMSTD, &standard)) {
 
@@ -218,12 +216,12 @@ int V4l2Device::checkCapabilities(int fd, unsigned int mandatoryCapabilities)
 
         {
 
-        u8 driver[16]; // 驱动名字
-        u8 card[32]; // 设备名字
-        u8 bus_info[32]; // 设备在系统中的位置
-        u32 version;// 驱动版本号
-        u32 capabilities;// 设备支持的操作
-        u32 reserved[4]; // 保留字段
+        u8 driver[16]; // driver name
+        u8 card[32]; // device name
+        u8 bus_info[32]; // device bus info
+        u32 version;//driver version
+        u32 capabilities;// suppoted operation
+        u32 reserved[4]; // reserve 
         };
     */
 	memset(&(cap), 0, sizeof(cap));
