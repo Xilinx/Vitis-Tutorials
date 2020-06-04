@@ -34,4 +34,4 @@
    <p align="left">
    <img src="images/demo_multi_threads.png">
    </p>
-   Please follow the instruction on [Module 4](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_4) for next step. 
+   Please follow the instruction on [Module_4](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_4) for next step. 
