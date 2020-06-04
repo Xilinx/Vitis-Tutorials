@@ -1,17 +1,17 @@
 3.2 Setting cross-compilation environment
 -----------------------
-Before we move to the board environment, some work need to be operated on the host side.
-* Download the [sdk.sh](https://www.xilinx.com/bin/public/openDownload?filename=sdk.sh) on host
-* Install the cross-compilation system environment, follow the prompts to install. 
+Before we move to the board environment, some work needs to be done on the host side.
+* Download the [sdk.sh](https://www.xilinx.com/bin/public/openDownload?filename=sdk.sh) script on the host. 
+* Run the script to install the cross-compilation system dependency and sysroot.
    ```
    $./sdk.sh
    ```
-  Note that the read-write permissions is required for the installation path. The installation will take around 10mins.
-* When the installation completes, follow the prompts and execute the following command.
+  Follow the prompts to install, note that the read-write permissions is required for the installation path. The installation will take around 10mins. By default it will be installed on the directory of ``~/petalinux_sdk``, which user could modify to other location if prefer to.
+* When the installation completes, follow the prompts and execute the following command to install the cross-compilation environment on X86 server.
    ```
    $source [SDK_INSTALLATION_PATH]/environment-setup-aarch64-xilinx-linux
    ```
-  Note that the command need to be re-executed each time when a new terminal interface open up.
+  Note that the command needs to be re-executed each time when a new terminal interface is opened.
 * Download the Vitis AI denpendencies [vitis_ai_2019.2-r1.1.0.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_2019.2-r1.1.0.tar.gz) and extract it to the sysroot.
    ```
    $tar -xzvf vitis_ai_2019.2-r1.1.0.tar.gz -C ~/petalinux_sdk/sysroots/aarch64-xilinx-linux
@@ -33,12 +33,12 @@ Before we move to the board environment, some work need to be operated on the ho
 		$make && make install
 		$make package
 		```
-* Cross compile the samples in the AI Library, taking refinedet as an example.
+* Cross-compile the samples in the AI Library, taking refinedet as an example.
     ```
     $cd ~/Vitis-AI/Vitis-AI-Library/overview/samples/refinedet
     $bash -x build.sh
     ```
-  You will find four execuable files generated after compilation.
+  You will find four execuable files generated after compilation. Please follow the instruction on [Module 3](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_3) for next step. 
   <p align="left">
   <img width="720" height="158" src="images/cross-compile.png">
   </p>
