@@ -1,43 +1,61 @@
-# Section_3-Advanced
-```
- * Copyright 2019 Xilinx Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ```
- ---
-## Important:
--  ./image_input_refinedet
--  ./usb_input_multi_threads_refinedet_drm
--  ./usb_input_multi_threas_refinedet
-**model name** :    refinedet_pruned_0_8
+# Section_3-Module_6
+
+
+***Note***: You must install the Vitis AI v1.1 package before you compile and run the application.
+This example suite, targeting the Vitis AI Library and Vitis acceleration kernels, illustrates how to use Vitis AI Library to run the neural network on DPU, and how to use the HLS kernel to accelerate the app.
+
+Some system level functions:
+- working with DRM on ZynqMP
+    -Using the DRM to display
+
+- V4L2 initialization and control
+    - Streaming video capture from V4L2, such as USB camera.
+
+
+## Program Prerequiste
+This design targets ZCU104 Vitis platform. About how to prepare the develop environmet you can refer to
+[quick start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge)
+
+## Setting up the software build environment
 ---
-## 1 compile
 
-execute the following command:
+- To setup the software environment, first to install the my_V4L2 libs and headers.
 
-        sh build.sh
-
-## 2 run the executable file.
-```    
-    drm mode :  /etc/init.d/weston stop; ./usb_input_multi_threads_refinedet_drm refinedet_pruned_0_8 0 -t 3
-    local mode: ./usb_input_multi_threads_refinedet refinedet_pruned_0_8 0 -t 3
-   
-    sample : ./image_input_refinedet /usr/share/vitis_ai_library/models/refinedet_pruned_0_8/
-    output : 
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-I0517 21:39:49.318879 27477 image_input_refinedet.cpp:150] RESULT2:     115     94      480     357     0.980669
-I0517 21:39:49.319383 27477 image_input_refinedet.cpp:150] RESULT2:     10      119     206     278     0.961984
-I0517 21:39:49.319458 27477 image_input_refinedet.cpp:150] RESULT2:     452     77      478     219     0.915951
-I0517 21:39:49.319499 27477 image_input_refinedet.cpp:150] RESULT2:     0       110     53      208     0.915951
 ```
+cd ${MODULE_6}/V4L2/
+mkdir build
+cd build
+cmake ..
+make
+make install
+```
+
+- Test the sample to check whether the my_v4l2s lirary can work. After the test example works correctly you will find two JPEG file generated under your execute directory.
+```
+./test
+```
+
+## Building the main appliction (usb_input_multi_threads_refinedet)
+- Build the application
+
+```
+cd ${MODULE_6}/app/
+sh build.sh
+
+```
+- before run the application you need to run the power patch command on board.
+```
+irps5401
+```
+we have two applications the difference is pre-processing part. for usb_input_multi_threads_refinedet_drm is using ARM to do the color convert and resize. The other one is using the HLS kernel to accelerate the pre-processing.
+
+``` 
+- DRM mode with ARM pre-processing:
+  /etc/init.d/weston stop; 
+  ./usb_input_multi_threads_refinedet_drm refinedet_pruned_0_8 0 -t 3
+
+- DRM mode with HLS kernel pre-processing
+ /etc/init.d/weston stop;
+ ./usb_input_multi_threads_refinedet_hls_drm refinedet_pruned_0_8 0 -t 3
    
+```
