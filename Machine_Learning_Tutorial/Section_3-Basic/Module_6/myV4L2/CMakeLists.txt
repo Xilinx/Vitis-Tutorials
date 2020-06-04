@@ -49,3 +49,4 @@ install(TARGETS my_v4l2s
 install(FILES include/V4l2Access.hpp  include/V4l2Capture.hpp include/V4l2ReadWriteDevice.hpp include/V4l2Device.hpp include/V4l2MmapDevice.hpp include/V4l2Output.hpp 
     DESTINATION /usr/include
 )
+install(FILES include/dpdrm.hpp DESTINATION /usr/include/vitis/ai)
