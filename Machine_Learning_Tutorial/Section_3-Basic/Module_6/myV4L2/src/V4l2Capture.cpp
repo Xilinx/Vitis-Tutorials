@@ -97,7 +97,7 @@ int V4l2Capture::read_images(std::vector<cv::Mat>& readImage)
             cv::Mat src,dst;
             cv::cvtColor(v4l2Mat, src, cv::COLOR_YUV2BGR_UYVY);
             readImage.reserve(2);
-            auto size=cv::Size(640,360);
+            auto size=cv::Size(480,360);
             readImage.emplace_back(src);
             cv::resize(src, dst, size);
             readImage.emplace_back(dst);
