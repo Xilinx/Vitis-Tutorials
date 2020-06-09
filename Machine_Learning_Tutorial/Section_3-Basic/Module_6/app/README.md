@@ -30,7 +30,7 @@ The file directory of this demo is as follows
 
 
 
-- As the solutions picture show, We provide three APIs, the top-level API is the VITIS AI LIBRARY
+- As the solutions picture show, We provide three levels of APIs, the top-level API is the VITIS AI LIBRARY
 The middle API is DPUTASK API and the bottom API is VITIS AI RUNTIME.  
 - The green modules in the diagram indicate that they are encapsulated in the API. 
 
