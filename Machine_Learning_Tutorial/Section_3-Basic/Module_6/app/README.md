@@ -27,7 +27,7 @@
 
 dataflow:
 
-![data_flow](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/blob/master/Machine_Learning_Tutorial/Section_3-Basic/Module_6/app/in_depth_demo_data_flow.jpg)
+![data_flow](images/in_depth_demo_data_flow.jpg)
 
 
 - Check the device capability
