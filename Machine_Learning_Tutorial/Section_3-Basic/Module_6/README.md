@@ -56,7 +56,7 @@ irps5401
 ```
 - DESCRIPTION 
 
-refinedet_pruned_0_8: The model used;
-0                   :  Camera input;
--t 3                :  thread number 3;
+    - refinedet_pruned_0_8: The model used;
+    - 0                   :  Camera input;
+    - -t 3                :  thread number 3;
 
