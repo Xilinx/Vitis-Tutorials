@@ -43,19 +43,18 @@ cd ${MODULE_6}/app/
 sh build.sh
 
 ```
-- before run the application you need to run the power patch command on board.
+- Before run the application you need to run the power patch command on board.
 ```
 irps5401
 ```
-we have two applications the difference is pre-processing part. for usb_input_multi_threads_refinedet_drm is using ARM to do the color convert and resize. The other one is using the HLS kernel to accelerate the pre-processing.
+
 
 ``` 
 - DRM mode with ARM pre-processing:
-  /etc/init.d/weston stop; 
+   /etc/init.d/weston stop; 
   ./usb_input_multi_threads_refinedet_drm refinedet_pruned_0_8 0 -t 3
+  
+refinedet_pruned_0_8: The model used
+0: Camera input
+-t 3: thread number 3
 
-- DRM mode with HLS kernel pre-processing
- /etc/init.d/weston stop;
- ./usb_input_multi_threads_refinedet_hls_drm refinedet_pruned_0_8 0 -t 3
-   
-```
