@@ -48,7 +48,7 @@ sh build.sh
 irps5401
 ```
 
-
+- Run the app(./usb_input_multi_threads_refinedet_drm)
 ``` 
 - DRM mode with ARM pre-processing:
    /etc/init.d/weston stop; 
