@@ -7,7 +7,7 @@ This solver is included as part the official Vitis accelerated libraries, here i
 
 For our purpose, we will star with a straighforward description implemented in C++.
 
-The souce code can be found here: ./src/reference.cpp
+The source code can be found here: ./src/reference.cpp
 It can be run like so at the command line: g++ ....
 
 Open the source code and get familiar with the algorithm.
