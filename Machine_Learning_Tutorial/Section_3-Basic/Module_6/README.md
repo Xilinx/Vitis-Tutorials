@@ -50,11 +50,12 @@ irps5401
 
 - Run the app(./usb_input_multi_threads_refinedet_drm)
 ``` 
-- DRM mode with ARM pre-processing:
+
    /etc/init.d/weston stop; 
   ./usb_input_multi_threads_refinedet_drm refinedet_pruned_0_8 0 -t 3
-  
-refinedet_pruned_0_8: The model used
-0: Camera input
--t 3: thread number 3
+```
+- DESCRIPTION 
+refinedet_pruned_0_8: The model used;
+0                   :  Camera input;
+-t 3                :  thread number 3;
 
