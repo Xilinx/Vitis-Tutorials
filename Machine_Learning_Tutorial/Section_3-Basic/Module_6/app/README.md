@@ -26,11 +26,11 @@ The file directory of this demo is as follows
 ## Solution select
 
 
-![three solutions](images/Solution_candidate.png)
+![three solutions](imgs/Solution_candidate.png)
 
 
 
-- As the solutions picture show, We provide three levels of APIs, the top-level API is the VITIS AI LIBRARY
+- As the solutions picture show, We provide three APIs, the top-level API is the VITIS AI LIBRARY
 The middle API is DPUTASK API and the bottom API is VITIS AI RUNTIME.  
 - The green modules in the diagram indicate that they are encapsulated in the API. 
 
@@ -43,13 +43,12 @@ The middle API is DPUTASK API and the bottom API is VITIS AI RUNTIME.
 
 ## App Pipeline
 The mean/scale/run DPU task operation on the refindet algorithm model used in this case is encapsulated in the DpuFilter class.
-When all threads are running, DecodeThread calls the v4l2 library to decode and put the The raw data in FrameInfo's queue and DpuThread will consume it from the queue. When a queue is empty, DPUTHREAD will stop the If the flag is set to true, all threads are stopped. FrameInfo is passed to SortThread for sorting, and when the sort is complete, the FrameInfo is sent to the DRM's framebuffer in GuiThread, completing the entire Process.
-
+When all threads are running, DecodeThread calls the v4l2 library to decode and put the The raw data into FrameInfo's queue. DpuThread will consume data from the queue. When the queue is empty for a specific duration, DpuThread sets the run flag to stop and all The threads are all stopped. The FrameInfo is passed to SortThread for sorting, and when the sorting is complete, the FrameInfo is sent to DRM's framebuffer in GuiThread, completing the The whole Process.
 
 
 dataflow:
 
-![data_flow](images/in_depth_demo_data_flow.jpg)
+![data_flow](imgs/in_depth_demo_data_flow.jpg)
 
 
 - Check the device capability
@@ -61,4 +60,4 @@ dataflow:
 - Gui Thread: displaying the result by using DRM.
 
 ## Accelerate the pre-processing by using the HLS kernel.
-Need to be add
+
