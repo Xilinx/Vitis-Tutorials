@@ -26,7 +26,7 @@ The file directory of this demo is as follows
 ## Solution select
 
 
-![three solutions](imgs/Solution_candidate.png)
+![three solutions](images/Solution_candidate.png)
 
 
 
@@ -48,7 +48,7 @@ When all threads are running, DecodeThread calls the v4l2 library to decode and 
 
 dataflow:
 
-![data_flow](imgs/in_depth_demo_data_flow.jpg)
+![data_flow](images/in_depth_demo_data_flow.jpg)
 
 
 - Check the device capability
