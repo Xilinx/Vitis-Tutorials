@@ -26,7 +26,7 @@ The file directory of this demo is as follows
 ## Solution select
 
 
-![three solutions](imgs/Solution_candidate.png)
+![three solutions](images/Solution_candidate.png)
 
 
 
@@ -45,11 +45,11 @@ The middle API is DPUTASK API and the bottom API is VITIS AI RUNTIME.
 The mean/scale/run DPU task operation on the refindet algorithm model used in this case is encapsulated in the DpuFilter class.
 When all threads are running, DecodeThread calls the v4l2 library to decode and put the The raw data in FrameInfo's queue and DpuThread will consume it from the queue. When a queue is empty, DPUTHREAD will stop the If the flag is set to true, all threads are stopped. FrameInfo is passed to SortThread for sorting, and when the sort is complete, the FrameInfo is sent to the DRM's framebuffer in GuiThread, completing the entire Process.
 
-Translated with www.DeepL.com/Translator (free version)
+
 
 dataflow:
 
-![data_flow](imgs/in_depth_demo_data_flow.jpg)
+![data_flow](images/in_depth_demo_data_flow.jpg)
 
 
 - Check the device capability
