@@ -44,7 +44,7 @@ dataflow:
 ## Solution select
 ---
 
-![three solutions](imgs/Solution_candidate.png)
+![solutions](images/Solution_candidate.png)
 
 
 
