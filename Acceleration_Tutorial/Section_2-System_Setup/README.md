@@ -1,5 +1,5 @@
-In order to move to the intresting part of the tuturial, we'll need to setup the environments and tool.
-We'll setup Vitis and verify that the system has access to a U50 card.
+In order to move to the interesting part of the tutorial, we'll need to setup the environment and the tools.
+We'll setup Vitis, then verify that the system has access to an Alveo U50 acceleration card.
 
 To setup Vitis:
 
