@@ -1,6 +1,6 @@
 <table width="100%">
   <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ In-Depth Development Flow Tutorials</h1>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ - Section 1 - Workflow</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -14,7 +14,7 @@ This tutorial is based on a C++ kernel that we'll optimize for highest throughpu
 The algorithm to accelerate is a common linear algebra solver, the decomposition of a Hermitian, positive-definite matrix into the product of a lower triangular matrix and its conjugate transpose.  For this purpose we will use the Cholesky decomposition or Cholesky factorization (pronounced /ʃo-LESS-key/).  This solver is useful for several numerical problems, in particular for Monte Carlo simulations.
 This solver is included as part the official Vitis accelerated libraries, here is a link to its documentation: https://xilinx.github.io/Vitis_Libraries/solver/guide_L2/L2_api.html#potrf
 
-For our purpose, we will star with a straighforward description implemented in C++.
+For our purpose, we will start with a straighforward description implemented in C++.
 
 The source code can be found here: ./src/reference.cpp
 It can be run like so at the command line: g++ ....
