@@ -8,7 +8,7 @@
 
 This tutorial is divided in 3 sections.
 * **Section 1**:
-  + A walkthrough of the algorithm chosen for the tutoria: the Cholesky decomposition 
+  + A walkthrough of the algorithm chosen for the tutorial: the Cholesky decomposition 
   + Compile and run the non-accelerated version of the algorithm on the CPU
   + Evaluate the performance
 * **Section 2**:
