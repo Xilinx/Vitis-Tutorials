@@ -7,14 +7,14 @@
 </table>
 
 This tutorial is divided in 3 sections.
-* Section 1: Setting up the design to provide a baseline performance evaluation
-  + Understand the OpenCL APIs that help connect host code to the kernel
-  + Verify the results through both sw_emu and hw_emu
-  + Evaluate the performance with Vitis Analyzer
-* Section 2: Apply the PIPELINE to improve the kernel throughput
-  + Using the module 1 results as a starting point to review the kernel performance in Vitis HLS
-  + Run the sw_emu step and use the hw_emu results to quantify the improvement 
-* Section 3: Add the task parallelism pragma to further improve the kernel
-  + Reuse the results from module 2 to re-arrange the code to use the DATAFLOW optimization
-  + Evaluate the performance with Vitis Analyzer
-  + Create the binary (xclbin) to program the card and perform actual measurements
+* Section 1:
+  + A walkthrough of the algorithm chosen for the tutorial, the Cholesky decomposition 
+  + Compile and run the CPU, non-accelerated version of the algorithm
+  + Evaluate the performance
+* Section 2:
+  + Setup the Vitis development tools
+  + Detect and check the card installed on the server 
+* Section 3:
+  + Re-organize the code to extract the algorithm in its own unit (the kernel)
+  + Review the APIs needed to enable communication between the host and the kernel
+  + Apply optimizations to the kernel to improve its throughput
