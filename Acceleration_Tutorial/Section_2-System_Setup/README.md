@@ -15,4 +15,4 @@ To verify the setup, do this:
 
 To check Alveo cards on your system:
 
-Run a test on the card.
+Run a test on the card:
