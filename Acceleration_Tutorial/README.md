@@ -7,14 +7,15 @@
 </table>
 
 This tutorial is divided in 3 sections.
-* Section 1:
-  + A walkthrough of the algorithm chosen for the tutorial, the Cholesky decomposition 
-  + Compile and run the CPU, non-accelerated version of the algorithm
+* **Section 1**:
+  + A walkthrough of the algorithm chosen for the tutoria: the Cholesky decomposition 
+  + Compile and run the non-accelerated version of the algorithm on the CPU
   + Evaluate the performance
-* Section 2:
+* **Section 2**:
   + Setup the Vitis development tools
   + Detect and check the card installed on the server 
-* Section 3:
+* **Section 3**:
   + Re-organize the code to extract the algorithm in its own unit (the kernel)
   + Review the APIs needed to enable communication between the host and the kernel
   + Apply optimizations to the kernel to improve its throughput
+  + Program the Alveo card with the optimized accelerator
