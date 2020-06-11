@@ -3,5 +3,4 @@ In this module, we perform a first U50 card implementation.  The kernel code is 
 * Run sw_emu the first level of emulation
 * Run hw_emu the next level of emulation using the hardware description of the kernel to simulate the design
 * Run vitis_analyzer
-* Compie hardware to create xclbin
-*
+* Compile hardware to create xclbin
