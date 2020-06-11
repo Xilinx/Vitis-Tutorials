@@ -6,15 +6,15 @@
  </tr>
 </table>
 
-This section is divided in 3 modules.
-* Module 1: Setting up the design to provide a baseline performance evaluation
+This section is divided in 3 sections.
+* Section 1: Setting up the design to provide a baseline performance evaluation
   + Understand the OpenCL APIs that help connect host code to the kernel
   + Verify the results through both sw_emu and hw_emu
   + Evaluate the performance with Vitis Analyzer
-* Module 2: Apply the PIPELINE to improve the kernel throughput
+* Section 2: Apply the PIPELINE to improve the kernel throughput
   + Using the module 1 results as a starting point to review the kernel performance in Vitis HLS
   + Run the sw_emu step and use the hw_emu results to quantify the improvement 
-* Module 3: Add the task parallelism pragma to further improve the kernel
+* Section 3: Add the task parallelism pragma to further improve the kernel
   + Reuse the results from module 2 to re-arrange the code to use the DATAFLOW optimization
   + Evaluate the performance with Vitis Analyzer
   + Create the binary (xclbin) to program the card and perform actual measurements
