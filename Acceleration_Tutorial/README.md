@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-This section is divided in 3 sections.
+This tutorial is divided in 3 sections.
 * Section 1: Setting up the design to provide a baseline performance evaluation
   + Understand the OpenCL APIs that help connect host code to the kernel
   + Verify the results through both sw_emu and hw_emu
