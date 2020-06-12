@@ -169,7 +169,7 @@ In the network package, both float model and quantized model are provided togeth
 
 Go to folder `cf_refinedet_coco_480_360_0.96_5.08G/code/test` and run the network on single image with command `python demo.py`. The output image will be stored in `output/res_output.jpg`. If you would like to use different image, please modify the image path in the `demo.py`.
 
-![Inference result](/Machine_Learning_Tutorial/Section_3-Basic/Module_5/README.md)
+![Inference result](/Machine_Learning_Tutorial/Section_3-Basic/Module_5/res_output.jpg)
 
 ### Test mAP 
 
