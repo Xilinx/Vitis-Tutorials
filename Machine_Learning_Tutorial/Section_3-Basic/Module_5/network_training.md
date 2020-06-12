@@ -383,4 +383,4 @@ I0602 21:29:55.022497 17132 solver.cpp:901]     Test net output #0: detection_ev
 
 The well trained network model (`refinedet_baseline.caffemodel`) is provided here in oder to save time. The baseline model could be used to test mAP and deploy onboard by Vitis AI toolchain. 
 
-Continue toolchain content at the [main page](/Section_3-Basic/Module_5/README.md/#evaluate-model).
+Continue toolchain content at the [main page](/Machine_Learning_Tutorial/Section_3-Basic/Module_5/README.md/#evaluate-model).
