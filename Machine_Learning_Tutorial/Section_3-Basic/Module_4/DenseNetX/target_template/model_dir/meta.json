@@ -1,0 +1,5 @@
+{
+    "lib": "libvart-dpu-runner.so",
+    "filename": "./dpu_densenetx_0.elf",
+    "kernel": [ "densenetx_0" ]
+}
