@@ -17,7 +17,7 @@
 #include "cholesky_kernel.hpp"
 
 #define MAXN 512
-#define NCU 4
+#define NCU 16
 
 extern "C" void cholesky_kernel(int diagSize, double* matrixA) {
 
