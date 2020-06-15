@@ -15,11 +15,6 @@ The algorithm to accelerate is a common linear algebra solver, the decomposition
 
 ![Cholesky description](../docs/images/description.png)
 
-<img src="../docs/images/description.png"
-     alt="Description"
-     title="Cholesky"
-     width="500" />
-
 This solver is included as part the official Vitis accelerated libraries, here is a link to its documentation: https://xilinx.github.io/Vitis_Libraries/solver/guide_L2/L2_api.html#potrf
 
 For our purpose, we will start with a straightforward description implemented in C++.
