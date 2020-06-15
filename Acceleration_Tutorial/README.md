@@ -19,3 +19,14 @@ This tutorial is divided in 3 sections.
   + Review the APIs needed to enable communication between the host and the kernel
   + Apply optimizations to the kernel to improve its throughput
   + Program the Alveo card with the optimized accelerator
+  + **Module 1:**
+    * Get a performance baseline
+    + **Module 2**
+    * Get a performance baseline
+    + **Module 3**
+    * Get a performance baseline
+    + **Module 4**
+    * Get a performance baseline
+    + **Module 5**
+    * Get a performance baseline
+ 
