@@ -17,16 +17,14 @@ This tutorial is divided in 3 sections.
 * **Section 3**:
   + Re-organize the code to extract the algorithm in its own unit (the kernel)
   + Review the APIs needed to enable communication between the host and the kernel
-  + Apply optimizations to the kernel to improve its throughput
-  + Program the Alveo card with the optimized accelerator
+  + Apply optimizations to the kernel across several modules to improve its throughput and program the Alveo card with the optimized accelerator to verify the performance
   + **Module 1:**
     * Get a performance baseline
-    + **Module 2**
-    * Get a performance baseline
-    + **Module 3**
-    * Get a performance baseline
-    + **Module 4**
-    * Get a performance baseline
-    + **Module 5**
-    * Get a performance baseline
- 
+  + **Module 2**
+    * Boost throughput with PIPELINE
+  + **Module 3**
+    * Remove dependencies to improve performance
+  + **Module 4**
+    * Flatten loop to improve design
+  + **Module 5**
+    * Apply the task parallelism optimization
