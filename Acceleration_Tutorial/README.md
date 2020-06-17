@@ -18,13 +18,13 @@ This tutorial is divided in 3 sections.
   + Re-organize the code to extract the algorithm in its own unit (the kernel)
   + Review the APIs needed to enable communication between the host and the kernel
   + Apply optimizations to the kernel across several modules to improve its throughput and program the Alveo card with the optimized accelerator to verify the performance
-  + [**Module 1:**](./docs)
+  + [**Module 1:**](./docs/module1_baseline)
     * Get a performance baseline that can be used as a reference point
-  + [**Module 2**](./docs)
+  + [**Module 2**](./docs/module2_pipeline)
     * Boost throughput with the HLS PIPELINE pragma
-  + [**Module 3**](.docs)
+  + [**Module 3**](.docs/module3_dependency_removal)
     * Remove dependencies on memory accesses to improve performance
-  + [**Module 4**](.docs)
+  + [**Module 4**](.docs/module4_flatten_loop)
     * Flatten loop to improve design
-  + [**Module 5**](./docs)
+  + [**Module 5**](./docs/module5_dataflow)
     * Apply the task parallelism optimization pragma
