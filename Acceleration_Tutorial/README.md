@@ -7,7 +7,7 @@
 </table>
 
 This tutorial is divided in 3 sections.
-* **Section 1** (a few mins):
+* **Section 1** (~10 mins):
   + A walkthrough of the algorithm chosen for the tutorial: the Cholesky decomposition 
   + Compile and run the non-accelerated version of the algorithm on the CPU
   + Evaluate the performance
@@ -19,7 +19,7 @@ This tutorial is divided in 3 sections.
   + Review the APIs needed to enable communication between the host and the kernel
   + Apply optimizations to the kernel across several modules to improve its throughput and program the Alveo card with the optimized accelerator to verify the performance
   + **Module 1:**
-    * Get a performance baseline that can be used as a refenrence point
+    * Get a performance baseline that can be used as a reference point
   + **Module 2**
     * Boost throughput with the HLS PIPELINE pragma
   + **Module 3**
