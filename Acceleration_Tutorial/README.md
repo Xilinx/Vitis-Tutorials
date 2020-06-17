@@ -9,8 +9,8 @@
 This tutorial is divided in 3 sections.
 * [**Section 1**](./Section_1-Workflows) (~10 mins):
   + A walkthrough of the algorithm chosen for the tutorial: the Cholesky decomposition 
-  + Compile and run the non-accelerated :snail: version of the algorithm on the CPU :cpu:
-  + Evaluate the performance
+  + Compile and run the non-accelerated :snail: version of the algorithm on the CPU :computer:
+  + Evaluate the performance :think:
 * [**Section 2**](./Section_2-System_Setup) (a couple of mins):
   + Setup the Vitis development tools
   + Detect and check the card installed on the server 
