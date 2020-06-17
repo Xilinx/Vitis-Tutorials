@@ -15,9 +15,9 @@ This tutorial is divided in 3 sections.
   + Setup the Vitis development tools
   + Detect and check the card installed on the server 
 * [**Section 3**](./Section_3-Algorithm_Acceleration) (a few hours):
-  + Re-organize the code to extract the algorithm in its own unit (the kernel)
-  + Review the APIs needed to enable communication between the host and the kernel
-  + Apply optimizations to the kernel across several modules to improve its throughput and program the Alveo card with the optimized accelerator to verify the performance
+  + Re-organize the code to create both a host and a kernel program
+  + Review the APIs needed to bind the host and the kernel
+  + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
   + [**Module 1:**](./docs/module1_baseline)
     * Get a performance baseline that can be used as a reference point
   + [**Module 2**](./docs/module2_pipeline)
