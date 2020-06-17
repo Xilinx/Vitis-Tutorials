@@ -91,7 +91,7 @@ $(BUILD_DIR)/$(HOST_EXE): $(HOST_SRC_CPP) $(HOST_SRC_H)
 
 $(BUILD_DIR)/$(XO_NAME).xo: $(KERNEL_SRC_CPP) $(KERNEL_SRC_H)
 	mkdir -p $(BUILD_DIR)
-	v++ $(VPPFLAGS) -c $(KERNEL_SRC_CPP) -o $@
+	v++ $(VPPFLAGS) -c $(KERNEL_SRC_CPP) $(KERNEL_SRC_H) -o $@
 	
 $(BUILD_DIR)/$(XCLBIN): $(BUILD_DIR)/$(XO_NAME).xo
 	mkdir -p $(BUILD_DIR)
@@ -133,4 +133,4 @@ endif
 ## Clean generated files
 
 clean:
-	rm -rf $(BUILD_DIR)/$(XCLBIN) $(BUILD_DIR)/$(HOST_EXE) $(BUILD_DIR)/$(EMCONFIG_FILE) $(BUILD_DIR)/$(XO_NAME).xo $(BUILD_DIR)/*.ltx $(BUILD_DIR)/*_$(TARGET).log $(BUILD_DIR)/_x* $(BUILD_DIR)/*.info $(BUILD_DIR)/cholesky_kernel_$(TARGET)* $(BUILD_DIR)/link $(BUILD_DIR)/reports/cholesky_kernel_$(TARGET)
+	rm -rf $(BUILD_DIR)/$(XCLBIN) $(BUILD_DIR)/$(HOST_EXE) $(BUILD_DIR)/$(EMCONFIG_FILE) $(BUILD_DIR)/*.xo $(BUILD_DIR)/*.ltx $(BUILD_DIR)/*_*.log $(BUILD_DIR)/_x* $(BUILD_DIR)/*.info $(BUILD_DIR)/cholesky_kernel_* $(BUILD_DIR)/link $(BUILD_DIR)/reports/cholesky_kernel_*
