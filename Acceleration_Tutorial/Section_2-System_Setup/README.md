@@ -11,9 +11,9 @@ In order to proceed to the Vitis optimization part of the tutorial, we'll need t
 ## Install Vitis Software Platform
 The [Vitis Unified Software Development Platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. To develop applications, you will need to download and install the Vitis core development kit from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html), Vitis 2020.1 will be used for this tutorial. 
 
-* *Note:* The Vitis core development kit does not need to be installed on the same server as the Alveo Data Center accelerator card. It can be installed on a system without any cards installed if you only need for development flow, but XRT and targat development platform for Alveo card must be installed to work with Vitis. 
+*Note:* The Vitis core development kit does not need to be installed on the same server as the Alveo Data Center accelerator card. It can be installed on a system without any cards installed if you only need for development flow, but XRT and targat development platform for Alveo card must be installed to work with Vitis. 
 
-* **Alternative Choice** 
+### Alternative Solution 
 Alternatively, you can also develop and deploy applications on cloud server such as [Nimbix](https://www.nimbix.net/alveo/), it comes with everything you need to develop your hardware acceleration code and deploy applications to be run on the host server and installed accelerator cards, please follow instructions on Nimbix to setup Vitis environment. 
 
 ## Install Alveo U50 Accelerator card
@@ -21,7 +21,7 @@ For details of Alveo U50 accelerator card we are about to use for this tutorial,
 
 To install Alveo U50 accelerator card on your server, follow the instructions in the *Alveo U50 Data Center Accelerator Card Installation Guide* ([UG1370](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1370-u50-installation.pdf)). It provides the latest hardware and driver software installation procedures including card bring-up and validation, also the steps to deploy hardware accelerated applications using the Alveo U50 card.
 
-* **Alternative Choice** 
+### **Alternative Solution** 
 Alternatively, you can also develop and deploy applications on cloud server such as [Nimbix](https://www.nimbix.net/alveo/), it comes with everything you need to develop your hardware acceleration code and deploy applications to be run on the host server and installed accelerator cards, please follow instructions on Nimbix to setup environment for Alveo U50 card. 
 
 ## Setup Environment to Run Vitis 
