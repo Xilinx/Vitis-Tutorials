@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-This section is divided in 3 modules.
+This section is divided in 5 modules (each module has its own readme with step-by-step instructions).
 * **Module 1**: Setting up the design and establish a performance **baseline**
   + Understand the OpenCL APIs that help connect host program to the kernel
   + Verify the algorithm results through emulation both at the software level (sw_emu) and the hardware level (hw_emu)
