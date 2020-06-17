@@ -74,9 +74,7 @@ int main(int argc, const char* argv[]) {
     int num_runs, dataAM, dataAN, seed;
 
     // Read In paths addresses
-    if (!parser.getCmdOption("-xclbin", xclbin_path)) {
-        std::cout << "INFO:input path is not set!\n";
-    }
+
     if (!parser.getCmdOption("-runs", num_str)) {
         num_runs = 1;
         std::cout << "INFO:number runs is not set!\n";
@@ -106,35 +104,15 @@ int main(int argc, const char* argv[]) {
     dataAM = (dataAM > dataAN) ? dataAN : dataAM;
     dataAN = dataAM;
 
-	//Remove OpenCL commands --- by Joyce
-/*
-    // Platform related operations
-    std::vector<cl::Device> devices = xcl::get_xil_devices();
-    cl::Device device = devices[0];
 
-    // Creating Context and Command Queue for selected Device
-    cl::Context context(device);
-    cl::CommandQueue q(context, device, CL_QUEUE_PROFILING_ENABLE | CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
-    std::string devName = device.getInfo<CL_DEVICE_NAME>();
-    printf("INFO: Found Device=%s\n", devName.c_str());
-
-    cl::Program::Binaries xclBins = xcl::import_binary_file(xclbin_path);
-    devices.resize(1);
-    cl::Program program(context, devices, xclBins);
-    cl::Kernel kernel_potrf_0(program, "kernel_potrf_0");
-    std::cout << "INFO: Kernel has been created" << std::endl;
-*/
     // Output the inputs information
-    std::cout << "INFO: Number of kernel runs: " << num_runs << std::endl;
+    std::cout << "INFO: Number of runs: " << num_runs << std::endl;
     std::cout << "INFO: Matrix Row M: " << dataAM << std::endl;
     std::cout << "INFO: Matrix Col N: " << dataAN << std::endl;
-
-    // Initialization of host buffers
 
     const int MAXN = dataAN, LDA = dataAN;
     int inout_size = MAXN * MAXN;
     double* dataA;
-	//double dataA[dataAN][dataAN];
     dataA = aligned_alloc<double>(inout_size);
 
     // Generate general matrix dataAM x dataAN
@@ -153,63 +131,10 @@ int main(int argc, const char* argv[]) {
     for (int i = 0; i < dataAM; ++i) {
         for (int j = 0; j < dataAN; ++j) {
             dataA[i * LDA + j] = dataE[i][j];
-			//dataA[i][j] = dataE[i][j];   //change dataA to a 2D array by Joyce
         }
     }
 
-	//Remove FPGA related commands -- by Joyce
-/*
-    // DDR Settings
-    std::vector<cl_mem_ext_ptr_t> mext_io(1);
-    mext_io[0].flags = XCL_MEM_DDR_BANK0;
-    mext_io[0].obj = dataA;
-    mext_io[0].param = 0;
-
-    // Create device buffer and map dev buf to host buf
-    std::vector<cl::Buffer> buffer(1);
-
-    buffer[0] = cl::Buffer(context, CL_MEM_EXT_PTR_XILINX | CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE,
-                           sizeof(double) * inout_size, &mext_io[0]);
-
-    // Data transfer from host buffer to device buffer
-    std::vector<std::vector<cl::Event> > kernel_evt(2);
-    kernel_evt[0].resize(1);
-    kernel_evt[1].resize(1);
-
-    std::vector<cl::Memory> ob_io;
-    ob_io.push_back(buffer[0]);
-
-    q.enqueueMigrateMemObjects(ob_io, 0, nullptr, &kernel_evt[0][0]); // 0 : migrate from host to dev
-    q.finish();
-    std::cout << "INFO: Finish data transfer from host to device" << std::endl;
-
-    // Setup kernel
-    kernel_potrf_0.setArg(0, dataAN);
-    kernel_potrf_0.setArg(1, buffer[0]);
-    q.finish();
-    std::cout << "INFO: Finish kernel setup" << std::endl;
-
-    // Variables to measure time
-    struct timeval tstart, tend;
-
-    // Launch kernel and compute kernel execution time
-    gettimeofday(&tstart, 0);
-    for (int i = 0; i < num_runs; ++i) {
-        q.enqueueTask(kernel_potrf_0, nullptr, nullptr);
-    }
-    q.finish();
-    gettimeofday(&tend, 0);
-    std::cout << "INFO: Finish kernel execution" << std::endl;
-    int exec_time = diff(&tend, &tstart);
-    std::cout << "INFO: FPGA execution time of " << num_runs << " runs:" << exec_time << " us\n"
-              << "INFO: Average executiom per run: " << exec_time / num_runs << " us\n";
-
-    // Data transfer from device buffer to host buffer
-    q.enqueueMigrateMemObjects(ob_io, 1, nullptr, nullptr); // 1 : migrate from dev to host
-    q.finish();
-*/
-
-    //Add CPU related code -- by Joyce
+	
 	// Variables to measure time
     struct timeval tstart, tend;
 	
@@ -226,7 +151,6 @@ int main(int argc, const char* argv[]) {
     for (int i = 0; i < dataAM; i++) {
         for (int j = 0; j <= i; j++) {
             errA += (dataA[i * LDA + j] - dataC[i][j]) * (dataA[i * LDA + j] - dataC[i][j]);
-			//errA += (dataA[i][j] - dataC[i][j]) * (dataA[i][j] - dataC[i][j]);  //modified by Joyce
         }
     }
     errA = std::sqrt(errA);
@@ -234,25 +158,6 @@ int main(int argc, const char* argv[]) {
     std::cout << "dataAN = " << dataAN << std::endl;
     std::cout << "dataAM = " << dataAM << std::endl;
 
-    //    std::cout<<"------ dataC ---------"<<std::endl;
-    //    for (int i = 0; i < dataAM; i++) {
-    //        for (int j = 0; j < dataAN; j++) {
-    //            std::cout << dataC[i][j] <<"\t";
-    //        }
-    //        std::cout<<std::endl;
-    //    }
-    //    std::cout<<"------ dataA ---------"<<std::endl;
-    //    for (int i = 0; i < dataAM; i++) {
-    //        for (int j = 0; j < dataAN; j++) {
-    //            if(j <= i){
-    //                std::cout << dataA[i*dataAN+j] <<"\t";
-    //            }else{
-    //                std::cout << 0 <<"\t";
-    //            }
-    //        }
-    //        std::cout<<std::endl;
-    //    }
-    //    std::cout<<"---------------------"<<std::endl;
 
     std::cout << "-------------- " << std::endl;
     if (errA > 0.0001) {
