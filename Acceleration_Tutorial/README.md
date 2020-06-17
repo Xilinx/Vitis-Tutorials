@@ -7,7 +7,7 @@
 </table>
 
 This tutorial is divided in 3 sections.
-* **Section 1** (~10 mins):
+* [**Section 1**](./docs) (~10 mins):
   + A walkthrough of the algorithm chosen for the tutorial: the Cholesky decomposition 
   + Compile and run the non-accelerated version of the algorithm on the CPU
   + Evaluate the performance
