@@ -1,13 +1,11 @@
 Code and files for **module 3**
 
-The DEPENDENCE pragma is used to provide additional information that can overcome loop-carry dependencies and allow loops to be pipelined (or pipelined with lower initiation intervals).
+The DEPENDENCE pragma is used to provide additional information that can overcome loop-carry dependencies and allow loops to be pipelined (or pipelined with lower initiation intervals). These dependencies impact when operations can be scheduled, especially during function and loop pipelining.
 
 The Vitis high-level synthesis tool automatically detects the following dependencies:
 
 + Within loops (loop-independent dependence), or
 + Between different iterations of a loop (loop-carry dependence).
-
-These dependencies impact when operations can be scheduled, especially during function and loop pipelining.
 
 Loop-independent dependence: The same element is accessed in the same loop iteration.
 ```cpp
