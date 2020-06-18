@@ -1,6 +1,10 @@
 # Vitis and Vitis-AI Workflow
 
-There are three types of workflows targeting different persona for Vitis and Vitis AI evaluation and development.
+The Vitis unified software platform enables the development of embedded software and accelerated applications on heterogeneous Xilinx platforms including FPGAs, SoCs, and Versal ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. 
+
+![vitis_stack](images/vitis_stack.png)
+
+Vitis software platform has a layered architecture. It helps engineers to focus on their own target but easy to exchange work results. For example, there are commonly three types of workflows targeting different persona for Vitis and Vitis AI evaluation and development.
 
 | Workflow | Target Persona | Highlights in the Flow |
 |-----------|-----------------|------------------------|
