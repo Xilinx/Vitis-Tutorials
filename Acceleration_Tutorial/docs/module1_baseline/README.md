@@ -26,8 +26,9 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
   
     ## Using **make**
     1. Open a terminal
-    2. Here are the main options:
-       * Default (no options) show the help
+    2. Navigate to ./build
+    3. Run make
+       * Without options, it will show the help
        * sw_emu runs the sw emulation flow
  
 </details>
