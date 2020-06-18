@@ -22,8 +22,7 @@ TIP: This feature is only supported for pipelined functions: it is not supported
     rewind: Optional keyword that enables rewinding, or continuous loop pipelining with no pause between one loop iteration ending and the next iteration starting. Rewinding is effective only if there is one single loop (or a perfect loop nest) inside the top-level function. The code segment before the loop:
         Is considered as initialization.
         Is executed only once in the pipeline.
-        Cannot contain any conditional operations (if-else).
-TIP: This feature is only supported for pipelined loops; it is not supported for pipelined functions.
+        Cannot contain any conditional operations (if-else). This feature is only supported for pipelined loops; it is not supported for pipelined functions.
 
 
 
