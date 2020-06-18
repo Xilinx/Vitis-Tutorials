@@ -24,7 +24,8 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
     7. Next window click "Finish"
     
     ### Setting up the Platform
-    1. Click on the "Problems" tab in the lower window pane of the GUI
+    1. On the center window pane of the GUI click the platform link (blue link xilinx_u50...)
+    2. Navigate to specify the platform accessible on your system
  
 </details>
 
