@@ -29,7 +29,13 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
     1. Open a terminal
     2. Navigate to ./build
     3. Run make
-       * Without options, it will show the help
-       * sw_emu runs the sw emulation flow
- 
+       * make 
+         * Without options, it will show the help
+       * make build TARGET=sw_emu|hw_emu|hw
+         * Builds for software or hardware emulation.  The "hw" options takes longer and runs the full compilation to create a binary file for the card
+       * make run TARGET=sw_emu|hw_emu|hw
+         * Executes for software or hardware emulation with "hw" running the full compilation to create a binary file for the card
+	     * make clean
+	       * delete files to start from a clean context
+         
 </details>
