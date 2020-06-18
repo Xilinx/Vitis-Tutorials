@@ -15,8 +15,8 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
   <summary>Click to expand! (instructions for GUI)</summary>
   
     ### Using Vitis via the **GUI**
-    1. Open a ternimal
-    2. Launch Vitis
+    1. Open a terminal
+    2. Setup and launch Vitis
     3. Import the project
        * Browse to the zip file located under the project directory
  
@@ -27,8 +27,9 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
   
     ## Using **make**
     1. Open a terminal
-    2. Navigate to ./build
-    3. Run make
+    2. Setup Vitis
+    3. Navigate to ./build
+    4. Run make
        * make 
          * Without options, it will show the help
        * make build TARGET=sw_emu|hw_emu|hw
