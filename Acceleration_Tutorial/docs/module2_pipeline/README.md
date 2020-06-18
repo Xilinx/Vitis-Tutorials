@@ -4,39 +4,35 @@ Code and files for **module 2**
 The C code transformation that the high-level synthesis operates is conservative by default.  This affects loops that only work on one element at a time.  As a result, the operators that a loop uses in its body might not be used at each iteration of the loop.
 
 This is where the the PIPELINE pragma comes in, it reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of of the different operations involved in the loop.
-
 A pipelined function or loop can process new inputs every <N> clock cycles, where <N> is the II of the loop or function. The default II for the PIPELINE pragma is 1, which processes a new input every clock cycle. You can also specify the initiation interval through the use of the II option for the pragma.
-
 Pipelining a loop allows the operations of the loop to be implemented in a concurrent manner as shown in the following figure. In the following figure, (A) shows the default sequential operation where there are 3 clock cycles between each input read (II=3), and it requires 8 clock cycles before the last output write is performed.
 
-
 If the Vivado high-level synthesis tool cannot create a design with the specified II, it issues a warning and creates a design with the lowest possible II.
-
 You can then analyze this design with the warning message to determine what steps must be taken to create a design that satisfies the required initiation interval.
 
 Syntax
 Place the pragma in the C source within the body of the function or loop.
 
-#pragma HLS pipeline II=<int> enable_flush rewind
+    #pragma HLS pipeline II=<int> enable_flush rewind
 
 Where:
 
 II= <int>: Specifies the desired initiation interval for the pipeline. The HLS tool tries to meet this request. Based on data dependencies, the actual result might have a larger initiation interval. The default II is 1.
 enable_flush: Optional keyword that implements a pipeline that will flush and empty if the data valid at the input of the pipeline goes inactive.
+
 TIP: This feature is only supported for pipelined functions: it is not supported for pipelined loops.
     rewind: Optional keyword that enables rewinding, or continuous loop pipelining with no pause between one loop iteration ending and the next iteration starting. Rewinding is effective only if there is one single loop (or a perfect loop nest) inside the top-level function. The code segment before the loop:
         Is considered as initialization.
         Is executed only once in the pipeline.
         Cannot contain any conditional operations (if-else).
-    TIP: This feature is only supported for pipelined loops; it is not supported for pipelined functions.
+TIP: This feature is only supported for pipelined loops; it is not supported for pipelined functions.
 
-Example 1
 
-In this example function foo is pipelined with an initiation interval of 1:
+
+In the following example function foo is pipelined with an initiation interval of 1:
 ```cpp
 void foo { a, b, c, d} {
   #pragma HLS pipeline II=1
   ...
 }
 ```
-Note: The default value for II is 1, so II=1 is not required in this example.
