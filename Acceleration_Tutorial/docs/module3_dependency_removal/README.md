@@ -4,19 +4,19 @@ The DEPENDENCE pragma is used to provide additional information that can overcom
 
 The Vivado High-Level Synthesis (HLS) tool automatically detects the following dependencies:
 
-    Within loops (loop-independent dependence), or
-    Between different iterations of a loop (loop-carry dependence).
++ Within loops (loop-independent dependence), or
++ Between different iterations of a loop (loop-carry dependence).
 
 These dependencies impact when operations can be scheduled, especially during function and loop pipelining.
 
-    Loop-independent dependence: The same element is accessed in the same loop iteration.
+Loop-independent dependence: The same element is accessed in the same loop iteration.
 ```cpp
     for (i=0;i<N;i++) {
      A[i]=x;
      y=A[i];
     }
 ```
-    Loop-carry dependence: The same element is accessed in a different loop iteration.
+Loop-carry dependence: The same element is accessed in a different loop iteration.
 ```cpp
     for (i=0;i<N;i++) {
      A[i]=A[i-1]*2;
