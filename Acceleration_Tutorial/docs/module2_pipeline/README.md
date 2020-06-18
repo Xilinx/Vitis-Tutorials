@@ -1,10 +1,9 @@
 Code and files for **module 2**
 
 ## Pipelining for throughput
-The C code high-level synthesis is conservative by default, loops body code is entirely executed at each iteration instead of staggering the execution.  As a result, the operators that a loop uses in its body might not be used at each iteration of the loop.
+The C code high-level synthesis is conservative by default, for example loop body instructions are entirely executed at each iteration instead of a staggered execution.  That latter style of execution is enabled by the PIPELINE pragma, it reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of the different operations.
+A pipelined function or loop can then process new inputs every <N> clock cycles, where <N> is the II of the loop or function. The default II for the PIPELINE pragma is 1, which processes a new input every clock cycle. You can also specify the initiation interval through the use of the II option.
 
-This is where the the PIPELINE pragma comes in, it reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of of the different operations involved in the loop.
-A pipelined function or loop can process new inputs every <N> clock cycles, where <N> is the II of the loop or function. The default II for the PIPELINE pragma is 1, which processes a new input every clock cycle. You can also specify the initiation interval through the use of the II option for the pragma.
 Pipelining a loop allows the operations of the loop to be implemented in a concurrent manner as shown in the following figure. In the following figure, (A) shows the default sequential operation where there are 3 clock cycles between each input read (II=3), and it requires 8 clock cycles before the last output write is performed.
 
 If the Vivado high-level synthesis tool cannot create a design with the specified II, it issues a warning and creates a design with the lowest possible II.
