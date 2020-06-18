@@ -14,7 +14,7 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
 <details>
   <summary>Click to expand! (instructions for GUI)</summary>
   
-    ### Using Vitis via the **GUI**
+    ### Using Vitis via the GUI
     1. Open a terminal
     2. Setup and launch Vitis
     3, "File" menu -> "Import"...
@@ -23,7 +23,7 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
     6. Select the vitis_export_archive.ide.zip and click "Okay"
     7. Next window click "Finish"
     
-    ### Setting up the platform
+    ### Setting up the Platform
     1. Click on the "Problems" tab in the lower window pane of the GUI
  
 </details>
