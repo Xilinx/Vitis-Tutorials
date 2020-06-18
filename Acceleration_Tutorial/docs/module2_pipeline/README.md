@@ -6,7 +6,7 @@ A pipelined function or loop can then process new inputs every <N> clock cycles,
 
 Pipelining a loop allows the operations of the loop to be implemented in a concurrent manner as shown in the following figure. In the following figure, (A) shows the default sequential operation where there are 3 clock cycles between each input read (II=3), and it requires 8 clock cycles before the last output write is performed.
 
-![Pipeine](anim_pipeline.jgif)
+![Pipeine](anim_pipeline.gif)
 
 If the Vivado high-level synthesis tool cannot create a design with the specified II, it issues a warning and creates a design with the lowest possible II.
 You can then analyze this design with the warning message to determine what steps must be taken to create a design that satisfies the required initiation interval.
