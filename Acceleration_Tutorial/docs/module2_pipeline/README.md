@@ -10,14 +10,11 @@ Pipelining a loop allows the operations of the loop to be implemented in a concu
 If the Vivado high-level synthesis tool cannot create a design with the specified II, it issues a warning and creates a design with the lowest possible II.
 You can then analyze this design with the warning message to determine what steps must be taken to create a design that satisfies the required initiation interval.
 
-Syntax
-Place the pragma in the C source within the body of the function or loop.
-
-    #pragma HLS pipeline II=<int> enable_flush rewind
-
-Where:
-
-II= <int>: Specifies the desired initiation interval for the pipeline. The HLS tool tries to meet this request. Based on data dependencies, the actual result might have a larger initiation interval. The default II is 1.
+To enable the pragma in the C source, insert it within the body of the function or loop.
+```cpp
+ #pragma HLS pipeline II=<int> enable_flush rewind
+```
+II=<int> specifies the desired number of clock cycles between each  initiation interval for the pipeline. The HLS tool tries to meet this request. Based on data dependencies, the actual result might have a larger initiation interval. The default II is 1.
 enable_flush: Optional keyword that implements a pipeline that will flush and empty if the data valid at the input of the pipeline goes inactive.
 
 TIP: This feature is only supported for pipelined functions: it is not supported for pipelined loops.
