@@ -26,6 +26,12 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
     ### Setting up the Platform
     1. On the center window pane of the GUI click the platform link (blue link xilinx_u50...)
     2. Navigate to specify the platform accessible on your system
+    
+    ### Running the design
+    Notice the "Assistant" window pane with its 3 main flow steps
+    1. Emulation-SW: to validate the design at the fucntional level
+    2. Emulation-HW: compile the kernel into a cycle accurate representation to better gauge metrics
+    3. Hardware: to launch the full compilation and generate a bitstream
  
 </details>
 
