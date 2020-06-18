@@ -32,11 +32,9 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
        * make 
          * Without options, it will show the help
        * make build TARGET=sw_emu|hw_emu|hw
-         * Builds for software or hardware emulation.
-	   The "hw" options takes longer and runs the full compilation to create a binary file for the card
+         * Builds for software or hardware emulation. The "hw" option runs the full compilation.
        * make run TARGET=sw_emu|hw_emu|hw
-         * Executes for software or hardware emulation with "hw" running the full compilation
-	   to create a binary file for the card
+         * Executes for software or hardware emulation with "hw" running on the card after full compilation
 	     * make clean
 	       * delete files to start from a clean context
          
