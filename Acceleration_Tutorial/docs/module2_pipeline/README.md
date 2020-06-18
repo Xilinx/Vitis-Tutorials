@@ -1,7 +1,7 @@
 Code and files for **module 2**
 
 ## Pipelining for throughput
-The C code transformation that the high-level synthesis operates is conservative by default.  This affects loops that only work on one element at a time.  As a result, the operators that a loop uses in its body might not be used at each iteration of the loop.
+The C code high-level synthesis is conservative by default, loops body code is entirely executed at each iteration instead of staggering the execution.  As a result, the operators that a loop uses in its body might not be used at each iteration of the loop.
 
 This is where the the PIPELINE pragma comes in, it reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of of the different operations involved in the loop.
 A pipelined function or loop can process new inputs every <N> clock cycles, where <N> is the II of the loop or function. The default II for the PIPELINE pragma is 1, which processes a new input every clock cycle. You can also specify the initiation interval through the use of the II option for the pragma.
