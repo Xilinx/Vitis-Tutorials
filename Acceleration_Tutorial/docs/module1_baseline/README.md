@@ -22,6 +22,9 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
     5. Click "Browse" on the next window and navigate to the ./docs/module1_baseline/project directory
     6. Select the vitis_export_archive.ide.zip and click "Okay"
     7. Next window click "Finish"
+    
+    ### Setting up the platform
+    1. Click on the "Problems" tab in the lower window pane of the GUI
  
 </details>
 
