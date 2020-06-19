@@ -1,1 +1,1 @@
-Code and files for **module 4**
+Code, files and instructions for **module 4**
