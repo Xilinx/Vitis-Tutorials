@@ -1,9 +1,15 @@
-3.1 Retrieve pre-built DPU platform
------------------------
+# Section 3: Basic Use Case
+
+## 3.1 "Hello World" Preparation
+
+In this module, we'll retrieve the pre-built DPU platform, write it into SD card to prepare the running environment.
+
+
 * Prerequisites
-  * Terminal emulater (https://osdn.net/projects/ttssh2)
-  * Win32 Disk Imager (https://sourceforge.net/projects/win32diskimager)
- 
+  
+  * Terminal emulator (https://osdn.net/projects/ttssh2)
+* Win32 Disk Imager (https://sourceforge.net/projects/win32diskimager)
+  
 * Download the pre-built DPU board image from the link below
 
   * [ZCU104](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu104-dpu-v2019.2-v2.img.gz) 
