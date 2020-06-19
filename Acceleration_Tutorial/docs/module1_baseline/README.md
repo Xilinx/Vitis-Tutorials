@@ -1,5 +1,7 @@
 Code and files for **module 1**
 
+Some Markdown text with <span style="color:blue">some *blue* text</span>.
+
 ## Organizing the C code
 In order to be able to use the hardware based acceleration, we need to split the code between an host and a kernel.  The host runs on the server and uses APIs we'll discuss below to manage the data and command operations for the kernel.
 
