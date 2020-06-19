@@ -1,4 +1,4 @@
-Code and files for **module 3**
+Code, files and instructions for **module 3**
 
 The DEPENDENCE pragma is used to provide additional information that can overcome loop-carry dependencies and allow loops to be pipelined (or pipelined with lower initiation intervals). These dependencies impact when operations can be scheduled, especially during function and loop pipelining.
 
