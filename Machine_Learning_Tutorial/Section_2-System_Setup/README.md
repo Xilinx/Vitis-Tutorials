@@ -1,4 +1,4 @@
-# Vitis and Vitis AI Environment Setup
+# Section 2: System Setup
 
 In this tutorial, we'll use Vitis 2019.2 and Vitis-AI v1.1 for demonstration. The tutorial will be updated when Vitis tools have updates. Vitis and Vitis-AI has a wide range of OS support list, from RHEL/CentOS 7.4, 7.5, 7.6 to Ubuntu 16.04 and 18.04. This tutorial is tested in Ubuntu 18.04.1 and CentOS 7.6.
 
