@@ -1,14 +1,112 @@
 # Vitis and Vitis AI Environment Setup
 
-## Vitis Setup
+In this tutorial, we'll use Vitis 2019.2 and Vitis-AI v1.1 for demonstration. The tutorial will be updated when Vitis tools have updates. Vitis and Vitis-AI has a wide range of OS support list, from RHEL/CentOS 7.4, 7.5, 7.6 to Ubuntu 16.04 and 18.04. This tutorial is tested in Ubuntu 18.04.1 and CentOS 7.6.
+
+| Type                    | Version                       |
+| ----------------------- | ----------------------------- |
+| Vitis Software Platform | 2019.2                        |
+| Vitis-AI                | v1.1                          |
+| PetaLinux               | 2019.2                        |
+| Host OS                 | Ubuntu 18.04.1 and CentOS 7.6 |
+
+The host OS can be a natively installed OS, or installed in a virtual machine. It needs to have at least 100GB hard disk to install all the tools, models and datasets. 16GB DDR memory is preferred for development flow. 
+
+
+
+## Vitis Software Platform Setup
 
 <img src = "./images/xilinx-vitis.png" align = "right" >
 
-The Vitis unified software platform enables the development of embedded software and accelerated applications on heterogeneous Xilinx platforms including FPGAs, SoCs, and Versal ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. Leverage integration with high-level frameworks, develop in C, C++, or Python using accelerated libraries or use RTL-based accelerators & low-level runtime APIs for more fine-grained control over implementation — Choose the level of abstraction you need.
+### Vitis Core Tools
 
-Please visit <https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html> for more information about Vitis.
+1. Download  Vitis Software Platform 2019.2 from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2019-2.html).
 
-To download and install latest Vitis Core Development Kit, please visit <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html>.
+2. Install Vitis dependent packages
+
+   1. Ubuntu: Install GLX 1.3
+
+      ```bash
+      sudo add-apt-repository ppa:xorg-edgers/ppa
+      sudo apt-get update
+      sudo apt-get install libgl1-mesa-glx
+      sudo apt-get install libgl1-mesa-dri
+      sudo apt-get install libgl1-mesa-dev
+      sudo add-apt-repository --remove ppa:xorg-edgers/ppa
+      ```
+
+   2. CentOS: Install EPEL and kernel headers
+
+      ```bash
+      # Install EPEL
+      sudo yum install epel-release
+      # Install Kernel Headers
+      sudo yum install kernel-headers-`uname -r` 
+      sudo yum install kernel-devel-`uname -r`
+      ```
+
+      
+
+3. Install Vitis Software Platform ([Full User Guided](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/juk1557377661419.html))
+
+   1. Ensure "Devices > Install devices for Alveo and Xilinx Edge acceleration platforms" is selected during installation.
+
+### Xilinx Run Time
+
+1. Download XRT from [Xilinx Download Center - Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2019-2.html)
+
+2. Install XRT (Full User Guide)
+
+   1. Ubuntu: `sudo apt install <xrt_filename_OS>.deb`
+   2. CentOS: `sudo yum install <xrt_filename>.rpm`
+
+### PetaLinux
+
+Note: PetaLinux is only needed for Platform Development for Customization Flow.
+
+1. Download PetaLinux from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools/2019-2.html)
+
+2. Install PetaLinux dependencies (Full list: [UG1144](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2020_1/ug1144-petalinux-tools-reference-guide.pdf) Table 2)
+
+   1. Ubuntu
+
+      ```
+      sudo apt install iproute gcc g++ net-tools libncurses5-dev zlib1g:i386 libssl-dev flex bison libselinux1 xterm autoconf libtool texinfo zlib1g-dev gcc-multilib build-essential screen pax gawk python
+      ```
+
+   2. CentOS
+
+      ```
+      sudo yum install iproute gcc gcc-++ net-tools libncurses5-devel zlib-devel openssl-devel flex bison libselinux xterm autoconf libtool texinfo SDL-devel glibc-devel glibc glib2-devel automake screen pax libstdc++ gawk python
+      ```
+
+      
+
+3. Install PetaLinux
+
+   ```
+   ./petalinux-v2019.2-final-installer.run 
+   ```
+
+4. Setup PetaLinux requirements
+
+   1. Ubuntu: change shell from dash to bash
+
+      ```
+      sudo dpkg-reconfigure dash
+      ```
+
+      
+
+
+### Load Vitis, XRT, and PetaLinux environment
+
+   ```bash
+   source /tools/Xilinx/Vitis/2019.2/settings64.sh
+   source /opt/xilinx/xrt/setup.sh
+   source /opt/petalinux-v2019.2/settings.sh
+   ```
+
+   
 
 ---
 
