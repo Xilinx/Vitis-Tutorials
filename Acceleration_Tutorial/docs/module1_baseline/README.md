@@ -1,7 +1,7 @@
 Code, files and instructions for **module 1**
 
 ## Organizing the C code
-In order to be able to use the hardware based acceleration, we need to split the code between an host and a kernel.  The host runs on the server and uses APIs we'll discuss below to manage the data and command operations for the kernel.
+To enable hardware acceleration, we need to split the code between the host and the kernel.  The host code runs on the server using APIs we'll discuss below to manage the data and command operations for the kernel.
 
 Take now a look at the host code and notice the several APIs that are used.
 Notice how the data is tranferred back and forth to the kernel an back.
