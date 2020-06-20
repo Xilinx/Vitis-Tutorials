@@ -3,10 +3,10 @@
 help::
 	@echo  " Makefile Usage:"
 	@echo  ""
-	@echo  "  make build TARGET=sw_emu/hw_emu/hw "
+	@echo  "  make build TARGET=sw_emu|hw_emu|hw "
 	@echo  "      Command to build the application design "
 	@echo  ""
-	@echo  "  make run TARGET=sw_emu/hw_emu/hw "
+	@echo  "  make run TARGET=sw_emu|hw_emu|hw "
 	@echo  "      command to run the application design "
 	@echo  ""
 	@echo  "  make clean "
@@ -69,8 +69,8 @@ CXXFLAGS += -O2 -g -Wall -fmessage-length=0 -std=c++0x
 
 
 CXXLDFLAGS := -L$(XILINX_XRT)/lib/
-CXXLDFLAGS += -lxilinxopencl -lpthread -lrt -lstdc++
-
+#CXXLDFLAGS += -lxilinxopencl -lpthread -lrt -lstdc++
+CXXLDFLAGS += -lOpenCL -lpthread -lrt -lstdc++
 
 ## Kernel Compiler and Linker Flags
 
@@ -119,7 +119,7 @@ build: $(BUILD_DIR)/$(HOST_EXE) $(BUILD_DIR)/$(XCLBIN) $(BUILD_DIR)/$(EMCONFIG_F
 
 
 ## build the design and then run host application
-## run with 512x10 input video format for emulation and 1280x720 for hardware
+## run with 512x512 matrix size for hardware and 64x64 for emulation
 
 run: build
 	cp xrt.ini $(BUILD_DIR);
