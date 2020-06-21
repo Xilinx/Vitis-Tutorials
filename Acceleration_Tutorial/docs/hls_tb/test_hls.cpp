@@ -23,25 +23,17 @@
 #include <math.h>
 #include <stdio.h>
 
-
 #include "cholesky_kernel.hpp"
-
 
 //! Core function of Cholesky benchmark
 int main(int argc, const char* argv[]) {
 
-
-	const int dataAM = 16, dataAN = 16;
-
-
+	  const int dataAM = 16, dataAN = 16;
     std::cout << "INFO: Matrix Row M: " << dataAM << std::endl;
     std::cout << "INFO: Matrix Col N: " << dataAN << std::endl;
 
-
     double dataA[dataAN*dataAM];
-
     double dataC[dataAN][dataAM];
-
 
     FILE *fp;
     double tmp;
@@ -62,11 +54,7 @@ int main(int argc, const char* argv[]) {
     }
     fclose(fp);
 
-
-
-	cholesky_kernel(dataAN, dataA);
-
-
+	  cholesky_kernel(dataAN, dataA);
 
     // Calculate err between dataA and dataC
     double errA = 0;
