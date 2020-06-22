@@ -19,12 +19,12 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
    2. Setup and launch Vitis  
    3. "File" menu -> "Import..." <a href="../images/gui1_import.png">(image)</a>
    4. Accept the default of the Vitis project exported zip file and click "Next" <a href="../images/gui2_next.png">(image)</a>
-   5. Click "Browse" on the next window and navigate to the ./docs/module1_baseline/project directory <a href="../images/gui3_browse.png">(image)
-   6. Select the vitis_export_archive.ide.zip and click "Okay" <a href="../images/gui4_zip.png">(image)
-   7. Next window click "Finish" <a href="../images/gui5_finish.png">(image)
+   5. Click "Browse" on the next window and navigate to the ./docs/module1_baseline/project directory <a href="../images/gui3_browse.png">(image)</a>
+   6. Select the vitis_export_archive.ide.zip and click "Okay" <a href="../images/gui4_zip.png">(image)</a>
+   7. Next window click "Finish" <a href="../images/gui5_finish.png">(image)</a>
     
    ### Setting up the Platform
-   1. On the center window pane of the GUI click the platform link (blue link xilinx_u50...)
+   1. On the center window pane of the GUI click the platform link (blue link xilinx_u50...) <a href="../images/gui6_platform.png">(image)</a>
    2. Navigate to specify the platform accessible on your system
     
    ### Running the design
