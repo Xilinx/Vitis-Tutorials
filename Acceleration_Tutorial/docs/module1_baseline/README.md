@@ -6,8 +6,10 @@ To enable hardware acceleration, the code is split between the host and the kern
 The API calls, processed by Xilinx runtime (XRT), manage process transactions between the host program and the hardware accelerators. Communication between the host and the kernel, including control and data transfers, occurs across the PCIe® bus or an AXI bus for embedded platforms.
 
 In a typical application, the host first transfers data to be operated on by the kernel from host memory into global memory. The kernel subsequently operates on the data, storing results back to the global memory. Upon kernel completion, the host transfers the results back into the host memory. Data transfers between the host and global memory introduce latency, which can be costly to the overall application. To achieve acceleration in a real system, the benefits achieved by the hardware acceleration kernels must outweigh the added latency of the data transfers.
-  + Take now a look at the host code and notice the several APIs that are used. Notice how the data is tranferred back and forth to the kernel an back.
-  +  Take a look at the kernel code.  This code will be compiled inside the Vitis tools and transformed into an hardware description that the Vivado tool can implement onto Xilinx devices. As we'll the goal on that code is to make it as efficient as possible in regards to the available hardware.
+
+The source code for each module is located under its module in the ./src directory:
+  + Take a look at the host code and notice the several APIs that are used. Notice how the data is tranferred back and forth to the kernel an back.
+  + Take a look at the kernel code.  This code will be compiled inside the Vitis tools and transformed into an hardware description that the Vivado tool can implement onto Xilinx devices. As we'll the goal on that code is to make it as efficient as possible in regards to the available hardware.
 
 You could either import this design as a pre-setup project in the Vitis GUI or run make.
 ## Build and Emulate with Vitis
