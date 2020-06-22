@@ -51,6 +51,6 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
        * make run TARGET=sw_emu|hw_emu|hw
          + Executes for software or hardware emulation with "hw" running on the card after full compilation
        * make clean
-	 + delete files to start from a clean context
+         + delete files to start from a clean context
          
 </details>
