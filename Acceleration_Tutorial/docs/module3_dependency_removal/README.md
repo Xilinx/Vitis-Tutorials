@@ -1,6 +1,6 @@
 Code, files and instructions for **module 3** (same flow as in [module1](../module1_baseline) to setup the GUI or run make)
 
-The DEPENDENCE pragma is used to provide additional information that can overcome loop-carry dependencies and allow loops to be pipelined (or pipelined with lower initiation intervals). These dependencies impact when operations can be scheduled, especially during function and loop pipelining.
+The dependence pragma provides additional information to overcome loop-carry dependencies and allow loops to be pipelined like we saw in module2 (or pipelined with lower initiation intervals). These dependencies impact the scheduling of operations during high-level synthesis for both function and loop pipelining.
 
 The Vitis high-level synthesis tool automatically detects the following dependencies:
 
