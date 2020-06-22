@@ -36,7 +36,7 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
 </details>
 
 <details>
-  <summary>Click to expand! (instructions for make)</summary>
+  <summary>Click to expand! (instructions for command line flow with <code>make</code>)</summary>
   
     ## Using **make**
     1. Open a terminal
