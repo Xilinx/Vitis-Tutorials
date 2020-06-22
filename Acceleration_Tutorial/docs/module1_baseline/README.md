@@ -30,7 +30,7 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
    1. On the center window pane, click on the triple dot icon (<code>...</code>) right after the platform link <a href="../images/gui6_platform.png">(image)</a>
    2. Navigate to specify the platform accessible from your system
     
-   ### Running the design
+   ### Building and emulating the design
    Notice the "Assistant" window pane with its 3 main flow steps
    1. Emulation-SW: to validate the design at the fucntional level
    2. Emulation-HW: compile the kernel into a cycle accurate representation to better gauge metrics
@@ -46,13 +46,11 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
     2. Setup Vitis
     3. Navigate to ./build
     4. Run make
-       * make 
-         * Without options, it will show the help
        * make build TARGET=sw_emu|hw_emu|hw
          * Builds for software or hardware emulation. The "hw" option runs the full compilation.
        * make run TARGET=sw_emu|hw_emu|hw
          * Executes for software or hardware emulation with "hw" running on the card after full compilation
-	     * make clean
-	       * delete files to start from a clean context
+       * make clean
+	 * delete files to start from a clean context
          
 </details>
