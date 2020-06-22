@@ -14,24 +14,24 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
 <details>
   <summary>Click to expand! (instructions for GUI)</summary>
   
-    ### Using Vitis via the GUI
-    1. Open a terminal
-    2. Setup and launch Vitis
-    3, "File" menu -> "Import..."  <a href="https://www.w3schools.com/">Visit W3Schools.com!</a> 
-    4. Accept the default of the Vitis project exported zip file and click "Next"
-    5. Click "Browse" on the next window and navigate to the ./docs/module1_baseline/project directory
-    6. Select the vitis_export_archive.ide.zip and click "Okay"
-    7. Next window click "Finish"
+   ### Using Vitis via the GUI
+   1. Open a terminal
+   2. Setup and launch Vitis  <a href="https://www.w3schools.com/">Visit W3Schools.com!</a> 
+   3, "File" menu -> "Import..."
+   4. Accept the default of the Vitis project exported zip file and click "Next"
+   5. Click "Browse" on the next window and navigate to the ./docs/module1_baseline/project directory
+   6. Select the vitis_export_archive.ide.zip and click "Okay"
+   7. Next window click "Finish"
     
-    ### Setting up the Platform
-    1. On the center window pane of the GUI click the platform link (blue link xilinx_u50...)
-    2. Navigate to specify the platform accessible on your system
+   ### Setting up the Platform
+   1. On the center window pane of the GUI click the platform link (blue link xilinx_u50...)
+   2. Navigate to specify the platform accessible on your system
     
-    ### Running the design
-    Notice the "Assistant" window pane with its 3 main flow steps
-    1. Emulation-SW: to validate the design at the fucntional level
-    2. Emulation-HW: compile the kernel into a cycle accurate representation to better gauge metrics
-    3. Hardware: to launch the full compilation and generate a bitstream
+   ### Running the design
+   Notice the "Assistant" window pane with its 3 main flow steps
+   1. Emulation-SW: to validate the design at the fucntional level
+   2. Emulation-HW: compile the kernel into a cycle accurate representation to better gauge metrics
+   3. Hardware: to launch the full compilation and generate a bitstream
  
 </details>
 
