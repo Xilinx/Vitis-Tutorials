@@ -1,4 +1,4 @@
-Code, files and instructions for **module 2** (same flow as in ![module1](../module1_baseline) to use the GUI or make)
+Code, files and instructions for **module 2** (same flow as in [module1](../module1_baseline) to use the GUI or make)
 
 ## Pipelining for Throughput
 The C code high-level synthesis is conservative by default, for example loop body instructions are entirely executed at each iteration instead of a staggered execution.  That latter style of execution is enabled by the PIPELINE pragma, it reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of the different operations.
