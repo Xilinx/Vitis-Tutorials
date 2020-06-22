@@ -32,7 +32,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
    7. Next window click "Finish" <a href="../images/gui5_finish.png">(image)</a>
     
    ### Setting up the Platform
-   1. On the center window pane, click on the triple dot icon (<code>...</code>) right after the platform link <a href="../images/gui6_platform.png">(image)</a>
+   1. On the center window pane, click on the triple dot icon <code>[...]</code> right after the platform link <a href="../images/gui6_platform.png">(image)</a>
    2. Navigate to specify the platform accessible from your system
     
    ### Building and emulating the design
