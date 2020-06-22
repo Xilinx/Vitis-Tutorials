@@ -10,12 +10,12 @@ Take a look at the kernel code.  This code will be compiled inside the Vitis too
 
 You could either import this design as a pre-setup project in the Vitis GUI or run make.
 ## Build and execute for Vitis
-The Vitis GUI is based on Eclipse and allows you to customize the design.
+The Vitis GUI is based on Eclipse and allows you to customize the design.![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 <details>
   <summary>Click to expand! (instructions for GUI)</summary>
   
     ### Using Vitis via the GUI
-    1. Open a terminal
+    1. Open a terminal ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
     2. Setup and launch Vitis
     3, "File" menu -> Import... <../images/gui1_import.png> <https://www.github.com>
     4. Accept the default of the Vitis project exported zip file and click "Next"
