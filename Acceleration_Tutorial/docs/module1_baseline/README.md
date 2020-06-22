@@ -17,7 +17,7 @@ The Vitis GUI is based on Eclipse and allows you to customize the design.
     ### Using Vitis via the GUI
     1. Open a terminal
     2. Setup and launch Vitis
-    3, "File" menu -> "Import..." <a href="../images/gui1_import.png">link text</a>
+    3, "File" menu -> "Import..."  <a href="https://www.w3schools.com/">Visit W3Schools.com!</a> 
     4. Accept the default of the Vitis project exported zip file and click "Next"
     5. Click "Browse" on the next window and navigate to the ./docs/module1_baseline/project directory
     6. Select the vitis_export_archive.ide.zip and click "Okay"
