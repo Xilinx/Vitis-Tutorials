@@ -7,7 +7,7 @@ The API calls, processed by Xilinx runtime (XRT), manage process transactions be
 
 In a typical application, the host first transfers data to be operated on by the kernel from host memory into global memory. The kernel subsequently operates on the data, storing results back to the global memory. Upon kernel completion, the host transfers the results back into the host memory. Data transfers between the host and global memory introduce latency, which can be costly to the overall application. To achieve acceleration in a real system, the benefits achieved by the hardware acceleration kernels must outweigh the added latency of the data transfers.
 
-The source code for each module is located under its module in the <code>./src</code> directory:
+The source code for each module is located under the <code>./src</code> directory:
   + Take a look at the host code and notice the several APIs that are used. Notice how the data is tranferred back and forth to the kernel an back. The execution model can be broken down into the following steps:
      + The host program writes the data needed by a kernel into the global memory of the attached device through the PCIe interface on an Alveo Data Center accelerator card, or through the AXI bus on an embedded platform.
      + The host program sets up the kernel with its input parameters.
