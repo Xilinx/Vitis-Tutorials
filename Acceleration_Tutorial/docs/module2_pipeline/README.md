@@ -24,3 +24,6 @@ void foo { a, b, c, d} {
   ...
 }
 ```
+Take a look at the kernel source code and notice how the PIPELINE directive is applied for several loops in the code.
+
+Either via the GUI or through <code>make</code> run the hardware emulation flow.  Open the Vitis Analyzer and Vitis HLS to observe the change compared to the baseline in module1.
