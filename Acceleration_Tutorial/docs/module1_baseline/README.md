@@ -10,7 +10,7 @@ Take a look at the kernel code.  This code will be compiled inside the Vitis too
 
 You could either import this design as a pre-setup project in the Vitis GUI or run make.
 ## Build and execute for Vitis
-The Vitis GUI is based on Eclipse and allows you to customize the design. ![mport](../images/gui1_import.png)
+The Vitis GUI is based on Eclipse and allows you to customize the design. [Import](../images/gui1_import.png)
 <details>
   <summary>Click to expand! (instructions for GUI)</summary>
   
