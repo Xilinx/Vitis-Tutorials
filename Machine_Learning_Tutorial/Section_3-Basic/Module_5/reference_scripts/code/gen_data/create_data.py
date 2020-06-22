@@ -119,7 +119,7 @@ def gen_image2anno(image_root, anno_root, image_list_file, image2anno_file):
 
 def convert_lmdb(image_root, convert_file, db_file, height, width):
 
-    cmd = 'python /workspace/in-depth-tutorial/cf_refinedet_coco_480_360_0.96_5.08G/code/gen_data/create_annoset.py --label-type=%s --anno-type=%s --label-map-file=%s --min-dim=%d --max-dim=%d --resize-width=%d --resize-height=%d --check-label %s %s %s %s ../../data/link_480_360/' %\
+    cmd = 'python /workspace/Vitis-In-Depth-Tutorial/Machine_Learning_Tutorial/Section_3-Basic/Module_5/cf_refinedet_coco_480_360_0.96_5.08G/code/gen_data/create_annoset.py --label-type=%s --anno-type=%s --label-map-file=%s --min-dim=%d --max-dim=%d --resize-width=%d --resize-height=%d --check-label %s %s %s %s ../../data/link_480_360/' %\
           (label_type, anno_type, map_file, min_dim, max_dim, width, height, extra_cmd, image_root, convert_file, db_file)
     print(cmd)
     print(subprocess.getoutput(cmd))
