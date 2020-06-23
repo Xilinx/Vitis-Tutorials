@@ -71,7 +71,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 </details>
 
 ***
-## Vitis Analyzer (end-to-end timeline analysis)
+## Vitis Analyzer for Application End-to-end Timeline Analysis)
 
 <details>
   <summary>Click to expand! (instructions for <code>Vitis Analyzer</code>)</summary>
@@ -124,7 +124,7 @@ The report has the following structure:
 </details>
 
 ***
-## Vitis HLS (kernel optimizations)
+## Vitis HLS for Kernel Optimizations
 
 <details>
   <summary>Click to expand! (instructions for <code>Vitis HLS</code>)</summary>
