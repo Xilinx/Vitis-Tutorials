@@ -1,6 +1,6 @@
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ - Acceleration Tutorial</h1>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ - Acceleration Tutorial for U50</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -8,8 +8,8 @@
 
 This tutorial is divided in 3 sections.
 * [**Section 1**](./Section_1-Workflows) (~10 mins):
-  + A walkthrough of the algorithm chosen for the tutorial: the Cholesky decomposition 
-  + Compile and run the non-accelerated version of the algorithm on the CPU
+  + A walkthrough of the algorithm chosen for the tutorial: the Cholesky matrix decomposition 
+  + Compile and run a version of the algorithm on the CPU
   + Evaluate the performance
 * [**Section 2**](./Section_2-System_Setup) (a couple of mins):
   + Setup the Vitis development tools
