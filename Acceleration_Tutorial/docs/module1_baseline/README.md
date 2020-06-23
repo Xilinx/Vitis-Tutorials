@@ -41,6 +41,14 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
    2. Emulation-HW: compile the kernel into a cycle accurate representation to better gauge metrics
    3. Hardware: to launch the full compilation and generate a bitstream
  
+ Run the software emulation...
+ 
+ Run the hardware emulation (takes over 10 minutes)
+ 
+ After hardware emulation has completed, right click on the <code>Emulation_HW</code> and select "Run HLS" (this will spawn the Vitis HLS GUI)
+ 
+ For instructions about Vitis HLS, please see below...
+ 
 </details>
 
 ***OR***
