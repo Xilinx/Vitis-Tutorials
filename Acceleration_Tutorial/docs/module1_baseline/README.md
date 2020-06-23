@@ -73,7 +73,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 ## Vitis Analyzer
 
 <details>
-  <summary>Click to expand! (instructions for <code>Vitis HLS</code>)</summary>
+  <summary>Click to expand! (instructions for <code>Vitis Analyzer</code>)</summary>
   
    1. Open a terminal
    2. Setup Vitis
