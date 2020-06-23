@@ -43,6 +43,8 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
  
 </details>
 
+***OR***
+
 <details>
   <summary>Click to expand! (instructions for <code>make</code>)</summary>
   
@@ -53,11 +55,9 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
    4. Run: make run TARGET=sw_emu (for a functional emulation)
    5. Run: make run TARGET=hw_emu (for a more detailed emulation - takes 10 minutes or more)  
       * Avoid the "hw" which would take over an hour to run
-      
    6. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
       * There should be another cholesky_kernel directory at that level
    7. Run: vitis_hls -p cholesky_kernel (started the high-level synthesis GUI)
-    8.
+   8. Now that HLS is started, see instructions below for the rest...
       
-         
 </details>
