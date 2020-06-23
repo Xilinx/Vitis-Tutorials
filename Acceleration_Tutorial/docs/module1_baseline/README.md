@@ -37,9 +37,9 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
     
    ### Building and emulating the design
    Notice the "Assistant" window pane with its 3 main flow steps
-   1. Emulation-SW: to validate the design at the functional level
-   2. Emulation-HW: compile the kernel into a cycle accurate representation to better gauge metrics
-   3. Hardware: to launch the full compilation and generate a bitstream
+   1. <code>Emulation-SW</code>: to validate the design at the functional level
+   2. <code>Emulation-HW</code>: compile the kernel into a cycle accurate representation to better gauge metrics
+   3. <code>Hardware</code>: to launch the full compilation and generate a bitstream
  
  Run the software emulation...
  
