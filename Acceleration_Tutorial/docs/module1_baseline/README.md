@@ -81,6 +81,22 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
    3. Navigate to the module area compile files
    4. File menu...
       
+The report has the following structure:
+
+    Host
+
+    OpenCL API Calls
+        All OpenCL API calls are traced here. The activity time is measured from the host perspective.
+
+        General
+            All general OpenCL API calls such as clCreateProgramWithBinary, clCreateContext, and clCreateCommandQueue, are traced here.
+
+        Queue
+            OpenCL API calls that are associated with a specific command queue are traced here. This includes commands such as clEnqueueMigrateMemObjects, and clEnqueueNDRangeKernel. If the user application creates multiple command queues, then this section shows all the queues and activities.
+
+Data Transfer
+    In this section the DMA transfers from the host to the device memory are traced. There are multiple DMA threads implemented in the OpenCL runtime and there is typically an equal number of DMA channels. The DMA transfer is initiated by the user application by calling OpenCL APIs such as clEnqueueMigrateMemObjects. These DMA requests are forwarded to the runtime which delegates to one of the threads. The data transfer from the host to the device appear under Write as they are written by the host, and the transfers from device to host appear under Read.
+      
 </details>
 
 ***
