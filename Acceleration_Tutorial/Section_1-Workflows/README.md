@@ -20,9 +20,8 @@ This solver is included as part the official Vitis accelerated libraries, here i
 For our purpose, we will start with a straightforward description implemented in C++.
 
 The source code can be found here: <code>./src/reference.cpp</code>
-To run the code, navigate to <code>./build</code> and run <code>make</code>.
-
 Open the source code and get familiar with the algorithm.
+To run the code, navigate to <code>./build</code> and run <code>make</code>.
 
 Make a note of the performance numbers for different size of matrices: 16, 64, 256...
 These numbers will become reference data points for later during this tutorial.
