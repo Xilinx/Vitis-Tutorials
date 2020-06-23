@@ -37,7 +37,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
     
    ### Building and emulating the design
    Notice the "Assistant" window pane with its 3 main flow steps
-   1. Emulation-SW: to validate the design at the fucntional level
+   1. Emulation-SW: to validate the design at the functional level
    2. Emulation-HW: compile the kernel into a cycle accurate representation to better gauge metrics
    3. Hardware: to launch the full compilation and generate a bitstream
  
@@ -46,16 +46,17 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 <details>
   <summary>Click to expand! (instructions for <code>make</code>)</summary>
   
-    ## Using **make**
-    1. Open a terminal
-    2. Setup Vitis
-    3. Navigate to ./build
-    4. Run: make run TARGET=sw_emu (for a functional emulation)
-    5. Run: make run TARGET-hw_emu (for a more detailed emulation - takes 10 minutes or more)  
-       * Avoid the "hw" which would take over an hour to run
-    6. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
-       * There should be another cholesky_kernel directory at that level
-    7. Run: vitis_hls -p cholesky_kernel (started the high-level synthesis GUI)
+   ### Using **make**
+   1. Open a terminal
+   2. Setup Vitis
+   3. Navigate to ./build
+   4. Run: make run TARGET=sw_emu (for a functional emulation)
+   5. Run: make run TARGET=hw_emu (for a more detailed emulation - takes 10 minutes or more)  
+      * Avoid the "hw" which would take over an hour to run
+      
+   6. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
+      * There should be another cholesky_kernel directory at that level
+   7. Run: vitis_hls -p cholesky_kernel (started the high-level synthesis GUI)
     8.
       
          
