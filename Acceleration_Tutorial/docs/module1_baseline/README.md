@@ -96,6 +96,9 @@ The report has the following structure:
 
    * **Data Transfer:**
      In this section the DMA transfers from the host to the device memory are traced. There are multiple DMA threads implemented in the OpenCL runtime and there is typically an equal number of DMA channels. The DMA transfer is initiated by the user application by calling OpenCL APIs such as clEnqueueMigrateMemObjects. These DMA requests are forwarded to the runtime which delegates to one of the threads. The data transfer from the host to the device appear under Write as they are written by the host, and the transfers from device to host appear under Read.
+     
+   *  **Kernel Enqueues:**
+    The kernels enqueued by the host program are shown here. The kernels here should not be confused with the kernels/CUs on the device. Here kernel refers to the NDRangeKernels and tasks created by the OpenCL commands clEnqueueNDRangeKernels and clEnqueueTask. These are plotted against the time measured from the hosts perspective. Multiple kernels can be scheduled to be executed at the same time, and they are traced from the point they are scheduled to run until the end of the kernel execution. This is the reason for multiple entries. The number of rows depend on the number of overlapping kernel executions.
       
 </details>
 
