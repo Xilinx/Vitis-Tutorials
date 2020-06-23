@@ -19,8 +19,8 @@ This solver is included as part the official Vitis accelerated libraries, here i
 
 For our purpose, we will start with a straightforward description implemented in C++.
 
-The source code can be found here: ./src/reference.cpp
-It can be run like so at the command line: g++ ....
+The source code can be found here: <code>./src/reference.cpp</code>
+To run the code, navigate to <code>./build</code> and run <code>make</code>.
 
 Open the source code and get familiar with the algorithm.
 
