@@ -96,4 +96,5 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
    4. Now that HLS is started, see instructions below for the rest...
       
 </details>
+
 ***
