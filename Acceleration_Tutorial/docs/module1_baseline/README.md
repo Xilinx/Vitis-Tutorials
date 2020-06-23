@@ -1,6 +1,6 @@
 Code, files and instructions for **module 1**
 
-## Setting up the source code
+## Understanding code setup with host/kernel
 To enable hardware acceleration, the code is split between the host and the kernel.  The host program, written in C/C++ uses API abstractions like OpenCL, runs on a host processor, an x86 server or an Arm processor for embedded platforms.  The hardware accelerated kernels run onto the programmable logic of a Xilinx device.
 
 The API calls, processed by Xilinx runtime (XRT), manage process transactions between the host program and the hardware accelerators. Communication between the host and the kernel, including control and data transfers, occurs across the PCIe® bus or an AXI bus for embedded platforms.
@@ -50,12 +50,13 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
     1. Open a terminal
     2. Setup Vitis
     3. Navigate to ./build
-    4. Run make
-       * make build TARGET=sw_emu|hw_emu|hw
-         + Builds for software or hardware emulation. The "hw" option runs the full compilation.
-       * make run TARGET=sw_emu|hw_emu|hw
-         + Executes for software or hardware emulation with "hw" running on the card after full compilation
-       * make clean
-         + delete files to start from a clean context
+    4. Run: make run TARGET=sw_emu (for a functional emulation)
+    5. Run: make run TARGET-hw_emu (for a more detailed emulation - takes 10 minutes or more)  
+       * Avoid the "hw" which would take over an hour to run
+    6. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
+       * There should be another cholesky_kernel directory at that level
+    7. Run: vitis_hls -p cholesky_kernel (started the high-level synthesis GUI)
+    8.
+      
          
 </details>
