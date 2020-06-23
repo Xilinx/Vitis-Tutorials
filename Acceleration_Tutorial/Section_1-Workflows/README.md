@@ -17,7 +17,7 @@ The algorithm to accelerate is a common linear algebra solver, the decomposition
 
 This solver is included as part the official Vitis accelerated libraries, here is a link to its documentation: https://xilinx.github.io/Vitis_Libraries/solver/guide_L2/L2_api.html#potrf
 
-For our purpose, we will start with a straightforward description implemented in C++.
+For our purpose, we will start with a simple description implemented in C++.
 
 The source code can be found here: <code>./src/reference.cpp</code>
 Open the source code and get familiar with the algorithm.
