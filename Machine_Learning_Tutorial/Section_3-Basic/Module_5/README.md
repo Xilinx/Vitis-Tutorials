@@ -27,9 +27,25 @@ Run `get_network.sh` to download RefineDet network package, which is trained wit
 
 If no error occurs, your workspace will be like below
 ```
-├── cf_refinedet_coco_480_360_0.96_1.1.zip
-├── cf_refinedet_coco_480_360_0.96_5.08G
-└── get_network.sh
+Module_5
+|-- README.md
+|-- cf_refinedet_coco_480_360_0.96_5.08G
+|   |-- code
+|   |-- code_bak
+|   |-- data
+|   |-- float
+|   |-- labelmap.prototxt
+|   |-- quantized
+|   `-- readme.md
+|-- cf_refinedet_coco_baseline_125G
+|   `-- refinedet_baseline.prototxt
+|-- get_network.sh
+|-- network_training.md
+|-- reference_scripts
+|   `-- code
+|-- res_output.jpg
+`-- solver.prototxt
+
 ```
 
 Go to folder `cf_refinedet_coco_480_360_0.96_5.08G` to start real work and feel free to refer to readme.md for detailed information about this model package. 
@@ -71,7 +87,7 @@ cf_refinedet_coco_480_360_0.96_5.08G/
 
 ## Modify Scripts to be Python3 Compatible
 
-Vitis AI docker is built with Python3 environment while Caffe is developed originally with Python2. Hence Minor modificaiton in several scripts are needed to be Python3 compatible. Ready-to-use scripts are prepared and located in folder `reference scripts`.
+Vitis AI docker is built with Python3 environment while Caffe is developed originally with Python2. Hence Minor modificaiton in several scripts are needed to be Python3 compatible. Ready-to-use scripts are prepared and located in folder `reference scripts`, which will be copied into code folder for simplicity when running "get_network.sh".
 
 Detailed modifications are as below
 
@@ -89,23 +105,23 @@ Detailed modifications are as below
   
   change `commands.getoutput()` to `subprocess.getoutput()`
   
-  change the path to the script `create_annoset.py` 
+  change the path to the script `create_annoset.py` in line 122 according to your environment
   
  - /code/test/test.py
   
-  change `print` to `print()`
+   change `print` to `print()`
   
-  change `xrange` to `range`
+   change `xrange` to `range`
   
-  comment line 91 
+   comment line 91 to let script use python env in conda 
   
-  change GPU ID if nessaray in line 171 
+   change GPU ID in line 171 if nessaray, default value is 3  
  
 ## Prepare Customized COCO Dataset
  
 If you would like to retrain the network, evaluate mAP before directly deploying the network on board, the COCO dataset used by this network needs to be prepared with necessary process. 
 
-Related scripts are provided in folder `cf_refinedet_coco_480_360_0.96_5.08G/code/gen_data` and please copy the modified scripts into this folder for simplicity. 
+Related scripts are provided in folder `cf_refinedet_coco_480_360_0.96_5.08G/code/gen_data`. 
 
 ```
 gen_data/
@@ -145,6 +161,15 @@ data/
 |   `-- val2014_lmdb -> ../../data/coco2014_lmdb/val2014_lmdb
 `-- test_name_size.txt
 ```
+If the script finishes with out error, the md5sum values of train and val mdb files are as below: 
+
+| File Name | Md5sum Value|
+|:--:|:--:|
+|data/coco2014_lmdb/train2014_lmdb/data.mdb | 39891c36467f22498a98cbd431e43657|
+|data/coco2014_lmdb/val2014_lmdb/data.mdb|e99d3ad2ce3d5ffc864fa8d41b01d4b0|
+   
+   
+
 
 ## From Official RefineDet to Model Zoo Version 
 
@@ -173,7 +198,7 @@ Go to folder `cf_refinedet_coco_480_360_0.96_5.08G/code/test` and run the networ
 
 ### Test mAP 
 
-The network package provides scripts to varify the mAP of the pretrained network (both float model and quantized model). To use the scripts, please make sure the evaluation dataset are correctly prepared and file paths in function 'parse_args' (line 54 of `test.py`)  are modified according to your environment. 
+The network package provides scripts to varify the mAP of the pretrained network (both float model and quantized model). To use the scripts, please make sure the evaluation dataset are correctly prepared and file paths in function 'parse_args' (line 54 to 85 in `test.py`)  are modified according to your environment. 
 
 By default, the script will evaluate float model (trainval.caffemodel and test.prototxt) stored under folder `cf_refinedet_coco_480_360_0.96_5.08G/float`.
 
@@ -183,12 +208,15 @@ evaluate 21634 images
 person AP: 0.6120284761439228
 mAP: 0.612028476144
 ```
-It's also easy to evaluate qantized model in the same way, just change the prototxt file and caffemodel file in the script into `quantize_test.prototxt` and `quantize_train_test.caffemodel`. After evaluation is finished the result will be displayed. 
+It's also easy to evaluate quantized model in the same way, just change the prototxt file and caffemodel file in the script into `quantize_test.prototxt` and `quantize_train_test.caffemodel`. After evaluation is finished the result will be displayed. 
 ```
 evaluate 21634 images
 person AP: 0.6112254774886302
 mAP: 0.611225477489
 ```
+
+The float baseline model could also be evaluated using the same script, just change the prototxt file and caffemodel file into `refinedet_baseline.prototxt` and `refinedet_baseline.caffemodel` in folder `cf_refinedet_coco_baseline_125G`.
+
 
 ## Deploy Model 
 
@@ -226,13 +254,13 @@ Output Deploy Weights: "quantization/deploy.caffemodel"
 Output Deploy Model:   "quantization/deploy.prototxt"
 ```
 
-Using the same step and command, we could also generate quantized model for baseline model and use in next step compilation.
+Using the same step and command, we could also generate quantized model for baseline model and use in next step compilation. Please make sure right models are used as you wish and output files are saved properly. 
 
 ### Compile Quantized Model 
 
-To deploy quantized model on board, we use `vai_c_caffe` to generate elf file by compiling deploy.prototxt and deploy.caffemodel. Here we could use files in both folder `quantized`(provided in the network package) or `quantization`(generated by ourselves).
+To deploy quantized model on board, we use `vai_c_caffe` to generate elf file by compiling deploy.prototxt and deploy.caffemodel. Here we could use files in both folder `cf_refinedet_coco_480_360_0.96_5.08G/quantized` (provided in the network package) or `quantization` (generated by ourselves, please check where you put it).
 
-Before compilation, in the deploy.prototxt, please make sure delete all the lines after the layer block `odm_conf`.
+Before compilation, in the any deploy.prototxt, please make sure all the layers after the layer block `odm_conf` are deleted as they are not needed for deployment and compilation .
 
 Run below command in the quantized model folder to compile the model in to elf file which targeting DPU on ZCU104 released board image
 
@@ -244,6 +272,8 @@ vai_c_caffe --prototxt    deploy.prototxt \
             --net_name    refinedet_5G \
             --options     "{'save_kernel':''}"
 ```
+
+Please note that you could also specify the path for prototxt, caffemodel and output_dir as you wish. 
 
 During compilation, the compiler will give following output which will show useful informations including kernel name, input tensor names, input tensor shapes, output tensor names and output tensor shapes. With `save_kernel` option used, these informations are saved in `refinedet_kernel.info` in `board_file_zcu104_5G`.
 
@@ -295,10 +325,10 @@ board_file_zcu104_5G
 `-- refinedet_5G_kernel_graph.gv
 ```
 
-Using the same step and command, we could also generate elf file for baseline model 
-board_file_zcu104_125G
+Using the same step and command in the folder containing the deploy model for baseline model, we could also generate elf file for baseline model 
 
 ```
+board_file_zcu104_125G
 |-- dpu_refinedet_125G.elf
 |-- refinedet_125G_kernel.info
 `-- refinedet_125G_kernel_graph.gv
@@ -315,7 +345,7 @@ Before starting this part, please make sure:
 
 ### Transfer Compiler Output to Board
 
-Tranfer the compiler output `board_file_zcu104_5G` to board and place it under `~/overview/samples/refinedet` with scp command 
+Tranfer the compiler output `board_file_zcu104_5G` and `board_file_zcu104_125G` to board and place it under `~/overview/samples/refinedet` with scp command 
 
 `scp -r /PATH_TO/board_file_zcu104_5G root@10.176.18.133:~/overview/samples/refinedet`
 
@@ -340,13 +370,13 @@ Copy model file folder example into current folder
 
 `cp /usr/share/vitis_ai_library/models/refinedet_pruned_0_96/ refinedet_test_125G/`
 
-Copy elf files generated by ourselves into folder `refinedet_test`
+Copy elf files generated by ourselves into folder `refinedet_test_5G` and ` refinedet_test_125G/`
 
 `cp board_file_zcu104_5G/dpu_refinedet_5G.elf refinedet_test_5G/refinedet_5G.elf`
 
 `cp board_file_zcu104_125G/dpu_refinedet_125G.elf refinedet_test_125G/refinedet_125G.elf`
 
-Modify meta.json file to change filename and kernel name of our elf file. The config file are identical for both baseline model and pruned model. 
+Modify meta.json file to change filename and kernel name of our elf file. The config files are identical for both baseline model and pruned model. 
 
 `vim refinedet_test_5G/meta.json`
 
@@ -415,6 +445,15 @@ From comparison we can see huge performance improvement between baseline model a
 - network efficiency on DPU decreases at some extent after network size decreases 
 - DPU time percentage significantly decreases in whole application time. Software processing and scheduling overhead increase will affect end-to-end FPS performance
 
-In following module, we will introduce how to use AI optimizer to achieve network optimization. 
+In the other module in advanced section, we will introduce how to use AI optimizer to achieve network optimization to reduce network from 125G to 5G. 
 
 ## Summary
+
+In this module, we use a Caffe detection network (RefineDet) introduce following items: 
+
+- how to use pre-trained model from Vitis AI model zoo, generate dateset and test it with provided scripts 
+- how to start from original network, make necessary modification, conduct trainning and get to the version provide in the model zoo 
+- how to quantize and compile the model with ready-to-use Vitis AI toolchain inside docker 
+- how to deploy the network with Vitis AI library and run on the board
+
+Hope you enjoy it and let's move to next module.
