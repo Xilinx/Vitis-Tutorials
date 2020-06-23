@@ -19,12 +19,12 @@ This tutorial is divided in 3 sections.
   + Review the APIs needed to bind the host and the kernel
   + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
   + [**Module 1:**](./docs/module1_baseline)
-    * Get a performance baseline that can be used as a reference point
+    * Get a performance baseline as a reference point
   + [**Module 2**](./docs/module2_pipeline)
     * Boost throughput with the HLS PIPELINE pragma
   + [**Module 3**](.docs/module3_dependency_removal)
-    * Remove dependencies on memory accesses to improve performance
+    * Remove dependencies on data accesses to improve performance with the DEPENDENCE pragma
   + [**Module 4**](.docs/module4_flatten_loop)
-    * Flatten loop to improve design
+    * Flatten critical loop to improve design
   + [**Module 5**](./docs/module5_dataflow)
-    * Apply the task parallelism optimization pragma
+    * Apply the DATAFLOW task parallelism optimization pragma
