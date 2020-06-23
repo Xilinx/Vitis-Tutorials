@@ -78,7 +78,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
    1. Open a terminal
    2. Setup Vitis
    3. Navigate to the module area compile files
-   4. Run: vitis_analyzer &
+   4. Run: <code>vitis_analyzer &</code>
    5. File menu...
       
 </details>
