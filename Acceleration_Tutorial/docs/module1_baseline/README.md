@@ -71,7 +71,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 </details>
 
 ***
-## Vitis Analyzer for Application End-to-end Timeline Analysis)
+## Vitis Analyzer for Application End-to-end Timeline Analysis
 
 <details>
   <summary>Click to expand! (instructions for <code>Vitis Analyzer</code>)</summary>
