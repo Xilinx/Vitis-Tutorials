@@ -39,12 +39,13 @@ struct Filter {
   virtual ~Filter() {}
   virtual cv::Mat run(FrameInfo& frame) = 0;
 };
-    
+
 /**
- * @brief DpuFilter the element required by DpuThread 
- * 
+ * @brief DpuFilter the element required by DpuThread
+ *
  * @tparam dpu_model_type_t dpu_model struct type such as vitis::ai::Refinedet
- * @tparam ProcessResult Function to process the result, such as drawing the overlay
+ * @tparam ProcessResult Function to process the result, such as drawing the
+ * overlay
  */
 template <typename dpu_model_type_t, typename ProcessResult>
 struct DpuFilter : public Filter {
@@ -75,18 +76,19 @@ struct DpuFilter : public Filter {
    * @param scale   pre-processing scale value
    *
    */
-  void NormalizeInputData(int8_t* input, int rows, int cols, int channels,
+  void NormalizeInputData(uint8_t* input, int rows, int cols, int channels,
                           int stride, const std::vector<float>& mean,
                           const std::vector<float>& scale) {
-  for (auto h = 0; h < rows; ++h) {
-    for (auto w = 0; w < cols; ++w) {
-      for (auto c = 0; c < channels; ++c) {
-        auto value =(input[h * stride + w * channels + c] * 1.0f - mean[c]) *scale[c];
-        input[h * cols * channels + w * channels + c] = (uchar)value;
+    for (auto h = 0; h < rows; ++h) {
+      for (auto w = 0; w < cols; ++w) {
+        for (auto c = 0; c < channels; ++c) {
+          auto value = (input[h * stride + w * channels + c] * 1.0f - mean[c]) *
+                       scale[c];
+          input[h * cols * channels + w * channels + c] = (uchar)value;
+        }
       }
     }
   }
-}
   /**
    * @brief Get the fixpos from the InputTensor.
    *
@@ -155,12 +157,11 @@ struct DpuFilter : public Filter {
     auto rows = layer_data.height;
     auto cols = layer_data.width;
     auto channels = layer_data.channel;
-    LOG(INFO)<<"before frame.dpu_mat.setp[0]"<<frame.dpu_mat.step[0]<<"frame.dpu_mat.setp[1] "<<frame.dpu_mat.step[1]<<" frame.dpu_mat.setp[2]"<<frame.dpu_mat.step[2];
 
-    NormalizeInputData((int8_t*)frame.dpu_mat.data, rows, cols, channels, frame.dpu_mat.step, mean_, real_scale);
-    LOG(INFO)<<"after frame.dpu_mat.setp[0]"<<frame.dpu_mat.step[0]<<"frame.dpu_mat.setp[1] "<<frame.dpu_mat.step[1]<<" frame.dpu_mat.setp[2]"<<frame.dpu_mat.step[2];
+    NormalizeInputData((uint8_t*)frame.dpu_mat.data, rows, cols, channels,
+                       frame.dpu_mat.step, mean_, real_scale);
     auto result = dpu_model_->run(frame.dpu_mat);
-    return processor_(frame.show_mat, result, true);
+    return processor_(frame.show_mat, result, false);
   }
 
   /**
