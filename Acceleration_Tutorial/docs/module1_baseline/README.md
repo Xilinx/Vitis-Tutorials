@@ -20,7 +20,7 @@ The source code for each module is located under the <code>./src</code> director
 ## Build and Emulate with Vitis
 For each module of this tutorial, Vitis can be run via the GUI **or** at the command line:
 <details>
-  <summary>Click to expand! (GUI instructions)</summary>
+  <summary>Click to expand! (<code>Vitis GUI</code> instructions)</summary>
   
    ### Using Vitis via the GUI
    1. Open a terminal
