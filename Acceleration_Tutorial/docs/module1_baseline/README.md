@@ -20,7 +20,7 @@ The source code for each module is located under the <code>./src</code> director
 ## Build and Emulate with Vitis
 For each module of this tutorial, Vitis can be run via the GUI **or** at the command line:
 <details>
-  <summary>Click to expand! (<code>Vitis GUI</code> instructions)</summary>
+  <summary><b>Click to expand! (<code>Vitis GUI</code> instructions)</b></summary>
   
    ### Using Vitis via the GUI
    1. Open a terminal
@@ -54,7 +54,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 ***OR***
 
 <details>
-  <summary>Click to expand! (instructions for <code>make</code>)</summary>
+  <summary><b>Click to expand! (instructions for <code>make</code>)</b></summary>
   
    ### Using **make**
    1. Open a terminal
@@ -74,7 +74,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 ## Vitis Analyzer for Application End-to-end Timeline Analysis
 
 <details>
-  <summary>Click to expand! (instructions for <code>Vitis Analyzer</code>)</summary>
+  <summary><b>Click to expand! (instructions for <code>Vitis Analyzer</code></b>)</summary>
   
    1. Open a terminal and setup Vitis
    2. Run: <code>vitis_analyzer &</code>
@@ -127,7 +127,7 @@ The report has the following structure:
 ## Vitis HLS for Kernel Optimizations
 
 <details>
-  <summary>Click to expand! (instructions for <code>Vitis HLS</code>)</summary>
+  <summary><b>Click to expand! (instructions for <code>Vitis HLS</code>)</b></summary>
   
    1. Open a terminal and setup Vitis
    2. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
