@@ -22,7 +22,7 @@ This design targets ZCU104 Vitis platform. About how to prepare the develop envi
 - To setup the software environment, first to install the my_V4L2 libs and headers.
 
 ```
-cd ${MODULE_6}/V4L2/
+cd ${MODULE_6}/myV4L2/
 mkdir build
 cd build
 cmake ..
