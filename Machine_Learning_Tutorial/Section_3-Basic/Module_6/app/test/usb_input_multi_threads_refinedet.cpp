@@ -36,13 +36,19 @@
 #include <vitis/ai/dpdrm.hpp>
 #endif
 
-// get runners parameters
+// the multithreads number setting for DPU Thread
 static std::vector<int> g_num_of_threads;
+
+// video file name, "0" for camera
 static std::vector<std::string> g_avi_file;
+
+// index number for the DPU runners we create
 static int idx = 0;
 
+// using the queue type with FrameInfo, using safe BoundedQueue
 using queue_t = vitis::ai::BoundedQueue<vitis::ai::FrameInfo>;
-// usage video
+
+// usage help for this application.
 inline void usage_video(const char* progname) {
   std::cout << "usage: " << progname << "      -t <num_of_threads>\n"
             << "      <video file name>\n"
@@ -50,13 +56,8 @@ inline void usage_video(const char* progname) {
   return;
 }
 
-/*// set the wallpaper
-inline cv::Mat& gui_background() {
-  static cv::Mat img;
-  return img;
-}*/
 
-// parse args
+// parse args 
 inline void parse_opt(int argc, char* argv[], int start_pos = 1) {
   int opt = 0;
   optind = start_pos;
@@ -86,75 +87,126 @@ inline void parse_opt(int argc, char* argv[], int start_pos = 1) {
   return;
 }
 
-static cv::Mat process_result(cv::Mat& image,
+
+/**
+ * @brief Drawing overlay after getting the result and the display image from the DPU thread. This function is encapsure into DpuFilter.
+ * 
+ * @param image input image, in this case we using 1080p image
+ * @param result input result
+ * @param is_jpeg 
+ * @return cv::Mat return the iamge with result overlay.
+ */
+static cv::Mat process_result(cv::Mat& image_show,
                               const vitis::ai::RefineDetResult& result,
                               bool is_jpeg);
 
 using namespace vitis::ai;
 int main(int argc, char* argv[]) {
   int start_pos = 2;
+  // register the singal handler for SIGINT
   signal(SIGINT, vitis::ai::MyThread::signal_handler);
   parse_opt(argc, argv, start_pos);
   {
 #if USE_DRM
-    cv::VideoCapture video_cap(g_avi_file[0]);
-
+    
+    /**
+     * @brief determine the input source.
+     * in this v4l2 for usb camera input, cv::VideoCapture for video file input
+     * 
+     */
     std::string file_name(g_avi_file[0]);
     bool is_camera =
         file_name.size() == 1 && file_name[0] >= '0' && file_name[0] <= '9';
     if (is_camera) {
-      // cv::Rect rect1(0,0,640,360);
-      // GuiThread::rects.emplace_back(rect1);
       LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "Using camera";
     } else {
+      cv::VideoCapture video_cap(g_avi_file[0]);
       LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "Using file";
       LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "width " << video_cap.get(3);
       LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "height " << video_cap.get(4);
       cv::Rect rect2(0, 0, (int)video_cap.get(3), (int)video_cap.get(4));
-      //  GuiThread::rects.emplace_back(rect2);
+      video_cap.release();
     }
-    video_cap.release();
+    
 #else
     cv::moveWindow(std::string{"CH-"} + std::to_string(0), 500, 500);
     LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
         << "Window name " << std::string{"CH-"} + std::to_string(0);
 #endif
-    auto runners_ = vitis::ai::DpuRunner::create_dpu_runner(
-        "/usr/share/vitis_ai_library/models/refinedet_pruned_0_8");
-    auto inputs = dynamic_cast<vart::dpu::DpuRunnerExt*>(runners_[idx].get())
-                      ->get_inputs();
-    auto scales = dynamic_cast<vart::dpu::DpuRunnerExt*>(runners_[idx].get())
-                      ->get_input_scale();
 
-    auto channel_id = 0;
-    std::vector<std::string> g_avi_file{"0"};
-    auto decode_queue = std::unique_ptr<queue_t>{new queue_t{5}};
+   auto decode_queue = std::unique_ptr<queue_t>{new queue_t{5}};
     
-
+  /**
+   * @brief Create a decode_thread for getting image from usb camera.
+   * Only one channel input, channel_id=0
+   */
     auto decode_thread = std::unique_ptr<DecodeThread>(
-        new DecodeThread{channel_id, g_avi_file[0], decode_queue.get()});
+        new DecodeThread{0, file_name, decode_queue.get()});
+
+  /**
+   * @brief Create a Dpu Thread which will contain g_num_of_threads DPU Filter.  
+   * Decode thread is a producer and DPU is a consumer with "g_num_of_threads" Filters.
+   * 
+   */
     auto dpu_thread = std::vector<std::unique_ptr<DpuThread>>{};
+
+    /**
+     * @brief using frame_id in FrameInfo to sort the queue
+     * 
+     */
     auto sorting_queue =
         std::unique_ptr<queue_t>(new queue_t(5 * g_num_of_threads[0]));
+
+    /**
+     * @brief create an GUI thread, copy the image to the drm frame buffer to show the result.
+     * 
+     */
     auto gui_thread = vitis::ai::GuiThread::instance();
+
+    /**
+     * @brief the FrameInfo need to be display should copy to gui_queue.
+     * 
+     */
     auto gui_queue = gui_thread->getQueue();
-    const auto model_name = "refinedet_pruned_0_8";
+
+    /**
+     * @brief setting the model_name 
+     * 
+     */
+    const auto model_name = argv[1];
+    /**
+     * @brief push back the g_num_of_threads of DPU Filters into DPU THREAD
+     * 
+     */
     for (int i = 0; i < g_num_of_threads[0]; ++i) {
       dpu_thread.emplace_back(new DpuThread(
-          create_dpu_filter(
-              [model_name]() {
-                return vitis::ai::RefineDet::create(model_name, 0);
-              },
-              process_result, inputs),
+          create_dpu_filter( [model_name]() {return vitis::ai::RefineDet::create(model_name, 0);}, process_result), 
           decode_queue.get(),sorting_queue.get(), std::to_string(i)));
     }
 
     auto sorting_thread = std::unique_ptr<vitis::ai::SortingThread>(
         new SortingThread(sorting_queue.get(), gui_queue, std::to_string(0)));
-    // start everything
+   /**
+    * @brief run the MyThread::start_all function
+    * 
+    */
     MyThread::start_all();
+
+    /**
+     * @brief wait for all Gui thread finished
+     * 
+     */
     gui_thread->wait();
+
+    /**
+     * @brief stop all the threads.
+     * 
+     */
     MyThread::stop_all();
+    /**
+     * @brief Stop the decode thread/dpu thread/sort thread.
+     * 
+     */
     MyThread::wait_all();
   }
   LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "BYEBYE";
