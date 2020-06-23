@@ -26,4 +26,4 @@ Under certain complex scenarios automatic dependence analysis can be too conserv
 
      IMPORTANT! Specifying a false dependency, when in fact the dependency is not false, 
      is likely to result in incorrect hardware. 
-     Be sure dependencies are correct (either true or false)!
+     Be sure dependencies are correct (either true or false)! 
