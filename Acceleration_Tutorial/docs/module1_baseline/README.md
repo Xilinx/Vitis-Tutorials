@@ -16,7 +16,7 @@ The source code for each module is located under the <code>./src</code> director
      + The kernel writes data back to global memory and notifies the host that it has completed its task.
      + The host program reads data back from global memory into the host memory and continues processing as needed
   + Take a look at the kernel code.  This code will be compiled inside the Vitis tools and transformed into an hardware description that the Vivado tool can implement onto Xilinx devices. As we'll the goal on that code is to make it as efficient as possible in regard to the available hardware.
-
+***
 ## Build and Emulate with Vitis
 For each module of this tutorial, Vitis can be run via the GUI **or** at the command line:
 <details>
@@ -70,6 +70,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
       
 </details>
 
+***
 ## Vitis Analyzer (end-to-end timeline analysis)
 
 <details>
@@ -83,7 +84,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
       
 </details>
 
-
+***
 ## Vitis HLS (kernel optimizations)
 
 <details>
