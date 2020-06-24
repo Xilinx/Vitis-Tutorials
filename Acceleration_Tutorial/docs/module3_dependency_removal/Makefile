@@ -124,9 +124,9 @@ build: $(BUILD_DIR)/$(HOST_EXE) $(BUILD_DIR)/$(XCLBIN) $(BUILD_DIR)/$(EMCONFIG_F
 run: build
 	cp xrt.ini $(BUILD_DIR);
 ifeq ($(TARGET), hw)
-	cd $(BUILD_DIR) && unset XCL_EMULATION_MODE; ./test.exe  -xclbin $(BUILD_DIR)/$(XCLBIN) -runs 2 -M 512 -N 512 -seed 12;
+	cd $(BUILD_DIR) && unset XCL_EMULATION_MODE; ./test.exe  -xclbin $(XCLBIN) -runs 1 -M 512 -N 512 -seed 12;
 else
-	cd $(BUILD_DIR) && export XCL_EMULATION_MODE=$(TARGET); ./test.exe  -xclbin $(XCLBIN) -runs 2 -M 64 -N 64 -seed 12;
+	cd $(BUILD_DIR) && export XCL_EMULATION_MODE=$(TARGET); ./test.exe  -xclbin $(XCLBIN) -runs 1 -M 64 -N 64 -seed 12;
 endif
 
 
