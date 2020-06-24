@@ -24,9 +24,9 @@ This tutorial is divided in 3 sections.
     * Get a performance baseline as a reference point
   + [**Module 2**](./docs/module2_pipeline)
     * Boost throughput with the HLS PIPELINE pragma
-  + [**Module 3**](.docs/module3_dependency_removal)
+  + [**Module 3**](./docs/module3_dependency_removal)
     * Remove dependencies on data accesses to improve performance with the DEPENDENCE pragma
-  + [**Module 4**](.docs/module4_flatten_loop)
+  + [**Module 4**](./docs/module4_flatten_loop)
     * Flatten critical loop to improve design
   + [**Module 5**](./docs/module5_dataflow)
     * Apply the DATAFLOW task parallelism optimization pragma
