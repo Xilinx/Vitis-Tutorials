@@ -191,7 +191,7 @@ int main(int argc, const char* argv[]) {
     std::cout << "INFO: Finish kernel execution" << std::endl;
     int exec_time = diff(&tend, &tstart);
     std::cout << "INFO: FPGA execution time of " << num_runs << " runs:" << exec_time << " us\n"
-              << "INFO: Average executiom per run: " << exec_time / num_runs << " us\n";
+              << "INFO: Average execution time per run: " << exec_time / num_runs << " us\n";
 
     // Data transfer from device buffer to host buffer
     q.enqueueMigrateMemObjects(ob_io, 1, nullptr, nullptr); // 1 : migrate from dev to host
@@ -209,25 +209,26 @@ int main(int argc, const char* argv[]) {
     std::cout << "dataAN = " << dataAN << std::endl;
     std::cout << "dataAM = " << dataAM << std::endl;
 
-    //    std::cout<<"------ dataC ---------"<<std::endl;
-    //    for (int i = 0; i < dataAM; i++) {
-    //        for (int j = 0; j < dataAN; j++) {
-    //            std::cout << dataC[i][j] <<"\t";
-    //        }
-    //        std::cout<<std::endl;
-    //    }
-    //    std::cout<<"------ dataA ---------"<<std::endl;
-    //    for (int i = 0; i < dataAM; i++) {
-    //        for (int j = 0; j < dataAN; j++) {
-    //            if(j <= i){
-    //                std::cout << dataA[i*dataAN+j] <<"\t";
-    //            }else{
-    //                std::cout << 0 <<"\t";
-    //            }
-    //        }
-    //        std::cout<<std::endl;
-    //    }
-    //    std::cout<<"---------------------"<<std::endl;
+
+   //     std::cout<<"------ dataC ---------"<<std::endl;
+   //     for (int i = 0; i < dataAM; i++) {
+   //         for (int j = 0; j < dataAN; j++) {
+   //             std::cout << dataC[i][j] <<"\t";
+   //         }
+   //         std::cout<<std::endl;
+   //     }
+   //     std::cout<<"------ dataA ---------"<<std::endl;
+   //     for (int i = 0; i < dataAM; i++) {
+   //         for (int j = 0; j < dataAN; j++) {
+   //             if(j <= i){
+   //                 std::cout << dataA[i*dataAN+j] <<"\t";
+   //             }else{
+   //                 std::cout << 0 <<"\t";
+   //             }
+   //         }
+   //         std::cout<<std::endl;
+   //     }
+   //     std::cout<<"---------------------"<<std::endl;
 
     std::cout << "-------------- " << std::endl;
     if (errA > 0.0001) {
