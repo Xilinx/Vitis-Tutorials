@@ -18,7 +18,7 @@ The source code for each module is located under their local <code>./src</code> 
   + Take a look at the kernel code.  This code will be compiled inside the Vitis tools and transformed into an hardware description that the Vivado tool can implement onto Xilinx devices. As we'll the goal on that code is to make it as efficient as possible in regard to the available hardware.
 ***
 ## Build and Emulate with Vitis
-For each module of this tutorial, Vitis can be run via the GUI **or** at the command line:
+For each module of this tutorial, Vitis can be run via the GUI **or** at the command line (more convenient in the context of this tutorial:
 <details>
   <summary><b>Click to expand! (<code>Vitis GUI</code> instructions)</b></summary>
   
@@ -64,7 +64,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
    5. Run: make run TARGET=hw_emu (for a more detailed emulation - takes 10 minutes or more)  
       * Avoid the "hw" which would take over an hour to run
    6. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
-      * There should be another cholesky_kernel directory at that level
+      * There should be another <code>cholesky_kernel</code> directory at that level
    7. Run: vitis_hls -p cholesky_kernel (started the high-level synthesis GUI)
    8. Now that HLS is started, see instructions below for the rest...
       
@@ -73,15 +73,23 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 ***
 ## Vitis Analyzer for Application End-to-end Timeline Analysis
 
+Vitis Analyzer is a graphical tool which lets you browse many aspects of the design starting from the whole system down to the details of the kernel.
+
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis Analyzer</code></b>)</summary>
   
    1. Open a terminal and setup Vitis
    2. Run: <code>vitis_analyzer &</code>
-   3. Navigate to the module area compile files
-   4. File menu...
+   3. File menu -> Import Summary...
+   4. Browse to <code>./build</code>
+   5. Select cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (prefixed with the blue "play" pictogram)
+   6. Navigate around by yourself ([see this 45 seconds looping gif](../images/analyzer.gif)) to see how to go around in Vitis Analyzer)
+      Make sure to check:
+      1. Profile summary
+      2. Application timeline - has detailed time information for both host and kernel
+      3. Guidance reports - indicates area of improvement
       
-The report has the following structure:
+The application timeline has the following structure:
 
 * *Host*
 
@@ -126,14 +134,17 @@ The report has the following structure:
 ***
 ## Vitis HLS for Kernel Optimizations
 
+In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops (what's often refered to as the "fabric") are compiled with the high-level synthesis tool Vitis HLS.  Vitis automatically uses Vitis HLS (no need to invoke the tool "manually") but for this tutorial we go deeper and run Vitis HLS to gain additional insights about the underlying synthesis technology and the Cholesky kernel algorithm.
+
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis HLS</code>)</b></summary>
   
    1. Open a terminal and setup Vitis
-   2. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
-      * There should be another cholesky_kernel directory at that level
-   3. Run: vitis_hls -p cholesky_kernel (started the high-level synthesis GUI)
-   4. Now that HLS is started, see instructions below for the rest...
+   2. Navigate to <code>./build/cholesky_kernel_hw_emu/cholesky_kernel</code>
+      * There should be yet another cholesky_kernel directory at that level
+   3. Run: <code>vitis_hls -p cholesky_kernel</code> (to start the Vitis high-level synthesis GUI)
+   4. Vitis HLS now shows the high-level synthesis report
+   5. Expand on the loop to check its metrics
       
 </details>
 
