@@ -73,6 +73,8 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 ***
 ## Vitis Analyzer for Application End-to-end Timeline Analysis
 
+Vitis Analyzer is a graphical tool which lets you browse many aspects of the design starting from the whole system down to the details of the kernel.
+
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis Analyzer</code></b>)</summary>
   
