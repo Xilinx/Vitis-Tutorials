@@ -148,7 +148,8 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
    6. Expand the loops and function in the **Performance & Resources** section
    7. Right click on the II violation as shown in this clip to detects its source: [HLS animation](../images/HLS_anim.gif)
    
-   We see an II violation of 8 for two loops around this expression and another very similar:
+   We see an II violation of 8 for two loops in this function.
+   One of them looks like this:
    ```cpp
    // Loop only takes one element every 8 clock cycles!!!
    // We expected one every cycle (II of 1)
@@ -157,6 +158,7 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
        tmp += dataA[j][k] * dataA[j][k];
    }
    ```
+   So what's the issue? What we use here are data type of type float (double in fact) with an accumulation and the Xilinx device in the U50 cards does not have dedicated floating point arithmetic units and cannot compute an accumulation in a single clock cycle at a Fmax of 300MHz (which is the requirement for this platform).  The silicon needs 8 cycles at 300MHz to perform the multiply add and needs to finist the operation before starting the next. So we can only compute samples one after another by intervals of 8 cycles.
       
 </details>
 
