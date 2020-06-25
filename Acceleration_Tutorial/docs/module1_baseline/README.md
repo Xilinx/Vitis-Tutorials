@@ -162,11 +162,31 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
    ```
 So what's the issue? What we use here are data type of type float (double in fact) with an accumulation and the Xilinx device in the U50 cards does not have dedicated floating point arithmetic units and cannot compute an accumulation in a single clock cycle at a Fmax of 300MHz (which is the requirement for this platform).  The silicon needs 8 cycles at 300MHz to perform the multiply add and needs to finist the operation before starting the next. So we can only compute samples one after another by intervals of 8 cycles.
 
-### Kernel Latency
+#### Kernel Latency
 
 
-Let's now look at latency.  In this example the size of matrices we compute is 64x64.
-Let's call that sze parameter of 64 N.
+Let's now look at latency.  In the example we ran the size of the matrices is 64x64.
+But let's call that size parameter N.
+
+<code>cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</code>
+
+    + Detail: 
+    * Instance: 
+       N/A
+
+    * Loop: 
+    +-----------------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
+    |                                   |  Latency (cycles) |   Iteration  |  Initiation Interval  |    Trip    |          |
+    |             Loop Name             |   min   |   max   |    Latency   |  achieved |   target  |    Count   | Pipelined|
+    +-----------------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
+    |- VITIS_LOOP_32_1_VITIS_LOOP_33_2  |        ?|        ?|             3|          1|          1|           ?|    yes   |
+    |- Loop_first_col                   |        ?|        ?|            34|          1|          1|           ?|    yes   |
+    |- Loop_col                         |        ?|        ?|             ?|          -|          -|           ?|    no    |
+    | + Loop_diag                       |       17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
+    | + Loop_row                        |        ?|        ?| 61 ~ 2097205 |          -|          -|           ?|    no    |
+    |  ++ Loop_vec_mul                  |       17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
+    |- VITIS_LOOP_67_3_VITIS_LOOP_68_4  |        ?|        ?|             4|          1|          1|           ?|    yes   |
+    +-----------------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
 
 
       
