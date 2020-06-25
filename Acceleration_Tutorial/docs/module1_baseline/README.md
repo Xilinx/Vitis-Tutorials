@@ -134,6 +134,8 @@ The application timeline has the following structure:
 ***
 ## Vitis HLS for Kernel Optimizations
 
+In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops are compiled with the high-level synthesis tool Vitis HLS.  Vitis automatically uses Vitis HLS without user intervention but for this tutorial we run the tool to gain additional insights about the kernel. 
+
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis HLS</code>)</b></summary>
   
