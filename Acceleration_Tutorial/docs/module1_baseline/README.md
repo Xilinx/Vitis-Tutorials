@@ -150,8 +150,8 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
    
    We see an II violation of 8 for two loops around this expression and another very similar:
    ```cpp
-   # Loop only takes one element every 8 clock cycles!!!
-   # We expected one every cycle (II of 1)
+   // Loop only takes one element every 8 clock cycles!!!
+   // We expected one every cycle (II of 1)
    for (int k = 0; k < j; k++) 
    {
        tmp += dataA[j][k] * dataA[j][k];
