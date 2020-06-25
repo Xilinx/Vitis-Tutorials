@@ -86,10 +86,10 @@ Vitis Analyzer is a graphical tool which lets you browse many aspects of the des
    6. Navigate around by yourself
       Make sure to check:
       1. Profile summary
-      2. Application timeline
-      3. Guidance reports
+      2. Application timeline - has detailed time information for both host and kernel
+      3. Guidance reports - indicates area of improvement
       
-The report has the following structure:
+The application timeline has the following structure:
 
 * *Host*
 
@@ -139,9 +139,10 @@ The report has the following structure:
   
    1. Open a terminal and setup Vitis
    2. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
-      * There should be another cholesky_kernel directory at that level
-   3. Run: vitis_hls -p cholesky_kernel (started the high-level synthesis GUI)
-   4. Now that HLS is started, see instructions below for the rest...
+      * There should be yet another cholesky_kernel directory at that level
+   3. Run: <code>vitis_hls -p cholesky_kernel</code> (to start the Vitis high-level synthesis GUI)
+   4. Vitis HLS now shows the high-level synthesis report
+   5. Expand on the loop to check its metrics
       
 </details>
 
