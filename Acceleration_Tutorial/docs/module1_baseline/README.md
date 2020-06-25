@@ -171,18 +171,18 @@ But let's call that size parameter N.
 <code>cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</code>
 
     * Loop: 
-    +-----------------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
-    |                                   |  Latency (cycles) |   Iteration  |  Initiation Interval  |    Trip    |          |
-    |             Loop Name             |   min   |   max   |    Latency   |  achieved |   target  |    Count   | Pipelined|
-    +-----------------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
-    |- VITIS_LOOP_32_1_VITIS_LOOP_33_2  |        ?|        ?|             3|          1|          1|           ?|    yes   |
-    |- Loop_first_col                   |        ?|        ?|            34|          1|          1|           ?|    yes   |
-    |- Loop_col                         |        ?|        ?|             ?|          -|          -|           ?|    no    |
-    | + Loop_diag                       |       17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
-    | + Loop_row                        |        ?|        ?| 61 ~ 2097205 |          -|          -|           ?|    no    |
-    |  ++ Loop_vec_mul                  |       17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
-    |- VITIS_LOOP_67_3_VITIS_LOOP_68_4  |        ?|        ?|             4|          1|          1|           ?|    yes   |
-    +-----------------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
+    +-------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
+    |                         |  Latency (cycles) |   Iteration  |  Initiation Interval  |    Trip    |          |
+    |         Loop Name       |   min   |   max   |    Latency   |  achieved |   target  |    Count   | Pipelined|
+    +-------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
+    |- VITIS_LOOP_32_1_VITIS  |        ?|        ?|             3|          1|          1|           ?|    yes   |
+    |- Loop_first_col         |        ?|        ?|            34|          1|          1|           ?|    yes   |
+    |- Loop_col               |        ?|        ?|             ?|          -|          -|           ?|    no    |
+    | + Loop_diag             |       17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
+    | + Loop_row              |        ?|        ?| 61 ~ 2097205 |          -|          -|           ?|    no    |
+    |  ++ Loop_vec_mul        |       17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
+    |- VITIS_LOOP_67_3_VITIS  |        ?|        ?|             4|          1|          1|           ?|    yes   |
+    +-------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
 
 Notice the <code>VITIS</code> prefixed loops, there are loops automatically labelled by Vitis HLS since none were given in the source code for these loops.  The other loops had a lable and we can see it in the table.
 Notice the question marks, they denote a latency that cannot be caalculated because dependent on scalar input to the function and indeed in this example the matrix size is configurable and latency will vary depending on the size.
