@@ -18,7 +18,7 @@ The source code for each module is located under their local <code>./src</code> 
   + Take a look at the kernel code.  This code will be compiled inside the Vitis tools and transformed into an hardware description that the Vivado tool can implement onto Xilinx devices. As we'll the goal on that code is to make it as efficient as possible in regard to the available hardware.
 ***
 ## Build and Emulate with Vitis
-For each module of this tutorial, Vitis can be run via the GUI **or** at the command line:
+For each module of this tutorial, Vitis can be run via the GUI **or** at the command line (more convenient in the context of this tutorial:
 <details>
   <summary><b>Click to expand! (<code>Vitis GUI</code> instructions)</b></summary>
   
