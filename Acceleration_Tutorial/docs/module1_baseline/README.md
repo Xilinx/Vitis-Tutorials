@@ -146,7 +146,7 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
    4. Vitis HLS now shows the high-level synthesis report
    5. In the GUI expand the **Synthesis Summary Report** window
    6. Expand the loops and function in the **Performance & Resources** section
-   7. Right click on the II violation as shown in this clip to detects its source: [HLS animation](../images/HLS_anim.gif)
+   7. Right click on the II violation as shown in this clip to detect its origin in the C++ source: [HLS animation](../images/HLS_anim.gif)
    
    We see an II violation of 8 for two loops in this function.
    One of them looks like this:
