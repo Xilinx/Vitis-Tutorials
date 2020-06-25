@@ -144,7 +144,9 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
       * There should be yet another cholesky_kernel directory at that level
    3. Run: <code>vitis_hls -p cholesky_kernel</code> (to start the Vitis high-level synthesis GUI)
    4. Vitis HLS now shows the high-level synthesis report
-   5. Expand the report window, study the loop and function latentency and throughput as shown here in this short clip: [HLS animation](../images/HLS_anim.gif))
+   5. In the GUI expand the **Synthesis Summary Report** window
+   6. Expand the loops and function in the **Performance & Resources** section
+   7. Right click on the II violation as shown in this clip to detects its source: [HLS animation](../images/HLS_anim.gif))
       
 </details>
 
