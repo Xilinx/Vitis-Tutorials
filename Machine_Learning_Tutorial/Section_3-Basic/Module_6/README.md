@@ -30,7 +30,7 @@ make
 make install
 ```
 
-- Test the sample to check whether the my_v4l2s lirary can work. After the test example works correctly you will find two JPEG file generated under your execute directory.
+- Test the libmy_v4l2s.so library to see if it works properly with the test example. When the test example works, you will notice that two JPEG files are generated in your execution directory.
 ```
 ./test
 ```
