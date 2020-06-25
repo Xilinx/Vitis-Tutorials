@@ -138,7 +138,7 @@ The application timeline has the following structure:
   <summary><b>Click to expand! (instructions for <code>Vitis HLS</code>)</b></summary>
   
    1. Open a terminal and setup Vitis
-   2. Navigate to ./build/cholesky_kernel_hw_emu/cholesky_kernel
+   2. Navigate to <code>./build/cholesky_kernel_hw_emu/cholesky_kernel</code>
       * There should be yet another cholesky_kernel directory at that level
    3. Run: <code>vitis_hls -p cholesky_kernel</code> (to start the Vitis high-level synthesis GUI)
    4. Vitis HLS now shows the high-level synthesis report
