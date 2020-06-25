@@ -146,7 +146,12 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
    4. Vitis HLS now shows the high-level synthesis report
    5. In the GUI expand the **Synthesis Summary Report** window
    6. Expand the loops and function in the **Performance & Resources** section
-   7. Right click on the II violation as shown in this clip to detects its source: [HLS animation](../images/HLS_anim.gif))
+   7. Right click on the II violation as shown in this clip to detects its source: [HLS animation](../images/HLS_anim.gif)
+   
+   Alright, we seem to have an II violation around this expression:
+   ```cpp
+   tmp += dataA[j][k] * dataA[j][k];
+   ```
       
 </details>
 
