@@ -148,9 +148,11 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
    6. Expand the loops and function in the **Performance & Resources** section
    7. Right click on the II violation as shown in this clip to detects its source: [HLS animation](../images/HLS_anim.gif)
    
-   Alright, we seem to have an II violation around this expression:
+   We see an II violation of 8 for two loops around this expression and another very similar:
    ```cpp
-   for (int k = 0; k < j; k++)
+   # Loop only takes one element every 8 clock cycles!!!
+   # We expected one every cycle (II of 1)
+   for (int k = 0; k < j; k++) 
    {
        tmp += dataA[j][k] * dataA[j][k];
    }
