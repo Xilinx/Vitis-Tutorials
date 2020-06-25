@@ -83,7 +83,7 @@ Vitis Analyzer is a graphical tool which lets you browse many aspects of the des
    3. File menu -> Import Summary...
    4. Browse to <code>./build</code>
    5. Select cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (prefixed with the blue "play" pictogram)
-   6. Navigate around by yourself
+   6. Navigate around by yourself ([see this 45 seconds looping gif](../images/analyzer.gif)) to see how to go around in Vitis Analyzer)
       Make sure to check:
       1. Profile summary
       2. Application timeline - has detailed time information for both host and kernel
@@ -134,7 +134,7 @@ The application timeline has the following structure:
 ***
 ## Vitis HLS for Kernel Optimizations
 
-In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops are compiled with the high-level synthesis tool Vitis HLS.  Vitis automatically uses Vitis HLS without user intervention but for this tutorial we run the tool to gain additional insights about the underlying synthesis technology and our cholesky kernel.
+In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops (what's often refered to as the "fabric") are compiled with the high-level synthesis tool Vitis HLS.  Vitis automatically uses Vitis HLS (no need to invoke the tool "manually") but for this tutorial we go deeper and run Vitis HLS to gain additional insights about the underlying synthesis technology and the Cholesky kernel algorithm.
 
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis HLS</code>)</b></summary>
