@@ -83,7 +83,7 @@ Vitis Analyzer is a graphical tool which lets you browse many aspects of the des
    3. File menu -> Import Summary...
    4. Browse to <code>./build</code>
    5. Select cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (prefixed with the blue "play" pictogram)
-   6. Navigate around by yourself ([see this 45 seconds looping gif](../images/analyzer.gif)) to see how to go around in Vitis Analyzer)
+   6. Navigate around by yourself ([see this 45 seconds looping gif](../images/analyzer_anim.gif)) to see how to go around in Vitis Analyzer)
       Make sure to check:
       1. Profile summary
       2. Application timeline - has detailed time information for both host and kernel
