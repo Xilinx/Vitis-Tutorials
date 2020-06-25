@@ -150,7 +150,10 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
    
    Alright, we seem to have an II violation around this expression:
    ```cpp
-   tmp += dataA[j][k] * dataA[j][k];
+   for (int k = 0; k < j; k++)
+		{
+			tmp += dataA[j][k] * dataA[j][k];
+		}
    ```
       
 </details>
