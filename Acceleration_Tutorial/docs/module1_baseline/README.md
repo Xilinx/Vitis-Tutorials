@@ -170,10 +170,6 @@ But let's call that size parameter N.
 
 <code>cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</code>
 
-    + Detail: 
-    * Instance: 
-       N/A
-
     * Loop: 
     +-----------------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
     |                                   |  Latency (cycles) |   Iteration  |  Initiation Interval  |    Trip    |          |
@@ -188,7 +184,8 @@ But let's call that size parameter N.
     |- VITIS_LOOP_67_3_VITIS_LOOP_68_4  |        ?|        ?|             4|          1|          1|           ?|    yes   |
     +-----------------------------------+---------+---------+--------------+-----------+-----------+------------+----------+
 
-
+Notice the <code>VITIS</code> prefixed loops, there are loops automatically labelled by Vitis HLS since none were given in the source code for these loops.  The other loops had a lable and we can see it in the table.
+Notice the question marks, they denote a latency that cannot be caalculated because dependent on scalar input to the function and indeed in this example the matrix size is configurable and latency will vary depending on the size.
       
 </details>
 
