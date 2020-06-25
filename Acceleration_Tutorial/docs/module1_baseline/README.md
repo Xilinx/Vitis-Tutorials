@@ -82,7 +82,7 @@ Vitis Analyzer is a graphical tool which lets you browse many aspects of the des
    2. Run: <code>vitis_analyzer &</code>
    3. File menu -> Import Summary...
    4. Browse to <code>./build</code>
-   5. Select cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (the one with the blue "play" :arrow_forward:)
+   5. Select cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (prefixed with the blue "play" pictogram)
    6. Navigate around by yourself
       Make sure to check:
       1. Profile summary
