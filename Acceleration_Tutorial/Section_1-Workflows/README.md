@@ -21,9 +21,4 @@ Note that this solver is included as part the official Vitis accelerated librari
 
 For our purpose, we will start with a simple description implemented in C++ and explain how to adapt it for acceleration with an Alveo U50 card.
 
-The source code can be found here: <code>./src/reference.cpp</code>
-Open the source code and get familiar with the algorithm.
-To run the code, navigate to <code>./build</code> and run <code>make</code>.
-
-Make a note of the performance numbers for different size of matrices: 16, 64, 256...
-These numbers will become reference data points for later during this tutorial.
+In the next section, you'll learn how to prepare your environment to run the tutorial.
