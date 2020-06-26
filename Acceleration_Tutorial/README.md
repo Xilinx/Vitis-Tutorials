@@ -27,7 +27,10 @@ This tutorial is divided in 3 sections.
     * Explicit use of the HLS PIPELINE pragma
   + [**Module 3**](./docs/module3_dependency_removal)
     * Remove dependencies on data accesses to improve performance with the DEPENDENCE pragma
+    * Run Vitis, Vitis Analyzer and Vitis HLS
   + [**Module 4**](./docs/module4_flatten_loop)
     * Flatten critical loop to improve design
+    * Run Vitis, Vitis Analyzer and Vitis HLS
   + [**Module 5**](./docs/module5_dataflow)
     * Apply the DATAFLOW task parallelism optimization pragma
+    * Run Vitis, Vitis Analyzer and Vitis HLS
