@@ -195,9 +195,10 @@ A couple of things to notice
  The <code>Loop_col</code> loop runs N times ( (<code>Loop_diag</code> is N * 18) + (<code>Loop_row</code> is N * (N + 18))
  Last loop also requires N iterations like the first one.
  
- Some we can estimate the duration to be: N(18N+N(18N)+N= 18N<sup>3</sup>
+ Some we can roughly estimate the duration to be: 
+ N(18N+N(18N+residual1)+residual2) = 18N<sup>3</sup> + (18+residual1)N<sup>2</sup> + residual2.N
 
-
+So essentially the latency goes by the cube of N, the size of the matrix. 
 
 </details>
 
