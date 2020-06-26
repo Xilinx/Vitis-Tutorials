@@ -9,7 +9,8 @@
 This tutorial is divided in 3 sections.
 * [**Section 1**](./Section_1-Workflows) (~10 mins):
   + A walkthrough of the algorithm chosen for the tutorial: the Cholesky matrix decomposition 
-  + Compile and run a version of the [algorithm on the CPU](./docs/cpu_src)
+  + [**Cholesky on the CPU:**](./docs/cpu_src)
+    * Evaluate the CPU version of the algorithm
   + Evaluate the performance
 * [**Section 2**](./Section_2-System_Setup) (a couple of minutes if Alveo U50 card is already installed):
   + Setup the Vitis development tools
@@ -18,8 +19,6 @@ This tutorial is divided in 3 sections.
   + Re-organize the code to create both a host and a kernel program
   + Review the APIs needed to bind the host and the kernel
   + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
-  + [**Cholesky on the CPU:**](./docs/cpu_src)
-    * Evaluate the CPU version of the algorithm
   + [**Module 1:**](./docs/module1_baseline)
     * Get a performance baseline as a reference point
   + [**Module 2**](./docs/module2_pipeline)
