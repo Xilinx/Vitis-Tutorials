@@ -11,13 +11,13 @@ This section is divided in 5 modules (each module is located under the <code>./d
   + Understand the OpenCL APIs that help connect host program to the kernel
   + Verify the algorithm results through emulation both at the software level (sw_emu) and the hardware level (hw_emu)
   + Evaluate the performance by visualizing the timeline trace with Vitis Analyzer
-* [**Module 2**](../docs/module2_pipeline): Apply a first level of optimization with the **PIPELINE** directive to improve throughput
-  + Using the module 1 results as a starting point to review the kernel performance in Vitis HLS
-  + Run the sw_emu step and use the hw_emu results to quantify the performance improvement 
-* [**Module 3**](../docs/module3_dependency_removal): Analyze and solve false dependencies to further improve the kernel
-  + Reuse the results from module 2 to study how these dependencies come into play.
+  + Launch Vitis HLS to review the kernel optimizations
+* [**Module 2**](../docs/module2_pipeline): This version of the code explicitely applies the **PIPELINE** directive.
+  + Learn about the pragma and its options 
+* [**Module 3**](../docs/module3_dependency_removal): Analyze and solve false dependencies to improve the kernel
+  + Understand the changes applied in the code to circumvent the throughput bottleneck.
   + Apply the **DEPENDENCE** pragma
-  + Rerun the kernel and observe the results
+  + Rerun the kernel and observe the results through Vitis Analyzer
 * [**Module 4**](../docs/module4_flatten_loop): Merge and flatten critical loop to implement more parallelism
   + Reuse the results from module 3 and flatten a critical loop to gain more parallelism.
   + Rerun and observe the impact on resources, latency and throughput
