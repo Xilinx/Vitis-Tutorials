@@ -20,6 +20,9 @@ This tutorial is divided in 3 sections.
   + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
   + [**Module 1:**](./docs/module1_baseline)
     * Get a performance baseline as a reference point
+    * Run Vitis in GUI mode or via <code>make</code>
+    * Run Vitis Analyzer to visualize the application timeline
+    * Run Vitis HLS to study how kernel code is optimized
   + [**Module 2**](./docs/module2_pipeline)
     * Explicit use of the HLS PIPELINE pragma
   + [**Module 3**](./docs/module3_dependency_removal)
