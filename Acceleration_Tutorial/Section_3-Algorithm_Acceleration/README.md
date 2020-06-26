@@ -9,7 +9,7 @@
 This section is divided in 5 modules (each module is located under the <code>./docs</code> directory and comes with its own readme with step-by-step instructions).
 * [**Module 1**](../docs/module1_baseline): Setting up the design and establish a performance **baseline**
   + Understand the OpenCL APIs that help connect host program to the kernel
-  + Verify the algorithm results through emulation both at the software level (sw_emu) and the hardware level (hw_emu)
+  + Verify results through emulation both at the software level (sw_emu) and the hardware level (hw_emu)
   + Evaluate the performance by visualizing the timeline trace with Vitis Analyzer
   + Launch Vitis HLS to review the kernel optimizations
 * [**Module 2**](../docs/module2_pipeline): This version of the code explicitely applies the **PIPELINE** directive.
