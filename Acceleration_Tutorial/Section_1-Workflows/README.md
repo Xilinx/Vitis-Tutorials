@@ -7,21 +7,18 @@
 </table>
 
 
-In the Vitis™ core development flow, an application program is split between a host application and hardware accelerated kernels. The host application is developed in C/C++ with OpenCL™ API calls. The hardware kernels, on the other hand, can be developed in C/C++, OpenCL C, or RTL.
+In the Vitis™ core development flow, an application program is split between a host application and hardware accelerated kernels.
+- The host application is developed in C/C++ with OpenCL™ API calls
+- The hardware kernels can be developed in C/C++, OpenCL C, or RTL.
 
-This tutorial is based on a C++ kernel that we'll optimize for highest throughput using the Xilinx high-level synthesis: Vitis HLS. 
+This tutorial is based on a C++ kernel that we'll optimize for highest throughput. 
 
 The algorithm to accelerate is a common linear algebra solver, the decomposition of a Hermitian, positive-definite matrix into the product of a lower triangular matrix and its conjugate transpose.  For this purpose we will use the Cholesky decomposition or Cholesky factorization (pronounced /ʃo-LESS-key/).  This solver is useful for several numerical problems, in particular for Monte Carlo simulations.
 
 ![Cholesky description](../docs/images/description.png)
 
-This solver is included as part the official Vitis accelerated libraries, here is a link to its documentation: https://xilinx.github.io/Vitis_Libraries/solver/guide_L2/L2_api.html#potrf
+Note that this solver is included as part the official Vitis accelerated libraries, here is a link to its documentation: https://xilinx.github.io/Vitis_Libraries/solver/guide_L2/L2_api.html#potrf
 
-For our purpose, we will start with a simple description implemented in C++.
+For our purpose, we will start with a simple description implemented in C++ and explain how to adapt it for acceleration with an Alveo U50 card.
 
-The source code can be found here: <code>./src/reference.cpp</code>
-Open the source code and get familiar with the algorithm.
-To run the code, navigate to <code>./build</code> and run <code>make</code>.
-
-Make a note of the performance numbers for different size of matrices: 16, 64, 256...
-These numbers will become reference data points for later during this tutorial.
+In the next [section](../Section_2-System_Setup), you'll learn how to prepare your environment to run the tutorial.

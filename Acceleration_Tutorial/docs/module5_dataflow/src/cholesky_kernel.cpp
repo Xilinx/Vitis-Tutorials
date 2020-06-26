@@ -30,8 +30,8 @@ extern "C" void cholesky_kernel(int diagSize, double* matrixA) {
 #pragma HLS INTERFACE s_axilite port = return bundle = control
 
     int info;
-    cholesky<double, MAXN, NCU>(diagSize, matrixA, MAXN, info);
+    cholesky<double, MAXN, NCU>(diagSize, matrixA, diagSize, info);
 
-	
-	
+
+
 }

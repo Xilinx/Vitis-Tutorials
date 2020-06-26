@@ -83,7 +83,7 @@ Vitis Analyzer is a graphical tool which lets you browse many aspects of the des
    3. File menu -> Import Summary...
    4. Browse to <code>./build</code>
    5. Select cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (prefixed with the blue "play" pictogram)
-   6. Navigate around by yourself
+   6. Navigate around by yourself ([see this 45 seconds looping gif](../images/analyzer_anim.gif)) to see how to go around in Vitis Analyzer)
       Make sure to check:
       1. Profile summary
       2. Application timeline - has detailed time information for both host and kernel
@@ -134,7 +134,7 @@ The application timeline has the following structure:
 ***
 ## Vitis HLS for Kernel Optimizations
 
-In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops are compiled with the high-level synthesis tool Vitis HLS.  Vitis automatically uses Vitis HLS without user intervention but for this tutorial we run the tool to gain additional insights about the underlying synthesis technology and our cholesky kernel.
+In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops (what's often refered to as the "fabric") are compiled with the high-level synthesis tool Vitis HLS.  Vitis automatically uses Vitis HLS (no need to invoke the tool "manually") but for this tutorial we go deeper and run Vitis HLS to gain additional insights about the underlying synthesis technology and the Cholesky kernel algorithm.
 
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis HLS</code>)</b></summary>
@@ -144,8 +144,62 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
       * There should be yet another cholesky_kernel directory at that level
    3. Run: <code>vitis_hls -p cholesky_kernel</code> (to start the Vitis high-level synthesis GUI)
    4. Vitis HLS now shows the high-level synthesis report
-   5. Expand on the loop to check its metrics
-      
+   5. In the GUI expand the **Synthesis Summary Report** window
+   6. Expand the loops and function in the **Performance & Resources** section
+   7. Right click on the II violation as shown in this clip to detect its origin in the C++ source: [HLS animation](../images/HLS_anim.gif)
+   
+#### Initiation Interval
+
+   We see an II violation of 8 for two loops in this function.
+   One of them looks like this:
+   ```cpp
+   // Loop only takes one element every 8 clock cycles!!!
+   // We expected one every cycle (II of 1)
+   for (int k = 0; k < j; k++) 
+   {
+       tmp += dataA[j][k] * dataA[j][k];
+   }
+   ```
+So what's the issue? What we use here are data type of type float (double in fact) with an accumulation and the Xilinx device in the U50 cards does not have dedicated floating point arithmetic units and cannot compute an accumulation in a single clock cycle at a Fmax of 300MHz (which is the requirement for this platform).  The silicon needs 8 cycles at 300MHz to perform the multiply add and needs to finist the operation before starting the next. So we can only compute samples one after another by intervals of 8 cycles.
+
+#### Kernel Latency
+
+
+Let's now look at latency. 
+
+<code>cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</code>
+
+    * Loop: 
+    +--------------------+--------+---------+--------------+-----------+-----------+------------+----------+
+    |                    | Latency (cycles) |   Iteration  |  Initiation Interval  |    Trip    |          |
+    |       Loop Name    |  min   |   max   |    Latency   |  achieved |   target  |    Count   | Pipelined|
+    +--------------------+--------+---------+--------------+-----------+-----------+------------+----------+
+    |- VITIS_LOOP_32_..  |       ?|        ?|             3|          1|          1|           ?|    yes   |
+    |- Loop_first_col    |       ?|        ?|            34|          1|          1|           ?|    yes   |
+    |- Loop_col          |       ?|        ?|             ?|          -|          -|           ?|    no    |
+    | + Loop_diag        |      17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
+    | + Loop_row         |       ?|        ?| 61 ~ 2097205 |          -|          -|           ?|    no    |
+    |  ++ Loop_vec_mul   |      17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
+    |- VITIS_LOOP_67_..  |       ?|        ?|             4|          1|          1|           ?|    yes   |
+    +--------------------+--------+---------+--------------+-----------+-----------+------------+----------+
+
+A couple of things to notice
+  - The <code>VITIS</code> prefixed loops: these are loops automatically labelled by Vitis HLS since none were applied in the source code for them.  The other loops did have a label, it's shown in the table.
+  - The question marks (?), they denote a metric that cannot be calculated because dependent on scalar input to the function and indeed in this example the matrix size is configurable and latency will vary depending on the size.
+  - The last "Pipeline" colunm indicates if a loop was constrained to process its inputs at each cycle. The simple loops or most inner nested loops are the ones generally "pipelined" automatically by the tool
+
+ As an input to the Cholesky function the user passes the size of the matrix N (in the example we ran it was 64).
+ 
+ The first loop requires N iterations at II=1 so it takes Nx3 to complete since the iteration latency is 3.
+ The <code>Loop_first_col</code> loop takes Nx34
+ The <code>Loop_col</code> loop runs N times ( (<code>Loop_diag</code> is N * 18) + (<code>Loop_row</code> is N * (N + 18))
+ Last loop also requires N iterations like the first one.
+ 
+ Some we can roughly estimate the duration to be: 
+<code> N(18N+N(18N+residual1)+residual2) = 18N<sup>3</sup> + (18+residual1)N<sup>2</sup> + residual2.N </code>
+
+So essentially the latency goes by the cube of N, the size of the matrix. 
+
 </details>
 
 ***
