@@ -1,15 +1,15 @@
 # Section_3-Module_6
 
 
-***Note***: You must install the Vitis AI v1.1 package before you compile and run the application.
-This example suite, targeting the Vitis AI Library and Vitis acceleration kernels, illustrates how to use Vitis AI Library to run the neural network on DPU, and how to use the HLS kernel to accelerate the app.
+***Note***: You must install the Vitis AI v1.1 package before you compile and run the application. 
+This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can find a description of the pipeline design of the program in ${app}/README.md
 
 Some system level functions:
 - working with DRM on ZynqMP
     -Using the DRM to display
 
 - V4L2 initialization and control
-    - Streaming video capture from V4L2, such as USB camera.
+    - Streaming video capture from V4L2, such as USB camera. 
 
 
 ## Program Prerequiste
@@ -19,7 +19,7 @@ This design targets ZCU104 Vitis platform. About how to prepare the develop envi
 ## Setting up the software build environment
 ---
 
-- To setup the software environment, first to install the my_V4L2 libs and headers.
+- To set up the software environment, first install the lib and header files associated with my_V4L2. Assume that you have copied Module6 into ZCU104.
 
 ```
 cd ${MODULE_6}/myV4L2/
@@ -43,12 +43,13 @@ cd ${MODULE_6}/app/
 sh build.sh
 
 ```
-- Before run the application you need to run the power patch command on board.
+- You need to run the power patch command on the board before you can run the application, otherwise the application may cause the board to crash.
 ```
 irps5401
 ```
 
-- Run the app(./usb_input_multi_threads_refinedet_drm)
+- Run the app.
+ You need to stop the weston service to use drm display mode for the application.
 ``` 
 
    /etc/init.d/weston stop; 
@@ -59,4 +60,3 @@ irps5401
     - refinedet_pruned_0_8: The model used;
     - 0                   :  Camera input;
     - -t 3                :  thread number 3;
-
