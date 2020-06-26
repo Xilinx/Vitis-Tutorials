@@ -25,5 +25,6 @@ void foo { a, b, c, d} {
 }
 ```
 Take a look at the kernel source code and notice how the PIPELINE directive is applied for several loops in the code.
+Since Vitis HLS automatically pipelines the isn't going to produce different results compared to the baseline.
 
-Either via the GUI or through <code>make</code> run the hardware emulation flow.  Open the Vitis Analyzer and Vitis HLS to observe the change compared to the baseline in module1.
+At this point you can move to [module 3](../module3_dependency_removal) unless you want to verify how these pragmas behave then you can run the tools the same way as in module 1.
