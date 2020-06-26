@@ -21,4 +21,4 @@ Note that this solver is included as part the official Vitis accelerated librari
 
 For our purpose, we will start with a simple description implemented in C++ and explain how to adapt it for acceleration with an Alveo U50 card.
 
-In the next section, you'll learn how to prepare your environment to run the tutorial.
+In the next [section](../Section_2-System-Setup), you'll learn how to prepare your environment to run the tutorial.
