@@ -196,7 +196,7 @@ A couple of things to notice
  Last loop also requires N iterations like the first one.
  
  Some we can roughly estimate the duration to be: 
- N(18N+N(18N+residual1)+residual2) = 18N<sup>3</sup> + (18+residual1)N<sup>2</sup> + residual2.N
+<code> N(18N+N(18N+residual1)+residual2) = 18N<sup>3</sup> + (18+residual1)N<sup>2</sup> + residual2.N </code>
 
 So essentially the latency goes by the cube of N, the size of the matrix. 
 
