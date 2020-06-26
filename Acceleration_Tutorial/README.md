@@ -23,7 +23,7 @@ This tutorial is divided in 3 sections.
     * Run Vitis in GUI mode or via <code>make</code>
     * Run Vitis Analyzer to visualize the application timeline
     * Run Vitis HLS to study kernel code performance and resource metrics
-  + [**Module 2**](./docs/module2_pipeline)
+  + [**Module 2**](./docs/module2_pipeline) (short module)
     * Explicit use of the HLS PIPELINE pragma
   + [**Module 3**](./docs/module3_dependency_removal)
     * Remove dependencies on data accesses to improve performance with the DEPENDENCE pragma
