@@ -10,8 +10,7 @@ This tutorial is divided in 3 sections.
 * [**Section 1**](./Section_1-Workflows) (~10 mins):
   + A walkthrough of the algorithm chosen for the tutorial: the Cholesky matrix decomposition 
   + [**Cholesky on the CPU:**](./docs/cpu_src)
-    * Evaluate the CPU version of the algorithm
-  + Evaluate the performance
+    * Evaluate the CPU version of the algorithm changing the matrix size
 * [**Section 2**](./Section_2-System_Setup) (a couple of minutes if Alveo U50 card is already installed):
   + Setup the Vitis development tools
   + Detect and check the card installed on the server 
