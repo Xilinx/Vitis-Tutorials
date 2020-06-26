@@ -165,28 +165,39 @@ So what's the issue? What we use here are data type of type float (double in fac
 #### Kernel Latency
 
 
-Let's now look at latency.  In the example we ran the size of the matrices is 64x64.
-But let's call that size parameter N.
+Let's now look at latency. 
 
 <code>cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</code>
 
     * Loop: 
-    +--------------------+---------+---------+--------------+-----------+-----------+------------+----------+
-    |                    |  Latency (cycles) |   Iteration  |  Initiation Interval  |    Trip    |          |
-    |       Loop Name    |   min   |   max   |    Latency   |  achieved |   target  |    Count   | Pipelined|
-    +--------------------+---------+---------+--------------+-----------+-----------+------------+----------+
-    |- VITIS_LOOP_32_..  |        ?|        ?|             3|          1|          1|           ?|    yes   |
-    |- Loop_first_col    |        ?|        ?|            34|          1|          1|           ?|    yes   |
-    |- Loop_col          |        ?|        ?|             ?|          -|          -|           ?|    no    |
-    | + Loop_diag        |       17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
-    | + Loop_row         |        ?|        ?| 61 ~ 2097205 |          -|          -|           ?|    no    |
-    |  ++ Loop_vec_mul   |       17|  2097161|            18|          8|          1| 1 ~ 262144 |    yes   |
-    |- VITIS_LOOP_67_..  |        ?|        ?|             4|          1|          1|           ?|    yes   |
-    +--------------------+---------+---------+--------------+-----------+-----------+------------+----------+
+    +--------------------+--------+---------+--------------+-----------+-----------+------------+----------+
+    |                    | Latency (cycles) |   Iteration  |  Initiation Interval  |    Trip    |          |
+    |       Loop Name    |  min   |   max   |    Latency   |  achieved |   target  |    Count   | Pipelined|
+    +--------------------+--------+---------+--------------+-----------+-----------+------------+----------+
+    |- VITIS_LOOP_32_..  |       ?|        ?|             3|          1|          1|           ?|    <b>yes</b>   |
+    |- Loop_first_col    |       ?|        ?|            34|          1|          1|           ?|    <b>yes</b>   |
+    |- Loop_col          |       ?|        ?|             ?|          -|          -|           ?|    no    |
+    | + Loop_diag        |      17|  2097161|            18|          8|          1| 1 ~ 262144 |    <b>yes</b>   |
+    | + Loop_row         |       ?|        ?| 61 ~ 2097205 |          -|          -|           ?|    no    |
+    |  ++ Loop_vec_mul   |      17|  2097161|            18|          8|          1| 1 ~ 262144 |    <b>yes</b>   |
+    |- VITIS_LOOP_67_..  |       ?|        ?|             4|          1|          1|           ?|    <b>yes</b>   |
+    +--------------------+--------+---------+--------------+-----------+-----------+------------+----------+
 
-Notice the <code>VITIS</code> prefixed loops, there are loops automatically labelled by Vitis HLS since none were given in the source code for these loops.  The other loops had a lable and we can see it in the table.
-Notice the question marks, they denote a latency that cannot be caalculated because dependent on scalar input to the function and indeed in this example the matrix size is configurable and latency will vary depending on the size.
-      
+Notice the <code>VITIS</code> prefixed loops, these are loops automatically labelled by Vitis HLS since none were applied in the source code for them.  The other loops did have a label, it's shown in the table.
+Notice the question marks (?), they denote a latency that cannot be calculated because dependent on scalar input to the function and indeed in this example the matrix size is configurable and latency will vary depending on the size.
+
+ As an input to the function the user passes the size of the matrix N (in the example we ran it was 64).
+ 
+ The first loop requires N iterations at II=1 so it takes Nx3 to complete since the iteration latency is 3.
+ The <code>Loop_first_col</code> loop take Nx34
+ The <code>Loop_col</code> loop runs N times ( (<code>Loop_diag</code> is N/2 * 18) + (<code>Loop_row</code> is N/2 * (N/2 + 18))
+ Last loop also requires N iterations like the first one.
+ 
+ Some we can estimate the duration to be: N + N (( 9N ) + (N/2(N/2+18)))
+ Which is 
+
+
+
 </details>
 
 ***
