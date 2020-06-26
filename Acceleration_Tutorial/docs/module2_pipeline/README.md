@@ -1,4 +1,4 @@
-Code, files and instructions for **module 2** (same instructions as in [module1](../module1_baseline) to setup the Vitis GUI or run make)
+Code, files and instructions for **module 2** (same instructions as in [<b>module1</b>](../module1_baseline) to setup the Vitis GUI or run make)
 
 ## Pipelining for Throughput
 The C code high-level synthesis is conservative by default, for example loop body instructions are entirely executed at each iteration instead of a staggered execution.  That latter style of execution is enabled by the PIPELINE pragma, it reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of the different operations.
@@ -27,4 +27,4 @@ void foo { a, b, c, d} {
 Take a look at the kernel source code and notice how the PIPELINE directive is applied for several loops in the code.
 Since Vitis HLS automatically pipelines the isn't going to produce different results compared to the baseline.
 
-At this point you can move to [module 3](../module3_dependency_removal) unless you want to verify how these pragmas behave then you can run the tools the same way as in module 1.
+At this point you can move to [<b>module 3</b>](../module3_dependency_removal) unless you want to verify how these pragmas behave then you can run the tools the same way as in module 1.
