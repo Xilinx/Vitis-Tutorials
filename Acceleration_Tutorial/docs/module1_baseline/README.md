@@ -148,6 +148,8 @@ In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops 
    6. Expand the loops and function in the **Performance & Resources** section
    7. Right click on the II violation as shown in this clip to detect its origin in the C++ source: [HLS animation](../images/HLS_anim.gif)
    
+   Note: you can restore the original Vitis HLS window layout via the "Window" menu -> "Reset Perspective".
+   
 #### Initiation Interval
 
    We see an II violation of 8 for two loops in this function.
