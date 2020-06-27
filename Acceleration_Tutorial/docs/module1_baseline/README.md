@@ -185,7 +185,7 @@ Let's now look at latency.
     |- VITIS_LOOP_67_..  |       ?|        ?|             4|          1|          1|           ?|    yes   |
     +--------------------+--------+---------+--------------+-----------+-----------+------------+----------+
 
-A couple of things to notice
+Notice that:
   - The <code>VITIS</code> prefixed loops: these are loops automatically labelled by Vitis HLS since none were applied in the source code for them.  The other loops did have a label, it's shown in the table.
   - The question marks (?), they denote a metric that cannot be calculated because dependent on scalar input to the function and indeed in this example the matrix size is configurable and latency will vary depending on the size.
   - The last "Pipeline" colunm indicates if a loop was constrained to process its inputs at each cycle. The simple loops or most inner nested loops are the ones generally "pipelined" automatically by the tool
