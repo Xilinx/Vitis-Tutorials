@@ -205,7 +205,8 @@ So essentially the latency goes by the cube of N, the size of the matrix.
 This isn't a feature that Vitis automates just yet so we'll copy a pre-made C++ "main" small program that wraps around the kernel to test it in the Vitis HLS environment.
 
 Instructions:
-1. In a terminal, from the Acceleration tutorial directory: <code>cp -r ./docs/tb_hls ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel</code>
+1. In a terminal, from the <code>docs</code> directory:
+<code>cp -r ./tb_hls ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel</code>
 
 
 
