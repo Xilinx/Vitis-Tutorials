@@ -141,7 +141,7 @@ The C++ kernels destined implemented onto the device LUTs and flops (a.k.a the "
    1. Open a terminal and setup Vitis
    2. Navigate to <code>./build/cholesky_kernel_hw_emu/cholesky_kernel</code>
       * There should be yet another cholesky_kernel directory at that level
-   3. Run: <code>vitis_hls -p cholesky_kernel</code> (to start the Vitis high-level synthesis GUI)
+   3. Run: <code>vitis_hls -p cholesky_kernel &</code> (to start the Vitis high-level synthesis GUI)
    4. Vitis HLS now shows the high-level synthesis report
    5. In the GUI expand the **Synthesis Summary Report** window
    6. Expand the loops and function in the **Performance & Resources** section
@@ -206,9 +206,28 @@ This isn't a feature that Vitis automates just yet so we'll copy a pre-made C++ 
 
 Instructions:
 1. In a terminal, from the <code>docs</code> directory:
-<code>cp -r ./tb_hls ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel</code>
 
+```
+cp -r ./hls_tb ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel
+cp ./module1_baseline/src/cholesky_kernel.hpp ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel/hls_tb
+```
 
+2. If the Vitis HLS GUI was closed, open it again:
+
+<code>vitis_hls -p cholesky_kernel &</code>
+
+3. In the "Explorer" window pane of the GUI, locate "Test Bench" under "Source". Right-click on it selecting "Add file..." and select test_hls.cpp.
+Repeat this operation for the two data file: matrix_input and golden_result.dat
+
+4. Now select "Project"-> "Run C simulation" in main menu.  This runs a purely functional simulation called "Csim", none of what HLS synthesizes is involved.
+
+5. Select "Project"-> "Run C simulation"
+
+6. Select "Solution" -> "Run C Synthesis" -> "Active Solution"
+
+7. Run "Solution" -> "Run C/RTL Cosimulation".  In the popup window select Okay.
+
+Running Cosimulation involved a cycle accurate RTL simulation which should now should now show you the latency in clock cycles for the chosen parameters which are a 16x16 matrix.
 
 </details>
 
