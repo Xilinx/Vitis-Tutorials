@@ -23,6 +23,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
   <summary><b>Click to expand! (<code>Vitis GUI</code> instructions)</b></summary>
   
    ### Using Vitis via the GUI
+   TIP: when following the links below, use right-click "open in another tab" to avoid losing the context for these instructions...
    1. Open a terminal
    2. Setup and launch Vitis  
    3. "File" menu -> "Import..." <a href="../images/gui1_import.png">(image)</a>
@@ -199,7 +200,12 @@ Notice that:
 
 So essentially the latency goes by the cube of N, the size of the matrix. 
 
-#### Kernel Latency
+#### Inserting a C++ testbench for the kernel
+
+This isn't a feature that Vitis automates just yet so we'll copy a C++ "main" small program that wraps around the kernel to test it in the context of Vitis HLS.
+Instructions:
+1. In a terminal, from the Acceleration tutorial directory: <code>cp -r ./docs/tb_hls ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel</code>
+
 
 
 </details>
