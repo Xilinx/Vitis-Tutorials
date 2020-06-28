@@ -15,7 +15,7 @@ The source code for each module is located under their local <code>./src</code> 
      + The kernel performs the required computation while reading data from global memory, as necessary.
      + The kernel writes data back to global memory and notifies the host that it has completed its task.
      + The host program reads data back from global memory into the host memory and continues processing as needed
-  + Take a look at the kernel code.  This code will be compiled inside the Vitis tools and transformed into an hardware description that the Vivado tool can implement onto Xilinx devices. As we'll the goal on that code is to make it as efficient as possible in regard to the available hardware.
+  + Take a look at the kernel code.  This code is compiled by the Vitis tools and transformed into an hardware description that the Vivado tool implements onto Xilinx devices.
 ***
 ## Build and Emulate with Vitis
 For each module of this tutorial, Vitis can be run via the GUI **or** at the command line (more convenient in the context of this tutorial:
@@ -134,7 +134,7 @@ The application timeline has the following structure:
 ***
 ## Vitis HLS for Kernel Optimizations
 
-In Vitis, C++ kernels destined to be implemented onto the device LUTs and flops (what's often refered to as the "fabric") are compiled with the high-level synthesis tool Vitis HLS.  Vitis automatically uses Vitis HLS (no need to invoke the tool "manually") but for this tutorial we go deeper and run Vitis HLS to gain additional insights about the underlying synthesis technology and the Cholesky kernel algorithm.
+The C++ kernels destined implemented onto the device LUTs and flops (a.k.a the "fabric") are automatically compiled with the high-level synthesis tool Vitis HLS. In this tutorial we run Vitis HLS "manually" to gain additional insights about the underlying synthesis technology and the Cholesky kernel algorithm.
 
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis HLS</code>)</b></summary>
@@ -166,7 +166,6 @@ So what's the issue? What we use here are data type of type float (double in fac
 
 #### Kernel Latency
 
-
 Let's now look at latency. 
 
 <code>cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</code>
@@ -186,9 +185,9 @@ Let's now look at latency.
     +--------------------+--------+---------+--------------+-----------+-----------+------------+----------+
 
 Notice that:
-  - The <code>VITIS</code> prefixed loops: these are loops automatically labelled by Vitis HLS since none were applied in the source code for them.  The other loops did have a label, it's shown in the table.
+  - The <code>VITIS</code> prefixed loops: these are loops automatically labeled by Vitis HLS since none were applied in the source code for them.  The other loops did have a label, it's shown in the table.
   - The question marks (?), they denote a metric that cannot be calculated because dependent on scalar input to the function and indeed in this example the matrix size is configurable and latency will vary depending on the size.
-  - The last "Pipeline" colunm indicates if a loop was constrained to process its inputs at each cycle. The simple loops or most inner nested loops are the ones generally "pipelined" automatically by the tool
+  - The last "Pipeline" column indicates if a loop was constrained to process its inputs at each cycle. The simple loops or most inner nested loops are the ones generally "pipelined" automatically by the tool
 
  As an input to the Cholesky function the user passes the size of the matrix N (in the example we ran it was 64).
  
@@ -201,6 +200,9 @@ Notice that:
 <code> N(18N+N(18N+residual1)+residual2) = 18N<sup>3</sup> + (18+residual1)N<sup>2</sup> + residual2.N </code>
 
 So essentially the latency goes by the cube of N, the size of the matrix. 
+
+#### Kernel Latency
+
 
 </details>
 
