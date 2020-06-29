@@ -62,14 +62,11 @@ wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
 
 #### Code modifications for the Cholesky kernel
 
-In this module 5 the algorithm code is moved into the header file <code>cholesky_kernel.hpp</code>.
+In this module 5 the code for the algorithm is moved into the header file <code>cholesky_kernel.hpp</code>.
 
-In terms of optimizations, there is now explicit parallelization and the number of parallel compute is determined by NCU, a constant set in <code>cholesky_kernel.cpp</code> through <code>#define NCU 16</code>.
+There is now an explicit parallelization and the number of parallel compute is determined by NCU, a constant set in <code>cholesky_kernel.cpp</code> through <code>#define NCU 16</code>.
 
-NCU is a template to the <code>chol_col_wrapper</code> function (see below)
-
-
-
+NCU is a template parameter to the <code>chol_col_wrapper</code> function (see below).  The DATAFLOW pragma then applies to the loop that calls <code>chol_col</code> NCU=16 times:
 
 ```cpp
 template <typename T, int N, int NCU>
@@ -87,4 +84,11 @@ Loop_row:
 }
 ```
 
-In a DATAFLOW region, the different functions should not access the same memory (in this case, dataA is accessed by all the three functions, so cannot use this methodology ),or HLS will pop up an error. 
+To ensure DATAFLOW is applied the dataA is is divided into NCU portions. 
+
+#### Running the design
+
+Same as in module 1, run the hardware emulation, Vitis Analyzer and Vitis HLS.
+Vitis HLS offers a dataflow viewer that can be accessed by right-clicking on 
+
+
