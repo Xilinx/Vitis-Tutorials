@@ -24,18 +24,21 @@ IMPORTANT: If any of these coding styles are present, the HLS tool issues a mess
 
 You can use the STABLE pragma to mark variables within DATAFLOW regions to be stable to avoid concurrent read or write of variables.
 
-Finally, the DATAFLOW optimization has no hierarchical implementation. If a sub-function or loop contains additional tasks that might benefit from the 
+Finally, the DATAFLOW optimization has no hierarchical implementation. If a sub-function or loop contains additional tasks that might benefit from the DATAFLOW optimization, you must apply the optimization to the loop, the sub-function, or inline the sub-function.
 
 Syntax
 
 Place the pragma in the C source within the boundaries of the region, function, or loop.
 
+```cpp
 #pragma HLS dataflow
+```
 
 Example 1
 
 Specifies DATAFLOW optimization within the loop wr_loop_j.
 
+```cpp
 wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
 #pragma HLS DATAFLOW
    wr_buf_loop_m: for (int m = 0; m < HEIGHT; ++m) {
@@ -52,6 +55,6 @@ wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
       }
    }
 }
-
+```
       
 </details>
