@@ -64,13 +64,12 @@ wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
 
 In this module 5 the algorithm code is moved into the header file <code>cholesky_kernel.hpp</code>.
 
-The code is modified to take advantage of dataflow by creating functions to express a producer-consumer flow. 
-The hls_stream type is applied to data transfered between the different functions. 
+In terms of optimizations, there is now explicit parallelization and the number of parallel compute is determined by NCU, a constant set in <code>cholesky_kernel.cpp</code> through <code>#define NCU 16</code>.
 
-The dataflow region covers these functions.
-In a DATAFLOW region, the different functions should not access the same memory (in this case, dataA is accessed by all the three functions, so cannot use this methodology ),or HLS will pop up an error. 
+NCU is a template to the <code>chol_col_wrapper</code> function (see below)
 
-Then the number of parallel compute is determined by NCU which is a constant set in <code>cholesky_kernel.cpp</code> through <code>#define NCU 16</code>.
+
+
 
 ```cpp
 template <typename T, int N, int NCU>
@@ -88,3 +87,4 @@ Loop_row:
 }
 ```
 
+In a DATAFLOW region, the different functions should not access the same memory (in this case, dataA is accessed by all the three functions, so cannot use this methodology ),or HLS will pop up an error. 
