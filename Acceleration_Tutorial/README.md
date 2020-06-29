@@ -16,7 +16,7 @@ This tutorial is divided in 3 sections.
   + Detect and check the card installed on the server 
 * [**Section 3**](./Section_3-Algorithm_Acceleration) (a few hours):
   + Re-organize the code to create both a host and a kernel program
-  + Review the APIs needed to bind the host and the kernel
+  + Review the APIs that bind the host and the kernel
   + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
   + [**Module 1:**](./docs/module1_baseline)
     * Get a performance baseline as a reference point
@@ -24,7 +24,7 @@ This tutorial is divided in 3 sections.
     * Run Vitis Analyzer to visualize the application timeline
     * Run Vitis HLS to study kernel code performance and resource metrics
   + [**Module 2**](./docs/module2_pipeline) (short module)
-    * Explicit use of the HLS PIPELINE pragma
+    * A deeper look at the HLS PIPELINE pragma
   + [**Module 3**](./docs/module3_dependency_removal)
     * Remove dependencies on data accesses to improve performance with the DEPENDENCE pragma
     * Run Vitis, Vitis Analyzer and Vitis HLS
