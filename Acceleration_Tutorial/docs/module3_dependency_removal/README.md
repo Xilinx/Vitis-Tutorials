@@ -2,10 +2,7 @@ Code, files and instructions for **module 3** (same flow as in [<b>module 1</b>]
 
 Here are the optimizations applied:
  + The loop are explicitely pipelined as they were in module 2 but the tool would have pipelined these loops by default as we've seen through the module 1 results
- + To circumvent the II violation of 5, we create multiple mult-add that we store in an array called tmp 
- + Then to avoid limited throughput because of port access we use a tmpcol array that we load at the beginning of the algorithm
-
-<details>
+   + <details>
   <summary><b>Click to expand! Learn about the <code>dependence</code> pragma...</b></summary>
   
 The dependence pragma provides additional information to overcome loop-carry dependencies and allow loops to be pipelined like we saw in module2 (or pipelined with lower initiation intervals). These dependencies impact the scheduling of operations during high-level synthesis for both function and loop pipelining.
@@ -37,6 +34,11 @@ Under certain complex scenarios automatic dependence analysis can be too conserv
      Be sure dependencies are correct (either true or false)! 
       
 </details>
+
+ + To circumvent the II violation of 5, we create multiple mult-add that we store in an array called tmp 
+ + Then to avoid limited throughput because of port access we use a tmpcol array that we load at the beginning of the algorithm
+
+
 
 
 
