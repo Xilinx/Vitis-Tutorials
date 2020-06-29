@@ -66,7 +66,7 @@ In this module 5 the code for the algorithm is moved into the header file <code>
 
 There is now an explicit parallelization and the number of parallel compute is determined by <code>NCU</code>, a constant set in <code>cholesky_kernel.cpp</code> through <code>#define NCU 16</code>.
 
-<code>NCU</code> is a template parameter to the <code>chol_col_wrapper</code> function (see below).  The DATAFLOW pragma then applies to the loop that calls <code>chol_col</code> NCU=16 times:
+<code>NCU</code> is passed as a template parameter to the <code>chol_col_wrapper</code> function (see below).  The DATAFLOW pragma applies to the loop that calls <code>chol_col</code> NCU=16 times:
 
 ```cpp
 template <typename T, int N, int NCU>
@@ -84,14 +84,12 @@ Loop_row:
 }
 ```
 
-To ensure DATAFLOW is applied the dataA is is divided into NCU portions. 
+To ensure DATAFLOW is applied the dataA is divided into <code>NCU</code> portions. 
 
-Finally the loop is unrolled with a factor <code>NCU</code> which implies we have <code>NCU</code> i.e. 16 copies of <code>chol_col</code> created each working on a chunk of the data.
+Finally the loop is unrolled with a factor <code>NCU</code> which implies we have <code>NCU</code> (i.e. 16) copies of <code>chol_col</code> created each working on a chunk of the data.
 
 #### Running the design
 
 Same as in module 1, run the hardware emulation, Vitis Analyzer and Vitis HLS.
 
 Vitis HLS offers a dataflow viewer that can be accessed by right-clicking on the function (<code>chol_col_wrapper</code>) in which dataflow is applied from the synthesis summary report. See [**this animation**](../images/HLS_dataflow_anim.gif) to see how to access it.
-
-
