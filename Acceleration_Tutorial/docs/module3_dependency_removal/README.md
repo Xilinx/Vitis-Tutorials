@@ -3,7 +3,7 @@ Code, files and instructions for **module 3** (same flow as in [<b>module 1</b>]
 Optimizations applied to the kernel source code:
  + The loop are explicitely pipelined as they were in module 2 but the tool would have pipelined these loops by default as we've seen through the module 1 results
  + To circumvent the II violation, multiple mult-add are created and store in an array called <code>tmp</code> 
- + Avoid limited throughput access on <code>dataA</code> by creating the <code>tmpcol</code> array loaded at the beginning of the algorithm.  Arrays are stored in 2-port RAMs and this modification avoids expression that would require more than 2 ports like this one: <code>dataA[i][j] -= dataA[i][k]+dataA[j][k]</code>
+ + Avoid limited throughput access on <code>dataA</code> by creating a <code>tmpcol</code> array loaded at the beginning of the algorithm.  This helps as arrays are stored into 2-port RAMs and the modification avoids expressions that would require more than 2 ports and could not execute within one clock cycle, like this one: <code>dataA[i][j] -= dataA[i][k]+dataA[j][k]</code>
 
   <details>
   <summary><b> Click to expand! Learn about the <code>dependence</code> pragma...</b></summary>
