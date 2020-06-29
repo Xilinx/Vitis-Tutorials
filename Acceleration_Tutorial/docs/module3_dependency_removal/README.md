@@ -1,5 +1,10 @@
 Code, files and instructions for **module 3** (same flow as in [<b>module 1</b>](../module1_baseline) to setup the Vits GUI or run make)
 
+Here are the optimizations applied to teh code:
+ + The loop are explicitely pipelined as they were in module 2 (but the tool would have pipelined these loops by default).
+ + To circumvent the II violation of 5, we isolate the different mult-add into a tmp array \ 
+ + Then to avoid limited througput because of port access we use a tmpcol array that we load at the beginning of the algotirhtm
+
 <details>
   <summary><b>Click to expand! Learn about the <code>dependence</code> pragma...</b></summary>
   
