@@ -66,7 +66,7 @@ In this module 5 the code for the algorithm is moved into the header file <code>
 
 There is now an explicit parallelization and the number of parallel compute is determined by <code>NCU</code>, a constant set in <code>cholesky_kernel.cpp</code> through <code>#define NCU 16</code>.
 
-<code>NCU</code> is passed as a template parameter to the <code>chol_col_wrapper</code> function (see below).  The DATAFLOW pragma applies to the loop that calls <code>chol_col</code> NCU=16 times:
+<code>NCU</code> is passed as a template parameter to the <code>chol_col_wrapper</code> function (see below).  The DATAFLOW pragma applies to the loop that calls <code>chol_col</code> 16 times:
 
 ```cpp
 template <typename T, int N, int NCU>
