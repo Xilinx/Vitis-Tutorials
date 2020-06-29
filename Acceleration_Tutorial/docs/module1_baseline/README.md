@@ -128,7 +128,7 @@ The C++ kernels destined implemented onto the device LUTs and flops (a.k.a the "
    4. Vitis HLS now shows the high-level synthesis report
    5. In the GUI expand the **Synthesis Summary Report** window
    6. Expand the loops and function in the **Performance & Resources** section
-   7. Right click on the **II violation** as shown in this clip to detect its origin in the C++ source: [**50 seconds HLS looping GIF**](../images/HLS_anim.gif)
+   7. Right click on the **II violation** as shown in this clip to locate it in the code: [**50s HLS looping GIF**](../images/HLS_anim.gif)
    
    Note: you can restore the original Vitis HLS window layout via the "Window" menu -> "Reset Perspective".
    
