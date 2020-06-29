@@ -89,6 +89,7 @@ To ensure DATAFLOW is applied the dataA is is divided into NCU portions.
 #### Running the design
 
 Same as in module 1, run the hardware emulation, Vitis Analyzer and Vitis HLS.
-Vitis HLS offers a dataflow viewer that can be accessed by right-clicking on 
+
+Vitis HLS offers a dataflow viewer that can be accessed by right-clicking on the function in which dataflow is applied from the synthesis summary report. See [**this animation**](../images/HLS_dataflow_anim.gif) to see how to access it.
 
 
