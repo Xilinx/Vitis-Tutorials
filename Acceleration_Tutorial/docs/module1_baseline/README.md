@@ -85,8 +85,8 @@ Vitis Analyzer is a graphical tool which lets you browse many aspects of the des
    6. Navigate around by yourself ([see this 45 seconds looping gif](../images/analyzer_anim.gif)) to see how to go around in Vitis Analyzer)
       Make sure to check:
       1. Profile summary
-      2. Application timeline - has detailed time information for both host and kernel
-      3. Guidance reports - indicates area of improvement
+      2. Guidance reports - indicates area of improvement
+      3. Application timeline - more information just below
       
 The application timeline has the following structure:
 
