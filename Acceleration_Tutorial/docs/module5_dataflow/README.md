@@ -14,19 +14,19 @@ If no initiation interval (number of cycles between the start of one function or
 TIP: The config_dataflow command specifies the default memory channel and FIFO depth used in dataflow optimization. Refer to the config_dataflow command in the Vivado Design Suite User Guide: High-Level Synthesis (UG902) for more information.
 For the DATAFLOW optimization to work, the data must flow through the design from one task to the next. The following coding styles prevent the HLS tool from performing the DATAFLOW optimization:
 
-    Single-producer-consumer violations
-    Bypassing tasks
-    Feedback between tasks
-    Conditional execution of tasks
-    Loops with multiple exit conditions
+   + Single-producer-consumer violations
+   + Bypassing tasks
+   + Feedback between tasks
+   + Conditional execution of tasks
+   + Loops with multiple exit conditions
 
-IMPORTANT: If any of these coding styles are present, the HLS tool issues a message and does not perform DATAFLOW optimization.
+**IMPORTANT**: If any of these coding styles are present, the HLS tool issues a message and does not perform DATAFLOW optimization.
 
 You can use the STABLE pragma to mark variables within DATAFLOW regions to be stable to avoid concurrent read or write of variables.
 
-Finally, the DATAFLOW optimization has no hierarchical implementation. If a sub-function or loop contains additional tasks that might benefit from the DATAFLOW optimization, you must apply the optimization to the loop, the sub-function, or inline the sub-function.
+Finally, the DATAFLOW optimization has no hierarchical implementation. If a sub-function or loop contains additional tasks that might benefit from the optimization, you must apply the optimization to the loop, the sub-function, or inline the sub-function.
 
-Syntax
+**Syntax**
 
 Place the pragma in the C source within the boundaries of the region, function, or loop.
 
@@ -34,7 +34,7 @@ Place the pragma in the C source within the boundaries of the region, function, 
 #pragma HLS dataflow
 ```
 
-Example 1
+**Example**
 
 Specifies DATAFLOW optimization within the loop wr_loop_j.
 
