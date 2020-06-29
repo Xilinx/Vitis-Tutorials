@@ -79,7 +79,7 @@ Vitis Analyzer is a graphical tool which lets you browse many aspects of the des
   
    1. Open a terminal and setup Vitis
    2. Run: <code>vitis_analyzer &</code>
-   3. File menu -> Import Summary...
+   3. File menu -> Open Summary...
    4. Browse to <code>./build</code>
    5. Select cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (prefixed with the blue "play" pictogram)
    6. Navigate around by yourself ([see this 45 seconds looping gif](../images/analyzer_anim.gif)) to see how to go around in Vitis Analyzer)
@@ -105,28 +105,15 @@ The application timeline has the following structure:
      In this section the DMA transfers from the host to the device memory are traced. There are multiple DMA threads implemented in the OpenCL runtime and there is typically an equal number of DMA channels. The DMA transfer is initiated by the user application by calling OpenCL APIs such as clEnqueueMigrateMemObjects. These DMA requests are forwarded to the runtime which delegates to one of the threads. The data transfer from the host to the device appear under Write as they are written by the host, and the transfers from device to host appear under Read.
      
    *  **Kernel Enqueues:**
-    The kernels enqueued by the host program are shown here. The kernels here should not be confused with the kernels/CUs on the device. Here kernel refers to the NDRangeKernels and tasks created by the OpenCL commands clEnqueueNDRangeKernels and clEnqueueTask. These are plotted against the time measured from the host's perspective. Multiple kernels can be scheduled to be executed at the same time, and they are traced from the point they are scheduled to run until the end of the kernel execution. This is the reason for multiple entries. The number of rows depend on the number of overlapping kernel executions.
+    The kernels enqueued by the host program are shown here. The kernels here should not be confused with the kernels/CUs on the device. Here kernel refers to the NDRangeKernels and tasks created by the OpenCL commands clEnqueueNDRangeKernels and clEnqueueTask. These are plotted against the time measured from the host's perspective. Multiple kernels can be scheduled to be executed at the same time, and they are traced from the point they are scheduled to run until the end of the kernel execution. Multiple entries would be shown in different rows depending on the number of overlapping kernel executions.
     
 * *Device "name"*
 
-   Binary Container "name"
-   Binary container name.
+   **Binary Container "name":**
+   Simply the binary container name.
 
    * **Accelerator "name":**
        Name of the compute unit (a.k.a., Accelerator) on the FPGA.
-
-   * **User Functions:**
-       In the case of the Vivado HLS tool kernels, functions that are implemented as data flow processes are traced here. The trace for these functions show the number of active instances of these functions that are currently executing in parallel. These names are generated in hardware emulation when waveform is enabled.
-            Note: Function level activity is only possible in hardware emulation.
-
-       Function: "name a"
-       Function: "name b"
-
-   * **Read:**
-       A CU reads from the DDR over AXI-MM ports. The trace of a data read by a CU is shown here. The activity is shown as transaction and the tool-tip for each transaction shows more details of the AXI transaction. These names are generated when --profile_kernel data is used where the format name is m_axi_<bundle name>(port).
-
-   * **Write:**
-       A CU writes to the DDR over AXI-MM ports. The trace of data written by a CU is shown here. The activity is shown as transactions and the tool-tip for each transaction shows more details of the AXI transaction. This is generated when --profile_kernel data is used where the format name is m_axi_<bundle name>(port).
       
 </details>
 
