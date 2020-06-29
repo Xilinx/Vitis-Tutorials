@@ -58,7 +58,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
    ### Using **make**
    1. Open a terminal
    2. Setup Vitis
-   3. Navigate to ./build
+   3. Navigate to <code>./build<code>
    4. Run: <code>make run TARGET=sw_emu</code> (for a functional emulation)
    5. Run: <code>make run TARGET=hw_emu</code> (for a more detailed emulation - takes 10 minutes or more)  
       * For now avoid the "hw" target which would take over an hour to run
