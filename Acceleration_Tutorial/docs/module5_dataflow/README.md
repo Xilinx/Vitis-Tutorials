@@ -62,4 +62,29 @@ wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
 
 #### Code modifications
 
-In this module the code for the algorithm is moved into the header file <code>cholesky_kernel.hpp</code>
+In this module the algorithm code is moved into the header file <code>cholesky_kernel.hpp</code>.
+
+The code is modified to take advantage of dataflow by creating functions to express a producer-consumer flow. 
+The hls_stream type is applied to data transfered between the different functions. 
+
+The dataflow region covers these functions.
+In a DATAFLOW region, the different functions should not access the same memory (in this case, dataA is accessed by all the three functions, so cannot use this methodology ),or HLS will pop up an error. 
+
+Then the number of parallel compute is determined by NCU.
+
+```cpp
+template <typename T, int N, int NCU>
+void chol_col_wrapper(int n, T dataA[NCU][(N + NCU - 1) / NCU][N], T dataj[NCU][N], T tmp1, int j)
+{
+#pragma HLS DATAFLOW
+
+Loop_row:
+    for (int num = 0; num < NCU; num++)
+    {
+#pragma HLS unroll factor = NCU
+
+        chol_col<T, N, NCU>(n, dataA[num], dataj[num], tmp1, num, j);
+    }
+}
+```
+
