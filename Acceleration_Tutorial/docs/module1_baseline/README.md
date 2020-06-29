@@ -144,7 +144,7 @@ The C++ kernels destined implemented onto the device LUTs and flops (a.k.a the "
        tmp += dataA[j][k] * dataA[j][k];
    }
    ```
-So what's the issue? What we use here are data type of type float (double in fact) with an accumulation and the Xilinx device in the U50 cards does not have dedicated floating point arithmetic units and cannot compute an accumulation in a single clock cycle at a Fmax of 300MHz (which is the requirement for this platform).  The silicon needs 8 cycles at 300MHz to perform the multiply add and needs to finist the operation before starting the next. So we can only compute samples one after another by intervals of 8 cycles.
+Since this version of the algorithm uses double data types with an accumulation, the silicon needs 8 cycles at 300MHz to perform and complete the operation before starting the next. So we can only compute samples one after another by intervals of 8 cycles...  This is the first bottleneck that we'll tackle in the next module.
 
 #### Kernel Latency
 
