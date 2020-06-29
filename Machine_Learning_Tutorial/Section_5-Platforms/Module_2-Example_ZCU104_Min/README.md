@@ -6,13 +6,13 @@
 
 For detailed instructions of how to design a base system, please refer to UG1209 for MPSoC, UG1305 for Versal.
 
-If you're familiar with creating Vivado project and PetaLinux project for MPSoC, please feel free to skip this section and jump to Step 1.
+If you're familiar with creating Vivado project and PetaLinux project for MPSoC, please feel free to skip this section and jump to Step 1. [src/zcu104_min_step0.tcl](./src/zcu104_min_step0.tcl) is provided to re-create the Vivado project for this step. 
 
 This example is based on ZCU104. It's assumed all platform project files are saved in **~/zcu104_min** directory.
 
 Here's the instructions for a minimum start for the base component.
 
-#### 1. Prepare Hardware Specification in Vivado
+#### A. Prepare Hardware Specification in Vivado
 
 1. Launch Vivado
    `vivado &` 
@@ -86,7 +86,7 @@ Note: Global Synthesis skips submodule synthesis when generating block design. I
 
 
 
-#### 2. Prepare software components with PetaLinux
+#### B. Prepare software components with PetaLinux
 
 
 
@@ -119,22 +119,27 @@ Note: Global Synthesis skips submodule synthesis when generating block design. I
 
    
 
-4. Package Image
+4. Package Boot Image (boot.bin)
 
    ```bash
-   cd images/linux petalinux-package --boot --u-boot
-   ```
-
+   cd images/linux 
+   petalinux-package --boot --u-boot
+```
    
+   In this step, `petalinux-package` will assemble FSBL, PMUFW, u-boot and generate boot.bin. 
+   
+   
+   
+   Note: Since we don't need to test the PL side in next step, bit file is not added to boot.bin in this step. If in your case PL is needed to make Linux boot properly, please add bit file with an additional option `--fpga system.bit`.
 
 
 
-#### 3. Test Image on board
+#### C. Test Image on board
 
 | Instructions                                                 |
 | ------------------------------------------------------------ |
 | Copy BOOT.BIN and image.ub to SD card.                       |
-| Plugin SD card, Boot the board with SD boot mode. The UART console should print boot log until you see this login prompt. Use root/root to login. |
+| Insert SD card to SD slot on board. Boot the board with SD boot mode. The UART console should print boot log until you see this login prompt. <br />Use default username and password root/root to login. |
 
 Console ouptut example:
 
@@ -152,7 +157,7 @@ root@zcu102_min:~#
 
 ### Step 1: Add Hardware Interfaces
 
-#### 1. Setup AXI Interfaces
+#### A. Setup AXI Interfaces
 
 1. Setup AXI Interfaces for IP within the platform
 
@@ -171,7 +176,7 @@ root@zcu102_min:~#
 | Enable AXI Master port for kernel control: <br />Right click **M_AXI_HPM0_FPD** and select **Enable**<br />![](./images/ss_2020_0605_011.png) |
 | Enable AXI Slave ports for memory:<br />Right click **S_AXI_HP0_FPD** and select **Enable**<br />In **Platform Interface Properties** window, select **Options**, update the following properties:<br />sptag: HP0<br />memory: zynq_ultra_ps_e_0 HP0_DDR_LOW |
 
-#### 2. Setup Clocks
+#### B. Setup Clocks
 
 1. Enable clocks for IP in the platform and kernel
 
@@ -197,7 +202,7 @@ Note: in this minimal platform, only one 100MHz clock is used. Please enable mor
 | In **Platform Interfaces** window, right click **pl_clk0** and select **Enable** |
 | In **Platform Interface Properties** window, select **Options**, update the following properties<br />is_default: checked<br />![](./images/ss_2020_0605_013.png) |
 
-#### 3. Setup Interrupts
+#### C. Setup Interrupts
 
 1. Add interrupt infrastructures for v++ auto linking
 
@@ -212,7 +217,7 @@ Note: in this minimal platform, only one 100MHz clock is used. Please enable mor
 | Right click **xlconstant_gnd**<br />output port **dout**, select **Start Connection Mode**, connect **dout** to each input port of **xlconcat_interrupt_0** |
 | Connect **xlconcat_interrupt_0****.dout** to **axi_intc_0.intr** |
 | Expand output interface **Interrupt** of **axi_intc_0** to show the port **irq** and connect irq to **zynq_ultra_ps_e_0.pl_ps_irq0** |
-| Right click on the diagram and select **Create Hierarchy...**Cell name: **interrupt_concat**Note: this name is used in the final dynamic_postlink.tcl. Please follow this name. |
+| Right click on the diagram and select **Create Hierarchy...**<br />Cell name: **interrupt_concat**<br />Note: this name is used in the final linking stage. Please follow this name. |
 | Move **xlconcat_interrupt_0** and **xlconstant_gnd** into **interrupt_concat** hierarchy |
 
 Here's a screenshot for the block diagram after executing the operations above.
@@ -221,7 +226,7 @@ Here's a screenshot for the block diagram after executing the operations above.
 
 
 
-#### 4. Export XSA
+#### D. Export XSA
 
 1. Set Platform Properties
 
@@ -264,7 +269,7 @@ validate_hw_platform ./zcu104_min.xsa
 
 ### Step 2: Update Software Components to Enable Application Acceleration
 
-#### 1. Update XSA
+#### A. Update XSA
 
 ```bash
 cd petalinux/zcu104_min 
@@ -273,7 +278,7 @@ petalinux-config --get-hw-description=../../vivado/zcu104_min
 
 
 
-#### 2. Add XRT support
+#### B. Add XRT support
 
 ```
 petalinux-config -c rootfs
@@ -286,7 +291,7 @@ Enable these packages
 
 
 
-#### 3. Update device tree to include zocl
+#### C. Update device tree to include zocl
 
 Add the following zocl code block to [system-user.dtsi](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/blob/master/Xilinx_Official_Platforms/zcu102_base/petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi) in project-spec/meta-user/recipes-bsp/device-tree/files/
 
@@ -314,36 +319,44 @@ Add the following zocl code block to [system-user.dtsi](https://github.com/Xilin
 
 
 
-#### 4. Build Image
+#### D. Build Image
 
 ```bash
 petalinux-build
 ```
 
+The build process takes a while.
 
 
 
+#### E. Build and install sysroot
 
-#### 5. Build and install sysroot
+Build sysroot
 
 ```
 petalinux-build --sdk
-# It takes 10 minutes to 1 hour, depends on the server performance
-# sysroot package is generated as a self-extract tar in zcu102_min/petalinux/zcu102_min/images/linux/sdk.sh
-
-
-cd zcu102_min/petalinux/zcu102_min/images/linux
-./sdk.sh
-# install the sysroot to /scratch/rickys/work/zcu102_min/pfm/sysroot
 ```
 
+It takes 10 minutes to 1 hour to build sysroot, depends on the server performance.
 
+sysroot package is generated as a self-extract tar in zcu104_min/petalinux/zcu104_min/images/linux/sdk.sh
+
+
+
+Install sysroot
+
+```
+cd zcu104_min/petalinux/zcu104_min/images/linux
+./sdk.sh
+```
+
+Follow the promprts and install the sysroot to ~/zcu104_min/pfm/sysroot
 
 ### Step 3: Wrap a Vitis Acceleration Platform
 
 In step 1 and step 2, we prepared all requirements for Vitis acceleration platforms. We can wrap them together and generate the final Vitis acceleration platform.
 
-#### 1. Create Vitis Platform
+#### A. Create Vitis Platform
 
 | Vitis GUI Workflow                                           |
 | ------------------------------------------------------------ |
@@ -359,7 +372,7 @@ In step 1 and step 2, we prepared all requirements for Vitis acceleration platfo
 
 
 
-#### 2. Update platform (optional)
+#### B. Update platform (optional)
 
 In case the platform source files (XSA or software components) need to be updated, please use the following steps.
 
@@ -373,7 +386,7 @@ In case the platform source files (XSA or software components) need to be update
 
 ### Step 4: Test Your Platform
 
-#### 1. Check with platforminfo utility
+#### A. Check with platforminfo utility
 
 ```
 cd zcu102_min/pfm/zcu104_min/export/zcu104_min/
@@ -398,11 +411,11 @@ Memory Information
 Bus SP Tag: HP0
 ```
 
-If XSA is exported with option "include_bit", the report will have a section "Resource Availability".
+If XSA is exported with option `include_bit`, the report will have an additional section "Resource Availability".
 
 
 
-#### 2. Test with a vadd application
+#### B. Test with a vadd application
 
 | Vitis GUI Workflow                                           |
 | ------------------------------------------------------------ |
