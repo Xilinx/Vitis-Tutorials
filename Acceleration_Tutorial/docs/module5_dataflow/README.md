@@ -1,4 +1,4 @@
-Code and files for **module 5** (same flow as in [module1](../module1_baseline) to setup the GUI or run make)
+Code and files for **module 5** (same instructions as in [module1](../module1_baseline) to setup Vitis and run Vitis Analyzer and Vitis HLS)
 
 <details>
   <summary><b>Click to expand! Learn about the <code>dataflow</code> pragma...</b></summary>
@@ -58,3 +58,8 @@ wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
 ```
       
 </details>
+
+
+#### Code modifications
+
+In this module the code for the algorithm is moved into the header file <code>cholesky_kernel.hpp</code>
