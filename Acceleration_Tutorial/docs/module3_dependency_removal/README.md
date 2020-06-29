@@ -1,4 +1,4 @@
-Code, files and instructions for **module 3** (same flow as in [<b>module1</b>](../module1_baseline) to setup the Vits GUI or run make)
+Code, files and instructions for **module 3** (same flow as in [<b>module 1</b>](../module1_baseline) to setup the Vits GUI or run make)
 
 <details>
   <summary><b>Click to expand! Learn about the <code>dependence</code> pragma...</b></summary>
