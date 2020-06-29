@@ -210,7 +210,7 @@ For this tutorial we provide a pre-made C++ "main" program to wrap around the ke
 
     7. Run "Solution" -> "Run C/RTL Cosimulation".  In the popup window select Okay.
 
-Running Cosimulation involved a cycle accurate RTL simulation which should now should now show you the latency in clock cycles for the chosen parameters which are a 16x16 matrix.
+The Vitis HLS Cosimulation runs a cycle accurate RTL simulation which shows the actual latency in clock cycles.  In the test bench the matrix is a 16x16.
 
 </details>
 
