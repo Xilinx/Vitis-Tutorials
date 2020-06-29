@@ -34,3 +34,4 @@ This tutorial is divided in 3 sections.
   + [**Module 5**](./docs/module5_dataflow)
     * Apply the DATAFLOW task parallelism optimization pragma
     * Run Vitis, Vitis Analyzer and Vitis HLS
+    * Run on the U50 card
