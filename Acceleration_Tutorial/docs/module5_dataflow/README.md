@@ -31,7 +31,7 @@ Finally, the DATAFLOW optimization has no hierarchical implementation. If a sub-
 Place the pragma in the C source within the boundaries of the region, function, or loop.
 
 ```cpp
-#pragma HLS dataflow
+#pragma HLS DATAFLOW
 ```
 
 **Example**
