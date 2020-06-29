@@ -6,7 +6,7 @@ Here are the optimizations applied:
  + Then to avoid limited throughput because of port access we use a tmpcol array that we load at the beginning of the algorithm
 
   <details>
-  <summary><b> + Click to expand! Learn about the <code>dependence</code> pragma...</b></summary>
+  <summary><b> Click to expand! Learn about the <code>dependence</code> pragma...</b></summary>
   
 The dependence pragma provides additional information to overcome loop-carry dependencies and allow loops to be pipelined like we saw in module2 (or pipelined with lower initiation intervals). These dependencies impact the scheduling of operations during high-level synthesis for both function and loop pipelining.
 
