@@ -70,7 +70,7 @@ The hls_stream type is applied to data transfered between the different function
 The dataflow region covers these functions.
 In a DATAFLOW region, the different functions should not access the same memory (in this case, dataA is accessed by all the three functions, so cannot use this methodology ),or HLS will pop up an error. 
 
-Then the number of parallel compute is determined by NCU.
+Then the number of parallel compute is determined by NCU which is a constant set in <code>cholesky_kernel.cpp</code>.
 
 ```cpp
 template <typename T, int N, int NCU>
