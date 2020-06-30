@@ -135,12 +135,6 @@ Vitis provides a way to automatic connect kernel's output IRQ signal to interrup
 
 
 
-#### Versal Specific Requirements
-
-
-
-#### AI Engine Requirements
-
 ### Step 2: Update Software Components
 
 #### Add XRT to Root Filesystem
