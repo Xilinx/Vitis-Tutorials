@@ -202,21 +202,36 @@ Note: in this minimal platform, only one 100MHz clock is used. Please enable mor
 
 #### C. Setup Interrupts
 
-1. Add interrupt infrastructures for v++ auto linking
+1. Add interrupt controller
+
+GUI Flow:
 
 | Vitis GUI Instructions                                       |
 | ------------------------------------------------------------ |
-| Add IP → AXI Interrupt Controller<br />Default instance name: axi_intc_0 |
-| Run Connection Automation<br />Set properties for **s_axi** of **axi_intc_0**<br />Master interface: /zynq_ultra_ps_e_0/M_AXI_HPM0_LPD |
-| Add IP → Concat<br />Default instance name: **xlconcat_interrupt_0**Note: this name is used in the final dynamic_postlink.tcl. Please follow this name. |
-| Change Concat IP property<br />Number of ports: 32           |
-| Add IP → ConstantChange instance name: **xlconstant_gnd**<br />Note: this name is used in the final dynamic_postlink.tcl. Please follow this name. |
-| Change Constant IP property<br />Const Val: 0                |
-| Right click **xlconstant_gnd**<br />output port **dout**, select **Start Connection Mode**, connect **dout** to each input port of **xlconcat_interrupt_0** |
-| Connect **xlconcat_interrupt_0****.dout** to **axi_intc_0.intr** |
-| Expand output interface **Interrupt** of **axi_intc_0** to show the port **irq** and connect irq to **zynq_ultra_ps_e_0.pl_ps_irq0** |
-| Right click on the diagram and select **Create Hierarchy...**<br />Cell name: **interrupt_concat**<br />Note: this name is used in the final linking stage. Please follow this name. |
-| Move **xlconcat_interrupt_0** and **xlconstant_gnd** into **interrupt_concat** hierarchy |
+| Add IP → **AXI Interrupt Controller**<br />Use default instance name: **axi_intc_0** |
+| Double click instance and configure or make sure the parameters are set as following:<br />**Processor Interrupt Type and Connection**: Level Interrupt<br />![](./images/intc_irq.png) |
+| Select **axi_intc_0** instance and go to Block Properties -> Properties,  configure or make sure the parameters are set as following:<br />**C_ASYNC_INTR**: 0xFFFFFFFF. <br />When interrupts generated from kernels are clocked by different clock domains, this option is useful to capture the interrupt signals properly.<br />![](./images/intc_block_properties.png) |
+
+
+
+2. Connect interrupt controller to Processing System
+
+| Vitis GUI Instructions                                  |
+| ------------------------------------------------------- |
+| Run Connection Automation                               |
+| Set properties for **s_axi** of **axi_intc_0**          |
+| Master interface: **/zynq_ultra_ps_e_0/M_AXI_HPM0_LPD** |
+
+![](./images/connection_automation_intc.png)
+
+3. Connect IRQ to PS
+
+| Vitis GUI Instructions                                       |
+| ------------------------------------------------------------ |
+| Expand output interface **Interrupt** of **axi_intc_0** to show the port **irq** |
+| Connect irq to **zynq_ultra_ps_e_0.pl_ps_irq0**              |
+
+
 
 Here's a screenshot for the block diagram after executing the operations above.
 

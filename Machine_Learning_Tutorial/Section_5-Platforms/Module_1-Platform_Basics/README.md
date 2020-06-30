@@ -6,8 +6,6 @@
 
 A platform is a starting point of your Vitis design. Vitis applications are built on top of the platforms.
 
-The embedded platform components and architecture introduction can be referred to [Using 2020.1 Embedded Platforms]().
-
 Xilinx has provided base platforms for Xilinx demo boards. The platforms can be downloaded from Xilinx Download Center. Source code of base platforms can be downloaded from Xilinx github.
 
 User can create custom embedded platforms from scratch, or modify Xilinx embedded platforms. 
