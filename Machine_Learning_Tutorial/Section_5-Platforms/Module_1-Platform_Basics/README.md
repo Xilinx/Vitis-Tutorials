@@ -128,15 +128,9 @@ set_property PFM.CLOCK {pl_clk0 {id "0" is_default "true" proc_sys_reset "/proc_
 
 #### Interrupt Requirements
 
-Vitis provides a way to automatic connect kernel's output IRQ signal to interrupt controller automatically during link stage. It's accomplished by a post link script `dynamic_postlink.tcl`. The interrupt controller setup needs to follow the requirements of this script so that the automation can work in Vitis link stage. From 2020.1, this tcl script is not required explicitly in Vivado project as a hook script because it's included by Vivado tools. But the design guideline and requirements remain the same.
+Vitis provides a way to automatic connect kernel's output IRQ signal to interrupt controller automatically during link stage. To make this automation work properly, these rules needs to be applied.
 
-- Use `dynamic_postlink.tcl` as `platform.post_sys_link_tcl_hook` (not required since 2020.1 because it's a default action for v++ --link) 
-- An AXI interrupt controller IP is required to collect kernel IRQ. Connect output of AXI Interrupt Controller to PS interrupt input port.
-- The input of AXI interrupt IP should follow these requirements so that 
-  - hierarchy name: **interrupt_concat** 
-  - Concat IP name: **xlconcat_interrupt_0** 
-  - Concat inputs are driven by constant IP with name **xlconstant_gnd** 
-  - Signal between **xlconcat_interrupt_0** and **xlconstant_gnd** should be named as **xlconcat_interrupt_0**
+- Add one AXI Interrupt Controller to block diagram with name axi_intc_0. Leave all inputs float. Connect the IRQ signal to Processing System's IRQ input.
 - To let software can utilize these interrupts, device tree needs to updated to include zocl node. It's explained in [Software Components requirement chapter](#update-device-tree-for-zocl).
 
 
