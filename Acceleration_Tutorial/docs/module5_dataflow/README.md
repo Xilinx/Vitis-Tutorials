@@ -94,6 +94,7 @@ Finally the loop is unrolled with a factor <code>NCU</code> which implies we hav
 
 #### Running the design
 
-Same as in module 1, run the hardware emulation, Vitis Analyzer and Vitis HLS.
-
-Vitis HLS offers a dataflow viewer that can be accessed by right-clicking on the function (<code>chol_col_wrapper</code>) in which dataflow is applied from the synthesis summary report. See [**this animation**](../images/HLS_dataflow_anim.gif) to see how to access it and confirm that the replications were applied.
+Same as in module 1:
++ run the hardware emulation
++ run Vitis Analyzer
++ run Vitis HLS and see how it offers a dataflow viewer that can be accessed by right-clicking on the function (<code>chol_col_wrapper</code>) in which dataflow is applied from the synthesis summary report. See [**this animation**](../images/HLS_dataflow_anim.gif) to see how to access it and confirm that the replications were applied.
