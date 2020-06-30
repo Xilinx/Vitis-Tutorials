@@ -1,6 +1,6 @@
 Code, files and instructions for **module 1**
 
-> **_In this module...:_**<br>
+> **_In this module..._**<br>
 _Review the OpenCL API for the host/kernel paradigm<br>
 Run Vitis via the GUI or make to execute software and hardware emulation<br>
 Run Vitis Analyzer to review the application timeline<br>
