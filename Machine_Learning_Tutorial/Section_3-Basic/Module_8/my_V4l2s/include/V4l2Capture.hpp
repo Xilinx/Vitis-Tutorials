@@ -6,8 +6,8 @@
 #include "opencv2/core/core.hpp"
 #include <vector>
 #include "xcl2.hpp"
-#define HEIGHT 1536
-#define WIDTH 2304
+#define HEIGHT 1080
+#define WIDTH 1920
 #define RESIZE_HEIGHT 360
 #define RESIZE_WIDTH 480
 // ---------------------------------
