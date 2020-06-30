@@ -1,7 +1,6 @@
 Code and files for **module 5** (same instructions as in [module1](../module1_baseline) to setup Vitis and run Vitis Analyzer and Vitis HLS)
 
-In this module we replicate a compute loop by a programmable factor set to 16 and applied via a templated function.
-We also applied the Vitis HLS dataflow pragma.
+> **_This module:_**  In this module we replicate a compute loop by a programmable factor set to 16 and applied via a templated function. We also applied the Vitis HLS dataflow pragma.
 
 <details>
   <summary><b>Click to expand! Learn about the <code>dataflow</code> pragma...</b></summary>
