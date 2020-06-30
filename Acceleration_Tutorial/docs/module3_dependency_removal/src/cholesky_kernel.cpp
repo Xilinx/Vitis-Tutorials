@@ -57,6 +57,7 @@ extern "C" void cholesky_kernel(int diagSize, double* matrixA){
 	Loop_row:
         for(int i = j; i < diagSize; ++i){
 #pragma HLS pipeline
+#pragma HLS LOOP_FLATTEN off
 	
     Loop_vec_mul:
 	    for(int k = 0; k <=j; k++){	  
