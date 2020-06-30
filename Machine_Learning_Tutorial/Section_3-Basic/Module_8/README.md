@@ -30,9 +30,11 @@ make
 make install
 ```
 
-- Test the libmy_v4l2s.so library to see if it works properly with the test example. When the test example works, you will notice that two JPEG files are generated in your execution directory.
+- Test the HLS kernel to see if it works properly with the test example. When the test example works, you will notice that two PNG files are generated in your execution directory. 
 ```
-./test
+cd ${Module_8/my_V4l2s/test}
+sh build.sh
+./test_hls_kernel
 ```
 
 ## Building the main appliction (usb_input_multi_threads_refinedet)
