@@ -6,7 +6,8 @@
  </tr>
 </table>
 
-This section is divided in 5 modules (each module is located under the <code>./docs</code> directory and comes with its own readme with step-by-step instructions).
+> **_In this section...:_**  _5 modules, each located under the <code>./docs</code> directory and each describing concepts and step-by-step instructions in local readme files._
+
 * [**Module 1**](../docs/module1_baseline): Setting up the design and establish a performance **baseline**
   + Understand the OpenCL APIs that help connect host program to the kernel
   + Verify results through emulation both at the software level (sw_emu) and the hardware level (hw_emu)
