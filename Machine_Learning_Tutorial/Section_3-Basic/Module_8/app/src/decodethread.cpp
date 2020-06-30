@@ -6,6 +6,8 @@
 #include <iostream>
 #include <memory>
 
+#define USE_KERNEL 0
+
 namespace vitis{namespace ai{
 
   DecodeThread::DecodeThread(int channel_id, const std::string& video_file, queue_t* queue)
@@ -65,7 +67,11 @@ namespace vitis{namespace ai{
     int ret = videoCapture->isReadable(&tv);
     if(ret==1)
     {
+    #if(USE_KERNEL)
     auto ret1=videoCapture->read_images_with_kernel(v4l2Mats);
+    #else
+    auto ret1=videoCapture->read_images(v4l2Mats);
+    #endif
    // CHECK_EQ(ret, 0)<<"get frame from device failed ";
     
    }
