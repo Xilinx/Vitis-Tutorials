@@ -6,7 +6,9 @@
 #include <iostream>
 #include <memory>
 
+#ifndef USE_KERNEL
 #define USE_KERNEL 0
+#endif
 
 namespace vitis{namespace ai{
 
@@ -67,7 +69,7 @@ namespace vitis{namespace ai{
     int ret = videoCapture->isReadable(&tv);
     if(ret==1)
     {
-    #if(USE_KERNEL)
+    #if USE_KERNEL
     auto ret1=videoCapture->read_images_with_kernel(v4l2Mats);
     #else
     auto ret1=videoCapture->read_images(v4l2Mats);
