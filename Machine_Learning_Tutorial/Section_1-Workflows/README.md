@@ -12,16 +12,15 @@ There are commonly three types of workflows targeting different persona for Viti
 
 | Workflow | Target Persona | Highlights in the Flow |
 |-----------|-----------------|------------------------|
-| Evaluation Flow | Data Scientists | Use your industry standard tools plus Xilinx adapters to evaluate acceleration performance on Xilinx platforms. Minimal toolset requirement. No need to install Vitis or PetaLinux. |
-| Development Flow | Application Developers | Explore the possibilities with Vitis acceleration on Xilinx platforms. No need to install PetaLinux. |
-| Customization Flow | Hardware engineers and BSP engineers | Advanced customization for more input and output interfaces, embedded Linux kernel and root file system configurations, etc. |
+| Evaluation Flow | Subject-matter Experts<br />(e.g. Data Scientists) | Use your industry standard tools plus Xilinx adapters to evaluate accelerated libraries' performance on Xilinx platforms. <br />Minimal Xilinx-specific toolset requirement. No need to install Vitis or PetaLinux. |
+| Development Flow | Application Developers | Explore the possibilities with Vitis acceleration on Xilinx platforms. Assemble Xilinx or partner accelerated libraries or develop your own acceleration kernel. <br />No need to install PetaLinux. |
+| Customization Flow | Platform Developers<br />(e.g. Hardware engineers and BSP engineers) | Advanced customization on Xilinx platforms or your own hardware for more input and output interfaces, embedded Linux kernel and root file system configurations, etc. |
 
-In big teams, engineers are focused in one area. In small teams or for independent developers, one person may act as multiple personas. This tutorial will give the introduction from higher level to lower level: starting from evaluation flow to introduce what one can do in Machine Learning with least Xilinx specific knowledge, to more customization of Xilinx technology for more performance optimization and flexibility. Please refer to each chapter introduction whether you're the target reader of this chapter.
+![](./images/persona.png)
 
 
 
-**TODO**: add an image, place different persona image on the above image
+In big teams, engineers are focused in their own development level. In small teams or for independent developers, one person may act as multiple personas. This tutorial will give the introduction from higher level to lower level: starting from evaluation flow to introduce what one can do in Machine Learning with least Xilinx specific knowledge, to more customization of Xilinx technology for more performance optimization and flexibility. Please refer to each chapter introduction whether you're the target reader of this chapter.
 
-- Data Scientist on top row
-- Application developers on second row
-- Hardware Engineers and BSP engineers on last row 
+
+
