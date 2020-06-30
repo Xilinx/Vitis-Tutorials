@@ -19,10 +19,10 @@ This design targets ZCU104 Vitis platform. About how to prepare the develop envi
 ## Setting up the software build environment
 ---
 
-- To set up the software environment, first install the lib and header files associated with my_V4L2. Assume that you have copied Module6 into ZCU104.
+- To set up the software environment, first install the lib and header files associated with my_V4L2. Assume that you have copied Module8 into ZCU104.
 
 ```
-cd ${MODULE_8}/myV4L2/
+cd ${Module_8}/myV4L2s/
 mkdir build
 cd build
 cmake ..
@@ -41,7 +41,7 @@ sh build.sh
 - Build the application. This "build.sh " script generates two executables, one using ARM for color conversion and resize, and the other using the HLS kernel to speed up color conversion and resize.
 
 ```
-cd ${MODULE_8}/app/
+cd ${Module_8}/app/
 sh build.sh
 
 ```
