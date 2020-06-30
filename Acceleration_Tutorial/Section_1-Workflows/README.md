@@ -6,6 +6,7 @@
  </tr>
 </table>
 
+> **_In this section...:_**  _Quick overview of the Vitis flow and description of the linear algebra algorithm chosen for the tutorial._
 
 In the Vitis™ core development flow, an application program is split between a host application and hardware accelerated kernels.
 - The host application is developed in C/C++ with OpenCL™ API calls
