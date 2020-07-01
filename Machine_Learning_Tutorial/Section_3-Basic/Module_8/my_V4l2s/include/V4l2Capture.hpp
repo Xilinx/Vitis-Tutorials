@@ -6,10 +6,12 @@
 #include "opencv2/core/core.hpp"
 #include <vector>
 #include "xcl2.hpp"
-#define HEIGHT 1536
-#define WIDTH 2304
-#define RESIZE_HEIGHT 360
-#define RESIZE_WIDTH 480
+#define IN_HEIGHT 1536
+#define IN_WIDTH 2304
+#define OUT_HEIGHT 1080
+#define OUT_WIDTH 1920
+#define OUT_RESIZE_HEIGHT 360
+#define OUT_RESIZE_WIDTH 480
 // ---------------------------------
 // V4L2 Capture
 // ---------------------------------

@@ -16,10 +16,10 @@
 #include "opencv2/imgcodecs/imgcodecs.hpp"
 #include "xcl2.hpp"
 
-uint8_t *V4l2Capture::out_buf_0 = (uint8_t *)malloc(RESIZE_WIDTH * RESIZE_HEIGHT * 3);
-uint8_t *V4l2Capture::out_buf_1 = (uint8_t *)malloc(WIDTH * HEIGHT * 3);
-unsigned int V4l2Capture::resize_size = (RESIZE_WIDTH * RESIZE_HEIGHT * 3);
-unsigned int V4l2Capture::full_size = (WIDTH * HEIGHT * 3);
+uint8_t *V4l2Capture::out_buf_0 = (uint8_t *)malloc(OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
+uint8_t *V4l2Capture::out_buf_1 = (uint8_t *)malloc(OUT_WIDTH * OUT_HEIGHT * 3);
+unsigned int V4l2Capture::resize_size = (OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
+unsigned int V4l2Capture::full_size = (OUT_WIDTH * OUT_HEIGHT * 3);
 // -----------------------------------------
 //    create video capture interface
 // -----------------------------------------
@@ -166,10 +166,10 @@ int V4l2Capture::read_images_with_kernel(std::vector<cv::Mat> &readImage)
             krnl.setArg(0, imgToDevice);
             krnl.setArg(1, resizeFromDevice);
             krnl.setArg(2, fullFromDevice);
-            krnl.setArg(3, WIDTH);
-            krnl.setArg(4, HEIGHT);
-            krnl.setArg(5, RESIZE_WIDTH);
-            krnl.setArg(6, RESIZE_HEIGHT);
+            krnl.setArg(3, IN_WIDTH);
+            krnl.setArg(4, IN_HEIGHT);
+            krnl.setArg(5, OUT_RESIZE_WIDTH);
+            krnl.setArg(6, OUT_RESIZE_HEIGHT);
 
             cl::Event event_sp;
             printf("Enqueue Stage\n");
@@ -189,8 +189,8 @@ int V4l2Capture::read_images_with_kernel(std::vector<cv::Mat> &readImage)
 
             q.enqueueReadBuffer(resizeFromDevice, CL_TRUE, 0, resize_size, out_buf_0);
             q.enqueueReadBuffer(fullFromDevice, CL_TRUE, 0, full_size, out_buf_1);
-            cv::Mat roi_mat0(RESIZE_HEIGHT, RESIZE_WIDTH, CV_8UC3, out_buf_0);
-            cv::Mat roi_mat1(1080, 1920, CV_8UC3, out_buf_1);
+            cv::Mat roi_mat0(OUT_RESIZE_HEIGHT, OUT_RESIZE_WIDTH, CV_8UC3, out_buf_0);
+            cv::Mat roi_mat1(OUT_HEIGHT, OUT_WIDTH, CV_8UC3, out_buf_1);
             readImage.emplace_back(roi_mat1);
             readImage.emplace_back(roi_mat0);
 
