@@ -6,7 +6,9 @@
  </tr>
 </table>
 
-> **_In this section...:_**  _5 modules, located under the <code>./docs</code> directory and each describing concepts with step-by-step instructions in local readme files._
+> **_In this section..._**<br>
+_5 modules, located under the <code>./docs</code> directory_<br>
+_Instructions in local readme files for each module_
 
 * [**Module 1**](../docs/module1_baseline): Setting up the design and establish a performance **baseline**
   + Understand the OpenCL APIs that help connect host program to the kernel
