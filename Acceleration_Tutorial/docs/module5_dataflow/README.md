@@ -83,7 +83,6 @@ Loop_row:
     for (int num = 0; num < NCU; num++)
     {
 #pragma HLS unroll factor = NCU
-
         chol_col<T, N, NCU>(n, dataA[num], dataj[num], tmp1, num, j);
     }
 }
