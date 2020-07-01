@@ -3,7 +3,7 @@ Code and files for **module 5** (same instructions as in [module1](../module1_ba
 > **_In this module..._**<br>
 _1> Replicate a compute loop by a programmable factor applied via a templated function_<br>
 _2> Use the Vitis HLS dataflow pragma_<br>
-_3> Run the full compile and program the card
+_3> Run the full compile and program the card_
 
 <details>
   <summary><b>Click to expand! Learn about the <code>dataflow</code> pragma...</b></summary>
