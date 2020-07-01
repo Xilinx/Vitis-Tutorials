@@ -1,2 +1,2 @@
 #!/bin/bash
-g++ -std=c++11 -o test test.cpp -I../include -I/usr/include/xrt ../src/xcl2.cpp -lxrt_core -lxrt_coreutil -lxilinxopencl
+g++ -std=c++11 -o test_hls_kernel test_hls_kernel.cpp -I../include -I/usr/include/xrt ../src/xcl2.cpp -lxrt_core -lxrt_coreutil -lxilinxopencl -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs
