@@ -54,7 +54,7 @@ Here's the instructions for a minimum start for the base component.
 | Click save button on tool bar                              |
 | Save block diagram with Ctrl+S                             |
 
-![](./images/ss_2020_0603_004.png)
+![](./images/ps_bd.png)
 
 7. Add top module
 
@@ -171,7 +171,7 @@ root@zcu102_min:~#
 | Vitis GUI Instructions                                       |
 | ------------------------------------------------------------ |
 | Open menu **Window** → **Platform Interfaces** <br />Click "Enable Platform Interfaces" if it's not enabled |
-| Enable AXI Master port for kernel control: <br />Right click **M_AXI_HPM0_FPD** and select **Enable**<br />![](./images/ss_2020_0605_011.png) |
+| Enable AXI Master port for kernel control: <br />Right click **M_AXI_HPM0_FPD** and select **Enable**<br />![](./images/platform_interface_enable.png) |
 | Enable AXI Slave ports for memory:<br />Right click **S_AXI_HP0_FPD** and select **Enable**<br />In **Platform Interface Properties** window, select **Options**, update the following properties:<br />sptag: HP0<br />memory: zynq_ultra_ps_e_0 HP0_DDR_LOW |
 
 Enabled interfaced will be usable in v++ link stage. Property sptag value would be used in v++ link configuration `--connectivity.sp` [option](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vitiscommandcompiler.html?hl=vitis%2Ccore%2Ctools#clt1568640709907__section_tfc_zxm_1jb).
@@ -200,7 +200,7 @@ Note: in this minimal platform, only one 100MHz clock is used. Please enable mor
 | Vitis GUI Instructions                                       |
 | ------------------------------------------------------------ |
 | In **Platform Interfaces** window, right click **pl_clk0** and select **Enable** |
-| In **Platform Interface Properties** window, select **Options**, update the following properties<br />is_default: **checked**<br />proc_sys_reset: **/proc_sys_reset_0**<br />![](./images/ss_2020_0605_013.png) |
+| In **Platform Interface Properties** window, select **Options**, update the following properties<br />is_default: **checked**<br />proc_sys_reset: **/proc_sys_reset_0**<br />![](./images/clock_properties.png) |
 
 #### C. Setup Interrupts
 
@@ -429,6 +429,8 @@ zcu104_min
 | Click hammer icon on tool bar to build platform              |
 
 The generated platform is located in zcu104_min/pfm/zcu104_min/export/zcu104_min directory. It has the top level platform description file **zcu104_min.xpfm**. The software components listed above are all copied to platform directory.
+
+Note: The software components packaged into platform are for boot purpose. The Linux kernel image, root file system and sysroot are to be provided in application creation time. Besides the kernel image, rootfs and sysroot generated in step 2, [Common images for Embedded Vitis platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) provided by Xilinx can also be used.
 
 #### C. Update Platform for Iterations (optional)
 
