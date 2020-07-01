@@ -190,7 +190,7 @@ int V4l2Capture::read_images_with_kernel(std::vector<cv::Mat> &readImage)
             q.enqueueReadBuffer(resizeFromDevice, CL_TRUE, 0, resize_size, out_buf_0);
             q.enqueueReadBuffer(fullFromDevice, CL_TRUE, 0, full_size, out_buf_1);
             cv::Mat roi_mat0(RESIZE_HEIGHT, RESIZE_WIDTH, CV_8UC3, out_buf_0);
-            cv::Mat roi_mat1(HEIGHT, WIDTH, CV_8UC3, out_buf_1);
+            cv::Mat roi_mat1(1080, 1920, CV_8UC3, out_buf_1);
             readImage.emplace_back(roi_mat1);
             readImage.emplace_back(roi_mat0);
 
