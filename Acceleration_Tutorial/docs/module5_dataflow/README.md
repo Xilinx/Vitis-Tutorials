@@ -8,7 +8,7 @@ _3> Run the full compile and program the card_
 <details>
   <summary><b>Click to expand! Learn about the <code>dataflow</code> pragma...</b></summary>
   
-  he DATAFLOW pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the register transfer level (RTL) implementation, and increasing the overall throughput of the design.
+The DATAFLOW pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the register transfer level (RTL) implementation, and increasing the overall throughput of the design.
 
 All operations are performed sequentially in a C description. In the absence of any directives that limit resources (such as pragma HLS allocation), the Vivado High-Level Synthesis (HLS) tool seeks to minimize latency and improve concurrency. However, data dependencies can limit this. For example, functions or loops that access arrays must finish all read/write accesses to the arrays before they complete. This prevents the next function or loop that consumes the data from starting operation. The DATAFLOW optimization enables the operations in a function or loop to start operation before the previous function or loop completes all its operations. 
 
