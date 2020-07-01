@@ -1,11 +1,11 @@
 Code, files and instructions for **module 1**
 
 > **_In this module..._**<br>
-_1. Review the OpenCL API for the host/kernel paradigm<br>
-2. Run Vitis via the GUI or make to execute software and hardware emulation<br>
-3. Run Vitis Analyzer to review the application timeline<br>
-4. Run Vitis HLS to identify the throughput bottleneck<br>
-5. Insert a testbench in HLS to iterate quickly on kernel code changes_
+_1- Review the OpenCL API for the host/kernel paradigm<br>
+2- Run Vitis via the GUI or make to execute software and hardware emulation<br>
+3- Run Vitis Analyzer to review the application timeline<br>
+4- Run Vitis HLS to identify the throughput bottleneck<br>
+5- Insert a testbench in HLS to iterate quickly on kernel code changes_
 
 ## Understanding Code Setup with Host and Kernel
 To enable hardware acceleration, the code is split between the host and the kernel.  The host program, written in C/C++ uses API abstractions like OpenCL, runs on a host processor, an x86 server or an Arm processor for embedded platforms.  The hardware accelerated kernels run onto the programmable logic of a Xilinx device.
