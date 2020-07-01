@@ -12,10 +12,12 @@
 #include "opencv2/imgcodecs/imgcodecs.hpp"
 #include "xcl2.hpp"
 
-#define HEIGHT 1080
-#define WIDTH 1920
-#define RESIZE_HEIGHT 360
-#define RESIZE_WIDTH 640
+#define IN_HEIGHT 2160
+#define IN_WIDTH 3840
+#define OUT_HEIGHT 1080
+#define OUT_WIDTH 1920
+#define OUT_RESIZE_HEIGHT 360
+#define OUT_RESIZE_WIDTH 640
 
 ssize_t read_file_to_buf(const char *file, uint8_t **buf, size_t *len)
 {
@@ -80,8 +82,8 @@ ssize_t write_buf_to_file(const uint8_t *buf, const size_t len,
 int main(int argc, char **argv)
 {
     uint8_t *input_img;
-    unsigned int resize_size = (RESIZE_WIDTH * RESIZE_HEIGHT * 3);
-    unsigned int full_size = (WIDTH * HEIGHT * 3);
+    unsigned int resize_size = (OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
+    unsigned int full_size = (OUT_WIDTH * OUT_HEIGHT * 3);
     size_t yuv_size;
     read_file_to_buf("test.yuv", &input_img, &yuv_size);
     uint8_t *out_buf_0 = (uint8_t *)malloc(resize_size);
@@ -106,10 +108,10 @@ int main(int argc, char **argv)
 krnl.setArg(0, imgToDevice);
 krnl.setArg(1, resizeFromDevice);
 krnl.setArg(2,  fullFromDevice);
-krnl.setArg(3,  WIDTH);
-krnl.setArg(4,  HEIGHT);
-krnl.setArg(5,  RESIZE_WIDTH);
-krnl.setArg(6,  RESIZE_HEIGHT);
+krnl.setArg(3,  IN_WIDTH);
+krnl.setArg(4,  IN_HEIGHT);
+krnl.setArg(5,  OUT_RESIZE_WIDTH);
+krnl.setArg(6,  OUT_RESIZE_HEIGHT);
 
 cl::Event event_sp;
 
@@ -139,8 +141,8 @@ std::cout << "Done with CL session" << std::endl;
 
 //    write_buf_to_file(out_buf_0, resize_size, "resize.bgr");
 
-cv::Mat roi_mat0(RESIZE_HEIGHT, RESIZE_WIDTH, CV_8UC3, out_buf_0);
-cv::Mat roi_mat1(HEIGHT, WIDTH, CV_8UC3, out_buf_1);
+cv::Mat roi_mat0(OUT_RESIZE_HEIGHT, OUT_RESIZE_WIDTH, CV_8UC3, out_buf_0);
+cv::Mat roi_mat1(OUT_HEIGHT, OUT_WIDTH, CV_8UC3, out_buf_1);
 
 cv::imwrite("scaled.png", roi_mat0);
 cv::imwrite("full.png", roi_mat1);
