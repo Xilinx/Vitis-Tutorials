@@ -29,7 +29,7 @@ This tutorial is divided in 3 sections.
     * Use Xilinx on-chip local RAM blocks for host data transfers (via Programmable Logic RAM - PLRAM) 
     * Run Vitis, Vitis Analyzer and Vitis HLS
   + [**Module 4**](./docs/module4_datatype)
-    * Modify design to use the more efficient "float" compared to "double"
+    * Modify design to use the more hardware efficient "float" data types (compared to "double")
     * Run Vitis, Vitis Analyzer and Vitis HLS
   + [**Module 5**](./docs/module5_dataflow)
     * Apply the DATAFLOW task parallelism optimization pragma
