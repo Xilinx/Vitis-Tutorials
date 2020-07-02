@@ -17,7 +17,7 @@ _Instructions in local readme files for each module_
   + Launch Vitis HLS to review the kernel optimizations
 * [**Module 2**](../docs/module2_pipeline): This version of the code explicitely applies the **PIPELINE** directive.
   + Learn about the pragma and its impact on designs
-* [**Module 3**](../docs/module3_localram): Direct host transfers to the Programmable Logic RAM (PLRAM) for more efficient transfers
+* [**Module 3**](../docs/module3_localram): Direct host transfers to the Programmable Logic RAM (**PLRAM**) for more efficient transfers
   + Modify the configuration file to use PLRAM
   + Rerun the hardware emulation and use Vitis Analyzer to review the results and verify the new connection
 * [**Module 4**](../docs/module4_datatype): Change "double" to "float"
