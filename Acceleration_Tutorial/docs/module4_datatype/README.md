@@ -9,4 +9,6 @@ Run Vitis Analyser to measure impact on resources used and performance improveme
 
 Did it shorten kernel execution time?
 
-Run Vitis HLS to measure detailed parameters including II.
+Run Vitis HLS to measure detailed parameters including the II.
+
+Is the II any different than before?
