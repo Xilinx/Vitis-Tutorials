@@ -231,7 +231,7 @@ int main(int argc, const char* argv[]) {
    //     std::cout<<"---------------------"<<std::endl;
 
     std::cout << "-------------- " << std::endl;
-    if (errA > 0.0001) {
+    if (errA > 0.005) {
         std::cout << "INFO: Result false" << std::endl;
         std::cout << "-------------- " << std::endl;
         return -1;
