@@ -25,11 +25,11 @@ This tutorial is divided in 3 sections.
     * Run Vitis HLS to study kernel code performance and resource metrics
   + [**Module 2**](./docs/module2_pipeline) (short module)
     * A deeper look at the HLS PIPELINE pragma
-  + [**Module 3**](./docs/module3_dependency_removal)
-    * Remove dependencies on data accesses to improve performance with the DEPENDENCE pragma
+  + [**Module 3**](./docs/module3_localram)
+    * Use Xilinx on-chip local RAM blocks for host data transfers (via PLRAM) 
     * Run Vitis, Vitis Analyzer and Vitis HLS
-  + [**Module 4**](./docs/module4_flatten_loop)
-    * Flatten critical loop to improve design
+  + [**Module 4**](./docs/module4_datatype)
+    * Modify design to use the more efficient "float" compared to "double"
     * Run Vitis, Vitis Analyzer and Vitis HLS
   + [**Module 5**](./docs/module5_dataflow)
     * Apply the DATAFLOW task parallelism optimization pragma
