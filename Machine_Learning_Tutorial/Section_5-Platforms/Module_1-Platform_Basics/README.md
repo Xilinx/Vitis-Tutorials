@@ -130,7 +130,20 @@ set_property PFM.CLOCK {pl_clk0 {id "0" is_default "true" proc_sys_reset "/proc_
 
 Vitis provides a way to automatic connect kernel's output IRQ signal to interrupt controller automatically during link stage. To make this automation work properly, these rules needs to be applied.
 
-- Add one AXI Interrupt Controller to block diagram with name axi_intc_0. Leave all inputs float. Connect the IRQ signal to Processing System's IRQ input.
+- Add one AXI Interrupt Controller to block diagram. 
+  - Connect the IRQ signal to Processing System's IRQ input.
+  - Set `PFM.IRQ` property. Give platform information about the interrupt controller name, interrupt input pin name and bus range, for future kernel IRQ auto-connection in v++ link stage.
+
+```
+# Command Syntax
+set_property PFM.IRQ {pin_name {id id_number}} bd_cell
+set_property PFM.IRQ {pin_name {id id_number range irq_count}} bd_cell
+# Example
+set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]
+```
+
+
+
 - To let software can utilize these interrupts, device tree needs to updated to include zocl node. It's explained in [Software Components requirement chapter](#update-device-tree-for-zocl).
 
 
@@ -278,4 +291,3 @@ In system architect's view, some logic functions may be in a grey area: they can
 
 
 
-#### Emulation
