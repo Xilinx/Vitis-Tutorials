@@ -7,7 +7,7 @@
 </table>
 
 > **_In this section..._**<br>
-_1 CPU module in <code>./cpu_src</code>
+_1 CPU module in <code>./cpu_src</code><br>
 _5 Alveo U50 modules, located under the <code>./docs</code> directory_<br>
 _Instructions in local readme files for each module_
 
