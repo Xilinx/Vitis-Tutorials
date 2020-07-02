@@ -7,7 +7,8 @@
 </table>
 
 > **_In this section..._**<br>
-_5 modules, located under the <code>./docs</code> directory_<br>
+_1 CPU module in <code>./cpu_src</code>_<br>
+_5 Alveo U50 modules, located under the <code>./docs</code> directory_<br>
 _Instructions in local readme files for each module_
 
 * [**Module 1**](../docs/module1_baseline): Setting up the design and establish a performance **baseline**
