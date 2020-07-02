@@ -239,7 +239,15 @@ Here's a screenshot for the block diagram after executing the operations above.
 
 ![](./images/platform_vivado_bd.png)
 
-[src/zcu104_min_step1.tcl](src/zcu104_min_step1.tcl) is provided to generate the Vivado project of this step.
+4. Setup `PFM_IRQ` property
+
+```
+set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]
+```
+
+
+
+[src/zcu104_min_step1.tcl](src/zcu104_min_step1.tcl) is provided to re-generate the Vivado project till this step.
 
 #### D. Export XSA
 
@@ -486,13 +494,56 @@ If XSA is exported with option `include_bit`, the report will have an additional
 
 #### B. Test with a vadd application
 
+1. Build vector addition application with the platform.
+
 | Vitis GUI Instructions                                       |
 | ------------------------------------------------------------ |
 | Launch Vitis with new workspace: zcu104_min/test/vadd        |
 | File → New → Application Project                             |
 | Project Name: vadd                                           |
-| Click add icon to add custom platform<br />Select zcu102/pfm/zcu104_min/export<br />Select zcu104_min platform |
+| Click add icon to add custom platform<br />Select zcu102/pfm/zcu104_min/export<br />Select zcu104_min platform<br /><br />Note: If platform and test application are created in the same workspace, custom platform is visible directly. There's no need to add custom platform. |
 | Select sysroot path: zcu104_min/pfm/sysroot/sysroots/aarch64-xilinx-linux |
 | Select template: Vector Addition                             |
 | Build for hardware<br />Change Active build configuration: **Hardware**<br />Click hammer icon in toolbar |
+
+2. Verify the AXI and interrupt signals are properly connected
+
+A Vivado project is generated during Vitis build process. It can be found at binary_container_1.build/link/vivado/vpl/prj/prj.xpr.
+
+Use Vivado to open this project.
+
+```
+vivado binary_container_1.build/link/vivado/vpl/prj/prj.xpr &
+```
+
+Open block design. 
+
+Verify that the vadd kernel is connected to control AXI and memory AXI properly. Interrupt signals are connected to interrupt controller properly.
+
+Here's an example.
+
+![](./images/zcu104_vadd.png)
+
+3. Run the design on board
+
+Copy files generated in package/sd_card directory to SD Card and boot.
+
+*Note: To simplify EXT4 rootfs write to SD card process, sd_card.img is provided. This SD card image can be written to SD card with image writers like Etcher or Win32 Disk Imager on Windows or dd command on Linux.*
+
+Boot the board in SD boot mode. 
+
+Run the vadd application.
+
+```bash
+mount /dev/mmcblk0p1 /mnt
+cd /mnt
+source ./init.sh
+./vadd binary_container_1.xclbin
+```
+
+It should print
+
+```
+TEST PASSED
+```
 
