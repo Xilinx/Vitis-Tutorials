@@ -26,7 +26,7 @@ This tutorial is divided in 3 sections.
   + [**Module 2**](./docs/module2_pipeline) (short module)
     * A deeper look at the HLS PIPELINE pragma
   + [**Module 3**](./docs/module3_localram)
-    * Use Xilinx on-chip local RAM blocks for host data transfers (via PLRAM) 
+    * Use Xilinx on-chip local RAM blocks for host data transfers (via Programmable Logic RAM - PLRAM) 
     * Run Vitis, Vitis Analyzer and Vitis HLS
   + [**Module 4**](./docs/module4_datatype)
     * Modify design to use the more efficient "float" compared to "double"
