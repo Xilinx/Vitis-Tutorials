@@ -26,5 +26,5 @@ _Instructions in local readme files for each module_
 * [**Module 5**](../docs/module5_dataflow): The task parallelism pragma is applied to improve results
   + Re-arrange code to enable the task parallelism optimization pragma of Vitis HLS called **DATAFLOW**.
   + Evaluate the performance improvement with Vitis Analyzer
-  + Use Vitis HLS to confirm the new micor-architecture created by dataflow
+  + Use Vitis HLS to confirm the new micro-architecture created by dataflow
   + Generate the binary (xclbin) to program the card and measure the actual performance
