@@ -150,7 +150,7 @@ int main(int argc, const char* argv[]) {
 
     // DDR Settings
     std::vector<cl_mem_ext_ptr_t> mext_io(1);
-    mext_io[0].flags = XCL_MEM_DDR_BANK0;
+    //    mext_io[0].flags = XCL_MEM_DDR_BANK0; // incorrect for PLRAM
     mext_io[0].obj = dataA;
     mext_io[0].param = 0;
 
@@ -168,7 +168,11 @@ int main(int argc, const char* argv[]) {
     std::vector<cl::Memory> ob_io;
     ob_io.push_back(buffer[0]);
 
-    q.enqueueMigrateMemObjects(ob_io, 0, nullptr, &kernel_evt[0][0]); // 0 : migrate from host to dev
+    // Kernel arguments
+    cholesky_kernel.setArg(0, dataAN);
+    cholesky_kernel.setArg(1, buffer[0]);
+    // 0 : migrate from host to dev
+    q.enqueueMigrateMemObjects(ob_io, 0, nullptr, &kernel_evt[0][0]);
     q.finish();
     std::cout << "INFO: Finish data transfer from host to device" << std::endl;
 
