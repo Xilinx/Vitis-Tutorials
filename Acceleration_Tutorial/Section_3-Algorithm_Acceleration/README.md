@@ -11,6 +11,8 @@ _1 CPU module in <code>./cpu_src</code>_<br>
 _5 Alveo U50 modules, located under the <code>./docs</code> directory_<br>
 _Instructions in local readme files for each module_
 
+* [**CPU**](../docs/cpu_src): A C++ implementation of the algorithm
+  + Run a C++ non-accelerated version of Cholesky algorithm
 * [**Module 1**](../docs/module1_baseline): Setting up the design and establish a performance **baseline**
   + Understand the OpenCL APIs that help connect host program to the kernel
   + Verify results through emulation both at the software level (sw_emu) and the hardware level (hw_emu)
