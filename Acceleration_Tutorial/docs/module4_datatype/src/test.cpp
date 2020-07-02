@@ -126,21 +126,21 @@ int main(int argc, const char* argv[]) {
 
     const int MAXN = dataAN, LDA = dataAN;
     int inout_size = MAXN * MAXN;
-    double* dataA;
-    dataA = aligned_alloc<double>(inout_size);
+    float* dataA;
+    dataA = aligned_alloc<float>(inout_size);
 
     // Generate general matrix dataAM x dataAN
-    double** dataC = new double*[dataAM];
-    double** dataD = new double*[dataAM];
-    double** dataE = new double*[dataAM];
+    float** dataC = new float*[dataAM];
+    float** dataD = new float*[dataAM];
+    float** dataE = new float*[dataAM];
     for (int i = 0; i < dataAM; ++i) {
-        dataC[i] = new double[dataAN];
-        dataD[i] = new double[dataAN];
-        dataE[i] = new double[dataAN];
+        dataC[i] = new float[dataAN];
+        dataD[i] = new float[dataAN];
+        dataE[i] = new float[dataAN];
     }
-    triLowerMatGen<double>(dataAN, seed, dataC);
-    transposeMat<double>(dataAN, dataC, dataD);
-    MulMat<double>(dataAM, dataAN, dataAN, dataC, dataD, dataE);
+    triLowerMatGen<float>(dataAN, seed, dataC);
+    transposeMat<float>(dataAN, dataC, dataD);
+    MulMat<float>(dataAM, dataAN, dataAN, dataC, dataD, dataE);
 
     for (int i = 0; i < dataAM; ++i) {
         for (int j = 0; j < dataAN; ++j) {
@@ -158,7 +158,7 @@ int main(int argc, const char* argv[]) {
     std::vector<cl::Buffer> buffer(1);
 
     buffer[0] = cl::Buffer(context, CL_MEM_EXT_PTR_XILINX | CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE,
-                           sizeof(double) * inout_size, &mext_io[0]);
+                           sizeof(float) * inout_size, &mext_io[0]);
 
     // Data transfer from host buffer to device buffer
     std::vector<std::vector<cl::Event> > kernel_evt(2);
@@ -198,7 +198,7 @@ int main(int argc, const char* argv[]) {
     q.finish();
 
     // Calculate err between dataA and dataC
-    double errA = 0;
+    float errA = 0;
     for (int i = 0; i < dataAM; i++) {
         for (int j = 0; j <= i; j++) {
             errA += (dataA[i * LDA + j] - dataC[i][j]) * (dataA[i * LDA + j] - dataC[i][j]);

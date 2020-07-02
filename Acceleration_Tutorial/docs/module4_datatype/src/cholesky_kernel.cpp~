@@ -16,7 +16,7 @@
 #include "cholesky_kernel.hpp"
 
 
-extern "C" void cholesky_kernel(int diagSize, float* matrixA) {
+extern "C" void cholesky_kernel(int diagSize, double* matrixA) {
 
 #pragma HLS INTERFACE m_axi offset = slave bundle = gmem0 port = matrixA latency = 64 \
   num_read_outstanding = 16 num_write_outstanding = 16 \
@@ -35,7 +35,7 @@ extern "C" void cholesky_kernel(int diagSize, float* matrixA) {
 		}
 	}
 
-    float tmp1=sqrt(dataA[0][0]); 
+    double tmp1=sqrt(dataA[0][0]); 
    
     dataA[0][0] = tmp1;  
     Loop_first_col:

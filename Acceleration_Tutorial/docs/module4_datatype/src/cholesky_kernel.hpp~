@@ -19,7 +19,7 @@
 #include <stdint.h>
 #include "hls_math.h"
 
-#define dataType float
+#define dataType double
 #define MAXN 512
 #define NCU 4
 
