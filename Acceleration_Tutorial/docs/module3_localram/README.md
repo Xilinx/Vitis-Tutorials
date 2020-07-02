@@ -1,4 +1,4 @@
-Code, files and instructions for **module 3** (same flow as in [<b>module 1</b>](../module1_baseline) to setup the Vits GUI or run make)
+Code, files and instructions for **module 3** (same flow and instructions as in [<b>module 1</b>](../module1_baseline) to run Vitis, Vitis Analyzer. No need to run Vitis HLS in this module)
 
 The kernel source code is same as in module 2.
 
