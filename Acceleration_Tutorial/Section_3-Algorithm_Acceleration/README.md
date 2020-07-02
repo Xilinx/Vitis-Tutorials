@@ -17,13 +17,12 @@ _Instructions in local readme files for each module_
   + Launch Vitis HLS to review the kernel optimizations
 * [**Module 2**](../docs/module2_pipeline): This version of the code explicitely applies the **PIPELINE** directive.
   + Learn about the pragma and its impact on designs
-* [**Module 3**](../docs/module3_dependency_removal): Analyze and solve false dependencies to improve the kernel
-  + Understand the changes applied in the code to circumvent the throughput bottleneck.
-  + Apply the **DEPENDENCE** pragma
-  + Rerun the kernel and observe the results through Vitis Analyzer
-* [**Module 4**](../docs/module4_flatten_loop): Merge and flatten critical loop to implement more parallelism
-  + Reuse the results from module 3 and flatten a critical loop to gain more parallelism.
-  + Rerun and observe the impact on resources, latency and throughput
+* [**Module 3**](../docs/module3_localram): Direct host transfers to the Programmable Logic RAM (PLRAM) for more efficient transfers
+  + Modify the configuration file to use PLRAM
+  + Rerun the hardware emulation and use Vitis Analyzer to review the results and verify the new connection
+* [**Module 4**](../docs/module4_datatype): Change "double" to "float"
+  + Run hardware emulation and then Vitis Analyzer and Vitis HLS
+  + Measure the impact on physical resources required to implement the design and performance 
 * [**Module 5**](../docs/module5_dataflow): Add the task parallelism pragma to further improve the kernel
   + Reuse the results from module 4 to re-arrange the code to enable the task parallelism optimization pragma called **DATAFLOW**.
   + Evaluate the performance improvement with Vitis Analyzer
