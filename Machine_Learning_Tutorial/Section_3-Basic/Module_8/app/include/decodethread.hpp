@@ -20,6 +20,7 @@
 #include <memory>
 #include "mythread.hpp"
 #include <linux/videodev2.h>    
+#include <opencv2/core.hpp>
 #include <V4l2Device.hpp>
 #include <V4l2Capture.hpp>
 
@@ -72,7 +73,7 @@ struct DecodeThread : public MyThread {
    * @return std::vector<cv::Mat> contains two cv::Mat, one is 1080P for showing the result, the other is 640x360 for DPU processing.
    *
    */
-  std::vector<cv::Mat> v4l2_videoCapture();
+   int v4l2_videoCapture(std::vector<cv::Mat>& mats);
   /**
    * @brief input channel ID
    * 
@@ -118,6 +119,9 @@ struct DecodeThread : public MyThread {
    * 
    */
   V4l2Capture* videoCapture;
+ static std::vector<cv::Mat> v4l2Mats;
+// static std::vector<cv::Mat> v4l2Mats_0;
+// static int count;
 };
 }}
 

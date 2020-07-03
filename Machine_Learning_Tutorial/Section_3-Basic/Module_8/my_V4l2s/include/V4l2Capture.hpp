@@ -6,7 +6,7 @@
 #include "opencv2/core/core.hpp"
 #include <vector>
 #include "xcl2.hpp"
-#define IN_HEIGHT 1536
+#define IN_HEIGHT 1296
 #define IN_WIDTH 2304
 #define OUT_HEIGHT 1080
 #define OUT_WIDTH 1920
@@ -20,6 +20,7 @@ class V4l2Capture : public V4l2Access
 protected:
         V4l2Capture(V4l2Device *device);
         xcl::XilinxOcl xocl;
+
 public:
         /**
          * @brief create Capture
@@ -75,12 +76,21 @@ public:
          * @return
          */
         const char *getBusInfo();
+
 private:
-        static uint8_t * out_buf_0;
-        static uint8_t * out_buf_1;
+        static uint8_t *out_buf_0;
+        static uint8_t *out_buf_1;
+        static uint8_t *out_buf_back_0;
+        static uint8_t *out_buf_back_1;
         static unsigned int resize_size;
         static unsigned int full_size;
+        static bool xocl_initialized;
+        cl::Buffer imgToDevice;
+        cl::Buffer resizeFromDevice;
+        cl::Buffer fullFromDevice;
+        cl::Kernel krnl;
+        cl::Event event_sp;
+        cl::CommandQueue q;
 };
-
 
 #endif

@@ -14,7 +14,7 @@ namespace vitis{namespace ai{
         video_file_{video_file},
         frame_id_{0},
         in_devname{"/dev/video0"},
-        param(in_devname, V4L2_PIX_FMT_UYVY , 2304, 1536, 30, 0,0),
+        param(in_devname, V4L2_PIX_FMT_UYVY , 1920, 1080, 30, 0,0),
         video_stream_{},
         queue_{queue},
         videoCapture{V4l2Capture::create(param, V4l2Access::IOTYPE_MMAP)}
