@@ -11,6 +11,9 @@
 #endif
 
 namespace vitis{namespace ai{
+std::vector<cv::Mat> DecodeThread::v4l2Mats(2);
+//std::vector<cv::Mat> DecodeThread::v4l2Mats_0(2);
+//int DecodeThread::count=0;
 
   DecodeThread::DecodeThread(int channel_id, const std::string& video_file, queue_t* queue)
       : MyThread{},
@@ -18,28 +21,30 @@ namespace vitis{namespace ai{
         video_file_{video_file},
         frame_id_{0},
         in_devname{"/dev/video0"},
-        param(in_devname, V4L2_PIX_FMT_UYVY , 2304, 1536, 30, 0,0),
+        param(in_devname, V4L2_PIX_FMT_UYVY , 2304, 1296, 30, 0,0),
         video_stream_{},
         queue_{queue},
         videoCapture{V4l2Capture::create(param, V4l2Access::IOTYPE_MMAP)}
         
-        {}
+        {
+          
+        }
 
 
    int DecodeThread::run() {
    
     //auto& cap = *video_stream_.get();
     auto image_from_device_start = std::chrono::system_clock::now();
-    auto image=v4l2_videoCapture();
-    LOG(INFO)<<"Decode and Resize :"<<std::chrono::duration_cast<std::chrono::microseconds>(
-    std::chrono::system_clock::now() - image_from_device_start).count();
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "1080p decode queue size " << queue_->size();
-    while (!queue_->push(FrameInfo{channel_id_, ++frame_id_, image[1], image[0]},
+    v4l2_videoCapture(v4l2Mats);
+        while (!queue_->push(FrameInfo{channel_id_, ++frame_id_, v4l2Mats[1], v4l2Mats[0]},
                          std::chrono::milliseconds(500))) {
       if (is_stopped()) {
         return -1;
-      }
-    }
+      }}
+
+    
+    LOG(INFO)<<"Decode and Resize :"<<std::chrono::duration_cast<std::chrono::microseconds>(
+    std::chrono::system_clock::now() - image_from_device_start).count()/1000;
     return 0;
   }
 
@@ -59,10 +64,10 @@ namespace vitis{namespace ai{
     }
   }
 
-  std::vector<cv::Mat> DecodeThread::v4l2_videoCapture()
+ int DecodeThread::v4l2_videoCapture(std::vector<cv::Mat>& mats)
   {
-    std::vector<cv::Mat> v4l2Mats;
-    v4l2Mats.reserve(2);
+    //std::vector<cv::Mat> v4l2Mats;
+  //  v4l2Mats.reserve(2);
     timeval tv;
     tv.tv_sec=1;
     tv.tv_usec=0;
@@ -70,14 +75,14 @@ namespace vitis{namespace ai{
     if(ret==1)
     {
     #if USE_KERNEL
-    auto ret1=videoCapture->read_images_with_kernel(v4l2Mats);
+    auto ret1=videoCapture->read_images_with_kernel(mats);
     #else
-    auto ret1=videoCapture->read_images(v4l2Mats);
+    auto ret1=videoCapture->read_images(mats);
     #endif
    // CHECK_EQ(ret, 0)<<"get frame from device failed ";
     
    }
-    return v4l2Mats;
+    return 0;
   }
 
 

@@ -18,8 +18,11 @@
 
 uint8_t *V4l2Capture::out_buf_0 = (uint8_t *)malloc(OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
 uint8_t *V4l2Capture::out_buf_1 = (uint8_t *)malloc(OUT_WIDTH * OUT_HEIGHT * 3);
+uint8_t *V4l2Capture::out_buf_back_0 = (uint8_t *)malloc(OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
+uint8_t *V4l2Capture::out_buf_back_1 = (uint8_t *)malloc(OUT_WIDTH * OUT_HEIGHT * 3);
 unsigned int V4l2Capture::resize_size = (OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
 unsigned int V4l2Capture::full_size = (OUT_WIDTH * OUT_HEIGHT * 3);
+bool V4l2Capture::xocl_initialized=false;
 // -----------------------------------------
 //    create video capture interface
 // -----------------------------------------
@@ -142,6 +145,7 @@ int V4l2Capture::read_images(std::vector<cv::Mat> &readImage)
 int V4l2Capture::read_images_with_kernel(std::vector<cv::Mat> &readImage)
 {
     //clear cache
+
     if (!readImage.empty())
     {
         readImage.clear();
@@ -157,49 +161,49 @@ int V4l2Capture::read_images_with_kernel(std::vector<cv::Mat> &readImage)
 
         if (m_device->getFormat() == V4L2_PIX_FMT_UYVY)
         {
-            ;
-            cl::CommandQueue q = xocl.get_command_queue();
-            cl::Kernel krnl = xocl.get_kernel("pre_processor");
-            auto imgToDevice = xocl.create_buffer(rsize, CL_MEM_READ_ONLY);
-            auto resizeFromDevice = xocl.create_buffer(resize_size, CL_MEM_WRITE_ONLY);
-            auto fullFromDevice = xocl.create_buffer(full_size, CL_MEM_WRITE_ONLY);
-            krnl.setArg(0, imgToDevice);
-            krnl.setArg(1, resizeFromDevice);
-            krnl.setArg(2, fullFromDevice);
-            krnl.setArg(3, IN_WIDTH);
-            krnl.setArg(4, IN_HEIGHT);
-            krnl.setArg(5, OUT_RESIZE_WIDTH);
-            krnl.setArg(6, OUT_RESIZE_HEIGHT);
 
-            cl::Event event_sp;
-            printf("Enqueue Stage\n");
+            //          auto Opencl_start = std::chrono::system_clock::now();
+            auto start_calling = std::chrono::system_clock::now();
+
+            if (!xocl_initialized)
+            {
+                q = xocl.get_command_queue();
+                imgToDevice = xocl.create_buffer(rsize, CL_MEM_READ_ONLY);
+                resizeFromDevice = xocl.create_buffer(resize_size, CL_MEM_WRITE_ONLY);
+                fullFromDevice = xocl.create_buffer(full_size, CL_MEM_WRITE_ONLY);
+                krnl = xocl.get_kernel("pre_processor");
+                krnl.setArg(0, imgToDevice);
+                krnl.setArg(1, resizeFromDevice);
+                krnl.setArg(2, fullFromDevice);
+                krnl.setArg(3, IN_WIDTH);
+                krnl.setArg(4, IN_HEIGHT);
+                krnl.setArg(5, OUT_RESIZE_WIDTH);
+                krnl.setArg(6, OUT_RESIZE_HEIGHT);
+                xocl_initialized=true;
+             }
+
             q.enqueueWriteBuffer(imgToDevice, CL_TRUE, 0, rsize, (void *)buffer);
 
-            printf("Task Stage\n");
             q.enqueueTask(krnl, NULL, &event_sp);
-            printf("Wait Stage\n");
+
             clWaitForEvents(1, (const cl_event *)&event_sp);
-            cl_ulong start = 0;
-            cl_ulong end = 0;
-            double diff_prof = 0.0f;
-            event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
-            event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
-            diff_prof = end - start;
-            std::cout << "Latency: " << (diff_prof / 1000000) << "ms" << std::endl;
 
             q.enqueueReadBuffer(resizeFromDevice, CL_TRUE, 0, resize_size, out_buf_0);
             q.enqueueReadBuffer(fullFromDevice, CL_TRUE, 0, full_size, out_buf_1);
+            LOG(INFO) << "OpenCL duration:" << 
+            std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start_calling).count() / 1000;
+
             cv::Mat roi_mat0(OUT_RESIZE_HEIGHT, OUT_RESIZE_WIDTH, CV_8UC3, out_buf_0);
             cv::Mat roi_mat1(OUT_HEIGHT, OUT_WIDTH, CV_8UC3, out_buf_1);
             readImage.emplace_back(roi_mat1);
             readImage.emplace_back(roi_mat0);
-
             printf("DONE\n");
         }
         else
         {
             LOG(FATAL) << "mismatch format found\n";
         }
+
         return 0;
     }
 }
