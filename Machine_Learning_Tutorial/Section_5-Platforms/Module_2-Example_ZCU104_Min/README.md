@@ -21,7 +21,7 @@ Here's the instructions for a minimum start for the base component.
 | Vitis GUI Instructions                                       |
 | ------------------------------------------------------------ |
 | Create Project: File -> Project -> New                       |
-| Project name: zcu102_min</br>Project location: ~/zcu104_min/vivado </br>Create project subdirectory: checked |
+| Project name: zcu104_min</br>Project location: ~/zcu104_min/vivado </br>Create project subdirectory: checked |
 | RTL Project Do not specify sources at this time: checked     |
 | Boards: Zynq UltraScale+ ZCU104 Evaluation Board             |
 | Finish                                                       |
@@ -142,9 +142,9 @@ Note: Since we don't need to test the PL side in next step, bit file is not adde
 Console output example:
 
 ```
-PetaLinux 2019.2 zcu102_min /dev/ttyPS0
+PetaLinux 2019.2 zcu104_min /dev/ttyPS0
 
-zcu102_min login: root
+zcu104_min login: root
 Password:
 root@zcu102_min:~#
 ```
@@ -313,7 +313,7 @@ Enable these packages
 
 #### C. Update device tree to include zocl
 
-Add the following zocl code block to [system-user.dtsi](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/blob/master/Xilinx_Official_Platforms/zcu102_base/petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi) in project-spec/meta-user/recipes-bsp/device-tree/files/
+Add the following zocl code block to [system-user.dtsi](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/blob/master/Xilinx_Official_Platforms/zcu104_base/petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi) in project-spec/meta-user/recipes-bsp/device-tree/files/
 
 ```
 &amba {
@@ -433,7 +433,7 @@ zcu104_min
 | Project name: **zcu104_min**                                 |
 | Create from hardware specification (XSA)                     |
 | XSA file: **zcu104_min.xsa** in Vivado project<br />Operating System: **Linux**<br />Processor: **psu_cortexa53**<br />Generate boot components: **uncheck** |
-| Double click zcu102_min/platform.spr, select linux on psu__cortexa53<br />Bif File:**zcu104_min/pfm/xrt/linux.bif**<br />Boot Components Directory: **zcu104_min/petalinux/zcu104_min/images/linux**<br />Linux Image Directory: **zcu104_min/pfm/xrt/image** |
+| Double click zcu104_min/platform.spr, select linux on psu__cortexa53<br />Bif File:**zcu104_min/pfm/xrt/linux.bif**<br />Boot Components Directory: **zcu104_min/petalinux/zcu104_min/images/linux**<br />Linux Image Directory: **zcu104_min/pfm/xrt/image** |
 | Click hammer icon on tool bar to build platform              |
 
 The generated platform is located in zcu104_min/pfm/zcu104_min/export/zcu104_min directory. It has the top level platform description file **zcu104_min.xpfm**. The software components listed above are all copied to platform directory.
@@ -501,7 +501,7 @@ If XSA is exported with option `include_bit`, the report will have an additional
 | Launch Vitis with new workspace: zcu104_min/test/vadd        |
 | File → New → Application Project                             |
 | Project Name: vadd                                           |
-| Click add icon to add custom platform<br />Select zcu102/pfm/zcu104_min/export<br />Select zcu104_min platform<br /><br />Note: If platform and test application are created in the same workspace, custom platform is visible directly. There's no need to add custom platform. |
+| Click add icon to add custom platform<br />Select zcu104/pfm/zcu104_min/export<br />Select zcu104_min platform<br /><br />Note: If platform and test application are created in the same workspace, custom platform is visible directly. There's no need to add custom platform. |
 | Select sysroot path: zcu104_min/pfm/sysroot/sysroots/aarch64-xilinx-linux |
 | Select template: Vector Addition                             |
 | Build for hardware<br />Change Active build configuration: **Hardware**<br />Click hammer icon in toolbar |
