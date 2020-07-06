@@ -1,13 +1,3 @@
-<table style="width:100%">
-  <tr>
-    <td width="20%" align="center">CPU</a></td>
-    <td width="20%" align="center"><a href="./getting-started-tutorial/README.md">Module 1</a></td>
-    <td width="20%" align="center"><a href="./docs/getting-started-with-c-kernels/getting-started.md">Module 2</a></td>
-    <td width="20%" align="center"><a href="./getting-started-tutorial/README.md">Module 1</a></td>
-    <td width="20%" align="center"><a href="./docs/getting-started-with-c-kernels/getting-started.md">Module 2</a></td>
-  </tr>
-</table>
-
 Code, files and instructions for **module 1**
 
 > **_In this module..._**<br>
@@ -232,4 +222,5 @@ The Vitis HLS Cosimulation runs a cycle accurate RTL simulation which shows the 
 
 </details>
 
+Proceed to [**module 2**](../docs/module2_pipeline)
 ***
