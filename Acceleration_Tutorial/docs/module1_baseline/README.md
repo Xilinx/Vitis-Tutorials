@@ -1,10 +1,10 @@
 <table style="width:100%">
   <tr>
-    <td width="17%" align="center">CPU</a></td>
-    <td width="16%" align="center"><a href="./getting-started-tutorial/README.md">Module 1</a></td>
-    <td width="16%" align="center"><a href="./docs/getting-started-with-c-kernels/getting-started.md">Module 2</a></td>
-    <td width="16%" align="center"><a href="./getting-started-tutorial/README.md">Module 1</a></td>
-    <td width="16%" align="center"><a href="./docs/getting-started-with-c-kernels/getting-started.md">Module 2</a></td>
+    <td width="20%" align="center">CPU</a></td>
+    <td width="20%" align="center"><a href="./getting-started-tutorial/README.md">Module 1</a></td>
+    <td width="20%" align="center"><a href="./docs/getting-started-with-c-kernels/getting-started.md">Module 2</a></td>
+    <td width="20%" align="center"><a href="./getting-started-tutorial/README.md">Module 1</a></td>
+    <td width="20%" align="center"><a href="./docs/getting-started-with-c-kernels/getting-started.md">Module 2</a></td>
   </tr>
 </table>
 
