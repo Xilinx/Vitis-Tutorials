@@ -1,7 +1,7 @@
 Code, files and instructions for **module 1**
 
 > **_In this module..._**<br>
-_1> Review the OpenCL API for the host/kernel paradigm<br>
+_>1> Review the OpenCL API for the host/kernel paradigm<br>
 2> Run Vitis via the GUI or make to execute software and hardware emulation<br>
 3> Run Vitis Analyzer to review the application timeline<br>
 4> Run Vitis HLS to identify the throughput bottleneck<br>
