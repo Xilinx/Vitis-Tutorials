@@ -35,5 +35,3 @@ Take a look at the kernel source code and notice how the PIPELINE directive is a
 Since Vitis HLS automatically pipelines the isn't going to produce different results compared to the baseline.
 
 At this point you can move to [<b>module 3</b>](../module3_dependency_removal) unless you want to verify how these pragmas behave in which case you can run the tools the same way as in module 1.
-
-Proceed to [**module 3**](../docs/module3_localram)
