@@ -22,7 +22,7 @@ _Instructions in local readme files for each module_
   + Learn about the pragma and its impact on designs
 * [**Module 3**](../docs/module3_localram): Direct host transfers to the Programmable Logic RAM (**PLRAM**) for more efficient transfers
   + Modify the configuration file to use PLRAM
-  + Rerun the hardware emulation and use Vitis Analyzer to review the results and verify the new connection
+  + Rerun the hardware emulation and use Vitis Analyzer to review the results and verify the new topology
 * [**Module 4**](../docs/module4_datatype): Change "double" **data types** to "float"
   + Run hardware emulation and then Vitis Analyzer and Vitis HLS
   + Measure the impact on physical resources required to implement the design and performance 
