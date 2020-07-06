@@ -1,4 +1,4 @@
-| cpu_src | Module 1 | Module 2 | Module 3 | Module 4 | Module 5 |
+| [toto](cpu_src) | Module 1 | Module 2 | Module 3 | Module 4 | Module 5 |
 |---------|----------|----------|----------|----------|----------|
 
 <table style="width:100%">
