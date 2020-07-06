@@ -222,5 +222,5 @@ The Vitis HLS Cosimulation runs a cycle accurate RTL simulation which shows the 
 
 </details>
 
-Proceed to [**module 2**](../docs/module2_pipeline)
+Please proceed to [**module 2**](../module2_pipeline).
 ***
