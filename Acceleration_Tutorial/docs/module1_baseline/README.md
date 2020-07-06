@@ -1,4 +1,5 @@
 | cpu_src | Module 1 | Module 2 | Module 3 | Module 4 | Module 5 |
+|---------|----------|
 
 Code, files and instructions for **module 1**
 
