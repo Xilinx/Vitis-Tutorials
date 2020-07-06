@@ -22,4 +22,4 @@ Run Vitis and hardware emulation.
 
 Run Vitis Analyzer and verify the PLRAM is used.
 
-Now proceed to [**module 4**](../docs/module4_datatype)
+Now please proceed to [**module 4**](../docs/module4_datatype).
