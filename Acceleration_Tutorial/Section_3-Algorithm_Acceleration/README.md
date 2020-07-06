@@ -26,7 +26,7 @@ _Instructions in local readme files for each module_
 * [**Module 4**](../docs/module4_datatype): Change "double" **data types** to "float"
   + Run hardware emulation and then Vitis Analyzer and Vitis HLS
   + Measure the impact on physical resources required to implement the design and performance 
-* [**Module 5**](../docs/module5_dataflow): The task parallelism pragma is applied to improve results
+* [**Module 5**](../docs/module5_dataflow): Back to using "double" and HBM, the task parallelism pragma is applied to improve results
   + Re-arrange code to enable the task parallelism optimization pragma of Vitis HLS called **DATAFLOW**.
   + Evaluate the performance improvement with Vitis Analyzer
   + Use Vitis HLS to confirm the new micro-architecture created by dataflow
