@@ -12,3 +12,5 @@ Did it shorten kernel execution time?
 Run Vitis HLS to measure detailed parameters including the II.
 
 Is the II any different than before?
+
+Please proceed to [**module 5**](../module5_dataflow).
