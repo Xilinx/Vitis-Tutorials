@@ -20,4 +20,6 @@ sp=cholesky_kernel_1.matrixA:PLRAM[0:3]
 
 Run Vitis and hardware emulation.
 
-Run Vitis Analyzer and verify the PLRAM is used
+Run Vitis Analyzer and verify the PLRAM is used.
+
+Now proceed to [**module 4**](../docs/module4_datatype)
