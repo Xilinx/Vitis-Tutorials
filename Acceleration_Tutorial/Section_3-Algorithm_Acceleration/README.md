@@ -14,7 +14,7 @@ _Instructions in local readme files for each module_
 * [**CPU Reference**](../docs/cpu_src): A C++ implementation of the algorithm
   + Run a C++ non-accelerated version of Cholesky algorithm
 * [**Module 1**](../docs/module1_baseline): Setting up the design and establish a performance **baseline**
-  + Understand the host OpenCL APIs that help connect to the kernel implemented onto the FPGA
+  + Understand the host OpenCL APIs that help connect to the kernel implemented onto the Xilinx device
   + Verify results through emulation both at the software level (sw_emu) and the hardware level (hw_emu)
   + Evaluate the performance by visualizing the timeline trace with Vitis Analyzer
   + Launch Vitis HLS to review the kernel optimizations
