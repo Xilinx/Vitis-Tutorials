@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-> **_In this section...:_**  _Quick overview of the Vitis flow and description of the linear algebra algorithm chosen for the tutorial._
+> **_In this section...:_**  _Quick overview of the Vitis flow and description host/kernel paradigm._
 
 #### The Vitis Flow
 
