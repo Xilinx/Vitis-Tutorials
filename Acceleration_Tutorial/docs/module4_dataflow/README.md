@@ -1,4 +1,4 @@
-Code and files for **module 5** (same instructions as in [module1](../module1_baseline) to setup Vitis and run Vitis Analyzer and Vitis HLS)
+Code and files for **module 4** (same instructions as in [module1](../module1_baseline) to setup Vitis and run Vitis Analyzer and Vitis HLS)
 
 > **_In this module..._**<br>
 _1> Replicate a compute loop by a programmable factor applied via a templated function_<br>
