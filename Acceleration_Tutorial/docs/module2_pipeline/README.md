@@ -24,7 +24,7 @@ To enable the pragma in the C source, insert it within the body of the function 
 ```
 II=int specifies the desired number of clock cycles between each  initiation interval for the pipeline. The HLS tool tries to meet this request but based on data dependencies, the actual result might have a larger initiation interval. The enable_flush modifier is optional and keeps on pushing data out if the data valid at the input of the pipeline goes inactive. The rewind modifier is also optional and enables continuous loop pipelining with no pause between one loop iteration ending and the next iteration starting. Rewinding is effective only if there is one single loop (or a perfect loop nest) inside the top-level function. 
 
-In the following example function foo is pipelined with an initiation interval of 1:
+In the following example function <code>foo</code> is pipelined with an initiation interval of 1:
 ```cpp
 void foo { a, b, c, d} {
   #pragma HLS pipeline II=1
