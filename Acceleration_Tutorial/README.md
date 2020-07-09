@@ -21,7 +21,7 @@ This tutorial is divided in 3 sections.
     
   + [**Introduction**](./docs/cpu_src)
     * Meet the Cholesky algorithm!
-    * Run a CPU version of the algorithm
+    * Run a CPU version
   + [**Vitis Module 1**](./docs/module1_baseline)
     * Get a performance baseline as a reference point with a first kernel design
     * Run Vitis in GUI mode or via <code>make</code>
