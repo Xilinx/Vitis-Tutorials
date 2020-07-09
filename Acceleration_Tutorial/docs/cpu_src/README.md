@@ -1,4 +1,9 @@
-#### Algorighm Description
+
+> **_In this initial module..._**<br>
+_1> Description of the Cholesky algorithm_
+_2> Running on the CPU_
+
+#### Algorithm Description
 This tutorial is based on a C++ kernel that we'll optimize for highest throughput. 
 
 The algorithm to accelerate is a common linear algebra solver, the decomposition of a Hermitian, positive-definite matrix into the product of a lower triangular matrix and its conjugate transpose.  For this purpose we will use the Cholesky decomposition or Cholesky factorization (pronounced /ʃo-LESS-key/).  This solver is useful for several numerical problems, in particular for Monte Carlo simulations.
