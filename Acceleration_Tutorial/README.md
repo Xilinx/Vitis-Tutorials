@@ -14,6 +14,7 @@ This tutorial is divided in 3 sections.
   + Setup the Vitis development tools
   + Detect and check the card installed on the server 
 * [**Section 3**](./Section_3-Algorithm_Acceleration) (a few hours):
+  + Understand the Cholesky algorithm and run it 
   + Re-organize the code to create both a host and a kernel program
   + Review the APIs that bind the host and the kernel
   + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
