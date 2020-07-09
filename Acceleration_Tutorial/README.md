@@ -19,10 +19,10 @@ This tutorial is divided in 3 sections.
   + Review the APIs that bind the host and the kernel
   + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
     
-  + [**Introduction:**](./docs/cpu_src)
+  + [**Introduction**](./docs/cpu_src)
     * Meet the Cholesky algorithm!
     * Run a CPU version of the algorithm
-  + [**Vitis Module 1:**](./docs/module1_baseline)
+  + [**Vitis Module 1**](./docs/module1_baseline)
     * Get a performance baseline as a reference point with a first kernel design
     * Run Vitis in GUI mode or via <code>make</code>
     * Run Vitis Analyzer to visualize the application timeline
