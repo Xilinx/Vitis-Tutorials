@@ -1,6 +1,6 @@
 
 > **_In this initial module..._**<br>
-_1> Description of the Cholesky algorithm_
+_1> Description of the Cholesky algorithm_<br>
 _2> Running on the CPU_
 
 #### Algorithm Description
