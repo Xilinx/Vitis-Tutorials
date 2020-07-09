@@ -7,7 +7,7 @@ The Xilinx device fitted on the U50 card is an UltraScale + device that can impl
 + Run Vitis and harware emulation (as described in module 1).
 + Run Vitis Analyser to measure impact on resources used and performance improvement.
 
-Did it shorten kernel execution time?
+:point_right: Did it shorten kernel execution time?
 
 + Run Vitis HLS to measure detailed parameters including the II (remember, the II is the initiationinterval, the ability of the generated hardware to consume data every <II> clock cycle).
 
