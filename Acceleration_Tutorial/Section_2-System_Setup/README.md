@@ -49,4 +49,4 @@ source /opt/xilinx/xrt/setup.sh
 xbutil validate
 ~~~
 
-Please proceed to [**Section 3**](../Section_3-Algorithm_Acceleration)
+Please proceed to [**Section 3**](../Section_3-Algorithm_Acceleration).
