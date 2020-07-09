@@ -20,7 +20,7 @@ In the Vitis™ core development flow, an application program is split between a
 - The host application is developed in C/C++ with OpenCL™ API calls
 - The hardware kernels can be developed in C/C++, OpenCL C, or RTL.
 
-![flow](./docs/images/host-kernel.png)
+![flow](../docs/images/host-kernel.png)
 
 #### Algorighm Description
 This tutorial is based on a C++ kernel that we'll optimize for highest throughput. 
