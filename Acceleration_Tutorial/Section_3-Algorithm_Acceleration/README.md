@@ -7,11 +7,11 @@
 </table>
 
 > **_In this section..._**<br>
-_1 CPU reference module in <code>./cpu_src</code>_<br>
+_1 Introductory reference module in which we run the CPU version of the algorithm in <code>./cpu_src</code>_<br>
 _4 Alveo U50 modules, located under the <code>./docs</code> directory_<br>
 _Instructions in local readme files for each module_
 
-* [**CPU Reference**](../docs/cpu_src): A C++ implementation of the algorithm
+* [**Introduction — CPU Run**](../docs/cpu_src): A C++ implementation of the algorithm
   + Run a C++ non-accelerated version of Cholesky algorithm
 * [**Module 1**](../docs/module1_baseline): Setting up the design and establish a performance **baseline**
   + Understand the host OpenCL APIs that help connect to the kernel implemented onto the Xilinx device
