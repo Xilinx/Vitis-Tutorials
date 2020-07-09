@@ -48,3 +48,5 @@ source /opt/xilinx/xrt/setup.sh
 #validate Alveo card
 xbutil validate
 ~~~
+
+Please proceed to [**Section 3**](../Section_3-Algorithm_Acceleration)
