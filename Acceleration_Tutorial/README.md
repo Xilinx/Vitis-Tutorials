@@ -22,17 +22,17 @@ This tutorial is divided in 3 sections.
   + [**Introduction:**](./docs/cpu_src)
     * Meet the Cholesky algorithm!
     * Run a CPU version of the algorithm
-  + [**Module 1:**](./docs/module1_baseline)
+  + [**Vitis Module 1:**](./docs/module1_baseline)
     * Get a performance baseline as a reference point with a first kernel design
     * Run Vitis in GUI mode or via <code>make</code>
     * Run Vitis Analyzer to visualize the application timeline
     * Run Vitis HLS to study kernel code performance and resource metrics
-  + [**Module 2**](./docs/module2_pipeline) (short module to focus on the impact of <code>PIPELINE</code>)
+  + [**Vitis Module 2**](./docs/module2_pipeline) (short module to focus on the impact of <code>PIPELINE</code>)
     * A deeper look at the HLS PIPELINE pragma
-  + [**Module 3**](./docs/module3_datatype)
+  + [**Vitis Module 3**](./docs/module3_datatype)
     * Modify design to use the more hardware efficient "float" data types (compared to "double")
     * Run Vitis, Vitis Analyzer and Vitis HLS
-  + [**Module 4**](./docs/module4_dataflow)
+  + [**Vitis Module 4**](./docs/module4_dataflow)
     * Apply the DATAFLOW task parallelism optimization pragma
     * Run Vitis, Vitis Analyzer and Vitis HLS (including viewing specific dataflow waveforms)
     * Run on the U50 card
