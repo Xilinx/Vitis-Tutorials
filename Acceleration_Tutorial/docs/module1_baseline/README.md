@@ -8,11 +8,6 @@ _1> Review the OpenCL API for the host/kernel paradigm<br>
 5> Insert a testbench in HLS to iterate quickly on kernel code changes_
 
 ## Understanding Code Setup with Host and Kernel
-To enable hardware acceleration, the code is split between the host and the kernel.  The host program, written in C/C++ uses API abstractions like OpenCL, runs on a host processor, an x86 server or an Arm processor for embedded platforms.  The hardware accelerated kernels run onto the programmable logic of a Xilinx device.
-
-The API calls, processed by Xilinx runtime (XRT), manage process transactions between the host program and the hardware accelerators. Communication between the host and the kernel, including control and data transfers, occurs across the PCIe® bus or an AXI bus for embedded platforms.
-
-In a typical application, the host first transfers data to be operated on by the kernel from host memory into global memory. The kernel subsequently operates on the data, storing results back to the global memory. Upon kernel completion, the host transfers the results back into the host memory. Data transfers between the host and global memory introduce latency, which can be costly to the overall application. To achieve acceleration in a real system, the benefits achieved by the hardware acceleration kernels must outweigh the added latency of the data transfers.
 
 The source code for each module is located under their local <code>./src</code> directory:
   + Take a look at the host code and notice the several APIs that are used. Notice how the data is transferred back and forth to the kernel an back. The execution model can be broken down into the following steps:
