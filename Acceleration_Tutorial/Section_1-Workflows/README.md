@@ -24,4 +24,4 @@ Here is a diagram of the functional blocks involved for a x86 server connected t
 
 ![flow](../docs/images/host-kernel.png)
 
-In the next [section](../Section_2-System_Setup), you'll learn how to prepare your environment to run the tutorial.
+In the next [**section**](../Section_2-System_Setup), you'll learn how to prepare your environment to run the tutorial.
