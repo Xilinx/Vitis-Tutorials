@@ -30,7 +30,7 @@ This tutorial is divided in 3 sections.
   + [**Vitis Module 2**](./docs/module2_pipeline) (short module to focus on the impact of <code>PIPELINE</code>)
     * A deeper look at the HLS PIPELINE pragma
   + [**Vitis Module 3**](./docs/module3_datatype)
-    * Modify design to use the more hardware efficient C++ <code>float</code> data types (compared to <code>double</code>")
+    * Modify design to use the more hardware efficient C++ <code>float</code> data types (compared to <code>double</code>)
     * Run Vitis, Vitis Analyzer and Vitis HLS
   + [**Vitis Module 4**](./docs/module4_dataflow)
     * Apply the <code>DATAFLOW</code> task parallelism optimization pragma
