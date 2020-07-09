@@ -25,13 +25,10 @@ This tutorial is divided in 3 sections.
     * Run Vitis HLS to study kernel code performance and resource metrics
   + [**Module 2**](./docs/module2_pipeline) (short module)
     * A deeper look at the HLS PIPELINE pragma
-  + [**Module 3**](./docs/module3_localram)
-    * Use Xilinx on-chip local RAM blocks for host data transfers (via Programmable Logic RAM - PLRAM) 
-    * Run Vitis, Vitis Analyzer and Vitis HLS
-  + [**Module 4**](./docs/module4_datatype)
+  + [**Module 3**](./docs/module3_datatype)
     * Modify design to use the more hardware efficient "float" data types (compared to "double")
     * Run Vitis, Vitis Analyzer and Vitis HLS
-  + [**Module 5**](./docs/module5_dataflow)
+  + [**Module 4**](./docs/module4_dataflow)
     * Apply the DATAFLOW task parallelism optimization pragma
     * Run Vitis, Vitis Analyzer and Vitis HLS (including viewing specific dataflow waveforms)
     * Run on the U50 card
