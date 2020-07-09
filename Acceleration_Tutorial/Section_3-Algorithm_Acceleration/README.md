@@ -8,7 +8,7 @@
 
 > **_In this section..._**<br>
 _1 CPU reference module in <code>./cpu_src</code>_<br>
-_5 Alveo U50 modules, located under the <code>./docs</code> directory_<br>
+_4 Alveo U50 modules, located under the <code>./docs</code> directory_<br>
 _Instructions in local readme files for each module_
 
 * [**CPU Reference**](../docs/cpu_src): A C++ implementation of the algorithm
@@ -20,13 +20,10 @@ _Instructions in local readme files for each module_
   + Launch Vitis HLS to review the kernel optimizations
 * [**Module 2**](../docs/module2_pipeline): This version of the code explicitely applies the **PIPELINE** directive.
   + Learn about the pragma and its impact on designs
-* [**Module 3**](../docs/module3_localram): Direct host transfers to the Programmable Logic RAM (**PLRAM**) for more efficient transfers
-  + Modify the configuration file to use PLRAM
-  + Rerun the hardware emulation and use Vitis Analyzer to review the results and verify the new topology
-* [**Module 4**](../docs/module4_datatype): Change "double" **data types** to "float"
+* [**Module 3**](../docs/module3_datatype): Change "double" **data types** to "float"
   + Run hardware emulation and then Vitis Analyzer and Vitis HLS
   + Measure the impact on physical resources required to implement the design and performance 
-* [**Module 5**](../docs/module5_dataflow): Back to using "double" and HBM, the task parallelism pragma is applied to improve results
+* [**Module 4**](../docs/module4_dataflow): Back to using "double" and HBM, the task parallelism pragma is applied to improve results
   + Re-arrange code to enable the task parallelism optimization pragma of Vitis HLS called **DATAFLOW**.
   + Evaluate the performance improvement with Vitis Analyzer
   + Use Vitis HLS to confirm the new micro-architecture created by dataflow
