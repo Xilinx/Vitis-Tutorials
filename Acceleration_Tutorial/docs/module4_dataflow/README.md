@@ -2,22 +2,22 @@ Code and files for **module 4** (same instructions as in [module1](../module1_ba
 
 > **_In this module..._**<br>
 _1> Replicate a compute loop by a programmable factor applied via a templated function_<br>
-_2> Use the Vitis HLS dataflow pragma_<br>
+_2> Use the Vitis HLS <code>dataflow</code> pragma_<br>
 _3> Run the full compile and program the card_
 
 <details>
   <summary><b>Click to expand! Learn about the <code>dataflow</code> pragma...</b></summary>
   
-The DATAFLOW pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the register transfer level (RTL) implementation, and increasing the overall throughput of the design.
+The <code>DATAFLOW</code> pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the register transfer level (RTL) implementation, and increasing the overall throughput of the design.
 
 All operations are performed sequentially in a C description. In the absence of any directives that limit resources (such as pragma HLS allocation), the Vivado High-Level Synthesis (HLS) tool seeks to minimize latency and improve concurrency. However, data dependencies can limit this. For example, functions or loops that access arrays must finish all read/write accesses to the arrays before they complete. This prevents the next function or loop that consumes the data from starting operation. The <code>DATAFLOW</code> optimization enables the operations in a function or loop to start operation before the previous function or loop completes all its operations. 
 
-When the <code>DATAFLOW</code> pragma is specified, the HLS tool analyzes the dataflow between sequential functions or loops and creates channels (based on ping pong RAMs or FIFOs) that allow consumer functions or loops to start operation before the producer functions or loops have completed. This allows functions or loops to operate in parallel, which decreases latency and improves the throughput of the RTL.
+When the <code>DATAFLOW</code> pragma is specified, the HLS tool analyzes the data flow between sequential functions or loops and creates channels (based on ping pong RAMs or FIFOs) that allow consumer functions or loops to start operation before the producer functions or loops have completed. This allows functions or loops to operate in parallel, which decreases latency and improves the throughput of the RTL.
 
 If no initiation interval (number of cycles between the start of one function or loop and the next) is specified, the HLS tool attempts to minimize the initiation interval and start operation as soon as data is available.
 
-TIP: The config_dataflow command specifies the default memory channel and FIFO depth used in dataflow optimization. Refer to the config_dataflow command in the Vivado Design Suite User Guide: High-Level Synthesis (UG902) for more information.
-For the DATAFLOW optimization to work, the data must flow through the design from one task to the next. The following coding styles prevent the HLS tool from performing the DATAFLOW optimization:
+TIP: The config_dataflow command specifies the default memory channel and FIFO depth used in <code>dataflow</code> optimization. Refer to the config_dataflow command in the Vivado Design Suite User Guide: High-Level Synthesis (UG902) for more information.
+For the <code>DATAFLOW</code> optimization to work, the data must flow through the design from one task to the next. The following coding styles prevent the HLS tool from performing the <code>DATAFLOW</code> optimization:
 
    + Single-producer-consumer violations
    + Bypassing tasks
