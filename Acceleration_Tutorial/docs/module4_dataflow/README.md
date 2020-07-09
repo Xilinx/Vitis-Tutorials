@@ -88,7 +88,7 @@ Loop_row:
 }
 ```
 
-To ensure DATAFLOW is applied the dataA is divided into <code>NCU</code> portions. 
+To ensure <code>DATAFLOW</code> is applied the dataA is divided into <code>NCU</code> portions. 
 
 Finally the loop is unrolled with a factor <code>NCU</code> which implies we have <code>NCU</code> (i.e. 16) copies of <code>chol_col</code> created each working on a chunk of the data.
 
