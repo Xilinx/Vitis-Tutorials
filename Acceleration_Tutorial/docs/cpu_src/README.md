@@ -1,7 +1,7 @@
 
 > **_In this initial module..._**<br>
 _1> Description of the Cholesky algorithm_<br>
-_2> Running on the CPU_
+_2> Running the algorithm on the CPU_
 
 #### Algorithm Description
 This tutorial is based on a C++ kernel that we'll optimize for highest throughput. 
