@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Xilinx, Inc.
+ * Copyright 2020 Xilinx, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,10 +134,10 @@ int main(int argc, const char* argv[]) {
         }
     }
 
-	
+
 	// Variables to measure time
     struct timeval tstart, tend;
-	
+
 	gettimeofday(&tstart, 0);
     cpu_cholesky(dataAN, dataA);
     gettimeofday(&tend, 0);
@@ -157,8 +157,6 @@ int main(int argc, const char* argv[]) {
     std::cout << "errA = " << errA << std::endl;
     std::cout << "dataAN = " << dataAN << std::endl;
     std::cout << "dataAM = " << dataAM << std::endl;
-
-
     std::cout << "-------------- " << std::endl;
     if (errA > 0.0001) {
         std::cout << "INFO: Result false" << std::endl;
