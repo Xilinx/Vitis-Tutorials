@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Xilinx, Inc.
+ * Copyright 2020 Xilinx, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -208,28 +208,6 @@ int main(int argc, const char* argv[]) {
     std::cout << "errA = " << errA << std::endl;
     std::cout << "dataAN = " << dataAN << std::endl;
     std::cout << "dataAM = " << dataAM << std::endl;
-
-
-   //     std::cout<<"------ dataC ---------"<<std::endl;
-   //     for (int i = 0; i < dataAM; i++) {
-   //         for (int j = 0; j < dataAN; j++) {
-   //             std::cout << dataC[i][j] <<"\t";
-   //         }
-   //         std::cout<<std::endl;
-   //     }
-   //     std::cout<<"------ dataA ---------"<<std::endl;
-   //     for (int i = 0; i < dataAM; i++) {
-   //         for (int j = 0; j < dataAN; j++) {
-   //             if(j <= i){
-   //                 std::cout << dataA[i*dataAN+j] <<"\t";
-   //             }else{
-   //                 std::cout << 0 <<"\t";
-   //             }
-   //         }
-   //         std::cout<<std::endl;
-   //     }
-   //     std::cout<<"---------------------"<<std::endl;
-
     std::cout << "-------------- " << std::endl;
     if (errA > 0.0001) {
         std::cout << "INFO: Result false" << std::endl;
