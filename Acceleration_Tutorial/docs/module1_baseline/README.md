@@ -1,10 +1,10 @@
 Code, files and instructions for **module 1**
 
-> **_In this module..._**<br>
-_1> Review the OpenCL API for the host/kernel paradigm<br>
-2> Run Vitis via the GUI or make to execute software and hardware emulation<br>
-3> Run Vitis Analyzer to review the application timeline<br>
-4> Run Vitis HLS to identify the throughput bottleneck<br>
+> **_In this module..._**  
+_1> Review the OpenCL API for the host/kernel paradigm  
+2> Run Vitis via the GUI or make to execute software and hardware emulation  
+3> Run Vitis Analyzer to review the application timeline  
+4> Run Vitis HLS to identify the throughput bottleneck  
 5> Insert a testbench in HLS to iterate quickly on kernel code changes_
 
 ## Understanding Code Setup with Host and Kernel
