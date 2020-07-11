@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Xilinx, Inc.
+ * Copyright 2020 Xilinx, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,9 +29,7 @@ extern "C" void cholesky_kernel(int diagSize, double* matrixA) {
 #pragma HLS INTERFACE s_axilite port = matrixA bundle = control
 #pragma HLS INTERFACE s_axilite port = return bundle = control
 
-    int info;
-    cholesky<double, MAXN, NCU>(diagSize, matrixA, diagSize, info);
-
-
+   int info;
+   cholesky<double, MAXN, NCU>(diagSize, matrixA, diagSize, info);
 
 }
