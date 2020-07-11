@@ -6,9 +6,9 @@
  </tr>
 </table>
 
-> **_In this section..._**<br>
-_1 Introductory reference module in which we run the CPU version of the algorithm in <code>./cpu_src</code>_<br>
-_4 Alveo U50 modules, located under the <code>./docs</code> directory_<br>
+> **_In this section..._**  
+_1 Introductory reference module in which we run the CPU version of the algorithm in <code>./cpu_src</code>_  
+_4 Alveo U50 modules, located under the <code>./docs</code> directory_  
 _Instructions in local readme files for each module_
 
 * [**Introduction — CPU Run**](../docs/cpu_src): The C++ implementation of the algorithm
