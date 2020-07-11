@@ -34,4 +34,4 @@ void foo { a, b, c, d} {
 Take a look at the kernel source code and notice how the PIPELINE pragma/directive is applied for several loops in the code.
 Since Vitis HLS automatically pipelines the most inner loops, the results won't be different compared to what was seen in the previous module (the baseline).
 
-You can now move to [<b>module 3</b>](../module3_localram) or run this version of the design to verify it behaves similarly to module 1.
+You can now move to [<b>module 3</b>](../module3_datatype) or run this version of the design to verify it behaves similarly to module 1.
