@@ -6,7 +6,7 @@ _2> General description of Pipeline_
 _3> Introduction to the <code>interface</code> pragma_
 
 This module is meant to focus on the pipeline pragma and go through the description below.
-The kernel source code with the loops annotated with the pragma will produce the same results as in **module 1**, that's because since simple loops and inner loops (for nested loops) are automatically pipelined by the tool.
+The kernel source code with the loops annotated with the pragma will produce the same results as in **module 1**, that's because since simple loops and inner loops (for nested loops) are automatically pipelined by the tool. This version also adds the <code>interface</code> pragma to explicitely describe the connectivity and settings for the C ports of the kernel.
 
 ## Pipelining for Throughput
 The C code high-level synthesis is conservative by default, for example loop body instructions are entirely executed at each iteration instead of a staggered execution.  That latter style of execution is enabled by the PIPELINE pragma, it reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of the different operations.
