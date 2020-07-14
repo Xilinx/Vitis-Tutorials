@@ -27,8 +27,8 @@ This tutorial is divided in 3 sections.
     * Run Vitis in GUI mode or via <code>make</code>
     * Run Vitis Analyzer to visualize the application timeline
     * Run Vitis HLS to study kernel code performance and resource metrics
-  + [**Vitis Module 2**](./docs/module2_pipeline) (short module to focus on the impact of <code>PIPELINE</code>)
-    * A deeper look at the HLS PIPELINE pragma
+  + [**Vitis Module 2**](./docs/module2_pipeline) (short module to focus on the impact of <code>PIPELINE</code> and <code>INTERFACE</code>)
+    * Understanding the impact of the HLS PIPELINE and INTERFACE pragmas
   + [**Vitis Module 3**](./docs/module3_datatype)
     * Modify design to use the more hardware efficient C++ <code>float</code> data types (compared to <code>double</code>)
     * Run Vitis, Vitis Analyzer and Vitis HLS
