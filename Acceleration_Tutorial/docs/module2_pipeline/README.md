@@ -2,7 +2,8 @@ Code, files and instructions for **module 2** (same instructions as in [<b>modul
 
 > **_In this module..._**  
 _1> Pipeline for throughput_  
-_2> General description of Pipeline_
+_2> General description of Pipeline_  
+_3> Introduction to the <code>interface</code> pragma_
 
 This module is meant to focus on the pipeline pragma and go through the description below.
 The kernel source code with the loops annotated with the pragma will produce the same results as in **module 1**, that's because since simple loops and inner loops (for nested loops) are automatically pipelined by the tool.
