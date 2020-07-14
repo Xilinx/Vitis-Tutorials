@@ -8,6 +8,8 @@ This tutorial is based on a C++ kernel that we'll optimize for highest throughpu
 
 The algorithm to accelerate is a common linear algebra solver, the decomposition of a Hermitian, positive-definite matrix into the product of a lower triangular matrix and its conjugate transpose.  For this purpose we will use the Cholesky decomposition or Cholesky factorization (pronounced /ʃo-LESS-key/).  This solver is useful for several numerical problems, in particular for Monte Carlo simulations.
 
+This algorithm has a serial complexity O(n<sup>3</sup>)
+
 ![Cholesky description](../images/description.png)
 
 Note that this solver is included as part the official Vitis accelerated libraries, here is a link to its documentation:
