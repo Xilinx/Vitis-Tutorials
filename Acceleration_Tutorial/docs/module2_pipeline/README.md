@@ -5,12 +5,12 @@ _1> Pipeline for throughput_
 _2> General description of Pipeline_  
 _3> Introduction to the <code>interface</code> pragma_
 
-This module is meant to focus on the pipeline pragma and go through the description below.
+This module is meant to focus on the <code>pipeline</code> pragma and go through the description below.
 The kernel source code with the loops annotated with the pragma will produce the same results as in **module 1**, that's because since simple loops and inner loops (for nested loops) are automatically pipelined by the tool. This version also adds the <code>interface</code> pragma to explicitely describe the connectivity and settings for the C ports of the kernel.
 
 ### Pipelining for Throughput
 The C code high-level synthesis is conservative by default, for example loop body instructions are entirely executed at each iteration instead of a staggered execution.  That latter style of execution is enabled by the <code>PIPELINE</code> pragma, it reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of the different operations.
-A pipelined function or loop can then process new inputs every <N> clock cycles, where <N> is the II of the loop or function. The default II for the PIPELINE pragma is 1, which processes a new input every clock cycle. You can also specify the initiation interval through the use of the II option.
+A pipelined function or loop can then process new inputs every <N> clock cycles, where <N> is the II of the loop or function. The default II for the <code>PIPELINE</code> pragma is 1, which processes a new input every clock cycle. You can also specify the initiation interval through the use of the II option.
 
 Pipelining a loop allows its operations to be implemented so that these operations execute concurrently as shown in the following animated figure below. In that example and by default there are 3 clock cycles between each input read (so II=3), and it requires 12 clock cycles fully execute the loop compared to 6 when the pragma is used.
 
@@ -32,7 +32,7 @@ void foo { a, b, c, d} {
   ...
 }
 ```
-Take a look at the kernel source code and notice how the PIPELINE pragma/directive is applied for several loops in the code.
+Take a look at the kernel source code and notice how the <code>PIPELINE</code> pragma/directive is applied for several loops in the code.
 Since Vitis HLS automatically pipelines the most inner loops, the results won't be different compared to what was seen in the previous module (the baseline).
 
 ### The <code>INTERFACE</code> Pragma
