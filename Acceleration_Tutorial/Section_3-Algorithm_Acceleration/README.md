@@ -20,7 +20,7 @@ _Instructions in local readme files for each module_
   + Launch Vitis HLS to review the kernel optimizations
 * [**Module 2**](../docs/module2_pipeline): This version of the code explicitely applies the **PIPELINE** directive.
   + Learn about the pragma and its impact on designs
-* [**Module 3**](../docs/module3_datatype): Change <code>double</code> **data types** to <code>float</code>
+* [**Module 3**](../docs/module3_datatype): Change <code>double</code> data types to <code>float</code>
   + Run hardware emulation and then Vitis Analyzer and Vitis HLS
   + Measure the impact on physical resources required to implement the design and performance 
 * [**Module 4**](../docs/module4_dataflow): Back to using <code>double</code> , the task parallelism pragma is applied to improve results
