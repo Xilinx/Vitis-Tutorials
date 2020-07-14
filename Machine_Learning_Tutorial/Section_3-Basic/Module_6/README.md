@@ -12,14 +12,14 @@ Some system level functions:
     - Streaming video capture from V4L2, such as USB camera. 
 
 
-## Program Prerequiste
-This design targets ZCU104 Vitis platform. About how to prepare the develop environmet you can refer to
-[quick start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge)
+## Program Prerequisites
+This design targets the ZCU104 Vitis platform. You can refer to the [quick start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development environment.
 
-## Setting up the software build environment
+
+## Setting Up the Software Build Environment
 ---
 
-- To set up the software environment, first install the lib and header files associated with my_V4L2. Assume that you have copied Module6 into ZCU104.
+- Use the following commands to setup the software environment. This installs the my_v4l2 libs and headers. Assume that you have copied Module6 into ZCU104.
 
 ```
 cd ${MODULE_6}/myV4L2/
@@ -43,13 +43,14 @@ cd ${MODULE_6}/app/
 sh build.sh
 
 ```
-- You need to run the power patch command on the board before you can run the application, otherwise the application may cause the board to crash.
+- Run the power patch
+ There's a small bug in ZCU104, you need to run the following command to prevent board from crashing before you running the application.
 ```
 irps5401
 ```
 
-- Run the app.
- You need to stop the weston service to use drm display mode for the application.
+- Run the application.
+ Before you runneed to stop the weston service to use drm display mode for the application.
 ``` 
 
    /etc/init.d/weston stop; 

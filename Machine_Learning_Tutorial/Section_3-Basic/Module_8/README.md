@@ -1,7 +1,7 @@
 # Section_3-Module_8
 
 
-***Note***: You must install the Vitis AI v1.1 package before you compile and run the application. 
+***Note***: You need to use the new image you generated in Section_4-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
 This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can find a description of the pipeline design of the program in ${app}/README.md
 
 Some system level functions:
@@ -12,9 +12,8 @@ Some system level functions:
     - Streaming video capture from V4L2, such as USB camera. 
 
 
-## Program Prerequiste
-This design targets ZCU104 Vitis platform. About how to prepare the develop environmet you can refer to
-[quick start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge)
+## Program Prerequisties
+This design targets the ZCU104 Vitis platform. You can refer to [quick start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guid to prepare the software envirnment.
 
 ## Setting up the software build environment
 ---
@@ -37,8 +36,8 @@ sh build.sh
 ./test_hls_kernel
 ```
 
-## Building the main appliction (usb_input_multi_threads_refinedet)
-- Build the application. This "build.sh " script generates two executables, one using ARM for color conversion and resize, and the other using the HLS kernel to speed up color conversion and resize.
+## Build the Applictions
+- Use the following command to build the application. This "build.sh " script generates two executables, one using ARM for color conversion and resize, and the other using the HLS kernel to speed up color conversion and image resizing.
 
 ```
 cd ${Module_8}/app/
@@ -50,19 +49,19 @@ sh build.sh
 irps5401
 ```
 
-- Run the two apps
-  - close the weston service:
+-Run this two applications
+  - Use the below command to close the weston service:
 ``` 
    /etc/init.d/weston stop
 ```
- - run the app with ARM to convert and resize
+ - Use the following command to run this application. Please note that this application will use ARM for color conversion and image resizing.
 
 
 ```
   ./usb_input_multi_threads_arm_refinedet_drm refinedet_pruned_0_8 0 -t 3
 
 ```
-- run the app with kernel to convert and resize
+- Use the following command to run this application. Please note that this application will use "preprocess" HLS kernel for color conversion and image resizing.
 
 ```
  ./usb_input_multi_threads_kernel_refinedet_drm refinedet_pruned_0_8 0 -t 3
