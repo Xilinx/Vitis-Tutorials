@@ -1,4 +1,4 @@
-## VAI 1.2 flow is under struction. Need to keep master available for VAI1.1. So create this tmp repository
+## VAI 1.2 flow is under construction. Need to keep master available for VAI1.1. So create this tmp repository
 
 # Vitis AI Custom Platform Development<br /><br />
 1. Introduction to Vitis Acceleration Platform<br />
