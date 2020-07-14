@@ -5,7 +5,7 @@ _1> Review the OpenCL API for the host/kernel paradigm
 2> Run Vitis via the GUI or make to execute software and hardware emulation  
 3> Run Vitis Analyzer to review the application timeline  
 4> Run Vitis HLS to identify the throughput bottleneck  
-5> Insert a testbench in HLS to iterate quickly on kernel code changes_
+5> Insert a testbench into HLS to iterate quickly and verify kernel code changes_
 
 ## Understanding Code Setup with Host and Kernel
 
