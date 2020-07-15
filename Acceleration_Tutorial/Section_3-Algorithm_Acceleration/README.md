@@ -24,7 +24,7 @@ _Instructions in local readme files for each module_
   + Run hardware emulation and then Vitis Analyzer and Vitis HLS
   + Measure the impact on physical resources required to implement the design and performance 
 * [**Module 4**](../docs/module4_dataflow): Back to using <code>double</code> , the task parallelism pragma is applied to improve results
-  + Re-arrange code to enable the task parallelism optimization pragma of Vitis HLS called <code>**DATAFLOW**</code>
+  + Re-arrange code to enable the task parallelism optimization <code>**DATAFLOW**</code> pragma 
   + Evaluate the performance improvement with Vitis Analyzer
   + Use Vitis HLS to confirm the new micro-architecture created by dataflow
   + Generate the binary (xclbin) to program the card and measure the actual performance
