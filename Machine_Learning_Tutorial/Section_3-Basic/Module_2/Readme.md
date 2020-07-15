@@ -1,7 +1,7 @@
 3.2 Setting cross-compilation environment
 -----------------------
 Before we move to the board environment, some work needs to be done on the host side.
-* Download the [sdk.sh](https://www.xilinx.com/bin/public/openDownload?filename=sdk.sh) script on the host. 
+* Download the [sdk.sh](https://www.xilinx.com/bin/public/openDownload?filename=sdk.sh) script on the host.
 * Run the script to install the cross-compilation system dependency and sysroot.
    ```
    $./sdk.sh
@@ -38,7 +38,9 @@ Before we move to the board environment, some work needs to be done on the host 
     $cd ~/Vitis-AI/Vitis-AI-Library/overview/samples/refinedet
     $bash -x build.sh
     ```
-  You will find four execuable files generated after compilation. Please follow the instruction on [Module 3](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_3) for next step. 
+  You will find four execuable files generated after compilation. Please follow the instruction on [Module 3](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_3) for next step.
   <p align="left">
   <img width="720" height="158" src="images/cross-compile.png">
   </p>
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

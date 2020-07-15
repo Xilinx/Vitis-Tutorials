@@ -8,17 +8,17 @@
 
 This tutorial is divided in 3 sections.
 * [**Section 1**](./Section_1-Workflows) (~10 mins):
-  + An overview of Vitis and the host/kernel paradigm 
+  + An overview of Vitis and the host/kernel paradigm
     * See how Vitis takes care of the heavy lifting to let you focus on the application code
 * [**Section 2**](./Section_2-System_Setup) (a couple of minutes if Alveo U50 card is already installed):
   + Setup the Vitis development tools
-  + Detect and check the card installed on the server 
+  + Detect and check the card installed on the server
 * [**Section 3**](./Section_3-Algorithm_Acceleration) (a few hours):
   + Understand the Cholesky algorithm and run it on the CPU first
   + Re-organize the code to create both a host and a kernel program
   + Review the APIs that bind the host and the kernel
   + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
-    
+
   + [**Introduction**](./docs/cpu_src)
     * Meet the Cholesky algorithm!
     * Run a CPU version
@@ -28,7 +28,8 @@ This tutorial is divided in 3 sections.
     * Run Vitis Analyzer to visualize the application timeline
     * Run Vitis HLS to study kernel code performance and resource metrics
   + [**Vitis Module 2**](./docs/module2_pipeline) (short module to focus on the impact of <code>PIPELINE</code> and <code>INTERFACE</code>)
-    * Understanding the impact of the HLS PIPELINE and INTERFACE pragmas
+    * Understanding instruction parallelism with the HLS <code>PIPELINE</code> pragma
+    * Applying the <code>INTERFACE</code> pragma to manage physical ports adapters
   + [**Vitis Module 3**](./docs/module3_datatype)
     * Modify design to use the more hardware efficient C++ <code>float</code> data types (compared to <code>double</code>)
     * Run Vitis, Vitis Analyzer and Vitis HLS
@@ -36,3 +37,5 @@ This tutorial is divided in 3 sections.
     * Apply the <code>DATAFLOW</code> task parallelism optimization pragma
     * Run Vitis, Vitis Analyzer and Vitis HLS (including viewing specific dataflow waveforms)
     * Run on the U50 card
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

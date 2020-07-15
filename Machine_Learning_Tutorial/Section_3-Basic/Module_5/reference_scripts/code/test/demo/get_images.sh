@@ -12,10 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ ! -d "./snapshot/" ]; then
-  mkdir snapshot 
-fi 
+cp ../../../data/coco2014/Images/COCO_val2014_000000425226.jpg .
+cp ../../../data/coco2014/Images/COCO_val2014_000000209468.jpg .
 
-#CAFFE_ROOT=../../../caffe-xilinx
-PRETRAIN_WEIGHTS=../../float/trainval.caffemodel
-caffe train -solver solver.prototxt -gpu 0 -weights $PRETRAIN_WEIGHTS

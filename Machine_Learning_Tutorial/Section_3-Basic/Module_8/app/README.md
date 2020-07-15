@@ -13,7 +13,7 @@ Translated with www.DeepL.com/Translator (free version)
 
 
 ## Hardware
-dpu.xclbin located at /mnt/dpu.xclbin, the hardware consisof two kernels. 
+dpu.xclbin located at /mnt/dpu.xclbin, the hardware consisof two kernels.
 Kernel: pre_processor
 Kernel: dpu_xrt_top
 
@@ -21,3 +21,5 @@ Kernel: dpu_xrt_top
 For this kernel, we need to prepare 2 buffers to read the output data. One is the full image according to the input resolution you set and the other one is resized. In this case, it's set to 480*360, which is required by the refindet model.
 - dpu_xrt_top
 Using the API of the vitis ai library to implement the DPU encapsulation, we only need to focus on the preparation of the input image, and the development of the upper level application.
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

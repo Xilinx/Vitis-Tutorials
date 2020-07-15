@@ -8,7 +8,7 @@ A platform is a starting point of your Vitis design. Vitis applications are buil
 
 Xilinx has provided base platforms for Xilinx demo boards. The platforms can be downloaded from Xilinx Download Center. Source code of base platforms can be downloaded from Xilinx github.
 
-User can create custom embedded platforms from scratch, or modify Xilinx embedded platforms. 
+User can create custom embedded platforms from scratch, or modify Xilinx embedded platforms.
 
 To create a custom embedded platform for acceleration flow from scratch, these base components need to be prepared.
 
@@ -35,11 +35,11 @@ As long as the base components can boot your board properly, they have  been wel
 
 Below is a table of workflows you may go through to make the base system work.
 
-|                         | Development                                                  | Validation                                                   |
-| ----------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Basic board bring-up    | Processor basic parameter setup                              | Standalone Hello world and Memory Test application run properly |
-| Advanced hardware setup | Enable advanced IO in CIPS (USB, Ethernet, Flash, PCIe RC, etc)Add IO related IP in PL (MIPI, EMAC, HDMI_TX, etc)Add non-Vitis IP (AXI BRAM Controller, VPSS, etc)Setup NOC for best performance connection | If these IP has standalone driver, test them.                |
-| Base software setup     | Create PetaLinux project based on hardware platformEnable kernel driversConfigure boot modeConfigure rootfs | Linux boot up successfully. Peripheral work properly in Linux |
+|                         | Development                                                                                                                                                                                                 | Validation                                                      |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Basic board bring-up    | Processor basic parameter setup                                                                                                                                                                             | Standalone Hello world and Memory Test application run properly |
+| Advanced hardware setup | Enable advanced IO in CIPS (USB, Ethernet, Flash, PCIe RC, etc)Add IO related IP in PL (MIPI, EMAC, HDMI_TX, etc)Add non-Vitis IP (AXI BRAM Controller, VPSS, etc)Setup NOC for best performance connection | If these IP has standalone driver, test them.                   |
+| Base software setup     | Create PetaLinux project based on hardware platformEnable kernel driversConfigure boot modeConfigure rootfs                                                                                                 | Linux boot up successfully. Peripheral work properly in Linux   |
 
 #### Base Components Requirements
 
@@ -62,13 +62,13 @@ Here we come the real Vitis platform baking process.
 
 The following table shows what Vitis can understand and what's minimal required for an acceleration embedded platform.
 
-|                      | Vitis can understand                                         | Minimum Requirements for AXI MM Kernels |
-| -------------------- | ------------------------------------------------------------ | --------------------------------------- |
+|                      | Vitis can understand                                                         | Minimum Requirements for AXI MM Kernels |
+| -------------------- | ---------------------------------------------------------------------------- | --------------------------------------- |
 | Control Interfaces   | AXI Master Interfaces from PS or from AXI Interconnect IP or SmartConnect IP | One AXI Lite Master for control         |
-| Memory Interfaces    | AXI Slave Interfaces                                         | One memory interface                    |
-| Streaming Interfaces | AXI Stream Interfaces                                        | Not required                            |
-| Clock                | Multiple clock signals                                       | One clock                               |
-| Interrupt            | Multiple interrupt signals                                   | One Interrupt                           |
+| Memory Interfaces    | AXI Slave Interfaces                                                         | One memory interface                    |
+| Streaming Interfaces | AXI Stream Interfaces                                                        | Not required                            |
+| Clock                | Multiple clock signals                                                       | One clock                               |
+| Interrupt            | Multiple interrupt signals                                                   | One Interrupt                           |
 
 
 
@@ -88,23 +88,23 @@ The following table shows what Vitis can understand and what's minimal required 
 
 - Every platform must declare at least one memory interface with AXI Slave port (S_AXI). It's used to exchange data between ARM processors in PS and kernels in PL. PS DDR is used in most cases.
 
-  - AXI Slave port (S_AXI) is defined as an element of `PFM.AXI_PORT` 
+  - AXI Slave port (S_AXI) is defined as an element of `PFM.AXI_PORT`
   - sptags property for S_AXI interfaces is supported by `v++` . `v++` can find the specific memory interface during linking stage by sptags name. If sptags property is not specified in hardware design, v++ can still link the design with default linking strategy.
 
 - Example of PFM.AXI_PORT setting for control interface and memory interface
 
 ```tcl
 set_property PFM.AXI_PORT {
-M_AXI_HPM1_FPD {memport "M_AXI_GP"} 
-S_AXI_HPC0_FPD {memport "S_AXI_HPC" sptag "HPC0" memory "ps_e HPC0_DDR_LOW"}  
-S_AXI_HPC1_FPD {memport "S_AXI_HPC" sptag "HPC1" memory "ps_e HPC1_DDR_LOW"}  
-S_AXI_HP0_FPD {memport "S_AXI_HP" sptag "HP0" memory "ps_e HP0_DDR_LOW"}  
-S_AXI_HP1_FPD {memport "S_AXI_HP" sptag "HP1" memory "ps_e HP1_DDR_LOW"}  
+M_AXI_HPM1_FPD {memport "M_AXI_GP"}
+S_AXI_HPC0_FPD {memport "S_AXI_HPC" sptag "HPC0" memory "ps_e HPC0_DDR_LOW"}
+S_AXI_HPC1_FPD {memport "S_AXI_HPC" sptag "HPC1" memory "ps_e HPC1_DDR_LOW"}
+S_AXI_HP0_FPD {memport "S_AXI_HP" sptag "HP0" memory "ps_e HP0_DDR_LOW"}
+S_AXI_HP1_FPD {memport "S_AXI_HP" sptag "HP1" memory "ps_e HP1_DDR_LOW"}
 S_AXI_HP2_FPD {memport "S_AXI_HP" sptag "HP2" memory "ps_e HP2_DDR_LOW"}
 } [get_bd_cells /ps_e]
 ```
 
-  
+
 
 
 
@@ -130,7 +130,7 @@ set_property PFM.CLOCK {pl_clk0 {id "0" is_default "true" proc_sys_reset "/proc_
 
 Vitis provides a way to automatic connect kernel's output IRQ signal to interrupt controller automatically during link stage. To make this automation work properly, these rules needs to be applied.
 
-- Add one AXI Interrupt Controller to block diagram. 
+- Add one AXI Interrupt Controller to block diagram.
   - Connect the IRQ signal to Processing System's IRQ input.
   - Set `PFM.IRQ` property. Give platform information about the interrupt controller name, interrupt input pin name and bus range, for future kernel IRQ auto-connection in v++ link stage.
 
@@ -218,13 +218,13 @@ The following files and information will be packaged into platform.
 
 #### Root Filesystem
 
-FAT32 and Ext4 partition types are supported by Vitis. The root filesystem is optional in platform creation step because it can be assigned during Vitis application creation step. 
+FAT32 and Ext4 partition types are supported by Vitis. The root filesystem is optional in platform creation step because it can be assigned during Vitis application creation step.
 
 A base rootfs image directory needs to be set during platform creation. All contents in this directory will be packaged into final SD card image. If the target file system is FAT32, the files will be placed to SD card root directory; if the target file system is Ext4, the files will be placed to root directory of the first FAT32 partition.
 
 #### Boot Components
 
-A BIF file needs to be provided so that the application build process can package the boot image. 
+A BIF file needs to be provided so that the application build process can package the boot image.
 
 Example of BIF file:
 
@@ -276,18 +276,18 @@ In system architect's view, some logic functions may be in a grey area: they can
 
 
 
-| Logic                                                        | Platform              | Kernel                                                     |
-| ------------------------------------------------------------ | --------------------- | ---------------------------------------------------------- |
-| Hard Processors(PS of ZYNQ and MPSoC)                        | Only in Platform      |                                                            |
-| Soft Processors                                              | Preferred in Platform | OK as an RTL kernel                                        |
-| IO Block (External pins, MIPI interface IP, etc)             | Only in Platform      |                                                            |
-| 2nd IP for IO Block (DMA for PCIe, MAC for Ethernet, Video Pipeline IP, etc) | OK in Platform        | OK as Kernel                                               |
-| IP with non-AXI interface                                    | Only in Platform      | OK if the interface can be changed to AXI MM or AXI Stream |
-| Traditional memory mapped IP which has Linux driver(VPSS, etc) | Only in Platform      |                                                            |
-| HLS AXI memory mapped IP                                     | OK in Platform        | Preferred as Kernel                                        |
+| Logic                                                                                | Platform              | Kernel                                                     |
+| ------------------------------------------------------------------------------------ | --------------------- | ---------------------------------------------------------- |
+| Hard Processors(PS of ZYNQ and MPSoC)                                                | Only in Platform      |                                                            |
+| Soft Processors                                                                      | Preferred in Platform | OK as an RTL kernel                                        |
+| IO Block (External pins, MIPI interface IP, etc)                                     | Only in Platform      |                                                            |
+| 2nd IP for IO Block (DMA for PCIe, MAC for Ethernet, Video Pipeline IP, etc)         | OK in Platform        | OK as Kernel                                               |
+| IP with non-AXI interface                                                            | Only in Platform      | OK if the interface can be changed to AXI MM or AXI Stream |
+| Traditional memory mapped IP which has Linux driver(VPSS, etc)                       | Only in Platform      |                                                            |
+| HLS AXI memory mapped IP                                                             | OK in Platform        | Preferred as Kernel                                        |
 | Acceleration memory mapped IP follows Vitis kernel register standard and open to XRT |                       | Preferred as Kernel                                        |
-| Vitis Libraries                                              |                       | Only work as Kernel                                        |
-| Free running IP with AXI Stream interface                    | OK                    | OK                                                         |
+| Vitis Libraries                                                                      |                       | Only work as Kernel                                        |
+| Free running IP with AXI Stream interface                                            | OK                    | OK                                                         |
 
 
-
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
