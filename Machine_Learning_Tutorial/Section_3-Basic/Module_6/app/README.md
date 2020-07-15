@@ -31,8 +31,8 @@ The file directory of this demo is as follows
 
 
 - As the solutions picture show, We provide three APIs, the top-level API is the VITIS AI LIBRARY
-The middle API is DPUTASK API and the bottom API is VITIS AI RUNTIME.  
-- The green modules in the diagram indicate that they are encapsulated in the API. 
+The middle API is DPUTASK API and the bottom API is VITIS AI RUNTIME.
+- The green modules in the diagram indicate that they are encapsulated in the API.
 
 - In order to separate the resize, mean, scale, normalization operations in the pre-processing, and then use the HLS kernel to accelerate our application, this demo will use the VITIS AI LIBRARY API.
 
@@ -61,3 +61,4 @@ dataflow:
 
 ## Accelerate the pre-processing by using the HLS kernel.
 
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

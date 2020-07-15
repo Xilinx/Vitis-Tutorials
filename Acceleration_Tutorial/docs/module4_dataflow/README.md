@@ -1,16 +1,16 @@
 Code and files for **module 4** (same instructions as in [module1](../module1_baseline) to setup Vitis, Vitis Analyzer and Vitis HLS)
 
-> **_In this module..._**  
-_1> Replicate a compute loop by a programmable factor applied via a templated function_  
-_2> Use the Vitis HLS <code>dataflow</code> pragma_  
+> **_In this module..._**
+_1> Replicate a compute loop by a programmable factor applied via a templated function_
+_2> Use the Vitis HLS <code>dataflow</code> pragma_
 _3> Run the full compile and program the card_
 
 <details>
   <summary><b>Click to expand! Learn about the <code>dataflow</code> pragma...</b></summary>
-  
+
 The <code>DATAFLOW</code> pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the register transfer level (RTL) implementation, and increasing the overall throughput of the design.
 
-All operations are performed sequentially in a C description. In the absence of any directives that limit resources (such as pragma HLS allocation), the Vivado High-Level Synthesis (HLS) tool seeks to minimize latency and improve concurrency. However, data dependencies can limit this. For example, functions or loops that access arrays must finish all read/write accesses to the arrays before they complete. This prevents the next function or loop that consumes the data from starting operation. The <code>DATAFLOW</code> optimization enables the operations in a function or loop to start operation before the previous function or loop completes all its operations. 
+All operations are performed sequentially in a C description. In the absence of any directives that limit resources (such as pragma HLS allocation), the Vivado High-Level Synthesis (HLS) tool seeks to minimize latency and improve concurrency. However, data dependencies can limit this. For example, functions or loops that access arrays must finish all read/write accesses to the arrays before they complete. This prevents the next function or loop that consumes the data from starting operation. The <code>DATAFLOW</code> optimization enables the operations in a function or loop to start operation before the previous function or loop completes all its operations.
 
 When the <code>DATAFLOW</code> pragma is specified, the HLS tool analyzes the data flow between sequential functions or loops and creates channels (based on ping pong RAMs or FIFOs) that allow consumer functions or loops to start operation before the producer functions or loops have completed. This allows functions or loops to operate in parallel, which decreases latency and improves the throughput of the RTL.
 
@@ -61,7 +61,7 @@ wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
    }
 }
 ```
-      
+
 </details>
 
 
@@ -88,7 +88,7 @@ Loop_row:
 }
 ```
 
-To ensure <code>DATAFLOW</code> is applied the dataA is divided into <code>NCU</code> portions. 
+To ensure <code>DATAFLOW</code> is applied the dataA is divided into <code>NCU</code> portions.
 
 Finally the loop is unrolled with a factor <code>NCU</code> which implies we have <code>NCU</code> (i.e. 16) copies of <code>chol_col</code> created each working on a chunk of the data.
 
@@ -98,3 +98,5 @@ Same as in module 1:
 + run the hardware emulation
 + run Vitis Analyzer
 + run Vitis HLS and see how it offers a dataflow viewer that can be accessed by right-clicking on the function (<code>chol_col_wrapper</code>) in which dataflow is applied from the synthesis summary report. See [**this animation**](../images/HLS_dataflow_anim.gif) to see how to access it and confirm that the replications were applied.
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

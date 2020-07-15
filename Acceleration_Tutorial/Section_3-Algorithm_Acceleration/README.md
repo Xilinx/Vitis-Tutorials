@@ -6,9 +6,9 @@
  </tr>
 </table>
 
-> **_In this section..._**  
-_1 Introductory reference module in which we run the CPU version of the algorithm in <code>./cpu_src</code>_  
-_4 Alveo U50 modules, located under the <code>./docs</code> directory_  
+> **_In this section..._**
+_1 Introductory reference module in which we run the CPU version of the algorithm in <code>./cpu_src</code>_
+_4 Alveo U50 modules, located under the <code>./docs</code> directory_
 _Instructions in local readme files for each module_
 
 * [**Introduction — CPU Run**](../docs/cpu_src): The C++ implementation of the algorithm
@@ -22,9 +22,11 @@ _Instructions in local readme files for each module_
   + Learn about these pragmas and their impact on designs
 * [**Module 3**](../docs/module3_datatype): Change <code>double</code> data types to <code>float</code>
   + Run hardware emulation and then Vitis Analyzer and Vitis HLS
-  + Measure the impact on physical resources required to implement the design and performance 
+  + Measure the impact on physical resources required to implement the design and performance
 * [**Module 4**](../docs/module4_dataflow): Back to using <code>double</code> , the task parallelism pragma is applied to improve results
-  + Re-arrange code to enable the task parallelism optimization <code>**DATAFLOW**</code> pragma 
+  + Re-arrange code to enable the task parallelism optimization <code>**DATAFLOW**</code> pragma
   + Evaluate the performance improvement with Vitis Analyzer
   + Use Vitis HLS to confirm the new micro-architecture created by dataflow
   + Generate the binary (xclbin) to program the card and measure the actual performance
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

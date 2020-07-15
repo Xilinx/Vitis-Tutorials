@@ -25,17 +25,17 @@ There are a total of 10 mutually exclusive classes (or labels):
 
 
 | Class index | Class name |
-| :---: | --- |
-| 0 | airplane |
-| 1 | automobile |
-| 2 | bird |
-| 3 | cat |
-| 4 | deer |
-| 5 | dog |
-| 6 | frog |
-| 7 | horse |
-| 8 | ship |
-| 9 | truck |
+| :---------: | ---------- |
+|      0      | airplane   |
+|      1      | automobile |
+|      2      | bird       |
+|      3      | cat        |
+|      4      | deer       |
+|      5      | dog        |
+|      6      | frog       |
+|      7      | horse      |
+|      8      | ship       |
+|      9      | truck      |
 
 
 ## The DenseNetX CNN
@@ -156,8 +156,8 @@ The docker container will start and you should see something like this in the te
 ==========================================
 __      ___ _   _                   _____
 \ \    / (_) | (_)            /\   |_   _|
- \ \  / / _| |_ _ ___ ______ /  \    | |  
-  \ \/ / | | __| / __|______/ /\ \   | |  
+ \ \  / / _| |_ _ ___ ______ /  \    | |
+  \ \/ / | | __| / __|______/ /\ \   | |
    \  /  | | |_| \__ \     / ____ \ _| |_
     \/   |_|\__|_|___/    /_/    \_\_____|
 
@@ -191,7 +191,7 @@ The 0_setenv.sh script also activates the 'vitis-ai-tensorflow' TensorFlow conda
 :pushpin: Training takes a considerable time, between 8-12 hours depending on the GPU. You can either:
 
 + Reduce the number of epochs by editing the ``export EPOCHS=160`` line in the 0_setenv.sh shell script. Obviously, less epochs of training will have a negative impact on the final accuracy.
-+ Skip the training phase altogether and use the pretrained Keras checkpoint available in keras_model.zip. In this case, you can copy the k_model.h5 file inside this zip archive to the ./files/build/keras_model folder. You can then skip the remaining parts of Step 1 and go directly to Step 2.   
++ Skip the training phase altogether and use the pretrained Keras checkpoint available in keras_model.zip. In this case, you can copy the k_model.h5 file inside this zip archive to the ./files/build/keras_model folder. You can then skip the remaining parts of Step 1 and go directly to Step 2.
 
 
 To run step 1: ``source ./1_train.sh``
@@ -258,15 +258,15 @@ To run step 4: ``source ./4_quant.sh``
 The DPU accelerator IP executes all calculations in 8bit integer format, so we must quantize our floating-point frozen graph. This is done by the Vitis AI tools, in particular by the 'vai_q_tensorflow quantize' command. This command can be seen in the 4_quant.sh script and has several arguments that we must provide values for:
 
 
-| Argument              | Description                                                    |
-|---------------------- | -------------------------------------------------------------- |
-|`--input_frozen_graph` | path and name of the input  .pb frozen graph                   |
-|`--input_fn`           | Name of input function used in calibration pre-processing      |
-|`--output_dir`         | Name of the output folder where the quantized models are saved |
-|`--input_nodes`        | Name(s) of the input nodes                                     |
-|`--output_nodes`       | Name(s) of the output nodes                                    |
-|`--input_shapes`       | Shape(s) of the input nodes                                    |
-|`--calib_iter`         | Number of calibration iterations                               |
+| Argument               | Description                                                    |
+| ---------------------- | -------------------------------------------------------------- |
+| `--input_frozen_graph` | path and name of the input  .pb frozen graph                   |
+| `--input_fn`           | Name of input function used in calibration pre-processing      |
+| `--output_dir`         | Name of the output folder where the quantized models are saved |
+| `--input_nodes`        | Name(s) of the input nodes                                     |
+| `--output_nodes`       | Name(s) of the output nodes                                    |
+| `--input_shapes`       | Shape(s) of the input nodes                                    |
+| `--calib_iter`         | Number of calibration iterations                               |
 
 
 *Note: Any error messages relating to ./bin/ptxas can be ignored.*
@@ -342,7 +342,7 @@ With the target folder copied to the SD Card and the ZCU104 booted, you can issu
 The application can be started by navigating into the target folder and then issuing the command ``python3 app_mt.py``. The application will start and after a few seconds will show the throughput in frames/sec.
 
 ```shell
-root@xilinx-zcu104-2019_2:~/target# python3 app_mt.py                   
+root@xilinx-zcu104-2019_2:~/target# python3 app_mt.py
 Command line options:
  --image_dir :  images
  --threads   :  1
@@ -371,20 +371,22 @@ Correct: 9116 Wrong: 883 Accuracy: 0.9116
 The floating-point post-training and frozen graph evaluations can be compared to the INT8 post-quantization model and actual results obtained by the hardware model running on the ZCU104 board:
 
 
-| Post-training (Float) | Frozen Graph (Float) | Quantized Model (INT8)| Hardware model (INT8) |
-| :-------------------: | :------------------: | :-------------------: | :-------------------: |
-|       92.94%          |       93.03%         |      92.66%           |        91.16  %       |
+| Post-training (Float) | Frozen Graph (Float) | Quantized Model (INT8) | Hardware model (INT8) |
+| :-------------------: | :------------------: | :--------------------: | :-------------------: |
+|        92.94%         |        93.03%        |         92.66%         |       91.16  %        |
 
 
 The approximate throughput (in frames/sec) for various batch sizes is shown below:
 
 
-| Threads   | Throughput (fps) |
-| :-------: | :--------------: |
-|     1     |      478.47      |
-|     2     |      708.57      |
-|     3     |      790.29      |
-|     4     |      820.57      |
-|     5     |      829.56      |
+| Threads | Throughput (fps) |
+| :-----: | :--------------: |
+|    1    |      478.47      |
+|    2    |      708.57      |
+|    3    |      790.29      |
+|    4    |      820.57      |
+|    5    |      829.56      |
 
 Now, you could jump to [Module_5](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_5) for a more practical use case.
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

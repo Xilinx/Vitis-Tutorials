@@ -25,7 +25,7 @@
    <img src="images/demo_single_thread.png">
    </p>
    Note that the user could also use parameters to define the number of threads and running time as below. For more detailed instruction, please refer to the Readme file within the refinedet folder.
-   
+
    ```
    root@xilinx-zcu104-2019_2:~/overview/samples/refinedet# ./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list -t 8 -s 60
    -t: <num_of_threads>
@@ -34,5 +34,7 @@
    <p align="left">
    <img src="images/demo_multi_threads.png">
    </p>
-   
+
    Please follow the instruction on [Module 4](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_4) for next step.
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
