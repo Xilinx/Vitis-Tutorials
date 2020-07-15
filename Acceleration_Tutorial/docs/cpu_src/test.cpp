@@ -25,7 +25,6 @@
 
 #include "matrixUtility.hpp"
 
-
 void cpu_cholesky(int diagSize, double *matrixA);
 
 // Memory alignment
@@ -71,16 +70,10 @@ int main(int argc, const char* argv[]) {
     // Initialize paths addresses
     std::string xclbin_path;
     std::string num_str;
-    int num_runs, dataAM, dataAN, seed;
+    int dataAM, dataAN, seed;
 
     // Read In paths addresses
 
-    if (!parser.getCmdOption("-runs", num_str)) {
-        num_runs = 1;
-        std::cout << "INFO:number runs is not set!\n";
-    } else {
-        num_runs = std::stoi(num_str);
-    }
     if (!parser.getCmdOption("-M", num_str)) {
         dataAM = 16;
         std::cout << "INFO:row size M is not set!\n";
@@ -104,9 +97,7 @@ int main(int argc, const char* argv[]) {
     dataAM = (dataAM > dataAN) ? dataAN : dataAM;
     dataAN = dataAM;
 
-
     // Output the inputs information
-    std::cout << "INFO: Number of runs: " << num_runs << std::endl;
     std::cout << "INFO: Matrix Row M: " << dataAM << std::endl;
     std::cout << "INFO: Matrix Col N: " << dataAN << std::endl;
 
@@ -134,17 +125,15 @@ int main(int argc, const char* argv[]) {
         }
     }
 
-
 	// Variables to measure time
     struct timeval tstart, tend;
 
-	gettimeofday(&tstart, 0);
+	  gettimeofday(&tstart, 0);
     cpu_cholesky(dataAN, dataA);
     gettimeofday(&tend, 0);
     std::cout << "INFO: Finish CPU execution" << std::endl;
-	int exec_time = diff(&tend, &tstart);
-    std::cout << "INFO: CPU execution time of " << num_runs << " runs:" << exec_time << " us\n"
-              << "INFO: Average CPU execution time per run: " << exec_time / num_runs << " us\n";
+	  int exec_time = diff(&tend, &tstart);
+    std::cout << "INFO: CPU execution time is:" << exec_time << " us\n";
 
     // Calculate err between dataA and dataC
     double errA = 0;
