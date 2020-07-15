@@ -9,7 +9,7 @@ In this tutorial, we'll use Vitis 2019.2 and Vitis-AI v1.1 for demonstration. Th
 | PetaLinux               | 2019.2                        |
 | Host OS                 | Ubuntu 18.04.1 and CentOS 7.6 |
 
-The host OS can be a natively installed OS, or installed in a virtual machine. It needs to have at least 100GB hard disk to install all the tools, models and datasets. 16GB DDR memory is preferred for development flow. 
+The host OS can be a natively installed OS, or installed in a virtual machine. It needs to have at least 100GB hard disk to install all the tools, models and datasets. 16GB DDR memory is preferred for development flow.
 
 
 
@@ -40,11 +40,11 @@ The host OS can be a natively installed OS, or installed in a virtual machine. I
       # Install EPEL
       sudo yum install epel-release
       # Install Kernel Headers
-      sudo yum install kernel-headers-`uname -r` 
+      sudo yum install kernel-headers-`uname -r`
       sudo yum install kernel-devel-`uname -r`
       ```
 
-      
+
 
 3. Install Vitis Software Platform ([Full User Guided](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/juk1557377661419.html))
 
@@ -79,12 +79,12 @@ Note: PetaLinux is only needed for Platform Development for Customization Flow.
       sudo yum install iproute gcc gcc-++ net-tools libncurses5-devel zlib-devel openssl-devel flex bison libselinux xterm autoconf libtool texinfo SDL-devel glibc-devel glibc glib2-devel automake screen pax libstdc++ gawk python
       ```
 
-      
+
 
 3. Install PetaLinux
 
    ```
-   ./petalinux-v2019.2-final-installer.run 
+   ./petalinux-v2019.2-final-installer.run
    ```
 
 4. Setup PetaLinux requirements
@@ -95,7 +95,7 @@ Note: PetaLinux is only needed for Platform Development for Customization Flow.
       sudo dpkg-reconfigure dash
       ```
 
-      
+
 
 
 ### Load Vitis, XRT, and PetaLinux environment
@@ -106,7 +106,7 @@ Note: PetaLinux is only needed for Platform Development for Customization Flow.
    source /opt/petalinux-v2019.2/settings.sh
    ```
 
-   
+
 
 ---
 
@@ -139,7 +139,7 @@ sudo yum install git
 
 Docker environment is needed at host side. For docker installation without GPU support, please refer to following link:
 * Ubuntu: <https://docs.docker.com/engine/install/ubuntu>
-* CentOS: <https://docs.docker.com/engine/install/centos> 
+* CentOS: <https://docs.docker.com/engine/install/centos>
 
 For docker installation with nVidia GPU support, please refer to following link:
 * Ubuntu and CentOS: <https://github.com/NVIDIA/nvidia-docker>
@@ -176,3 +176,5 @@ You have to build the docker using following comamnd:
 ~~~
 
 After that, you could get the docker image *vitis-ai-gpu:latest* on your host.
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

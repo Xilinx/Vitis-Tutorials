@@ -16,7 +16,7 @@
 # Section_3-Module_6
 
 
-***Note***: You must install the Vitis AI v1.1 package before you compile and run the application. 
+***Note***: You must install the Vitis AI v1.1 package before you compile and run the application.
 This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can find a description of the pipeline design of the program in ${app}/README.md
 
 Some system level functions:
@@ -24,7 +24,7 @@ Some system level functions:
     -Using the DRM to display
 
 - V4L2 initialization and control
-    - Streaming video capture from V4L2, such as USB camera. 
+    - Streaming video capture from V4L2, such as USB camera.
 
 
 ## Program Prerequisites
@@ -66,13 +66,15 @@ irps5401
 
 - Run the application.
  Before you runneed to stop the weston service to use drm display mode for the application.
-``` 
+```
 
-   /etc/init.d/weston stop; 
+   /etc/init.d/weston stop;
   ./usb_input_multi_threads_refinedet_drm refinedet_pruned_0_8 0 -t 3
 ```
-- DESCRIPTION 
+- DESCRIPTION
 
     - refinedet_pruned_0_8: The model used;
     - 0                   :  Camera input;
     - -t 3                :  thread number 3;
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
