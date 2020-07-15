@@ -221,10 +221,10 @@ The Vitis HLS Cosimulation runs a cycle accurate RTL simulation which shows the 
 #### Module 1 Wrap-up
 
 **Key points:**
- - To accelerate an algorithm on an Alveo card, the program needs a host and kernel design unit.  
- - Vitis helps build the application, provides drivers to enable host-kernel communication.  
- - Vitis also provide an analyzer tool to help understand the sequence of operations.
- - Vitis HLS is a compiler technology that transforms the C code algorithm into an hardware language to implement onto the Xilinx device.
+ - To accelerate an algorithm on an Alveo card, the program needs a host and kernel design unit
+ - Vitis helps build the application, provides drivers to enable host-kernel communication
+ - Vitis also provide an analyzer tool to help understand the sequence of operations
+ - Vitis HLS is a compiler technology that transforms the C code algorithm into an hardware language to implement onto the Xilinx device
 ***
 Please proceed to [**module 2**](../module2_pipeline).
 ***
