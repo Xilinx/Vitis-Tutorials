@@ -24,7 +24,7 @@ Some system level functions:
     - Using the DRM to display
 
 - V4L2 initialization and control
-    - Streaming video capture from V4L2, such as USB camera. 
+    - Streaming video capture from V4L2, such as USB camera.
 ## Platform integrated
 
 - Hardware required:
@@ -42,7 +42,7 @@ Some system level functions:
 
 
 ---
-## [Building the Vitis Platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2019.2/Xilinx_Official_Platforms/zcu104_dpu) 
+## [Building the Vitis Platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2019.2/Xilinx_Official_Platforms/zcu104_dpu)
 
 Last Tested Vivado Release: 2019.2
 The platform build process is entirely scripted. Note that as this platform build process involves cross-compiling Linux, build of the platform is supported on Linux environments only (although it is possible to build inside a VM or Docker container).
@@ -91,11 +91,11 @@ cp ${Module_8}/kernel/flash_sd_card.sh  ${Vitis-AI}/DPU-TRD/prj/Vitis/binary_con
 cd ${Module_8}/kernel/flash_sd_card.sh ${Vitis-AI}/DPU-TRD/prj/Vitis/binary_container_1/sd_card
 sudo ./flash_sd_card.sh
 ```
-- Step5: Use etcher or other tools to burn the image to 16GB sd card. 
+- Step5: Use etcher or other tools to burn the image to 16GB sd card.
 - Step6: Set the Mode to SD card
 
     ```
-    Rev 1.0:  SW6[4:1] - off, off, off, on 
+    Rev 1.0:  SW6[4:1] - off, off, off, on
     Rev D2:   SW6[4:1] - on, off, on, off
     ```
 ### Board development setting.
@@ -130,7 +130,7 @@ make
 make install
 ```
 
-- Test the HLS kernel to see if it works properly with the test example. When the test example works, you will notice that two PNG files are generated in your execution directory. 
+- Test the HLS kernel to see if it works properly with the test example. When the test example works, you will notice that two PNG files are generated in your execution directory.
 ```
 cd ${Module_8/my_V4l2s/test}
 sh build.sh
@@ -152,7 +152,7 @@ irps5401
 
 -Run this two applications
   - Use the below command to close the weston service:
-``` 
+```
    /etc/init.d/weston stop
 ```
  - Use the following command to run this application. Please note that this application will use ARM for color conversion and image resizing.
@@ -168,8 +168,10 @@ irps5401
  ./usb_input_multi_threads_kernel_refinedet_drm refinedet_pruned_0_8 0 -t 3
 ```
 
-- DESCRIPTION 
+- DESCRIPTION
 
     - refinedet_pruned_0_8: The model used;
     - 0                   :  Camera input;
     - -t 3                :  thread number 3;
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

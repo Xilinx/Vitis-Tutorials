@@ -15,3 +15,5 @@ Are resources used less than for modules 1 and 2?
 Is the II any different than before?
 
 Please proceed to [**module 4**](../module4_dataflow).
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
