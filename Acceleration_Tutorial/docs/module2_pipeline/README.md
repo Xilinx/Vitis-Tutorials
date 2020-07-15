@@ -16,7 +16,7 @@ Pipelining a loop allows its operations to be implemented so that these operatio
 
 ![Pipeline](../images/anim_pipeline.gif)
 
-If the Vivado high-level synthesis tool cannot create a design with the specified II, it issues a warning and creates a design with the lowest possible II.
+If the Vitis high-level synthesis tool cannot create a design with the user-specified II, it issues a warning and creates a design with the lowest achievable II.
 You can then analyze this design with the warning message to determine what steps must be taken to create a design that satisfies the required initiation interval.
 
 To enable the pragma in the C source, insert it within the body of the function or loop.
