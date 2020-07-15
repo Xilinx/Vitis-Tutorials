@@ -12,7 +12,7 @@ This algorithm has a serial complexity O(n<sup>3</sup>).
 
 ![Cholesky description](../images/description.png)
 
-[_More information on wikipedia_](https://en.wikipedia.org/wiki/Cholesky_decomposition)  
+[_More information on wikipedia..._](https://en.wikipedia.org/wiki/Cholesky_decomposition)  
 Note that this solver is included as part the official Vitis accelerated libraries, here is a link to its documentation:
 https://xilinx.github.io/Vitis_Libraries/solver/2020.1/guide_L2/L2_api.html#potrf
 
