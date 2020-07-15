@@ -69,7 +69,7 @@ int GuiThread::run() {
   for (auto& f : frames_) {
     all_dirty = all_dirty && f.second.dirty;
   }
-  if (!all_dirty) {  ////???????
+  if (!all_dirty) {  
     // only show frames until all channels are dirty
     return 0;
   }
@@ -82,8 +82,6 @@ int GuiThread::run() {
                  [](const decltype(frames_)::value_type& a) {
                    return a.second.frame_info.show_mat.size();
                  });
-  // std::vector<cv::Rect> rects;
-  // rects = gui_layout();
   LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "rects size is  " << rects.size();
 
   for (const auto& rect : rects) {
