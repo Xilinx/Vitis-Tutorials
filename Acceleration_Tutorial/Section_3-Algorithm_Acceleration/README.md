@@ -18,13 +18,13 @@ _Instructions in local readme files for each module_
   + Verify results through emulation both at the software level (sw_emu) and the hardware level (hw_emu)
   + Evaluate the performance by visualizing the timeline trace with Vitis Analyzer
   + Launch Vitis HLS to review the kernel optimizations
-* [**Module 2**](../docs/module2_pipeline): This version of the code explicitely applies the **PIPELINE** and **INTERFACE** directive.
+* [**Module 2**](../docs/module2_pipeline): This version of the code explicitely applies the <code>**PIPELINE**</code> and <code>**INTERFACE**</code> directive
   + Learn about these pragmas and their impact on designs
 * [**Module 3**](../docs/module3_datatype): Change <code>double</code> data types to <code>float</code>
   + Run hardware emulation and then Vitis Analyzer and Vitis HLS
   + Measure the impact on physical resources required to implement the design and performance 
 * [**Module 4**](../docs/module4_dataflow): Back to using <code>double</code> , the task parallelism pragma is applied to improve results
-  + Re-arrange code to enable the task parallelism optimization pragma of Vitis HLS called **DATAFLOW**.
+  + Re-arrange code to enable the task parallelism optimization pragma of Vitis HLS called <code>**DATAFLOW**</code>
   + Evaluate the performance improvement with Vitis Analyzer
   + Use Vitis HLS to confirm the new micro-architecture created by dataflow
   + Generate the binary (xclbin) to program the card and measure the actual performance
