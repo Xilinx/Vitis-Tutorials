@@ -17,8 +17,6 @@
 
   Some source codes below are copied
 https://github.com/xxradon/libv4l2_opencv_mat
-https://github.com/mpromonet/libv4l2cpp
-
   They are modified.
 
 This is free and unencumbered software released into the public domain.
