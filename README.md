@@ -49,7 +49,7 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
 5. Re-Customizing the Processor IP Block<br />
    a) Double-click the Zynq UltraScale+ MPSoC block in the IP integrator diagram.<br />
    b) Select ***Page Navigator > PS-PL Configuration***.<br />
-   c) Expand ***PS-PL Configuration > PS-PL Interfaces*** by clicking the > symbol.<br />
+   c) Expand ***PS-PL Configuration > PS-PL Interfaces*** by clicking the ***>*** symbol.<br />
    d) Expand Master Interface.<br />
    e) Uncheck the AXI HPM0 FPD and AXI HPM1 FPD interfaces.<br />
    f) Click OK.<br />
