@@ -56,7 +56,7 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
    g) Confirm that the IP block interfaces were removed from the Zynq UltraScale+ MPSoC symbol in your block design.<br />
    ![hp_removed.png](/pic_for_readme/hp_removed.png)<br />
   
-***Note: This is a little different from traditional Vivado design flow. When trying to make AXI interfaces available in Vitis design you should disable these interface at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later***<br><br />
+***Note: This is a little different from traditional Vivado design flow. When trying to make AXI interfaces available in Vitis design you should disable these interfaces at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later***<br><br />
 
 6. Add clock block:<br />
    a) Right click Diagram view and select ***Add IP***.<br />
