@@ -18,13 +18,13 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
 
 ## Create the Vivado Hardware Component and Generate XSA<br /><br />
 1. Source <Vitis_Install_Directory>/settings64.sh, and call Vivado out by typing "vivado" in the console.<br />
-2. Create a Vivado project named zcu102_custom_platform.<br />
+2. Create a Vivado project named zcu104_custom_platform.<br />
    a) Select ***File->Project->New***.<br />
    b) Click ***Next***.<br />
-   c) In Project Name dialog set Project name to ```zcu102_custom_platform```.<br />
+   c) In Project Name dialog set Project name to ```zcu104_custom_platform```.<br />
    d) Click ***Next***.<br />
    e) Leaving all the setting to default until you goto the Default Part dialog.<br />
-   f) Select ***Boards*** tab and then select ***Zynq UltraScale+ ZCU102 Evaluation Board***<br />
+   f) Select ***Boards*** tab and then select ***Zynq UltraScale+ ZCU104 Evaluation Board***<br />
    g) Click ***Next***, and your project summary should like below:<br />
    ![vivado_project_summary.png](/pic_for_readme/vivado_project_summary.png)<br />
    h) Then click ***Finish***<br />
@@ -44,7 +44,7 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
    d) Click ***OK***. You should get MPSoC block configured like below:<br />
 ![block_automation_result.png](/pic_for_readme/block_automation_result.png)<br />
 
-***Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU102. Add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.***<br /><br />
+***Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. Add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.***<br /><br />
 
 5. Re-Customizing the Processor IP Block<br />
    a) Double-click the Zynq UltraScale+ MPSoC block in the IP integrator diagram.<br />
