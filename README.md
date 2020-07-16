@@ -24,7 +24,7 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
    c) In Project Name dialog set Project name to ```zcu102_custom_platform```.<br />
    d) Click ***Next***.<br />
    e) Leaving all the setting to default until you goto the Default Part dialog.<br />
-   f) Select ***Boards tab*** and then select ***Zynq UltraScale+ ZCU102 Evaluation Board***<br />
+   f) Select ***Boards*** tab and then select ***Zynq UltraScale+ ZCU102 Evaluation Board***<br />
    g) Click ***Next***, and your project summary should like below:<br />
    ![vivado_project_summary.png](/pic_for_readme/vivado_project_summary.png)<br />
    h) Then click ***Finish***<br />
