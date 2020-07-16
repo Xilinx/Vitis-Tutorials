@@ -15,23 +15,14 @@
 cmake_minimum_required(VERSION 3.3)
 
 get_filename_component(COMPONENT_NAME ${CMAKE_CURRENT_LIST_DIR} NAME)
-project(${COMPONENT_NAME})
+project(${COMPONENT_NAME} VERSION 1.0.0 LANGUAGES C CXX)
 
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_C_FLAGS "-Wall")
-set(CMAKE_CXX_FLAGS "-Wall")
+find_package(OpenCV COMPONENTS opencv_core opencv_video opencv_videoio opencv_imgproc opencv_imgcodecs opencv_highgui)
+if(NOT OpenCV_FOUND)
+  find_package(OpenCV_LIBS opencv_core opencv_video opencv_videoio opencv_imgproc opencv_imgcodecs opencv_highgui)
+endif(NOT OpenCV_FOUND)
 
-find_package(OpenCV REQUIRED NO_CMAKE_FIND_ROOT_PATH)
-
-if(OpenCV_FOUND)
-
-    include_directories(${OpenCV_INCLUDE_DIRS})
-    message(STATUS "    OpenCV library status:")
-    message(STATUS "    version ${OpenCV_VERSION}")
-    message(STATUS "    libraries: ${OpenCV_LIBS}")
-    message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
-endif()
 
 find_package(Glog REQUIRED)
 if(Glog_FOUND)
