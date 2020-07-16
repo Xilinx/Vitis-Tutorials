@@ -27,7 +27,7 @@ Run the following command to compile the design:
 g++ cpu_cholesky.cpp test.cpp matrixUtility.hpp -std=c++0x -O3 -o test
 ./test -M 512 -N 512 -seed 12
 ```
-Run with different sizes of matrices to gauge the impact on the execution time...
-Study the code to see how it implements the Cholesky algorithm.
+Run with different sizes of matrices small and large (limit is 2048x2048) to gauge the impact on the execution time...
+Study the code to check how it implements the Cholesky algorithm.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
