@@ -192,11 +192,15 @@ For this tutorial we provide a pre-made C++ "main" program to wrap around the ke
 
 **Instructions:**
 1. In a terminal, from the <code>docs</code> directory:
+
        cp -r ./hls_tb ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel
        cp ./module1_baseline/src/cholesky_kernel.hpp ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel/hls_tb
+       
 2. If the Vitis HLS GUI was closed, open it again:
+
        cd ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel
        vitis_hls -p cholesky_kernel &
+       
 3. In the "Explorer" window left pane of the GUI, locate "Test Bench" under "Source".
    Right-click -> "Add file...", select test_hls.cpp.
    Repeat this operation for the two data files: matrix_input.dat and golden_result.dat in ./hls_tb/tb_data
