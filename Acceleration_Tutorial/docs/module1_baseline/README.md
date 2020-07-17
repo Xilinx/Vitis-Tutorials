@@ -17,7 +17,13 @@ The source code for each module is located under their local <code>./src</code> 
      + The kernel performs the required computation while reading data from global memory, as necessary.
      + The kernel writes data back to global memory and notifies the host that it has completed its task.
      + The host program reads data back from global memory into the host memory and continues processing as needed
-  + Take a look at the kernel code.  This code is compiled by the Vitis tools and transformed into an hardware description that the Vivado tool implements onto Xilinx devices.
+  + Take a look at the kernel code.  This code is compiled by the Vitis tools and transformed into an hardware description that the Vivado tool implements onto Xilinx devices. Since the the host and kernel code are developed and compiled independently, wrap the kernel function declaration with the extern "C" linkage in the header file, or wrap the whole function in the kernel code.
+```cpp
+extern "C" {
+           void kernel_function(int *in, int *out, int size);
+        }
+```
+
 ***
 ## Build and Emulate with Vitis
 For each module of this tutorial, Vitis can be run via the GUI **or** at the command line (more efficient in the context of this tutorial):
