@@ -1,8 +1,8 @@
 Code and files for **module 4** (same instructions as in [module1](../module1_baseline) to setup Vitis, Vitis Analyzer and Vitis HLS)
 
-> **_In this module..._**
-_1> Replicate a compute loop by a programmable factor applied via a templated function_
-_2> Use the Vitis HLS `dataflow` pragma_
+> **_In this module..._**  
+_1> Replicate a compute loop by a programmable factor applied via a templated function_  
+_2> Use the Vitis HLS `dataflow` pragma_  
 _3> Run the full compile and program the card_
 
 <details>
