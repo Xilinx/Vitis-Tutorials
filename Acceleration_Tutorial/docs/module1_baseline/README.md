@@ -73,7 +73,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 Vitis Analyzer is a graphical tool which lets you browse many aspects of the design starting from the whole system down to the details of the kernel.
 
 <details>
-  <summary>**Click to expand! (instructions for `Vitis Analyzer`**)</summary>
+  <summary><b>Click to expand! (instructions for <code>Vitis Analyzer</code><\b>)</summary>
 
    1. Open a terminal and setup Vitis
    2. Run: <code>vitis_analyzer &</code>
@@ -153,7 +153,7 @@ Since this version of the algorithm uses double data types with an accumulation,
 
 Let's now look at latency.
 
-<code>cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</code>
+`cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt`
 
     * Loop:
     +--------------------+--------+---------+-------------+-----------+-----------+------------+----------+
