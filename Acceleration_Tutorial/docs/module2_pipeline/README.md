@@ -1,8 +1,8 @@
 Code, files and instructions for **module 2** (same instructions as in [<b>module 1</b>](../module1_baseline) to setup and run the Vitis tools)
 
-> **_In this module..._**
-_1> Pipeline for throughput_
-_2> General description of Pipeline_
+> **_In this module..._**  
+_1> Pipeline for throughput_  
+_2> General description of Pipeline_  
 _3> Introduction to the <code>interface</code> pragma_
 
 This module is meant to focus on the <code>pipeline</code> pragma and go through the description below.
