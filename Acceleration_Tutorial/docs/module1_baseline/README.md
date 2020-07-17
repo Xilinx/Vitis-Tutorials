@@ -55,15 +55,15 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 ***OR***
 
 <details>
-  <summary><b>Click to expand! (instructions for <code>make</code>)</b></summary>
+  <summary><b>Click to expand! (instructions for `make`)</b></summary>
 
    ### Using **make**
    1. Open a terminal
    2. Setup Vitis
-   3. Navigate to <code>./build</code>
-   4. Run: <code>make run TARGET=sw_emu</code> (for a functional emulation)
-   5. Run: <code>make run TARGET=hw_emu</code> (for a more detailed emulation - takes 10 minutes or more)
-      * For now avoid the "hw" target which would take over an hour to run
+   3. Navigate to `./build`
+   4. Run: `make run TARGET=sw_emu` (for a functional emulation)
+   5. Run: `make run TARGET=hw_emu` (for a more detailed emulation - takes 10 minutes or more)
+      * For now don't run "hw" target as it would take over an hour to run
 
 </details>
 
@@ -73,7 +73,7 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 Vitis Analyzer is a graphical tool which lets you browse many aspects of the design starting from the whole system down to the details of the kernel.
 
 <details>
-  <summary><b>Click to expand! (instructions for <code>Vitis Analyzer</code></b>)</summary>
+  <summary>**Click to expand! (instructions for `Vitis Analyzer`**)</summary>
 
    1. Open a terminal and setup Vitis
    2. Run: <code>vitis_analyzer &</code>
