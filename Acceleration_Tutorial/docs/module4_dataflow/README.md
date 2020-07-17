@@ -103,4 +103,12 @@ Same as in module 1:
 
 Reference CPU is the Intel® Xeon® Processor E5-2640 v3 (as available on Nimbix)
 
+| foo | bar |
+| --- | --- |
+| baz | bim |
+
+| Module | CPU | Module 1 | Module 2 | Module 3 | Module 4 |
+| --- | --- | --- | --- | --- | --- |
+| Execution Time (us) | 21461 | 793950 | 793732 | 536784 | 11698 |
+
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
