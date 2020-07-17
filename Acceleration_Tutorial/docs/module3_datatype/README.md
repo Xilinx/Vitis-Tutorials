@@ -4,8 +4,8 @@ In this module both the kernel and host code are modified to use 32-bit floating
 
 The Xilinx device fitted on the U50 card is an UltraScale + device that can implement floating point using hardware resources (DSP blocks and logic). Floating point operators tend to use a good amount of hardware. Here in this module, we can measure the savings when scaling down to 32-bit floting point types.
 
-+ Run Vitis and harware emulation (as described in module 1).
-+ Run Vitis Analyser to measure impact on resources used and performance improvement.
++ Run Vitis and harware emulation only (as described in module 1).  No need to run software emulation or actual hardware compilation.
++ Run Vitis Analyser to measure both the impact on the device resources and performance improvement.
 + Compare to utilization seen in previous module.
 
 Did it shorten kernel execution time?
