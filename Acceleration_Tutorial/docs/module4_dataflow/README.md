@@ -99,4 +99,8 @@ Same as in module 1:
 + run Vitis Analyzer
 + run Vitis HLS and see how it offers a dataflow viewer that can be accessed by right-clicking on the function (<code>chol_col_wrapper</code>) in which dataflow is applied from the synthesis summary report. See [**this animation**](../images/HLS_dataflow_anim.gif) to see how to access it and confirm that the replications were applied.
 
+#### Result Summary
+
+Reference CPU is the Intel® Xeon® Processor E5-2640 v3 (as available on Nimbix)
+
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
