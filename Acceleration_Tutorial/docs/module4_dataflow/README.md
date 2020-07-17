@@ -101,13 +101,13 @@ Same as in module 1:
 
 #### Result Summary
 
-Reference CPU is the Intel® Xeon® Processor E5-2640 v3 (as available on Nimbix)
+Actual results comparing the runs for all modules including execution on the CPU<sup>*</sup>
 
 | Module | CPU | Module 1 | Module 2 | Module 3 | Module 4 |
 | ------ | --- | -------- | -------- | -------- | -------- |
 | Execution Time (µs) | 21461 | 793950 | 793732 | 536784 | 11698 |
 | Speed Up (CPU reference) | 1 | 0.03x | 0.03x | 0.04x | 1.83x|
 | Speed Up | N/A | 1 | 1 | 1.48x | 68x |
-
+(*): Reference CPU is the Intel® Xeon® Processor E5-2640 v3 (as available on Nimbix)
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
