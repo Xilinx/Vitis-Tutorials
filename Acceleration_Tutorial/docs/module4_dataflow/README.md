@@ -67,7 +67,7 @@ wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
 
 #### Code modifications for the Cholesky kernel
 
-In this module 5 the code for the algorithm is moved into the header file <code>cholesky_kernel.hpp</code>.
+In this module 4 the code for the algorithm is moved into the header file <code>cholesky_kernel.hpp</code>.
 
 There is now an explicit parallelization and the number of parallel compute is determined by <code>NCU</code>, a constant set in <code>cholesky_kernel.cpp</code> through <code>#define NCU 16</code>.
 
