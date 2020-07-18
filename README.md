@@ -109,21 +109,17 @@ You can provide kernel interrupt support by adding an AXI interrupt controller t
    h) Click the AXI Interrupt Controller block and go to ***Block Properties -> Properties***, configure or make sure the parameters are set as following:
 ***C_ASYNC_INTR***: ```0xFFFFFFFF```. <br />
    ![async_intr.png](/pic_for_readme/async_intr.png)<br /><br />
-   h) Click ***Run Connection Automation***<br />
-   
-   
-   q) Leave the default values for Master interface and Bridge IP.<br />
-      - Master interface default is /zynq_ultra_ps_e_0/M_AXI_HPM0_LPD.
-      - Bridge IP default is New AXI interconnect.
+   ***When interrupts generated from kernels are clocked by different clock domains, this option is useful to capture the interrupt signals properly. For the platform that has only one clock domain, this step can be skipped.***
 
-   r) For the clock source for driving Bridge IP/Slave interface/Master interface, select /clk_wiz_0/clk_100m. <br />
-   You can select other clock resources if you want. But for axi_lite bus for register control i would recommend a lower frequency.<br />
-   s) Connect the interrupt_concat/dout[31:0] to the axi_intc_0/intr[0:0] input.<br />
-   t) Connect the axi_intc_0/irq output to the Zynq UltraScale+ MPSoC pl_ps_irq0[0:0] input.<br />
-   ![vivado_platform_connection.png](/pic_for_readme/vivado_platform_connection.png)<br /><br />
-   u) Press and hold the ***Shift*** button on keyboard, then left click ***xlconstant_gnd*** and ***xlconcat_interrupt_0*** to select these 2 IPs. Release the ***Shift*** button, right click one of these 2 IPs, select ***Create Hierachy ...***, use ```interrupt_concat``` as ***Cell Name***.<br />
-   v) Click ***(+)*** to expand the ***interrupt_concat*** block, click the connection network between ***xlconstant_gnd*** and ***xlconcat_interrupt_0***, modify the ***System Network Properties->Name*** to ```xlconstant_gnd_dout```.<br />
-   ![netname.png](/pic_for_readme/netname.png)<br /><br />
+   i) Click ***Run Connection Automation***<br />   
+   j) Leave the default values for Master interface and Bridge IP.<br />
+      - Master interface default is /zynq_ultra_ps_e_0/M_AXI_HPM0_LPD.<br />
+      - Bridge IP default is New AXI interconnect.<br />
+   k) Expand output interface Interrupt of axi_intc_0 to show the port irq, connect this irq portto zynq_ultra_ps_e_0.pl_ps_irq0<br />
+   l) Setup ***PFM_IRQ** property by typing following command in Vivado console:<br />
+   ```set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]```<br />
+***The IPI design connection would like below:***<br />
+![ipi_fully_connection.png](/pic_for_readme/ipi_fully_connection.png)<br /><br />
 ***Note: Now we have finished the IPI design input, let's set some platform parameters and generate the DSA***<br /><br /><br />
 
 ## Configuring Platform Interface Properties<br /><br />
