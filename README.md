@@ -154,24 +154,20 @@ get_property platform.design_intent.datacenter [current_project]
 set_property platform.default_output_type "sd_card" [current_project]
 
 get_property platform.default_output_type [current_project]
-
-# Add the platform property to use dynamic_postlink.tcl during the v++ link
-set_property platform.post_sys_link_tcl_hook ./dynamic_postlink.tcl [current_project]
 ```
 11. In your Vivado project, use the ***Tcl console*** to ***navigate to the xsa_gen folder***, and run ```source ./xsa.tcl``` command.
 ![run_xsa_tcl.png](/pic_for_readme/run_xsa_tcl.png)<br /><br />
 12. Right-click and select ***Validate Design*** on ***IP integrator diagram***<br />
-13. Select the Zynq UltraScale+ MPSoC IP block and set ***SELECTED_SIM_MODEL*** to ```tlm``` in the Block Properties view.<br />
-14. Create the HDL wrapper:<br />
+13. Create the HDL wrapper:<br />
     a. Right-click ***system.bd*** in the Block Design, Sources view and select Create HDL Wrapper.<br />
     b. Select Let Vivado manage wrapper and ***auto-update***.<br />
     c. Click ***OK***.<br />
 
-15. Right-click ***system.bd*** in the Block Design, Sources view and select ***Generate Output Products***.<br />
-16. Type the tcl command in tcl console like:<br />
-```write_hw_platform -unified -force -file <your_vivado_project_dir>/xsa_gen/zcu102_custom_platform.xsa```<br />
+14. Right-click ***system.bd*** in the Block Design, Sources view and select ***Generate Output Products***.<br />
+15. Type the tcl command in tcl console like:<br />
+```write_hw_platform -unified -force -file <your_vivado_project_dir>/xsa_gen/zcu104_custom_platform.xsa```<br />
 If you use ***export Hardware*** function in Vivado GUI it would add ***-fixed*** option which would generate a XSA for traditional embedded platform which can't add DPU acceleration kernel here.
-17. Check the ***<your_vivado_project_dir>/xsa_gen*** folder, you should find the ***zcu102_custom_platform.xsa*** generated there.<br />
+16. Check the ***<your_vivado_project_dir>/xsa_gen*** folder, you should find the ***zcu104_custom_platform.xsa*** generated there.<br />
 
 ***Now we finish the Hardware platform creation flow, then we should go to the Software platform creation***<br /><br />
 
@@ -179,12 +175,12 @@ If you use ***export Hardware*** function in Vivado GUI it would add ***-fixed**
 
 A Vitis platform requires software components. For Linux, the PetaLinux tools are invoked outside of the Vitis tools by the developer to create the necessary Linux image,Executable and Linkable Format (ELF) files, and sysroot with XRT support. Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux. <br />
 1. source <petaLinux_tool_install_dir>/settings.sh<br />
-2. Create a PetaLinux project named ***zcu102_custom_plnx*** and configure the hw with the XSA file we created before:<br />
-```petalinux-create --type project --template zynqMP --name zcu102_custom_plnx```<br />
-```cd zcu102_custom_plnx```<br />
+2. Create a PetaLinux project named ***zcu104_custom_plnx*** and configure the hw with the XSA file we created before:<br />
+```petalinux-create --type project --template zynqMP --name zcu104_custom_plnx```<br />
+```cd zcu104_custom_plnx```<br />
 ```petalinux-config --get-hw-description=<you_vivado_design_dir>/xsa_gen/```<br />
-3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu102-rev1.0```.<br />
-***Note: If you are using a Xilinx development board, izcu102_dpu_pkg/DPU-TRD/prj/Vitis/binary_container_1t is recomended to modify the machine name so that the board confiugrations would be involved in the DTS auto-generation. Otherwise you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
+3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu104-rev1.0```.<br />
+***Note: If you are using a Xilinx development board, izcu104_dpu_pkg/DPU-TRD/prj/Vitis/binary_container_1t is recomended to modify the machine name so that the board confiugrations would be involved in the DTS auto-generation. Otherwise you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
 4. Add user packages by appending the CONFIG_x lines below to the <your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig file.<br />
 Packages for base XRT support:<br />
 ```
@@ -329,42 +325,42 @@ petalinux-build --sdk
 source <Vitis_Install_Directory>/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
-2. Go to the ***zcu102_dpu_pkg*** folder you created: ```cd <full_pathname_to_zcu102_dpu_pkg>```.<br />
+2. Go to the ***zcu104_dpu_pkg*** folder you created: ```cd <full_pathname_to_zcu104_dpu_pkg>```.<br />
 3. Launch Vitis by typing ```vits``` in the console.<br />
-4. Select ***zcu102_dpu_pkg*** folder as workspace directory.<br />
+4. Select ***zcu104_dpu_pkg*** folder as workspace directory.<br />
 ![vitis_launch.png](/pic_for_readme/vitis_launch.png)<br /><br />
 5. In the Vitis IDE, select ***File > New > Platform Project*** to create a platform project.<br />
 6. In the Create New Platform Project dialog box, do the following:<br />
-   a) Enter the project name. For this example, type ```zcu102_vai_custom```.<br />
+   a) Enter the project name. For this example, type ```zcu104_vai_custom```.<br />
    b) Leave the checkbox for the default location selected.<br />
    c) Click ***Next***.<br />
 7. In the Platform Project dialog box, do the following:<br />
    a) Select ***Create from hardware specification (XSA)***.<br />
    b) Click ***Next***.<br />
 8. In the Platform Project Specification dialog box, do the following:<br />
-   a) Browse to the XSA file generated by the Vivado. In this case, it is located in ```vitis_custom_platform_flow/zcu102_custom_platform/xsa_gen/zcu102_custom_platform.xsa```.<br />
+   a) Browse to the XSA file generated by the Vivado. In this case, it is located in ```vitis_custom_platform_flow/zcu104_custom_platform/xsa_gen/zcu104_custom_platform.xsa```.<br />
    b) Set the operating system to ***linux***.<br />
    c) Set the processor to ***psu_cortexa53***.<br />
    d) Leave the checkmark selected to generate boot components.<br />
    e) Click ***Finish***.<br />
 9. In the Platform Settings view, observe the following:<br />
-   - The name of the Platform Settings view matches the platform project name of ***zcu102_vai_custom***.<br />
+   - The name of the Platform Settings view matches the platform project name of ***zcu104_vai_custom***.<br />
    - A psu_cortexa53 device icon is shown, containing a Linux on psu_cortexa53 domain.<br />
    - A psu_cortexa53 device icon is shown, containing a zynqmp_fsbl BSP.<br />
    - A psu_pmu_0 device icon is shown, containing a zynqmp_pmufw BSP.<br />
 10. Click the linux on psu_cortexa53 domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:
 ```
 Linux Build Output:
-    Browse to zcu102_dpu_pkg/pfm/boot and click OK.
+    Browse to zcu104_dpu_pkg/pfm/boot and click OK.
     
 Bif file:
-    Browse to zcu102_dpu_pkg/pfm/boot/linux.bif file and click OK.
+    Browse to zcu104_dpu_pkg/pfm/boot/linux.bif file and click OK.
 
 Image:
-    Browse to zcu102_dpu_pkg/pfm/boot and click OK.
+    Browse to zcu104_dpu_pkg/pfm/boot and click OK.
 ```
 ![vitis_linux_config.png](/pic_for_readme/vitis_linux_config.png)<br /><br />
-11. Click ***zcu102_vai_custom*** project in the Vitis Explorer view, click the ***Build*** button to generate the platform.
+11. Click ***zcu104_vai_custom*** project in the Vitis Explorer view, click the ***Build*** button to generate the platform.
 ![build_vitis_platform.png](/pic_for_readme/build_vitis_platform.png)<br /><br />
 ***Note: The generated platform is placed in the export directory. BSP and source files are also provided for re-building the FSBL and PMU if desired and are associated with the platform. The platform is ready to be used for application development.***<br />
 
@@ -372,10 +368,10 @@ Image:
 
 1. Download Vitis AI by calling command ```git clone https://github.com/Xilinx/Vitis-AI.git```.<br />
 2. Navigate to the repository:```cd Vitis-AI```, set the tag to proper tag(here we use ***v1.1***) by typing: ```git checkout v1.1```.<br />
-3. If you don't want to destroy the TRD reference design. Copy ***DPU-TRD*** folder into another directory. For example I would copy that into my ***zcu102_dpu_pkg*** folder: ```cp -r DPU-TRD ~/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu102_dpu_pkg/```<br />
+3. If you don't want to destroy the TRD reference design. Copy ***DPU-TRD*** folder into another directory. For example I would copy that into my ***zcu104_dpu_pkg*** folder: ```cp -r DPU-TRD ~/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu104_dpu_pkg/```<br />
 4. Source Vitis tools setting sh file: ```source <vitis install path>/Vitis/2019.2/settings64.sh```.<br />
 5. Source XRT sh file:```source opt/xilinx/xrt/setup.sh```.<br />
-6. Export SDX_PLATFORM with the directory of the custom platform xpfm file which you created before. Here in my project it would be: ```export SDX_PLATFORM=/home/wuxian/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu102_dpu_pkg/zcu102_vai_custom/export/zcu102_vai_custom/zcu102_vai_custom.xpfm```. Remember now this custom platform name is ***zcu102_vai_custom***.<br />
+6. Export SDX_PLATFORM with the directory of the custom platform xpfm file which you created before. Here in my project it would be: ```export SDX_PLATFORM=/home/wuxian/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu104_dpu_pkg/zcu104_vai_custom/export/zcu104_vai_custom/zcu104_vai_custom.xpfm```. Remember now this custom platform name is ***zcu104_vai_custom***.<br />
 7. Navigate to the copy of the ***DPU-TRD*** folder, then go to the ***./prj/Vitis*** folder.<br />
 There are 2 files can be used to modify the DPU settings: The ***config_file/prj_config*** file is for DPU connection in Vitis project and the dpu_conf.vh is for other DPU configurations. Here we would modify the prj_config so that 2 DPU cores are enabled. And we would keep dpu_conf.vh in default.<br />
 8. Modify the ***config_file/prj_config*** like below:<br />
@@ -409,19 +405,19 @@ prop=run.impl_1.strategy=Performance_Explore
 
 ```
 
-9. Generate the XO file by typing: ```make binary_container_1/dpu.xo DEVICE=zcu102_vai_custom```.<br />
-10. Verify if the XO file is generated here: ***<zcu102_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo***.<br />
+9. Generate the XO file by typing: ```make binary_container_1/dpu.xo DEVICE=zcu104_vai_custom```.<br />
+10. Verify if the XO file is generated here: ***<zcu104_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo***.<br />
 
 ## Create and Build a Vitis application
 1. Open Vitis workspace you were using before.<br />
 2. Select ***File -> New -> Application Project***.<br />
 3. Name the project ```hello_dpu```, use ***new system project** and use the default name, click ***next***.<br />
-4. Select ***zcu102_vai_custom*** as platform, click ***next***.<br />
-5. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu102_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***) and click ***next***.<br />
+4. Select ***zcu104_vai_custom*** as platform, click ***next***.<br />
+5. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu104_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***) and click ***next***.<br />
 6. Select ***Empty Application*** and click ***finish*** to generate the application.<br />
 7. Right click on the ***src*** folder under your ***hello_dpu*** application  in the Expplorer window, and select "Import Sources"
 ![import_sources.png](/pic_for_readme/import_sources.png)<br /><br />
-8. Choose from directory ***<zcu102_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/*** as the target location, and import the ***dpu.xo*** file that we just created.<br />
+8. Choose from directory ***<zcu104_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/*** as the target location, and import the ***dpu.xo*** file that we just created.<br />
 9. Import sources again, and add the cpp, header and prj_config files from ***ref_files/src*** folder provided by this Git repository.<br />
 10. In the Explorer window double click the hello_dpu.prj file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
 11. Under Hardware Functions, click the lightning bolt logo to ***Add Hardware Function***.<br />
@@ -449,11 +445,11 @@ hineon
 ***These steps are used to make sure your application can call libs in rootfs directly on Vitis appilcation build***
 20. The Vitis AI library and DNNDK are not included in PetaLinux SDK rootfs, now let's install them into the rootfs directory:<br />
 ***Note:*** We should follow the section ***Setting Up the Host For Edge*** of [Vitis AI library readme file](https://github.com/Xilinx/Vitis-AI/blob/master/Vitis-AI-Library/README.md) to install the Vitis AI library and section ***Setup cross-compiler for Vitis AI DNNDK and make samples*** of [DNNDK readme file](https://github.com/Xilinx/Vitis-AI/blob/master/mpsoc/README.md) to install the DNNDK. Most of the time I would suggest you to use a release tag when visting Github resource, but there are some critical modifications after v1.1 release. So I would just suggest you to refer to ***master*** branch this time. If you feel difficult to following the official guide there you can refer to the following ones. ***Please just skip these steps if you already install the libs referring to the readme files***:<br />
-    a) Set the PetaLinux SDK environment by running command: ```. <full_pathname_to_zcu102_dpu_pkg>/pfm/environment-setup-aarch64-xilinx-linux```<br />
+    a) Set the PetaLinux SDK environment by running command: ```. <full_pathname_to_zcu104_dpu_pkg>/pfm/environment-setup-aarch64-xilinx-linux```<br />
     b) Download the [vitis_ai_2019.2-r1.1.0.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_2019.2-r1.1.0.tar.gz) to a particular directory(here we take ***~/Downloads*** as example) and install it to the roofs folder:<br />
     ```
     cd ~/Downloads # Or some place else you download the vitis_ai_2019.2-r1.1.0.tar.gz file
-    tar -xzvf vitis_ai_2019.2-r1.1.0.tar.gz -C <full_pathname_to_zcu102_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux
+    tar -xzvf vitis_ai_2019.2-r1.1.0.tar.gz -C <full_pathname_to_zcu104_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux
     ```
     c) Download the glog package to ***~/Downloads*** folder and untar it:<br />
     ```
@@ -466,8 +462,8 @@ hineon
     ```
     mkdir build_for_petalinux
     cd build_for_petalinux
-    unset LD_LIBRARY_PATH; source <full_pathname_to_zcu102_dpu_pkg>/pfm/environment-setup-aarch64-xilinx-linux
-    cmake -DCPACK_GENERATOR=TGZ -DBUILD_SHARED_LIBS=on -DCMAKE_INSTALL_PREFIX=<full_pathname_to_zcu102_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux/usr ..
+    unset LD_LIBRARY_PATH; source <full_pathname_to_zcu104_dpu_pkg>/pfm/environment-setup-aarch64-xilinx-linux
+    cmake -DCPACK_GENERATOR=TGZ -DBUILD_SHARED_LIBS=on -DCMAKE_INSTALL_PREFIX=<full_pathname_to_zcu104_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux/usr ..
     make && make install
     make package
     ```
@@ -476,7 +472,7 @@ hineon
     cd ~/Downloads # Or some place else you download the file
     tar -xzvf vitis-ai_v1.1_dnndk.tar.gz
     cd vitis-ai_v1.1_dnndk
-    ./install.sh <full_pathname_to_zcu102_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux
+    ./install.sh <full_pathname_to_zcu104_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux
     ```
 ***Now we install both the VAI lib and DNNDK packages into the rootfs set as Vitis sysroot, then we can build application on Vitis.***<br />
 
@@ -504,7 +500,7 @@ The DCF file name should be associated with the time and date you generating thi
 Take my project as example it is:<br />
 ```--options "{'save_kernel':'', 'dcf':'./dpu-03-26-2020-13-30.dcf'}"```<br />
 7. Following the TensorFlow steps at https://github.com/Xilinx/Vitis-AI/blob/v1.1/Tool-Example/README.md to generate the ELF from ResNet model.<br />
-8. Check the generated ELF file from ***tf_resnetv1_50_imagenet_224_224_6.97G/vai_c_output_ZCU102/dpu_resnet50_0.elf***.<br />
+8. Check the generated ELF file from ***tf_resnetv1_50_imagenet_224_224_6.97G/vai_c_output_ZCU104/dpu_resnet50_0.elf***.<br />
 9. Copy that file to the ***src*** folder of Vitis application ***hello_dpu***<br />
 10. Right click on the ***hello_dpu*** project folder in Vitis select ***C/C++ Building Settings**.<br />
 11. In ***Propery for Hello_DPU*** dialog box, select ***C/C++ Build->Settings->Tool Settings->GCC Host Linker->Miscellaneous->Other objects***, add a new object: ```"${workspace_loc:/${ProjName}/src/dpu_resnet50_0.elf}"```, click ***Apply and Close***.<br />
@@ -512,10 +508,10 @@ Take my project as example it is:<br />
 ***Now you should get an updated hello_dpu.exe with a size of about 20MB(the ConvNet model is involved).***<br />
 
 ## Run Application on Board<br />
-1. Copy all the files from ***sd_card folder*** inside your Vitis application like ***<hello_dpu_application_directory>/Hardware/sd_card/*** to SD card, set ZCU102 to SD boot mode and boot up the board, connect the board with serial port.<br />
+1. Copy all the files from ***sd_card folder*** inside your Vitis application like ***<hello_dpu_application_directory>/Hardware/sd_card/*** to SD card, set ZCU104 to SD boot mode and boot up the board, connect the board with serial port.<br />
 2. Connect SSH:<br />
    a) Run ```ifconfig``` to get the IP address, here we take ```172.16.75.189``` as example.<br />
-   b) Using SSH terminal to connect ZCU102 with SSH: ```ssh -x root@172.16.75.189```, or use MobaXterm in Windows.<br />
+   b) Using SSH terminal to connect ZCU104 with SSH: ```ssh -x root@172.16.75.189```, or use MobaXterm in Windows.<br />
 3. Mount SD card to mnt folder by running command: ```mount /dev/mmcblk0p1 /mnt```.<br />
 4. Go to the /mnt folder and create a new folder named "package":
 ```
