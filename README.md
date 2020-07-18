@@ -123,7 +123,7 @@ You can provide kernel interrupt support by adding an AXI interrupt controller t
 ***Note: Now we have finished the IPI design input, let's set some platform parameters and generate the DSA***<br /><br /><br />
 
 ## Configuring Platform Interface Properties<br /><br />
-1. Click ***Window->Platform interfaces*** to open the ***Platform Interfaces*** Window.<br />
+1. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.<br />
 2. Select ***Platform-system->zynq_ultra_ps_e_0->S_AXI_HP0_FPD***, in ***Platform interface Properties*** tab enable the ***Enabled*** option like below:<br />
 ![enable_s_axi_hp0_fpd.png](/pic_for_readme/enable_s_axi_hp0_fpd.png)<br /><br />
 3. Select ***Options*** tab, set ***memport*** to ```S_AXI_HP``` and set ***sptag*** to ```HP0``` like below:
