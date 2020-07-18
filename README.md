@@ -136,10 +136,8 @@ You can provide kernel interrupt support by adding an AXI interrupt controller t
 7. Enable ***clk_200m***, ***clk_400m***, ***clk_100m*** of clk_wiz_0, set ***id*** of ***clk_200m*** to ```0```, set ***id*** of ***clk_400m*** to ```1```, set ***id*** of ***clk_100m*** to ```2```, enable ***is default*** for ***clk_200m***.<br />
 
 8. Create a ```xsa_gen``` folder inside your Vivado project.<br />
-9. Copy the [dynamic_postlink.tcl](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/blob/2019.2/Xilinx_Official_Platforms/zcu102_dpu/vivado/dynamic_postlink.tcl) file into that ***xsa_gen*** folder.<br />
-Or you can just find this file from any of the MPSoC official platform example.<br />
-10. Create a file named ```xsa.tcl``` inside the ***xsa_gen*** folder.<br />
-11. Copy the following commands into the xsa.tcl file and save the file.<br />
+9. Create a file named ```xsa.tcl``` inside the ***xsa_gen*** folder.<br />
+10. Copy the following commands into the xsa.tcl file and save the file.<br />
 ```
 # Set the platform design intent properties
 set_property platform.design_intent.embedded true [current_project]
@@ -160,20 +158,20 @@ get_property platform.default_output_type [current_project]
 # Add the platform property to use dynamic_postlink.tcl during the v++ link
 set_property platform.post_sys_link_tcl_hook ./dynamic_postlink.tcl [current_project]
 ```
-12. In your Vivado project, use the ***Tcl console*** to ***navigate to the xsa_gen folder***, and run ```source ./xsa.tcl``` command.
+11. In your Vivado project, use the ***Tcl console*** to ***navigate to the xsa_gen folder***, and run ```source ./xsa.tcl``` command.
 ![run_xsa_tcl.png](/pic_for_readme/run_xsa_tcl.png)<br /><br />
-13. Right-click and select ***Validate Design*** on ***IP integrator diagram***<br />
-14. Select the Zynq UltraScale+ MPSoC IP block and set ***SELECTED_SIM_MODEL*** to ```tlm``` in the Block Properties view.<br />
-15. Create the HDL wrapper:<br />
+12. Right-click and select ***Validate Design*** on ***IP integrator diagram***<br />
+13. Select the Zynq UltraScale+ MPSoC IP block and set ***SELECTED_SIM_MODEL*** to ```tlm``` in the Block Properties view.<br />
+14. Create the HDL wrapper:<br />
     a. Right-click ***system.bd*** in the Block Design, Sources view and select Create HDL Wrapper.<br />
     b. Select Let Vivado manage wrapper and ***auto-update***.<br />
     c. Click ***OK***.<br />
 
-16. Right-click ***system.bd*** in the Block Design, Sources view and select ***Generate Output Products***.<br />
-17. Type the tcl command in tcl console like:<br />
+15. Right-click ***system.bd*** in the Block Design, Sources view and select ***Generate Output Products***.<br />
+16. Type the tcl command in tcl console like:<br />
 ```write_hw_platform -unified -force -file <your_vivado_project_dir>/xsa_gen/zcu102_custom_platform.xsa```<br />
 If you use ***export Hardware*** function in Vivado GUI it would add ***-fixed*** option which would generate a XSA for traditional embedded platform which can't add DPU acceleration kernel here.
-18. Check the ***<your_vivado_project_dir>/xsa_gen*** folder, you should find the ***zcu102_custom_platform.xsa*** generated there.<br />
+17. Check the ***<your_vivado_project_dir>/xsa_gen*** folder, you should find the ***zcu102_custom_platform.xsa*** generated there.<br />
 
 ***Now we finish the Hardware platform creation flow, then we should go to the Software platform creation***<br /><br />
 
