@@ -97,27 +97,21 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
 ***Now we have added clock and reset IPs and configure and connect them. Some would be used in creating the hardware platform and some would be called in Vitis high level design***<br /><br />
 
 9. Add Kernel Interrupt Support<br />
-You can provide kernel interrupt support by adding an AXI interrupt controller to the base hardware design and connecting the output of the interrupt controller to the input of the processor block interrupt. The interrupt inputs of the AXI interrupt controller are initialized to a de-asserted state by wiring them to ground. When the v++ linker adds acceleration kernels to the base hardware design, the dynamic_postlink.tcl script is used to wire the interrupt output of the kernel to the AXI interrupt controller. <br />
+You can provide kernel interrupt support by adding an AXI interrupt controller to the base hardware design.<br />
    a) In the block diagram, double-click the Zynq UltraScale+ MPSoC block.<br />
    b) Select ***PS-PL Configuration > PS-PL interfaces > Master interface***.<br />
    c) Select the ***AXI HPM0 LPD*** check box, keep the ***AXI HPM0 LPD Data width*** settings as default ***32***.<br />
    d) Click ***OK*** to finsih the configuration.<br />
    e) Connect ***maxihpm0_lpd_aclk*** to ***/clk_wiz_0/clk_100m***.<br />
-   f) Right click Diagram view and select ***Add IP***, search and add ***Concat*** IP.<br />
-   g) Double-click the Concat block to open the Re-Customize IP dialog box.<br />
-   h) Set the number of ports to ```32```.<br />
-   i) Right click Diagram view and select ***Add IP***, search and add ***Constant*** IP.<br />
-   j) Double-click the Constant IP, set Const Width = 1 & Const Val = 0, click ***OK***.<br />
-   k) Connect the xlconstant_0 dout[0:0] output to all 32 inputs of xlconcat_0 like below:<br />
-   ![concat_connection.png](/pic_for_readme/concat_connection.png)<br /><br />
-   l) Select the ***xconstant_0*** IP block,in the Block Properties, General dialog box, change the name to ```xlconstant_gnd```.<br />
-   m) Select the ***xlconcat_0*** IP block,in the Block Properties, General dialog box, change the name to ```xlconcat_interrupt_0```.<br />
-   These names should match the ones in the dynamic_postlink.tcl script.<br />
-   n) Right click Diagram view and select ***Add IP***, search and add ***AXI Interrupt Controller*** IP.<br />
-   o) Double-click the AXI Interrupt Controller block, set the Interrupts type to Level by changing the button to ***Manual*** and entering ```0x0``` text field, Set the Level type to High by changing the button to ***Manual*** and entering ```0xFFFFFFFF```, Set the Interrupt Output Connection to ***Single***, click ***OK***.<br />
-   The configuration of axi_intc should like below:<br />
+   f) Right click Diagram view and select ***Add IP***, search and add ***AXI Interrupt Controller*** IP.<br />
+   g) Double click the AXI Interrupt Controller block, set ***Interrupts type*** to ```Level Interrupt```, set ***Level type*** to ```Active High```, set ***Interrupt Output Connection*** to ```Bus```. Click ***OK*** to save the change.<br />
    ![intc_settings.png](/pic_for_readme/intc_settings.png)<br /><br />
-   p) Click ***Run Connection Automation***<br />
+   h) Click the AXI Interrupt Controller block and go to ***Block Properties -> Properties***, configure or make sure the parameters are set as following:
+***C_ASYNC_INTR***: ```0xFFFFFFFF```. <br />
+   ![async_intr.png](/pic_for_readme/async_intr.png)<br /><br />
+   h) Click ***Run Connection Automation***<br />
+   
+   
    q) Leave the default values for Master interface and Bridge IP.<br />
       - Master interface default is /zynq_ultra_ps_e_0/M_AXI_HPM0_LPD.
       - Bridge IP default is New AXI interconnect.
