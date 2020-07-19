@@ -352,35 +352,35 @@ Image:
 ## Prepare for the DPU Kernel<br /><br />
 
 1. Download Vitis AI by calling command ```git clone https://github.com/Xilinx/Vitis-AI.git```.<br />
-2. Navigate to the repository:```cd Vitis-AI```, set the tag to proper tag(here we use ***v1.1***) by typing: ```git checkout v1.1```.<br />
+2. Navigate to the repository:```cd Vitis-AI```, set the tag to proper tag(here we use ***v1.1***) by typing: ```git checkout v1.2```.<br />
 3. If you don't want to destroy the TRD reference design. Copy ***DPU-TRD*** folder into another directory. For example I would copy that into my ***zcu104_dpu_pkg*** folder: ```cp -r DPU-TRD ~/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu104_dpu_pkg/```<br />
 4. Source Vitis tools setting sh file: ```source <vitis install path>/Vitis/2019.2/settings64.sh```.<br />
 5. Source XRT sh file:```source opt/xilinx/xrt/setup.sh```.<br />
-6. Export SDX_PLATFORM with the directory of the custom platform xpfm file which you created before. Here in my project it would be: ```export SDX_PLATFORM=/home/wuxian/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu104_dpu_pkg/zcu104_vai_custom/export/zcu104_vai_custom/zcu104_vai_custom.xpfm```. Remember now this custom platform name is ***zcu104_vai_custom***.<br />
+6. Export SDX_PLATFORM with the directory of the custom platform xpfm file which you created before. Here in my project it would be: ```export SDX_PLATFORM=/home/wuxian/wu_project/vitis2020.1/vitis_custom_platform_flow/zcu104_dpu_pkg/zcu104_vai_custom/export/zcu104_vai_custom/zcu104_vai_custom.xpfm```. Remember now this custom platform name is ***zcu104_vai_custom***.<br />
 7. Navigate to the copy of the ***DPU-TRD*** folder, then go to the ***./prj/Vitis*** folder.<br />
-There are 2 files can be used to modify the DPU settings: The ***config_file/prj_config*** file is for DPU connection in Vitis project and the dpu_conf.vh is for other DPU configurations. Here we would modify the prj_config so that 2 DPU cores are enabled. And we would keep dpu_conf.vh in default.<br />
+There are 2 files can be used to modify the DPU settings: The ***config_file/prj_config*** file is for DPU connection in Vitis project and the dpu_conf.vh is for other DPU configurations. Here we would modify the prj_config so that 2 DPU cores are enabled. And then we modify dpu_conf.vh as [DPU-TRD readme](https://github.com/Xilinx/Vitis-AI/blob/v1.2/DPU-TRD/README.md) suggested.<br />
 8. Modify the ***config_file/prj_config*** like below:<br />
 ```
 
 [clock]
 
-id=0:dpu_xrt_top_1.aclk
-id=1:dpu_xrt_top_1.ap_clk_2
-id=0:dpu_xrt_top_2.aclk
-id=1:dpu_xrt_top_2.ap_clk_2
+id=0:DPUCZDX8G_1.aclk
+id=1:DPUCZDX8G_1.ap_clk_2
+id=0:DPUCZDX8G_2.aclk
+id=1:DPUCZDX8G_2.ap_clk_2
 
 [connectivity]
 
-sp=dpu_xrt_top_1.M_AXI_GP0:HPC0
-sp=dpu_xrt_top_1.M_AXI_HP0:HP0
-sp=dpu_xrt_top_1.M_AXI_HP2:HP1
-sp=dpu_xrt_top_2.M_AXI_GP0:HPC1
-sp=dpu_xrt_top_2.M_AXI_HP0:HP2
-sp=dpu_xrt_top_2.M_AXI_HP2:HP3
+sp=DPUCZDX8G_1.M_AXI_GP0:HPC0
+sp=DPUCZDX8G_1.M_AXI_HP0:HP0
+sp=DPUCZDX8G_1.M_AXI_HP2:HP1
+sp=DPUCZDX8G_2.M_AXI_GP0:HPC1
+sp=DPUCZDX8G_2.M_AXI_HP0:HP2
+sp=DPUCZDX8G_2.M_AXI_HP2:HP3
 
 [advanced]
 misc=:solution_name=link
-param=compiler.addOutputTypes=sd_card
+#param=compiler.addOutputTypes=sd_card
 
 #param=compiler.skipTimingCheckAndFrequencyScaling=1
 
@@ -389,9 +389,17 @@ prop=run.impl_1.strategy=Performance_Explore
 #param=place.runPartPlacer=0
 
 ```
+9. Modify dpu_conf.vh from:<br />
+```
+`define URAM_DISABLE 
+```
+to<br />
+```
+`define URAM_ENABLE 
+```
 
-9. Generate the XO file by typing: ```make binary_container_1/dpu.xo DEVICE=zcu104_vai_custom```.<br />
-10. Verify if the XO file is generated here: ***<zcu104_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo***.<br />
+10. Generate the XO file by typing: ```make binary_container_1/dpu.xo DEVICE=zcu104_vai_custom```.<br />
+11. Verify if the XO file is generated here: ***<zcu104_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo***.<br />
 
 ## Create and Build a Vitis application
 1. Open Vitis workspace you were using before.<br />
