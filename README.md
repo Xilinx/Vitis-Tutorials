@@ -266,12 +266,7 @@ Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is 
 
 10. Modify the u-boot settings:<br />
 Because we didn't use SD card to store the rootfs files. So that u-boot need to load a large image. We need to modify the u-boot so that it can load larger image.
-Open ***project-spec/meta-user/recipes-bsp/u-boot/files/platform-top.h*** and modify:<br />
-
-```
-#define CONFIG_SYS_BOOTM_LEN 0xF000000
-```
-to<br />
+Open ***project-spec/meta-user/recipes-bsp/u-boot/files/platform-top.h*** and add:<br />
 ```
 #define CONFIG_SYS_BOOTM_LEN 0x80000000
 #undef CONFIG_SYS_BOOTMAPSZ
