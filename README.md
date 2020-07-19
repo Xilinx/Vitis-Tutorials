@@ -217,7 +217,7 @@ CONFIG_packagegroup-petalinux-matchbox
 5. Run ```petalinux-config -c rootfs``` and select ***user packages***, select name of rootfs all the libraries listed above, save and exit.
 ![petalinux_rootfs.png](/pic_for_readme/petalinux_rootfs.png)<br /><br />
 
-9. Enable OpenSSH and disable dropbear<br /> 
+6. Enable OpenSSH and disable dropbear<br /> 
 Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, it could achieve 4x times faster data transmission speed (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.<br /> 
     a) Run ```petalinux-config -c rootfs```.<br /> 
     b) Go to ***Image Features***.<br /> 
@@ -225,18 +225,14 @@ Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is 
     ![ssh_settings.png](/pic_for_readme/ssh_settings.png)<br /><br />
     d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***.<br />
     e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable ***openssh***, ***openssh-sftp-server***, ***openssh-sshd***, ***openssh-scp***.<br />
-10. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, store the change and exit.<br />
-11. Increase the size allocation for CMA memory to 512 MB (optional), disable CPU IDLE in the kernel configurations as follows:<br /> 
-Default CMA size in PetaLinux project and Vitis Base Platform is 256MB. But for some models, 256MB is not enough to allocate DPU instructions/parameters/data area. Unless it's clear that your 256MB is sufficient for your model, it's recommended to set cma=512M which could cover all Vitis-AI models.<br /> 
-CPU IDLE would cause CPU IDLE when JTAG is connected. So it is recommended to disable the selection.<br /> 
+7. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, store the change and exit.<br />
+8. CPU IDLE would cause CPU IDLE when JTAG is connected. So it is recommended to disable the selection.<br /> 
     a) Type ```petalinux-config -c kernel```<br /> 
-    b) Select ***Device Drivers > Generic Driver Options > DMA Contiguous Memory Allocator > Size in Mega Bytes***.<br />
-    c) Press the ```Enter``` key and change 256 to 512.<br /> 
-Ensure the following are ***TURNED OFF*** by entering 'n' in the [ ] menu selection for:<br />
+    b) Ensure the following are ***TURNED OFF*** by entering 'n' in the [ ] menu selection for:<br />
        - ***CPU Power Mangement > CPU Idle > CPU idle PM support***<br />
-       - ***CPU Power Management > CPU Frequency scaling > CPU Frequency scaling***<br />
+       - ***CPU Power Management > CPU Frequency scaling > CPU Frequency scaling***<br /><br />
 
-12. Update the Device tree to include the zocl driver by appending the text below to the ***project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi*** file. 
+9. Update the Device tree to include the zocl driver by appending the text below to the ***project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi*** file. 
 ```
 &amba {
 	zyxclmm_drm {
@@ -254,13 +250,21 @@ Ensure the following are ***TURNED OFF*** by entering 'n' in the [ ] menu select
 	};
 };
 
+&axi_intc_0 {
+      xlnx,kind-of-intr = <0x0>;
+      xlnx,num-intr-inputs = <0x20>;
+      interrupt-parent = <&gic>;
+      interrupts = <0 89 4>;
+};
+
+&sdhci1 {
+      no-1-8-v;
+      disable-wp;
+};
+
 ```
-13. Modify the bsp config file:<br />
-Open ***project-spec/meta-user/conf/petalinuxbsp.conf*** and add a line like below:<br />
-```
-PACKAGE_CLASSES = "package_deb"
-```
-14. Modify the u-boot settings:<br />
+
+10. Modify the u-boot settings:<br />
 Because we didn't use SD card to store the rootfs files. So that u-boot need to load a large image. We need to modify the u-boot so that it can load larger image.
 Open ***project-spec/meta-user/recipes-bsp/u-boot/files/platform-top.h*** and modify:<br />
 
@@ -272,16 +276,16 @@ to<br />
 #define CONFIG_SYS_BOOTM_LEN 0x80000000
 #undef CONFIG_SYS_BOOTMAPSZ
 ```
-15. From within the PetaLinux project (petalinux), type ```petalinux-build``` to build the project.<br />
-16. Create a sysroot self-installer for the target Linux system:<br />
+11. From within the PetaLinux project (petalinux), type ```petalinux-build``` to build the project.<br />
+12. Create a sysroot self-installer for the target Linux system:<br />
 ```
 cd images/linux
 petalinux-build --sdk
 ```
 ***Note: We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu102_dpu_pkg ```. Then we create a pfm folder inside.***<br />
-17. Type ```./sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***<full_pathname_to_zcu102_dpu_pkg>/pfm***(here in this example I use ***/home/wuxian/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu102_dpu_pkg/pfm***) and confirm.<br />
-18. We would install Vitis AI library and DNNDK into this rootfs in the future.<br />
-19. After the PetaLinux build succeeds, the generated Linux software components are in the ***<your_petalinux_dir>/images/linux directory***. For our example, the ***images/linux*** directory contains the generated image and ELF files listed below. Copy these files to the ***<full_pathname_to_zcu102_dpu_pkg>/pfm/boot*** directory in preparation for running the Vitis platform creation flow:<br />
+13. Type ```./sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***<full_pathname_to_zcu102_dpu_pkg>/pfm***(here in this example I use ***/home/wuxian/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu102_dpu_pkg/pfm***) and confirm.<br />
+14. We would install Vitis AI library and DNNDK into this rootfs in the future.<br />
+15. After the PetaLinux build succeeds, the generated Linux software components are in the ***<your_petalinux_dir>/images/linux directory***. For our example, the ***images/linux*** directory contains the generated image and ELF files listed below. Copy these files to the ***<full_pathname_to_zcu102_dpu_pkg>/pfm/boot*** directory in preparation for running the Vitis platform creation flow:<br />
 ```
     - image.ub
     - zynqmp_fsbl.elf
@@ -289,7 +293,7 @@ petalinux-build --sdk
     - bl31.elf
     - u-boot.elf
 ```
-20. Add a BIF file (linux.bif) to the ***<full_pathname_to_zcu102_dpu_pkg>/pfm/boot*** directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the <> symbols.<br />
+16. Add a BIF file (linux.bif) to the ***<full_pathname_to_zcu102_dpu_pkg>/pfm/boot*** directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the <> symbols.<br />
 ```
 /* linux */
  the_ROM_image:
