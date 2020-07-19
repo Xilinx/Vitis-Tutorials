@@ -198,7 +198,6 @@ CONFIG_packagegroup-petalinux-vitisai
 ```
 Packages for building Vitis AI applications:<br /> 
 ```
-CONFIG_gtest-staticdev
 CONFIG_json-c-dev
 CONFIG_protobuf-dev
 CONFIG_protobuf-c
