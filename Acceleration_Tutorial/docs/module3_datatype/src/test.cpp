@@ -205,6 +205,7 @@ int main(int argc, const char* argv[]) {
         }
     }
     errA = std::sqrt(errA);
+    std::cout << std::setprecision(1);
     std::cout << "errA = " << errA << std::endl;
     std::cout << "dataAN = " << dataAN << std::endl;
     std::cout << "dataAM = " << dataAM << std::endl;
