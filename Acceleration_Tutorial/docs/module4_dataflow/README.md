@@ -69,9 +69,9 @@ wr_loop_j: for (int j = 0; j < TILE_PER_ROW; ++j) {
 
 In this module 4 the code for the algorithm is moved into the header file <code>cholesky_kernel.hpp</code>.
 
-There is now an explicit parallelization and the number of parallel compute is determined by <code>NCU</code>, a constant set in <code>cholesky_kernel.cpp</code> through <code>#define NCU 16</code>.
+There is now an explicit parallelization and the number of parallel compute, it is determined by `NCU`, a constant set in `cholesky_kernel.cpp` through `#define NCU 16`.
 
-<code>NCU</code> is passed as a template parameter to the <code>chol_col_wrapper</code> function (see below).  The DATAFLOW pragma applies to the loop that calls <code>chol_col</code> 16 times:
+`NCU` is passed as a template parameter to the `chol_col_wrapper` function (see below).  The `DATAFLOW` pragma applies to the loop that calls `chol_col` 16 times:
 
 ```cpp
 template <typename T, int N, int NCU>
@@ -88,9 +88,9 @@ Loop_row:
 }
 ```
 
-To ensure <code>DATAFLOW</code> is applied the dataA is divided into <code>NCU</code> portions.
+To ensure `DATAFLOW` is applied the dataA is divided into `NCU` portions.
 
-Finally the loop is unrolled with a factor <code>NCU</code> which implies we have <code>NCU</code> (i.e. 16) copies of <code>chol_col</code> created each working on a chunk of the data.
+Finally the loop is unrolled with a factor `NCU` which implies we have `NCU` (i.e. 16) copies of `chol_col` created each working on a chunk of the data.
 
 #### Running the design
 
