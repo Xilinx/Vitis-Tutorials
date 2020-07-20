@@ -95,6 +95,12 @@ int main(int argc, const char* argv[]) {
 
     // dataAM = dataAN is valid only for symmetric matrix
     dataAM = (dataAM > dataAN) ? dataAN : dataAM;
+    // Setting maximum size to 2048
+    if (dataAM > 2048) {
+        dataAM = 2048;
+        std::cout << "INFO: Limiting size to 2048" << std::endl;
+    } 
+    // Setting same size for rows and columns
     dataAN = dataAM;
 
     // Output the inputs information

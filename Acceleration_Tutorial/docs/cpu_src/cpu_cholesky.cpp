@@ -16,7 +16,7 @@
 #include <stdint.h>
 #include <cmath>
 
-#define MAXN 512
+#define MAXN 2048
 
 void cpu_cholesky(int diagSize, double *matrixA) {
 
