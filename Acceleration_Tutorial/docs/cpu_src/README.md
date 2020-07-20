@@ -30,7 +30,7 @@ g++ cpu_cholesky.cpp test.cpp matrixUtility.hpp -std=c++0x -O3 -o test
 Run with different sizes of matrices small and large (maximum size is 2048x2048) to gauge the impact on the execution time.
 Study the code to check how it implements the Cholesky algorithm.
 
-> **Note 1**: If your server has limited stack size, this program might issue a segmentation fault at sizes smaller than 2048x2028. 
+> **Note 1**: If your server has limited stack size, this program might issue a segmentation fault at values smaller than 2048x2028. 
 
 > **Note 2**: On Nimbix servers, fitted with Intel® Xeon® Processor E5-2640 v3 (20M Cache, 2.60 GHz), the algorithm execution time is about 21ms for a 512x512 matrix.
 
