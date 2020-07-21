@@ -22,33 +22,41 @@ We will use Caffe RefineDet network as example in this tutorial. More examples w
 
 In each network packages, float models and quantized models are provided together with training and evaluation scripts. We use Caffe [RefineDet](https://arxiv.org/abs/1711.06897) (No. 12 model in the Model Zoo) to build people detection application.
 
-### Get RefineDet Model Package
-Run `get_network.sh` to download RefineDet network package, which is trained with people subset selected from COCO2014 and optimized to reduce 96% of the computation complexity (GOP).
+RefineDet is an one-stage objection detection network that could achieve better accuracy than two-stage networks before
+publication but still maintains comparable speed performance of one-stage networks.
 
-If no error occurs, your workspace will be like below
+RefineDet can be seen as an improved version of SSD with addition of anchor refinement module (ARM), object detection m
+and transfer connection block (TCB) to improve accuracy. 
+
+The detailed introduction about network itself is beyond the scope of this module, please refer to the original paper. 
+
+### Get RefineDet Model Package
+After the git clone the whole repository, go to the module 5 folder (Vitis-In-Depth-Tutorial/Machine_Learning_Tutorial/Section_3-Basic/Module_5) and run `sh get_network.sh` to download RefineDet network package, which is trained with people subset selected from COCO2014 and optimized to reduce 96% of the computation complexity (GOP).
+
+If no error occurs, your workspace in module 5 folder will be like below
 ```
-Module_5
-|-- README.md
+Module_5/
 |-- cf_refinedet_coco_480_360_0.96_5.08G
-|   |-- code
+|   |-- codeco_480_360_0.96_5.08G
 |   |-- code_bak
 |   |-- data
 |   |-- float
 |   |-- labelmap.prototxt
-|   |-- quantized
+|   |-- quantizedototxt
 |   `-- readme.md
 |-- cf_refinedet_coco_baseline_125G
-|   `-- refinedet_baseline.prototxt
+|   |-- refinedet_baseline.prototxtco_baseline_125G
+|   `-- solver.prototxtaseline.prototxt
 |-- get_network.sh
-|-- network_training.md
+|-- network_training.mdg.md
+|-- README.mdts
 |-- reference_scripts
 |   `-- code
-|-- res_output.jpg
-`-- solver.prototxt
+`-- res_output.jpg
 
 ```
 
-Go to folder `cf_refinedet_coco_480_360_0.96_5.08G` to start real work and feel free to refer to readme.md for detailed information about this model package.
+Go to folder `cf_refinedet_coco_480_360_0.96_5.08G` and follow the steps described below to start the real works.
 
 ```
 cf_refinedet_coco_480_360_0.96_5.08G/
@@ -118,6 +126,8 @@ Detailed modifications are as below
    change GPU ID in line 171 if nessaray, default value is 3
 
 ## Prepare Customized COCO Dataset
+
+COCO is a large-scale object detection, segmentation, and captioning dataset including 330K images (>200K labeled) in 91 object types, which are used widely in ML/AI researches. For detailed information about the dataset, please refer to [COCO official website](https://cocodataset.org/#home).
 
 If you would like to retrain the network, evaluate mAP before directly deploying the network on board, the COCO dataset used by this network needs to be prepared with necessary process.
 
@@ -456,6 +466,6 @@ In this module, we use a Caffe detection network (RefineDet) introduce following
 - how to quantize and compile the model with ready-to-use Vitis AI toolchain inside docker
 - how to deploy the network with Vitis AI library and run on the board
 
-Hope you enjoy it and let's move to next module.
+Hope you enjoy it and let's move to [next module](/Machine_Learning_Tutorial/Section_3-Basic/Module_6/README.md) .
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
