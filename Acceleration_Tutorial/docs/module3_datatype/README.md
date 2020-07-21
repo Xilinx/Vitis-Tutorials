@@ -14,6 +14,14 @@ Did it shorten kernel execution time?
 
 Are resources used less than for modules 1 and 2?
 Is the II any different than before?
+
+
+Resources:
+| Name                 | LUT              | LUTAsMem         | REG               | BRAM           | URAM          | DSP            |
++----------------------+------------------+------------------+-------------------+----------------+---------------+----------------+
+|    cholesky_kernel_1 |   5071 [  0.66%] |    746 [  0.19%] |    5124 [  0.32%] |  258 [ 22.13%] |   0 [  0.00%] |   12 [  0.20%] |
+
+
 ***
 Please proceed to [**module 4**](../module4_dataflow).
 
