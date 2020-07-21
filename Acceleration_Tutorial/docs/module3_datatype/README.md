@@ -18,10 +18,10 @@ Is the II any different than before?
 
 **Kernel Resources Used**:  
 
-| Name                 | LUT           | LUTAsMem   | REG       | BRAM     | URAM   | DSP  |
-|----------------------|---------------|------------|-----------|----------|--------|------|
-| kernel with `double` |  10,190       |    799     |   10,191  |  514     |   0    |  18  |
-| kernel with `float`  |   5,071       |    746     |    5,124  |  258     |   0    |  12  |
+| Name                 | LUT           | LUTAsMem   | REG       | BRAM     |  DSP  |
+|----------------------|--------------:|-----------:|----------:|---------:|------:|
+| kernel with `double` |  10,190       |    799     |   10,191  |  514     |  18   |
+| kernel with `float`  |   5,071       |    746     |    5,124  |  258     |  12   |
 
 
 
