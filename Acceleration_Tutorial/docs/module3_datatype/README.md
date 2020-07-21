@@ -16,12 +16,12 @@ Are resources used less than for modules 1 and 2?
 Is the II any different than before?
 
 
-Resources:  
+**Kernel Resources Used**:  
 
 | Name                 | LUT           | LUTAsMem   | REG       | BRAM     | URAM   | DSP  |
 |----------------------|---------------|------------|-----------|----------|--------|------|
-| kernel with "double" |  10190        |    799     |   10191   |  514     |   0    |  18  |
-| kernel with "float"  |   5071        |    746     |    5124   |  258     |   0    |  12  |
+| kernel with `double` |  10,190       |    799     |   10,191  |  514     |   0    |  18  |
+| kernel with `float`  |   5,071       |    746     |    5,124  |  258     |   0    |  12  |
 
 
 
