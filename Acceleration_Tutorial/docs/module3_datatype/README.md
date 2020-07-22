@@ -16,14 +16,16 @@ Are resources used less than for modules 1 and 2?
 Is the II any different than before?
 
 
-**Kernel Resources Used**:  
+**Kernel Resources Used (regular floating point versus double)**:  
 
 | Name                 | LUT           | LUTAsMem   | REG       | BRAM     |  DSP  |
 |----------------------|--------------:|-----------:|----------:|---------:|------:|
 | kernel with `double` |  10,190       |    799     |   10,191  |  514     |  18   |
 | kernel with `float`  |   5,071       |    746     |    5,124  |  258     |  12   |
 
-
+As expected, the resource utilization comes down all across for both logic and storage
+ - About half for storage as we are storing 32-bit words versus 64-bit for the double data types
+ - The operators also consume less logic hence less DSP blocks
 
 ***
 Please proceed to [**module 4**](../module4_dataflow).
