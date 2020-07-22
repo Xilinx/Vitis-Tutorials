@@ -103,7 +103,7 @@ Same as in module 1:
 
 Actual results comparing the runs for all modules including execution on the CPU<sup>(*)</sup>:
 
-| Module | CPU | Module 1 | Module 2 | Module 3 | Module 4 |
+| Module | CPU | Module 1 | Module 2 | Module 3 | Module 4 (NCU=16) |
 | ------ | --- | -------- | -------- | -------- | -------- |
 | Execution Time (µs) | 21461 | 793950 | 793732 | 536784 | 11698 |
 | Speed Up (CPU reference) | 1 | 0.03x | 0.03x | 0.04x | 1.83x|
