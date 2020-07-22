@@ -496,21 +496,26 @@ cd /mnt
 mkdir package
 ```
 5. Since this is a custom design the Vitis AI library, DNNDK and test images are not installed. We need to install them on board.<br />
-I would suggest you to refer to section "Setting Up the Target" of [Vitis AI library readme file](https://github.com/Xilinx/Vitis-AI/blob/master/Vitis-AI-Library/README.md) to install the Vitis AI library and refer to section "Setup Evaluation Board and run Vitis AI DNNDK samples" of [DNNDK example readme file](https://github.com/Xilinx/Vitis-AI/blob/master/mpsoc/README.md) to install DNNDK and test images.(For the similar reason now I would suggest the master branch not v1.1 tag.) If you feel difficult to do that please follow the steps below:<br />
-   a) Download the Vitis AI Runtime 1.1 package [vitis-ai-runtime-1.1.2.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai-runtime-1.1.2.tar.gz)<br />
-   b) Untar the packet and copy the following files to the board using scp by running the command on host:<br />
+I would suggest you to refer to section "Setting Up the Target" of [Vitis AI library readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/Vitis-AI-Library/README.md) to install the Vitis AI library and refer to section "Setup Evaluation Board and run Vitis AI DNNDK samples" of [DNNDK example readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/mpsoc/README.md) to install DNNDK and test images. If you feel difficult to do that please follow the steps below:<br />
+   a) Download the Vitis AI Runtime 1.1 package [Vitis AI Runtime 1.2.0](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai-runtime-1.2.0.tar.gz)<br />
+   b) Copy the vitis-ai-runtime-1.2.0.tar.gz from host to board with the following command running on host:<br />
    ```
-   scp <path_to_untar'd_runtime_library>/unilog/aarch64/libunilog-1.1.0-Linux-build<xx>.deb root@172.16.75.189:~/package
-   scp <path_to_untar'd_runtime_library>/XIR/aarch64/libxir-1.1.0-Linux-build<xx>.deb root@172.16.75.189:~/package
-   scp <path_to_untar'd_runtime_library>/VART/aarch64/libvart-1.1.0-Linux-build<xx>.deb root@172.16.75.189:~/package
-   scp <path_to_untar'd_runtime_library>/Vitis-AI-Library/aarch64/libvitis_ai_library-1.1.0-Linux-build<xx>.deb root@172.16.75.189:~/package
+   cd <path_to_vitis-ai-runtime-1.2.0.tar.gz>
+   scp vitis-ai-runtime-1.2.0.tar.gz 172.16.75.189:/mnt/package
    ```
-   c) Copy the glog-0.4.0-Linux.tar.gz from host to board with the following command:<br />
-   ***glog-0.4.0-Linux.tar.gz is built before when configure rootfs for Vitis application***<br />
+   c) Untar the packet and install them one by one on target board:<br />
    ```
-   cd <path_to_glog-0.4.0_build_folder>/build_for_petalinux
-   scp glog-0.4.0-Linux.tar.gz 172.16.75.189:/mnt/package
+   cd /mnt/package
+   tar -zxvf vitis-ai-runtime-1.2.0.tar.gz
+   cd ./vitis-ai-runtime-1.2.0/aarch64/centos/
+   rpm -ivh --force libunilog-1.2.0-r10.aarch64.rpm
+   rpm -ivh --force libxir-1.2.0-r12.aarch64.rpm
+   rpm -ivh --force libtarget-factory-1.2.0-r10.aarch64.rpm
+   rpm -ivh --force libvart-1.2.0-r16.aarch64.rpm
+   rpm -ivh --force libvitis_ai_library-1.2.0-r15.aarch64.rpm   
    ```
+
+
    d) Download the package [vitis-ai_v1.1_dnndk.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.1_dnndk.tar.gz) and package [vitis-ai_v1.1_dnndk_sample_img.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.1_dnndk_sample_img.tar.gz), copy them to board:<br />
    ```
    scp vitis-ai_v1.1_dnndk.tar.gz root@172.16.75.189:/mnt/package
