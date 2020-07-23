@@ -16,7 +16,7 @@ Are resources used less than for modules 1 and 2?
 Is the II any different than before?
 
 
-**Kernel Resources Used (regular floating point versus double)**:  
+####Kernel Resources Used (regular floating point versus double)
 
 | Name                 | LUT           | LUTAsMem   | REG       | BRAM     |  DSP  |
 |----------------------|--------------:|-----------:|----------:|---------:|------:|
@@ -27,6 +27,9 @@ As expected, the resource utilization comes down all across for both logic and s
  - About half for storage as we are storing 32-bit words versus 64-bit for the double data types
  - The operators also consume less logic hence less DSP blocks
 
+***
+#### Takeaway for this module...
+Users can ofen get better performance by scaling down the precision of their data.  Xilinx devices can produce dramatically better results once the data types are simplified.
 ***
 Please proceed to [**module 4**](../module4_dataflow).
 
