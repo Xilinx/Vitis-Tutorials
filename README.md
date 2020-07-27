@@ -510,11 +510,11 @@ I would suggest you to refer to section "Setting Up the Target" of [Vitis AI lib
    cd /mnt/package
    tar -zxvf vitis-ai-runtime-1.2.0.tar.gz
    cd ./vitis-ai-runtime-1.2.0/aarch64/centos/
-   rpm -ivh --force libunilog-1.2.0-r10.aarch64.rpm
-   rpm -ivh --force libxir-1.2.0-r12.aarch64.rpm
-   rpm -ivh --force libtarget-factory-1.2.0-r10.aarch64.rpm
-   rpm -ivh --force libvart-1.2.0-r16.aarch64.rpm
-   rpm -ivh --force libvitis_ai_library-1.2.0-r15.aarch64.rpm   
+   rpm -ivh --force --ignoresize libunilog-1.2.0-r10.aarch64.rpm
+   rpm -ivh --force --ignoresize libxir-1.2.0-r12.aarch64.rpm
+   rpm -ivh --force --ignoresize libtarget-factory-1.2.0-r10.aarch64.rpm
+   rpm -ivh --force --ignoresize libvart-1.2.0-r16.aarch64.rpm
+   rpm -ivh --force --ignoresize libvitis_ai_library-1.2.0-r15.aarch64.rpm   
    ```
 
 
