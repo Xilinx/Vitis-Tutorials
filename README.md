@@ -188,6 +188,7 @@ Packages for base XRT support:<br />
 CONFIG_xrt
 CONFIG_xrt-dev
 CONFIG_zocl
+CONFIG_dnf
 CONFIG_opencl-clhpp-dev
 CONFIG_opencl-headers-dev
 CONFIG_packagegroup-petalinux-opencv
