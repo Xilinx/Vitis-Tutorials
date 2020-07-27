@@ -484,7 +484,7 @@ Take my project as example it is:<br />
 10. Right click on the ***hello_dpu*** project folder in Vitis select ***C/C++ Building Settings**.<br />
 11. In ***Propery for Hello_DPU*** dialog box, select ***C/C++ Build->Settings->Tool Settings->GCC Host Linker->Miscellaneous->Other objects***, add a new object: ```"${workspace_loc:/${ProjName}/src/dpu_resnet50_0.elf}"```, click ***Apply and Close***.<br />
 12. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
-***Now you should get an updated hello_dpu.exe with a size of about 20MB(the ConvNet model is involved).***<br />
+***Now you should get an updated hello_dpu with a size of about 20MB(the ConvNet model is involved).***<br />
 
 ## Run Application on Board<br />
 1. Copy all the files from ***sd_card folder*** inside your Vitis application like ***<hello_dpu_application_directory>/Hardware/sd_card/*** to SD card, set ZCU104 to SD boot mode and boot up the board, connect the board with serial port.<br />
@@ -518,43 +518,33 @@ I would suggest you to refer to section "Setting Up the Target" of [Vitis AI lib
    ```
 
 
-   d) Download the package [vitis-ai_v1.1_dnndk.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.1_dnndk.tar.gz) and package [vitis-ai_v1.1_dnndk_sample_img.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.1_dnndk_sample_img.tar.gz), copy them to board:<br />
+   d) Download the package [vitis-ai_v1.2_dnndk.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.2_dnndk.tar.gz) and package [vitis-ai_v1.2_dnndk_sample_img.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.2_dnndk_sample_img.tar.gz), copy them to board:<br />
    ```
-   scp vitis-ai_v1.1_dnndk.tar.gz root@172.16.75.189:/mnt/package
-   scp vitis-ai_v1.1_dnndk_sample_img.tar.gz root@172.16.75.189:/mnt/package
+   scp vitis-ai_v1.2_dnndk.tar.gz root@172.16.75.189:/mnt/package
+   scp vitis-ai_v1.2_dnndk_sample_img.tar.gz root@172.16.75.189:/mnt/package
    ```
-   e) In SSH console go to the ***/mnt/package*** folder and install the packages you have uploaded:<br />
+   e) Install DNNDK package like below:<br />
    ```
-   cd /mnt/package
-   tar -xzvf glog-0.4.0-Linux.tar.gz --strip-components=1 -C /usr
-   dpkg -i --force-all libunilog-1.1.0-Linux-build46.deb
-   dpkg -i libxir-1.1.0-Linux-build46.deb
-   dpkg -i libvart-1.1.0-Linux-build48.deb
-   dpkg -i libvitis_ai_library-1.1.0-Linux-build46.deb
-   ```
-   ***Notice that the first dpkg command we use --force-all option to force install this package and ignore the warning messages. And the build version may be a little different depending on the download time.***<br />
-   f) Install DNNDK package like below:<br />
-   ```
-   cp vitis-ai_v1.1_dnndk.tar.gz ~/
+   cp vitis-ai_v1.2_dnndk.tar.gz ~/
    cd ~/
-   tar -zxvf vitis-ai_v1.1_dnndk.tar.gz
-   cd vitis-ai_v1.1_dnndk
+   tar -zxvf vitis-ai_v1.2_dnndk.tar.gz
+   cd vitis-ai_v1.2_dnndk/
    ./install.sh
    ```
    g) Go back to ***/mnt/package*** folder and untar the dnndk example file:<br />
    ```
    cd /mnt/package
-   tar -zxvf vitis-ai_v1.1_dnndk_sample_img.tar.gz
+   tar -zxvf vitis-ai_v1.2_dnndk_sample_img.tar.gz
    ```
-6. Go to the vitis_ai_dnndk_samples and run the hello_dpu.exe application:<br />
+6. Go to the vitis_ai_dnndk_samples and run the hello_dpu application:<br />
 ```
 cd /mnt/package/vitis_ai_dnndk_samples
 mkdir test
 cd test
-cp /mnt/hello_dpu.exe ./
-./hello_dpu.exe
+cp /mnt/hello_dpu ./
+./hello_dpu
 ```
-***We store the hello_dpu.exe to /mnt/package/vitis_ai_dnndk_samples/test folder to suit the relative path in my code, you can do that according to your code context. The hello_dpu.exe is generated in Vitis application build and was copied to sd card from previous operation.***<br />
+***We store the hello_dpu to /mnt/package/vitis_ai_dnndk_samples/test folder to suit the relative path in my code, you can do that according to your code context. The hello_dpu is generated in Vitis application build and was copied to sd card from previous operation.***<br />
 7. You should see the result like below:<br />
 ![test_result.PNG](/pic_for_readme/test_result.PNG)<br /><br />
 
