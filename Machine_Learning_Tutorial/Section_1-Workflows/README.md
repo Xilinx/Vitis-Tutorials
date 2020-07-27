@@ -22,4 +22,12 @@ There are commonly three types of workflows targeting different persona for Viti
 
 In big teams, engineers are focused in their own development level. In small teams or for independent developers, one person may act as multiple personas. This tutorial will give the introduction from higher level to lower level: starting from evaluation flow to introduce what one can do in Machine Learning with least Xilinx specific knowledge, to more customization of Xilinx technology for more performance optimization and flexibility. Please refer to each chapter introduction whether you're the target reader of this chapter.
 
+This tutorial will guide you from high level to low level in step-by-step manner. 
+
+We'll start from development environment setup in Section 2.
+
+Section 3 Module 1-3 introduces the Vitis-AI demo setup. Module 4 guides you through the CIFAR10 Classification example using Vitis AI and TensorFlow. Module 5 explains how to switch to other networks. All above are on the "Evaluation Flow" level for Data Scientists. Module 6 introduces how to use Vitis Libraries to speed up pre/post processing for machine learning applications. It brings performance optimization in system level. It's a step in "Development Flow".
+
+
+
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
