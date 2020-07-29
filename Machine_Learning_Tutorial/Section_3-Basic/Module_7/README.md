@@ -14,7 +14,7 @@ Some system level functions:
 The directory structure and brief explanations as below:
 
 
-```
+~~~
 .
 ??? app
 ?   ??? build.sh              #compile script
@@ -71,7 +71,7 @@ The directory structure and brief explanations as below:
 ?       ??? test.yuv
 ??? README.md
 
-```
+~~~
 
 ## Platform integrated
 
