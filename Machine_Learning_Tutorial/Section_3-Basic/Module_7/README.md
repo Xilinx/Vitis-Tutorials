@@ -15,61 +15,61 @@ Some system level functions:
 The directory structure and brief explanations as below:
 
 ```
-.
-??? app
-?�� ??? build.sh              #compile script
-?�� ??? include               #headers directory of work pipeline
-?�� ?�� ??? decodethread.hpp  #decode thread
-?�� ?�� ??? dputhread.hpp     #dpu encapsulation thread
-?�� ?�� ??? filter.hpp        #specific model in filter
-?�� ?�� ??? frameinfo.hpp     #important data structure in pipeline
-?�� ?�� ??? guithread.hpp     #display thread using drm
-?�� ?�� ??? mythread.hpp      #thread pool
-?�� ?�� ??? sortthread.hpp    #sorting frame thread
-?�� ??? README.md
-?�� ??? src
-?�� ?�� ??? decodethread.cpp
-?�� ?�� ??? dputhread.cpp
-?�� ?�� ??? guithread.cpp
-?�� ?�� ??? mythread.cpp
-?�� ?�� ??? sortthread.cpp
-?�� ??? test
-?��     ??? usb_input_multi_threads_xcl_refinedet.cpp #main application
-??? kernel
-?�� ??? build
-?�� ?�� ??? dpu_conf.vh
-?�� ?�� ??? Makefile
-?�� ?�� ??? preprocessor_config.ini
-?�� ?�� ??? prj_config_104_2dpu
-?�� ??? flash_sd_card.sh
-?�� ??? src
-?��     ??? pre_processor.cpp
-?��     ??? pre_processor.h
-??? my_V4l2s
-?�� ??? CMakeLists.txt
-?�� ??? include
-?�� ?�� ??? dpdrm.hpp
-?�� ?�� ??? line_exception.hpp
-?�� ?�� ??? V4l2Access.hpp
-?�� ?�� ??? V4l2Capture.hpp
-?�� ?�� ??? V4l2Device.hpp
-?�� ?�� ??? V4l2MmapDevice.hpp
-?�� ?�� ??? V4l2Output.hpp
-?�� ?�� ??? V4l2ReadWriteDevice.hpp
-?�� ?�� ??? xcl2.hpp
-?�� ??? src
-?�� ?�� ??? V4l2Access.cpp
-?�� ?�� ??? V4l2Capture.cpp
-?�� ?�� ??? V4l2Device.cpp
-?�� ?�� ??? V4l2MmapDevice.cpp
-?�� ?�� ??? V4l2Output.cpp
-?�� ?�� ??? V4l2ReadWriteDevice.cpp
-?�� ?�� ??? xcl2.cpp
-?�� ??? test
-?��     ??? build.sh
-?��     ??? test_hls_kernel.cpp
-?��     ??? test.yuv
-??? README.md
+├── app
+│   ├── build.sh                   #compile script             
+│   ├── include                    #headers directory of work pipeline
+│   │   ├── decodethread.hpp       #header file of decode thread
+│   │   ├── dputhread.hpp          #header file of dpu threadd
+│   │   ├── filter.hpp              
+│   │   ├── frameinfo.hpp
+│   │   ├── guithread.hpp
+│   │   ├── mythread.hpp
+│   │   └── sortthread.hpp
+│   ├── README.md
+│   ├── src
+│   │   ├── decodethread.cpp
+│   │   ├── dputhread.cpp
+│   │   ├── guithread.cpp
+│   │   ├── mythread.cpp
+│   │   └── sortthread.cpp
+│   └── test
+│       └── usb_input_multi_threads_xcl_refinedet.cpp
+├── kernel
+│   ├── build
+│   │   ├── dpu_conf.vh
+│   │   ├── Makefile
+│   │   ├── preprocessor_config.ini
+│   │   └── prj_config_104_2dpu
+│   ├── flash_sd_card.sh
+│   └── src
+│       ├── pre_processor.cpp
+│       └── pre_processor.h
+├── my_V4l2s
+│   ├── CMakeLists.txt
+│   ├── include
+│   │   ├── dpdrm.hpp
+│   │   ├── line_exception.hpp
+│   │   ├── V4l2Access.hpp
+│   │   ├── V4l2Capture.hpp
+│   │   ├── V4l2Device.hpp
+│   │   ├── V4l2MmapDevice.hpp
+│   │   ├── V4l2Output.hpp
+│   │   ├── V4l2ReadWriteDevice.hpp
+│   │   └── xcl2.hpp
+│   ├── src
+│   │   ├── V4l2Access.cpp
+│   │   ├── V4l2Capture.cpp
+│   │   ├── V4l2Device.cpp
+│   │   ├── V4l2MmapDevice.cpp
+│   │   ├── V4l2Output.cpp
+│   │   ├── V4l2ReadWriteDevice.cpp
+│   │   └── xcl2.cpp
+│   └── test
+│       ├── build.sh
+│       ├── test_hls_kernel.cpp
+│       └── test.yuv
+└── README.md
+
 ```
 
 ## Platform integrated
