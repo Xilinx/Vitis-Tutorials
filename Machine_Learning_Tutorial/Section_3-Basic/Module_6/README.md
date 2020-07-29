@@ -1,7 +1,7 @@
-# Section_3-Module_6
+# 3.6 Usb Camera Input and Multi-Threads base on Vitis AI Library
 
 ***Note***: You must install the Vitis AI v1.1 package before you compile and run the application.
-This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can refer to [pipeline instruction](app/README.md)
+This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can refer to [pipeline instruction](app/README.md).
 
 Some system level functions:
 - working with DRM on ZynqMP
@@ -10,7 +10,52 @@ Some system level functions:
 - V4L2 initialization and control
     - Streaming video capture from V4L2, such as USB camera.
 
+The directory structure and brief explanations as below:
+```bash
+├── app
+│   ├── build.sh
+│   ├── images
+│   │   ├── in_depth_demo_data_flow.jpg
+│   │   └── Solution_candidate.png
+│   ├── include
+│   │   ├── decodethread.hpp
+│   │   ├── dputhread.hpp
+│   │   ├── filter.hpp
+│   │   ├── frameinfo.hpp
+│   │   ├── guithread.hpp
+│   │   ├── mythread.hpp
+│   │   └── sortthread.hpp
+│   ├── README.md
+│   ├── src
+│   │   ├── decodethread.cpp
+│   │   ├── dputhread.cpp
+│   │   ├── guithread.cpp
+│   │   ├── mythread.cpp
+│   │   └── sortthread.cpp
+│   └── test
+│       └── usb_input_multi_threads_refinedet.cpp 
+├── myV4L2
+│   ├── CMakeLists.txt
+│   ├── include
+│   │   ├── dpdrm.hpp
+│   │   ├── V4l2Access.hpp
+│   │   ├── V4l2Capture.hpp
+│   │   ├── V4l2Device.hpp
+│   │   ├── V4l2MmapDevice.hpp
+│   │   ├── V4l2Output.hpp
+│   │   └── V4l2ReadWriteDevice.hpp
+│   ├── src
+│   │   ├── V4l2Access.cpp
+│   │   ├── V4l2Capture.cpp
+│   │   ├── V4l2Device.cpp
+│   │   ├── V4l2MmapDevice.cpp
+│   │   ├── V4l2Output.cpp
+│   │   └── V4l2ReadWriteDevice.cpp
+│   └── test
+│       └── test.cpp
+└── README.md
 
+```
 ## Program Prerequisites
 This design targets the ZCU104 Vitis platform. You can refer to the [quick start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development environment.
 
