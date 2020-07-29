@@ -1,7 +1,7 @@
 # Acceleration with HLS kernel
 
 **_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
-This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can find a description of the pipeline design of the program in \${app}/README.md
+This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. About how to immigrate from OpenCV to HLS, please refer to [README.md](app/README.md)
 
 Some system level functions:
 
