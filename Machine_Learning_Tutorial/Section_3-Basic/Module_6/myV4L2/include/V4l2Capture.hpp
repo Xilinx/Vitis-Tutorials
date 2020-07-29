@@ -57,10 +57,12 @@ class V4l2Capture : public V4l2Access
         size_t read(char* buffer, size_t bufferSize);
 
 
-        /*
-        *   output the vector of images
-        *
-        */
+        /**
+         * @brief Read images from the device
+         * 
+         * @param readImage and output parameters to store the image data.
+         * @return int 
+         */
        int read_images(std::vector<cv::Mat>& readImage);
 
 

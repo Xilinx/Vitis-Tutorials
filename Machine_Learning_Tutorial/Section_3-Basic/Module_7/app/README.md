@@ -124,11 +124,85 @@ q.enqueueReadBuffer(fullFromDevice, CL_TRUE, 0, full_size, out_buf_1);
 
 q.finish();
 ```
+---
+## How to migrate from OpenCV to HLS kernel.
+The V4l2Capture class contains the method read_images_with_kernel() for color conversion and image resizing, which is implemented in another method read_images() using OpenCV.
 
-You can find the encapsulation of the HLS kernel in xcl2.hpp, named xcl::XilinxOcl, which is used to find cl::device, create cl::kernel, context,cl::kernel, cl::Commandqueue, cl::buffer, etc.
+```c++
+        /**
+         * @brief Using HLS kernel to decode the yuv data and do resize
+         * 
+         * @param readImage output parameters
+         * @return int 
+         */
+        int read_images_with_kernel(std::vector<cv::Mat> &readImage);
 
-In the structure V4l2Capture, use the methods provided by the structure XilinxOcl to do this. Use the HLS kernel in "read_images_with_kernel()" to conduct Pre-processing. Refer to the source code in V4l2Capture.cpp for details.
+                /**
+         * @brief Read images from the device
+         * 
+         * @param readImage and output parameters to store the image data.
+         * @return int 
+         */
+       int read_images(std::vector<cv::Mat>& readImage);
 
+```
+The constructor of class V4l2Capture will using the xclbin to initialized the xocl, the instance of class xcl::XilinxOcl. The detail definition of XilinxOcl you can refer to [xcl2.hpp](../my_V4l2s/include/xcl2.hpp)
 
+```C++
+V4l2Capture::V4l2Capture(V4l2Device *device) : V4l2Access(device)
+{
+    if (std::getenv("DPU_XCLBIN_PATH"))
+    {
+        xocl.initialize(std::getenv("DPU_XCLBIN_PATH"));
+    }
+    else
+    {
+        xocl.initialize("/mnt/dpu.xclbin");
+    }
+}
+Get the command queue and create the buffers 
+```c++
+                q = xocl.get_command_queue();
+                imgToDevice = xocl.create_buffer(rsize, CL_MEM_READ_ONLY);
+                resizeFromDevice = xocl.create_buffer(resize_size, CL_MEM_WRITE_ONLY);
+                fullFromDevice = xocl.create_buffer(full_size, CL_MEM_WRITE_ONLY);
+```
+Set the arguments to kernel, imgToDevice is the buffer to store the input image data get from the USB camera. resizeFromDevice is the buffer to store the resize image data on device side. The fullFromDevice is the buffer to store the full image(1080P) data on device side.
 
+```c++
+
+                krnl = xocl.get_kernel("pre_processor");
+                krnl.setArg(0, imgToDevice);
+                krnl.setArg(1, resizeFromDevice);
+                krnl.setArg(2, fullFromDevice);
+                krnl.setArg(3, IN_WIDTH);
+                krnl.setArg(4, IN_HEIGHT);
+                krnl.setArg(5, OUT_RESIZE_WIDTH);
+                krnl.setArg(6, OUT_RESIZE_HEIGHT);
+                xocl_initialized=true;
+             }
+```
+write the image data which store in (void*) buffer to imgToDevice, then enqueueTask to run the kernel function.
+```c++
+            q.enqueueWriteBuffer(imgToDevice, CL_TRUE, 0, rsize, (void *)buffer);
+
+            q.enqueueTask(krnl, NULL, &event_sp);
+
+            clWaitForEvents(1, (const cl_event *)&event_sp);
+```
+Read the full resize image buffer to out_buf_0 and the full size image buffer to out_buf_1.
+```c++
+            q.enqueueReadBuffer(resizeFromDevice, CL_TRUE, 0, resize_size, out_buf_0);
+            q.enqueueReadBuffer(fullFromDevice, CL_TRUE, 0, full_size, out_buf_1);
+```
+Convert the data into cv::Mat format, and push to the vector container of readImage.
+
+```c++
+            cv::Mat roi_mat0(OUT_RESIZE_HEIGHT, OUT_RESIZE_WIDTH, CV_8UC3, out_buf_0);
+            cv::Mat roi_mat1(OUT_HEIGHT, OUT_WIDTH, CV_8UC3, out_buf_1);
+            readImage.emplace_back(roi_mat1);
+            readImage.emplace_back(roi_mat0);
+            printf("DONE\n");
+
+```
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
