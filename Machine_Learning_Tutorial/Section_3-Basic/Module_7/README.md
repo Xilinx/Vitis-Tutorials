@@ -14,48 +14,48 @@ Some system level functions:
 
 The directory structure and brief explanations as below:
 
-```
+```bash
 ├── app
 │   ├── build.sh                   #compile script             
 │   ├── include                    #headers directory of work pipeline
 │   │   ├── decodethread.hpp       #header file of decode thread
 │   │   ├── dputhread.hpp          #header file of dpu threadd
-│   │   ├── filter.hpp              
-│   │   ├── frameinfo.hpp
-│   │   ├── guithread.hpp
-│   │   ├── mythread.hpp
-│   │   └── sortthread.hpp
-│   ├── README.md
-│   ├── src
+│   │   ├── filter.hpp             #dpu filer header 
+│   │   ├── frameinfo.hpp          #important data structure 
+│   │   ├── guithread.hpp          #display thread headerfile
+│   │   ├── mythread.hpp           #thread pool 
+│   │   └── sortthread.hpp         #sort thread header
+│   ├── README.md                  #instruction of how to migrate from OpenCV to HLS
+│   ├── src                        #implementation of the work threads
 │   │   ├── decodethread.cpp
 │   │   ├── dputhread.cpp
 │   │   ├── guithread.cpp
 │   │   ├── mythread.cpp
 │   │   └── sortthread.cpp
 │   └── test
-│       └── usb_input_multi_threads_xcl_refinedet.cpp
-├── kernel
-│   ├── build
-│   │   ├── dpu_conf.vh
-│   │   ├── Makefile
-│   │   ├── preprocessor_config.ini
-│   │   └── prj_config_104_2dpu
-│   ├── flash_sd_card.sh
-│   └── src
-│       ├── pre_processor.cpp
+│       └── usb_input_multi_threads_xcl_refinedet.cpp #main application
+├── kernel                            #HLS kernel work directory
+│   ├── build                         #directory of config file
+│   │   ├── dpu_conf.vh               #dpu IP config file
+│   │   ├── Makefile                  #The Makefile used to replace the file in ${DPU_TRD}
+│   │   ├── preprocessor_config.ini   #config file of pre_processor
+│   │   └── prj_config_104_2dpu       #Config file required be Makefile for IP integration
+│   ├── flash_sd_card.sh              #Script to generate the OS image
+│   └── src                           #HLS kernel source codes directory
+│       ├── pre_processor.cpp   
 │       └── pre_processor.h
-├── my_V4l2s
-│   ├── CMakeLists.txt
-│   ├── include
-│   │   ├── dpdrm.hpp
-│   │   ├── line_exception.hpp
-│   │   ├── V4l2Access.hpp
-│   │   ├── V4l2Capture.hpp
-│   │   ├── V4l2Device.hpp
-│   │   ├── V4l2MmapDevice.hpp
-│   │   ├── V4l2Output.hpp
-│   │   ├── V4l2ReadWriteDevice.hpp
-│   │   └── xcl2.hpp
+├── my_V4l2s                          # V4l2 libraries work directory to get image data from USB camera
+│   ├── CMakeLists.txt                # cmake file to build libs
+│   ├── include                       
+│   │   ├── dpdrm.hpp                 #Encapsulate drm library
+│   │   ├── line_exception.hpp        #Encapsulate throw error
+│   │   ├── V4l2Access.hpp            #Interface to access the camera device
+│   │   ├── V4l2Capture.hpp           #Methods to get the image
+│   │   ├── V4l2Device.hpp            #Device capablity 
+│   │   ├── V4l2MmapDevice.hpp        #Device type
+│   │   ├── V4l2Output.hpp            #asistant class
+│   │   ├── V4l2ReadWriteDevice.hpp   #Device type
+│   │   └── xcl2.hpp                  #Encapsulate the kernel usage
 │   ├── src
 │   │   ├── V4l2Access.cpp
 │   │   ├── V4l2Capture.cpp
@@ -65,9 +65,9 @@ The directory structure and brief explanations as below:
 │   │   ├── V4l2ReadWriteDevice.cpp
 │   │   └── xcl2.cpp
 │   └── test
-│       ├── build.sh
-│       ├── test_hls_kernel.cpp
-│       └── test.yuv
+│       ├── build.sh                #compile script
+│       ├── test_hls_kernel.cpp     #test case for hls kernel
+│       └── test.yuv                #test data
 └── README.md
 
 ```
