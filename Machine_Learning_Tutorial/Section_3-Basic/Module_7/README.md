@@ -12,7 +12,7 @@ Some system level functions:
     - Streaming video capture from V4L2, such as USB camera.
 
 The directory structure and brief explanations as below:
-```bash
+```
 .
 ??? app
 ?   ??? build.sh              #compile script
