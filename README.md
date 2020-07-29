@@ -180,7 +180,7 @@ A Vitis platform requires software components. For Linux, the PetaLinux tools ar
 ```petalinux-create --type project --template zynqMP --name zcu104_custom_plnx```<br />
 ```cd zcu104_custom_plnx```<br />
 ```petalinux-config --get-hw-description=<you_vivado_design_dir>/xsa_gen/```<br />
-3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu104-rev1.0```.<br />
+3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu104-revc```.<br />
 ***Note: If you are using a Xilinx development board, izcu104_dpu_pkg/DPU-TRD/prj/Vitis/binary_container_1t is recomended to modify the machine name so that the board confiugrations would be involved in the DTS auto-generation. Otherwise you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
 4. Add user packages by appending the CONFIG_x lines below to the <your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig file.<br />
 Packages for base XRT support:<br />
