@@ -51,39 +51,10 @@ void pre_processor(ap_uint<AXI_WIDTH> *image_in, ap_uint<AXI_WIDTH> *image_out,
 ```
 
 ## How to program with kernel pre-processor
-We create a class XilinxOcl to use kernel.
-```c++
-   class XilinxOcl
-    {
-    private:
-        bool is_initialized = false;
-        cl::Device device_0;
-        cl::Context context;
-        cl::Program program;
+For convient use the kernel, The methods of OpenCL are encapsulated in to class XilinxOcl, for the detail you can refer to [xcl2.hpp](../my_V4l2s/include/xcl2.hpp)
 
-     std::vector<cl::Device> find_xilinx_devices();   
-    public:
-        XilinxOcl(){};
-        ~XilinxOcl(){};
-
-        void initialize(std::string xclbin_file_name);
-
-        cl::CommandQueue get_command_queue(bool in_order         = false,
-                                           bool enable_profiling = false);
-        cl::Kernel get_kernel(std::string kernel_name);
-        cl::Buffer create_buffer(size_t size, cl_mem_flags flags);
-        cl::Buffer create_buffer_in_bank(int bank, size_t size, cl_mem_flags flags);
-        cl::Buffer create_sub_buffer(cl::Buffer buf_in,
-                                     size_t origin,
-                                     size_t size,
-                                     cl_mem_flags flags);
-        int get_fd_for_buffer(cl::Buffer buf);
-        cl::Buffer get_buffer_from_fd(int fd);
-        size_t get_buffer_size(cl::Buffer buf);
-    };
-```
-Take [test_hls_kernel.cpp](../test/test_hls_kernel.cpp) as an example.
-The first step is to prepare the input image data, by calling read_file_to_buf, the data buffer will be stored in input_img and the size of the input_img will be stored in yuv_size parameter. Prepare the two output buffer to receive the full size output data and resize output data from the device
+Take [test_hls_kernel.cpp](../my_V4l2s/test/test_hls_kernel.cpp) as an example.
+- The first step is to prepare the input image data, by calling read_file_to_buf, the data buffer will be stored in input_img and the size of the input_img will be stored in yuv_size parameter. Prepare the two output buffer to receive the full size output data and resize output data from the device
 ```c++
     uint8_t *input_img;
     unsigned int resize_size = (OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
@@ -94,7 +65,7 @@ The first step is to prepare the input image data, by calling read_file_to_buf, 
     uint8_t *out_buf_1 = (uint8_t *)malloc(full_size);
 ```
 
-Second, create an instance of XilinxOcl initialize by the "dpu.xclbin" which is generated from IP integration. 
+- Second, create an instance of XilinxOcl initialize by the "dpu.xclbin" which is generated from IP integration. 
 
 ```c++
     xcl::XilinxOcl xocl;
@@ -107,14 +78,14 @@ Second, create an instance of XilinxOcl initialize by the "dpu.xclbin" which is 
         xocl.initialize("/mnt/dpu.xclbin");
     }
 ```
-Thirdly, get the CommandQueue and Kernel from the instance of XilinxOcl.
+- Thirdly, get the CommandQueue and Kernel from the instance of XilinxOcl.
 
 ```c++
     cl::CommandQueue q = xocl.get_command_queue();
     cl::Kernel krnl = xocl.get_kernel("pre_processor");
 
 ```
-Fourth, Create buffers on device side. 
+- Fourth, create buffers on device side. 
 ```c++
 // the input buffer on device side to store input yuv data
     auto imgToDevice = xocl.create_buffer(yuv_size, CL_MEM_READ_ONLY);
@@ -125,7 +96,7 @@ Fourth, Create buffers on device side.
     auto fullFromDevice = xocl.create_buffer(full_size, CL_MEM_WRITE_ONLY);
 ```
 
-The next step is to set args to kernel functions. Please note there are two arguments, the full size output image width and height, have been set the initial values with 1920 and 1080. 
+- The next step is to set args to kernel functions. Please note there are two arguments, the full size output image width and height, have been set the initial values with 1920 and 1080. 
 ```c++
 krnl.setArg(0,  imgToDevice);
 krnl.setArg(1,  resizeFromDevice);
@@ -136,7 +107,7 @@ krnl.setArg(5,  OUT_RESIZE_WIDTH);
 krnl.setArg(6,  OUT_RESIZE_HEIGHT);
 
 ```
-The last step enqueue the task and run it, wait for the task to complete, and the results will be stored in out_buf_0 and out_buf_1.
+- At last, enqueue the task and run it, wait for the task to complete, and the results will be stored in out_buf_0 and out_buf_1.
 ```c++
 
 printf("Enqueue Stage\n");
