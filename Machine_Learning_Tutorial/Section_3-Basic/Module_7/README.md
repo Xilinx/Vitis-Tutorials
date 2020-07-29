@@ -70,7 +70,6 @@ The directory structure and brief explanations as below:
 ?       ??? test_hls_kernel.cpp
 ?       ??? test.yuv
 ??? README.md
-
 ```
 
 ## Platform integrated
