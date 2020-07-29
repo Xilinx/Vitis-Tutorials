@@ -1,7 +1,7 @@
 # Section_3-Module_6
 
 ***Note***: You must install the Vitis AI v1.1 package before you compile and run the application.
-This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can find a description of the pipeline design of the program in ${app}/README.md
+This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can refer to [pipeline instruction](app/README.md)
 
 Some system level functions:
 - working with DRM on ZynqMP
