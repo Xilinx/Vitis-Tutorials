@@ -1,6 +1,7 @@
 3.3 Setting up board environment & Demo run
 -----------------------
-* Before we get our hands on the board, there are some dependencies that need to be prepared in advance. The corresponding script is provided in the Module_3 repository. Copy the prerequisite files and comipled project to the evaluation board.
+Before we get our hands on the board, there are some dependencies that need to be prepared in advance. In the previous module_1, user has downloaded the board environment with DPU hardware integrated. In this module, We need to add some runtime level software dependencies.
+* The corresponding script is provided in the Module_3 repository. Copy the prerequisite files and compiled project to the evaluation board.
     ```
     $cd [DOWNLOAD_PATH]/Board_Dependency
     $./get_dependency_zcu104.sh
@@ -11,7 +12,7 @@
     $ssh root@[IP_OF_THE_BOARD]
     ```
  * Now we can operate on the board through an ethernet connection.
-   * Install the dependencies
+   * Install the Vitis AI related dependencies
    ```
    root@xilinx-zcu104-2019_2:~# cd Board_Dependency
    root@xilinx-zcu104-2019_2:~/Board_Dependency# ./install_dependency_zcu104.sh
