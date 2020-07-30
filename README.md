@@ -288,7 +288,7 @@ petalinux-build --sdk
 15. After the PetaLinux build succeeds, the generated Linux software components are in the ***<your_petalinux_dir>/images/linux directory***. For our example, the ***images/linux*** directory contains the generated image and ELF files listed below. Copy these files to the ***<full_pathname_to_zcu104_dpu_pkg>/pfm/boot*** directory in preparation for running the Vitis platform creation flow:<br />
 ```
     - image.ub
-    - zynqmp_fsbl.elf
+    - fsbl.elf (Rename the petalinux generated zynq_fsbl.elf to fsbl.elf)
     - pmufw.elf
     - bl31.elf
     - u-boot.elf
@@ -300,7 +300,7 @@ petalinux-build --sdk
  the_ROM_image:
  {
  	[fsbl_config] a53_x64
- 	[bootloader] <zynqmp_fsbl.elf>
+ 	[bootloader] <fsbl.elf>
  	[pmufw_image] <pmufw.elf>
  	[destination_device=pl] <bitstream>
  	[destination_cpu=a53-0, exception_level=el-3, trustzone] <bl31.elf>
