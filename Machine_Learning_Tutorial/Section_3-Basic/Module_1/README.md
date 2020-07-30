@@ -2,23 +2,28 @@
 
 ## 3.1 "Hello World" Preparation
 
-In this module, we'll retrieve the pre-built DPU platform, write it into SD card to prepare the running environment.
+The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platform which is dedecated for machine learning applications is provided in this module, user could simply retrieve it and write it into SD card to prepare the running environment.
 
 
 * Prerequisites
 
-  * Terminal emulator (https://osdn.net/projects/ttssh2)
-* Win32 Disk Imager (https://sourceforge.net/projects/win32diskimager)
+  * [Terminal emulator](https://osdn.net/projects/ttssh2)
+* [Etcher](https://etcher.io/)
 
 * Download the pre-built DPU board image from the link below
 
   * [ZCU104](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu104-dpu-v2019.2-v2.img.gz)
 
-* Choose an unpartitioned SD card of size 8GB or greater. Use Win32DiskImager to burn the image file onto the SD card.
-  * Unzip the image file ``xilinx-zcu104-dpu-v2019.2-v2.img.gz`` using windows extractor
-  * Browse to the location of the unzipped image in the Win32 utility
-  * Choose the correct SD card under 'Device'
-  * Select 'Write' to the SD card, click 'Yes' at the prompt to continue writing and wait till the operation is complete
+* Choose an unpartitioned SD card of size 8GB or greater. Use Etcher to burn the image file onto the SD card.
+  * Etcher launches, as shown in the following figure.
+  
+  <p align="left">
+  <img width="720" height="482" src="images/win32.png">
+  </p>  
+  
+  * Browse to the location of the image.You can select a .zip or .gz compressed file.
+  * Etcher tries to detect the SD drive. Verify the drive designation and the image size.
+  * Click 'Flash' and wait till the operation is complete
 
   <p align="left">
   <img width="720" height="482" src="images/win32.png">
