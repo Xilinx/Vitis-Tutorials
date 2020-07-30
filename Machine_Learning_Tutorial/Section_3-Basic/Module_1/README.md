@@ -18,7 +18,7 @@ The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platfo
   * Etcher launches, as shown in the following figure.
   
   <p align="left">
-  <img width="720" height="482" src="images/win32.png">
+  <img width="720" height="482" src="images/etcher1.png">
   </p>  
   
   * Browse to the location of the image.You can select a .zip or .gz compressed file.
@@ -26,7 +26,7 @@ The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platfo
   * Click 'Flash' and wait till the operation is complete
 
   <p align="left">
-  <img width="720" height="482" src="images/win32.png">
+  <img width="720" height="482" src="images/etcher2.png">
   </p>
 
 * Afterwards, please get the ZCU104 board ready with one serial cable and ethernet cable.
