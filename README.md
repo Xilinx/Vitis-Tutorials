@@ -191,6 +191,7 @@ CONFIG_zocl
 CONFIG_dnf
 CONFIG_e2fsprogs-resize2fs
 CONFIG_parted
+CONFIG_mesa-megadriver
 CONFIG_opencl-clhpp-dev
 CONFIG_opencl-headers-dev
 CONFIG_packagegroup-petalinux-opencv
