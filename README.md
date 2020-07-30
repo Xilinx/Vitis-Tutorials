@@ -528,6 +528,7 @@ I would suggest you to refer to section "Setting Up the Target" of [Vitis AI lib
    ```
    e) Install DNNDK package like below:<br />
    ```
+   cd /mnt/package
    cp vitis-ai_v1.2_dnndk.tar.gz ~/
    cd ~/
    tar -zxvf vitis-ai_v1.2_dnndk.tar.gz
