@@ -37,7 +37,7 @@ In the Vitis™ core development flow helps manage, configure, build and run a h
 
 Here is a diagram of the functional blocks involved for application on ARM to control PL kernels
 
-<Diagram to be added>
+![](C:\Users\rickys\Pictures\screenshot\vitis_soc.png)
 
 ## Workflow in this Tutorial
 
