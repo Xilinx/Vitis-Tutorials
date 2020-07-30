@@ -291,6 +291,7 @@ petalinux-build --sdk
     - pmufw.elf
     - bl31.elf
     - u-boot.elf
+    - boot.scr
 ```
 16. Add a BIF file (linux.bif) to the ***<full_pathname_to_zcu104_dpu_pkg>/pfm/boot*** directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the <> symbols.<br />
 ```
