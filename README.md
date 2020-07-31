@@ -1,4 +1,3 @@
-# Still under construction
 ## VAI 1.2 flow is under construction. Need to keep master unmodified for VAI1.1 publish. So create this tmp repository
 
 # Vitis AI Custom Platform Development<br /><br />
