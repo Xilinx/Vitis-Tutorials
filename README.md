@@ -465,7 +465,7 @@ hineon
 
 1. Find HWH file from your Vitis application folder***hello_dpu/Hardware/dpu.build/link/vivado/vpl/prj/prj.srcs/sources_1/bd/system/hw_handoff/system.hwh***<br />
 Or go to your Vitis application folder use command ```find -name *.hwh``` to search for the file.<br />
-2. Create a folder with the name ```Tool-Example``` under the Vitis AI download directory.<br />
+2. Copy the ***ref_files/Tool-Example*** folder provided by this Github repository to your Vitis AI download directory.<br />
 3. Copy this HWH file into ***<Vitis-AI-download_directory>/Tool-Example*** folder.<br />
 4. Go to ***<Vitis-AI-download_directory>*** folder and launch the docker.<br />
 5. Use following command to activate TensorFlow tool conda environment:<br />
@@ -476,15 +476,13 @@ conda activate vitis-ai-tensorflow
 You should get the running log like below:
 ```
 (vitis-ai-tensorflow) wuxian@wuxian-Ubuntu1804:/workspace/Tool-Example$ dlet -f ./system.hwh 
-[DLet]Generate DPU DCF file dpu-03-26-2020-13-30.dcf successfully.
+[DLet]Generate DPU DCF file dpu-06-18-2020-12-00.dcf successfully.
 ```
 The DCF file name should be associated with the time and date you generating this file.<br />
-7. Edit the ***6_tf_compile_for_v2.sh*** file and modify the ***--options*** parameter to add dcf file like below:<br />
-```--options "{'save_kernel':'', 'dcf':'./<generated_dcf_file_name>'}"```<br />
-Take my project as example it is:<br />
-```--options "{'save_kernel':'', 'dcf':'./dpu-03-26-2020-13-30.dcf'}"```<br />
-8. Following the TensorFlow steps at https://github.com/Xilinx/Vitis-AI/blob/v1.1/Tool-Example/README.md to generate the ELF from ResNet model.<br />
-9. Check the generated ELF file from ***tf_resnetv1_50_imagenet_224_224_6.97G/vai_c_output_ZCU104/dpu_resnet50_0.elf***.<br />
+7. Open the ***arch.json*** file and make sure the ***"dcf"*** parameter is set with the name you got on the previous step:<br />
+```"dcf"      : "./dpu-06-18-2020-12-00.dcf",```<br />
+8. Run command```sh download_model.sh``` to download the Xilinx Model Zoo files for resnet-50.<br />
+9. Run command```sh custom_platform_compile.sh```, go to***tf_resnetv1_50_imagenet_224_224_6.97G/vai_c_output_ZCU104/dpu_resnet50_0.elf*** to get the ***dpu_resnet50_0.elf*** file.<br />
 10. Copy that file to the ***src*** folder of Vitis application ***hello_dpu***<br />
 11. Right click on the ***hello_dpu*** project folder in Vitis select ***C/C++ Building Settings**.<br />
 12. In ***Propery for Hello_DPU*** dialog box, select ***C/C++ Build->Settings->Tool Settings->GCC Host Linker->Miscellaneous->Other objects***, add a new object: ```"${workspace_loc:/${ProjName}/src/dpu_resnet50_0.elf}"```, click ***Apply and Close***.<br />
