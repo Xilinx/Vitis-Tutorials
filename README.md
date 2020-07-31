@@ -490,7 +490,7 @@ The DCF file name should be associated with the time and date you generating thi
 ***Now you should get an updated hello_dpu with a size of about 20MB(the ConvNet model is involved).***<br />
 
 ## Run Application on Board<br />
-1. Copy all the files from ***sd_card folder*** inside your Vitis application like ***<hello_dpu_application_directory>/Hardware/sd_card/*** to SD card, set ZCU104 to SD boot mode and boot up the board, connect the board with serial port.<br />
+1. Copy all the files from ***sd_card folder*** inside your Vitis application like ***<hello_dpu_application_directory>/Hardware/sd_card/*** to SD card, copy all the files under ***ref_files/boot_additional_files/*** provided by this Github repository to SD card, set ZCU104 to SD boot mode and boot up the board, connect the board with serial port.<br />
 2. Connect SSH:<br />
    a) Run ```ifconfig``` to get the IP address, here we take ```172.16.75.189``` as example.<br />
    b) Using SSH terminal to connect ZCU104 with SSH: ```ssh -x root@172.16.75.189```, or use MobaXterm in Windows.<br />
