@@ -22,7 +22,7 @@ Leverage integration with high-level frameworks, develop in C, C++, or Python us
 The Vitis In-Depth Tutorials takes users through the design methodology and programming model for deploying accelerated application on all Xilinx platforms.
 
 <p align="center">
-    <img src="https://www.xilinx.com/content/dam/xilinx/imgs/products/vitis/vitis-landing-graphic-boards.png">
+    <img src="./Machine_Learning_Tutorial/Section_1-Workflows/images/vitis-landing-graphic-boards-u50.png">
 </p>
 
 ### [Machine Learning Tutorial](./Machine_Learning_Tutorial)
