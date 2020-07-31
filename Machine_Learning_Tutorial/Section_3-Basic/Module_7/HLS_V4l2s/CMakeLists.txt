@@ -33,24 +33,24 @@ if(Glog_FOUND)
     message(STATUS "    include path: ${Glog_INCLUDE_DIRS}")    
 endif()
 include_directories("include" "/usr/include/CL" "/usr/include/xrt")
-set(MY_SRCS src/V4l2Access.cpp
-            src/V4l2Capture.cpp
-            src/V4l2Device.cpp
-            src/V4l2MmapDevice.cpp    
-            src/V4l2Output.cpp  
-            src/V4l2ReadWriteDevice.cpp
+set(MY_SRCS src/hlsV4l2Access.cpp
+            src/hlsV4l2Capture.cpp
+            src/hlsV4l2Device.cpp
+            src/hlsV4l2MmapDevice.cpp    
+            src/hlsV4l2Output.cpp  
+            src/hlsV4l2ReadWriteDevice.cpp
             src/xcl2.cpp 
 
 
 )
 
-add_library(my_v4l2s SHARED ${MY_SRCS})
-target_link_libraries(my_v4l2s ${OpenCV_LIBS} glog)
-install(TARGETS my_v4l2s
+add_library(hls_v4l2s SHARED ${MY_SRCS})
+target_link_libraries(hls_v4l2s ${OpenCV_LIBS} glog)
+install(TARGETS hls_v4l2s
         LIBRARY 
             DESTINATION /usr/lib
         )
-install(FILES include/V4l2Access.hpp  include/line_exception.hpp include/xcl2.hpp include/V4l2Capture.hpp include/V4l2ReadWriteDevice.hpp include/V4l2Device.hpp include/V4l2MmapDevice.hpp include/V4l2Output.hpp 
+install(FILES include/hlsV4l2Access.hpp  include/line_exception.hpp include/xcl2.hpp include/hlsV4l2Capture.hpp include/hlsV4l2ReadWriteDevice.hpp include/hlsV4l2Device.hpp include/hlsV4l2MmapDevice.hpp include/hlsV4l2Output.hpp 
     DESTINATION /usr/include
 )
 install(FILES include/dpdrm.hpp DESTINATION /usr/include/vitis/ai)

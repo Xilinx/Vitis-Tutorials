@@ -30,10 +30,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 */
-#ifndef V4L2_CAPTURE
-#define V4L2_CAPTURE
+#ifndef HLSV4L2_CAPTURE
+#define HLSV4L2_CAPTURE
 
-#include "V4l2Access.hpp"
+#include "hlsV4l2Access.hpp"
 #include "opencv2/core/core.hpp"
 #include <vector>
 #include "xcl2.hpp"

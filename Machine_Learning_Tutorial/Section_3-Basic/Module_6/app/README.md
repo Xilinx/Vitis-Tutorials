@@ -1,17 +1,20 @@
-## file instructure
-The file directory of this demo is as follows
+# Work Pipeline 
+
+
+## File instructure
+The file directory of this demo is shown as follows
 ```
 .
-├── build.sh
+├── build.sh               #Compile script
 ├── include
-│   ├── decodethread.hpp
-│   ├── dputhread.hpp
-│   ├── dpdrm.hpp
-│   ├── filter.hpp
-│   ├── frameinfo.hpp
-│   ├── guithread.hpp
-│   ├── mythread.hpp
-│   └── sortthread.hpp
+│   ├── decodethread.hpp   #Decode thread header
+│   ├── dputhread.hpp      #DPU thread header
+│   ├── dpdrm.hpp          #Show result with drm library
+│   ├── filter.hpp         #Model filter
+│   ├── frameinfo.hpp      #Important data structure
+│   ├── guithread.hpp      #Display thread
+│   ├── mythread.hpp       #Thread pool
+│   └── sortthread.hpp     #Frame ID sort thread
 ├── README.md
 ├── src
 │   ├── decodethread.cpp
@@ -20,12 +23,14 @@ The file directory of this demo is as follows
 │   ├── mythread.cpp
 │   └── sortthread.cpp
 └── test
-    └── usb_input_multi_threads_refinedet.cpp
+    └── usb_input_multi_threads_refinedet.cpp #Main application
 
 ```
 ## Solution select
-
-
+### 1 Hierachy of APIs
+Xilinx RunTime(XRT) is unified base APIs. Vitis AI RunTime(VART) is built on top of XRT, VART uses XRT to build the 5 unified APIs. The DpuTask APIs are built on top of VART, as apposed to VART, the DpuTask APIs encapsulate not only the DPU runner, but also the algorithm-level pre-processing, such as mean and scale. The highest is the Vitis AI Library APIs, which are base on the DpuTask APIs, with this you don't need to care about the implementation of the Algorithms and can focus on the system-level applications.
+![APIs_Level](images/APIs_Level.png)
+### 2 Program development workload for different APIs 
 ![three solutions](images/Solution_candidate.png)
 
 

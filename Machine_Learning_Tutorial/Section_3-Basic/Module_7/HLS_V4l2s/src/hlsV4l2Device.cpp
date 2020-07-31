@@ -41,7 +41,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 #include <glog/logging.h>
 
-#include "V4l2Device.hpp"
+#include "hlsV4l2Device.hpp"
 
 std::string fourcc(unsigned int format)
 {
