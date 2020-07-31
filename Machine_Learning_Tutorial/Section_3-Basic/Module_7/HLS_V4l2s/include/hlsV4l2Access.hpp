@@ -2,6 +2,7 @@
 
   Some source codes below are copied
 https://github.com/xxradon/libv4l2_opencv_mat
+https://github.com/mpromonet/libv4l2cpp
 
   They are modified.
 
@@ -29,41 +30,41 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 */
-#ifndef V4L2_MMAP_DEVICE
-#define V4L2_MMAP_DEVICE
- 
-#include "V4l2Device.hpp"
+#ifndef V4L2_ACCESS
+#define V4L2_ACCESS
 
-#define V4L2MMAP_NBBUFFER 10
+#include "hlsV4l2Device.hpp"
 
-class V4l2MmapDevice : public V4l2Device
-{	
-	protected:	
-		size_t writeInternal(char* buffer, size_t bufferSize);
-		bool startPartialWrite(void);
-		size_t writePartialInternal(char*, size_t);
-		bool endPartialWrite(void);
-		size_t readInternal(char* buffer, size_t bufferSize);
-			
+class V4l2Access
+{
 	public:
-		V4l2MmapDevice(const V4L2DeviceParameters & params, v4l2_buf_type deviceType);		
-		virtual ~V4l2MmapDevice();
+		enum IoType
+		{
+			IOTYPE_READWRITE,
+			IOTYPE_MMAP
+		};
+		
+		V4l2Access(V4l2Device* device);
+		virtual ~V4l2Access();
+		
+		int getFd()         { return m_device->getFd();         }
+		unsigned int getBufferSize() { return m_device->getBufferSize(); }
+		unsigned int getFormat()     { return m_device->getFormat();     }
+		unsigned int getWidth()      { return m_device->getWidth();      }
+		unsigned int getHeight()     { return m_device->getHeight();     }
+		void queryFormat()  { m_device->queryFormat();          }
 
-		virtual bool init(unsigned int mandatoryiCapabilities);
-		virtual bool isReady() { return  ((m_fd != -1)&& (n_buffers != 0)); }
-		virtual bool start();
-		virtual bool stop();
+		int isReady()       { return m_device->isReady();       }
+		int start()         { return m_device->start();         }
+		int stop()          { return m_device->stop();          }
+
+	private:
+		V4l2Access(const V4l2Access&);
+		V4l2Access & operator=(const V4l2Access&);
 	
 	protected:
-		unsigned int  n_buffers;
-	
-		struct buffer 
-		{
-			void *                  start;
-			size_t                  length;
-		};
-		buffer m_buffer[V4L2MMAP_NBBUFFER];
+		V4l2Device* m_device;		
 };
 
-#endif
 
+#endif

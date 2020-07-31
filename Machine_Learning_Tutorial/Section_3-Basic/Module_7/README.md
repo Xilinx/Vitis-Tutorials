@@ -162,27 +162,11 @@ sudo ./flash_sd_card.sh
 
 ### Board development setting.
 
-- Copy the model file, glog and runtime package to ZCU104 Board.
-
-```
-scp glog-0.4.0-Linux.tar.gz root@IP_OF_BOARD:~/
-tar -xzvf glog-0.4.0-Linux.tar.gz --strip-components=1 -C /usr
-
-tar -xvzf vitis-ai-runtime-1.1.2.tar.gz
-dpkg –i --force-all libunilog-1.1.0-Linux-build<xx>.deb
-dpkg –i libxir-1.1.0-Linux-build<xx>.deb
-dpkg –i libvart-1.1.0-Linux-build<xx>.deb
-
-
-dpkg -i vitis_ai_model_ZCU104_2019.2-r1.1.0.deb
-
-```
-
----
+How to setup the board environment you could refer to [Module_3/README.md](../../Module_3/README.md)
 
 ## Setting up the software build environment
 
-- To set up the software environment, first install the lib and header files associated with my_V4L2. Assume that you have copied Module8 into ZCU104.
+- To set up the software environment, first install the lib and header files associated with hls_my_V4L2. Assume that you have copied Module_7 into ZCU104.
 
 ```
 cd ${Module_7}/myV4L2s/

@@ -33,9 +33,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include <linux/videodev2.h>
 #include <glog/logging.h>
-#include "V4l2Output.hpp"
-#include "V4l2MmapDevice.hpp"
-#include "V4l2ReadWriteDevice.hpp"
+#include "hlsV4l2Output.hpp"
+#include "hlsV4l2MmapDevice.hpp"
+#include "hlsV4l2ReadWriteDevice.hpp"
 
 // -----------------------------------------
 //    create video output interface

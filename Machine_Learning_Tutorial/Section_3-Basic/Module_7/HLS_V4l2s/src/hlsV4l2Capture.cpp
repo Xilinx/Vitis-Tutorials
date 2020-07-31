@@ -31,9 +31,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 #include <linux/videodev2.h>
 #include <glog/logging.h>
-#include "V4l2Capture.hpp"
-#include "V4l2MmapDevice.hpp"
-#include "V4l2ReadWriteDevice.hpp"
+#include "hlsV4l2Capture.hpp"
+#include "hlsV4l2MmapDevice.hpp"
+#include "hlsV4l2ReadWriteDevice.hpp"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
