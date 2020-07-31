@@ -20,7 +20,11 @@ In different stages of project development, you may focus on different flows. Th
 
 ## Vitis-AI Workflow
 
-<To be added>
+Vitis-AI toolsets can take output from TensorFlow, Caffe and PyTorch. 
+
+To evaluate machine learning models on Xilinx devices, data scientists only needs to run through step 1 and step 3  because the hardware in step 2 are prepared for Xilinx demo boards and can be customized further with development flow and customization flow described above.
+
+![](./images/vitis_ai_workflow.png)
 
 ## Vitis Workflow
 
