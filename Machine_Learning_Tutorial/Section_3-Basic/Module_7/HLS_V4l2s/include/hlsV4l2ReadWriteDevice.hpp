@@ -2,7 +2,6 @@
 
   Some source codes below are copied
 https://github.com/xxradon/libv4l2_opencv_mat
-https://github.com/mpromonet/libv4l2cpp
 
   They are modified.
 
@@ -30,11 +29,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 */
-#include "V4l2Access.hpp"
+#ifndef V4L2_RW_DEVICE
+#define V4L2_RW_DEVICE
+ 
+#include "hlsV4l2Device.hpp"
 
-V4l2Access::V4l2Access(V4l2Device* device) : m_device(device) {
-}
 
-V4l2Access::~V4l2Access() { 
-	delete m_device; 
-}
+class V4l2ReadWriteDevice : public V4l2Device
+{	
+	protected:	
+		virtual size_t writeInternal(char* buffer, size_t bufferSize);
+		virtual size_t readInternal(char* buffer, size_t bufferSize);
+		
+	public:
+		V4l2ReadWriteDevice(const V4L2DeviceParameters&  params, v4l2_buf_type deviceType);
+};
+
+
+#endif
+

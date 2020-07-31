@@ -2,8 +2,6 @@
 
   Some source codes below are copied
 https://github.com/xxradon/libv4l2_opencv_mat
-https://github.com/mpromonet/libv4l2cpp
-
   They are modified.
 
 This is free and unencumbered software released into the public domain.
@@ -30,41 +28,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 */
-#ifndef V4L2_ACCESS
-#define V4L2_ACCESS
+#ifndef HLSV4L2_OUTPUT
+#define HLSV4L2_OUTPUT
 
-#include "V4l2Device.hpp"
+#include "hlsV4l2Access.hpp"
 
-class V4l2Access
-{
-	public:
-		enum IoType
-		{
-			IOTYPE_READWRITE,
-			IOTYPE_MMAP
-		};
-		
-		V4l2Access(V4l2Device* device);
-		virtual ~V4l2Access();
-		
-		int getFd()         { return m_device->getFd();         }
-		unsigned int getBufferSize() { return m_device->getBufferSize(); }
-		unsigned int getFormat()     { return m_device->getFormat();     }
-		unsigned int getWidth()      { return m_device->getWidth();      }
-		unsigned int getHeight()     { return m_device->getHeight();     }
-		void queryFormat()  { m_device->queryFormat();          }
-
-		int isReady()       { return m_device->isReady();       }
-		int start()         { return m_device->start();         }
-		int stop()          { return m_device->stop();          }
-
-	private:
-		V4l2Access(const V4l2Access&);
-		V4l2Access & operator=(const V4l2Access&);
-	
+// ---------------------------------
+// V4L2 Output
+// ---------------------------------
+class V4l2Output : public V4l2Access
+{		
 	protected:
-		V4l2Device* m_device;		
+		V4l2Output(V4l2Device* device);
+
+	public:
+		static V4l2Output* create(const V4L2DeviceParameters & param, IoType iotype = V4l2Access::IOTYPE_MMAP);
+		~V4l2Output();
+	
+		size_t write(char* buffer, size_t bufferSize);
+		int    isWritable(timeval* tv);
+		bool   startPartialWrite(void);
+		size_t writePartial(char* buffer, size_t bufferSize);
+		bool   endPartialWrite(void);
 };
 
-
 #endif
+
