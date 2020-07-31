@@ -1,7 +1,6 @@
 # 3.6 Usb Camera Input and Multi-Threads base on Vitis AI Library
 
-***Note***: You must install the Vitis AI v1.1 package before you compile and run the application.
-This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. You can refer to [pipeline instruction](app/README.md).
+***Note***:The programs in Module_6 are compiled and install on Evaluation Board ZCU104. Assumed that you have installed the Vitis AI v1.1 package before you compile and run the application.
 
 Some system level functions:
 - working with DRM on ZynqMP
@@ -101,9 +100,13 @@ irps5401
   ./usb_input_multi_threads_refinedet_drm refinedet_pruned_0_8 0 -t 3
 ```
 - DESCRIPTION
-
+```
     - refinedet_pruned_0_8: The model used;
     - 0                   :  Camera input;
     - -t 3                :  thread number 3;
 
+```
+
+
+Learn More about the work pipeline:[work_pipeline](app/README.md)
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
