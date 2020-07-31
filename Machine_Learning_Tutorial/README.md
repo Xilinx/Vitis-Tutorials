@@ -14,7 +14,7 @@ This tutorial is divided in 3 sections.
 * [**Section 2**](./Section_2-System_Setup) :
   + Vitis software platform setup
   + Vitis-AI setup
-* [**Section 3**](./Section_3-Algorithm_Acceleration) :
+* [**Section 3**](./Section_3-Basic/Module_1) :
   + Deploy a DenseNet inference application on the ZCU104 board
     - Video file input
     - USB camera input
@@ -28,7 +28,7 @@ This tutorial is divided in 3 sections.
     * Update <code>glog</code> package
     * Cross-compile the Vitis-AI examples
   + [**Module 3**](./Section_3-Basic/Module_3)
-    * Update the board image 
+    * Update the board image
     * Run RefineNet demo
   + [**Module 4**](./Section_3-Basic/Module_4)
     * Classification using Vitis-AI and Tensorflow
