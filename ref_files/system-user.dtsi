@@ -14,10 +14,10 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-
 /include/ "system-conf.dtsi"
 / {
 };
+
 &amba {
 	zyxclmm_drm {
 		compatible = "xlnx,zocl";
@@ -33,4 +33,17 @@
 			     <28 4>, <29 4>, <30 4>, <31 4>;
 	};
 };
+
+&axi_intc_0 {
+      xlnx,kind-of-intr = <0x0>;
+      xlnx,num-intr-inputs = <0x20>;
+      interrupt-parent = <&gic>;
+      interrupts = <0 89 4>;
+};
+
+&sdhci1 {
+      no-1-8-v;
+      disable-wp;
+};
+
 
