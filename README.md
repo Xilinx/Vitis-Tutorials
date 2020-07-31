@@ -482,7 +482,7 @@ The DCF file name should be associated with the time and date you generating thi
 7. Open the ***arch.json*** file and make sure the ***"dcf"*** parameter is set with the name you got on the previous step:<br />
 ```"dcf"      : "./dpu-06-18-2020-12-00.dcf",```<br />
 8. Run command```sh download_model.sh``` to download the Xilinx Model Zoo files for resnet-50.<br />
-9. Run command```sh custom_platform_compile.sh```, go to***tf_resnetv1_50_imagenet_224_224_6.97G/vai_c_output_ZCU104/dpu_resnet50_0.elf*** to get the ***dpu_resnet50_0.elf*** file.<br />
+9. Run command```sh custom_platform_compile.sh```, go to ***tf_resnetv1_50_imagenet_224_224_6.97G/vai_c_output_ZCU104/dpu_resnet50_0.elf*** to get the ***dpu_resnet50_0.elf*** file.<br />
 10. Copy that file to the ***src*** folder of Vitis application ***hello_dpu***<br />
 11. Right click on the ***hello_dpu*** project folder in Vitis select ***C/C++ Building Settings**.<br />
 12. In ***Propery for Hello_DPU*** dialog box, select ***C/C++ Build->Settings->Tool Settings->GCC Host Linker->Miscellaneous->Other objects***, add a new object: ```"${workspace_loc:/${ProjName}/src/dpu_resnet50_0.elf}"```, click ***Apply and Close***.<br />
