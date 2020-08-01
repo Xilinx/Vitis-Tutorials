@@ -11,7 +11,7 @@ In order to proceed to the Vitis optimization part of the tutorial, we'll need t
 ## Install Vitis Software Platform
 The [Vitis Unified Software Development Platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. To develop applications, you will need to download and install the Vitis core development kit from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html), Vitis 2020.1 will be used for this tutorial.
 
-**<u>*Note:*</u>** The Vitis core development kit does not need to be installed on the same server as the Alveo Data Center accelerator card. It can be installed on a system without any cards installed if you only need for development flow, but XRT and targat development platform for Alveo card must be installed to work with Vitis.
+**<u>*Note:*</u>** The Vitis core development kit does not need to be installed on the same server as the Alveo Data Center accelerator card. It can be installed on a system without any cards installed if you only need for development flow, but XRT and target development platform for Alveo card must be installed to work with Vitis.
 
 <details>  <summary><b> Alternative Solution </b></summary>
 <p>
