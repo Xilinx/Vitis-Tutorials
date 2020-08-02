@@ -64,5 +64,10 @@ dataflow:
 - Sort Thead: Get the result from the DPU Thread and sort all the result according to FrameID. output the result to GuiThread to display.
 - Gui Thread: displaying the result by using DRM.
 
+## Performance
+
+|Neural Network|Input Size|GOPS|Performance(fps)(Multiple threads)|
+|---|---|---|---|---|
+|refinedet_pruned_0_8|360x480|6.6|114.7|
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
