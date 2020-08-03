@@ -169,7 +169,7 @@ How to setup the board environment you could refer to [Module_3/README.md](../..
 - To set up the software environment, first install the lib and header files associated with hls_my_V4L2. Assume that you have copied Module_7 into ZCU104.
 
 ```
-cd ${Module_7}/myV4L2s/
+cd ${Module_7}/HLS_V4L2s/
 mkdir build
 cd build
 cmake ..
@@ -180,7 +180,7 @@ make install
 - Test the HLS kernel to see if it works properly with the test example. When the test example works, you will notice that two PNG files are generated in your execution directory.
 
 ```
-cd ${Module_8/my_V4l2s/test}
+cd ${Module_7/HLS_V4l2s/test}
 sh build.sh
 ./test_hls_kernel
 ```
@@ -190,7 +190,7 @@ sh build.sh
 - Use the following command to build the application. This "build.sh " script generates two executables, one using ARM for color conversion and resize, and the other using the HLS kernel to speed up color conversion and image resizing.
 
 ```
-cd ${Module_8}/app/
+cd ${Module_7}/app/
 sh build.sh
 
 ```
