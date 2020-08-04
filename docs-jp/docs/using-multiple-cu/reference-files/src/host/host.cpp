@@ -91,26 +91,14 @@ public:
 	unsigned nbytes = (stride*height);
 
 	// Create input buffers for coefficients (host to device)
-	mSrcExt[0].flags = XCL_MEM_DDR_BANK1;
-	mSrcExt[0].param = 0;
-	mSrcExt[0].obj   = coeffs;
-  	mSrcBuf[0] = clCreateBuffer(mContext, CL_MEM_EXT_PTR_XILINX | CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,  (FILTER2D_KERNEL_V_SIZE*FILTER2D_KERNEL_V_SIZE)*sizeof(short), &mSrcExt[0], &mErr);
+  	mSrcBuf[0] = clCreateBuffer(mContext, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,  (FILTER2D_KERNEL_V_SIZE*FILTER2D_KERNEL_V_SIZE)*sizeof(short), coeffs, &mErr);
 
   	// Create input buffer for src (host to device)
-	mSrcExt[1].flags = XCL_MEM_DDR_BANK1;
-	mSrcExt[1].param = 0;
-	mSrcExt[1].obj   = src;
-	mSrcBuf[1] = clCreateBuffer(mContext, CL_MEM_EXT_PTR_XILINX | CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,  nbytes, &mSrcExt[1], &mErr);
+	mSrcBuf[1] = clCreateBuffer(mContext, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,  nbytes, src, &mErr);
 
 	// Create output buffer for dst (device to host)
-	mDstExt[0].flags = XCL_MEM_DDR_BANK1;
-	mDstExt[0].param = 0;
-	mDstExt[0].obj   = dst;
-	mDstBuf[0] = clCreateBuffer(mContext, CL_MEM_EXT_PTR_XILINX | CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, nbytes, &mDstExt[0], &mErr);
+	mDstBuf[0] = clCreateBuffer(mContext,CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, nbytes, dst, &mErr);
   
-	// Schedule the writing of the inputs
-	clEnqueueMigrateMemObjects(mQueue, 1, mSrcBuf, 0, 0, nullptr,  &req->mEvent[0]);	
-
   	// Set the kernel arguments
   	clSetKernelArg(mKernel, 0, sizeof(cl_mem),       &mSrcBuf[0]);
   	clSetKernelArg(mKernel, 1, sizeof(cl_mem),       &mSrcBuf[1]);
@@ -118,6 +106,9 @@ public:
   	clSetKernelArg(mKernel, 3, sizeof(unsigned int), &height);
   	clSetKernelArg(mKernel, 4, sizeof(unsigned int), &stride);
   	clSetKernelArg(mKernel, 5, sizeof(cl_mem),       &mDstBuf[0]);
+
+	// Schedule the writing of the inputs
+	clEnqueueMigrateMemObjects(mQueue, 2, mSrcBuf, 0, 0, nullptr,  &req->mEvent[0]);	
 
 	// Schedule the execution of the kernel
 	clEnqueueTask(mQueue, mKernel, 1,  &req->mEvent[0], &req->mEvent[1]);	
@@ -141,8 +132,6 @@ private:
   cl_kernel         mKernel;
   cl_command_queue  mQueue;	
   cl_context        mContext;  
-  cl_mem_ext_ptr_t  mSrcExt[2];
-  cl_mem_ext_ptr_t  mDstExt[1];
   cl_mem            mSrcBuf[2];
   cl_mem            mDstBuf[1]; 
   cl_int            mErr;
@@ -261,8 +250,8 @@ int main(int argc, char** argv)
 	for(int xx=0; xx<numRuns; xx++) 
 	{
 		// Make independent requests to Blur Y, U and V planes
-		// Requests will run sequentially if there is a single kernel
-		// Requests will run in parallel is there are two or more kernels
+		// Requests will run sequentially if there is a single CU
+		// Requests will run in parallel if there are two or more CUs
 		request[xx*3+0] = Filter(coeff.data(), y_src.data(), width, height, stride, y_dst.data());
 		request[xx*3+1] = Filter(coeff.data(), u_src.data(), width, height, stride, u_dst.data());
 		request[xx*3+2] = Filter(coeff.data(), v_src.data(), width, height, stride, v_dst.data());

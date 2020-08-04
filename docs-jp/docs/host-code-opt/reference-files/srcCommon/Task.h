@@ -17,9 +17,6 @@ class Task {
   unsigned int      m_bufferSize;
   unsigned int      m_processDelay;
 
-  cl_mem_ext_ptr_t  m_inExt;
-  cl_mem_ext_ptr_t  m_outExt;
-  
   cl_event          m_inEv;
   cl_event          m_outEv;
   cl_event          m_doneEv;
@@ -39,13 +36,6 @@ public:
     m_processDelay(processDelay),
     m_hasRun(false)
   {
-    m_inExt.flags  = XCL_MEM_DDR_BANK0;
-    m_inExt.obj    = m_in.data();
-    m_inExt.param  = 0;
-    
-    m_outExt.flags = XCL_MEM_DDR_BANK1;
-    m_outExt.obj   = m_out.data();
-    m_outExt.param = 0;
   }
   Task(const Task &t):
     m_in(t.m_bufferSize, 0),
@@ -54,13 +44,6 @@ public:
     m_processDelay(t.m_processDelay),
     m_hasRun(false)
   {
-    m_inExt.flags  = XCL_MEM_DDR_BANK0;
-    m_inExt.obj    = m_in.data();
-    m_inExt.param  = 0;
-    
-    m_outExt.flags = XCL_MEM_DDR_BANK1;
-    m_outExt.obj   = m_out.data();
-    m_outExt.param = 0;
   }
   ~Task() {
     if(m_hasRun) {
@@ -75,19 +58,22 @@ public:
   void run(ApiHandle &api, cl_event *prevEvent = nullptr) {
     int err;
     m_inBuffer[0] = clCreateBuffer(api.getContext(),
-				   CL_MEM_EXT_PTR_XILINX |
-				     CL_MEM_USE_HOST_PTR |
-				     CL_MEM_READ_ONLY,
+				   CL_MEM_USE_HOST_PTR |
+				   CL_MEM_READ_ONLY,
 				   m_bufferSize*sizeof(ap_int<512>), 
-				   &m_inExt,
+				   m_in.data(),
 				   &err);
     m_outBuffer[0] = clCreateBuffer(api.getContext(),
-				    CL_MEM_EXT_PTR_XILINX |
-				      CL_MEM_USE_HOST_PTR |
-				      CL_MEM_WRITE_ONLY,
+				    CL_MEM_USE_HOST_PTR |
+				    CL_MEM_WRITE_ONLY,
 				    m_bufferSize*sizeof(ap_int<512>), 
-				    &m_outExt,
+				    m_out.data(),
 				    &err);
+    clSetKernelArg(api.getKernel(), 0, sizeof(cl_mem), &m_inBuffer[0]);
+    clSetKernelArg(api.getKernel(), 1, sizeof(cl_mem), &m_outBuffer[0]);
+    clSetKernelArg(api.getKernel(), 2, sizeof(unsigned int), &m_bufferSize);
+    clSetKernelArg(api.getKernel(), 3, sizeof(unsigned int), &m_processDelay);
+
     if(prevEvent != nullptr) {
       clEnqueueMigrateMemObjects(api.getQueue(), 1, &m_inBuffer[0],
 				 0, 1, prevEvent, &m_inEv);

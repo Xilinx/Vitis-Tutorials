@@ -1,247 +1,373 @@
-<p align="right">
-別の言語で表示: <a href="../../../README.md">English</a>          
-</p>
-
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2018.3 SDAccel™ 開発環境チュートリアル</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">ほかのバージョンを参照</a>
-   </td>
+   <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ アプリケーション アクセラレーション開発フローのチュートリアル</h1><a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">SDAccel™ 開発環境 2019.1 チュートリアルを参照</a></td>
  </tr>
  <tr>
- <td align="center"><h3>C カーネルと RTL カーネルの混合</h3>
+ <td align="center"><h1>C カーネルと RTL カーネルの混合</h1>
  </td>
  </tr>
 </table>
 
-## 概要
-SDAccel™ 開発環境は、関数をハードウェアでアクセラレーションするためのプラットフォームを提供します。ホスト ソフトウェア (アプリケーション) は C/C++ で OpenCL™ API 呼び出しを使用して開発しますが、ハードウェア コンポーネント (カーネル) は C/C++、OpenCL C、または RTL を使用して開発できます。  SDAccel 環境アプリケーションでは、異なる言語で開発したカーネルを組み合わせて使用できます。このチュートリアルでは、2 つのカーネルを使用するアプリケーションを示します。ホスト コードは、これらのカーネルに同じようにアクセスします。
-* C++ で開発されたカーネル
-* RTL で開発されたカーネル
+# 概要
 
-### ワークフロー
-このチュートリアルでは、SDAccel ツールを GUI モードで使用して新規プロジェクトを作成し、C++ ベースのカーネルを追加します。その後、C++ ベースのカーネルを FPGA にインプリメンテーションするため、このカーネルを含むバイナリ コンテナー (xclbin) を生成します。そして、デザインのソフトウェア エミュレーションを実行します。生成されたアプリケーション タイムライン レポートを開き、カーネルがホスト アプリケーションから呼び出されて実行されていることを確認します。
+Vitis™ コア開発キットでは、アプリケーション プログラムがホスト アプリケーションとハードウェア アクセラレーションされたカーネル間で分割されます。ホスト アプリケーションは OpenCL™ API 呼び出しを使用して C/C++ で開発されますが、  ハードウェア カーネルは C/C++、OpenCL C、または RTL で開発されます。Vitis コア開発キット アプリケーションでは、異なる言語で開発したカーネルを組み合わせて使用できます。ホスト コードは、カーネルの開発方法には関係ありませんが、同じ関数呼び出しを使用します。
 
-セクション 2 では、RTL Kernel ウィザードを使用して単純な RTL カーネルを作成し、プロジェクトに追加します。C++ カーネルを含むバイナリ コンテナーに RTL ベース カーネルを追加します。ホスト コードを RTL ベース カーネルを使用するよう変更し、ハードウェア エミュレーションを実行します。再びアプリケーション タイムライン レポートを開き、両方のカーネルがホスト アプリケーションから呼び出されて実行されていることを確認します。
+# チュートリアルの概要
 
-## C/C ++ カーネルの使用
-まず SDAccel 環境を起動し、新規プロジェクトを作成してソース ファイルをインポートします。詳細は、『SDAccel 環境ユーザー ガイド』 ([UG1023](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2018.3;d=ug1023-sdaccel-user-guide.pdf)) を参照してください。[C/C++ カーネル入門](./docs/getting-started-c-kernels/README.md)チュートリアルでも、具体的な手順を説明しています。
+このチュートリアルでは、C++ で設計されたカーネルと RTL で設計されたカーネルの 2 つのカーネルを使用するアプリケーションについて説明します。ホスト コードは、これらのカーネルに同じようにアクセスします。
 
-### SDAccel 環境の起動
-1. Linux ターミナルを開き、次のコマンドを入力して SDAccel を GUI モードで起動します。
-```
-$ sdx
-```  
-2. [Eclipse Launcher] ダイアログ ボックスで、`Tutorial` という名前の新しいワークスペースを作成し、**[OK]** をクリックします。ワークショップの場所には、どの場所でも選択できます。
+このチュートリアルは、次の 2 つのセクションに分割されます。
 
-### New SDx Project ウィザードを使用した新規プロジェクトの作成
+- まずは、1 つの C++ ベース カーネルを使用してアプリケーション (ホストおよびカーネル) をビルドし、カーネル関数呼び出しも含めたホスト コードを確認します。
+- 次に、RTL ベースのカーネルをアプリケーションに追加し、  追加カーネルへの関数呼び出しも含め、アップデートしたホスト コードを確認します。
 
-1. [File] → [New] → **[SDx Application Project]** をクリックします。
-2. プロジェクト名を `mixed_c_rtl` に指定します。
-3. **[Next]** をクリックします。
-4. [Platform] ページで、プラットフォームに `xilinx_u200_xdma_201830_1` を選択し、**[Next]** をクリックします。
-5. [Templates] ページで **[Empty Application]** を選択し、**[Finish]** をクリックします。
+どちらの手順でも、アプリケーションは makefile を使用してビルドされます。ソフトウェア エミュレーションは手順 1 で、ハードウェア エミュレーションは手順 2 で実行します。どちらの手順でも、生成されたアプリケーション タイムラインを確認し、カーネルがホスト アプリケーションから呼び出されて実行されることを確認します。
 
-### prj_c_rtl プロジェクトにソース ファイルを追加
+ホスト コードと C++ カーネル コードは提供されます。RTL コードは RTL Kernel ウィザードで生成します。
 
-1. SDAccel の [Project Explorer] ビューで、[Import Sources] (下の図の赤丸で示されているボタン) をクリックします。  
-![Missing Image:ImportSources](images/import_sources_icon.PNG)  
-2. [Browse] をクリックして `mixing-c-rtl-kernels/reference-files` サブディレクトリを開き、[OK] をクリックします。
-3. ディレクトリに含まれるすべてのファイルを選択し、**[Finish]** をクリックします。これにより、`reference-files` ディレクトリからホストおよび C++ カーネルのソース ファイルが `mixing_c_rtl` プロジェクトの `src` ディレクトリにインポートされます。
+# 開始前の注意点
 
-カーネル (`krnl_vadd.cpp`) は 2 つの入力ベクターを追加し、出力を生成します。
-ホスト コード (`host.cpp`) はプラットフォームを設定し、グローバル メモリ バッファーを定義してカーネルに接続します。ホスト コードには、次に説明する 4 つの OpenCL API 呼び出しがあります。これらの呼び出しは、`host.cpp` ファイルに含まれています。
+このチュートリアルでは、次を使用します。
 
-1 つ目は `host.cpp` ファイルの 135 ～ 138 行目のコードで、実行するプログラムを作成します。C++ ベース カーネルのみを含むバイナリ コンテナーを使用します。
+- BASH Linux シェル コマンド
+- 2019.2 Vitis コア開発リリースおよび xilinx\_u200\_xdma\_201830\_2 プラットフォーム。必要であれば、その他のバージョンおよびプラットフォームも使用できます。
 
-```
-cl::Program::Binaries bins;
-bins.push_back({buf,nb});
-devices.resize(1);
-cl::Program program(context, devices, bins);
+> **重要:**
+>
+> * 例を実行する前に、[インストール](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html)に示すように Vitis コア開発キットをインストールしておく必要があります。
+> * ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、『Alveo データセンター アクセラレータ カード入門ガイド』 ([UG1301](https://japan.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=j_ug1301-getting-started-guide-alveo-accelerator-cards.pdf)) で説明されるように、カードとソフトウェア ドライバーを正しくインストールしてください。
+
+サンプルを実行する前に、インストールに示すように Vitis コア開発キットをインストールしておく必要があります。
+
+```bash
+  #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
+  source /opt/Xilinx/Vitis/2019.2/settings64.sh
+  #Setup runtime. XILINX_XRT will be set in this step
+  source /opt/xilinx/xrt/setup.sh
 ```
 
-2 つ目は 142 行目のコードで、プログラムから C++ `krnl_vadd` カーネル オブジェクトを取得し、`krnl_vector_add` という名前を付けます。これにより、ホストがカーネルを使用できるようになります。
+## チュートリアル リファレンス ファイルの入手
+
+1. リファレンス ファイルを入手するには、ターミナルに `git clone https://github.com/Xilinx/Vitis-Tutorials` と入力します。
+2. `mixing-c-rtl-kernels` ディレクトリに移動し、`reference-files` ディレクトリにアクセスします。
+
+# C++ ベースのカーネルを使用したアプリケーションのビルド
+
+この手順では、makefile を使用してホスト コードと C++ カーネルを含むアプリケーションをビルドします。
+
+アプリケーションのビルドに関する概要は、[アプリケーションのビルド](../../docs/Pathway3/BuildingAnApplication.md)を参照してください。
+
+## C++ ベースのカーネル
+
+C ベースのカーネルは 2 つの入力ベクターを追加し、出力を生成します。ソース コードは、次のディレクトリに含まれます。
 
 ```
-cl::Kernel krnl_vector_add(program,"krnl_vadd");
+./reference-files/src/kernel_cpp/
 ```
 
-3 つ目は 162 ～ 165 行目のコードで、`krnl_vector_add` カーネル引数をバッファーに割り当てます。
+makefile はこのカーネルをビルドし、ホスト コードからアクセス可能なハードウェア プラットフォーム (xclbin) に追加します。
+
+## ホスト コード
+
+手順 1 のホスト コード (`host_step1.cpp`) は、次のディレクトリに含まれます。
 
 ```
-krnl_vector_add.setArg(0,buffer_a);
-krnl_vector_add.setArg(1,buffer_b);
-krnl_vector_add.setArg(2,buffer_result);
-krnl_vector_add.setArg(3,DATA_SIZE);
+./reference-files/src/host/
 ```
 
+このホスト コードは、プラットフォームを設定し、グローバル メモリ バッファーを定義してカーネルに接続します。このホスト コードには、次に説明する 4 つの OpenCL API 呼び出しがあります。`host_step1.cpp` ファイルを開いてこれらの呼び出しを表示します。
 
-引数の番号 0、1、2、および 3 は、`krnl_vadd.cpp` に含まれる次の `krnl_vadd` 定義の引数の順序に一致します。
-```
-void krnl_vadd(
+- 1 つ目は 189 ～ 191 行目のコードで、実行するプログラムを作成します。C++ ベース カーネルのみを含むバイナリ コンテナーが使用されます。
+
+  ```
+  cl::Program::Binaries bins;
+  bins.push_back({buf,nb});
+  cl::Program program(context, devices, bins);
+  ```
+
+- 2 つ目は 195 行目のコードで、プログラムから C++ の krnl\_vadd カーネル オブジェクトを取得し、krnl\_vector\_add という名前を付けます。これにより、ホストがカーネルを使用できるようになります。
+
+  ```
+  cl::Kernel krnl_vector_add(program,"krnl_vadd");
+  ```
+
+- 3 つ目は 213 ～ 216 行目のコードで、krnl\_vector\_add カーネル引数をバッファーに割り当てます。
+
+  ```
+  krnl_vector_add.setArg(0,buffer_a);
+  krnl_vector_add.setArg(1,buffer_b);
+  krnl_vector_add.setArg(2,buffer_result);
+  krnl_vector_add.setArg(3,DATA_SIZE);
+  ```
+
+- 引数の番号 0、1、2、3 は、`krnl_vadd.cpp` に含まれる次の `krnl_vadd` 定義引数の順序と同じです。
+
+  > **注記:** 引数 `a` および `b` は入力で、`c` が出力です。
+
+  ```
+  void krnl_vadd(
                 int* a,
                 int* b,
                 int* c,
                 const int n_elements)
-```
-4 つ目は 171 目のコードで、次の OpenCL API により `krnl_vector_add` カーネルが起動します。
+  ```
+
+- 4 つ目は 220 目のコードで、次の OpenCL API により krnl\_vector\_add カーネルが起動します。
+
+  ```
+  q.enqueueTask(krnl_vector_add);
+  ```
+
+ホスト コードのプログラミングの詳細は、[アプリケーションの開発](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html)を参照してください。
+
+## アプリケーションのビルド
+
+1. ソフトウェア エミュレーションをターゲットにするアプリケーションをビルドするには、`./reference-files/run1` ディレクトリから次の makefile を実行します。
+
+   ```bash
+   make all TARGET=sw_emu
+   ```
+
+   これで、ホスト ソフトウェアと、ソフトウェア エミュレーションをターゲットにするハードウェア バイナリの両方がビルドされます。この makefile はエミュレーション中に使用するプラットフォーム JSON エミュレーション ファイルも生成します。
+
+## エミュレーションの実行
+
+エミュレーション中は、ホストおよびデバイス イベントを含むアプリケーション タイムライン データが集められます。これはエミュレーションが終了した後に確認できます。アプリケーション タイムライン データの収集は、エミュレーションを実行する前に、`xrt.ini` ファイルで timeline\_trace=true オプションを設定してイネーブルにしておく必要があります。
 
 ```
-q.enqueueTask(krnl_vector_add);
+[Debug]
+profile=true
+timeline_trace=true
 ```
 
-RTL ベースのコードを追加するときには、そのカーネルに対して同一の読み出しを追加します。
-高位 OpenCL 呼び出しは、カーネルがプログラムされている言語には関係なく同じです。
+このファイルは既に作成されており、`run1` および `run2` ディレクトリに含まれます。
 
->**注記**: ホスト コードのプログラムに関する詳細は、『SDAccel プログラマ ガイド』 ([UG1277](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2018.3;d=ug1277-sdaccel-programmers-guide.pdf)) を参照してください。
+1. デザインでソフトウェア エミュレーションを実行するには、次のコマンドを実行するように XCL\_EMULATION\_MODE 環境変数を設定します。
 
-### C++ カーネルを含むバイナリ コンテナーの作成
+   ```bash
+   export XCL_EMULATION_MODE=sw_emu
+   ```
 
-1. [Project Explorer] ビューで **[project.sdx]** をダブルクリックし、[SDx Application Project Settings] を開きます。  
-![Missing Image:OpenSDxAppPrj](images/mixing-c-rtl-kernels_open_sdx_app_prj_settings.PNG)  
-SDx 環境ですべてのソース ファイルがスキャンされ、プロジェクトにカーネルが含まれることが自動的に検出されます。このチュートリアルでは、検出されるカーネルは 1 つのみです。それを選択して [OK] をクリックします。
-2. [Hardware Function] セクションで稲妻アイコンをクリックします (次の図を参照)。  
-![Missing Image:HW_Functions](images/mixing-c-rtl-kernels_hw_functions.PNG)  
-稲妻アイコンをクリックすると、SDx 環境ですべてのソース ファイルがスキャンされ、プロジェクトにカーネルが含まれることが自動的に検出されます (この場合は検出されるカーネルは 1 つのみ)。
-3. カーネルを選択し、**[OK]** をクリックします。  
-デフォルトの `binary_container_1` という名前のバイナリ コンテナーが作成され、krnl_vadd が含まれます。  
-![Missing Image:BinContainer](images/mixing-c-rtl-kernels_bin_container_with_cpp.PNG)  
+2. `run1` ディレクトリ内からソフトウェア エミュレーションを実行するには、次のコマンドを実行します。
 
-これで、プロジェクトをコンパイル (ビルド) する準備ができました。
+   ```bash
+   ./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
+   ```
 
-### プロジェクトのコンパイル
+   アプリケーションが問題なく終了したら、\[Console] ウィンドウに次のメッセージが表示されます。
 
-1. [SDx Application Project Settings] で、[Active build configuration] に **[Emulation-SW]** が選択されていることを確認します。  
-![Missing Image:SW_EMU](images/mixing-c-rtl-kernels_sw_emulation.PNG)  
-2. ハンマー アイコンをクリックしてコンパイルを開始します。  
-![Missing Image:HammerCompile](images/mixing-c-rtl-kernels_hammer.PNG)  
->**注記**: ソフトウェア エミュレーションを使用して、ホスト コードとカーネルの機能を検証します。ソフトウェア エミュレーションは、ホスト コードとカーネル コードの両方がコンパイルされて、開発マシンの x86 プロセッサで実行されるので、非常に高速です。
-3. エミュレーションを実行するには、[Run] アイコンをクリックします。  
-![Missing Image:RunIcon](images/run_icon.PNG)  
-アプリケーションが正しく完了すると、[Console] ビューに `TEST WITH ONE KERNEL PASSED` というメッセージが表示されます。
+   `TEST WITH ONE KERNEL PASSED`
 
-### アプリケーション タイムラインの確認
+## アプリケーション タイムラインの確認
 
-ソフトウェア エミュレーション中に生成されたアプリケーション タイムライン レポートを確認します。アプリケーション タイムラインは、ホストおよびデバイスのイベントを収集して共通のタイムラインに表示します。ホスト イベントと実行中のカーネルを可視化するのに使用できます。
-1. [Assistant] ビューで、次の図に示すように **[Emulation-SW]** → **[mixed_c_rtl-Default]** を展開します。  
-![Missing Image:Application Timeline 1](images/mixed_c_rtl_default_from_assistant.png)
-2. **[Application Timeline]** をダブルクリックし、プログラムおよびバッファーの作成を含むホスト イベントを表示します。
-3.	**[Device]** → **[Binary Container]** の下に、`Compute Unit krnl_vadd_1` という行があります。  そのタイムラインをたどり、計算ユニット `krnl_vadd_1` が実行されている部分を拡大表示します。  
-![Missing Image:Application Timeline 1](images/mixing-c-rtl-kernels_timeline_one_kernel.PNG)  
-確認したら、[Application Timeline] ビューを閉じます。  
->**注記:** 計算ユニットは、FPGA 上のカーネルのインスタンシエーションです。
+ソフトウェア エミュレーション中に生成されたアプリケーション タイムラインを確認し、ホスト イベントと実行中のカーネルを可視化します。
 
-## RTL カーネルの作成
+1. アプリケーション タイムラインを表示するには、`run1` ディレクトリ内から次のコマンドを実行して、Vitis アナライザーを使用します。
 
-C++ カーネルを追加して実行しました。次に、`prj_c_rtl` プロジェクトに RTL カーネルを追加します。その後、C++ カーネルと RTL カーネルの両方をビルドして実行します。  SDAccel 環境では、カーネルのソースに次の言語がサポートされます。
-* OpenCL
-* C/C++
-* RTL
+   ```
+   vitis_analyzer -open ./timeline_trace.csv
+   ```
 
-カーネルがどのように設計されているかにかかわらず、ホスト コードからカーネルのアクセスには同様の関数呼び出しが使用されます。  
+   **\[Device]** → **\[Binary Container]** の下に、「Compute Unit krnl\_vadd\_1」という行があります
 
-### RTL Kernel ウィザードの使用
+2. そのタイムラインをたどり、計算ユニット krnl\_vadd\_1 を拡大し、`running` と表示されていることを確認します。  
+![Missing Image:Application Timeline 1](images/mixing-c-rtl-kernels_timeline_one_kernel_vitis.PNG)
 
-まず、RTL Kernel ウィザードを使用して、入力ベクターに定数を追加するカーネルを生成します。RTL Kernel ウィザードは、RTL デザインを SDAccel 環境でアクセス可能なコンパイル済みカーネル オブジェクト ファイル (`.xo`) にパッケージするのに必要な手順の一部を自動化します。
+3. 確認したら、\[Application Timeline] ビューを閉じます。
 
-デフォルトでは、このチュートリアルの最初のセクションで使用した C++ カーネルと同様に、ウィザードで単純な Vector Addition カーネルが作成されます。この RTL カーネルを作成してプロジェクトに追加します。  
->**重要**: このチュートリアルで RTL カーネルを作成するため、ここでは詳細を説明せずに手順を示します。RTL Kernel ウィザードについては、[RTL カーネル入門](./docs/getting-started-rtl-kernels/README.md)チュートリアルに詳細に記述されています。また、RTL Kernel ウィザードの完全な詳細は、『SDAccel 環境ユーザー ガイド』 ([UG1023](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2018.3;d=ug1023-sdaccel-user-guide.pdf)) を参照してください。
+   > **注記:** 計算ユニットは、FPGA 上のカーネルのインスタンシエーションです。
 
-### RTL Kernel ウィザードを開く
+### まとめ
 
-1.	[Xilinx] → **[RTL Kernel Wizard]** をクリックします。RTL Kernel ウィザードの Welcome ページが開きます。
-2. **[Next]** をクリックします。
-3. [General Settings] ページで、デフォルト設定のままにして **[Next]** をクリックします。
-4. [Scalars] ページで、スカラー引数の数を `0` に設定し、**[Next]** をクリックします。
-5. [Global Memory] ページで、デフォルト設定のままにして **[Next]** をクリックします。  
-[Summary] ページに、RTL カーネル設定のサマリが示され、呼び出しが C 関数としてどのように見えるかを示す関数プロトタイプが含まれます。
-6. **[OK]** をクリックします。
+手順 1 では、次を実行しました。すべてのコマンドを `./reference-files/run1` ディレクトリで実行しました。
 
+```bash
+   # Build the application
+   make all TARGET=sw_emu
 
-### Vivado プロジェクト
+   # Set XCL_EMULATION_MODE environment variable for software emulation
+   export XCL_EMULATION_MODE=sw_emu
 
-この時点で、Vivado™ Design Suite が開き、生成された RTL コードのプロジェクトが表示されます。RTL Kernel ウィザードで生成および設定された RTL コードは、`A = A + 1` 関数に対応します。  ソース ファイルを開いて確認するか、RTL シミュレーションを実行できます。  このチュートリアルでは、RTL カーネルを生成します。
+   # Run software emulation
+   ./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
 
-1. Flow Navigator で **[Generate Block Design]** をクリックします (次の図を参照)。  
-![Missing Image:Flow Navigator](images/mixing-c-rtl-kernels_flow_navigator.png)  
-2. [Generate RTL Kernel] ダイアログ ボックスで、カーネル パッケージ オプションに **[Sources-only]** を選択します。
-3. (オプション) ソフトウェア エミュレーション ソースとして、SDAccel ツールでのソフトウェア エミュレーションで使用可能な RTL カーネルの C++ モデルを追加できます。C++ モデルは、設計エンジニアがコード記述する必要があります。通常は C++ モデルはなく、デザインのテストにハードウェア エミュレーションが使用されます。  
-RTL Kernel ウィザードでは vadd デザインの C++ モデルが作成されるので、それを追加できます。
-4. [`…`] (参照) ボタンをクリックします。
+   # Create timeline waveform and view in Vitis
+   vitis_analyzer -open ./timeline_trace.csv
+```
+
+# C++ および RTL ベースのカーネルを使用したアプリケーションのビルド
+
+ここまでで、C++ ベースのカーネルを使用してアプリケーションを問題なくビルドして実行したので、次はアプリケーションをアップデートして RTL ベースのカーネルを含めます。
+
+前のセクションと同様、ビルドして、エミュレーションした後、生成したアプリケーション タイムラインを確認します。カーネルがどのように設計されたかに関係なく、カーネルがビルドされた後、ホスト コードは同様の関数呼び出しを使用してカーネルにアクセスします。
+
+## RTL ベースのカーネル
+
+まず、RTL Kernel ウィザードを使用して RTL ベースのカーネルを作成してパッケージします。デフォルトでは、1 ずつ増加するカーネルが作成されます。このチュートリアルでは、このカーネルを使用します。また、ウィザードでは RTL デザインをカーネル オブジェクト ファイル (XO) にパッケージするために必要な手順が自動化されます。
+
+RTL Kernel ウィザードの手順に従うと、詳細な設定をせずにすばやく RTL ベースのカーネルを生成できます。詳細は、[RTL カーネル入門](../../docs/getting-started-rtl-kernels/README.md)の RTL Kernel ウィザードの記述を参照してください。RTL Kernel ウィザードの詳細は、[アプリケーションの開発](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html)を参照してください。
+
+### Vitis プロジェクトの作成
+
+1. コマンド ラインに `vitis` と入力して Vitis IDE を開きます。
+2. ワークスペース ディレクトリに **./mixing-c-rtl-kernels/workspace** を選択し、**\[Launch]** をクリックします。
+3. **\[Create Application Project]** をクリックし、「`rtl_project`」と入力し、**\[Next]** をクリックします。
+4. **xilinx\_u200\_xdma\_201830\_2** プラットフォームを選択して **\[Next]** をクリックします
+5. \[Templates] から **\[Empty Application]** を選択し、**\[Finish]** をクリックします。これで Vitis IDE プロジェクトが作成されます。
+
+次に、Vitis IDE 内から RTL ベースのカーネルを生成します。
+
+1. **\[Xilinx]** → **\[RTL Kernel Wizard]** をクリックします。  
+RTL Kernel ウィザードの Welcome ページが開きます。
+2. **\[Next]** をクリックします。
+3. \[General Settings] ページで、デフォルト設定のままにして **\[Next]** をクリックします。
+4. \[Scalars] ページで、スカラー引数の数を `0` に設定し、**\[Next]** をクリックします。
+5. \[Global Memory] ページで、デフォルト設定のままにして **\[Next]** をクリックします。
+6. \[Streaming Interfaces] ページで、デフォルト設定のままにして **\[Next]** をクリックします。  
+\[Summary] ページに、RTL カーネル設定のサマリが示され、呼び出しが C 関数としてどのように見えるかを示す関数プロトタイプが含まれます。
+7. **\[OK]** をクリックします。
+
+これで RTL カーネル ソース ファイルが作成されました。
+
+### Vivado Design Suite プロジェクト
+
+この段階では、Vivado Design Suite はデフォルトの `A = A + 1` 関数に該当する RTL コードを生成したプロジェクトが自動的に開きます。  ソース ファイルを確認したり、RTL シミュレーションを実行したりできますが、  このチュートリアルでは、デフォルトの RTL カーネルは変更せずに、オブジェクト ファイル (XO) にパッケージします。
+
+1. Flow Navigator で **\[Generate RTL Kernel]** をクリックします。  
+![RTL カーネルの生成](images/mixing-c-rtl-kernels_flow_navigator.png)
+
+2. **\[Generate RTL Kernel]** ダイアログ ボックスで、パッケージ オプションに **\[Sources-only]** を選択します。
+
+3. **\[Software Emulation Sources]** には、ソフトウェア エミュレーションで使用する RTL カーネルの C++ モデルを追加できます。  
+C++ モデルは、設計エンジニアがコード記述する必要があります。通常 C++ モデルはなく、デザインのテストにはハードウェア エミュレーションが使用されます。
+
+   RTL Kernel ウィザードでは vadd デザインの C++ モデルが作成されるので、このファイルを追加する手順も示します。
+
+4. **\[…]** (参照ボタン) をクリックします。
+
 5. `imports` ディレクトリをダブルクリックします。
-6. 唯一含まれる `.cpp` ファイルを選択し、**[OK]** をクリックします。
-7. もう一度 **[OK]** をクリックして RTL カーネルを生成します。
-8. RTL カーネルが生成されたら、**[Yes]** をクリックして Vivado Design Suite を閉じ、SDAccel 環境に戻ります。
 
-## RTL および C++ カーネル のホスト コードへの追加
+6. CPP ファイル (.cpp) のみを選択し、**\[OK]** をクリックします。
 
-SDAccel 環境で、開始した`rtl_c_prj` プロジェクトに戻ります。[Project Explorer] ビューで `src` ディレクトリを展開すると、`sdx_rtl_kernel` の下に RTL カーネルが追加されているのがわかります。
+7. **\[OK]** をクリックして RTL カーネルを生成します。
 
-カーネル ソース ファイルだーには、次の 2 つのファイルが含まれています。
-- `host_example.cpp` (サンプル ホスト コード)
-- `.xo` ファイル (RTL カーネル)  
-![Missing Image:KernelDir](images/mixing-c-rtl-kernels_kernel_dir_structure.PNG)
+8. RTL カーネルが生成されたら、**\[Yes]** をクリックして Vivado Design Suite を閉じ、Vitis IDE に戻ります。
 
-プロジェクトには既にホスト コードが含まれるので、生成された `host_example.cpp` ファイルは削除する必要があります。  これには、`host_example.cpp` ファイルを右クリックして **[Delete]** をクリックします。
+   「**RTL Kernel has been imported**」と表示されます。
 
-### 新規カーネルのバイナリ コンテナーへの追加
+9. **\[OK]** をクリックします。
 
-新しいカーネルをプロジェクトに追加したので、それをバイナリ コンテナーに追加する必要があります。
+10. Vivado IDE を終了します。
 
-1. [SDx Application Project Settings] の [Hardware Functions] エリアで、稲妻アイコンをクリックします。
-2. 作成したカーネルを選択し、**[OK]** をクリックします。  
-これで、RTL カーネルがバイナリ コンテナー (既に C++ カーネルを含む) に追加されます。
-3. ホスト コード (`host.cpp`) をアップデートして、新しいカーネルを組み込みます。
-4. `host.cpp` ファイルを開き、`ADD_RTL_KERNEL` を定義する 49 行目のコメント `//` を削除します。
-  * 変更前:
-  ```
-  //#define ADD_RTL_KERNEL
-  ```
-  * 変更後:
-  ```
-  #define ADD_RTL_KERNEL
-  ```
+ここまでで、RTL カーネルを次のディレクトリの `vitis_kernel_wizard_0.xo` オブジェクト ファイルにパッケージしました。
 
-5. ファイルを保存します。
-
-  アップデートした `host.cpp` ファイルには、次に示すように追加の OpenCL 呼び出しが含まれます。実際の OpenCL 呼び出しは、C++ ベース カーネルに使用されるものと同じで、引数が RTL ベース カーネル用に変更されているだけです。  
-  コードの最初の部分は変更されていませんが、バイナリ コンテナーには C++ カーネルと RTL カーネルが含まれます。
-  ```
-  cl::Program::Binaries bins;
-  bins.push_back({buf,nb});
-  devices.resize(1);
-  cl::Program program(context, devices, bins);
-  ```
-6. プログラムから `sdx_kernel_wizard_0` オブジェクトを取得し、145 行目で名前 `krnl_const_add` を割り当てます。`sdx_kernel_wizard_0` オブジェクト名は、RTL Kernel ウィザードで生成された名前と一致します。
 ```
-cl::Kernel krnl_const_add(program,"sdx_kernel_wizard_0");
+./mixing-c-rtl-kernels/workspace/rtl_project/src/vitis_rtl_kernel/rtl_kernel_wizard_0
 ```
-7. 168 行目で `krnl_const_add` カーネル引数を定義します。  
+
+### ホスト コードのアップデート
+
+RTL ベース カーネルにアクセスするには、ホスト コードをアップデートする必要があります。アップデートは、次のディレクトリの `host_step2.cpp` ファイルで実行しました。
+
+```
+./reference-files/src/host/
+```
+
+アップデートには、次に簡単に示した追加の OpenCL API 呼び出しが含まれます。この追加の OpenCL 呼び出しは、C++ ベース カーネルに使用されるものと同じで、引数が RTL ベース カーネル用に変更されているだけです。
+
+```
+cl::Program::Binaries bins;
+bins.push_back({buf,nb});
+cl::Program program(context, devices, bins);
+```
+
+次のコードでは、プログラムから `rtl_kernel_wizard_0` オブジェクトを取得し、198 行目で「krnl\_const\_add」という名前を割り当てています。`rtl_kernel_wizard_0` オブジェクト名は、RTL Kernel ウィザードで生成された名前と同じです。
+
+```
+cl::Kernel krnl_const_add(program,"rtl_kernel_wizard_0");
+```
+
+次に、219 行目で krnl\_const\_add カーネル引数を定義します。
+
+> **注記:** ホスト コードでは、`buffer_result` バッファーは C カーネルから DDR を介して RTL カーネルに渡され、ホスト メモリには戻されません。
+
 ```
 krnl_const_add.setArg(0,buffer_result);
 ```
->**注記**: ホスト コードでは、`buffer_results` バッファーは C カーネルから DDR を介して RTL カーネルに渡され、ホスト メモリには戻されません。
-8. 173 行目で `krnl_const_add` カーネルを起動します。
+
+222 行目で krnl\_const\_add カーネルを起動します。
+
 ```
-q.enqueueTask(krnl_vector_add);
-```  
-RTL カーネルをバイナリ コンテナーおよびホスト コードに追加したので、プロジェクトを再ビルドし、ハードウェア エミュレーションを実行できます。
+q.enqueueTask(krnl_const_add);
+```
 
-9. [Active build configuration] が **[Emulation-HW]** に設定されていることを確認し、[Run] ボタンをクリックします。これによりコンパイルおよびハードウェア エミュレーションが実行されます。  
-![Missing Image:RunButton](images/mixing-c-rtl-kernels_run_button.PNG)  
-エミュレーションが終了すると、[Console] ビューに `TEST WITH TWO KERNELS PASSED` というメッセージが表示されます。  
-[Application Timeline] レポートを開いて、2 つのカーネルが実行されていることを確認します。
+### C++ および RTL ベースのカーネルを使用したアプリケーションのビルドおよびエミュレーション
 
-10. [Assistant] ビューで、**[Emulation-HW]** およびデフォルト カーネルを展開し、[Application Timeline] をダブルクリックして開きます。  
-6.	**[Device]** → **[Binary Container]** の下のタイムラインをたどり、拡大表示します。計算ユニット `krnl_vadd_1` および `rtl_kernel` が実行されているのがわかります。  
-![Missing Image:Application Timeline 2](images/mixing-c-rtl-kernels_timeline_two_kernels.PNG)
+RTL ベース カーネルを追加し、ホスト コードをアップデートした状態で、`run2` ディレクトリのアップデートした makefile を使用して、ハードウェア エミュレーションをターゲットにしたアプリケーションをビルドします。makefile は、CPP と RTL ベースのカーネルをハードウェア プラットフォーム ファイル (xclbin) の両方を追加するようにアップデートされています。
 
-## まとめ
+1. `./mixing-c-rtl-kernels/reference-files/run2` ディレクトリに移動します。
 
-このチュートリアルでは、SDAccel 環境アプリケーションで C++ カーネルと RTL ベース カーネルを実行し、開発言語の異なるカーネルを組み合わせて使用できることを示しました。ホスト コードからこれらのカーネルにアクセスする方法は同じです。
+2. ハードウェア エミュレーションをターゲットにするアプリケーションをビルドするには、`./reference-files/run2` ディレクトリから次の makefile を実行します。
+
+   ```bash
+   make all TARGET=hw_emu
+   ```
+
+   前と同様、`run2` ディレクトリ内から次のコマンドを実行して、エミュレーションを実行し、アプリケーション タイムラインを生成して確認します。
+
+3. ハードウェア エミュレーションのための XCL\_EMULATION\_MODE 環境変数を設定します。
+
+   ```bash
+   export XCL_EMULATION_MODE=hw_emu
+   ```
+
+4. ハードウェア エミュレーションを実行します。
+
+   ```
+   ./host krnl_vadd.hw_emu.xilinx_u200_xdma_201830_2.xclbin
+   ```
+
+5. Vitis アナライザーでタイムライン トレース レポートを表示します。
+
+   ```
+   vitis_analyzer -open ./timeline_trace.csv
+   ```
+
+6. **\[Device]** → **\[Binary Container]** の下のタイムラインをたどり、拡大表示します。krnl\_vadd\_1 および sdx\_kernel\_wizard\_0\_1 の両方の計算ユニットが実行されていることが示されます。  
+![アプリケーション タイムライン 2](images/mixing-c-rtl-kernels_timeline_two_kernels_vitis.PNG)
+
+7. 確認したら、\[Application Timeline] を閉じます。
+
+Vitis コア開発キット アプリケーションは、開発した言語に関係なく、どの組み合わせのカーネルでも使用できます。
+
+CPP エミュレーション ファイルが RTL カーネルと一緒にパッケージされたので (RTL Kernel ウィザードを使用して)、ソフトウェア エミュレーションも実行できます。  ソフトウェア エミュレーションは、次の手順で実行できます。
+
+```bash
+   # Build the application
+   make all TARGET=sw_emu
+
+   # Set XCL_EMULATION_MODE environment variable for software emulation
+   export XCL_EMULATION_MODE=sw_emu
+
+   # Run software emulation
+   ./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
+
+   # Create timeline waveform and view in Vitis
+   vitis_analyzer -open ./timeline_trace.csv
+```
+
+## 次のステップ
+
+- アプリケーションをビルドし、エミュレーションを実行し、プロファイルおよびトレース レポートを生成する方法を理解するため、[アクセラレーションされたアプリケーションをビルドして実行するための基本的な概念](../../docs/Pathway3/README.md)チュートリアルを参照してください。
+
+- RTL Kernel ウィザードの詳細は、次を参照してください。
+
+  - [RTL カーネル入門](../../docs/getting-started-rtl-kernels/README.md)チュートリアル
+  - [アプリケーションの開発](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html)の[RTL Kernel ウィザード](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk851038901.html#ouz1504034324041)セクション</br>
 
 <hr/>
-<p align="center"><sup>Copyright&copy; 2018 Xilinx</sup></p>
+<p align= center><b><a href="../../README.md">メイン ページに戻る</a></b></p>
+<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
 
 この資料は表記のバージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。
+

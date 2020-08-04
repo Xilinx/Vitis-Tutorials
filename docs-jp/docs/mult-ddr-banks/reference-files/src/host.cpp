@@ -1,5 +1,5 @@
 /**********
-Copyright (c) 2018, Xilinx, Inc.
+Copyright (c) 2019, Xilinx, Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -27,12 +27,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **********/
 
-#include "xcl2.hpp"
-#include <vector>
-#define DATA_SIZE 4096
-
-// #define USE_MULT_DDR_BANKs
-// Note: set XOCC options for Link: --sp vadd_1.in1:DDR[0] --sp vadd_1.in2:DDR[1] --sp vadd_1.out:DDR[2]
+#include "host.hpp"
 
 int main(int argc, char** argv)
 {
@@ -58,84 +53,74 @@ int main(int argc, char** argv)
     }
 
 // OPENCL HOST CODE AREA START
-    // get_xil_devices() is a utility API which will find the xilinx
-    // platforms and will return list of devices connected to Xilinx platform
-    std::vector<cl::Device> devices = xcl::get_xil_devices();
+
+    std::vector<cl::Device> devices = get_devices();
     cl::Device device = devices[0];
+    std::string device_name = device.getInfo<CL_DEVICE_NAME>();
+    std::cout << "Found Device=" << device_name.c_str() << std::endl;
 
-    OCL_CHECK(err, cl::Context context(device, NULL, NULL, NULL, &err));
-    OCL_CHECK(err, cl::CommandQueue q(context, device, CL_QUEUE_PROFILING_ENABLE, &err));
-    OCL_CHECK(err, std::string device_name = device.getInfo<CL_DEVICE_NAME>(&err)); 
+    //Creating Context and Command Queue for selected device
+    cl::Context context(device);
+    cl::CommandQueue q(context, device);
 
-    // find_binary_file() is a utility API which will search the xclbin file for
-    // targeted mode (sw_emu/hw_emu/hw) and for targeted platforms.
-    std::string binaryFile = xcl::find_binary_file(device_name,"vadd");
+    // Import XCLBIN
+    xclbin_file_name = argv[1];
+    cl::Program::Binaries vadd_bins = import_binary_file();
 
-    // import_binary_file() ia a utility API which will load the binaryFile
-    // and will return Binaries.
-    cl::Program::Binaries bins = xcl::import_binary_file(binaryFile);
+    // Program and Kernel
     devices.resize(1);
-    OCL_CHECK(err, cl::Program program(context, devices, bins, NULL, &err));
-    OCL_CHECK(err, cl::Kernel krnl_vector_add(program,"vadd", &err));
+    cl::Program program(context, devices, vadd_bins);
+    cl::Kernel krnl_vector_add(program, "vadd");
 
 	// ------------------------------------------------------------------
 	// Create Buffers in Global Memory to store data
-	//             GlobMem_BUF_in1 - stores in1
-	// ------------------------------------------------------------------
-#ifndef USE_MULT_DDR_BANKs
-#else
-	cl_mem_ext_ptr_t  GlobMem_BUF_in1_Ext;
-    GlobMem_BUF_in1_Ext.param = krnl_vector_add.get();
-    GlobMem_BUF_in1_Ext.flags = 0; // 0th Argument
-	GlobMem_BUF_in1_Ext.obj   = source_in1.data();
-
-	cl_mem_ext_ptr_t  GlobMem_BUF_in2_Ext;
-    GlobMem_BUF_in2_Ext.param = krnl_vector_add.get();
-    GlobMem_BUF_in2_Ext.flags = 1; // 1st Argument
-	GlobMem_BUF_in2_Ext.obj   = source_in2.data();
-
-	cl_mem_ext_ptr_t  GlobMem_BUF_output_Ext;
-    GlobMem_BUF_output_Ext.param = krnl_vector_add.get();
-    GlobMem_BUF_output_Ext.flags = 2; // 2nd Argument
-	GlobMem_BUF_output_Ext.obj   = source_hw_results.data();
-#endif
-
-    // Allocate Buffer in Global Memory
-    // Buffers are allocated using CL_MEM_USE_HOST_PTR for efficient memory and 
-    // Device-to-host communication
-#ifndef USE_MULT_DDR_BANKs
+	//             o) buffer_in1 - stores source_in1
+	//             o) buffer_in2 - stores source_in2
+	//             o) buffer_ouput - stores Results
+	// ------------------------------------------------------------------	
+	
+	// Allocate Global Memory for source_in1
     OCL_CHECK(err, cl::Buffer buffer_in1   (context,CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, 
             vector_size_bytes, source_in1.data(), &err));
+	// Allocate Global Memory for source_in2
     OCL_CHECK(err, cl::Buffer buffer_in2   (context,CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, 
             vector_size_bytes, source_in2.data(), &err));
+
+	// Allocate Global Memory for sourcce_hw_results
     OCL_CHECK(err, cl::Buffer buffer_output(context,CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, 
             vector_size_bytes, source_hw_results.data(), &err));
-#else
-    OCL_CHECK(err, cl::Buffer buffer_in1   (context,CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY | CL_MEM_EXT_PTR_XILINX, 
-            vector_size_bytes, &GlobMem_BUF_in1_Ext, &err));
-    OCL_CHECK(err, cl::Buffer buffer_in2   (context,CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY | CL_MEM_EXT_PTR_XILINX, 
-            vector_size_bytes, &GlobMem_BUF_in2_Ext, &err));
-    OCL_CHECK(err, cl::Buffer buffer_output(context,CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY | CL_MEM_EXT_PTR_XILINX, 
-            vector_size_bytes, &GlobMem_BUF_output_Ext, &err));
-#endif
 
-    // Copy input data to device global memory
-    OCL_CHECK(err, err = q.enqueueMigrateMemObjects({buffer_in1, buffer_in2},0/* 0 means from host*/));
-
+	// ------------------------------------------------------------------
+	// Set Kernel Arguments and Run the Application
+	//         o) Set Kernel Arguments
+	// 		----------------------------------------------------
+	// 		 Kernel	Argument Nb    Description
+	// 		----------------------------------------------------
+	//		in1   (input)     --> Input Vector1
+    	//		in2   (input)     --> Input Vector2
+    	//		out   (output)    --> Output Vector
+    	//		size  (input)     --> Size of Vector in Integer
+	//         o) Copy Input Data from Host to Global Memory on the device
+	//         o) Submit Kernels for Execution
+	//         o) Copy Results from Global Memory, device to Host
+	// ------------------------------------------------------------------
+	
     int size = DATA_SIZE;
     OCL_CHECK(err, err = krnl_vector_add.setArg(0, buffer_in1));
     OCL_CHECK(err, err = krnl_vector_add.setArg(1, buffer_in2));
     OCL_CHECK(err, err = krnl_vector_add.setArg(2, buffer_output));
     OCL_CHECK(err, err = krnl_vector_add.setArg(3, size));
 
+    // Copy input data to device global memory
+    OCL_CHECK(err, err = q.enqueueMigrateMemObjects({buffer_in1, buffer_in2},0/* 0 means from host*/));
+
     // Launch the Kernel
-    // For HLS kernels global and local size is always (1,1,1). So, it is recommended
-    // to always use enqueueTask() for invoking HLS kernel
     OCL_CHECK(err, err = q.enqueueTask(krnl_vector_add));
 
     // Copy Result from Device Global Memory to Host Local Memory
     OCL_CHECK(err, err = q.enqueueMigrateMemObjects({buffer_output},CL_MIGRATE_MEM_OBJECT_HOST));
     q.finish();
+
 // OPENCL HOST CODE AREA END
 
     // Compare the results of the Device to the simulation

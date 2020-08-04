@@ -10,28 +10,25 @@ include $(COMMON_REPO)/utils.mk
 SIZE    := 14
 TARGETS := hw
 TARGET  := $(TARGETS)
-DEVICES := xilinx_vcu1525_dynamic
+DEVICES := xilinx_u200_xdma_201830_2
 DEVICE  := $(DEVICES)
 XCLBIN  := ./xclbin
 DSA := $(call device2sandsa, $(DEVICE))
 
-CXX  := $(XILINX_SDX)/bin/xcpp
-XOCC := $(XILINX_SDX)/bin/xocc
-
-CXXFLAGS := $(opencl_CXXFLAGS) -Wall -O0 -g -std=c++14
-LDFLAGS  := $(opencl_LDFLAGS)
+CXX  := g++
+VPP := $(XILINX_VITIS)/bin/v++
 
 HOST_SRCS = src/host.cpp
 
 # Host compiler global settings
-CXXFLAGS = -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include/ -IsrcCommon/ -O0 -g -Wall -fmessage-length=0 -std=c++14
-LDFLAGS = -lOpenCL -lpthread -lrt -lstdc++ -L$(XILINX_SDX)/runtime/lib/x86_64
+CXXFLAGS = -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include/ -IsrcCommon/ -O0 -g -Wall -fmessage-length=0 -std=c++11
+LDFLAGS = -lOpenCL -lpthread -lrt -lstdc++ -L$(XILINX_VITIS)/runtime/lib/x86_64
 
 # Kernel compiler global settings
-CLFLAGS = -t $(TARGET) --platform $(DEVICE) --save-temps 
+CLFLAGS = -t $(TARGET) --platform $(DEVICE) --save-temps
 
 # Kernel linker flags
-LDCLFLAGS =   --sp pass_1.m_axi_p0:bank0 --sp pass_1.m_axi_p1:bank1 
+LDCLFLAGS = --config design.cfg
 
 EXECUTABLE = pass
 
@@ -42,22 +39,20 @@ BINARY_CONTAINER_pass_OBJS += $(XCLBIN)/pass.$(TARGET).$(DSA).xo
 
 # Select Host code source based on target
 .PHONY: pipeline
-pipeline: HOST_SRCS= srcPipeline/host.cpp 
+pipeline: HOST_SRCS= srcPipeline/host.cpp
 pipeline: BUILDDIR = runPipeline
 pipeline: cleanExeBuildDir
 pipeline: $(BUILDDIR)/$(EXECUTABLE)
 
 .PHONY: runPipeline
 pipelineRun:
-	cp auxFiles/sdaccel.ini runPipeline
-	cd runPipeline; \
-	./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin 
-	cd runPipeline; \
-	sdx_analyze profile -i sdaccel_profile_summary.csv -f html
-	cd runPipeline; \
-	sdx_analyze trace sdaccel_timeline_trace.csv -f wdb
-	sdx -workspace workspace -report runPipeline/*.wdb
-# sdx -workspace workspace -rundir runPipline
+	cp auxFiles/xrt.ini runPipeline
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+	cd runPipeline; XCL_EMULATION_MODE=${TARGET} ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
+else
+	cd runPipeline; ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
+endif
+	vitis_analyzer -open runPipeline/timeline_trace.csv
 
 # Select Host code source based on target
 .PHONY: sync
@@ -68,15 +63,13 @@ sync:   $(BUILDDIR)/$(EXECUTABLE)
 
 .PHONY: runSync
 syncRun:
-	cp auxFiles/sdaccel.ini runSync
-	cd runSync; \
-	./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin 
-	cd runSync; \
-	sdx_analyze profile -i sdaccel_profile_summary.csv -f html
-	cd runSync; \
-	sdx_analyze trace sdaccel_timeline_trace.csv -f wdb
-	sdx -workspace workspace -report runSync/*.wdb
-# sdx -workspace workspace -rundir runPipline
+	cp auxFiles/xrt.ini runSync
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+	cd runSync; XCL_EMULATION_MODE=${TARGET} ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
+else
+	cd runSync; ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
+endif
+	vitis_analyzer -open runSync/timeline_trace.csv
 
 # Select Host code source based on target
 .PHONY: buf
@@ -87,22 +80,21 @@ buf:   $(BUILDDIR)/$(EXECUTABLE)
 
 .PHONY: runBuf
 bufRun:
-	cp auxFiles/sdaccel.ini runBuf
-	cd runBuf; \
-	./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin $(SIZE)
+	cp auxFiles/xrt.ini runBuf
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+	cd runBuf; XCL_EMULATION_MODE=${TARGET} ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin $(SIZE)
+else
+	cd runBuf; ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin $(SIZE)
+endif
 
 # add code to check for gnuplot and if it exists try to pot otherwise just
 # list data
 bufRunSweep:
-	cp auxFiles/sdaccel.ini runBuf
+	cp auxFiles/xrt.ini runBuf
 	cp auxFiles/run.py runBuf
-	cd runBuf; \
-	./run.py
+	cd runBuf; ./run.py $(DSA)
 	more runBuf/results.csv
 	if hash gnuplot 2>/dev/null; then gnuplot -p -c auxFiles/plot.txt; fi;
-
-#Include Libraries
-include $(COMMON_REPO)/opencl.mk
 
 
 CP = cp -rf
@@ -119,13 +111,13 @@ kernel: $(BINARY_CONTAINERS)
 # Building kernel
 $(XCLBIN)/pass.$(TARGET).$(DSA).xo: ./srcKernel/pass.cpp
 	mkdir -p $(XCLBIN)
-	$(XOCC) $(CLFLAGS) -c -k pass -I'$(<D)' -o'$@' '$<'
+	$(VPP) $(CLFLAGS) -c -k pass -I'$(<D)' -o'$@' '$<'
 
 $(XCLBIN)/pass.$(TARGET).$(DSA).xclbin: $(BINARY_CONTAINER_pass_OBJS)
-	$(XOCC) $(CLFLAGS) -l $(LDCLFLAGS) --nk pass:1 -o'$@' $(+)
+	$(VPP) $(CLFLAGS) -l $(LDCLFLAGS) -o'$@' $(+)
 
 # Building Host
-$(BUILDDIR)/$(EXECUTABLE): 
+$(BUILDDIR)/$(EXECUTABLE):
 	mkdir -p $(BUILDDIR)
 	$(CXX) $(CXXFLAGS) $(HOST_SRCS) $(HOST_HDRS) -o '$(BUILDDIR)/$(EXECUTABLE)' $(LDFLAGS)
 
@@ -141,7 +133,7 @@ cleanExeBuildDir:
 clean:
 	-$(RMDIR) $(XCLBIN)/{*sw_emu*,*hw_emu*}
 	-$(RMDIR) workspace runBuf runSync runPipeline
-	-$(RMDIR) $(XCLBIN)/*.xo $(XCLBIN)/*.ltx 
+	-$(RMDIR) $(XCLBIN)/*.xo $(XCLBIN)/*.ltx
 
 cleanall: clean
 	-$(RMDIR) $(XCLBIN)
@@ -166,4 +158,3 @@ help::
 	$(ECHO) "  make cleanall"
 	$(ECHO) "      Command to remove all the generated files."
 	$(ECHO) ""
-

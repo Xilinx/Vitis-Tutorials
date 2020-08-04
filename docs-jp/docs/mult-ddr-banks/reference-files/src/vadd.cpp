@@ -1,5 +1,5 @@
 /**********
-Copyright (c) 2018, Xilinx, Inc.
+Copyright (c) 2019, Xilinx, Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -98,7 +98,6 @@ void vadd(
 	// PIPELINE pragma reduces the initiation interval for loop by allowing the
 	// concurrent executions of operations
         vadd: for (int j = 0 ; j < chunk_size; j ++){
-            #pragma HLS PIPELINE
             //perform vector addition
             vout_buffer[j] = v1_buffer[j] + v2_buffer[j]; 
         }

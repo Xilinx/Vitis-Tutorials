@@ -1,160 +1,206 @@
-<p align="right">
-別の言語で表示: <a href="../../../README.md">English</a>          
-</p>
-
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2018.3 SDAccel™ 開発環境チュートリアル</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">ほかのバージョンを参照</a>
-   </td>
+   <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ アプリケーション アクセラレーション開発フローのチュートリアル</h1><a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">SDAccel™ 開発環境 2019.1 チュートリアルを参照</a></td>
  </tr>
  <tr>
- <td align="center"><h3>複数の計算ユニットの使用</h3>
+ <td align="center"><h1>複数の計算ユニットの使用</h1>
  </td>
  </tr>
 </table>
 
-## 概要
+# 概要
 
-このチュートリアルでは、FPGA 上のカーネル インスタンスの数を増やすための柔軟なカーネル リンク プロセスを示します。カーネルの各インスタンスは、計算ユニット (CU) とも呼ばれます。このプロセスを使用すると、統合されたホスト/カーネル システムの並列処理が向上します。
+このチュートリアルでは、FPGA 上のカーネル インスタンスの数を増やすための柔軟なカーネル リンク プロセスを示します。カーネルの各インスタンスは、計算ユニット (CU) とも呼ばれます。CU 数を増加するこのプロセスを使用すると、統合されたホスト/カーネル システムの並列処理が向上します。
 
-## 背景
+# チュートリアルの概要
 
-SDAccel™ ツールでは、デフォルトではカーネルごとに 1 つのハードウェア インスタンス (計算ユニット) が作成されます。ホスト プログラムは、異なるデータ セットに対して同じカーネルを複数回使用できます。この場合、カーネルに対して複数の計算ユニットを生成して、これらの計算ユニットを同時実行すると、システム全体のパフォーマンスを向上できます。  
+デフォルトでは、Vitis™ コア開発キットはカーネルごとに CU を 1 つ作成します。ホスト プログラムは、異なるデータ セットに対して同じカーネルを複数回使用できます。この場合、カーネルに対して複数の CU を生成して、これらの CU を同時実行すると、システム全体のパフォーマンスを向上できます。
 
-詳細は、『SDAccel プログラマ ガイド』 ([UG1277](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2018.3;d=ug1277-sdaccel-programmers-guide.pdf)) を参照してください。
-
-<!-- We should provide some prerequisites for this tutorial, as well as some directions for accessing the lab materials either through cloning the repository or downloading a zip file from xilinx.com.-->
-
-## チュートリアル例の説明
-
-このチュートリアルでは、画像フィルター例を使用して複数の計算ユニットの機能を示します。ホスト アプリケーションは、画像を処理して Y、U、および V プレーンを抽出し、カーネルを 3 回実行して画像の各プレーンをフィルター処理します。デフォルトでは、FPGA にはカーネルのハードウェア インスタンスが 1 つしか含まれないので、これら 3 つのカーネルは同じハードウェア リソースを使用して順次実行されます。このチュートリアルでは、ホスト アプリケーションが呼び出す計算ユニットの数を増やし、Y、U、および V プレーンを同時にフィルター処理する方法を示します。
-
-## 内容
+詳細は、[アプリケーションのビルドおよび実行](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/xia1553473418160.html)の[カーネルの複数インスタンスの作成](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk595166594.html#yzb1524519238289)を参照してください。
 
 このチュートリアルでは、次を実行します。
-1. 新しいアプリケーション プロジェクトを作成し、ソース ファイルをインポートします。
-2. ハードウェア エミュレーションを実行し、エミュレーション レポートを参照して、カーネルが順に複数回実行されることを確認します。
-3. ホスト コードを変更し、コマンドを順不同に実行できるようにします。
-4. カーネル リンク プロセスを変更し、同じカーネルのインスタンスを複数作成します。
-5. ハードウェア エミュレーションを再実行し、計算ユニットが同時実行されることを確認します。  
 
-## チュートリアル手順
+1. ハードウェア エミュレーションを実行し、エミュレーション レポートを参照して、カーネルが順に複数回実行されることを確認します。
+2. コマンドを順不同に実行できるようにホスト コードを変更します。
+3. カーネル リンク プロセスを変更し、同じカーネルの CUを複数作成します。
+4. ハードウェア エミュレーションを再実行し、CU が同時実行されることを確認します。
 
-### ワークスペースの設定
+このチュートリアルでは、画像フィルター例を使用して複数 CU の利点を示します。ホスト アプリケーションは、画像を処理して Y、U、および V プレーンを抽出し、カーネルを 3 回実行して画像の各プレーンをフィルター処理します。デフォルトでは、FPGA にはカーネルの CU が 1 つしか含まれないので、これら 3 つのカーネルは同じハードウェア リソースを使用して順次実行されます。このチュートリアルでは、CU の数を増加し、このカーネル実行を並列で実行する方法を示します。
 
-1. 次のコマンドを使用してサンプル デザインのディレクトリに移動します。
-   ```
-   cd using-multiple-cu/reference-files/
-   ```
-2. 次のコマンドを使用して SDx™ 環境 GUI を起動します。
-   ```
-   sdx
-   ```
-3. ワークスペースを指定し、新しいアプリケーション プロジェクトを作成して、プロジェクトを名前を `filter2d` に指定します。
-4. プラットフォームとして `xilinx_u200_xdma_201830_1` を選択します。
-5. **[Templates]** ページで **[Empty Application]** を選択し、**[Finish]** をクリックします。
+# 開始前の注意点
 
-プロジェクトが作成され、指定したワークスペースで開きます。
+このチュートリアルでは、次を使用します。
 
-### デザインの設定
+* BASH Linux シェル コマンド
+* 2019.2 Vitis コア開発キット リリースおよび xilinx\_u200\_xdma\_201830\_2 プラットフォーム。必要であれば、その他のバージョンおよびプラットフォームも使用できます。
 
-1. [Project Explorer] ビューで `src/host` ディレクトリからホスト ソース ファイルをインポートし、すべてのファイルを選択します。
-2. [Project Explorer] ビューで、`src/kernel` ディレクトリから `Filter2DKernel.xo` カーネル オブジェクト ファイルをインポートします。
->**注記**: このチュートリアルで使用するカーネル コードは、既にコンパイル済みのオブジェクト ファイル (.xo) です。実際には、`Filter2DKernel.xo` ファイルは、C/C++ または RTL のいずれかから生成されたものです。コンパイル済みオブジェクト コードから開始する場合は、どちらでも基本的には同じです。`.xo` ファイルから開始しても、リンク プロセスをカスタマイズすることは可能です。
-3. メイン プロジェクト ウィンドウで、ハードウェア関数として **Filter2DKernel** を選択します。
-4. ホスト コード リンカー オプションを指定します。  
-ホスト コードでは、画像ファイルの演算に OpenCV™ ライブラリが使用されるので、関連するリンカー オプションを指定する必要があります。
-  1. [Project Explorer] ビューで `filter2d` プロジェクトの最上位フォルダーを右クリックし、**[C/C++ Build Settings]** をクリックします。
-  2. [Settings] ダイアログ ボックスの [Tool Settings] タブで、**[SDx GCC Host Linker (x86_64)]** を選択します。
-  3. [Settings] ダイアログ ボックスの上部で、**[Configuration]** ドロップダウン リストから **[All Configuration]** を選択し、リンカー オプションがすべてのフローに適用されるようにします。
-  4. [Expert Settings: Command line pattern] フィールドの現在の文字列の最後に、次の文字列を追加します。  
+> **重要:**
+>
+> * 例を実行する前に、[インストール](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html)に示すように Vitis コア開発キットをインストールしておく必要があります。
+> * ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、『Alveo データセンター アクセラレータ カード入門ガイド ([UG1301](https://japan.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=j_ug1301-getting-started-guide-alveo-accelerator-cards.pdf)) で説明されるように、カードとソフトウェア ドライバーを正しくインストールしてください。
+
+## チュートリアル リファレンス ファイルの入手
+
+1. リファレンス ファイルを入手するには、ターミナルに `git clone http://github.com/Xilinx/Vitis-Tutorials` と入力します。
+2. `using-multiple-cu` ディレクトリに移動し、`reference-files` ディレクトリにアクセスします。
+
+# makefile フロー
+
+このチュートリアルで使用する makefile は、`using-multiple-cu/reference-files/Makefile` に含まれます。最上位設定には、次が含まれます。
+
+* **VPP**: カーネル コードをコンパイルする Vitis コンパイラ パス。
+
+* **EMCONFIGUTIL**: エミュレーション コンフィギュレーション ファイル `emconfig.json` を作成するユーティリティ ファイルのパス。
+
+* **DSA**: ターゲット プラットフォーム。
+
+* **LFLAGS**: ホスト コード リンカー オプション用に OpenCV™ ライブラリを使用するリンカー オプション。
+
+  ```
+  -Wl,-rpath,${XILINX_VIVADO}/lnx64/tools/opencv/opencv_gcc -L${XILINX_VIVADO}/lnx64/tools/opencv/opencv_gcc -lopencv_core -lopencv_highgui
+  ```
+
+* **EXE\_OPT**: コマンド ライン引数として渡されるランタイム オプション: コンパイル済みカーネル xclbin ファイル, 入力画像。
+
+## ハードウェア エミュレーションの実行
+
+次のコマンドでハードウェア エミュレーションを実行します。
+
 ```
-  -L${XILINX_SDX}/lnx64/tools/opencv -lopencv_core -lopencv_highgui -Wl,-rpath,${XILINX_SDX}/lnx64/tools/opencv
-```  
-  5. **[Apply and Close]** をクリックします。  
+make check MODE=hw_emu
+```
 
-6. ランタイム引数を設定します。  
-[Run] メニューから [Run Configurations] をクリックし、[Arguments] タブで **[Program arguments]** フィールドに `-x ../binary_container_1.xclbin -i ../../../../img/test.bmp -n 1` と入力します。
+ハードウェア エミュレーション (`hw_emu`) では、カーネル コードがハードウェア モデル (RTL) にコンパイルされ、専用シミュレータで実行されますが、残りのシステムでは C シミュレータが使用されます。ビルドおよび実行にかかる時間は長くなりますが、詳細でサイクル精度の高いカーネル アクティビティが表示されます。このターゲットは、FPGA に含まれるロジックの機能をテストして、最初のパフォーマンス見積もりを取得する場合に便利です。
 
-### ハードウェア エミュレーションの実行
+> **注記:** ホスト ソフトウェアおよびハードウェアのビルド方法は、[アプリケーションのビルド](/docs/Pathway3/BuildingAnApplication.md)演習を参照してください。
 
-**[Active build configuration]** を **[Emulation-HW]** に設定し、**[Run]** ボタン (![](./images/RunButton.PNG)) をクリックしてハードウェア エミュレーションを実行します。
+## ホスト コードの確認
 
-### ホスト コードの確認
+1. エミュレーション run を実行中、別のターミナルで `src/host/host.cpp` ファイルを開きます。
 
-エミュレーションを実行中に、ホスト コードを確認してみます。**[Project Explorer]** ビューで `src` フォルダーを展開し、`host.cpp` ファイルをダブルクリックして開きます。
+2. 255 ～ 257 行目を確認してください。Y、U、および V チャネルを処理するためにフィルター関数が 3 回呼び出されています。
 
-266 ～ 268 行目にスクロールし、Y、U、および V チャネルを処理するためにフィルター関数が 3 回呼び出されていることを確認します。  
-![](./images/host_file1.png)
+   ```
+   request[xx*3+0] = Filter(coeff.data(), y_src.data(), width, height, stride, y_dst.data());
+   request[xx*3+1] = Filter(coeff.data(), u_src.data(), width, height, stride, u_dst.data());
+   request[xx*3+2] = Filter(coeff.data(), v_src.data(), width, height, stride, v_dst.data());
+   ```
 
-この関数は、80 行目から記述されています。下の抜粋部分で、カーネル引数が設定され、カーネルが `clEnqueueTask` コマンドにより実行されます。  
-![](./images/host_file2.png)
+   この関数は、80 行目から記述されています。下の抜粋部分で、カーネル引数が設定され、カーネルが `clEnqueueTask` コマンドにより実行されます。
 
-これら 3 つの `clEnqueueTask` コマンドは、1 つの順序どおりのコマンド キューを使用してキューに追加されます (75 行目)。このコマンド キューを使用するすべてのコマンドは、キューに追加された順序で実行されます。  
-![](./images/Command_queue.JPG)
+   ```
+    // Set the kernel arguments
+    clSetKernelArg(mKernel, 0, sizeof(cl_mem),       &mSrcBuf[0]);
+    clSetKernelArg(mKernel, 1, sizeof(cl_mem),       &mSrcBuf[1]);
+    clSetKernelArg(mKernel, 2, sizeof(unsigned int), &width);
+    clSetKernelArg(mKernel, 3, sizeof(unsigned int), &height);
+    clSetKernelArg(mKernel, 4, sizeof(unsigned int), &stride);
+    clSetKernelArg(mKernel, 5, sizeof(cl_mem),       &mDstBuf[0]);
 
-### エミュレーション結果
+   // Schedule the writing of the inputs
+   clEnqueueMigrateMemObjects(mQueue, 2, mSrcBuf, 0, 0, nullptr,  &req->mEvent[0]);
 
-ハードウェア エミュレーションの実行が終了したら、左下にある [Assistant] ビューをクリックします。**[Emulation-HW]** → **[filter2d-Default]** を展開します。ここから、プロファイル サマリ (`Profile Summary`) および アプリケーション タイムライン (`Application Timeline`) などの重要なレポートを開くことができます。  
-![](./images/assistant_2.JPG)
+   // Schedule the execution of the kernel
+   clEnqueueTask(mQueue, mKernel, 1,  &req->mEvent[0], &req->mEvent[1]);
+   ```
 
-1. **[Profile Summary]** レポートをダブルクリックして **[Reports]** ビューに開きます。  
-  * このレポートには、アプリケーションがどうのように実行されたかに関連するデータが表示されます。
-  * 「**Top Kernel Execution**」セクションを見ると、カーネルが 3 回実行されていることがわかります。
+   これら 3 つの `clEnqueueTask` コマンドは、1 つの順序どおりのコマンド キューを使用してキューに追加されます (75 行目)。この結果、すべてのコマンドがキューに追加された順序で実行されます。
 
-2. **[Emulation-HW]** の [Application Timeline] レポートを開きます。
-   * アプリケーション タイムライン レポートは、ホストとデバイスのイベント情報を収集し、共通のタイムラインに表示します。これは、システムの全体的な状態とパフォーマンスを視覚的に表示して理解するのに役立ちます。
+   ```
+   Filter2DDispatcher(
+           cl_device_id     &Device,
+           cl_context       &Context,
+           cl_program       &Program )
+     {
+           mKernel  = clCreateKernel(Program, "Filter2DKernel", &mErr);
+           mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFI   LING_ENABLE, &mErr);
+           mContext = Context;
+           mCounter = 0;
+     }
+   ```
+
+## エミュレーション結果
+
+1. まず、生成されたプロファイル サマリ レポート (`profile_summary.csv`) を確認します。
+
+   ```
+   vitis_analyzer ./profile_summary.csv
+   ```
+
+   * このレポートには、アプリケーションがどうのように実行されたかに関連するデータが表示されます。
+   * 「Top Kernel Execution」セクションを見ると、カーネルが 3 回実行されていることがわかります。
+
+   > **注記:** run ディレクトリには、`xrt.ini` というファイルが含まれます。このファイルには、プロファイル サマリ レポートおよびタイムライン トレースなどの追加レポートを生成するランタイム オプションが含まれています。
+
+2. 次にタイムライン トレース レポート (`timeline_trace.csv`) を確認します。
+
+   ```
+   vitis_analyzer ./timeline_trace.csv
+   ```
+
+   アプリケーション タイムライン レポートは、ホストとデバイスのイベント情報を収集し、共通のタイムラインに表示します。これは、システムの全体的な状態とパフォーマンスを視覚的に表示して理解するのに役立ちます。
+
    * タイムラインの最下部に、ホストからキューに追加された各カーネルに 1 本ずつ、合計 3 本の青いバーがあります。1 つの順序どおりのコマンド キューが使用されているので、ホストはカーネル実行を順にキューに追加します。
-   * 青いバーの下に、各カーネル実行に 1 本ずつ、合計 3 本の緑色のバーがあります。これらは、FPGA で順に実行されます。  
-   ![](./images/serial_kernel_enqueue.JPG)
+   * 青いバーの下に、各カーネル実行に 1 本ずつ、合計 3 本の緑色のバーがあります。これらは、FPGA で順に実行されます。 ![順序通りのカーネル エンキュー](./images/serial_kernel_enqueue_vitis.JPG)
 
+## カーネルを同時にキューに追加するためのホスト コードの改善
 
-### カーネルを同時にキューに追加するためのホスト コードの変更
+1. 75 行目の `src/host/host.cpp` ホスト ファイルを変更します。  
+これはコマンド キューを順不同コマンド キューとして宣言します。
 
-ホスト コードの 75 行目を変更して、順不同コマンド キューを宣言します。
+   コード変更前:
 
-変更前:
+   ```
+   mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE, &mErr);
+   ```
+
+   コード変更後:
+
+   ```
+   mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE | CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE, &mErr);
+   ```
+
+2. **(オプション)** 変更したホスト コードでハードウェア エミュレーションを実行します。
+
+   ハードウェア エミュレーションを実行する場合、タイムライン トレースを使用して、順不同コマンド キューを使用することによりカーネルがほぼ同時に実行されるように要求できます (青のバーはホストでスケジュールされるカーネル エンキュー リクエストを示しています)。
+
+   ホストはこれらの実行を同時にスケジューリングできますが、FPGA 上には 1 つしか CU がないので、2 つ目および 3 つ目の実行要求が遅れます (FPGA ではカーネルはまだ順次実行されるので)。  
+![シーケンシャル カーネル](./images/sequential_kernels_2.JPG)  
+次の手順では、FPGA 上の CU の数を増やして、ホスト カーネルを同時に実行できるようにします。
+
+## CU 数の増加
+
+次は、同じカーネルの CU を 3 つ生成するようにリンク手順を変更して、カーネル xclbin をビルドし直します。
+
+`link.cfg` を開いて `nk` 設定を変更します。
+
 ```
-mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE, &mErr);
+nk = Filter2DKernel:3
 ```
 
-変更後:
-```
-mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE | CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE, &mErr);
-```
-**Ctrl** + **S** キー を押してファイルを保存します。  
->**オプションの手順:** 変更したホスト コードでハードウェア エミュレーションを実行できます。ハードウェア エミュレーションを実行する場合、タイムライン トレースを使用して、順不同コマンド キューを使用することによりカーネルがほぼ同時に実行できるようになることを確認します。
+## ハードウェア エミュレーションの実行と変更の確認
 
-ホストはこれらの実行を同時にスケジューリングできますが、FPGA 上にあるカーネル インスタンスに制限があるので、一部の実行要求は遅れます (FPGA ではカーネルは順次実行される)。  
-![](./images/sequential_kernels_2.JPG)
+1. xclbin ファイルを生成し直します。`make clean` および `make` を実行して 1 つの CU を含む既存の xclbin を削除してから、3 つのカーネル CU を含む新しい xclbin を作成する必要があります。
 
-次の手順では、FPGA 上のカーネル インスタンスの数を増やして、ホスト カーネルを同時に実行できるようにします。
+   ```
+   make clean
+   make check MODE=hw_emu
+   ```
 
-1 つの順不同キューを使用する代わりに、複数の順序どおりのキューを使用して、ホスト コードから同じ同時コマンド実行を達成できます。詳細は、[この SDAccel Github ホスト コード例](https://github.com/Xilinx/SDAccel_Examples/blob/master/getting_started/host/concurrent_kernel_execution_ocl/src/host.cpp)を参照してください。この例では、1 つの順不同コマンド キューを使用した方法と複数の順序どおりのコマンド キューを使用した方法を示しています。
+2. Vitis アナライザーで新しい `timeline_trace.csv` を表示します。
 
-### カーネル インスタンスの数の増加
+   ```
+   vitis_analyzer ./timeline_trace.csv
+   ```
 
-次の手順に従って、カーネル インスタンスの数を 3 に増加します。
-1. **[Filter2D]** タブをクリックして [SDx Project Settings] に戻ります。
-2. ウィンドウの下部にある [Hardware Functions] セクションを見つけます。
-3. 計算ユニットの数を `1` から `3` に増やします。  
-![](./images/SetNumComputeUnits_2.PNG)
+   アプリケーションが 3 つの CU の利点を生かし、カーネル実行がオーバーラップして並列で実行されるようになって、アプリケーション全体の速度が上がるようになりました。![](./images/overlapping_kernels_vitis_2.JPG)
 
-### ハードウェア エミュレーションの実行と変更の確認
+# まとめ
 
-1. 先ほどと同様にハードウェア エミュレーションを実行します。
-2. 実行が終了したら、プロファイル サマリ レポートを確認します。
-3. [Application Timeline] レポートで、カーネル実行がオーバーラップしていることを確認します。  
-![](./images/overlapping_kernels_2.JPG)
-
-カーネル リンク プロセスを変更して、FPGA 上の同じカーネル インスタンスを同時に実行する方法を学びました。
-
-### オプションの手順
-
-このチュートリアルでは、ハードウェア エミュレーションを使用してメカニズムを確認しました。[Active Build Configuration] を **[System]** に変更して **[Run]** ボタンをクリックしてコンパイルすると、実際の FPGA ボード上で実行することもできます。実行が終了したら、システム実行からのタイムライン トレース レポートで確認できます。
+カーネル リンク プロセスを変更して、FPGA 上の同じカーネル インスタンスを同時に実行する方法を学びました。</br>
 
 <hr/>
-<p align="center"><sup>Copyright&copy; 2018 Xilinx</sup></p>
+<p align= center><b><a href="../../README.md">メイン ページに戻る</a></b></p>
+<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
 
 この資料は表記のバージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。

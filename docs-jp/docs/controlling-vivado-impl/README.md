@@ -1,115 +1,204 @@
-<p align="right">
-別の言語で表示: <a href="../../../README.md">English</a>          
-</p>
-
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2018.3 SDAccel™ 開発環境チュートリアル</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">その他のバージョン</a>
-   </td>
+   <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ アプリケーション アクセラレーション開発フローのチュートリアル</h1><a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">SDAccel™ 開発環境 2019.1 チュートリアルを参照</a></td>
  </tr>
  <tr>
- <td align="center"><h3>Vivado インプリメンテーションの制御</h3>
+ <td align="center"><h1>Vivado インプリメンテーションの制御</h1>
  </td>
  </tr>
 </table>
 
-ザイリンクス オープン コード コンパイラ (XOCC) は、ソース コードに対して Vivado® インプリメンテーションを実行し、FPGA ベースのアクセラレータ ボードのプログラムに必要なビットストリームおよびその他のファイルを生成するコマンド ライン コンパイラです。タイミング クロージャを含む適切な結果を達成するため、Vivado 合成およびインプリメンテーションのアドバンス オプションを使用することが必要となる場合があります。  
-このセクションでは、プロジェクトをインプリメントする際に Vivado フローを制御する方法を GUI で手順ごとに示します。  
->**注記**: このセクションは、システム実行に適用されます。アプリケーションのコンパイルには、1 時間以上かかる場合があります。
+# 概要
 
-SDAccel™ 環境から Vivado フローを制御するには、2 つの方法があります。
-システム実行のコンパイルを開始する前に、`--xp` XOOC コンパイラ オプションを使用して Vivado 特有の合成およびインプリメンテーション オプションを渡します。
-* アプリケーションが既にシステム実行用にコンパイルされている場合は、次を実行します。
-  1. Vivado ツールの GUI を開きます。
-  2. デザインを最適化します。
-  3. 新しいチェックポイントを生成します。
-  4. このチェックポイントを SDAccel 環境にインポートし戻して、新しいインプリメンテーションを完了させます。
+Vitis™ コンパイラは、ソース コードからカーネル オブジェクトを作成し、そのカーネルをターゲット シェルにリンクし、Vivado® ツールのインプリメンテーション フローを使用してアセンブルされたデザインを実行します。また、FPGA ベースのアクセラレーション カードをプログラムするのに必要なプラットフォーム ファイル (xclbin) を生成します。望む結果を達成するためには、タイミング クロージャなど、Vivado 合成およびインプリメンテーションのアドバンス オプションを使用する必要があることもあります。
 
-## `--xp` XOOC コンパイラ オプションを使用
-ここでは、次の方法を説明します。
- * RTL 合成で階層を完全にフラット化 (`FLATTEN_HIERARCHY=full` を指定)
- * 配線で NoTimingRelaxation 指示子を使用 (`DIRECTIVE=NoTimingRelaxation` を指定)
+# チュートリアルの概要
 
-これらのオプションを `--xp` XOCC コンパイラ オプションを使用して Vivado フローに渡すには、次の構文を使用します。オプションごとに `--xp` オプションを使用する必要があります。
-* `--xp vivado_prop:run.my_rm_synth_1.{STEPS.SYNTH_DESIGN.ARGS.FLATTEN_HIERARCHY}={full}`
-* `--xp vivado_prop:run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={NoTimingRelaxation}`
+このチュートリアルでは、プロジェクトをインプリメントする際に Vivado フローを制御する方法を GUI で手順ごとに示します。
 
+Vitis コア開発キットには、Vivado ツール フローを制御する 2 つの方法があります。
 
-これらのオプションを SDAccel GUI で XOCC リンカーに指定する必要があります。
-1. **[File]** → **[Import]** をクリックして `Prj_5_Pipes` プロジェクトをインポートします。<!--ThomasB: the project name is non-descriptive and should be changed. Also, it is best to create projects from scratch rather than load existing ones.-->
-2. **[Xilinx/SDx Project]** を選択します。
-3. 次のウィンドウで **[SDx project exported zip file]** を選択します。
-4. **[Next]** をクリックし、プロジェクト ディレクトリの `Prj_5_Pipes.zip` を指定します。
-5. **[OK]** をクリックすると、**[Application Projects/Prj_5_Pipes]** が既に選択されているはずです。**[Finish]** をクリックします。
-6. [Assistant] ビューで **[System]** → **[binary_container_1]** を右クリックし、**[Settings]** をクリックします。
+1. システム ビルドのコンパイルまたはリンクする際は、config ファイルを使用すると、Vivado の合成およびインプリメンテーション オプションを渡すことができます。
 
-  ![](images/vivado-implementation_snap1.PNG)
+   > **注記:** システム実行を終了するには数時間かかることがあります。
 
-  [XOCC Linker Options] に `--xp` オプションが指定されています。
-  ![](images/vivado-implementation_snap2.PNG)
+2. アプリケーションが既にコンパイル済みの場合は、次を実行できます。
 
-7. [Cancel] をクリックしてウィンドウを閉じます。
-8. `Prj_5_Pipes/System` を右クリックして **[Build]** をクリックします。  
+   * Vivado Design Suite を使用してデザインを最適化します。
+   * 新しい配線済みチェックポイントを生成します。
+   * このチェックポイントを再利用してプラットフォーム ファイル (xclbin) を生成します。
 
-  デザインのインプリメンテーション中、これらのオプションが Vivado フローに正しく伝搬されていることを確認できます。Vivado RTL 合成で生成されたログ メッセージは、`Prj_5_Pipes/System/binary_container_1/logs/link/syn/my_rm_synth_1_runme.log` に含まれます。  
-  ![](images/vivado-implementation_snap4.PNG)
+# 開始前の注意点
 
-9. `Prj_5_Pipes/System/binary_container_1/logs/link/syn/my_rm_synth_1_runme.log` を開いて、`flatten_hierarchy` を検索します。次のコマンドが見つかります。  
+このチュートリアルでは、次を使用します。
+
+* BASH Linux シェル コマンド
+* 2019.2 Vitis コア開発キット リリースおよびxilinx\_u200\_xdma\_201830\_2 プラットフォーム。必要であれば、その他のバージョンおよびプラットフォームも使用できます。
+
+> **重要:**
+>
+> * 例を実行する前に、[インストール](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html)に示すように Vitis コア開発キットをインストールしておく必要があります。
+> * ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、『Alveo データセンター アクセラレータ カード入門ガイド ([UG1301](https://japan.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=j_ug1301-getting-started-guide-alveo-accelerator-cards.pdf)) で説明されるように、カードとソフトウェア ドライバーを正しくインストールしてください。
+> * この演習を実行する前に、[アクセラレーションされたアプリケーションをビルドおよび実行するための基本的な概念](../Pathway3/README.md)チュートリアルを理解しておく必要があります。
+
+## チュートリアル リファレンス ファイルの入手
+
+1. リファレンス ファイルを入手するには、ターミナルに `git clone https://github.com/Xilinx/Vitis-Tutorials` と入力します。
+2. `controlling-vivado-impl` ディレクトリに移動し、`reference-files/run` ディレクトリにアクセスします。
+
+# コンフィギュレーション ファイルを使用した Vivado オプションの設定
+
+> **注記:** このチュートリアルでは、すべての手順を `reference-files/run` ディレクトリから実行します。
+
+`–-xp` オプションは Vivado ツールを設定するパラメーターに対応しています。たとえば、`--xp` オプションで最適化、配置、およびタイミングを設定したり、エミュレーションおよびコンパイル オプションを設定したりできます。コマンド ライン フローでは、パラメーターが `param:<param_name>=<value>` と指定されます。
+
+* `param`: 必須のキーワード。
+* `param_name`: 適用するパラメーターの名前。
+* `value`: パラメーターに適した値。
+
+このセクションでは、次のコンフィギュレーションを例として使用して、Vivado 合成およびインプリメンテーションを制御するフローをお見せします。
+
+* RTL 合成で階層を完全にフラット化 (FLATTEN\_HIERARCHY=full を指定)
+
+  * `--xp vivado_prop:run.my_rm_synth_1.{STEPS.SYNTH_DESIGN.ARGS.FLATTEN_HIERARCHY}={full}`
+
+* 配線で NoTimingRelaxation 指示子を使用 (DIRECTIVE=NoTimingRelaxation を指定)
+
+  * `--xp vivado_prop:run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={NoTimingRelaxation}`
+
+この演習では、`design.cfg` ファイルに `-–xp` コマンド オプションが含まれており、各オプションは `--xp` オプションなしで別々の行に記述されています。
+
+パラメーターのすべてのリストおよび有効な値は、[Vitis 環境リファレンス マニュアル](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html)を参照してください。
+
+1. サンプルを実行する前に、次のコマンドを実行して Vitis コア開発キットを設定しておいてください。
+
+   ```bash
+   #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
+   source /opt/Xilinx/Vitis/2019.2/settings64.sh
+   #Setup runtime. XILINX_XRT will be set in this step
+   source /opt/xilinx/xrt/setup.sh
+   ```
+
+2. Vitis コンパイラを使用してカーネルをコンパイルし、それを `--xp` コマンド オプションでプラットフォーム ファイル (xclbin) にリンクします。
+
+   ```bash
+   v++ -t hw --config design.cfg -c -k apply_watermark -o'apply_watermark.hw.xilinx_u200_xdma_201830_2.xo' '../src/krnl_watermarking.cl'
+   v++ -t hw -s --config design.cfg -R2 -l -o'apply_watermark.hw.xilinx_u200_xdma_201830_2.xclbin' apply_watermark.hw.xilinx_u200_xdma_201830_2.xo
+   ```
+
+3. `design.cfg` ファイルを開いて、さまざまなオプションを確認してください。次のリストでは、コマンド オプションの一部を説明しています。
+
+   > **コマンド オプションの説明**
+   >
+   > * `-t hw`: システム実行をターゲットに指定
+   > * `platform=xilinx_u200_xdma_201830_2`: xilinx\_u200 プラットフォームをターゲットに指定
+   > * `debug=1`: デバッグ情報を生成
+   > * `max_memory_ports=apply_watermark`: 1 つのポートに対して 1 つの AXI4 インターフェイスを生成
+   > * `-c`: カーネルをコンパイル
+   > * `-k apply_watermark`: カーネル名を指定
+   > * `../src/krnl_watermarking.cl`: ソース ファイルを指定
+   > * `sp=apply_watermark_1.m_axi_gmem0:DDR[0]`: DDR バンク接続を指定
+   > * `--config design.cfg`: Vivado 合成およびインプリメンテーション オプションを設定
+   > * `-R2`: レポート レベルを 2 に設定して、各インプリメンテーション段階ごとに DCP を生成
+   > * `-l`: カーネルをリンク
+   > * `nk=apply_watermark:1:apply_watermark_1`: カーネル インスタンスの数と名前を指定
+
+4. Vivado 合成およびインプリメンテーション オプションが適用されたことを確認するには、`_x/logs/link/vivado.log` ファイルで「flatten\_hierarchy」および「NoTimingRelaxation」を検索します。オプションが実行されたかどうかは、次の行からわかります。
+
+   * **コマンド**: `synth_design -top pfm_dynamic -part xcu200-fsgd2104-2-e -flatten_hierarchy full -mode out_of_context`
+   * **コマンド**: `route_design -directive NoTimingRelaxation`
+
+# Vivado ツールを使用した最適化
+
+アプリケーションが既にシステム実行用にコンパイルされている場合は、さまざまな Vivado ツールの手法を使用してインプリメンテーション結果を最適化し、タイミング クロージャなどの目標を達成します。最適化が終了したら、配線済みのデザインをチェックポイント ファイル (DCP) に書き戻して、このチェックポイントを使用して新しいインプリメンテーションを終了します。
+
+> **注記:** Vitis コア開発キットと Vivado 環境のバージョンは異なるイテレーション間で同じにする必要があります。
+
+最適化段階では、Vivado ツールの手法を使用します。Vivado ツールの使用方法および最適化については、『Vivado Design Suite ユーザー ガイド: インプリメンテーション』 ([UG904](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=latest;d=ug904-vivado-implementation.pdf)) および『UltraFast 設計手法ガイド (Vivado Design Suite 用)』 ([UG949](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=latest;d=ug949-vivado-design-methodology.pdf)) を参照してください。
+
+たとえば、Tcl スクリプトを使用してバッチ モードで Vivado ツールを実行する場合、その Tcl スクリプトにより DCP が読み込まれて最適化が実行され、配線された DCP が書き出されます。
+
+`/reference-file/run` フォルダーから次のコマンドを実行します。
+
+```bash
+#make sure you have successfully setup Vitis/Vivado environments as previous part shows.
+vivado -mode batch -source opt.tcl
 ```
-Command: synth_design -top pfm_dynamic -part xcvu9p-fsgd2104-2-i -flatten_hierarchy full -mode out_of_context  
-```
 
-  Vivado インプリメンテーション機能で生成されたログ メッセージは、`Prj_5_Pipes/System/binary_container_1/logs/link/impl/impl_1_runme.log` に含まれます。  
-![](images/vivado-implementation_snap5.PNG)
+この場合、`opt.tcl` ファイルに次のように表示されます。
 
-10. `Prj_5_Pipes/System/binary_container_1/logs/link/impl/impl_1_runme.log` を開いて、`NoTimingRelaxation` を検索します。次のコマンドが見つかります。  
-```
-Command: route_design -directive NoTimingRelaxation
-```
-
-  ログ ファイルからは、SDAccel 環境で指定したオプションが Vivado フローに正しく伝搬されてたことが確認できます。
-
-## SDAccel GUI から Vivado を実行
-アプリケーションを既にシステム実行用にコンパイルしている場合は、Vivado GUI を開き、合成済みまたはインプリメント済みデザインを読み込んで、インタラクティブに変更を加えてから、このチェックポイントを SDAccel 環境にエクスポートして新しいインプリメンテーションを実行します。
-
->**重要**: マシンのメモリが 32 GB RAM 未満の場合は、この後の手順を実行せずに確認だけしてください。実行すると、メモリ不足になる可能性があります。
-
-1. Prj_5_Pipes プロジェクトを開いた状態で、**[Xilinx]** → **[Vivado Integration]** → **[Open Vivado Project]** をクリックして Vivado を起動します。  
-![](images/vivado-implementation_snap6.PNG)  
-2. 開いている Vivado プロジェクトで合成 run (`my_rm_synth_1`) を選択します。
-3. [Synthesis Run Properties] セクションの [Options] タブをチェックします。`flatten_hierarchy` オプションが `full` に設定されています。これは、`--xp` オプションを使用して `flatten_hierarchy` オプションを伝搬したからです。  
-![](images/vivado-implementation_snap7.PNG)  
-同様に、Vivado インプリメンテーション設定も確認します。
-
-  Vivado インプリメンテーション結果でタイミングを調整する必要があるとします。
-
-4. **[IMPLEMENTATION]** → **[Open Implemented Design]** を展開します。
-5. 配線後の物理合成を実行するには、コンソール ウィンドウに次を入力します。  
-```
+```bash
+#DCP files in different stages of Vivado have been written by v++ linker automatically with option "-R2"
+open_checkpoint ./_x/link/vivado/vpl/prj/prj.runs/impl_1/pfm_top_wrapper_routed.dcp
+#Run post-route physical optimization
 phys_opt_design -directive AggressiveExplore
-```  
-![](images/vivado-implementation_snap8.PNG)  
- スラックが小さい場合は、タイミングが向上しています。
-6. これが終了したら、次のコマンドを使用して配線済みチェックポイント (`.dcp` ファイル) を生成します。
+write_checkpoint -force ./_x/link/vivado/routed.dcp
 ```
-write_checkpoint -force prj/prj.runs/impl_1/pfm_top_wrapper_routed.dcp
+
+# チェックポイントを再利用したプラットフォーム ファイル (xclbin) の生成
+
+次は、`opt.tcl` スクリプトで生成された `routed.dcp` チェックポイント ファイルを再利用して新しいプラットフォーム ファイル (xclbin) を生成します。これには、`v++` コマンドに `--reuse_impl` オプションを追加します。
+
+```bash
+v++ -t hw --config design.cfg -l -o'apply_watermark.hw.xilinx_u200_xdma_201830_2.xclbin' apply_watermark.hw.xilinx_u200_xdma_201830_2.xo --reuse_impl ./_x/link/vivado/routed.dcp
 ```
->**注記**: `.dcp` ファイルのパスを変更する必要がある場合があります。`pwd` コマンドを使用して作業ディレクトリを確認します。
-7. 最適化が終了したら、Vivado ツール を閉じます。
 
-## Vivado チェックポイントを SDAccel GUI にインポート
+コンソールのメッセージに、インプリメントしたデザインの生成を飛ばして、ビットストリームの生成が開始されたことが表示されます。
 
-1. SDx™ 環境で、**[Xilinx]** → **[Vivado Integration]** → **[Import Vivado Checkpoint]** をクリックしてアップデートされた `.dcp` をインポートします。  
-インポートが終了すると、Vivado 設定ファイルをインポートするかどうか尋ねるダイアログ ボックスが表示されます。  
-![](images/vivado-implementation_snap9.PNG)  
-2. **[Yes]** をクリックして Vivado 設定ファイル (`xocc.ini`) をインポートします。`.dcp` ファイルと `.ini` ファイルがインポートされたことを確認します。  
-![](images/vivado-implementation_snap10.PNG)
-3. [Assistant] ビューで **[Prj_5_Pipes]** → **[System]** を右クリックし、**[Build]** をクリックします。  
+```bash
+INFO: [VPL 60-251]   Hardware accelerator integration...
+Starting FPGA bitstream generation.
+```
 
-インクリメンタル フローが Vivado インプリメンテーション フローに進み、ビットストリームが生成されます。
+# まとめ
 
-<hr/>
-<p align="center"><sup>Copyright&copy; 2018 Xilinx</sup></p>
+次のセクションには、`v++` コマンドを使用して Vivado インプリメンテーションを制御し、Vivado ツールを使用してデザインを最適化し、インプリメントした DCP を再利用してプラットフォーム ファイルを生成する方法をまとめていますので、コマンドのクリック リファレンスとしてご利用ください。
+
+1. コア開発キットおよび作業ディレクトリを設定します。
+
+   ```bash
+   #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <Vitis install path>/settings64.sh. for example:
+   source /opt/Xilinx/Vitis/2019.2/settings64.sh
+   #Setup runtime. XILINX_XRT will be set in this step
+   source /opt/xilinx/xrt/setup.sh
+   ```
+
+2. `v++` コマンドを使用してプラットフォーム ファイル (xclbin) を生成します。
+
+   ```bash
+   v++ -t hw --config design.cfg -c -k apply_watermark -o'apply_watermark.hw.xilinx_u200_xdma_201830_2.xo' '../src/krnl_watermarking.cl'
+   v++ -t hw -s --config design.cfg -R2 -l -o'apply_watermark.hw.xilinx_u200_xdma_201830_2.xclbin' apply_watermark.hw.xilinx_u200_xdma_201830_2.xo
+   ```
+
+3. Vivado ツールを使用してデザインを最適化し、配線後の DCP を記述し直します。
+
+   ```bash
+   vivado -mode batch -source opt.tcl
+   ```
+
+4. 配線後の DCP を再利用して、プラットフォーム ファイル (xclbin) を生成します。
+
+   ```bash
+   v++ -t hw --config design.cfg -l -o'apply_watermark.hw.xilinx_u200_xdma_201830_2.xclbin' apply_watermark.hw.xilinx_u200_xdma_201830_2.xo --reuse_impl ./_x/link/vivado/routed.dcp
+   ```
+
+5. このチュートリアルには、さまざまなフローを実行するためのホスト コードが含まれています。次のコマンドは、ホストをビルドしてからアプリケーションを実行します。
+
+   ```bash
+   #Generate the host executable.
+   g++ -I$XILINX_XRT/include/ -I$XILINX_VIVADO/include/ -Wall -O0 -g -std=c++11 -L$XILINX_XRT/lib/ -lOpenCL -lpthread -lrt -lstdc++ -o 'host' '../src/host.cpp'
+   #Please set correct XCL_EMULATION_MODE manually if running sw_emu and hw_emu modes
+   ./host apply_watermark.hw.xilinx_u200_xdma_201830_2.xclbin ../src/inputImage.bmp ../src/golden.bmp
+   ```
+
+# まとめ
+
+このチュートリアルでは、Vivado ツールでデザインを最適化する単純な例を使用して、`v++` コマンドの `--xp` オプションで Vivado 合成およびインプリメンテーションを制御する方法について説明しました。その後、インプリメント済みデザインを生成する中間の手順を省いて、インプリメント後の DCP を再利用してプラットフォーム ファイル (xclbin) を生成しました。
+
+すべてのフローを実行するためのホスト コードとそのビルド コマンドも参照用に含まれています。
+
+</br><hr/>
+<p align= center><b><a href="../../README.md">メイン ページに戻る</a></b></p>
+<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
 
 この資料は表記のバージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。
