@@ -20,11 +20,29 @@ In different stages of project development, you may focus on different flows. Th
 
 ## Vitis-AI Workflow
 
-Vitis-AI toolsets can take output from TensorFlow, Caffe and PyTorch. 
+Vitis AI is Xilinx’s development stack for AI inference on Xilinx hardware platforms, including both edge devices and Alveo cards. It consists of optimized IP, tools, libraries, models, and example designs. It is designed with high efficiency and ease of use in mind, unleashing the full potential of AI acceleration on Xilinx FPGA and ACAP.
 
-To evaluate machine learning models on Xilinx devices, data scientists only needs to run through step 1 and step 3  because the hardware in step 2 are prepared for Xilinx demo boards and can be customized further with development flow and customization flow described above.
+![](./images/Vitis-AI-arch.png)
+
+Vitis AI includes following key components:
+- AI Model Zoo - a comprehensive set of pre-optimized models that are ready to deploy on Xilinx devices.
+- AI Optimizer - an optional model optimizer that can prune a model by up to 90%. It is separately available with commercial licenses.
+- AI Quantizer - a powerful quantizer that supports model quantization, calibration, and fine tuning.
+- AI Compiler - compile the quantized model to a high-efficient instruction set and data flow.
+- AI Profiler - perform an in-depth analysis of the efficiency and utilization of AI inference implementation.
+- AI Library - offer high-level yet optimized C++ APIs for AI applications from edge to cloud.
+- DPU - efficient and scalable IP cores can be customized to meet the needs for many different applications
+
+When using Vitis AI, there are three steps in general which are shown in the following diagram, including:
+
+- Model development - train models or get models from Vitis AI model zoo, use Vitis AI optimizer (optional), quantizer and compiler to convert float models into DPU instruction files 
+- HW development - use Vitis tool to integrate DPU IP and other kernels with platform and generate board boot files
+- SW development - implement model deployment codes using VART or Vitis AI library, finish application level SW development and generate executable running on board
 
 ![](./images/vitis_ai_workflow.png)
+
+To quickly evaluate machine learning models on Xilinx evaluation boards, data scientists only need to run through step 1 and step 3 because the hardware build in step 2 is released by Xilinx and can be the further customized by corresponding developers using development flow and customization flow.
+
 
 ## Vitis Workflow
 
