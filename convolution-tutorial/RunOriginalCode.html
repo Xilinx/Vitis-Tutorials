@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Pathway3/README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -497,13 +498,59 @@ The application uses FFmpeg to create input and output video streams that are us
 </li>
 <li><p>To view the Profile Summary report, open the <code class="docutils literal notranslate"><span class="pre">gprofresult.txt</span></code> file in a text editor. You should see results similar to the following table.</p>
 <p>Each sample counts as 0.01 seconds.</p>
-<p>| % Time | Cumulative Seconds | Self Seconds | Total Calls  | ms/Call  | ms/Call  | Name                         |<br />|——–:|———–:|———-:|———-:|———-:|———-:|:——————————|<br />| 95.29  |     7.28  |   7.28   |    132   |  55.15   |  55.15   | convolve_cpu                 |
-|  4.85  |     7.65  |   0.37   |    132   |   2.81   |   2.81   | grayscale_cpu                |
-|  0.00  |     7.65  |   0.00   |    132   |   0.00   |   0.00   | print_progress(int, int)     |
-|  0.00  |     7.65  |   0.00   |      1   |   0.00   |   0.00   | GLOBAL__sub_I_default_output |</p>
-<p>The report indicates that the convolve_cpu uses 95% of the execution time. Accelerating that function will significantly improve the total performance.</p>
 </li>
 </ol>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="right">% Time</th>
+<th align="right">Cumulative Seconds</th>
+<th align="right">Self Seconds</th>
+<th align="right">Total Calls</th>
+<th align="right">ms/Call</th>
+<th align="right">ms/Call</th>
+<th align="left">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">95.29</td>
+<td align="right">7.28</td>
+<td align="right">7.28</td>
+<td align="right">132</td>
+<td align="right">55.15</td>
+<td align="right">55.15</td>
+<td align="left">convolve_cpu</td>
+</tr>
+<tr>
+<td align="right">4.85</td>
+<td align="right">7.65</td>
+<td align="right">0.37</td>
+<td align="right">132</td>
+<td align="right">2.81</td>
+<td align="right">2.81</td>
+<td align="left">grayscale_cpu</td>
+</tr>
+<tr>
+<td align="right">0.00</td>
+<td align="right">7.65</td>
+<td align="right">0.00</td>
+<td align="right">132</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">print_progress(int, int)</td>
+</tr>
+<tr>
+<td align="right">0.00</td>
+<td align="right">7.65</td>
+<td align="right">0.00</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">GLOBAL__sub_I_default_output</td>
+</tr>
+</tbody>
+</table><p>The report indicates that the convolve_cpu uses 95% of the execution time. Accelerating that function will significantly improve the total performance.</p>
 <div class="section" id="determine-the-maximum-achievable-throughput">
 <h3>Determine the Maximum Achievable Throughput<a class="headerlink" href="#determine-the-maximum-achievable-throughput" title="Permalink to this headline">¶</a></h3>
 <p>In most FPGA-accelerated systems, the maximum achievable throughput is limited by the PCIe® bus. The PCIe performance is influenced by many different aspects, such as motherboard, drivers, targeted shell, and transfer sizes. The Vitis core development kit provides a utility, <code class="docutils literal notranslate"><span class="pre">xbutil</span></code>, and you can run the <code class="docutils literal notranslate"><span class="pre">xbutil</span> <span class="pre">dmatest</span></code> command to measure the maximum PCIe bandwidth it can achieve. The throughput on your design target cannot exceed this upper limit.</p>
@@ -544,7 +591,7 @@ The application uses FFmpeg to create input and output video streams that are us
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 03, 2020.
       </span>
 
     </p>

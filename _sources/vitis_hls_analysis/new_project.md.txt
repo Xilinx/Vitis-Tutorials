@@ -96,9 +96,9 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 
 ## Conclusion
 
-You created the DCT project, targeted your Xilinx device or board, and configured the solution characteristics. You are ready to move to the next lab, [Running High-Level Synthesis and Analyzing Results](/docs/vitis_hls_analysis/synth_and_analysis.md).
+You created the DCT project, targeted your Xilinx device or board, and configured the solution characteristics. You are ready to move to the next lab, [Running High-Level Synthesis and Analyzing Results](./synth_and_analysis.md).
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.me">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

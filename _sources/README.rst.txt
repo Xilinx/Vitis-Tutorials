@@ -38,6 +38,7 @@ Learn how to `develop accelerated applications using the Vitis core development 
    Pathway3/README
    my-first-program/README
    convolution-tutorial/README
+   bloom/README
 
 
 
@@ -64,7 +65,7 @@ Intermediate
 
    * - `Mixing C and RTL <./mixing-c-rtl-kernels/README.md>`__
      - C and RTL
-     - This tutorial demonstrates working with an application containing RTL and OpenCL? kernels to familiarize yourself with the Vitis core development kit flow, along with various design analysis features.
+     - This tutorial demonstrates working with an application containing RTL and OpenCL kernels to familiarize yourself with the Vitis core development kit flow, along with various design analysis features.
 
    * - `Using Multiple Compute Units <using-multiple-cu/README.html>`__
      - C and RTL

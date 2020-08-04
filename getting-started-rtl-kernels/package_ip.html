@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Pathway3/README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -433,7 +434,7 @@
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Getting Started with RTL Kernels</h1>
+ <td>
  </td>
  </tr>
 </table><div class="section" id="package-ip-package-xo-flow">
@@ -496,7 +497,7 @@
 </li>
 <li><p>Select the <strong>Copy sources into project</strong> and <strong>Add sources from subdirectories</strong>.</p></li>
 <li><p>Click <strong>Finish</strong>.</p>
-<p>The files are added to the project, and the Vivado Design Suite automatically identifies the <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.v</span></code> file as the top level of the design. This RTL module has an interface which is compatible with the <strong>Hardware Interface Requirements</strong> for RTL kernels as discussed in the <a class="reference external" href="./readme">Introduction</a>. This can be seen in the <code class="docutils literal notranslate"><span class="pre">Vadd_A_B</span></code> module definition by double-clicking the file in the Sources view to open it in a Code Editor window.</p>
+<p>The files are added to the project, and the Vivado Design Suite automatically identifies the <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.v</span></code> file as the top level of the design. This RTL module has an interface which is compatible with the <strong>Hardware Interface Requirements</strong> for RTL kernels as discussed in the <a class="reference internal" href="README.html"><span class="doc">Introduction</span></a>. This can be seen in the <code class="docutils literal notranslate"><span class="pre">Vadd_A_B</span></code> module definition by double-clicking the file in the Sources view to open it in a Code Editor window.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Vadd_A_B</span> <span class="c1">#(</span>
   <span class="n">parameter</span> <span class="n">integer</span> <span class="n">C_S_AXI_CONTROL_ADDR_WIDTH</span> <span class="o">=</span> <span class="mi">12</span> <span class="p">,</span>
   <span class="n">parameter</span> <span class="n">integer</span> <span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span> <span class="o">=</span> <span class="mi">32</span> <span class="p">,</span>
@@ -559,16 +560,60 @@ The Create and Package IP summary page is displayed.
 <div class="section" id="add-control-registers-and-address-offsets">
 <h2>Add Control Registers and Address Offsets<a class="headerlink" href="#add-control-registers-and-address-offsets" title="Permalink to this headline">¶</a></h2>
 <p>You must also add the control registers and address offsets for the interfaces in the design. This can be done through the Addressing and Memory section of the Package IP window.  This requires a number of control registers to be added with the following attributes.</p>
-<p>Name | Description | Offset | Size (bits)
-—–|————-|——–|—–
-CTRL | Control Signals | 0x000 | 32
-GIER | Global Interrupt Enable Register | 0x004 | 32
-IP_IER | IP Interrupt Enable Register | 0x008 | 32
-IP_ISR | IP Interrupt Status Register | 0x00C | 32
-scalar00 | Scalar values | 0x010 | 32
-A | pointer argument | 0x018 | 64
-B | pointer argument | 0x024 | 64</p>
-<ol>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Offset</th>
+<th>Size (bits)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CTRL</td>
+<td>Control Signals</td>
+<td>0x000</td>
+<td>32</td>
+</tr>
+<tr>
+<td>GIER</td>
+<td>Global Interrupt Enable Register</td>
+<td>0x004</td>
+<td>32</td>
+</tr>
+<tr>
+<td>IP_IER</td>
+<td>IP Interrupt Enable Register</td>
+<td>0x008</td>
+<td>32</td>
+</tr>
+<tr>
+<td>IP_ISR</td>
+<td>IP Interrupt Status Register</td>
+<td>0x00C</td>
+<td>32</td>
+</tr>
+<tr>
+<td>scalar00</td>
+<td>Scalar values</td>
+<td>0x010</td>
+<td>32</td>
+</tr>
+<tr>
+<td>A</td>
+<td>pointer argument</td>
+<td>0x018</td>
+<td>64</td>
+</tr>
+<tr>
+<td>B</td>
+<td>pointer argument</td>
+<td>0x024</td>
+<td>64</td>
+</tr>
+</tbody>
+</table><ol>
 <li><p>Under Packaging Steps, select <strong>Addressing and Memory</strong>.
 This displays the Addressing and Memory window.</p></li>
 <li><p>Under Address Blocks, right-click <strong>reg0</strong> and select <strong>Add Reg</strong>.</p></li>
@@ -657,7 +702,7 @@ set_property sdx_kernel_type rtl $core
 <p>Next, you will work through the <a class="reference internal" href="vitis_ide.html"><span class="doc">RTL Kernel Wizard Flow</span></a> flow. This recreates the Vitis kernel (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) file you just created, but you will use an alternative approach.
 </br></p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/getting-started-rtl-kernels/README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
 </div>
 
 
@@ -680,7 +725,7 @@ set_property sdx_kernel_type rtl $core
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 03, 2020.
       </span>
 
     </p>

@@ -27,7 +27,7 @@ This lab uses Hardware Emulation to illustrate the steps of profiling. The steps
 
 ## Before You Begin
 
-Before running this lab, it is required to run the [Building an Application](/docs/Pathway3/BuildingAnApplication.md) lab and [Running Software and Hardware Emulation](/docs/Pathway3/Emulation.md) lab.
+Before running this lab, it is required to run the [Building an Application](./BuildingAnApplication.md) lab and [Running Software and Hardware Emulation](./Emulation.md) lab.
 
 ## Generating Emulation Data
 
@@ -85,7 +85,7 @@ With profiling and the timeline trace enabled in the `xrt.ini` file, performance
 
    >**TIP:** The `--profile_kernel` option can also be specified on the `v++` command line.
 
-   This generates a new `.xclbin` file which supports profiling the kernels. For details on building a design, refer to the [Building an Application](/docs/Pathway3/BuildingAnApplication.md) lab.
+   This generates a new `.xclbin` file which supports profiling the kernels. For details on building a design, refer to the [Building an Application](./BuildingAnApplication.md) lab.
 
 2. After the build is complete, run emulation using the following commands.  
 
@@ -171,9 +171,9 @@ Below is a summary of all the steps necessary to generate and view Profile Summa
 
 # Next Steps
 
-After you perform emulation to check correctness and performance, run application in a real device. The [Execute in Hardware](/docs/Pathway3/HardwareExec.md) lab details how to run application in hardware.
+After you perform emulation to check correctness and performance, run application in a real device. The [Execute in Hardware](./HardwareExec.md) lab details how to run application in hardware.
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="/docs/Pathway3/README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="../vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/Pathway3/README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

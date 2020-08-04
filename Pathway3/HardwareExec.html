@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -450,12 +451,12 @@
 </div>
 <div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
-<p>Review and run the <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a>, <a class="reference external" href="/docs/Pathway3/Emulation">Running Software and Hardware Emulation</a> and <a class="reference external" href="/docs/Pathway3/ProfileAndTraceReports">Generating Profile and Timeline Trace Reports</a> labs before running this lab. This lab uses the source files and options as in these previous labs, though all the necessary commands to build the host and hardware platform are shown in this lab.</p>
+<p>Review and run the <a class="reference internal" href="BuildingAnApplication.html"><span class="doc">Building an Application</span></a>, <a class="reference internal" href="Emulation.html"><span class="doc">Running Software and Hardware Emulation</span></a> and <a class="reference internal" href="ProfileAndTraceReports.html"><span class="doc">Generating Profile and Timeline Trace Reports</span></a> labs before running this lab. This lab uses the source files and options as in these previous labs, though all the necessary commands to build the host and hardware platform are shown in this lab.</p>
 </div>
 <div class="section" id="building-the-design">
 <h2>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this headline">¶</a></h2>
 <p>Before running applications in Xilinx boards or devices, it is necessary to build the design with <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">hw</span></code> option passed to the <code class="docutils literal notranslate"><span class="pre">v++</span></code> command while building the hardware.</p>
-<p>The <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a> lab describes building the host software and hardware and how to specify the <em>&lt;build_target&gt;</em>.</p>
+<p>The <a class="reference internal" href="BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab describes building the host software and hardware and how to specify the <em>&lt;build_target&gt;</em>.</p>
 <blockquote>
 <div><p><strong>IMPORTANT:</strong> Before running any of the examples, ensure you have sourced the runtime script.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Setup runtime. XILINX_XRT will be set in this step</span>
@@ -506,7 +507,7 @@ v++ -t hw --config design.cfg -l -o <span class="s1">&#39;mmult.hw.xilinx_u200_x
 </div>
 <div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
-<p>You should understand the steps required for building and running an application using the Vitis core development kit. These include coding the software program and kernel, building the application, running software and hardware emulation, viewing reports, and running the application on an accelerator card. The next steps will be to use this understanding to <a class="reference external" href="/docs/my-first-program">build your first program</a>.
+<p>You should understand the steps required for building and running an application using the Vitis core development kit. These include coding the software program and kernel, building the application, running software and hardware emulation, viewing reports, and running the application on an accelerator card. The next steps will be to use this understanding to <a class="reference internal" href="../my-first-program/README.html"><span class="doc">build your first program</span></a>.
 </br></p>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
@@ -532,7 +533,7 @@ v++ -t hw --config design.cfg -l -o <span class="s1">&#39;mmult.hw.xilinx_u200_x
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 03, 2020.
       </span>
 
     </p>

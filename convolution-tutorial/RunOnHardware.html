@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Pathway3/README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -551,14 +552,54 @@
 <div class="section" id="performance-table">
 <h3>Performance Table<a class="headerlink" href="#performance-table" title="Permalink to this headline">¶</a></h3>
 <p>The following table shows the final performance benchmarking results.</p>
-<p>| Step                            | Image Size   | Number of Frames  | Time (Hardware) (s) | Throughput (MBps) |
-| :———————–        | :———– | ————: | ——————: | —————-: |
-| baseline                        |     1920x1080 |           132 |              701.8 | 1.48              |
-| localbuf                        |     1920x1080 |           132 |                86.8 | 12 (8.1x)         |
-| fixed-point data                |     1920x1080 |           132 |                27.3 | 38.2 (3.2x)        |
-| dataflow                        |     1920x1080 |           132 |                3.6 | 284 (7.4x)        |
-| multi-CU                        |     1920x1080 |           132 |                2.35 | 443 (1.5x)       |</p>
-</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Step</th>
+<th align="left">Image Size</th>
+<th align="right">Number of Frames</th>
+<th align="right">Time (Hardware) (s)</th>
+<th align="right">Throughput (MBps)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">baseline</td>
+<td align="left">1920x1080</td>
+<td align="right">132</td>
+<td align="right">701.8</td>
+<td align="right">1.48</td>
+</tr>
+<tr>
+<td align="left">localbuf</td>
+<td align="left">1920x1080</td>
+<td align="right">132</td>
+<td align="right">86.8</td>
+<td align="right">12 (8.1x)</td>
+</tr>
+<tr>
+<td align="left">fixed-point data</td>
+<td align="left">1920x1080</td>
+<td align="right">132</td>
+<td align="right">27.3</td>
+<td align="right">38.2 (3.2x)</td>
+</tr>
+<tr>
+<td align="left">dataflow</td>
+<td align="left">1920x1080</td>
+<td align="right">132</td>
+<td align="right">3.6</td>
+<td align="right">284 (7.4x)</td>
+</tr>
+<tr>
+<td align="left">multi-CU</td>
+<td align="left">1920x1080</td>
+<td align="right">132</td>
+<td align="right">2.35</td>
+<td align="right">443 (1.5x)</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
@@ -597,7 +638,7 @@
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 03, 2020.
       </span>
 
     </p>

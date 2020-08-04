@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Pathway3/README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -453,13 +454,13 @@
 </div>
 <p>This command specifies the required libraries and include files for XRT, the Vivado tools, and the OpenCL API. For more information on building the host, refer to the <a class="reference internal" href="../Pathway3/BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab in the  Essential Concepts for Building and Running the Accelerated Application tutorial.</p>
 <blockquote>
-<div><p><strong>TIP</strong>: To run the commands shown here, you must set up the environment for the Vitis core development kit as discussed in <em>Building an Application</em>.</p>
+<div><p><strong>TIP</strong>: To run the commands shown here, you must set up the environment for the Vitis core development kit as discussed in <a class="reference internal" href="../Pathway3/BuildingAnApplication.html"><span class="doc">Building an Application</span></a>.</p>
 </div></blockquote>
 </div>
 <div class="section" id="building-the-fpga-binary">
 <h3>Building the FPGA Binary<a class="headerlink" href="#building-the-fpga-binary" title="Permalink to this headline">¶</a></h3>
 <p>Similar to building the software application, building the hardware requires compiling and linking steps using the Vitis compiler as explained in the <a class="reference internal" href="../Pathway3/BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.</p>
-<p>In the following command, the build target is for software emulation. You can also specify other build targets, such as <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> and <code class="docutils literal notranslate"><span class="pre">hw</span></code> as explained in the <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a> lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.</p>
+<p>In the following command, the build target is for software emulation. You can also specify other build targets, such as <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> and <code class="docutils literal notranslate"><span class="pre">hw</span></code> as explained in the <a class="reference internal" href="../Pathway3/BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.</p>
 <ul>
 <li><p>Use the following commands for compiling the hardware kernel for the VADD example.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">++</span> <span class="o">-</span><span class="n">t</span> <span class="n">sw_emu</span> <span class="o">--</span><span class="n">config</span> <span class="n">design</span><span class="o">.</span><span class="n">cfg</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">k</span> <span class="n">vadd</span> <span class="o">-</span><span class="n">I</span><span class="s1">&#39;../src&#39;</span> <span class="o">-</span><span class="n">o</span> <span class="s1">&#39;vadd.xilinx_u200_xdma_201830_2.xo&#39;</span> <span class="s1">&#39;./src/vadd.cpp&#39;</span>
@@ -603,10 +604,10 @@ v++ -t hw --config design.cfg -l -o <span class="s1">&#39;vadd.xilinx_u200_xdma_
 </div>
 <div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
-<p>The next step in this tutorial is to <a class="reference external" href="./my-first-program/profile_debug">profile the application</a>.
+<p>The next step in this tutorial is to <a class="reference internal" href="profile_debug.html"><span class="doc">profile the application</span></a>.
 </br></p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/my-first-program/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
 </div>
 
 
@@ -629,7 +630,7 @@ v++ -t hw --config design.cfg -l -o <span class="s1">&#39;vadd.xilinx_u200_xdma_
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 03, 2020.
       </span>
 
     </p>

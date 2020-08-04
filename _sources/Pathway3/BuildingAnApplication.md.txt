@@ -14,7 +14,7 @@
 
 ## Introduction
 
-As described in the [Execution Model of an FPGA Accelerated Application](/docs/vitis-execution-model/), an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx device. The sources for both need to be built (compiled and linked) separately. For additional details, see [Introduction to the Vitis Environment for Acceleration](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+As described in the [Execution Model of an FPGA Accelerated Application](../vitis-execution-model/README.md), an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx device. The sources for both need to be built (compiled and linked) separately. For additional details, see [Introduction to the Vitis Environment for Acceleration](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 This tutorial describes how to build both the software and hardware portions of your design using the `g++` compiler and Vitis compiler (`v++`). It describes various command line options, including how to specify a target platform, and building for hardware or software emulation.
 
@@ -104,7 +104,7 @@ The following figure shows the compiling and linking flow for the various types 
 
   ![compiling_and_linking_flow](images/compiling_and_linking_flow.png)  
 
-This tutorial is limited to `v++` compilation and does not consider RTL kernels. For details on building RTL kernels, see the [Getting Started with RTL Kernels](/docs/getting-started-rtl-kernels/README.md) tutorial.
+This tutorial is limited to `v++` compilation and does not consider RTL kernels. For details on building RTL kernels, see the [Getting Started with RTL Kernels](../getting-started-rtl-kernels/README.md) tutorial.
 
 ### Hardware Compilation
 

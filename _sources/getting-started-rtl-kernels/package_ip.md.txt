@@ -5,7 +5,7 @@
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Getting Started with RTL Kernels</h1>
+ <td>
  </td>
  </tr>
 </table>
@@ -63,7 +63,7 @@ You are ready to add RTL files into the project to package as an IP. The RTL fil
 4. Select the **Copy sources into project** and **Add sources from subdirectories**.
 5. Click **Finish**.
 
-   The files are added to the project, and the Vivado Design Suite automatically identifies the `Vadd_A_B.v` file as the top level of the design. This RTL module has an interface which is compatible with the **Hardware Interface Requirements** for RTL kernels as discussed in the [Introduction](./readme.md). This can be seen in the `Vadd_A_B` module definition by double-clicking the file in the Sources view to open it in a Code Editor window.
+   The files are added to the project, and the Vivado Design Suite automatically identifies the `Vadd_A_B.v` file as the top level of the design. This RTL module has an interface which is compatible with the **Hardware Interface Requirements** for RTL kernels as discussed in the [Introduction](./README.md). This can be seen in the `Vadd_A_B` module definition by double-clicking the file in the Sources view to open it in a Code Editor window.
 
    ````
    module Vadd_A_B #(
@@ -222,7 +222,7 @@ With the Vivado IP packaged, you can now run the **package_xo** command to creat
 Next, you will work through the [RTL Kernel Wizard Flow](./vitis_ide.md) flow. This recreates the Vitis kernel (`.xo`) file you just created, but you will use an alternative approach.
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/getting-started-rtl-kernels/README.md">Return to Start of this Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
 

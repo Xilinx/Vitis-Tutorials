@@ -394,5 +394,5 @@ In general, there are many ways to implement your host code and improve performa
 For more information about tools and processes you can use to analyze the application performance in general, refer to the [Profiling, Optimizing, and Debugging the Application](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=wzc1553475252001.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="docs/README.md">Return to Main Page</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Pathway3/README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -527,10 +528,32 @@
 <li><p><strong>Avg. Write</strong>: The average write size of each memory transaction. Retrieved from the Profile Summary report in the <em>Data Transfer</em> tab under the <em>Data Transfer: Kernels and Global Memory</em> section.</p></li>
 <li><p><strong>BW</strong>: The bandwidth is calculated by (512x10x4)/Time.</p></li>
 </ul>
-<p>| Step          | Image Size | Time (HW-EM)(ms) | Reads (KB) | Writes (KB) | Avg. Read (KB) | Avg. Write (KB) | BW (MBps) |
-| :———— | :——— | —————: | ———: | ———-: | ————-: | ————–: | ——–: |
-| baseline      | 512x10     | 3.903            | 344        | 20.0        | 0.004          | 0.004           |   5.2     |</p>
-</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Step</th>
+<th align="left">Image Size</th>
+<th align="right">Time (HW-EM)(ms)</th>
+<th align="right">Reads (KB)</th>
+<th align="right">Writes (KB)</th>
+<th align="right">Avg. Read (KB)</th>
+<th align="right">Avg. Write (KB)</th>
+<th align="right">BW (MBps)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">baseline</td>
+<td align="left">512x10</td>
+<td align="right">3.903</td>
+<td align="right">344</td>
+<td align="right">20.0</td>
+<td align="right">0.004</td>
+<td align="right">0.004</td>
+<td align="right">5.2</td>
+</tr>
+</tbody>
+</table></div>
 <div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
 <p>You have created the hardware kernel and run the application in hardware emulation mode. You will now begin to examine data transfers between the host application and the kernel and determine some good strategies for <a class="reference internal" href="localbuf.html"><span class="doc">optimizing memory transfers</span></a>.
@@ -559,7 +582,7 @@
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 03, 2020.
       </span>
 
     </p>

@@ -30,13 +30,13 @@ g++ -I$XILINX_XRT/include/ -I$XILINX_VIVADO/include/ -Wall -O0 -g -std=c++11 ./s
 
 This command specifies the required libraries and include files for XRT, the Vivado tools, and the OpenCL API. For more information on building the host, refer to the [Building an Application](../Pathway3/BuildingAnApplication.md) lab in the  Essential Concepts for Building and Running the Accelerated Application tutorial.
 
->**TIP**: To run the commands shown here, you must set up the environment for the Vitis core development kit as discussed in *Building an Application*.
+>**TIP**: To run the commands shown here, you must set up the environment for the Vitis core development kit as discussed in [Building an Application](../Pathway3/BuildingAnApplication.md).
 
 ### Building the FPGA Binary
 
 Similar to building the software application, building the hardware requires compiling and linking steps using the Vitis compiler as explained in the [Building an Application](../Pathway3/BuildingAnApplication.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
 
-In the following command, the build target is for software emulation. You can also specify other build targets, such as `hw_emu` and `hw` as explained in the [Building an Application](/docs/Pathway3/BuildingAnApplication.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
+In the following command, the build target is for software emulation. You can also specify other build targets, such as `hw_emu` and `hw` as explained in the [Building an Application](../Pathway3/BuildingAnApplication.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
 
 * Use the following commands for compiling the hardware kernel for the VADD example.
 
@@ -182,9 +182,9 @@ The `Makefile` provided requires you to specify the build TARGET, the hardware D
 
 ## Next Step
 
-The next step in this tutorial is to [profile the application](./my-first-program/profile_debug.md).
+The next step in this tutorial is to [profile the application](./profile_debug.md).
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/my-first-program/README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

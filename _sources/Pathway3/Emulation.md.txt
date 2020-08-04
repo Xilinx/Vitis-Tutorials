@@ -20,7 +20,7 @@ This tutorial details the steps to perform both software and hardware emulation.
 
 ## Before You Begin
 
-Before running this lab, review and run the [Building an Application](/docs/Pathway3/BuildingAnApplication.md) lab.  
+Before running this lab, review and run the [Building an Application](./BuildingAnApplication.md) lab.  
 
 ## Running Software and Hardware Emulation
 
@@ -45,7 +45,7 @@ Before running emulation, build the application with the desired emulation mode 
 * To run software emulation, the hardware must be built with *<build_target>* set to **sw_emu**.  
 * Similarly, to run hardware emulation, the hardware must be built with *<build_target>* set to **hw_emu**.
 
-The [Building an Application](/docs/Pathway3/BuildingAnApplication.md) lab describes building the host software and hardware kernels, and how to specify the *<build_target>*.
+The [Building an Application](./BuildingAnApplication.md) lab describes building the host software and hardware kernels, and how to specify the *<build_target>*.
 
 >**IMPORTANT:** Before running any of the examples, ensure you have set up the Vitis core development kit by running the following commands.
 >
@@ -92,7 +92,7 @@ Using what you now know, put it all together, and run software emulation on a de
 
 1. Ensure the software and hardware have been built with *build_target* set to `sw_emu`.  
 
-   >**NOTE:** Refer to the [Building an Application](/docs/Pathway3/BuildingAnApplication.md) lab for how to build the host software and hardware.
+   >**NOTE:** Refer to the [Building an Application](./BuildingAnApplication.md) lab for how to build the host software and hardware.
 
 2. Generate the emulation configuration file.  
     The generated `emconfig.json` file must be in the same directory as the host executable; ensure you are in the same directory as the host executable, then run the following command.
@@ -128,7 +128,7 @@ Now that you have run software emulation, run hardware emulation on the same des
 
 1. Ensure the software and hardware have been built with *build_target* set to *hw_emu*.  
 
-   >**NOTE:** For instructions on how to build the host software and hardware, refer to the [Building an Application](/docs/Pathway3/BuildingAnApplication.md) lab.  
+   >**NOTE:** For instructions on how to build the host software and hardware, refer to the [Building an Application](./BuildingAnApplication.md) lab.  
 
 2. Generate the emulation configuration file.
 
@@ -200,7 +200,7 @@ The following steps summarize the steps necessary to configure and run emulation
 
 ## Next Step
 
-After you perform emulation, generate the Profile Summary and Timeline Trace reports for further debugging and optimization. For details on how to generate and view these reports, refer to the [Generating Profile and Trace Reports](docs/Pathway3/ProfileAndTraceReports.md) lab.
+After you perform emulation, generate the Profile Summary and Timeline Trace reports for further debugging and optimization. For details on how to generate and view these reports, refer to the [Generating Profile and Trace Reports](./ProfileAndTraceReports.md) lab.
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a></b> — <b><a href="/docs/Pathway3/README.md">Return to Start of Tutorial</a></b></p>

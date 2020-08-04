@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Pathway3/README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -609,13 +610,62 @@ static fixed coef[COEFFICIENT_SIZE * COEFFICIENT_SIZE];
 </div>
 <p>The kernel execution time is now reduced to 0.059 ms.</p>
 <p>Here is the updated table.</p>
-<p>| Step               | Image Size | Time (HW-EM)(ms) | Reads(KB)       | Writes(KB) | Avg. Read (KB) | Avg. Write (KB) | Bandwidth (MBps)  |
-| :—————   | :——— | —————: | ————–: | ———: | ————-: | ————–: | ———: |
-| baseline           |     512x10 | 3.903            | 344             |       20.0 |          0.004 |           0.004 |    5.2     |
-| localbuf           |     512x10 | 1.574 (2.48x)    | 21  (0.12x)     |       20.0 |          0.064 |           0.064 |    13      |
-| fixed-point data   |     512x10 | 0.46 (3.4x)      | 21              |       20.0 |          0.064 |           0.064 |    44      |
-| dataflow           |     512x10 | 0.059 (7.8x)     | 21              |       20.0 |          0.064 |           0.064 |    347     |</p>
-</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Step</th>
+<th align="left">Image Size</th>
+<th align="right">Time (HW-EM)(ms)</th>
+<th align="right">Reads(KB)</th>
+<th align="right">Writes(KB)</th>
+<th align="right">Avg. Read (KB)</th>
+<th align="right">Avg. Write (KB)</th>
+<th align="right">Bandwidth (MBps)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">baseline</td>
+<td align="left">512x10</td>
+<td align="right">3.903</td>
+<td align="right">344</td>
+<td align="right">20.0</td>
+<td align="right">0.004</td>
+<td align="right">0.004</td>
+<td align="right">5.2</td>
+</tr>
+<tr>
+<td align="left">localbuf</td>
+<td align="left">512x10</td>
+<td align="right">1.574 (2.48x)</td>
+<td align="right">21  (0.12x)</td>
+<td align="right">20.0</td>
+<td align="right">0.064</td>
+<td align="right">0.064</td>
+<td align="right">13</td>
+</tr>
+<tr>
+<td align="left">fixed-point data</td>
+<td align="left">512x10</td>
+<td align="right">0.46 (3.4x)</td>
+<td align="right">21</td>
+<td align="right">20.0</td>
+<td align="right">0.064</td>
+<td align="right">0.064</td>
+<td align="right">44</td>
+</tr>
+<tr>
+<td align="left">dataflow</td>
+<td align="left">512x10</td>
+<td align="right">0.059 (7.8x)</td>
+<td align="right">21</td>
+<td align="right">20.0</td>
+<td align="right">0.064</td>
+<td align="right">0.064</td>
+<td align="right">347</td>
+</tr>
+</tbody>
+</table></div>
 <div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
 <p>You have performed a couple of optimizations on the hardware kernels to improve the performance. In the next section, you look at different host code optimizations, such as <a class="reference internal" href="multi-CU.html"><span class="doc">using out-of-order queues and multiple compute units</span></a>.</p>
@@ -644,7 +694,7 @@ static fixed coef[COEFFICIENT_SIZE * COEFFICIENT_SIZE];
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 03, 2020.
       </span>
 
     </p>
