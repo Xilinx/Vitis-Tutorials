@@ -359,5 +359,5 @@ vitis_analyzer xclbin.run_summary
   - Review the [RTL Kernel Wizard](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=devrtlkernel.html;a=ouz1504034324041) section in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

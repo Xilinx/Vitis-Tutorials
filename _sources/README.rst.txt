@@ -38,6 +38,7 @@ Learn how to `develop accelerated applications using the Vitis core development 
    Pathway3/README
    my-first-program/README
    convolution-tutorial/README
+   bloom/README
 
 
 
@@ -54,17 +55,17 @@ Intermediate
      - Kernel
      - Description
 
-   * - `Getting Started with RTL Kernels <./getting-started-rtl-kernels/README.md>`__
+   * - `Getting Started with RTL Kernels <./getting-started-rtl-kernels/README.html>`__
      - RTL
      - This tutorial demonstrates how to use the Vitis core development kit to program an RTL kernel into an FPGA and build a Hardware Emulation using a common development flow.
 
-   * - `Vitis HLS Analysis and Optimization <./vitis_hls_analysis/README.md>`__
+   * - `Vitis HLS Analysis and Optimization <./vitis_hls_analysis/README.html>`__
      - C
      - This tutorial demonstrates how you can use the Vitis HLS tool GUI to build, analyze, and optimize a hardware kernel.
 
-   * - `Mixing C and RTL <./mixing-c-rtl-kernels/README.md>`__
+   * - `Mixing C and RTL <./mixing-c-rtl-kernels/README.html>`__
      - C and RTL
-     - This tutorial demonstrates working with an application containing RTL and OpenCL? kernels to familiarize yourself with the Vitis core development kit flow, along with various design analysis features.
+     - This tutorial demonstrates working with an application containing RTL and OpenCL kernels to familiarize yourself with the Vitis core development kit flow, along with various design analysis features.
 
    * - `Using Multiple Compute Units <using-multiple-cu/README.html>`__
      - C and RTL
@@ -125,7 +126,7 @@ Advanced
 
    Master <https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html>
    
-   2019.2 <https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md>
+   2019.2 <https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md>
 
       
 	 

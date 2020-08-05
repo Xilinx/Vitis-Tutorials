@@ -144,7 +144,7 @@ Click **OK** to launch Vivado Design Suite to package the RTL IP and create the 
 Next you will take an RTL design and [package it as an IP in the Vivado Design Suite](./vivado_ip.md).
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/getting-started-rtl-kernels/README.md">Return to Start of this Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
 

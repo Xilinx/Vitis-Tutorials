@@ -213,5 +213,5 @@ The following section summarizes all the steps to control the Vivado tool implem
 This tutorial illustrated how to use the `v++` command `--vivado` option to control Vivado synthesis and implementation, using a simple example to optimize the design with the Vivado tool. It also showed the steps to reuse an implemented DCP to generate the device binary file (`.xclbin`), building the Vitis accelerated application from the optimized Vivado implementation.
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

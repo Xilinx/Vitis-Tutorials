@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Pathway3/README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -354,7 +355,7 @@
 <p class="caption"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">Master</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md">2019.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md">2019.2</a></li>
 </ul>
 
             
@@ -652,14 +653,72 @@
 </div>
 <p>The kernel execution time for four CUs is around 0.065 ms each.</p>
 <p>Here is the updated table.</p>
-<p>| Step                    | Image Size | Time (HW-EM)(ms) | Reads (KB)      | Writes (KB)    | Avg. Read (KB) | Avg. Write (KB) | BW (MBps)  |
-| :——————-    | :——— | —————: | ————–: | ————-: | ————-: | ————–: | ———: |
-| baseline                |     512x10 | 3.903            | 344             |        20.0    |          0.004 |           0.004 |    5.2     |
-| localbuf                |     512x10 | 1.574 (2.48x)    | 21 (0.12x)      |        20.0    |          0.064 |           0.064 |    13      |
-| fixed-type data         |     512x10 | 0.46 (3.4x)      | 21              |        20.0    |          0.064 |           0.064 |    44      |
-| dataflow                |     512x10 | 0.059 (7.8x)     | 21              |        20.0    |          0.064 |           0.064 |    347     |
-| multi-CU                |     512x40*| 0.06 (0.98x)     | 92 (4.3x)       |       80.0 (4x)|          0.064 |           0.064 |    1365*   |</p>
-<blockquote>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Step</th>
+<th align="left">Image Size</th>
+<th align="right">Time (HW-EM)(ms)</th>
+<th align="right">Reads (KB)</th>
+<th align="right">Writes (KB)</th>
+<th align="right">Avg. Read (KB)</th>
+<th align="right">Avg. Write (KB)</th>
+<th align="right">BW (MBps)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">baseline</td>
+<td align="left">512x10</td>
+<td align="right">3.903</td>
+<td align="right">344</td>
+<td align="right">20.0</td>
+<td align="right">0.004</td>
+<td align="right">0.004</td>
+<td align="right">5.2</td>
+</tr>
+<tr>
+<td align="left">localbuf</td>
+<td align="left">512x10</td>
+<td align="right">1.574 (2.48x)</td>
+<td align="right">21 (0.12x)</td>
+<td align="right">20.0</td>
+<td align="right">0.064</td>
+<td align="right">0.064</td>
+<td align="right">13</td>
+</tr>
+<tr>
+<td align="left">fixed-type data</td>
+<td align="left">512x10</td>
+<td align="right">0.46 (3.4x)</td>
+<td align="right">21</td>
+<td align="right">20.0</td>
+<td align="right">0.064</td>
+<td align="right">0.064</td>
+<td align="right">44</td>
+</tr>
+<tr>
+<td align="left">dataflow</td>
+<td align="left">512x10</td>
+<td align="right">0.059 (7.8x)</td>
+<td align="right">21</td>
+<td align="right">20.0</td>
+<td align="right">0.064</td>
+<td align="right">0.064</td>
+<td align="right">347</td>
+</tr>
+<tr>
+<td align="left">multi-CU</td>
+<td align="left">512x40*</td>
+<td align="right">0.06 (0.98x)</td>
+<td align="right">92 (4.3x)</td>
+<td align="right">80.0 (4x)</td>
+<td align="right">0.064</td>
+<td align="right">0.064</td>
+<td align="right">1365*</td>
+</tr>
+</tbody>
+</table><blockquote>
 <div><p><strong>NOTE:</strong></p>
 <ul class="simple">
 <li><p>The multi-CU version processed four times the amount of data compared to previous versions. Even if the CU execution time does not change for each CU, the four parallel CUs increase the system performance by almost four times.</p></li>
@@ -695,7 +754,7 @@
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 04, 2020.
       </span>
 
     </p>

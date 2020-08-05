@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -354,7 +355,7 @@
 <p class="caption"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">Master</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md">2019.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md">2019.2</a></li>
 </ul>
 
             
@@ -453,7 +454,7 @@
 </div>
 <div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
-<p>Before running this lab, it is required to run the <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a> lab and <a class="reference external" href="/docs/Pathway3/Emulation">Running Software and Hardware Emulation</a> lab.</p>
+<p>Before running this lab, it is required to run the <a class="reference internal" href="BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab and <a class="reference internal" href="Emulation.html"><span class="doc">Running Software and Hardware Emulation</span></a> lab.</p>
 </div>
 <div class="section" id="generating-emulation-data">
 <h2>Generating Emulation Data<a class="headerlink" href="#generating-emulation-data" title="Permalink to this headline">¶</a></h2>
@@ -512,7 +513,7 @@ v++ -t hw_emu --config design.cfg -l -o mmult.hw_emu.xilinx_u200_xdma_201830_2.x
 <blockquote>
 <div><p><strong>TIP:</strong> The <code class="docutils literal notranslate"><span class="pre">--profile_kernel</span></code> option can also be specified on the <code class="docutils literal notranslate"><span class="pre">v++</span></code> command line.</p>
 </div></blockquote>
-<p>This generates a new <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code> file which supports profiling the kernels. For details on building a design, refer to the <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a> lab.</p>
+<p>This generates a new <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code> file which supports profiling the kernels. For details on building a design, refer to the <a class="reference internal" href="BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab.</p>
 </li>
 <li><p>After the build is complete, run emulation using the following commands.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>emconfigutil --platform xilinx_u200_xdma_201830_2
@@ -598,10 +599,10 @@ v++ -t hw_emu --config design.cfg -l  -o mmult.hw_emu.xilinx_u200_xdma_201830_2.
 </div>
 <div class="section" id="next-steps">
 <h1>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h1>
-<p>After you perform emulation to check correctness and performance, run application in a real device. The <a class="reference external" href="/docs/Pathway3/HardwareExec">Execute in Hardware</a> lab details how to run application in hardware.
+<p>After you perform emulation to check correctness and performance, run application in a real device. The <a class="reference internal" href="HardwareExec.html"><span class="doc">Execute in Hardware</span></a> lab details how to run application in hardware.
 </br></p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="/docs/Pathway3/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+<p align="center" class="sphinxhide"><b><a href="../vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/Pathway3/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
 
 
            </div>
@@ -623,7 +624,7 @@ v++ -t hw_emu --config design.cfg -l  -o mmult.hw_emu.xilinx_u200_xdma_201830_2.
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 04, 2020.
       </span>
 
     </p>

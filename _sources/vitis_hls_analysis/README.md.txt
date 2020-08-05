@@ -61,6 +61,6 @@ Complete the labs in the following order:
 
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a> — <a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></p>
 </br>
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

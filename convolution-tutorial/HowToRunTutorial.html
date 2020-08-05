@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Pathway3/README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -354,7 +355,7 @@
 <p class="caption"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">Master</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md">2019.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md">2019.2</a></li>
 </ul>
 
             
@@ -440,15 +441,40 @@
 <h1>Understanding the Makefile<a class="headerlink" href="#understanding-the-makefile" title="Permalink to this headline">¶</a></h1>
 <p>The source files required for this lab are all under the <code class="docutils literal notranslate"><span class="pre">design</span></code> folder. The <code class="docutils literal notranslate"><span class="pre">design</span></code> folder contains three sub-directories: <code class="docutils literal notranslate"><span class="pre">cpu_src</span></code> with the original application code, <code class="docutils literal notranslate"><span class="pre">src</span></code> with the accelerated application code, and <code class="docutils literal notranslate"><span class="pre">makefile</span></code>.</p>
 <p>Under the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder, there are six sub-folders, which contain the source files for each step. The following directories correspond to each step of the tutorial.</p>
-<p>| Tutorial Step                                             | Associated Directory  |
-|————————————————————-|———————— |
-| Creating a Vitis core development kit application from C application          |     <code class="docutils literal notranslate"><span class="pre">src/baseline</span></code>        |
-| Optimizing memory transfers                                  |     <code class="docutils literal notranslate"><span class="pre">src/localbuf</span></code>        |
-| Optimizing by using fixed point data types:                 |     <code class="docutils literal notranslate"><span class="pre">src/fixedpoint</span></code>      |
-| Optimizing with dataflow                                    |     <code class="docutils literal notranslate"><span class="pre">src/dataflow</span></code>        |
-| Using Out-of-order queues and multiple kernels              |     <code class="docutils literal notranslate"><span class="pre">src/multicu</span></code>         |
-| Using Using QDMA with Multiple Compute Units              |     <code class="docutils literal notranslate"><span class="pre">src/qdma</span></code>         |</p>
-<p>Makefile targets can be used to run software emulation, hardware emulation, as well as hardware on the Alveo Data Center accelerator card.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Tutorial Step</th>
+<th>Associated Directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Creating a Vitis core development kit application from C application</td>
+<td><code>src/baseline</code></td>
+</tr>
+<tr>
+<td>Optimizing memory transfers</td>
+<td><code>src/localbuf</code></td>
+</tr>
+<tr>
+<td>Optimizing by using fixed point data types:</td>
+<td><code>src/fixedpoint</code></td>
+</tr>
+<tr>
+<td>Optimizing with dataflow</td>
+<td><code>src/dataflow</code></td>
+</tr>
+<tr>
+<td>Using Out-of-order queues and multiple kernels</td>
+<td><code>src/multicu</code></td>
+</tr>
+<tr>
+<td>Using Using QDMA with Multiple Compute Units</td>
+<td><code>src/qdma</code></td>
+</tr>
+</tbody>
+</table><p>Makefile targets can be used to run software emulation, hardware emulation, as well as hardware on the Alveo Data Center accelerator card.</p>
 <div class="section" id="makefile-targets-for-building-designs">
 <h2>Makefile Targets for Building Designs<a class="headerlink" href="#makefile-targets-for-building-designs" title="Permalink to this headline">¶</a></h2>
 <p>To build the design, use the following command.</p>
@@ -520,7 +546,7 @@
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 04, 2020.
       </span>
 
     </p>

@@ -22,13 +22,13 @@ In hardware execution, the host program runs on the host machine, and the kernel
 
 ## Before You Begin
 
-Review and run the [Building an Application](/docs/Pathway3/BuildingAnApplication.md), [Running Software and Hardware Emulation](/docs/Pathway3/Emulation.md) and [Generating Profile and Timeline Trace Reports](/docs/Pathway3/ProfileAndTraceReports.md) labs before running this lab. This lab uses the source files and options as in these previous labs, though all the necessary commands to build the host and hardware platform are shown in this lab.
+Review and run the [Building an Application](./BuildingAnApplication.md), [Running Software and Hardware Emulation](./Emulation.md) and [Generating Profile and Timeline Trace Reports](./ProfileAndTraceReports.md) labs before running this lab. This lab uses the source files and options as in these previous labs, though all the necessary commands to build the host and hardware platform are shown in this lab.
 
 ## Building the Design
 
 Before running applications in Xilinx boards or devices, it is necessary to build the design with `-t hw` option passed to the `v++` command while building the hardware.
 
-The [Building an Application](/docs/Pathway3/BuildingAnApplication.md) lab describes building the host software and hardware and how to specify the *<build_target>*.
+The [Building an Application](./BuildingAnApplication.md) lab describes building the host software and hardware and how to specify the *<build_target>*.
 
 >**IMPORTANT:** Before running any of the examples, ensure you have sourced the runtime script.
 >
@@ -86,7 +86,7 @@ The board status, compute unit status, and so on display. For more information a
 
 ## Next Steps
 
-You should understand the steps required for building and running an application using the Vitis core development kit. These include coding the software program and kernel, building the application, running software and hardware emulation, viewing reports, and running the application on an accelerator card. The next steps will be to use this understanding to [build your first program](/docs/my-first-program).
+You should understand the steps required for building and running an application using the Vitis core development kit. These include coding the software program and kernel, building the application, running software and hardware emulation, viewing reports, and running the application on an accelerator card. The next steps will be to use this understanding to [build your first program](../my-first-program/README.md).
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

@@ -12,7 +12,7 @@
 
 # 3. Using Optimization Techniques
 
-This lab discusses various optimization techniques that you can try to reconcile the II violation from the [Running Simulation and Synthesis](/docs/vitis_hls_analysis/synth_and_analysis.md) lab.
+This lab discusses various optimization techniques that you can try to reconcile the II violation from the [Running Simulation and Synthesis](./synth_and_analysis.md) lab.
 
 ## Configure the Pipeline Loops Threshold
 
@@ -159,9 +159,9 @@ ARRAY_PARTITION lets you partition an array into smaller arrays or into individu
 
 ## Next Step
 
-Now that you have resolved the optimizations for the specific issues in the design, there is one more optimization. You will be [using the DATAFLOW optimization](/docs/vitis_hls_analysis/dataflow_design.md).
+Now that you have resolved the optimizations for the specific issues in the design, there is one more optimization. You will be [using the DATAFLOW optimization](./dataflow_design.md).
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

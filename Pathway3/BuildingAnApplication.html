@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -354,7 +355,7 @@
 <p class="caption"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">Master</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md">2019.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md">2019.2</a></li>
 </ul>
 
             
@@ -440,7 +441,7 @@
 <h1>1. Building an Application<a class="headerlink" href="#building-an-application" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>As described in the <a class="reference external" href="/docs/vitis-execution-model/">Execution Model of an FPGA Accelerated Application</a>, an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx device. The sources for both need to be built (compiled and linked) separately. For additional details, see <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1%3Bt=vitis+doc%3Bd=vhc1571429852245.html">Introduction to the Vitis Environment for Acceleration</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
+<p>As described in the <a class="reference internal" href="../vitis-execution-model/README.html"><span class="doc">Execution Model of an FPGA Accelerated Application</span></a>, an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx device. The sources for both need to be built (compiled and linked) separately. For additional details, see <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1%3Bt=vitis+doc%3Bd=vhc1571429852245.html">Introduction to the Vitis Environment for Acceleration</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
 <p>This tutorial describes how to build both the software and hardware portions of your design using the <code class="docutils literal notranslate"><span class="pre">g++</span></code> compiler and Vitis compiler (<code class="docutils literal notranslate"><span class="pre">v++</span></code>). It describes various command line options, including how to specify a target platform, and building for hardware or software emulation.</p>
 <p>Reference files are provided in the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory for use with this tutorial.</p>
 <blockquote>
@@ -517,7 +518,7 @@
 <p>The object files are subsequently linked with the shell (hardware platform) through the Vitis compiler to create the FPGA binary file, or <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> file.</p>
 <p>The following figure shows the compiling and linking flow for the various types of kernels.</p>
 <p><img alt="compiling_and_linking_flow" src="../_images/compiling_and_linking_flow.png" /></p>
-<p>This tutorial is limited to <code class="docutils literal notranslate"><span class="pre">v++</span></code> compilation and does not consider RTL kernels. For details on building RTL kernels, see the <a class="reference external" href="/docs/getting-started-rtl-kernels/README">Getting Started with RTL Kernels</a> tutorial.</p>
+<p>This tutorial is limited to <code class="docutils literal notranslate"><span class="pre">v++</span></code> compilation and does not consider RTL kernels. For details on building RTL kernels, see the <a class="reference internal" href="../getting-started-rtl-kernels/README.html"><span class="doc">Getting Started with RTL Kernels</span></a> tutorial.</p>
 <div class="section" id="hardware-compilation">
 <h3>Hardware Compilation<a class="headerlink" href="#hardware-compilation" title="Permalink to this headline">¶</a></h3>
 <p>In hardware compilation, you are compiling hardware kernel source files through the <code class="docutils literal notranslate"><span class="pre">v++</span></code> command <code class="docutils literal notranslate"><span class="pre">-c</span></code> option. While <code class="docutils literal notranslate"><span class="pre">v++</span></code> command has command options, at minimum, you must specify the source files, the targeted platform, and the build target. For a complete list of <code class="docutils literal notranslate"><span class="pre">v++</span></code> command options, refer to the <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1%3Bt=vitis+doc%3Bd=vitiscommandcompiler.html%3Ba=wrj1504034328013">Vitis Compiler Command</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
@@ -726,7 +727,7 @@ v++ -t hw --config design.cfg -l --temp_dir hw -o <span class="s1">&#39;hw/mmult
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 04, 2020.
       </span>
 
     </p>

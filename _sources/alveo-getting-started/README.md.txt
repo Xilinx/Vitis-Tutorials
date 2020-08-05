@@ -40,6 +40,6 @@ For developing application in-house, install the Vitis core development kit, by 
 Understand the [Essential Concepts for Building and Running the Accelerated Application](../Pathway3/README.md) using the Vitis core development kit, including building a software application, building a hardware platform, performing emulation, viewing reports, and executing in hardware.
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a> — <a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a></b></p>
 </br>
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

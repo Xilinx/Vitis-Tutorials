@@ -204,5 +204,5 @@ This tutorial showed you how to change the default mapping of ports `in1`, `in2`
 * Run HW-Emulation and observe the transfer rate and bandwidth utilization for each port.
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

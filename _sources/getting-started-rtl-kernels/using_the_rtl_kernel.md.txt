@@ -139,6 +139,6 @@ In the system configuration, the kernel code is implemented onto the FPGA, resul
    - In the Vitis IDE, a binary container was created using the XO file, and a `xclbin` file was compiled.
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/getting-started-rtl-kernels/vivado_ip.md">Return to Vivado Design Suite</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

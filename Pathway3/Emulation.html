@@ -337,6 +337,7 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">Essential Concepts for Building and Running the Accelerated Application</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../my-first-program/README.html">My First Program</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Intermediate</span></p>
 <ul>
@@ -354,7 +355,7 @@
 <p class="caption"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">Master</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md">2019.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md">2019.2</a></li>
 </ul>
 
             
@@ -445,7 +446,7 @@
 </div>
 <div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
-<p>Before running this lab, review and run the <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a> lab.</p>
+<p>Before running this lab, review and run the <a class="reference internal" href="BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab.</p>
 </div>
 <div class="section" id="id1">
 <h2>Running Software and Hardware Emulation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
@@ -470,7 +471,7 @@
 <li><p>To run software emulation, the hardware must be built with <em>&lt;build_target&gt;</em> set to <strong>sw_emu</strong>.</p></li>
 <li><p>Similarly, to run hardware emulation, the hardware must be built with <em>&lt;build_target&gt;</em> set to <strong>hw_emu</strong>.</p></li>
 </ul>
-<p>The <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a> lab describes building the host software and hardware kernels, and how to specify the <em>&lt;build_target&gt;</em>.</p>
+<p>The <a class="reference internal" href="BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab describes building the host software and hardware kernels, and how to specify the <em>&lt;build_target&gt;</em>.</p>
 <blockquote>
 <div><p><strong>IMPORTANT:</strong> Before running any of the examples, ensure you have set up the Vitis core development kit by running the following commands.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.</span>
@@ -514,7 +515,7 @@
 <ol>
 <li><p>Ensure the software and hardware have been built with <em>build_target</em> set to <code class="docutils literal notranslate"><span class="pre">sw_emu</span></code>.</p>
 <blockquote>
-<div><p><strong>NOTE:</strong> Refer to the <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a> lab for how to build the host software and hardware.</p>
+<div><p><strong>NOTE:</strong> Refer to the <a class="reference internal" href="BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab for how to build the host software and hardware.</p>
 </div></blockquote>
 </li>
 <li><p>Generate the emulation configuration file.<br />The generated <code class="docutils literal notranslate"><span class="pre">emconfig.json</span></code> file must be in the same directory as the host executable; ensure you are in the same directory as the host executable, then run the following command.</p>
@@ -546,7 +547,7 @@ TEST PASSED
 <ol>
 <li><p>Ensure the software and hardware have been built with <em>build_target</em> set to <em>hw_emu</em>.</p>
 <blockquote>
-<div><p><strong>NOTE:</strong> For instructions on how to build the host software and hardware, refer to the <a class="reference external" href="/docs/Pathway3/BuildingAnApplication">Building an Application</a> lab.</p>
+<div><p><strong>NOTE:</strong> For instructions on how to build the host software and hardware, refer to the <a class="reference internal" href="BuildingAnApplication.html"><span class="doc">Building an Application</span></a> lab.</p>
 </div></blockquote>
 </li>
 <li><p>Generate the emulation configuration file.</p>
@@ -612,7 +613,7 @@ TEST PASSED
 </div>
 <div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
-<p>After you perform emulation, generate the Profile Summary and Timeline Trace reports for further debugging and optimization. For details on how to generate and view these reports, refer to the <a class="reference external" href="docs/Pathway3/ProfileAndTraceReports">Generating Profile and Trace Reports</a> lab.
+<p>After you perform emulation, generate the Profile Summary and Timeline Trace reports for further debugging and optimization. For details on how to generate and view these reports, refer to the <a class="reference internal" href="ProfileAndTraceReports.html"><span class="doc">Generating Profile and Trace Reports</span></a> lab.
 </br></p>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a></b> — <b><a href="/docs/Pathway3/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
@@ -638,7 +639,7 @@ TEST PASSED
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on July 23, 2020.
+        Last updated on August 04, 2020.
       </span>
 
     </p>
