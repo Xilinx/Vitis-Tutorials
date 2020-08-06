@@ -25,21 +25,27 @@ For the hardware part of Vitis AI design, DPU is integrated as RTL kernel. It's 
 On the software side, the platform needs to provide the XRT, ZOCL packages for Vitis-AI to control DPU. ZOCL is the kernel module that talks to acceleration kernels. It needs a device tree node so it will be added. Other Vitis-AI dependencies will also be added. The above are standard Vitis platform software settings. Common image provided by Xilinx can accomplish all these features. Besides these common features, we wish to add gcc compilers to do application native compilation, add mesa-megadriver for Vitis-AI demo applications and replace the dropbear with openssh so that the network speed can be faster.
 
 ## Step 1: Create the Vivado Hardware Design and Generate XSA
+
+### Create Base Vivado Project from Preset
+
 1. Source <Vitis_Install_Directory>/settings64.sh, and call Vivado out by typing "vivado" in the console.<br />
-2. Create a Vivado project named zcu104_custom_platform.<br />
-   a) Select ***File->Project->New***.<br />
-   b) Click ***Next***.<br />
-   c) In Project Name dialog set Project name to ```zcu104_custom_platform```.<br />
-   d) Click ***Next***.<br />
-   e) Leaving all the setting to default until you goto the Default Part dialog.<br />
-   f) Select ***Boards*** tab and then select ***Zynq UltraScale+ ZCU104 Evaluation Board***<br />
-   g) Click ***Next***, and your project summary should like below:<br />
-   ![vivado_project_summary.png](images/vivado_project_summary.png)<br />
-   h) Then click ***Finish***<br />
+
+2. Create a Vivado project named zcu104_custom_platform.
+      a) Select ***File->Project->New***.<br />
+      b) Click ***Next***.<br />
+      c) In Project Name dialog set Project name to ```zcu104_custom_platform```.<br />
+      d) Click ***Next***.<br />
+      e) Leaving all the setting to default until you goto the Default Part dialog.<br />
+      f) Select ***Boards*** tab and then select ***Zynq UltraScale+ ZCU104 Evaluation Board***<br />
+      g) Click ***Next***, and your project summary should like below:<br />
+      ![vivado_project_summary.png](images/vivado_project_summary.png)<br />
+      h) Then click ***Finish***<br />
+   
 3. Create a block design named system. <br />
    a) Select Create Block Design.<br />
    b) Change the design name to ```system```.<br />
    c) Click ***OK***.<br />
+
 4. Add MPSoC IP and run block automation to configure it.<br />
    a) Right click Diagram view and select ***Add IP***.<br />
    b) Search for ```zynq``` and then double-click the ***Zynq UltraScale+ MPSoC*** from the IP search results.<br />
@@ -50,11 +56,13 @@ On the software side, the platform needs to provide the XRT, ZOCL packages for V
       - Apply Board Presets<br />
 
    d) Click ***OK***. You should get MPSoC block configured like below:<br />
-![block_automation_result.png](images/block_automation_result.png)<br />
+   ![block_automation_result.png](images/block_automation_result.png)<br />
 
 ***Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. Add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.***
 
-5. Re-Customizing the Processor IP Block<br />
+### Customize System Design for Clock and Reset 
+
+1. Re-Customizing the Processor IP Block<br />
    a) Double-click the Zynq UltraScale+ MPSoC block in the IP integrator diagram.<br />
    b) Select ***Page Navigator > PS-PL Configuration***.<br />
    c) Expand ***PS-PL Configuration > PS-PL Interfaces*** by clicking the ***>*** symbol.<br />
@@ -66,7 +74,7 @@ On the software side, the platform needs to provide the XRT, ZOCL packages for V
 
 ***Note: This is a little different from traditional Vivado design flow. When trying to make AXI interfaces available in Vitis design you should disable these interfaces at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later***
 
-6. Add clock block:<br />
+2. Add clock block:<br />
    a) Right click Diagram view and select ***Add IP***.<br />
    b) Search for and add a Clocking Wizard from the IP Search dialog.<br />
    c) Double-click the clk_wiz_0 IP block to open the Re-Customize IP dialog box.<br />
@@ -83,100 +91,111 @@ On the software side, the platform needs to provide the XRT, ZOCL packages for V
  ![clock_settings.png](images/clock_settings.png)<br />
 ***Note: So now we have set up the clock system for our design. This clock wizard use the pl_clk as input clock and geneatate clocks needed for the whole logic design. In this simple design I would like to use 100MHz clock as the axi_lite control bus clock, 200MHz clock as DPU AXI interface clock and 400MHz as DPU core clock. You can just modifiy these clocks as you like and remember we should "tell" Vitis what clock we can use. Let's do that later.(And after creating this example I learn that the Vitis AI DPU can only have 2 clock domains and the axi_lite control bus and DPU AXI interface share same clock. So the 100MHz clock can't be used as axi_lite control bus for DPU now.)***<br><br />
    
-7. Add the Processor System Reset blocks:<br />
+3. Add the Processor System Reset blocks:<br />
    a) Right click Diagram view and select ***Add IP***.<br />
    b) Search for and add a Processor System Reset from the IP Search dialog<br />
    c) Add 2 more Processor System Reset blocks, using the previous step; or select the proc_sys_reset_0 block and Copy (Ctrl-C) and Paste (Ctrl-V) it four times in the block diagram<br />
    d) Rename them as ```proc_sys_reset_100m```, ```proc_sys_reset_200m```, ```proc_sys_reset_400m```<br />
   
-8. Connect Clocks and Resets: <br />
+4. Connect Clocks and Resets: <br />
    a) Click ***Run Connection Automation***, which will open a dialog that will help connect the proc_sys_reset blocks to the clocking wizard clock outputs.<br />
    b) Enable All Automation on the left side of the Run Connection Automation dialog box.<br />
    c) Select clk_in1 on clk_wiz_0, and set the Clock Source to ***/zynq_ultra_ps_e_0/pl_clk0***.<br />
    d) For each proc_sys_reset instance, select the slowest_sync_clk, and set the Clock Source as follows:<br />
+   
       - proc_sys_reset_100m with /clk_wiz_0/clk_100m<br />
       - proc_sys_reset_200m with /clk_wiz_0/clk_200m<br />
-      - proc_sys_reset_400m with /clk_wiz_0/clk_400m<br />
-
+   - proc_sys_reset_400m with /clk_wiz_0/clk_400m<br />
+   
    e) On each proc_sys_reset instance, select the ***ext_reset_in***, set ***Board Part Interface*** to ***Custom*** and set the ***Select Manual Source*** to ***/zynq_ultra_ps_e_0/pl_resetn0***.<br />
    f) Make sure all checkboxes are enabled, and click ***OK*** to close the dialog and create the connections.<br />
    g) Connect all the ***dcm_locked*** signals on each proc_sys_reset instance to the locked signal on ***clk_wiz_0***.<br />
    Then the connection should like below:<br />
-   ![clk_rst_connection.png](images/clk_rst_connection.png)
-***Now we have added clock and reset IPs and configure and connect them. Some would be used in creating the hardware platform and some would be called in Vitis high level design***<br /><br />
+![clk_rst_connection.png](images/clk_rst_connection.png)
 
-9. Add Kernel Interrupt Support<br />
-You can provide kernel interrupt support by adding an AXI interrupt controller to the base hardware design.<br />
-   a) In the block diagram, double-click the Zynq UltraScale+ MPSoC block.<br />
-   b) Select ***PS-PL Configuration > PS-PL interfaces > Master interface***.<br />
-   c) Select the ***AXI HPM0 LPD*** check box, keep the ***AXI HPM0 LPD Data width*** settings as default ***32***.<br />
-   d) Click ***OK*** to finsih the configuration.<br />
-   e) Connect ***maxihpm0_lpd_aclk*** to ***/clk_wiz_0/clk_100m***.<br />
-   f) Right click Diagram view and select ***Add IP***, search and add ***AXI Interrupt Controller*** IP.<br />
-   g) Double click the AXI Interrupt Controller block, set ***Interrupts type*** to ```Level Interrupt```, set ***Level type*** to ```Active High```, set ***Interrupt Output Connection*** to ```Bus```. Click ***OK*** to save the change.<br />
-   ![intc_settings.png](images/intc_settings.png)<br /><br />
-   h) Click the AXI Interrupt Controller block and go to ***Block Properties -> Properties***, configure or make sure the parameters are set as following:
-***C_ASYNC_INTR***: ```0xFFFFFFFF```. <br />
-   ![async_intr.png](images/async_intr.png)<br /><br />
-   ***When interrupts generated from kernels are clocked by different clock domains, this option is useful to capture the interrupt signals properly. For the platform that has only one clock domain, this step can be skipped.***
+5. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.
+   
+6. Enable ***clk_200m***, ***clk_400m***, ***clk_100m*** of clk_wiz_0, set ***id*** of ***clk_200m*** to ```0```, set ***id*** of ***clk_400m*** to ```1```, set ***id*** of ***clk_100m*** to ```2```, enable ***is default*** for ***clk_200m***.<br />
 
-   i) Click ***Run Connection Automation***<br />   
-   j) Leave the default values for Master interface and Bridge IP.<br />
-      - Master interface default is /zynq_ultra_ps_e_0/M_AXI_HPM0_LPD.<br />
-      - Bridge IP default is New AXI interconnect.<br />
-   k) Expand output interface Interrupt of axi_intc_0 to show the port irq, connect this irq portto zynq_ultra_ps_e_0.pl_ps_irq0<br />
-   l) Setup ***PFM_IRQ** property by typing following command in Vivado console:<br />
-   ```set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]```<br />
-***The IPI design connection would like below:***<br />
-![ipi_fully_connection.png](images/ipi_fully_connection.png)<br /><br />
-***Note: Now we have finished the IPI design input, let's set some platform parameters and generate the DSA***<br /><br /><br />
+   ***Now we have added clock and reset IPs and enabled them for kernels to use***
+
+
+
+### Add Interrupt Support
+
+
+You can provide kernel interrupt support by adding an AXI interrupt controller to the base hardware design.
+1. In the block diagram, double-click the Zynq UltraScale+ MPSoC block.
+
+2. Select ***PS-PL Configuration > PS-PL interfaces > Master interface***.
+
+3. Select the ***AXI HPM0 LPD*** check box, keep the ***AXI HPM0 LPD Data width*** settings as default ***32***.
+
+   ***We use AXI HPM0 LPD mainly for controlling purpose. It only needs to read write 32 bit control registers.***
+
+4. Click ***OK*** to finish the configuration.
+
+5. Connect ***maxihpm0_lpd_aclk*** to ***/clk_wiz_0/clk_100m***.
+
+6. Right click Diagram view and select ***Add IP***, search and add ***AXI Interrupt Controller*** IP.
+
+7. Double click the AXI Interrupt Controller block, set ***Interrupts type*** to ```Level Interrupt```, set ***Level type*** to ```Active High```, set ***Interrupt Output Connection*** to ```Bus```. Click ***OK*** to save the change.
+    ![intc_settings.png](images/intc_settings.png)
+
+8. Click the AXI Interrupt Controller block and go to ***Block Properties -> Properties***, configure or make sure the parameters are set as following:
+    ***C_ASYNC_INTR***: ```0xFFFFFFFF```.
+    ![async_intr.png](images/async_intr.png)
+    ***When interrupts generated from kernels are clocked by different clock domains, this option is useful to capture the interrupt signals properly. For the platform that has only one clock domain, this step can be skipped.***
+
+9. Click ***Run Connection Automation***  
+
+10. Leave the default values for Master interface and Bridge IP.
+   - Master interface default is `/zynq_ultra_ps_e_0/M_AXI_HPM0_LPD`.
+   - Bridge IP default is New AXI interconnect.
+11. Expand output interface Interrupt of axi_intc_0 to show the port irq, connect this irq portto zynq_ultra_ps_e_0.pl_ps_irq0
+12. Setup **PFM_IRQ** property by typing following command in Vivado console:<br />
+```set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]```
+***The IPI design connection would like below:***
+![ipi_fully_connection.png](images/ipi_fully_connection.png)
+***Note: Now we have finished the IPI design input, let's set some platform parameters and generate the DSA***
 
 ### Configuring Platform Interface Properties
-1. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.<br />
+1. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.
 2. Select ***Platform-system->zynq_ultra_ps_e_0->S_AXI_HP0_FPD***, in ***Platform interface Properties*** tab enable the ***Enabled*** option like below:<br />
-![enable_s_axi_hp0_fpd.png](images/enable_s_axi_hp0_fpd.png)<br /><br />
+![enable_s_axi_hp0_fpd.png](images/enable_s_axi_hp0_fpd.png)
 3. Select ***Options*** tab, set ***memport*** to ```S_AXI_HP``` and set ***sptag*** to ```HP0``` like below:
-![set_s_axi_hp0_fpd_options.png](images/set_s_axi_hp0_fpd_options.png)<br /><br />
+![set_s_axi_hp0_fpd_options.png](images/set_s_axi_hp0_fpd_options.png)
 4. Do the same operations for ***S_AXI_HP1_FPD, S_AXI_HP2_FPD, S_AXI_HP3_FPD, S_AXI_HPC0_FPD, S_AXI_HPC1_FPD*** and set ***sptag*** to ```HP1```, ```HP2```, ```HP3```, ```HPC0```, ```HPC1```. And be noticed that for HPC0/HPC1 ports the ***memport*** is set to ```S_AXI_HPC``` in default, but actually we would use these ports without data coherency function enabled to get a high performance. So please modify it into ```S_AXI_HP``` manually.<br />
-![set_s_axi_hpc0_fpd_options.png](images/set_s_axi_hpc0_fpd_options.png)<br /><br />
-5. Enable the M01_AXI ~ M08_AXI ports of ps8_0_axi_periph IP(The axi_interconnect between M_AXI_HPM0_LPD and axi_intc_0), and set these ports with the same ***sptag*** name to ```HPM0_LPD``` and ***memport*** type to ```M_AXI_GP```<br />
-6. Enable the ***M_AXI_HPM0_FPD*** and ***M_AXI_HPM1_FPD*** ports, set ***sptag*** name to ```HPM0_FPD```, ```HPM1_FPD``` and ***memport*** to ```M_AXI_GP```.<br />
-***Now we enable AXI master/slave interfaces that can be used for Vitis tools on the platform***<br /><br />
-7. Enable ***clk_200m***, ***clk_400m***, ***clk_100m*** of clk_wiz_0, set ***id*** of ***clk_200m*** to ```0```, set ***id*** of ***clk_400m*** to ```1```, set ***id*** of ***clk_100m*** to ```2```, enable ***is default*** for ***clk_200m***.<br />
+![set_s_axi_hpc0_fpd_options.png](images/set_s_axi_hpc0_fpd_options.png)<br />
+5. Enable the M01_AXI ~ M08_AXI ports of ps8_0_axi_periph IP(The axi_interconnect between M_AXI_HPM0_LPD and axi_intc_0), and set these ports with the same ***sptag*** name to ```HPM0_LPD``` and ***memport*** type to ```M_AXI_GP```
+6. Enable the ***M_AXI_HPM0_FPD*** and ***M_AXI_HPM1_FPD*** ports, set ***sptag*** name to ```HPM0_FPD```, ```HPM1_FPD``` and ***memport*** to ```M_AXI_GP```.
+***Now we have enabled AXI master/slave interfaces that can be used for Vitis tools on the platform***<br />
 
-8. Create a ```xsa_gen``` folder inside your Vivado project.<br />
-9. Create a file named ```xsa.tcl``` inside the ***xsa_gen*** folder.<br />
-10. Copy the following commands into the xsa.tcl file and save the file.<br />
-```
-# Set the platform design intent properties
-set_property platform.design_intent.embedded true [current_project]
-set_property platform.design_intent.server_managed false [current_project]
-set_property platform.design_intent.external_host false [current_project]
-set_property platform.design_intent.datacenter false [current_project]
+### Export Hardware XSA
+1. Validate the block design by clicking ***Validate Design*** button
 
-get_property platform.design_intent.embedded [current_project]
-get_property platform.design_intent.server_managed [current_project]
-get_property platform.design_intent.external_host [current_project]
-get_property platform.design_intent.datacenter [current_project]
+2. Click menu ***File -> Export -> Export Hardware*** to Export Platform from Vitis GUI
+3. Select Platform Type: ***Expandable***
+4. Select Platform Stage: ***Pre-synthesis***
+5. Input Platform Properties, for example<br />Name: zcu104_custom_platform<br />Vendor: xilinx<br />Board: zcu104<br />Version: 0.0<br />Description: This platform provides high PS DDR bandwidth and three clocks: 100Mhz, 200MHz and 400MHz.
+6. Fill in XSA file name: ***zcu104_custom_platform***, export directory: ***<you_vivado_design_dir>/xsa_gen/***
+7. Click OK. zcu104_custom_platform.xsa will be generated.
 
-# Set the platform default output type property
+8. Alternatively, the above export can be done in Tcl scripts
+
+```tcl
+# Setting platform properties
 set_property platform.default_output_type "sd_card" [current_project]
-
-get_property platform.default_output_type [current_project]
+set_property platform.design_intent.embedded "true" [current_project]
+set_property platform.design_intent.server_managed "false" [current_project]
+set_property platform.design_intent.external_host "false" [current_project]
+set_property platform.design_intent.datacenter "false" [current_project]
+# Write pre-synthesis expandable XSA
+write_hw_platform -unified ./zcu104_custom_platform.xsa
+# Or uncomment command below to write post-implementation expandable XSA
+# write_hw_platform -unified -include_bit ./zcu104_custom_platform.xsa
 ```
-11. In your Vivado project, use the ***Tcl console*** to ***navigate to the xsa_gen folder***, and run ```source ./xsa.tcl``` command.
-![run_xsa_tcl.png](images/run_xsa_tcl.png)<br /><br />
-12. Right-click and select ***Validate Design*** on ***IP integrator diagram***<br />
-13. Create the HDL wrapper:<br />
-    a. Right-click ***system.bd*** in the Block Design, Sources view and select Create HDL Wrapper.<br />
-    b. Select Let Vivado manage wrapper and ***auto-update***.<br />
-    c. Click ***OK***.<br />
 
-14. Right-click ***system.bd*** in the Block Design, Sources view and select ***Generate Output Products***.<br />
-15. Type the tcl command in tcl console like:<br />
-```write_hw_platform -unified -force -file <your_vivado_project_dir>/xsa_gen/zcu104_custom_platform.xsa```<br />
-If you use ***export Hardware*** function in Vivado GUI it would add ***-fixed*** option which would generate a XSA for traditional embedded platform which can't add DPU acceleration kernel here.
-16. Check the ***<your_vivado_project_dir>/xsa_gen*** folder, you should find the ***zcu104_custom_platform.xsa*** generated there.<br />
 
 ***Now we finish the Hardware platform creation flow, then we should go to the Software platform creation***
 
@@ -189,7 +208,7 @@ A Vitis platform requires software components. For Linux, the PetaLinux tools ar
 ```cd zcu104_custom_plnx```<br />
 ```petalinux-config --get-hw-description=<you_vivado_design_dir>/xsa_gen/```<br />
 3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu104-revc```.<br />
-***Note: If you are using a Xilinx development board it is recomended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. Otherwise you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
+***Note: If you are using a Xilinx development board it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. Otherwise you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
 4. Add user packages by appending the CONFIG_x lines below to the <your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig file.<br />
 Packages for base XRT support:<br />
 ```
