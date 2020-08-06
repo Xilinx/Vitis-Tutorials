@@ -1,23 +1,30 @@
 # Vitis AI Custom Platform Creation
 
-Table of Contents
+In this module, we will create a custom platform to run Vitis-AI applications for ZCU104. Since ZCU104 is a validated board and Vivado has processing system presets, we will skip step 0 mentioned in previous module and start to build the full hardware and generate XSA. To prepare the software components, we will import XSA into PetaLinux project and do some configurations. After building software and hardware components, we'll package the platform. At last, we'll run Vitis-AI application on this platform to test this customized platform.
 
-1. Introduction to Vitis Acceleration Platform<br />
-2. Create the Vivado Hardware Component<br />
-3. Configure Platform Interface Properties and Generate XSA<br />
-4. Create the PetaLinux Software Component<br />
-5. Create the Vitis Platform<br />
-6. Prepare for the DPU Kernel<br />
-7. Create and Build a Vitis Application<br />
-8. Prepare the Network Deployment File<br />
-9. Run Application on Board<br />
+## Table of Contents
 
-## Introduction to Vitis Acceleration Platform
-The Vivado Design Suite is used to generate XSA containing a few additional IP blocks and metadata to support kernel connectivity. The following figure shows the acceleration kernel application development flow:<br />
-![vitis_acceleration_flow.PNG](images/vitis_acceleration_flow.PNG)<br />
-For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI platform on MPSoC and run ConvNet on that, you need to create a Vivado HW platform, a PetaLinux SW platform, a Vitis platform which contains both the HW/SW platform you created. Then create a Vitis application based on this Vitis platform, import DPU kernel & ARM deployment code and build the Vitis application to be a HW-SW cowork design. Vitis would generate a SD card folder as output which would contain all the files needed to boot up from a target board. In the meanwhile to cross-compile the application and run it on board you may need Vitis AI library and DNNDK, you should install them both on the host and target board.<br />
+- [Custom Platform Planning](#custom-platform-planning)
+- [Step 1: Create the Vivado Hardware Design and Generate XSA](#step-1-create-the-vivado-hardware-design-and-generate-xsa)
+  - [Configuring Platform Interface Properties](#configuring-platform-interface-properties)
+- [Step 2: Create the Software Components with PetaLinux](#step-2-create-the-software-components-with-petalinux)
+- [Step 3: Create the Vitis Platform](#step-3-create-the-vitis-platform)
+- [Step 4: Test the Platform](#step-4-test-the-platform)
+  - [Prepare for the DPU Kernel](#prepare-for-the-dpu-kernel)
+  - [Create and Build a Vitis application](#create-and-build-a-vitis-application)
+  - [Prepare the Network Deployment File<br />](#prepare-the-network-deployment-filebr-)
+- [Reference](#reference)
+- [More Information about Install and Set Vitis and XRT Environment](#more-information-about-install-and-set-vitis-and-xrt-environment)
 
-## Create the Vivado Hardware Component and Generate XSA
+
+
+## Custom Platform Planning
+
+For the hardware part of Vitis AI design, DPU is integrated as RTL kernel. It's connected to the interfaces of platform and controlled by software running on ARM processor. DPU requires two clocks: clk and clk2x. We'll give 200MHz and 400MHz clocks for easy timing closure. DPU is a memory hungry IP so the platform needs to provide multiple AXI HP interfaces. 
+
+On the software side, the platform needs to provide the XRT, ZOCL packages for Vitis-AI to control DPU. ZOCL is the kernel module that talks to acceleration kernels. It needs a device tree node so it will be added. Other Vitis-AI dependencies will also be added. The above are standard Vitis platform software settings. Common image provided by Xilinx can accomplish all these features. Besides these common features, we wish to add gcc compilers to do application native compilation, add mesa-megadriver for Vitis-AI demo applications and replace the dropbear with openssh so that the network speed can be faster.
+
+## Step 1: Create the Vivado Hardware Design and Generate XSA
 1. Source <Vitis_Install_Directory>/settings64.sh, and call Vivado out by typing "vivado" in the console.<br />
 2. Create a Vivado project named zcu104_custom_platform.<br />
    a) Select ***File->Project->New***.<br />
@@ -45,7 +52,7 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
    d) Click ***OK***. You should get MPSoC block configured like below:<br />
 ![block_automation_result.png](images/block_automation_result.png)<br />
 
-***Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. Add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.***<br /><br />
+***Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. Add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.***
 
 5. Re-Customizing the Processor IP Block<br />
    a) Double-click the Zynq UltraScale+ MPSoC block in the IP integrator diagram.<br />
@@ -57,7 +64,7 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
    g) Confirm that the IP block interfaces were removed from the Zynq UltraScale+ MPSoC symbol in your block design.<br />
    ![hp_removed.png](images/hp_removed.png)<br />
 
-***Note: This is a little different from traditional Vivado design flow. When trying to make AXI interfaces available in Vitis design you should disable these interfaces at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later***<br><br />
+***Note: This is a little different from traditional Vivado design flow. When trying to make AXI interfaces available in Vitis design you should disable these interfaces at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later***
 
 6. Add clock block:<br />
    a) Right click Diagram view and select ***Add IP***.<br />
@@ -65,16 +72,17 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
    c) Double-click the clk_wiz_0 IP block to open the Re-Customize IP dialog box.<br />
    d) Click the Output Clocks tab.<br />
    e) Enable clk_out1 through clk_out3 in the Output Clock column, rename them as ```clk_100m```, ```clk_200m```, ```clk_400m``` and set the Requested Output Freq as follows:<br />
+   
       - clk_100m to ```100``` MHz.<br />
       - clk_200m to ```200``` MHz.<br />
-      - clk_400m to ```400``` MHz.<br />
-
+   - clk_400m to ```400``` MHz.<br />
+   
    f) At the bottom of the dialog box set the ***Reset Type*** to ***Active Low***.<br />
    g) Click ***OK*** to close the dialog.<br />
     The settings should like below:<br />
-    ![clock_settings.png](images/clock_settings.png)<br />
+ ![clock_settings.png](images/clock_settings.png)<br />
 ***Note: So now we have set up the clock system for our design. This clock wizard use the pl_clk as input clock and geneatate clocks needed for the whole logic design. In this simple design I would like to use 100MHz clock as the axi_lite control bus clock, 200MHz clock as DPU AXI interface clock and 400MHz as DPU core clock. You can just modifiy these clocks as you like and remember we should "tell" Vitis what clock we can use. Let's do that later.(And after creating this example I learn that the Vitis AI DPU can only have 2 clock domains and the axi_lite control bus and DPU AXI interface share same clock. So the 100MHz clock can't be used as axi_lite control bus for DPU now.)***<br><br />
-
+   
 7. Add the Processor System Reset blocks:<br />
    a) Right click Diagram view and select ***Add IP***.<br />
    b) Search for and add a Processor System Reset from the IP Search dialog<br />
@@ -94,7 +102,7 @@ For Vitis AI platform, DPU is integrated as RTL kernel. To create a Vitis AI pla
    f) Make sure all checkboxes are enabled, and click ***OK*** to close the dialog and create the connections.<br />
    g) Connect all the ***dcm_locked*** signals on each proc_sys_reset instance to the locked signal on ***clk_wiz_0***.<br />
    Then the connection should like below:<br />
-   ![clk_rst_connection.png](images/clk_rst_connection.png)<br /><br />
+   ![clk_rst_connection.png](images/clk_rst_connection.png)
 ***Now we have added clock and reset IPs and configure and connect them. Some would be used in creating the hardware platform and some would be called in Vitis high level design***<br /><br />
 
 9. Add Kernel Interrupt Support<br />
@@ -123,7 +131,7 @@ You can provide kernel interrupt support by adding an AXI interrupt controller t
 ![ipi_fully_connection.png](images/ipi_fully_connection.png)<br /><br />
 ***Note: Now we have finished the IPI design input, let's set some platform parameters and generate the DSA***<br /><br /><br />
 
-## Configuring Platform Interface Properties<br /><br />
+### Configuring Platform Interface Properties
 1. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.<br />
 2. Select ***Platform-system->zynq_ultra_ps_e_0->S_AXI_HP0_FPD***, in ***Platform interface Properties*** tab enable the ***Enabled*** option like below:<br />
 ![enable_s_axi_hp0_fpd.png](images/enable_s_axi_hp0_fpd.png)<br /><br />
@@ -170,12 +178,12 @@ get_property platform.default_output_type [current_project]
 If you use ***export Hardware*** function in Vivado GUI it would add ***-fixed*** option which would generate a XSA for traditional embedded platform which can't add DPU acceleration kernel here.
 16. Check the ***<your_vivado_project_dir>/xsa_gen*** folder, you should find the ***zcu104_custom_platform.xsa*** generated there.<br />
 
-***Now we finish the Hardware platform creation flow, then we should go to the Software platform creation***<br /><br />
+***Now we finish the Hardware platform creation flow, then we should go to the Software platform creation***
 
-## Create the PetaLinux Software Component<br /><br />
+## Step 2: Create the Software Components with PetaLinux
 
-A Vitis platform requires software components. For Linux, the PetaLinux tools are invoked outside of the Vitis tools by the developer to create the necessary Linux image,Executable and Linkable Format (ELF) files, and sysroot with XRT support. Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux. <br />
-1. source <petaLinux_tool_install_dir>/settings.sh<br />
+A Vitis platform requires software components. For Linux, the PetaLinux tools are invoked outside of the Vitis tools by the developer to create the necessary Linux image,Executable and Linkable Format (ELF) files, and sysroot with XRT support. Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux. 
+1. source <petaLinux_tool_install_dir>/settings.sh
 2. Create a PetaLinux project named ***zcu104_custom_plnx*** and configure the hw with the XSA file we created before:<br />
 ```petalinux-create --type project --template zynqMP --name zcu104_custom_plnx```<br />
 ```cd zcu104_custom_plnx```<br />
@@ -221,7 +229,6 @@ CONFIG_packagegroup-petalinux-matchbox
 ```
 5. Run ```petalinux-config -c rootfs``` and select ***user packages***, select name of rootfs all the libraries listed above, save and exit.
 ![petalinux_rootfs.png](images/petalinux_rootfs.png)<br /><br />
-
 6. Enable OpenSSH and disable dropbear<br /> 
 Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, it could achieve 4x times faster data transmission speed (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.<br /> 
     a) Run ```petalinux-config -c rootfs```.<br /> 
@@ -236,7 +243,6 @@ Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is 
     b) Ensure the following are ***TURNED OFF*** by entering 'n' in the [ ] menu selection for:<br />
        - ***CPU Power Mangement > CPU Idle > CPU idle PM support***<br />
        - ***CPU Power Management > CPU Frequency scaling > CPU Frequency scaling***<br /><br />
-
 9. Update the Device tree to include the zocl driver by appending the text below to the ***project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi*** file. 
 ```
 &amba {
@@ -282,7 +288,8 @@ Open ***project-spec/meta-user/recipes-bsp/u-boot/files/platform-top.h*** and ad
 cd images/linux
 petalinux-build --sdk
 ```
-***Note: We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu102_dpu_pkg ```. Then we create a pfm folder inside.***<br />
+***Note: We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu104_dpu_pkg ```. Then we create a pfm folder inside.***<br />
+
 13. Type ```./sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***<full_pathname_to_zcu104_dpu_pkg>/pfm***(here in this example I use ***/home/wuxian/wu_project/vitis2020.1/vitis_custom_platform_flow/zcu104_dpu_pkg/pfm***) and confirm.<br />
 14. We would install Vitis AI library and DNNDK into this rootfs in the future.<br />
 15. After the PetaLinux build succeeds, the generated Linux software components are in the ***<your_petalinux_dir>/images/linux directory***. For our example, the ***images/linux*** directory contains the generated image and ELF files listed below. Copy these files to the ***<full_pathname_to_zcu104_dpu_pkg>/pfm/boot*** directory in preparation for running the Vitis platform creation flow:<br />
@@ -309,7 +316,7 @@ petalinux-build --sdk
 ```
 ***Note: Now we prepare the HW platform and SW platform, next we would create a Vitis Platform.***
 
-## Create the Vitis Platform
+## Step 3: Create the Vitis Platform
 
 1. Source Vitis and XRT settings<br />
 ```
@@ -350,17 +357,20 @@ Bif file:
 Image:
     Browse to zcu104_dpu_pkg/pfm/boot and click OK.
 ```
-![vitis_linux_config.png](images/vitis_linux_config.png)<br /><br />
+![vitis_linux_config.png](images/vitis_linux_config.png)
 11. Click ***zcu104_vai_custom*** project in the Vitis Explorer view, click the ***Build*** button to generate the platform.
-![build_vitis_platform.png](images/build_vitis_platform.png)<br /><br />
-***Note: The generated platform is placed in the export directory. BSP and source files are also provided for re-building the FSBL and PMU if desired and are associated with the platform. The platform is ready to be used for application development.***<br />
+![](images/build_vitis_platform.png)<br />
 
-## Prepare for the DPU Kernel
+***Note: The generated platform is placed in the export directory. BSP and source files are also provided for re-building the FSBL and PMU if desired and are associated with the platform. The platform is ready to be used for application development.***
+
+## Step 4: Test the Platform
+
+### Prepare for the DPU Kernel
 
 1. Download Vitis AI by calling command ```git clone https://github.com/Xilinx/Vitis-AI.git```.<br />
-2. Navigate to the repository:```cd Vitis-AI```, set the tag to proper tag(here we use ***v1.1***) by typing: ```git checkout v1.2```.<br />
-3. If you don't want to destroy the TRD reference design. Copy ***DPU-TRD*** folder into another directory. For example I would copy that into my ***zcu104_dpu_pkg*** folder: ```cp -r DPU-TRD ~/wu_project/vitis2019.2/vitis_custom_platform_flow/zcu104_dpu_pkg/```<br />
-4. Source Vitis tools setting sh file: ```source <vitis install path>/Vitis/2019.2/settings64.sh```.<br />
+2. Navigate to the repository:```cd Vitis-AI```, set the tag to proper tag(here we use **v1.2**) by typing: ```git checkout v1.2```.<br />
+3. If you don't want to destroy the TRD reference design. Copy ***DPU-TRD*** folder into another directory. For example I would copy that into my ***zcu104_dpu_pkg*** folder: ```cp -r DPU-TRD ~/wu_project/vitis2020.1/vitis_custom_platform_flow/zcu104_dpu_pkg/```<br />
+4. Source Vitis tools setting sh file: ```source <vitis install path>/Vitis/2020.1/settings64.sh```.<br />
 5. Source XRT sh file:```source opt/xilinx/xrt/setup.sh```.<br />
 6. Export SDX_PLATFORM with the directory of the custom platform xpfm file which you created before. Here in my project it would be: ```export SDX_PLATFORM=/home/wuxian/wu_project/vitis2020.1/vitis_custom_platform_flow/zcu104_dpu_pkg/zcu104_vai_custom/export/zcu104_vai_custom/zcu104_vai_custom.xpfm```. Remember now this custom platform name is ***zcu104_vai_custom***.<br />
 7. Navigate to the copy of the ***DPU-TRD*** folder, then go to the ***./prj/Vitis*** folder.<br />
@@ -407,7 +417,7 @@ to<br />
 10. Generate the XO file by typing: ```make binary_container_1/dpu.xo DEVICE=zcu104_vai_custom```.<br />
 11. Verify if the XO file is generated here: ***<zcu104_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo***.<br />
 
-## Create and Build a Vitis application
+### Create and Build a Vitis application
 1. Open Vitis workspace you were using before.<br />
 2. Select ***File -> New -> Application Project***.<br />
 3. Click ***next***<br />
@@ -447,7 +457,7 @@ hineon
 ***Note:*** We should follow the section ***Setting Up the Host For Edge*** of [Vitis AI library readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/Vitis-AI-Library/README.md) to install the Vitis AI library and section ***Setup cross-compiler for Vitis AI DNNDK and make samples*** of [DNNDK readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/mpsoc/README.md) to install the DNNDK. If you feel difficult to following the official guide there you can refer to the following ones. ***Please just skip these steps if you already install the libs referring to the readme files***:<br />
     a) Download the [vitis_ai_2020.1-r1.2.0.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_2020.1-r1.2.0.tar.gz) to a particular directory(here we take ***~/Downloads*** as example) and install it to the roofs folder:<br />
     ```
-    cd ~/Downloads # Or some place else you download the vitis_ai_2019.2-r1.1.0.tar.gz file
+    cd ~/Downloads # Or some place else you download the vitis_ai_2020.1-r1.2.0.tar.gz file
     tar -xzvf vitis_ai_2020.1-r1.2.0.tar.gz -C <full_pathname_to_zcu104_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux
     ```
     b) Download DNNDK runtime package [vitis-ai_v1.2_dnndk.tar.gz ](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.2_dnndk.tar.gz) to ***~/Downloads*** and install it into rootfs
@@ -461,7 +471,7 @@ hineon
 
 21. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
 
-## Prepare the Network Deployment File<br />
+### Prepare the Network Deployment File<br />
 
 1. Find HWH file from your Vitis application folder***hello_dpu/Hardware/dpu.build/link/vivado/vpl/prj/prj.srcs/sources_1/bd/system/hw_handoff/system.hwh***<br />
 Or go to your Vitis application folder use command ```find -name *.hwh``` to search for the file.<br />
@@ -489,7 +499,7 @@ The DCF file name should be associated with the time and date you generating thi
 13. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
 ***Now you should get an updated hello_dpu with a size of about 20MB(the ConvNet model is involved).***<br />
 
-## Run Application on Board<br />
+### Run Application on Board
 1. Copy all the files from ***sd_card folder*** inside your Vitis application like ***<hello_dpu_application_directory>/Hardware/sd_card/*** to SD card, copy all the files under ***ref_files/boot_additional_files/*** provided by this Github repository to SD card, set ZCU104 to SD boot mode and boot up the board, connect the board with serial port.<br />
 2. Connect SSH:<br />
    a) Run ```ifconfig``` to get the IP address, here we take ```172.16.75.189``` as example.<br />
