@@ -39,10 +39,10 @@ The labs in this tutorial use:
 
 Complete the labs in the following order:
 
-* [Coding My First C++ Kernel](./my-first-program/cpp_kernel.md)
-* [Coding My First Host Program](./my-first-program/host_program.md)
-* [Compiling and Linking the Application](./my-first-program/building_application.md)
-* [Profiling the Application](./my-first-program/profile_debug.md)
+* [Coding My First C++ Kernel](cpp_kernel.md)
+* [Coding My First Host Program](host_program.md)
+* [Compiling and Linking the Application](building_application.md)
+* [Profiling the Application](profile_debug.md)
 
 
 
