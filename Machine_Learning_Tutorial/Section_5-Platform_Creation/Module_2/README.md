@@ -12,7 +12,7 @@ In this module, we will create a custom platform to run Vitis-AI applications fo
 - [Step 4: Test the Platform](#step-4-test-the-platform)
   - [Prepare for the DPU Kernel](#prepare-for-the-dpu-kernel)
   - [Create and Build a Vitis application](#create-and-build-a-vitis-application)
-  - [Prepare the Network Deployment File<br />](#prepare-the-network-deployment-filebr-)
+  - [Prepare the Network Deployment File](#prepare-the-network-deployment-filebr-)
 - [Reference](#reference)
 - [More Information about Install and Set Vitis and XRT Environment](#more-information-about-install-and-set-vitis-and-xrt-environment)
 
@@ -58,7 +58,7 @@ On the software side, the platform needs to provide the XRT, ZOCL packages for V
    d) Click ***OK***. You should get MPSoC block configured like below:<br />
    ![block_automation_result.png](images/block_automation_result.png)<br />
 
-***Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. Add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.***
+***Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. For a custom board, please double click MPSoC block and setup parameters according to the board hardware. Next we'll add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.***
 
 ### Customize System Design for Clock and Reset 
 
@@ -66,46 +66,46 @@ On the software side, the platform needs to provide the XRT, ZOCL packages for V
    a) Double-click the Zynq UltraScale+ MPSoC block in the IP integrator diagram.<br />
    b) Select ***Page Navigator > PS-PL Configuration***.<br />
    c) Expand ***PS-PL Configuration > PS-PL Interfaces*** by clicking the ***>*** symbol.<br />
-   d) Expand Master Interface.<br />
-   e) Uncheck the AXI HPM0 FPD and AXI HPM1 FPD interfaces.<br />
+   d) Expand ***Master Interface***.<br />
+   e) Uncheck the ***AXI HPM0 FPD*** and ***AXI HPM1 FPD*** interfaces.<br />
    f) Click OK.<br />
    g) Confirm that the IP block interfaces were removed from the Zynq UltraScale+ MPSoC symbol in your block design.<br />
    ![hp_removed.png](images/hp_removed.png)<br />
 
-***Note: This is a little different from traditional Vivado design flow. When trying to make AXI interfaces available in Vitis design you should disable these interfaces at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later***
+***Note: This is a little different from traditional Vivado design flow. In order to make AXI interfaces available in Vitis platform, you should disable these interfaces at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later***
 
 2. Add clock block:<br />
    a) Right click Diagram view and select ***Add IP***.<br />
-   b) Search for and add a Clocking Wizard from the IP Search dialog.<br />
-   c) Double-click the clk_wiz_0 IP block to open the Re-Customize IP dialog box.<br />
-   d) Click the Output Clocks tab.<br />
+   b) Search for and add a ***Clocking Wizard*** from the IP Search dialog.<br />
+   c) Double-click the ***clk_wiz_0*** IP block to open the Re-Customize IP dialog box.<br />
+   d) Click the ***Output Clocks*** tab.<br />
    e) Enable clk_out1 through clk_out3 in the Output Clock column, rename them as ```clk_100m```, ```clk_200m```, ```clk_400m``` and set the Requested Output Freq as follows:<br />
    
-      - clk_100m to ```100``` MHz.<br />
-      - clk_200m to ```200``` MHz.<br />
-   - clk_400m to ```400``` MHz.<br />
+      - ***clk_100m*** to ***100*** MHz.<br />
+      - ***clk_200m*** to ***200*** MHz.<br />
+   - ***clk_400m*** to ***400*** MHz.<br />
    
    f) At the bottom of the dialog box set the ***Reset Type*** to ***Active Low***.<br />
    g) Click ***OK*** to close the dialog.<br />
     The settings should like below:<br />
  ![clock_settings.png](images/clock_settings.png)<br />
-***Note: So now we have set up the clock system for our design. This clock wizard use the pl_clk as input clock and geneatate clocks needed for the whole logic design. In this simple design I would like to use 100MHz clock as the axi_lite control bus clock, 200MHz clock as DPU AXI interface clock and 400MHz as DPU core clock. You can just modifiy these clocks as you like and remember we should "tell" Vitis what clock we can use. Let's do that later.(And after creating this example I learn that the Vitis AI DPU can only have 2 clock domains and the axi_lite control bus and DPU AXI interface share same clock. So the 100MHz clock can't be used as axi_lite control bus for DPU now.)***<br><br />
+***Note: So now we have set up the clock system for our design. This clock wizard uses the pl_clk as input clock and generates clocks needed for the whole logic design. In this simple design, we would use 100MHz clock as the axi_lite control bus clock. 200MHz and 400MHz clocks are reserved for DPU AXI interface clock and DPU core clock during design linking phase. You are free to modify the clock quantities and frequency to fit your target design. We'll setup the clock export in future steps. Before that, we need to create reset signals for each clock because they are needed in clock export setup.***
    
 3. Add the Processor System Reset blocks:<br />
    a) Right click Diagram view and select ***Add IP***.<br />
-   b) Search for and add a Processor System Reset from the IP Search dialog<br />
-   c) Add 2 more Processor System Reset blocks, using the previous step; or select the proc_sys_reset_0 block and Copy (Ctrl-C) and Paste (Ctrl-V) it four times in the block diagram<br />
-   d) Rename them as ```proc_sys_reset_100m```, ```proc_sys_reset_200m```, ```proc_sys_reset_400m```<br />
+   b) Search for and add a ***Processor System Reset*** from the IP Search dialog<br />
+   c) Add 2 more ***Processor System Reset*** blocks, using the previous steps; or select the ***proc_sys_reset_0*** block and Copy (Ctrl-C) and Paste (Ctrl-V) it twice in the block diagram<br />
+   d) Rename them as ```proc_sys_reset_100m```, ```proc_sys_reset_200m```, ```proc_sys_reset_400m``` by selecting the block and update ***Name*** in ***Block Properties*** window.
   
 4. Connect Clocks and Resets: <br />
    a) Click ***Run Connection Automation***, which will open a dialog that will help connect the proc_sys_reset blocks to the clocking wizard clock outputs.<br />
    b) Enable All Automation on the left side of the Run Connection Automation dialog box.<br />
-   c) Select clk_in1 on clk_wiz_0, and set the Clock Source to ***/zynq_ultra_ps_e_0/pl_clk0***.<br />
-   d) For each proc_sys_reset instance, select the slowest_sync_clk, and set the Clock Source as follows:<br />
+   c) Select ***clk_in1*** on clk_wiz_0, and set the Clock Source to ***/zynq_ultra_ps_e_0/pl_clk0***.<br />
+   d) For each ***proc_sys_reset*** instance, select the ***slowest_sync_clk***, and set the Clock Source as follows:<br />
    
-      - proc_sys_reset_100m with /clk_wiz_0/clk_100m<br />
-      - proc_sys_reset_200m with /clk_wiz_0/clk_200m<br />
-   - proc_sys_reset_400m with /clk_wiz_0/clk_400m<br />
+      - ***proc_sys_reset_100m*** with ***/clk_wiz_0/clk_100m***<br />
+      - ***proc_sys_reset_200m*** with ***/clk_wiz_0/clk_200m***<br />
+   - ***proc_sys_reset_400m*** with ***/clk_wiz_0/clk_400m***<br />
    
    e) On each proc_sys_reset instance, select the ***ext_reset_in***, set ***Board Part Interface*** to ***Custom*** and set the ***Select Manual Source*** to ***/zynq_ultra_ps_e_0/pl_resetn0***.<br />
    f) Make sure all checkboxes are enabled, and click ***OK*** to close the dialog and create the connections.<br />
@@ -115,8 +115,12 @@ On the software side, the platform needs to provide the XRT, ZOCL packages for V
 
 5. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.
    
-6. Enable ***clk_200m***, ***clk_400m***, ***clk_100m*** of clk_wiz_0, set ***id*** of ***clk_200m*** to ```0```, set ***id*** of ***clk_400m*** to ```1```, set ***id*** of ***clk_100m*** to ```2```, enable ***is default*** for ***clk_200m***.<br />
+6. Enable ***clk_200m***, ***clk_400m***, ***clk_100m*** of clk_wiz_0, 
 
+   - set ***id*** of ***clk_200m*** to ```0```, enable ***is default***
+     set ***id*** of ***clk_400m*** to ```1```, 
+     set ***id*** of ***clk_100m*** to ```2```, <br />![](images/platform_clock.png)
+   
    ***Now we have added clock and reset IPs and enabled them for kernels to use***
 
 
@@ -125,7 +129,7 @@ On the software side, the platform needs to provide the XRT, ZOCL packages for V
 
 
 You can provide kernel interrupt support by adding an AXI interrupt controller to the base hardware design.
-1. In the block diagram, double-click the Zynq UltraScale+ MPSoC block.
+1. In the block diagram, double-click the ***Zynq UltraScale+ MPSoC*** block.
 
 2. Select ***PS-PL Configuration > PS-PL interfaces > Master interface***.
 
@@ -490,7 +494,7 @@ hineon
 
 21. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
 
-### Prepare the Network Deployment File<br />
+### Prepare the Network Deployment File
 
 1. Find HWH file from your Vitis application folder***hello_dpu/Hardware/dpu.build/link/vivado/vpl/prj/prj.srcs/sources_1/bd/system/hw_handoff/system.hwh***<br />
 Or go to your Vitis application folder use command ```find -name *.hwh``` to search for the file.<br />
