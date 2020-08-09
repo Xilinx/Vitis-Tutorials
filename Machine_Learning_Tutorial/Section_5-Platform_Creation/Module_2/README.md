@@ -127,8 +127,8 @@ On the software side, the platform needs to provide the XRT, ZOCL packages for V
 
 ### Add Interrupt Support
 
+V++ linker can automatically link the interrupt signals between kernel and platform, as long as interrupt signals are exported by ***PFM.IRQ*** property in the platform. For simple designs, interrupt signals can be sourced by processor's ***pl_ps_irq***. We'll use AXI Interrupt Controller here because it can provide phase aligned clocks for DPU. We'll enable ***AXI HPM0 LPD*** to control AXI Interrupt Controller, add AXI Interrupt Controller and enable interrupt signals for ***PFM.IRQ***. Here are the detailed steps.
 
-You can provide kernel interrupt support by adding an AXI interrupt controller to the base hardware design.
 1. In the block diagram, double-click the ***Zynq UltraScale+ MPSoC*** block.
 
 2. Select ***PS-PL Configuration > PS-PL interfaces > Master interface***.
@@ -154,38 +154,48 @@ You can provide kernel interrupt support by adding an AXI interrupt controller t
 9. Click ***Run Connection Automation***  
 
 10. Leave the default values for Master interface and Bridge IP.
-   - Master interface default is `/zynq_ultra_ps_e_0/M_AXI_HPM0_LPD`.
+   - Master interface default is ***/zynq_ultra_ps_e_0/M_AXI_HPM0_LPD***.
    - Bridge IP default is New AXI interconnect.
-11. Expand output interface Interrupt of axi_intc_0 to show the port irq, connect this irq portto zynq_ultra_ps_e_0.pl_ps_irq0
+11. Expand output interface Interrupt of ***axi_intc_0*** to show the port irq, connect this irq port to ***zynq_ultra_ps_e_0.pl_ps_irq0***
 12. Setup **PFM_IRQ** property by typing following command in Vivado console:<br />
 ```set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]```
 ***The IPI design connection would like below:***
 ![ipi_fully_connection.png](images/ipi_fully_connection.png)
-***Note: Now we have finished the IPI design input, let's set some platform parameters and generate the DSA***
+
 
 ### Configuring Platform Interface Properties
 1. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.
+
 2. Select ***Platform-system->zynq_ultra_ps_e_0->S_AXI_HP0_FPD***, in ***Platform interface Properties*** tab enable the ***Enabled*** option like below:<br />
-![enable_s_axi_hp0_fpd.png](images/enable_s_axi_hp0_fpd.png)
+    ![enable_s_axi_hp0_fpd.png](images/enable_s_axi_hp0_fpd.png)
+
 3. Select ***Options*** tab, set ***memport*** to ```S_AXI_HP``` and set ***sptag*** to ```HP0``` like below:
-![set_s_axi_hp0_fpd_options.png](images/set_s_axi_hp0_fpd_options.png)
+    ![set_s_axi_hp0_fpd_options.png](images/set_s_axi_hp0_fpd_options.png)
+
 4. Do the same operations for ***S_AXI_HP1_FPD, S_AXI_HP2_FPD, S_AXI_HP3_FPD, S_AXI_HPC0_FPD, S_AXI_HPC1_FPD*** and set ***sptag*** to ```HP1```, ```HP2```, ```HP3```, ```HPC0```, ```HPC1```. And be noticed that for HPC0/HPC1 ports the ***memport*** is set to ```S_AXI_HPC``` in default, but actually we would use these ports without data coherency function enabled to get a high performance. So please modify it into ```S_AXI_HP``` manually.<br />
-![set_s_axi_hpc0_fpd_options.png](images/set_s_axi_hpc0_fpd_options.png)<br />
-5. Enable the M01_AXI ~ M08_AXI ports of ps8_0_axi_periph IP(The axi_interconnect between M_AXI_HPM0_LPD and axi_intc_0), and set these ports with the same ***sptag*** name to ```HPM0_LPD``` and ***memport*** type to ```M_AXI_GP```
+    ![set_s_axi_hpc0_fpd_options.png](images/set_s_axi_hpc0_fpd_options.png)<br />
+
+5. Enable the M01_AXI ~ M08_AXI ports of ps8_0_axi_periph IP(The AXI Interconnect between M_AXI_HPM0_LPD and axi_intc_0), and set these ports with the same ***sptag*** name to ```HPM0_LPD``` and ***memport*** type to ```M_AXI_GP```
+
 6. Enable the ***M_AXI_HPM0_FPD*** and ***M_AXI_HPM1_FPD*** ports, set ***sptag*** name to ```HPM0_FPD```, ```HPM1_FPD``` and ***memport*** to ```M_AXI_GP```.
-***Now we have enabled AXI master/slave interfaces that can be used for Vitis tools on the platform***<br />
+
+Note: A Vivado project script ***vivado/zcu104_custom_platform.tcl*** is provided. You can re-create the Vivado project by selecting ***Tools -> Run Tcl Script...*** in Vivado and select this file.
+
+***Now we have enabled AXI master/slave interfaces that can be used for Vitis tools on the platform***
 
 ### Export Hardware XSA
 1. Validate the block design by clicking ***Validate Design*** button
-
-2. Click menu ***File -> Export -> Export Hardware*** to Export Platform from Vitis GUI
-3. Select Platform Type: ***Expandable***
-4. Select Platform Stage: ***Pre-synthesis***
-5. Input Platform Properties, for example<br />Name: zcu104_custom_platform<br />Vendor: xilinx<br />Board: zcu104<br />Version: 0.0<br />Description: This platform provides high PS DDR bandwidth and three clocks: 100Mhz, 200MHz and 400MHz.
-6. Fill in XSA file name: ***zcu104_custom_platform***, export directory: ***<you_vivado_design_dir>/xsa_gen/***
-7. Click OK. zcu104_custom_platform.xsa will be generated.
-
-8. Alternatively, the above export can be done in Tcl scripts
+2. In ***Source*** tab, right click ***system.bd***, select ***Create HDL Wrapper...*** 
+3. Select ***Let Vivado manage wrapper and auto-update***. Click OK to generate wrapper for block design.
+4. Select ***Generate Block Design*** from Flow Navigator
+5. Select ***Synthesis Options*** to ***Global*** and click ***Generate***. This will skip IP synthesis.
+6. Click menu ***File -> Export -> Export Hardware*** to Export Platform from Vitis GUI
+7. Select Platform Type: ***Expandable***
+8. Select Platform Stage: ***Pre-synthesis***
+9. Input Platform Properties, for example<br />Name: zcu104_custom_platform<br />Vendor: xilinx<br />Board: zcu104<br />Version: 0.0<br />Description: This platform provides high PS DDR bandwidth and three clocks: 100Mhz, 200MHz and 400MHz.
+10. Fill in XSA file name: ***zcu104_custom_platform***, export directory: ***<you_vivado_design_dir>***
+11. Click OK. zcu104_custom_platform.xsa will be generated.
+12. Alternatively, the above export can be done in Tcl scripts
 
 ```tcl
 # Setting platform properties
@@ -199,7 +209,6 @@ write_hw_platform -unified ./zcu104_custom_platform.xsa
 # Or uncomment command below to write post-implementation expandable XSA
 # write_hw_platform -unified -include_bit ./zcu104_custom_platform.xsa
 ```
-
 
 ***Now we finish the Hardware platform creation flow, then we should go to the Software platform creation***
 
