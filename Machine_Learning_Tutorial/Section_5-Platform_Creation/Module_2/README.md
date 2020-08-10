@@ -215,6 +215,9 @@ write_hw_platform -unified ./zcu104_custom_platform.xsa
 ## Step 2: Create the Software Components with PetaLinux
 
 A Vitis platform requires software components. Xilinx provides common software images for quick evaluation. Here since we'd like to do more customization, we'll use the PetaLinux tools to create the Linux image and sysroot with XRT support. Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux. 
+
+### PetaLinux Project Settings
+
 1. Setup PetaLinux environment: `source <petaLinux_tool_install_dir>/settings.sh`
 
 2. Create a PetaLinux project named ***zcu104_custom_plnx*** and configure the hw with the XSA file we created before:
@@ -228,9 +231,13 @@ A Vitis platform requires software components. Xilinx provides common software i
 3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu104-revc```.<br />
     ***Note: If you are using a Xilinx development board it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. Otherwise you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
 
-4. Add user packages by appending the CONFIG_x lines below to the ***<your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig*** file.
 
-     ***Note: This step is not a must but it makes it easier to find and select all required packages in next step.***
+
+### Customize Root File System, Kernel, Device Tree and U-boot
+
+1. Add user packages by appending the CONFIG_x lines below to the ***<your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig*** file.
+
+   ***Note: This step is not a must but it makes it easier to find and select all required packages in next step.***
 
    Packages for base XRT support:
 
@@ -245,14 +252,14 @@ A Vitis platform requires software components. Xilinx provides common software i
    CONFIG_e2fsprogs-resize2fs
    CONFIG_parted
     ```
-   
+
     Packages for Vitis-AI dependencies support:
 
     ```
    CONFIG_packagegroup-petalinux-vitisai
     ```
 
-	Packages for natively building Vitis AI applications on target board: 
+   Packages for natively building Vitis AI applications on target board: 
 
     ```
    CONFIG_packagegroup-petalinux-self-hosted
@@ -274,24 +281,29 @@ A Vitis platform requires software components. Xilinx provides common software i
     CONFIG_packagegroup-petalinux-matchbox
     ```
 
-5. Run ```petalinux-config -c rootfs``` and select ***user packages***, select name of rootfs all the libraries listed above, save and exit.
-![petalinux_rootfs.png](images/petalinux_rootfs.png)
+2. Run ```petalinux-config -c rootfs``` and select ***user packages***, select name of rootfs all the libraries listed above, save and exit.
+    ![petalinux_rootfs.png](images/petalinux_rootfs.png)
 
-6. Enable OpenSSH and disable dropbear 
-Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve 4x times faster data transmission speed (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.<br /> 
-    a) Run ```petalinux-config -c rootfs```.<br /> 
-    b) Go to ***Image Features***.<br /> 
-    c) Disable ***ssh-server-dropbear*** and enable ***ssh-server-openssh***. 
-    ![ssh_settings.png](images/ssh_settings.png)<br />
-    d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***.<br />
-    e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable ***openssh***, ***openssh-sftp-server***, ***openssh-sshd***, ***openssh-scp***.<br />
-7. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, store the change and exit.<br />
-8. CPU IDLE would cause CPU IDLE when JTAG is connected. So it is recommended to disable the selection during project development phase. It can be enabled for production to save power.<br /> 
+3. Enable OpenSSH and disable dropbear 
+    Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve 4x times faster data transmission speed (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience. 
+   a) Run ```petalinux-config -c rootfs``` 
+   b) Go to ***Image Features***. 
+   c) Disable ***ssh-server-dropbear*** and enable ***ssh-server-openssh***. 
+   ![ssh_settings.png](images/ssh_settings.png)<br />
+   d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***.
+
+   e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable ***openssh***, ***openssh-sftp-server***, ***openssh-sshd***, ***openssh-scp***.
+
+4. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, store the change and exit.
+
+5. CPU IDLE would cause CPU IDLE when JTAG is connected. So it is recommended to disable the selection during project development phase. It can be enabled for production to save power.<br /> 
     a) Type ```petalinux-config -c kernel```<br /> 
     b) Ensure the following are ***TURNED OFF*** by entering 'n' in the [ ] menu selection for:<br />
+
        - ***CPU Power Mangement > CPU Idle > CPU idle PM support***<br />
        - ***CPU Power Management > CPU Frequency scaling > CPU Frequency scaling***<br /><br />
-9. Update the Device tree to include the zocl driver, define 32 interrupt inputs and decrease SD Card speed for better card compatibility on ZCU104 boarad by appending the text below to the ***project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi*** file. 
+
+6. Update the Device tree to include the zocl driver, define 32 interrupt inputs and decrease SD Card speed for better card compatibility on ZCU104 boarad by appending the text below to the ***project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi*** file. 
 ```
 &amba {
 	zyxclmm_drm {
@@ -330,26 +342,29 @@ Open ***project-spec/meta-user/recipes-bsp/u-boot/files/platform-top.h*** and ad
 #define CONFIG_SYS_BOOTM_LEN 0x80000000
 #undef CONFIG_SYS_BOOTMAPSZ
 ```
-11. From within the PetaLinux project (petalinux), type ```petalinux-build``` to build the project.<br />
-12. Create a sysroot self-installer for the target Linux system:<br />
-```
-cd images/linux
-petalinux-build --sdk
-```
-***Note: We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu104_dpu_pkg ```. Then we create a pfm folder inside.***<br />
 
-13. Type ```./sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***<full_pathname_to_zcu104_dpu_pkg>/pfm***(here in this example I use ***/home/wuxian/wu_project/vitis2020.1/vitis_custom_platform_flow/zcu104_dpu_pkg/pfm***) and confirm.<br />
-14. We would install Vitis AI library and DNNDK into this rootfs in the future.<br />
-15. After the PetaLinux build succeeds, the generated Linux software components are in the ***<your_petalinux_dir>/images/linux directory***. For our example, the ***images/linux*** directory contains the generated image and ELF files listed below. Copy these files to the ***<full_pathname_to_zcu104_dpu_pkg>/pfm/boot*** directory in preparation for running the Vitis platform creation flow:<br />
-```
-    - image.ub
-    - fsbl.elf (Rename the petalinux generated zynq_fsbl.elf to fsbl.elf)
+### Build Image and Prepare for Platform Packaging
+
+We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu104_custom_pkg ```. Then we create a pfm folder inside.
+
+1. From any directory within the PetaLinux project, build the PetaLinux project.
+
+   ```
+   petalinux-build
+   ```
+
+   
+
+2. Copy the generated Linux software boot components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/boot*** directory to prepare for running the Vitis platform packaging flow:
+
+    - zynqmp_fsbl.elf: ***rename as fsbl.elf*** as a workaround of a Vitis known issue.
     - pmufw.elf
     - bl31.elf
     - u-boot.elf
-    - boot.scr
-```
-16. Add a BIF file (linux.bif) to the ***<full_pathname_to_zcu104_dpu_pkg>/pfm/boot*** directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the <> symbols.<br />
+
+Note: These files are the sources of creating BOOT.BIN.
+
+3. Add a BIF file (linux.bif) to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/boot*** directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the <> symbols.<br />
 ```
 /* linux */
  the_ROM_image:
@@ -362,54 +377,82 @@ petalinux-build --sdk
  	[destination_cpu=a53-0, exception_level=el-2] <u-boot.elf>
  }
 ```
-***Note: Now we prepare the HW platform and SW platform, next we would create a Vitis Platform.***
+
+4. Copy the generated Linux software components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/image*** directory. Contents in this directory will be packaged to FAT32 partition by v++ package tool.
+
+    - boot.scr: script for u-boot initialization
+    - image.ub
+
+5. Create a sysroot self-installer for the target Linux system
+
+    ```
+    petalinux-build --sdk
+    ```
+    
+6. Install sysroot: type ```./images/linux/sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***zcu104_custom_pkg/pfm*** (This is an example ) and confirm.<br />
+
+	We would install Vitis AI library and DNNDK into this rootfs in the future.
+
+***Note: Now HW platform and SW platform are all generated. Next we would package the Vitis Platform.***
 
 ## Step 3: Create the Vitis Platform
 
-1. Source Vitis and XRT settings<br />
-```
-source <Vitis_Install_Directory>/settings64.sh
-source /opt/xilinx/xrt/setup.sh
-```
-2. Go to the ***zcu104_dpu_pkg*** folder you created: ```cd <full_pathname_to_zcu104_dpu_pkg>```.<br />
-3. Launch Vitis by typing ```vits``` in the console.<br />
-4. Select ***zcu104_dpu_pkg*** folder as workspace directory.<br />
-![vitis_launch.png](images/vitis_launch.png)<br /><br />
-5. In the Vitis IDE, select ***File > New > Platform Project*** to create a platform project.<br />
-6. In the Create New Platform Project dialog box, do the following:<br />
-   a) Enter the project name. For this example, type ```zcu104_vai_custom```.<br />
-   b) Leave the checkbox for the default location selected.<br />
-   c) Click ***Next***.<br />
-7. In the Platform Project dialog box, do the following:<br />
-   a) Select ***Create from hardware specification (XSA)***.<br />
-   b) Click ***Next***.<br />
-8. In the Platform Project Specification dialog box, do the following:<br />
-   a) Browse to the XSA file generated by the Vivado. In this case, it is located in ```vitis_custom_platform_flow/zcu104_custom_platform/xsa_gen/zcu104_custom_platform.xsa```.<br />
-   b) Set the operating system to ***linux***.<br />
-   c) Set the processor to ***psu_cortexa53***.<br />
-   d) Leave the checkmark selected to generate boot components.<br />
-   e) Click ***Finish***.<br />
-9. In the Platform Settings view, observe the following:<br />
-   - The name of the Platform Settings view matches the platform project name of ***zcu104_vai_custom***.<br />
-   - A psu_cortexa53 device icon is shown, containing a Linux on psu_cortexa53 domain.<br />
-   - A psu_cortexa53 device icon is shown, containing a zynqmp_fsbl BSP.<br />
-   - A psu_pmu_0 device icon is shown, containing a zynqmp_pmufw BSP.<br />
-10. Click the linux on psu_cortexa53 domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:
-```
-Linux Build Output:
-    Browse to zcu104_dpu_pkg/pfm/boot and click OK.
-    
-Bif file:
-    Browse to zcu104_dpu_pkg/pfm/boot/linux.bif file and click OK.
+First we create a Vitis platform project with the XSA file generated by Vivado from Step 1.
 
-Image:
-    Browse to zcu104_dpu_pkg/pfm/boot and click OK.
-```
+1. Source Vitis and XRT settings
+
+    ```
+    source <Vitis_Install_Directory>/settings64.sh
+    source /opt/xilinx/xrt/setup.sh
+    ```
+
+2. Go to the ***zcu104_custom_pkg*** folder you created: 
+
+    ```
+    cd <full_pathname_to_zcu104_custom_pkg>
+    ```
+
+3. Launch Vitis by typing ```vits``` in the console.
+
+4. Select ***zcu104_custom_pkg*** folder as workspace directory.
+
+5. In the Vitis IDE, select ***File > New > Platform Project*** to create a platform project.<br />
+
+6. Enter the project name. For this example, type ```zcu104_custom```, click ***Next***.
+
+7. In the Platform page, 
+
+    a) Click ***Browse*** button, select the XSA file generated by the Vivado. In this case, it is located in ```vivado/zcu104_custom_platform.xsa```.
+    b) Set the operating system to ***linux***.
+
+    c) Set the processor to ***psu_cortexa53***.
+
+    d) Architecture: ***64-bit***
+
+    e) ***Uncheck*** option ***Generate boot components***, because we'll use PetaLinux generated boot components.
+
+    f) Click ***Finish***.
+
+Next we setup software settings in Platform Settings view.
+
+1. In the Platform Settings view, observe the following:<br />
+   - The name of the Platform Settings view matches the platform project name of ***zcu104_custom***.<br />
+   - A psu_cortexa53 device icon is shown, containing a Linux on psu_cortexa53 domain.<br />
+2. Click the ***linux on psu_cortexa53*** domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:
+
+	- ***Bif file***: Browse to ***zcu104_custom_pkg/pfm/boot/linux.bif*** file and click OK.
+	- ***Boot Components Direcotory***: Browse to ***zcu104_custom_pkg/pfm/boot*** and click OK.
+	- ***Linux Image Directory***: Browse to ***zcu104_custom_pkg/pfm/image*** and click OK.
+
 ![vitis_linux_config.png](images/vitis_linux_config.png)
-11. Click ***zcu104_vai_custom*** project in the Vitis Explorer view, click the ***Build*** button to generate the platform.
-![](images/build_vitis_platform.png)<br />
+11. Click ***zcu104_custom*** project in the Vitis Explorer view, click the ***Build*** button to generate the platform.
+![](images/build_vitis_platform.png)
 
 ***Note: The generated platform is placed in the export directory. BSP and source files are also provided for re-building the FSBL and PMU if desired and are associated with the platform. The platform is ready to be used for application development.***
+
+![](./images/vitis_platform_output.png)
+
+
 
 ## Step 4: Test the Platform
 
@@ -417,12 +460,12 @@ Image:
 
 1. Download Vitis AI by calling command ```git clone https://github.com/Xilinx/Vitis-AI.git```.<br />
 2. Navigate to the repository:```cd Vitis-AI```, set the tag to proper tag(here we use **v1.2**) by typing: ```git checkout v1.2```.<br />
-3. If you don't want to destroy the TRD reference design. Copy ***DPU-TRD*** folder into another directory. For example I would copy that into my ***zcu104_dpu_pkg*** folder: ```cp -r DPU-TRD ~/wu_project/vitis2020.1/vitis_custom_platform_flow/zcu104_dpu_pkg/```<br />
+3. If you don't want to destroy the TRD reference design. Copy ***DPU-TRD*** folder into another directory. For example I would copy that into my ***zcu104_custom_pkg*** folder: ```cp -r DPU-TRD ./zcu104_custom_pkg/```<br />
 4. Source Vitis tools setting sh file: ```source <vitis install path>/Vitis/2020.1/settings64.sh```.<br />
 5. Source XRT sh file:```source opt/xilinx/xrt/setup.sh```.<br />
-6. Export SDX_PLATFORM with the directory of the custom platform xpfm file which you created before. Here in my project it would be: ```export SDX_PLATFORM=/home/wuxian/wu_project/vitis2020.1/vitis_custom_platform_flow/zcu104_dpu_pkg/zcu104_vai_custom/export/zcu104_vai_custom/zcu104_vai_custom.xpfm```. Remember now this custom platform name is ***zcu104_vai_custom***.<br />
+6. Export ***PLATFORM_REPO_PATHS*** with the directory of the custom platform xpfm file which you created before so that it can be found by Vitis. Here in my project it would be: ```export PLATFORM_REPO_PATHS=<path_to/zcu104_custom_pkg/zcu104_custom/export/zcu104_custom>```. Remember now this custom platform name is ***zcu104_custom***.<br />
 7. Navigate to the copy of the ***DPU-TRD*** folder, then go to the ***./prj/Vitis*** folder.<br />
-There are 2 files can be used to modify the DPU settings: The ***config_file/prj_config*** file is for DPU connection in Vitis project and the dpu_conf.vh is for other DPU configurations. Here we would modify the prj_config so that 2 DPU cores are enabled. And then we modify dpu_conf.vh as [DPU-TRD readme](https://github.com/Xilinx/Vitis-AI/blob/v1.2/DPU-TRD/README.md) suggested.<br />
+There are 2 files can be used to modify the DPU settings: The ***config_file/prj_config*** file is for DPU connection in Vitis project and the ***dpu_conf.vh*** is for other DPU configurations. Here we would modify the ***prj_config*** so that 2 DPU cores are enabled. And then we modify ***dpu_conf.vh*** as [DPU-TRD readme](https://github.com/Xilinx/Vitis-AI/blob/v1.2/DPU-TRD/README.md) suggested.<br />
 8. Modify the ***config_file/prj_config*** like below:<br />
 ```
 
@@ -453,7 +496,7 @@ prop=run.impl_1.strategy=Performance_Explore
 #param=place.runPartPlacer=0
 
 ```
-9. Modify dpu_conf.vh from:<br />
+9. Modify ***dpu_conf.vh*** from:<br />
 ```
 `define URAM_DISABLE 
 ```
@@ -462,20 +505,20 @@ to<br />
 `define URAM_ENABLE 
 ```
 
-10. Generate the XO file by typing: ```make binary_container_1/dpu.xo DEVICE=zcu104_vai_custom```.<br />
-11. Verify if the XO file is generated here: ***<zcu104_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo***.<br />
+10. Generate the XO file by typing: ```make binary_container_1/dpu.xo DEVICE=zcu104_custom```.<br />
+11. Verify if the XO file is generated here: ***<zcu104_custom_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo***.<br />
 
-### Create and Build a Vitis application
+### Create and Build a Vitis Application
 1. Open Vitis workspace you were using before.<br />
 2. Select ***File -> New -> Application Project***.<br />
 3. Click ***next***<br />
-4. Select ***zcu104_vai_custom*** as platform, click ***next***.<br />
+4. Select ***zcu104_custom*** as platform, click ***next***.<br />
 5. Name the project ```hello_dpu```, click ***next***.<br />
-5. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu104_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***), keep the ***Kernel Image*** setting in default and click ***next***.<br />
+5. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***), keep the ***Kernel Image*** setting in default and click ***next***.<br />
 6. Select ***System Optimization Examples -> Empty application*** and click ***finish*** to generate the application.<br />
-7. Right click on the ***src*** folder under your ***hello_dpu*** application  in the Expplorer window, and select "Import Sources"
+7. Right click on the ***src*** folder under your ***hello_dpu*** application  in the Explorer window, and select "Import Sources"
 ![import_sources.png](images/import_sources.png)<br /><br />
-8. Choose from directory ***<zcu104_dpu_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/*** as the target location, and import the ***dpu.xo*** file that we just created.<br />
+8. Choose from directory ***<zcu104_custom_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/*** as the target location, and import the ***dpu.xo*** file that we just created.<br />
 9. Import sources again, and add the cpp, header and prj_config files from ***ref_files/src*** folder provided by this Git repository.<br />
 10. In the Explorer window double click the hello_dpu.prj file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
 11. Under Hardware Functions, click the lightning bolt logo to ***Add Hardware Function***.<br />
@@ -502,20 +545,21 @@ hineon
 ![vitis_include_settings.png](images/vitis_include_settings.png)<br /><br />
 ***These steps are used to make sure your application can call libs in rootfs directly on Vitis appilcation build***
 20. The Vitis AI library and DNNDK are not included in PetaLinux SDK rootfs, now let's install them into the rootfs directory:<br />
-***Note:*** We should follow the section ***Setting Up the Host For Edge*** of [Vitis AI library readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/Vitis-AI-Library/README.md) to install the Vitis AI library and section ***Setup cross-compiler for Vitis AI DNNDK and make samples*** of [DNNDK readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/mpsoc/README.md) to install the DNNDK. If you feel difficult to following the official guide there you can refer to the following ones. ***Please just skip these steps if you already install the libs referring to the readme files***:<br />
+    ***Note:*** We should follow the section ***Setting Up the Host For Edge*** of [Vitis AI library readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/Vitis-AI-Library/README.md) to install the Vitis AI library and section ***Setup cross-compiler for Vitis AI DNNDK and make samples*** of [DNNDK readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/mpsoc/README.md) to install the DNNDK. If you feel difficult to following the official guide there you can refer to the following ones. ***Please just skip these steps if you already install the libs referring to the readme files***:<br />
     a) Download the [vitis_ai_2020.1-r1.2.0.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_2020.1-r1.2.0.tar.gz) to a particular directory(here we take ***~/Downloads*** as example) and install it to the roofs folder:<br />
+
     ```
     cd ~/Downloads # Or some place else you download the vitis_ai_2020.1-r1.2.0.tar.gz file
-    tar -xzvf vitis_ai_2020.1-r1.2.0.tar.gz -C <full_pathname_to_zcu104_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux
+    tar -xzvf vitis_ai_2020.1-r1.2.0.tar.gz -C <full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux
     ```
     b) Download DNNDK runtime package [vitis-ai_v1.2_dnndk.tar.gz ](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.2_dnndk.tar.gz) to ***~/Downloads*** and install it into rootfs
     ```
     cd ~/Downloads # Or some place else you download the file
     tar -xzvf vitis-ai_v1.2_dnndk.tar.gz
     cd vitis-ai_v1.2_dnndk
-    ./install.sh <full_pathname_to_zcu104_dpu_pkg>/pfm/sysroots/aarch64-xilinx-linux
+    ./install.sh <full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux
     ```
-***Now we install both the VAI lib and DNNDK packages into the rootfs set as Vitis sysroot, then we can build application on Vitis.***<br />
+    ***Now we install both the VAI lib and DNNDK packages into the rootfs set as Vitis sysroot, then we can build application on Vitis.***<br />
 
 21. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
 
