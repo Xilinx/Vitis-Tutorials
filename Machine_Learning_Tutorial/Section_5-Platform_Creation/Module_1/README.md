@@ -17,6 +17,8 @@ There are generally four steps to create a Vitis embedded platform.
 | Step 2 | Update Software Components for Vitis Platform                | Add XRT software libraries and dependencies in PetaLinux because Vitis applications use XRT to control acceleration kernels.<br />Generate PetaLinux image. |
 | Step 3 | Package a Vitis Platform                                     | Use Vitis GUI or packaging command to generate platform files |
 
+Detailed requirements of these steps are described in [UG1393](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/rjs1596051748503.html).
+
 The [next module](../Module_2/README.md) provides an example to create a Vitis-AI application ready custom platform for ZCU104 board from scratch. 
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
