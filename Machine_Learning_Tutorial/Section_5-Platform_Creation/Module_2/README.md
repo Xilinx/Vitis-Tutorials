@@ -840,4 +840,4 @@ $ dlet -f ./system.hwh
 - [Setting up the Vitis environment](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/settingupvitisenvironment.html)
 - [Installing Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/pjr1542153622642.html)
 
-
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
