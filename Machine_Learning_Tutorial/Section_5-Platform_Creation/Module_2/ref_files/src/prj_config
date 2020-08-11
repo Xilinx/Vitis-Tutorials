@@ -16,9 +16,9 @@
 [clock]
 
 id=0:DPUCZDX8G_1.aclk
-id=2:DPUCZDX8G_1.ap_clk_2
+id=1:DPUCZDX8G_1.ap_clk_2
 id=0:DPUCZDX8G_2.aclk
-id=2:DPUCZDX8G_2.ap_clk_2
+id=1:DPUCZDX8G_2.ap_clk_2
 
 [connectivity]
 
