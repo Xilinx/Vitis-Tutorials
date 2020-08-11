@@ -10,11 +10,14 @@ In this module, we will create a custom platform to run Vitis-AI applications fo
 - [Step 2: Create the Software Components with PetaLinux](#step-2-create-the-software-components-with-petalinux)
 - [Step 3: Create the Vitis Platform](#step-3-create-the-vitis-platform)
 - [Step 4: Test the Platform](#step-4-test-the-platform)
-  - [Prepare for the DPU Kernel](#prepare-for-the-dpu-kernel)
-  - [Create and Build a Vitis application](#create-and-build-a-vitis-application)
-  - [Prepare the Network Deployment File](#prepare-the-network-deployment-filebr-)
+  - [Test 1: Read Platform Info](#test-1-read-platform-info)
+  - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
+  - [Test 3: Run a DNNDK Demo](#test-3-run-a-dnndk-demo)
+    - [Prepare for the DPU Kernel](#prepare-for-the-dpu-kernel)
+    - [Create and Build a Vitis application](#create-and-build-a-vitis-application)
+    - [Prepare the Network Deployment File](#prepare-the-network-deployment-filebr-)
+    - [Run Application on Board](#run-application-on-board)
 - [Reference](#reference)
-- [More Information about Install and Set Vitis and XRT Environment](#more-information-about-install-and-set-vitis-and-xrt-environment)
 
 
 
@@ -291,8 +294,9 @@ A Vitis platform requires software components. Xilinx provides common software i
    c) Disable ***ssh-server-dropbear*** and enable ***ssh-server-openssh***. 
    ![ssh_settings.png](images/ssh_settings.png)
    
+
 d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***.
-   
+
 e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable ***openssh***, ***openssh-sftp-server***, ***openssh-sshd***, ***openssh-scp***.
     
 4. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, store the change and exit.
