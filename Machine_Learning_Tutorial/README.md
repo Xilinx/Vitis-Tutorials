@@ -48,5 +48,13 @@ This tutorial is divided in 3 sections.
     * Determining performance bottlenecks in RefineDet application
     * Accelerating the image pre-processing using the Vitis Vision libraries
     * Measuring end-to-end system performance
+* Section 4
+  * Placeholder for Advanced Machine Learning Examples.
+* [**Section 5**](./Section_5-Platform_Creation/README.md)
+  * [**Module 1**](./Section_5-Platform_Creation/Module_1/README.md)
+    * Custom Platform Creation Workflow
+  * [**Module 2**](./Section_5-Platform_Creation/Module_2/README.md)
+    * Create a Vitis-AI capable custom platform
+    * Test platform in several ways
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
