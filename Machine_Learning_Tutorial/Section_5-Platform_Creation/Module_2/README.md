@@ -179,7 +179,7 @@ V++ linker can automatically link the interrupt signals between kernel and platf
 
 6. Enable the ***M_AXI_HPM0_FPD*** and ***M_AXI_HPM1_FPD*** ports, set ***sptag*** name to ```HPM0_FPD```, ```HPM1_FPD``` and ***memport*** to ```M_AXI_GP```.
 
-***Note***: A Vivado project script ***vivado/zcu104_custom_platform.tcl*** is provided. You can re-create the Vivado project by selecting ***Tools -> Run Tcl Script...*** in Vivado and select this file.
+***Note: Fast Track:*** A Vivado project script ***step1_vivado/zcu104_custom_platform.tcl*** is provided. You can re-create the Vivado project by selecting ***Tools -> Run Tcl Script...*** in Vivado and select this file.
 
 ***Now we have enabled AXI master/slave interfaces that can be used for Vitis tools on the platform***
 
@@ -245,7 +245,7 @@ A Vitis platform requires software components. Xilinx provides common software i
    CONFIG_packagegroup-petalinux-xrt
     ```
 
-   Packages for easy system mamagement
+   Packages for easy system management
 
     ```
    CONFIG_dnf
@@ -289,61 +289,67 @@ A Vitis platform requires software components. Xilinx provides common software i
    a) Run ```petalinux-config -c rootfs``` 
    b) Go to ***Image Features***. 
    c) Disable ***ssh-server-dropbear*** and enable ***ssh-server-openssh***. 
-   ![ssh_settings.png](images/ssh_settings.png)<br />
-   d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***.
-
-   e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable ***openssh***, ***openssh-sftp-server***, ***openssh-sshd***, ***openssh-scp***.
-
+   ![ssh_settings.png](images/ssh_settings.png)
+   
+d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***.
+   
+e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable ***openssh***, ***openssh-sftp-server***, ***openssh-sshd***, ***openssh-scp***.
+    
 4. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, store the change and exit.
 
-5. CPU IDLE would cause CPU IDLE when JTAG is connected. So it is recommended to disable the selection during project development phase. It can be enabled for production to save power.<br /> 
-    a) Type ```petalinux-config -c kernel```<br /> 
-    b) Ensure the following are ***TURNED OFF*** by entering 'n' in the [ ] menu selection for:<br />
+5. Disable CPU IDLE in kernel config.
 
-       - ***CPU Power Mangement > CPU Idle > CPU idle PM support***<br />
-       - ***CPU Power Management > CPU Frequency scaling > CPU Frequency scaling***<br /><br />
+   CPU IDLE would cause CPU IDLE when JTAG is connected. So it is recommended to disable the selection during project development phase. It can be enabled for production to save power. 
+   a) Type ```petalinux-config -c kernel``` 
+   b) Ensure the following are ***TURNED OFF*** by entering 'n' in the [ ] menu selection for:
 
-6. Update the Device tree to include the zocl driver, define 32 interrupt inputs and decrease SD Card speed for better card compatibility on ZCU104 boarad by appending the text below to the ***project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi*** file. 
-```
-&amba {
-	zyxclmm_drm {
-		compatible = "xlnx,zocl";
-		status = "okay";
-		interrupt-parent = <&axi_intc_0>;
-		interrupts = <0  4>, <1  4>, <2  4>, <3  4>,
-			     <4  4>, <5  4>, <6  4>, <7  4>,
-			     <8  4>, <9  4>, <10 4>, <11 4>,
-			     <12 4>, <13 4>, <14 4>, <15 4>,
-			     <16 4>, <17 4>, <18 4>, <19 4>,
-			     <20 4>, <21 4>, <22 4>, <23 4>,
-			     <24 4>, <25 4>, <26 4>, <27 4>,
-			     <28 4>, <29 4>, <30 4>, <31 4>;
-	};
-};
+   - ***CPU Power Mangement > CPU Idle > CPU idle PM support***
+       - ***CPU Power Management > CPU Frequency scaling > CPU Frequency scaling***
 
-&axi_intc_0 {
-      xlnx,kind-of-intr = <0x0>;
-      xlnx,num-intr-inputs = <0x20>;
-      interrupt-parent = <&gic>;
-      interrupts = <0 89 4>;
-};
+6. Update the Device tree.
 
-&sdhci1 {
-      no-1-8-v;
-      disable-wp;
-};
+    Append the following contents to the ***project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi*** file. 
 
-```
+    - ***zyxclmm_drm*** node is required by zocl driver, which is a part of XRT.
+    - ***axi_intc_0*** node defines 32 interrupt inputs. This can not be inferred by the hardware settings in Vivado.
+    - ***sdhci1*** node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104. It's not a part of Vitis acceleration platform requirements.
 
-10. Modify the u-boot settings:<br />
-Because we use initramfs to store the rootfs files. So that u-boot need to load a large image. We need to modify the u-boot so that it can load larger image.
-Open ***project-spec/meta-user/recipes-bsp/u-boot/files/platform-top.h*** and add:<br />
-```
-#define CONFIG_SYS_BOOTM_LEN 0x80000000
-#undef CONFIG_SYS_BOOTMAPSZ
-```
+    ***Note***: an example file is provided in ***ref_files/step2_petalinux/system-user.dtsi***.
+    ```
+    &amba {
+        zyxclmm_drm {
+            compatible = "xlnx,zocl";
+            status = "okay";
+            interrupt-parent = <&axi_intc_0>;
+            interrupts = <0  4>, <1  4>, <2  4>, <3  4>,
+                     <4  4>, <5  4>, <6  4>, <7  4>,
+                     <8  4>, <9  4>, <10 4>, <11 4>,
+                     <12 4>, <13 4>, <14 4>, <15 4>,
+                     <16 4>, <17 4>, <18 4>, <19 4>,
+                     <20 4>, <21 4>, <22 4>, <23 4>,
+                     <24 4>, <25 4>, <26 4>, <27 4>,
+                     <28 4>, <29 4>, <30 4>, <31 4>;
+        };
+    };
+    
+    &axi_intc_0 {
+          xlnx,kind-of-intr = <0x0>;
+          xlnx,num-intr-inputs = <0x20>;
+          interrupt-parent = <&gic>;
+          interrupts = <0 89 4>;
+    };
+    
+    &sdhci1 {
+          no-1-8-v;
+          disable-wp;
+    };
+    
+    ```
 
-11. Add EXT4 rootfs support
+
+
+
+7. Add EXT4 rootfs support
 
     Since Vitis-AI software stack is not included in PetaLinux yet, they need to be installed after PetaLinux generates rootfs. PetaLinux uses initramfs format for rootfs by default, it can't retain the rootfs changes in run time. To make the root file system retain changes, we'll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store boot.bin file.
 
@@ -388,20 +394,27 @@ Note: These files are the sources of creating BOOT.BIN.
  }
 ```
 
-4. Copy the generated Linux software components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/image*** directory. Contents in this directory will be packaged to FAT32 partition by v++ package tool.
+4. Prepare image directory. Contents in this directory will be packaged to FAT32 partition by v++ package tool.
+
+    a) Copy the generated Linux software components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/image*** directory. 
 
     - boot.scr: script for u-boot initialization
-    - system.dtb
+    - system.dtb: device tree file for Linux to boot
+
+    b) Copy ***init.sh*** and ***platform_description.txt*** from ***ref_files/step3_pfm*** to ***<full_pathname_to_zcu104_custom_pkg>/pfm/image*** directory.
+
+    - init.sh will set environment variable XILINX_XRT for XRT and copy platform_desc.txt to /etc/xocl.txt
+    - platform_desc.txt has the platform name. XRT will check platform name before loading xclbin file.
 
 5. Create a sysroot self-installer for the target Linux system
 
     ```
     petalinux-build --sdk
     ```
-    
+
 6. Install sysroot: type ```./images/linux/sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***zcu104_custom_pkg/pfm*** (This is an example ) and confirm.<br />
 
-	We would install Vitis AI library and DNNDK into this rootfs in the future.
+  We would install Vitis AI library and DNNDK into this rootfs in the future.
 
 ***Note: Now HW platform and SW platform are all generated. Next we would package the Vitis Platform.***
 
@@ -422,7 +435,7 @@ First we create a Vitis platform project with the XSA file generated by Vivado f
     cd <full_pathname_to_zcu104_custom_pkg>
     ```
 
-3. Launch Vitis by typing ```vits``` in the console.
+3. Launch Vitis by typing ```vitis``` in the console.
 
 4. Select ***zcu104_custom_pkg*** folder as workspace directory.
 
@@ -653,7 +666,11 @@ prop=run.impl_1.strategy=Performance_Explore
 #param=place.runPartPlacer=0
 
 ```
-Here clock ID 0 is 200MHz, clock ID 1 is 400MHz.
+​	Here clock ID 0 is 200MHz, clock ID 1 is 400MHz.
+
+​	This file describes the link connections between DPU and the platform. It will be used by Vitis application in next step.
+
+​	***Note***: an example of prj_config file is provided in ***ref_files/step4_test3/app_src***.
 
 9. Modify ***dpu_conf.vh*** to enable URAM because ZU7EV device on ZCU104 board has URAM resources. Change from:<br />
 ```
@@ -681,7 +698,7 @@ to<br />
 11. Right click on the ***src*** folder under your ***hello_dpu*** application  in the Explorer window, and select "Import Sources"
       ![import_sources.png](images/import_sources.png)<br /><br />
 12. Choose from directory ***<zcu104_custom_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/*** as the target location, and import the ***dpu.xo*** file that we just created.<br />
-13. Import sources again, and add the cpp, header and prj_config files from ***ref_files/src*** folder provided by this Git repository.<br />
+13. Import sources again, and add all files from ***ref_files/step4_test3/app_src*** folder provided by this Git repository, including prj_config.
 14. In the Explorer window double click the hello_dpu.prj file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
 15. Under Hardware Functions, click the lightning bolt logo to ***Add Hardware Function***.<br />
     ![add_hardware_function.png](images/add_hardware_function.png)<br /><br />
@@ -704,15 +721,14 @@ hineon
 18. In the same page, Check the ***Library search path*** to makesure the ```${SYSROOT}/usr/lib/``` is added, click ***Apply***<br />
 ![vitis_lib_settings.png](images/vitis_lib_settings.png)<br /><br />
 19. Then go to ***C/C++ Build->Settings->Tool Settings->GCC Host Compiler->Includes***, remove the HLS include directory and add ```${SYSROOT}/usr/include/``` like below, then click ***Apply and Close*** to save the changes.<br />
-![vitis_include_settings.png](images/vitis_include_settings.png)<br /><br />
-***These steps are used to make sure your application can call libs in rootfs directly on Vitis application build***
+![vitis_include_settings.png](images/vitis_include_settings.png)These steps are used to make sure your application can call libs in rootfs directly on Vitis application build***
 21. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
 
 #### Prepare the Network Deployment File
 
 1. Find HWH file from your Vitis application folder ***hello_dpu/Hardware/dpu.build/link/vivado/vpl/prj/prj.srcs/sources_1/bd/system/hw_handoff/system.hwh***<br />
 Or go to your Vitis application folder use command ```find -name *.hwh``` to search for the file.<br />
-2. Copy the ***ref_files/Tool-Example*** folder provided by this Github repository to your Vitis AI download directory.<br />
+2. Copy the ***ref_files/step4_test3/Tool-Example*** folder provided by this Github repository to your Vitis AI download directory.<br />
 3. Copy this HWH file into ***<Vitis-AI-download_directory>/Tool-Example*** folder.<br />
 4. Go to ***<Vitis-AI-download_directory>*** folder and launch the docker.
 ```
@@ -759,6 +775,7 @@ $ dlet -f ./system.hwh
     cd /mnt/sd-mmcblk0p1
     cp dpu_sw_optimize.tar.gz vitis-ai_v1.2_dnndk.tar.gz vitis-ai_v1.2_dnndk_sample_img.tar.gz ~
     ```
+    
 5. Run DPU Software Optimization
 
    ```bash
@@ -782,14 +799,16 @@ $ dlet -f ./system.hwh
    
    - PMIC config makes ZCU104 can use more power when running Vitis-AI applications.
    
-6. Install DNNDK package like below:<br />
+7. Install DNNDK package like below:<br />
 
    ```
    tar -zxvf vitis-ai_v1.2_dnndk.tar.gz
    cd vitis-ai_v1.2_dnndk/
    ./install.sh
    ```
-***install.sh*** copies ***dpu.xclbin*** from FAT32 partition to /usr/lib because DNNDK requires xclbin to be placed in this location.   
+   ***install.sh*** copies ***dpu.xclbin*** from FAT32 partition to /usr/lib because DNNDK requires xclbin to be placed in this location.  
+
+   ***Note: Vitis-AI Library has the similar installation method. Please refer to Vitis-AI user guide for more info.*** 
 
 6. Extract vitis_ai_dnndk_samples and put hello_dpu into it:
     ```
@@ -801,7 +820,7 @@ $ dlet -f ./system.hwh
     cp /mnt/sd-mmcblk0p1/hello_dpu ./
     ./hello_dpu
     ```
-	***We store the hello_dpu to /mnt/package/vitis_ai_dnndk_samples/test folder to suit the relative path in my code, you can do that according to your code context. The hello_dpu is generated in Vitis application build and was copied to sd card from previous operation.***<br />
+	***We store the hello_dpu to vitis_ai_dnndk_samples/test folder to suit the relative path in my code, you can do that according to your code context. The hello_dpu is generated in Vitis application build and was copied to sd card from previous operation.***<br />
 
 7. You should see the result like below:<br />
 ![test_result.PNG](images/test_result.PNG)
