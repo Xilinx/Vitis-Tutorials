@@ -38,4 +38,11 @@ Learn how to use the Vitis core development kit to build, analyze, and optimize 
 
 Learn how to use Vitis HLS, compiler, analyzer, and debugger to identify performance bottlenecks and make modifications to increase algorithm efficiency and performance using an Alveo card.
 
+### [Platform Creation Tutorial](./Vitis_Platform_Creation)
+Learn how to build custom platforms for Vitis to target your own boards, and how to modify and extend existing platforms.
+
+Learn how to configure the platform hardware sources, construct the runtime software environment, add support for software and
+hardware emulation, and more.
+
+
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
