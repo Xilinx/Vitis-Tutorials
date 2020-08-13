@@ -148,6 +148,6 @@ Congratulations! You have successfully completed all the labs of this tutorial.
 5. You familiarized yourself with the reports generated during application build and execution.
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/my-first-program/README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/Getting_Started/README.md">Return to Getting Started Pathway</a> — <a href="docs/my-first-program/README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

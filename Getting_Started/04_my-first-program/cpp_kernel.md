@@ -124,6 +124,6 @@ The `vadd` function can now be compiled into a kernel using the Vitis toolchain.
 The next step in this tutorial is [coding the host program](./host_program.md).
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/my-first-program/README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/Getting_Started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/my-first-program/README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
