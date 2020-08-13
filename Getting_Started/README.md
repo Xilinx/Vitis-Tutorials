@@ -54,15 +54,6 @@ In this tutorial, you will learn how to do the following:
 
 [Read more...](./04_my-first-program/README.md)
 
-### 5. Optimizing Accelerated FPGA Applications — Based on Vitis Environment Methodology
-
-The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the hardware kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto FPGA kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary compiler options and pragmas to create the kernel architecture needed to achieve the optimized performance target.
-
-####TODO: Fix links below
-
-* [Convolution Example](../convolution-tutorial/README.md)
-* [Bloom Filter Example](../bloom/README.md)
-
 ## Additional Resources
 
 For more training and in-depth documentation on the topics discussed in this pathway, refer to the following resources.
