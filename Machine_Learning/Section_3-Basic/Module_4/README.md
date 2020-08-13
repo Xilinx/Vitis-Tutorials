@@ -127,7 +127,7 @@ The host machine has several requirements that need to be met before we begin. Y
 
   + Optionally, a GPU card suitable for training (a trained checkpoint is provided for those who wish to skip the training step).
 
-  + The environment is supposed to be ready at this step. If not, please follow the setup instructions provided in [Module_2](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_2) and in [Module_3](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_3).
+  + The environment is supposed to be ready at this step. If not, please follow the setup instructions provided in [Module_2](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning/Section_3-Basic/Module_2) and in [Module_3](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning/Section_3-Basic/Module_3).
 
 ### Downloading the Design and Setting up the Workspace
 
@@ -387,6 +387,6 @@ The approximate throughput (in frames/sec) for various batch sizes is shown belo
 |    4    |      820.57      |
 |    5    |      829.56      |
 
-Now, you could jump to [Module_5](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_5) for a more practical use case.
+Now, you could jump to [Module_5](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning/Section_3-Basic/Module_5) for a more practical use case.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

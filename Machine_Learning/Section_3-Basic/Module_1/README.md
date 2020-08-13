@@ -16,11 +16,11 @@ The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platfo
 
 * Choose an unpartitioned SD card of size 8GB or greater. Use Etcher to burn the image file onto the SD card.
   * Etcher launches, as shown in the following figure.
-  
+
   <p align="left">
   <img width="452" height="232" src="images/etcher1.png">
-  </p>  
-  
+  </p>
+
   * Browse to the location of the image.You can select a .zip or .gz compressed file.
   * Etcher tries to detect the SD drive. Verify the drive designation and the image size.
   * Click 'Flash' and wait till the operation is complete
@@ -39,7 +39,7 @@ The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platfo
     <p align="left">
     <img width="600" height="308" src="images/IP.png">
     </p>
-  * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_2) for next step.
+  * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning/Section_3-Basic/Module_2) for next step.
   <p align="left">
   <img width="720" height="660" src="images/ZCU104.png">
   </p>
