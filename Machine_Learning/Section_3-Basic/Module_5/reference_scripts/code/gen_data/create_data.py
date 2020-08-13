@@ -76,35 +76,35 @@ extra_cmd = '--encode-type=jpg --encoded --redo'
 
 def gen_image2anno(image_root, anno_root, image_list_file, image2anno_file):
     assert os.path.exists(image_root), 'image_root doesnot exists found in func gen_image2anno'
-    assert os.path.exists(image_list_file), 'image_list_file doesnot exists found in func gen_image2anno' 
+    assert os.path.exists(image_list_file), 'image_list_file doesnot exists found in func gen_image2anno'
     with open(image_list_file, 'r') as fr_image_list:
         image_name_list = fr_image_list.readlines()
         with open(image2anno_file, 'w') as fw_image2anno:
             for image_name in image_name_list:
-                image_name = image_name.strip() 
+                image_name = image_name.strip()
                 image_path = os.path.join(image_root, image_name + '.jpg')
-                anno_path = os.path.join(anno_root, image_name + '.txt')   
-                fw_image2anno.write(image_path + " " + anno_path + '\n') 
+                anno_path = os.path.join(anno_root, image_name + '.txt')
+                fw_image2anno.write(image_path + " " + anno_path + '\n')
 
 def convert_lmdb(image_root, convert_file, db_file, height, width):
 
-    cmd = 'python /workspace/Vitis-In-Depth-Tutorial/Machine_Learning_Tutorial/Section_3-Basic/Module_5/cf_refinedet_coco_480_360_0.96_5.08G/code/gen_data/create_annoset.py --label-type=%s --anno-type=%s --label-map-file=%s --min-dim=%d --max-dim=%d --resize-width=%d --resize-height=%d --check-label %s %s %s %s ../../data/link_480_360/' %\
+    cmd = 'python /workspace/Vitis-In-Depth-Tutorial/Machine_Learning/Section_3-Basic/Module_5/cf_refinedet_coco_480_360_0.96_5.08G/code/gen_data/create_annoset.py --label-type=%s --anno-type=%s --label-map-file=%s --min-dim=%d --max-dim=%d --resize-width=%d --resize-height=%d --check-label %s %s %s %s ../../data/link_480_360/' %\
           (label_type, anno_type, map_file, min_dim, max_dim, width, height, extra_cmd, image_root, convert_file, db_file)
     print(cmd)
     print(subprocess.getoutput(cmd))
 
 
 if __name__ == "__main__":
-     
+
     if not os.path.exists(args.output):
         subprocess.getoutput('mkdir ' + args.output)
     db_file = os.path.join(args.output, args.train_image_list.split('/')[-1][:-4] + '_lmdb')
-    gen_image2anno(args.image_dir, args.anno_dir, args.train_image_list, args.train_image2anno) 
+    gen_image2anno(args.image_dir, args.anno_dir, args.train_image_list, args.train_image2anno)
     convert_lmdb('./', args.train_image2anno, db_file, args.height, args.width)
-    db_file = os.path.join(args.output, args.val_image_list.split('/')[-1][:-4] + '_lmdb') 
-    gen_image2anno(args.image_dir, args.anno_dir, args.val_image_list, args.val_image2anno) 
+    db_file = os.path.join(args.output, args.val_image_list.split('/')[-1][:-4] + '_lmdb')
+    gen_image2anno(args.image_dir, args.anno_dir, args.val_image_list, args.val_image2anno)
     convert_lmdb('./', args.val_image2anno, db_file, 0, 0)
-    
+
     get_image_size_cmd = 'get_image_size' + ' ' + './' + ' '  + args.val_image2anno + ' ' + '../../data/test_name_size.txt'
 
     print(get_image_size_cmd)

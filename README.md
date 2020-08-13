@@ -8,7 +8,7 @@
 <div align="center">
     <a href="http://www.youtube.com/watch?v=vFPNlcXAeWI">
     <img
-    src="./Machine_Learning_Tutorial/Section_1-Workflows/images/intro_video.png">
+    src="./Machine_Learning/Section_1-Workflows/images/intro_video.png">
     </a>
 </div>
 
@@ -22,16 +22,19 @@ Leverage integration with high-level frameworks, develop in C, C++, or Python us
 The Vitis In-Depth Tutorials takes users through the design methodology and programming model for deploying accelerated application on all Xilinx platforms.
 
 <p align="center">
-    <img src="./Machine_Learning_Tutorial/Section_1-Workflows/images/vitis-landing-graphic-boards-u50.png">
+    <img src="./Machine_Learning/Section_1-Workflows/images/vitis-landing-graphic-boards-u50.png">
 </p>
 
-### [Machine Learning Tutorial](./Machine_Learning_Tutorial)
+### [Getting Started](./Getting_Started)
+Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!
+
+### [Machine Learning Tutorial](./Machine_Learning)
 Learn how to use Vitis, Vitis-AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
 
 Use Vitis-AI to configure Xilinx hardware using the Tensorflow framework. Vitis-AI allows the user to quantize, compile, and deploy an inference model in a matter of minutes.
 
-### [Acceleration Tutorial](./Acceleration_Tutorial)
-Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C/C++. 
+### [Acceleration Tutorial](./Algorithm_Acceleration)
+Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C/C++.
 
 Learn how to use Vitis HLS, compiler, analyzer, and debugger to identify performance bottlenecks and make modifications to increase algorithm efficiency and performance using an Alveo card.
 
