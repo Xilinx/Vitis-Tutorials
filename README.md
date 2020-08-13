@@ -8,7 +8,7 @@
 <div align="center">
     <a href="http://www.youtube.com/watch?v=vFPNlcXAeWI">
     <img
-    src="./Machine_Learning/Section_1-Workflows/images/intro_video.png">
+    src="./Machine_Learning/Getting_Started/01-Workflows/images/intro_video.png">
     </a>
 </div>
 
@@ -22,7 +22,7 @@ Leverage integration with high-level frameworks, develop in C, C++, or Python us
 The Vitis In-Depth Tutorials takes users through the design methodology and programming model for deploying accelerated application on all Xilinx platforms.
 
 <p align="center">
-    <img src="./Machine_Learning/Section_1-Workflows/images/vitis-landing-graphic-boards-u50.png">
+    <img src="./Machine_Learning/Getting_Started/01-Workflows/images/vitis-landing-graphic-boards-u50.png">
 </p>
 
 ### [Getting Started](./Getting_Started)
