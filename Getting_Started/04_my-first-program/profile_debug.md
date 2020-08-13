@@ -19,7 +19,7 @@ The Vitis™ core development kit generates various reports on the kernel resour
 XRT automatically collects profiling data on host applications. After the application finishes execution, the Profile Summary report is saved in HTML, CSV, and Google Protocol Buffer formats in the solution report or working directory. These reports can be reviewed in a web browser, spreadsheet viewer, or the integrated Profile Summary view in the Vitis IDE.
 
 1. To enable profile monitoring, create the `xrt.ini` file with `profile=true`. This file should be in the execution directory.
-   >**TIP**: For details on creating the `xrt.ini` file, refer to the [Profile and Trace Reports](../Pathway3/ProfileAndTraceReports.md) lab. 
+   >**TIP**: For details on creating the `xrt.ini` file, refer to the [Profile and Trace Reports](../03_essential-concepts/ProfileAndTraceReports.md) lab.
 
    ```
    [Debug]
@@ -46,7 +46,7 @@ XRT automatically collects profiling data on host applications. After the applic
 
 3. To view the Profile Summary report in the IDE, use the Vitis analyzer.
 
-   >**TIP**: For details on using the Vitis analyzer, refer to the [Profile and Trace Reports](../Pathway3/ProfileAndTraceReports.md) lab.
+   >**TIP**: For details on using the Vitis analyzer, refer to the [Profile and Trace Reports](../03_essential-concepts/ProfileAndTraceReports.md) lab.
 
    ```bash
    vitis_analyzer ./vadd.hw_emu.xclbin.run_summary

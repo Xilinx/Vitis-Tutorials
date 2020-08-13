@@ -14,7 +14,7 @@
 
 ## Introduction
 
-As described in the [Execution Model of an FPGA Accelerated Application](../vitis-execution-model/README.md), an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx device. The sources for both need to be built (compiled and linked) separately. For additional details, see [Introduction to the Vitis Environment for Acceleration](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+As described in the [Execution Model of an FPGA Accelerated Application](./01_vitis-execution-model/README.md), an accelerated application consists of a software program running on an x86 server, and the accelerated kernels running on an Alveo Data Center accelerator card or Xilinx device. The sources for both need to be built (compiled and linked) separately. For additional details, see [Introduction to the Vitis Environment for Acceleration](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 This tutorial describes how to build both the software and hardware portions of your design using the `g++` compiler and Vitis compiler (`v++`). It describes various command line options, including how to specify a target platform, and building for hardware or software emulation.
 
@@ -43,7 +43,7 @@ The software program is written in C/C++ and uses OpenCL™ API calls to communi
    cd <Vitis-Tutorials>/docs/Pathway3/reference_files/run
    ```
 
-   To compile the host application, use the `-c` option with a list of the host source files.  
+   To compile the host application, use the `-c` option with a list of the host source files.
 
    Optionally, the output object file name can be specified with the `-o` option as shown as follows.
 
@@ -65,7 +65,7 @@ The software program is written in C/C++ and uses OpenCL™ API calls to communi
 
 3. **Required Flags**
 
-   You will need to specify include paths and library paths for XRT and the Vivado tools:  
+   You will need to specify include paths and library paths for XRT and the Vivado tools:
 
    1. Use the `-I` option to specify the include directories: `-I$XILINX_XRT/include -I$XILINX_VIVADO/include`
    2. Use the `-L` option to specify directories searched for `-l` libraries: `-L$XILINX_XRT/lib`
@@ -100,9 +100,9 @@ For details on both `v++` and `package_xo`, refer to the [Vitis Environment Refe
 
 The object files are subsequently linked with the shell (hardware platform) through the Vitis compiler to create the FPGA binary file, or `xclbin` file.
 
-The following figure shows the compiling and linking flow for the various types of kernels.  
+The following figure shows the compiling and linking flow for the various types of kernels.
 
-  ![compiling_and_linking_flow](images/compiling_and_linking_flow.png)  
+  ![compiling_and_linking_flow](images/compiling_and_linking_flow.png)
 
 This tutorial is limited to `v++` compilation and does not consider RTL kernels. For details on building RTL kernels, see the [Getting Started with RTL Kernels](../getting-started-rtl-kernels/README.md) tutorial.
 
@@ -121,7 +121,7 @@ The targeted platform must be specified during both compile and linking stages a
 Finally, the build target is specified with the `-t` option.
 `v++ … -t <build_target>`
 
-There are three different build targets; two emulation targets used for debug and validation purposes, and one hardware target used to generate the actual binary needed to run on the FPGA.  
+There are three different build targets; two emulation targets used for debug and validation purposes, and one hardware target used to generate the actual binary needed to run on the FPGA.
 
 These build target configurations options are: `sw_emu`, `hw_emu` and `hw`.
 
@@ -161,7 +161,7 @@ Use the following command to compile the kernel into a *software emulation* targ
 >* `../src/mmult.cpp`: Specify source files
 >* `-o mmult.sw_emu.xilinx_u200_xdma_201830_2.xo`: Specify the .xo output path and file name
 
-The `v++` command also generates the `compile_summary` file that can be viewed with Vitis analyzer to review relevant reports. You can open Vitis analyzer and review the compile summary using the following command: 
+The `v++` command also generates the `compile_summary` file that can be viewed with Vitis analyzer to review relevant reports. You can open Vitis analyzer and review the compile summary using the following command:
 
 ```
 vitis_analyzer mmult.sw_emu.xilinx_u200_xdma_201830_2.xo.compile_summary
@@ -248,7 +248,7 @@ After running the software emulation build or the hardware emulation build, use 
 archive_summary mmult.hw_emu.xilinx_u200_xdma_201830_2.xclbin.link_summary mmult.hw_emu.link_summary.archive
 ```
 
-Use `archive_summary -h` to learn more about this command, and its options. Create the archive before running subsequent builds to ensure your summary reports are preserved to compare with future runs. Archiving the link_summary automatically preserves the compile_summary report that the link_summary references.  
+Use `archive_summary -h` to learn more about this command, and its options. Create the archive before running subsequent builds to ensure your summary reports are preserved to compare with future runs. Archiving the link_summary automatically preserves the compile_summary report that the link_summary references.
 
 ### Building for Hardware
 

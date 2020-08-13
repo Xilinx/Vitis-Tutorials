@@ -28,15 +28,15 @@ To build the host code, use the following XCPP command for the `./reference-file
 g++ -I$XILINX_XRT/include/ -I$XILINX_VIVADO/include/ -Wall -O0 -g -std=c++11 ./src/host.cpp  -o 'host'  -L$XILINX_XRT/lib/ -lOpenCL -lpthread -lrt -lstdc++
    ```
 
-This command specifies the required libraries and include files for XRT, the Vivado tools, and the OpenCL API. For more information on building the host, refer to the [Building an Application](../Pathway3/BuildingAnApplication.md) lab in the  Essential Concepts for Building and Running the Accelerated Application tutorial.
+This command specifies the required libraries and include files for XRT, the Vivado tools, and the OpenCL API. For more information on building the host, refer to the [Building an Application](../03_essential-concepts/BuildingAnApplication.md) lab in the  Essential Concepts for Building and Running the Accelerated Application tutorial.
 
->**TIP**: To run the commands shown here, you must set up the environment for the Vitis core development kit as discussed in [Building an Application](../Pathway3/BuildingAnApplication.md).
+>**TIP**: To run the commands shown here, you must set up the environment for the Vitis core development kit as discussed in [Building an Application](../03_essential-concepts/BuildingAnApplication.md).
 
 ### Building the FPGA Binary
 
-Similar to building the software application, building the hardware requires compiling and linking steps using the Vitis compiler as explained in the [Building an Application](../Pathway3/BuildingAnApplication.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
+Similar to building the software application, building the hardware requires compiling and linking steps using the Vitis compiler as explained in the [Building an Application](../03_essential-concepts/BuildingAnApplication.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
 
-In the following command, the build target is for software emulation. You can also specify other build targets, such as `hw_emu` and `hw` as explained in the [Building an Application](../Pathway3/BuildingAnApplication.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
+In the following command, the build target is for software emulation. You can also specify other build targets, such as `hw_emu` and `hw` as explained in the [Building an Application](../03_essential-concepts/BuildingAnApplication.md) lab in the Essential Concepts for Building and Running the Accelerated Application tutorial.
 
 * Use the following commands for compiling the hardware kernel for the VADD example.
 
@@ -52,7 +52,7 @@ In the following command, the build target is for software emulation. You can al
 
 ## Run Emulation
 
-Before running the design on hardware, run the design in [Running Software and Hardware Emulation](../Pathway3/Emulation.md) mode to verify functionality. Running the application in any emulation mode is a two-step process:
+Before running the design on hardware, run the design in [Running Software and Hardware Emulation](../03_essential-concepts/Emulation.md) mode to verify functionality. Running the application in any emulation mode is a two-step process:
 
 1. Generate an emulation configuration file.
 2. Run the application.
@@ -63,7 +63,7 @@ Before running the design on hardware, run the design in [Running Software and H
 
    ```bash
    emconfigutil --platform xilinx_u200_xdma_201830_2
-   export XCL_EMULATION_MODE=sw_emu  
+   export XCL_EMULATION_MODE=sw_emu
    ```
 
 2. With the configuration file `emconfig.json` generated and XCL_EMULATION_MODE set, use the following command to execute the host program and kernel in software emulation mode.
@@ -92,7 +92,7 @@ Before running the design on hardware, run the design in [Running Software and H
    v++ -t hw_emu --config design.cfg -c -k vadd -I'../src' -o 'vadd.xilinx_u200_xdma_201830_2.xo' './src/vadd.cpp'
    v++ -t hw_emu --config design.cfg -l -o 'vadd.xilinx_u200_xdma_201830_2.xclbin' vadd.xilinx_u200_xdma_201830_2.xo
    ```
-  
+
 2. To run in hardware emulation mode, generate an emulation configuration file, and set the XCL_EMULATION_MODE environment variable.
 
    ```bash
