@@ -79,7 +79,7 @@ As you work through this section, refer to step 1 in the `host.cpp` file.
 
 4. Next, you need to create a program object. The program object is created from the pre-compiled FPGA binary file (`xclbin`). It contains the collection of user-defined kernel functions and is programed onto the FPGA.
 
-   >**TIP:** The `xclbin` is the compiled kernel binary created, as explained in [Building an Application](../Pathway3/BuildingAnApplication.md).
+   >**TIP:** The `xclbin` is the compiled kernel binary created, as explained in [Building an Application](../03_essential-concepts/BuildingAnApplication.md).
 
    First, the application needs to read the contents of `xclbin` file. In this tutorial, you will use a user-defined function, `read_binary_file`, to achieve this. This function returns a pointer to the contents of `xclbin` file.
 
