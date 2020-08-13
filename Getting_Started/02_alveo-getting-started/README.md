@@ -37,7 +37,7 @@ For developing application in-house, install the Vitis core development kit, by 
 
 ## Next Steps
 
-Understand the [Essential Concepts for Building and Running the Accelerated Application](../Pathway3/README.md) using the Vitis core development kit, including building a software application, building a hardware platform, performing emulation, viewing reports, and executing in hardware.
+Understand the [Essential Concepts for Building and Running the Accelerated Application](../03_essential-concepts/README.md) using the Vitis core development kit, including building a software application, building a hardware platform, performing emulation, viewing reports, and executing in hardware.
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a></b></p>
