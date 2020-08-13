@@ -6,7 +6,10 @@
  </tr>
 </table>
 
+### Getting Started Tutorial
+
 This tutorial is divided in 3 sections.
+
 * [**Section 1**](./Getting_Started/01-Workflows) (~10 mins):
   + An overview of Vitis and the host/kernel paradigm
     * See how Vitis takes care of the heavy lifting to let you focus on the application code
@@ -37,5 +40,14 @@ This tutorial is divided in 3 sections.
     * Apply the <code>DATAFLOW</code> task parallelism optimization pragma
     * Run Vitis, Vitis Analyzer and Vitis HLS (including viewing specific dataflow waveforms)
     * Run on the U50 card
+
+### Design Tutorials - Optimizing Accelerated FPGA Applications Based on Vitis Environment Methodology
+
+The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the hardware kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto FPGA kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary compiler options and pragmas to create the kernel architecture needed to achieve the optimized performance target.
+
+The following examples illustrate the use of this methodology in real-world applications:
+
+* [Convolution Example](./Design_Tutorials/01-convolution-tutorial/README.md)
+* [Bloom Filter Example](./Design_Tutorials/02-bloom/README.md)
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
