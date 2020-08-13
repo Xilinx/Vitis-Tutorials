@@ -8,43 +8,43 @@
 </table>
 
 This tutorial is divided in 3 sections.
-* [**Section 1**](./Section_1-Workflows) :
+* [**Section 1**](./Getting_Started/01-Workflows) :
   + An overview of Vitis and Vitis-AI Workflows
     * See how Vitis unifies software, acceleration, and ML development under a single development platform.
-* [**Section 2**](./Section_2-System_Setup) :
+* [**Section 2**](./Getting_Started/02-System_Setup) :
   + Vitis software platform setup
   + Vitis-AI setup
-* [**Section 3**](./Section_3-Basic/Module_1) :
+* [**Section 3**](./Getting_Started/03-Basic/Module_1) :
   + Deploy a DenseNet inference application on the ZCU104 board
     - Video file input
     - USB camera input
   + Increase overall system performance by using the [Vitis Vision Library](https://www.xilinx.com/products/design-tools/vitis/vitis-libraries/vitis-vision.html) to accelerate the image pre-processing
 
-  + [**Module 1**](./Section_3-Basic/Module_1)
+  + [**Module 1**](./Getting_Started/03-Basic/Module_1)
     * Prepare SD card with the pre-built DPU platform
     * Boot the ZCU104 and verify basic functionality
-  + [**Module 2**](./Section_3-Basic/Module_2)
+  + [**Module 2**](./Getting_Started/03-Basic/Module_2)
     * Setup cross-compilation environment
     * Update <code>glog</code> package
     * Cross-compile the Vitis-AI examples
-  + [**Module 3**](./Section_3-Basic/Module_3)
+  + [**Module 3**](./Getting_Started/03-Basic/Module_3)
     * Update the board image
     * Run RefineNet demo
-  + [**Module 4**](./Section_3-Basic/Module_4)
+  + [**Module 4**](./Getting_Started/03-Basic/Module_4)
     * Classification using Vitis-AI and Tensorflow
     * Running model through the Vitis-AI tool flow
     * Deploying the model to the ZCU104 and evaluating results
-  + [**Module 5**](./Section_3-Basic/Module_5)
+  + [**Module 5**](./Getting_Started/03-Basic/Module_5)
     * Working with network and Vitis-AI
     * Modifying RefineDet model to work with Vitis-AI
     * Train model with modified dataset
     * Use Vitis-AI to generate deployment files
     * Running RefineDet on the ZCU104
-  + [**Module 6**](./Section_3-Basic/Module_6)
+  + [**Module 6**](./Getting_Started/03-Basic/Module_6)
     * Review the Vitis-AI APIs for application development
     * Review the RefineDet application architecture
     * Cross-compiling RefineDet application using the cross-compilation environment
-  + [**Module 7**](./Section_3-Basic/Module_7)
+  + [**Module 7**](./Getting_Started/03-Basic/Module_7)
     * Determining performance bottlenecks in RefineDet application
     * Accelerating the image pre-processing using the Vitis Vision libraries
     * Measuring end-to-end system performance
