@@ -25,7 +25,7 @@ The Vitis In-Depth Tutorials takes users through the design methodology and prog
     <img src="./Machine_Learning/Getting_Started/01-Workflows/images/vitis-landing-graphic-boards-u50.png">
 </p>
 
-### [Getting Started](./Getting_Started)
+### [Introduction](./Introduction)
 Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!
 
 ### [Machine Learning Tutorial](./Machine_Learning)
