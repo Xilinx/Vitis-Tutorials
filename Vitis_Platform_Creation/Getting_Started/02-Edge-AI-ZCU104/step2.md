@@ -68,14 +68,14 @@ A Vitis platform requires software components. Xilinx provides common software i
     ```
 
 2. Run ```petalinux-config -c rootfs``` and select ***user packages***, select name of rootfs all the libraries listed above, save and exit.
-   ![petalinux_rootfs.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/petalinux_rootfs.png)
+   ![petalinux_rootfs.png](./images/petalinux_rootfs.png)
 
 3. Enable OpenSSH and disable dropbear
    Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve 4x times faster data transmission speed (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.
    a) Run ```petalinux-config -c rootfs```
    b) Go to ***Image Features***.
    c) Disable ***ssh-server-dropbear*** and enable ***ssh-server-openssh***.
-   ![ssh_settings.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/ssh_settings.png)
+   ![ssh_settings.png](./images/ssh_settings.png)
 
 
 d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***.
@@ -143,9 +143,9 @@ e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable
 
    Run `petalinux-config`, go to ***Image Packaging Configuration***, select ***Root File System Type*** as ***EXT4***, and append `ext4 ext4.gz` to ***Root File System Formats***.
 
-   ![](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/petalinux_root_filesystem_type.png)
+   ![](./images/petalinux_root_filesystem_type.png)
 
-   ![](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/petalinux_add_rootfs_types.png)
+   ![](./images/petalinux_add_rootfs_types.png)
 
 ### Build Image and Prepare for Platform Packaging
 
