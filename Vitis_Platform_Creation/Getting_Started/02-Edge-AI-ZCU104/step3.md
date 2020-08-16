@@ -47,14 +47,14 @@ Next we setup software settings in Platform Settings view.
    - ***Boot Components Direcotory***: Browse to ***zcu104_custom_pkg/pfm/boot*** and click OK.
    - ***Linux Image Directory***: Browse to ***zcu104_custom_pkg/pfm/image*** and click OK.
 
-![vitis_linux_config.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/vitis_linux_config.png)
+![vitis_linux_config.png](./images/vitis_linux_config.png)
 
 11. Click ***zcu104_custom*** project in the Vitis Explorer view, click the ***Build*** button to generate the platform.
-    ![](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/build_vitis_platform.png)
+    ![](./images/build_vitis_platform.png)
 
 ***Note: The generated platform is placed in the export directory. BSP and source files are also provided for re-building the FSBL and PMU if desired and are associated with the platform. The platform is ready to be used for application development.***
 
-![](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/vitis_platform_output.png)
+![](./images/vitis_platform_output.png)
 
 
 
