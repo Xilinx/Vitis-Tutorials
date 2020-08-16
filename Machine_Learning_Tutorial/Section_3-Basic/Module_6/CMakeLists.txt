@@ -22,7 +22,7 @@ endif(NOT OpenCV_FOUND)
 add_subdirectory(myV4L2)
 add_definitions(-DUSE_DRM)
 message(STATUS "CMAKE_SYSROOT is ${CMAKE_SYSROOT}")
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include","{CMAKE_SYSROOT}/usr/include/drm")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include" "{CMAKE_SYSROOT}/usr/include/drm")
 
 add_executable(usb_input_multi_threads_refinedet_drm ${CMAKE_CURRENT_SOURCE_DIR}/app/test/usb_input_multi_threads_refinedet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/decodethread.cpp
