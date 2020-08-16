@@ -222,12 +222,12 @@ to<br />
 9. Set Root Filesystem to ***zcu104_custom_plnx/images/linux/rootfs.ext4*** and click ***next***.<br />
 10. Select ***System Optimization Examples -> Empty application*** and click ***finish*** to generate the application.<br />
 11. Right click on the ***src*** folder under your ***hello_dpu*** application  in the Explorer window, and select "Import Sources"
-      ![import_sources.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/import_sources.png)<br /><br />
+      ![import_sources.png](./images/import_sources.png)<br /><br />
 12. Choose from directory ***<zcu104_custom_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/*** as the target location, and import the ***dpu.xo*** file that we just created.<br />
 13. Import sources again, and add all files from ***ref_files/step4_test3/app_src*** folder provided by this Git repository, including prj_config.
 14. In the Explorer window double click the hello_dpu.prj file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
 15. Under Hardware Functions, click the lightning bolt logo to ***Add Hardware Function***.<br />
-    ![add_hardware_function.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/add_hardware_function.png)<br /><br />
+    ![add_hardware_function.png](./images/add_hardware_function.png)<br /><br />
 16. Select the "DPUCZDX8G" included as part of the dpu.xo file that we included earlier.<br />
 17. Click on binary_container_1 to change the name to dpu.<br />
 18. Click on ***DPUCZDX8G*** and change the ***Compute Units*** from ```1``` to ```2``` because we have 2 dpu cores involved.<br />
@@ -247,9 +247,9 @@ hineon
 ```
 
 18. In the same page, Check the ***Library search path*** to makesure the ```${SYSROOT}/usr/lib/``` is added, click ***Apply***<br />
-    ![vitis_lib_settings.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/vitis_lib_settings.png)<br /><br />
+    ![vitis_lib_settings.png](./images/vitis_lib_settings.png)<br /><br />
 19. Then go to ***C/C++ Build->Settings->Tool Settings->GCC Host Compiler->Includes***, remove the HLS include directory and add ```${SYSROOT}/usr/include/``` like below, then click ***Apply and Close*** to save the changes.<br />
-    ![vitis_include_settings.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/vitis_include_settings.png)These steps are used to make sure your application can call libs in rootfs directly on Vitis application build***
+    ![vitis_include_settings.png](./images/vitis_include_settings.png)These steps are used to make sure your application can call libs in rootfs directly on Vitis application build***
 20. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
 
 #### Prepare the Network Deployment File
@@ -361,6 +361,6 @@ $ dlet -f ./system.hwh
    ***We store the hello_dpu to vitis_ai_dnndk_samples/test folder to suit the relative path in my code, you can do that according to your code context. The hello_dpu is generated in Vitis application build and was copied to sd card from previous operation.***<br />
 
 9. You should see the result like below:<br />
-   ![test_result.PNG](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/test_result.PNG)
+   ![test_result.PNG](./images/test_result.PNG)
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
