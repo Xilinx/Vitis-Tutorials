@@ -19,7 +19,7 @@ find_package(OpenCV COMPONENTS opencv_core opencv_video opencv_videoio opencv_im
 if(NOT OpenCV_FOUND)
   find_package(OpenCV_LIBS opencv_core opencv_video opencv_videoio opencv_imgproc opencv_imgcodecs opencv_highgui)
 endif(NOT OpenCV_FOUND)
-add_subdirectory(myV4l2)
+add_subdirectory(myV4L2)
 add_definitions(-DUSE_DRM)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include")
 include_directories("{CMAKE_SYSROOT}/usr/include/drm")
