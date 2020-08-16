@@ -29,6 +29,7 @@ We'll introduce the platform creation steps in the following pages. Each page de
 ## Reference
 
 - [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/index.html)
+- [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vcm1596051749044.html) in UG1393
 - Vitis-AI Github Repository: https://github.com/Xilinx/Vitis-AI
 - Vitis Embedded Platform Source Github Repository: https://github.com/Xilinx/Vitis_Embedded_Platform_Source
 - https://github.com/Xilinx/Vitis-AI-Tutorials/tree/Vitis-AI-Custom-Platform
