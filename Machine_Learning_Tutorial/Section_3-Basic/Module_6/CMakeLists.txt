@@ -24,10 +24,10 @@ add_definitions(-DUSE_DRM)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include")
 include_directories("{CMAKE_SYSROOT}/usr/include/drm")
 add_executable(usb_input_multi_threads_refinedet_drm ${CMAKE_CURRENT_SOURCE_DIR}/app/test/usb_input_multi_threads_refinedet.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/decodethread.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/dputhread.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guithread.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/sortthread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/app/src/decodethread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/app/src/dputhread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/app/src/guithread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/app/src/sortthread.cpp
 
 
 )
