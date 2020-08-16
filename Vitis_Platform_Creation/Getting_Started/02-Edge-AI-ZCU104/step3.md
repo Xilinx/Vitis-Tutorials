@@ -56,6 +56,10 @@ Next we setup software settings in Platform Settings view.
 
 ![](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/vitis_platform_output.png)
 
+
+
+If you'd create an Vitis application in the same workspace as this platform, you can find this platform available in the platform selection page in platform creation wizard. If you'd like to reuse this platform in another workspace, add its path to PLATFORM_REPO_PATHS environment variable before launching Vitis GUI, or use "Add" button in platform selection page of Vitis GUI to add its path.
+
 ***[Next let's try to build some applications on this platform and test them.](./step4.md)***
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
