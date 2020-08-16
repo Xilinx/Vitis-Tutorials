@@ -12,7 +12,7 @@
    e) Leaving all the setting to default until you goto the Default Part dialog.<br />
    f) Select ***Boards*** tab and then select ***Zynq UltraScale+ ZCU104 Evaluation Board***<br />
    g) Click ***Next***, and your project summary should like below:<br />
-   ![vivado_project_summary.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/vivado_project_summary.png)<br />
+   ![vivado_project_summary.png](./images/vivado_project_summary.png)<br />
    h) Then click ***Finish***<br />
 
 3. Create a block design named system. <br />
@@ -31,7 +31,7 @@
       - Apply Board Presets<br />
 
    d) Click ***OK***. You should get MPSoC block configured like below:<br />
-   ![block_automation_result.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/block_automation_result.png)<br />
+   ![block_automation_result.png](./images/block_automation_result.png)<br />
 
 ***Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. For a custom board, please double click MPSoC block and setup parameters according to the board hardware. Next we'll add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.***
 
@@ -45,7 +45,7 @@
    e) Uncheck the ***AXI HPM0 FPD*** and ***AXI HPM1 FPD*** interfaces.<br />
    f) Click OK.<br />
    g) Confirm that the IP block interfaces were removed from the Zynq UltraScale+ MPSoC symbol in your block design.<br />
-   ![hp_removed.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/hp_removed.png)<br />
+   ![hp_removed.png](./images/hp_removed.png)<br />
 
 ***Note: This is a little different from traditional Vivado design flow. In order to make AXI interfaces available in Vitis platform, you should disable these interfaces at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later***
 
@@ -63,7 +63,7 @@
    f) At the bottom of the dialog box set the ***Reset Type*** to ***Active Low***.<br />
    g) Click ***OK*** to close the dialog.<br />
     The settings should like below:<br />
-    ![clock_settings.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/clock_settings.png)<br />
+    ![clock_settings.png](./images/clock_settings.png)<br />
    ***Note: So now we have set up the clock system for our design. This clock wizard uses the pl_clk as input clock and generates clocks needed for the whole logic design. In this simple design, we would use 100MHz clock as the axi_lite control bus clock. 200MHz and 400MHz clocks are reserved for DPU AXI interface clock and DPU core clock during design linking phase. You are free to modify the clock quantities and frequency to fit your target design. We'll setup the clock export in future steps. Before that, we need to create reset signals for each clock because they are needed in clock export setup.***
 
 3. Add the Processor System Reset blocks:<br />
@@ -86,7 +86,7 @@
    f) Make sure all checkboxes are enabled, and click ***OK*** to close the dialog and create the connections.<br />
    g) Connect all the ***dcm_locked*** signals on each proc_sys_reset instance to the locked signal on ***clk_wiz_0***.<br />
    Then the connection should like below:<br />
-   ![clk_rst_connection.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/clk_rst_connection.png)
+   ![clk_rst_connection.png](./images/clk_rst_connection.png)
 
 5. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.
 
@@ -94,7 +94,7 @@
 
    - set ***id*** of ***clk_200m*** to ```0```, enable ***is default***
      set ***id*** of ***clk_400m*** to ```1```,
-     set ***id*** of ***clk_100m*** to ```2```, <br />![](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/platform_clock.png)
+     set ***id*** of ***clk_100m*** to ```2```, <br />![](./images/platform_clock.png)
 
    ***Now we have added clock and reset IPs and enabled them for kernels to use***
 
@@ -119,11 +119,11 @@ V++ linker can automatically link the interrupt signals between kernel and platf
 6. Right click Diagram view and select ***Add IP***, search and add ***AXI Interrupt Controller*** IP.
 
 7. Double click the AXI Interrupt Controller block, set ***Interrupts type*** to ```Level Interrupt```, set ***Level type*** to ```Active High```, set ***Interrupt Output Connection*** to ```Bus```. Click ***OK*** to save the change.
-   ![intc_settings.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/intc_settings.png)
+   ![intc_settings.png](./images/intc_settings.png)
 
 8. Click the AXI Interrupt Controller block and go to ***Block Properties -> Properties***, configure or make sure the parameters are set as following:
    ***C_ASYNC_INTR***: ```0xFFFFFFFF```.
-   ![async_intr.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/async_intr.png)
+   ![async_intr.png](./images/async_intr.png)
    ***When interrupts generated from kernels are clocked by different clock domains, this option is useful to capture the interrupt signals properly. For the platform that has only one clock domain, this step can be skipped.***
 
 9. Click ***Run Connection Automation***
@@ -137,7 +137,7 @@ V++ linker can automatically link the interrupt signals between kernel and platf
 12. Setup **PFM_IRQ** property by typing following command in Vivado console:<br />
     ```set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]```
     ***The IPI design connection would like below:***
-    ![ipi_fully_connection.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/ipi_fully_connection.png)
+    ![ipi_fully_connection.png](./images/ipi_fully_connection.png)
 
 
 ### Configuring Platform Interface Properties
@@ -145,13 +145,13 @@ V++ linker can automatically link the interrupt signals between kernel and platf
 1. Click ***Window->Platform interfaces***, and then click ***Enable platform interfaces*** link to open the ***Platform Interfaces*** Window.
 
 2. Select ***Platform-system->zynq_ultra_ps_e_0->S_AXI_HP0_FPD***, in ***Platform interface Properties*** tab enable the ***Enabled*** option like below:<br />
-   ![enable_s_axi_hp0_fpd.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/enable_s_axi_hp0_fpd.png)
+   ![enable_s_axi_hp0_fpd.png](./images/enable_s_axi_hp0_fpd.png)
 
 3. Select ***Options*** tab, set ***memport*** to ```S_AXI_HP``` and set ***sptag*** to ```HP0``` like below:
-   ![set_s_axi_hp0_fpd_options.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/set_s_axi_hp0_fpd_options.png)
+   ![set_s_axi_hp0_fpd_options.png](./images/set_s_axi_hp0_fpd_options.png)
 
 4. Do the same operations for ***S_AXI_HP1_FPD, S_AXI_HP2_FPD, S_AXI_HP3_FPD, S_AXI_HPC0_FPD, S_AXI_HPC1_FPD*** and set ***sptag*** to ```HP1```, ```HP2```, ```HP3```, ```HPC0```, ```HPC1```. And be noticed that for HPC0/HPC1 ports the ***memport*** is set to ```S_AXI_HPC``` in default, but actually we would use these ports without data coherency function enabled to get a high performance. So please modify it into ```S_AXI_HP``` manually.<br />
-   ![set_s_axi_hpc0_fpd_options.png](C:/Case/Vitis-In-Depth-Tutorial/Vitis_Platform_Creation/Getting_Started/02-Edge-AI-ZCU104/images/set_s_axi_hpc0_fpd_options.png)<br />
+   ![set_s_axi_hpc0_fpd_options.png](./images/set_s_axi_hpc0_fpd_options.png)<br />
 
 5. Enable the M01_AXI ~ M08_AXI ports of ps8_0_axi_periph IP(The AXI Interconnect between M_AXI_HPM0_LPD and axi_intc_0), and set these ports with the same ***sptag*** name to ```HPM0_LPD``` and ***memport*** type to ```M_AXI_GP```
 
