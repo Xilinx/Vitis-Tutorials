@@ -189,6 +189,6 @@ write_hw_platform -unified ./zcu104_custom_platform.xsa
 # write_hw_platform -unified -include_bit ./zcu104_custom_platform.xsa
 ```
 
-***Now we finish the Hardware platform creation flow, then we should go to the Software platform creation***
+***Now we finish the Hardware platform creation flow, then we should go to the [Step2: Software platform creation](./step2.md)***
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
