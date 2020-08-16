@@ -205,6 +205,6 @@ Note: These files are the sources of creating BOOT.BIN.
 
   We would install Vitis AI library and DNNDK into this rootfs in the future.
 
-***Note: Now HW platform and SW platform are all generated. Next we would package the Vitis Platform.***
+***Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](./step3.md).***
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
