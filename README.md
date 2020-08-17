@@ -8,7 +8,7 @@
 <div align="center">
     <a href="http://www.youtube.com/watch?v=vFPNlcXAeWI">
     <img
-    src="./Machine_Learning/Getting_Started/01-Workflows/images/intro_video.png">
+    src="./Machine_Learning/Introduction/01-Workflows/images/intro_video.png">
     </a>
 </div>
 
@@ -22,7 +22,7 @@ Leverage integration with high-level frameworks, develop in C, C++, or Python us
 The Vitis In-Depth Tutorials takes users through the design methodology and programming model for deploying accelerated application on all Xilinx platforms.
 
 <p align="center">
-    <img src="./Machine_Learning/Getting_Started/01-Workflows/images/vitis-landing-graphic-boards-u50.png">
+    <img src="./Machine_Learning/Introduction/01-Workflows/images/vitis-landing-graphic-boards-u50.png">
 </p>
 
 ### [Introduction](./Introduction)
@@ -43,6 +43,12 @@ Learn how to build custom platforms for Vitis to target your own boards, and how
 
 Learn how to configure the platform hardware sources, construct the runtime software environment, add support for software and
 hardware emulation, and more.
+
+### [Xilinx Runtime (XRT) and Vitis System Optimization Tutorials](./Runtime_and_System_Optimization)
+Learn how to optimize the CPU side of your application for efficient memory allocation, how to sequence system-level
+events, and more.
+
+On the back-end, learn how to control Vitis system-level topologies and low-level hardware implementation.
 
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
