@@ -41,8 +41,8 @@
 #include "guithread.hpp"
 #include "mythread.hpp"
 #include "sortthread.hpp"
-#include <hlsV4l2Capture.hpp>
-#include <hlsV4l2Device.hpp>
+#include <V4l2Capture.hpp>
+#include <V4l2Device.hpp>
 
 #ifndef USE_DRM
 #define USE_DRM 0
