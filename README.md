@@ -33,7 +33,7 @@ Learn how to use Vitis, Vitis-AI, and the Vitis accelerated libraries to impleme
 
 Use Vitis-AI to configure Xilinx hardware using the Tensorflow framework. Vitis-AI allows the user to quantize, compile, and deploy an inference model in a matter of minutes.
 
-### [Acceleration Tutorial](./Hardware_Acceleration)
+### [Acceleration Tutorial](./Hardware_Accelerators)
 Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C/C++.
 
 Learn how to use Vitis HLS, compiler, analyzer, and debugger to identify performance bottlenecks and make modifications to increase algorithm efficiency and performance using an Alveo card.
