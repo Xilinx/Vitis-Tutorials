@@ -1,0 +1,9 @@
+set key autotitle columnhead
+set logscale x 2
+set style line 1 \
+    linecolor rgb '#0060ad' \
+    linetype 1 linewidth 2 \
+    pointtype 7 pointsize 1.5
+
+plot "runBuf/results.csv" with linespoints linestyle 1
+
