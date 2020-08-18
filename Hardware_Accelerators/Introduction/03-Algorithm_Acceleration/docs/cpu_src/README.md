@@ -34,5 +34,9 @@ Study the code to check how it implements the Cholesky algorithm.
 
 > **Note 2**: On Nimbix servers, fitted with Intel® Xeon® Processor E5-2640 v3 (20M Cache, 2.60 GHz), the algorithm execution time is about 21ms for a 512x512 matrix.
 
+#### Next
+
+Continue to [**module 1**](../module1_baseline/README.md) to build and run a baseline version with Vitis.
+
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
