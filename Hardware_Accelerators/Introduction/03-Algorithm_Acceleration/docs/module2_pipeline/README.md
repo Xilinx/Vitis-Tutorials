@@ -71,6 +71,8 @@ For example, a pipelined for-loop with 100 accesses and max_read_burst_length or
 
 ---
 
-You can now move to [<b>module 3</b>](../module3_datatype) or run this version of the design to verify it behaves similarly to module 1.
+#### Next
+
+You can now continue to [<b>module 3</b>](../module3_datatype/README.md) or run this version of the design to verify it behaves similarly to module 1.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
