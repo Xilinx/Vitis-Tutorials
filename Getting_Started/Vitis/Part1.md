@@ -72,3 +72,7 @@ The Vitis compiler provides three different build targets: two emulation targets
 ## Next Step
 
 Theory is useful, but nothing beats practice! Proceed to [**Part 2**](./Part2.md) to install the Vitis tools before starting your first example project.
+
+ 
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
