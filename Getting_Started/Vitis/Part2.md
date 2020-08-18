@@ -8,7 +8,7 @@ To develop and deploy applications with Vitis, you need to install the Vitis uni
 
 Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/aqm1532064088764.html).
 
-NOTE: Windows OS support is limited to the Vitis embedded software development flow. The Vitis acceleration flow is only supported on Linux.
+*NOTE: Windows OS support is limited to the Vitis embedded software development flow. The Vitis acceleration flow is only supported on Linux.*
 
 
 
@@ -26,11 +26,9 @@ Download the latest version of the Vitis from the [Xilinx download website](http
 
 Xilinx provides base platforms for the ZCU102 and ZCU104 cards. Before installing a platform, you need to download the following packages:
 
-* XRT
-
-* Base platform
-
-* Common image
+1. XRT
+2. Base platform
+3. Common image
 
 The packages required for each platform can be found on the corresponding download pages:
 
@@ -46,11 +44,11 @@ The packages required for each platform can be found on the corresponding downlo
 
 Xilinx provides base platforms for the Alveo U200, U250, U50 and U280 data-center acceleration cards. Before installing a platform, you need to download the following packages:
 
-* Xilinx Runtime (XRT)
+1. Xilinx Runtime (XRT)
 
-* Deployment Target Platform
+2. Deployment Target Platform
 
-* Development Target Platform
+3. Development Target Platform
 
 The packages required for each platform can be found on the corresponding download pages:
 
@@ -87,7 +85,7 @@ source <Vitis_install_path>/Vitis/2020.1/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
-NOTE: .csh scripts are also provided.
+*NOTE: .csh scripts are also provided but this tutorial assumes a bash shell is used.*
 
 To specify the location of any Data-Center of Embedded platforms you have installed, set the following environment variable:
 
