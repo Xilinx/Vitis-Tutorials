@@ -36,7 +36,7 @@ Study the code to check how it implements the Cholesky algorithm.
 
 #### Next
 
-Continue to [**module 1**](../module2_baseline/README.md) to build and run a baseline version with Vitis.
+Continue to [**module 1**](../module1_baseline/README.md) to build and run a baseline version with Vitis.
 
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
