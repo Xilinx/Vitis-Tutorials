@@ -90,3 +90,7 @@ This example shows the simplest way of using OpenCL APIs to interact with the ha
 ## Next Step
 
 Now that you understand the source code for both kernel and the host program, [**Part 4**](./Part4.md) will explain how to compile and run this example.
+
+ 
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

@@ -22,8 +22,8 @@ In the Vitis™ core development flow helps manage, configure, build and run a h
 
 Here is a diagram of the functional blocks involved for a x86 server connected to an Alveo acceleration card:
 
-![flow](../docs/images/host-kernel.png)
+![flow](../03-Algorithm_Acceleration/docs/images/host-kernel.png)
 
-In the next [**section**](../Getting_Started/02-System_Setup), you'll learn how to prepare your environment to run the tutorial.
+In the next [**section**](../02-System_Setup/README.md), you'll learn how to prepare your environment to run the tutorial.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

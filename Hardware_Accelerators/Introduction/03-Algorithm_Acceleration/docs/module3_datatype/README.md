@@ -31,6 +31,9 @@ As expected, the resource utilization comes down all across for both logic and s
 #### Takeaway for this module...
 Users can ofen get better performance by scaling down the precision of their data.  Xilinx devices can produce dramatically better results once the data types are simplified.
 ***
-Please proceed to [**module 4**](../module4_dataflow).
+
+#### Next
+
+Proceed to [**module 4**](../module4_dataflow/README.md).
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

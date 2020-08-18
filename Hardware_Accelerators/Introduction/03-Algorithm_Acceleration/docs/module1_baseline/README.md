@@ -229,7 +229,10 @@ The Vitis HLS Cosimulation runs a cycle accurate RTL simulation which shows the 
  - Vitis provides an analyzer tool to help understand the sequence of operations
  - Vitis HLS is a compiler technology that transforms the C code algorithm into an hardware language to implement onto the Xilinx device
 ***
-Please proceed to [**module 2**](../module2_pipeline).
+
+#### Next
+
+You can now proceed to [**module 2**](../module2_pipeline/README.md).
 ***
 
 

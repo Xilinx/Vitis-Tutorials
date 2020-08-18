@@ -105,6 +105,6 @@ INFO: All cards validated successfully.
 
 
 
-Please proceed to [**Section 3**](../Section_3-Hardware_Accelerators).
+Please proceed to [**Section 3**](../03-Algorithm_Acceleration/README.md).
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
