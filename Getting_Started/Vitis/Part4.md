@@ -4,11 +4,11 @@
 
 In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow (software emulation, hardware emulation and hardware).
 
-* <u>Software Emulation</u> - The kernel code is compiled to run on the host processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system.
+* Software Emulation - The kernel code is compiled to run on the host processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system.
 
-* <u>Hardware Emulation</u> - The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates.
+* Hardware Emulation - The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates.
 
-* <u>Hardware</u> - The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA.
+* Hardware - The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA.
 
  
 
@@ -50,7 +50,7 @@ export SYSROOT=<path to the ZCU102 sysroot directory>
 
 
 ```bash
-cd zcu102/sw_emu
+cd Vitis-In-Depth-Tutorial/Getting_Started/Vitis/example/zcu102/sw_emu
 
 aarch64-linux-gnu-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${SYSROOT}/usr/include/xrt -L${SYSROOT}/usr/lib -lOpenCL -lpthread -lrt -lstdc++ --sysroot=${SYSROOT}
 emconfigutil --platform xilinx_zcu102_base_202010_1 --nd 1
@@ -127,7 +127,7 @@ v++ -l -t hw_emu --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
 v++ -p -t hw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file emconfig.json --package.sd_file app.exe --package.sd_file run_app.sh
 ```
 
-* The only difference with the previous step is that v++ target (-t) option which is changed from sw_emu to hw_emu. All other options remain identical.
+* The only difference with the previous step is the v++ target (-t) option which is changed from sw_emu to hw_emu. All other options remain identical.
 
 * Building for hardware emulation takes about 5 minutes. After the build process completes, you can launch the hardware emulation run by using the launch script generated during the packaging step.
 
@@ -167,8 +167,7 @@ v++ -l -t hw --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
 v++ -p -t hw --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file run_app.sh
 ```
 
-To target Hardware, the v++ -t option is set to hw and the emconfigutil step is skipped as it only applies to emulation. All other options remain identical.
-
+* To target Hardware, the v++ -t option is set to hw and the emconfigutil step is skipped as it only applies to emulation. All other options remain identical.
 * Building for hardware takes about 30 minutes. 
 * After the build process completes, copy the sd_card directory to an SD card and plug it into the platform and boot until you see the Linux prompt. At that point, enter the following commands to execute the accelerated application:
 
@@ -188,7 +187,7 @@ export XILINX_VITIS=/mnt
 
 
 <details>
-<summary><b>Instructions for the ZCU102 platform, click here</b></summary>
+<summary><b>Instructions for the Alveo U200 platform, click here</b></summary>
 
 
 
@@ -220,7 +219,7 @@ export PLATFORM_REPO_PATHS=<path to the U200 platform install dir>
 
 
 ```bash
-cd u200/sw_emu
+cd Vitis-In-Depth-Tutorial/Getting_Started/Vitis/example/u200/sw_emu
 
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
 emconfigutil --platform xilinx_u200_xdma_201830_2 --nd 1
@@ -285,7 +284,7 @@ v++ -l -t hw_emu --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
 
 
-The only difference with the previous step is that v++ target (-t) option which is changed from sw_emu to hw_emu. All other options remain identical.
+* The only difference with the previous step is the v++ target (-t) option which is changed from sw_emu to hw_emu. All other options remain identical.
 
 * Building for hardware emulation takes about 5 or 6 minutes. After the build process completes, you can launch the hardware emulation run as follows.
 
@@ -310,12 +309,9 @@ v++ -c -t hw --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp 
 v++ -l -t hw --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
 
-To target Hardware, the v++ -t option is set to hw and the emconfigutil step is skipped as it only applies to emulation. All other options remain identical.
-
+* To target Hardware, the v++ -t option is set to hw and the emconfigutil step is skipped as it only applies to emulation. All other options remain identical.
 * Building for hardware takes between 1.5 and 2 hours. 
-
 * After the build process completes ... 
-
 * You will see the same TEST PASSED message indicating that the run completed successfully.
 * Congratulations, you just completed your first run of a Vitis accelerated application on the Alveo U200 card! 
 
@@ -326,4 +322,4 @@ To target Hardware, the v++ -t option is set to hw and the emconfigutil step is 
 
 ## Next Step
 
-Running in batch mode is nice. But wouldn't it be nicer to visualize results? We agree! Proceed to **Part 5** of this tutorial to learn how to profile and analyze your application with Vitis Analyzer.
+Running in batch mode is nice. But wouldn't it be nicer to visualize results? We agree! Proceed to [**Part 5**](./Part5.md) of this tutorial to learn how to profile and analyze your application with Vitis Analyzer.
