@@ -293,7 +293,7 @@ export XCL_EMULATION_MODE=hw_emu
 ./app.exe vadd.xclbin
 ```
 
-* When the run completes, you should see a message saying TEST PASSED indicating that the run completed successfully
+* When the run completes, you should see the TEST PASSED message indicating that the run completed successfully
 
  
 
@@ -311,8 +311,15 @@ v++ -l -t hw --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 
 * To target Hardware, the v++ -t option is set to hw and the emconfigutil step is skipped as it only applies to emulation. All other options remain identical.
 * Building for hardware takes between 1.5 and 2 hours. 
-* After the build process completes ... 
-* You will see the same TEST PASSED message indicating that the run completed successfully.
+* After the build completes you can run on the card:
+
+```bash
+./app.exe vadd.xclbin
+```
+
+*NOTE: Make sure to run the program on the server where the Alveo card is installed. If you built the application on a different machine, you will need to source the /opt/xilinx/xrt/setup.sh script after connecting to the desired server and before running the above command.*
+
+* You should see the same TEST PASSED message indicating that the run completed successfully.
 * Congratulations, you just completed your first run of a Vitis accelerated application on the Alveo U200 card! 
 
 
@@ -322,7 +329,7 @@ v++ -l -t hw --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 
 ## Next Step
 
-Running in batch mode is nice. But wouldn't it be nicer to visualize results? We agree! Proceed to [**Part 5**](./Part5.md) of this tutorial to learn how to profile and analyze your application with Vitis Analyzer.
+Now that you ran your first example, proceed to [**Part 5**](./Part5.md) of this tutorial to learn how to visualize and profile your application with Vitis Analyzer.
 
  
 
