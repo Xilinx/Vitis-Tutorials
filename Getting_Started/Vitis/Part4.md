@@ -323,3 +323,7 @@ v++ -l -t hw --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ## Next Step
 
 Running in batch mode is nice. But wouldn't it be nicer to visualize results? We agree! Proceed to [**Part 5**](./Part5.md) of this tutorial to learn how to profile and analyze your application with Vitis Analyzer.
+
+ 
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
