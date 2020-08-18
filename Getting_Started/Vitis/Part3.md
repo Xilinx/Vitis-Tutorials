@@ -50,23 +50,23 @@ The Vitis online documentation provides comprehensive information on [C++ kernel
 
 The source code for the host program is written in C/C++ and uses standard OpenCL APIs to interact with the hardware-accelerated vector-add kernel.
 
-* Open the `host.cpp` file located in the `src` directory of this tutorial
+* Open the [`host.cpp`](./example/src/host.cpp) file located in the `src` directory of this tutorial
 
 There are 5 main sections in the source code for this simple example.
 
-* Lines 40-55: local variables are declared and initialized. Of note, the input and output vectors are aligned on a 4k page boundary during allocation. On data-center platforms, this results in more for efficient management of buffers.
+* Section 1: local variables are declared and initialized. Of note, the input and output vectors are aligned on a 4k page boundary during allocation. On data-center platforms, this results in more for efficient management of buffers.
 
-* Lines 61-70: the OpenCL environment is initialized. In this section, the host detects the attached Xilinx device, loads the FPGA binary (.xclbin file) from file and programs it into the first Xilinx device it found. Then a command queue and the kernel object are created. All Vitis applications will have code very similar to this one.
+* Section 2: the OpenCL environment is initialized. In this section, the host detects the attached Xilinx device, loads the FPGA binary (.xclbin file) from file and programs it into the first Xilinx device it found. Then a command queue and the kernel object are created. All Vitis applications will have code very similar to the one in this section.
 
-* Lines 75-76: the application creates the three buffers needed to share data with the kernel: one for each input vector and one for the output. In this example, the buffers are declared with the CL_MEM_USE_HOST_PTR flag. With this flag, the buffer maintains a reference to the specific host object and uses this memory instead of allocating its own. This is more memory efficient and on data-center platforms, it eliminates a memory copy operation when host data is transferred to the device. 
+* Section 3: the application creates the three buffers needed to share data with the kernel: one for each input vector and one for the output. In this example, the buffers are declared with the CL_MEM_USE_HOST_PTR flag. With this flag, the buffer maintains a reference to the specific host object and uses this memory instead of allocating its own. This is more memory efficient and on data-center platforms, it eliminates a memory copy operation when host data is transferred to the device. 
 
 ```cpp
-  OCL_CHECK(err, cl::Buffer buffer_in1(context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, vector_size_bytes, source_in1.data(), &err));
-  OCL_CHECK(err, cl::Buffer buffer_in2(context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, vector_size_bytes, source_in2.data(), &err));
-  OCL_CHECK(err, cl::Buffer buffer_out(context, CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY,vector_size_bytes, source_hw_results.data(), &err));
+  OCL_CHECK(err, cl::Buffer buffer_in1(context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, vector_size_bytes, in1.data(), &err));
+  OCL_CHECK(err, cl::Buffer buffer_in2(context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, vector_size_bytes, in2.data(), &err));
+  OCL_CHECK(err, cl::Buffer buffer_out(context, CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY,vector_size_bytes, out.data(), &err));
 ```
 
-* Lines 82-92: after all the declaration and initialization code, this is where the action is. The host program sets the arguments of the kernel, then schedules three operations: the transfers of the two input vectors to the device, the execution of the kernel, and lastly the transfer of the results back to the host. These operations are enqueue in the command queue previously declared. It is important to keep in my mind that these three function calls are non-blocking. The commands are put in the queue and the Xilinx Runtime library (XRT) is responsible for submitting them to the device. Because the queue used in this example is an ordered queue, these commands are guaranteed to execute in the specified order. The call to `q.finish()` is necessary to wait until all enqueued commands run to completion. 
+* Section 4: after all the declaration and initialization code, this is where the action is. The host program sets the arguments of the kernel, then schedules three operations: the transfers of the two input vectors to the device, the execution of the kernel, and lastly the transfer of the results back to the host. These operations are enqueue in the command queue previously declared. It is important to keep in my mind that these three function calls are non-blocking. The commands are put in the queue and the Xilinx Runtime library (XRT) is responsible for submitting them to the device. Because the queue used in this example is an ordered queue, these commands are guaranteed to execute in the specified order. The call to `q.finish()` is necessary to wait until all enqueued commands run to completion. 
 
 ```cpp
   OCL_CHECK(err, err = krnl_vector_add.setArg(0, buffer_in1));
@@ -79,7 +79,7 @@ There are 5 main sections in the source code for this simple example.
   OCL_CHECK(err, err = q.enqueueMigrateMemObjects({buffer_out},CL_MIGRATE_MEM_OBJECT_HOST));
 ```
 
-* Lines 98-113: after the call to `q.finish()` returns, the results of hardware kernel are checked against the golden results and the program finishes.
+* Section 5: after the call to `q.finish()` returns, the results of hardware kernel are checked against the golden results and the program finishes.
 
 
 
