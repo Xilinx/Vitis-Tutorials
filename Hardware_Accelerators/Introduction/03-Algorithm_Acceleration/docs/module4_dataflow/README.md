@@ -111,4 +111,10 @@ Actual results comparing the runs for all modules including execution on the CPU
 
 (*): Reference CPU is the Intel® Xeon® Processor E5-2640 v3 (as available on Nimbix)
 
+
+#### Conclusion
+
+This concludes this introductory tutorial on Vitis hardware accelerators. [Click here](../../../../README.md) to find more Vitis design optimization tutorials.
+
+
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

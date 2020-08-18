@@ -98,3 +98,7 @@ export PLATFORM_REPO_PATHS=<path to platforms>
 ## Next Step
 
 Congratulations on successfully installing everything you need to use Vitis! You can now move on to [**Part 3**](./Part3.md) and get going with your first example project.
+
+ 
+
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

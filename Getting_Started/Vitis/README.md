@@ -26,5 +26,7 @@ Vitis provides a unified flow for developing FPGA accelerated application target
 
 [**Click here to start the Vitis Flow 101 Tutorial**](./Part1.md) 
 
+ 
 
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
 
