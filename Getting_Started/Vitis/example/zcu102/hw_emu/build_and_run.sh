@@ -19,8 +19,6 @@ fi
 # Make sure everything is up to date
 make all 
 
-# Setup the environment for QEMU and launch emulation
-unset LD_LIBRARY_PATH
-source $XILINX_VITIS/data/emulation/qemu/unified_qemu_v4_2/environment-setup-aarch64-xilinx-linux
+# Launch emulation
 ./package/launch_hw_emu.sh
 
