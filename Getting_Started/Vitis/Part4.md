@@ -52,7 +52,7 @@ export SYSROOT=<path to the ZCU102 sysroot directory>
 
 
 ```bash
-cd Vitis-In-Depth-Tutorial/Getting_Started/Vitis/example/zcu102/sw_emu
+cd <Path to the cloned repo>/Getting_Started/Vitis/example/zcu102/sw_emu
 
 aarch64-linux-gnu-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${SYSROOT}/usr/include/xrt -L${SYSROOT}/usr/lib -lOpenCL -lpthread -lrt -lstdc++ --sysroot=${SYSROOT}
 emconfigutil --platform xilinx_zcu102_base_202010_1 --nd 1
@@ -166,7 +166,7 @@ v++ -p -t hw --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir packa
 ```
 
 * To target Hardware, the v++ -t option is set to hw and the emconfigutil step is skipped as it only applies to emulation. All other options remain identical.
-* Building for hardware takes about 30 minutes. 
+* Building for hardware takes about 30 minutes, but the exact duration will depend on the machine you are building on and its load.
 * After the build process completes, copy the sd_card directory to an SD card and plug it into the platform and boot until you see the Linux prompt. At that point, enter the following commands to execute the accelerated application:
 
 ```bash
@@ -218,7 +218,7 @@ export PLATFORM_REPO_PATHS=<path to the U200 platform install dir>
 
 
 ```bash
-cd Vitis-In-Depth-Tutorial/Getting_Started/Vitis/example/u200/sw_emu
+cd <Path to the cloned repo>/Getting_Started/Vitis/example/u200/sw_emu
 
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
 emconfigutil --platform xilinx_u200_xdma_201830_2 --nd 1
