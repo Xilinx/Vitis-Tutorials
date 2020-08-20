@@ -7,5 +7,5 @@ set -e
 make all 
 
 # Run the application in HW emulation mode
-XCL_EMULATION_MODE=hw_emu ./app.exe vadd.xclbin
+XCL_EMULATION_MODE=hw_emu ./app.exe 
 
