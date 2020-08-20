@@ -32,6 +32,8 @@ There are slight differences when targeting data-center and embedded platforms. 
 ```bash
 source <VITIS_install_path>/settings64.sh
 source <XRT_install_path>/setup.sh
+unset LD_LIBRARY_PATH
+source $XILINX_VITIS/data/emulation/qemu/unified_qemu_v4_2/environment-setup-aarch64-xilinx-linux
 ```
 
 * Then make sure the following environment variables are correctly set to point to the your ZCU102 platform, rootf and sysroot directories respectively.
@@ -50,7 +52,7 @@ export SYSROOT=<path to the ZCU102 sysroot directory>
 
 
 ```bash
-cd Vitis-In-Depth-Tutorial/Getting_Started/Vitis/example/zcu102/sw_emu
+cd <Path to the cloned repo>/Getting_Started/Vitis/example/zcu102/sw_emu
 
 aarch64-linux-gnu-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${SYSROOT}/usr/include/xrt -L${SYSROOT}/usr/lib -lOpenCL -lpthread -lrt -lstdc++ --sysroot=${SYSROOT}
 emconfigutil --platform xilinx_zcu102_base_202010_1 --nd 1
@@ -82,8 +84,6 @@ save-temps=1
 
 
 ```bash
-unset LD_LIBRARY_PATH
-source $XILINX_VITIS/data/emulation/qemu/unified_qemu_v4_2/environment-setup-aarch64-xilinx-linux
 ./package/launch_sw_emu.sh 
 ```
 
@@ -92,19 +92,18 @@ source $XILINX_VITIS/data/emulation/qemu/unified_qemu_v4_2/environment-setup-aar
 ```bash
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
+cp platform_desc.txt /etc/xocl.txt
 export XILINX_XRT=/usr
 export XILINX_VITIS=/mnt
 export XCL_EMULATION_MODE=sw_emu
-./app.exe vadd.xclbin
+./app.exe
 ```
 
 * You should see the following messages, indicating that the run completed successfully:
 
 ```bash
-Found Platform
-Platform Name: Xilinx
-INFO: Reading vadd.xclbin
-Loading: 'vadd.xclbin'
+INFO: Found Xilinx Platform
+INFO: Loading 'vadd.xclbin'
 TEST PASSED
 ```
 
@@ -132,8 +131,6 @@ v++ -p -t hw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir p
 * Building for hardware emulation takes about 5 minutes. After the build process completes, you can launch the hardware emulation run by using the launch script generated during the packaging step.
 
 ```bash
-unset LD_LIBRARY_PATH
-source $XILINX_VITIS/data/emulation/qemu/unified_qemu_v4_2/environment-setup-aarch64-xilinx-linux
 ./package/launch_hw_emu.sh 
 ```
 
@@ -142,10 +139,11 @@ source $XILINX_VITIS/data/emulation/qemu/unified_qemu_v4_2/environment-setup-aar
 ```bash
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
+cp platform_desc.txt /etc/xocl.txt
 export XILINX_XRT=/usr
 export XILINX_VITIS=/mnt
 export XCL_EMULATION_MODE=hw_emu
-./app.exe vadd.xclbin
+./app.exe
 ```
 
 * You should see the more messages, including saying TEST PASSED indicating that the run completed successfully
@@ -168,15 +166,16 @@ v++ -p -t hw --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir packa
 ```
 
 * To target Hardware, the v++ -t option is set to hw and the emconfigutil step is skipped as it only applies to emulation. All other options remain identical.
-* Building for hardware takes about 30 minutes. 
+* Building for hardware takes about 30 minutes, but the exact duration will depend on the machine you are building on and its load.
 * After the build process completes, copy the sd_card directory to an SD card and plug it into the platform and boot until you see the Linux prompt. At that point, enter the following commands to execute the accelerated application:
 
 ```bash
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
+cp platform_desc.txt /etc/xocl.txt
 export XILINX_XRT=/usr
 export XILINX_VITIS=/mnt
-./app.exe vadd.xclbin
+./app.exe
 ```
 
 * You will see the same TEST PASSED message indicating that the run completed successfully.
@@ -219,7 +218,7 @@ export PLATFORM_REPO_PATHS=<path to the U200 platform install dir>
 
 
 ```bash
-cd Vitis-In-Depth-Tutorial/Getting_Started/Vitis/example/u200/sw_emu
+cd <Path to the cloned repo>/Getting_Started/Vitis/example/u200/sw_emu
 
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
 emconfigutil --platform xilinx_u200_xdma_201830_2 --nd 1
@@ -255,16 +254,14 @@ sp=vadd_1.out:DDR[1]
 
 ```bash
 export XCL_EMULATION_MODE=sw_emu
-./app.exe vadd.xclbin
+./app.exe
 ```
 
 * You should see the following messages, indicating that the run completed successfully:
 
 ```bash
-Found Platform
-Platform Name: Xilinx
-INFO: Reading vadd.xclbin
-Loading: 'vadd.xclbin'
+INFO: Found Xilinx Platform
+INFO: Loading 'vadd.xclbin'
 TEST PASSED
 ```
 
@@ -290,7 +287,7 @@ v++ -l -t hw_emu --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 
 ```bash
 export XCL_EMULATION_MODE=hw_emu
-./app.exe vadd.xclbin
+./app.exe
 ```
 
 * When the run completes, you should see the TEST PASSED message indicating that the run completed successfully
@@ -310,11 +307,11 @@ v++ -l -t hw --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
 
 * To target Hardware, the v++ -t option is set to hw and the emconfigutil step is skipped as it only applies to emulation. All other options remain identical.
-* Building for hardware takes between 1.5 and 2 hours. 
-* After the build completes you can run on the card:
+* Building for hardware may take between 1.5 and 2 hours depending on the machine you are building on and its load.
+* After the build completes you can run the application accelerated with the U200 card:
 
 ```bash
-./app.exe vadd.xclbin
+./app.exe
 ```
 
 *NOTE: Make sure to run the program on the server where the Alveo card is installed. If you built the application on a different machine, you will need to source the /opt/xilinx/xrt/setup.sh script after connecting to the desired server and before running the above command.*
