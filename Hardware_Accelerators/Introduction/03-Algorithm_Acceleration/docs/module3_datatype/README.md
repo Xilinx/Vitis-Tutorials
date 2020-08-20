@@ -2,10 +2,10 @@ Code, files and instructions for **module 3** (same flow as in [module1](../modu
 
 In this module both the kernel and host code are modified to use 32-bit floating point data types (float) instead of the 64-bit floating point (double) to show the performance and Xilinx utilization beneficial impact of downsizing data types.
 
-The Xilinx device fitted on the U50 card is an UltraScale + device that can implement floating point using hardware resources (DSP blocks and logic). Floating point operators tend to use a good amount of hardware. Here in this module, we can measure the savings when scaling down to 32-bit floting point types.
+The Xilinx device fitted on the U50 card is an UltraScale+ device that can implement floating point using hardware resources (DSP blocks and logic). Floating point operators tend to use a good amount of hardware. Here in this module, we can measure the savings when scaling down to 32-bit floating point types.
 
-+ Run Vitis and harware emulation only (as described in module 1).  No need to run software emulation or actual hardware compilation.
-+ Run Vitis Analyser to measure both the impact on the device resources and performance improvement.
++ Run Vitis and hardware emulation only (as described in module 1).  No need to run software emulation or actual hardware compilation.
++ Run Vitis Analyzer to measure both the impact on the device resources and performance improvement.
 + Compare to utilization seen in previous module.
 
 Did it shorten kernel execution time?
@@ -15,8 +15,7 @@ Did it shorten kernel execution time?
 Are resources used less than for modules 1 and 2?
 Is the II any different than before?
 
-
-####Kernel Resources Used (regular floating point versus double)
+#### Kernel Resources Used (regular floating point versus double)
 
 | Name                 | LUT           | LUTAsMem   | REG       | BRAM     |  DSP  |
 |----------------------|--------------:|-----------:|----------:|---------:|------:|
@@ -29,7 +28,7 @@ As expected, the resource utilization comes down all across for both logic and s
 
 ***
 #### Takeaway for this module...
-Users can ofen get better performance by scaling down the precision of their data.  Xilinx devices can produce dramatically better results once the data types are simplified.
+Users can often get better performance by scaling down the precision of their data.  Xilinx devices can produce dramatically better results once the data types are simplified.
 ***
 
 #### Next
