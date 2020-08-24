@@ -1,4 +1,4 @@
-<p align="right" class="sphinxhide"><a>English</a> | <a href="/docs-jp/README.md">日本語</a></p>
+<p align="right" class="sphinxhide"><a href="../../../README.md">English</a> | <a>日本語</a></p>
 <table class="sphinxhide">
   <tr width="100%">
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">2019.2 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
