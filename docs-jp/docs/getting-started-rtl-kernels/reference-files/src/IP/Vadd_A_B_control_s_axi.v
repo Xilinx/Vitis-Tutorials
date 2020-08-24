@@ -1,6 +1,6 @@
 // ==============================================================
 // Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2019.2 (64-bit)
-// Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+// Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // ==============================================================
 `timescale 1ns/1ps
 module Vadd_A_B_control_s_axi

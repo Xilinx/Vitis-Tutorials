@@ -59,5 +59,13 @@ endif
 
 # Cleaning stuff
 .PHONY: clean
+RMDIR = rm -rf
+
 clean:
-	rm -f $(EXECUTABLE) *krnl_vadd.$(TARGET).$(DEVICE).* *.log *.json *.xo
+	-$(RMDIR) $(EXECUTABLE) $(XCLBIN)/{*sw_emu*,*hw_emu*}
+	-$(RMDIR) TempConfig system_estimate.xtxt *.rpt
+	-$(RMDIR) *.protoinst _v++_* .Xil emconfig.json dltmp* xmltmp* *.log *.jou 
+
+cleanall: clean
+	-$(RMDIR) $(XCLBIN) *.xo *.xclbin* *.wcfg *.wdb *.csv *.compile_summary *.run_summary
+	-$(RMDIR) _x*

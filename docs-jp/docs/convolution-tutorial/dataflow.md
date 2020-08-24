@@ -1,41 +1,42 @@
-<table>
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ アプリケーション アクセラレーション開発フローのチュートリアル</h1><a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">SDAccel™ 開発環境 2019.1 チュートリアルを参照</a></td>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">2019.2 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
  </tr>
  <tr>
- <td align="center"><h1>アクセラレーションした FPGA アプリケーションの最適化: たたみ込みの例</td>
+ <td>
+ </td>
  </tr>
 </table>
 
-# 5\. データフローを使用して最適化
+# 5\. データフローを使用した最適化
 
-前の演習では、固定小数点型を使用してカーネルの効率を改善しました。この演習では、コードの構造を見て、タスク レベルと命令レベルの並列処理を増加します。パイプライン処理は、命令レベルで並列化をするためにほとんどのプロセッサで使用される共通の手法です。パイプライン処理すると、前の命令を終了したハードウェアで命令を実行することで、プロセッサが複数の命令を同時に処理できるようになります。
+前の演習では、固定小数点型を使用してカーネルの効率を改善しました。この演習では、コードの構造を調べ、タスク レベルと命令レベルの並列処理を増加します。パイプライン処理は、命令レベルで並列処理のためにほとんどのプロセッサで使用される一般的な手法です。パイプライン処理を使用すると、前の命令を終了したハードウェアで命令を実行することにより、プロセッサで複数の命令を同時に処理できるようになります。
 
-Vitis™ コンパイラは自動的にほとんどの演算をパイプライン処理しますので、コード内でパイプラインをイネーブルにするために何かする必要はありません。各ループがどのようにパイプライン処理されたかは、HLS レポートで確認できます。
+Vitis™ コンパイラではほとんどの演算が自動的にパイプライン処理されるので、コードでパイプライン処理をイネーブルにする必要はありません。各ループがどのようにパイプライン処理されたかは、HLS レポートで確認できます。
 
-パイプラインは通常命令レベルで機能しますが、Vitis コンパイラでは dataflow という変換方法を使用して、関数レベルでパイプライン処理することもできます。dataflow を使用すると複数の関数をパイプライン処理できるので、別の反復セットでそれらの命令を同時に実行できます。次の図に例を示します。
+パイプライン処理は通常命令レベルで適用されますが、Vitis コンパイラではデータフローという変換方法を使用して、関数レベルでパイプライン処理を適用できます。データフローを使用すると、複数の関数をパイプライン処理することにより、それらの命令を異なる反復セットで同時に実行できます。次の図に例を示します。
 
 ![][dataflow]
 
-dataflow を使用しない場合、`func_A`、`func_B`、`func_C` は順次実行されます。dataflow をイネーブルにすると、この 3 つの関数が重複されるので、実行時間合計が減ります。
+データフローを使用しない場合、`func_A`、`func_B`、`func_C` は順次実行されます。データフローをイネーブルにすると、この 3 つの関数がオーバーラップするので、合計実行時間が短縮されます。
 
-> **ヒント:** この演習は、[Vitis 統合ソフトウェア プラットフォームを使用してアプリケーションをアクセラレーションする設計手法](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380)の[手順 1: コードの load-compute-store パターンへの分割](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#vhk1551127460562)に関連しています。
+> **ヒント:** この演習は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの [Vitis ソフトウェア プラットフォームでのアプリケーションのアクセラレーション手法](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=methodologyacceleratingapplications.html)に含まれる[手順 1: コードをロード/計算/ストア パターンに分割](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=methodologyacceleratingapplications.html;a=vhk1551127460562)に関連しています。
 
-この演習では、関数を dataflow でインプリメントするために、まず元のたたみ込み関数を次の 3 つの別々の関数に分割します。
+この演習では、関数をデータフローでインプリメントするため、まず元のたたみ込み関数を次の 3 つの関数に分割します。
 
 * `read_dataflow`: データを読み出します。
-* `compute_dataflow`: 特定行のたたみ込みを計算します。
+* `compute_dataflow`: 特定の行のたたみ込みを計算します。
 * `write_dataflow`: 出力をメイン メモリに書き込みます。
 
-これら 3 つの関数は、互いにデータを渡すのにストリームを使用します。ストリームについては、『Vivado Design Suite ユーザー ガイド: 高位合成』 ([UG902](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=latest;d=ug902-vivado-high-level-synthesis.pdf)) の「HLS ストリーム ライブラリ」を参照してください。ストリームでは、データをデータのエレメント レベルで処理できます。ストリームを使用する場合、次のモジュールがストリーム変数に挿入されると、即座にエレメントが処理され始めます。
+これら 3 つの関数間のデータ転送には、ストリームを使用します。ストリームの詳細は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの [HLS ストリーム ライブラリ](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vitishlslibrariesreference.html;a=mes1539734221433)を参照してください。ストリームでは、データを要素レベルで処理できます。ストリームを使用すると、次のモジュールがストリーム変数に挿入されるとすぐに要素の処理が開始します。
 
 ## カーネル コードの変更
 
 > **ヒント:** カーネル ソース ファイルは `reference-files/dataflow` フォルダーに含まれています。必要に応じて、リファレンスとしてご利用ください。
 
-1. `src/dataflow` から `convolve_fpga.cpp` ファイルを開きます。
+1. `src/dataflow` ディレクトリにある `convolve_fpga.cpp` ファイルを開きます。
 
-2. まず、カーネルの最上位関数である `convolve_fpga` 関数に移動します。次のように、この関数の構造を 3 つのサブ関数を呼び出すように変更します。
+2. カーネルの最上位関数である `convolve_fpga` 関数に移動します。この関数の構造を、次に示すように 3 つのサブ関数を呼び出すよう変更します。
 
    ```
    void convolve_fpga(const RGBPixel* inFrame, RGBPixel* outFrame,
@@ -55,13 +56,13 @@ dataflow を使用しない場合、`func_A`、`func_B`、`func_C` は順次実�
    }  
    ```
 
-   3 つのサブ関数が呼び出され、ストリーム オブジェクト型の `read_stream` および `write_stream` によりデータが渡されます。これらのストリームは FPGA 上の FIFO を使用してインプリメントされます。DATAFLOW プラグマが使用されているので、3 つの関数が並列に実行されます。dataflow プラグマの詳細は、『Vivado Design Suite ユーザー ガイド: 高位合成』 ([UG902](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=latest;d=ug902-vivado-high-level-synthesis.pdf)) を参照してください。
+   3 つのサブ関数が呼び出され、ストリーム型オブジェクト `read_stream` および `write_stream` によりデータが渡されます。これらのストリームは FPGA 上の FIFO を使用してインプリメントされます。dataflow プラグマが使用されているので、3 つの関数が並列に実行されます。dataflow プラグマの詳細は、『Vivado Design Suite ユーザー ガイド: 高位合成』 ([UG902](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;d=ug902-vivado-high-level-synthesis.pdf)) を参照してください。
 
-3. 次は、3 つのサブ関数を 1 つずつ作成します。まず、`read_dataflow` 関数から始めます。
+3. 3 つのサブ関数を 1 つずつ作成します。まず、`read_dataflow` 関数から始めます。
 
-   この関数は、グローバル メモリからデータを読み出し、そのデータをストリームを使用して次の関数に渡します。範囲外からデータを読み出さないように、ストリームに 0 を挿入して、画像の一番下にパディング ピクセルを追加します。行番号が image\_height より小さい場合、入力画像から行を読み出して、それを read\_stream ストリームに格納します。
+   この関数は、グローバル メモリからデータを読み出し、そのデータをストリームを使用して次の関数に渡します。範囲外からデータを読み出さないように、画像の下部にパディング ピクセルを追加するためストリームに 0 を挿入します。行インデックスが image_height より小さい場合、入力画像から行を読み出し、read_stream ストリームに格納します。
 
-   すべての関数は、次のようになります。
+   完成した関数は、次のようになります。
 
    ```
    void read_dataflow(hls::stream<RGBPixel>& read_stream, const RGBPixel *in,
@@ -77,9 +78,9 @@ dataflow を使用しない場合、`func_A`、`func_B`、`func_C` は順次実�
    }
    ```
 
-   hls::stream オブジェクトは `hls_stream.h` ヘッダーでｄ定義されます。値をストリームに挿入するには、`<<` 演算子を使用します。
+   hls::stream オブジェクトは `hls_stream.h` ヘッダーで定義されます。値をストリームに挿入するには、`<<` 演算子を使用します。
 
-4. では、次に `compute_dataflow` 関数を作成します。これは、`read_flow` 関数からストリーミング データを読み込んで計算するので、最も複雑な関数です。出力データは `write_stream` に書き込まれます。
+4. `compute_dataflow` 関数を作成します。これは、`read_flow` 関数からストリーミング データを読み込んで計算するので、最も複雑な関数です。出力データは `write_stream` に書き込まれます。
 
    `compute_dataflow` のコード部分は、次のとおりです。
 
@@ -151,13 +152,13 @@ dataflow を使用しない場合、`func_A`、`func_B`、`func_C` は順次実�
    }
    ```
 
-   ローカル バッファー `window_mem` は、計算に必要なデータの行を格納するように定義されます。ストリームからエレメントを抽出するには、`>>` 演算子を使用します。`window_mem` 配列の冒頭の数行は画像のパディングを示すために 0 にする必要があります。これは、最初の反復でのみ実行されます。
+   ローカル バッファー `window_mem` は、計算に必要なデータの行を格納します。ストリームから要素を抽出するには、`>>` 演算子を使用します。`window_mem` 配列の冒頭の数行は画像のパディングを示すために 0 にする必要があります。これは、最初の反復でのみ実行されます。
 
-   計算がメイン ループにインプリメントされ、COEFFICIENT\_SIZE 変数がコンパイル時に前もって定義されるので、ループがパイプライン処理されます。ループの最適化の詳細は、[Vitis 統合ソフトウェア プラットフォームでのアプリケーション アクセラレーション手法](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380)の[手順 4: ループ レイテンシの改善](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wnz1555544738414)を参照してください。
+   計算はメイン ループにインプリメントされ、COEFFICIENT\_SIZE 変数がコンパイル時に定義されるので、ループがパイプライン処理されます。ループ最適化の詳細は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの [Vitis ソフトウェア プラットフォームでのアプリケーションのアクセラレーション手法](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=methodologyacceleratingapplications.html)に含まれる[手順 4: ループ レイテンシの改善](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=methodologyacceleratingapplications.html;a=wnz1555544738414)を参照してください。
 
-   計算が終了したら、`out` 値がダウンストリーム関数の `write_stream` にプッシュされて処理されます。
+   計算が終了すると、`out` 値がダウンストリーム関数の `write_stream` にプッシュされて処理されます。
 
-5. では、次に `write_dataflow` 関数を作成します。
+5. `write_dataflow` 関数を作成します。
 
    ```
    void write_dataflow(RGBPixel* outFrame, hls::stream<RGBPixel>& write_stream,
@@ -169,11 +170,11 @@ dataflow を使用しない場合、`func_A`、`func_B`、`func_C` は順次実�
    }
    ```
 
-   この関数はかなり単純で、ストリーミング結果をグローバル メモリに出力するだけのものです。
+   この関数は単純で、ストリーミング結果をグローバル メモリに出力するだけです。
 
-## ハードウェア エミュレーションの実行 (データフローを使用した場合)
+## データフローを使用した場合のハードウェア エミュレーションの実行
 
-`makefile` ディレクトリに移動して、次のコマンドでハードウェア エミュレーションを実行します。
+`makefile` ディレクトリに移動し、次のコマンドを使用してハードウェア エミュレーションを実行します。
 
 ```
 make run TARGET=hw_emu STEP=dataflow SOLUTION=1 NUM_FRAMES=1
@@ -198,21 +199,20 @@ convolve_fpga_1:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.0
 make view_run_summary TARGET=hw_emu STEP=dataflow
 ```
 
-カーネル実行時間が 0.059 ms に減っています。
+カーネル実行時間が 0.059 ms に短縮されています。
 
 アップデートされた表は、次のようになります。
 
-| 演習               | Image Size | Time (HW-EM)(ms) | Reads(KB)       | Writes(KB) | Avg. Read (KB) | Avg. Write (KB) | BW (MBps)  |
-| :---------------   | :--------- | ---------------: | --------------: | ---------: | -------------: | --------------: | ---------: |
-| baseline           |     512x10 | 3.903            | 344             |       20.0 |          0.004 |           0.004 |    5.2     |
-| localbuf           |     512x10 | 1.574 (2.48x)    | 21  (0.12x)     |       20.0 |          0.064 |           0.064 |    13      |
-| fixed-point data   |     512x10 | 0.46 (3.4x)      | 21              |       20.0 |          0.064 |           0.064 |    44      |
-| dataflow           |     512x10 | 0.059 (7.8x)     | 21              |       20.0 |          0.064 |           0.064 |    347     |
----------------------------------------
+| 手順| 画像サイズ| 時間 (HW-EM) (ms)| 読み出し (KB)| 書き込み (KB)| 読み出し平均 (KB)| 書き込み平均 (KB)| 帯域幅 (Mbps)
+|:----------|:----------|----------:|----------:|----------:|----------:|----------:|----------:
+| baseline| 512x10| 3.903| 344| 20.0| 0.004| 0.004| 5.2
+| localbuf| 512x10| 1.574 (2.48x)| 21 (0.12x)| 20.0| 0.064| 0.064| 13
+| fixedpoint| 512x10| 0.46 (3.4x)| 21| 20.0| 0.064| 0.064| 44
+| dataflow| 512x10| 0.059 (7.8x)| 21| 20.0| 0.064| 0.064| 347
 
-## 次のステップ
+## 次の手順
 
-ここまでで、ハードウェア カーネルで最適化をいくつか実行して、パフォーマンスを改善しました。次は、[順不同キューと複数の計算ユニットを使用](./multi-CU.md)したりする別のホスト コード最適化を実行します。
+この演習では、ハードウェア カーネルに対していくつかの最適化を実行し、パフォーマンスを改善しました。次のセクションでは、[順不同キューと複数の計算ユニットを使用](./multi-CU.md)するなどのほかのホスト コード最適化を実行します。
 
 </br>
 
@@ -220,5 +220,5 @@ make view_run_summary TARGET=hw_emu STEP=dataflow
 [dataflow]: ./images/dataflow.png "データフロー"
 [dataflow_hwemu_profilesummary]: ./images/191_dataflow_hwemu_pfsummary_new_2.jpg "データフロー バージョンのハードウェア エミュレーションのプロファイル サマリ"
 <hr/>
-<p align="center"><b><a href="../../docs/vitis-getting-started/README.md">入門コースの初めに戻る</a> &mdash; <a href="./README.md">チュートリアルの初めに戻る</a></b></p>
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">入門コースの初めに戻る</a> &mdash; <a href="/docs/convolution-tutorial/README.md">チュートリアルの初めに戻る</a></b></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

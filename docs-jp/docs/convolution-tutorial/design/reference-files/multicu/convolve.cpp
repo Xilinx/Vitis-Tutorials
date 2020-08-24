@@ -114,7 +114,22 @@ void convolve(FILE* streamIn, FILE* streamOut,
         q.enqueueReadBuffer(buffer_output, CL_FALSE, 0, frame_bytes, outFrame.data(), &iteration_events, &read_event);
         iteration_events.push_back(read_event);
 	read_event.wait();
-		
+	    RGBPixel *a;
+   a = outFrame.data();
+   for(int k=0;k<4;k++)
+    {
+   for(int q=0;q<5120;q++)
+   {
+    std::cout <<"b " << (int)a->b << "g " << (int)a->g << "r "<< (int)a->r << std::endl;
+
+   }
+    std::cout << "----------------------------------------------"<<std::endl;
+    std::cout << "----------------------------------------------"<<std::endl;
+    std::cout << "----------------------------------------------"<<std::endl;
+    std::cout << "----------------------------------------------"<<std::endl;
+  
+    }
+ 	
         if(args.gray) {
           grayscale_cpu(outFrame.data(), grayFrame.data(), args.width, args.height);
           bytes_written = fwrite(outFrame.data(), 1, gray_frame_bytes, streamOut);

@@ -1,25 +1,26 @@
-<table>
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ アプリケーション アクセラレーション開発フローのチュートリアル</h1><a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">SDAccel™ 開発環境 2019.1 チュートリアルを参照</a></td>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">2019.2 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
  </tr>
  <tr>
- <td align="center"><h1>アクセラレーションした FPGA アプリケーションの最適化: たたみ込みの例</td>
+ <td>
+ </td>
  </tr>
 </table>
 
 # 6\. 順不同キューと複数の計算ユニットの使用
 
-前の演習では、パイプラインおよびデータフローなどの手法を使用してカーネル内で並列処理を抽出する方法をお見せしました。FPGA の利点の 1 つは、カーネルのコピーである複数の計算ユニット (CU) を作成して、より多くの処理が並列で実行されるようにできることです。これらの CU を使用すると、複数画像を同時に処理したり、1 つの画像をより小さな領域に分割して、各フレームをより速く処理できるようになります。このチュートリアルでは、1 つの画像をより小さな領域に分割して、各フレームの計算速度を上げます。
+前の演習では、パイプラインおよびデータフローなどの手法を使用してカーネル内で並列処理を抽出する方法をお見せしました。FPGA の利点の 1 つは、カーネルのコピーである複数の計算ユニット (CU) を作成して、より多くの処理が並列で実行されるようにできることです。これらの CU を使用すると、複数画像を同時に処理したり、1 つの画像を小さな領域に分割して、各フレームをより高速に処理できるようになります。このチュートリアルでは、1 つの画像を小さな領域に分割して、各フレームの計算速度を上げます。
 
-複数 CU によるアクセラレーションの可能性を利用するには、ホスト アプリケーションが複数の並行リクエストを CU に送信して管理できるようにする必要があります。パフォーマンスを最大にするには、アプリケーションがすべての CU をビジー状態に維持するようにすることが重要です。データ転送や CU の開始に遅延があると、全体的なパフォーマンスが下がります。
+複数 CU によるアクセラレーションの可能性を活用するには、ホスト アプリケーションが CU に複数の並行要求を送信して管理できるようにする必要があります。パフォーマンスを最大にするには、アプリケーションがすべての CU をビジー状態に維持するようにすることが重要です。データ転送や CU の開始に遅延があると、全体的なパフォーマンスが下がります。
 
-この演習では、まず複数の CU を処理するようにホスト コードを変更してから、フレームの下位領域を処理するようにカーネルをアップデートします。
+この演習では、まず複数の CU を処理するようにホスト コードを変更し、その後フレームのサブ領域を処理するようカーネルをアップデートします。
 
 ## キューの演算を順不同に実行
 
-ホスト アプリケーションは OpenCL™ API を使用して FPGA 上のカーネルと通信します。これらのコマンドは、コマンド キュー オブジェクトを介して実行されます。デフォルトでは、コマンド キューは順番通りに処理されますが、特殊なフラグをコマンド キューに渡すと、どの順番でも動作を実行できるようになります。このタイプのキューは、リソースが使用可能になるとすぐに、実行準備のできた演算を実行します。
+ホスト アプリケーションは OpenCL™ API を使用して FPGA 上のカーネルと通信します。これらのコマンドは、コマンド キュー オブジェクトを使用して実行します。デフォルトでは、コマンド キューは順序どおりに処理されますが、特殊なフラグをコマンド キューに渡すことにより、任意の順序で実行できるようになります。このタイプのキューは、リソースが使用可能になるとすぐに、実行準備のできた演算を実行します。
 
-順不同キューを使用すると、メモリ転送およびカーネル呼び出しなどの複数の動作を同時に開始できます。OpenCL API イベントと待機リストを使用すると、タスクに依存性を追加できます。イベントは、特定タスクに関連付けられたオブジェクトで、通常は最後の引数として呼び出しに渡されます。動作が別のタスクに依存する場合は、そのイベントを待機リストに渡すことができます。動作は、待機リストのすべてのイベントが終了するのを待ってから実行されます。
+順不同キューを使用すると、メモリ転送およびカーネル呼び出しなどの複数の処理を同時に開始できます。タスクの依存関係は、OpenCL API イベントおよび待機リストを使用して追加できます。イベントは、特定のタスクに関連付けられたオブジェクトで、通常は最後の引数として呼び出しに渡されます。操作が別のタスクに依存している場合は、そのイベントを待機リストに渡すことができます。その操作は、待機リストのすべてのイベントが終了するのを待ってから実行する必要があります。
 
 > **ヒント:** すべてのホスト コードのソース ファイルは、`reference-files/multicu` フォルダーに含まれます。必要に応じて、リファレンスとしてご利用ください。
 
@@ -35,7 +36,7 @@
 
    `cl::QueueProperties::OutOfOrder` 列挙型を `CommandQueue` コンストラクターに渡すことで、ランタイムにこのキューの動作を順不同で実行できることを伝えられます。
 
-2. 順不同キューを使用する場合、読み出し、enqueueTask、書き込みの呼び出し間の順番を、コピー動作が終了する前にバッファーを読み出すことがないように変更する必要があります。`cl::Event` オブジェクトを作成して、それを `enqueueWriteBuffer` 関数の最後の引数として渡します。次の 95 行目を見つけます。
+2. 順不同キューを使用する場合、読み出し、enqueueTask、書き込みの呼び出しの順序を、コピーが終了する前にバッファーを読み出すことがないように変更する必要があります。`cl::Event` オブジェクトを作成して、それを `enqueueWriteBuffer` 関数の最後の引数として渡します。次の 95 行目を見つけます。
 
         q.enqueueWriteBuffer(buffer_input, CL_FALSE, 0, frame_bytes, inFrame.data());
 
@@ -44,43 +45,43 @@
         cl::Event write_event;
         q.enqueueWriteBuffer(buffer_input, CL_FALSE, 0, frame_bytes, inFrame.data(), nullptr, &write_event);
 
-   `write_event` オブジェクトを使用して、次のタスクへの動作の依存性を指定します。
+   `write_event` オブジェクトを使用して、この操作の次のタスクへの依存性を指定します。
 
-3. `write_event` を `enqueueTask` 呼び出しに渡す必要があります。タスクが読み出し動作に渡されるよう、イベント オブジェクトを作成する必要もあります。前の呼び出しからの `write_event` オブジェクトは、ベクターへのポインターを介してこの呼び出しに渡される必要があります。96 行目の `enqueueTask` 呼び出しを次のように変更します。
+3. `write_event` を `enqueueTask` 呼び出しに渡す必要があります。読み出し操作に渡すタスクのイベント オブジェクトを作成する必要もあります。前の呼び出しからの `write_event` オブジェクトは、ベクターへのポインターを使用してこの呼び出しに渡す必要があります。96 行目の `enqueueTask` 呼び出しを次のように変更します。
 
         vector<cl::Event> iteration_events{write_event};
         cl::Event task_event;
         q.enqueueTask(convolve_kernel, &iteration_events, &task_event);
 
-4. 読み出し呼び出しは、`convolve_kernel` の実行が終了してから実行する必要があります。前の動作と同様、イベントをこの関数の最後の引数として送信します。97 行目の `enqueueReadBuffer` 呼び出しを次のように変更します。
+4. 読み出し呼び出しは、`convolve_kernel` の実行が終了してから実行する必要があります。前の操作と同様、イベントはこの関数の最後の引数として渡すことができます。97 行目の `enqueueReadBuffer` 呼び出しを次のように変更します。
 
         iteration_events.push_back(task_event);
         cl::Event read_event;
         q.enqueueReadBuffer(buffer_output, CL_FALSE, 0, frame_bytes, outFrame.data(), &iteration_events, &read_event);
         iteration_events.push_back(read_event);
 
-   ここでは、`iteration_events` ベクターの最後に `task_event` オブジェクトを追加しました。その後、`enqueueReadBuffer` 呼び出しへの最後から 2 つ目の引数として `iteration_events` を渡しました。`enqueueTask` 呼び出しは前の呼び出しに依存するので、新しいベクターを作成することもできました。
+   ここでは、`iteration_events` ベクターの最後に `task_event` オブジェクトを追加しました。その後、`enqueueReadBuffer` 呼び出しへの最後から 2 つ目の引数として `iteration_events` を渡しました。`enqueueTask` 呼び出しは前の呼び出しに依存するので、新しいベクターを作成することも可能です。
 
-5. `ffmpeg` がデータをホストに転送し戻す前に出力ストリームに書き込まないようにする必要があります。`read_event` オブジェクトで待機呼び出しを呼び出すことで、スレッドが続行されないようにできます。`iteration_events` オブジェクトの `push_back` 関数呼び出しの後に次の行を追加します。
+5. `ffmpeg` がデータをホストに戻す前に出力ストリームに書き込まないようにする必要があります。`read_event` オブジェクトに対して待機呼び出しを呼び出すことにより、スレッドが続行されないようにすることができます。`iteration_events` オブジェクトの `push_back` 関数呼び出しの後に次の行を追加します。
 
         read_event.wait();
 
 ## 複数の計算ユニットの使用
 
-前の演習では、カーネルに 1 つの CU しか使用しませんでした。このセクションでは、複数の CU を使用して、各 CU が画像のより小さな領域を処理するようにデザインを変更します。これには、前の手順からの出力を使用して変更を加えていきます。
+前の演習では、カーネルに 1 つの CU しか使用しませんでした。このセクションでは、複数の CU を使用して、各 CU が画像のより小さな領域を処理するようにデザインを変更します。これには、前の手順からの出力に変更を加えます。
 
 > **ヒント:** カーネル ソース ファイルは `reference-files/multicu` フォルダーに含まれています。必要に応じて、リファレンスとしてご利用ください。
 
-では、カーネル コードを変更します。`src/multicu` から `convolve_fpga.cpp` ファイルを開いて、次のように変更します。
+まず、カーネル コードを変更します。`src/multicu` ディレクトリにある `convolve_fpga.cpp` ファイルを開き、次のように変更します。
 
-1. オフセットと各カーネルが処理する行数を受け取れるように、`convolve_fpga` カーネルのシグネチャを変更します。
+1. `convolve_fpga` カーネルのシグネチャを変更して、オフセットと各カーネルが処理する行数を受信できるようにします (106 行目)。
 
    ```
            void convolve_fpga(const RGBPixel* inFrame, RGBPixel* outFrame, const float* coefficient, int coefficient_size, int img_width, int img_height, int line_offset, int num_lines) {
                ...
    ```
 
-   画像サイズと CU 数によって、作業を均等に分割します。カーネルの開始位置はオフセットを使用して決定します。`line_offset` パラメーターは CU が処理する最初の行です。`num_lines` 引数は、各 CU で処理される行数を保持します。
+   画像サイズと CU 数に応じて、作業を均等に分割します。カーネルの開始位置はオフセットを使用して決定します。`line_offset` パラメーターは CU が処理する最初の行です。`num_lines` 引数は、各 CU で処理される行数を保持します。
 
    > **ヒント:** `kernels.h` の `convolve_fpga` 関数の宣言が `convolve_fpga.cpp` ファイルと同じになるようにします。
 
@@ -116,7 +117,7 @@
 
    * `offset` 変数は、画像の最初から CU の読み出す最初のピクセルまでのオフセットを計算するために使用されます。
    * `top_padding` および `bottom_padding` 変数は、画像の一番上と一番下に追加する 0 のパディングを決定します。
-   * 一方で、`padding` 変数は、たたみ込みウィンドウ周辺の領域も含めた読み出すピクセル数です。
+   * `padding` 変数は、たたみ込みウィンドウ周辺の領域を含む読み出すピクセル数です。
 
 3. 画像の一番上と一番下のパディング エリアに 0 を送信するように read\_dataflow カーネルを変更します。
 
@@ -150,16 +151,16 @@
 
 ## 複数の計算ユニット (CU) をサポートするようにホスト コードをアップデート
 
-CU をサポートするためには、次の手順を実行する必要があります。
+複数の CU をサポートするには、次の手順を実行する必要があります。
 
-1. `convolve.cpp` を開いて、`frame_count` `for` ループの前に次の行を追加します。
+1. `convolve.cpp` を開き、`frame_count` `for` ループの前に次の行を追加します。
 
    ```
         int compute_units = 4;
         int lines_per_compute_unit = height / compute_units;
    ```
 
-   これらの変数は、バイナリに含まれる CU の数を定義します。この後、画像の行を CU 間で均等に分割します。このコードは、CU 間で画像を均等に分割できると想定したものです。
+   これらの変数は、バイナリに含める CU の数を定義します。この後、画像の行を複数の CU に均等に分割します。このコードでは、画像を複数の CU に均等に分割できると想定しています。
 
 2. 1 つのタスクを開始するのではなく、作成した各 CU でタスクを開始します。次のコードを見つけます。
 
@@ -182,11 +183,11 @@ CU をサポートするためには、次の手順を実行する必要があ�
         copy(begin(task_events), end(task_events), std::back_inserter(iteration_events));
    ```
 
-   この `for` ループは CU ごとに 1 つのタスクを開始します。各タスクにイベント オブジェクトを渡してから、それを `task_events` ベクターに追加します。ループの終わりまでは `iteration_events` に追加しないようになっています。これは、タスクを `enqueueWriteBuffer` 呼び出しにのみに依存させ、互いには依存させないようにするためです。
+   この `for` ループは CU ごとに 1 つのタスクを開始します。各タスクにイベント オブジェクトを渡し、それを `task_events` ベクターに追加します。ループが終了するまでは `iteration_events` に追加しないことに注意してください。これは、タスクが `enqueueWriteBuffer` 呼び出しにのみに依存し、タスクどうしが依存しないようににするためです。
 
-これでデザインをコンパイルして実行でき、次のような結果が表示されます。
+これでデザインをコンパイルして実行できます。次のセクションに示すような結果が表示されるはずです。
 
-## ハードウェア エミュレーションの実行 (複数の計算ユニットを使用した場合)
+## 複数の計算ユニットを使用した場合のハードウェア エミュレーションの実行
 
 1. エミュレーションの実行前に、CU 数を 4 に設定する必要があります。これには、`design.cfg` を開いて `nk` オプションを次のように変更します。
 
@@ -194,7 +195,7 @@ CU をサポートするためには、次の手順を実行する必要があ�
    nk=convolve_fpga:4
    ```
 
-   ビルド プロセスのリンク段階で生成されたカーネル インスタンス数または CU 数を指定するのに `nk` オプションが使用されています。この演習では、4 に設定します。
+   `nk` オプションは、ビルド プロセスのリンク段階で生成するカーネル インスタンス (CU) の数を指定するために使用します。この演習では、4 に設定します。
 
 2. `makefile` ディレクトリに移動します。
 
@@ -204,31 +205,31 @@ CU をサポートするためには、次の手順を実行する必要があ�
    make run TARGET=hw_emu STEP=multicu SOLUTION=1 NUM_FRAMES=1
    ```
 
-4 つの CU で実行されるこのカーネルの結果は、次のようになります。
+   このカーネルを 4 つの CU で実行した場合の結果は、次のようになります。
 
-```
-Processed 0.08 MB in 42.810s (0.00 MBps)
+   ```
+   Processed 0.08 MB in 42.810s (0.00 MBps)
 
-INFO: [Vitis-EM 22] [Wall clock time: 01:34, Emulation time: 0.102462 ms] Data transfer between kernel(s) and global memory(s)
-convolve_fpga_1:m_axi_gmem1-DDR[0]          RD = 24.012 KB              WR = 0.000 KB
-convolve_fpga_1:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
-convolve_fpga_1:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
-convolve_fpga_2:m_axi_gmem1-DDR[0]          RD = 22.012 KB              WR = 0.000 KB
-convolve_fpga_2:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
-convolve_fpga_2:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
-convolve_fpga_3:m_axi_gmem1-DDR[0]          RD = 24.012 KB              WR = 0.000 KB
-convolve_fpga_3:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
-convolve_fpga_3:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
-convolve_fpga_4:m_axi_gmem1-DDR[0]          RD = 22.000 KB              WR = 0.000 KB
-convolve_fpga_4:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
-convolve_fpga_4:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
-```
+   INFO: [Vitis-EM 22] [Wall clock time: 01:34, Emulation time: 0.102462 ms] Data transfer between kernel(s) and global memory(s)
+   convolve_fpga_1:m_axi_gmem1-DDR[0]          RD = 24.012 KB              WR = 0.000 KB
+   convolve_fpga_1:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+   convolve_fpga_1:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
+   convolve_fpga_2:m_axi_gmem1-DDR[0]          RD = 22.012 KB              WR = 0.000 KB
+   convolve_fpga_2:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+   convolve_fpga_2:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
+   convolve_fpga_3:m_axi_gmem1-DDR[0]          RD = 24.012 KB              WR = 0.000 KB
+   convolve_fpga_3:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+   convolve_fpga_3:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
+   convolve_fpga_4:m_axi_gmem1-DDR[0]          RD = 22.000 KB              WR = 0.000 KB
+   convolve_fpga_4:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+   convolve_fpga_4:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
+   ```
 
-これで、ほぼ同じ時間量で 4 倍の仕事を実行できるようになりました。これで、グローバル メモリからさらにデータを転送できるようになりました。これは各 CU が周囲のパディング行を読み出す必要があるためです。
+   これで、ほぼ同じ時間で 4 倍の処理を実行できるようになりました。各 CU がパディングされた周辺のラインも読み出す必要があるので、グローバル メモリから転送されるデータ量は増加します。
 
 ## ハードウェア エミュレーションのプロファイル サマリ レポートの表示
 
-1. 次のコマンドを使用して、プロファイル サマリ レポートを表示します。
+次のコマンドを使用して、プロファイル サマリ レポートを表示します。
 
 ```
 make view_run_summary TARGET=hw_emu STEP=multicu
@@ -238,26 +239,26 @@ make view_run_summary TARGET=hw_emu STEP=multicu
 
 アップデートされた表は、次のようになります。
 
-| 演習名| Image Size| Time (HW-EM)(ms)| Reads (KB)| Writes (KB)| Avg. Read (KB)| Avg. Write (KB)| BW (MBps)
+| 手順| 画像サイズ| 時間 (HW-EM) (ms)| 読み出し (KB)| 書き込み (KB)| 読み出し平均 (KB)| 書き込み平均 (KB)| 帯域幅 (MBps)
 |:----------|:----------|----------:|----------:|----------:|----------:|----------:|----------:
 | baseline| 512x10| 3.903| 344| 20.0| 0.004| 0.004| 5.2
 | localbuf| 512x10| 1.574 (2.48x)| 21 (0.12x)| 20.0| 0.064| 0.064| 13
-| fixed-type data| 512x10| 0.46 (3.4x)| 21| 20.0| 0.064| 0.064| 44
+| fixedpoint| 512x10| 0.46 (3.4x)| 21| 20.0| 0.064| 0.064| 44
 | dataflow| 512x10| 0.059 (7.8x)| 21| 20.0| 0.064| 0.064| 347
 | multi-CU| 512x40\*| 0.06 (0.98x)| 92 (4.3x)| 80.0 (4x)| 0.064| 0.064| 1365\*
 
 > **注記:**
 >
-> * この複数 CU のバージョンは前のバージョンに比べると 4 倍のデータを処理します。各 CU の実行時間は変わりませんが、4 つの並列 CU によりシステム パフォーマンスがほぼ 4 倍増加します。
-> * これは、4 x データ/時間で計算されます。この場合、データ転送時間は考慮されておらず、4 つの CU が並列で実行されているとしています。これは、ハードウェア実行ほど正確ではありませんが、最適化の効率性を計るためのリファレンスとして使用できます。
+> * この複数 CU バージョンは、前のバージョンの 4 倍のデータを処理します。各 CU の実行時間は変わらなくても、4 つの CU を並列処理することによりシステム パフォーマンスがほぼ 4 倍になります。
+> * これは、4 x データ/時間で計算されます。ここでは、データ転送時間は考慮されておらず、4 つの CU が並列で実行されると想定しています。これはハードウェア実行ほど正確ではありませんが、最適化の効果を評価するために使用します。
 
-## 次のステップ
+## 次の手順
 
-この段階では、順不同コマンド キューを使用して複数の CU を実行することで、ホスト コード最適化を実行しました。次は、[アクセラレータをハードウェアで実行](./RunOnHardware.md)するアプリケーションを作成します。
+この手順では、順不同コマンド キューを使用して複数の CU を実行することにより、ホスト コードを最適化しました。次の手順では、[複数の計算ユニットを使用した QDMA ストリーミングを使用](./qdma.md)します。
 
 </br>
 
 [hostopt_hwemu_profilesummary]: ./images/191_hostopt_hwemu_pfsummary_40_2.jpg "ホスト コード最適化バージョンのハードウェア エミュレーションのプロファイル サマリ"
 <hr/>
-<p align="center"><b><a href="../../docs/vitis-getting-started/README.md">入門コースの初めに戻る</a> &mdash; <a href="./README.md">チュートリアルの初めに戻る</a></b></p>
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">入門コースの初めに戻る</a> &mdash; <a href="/docs/convolution-tutorial/README.md">チュートリアルの初めに戻る</a></b></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

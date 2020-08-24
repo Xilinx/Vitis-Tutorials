@@ -58,13 +58,8 @@ void pass(const ap_int<512> *input,
 	  unsigned int      numInputs,
 	  unsigned int      processDelay) {
   #pragma HLS INTERFACE m_axi     port=input     offset=slave bundle=p0
-  #pragma HLS INTERFACE s_axilite port=input                  bundle=control
   #pragma HLS INTERFACE m_axi     port=output    offset=slave bundle=p1
-  #pragma HLS INTERFACE s_axilite port=output                 bundle=control
-  #pragma HLS INTERFACE s_axilite port=numInputs              bundle=control
-  #pragma HLS INTERFACE s_axilite port=processDelay           bundle=control
-  #pragma HLS INTERFACE s_axilite port=return                 bundle=control
-
+  
   pass_dataflow(input, output, numInputs, processDelay);
 }
 }

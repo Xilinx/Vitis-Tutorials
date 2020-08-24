@@ -1,31 +1,34 @@
-<table>
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ アプリケーション アクセラレーション開発フローのチュートリアル</h1><a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">SDAccel™ 開発環境 2019.1 チュートリアルを参照</a></td>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">2019.2 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
  </tr>
  <tr>
- <td align="center"><h1>アクセラレーションした FPGA アプリケーションの最適化: たたみ込みの例</td>
+ <td>
+ </td>
  </tr>
 </table>
 
-# 概要
+# アクセラレーション FPGA アプリケーションの最適化: たたみ込みの例
 
-最適化したアクセラレーション アプリケーションを開発して必要なパフォーマンス目標を達成する手法には、アプリケーションの構築とアクセラレータの開発の 2 つの主な段階があります。
+## 概要
 
-* 最初の段階では、どのソフトウェア関数を FPGA カーネルでアクセラレーションするか、どれくらい並列処理が達成可能か、どのようにコードで記述するかなど、アプリケーション アーキテクチャに関する重要事項を決定します。
-* 次の段階では、ソース コードを構築し、必要なコンパイラ オプションとプラグマを適用して、パフォーマンス ターゲットを達成するのに必要なカーネル アーキテクチャを作成して、カーネルをインプリメントします。
+最適化されたアクセラレーション アプリケーションを開発して必要なパフォーマンス目標を達成する手法には、アプリケーションの設計とアクセラレータの開発の 2 つの主な段階があります。
 
-基準アプリケーションを使用してこのチュートリアルを開始し、プロファイルしてハードウェア アクセラレーションの可能性を検証します。チュートリアルのアプリケーションは、多くの音声/画像形式を再生し、コードを変換し、多重化および分離し、フィルターできるマルチメディア フレームワークの ffmpeg を使用して、RGBA ビデオの 2D たたみ込みとフィルター係数をのセットを実行します。この後、ホスト プログラムおよびカーネル側の両方でさまざまな最適化を実行します。このチュートリアルでは、次の最適化手法を使用します。
+* 第 1 段階では、どのソフトウェア関数を FPGA カーネルでアクセラレーションするか、どれくらい並列処理が達成可能か、どのようにコード記述するかなど、アプリケーション アーキテクチャに関する重要事項を決定します。
+* 第 2 段階では、ソース コードを構築し、必要なコンパイラ オプションとプラグマを適用して、パフォーマンス ターゲットを達成するのに必要なカーネル アーキテクチャを作成して、カーネルをインプリメントします。
+
+このチュートリアルでは、ベースライン アプリケーションから開始し、アプリケーションをプロファイリングしてハードウェア アクセラレーションの可能性を調べます。このアプリケーションは、多くのオーディオ/ビデオ形式を再生、トランスコード、多重化および分離、フィルター可能な 2D たたみ込みフィルターを使用して、マルチチャネル RGB ビデオ ストリームを処理します。その後、ホスト プログラムおよびカーネルの両方でさまざまな最適化を実行します。このチュートリアルでは、次の最適化手法を使用します。
 
 * メモリ転送の最適化
-* 固定小数点データ型の適用
+* 固定小数点型の適用
 * データフローおよびストリーム
-* ループの最適化
+* ループ最適化
 
-このチュートリアルでは、[Vitis 統合ソフトウェア プラットフォームでのアプリケーション アクセラレーション手法](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380)に示すように、CPU ベースのアプリケーションを最適化した FPGA のアクセラレーションされたデザインに移行する方法を説明します。このチュートリアルを実行する際は、この資料も確認することでより理解が深まります。
+このチュートリアルでは、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの [Vitis 統合ソフトウェア プラットフォームでのアプリケーション アクセラレーション手法](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=methodologyacceleratingapplications.html)の手順に従って、CPU ベースのアプリケーションを最適化された FPGA アクセラレーション デザインに移行します。このチュートリアルを実行する際にこの資料も確認すると、より理解が深まります。
 
-# 開始前の注意点
+## 開始前の確認事項
 
-このチュートリアルでは、手順を実行するマシンに ffmpeg フレームワークがインストールされている必要があります。これらの依存ファイルは、次のコマンドを実行するとダウンロードできます。
+このチュートリアルでは、手順を実行するマシンに FFmpeg フレームワークがインストールされている必要があります。ダウンロードして次のコマンドを実行します。
 
 * CentOS の場合:
 
@@ -44,34 +47,44 @@
 
 このチュートリアルでは、次を使用します。
 
-* BASH Linux シェル コマンド
-* 2019.2 Vitis コア開発キット リリースおよび xilinx\_u200\_xdma\_201830\_2 プラットフォーム。必要であれば、その他のバージョンおよびプラットフォームも使用できます。
+* BASH Linux シェル コマンド。
+* 2020.1 Vitis コア開発キット リリースおよび xilinx\_u200\_xdma\_201830\_2 プラットフォーム。必要であれば、ほかのバージョンおよびプラットフォームを使用するように変更することもできます。
 * 多くの手順および変数を含む `Makefile`。`Makefile` の構造および内容については、[makefile の理解](./HowToRunTutorial.md)を参照してください。
 
 > **重要:**
 >
-> * 例を実行する前に、[インストール](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html)に示すように Vitis コア開発キットをインストールしておく必要があります。
-> * ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、『Alveo データセンター アクセラレータ カード入門ガイド ([UG1301](https://japan.xilinx.com/support/documentation/boards_and_kits/accelerator-cards/ug1301-getting-started-guide-alveo-accelerator-cards.pdf)) で説明されるように、カードとソフトウェア ドライバーを正しくインストールしてください。
+> * 例を実行する前に、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの[インストール](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html)の手順に従って、Vitis コア開発キットをインストールしてください。
+> * ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、[Alveo ポートフォリオ](https://japan.xilinx.com/products/boards-and-kits/alveo.html) ページの手順に従って、カードとソフトウェア ドライバーを正しくインストールしてください。
 
-## チュートリアル リファレンス ファイルの入手
+### チュートリアル リファレンス ファイルの入手
 
 1. リファレンス ファイルを入手するには、ターミナルに `git clone http://github.com/Xilinx/Vitis-Tutorials` と入力します。
 2. `convolution-tutorial` ディレクトリに移動し、`design` ディレクトリにアクセスします。
 
-# チュートリアルの概要
+## 次の手順
 
-次の演習では、既存のアプリケーションを FPGA アクセラレーションされたアプリケーションとして最適化するためのベスト プラクティスを説明します。このチュートリアルでは、複数の演習に分けて手法をお見せします。演習は、次の順序で実行することをお勧めします。
+次の演習では、既存のアプリケーションを FPGA アクセラレーションされたアプリケーションとして最適化するためのベスト プラクティスを説明します。このチュートリアルでは、複数の演習に分けて手法を示します。演習は、次の順序で実行することをお勧めします。
 
-1. [元のアプリケーションの評価](RunOriginalCode.md): この演習では、元の C ベースのアプリケーションが入力ビデオを処理してたたみ込み出力ビデオを生成するところをお見せします。この演習では、アクセラレーションされたアプリケーションの現実的なパフォーマンス目標設定についても説明します。
-2. [C アプリケーションからの Vitis コア開発キット アプリケーションの作成](baseline.md): OpenCL™ API を使用してホストから呼び出されるホスト プログラムおよびハードウェア カーネルに元の C コードを変換します。
-3. [メモリ転送の最適化](localbuf.md): メモリ アクセスを改善するためのハードウェア カーネルの最適化方法を学びます。ローカル キャッシュを使用して効率的に FPGA 帯域幅を使用できるようにする方法を学びます。
-4. [固定小数点データ型を使用した最適化](fixedtype.md): データ型のデザイン パフォーマンスに与える影響について説明します。
-5. [データフローを使用した最適化](dataflow.md): データフローおよびストリーミングを適用してデータパスを改善することで、カーネルの計算効率を改善します。
-6. [順不同キューと複数の計算ユニットの使用](multi-CU.md): ホスト プログラムの OpenCL API 呼び出しを順不同のタスク実行ができるように変更し、作業を実行する複数カーネルを合成してアクセラレータの並列処理を増加します。
-7. [ハードウェアでのアクセラレータの実行](RunOnHardware.md): 前の手順はすべてハードウェア エミュレーション モードで実行されました。この演習ではアクセラレーション ハードウェアでアプリケーションを実行します。</br>
+* [元のアプリケーションの評価](RunOriginalCode.md)
+* [C アプリケーションから Vitis コア開発キット アプリケーションを作成](baseline.md)
+* [メモリ転送の最適化](localbuf.md)
+* [固定小数点データ型を使用した最適化](fixedtype.md)
+* [データフローを使用した最適化](dataflow.md)
+* [順不同キューと複数の計算ユニットの使用](multi-CU.md)
+* [複数の計算ユニットを使用した QDMA ストリーミングの使用](qdma.md)
+* [ハードウェアでのアクセラレータの実行](RunOnHardware.md)
 
-<hr/>
-<p align= center><b><a href="../../README.md">メイン ページに戻る</a> &mdash; <a href="../../docs/vitis-getting-started/README.md">入門コースの初めに戻る</a></b></p></br><p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<!--
 
-この資料は表記のバージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。
+1. [Evaluating the Original Application](RunOriginalCode.md): In this lab, the original C-based application is used to process the filtered video stream. This lab also discusses setting realistic performance goals for an accelerated application.
+2. [Creating a Vitis Core Development Kit Application from the C Application](baseline.md): Convert the original C code into a host program and hardware kernel where the kernel is called by the host using the OpenCL™ API.
+3. [Optimizing Memory Transfers](localbuf.md): Learn methods for optimizing the hardware kernel for improved memory access. You will learn how to use local cache to make efficient use of the FPGA bandwidth.
+4. [Optimizing Using Fixed Point Data Types](fixedtype.md): Understand how data types affect design performance.
+5. [Optimizing with Dataflow](dataflow.md): Improve the compute efficiency of your kernel, applying dataflow and streaming to improve the data-path in your kernel.
+6. [Using Out-of-Order Queues and Multiple Compute Units](multi-CU.md): Modify the OpenCL API calls in the host program to allow for out-of-order task execution, and increase parallelism within the accelerator by synthesizing multiple kernels to perform the work.
+7. [Using QDMA Streaming with Multiple Compute Units](qdma.md): Modify the design to use multiple CUs with streaming functionality based on the output from the previous lab.
+8. [Running the Accelerator in Hardware](RunOnHardware.md): All the previous steps have been run in Hardware Emulation mode. Here you run the application on FPGA-based acceleration hardware.
 
+-->
+</br><hr/>
+<p align="center" class="sphinxhide"><b><a href="./README.md">メイン ページに戻る</a> &mdash; <a href="/docs/vitis-getting-started/README.md">入門コースの初めに戻る</a></b></p></br><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

@@ -1,5 +1,5 @@
 /**********
-Copyright (c) 2019, Xilinx, Inc.
+Copyright (c) 2020, Xilinx, Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -64,12 +64,6 @@ void vadd(
 #pragma HLS INTERFACE m_axi port=in1  offset=slave bundle=gmem0
 #pragma HLS INTERFACE m_axi port=in2  offset=slave bundle=gmem1
 #pragma HLS INTERFACE m_axi port=out  offset=slave bundle=gmem2
-#pragma HLS INTERFACE s_axilite port=in1  bundle=control
-#pragma HLS INTERFACE s_axilite port=in2  bundle=control
-#pragma HLS INTERFACE s_axilite port=out bundle=control
-#pragma HLS INTERFACE s_axilite port=size bundle=control
-#pragma HLS INTERFACE s_axilite port=return bundle=control
-
     unsigned int v1_buffer[BUFFER_SIZE];    // Local memory to store vector1
     unsigned int v2_buffer[BUFFER_SIZE];    // Local memory to store vector2
     unsigned int vout_buffer[BUFFER_SIZE];  // Local Memory to store result

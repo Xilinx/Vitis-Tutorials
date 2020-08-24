@@ -52,7 +52,6 @@ ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
 else
 	cd runPipeline; ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
 endif
-	vitis_analyzer -open runPipeline/timeline_trace.csv
 
 # Select Host code source based on target
 .PHONY: sync
@@ -69,7 +68,6 @@ ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
 else
 	cd runSync; ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
 endif
-	vitis_analyzer -open runSync/timeline_trace.csv
 
 # Select Host code source based on target
 .PHONY: buf

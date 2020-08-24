@@ -26,8 +26,10 @@
          read_stream << zero;
      }
      int pixel = 0;
+     RGBPixel a ;
      while(elements--) {
-         read_stream << in[pixel++];
+         a = in[pixel++];
+         read_stream.write(a);
      }
      while(bottom_padding--) {
          read_stream << zero;
@@ -38,8 +40,8 @@
                        const float* coefficient,
                        int img_width, int elements, int center) {
        static RGBPixel window_mem[COEFFICIENT_SIZE][MAX_WIDTH];
- #pragma HLS data_pack variable=window_mem
- #pragma HLS array_partition variable=window_mem complete dim=1
+#pragma HLS AGGREGATE variable=window_mem
+#pragma HLS array_partition variable=window_mem complete dim=1
        static fixed coef[COEFFICIENT_SIZE * COEFFICIENT_SIZE];
  #pragma HLS array_partition variable=coef complete
  
@@ -107,28 +109,24 @@
                                  const float* coefficient, int coefficient_size,
                                  int img_width, int img_height,
                                  int line_offset, int num_lines) {
- #pragma HLS INTERFACE s_axilite port=return bundle=control
- #pragma HLS INTERFACE s_axilite port=inFrame bundle=control
- #pragma HLS INTERFACE s_axilite port=outFrame bundle=control
- #pragma HLS INTERFACE s_axilite port=img_height bundle=control
- #pragma HLS INTERFACE s_axilite port=img_width bundle=control
- #pragma HLS INTERFACE s_axilite port=coefficient bundle=control
- #pragma HLS INTERFACE s_axilite port=coefficient_size bundle=control
- #pragma HLS INTERFACE s_axilite port=line_offset bundle=control
- #pragma HLS INTERFACE s_axilite port=num_lines bundle=control
- #pragma HLS INTERFACE m_axi port=inFrame bundle=gmem1
+#pragma HLS INTERFACE m_axi port=inFrame bundle=gmem1
  #pragma HLS INTERFACE m_axi port=outFrame bundle=gmem2
  #pragma HLS INTERFACE m_axi port=coefficient bundle=gmem3
- #pragma HLS data_pack variable=inFrame
- #pragma HLS data_pack variable=outFrame
  
      int half = COEFFICIENT_SIZE / 2;
+     int offset ;
  
      hls::stream<RGBPixel> read_stream("read");
      hls::stream<RGBPixel> write_stream("write");
  
      int elements = img_width * num_lines;
-     int offset = std::max(0, line_offset - half) * img_width;
+     //int offset = std::max(0, line_offset - half) * img_width;
+     if ((line_offset-half) > 0) {
+	offset = (line_offset - half) * img_width;
+     }
+     else {
+	offset = 0;
+     }
      int top_padding = 0;
      int bottom_padding = 0;
      int padding = 0;

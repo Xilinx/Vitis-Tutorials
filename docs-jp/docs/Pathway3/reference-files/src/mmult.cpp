@@ -81,17 +81,6 @@ extern "C"{
                 int b_col       // Matrix B Col Size
             )
     {
-    #pragma HLS INTERFACE m_axi port=a offset=slave bundle=gmem
-    #pragma HLS INTERFACE m_axi port=b offset=slave bundle=gmem
-    #pragma HLS INTERFACE m_axi port=c offset=slave bundle=gmem
-
-    #pragma HLS INTERFACE s_axilite port=a bundle=control
-    #pragma HLS INTERFACE s_axilite port=b bundle=control
-    #pragma HLS INTERFACE s_axilite port=c bundle=control
-    #pragma HLS INTERFACE s_axilite port=a_row bundle=control
-    #pragma HLS INTERFACE s_axilite port=a_col bundle=control
-    #pragma HLS INTERFACE s_axilite port=b_col bundle=control
-    #pragma HLS INTERFACE s_axilite port=return bundle=control
         
         int b_row = a_col;
         int c_row = a_row;

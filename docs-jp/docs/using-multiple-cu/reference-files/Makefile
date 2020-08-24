@@ -22,8 +22,8 @@ VPP_LINK_OPTS := --config link.cfg
 VPP_COMMON_OPTS := -s -t $(MODE) --config compile.cfg
 
 CFLAGS := -g -std=c++11 -I$(XILINX_XRT)/include -I${XILINX_VIVADO}/include
-CFLAGS += -I${OPENCVLIB}/include
-LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lrt -fopenmp -Wl,--as-needed -Wl,-rpath,${XILINX_VIVADO}/lnx64/tools/opencv/opencv_gcc -L${XILINX_VIVADO}/lnx64/tools/opencv/opencv_gcc -lopencv_core -lopencv_highgui
+CFLAGS += -I./opencv
+LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lrt -fopenmp -Wl,--as-needed -Wl,-rpath,./opencv/opencv_gcc -L./opencv/opencv_gcc -lopencv_core -lopencv_highgui
 
 NUMDEVICES := 1
 

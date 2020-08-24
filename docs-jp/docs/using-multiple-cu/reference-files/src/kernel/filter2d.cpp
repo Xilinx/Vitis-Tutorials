@@ -64,16 +64,9 @@ void Filter2DKernel(
 		ap_uint<AXIMM_DATA_WIDTH>* dst)
   {
     #pragma HLS INTERFACE m_axi     port=src    offset=slave bundle=gmem0  
-    #pragma HLS INTERFACE s_axilite port=src                 bundle=control
-    #pragma HLS INTERFACE s_axilite port=width               bundle=control
-    #pragma HLS INTERFACE s_axilite port=height              bundle=control
-    #pragma HLS INTERFACE s_axilite port=stride              bundle=control
     #pragma HLS INTERFACE m_axi     port=coeffs offset=slave bundle=gmem1
-    #pragma HLS INTERFACE s_axilite port=coeffs              bundle=control
     #pragma HLS INTERFACE m_axi     port=dst    offset=slave bundle=gmem1
-    #pragma HLS INTERFACE s_axilite port=dst                 bundle=control
-    #pragma HLS INTERFACE s_axilite port=return              bundle=control
-
+  
 #ifndef __SYNTHESIS__
 	assert(width <= 1920);
 	assert(height<= 1080);

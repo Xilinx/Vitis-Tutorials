@@ -1,63 +1,65 @@
-<table>
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ アプリケーション アクセラレーション開発フローのチュートリアル</h1><a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">SDAccel™ 開発環境 2019.1 チュートリアルを参照</a></td>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">2019.2 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
  </tr>
  <tr>
- <td align="center"><h1>C カーネルと RTL カーネルの混合</h1>
+ <td>
  </td>
  </tr>
 </table>
 
-# 概要
+# C カーネルと RTL カーネルの混合
 
-Vitis™ コア開発キットでは、アプリケーション プログラムがホスト アプリケーションとハードウェア アクセラレーションされたカーネル間で分割されます。ホスト アプリケーションは OpenCL™ API 呼び出しを使用して C/C++ で開発されますが、  ハードウェア カーネルは C/C++、OpenCL C、または RTL で開発されます。Vitis コア開発キット アプリケーションでは、異なる言語で開発したカーネルを組み合わせて使用できます。ホスト コードは、カーネルの開発方法には関係ありませんが、同じ関数呼び出しを使用します。
+## 概要
 
-# チュートリアルの概要
+Vitis™ コア開発キットでは、アプリケーション プログラムがホスト アプリケーションとハードウェア アクセラレーションされたカーネル間で分割されます。ホスト アプリケーションは OpenCL™ API 呼び出しを使用して C/C++ で開発されますが、ハードウェア カーネルは C/C++、OpenCL C、または RTL で開発されます。Vitis コア開発キット アプリケーションでは、異なる言語で開発したカーネルを組み合わせて使用できます。ホスト コードは、カーネルの開発方法には関係ありませんが、同じ関数呼び出しを使用します。
+
+## チュートリアルの概要
 
 このチュートリアルでは、C++ で設計されたカーネルと RTL で設計されたカーネルの 2 つのカーネルを使用するアプリケーションについて説明します。ホスト コードは、これらのカーネルに同じようにアクセスします。
 
 このチュートリアルは、次の 2 つのセクションに分割されます。
 
-- まずは、1 つの C++ ベース カーネルを使用してアプリケーション (ホストおよびカーネル) をビルドし、カーネル関数呼び出しも含めたホスト コードを確認します。
-- 次に、RTL ベースのカーネルをアプリケーションに追加し、  追加カーネルへの関数呼び出しも含め、アップデートしたホスト コードを確認します。
+- 1 つの C++ ベース カーネルを使用するアプリケーション (ホストおよびカーネル) をビルドし、カーネル関数呼び出しも含めたホスト コードを確認します。
+- RTL ベースのカーネルをアプリケーションに追加し、  追加したカーネルへの関数呼び出しも含め、アップデートしたホスト コードを確認します。
 
-どちらの手順でも、アプリケーションは makefile を使用してビルドされます。ソフトウェア エミュレーションは手順 1 で、ハードウェア エミュレーションは手順 2 で実行します。どちらの手順でも、生成されたアプリケーション タイムラインを確認し、カーネルがホスト アプリケーションから呼び出されて実行されることを確認します。
+どちらの手順でも、アプリケーションは makefile を使用してビルドします。ソフトウェア エミュレーションは手順 1 で、ハードウェア エミュレーションは手順 2 で実行します。どちらの手順でも、生成されたアプリケーション タイムラインを確認し、カーネルがホスト アプリケーションから呼び出されて実行されることを確認します。
 
-ホスト コードと C++ カーネル コードは提供されます。RTL コードは RTL Kernel ウィザードで生成します。
+ホスト コードと C++ カーネル コードは提供されています。RTL コードは RTL Kernel ウィザードで生成します。
 
-# 開始前の注意点
+## 開始前の確認事項
 
 このチュートリアルでは、次を使用します。
 
-- BASH Linux シェル コマンド
-- 2019.2 Vitis コア開発リリースおよび xilinx\_u200\_xdma\_201830\_2 プラットフォーム。必要であれば、その他のバージョンおよびプラットフォームも使用できます。
+- BASH Linux シェル コマンド。
+- 2020.1 Vitis コア開発キット リリースおよび xilinx\_u200\_xdma\_201830\_2 プラットフォーム。必要であれば、ほかのバージョンおよびプラットフォームを使用するように変更することもできます。
 
 > **重要:**
 >
-> * 例を実行する前に、[インストール](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html)に示すように Vitis コア開発キットをインストールしておく必要があります。
-> * ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、『Alveo データセンター アクセラレータ カード入門ガイド』 ([UG1301](https://japan.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=j_ug1301-getting-started-guide-alveo-accelerator-cards.pdf)) で説明されるように、カードとソフトウェア ドライバーを正しくインストールしてください。
+> * 例を実行する前に、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの[インストール](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html)の手順に従って、Vitis コア開発キットをインストールしてください。
+> * ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、[Alveo ポートフォリオ](https://japan.xilinx.com/products/boards-and-kits/alveo.html) ページの手順に従って、カードとソフトウェア ドライバーを正しくインストールしてください。
 
 サンプルを実行する前に、インストールに示すように Vitis コア開発キットをインストールしておく必要があります。
 
 ```bash
   #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-  source /opt/Xilinx/Vitis/2019.2/settings64.sh
+  source /opt/Xilinx/Vitis/2020.1/settings64.sh
   #Setup runtime. XILINX_XRT will be set in this step
   source /opt/xilinx/xrt/setup.sh
 ```
 
-## チュートリアル リファレンス ファイルの入手
+### チュートリアル リファレンス ファイルの入手
 
 1. リファレンス ファイルを入手するには、ターミナルに `git clone https://github.com/Xilinx/Vitis-Tutorials` と入力します。
 2. `mixing-c-rtl-kernels` ディレクトリに移動し、`reference-files` ディレクトリにアクセスします。
 
-# C++ ベースのカーネルを使用したアプリケーションのビルド
+## C++ ベースのカーネルを使用したアプリケーションのビルド
 
 この手順では、makefile を使用してホスト コードと C++ カーネルを含むアプリケーションをビルドします。
 
-アプリケーションのビルドに関する概要は、[アプリケーションのビルド](../../docs/Pathway3/BuildingAnApplication.md)を参照してください。
+アプリケーションのビルドに関する概要は、[アプリケーションのビルド](../Pathway3/BuildingAnApplication.md)を参照してください。
 
-## C++ ベースのカーネル
+### C++ ベースのカーネル
 
 C ベースのカーネルは 2 つの入力ベクターを追加し、出力を生成します。ソース コードは、次のディレクトリに含まれます。
 
@@ -65,9 +67,9 @@ C ベースのカーネルは 2 つの入力ベクターを追加し、出力を
 ./reference-files/src/kernel_cpp/
 ```
 
-makefile はこのカーネルをビルドし、ホスト コードからアクセス可能なハードウェア プラットフォーム (xclbin) に追加します。
+makefile はこのカーネルをビルドし、ホスト コードからアクセス可能なハードウェア プラットフォーム (`xclbin`) に追加します。
 
-## ホスト コード
+### ホスト コード
 
 手順 1 のホスト コード (`host_step1.cpp`) は、次のディレクトリに含まれます。
 
@@ -118,9 +120,9 @@ makefile はこのカーネルをビルドし、ホスト コードからアク�
   q.enqueueTask(krnl_vector_add);
   ```
 
-ホスト コードのプログラミングの詳細は、[アプリケーションの開発](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html)を参照してください。
+ホスト コードのプログラミングの詳細は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの[アプリケーションの開発](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=lhv1569273988420.html)を参照してください。
 
-## アプリケーションのビルド
+### アプリケーションのビルド
 
 1. ソフトウェア エミュレーションをターゲットにするアプリケーションをビルドするには、`./reference-files/run1` ディレクトリから次の makefile を実行します。
 
@@ -130,9 +132,9 @@ makefile はこのカーネルをビルドし、ホスト コードからアク�
 
    これで、ホスト ソフトウェアと、ソフトウェア エミュレーションをターゲットにするハードウェア バイナリの両方がビルドされます。この makefile はエミュレーション中に使用するプラットフォーム JSON エミュレーション ファイルも生成します。
 
-## エミュレーションの実行
+### エミュレーションの実行
 
-エミュレーション中は、ホストおよびデバイス イベントを含むアプリケーション タイムライン データが集められます。これはエミュレーションが終了した後に確認できます。アプリケーション タイムライン データの収集は、エミュレーションを実行する前に、`xrt.ini` ファイルで timeline\_trace=true オプションを設定してイネーブルにしておく必要があります。
+エミュレーション中は、ホストおよびデバイス イベントを含むアプリケーション タイムライン データが収集されます。これらのデータは、エミュレーションの終了後に確認できます。アプリケーション タイムライン データの収集は、エミュレーションを実行する前に、`xrt.ini` ファイルで timeline\_trace=true オプションを設定してイネーブルにしておく必要があります。
 
 ```
 [Debug]
@@ -154,84 +156,82 @@ timeline_trace=true
    ./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
    ```
 
-   アプリケーションが問題なく終了したら、\[Console] ウィンドウに次のメッセージが表示されます。
+   アプリケーションが問題なく終了すると、\[Console] ウィンドウに次のメッセージが表示されます。
 
    `TEST WITH ONE KERNEL PASSED`
 
-## アプリケーション タイムラインの確認
+### アプリケーション タイムラインの確認
 
-ソフトウェア エミュレーション中に生成されたアプリケーション タイムラインを確認し、ホスト イベントと実行中のカーネルを可視化します。
+ソフトウェア エミュレーション中に生成されたアプリケーション タイムラインを開き、ホスト イベントとカーネルの実行を表示します。
 
-1. アプリケーション タイムラインを表示するには、`run1` ディレクトリ内から次のコマンドを実行して、Vitis アナライザーを使用します。
+1. アプリケーション タイムラインを表示するには、`run1`  ディレクトリから次のコマンドを実行して Vitis アナライザーを開きます。
 
    ```
-   vitis_analyzer -open ./timeline_trace.csv
+   vitis_analyzer xclbin.run_summary
    ```
 
-   **\[Device]** → **\[Binary Container]** の下に、「Compute Unit krnl\_vadd\_1」という行があります
-
-2. そのタイムラインをたどり、計算ユニット krnl\_vadd\_1 を拡大し、`running` と表示されていることを確認します。  
-![Missing Image:Application Timeline 1](images/mixing-c-rtl-kernels_timeline_one_kernel_vitis.PNG)
+2. 左側のペインで \[Application Timeline] をクリックし、アプリケーション タイムラインを表示します。![Missing Image:Application Timeline 1](images/mixing-c-rtl-kernels_timeline_one_kernel_vitis.PNG)
 
 3. 確認したら、\[Application Timeline] ビューを閉じます。
 
    > **注記:** 計算ユニットは、FPGA 上のカーネルのインスタンシエーションです。
 
-### まとめ
+#### 手順のサマリ
 
 手順 1 では、次を実行しました。すべてのコマンドを `./reference-files/run1` ディレクトリで実行しました。
 
 ```bash
-   # Build the application
-   make all TARGET=sw_emu
+# Build the application
+make all TARGET=sw_emu
 
-   # Set XCL_EMULATION_MODE environment variable for software emulation
-   export XCL_EMULATION_MODE=sw_emu
+# Set XCL_EMULATION_MODE environment variable for software emulation
+export XCL_EMULATION_MODE=sw_emu
 
-   # Run software emulation
-   ./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
+# Run software emulation
+./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
 
-   # Create timeline waveform and view in Vitis
-   vitis_analyzer -open ./timeline_trace.csv
+# View Application Timeline Trace in Vitis Analyzer
+vitis_analyzer xclbin.run_summary
 ```
 
-# C++ および RTL ベースのカーネルを使用したアプリケーションのビルド
+## C++ および RTL ベースのカーネルを使用したアプリケーションのビルド
 
-ここまでで、C++ ベースのカーネルを使用してアプリケーションを問題なくビルドして実行したので、次はアプリケーションをアップデートして RTL ベースのカーネルを含めます。
+C++ ベースのカーネルを使用してアプリケーションをビルドして実行したので、次にアプリケーションをアップデートして RTL ベースのカーネルを含めます。
 
-前のセクションと同様、ビルドして、エミュレーションした後、生成したアプリケーション タイムラインを確認します。カーネルがどのように設計されたかに関係なく、カーネルがビルドされた後、ホスト コードは同様の関数呼び出しを使用してカーネルにアクセスします。
+前のセクションと同様、ビルドしてエミュレーションした後、生成されたアプリケーション タイムラインを確認します。カーネルがどのように設計されたかに関係なく、カーネルがビルドされた後、ホスト コードは同様の関数呼び出しを使用してカーネルにアクセスします。
 
-## RTL ベースのカーネル
+### RTL ベースのカーネル
 
-まず、RTL Kernel ウィザードを使用して RTL ベースのカーネルを作成してパッケージします。デフォルトでは、1 ずつ増加するカーネルが作成されます。このチュートリアルでは、このカーネルを使用します。また、ウィザードでは RTL デザインをカーネル オブジェクト ファイル (XO) にパッケージするために必要な手順が自動化されます。
+まず、RTL Kernel ウィザードを使用して RTL ベースのカーネルを作成してパッケージします。デフォルトでは、1 ずつ増加するカーネルが作成されます。このチュートリアルでは、このカーネルを使用します。ウィザードを使用すると、RTL デザインをカーネル オブジェクト ファイル (XO) にパッケージするために必要な手順が自動化されます。
 
-RTL Kernel ウィザードの手順に従うと、詳細な設定をせずにすばやく RTL ベースのカーネルを生成できます。詳細は、[RTL カーネル入門](../../docs/getting-started-rtl-kernels/README.md)の RTL Kernel ウィザードの記述を参照してください。RTL Kernel ウィザードの詳細は、[アプリケーションの開発](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html)を参照してください。
+RTL Kernel ウィザードの手順に従うと、RTL ベースのカーネルをすばやく生成できます。詳細は、[RTL カーネル入門](../getting-started-rtl-kernels/README.md)の RTL Kernel ウィザードの説明を参照してください。RTL Kernel ウィザードの詳細は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの[アプリケーションの開発](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=lhv1569273988420.html)を参照してください。
 
-### Vitis プロジェクトの作成
+#### Vitis プロジェクトの作成
 
 1. コマンド ラインに `vitis` と入力して Vitis IDE を開きます。
-2. ワークスペース ディレクトリに **./mixing-c-rtl-kernels/workspace** を選択し、**\[Launch]** をクリックします。
-3. **\[Create Application Project]** をクリックし、「`rtl_project`」と入力し、**\[Next]** をクリックします。
-4. **xilinx\_u200\_xdma\_201830\_2** プラットフォームを選択して **\[Next]** をクリックします
-5. \[Templates] から **\[Empty Application]** を選択し、**\[Finish]** をクリックします。これで Vitis IDE プロジェクトが作成されます。
+2. ワークスペース ディレクトリとして **./mixing-c-rtl-kernels/workspace** を選択し、**\[Launch]** をクリックします。
+3. **\[Create Application Project]** をクリックし、`rtl_project` という名前を付けて **\[Next]** をクリックします。
+4. **xilinx\_u200\_xdma\_201830\_2** プラットフォームを選択して **\[Next]** をクリックします。
+5. プロジェクト名を `my_project` として **\[Next]** をクリックします。
+6. \[SW acceleration templates] の下の **\[Empty Application]** を選択し、**\[Finish]** をクリックします。これで Vitis IDE プロジェクトが作成されます。
 
 次に、Vitis IDE 内から RTL ベースのカーネルを生成します。
 
-1. **\[Xilinx]** → **\[RTL Kernel Wizard]** をクリックします。  
+1. \[Xilinx] → **\[RTL Kernel Wizard]** をクリックします。  
 RTL Kernel ウィザードの Welcome ページが開きます。
 2. **\[Next]** をクリックします。
 3. \[General Settings] ページで、デフォルト設定のままにして **\[Next]** をクリックします。
 4. \[Scalars] ページで、スカラー引数の数を `0` に設定し、**\[Next]** をクリックします。
 5. \[Global Memory] ページで、デフォルト設定のままにして **\[Next]** をクリックします。
 6. \[Streaming Interfaces] ページで、デフォルト設定のままにして **\[Next]** をクリックします。  
-\[Summary] ページに、RTL カーネル設定のサマリが示され、呼び出しが C 関数としてどのように見えるかを示す関数プロトタイプが含まれます。
+[Summary] ページに、RTL カーネル設定のサマリと、呼び出しが C 関数としてどのように見えるかを示す関数プロトタイプが示されます。
 7. **\[OK]** をクリックします。
 
 これで RTL カーネル ソース ファイルが作成されました。
 
-### Vivado Design Suite プロジェクト
+#### Vivado Design Suite プロジェクト
 
-この段階では、Vivado Design Suite はデフォルトの `A = A + 1` 関数に該当する RTL コードを生成したプロジェクトが自動的に開きます。  ソース ファイルを確認したり、RTL シミュレーションを実行したりできますが、  このチュートリアルでは、デフォルトの RTL カーネルは変更せずに、オブジェクト ファイル (XO) にパッケージします。
+この時点で、Vivado Design Suite でデフォルトの `A = A + 1` 関数に対応する生成された RTL コードを含むプロジェクトが自動的に開きます。ソース ファイルを確認したり、RTL シミュレーションを実行したりできますが、  このチュートリアルでは、デフォルトの RTL カーネルは変更せずに、オブジェクト ファイル (`.xo`) にパッケージします。
 
 1. Flow Navigator で **\[Generate RTL Kernel]** をクリックします。  
 ![RTL カーネルの生成](images/mixing-c-rtl-kernels_flow_navigator.png)
@@ -239,7 +239,7 @@ RTL Kernel ウィザードの Welcome ページが開きます。
 2. **\[Generate RTL Kernel]** ダイアログ ボックスで、パッケージ オプションに **\[Sources-only]** を選択します。
 
 3. **\[Software Emulation Sources]** には、ソフトウェア エミュレーションで使用する RTL カーネルの C++ モデルを追加できます。  
-C++ モデルは、設計エンジニアがコード記述する必要があります。通常 C++ モデルはなく、デザインのテストにはハードウェア エミュレーションが使用されます。
+C++ モデルは、設計エンジニアがコード記述する必要があります。通常は C++ モデルはなく、デザインのテストにはハードウェア エミュレーションが使用されます。
 
    RTL Kernel ウィザードでは vadd デザインの C++ モデルが作成されるので、このファイルを追加する手順も示します。
 
@@ -259,13 +259,13 @@ C++ モデルは、設計エンジニアがコード記述する必要があり�
 
 10. Vivado IDE を終了します。
 
-ここまでで、RTL カーネルを次のディレクトリの `vitis_kernel_wizard_0.xo` オブジェクト ファイルにパッケージしました。
+ここまでで、RTL カーネルを次のディレクトリの `rtl_kernel_wizard_0.xo` オブジェクト ファイルにパッケージしました。
 
 ```
-./mixing-c-rtl-kernels/workspace/rtl_project/src/vitis_rtl_kernel/rtl_kernel_wizard_0
+./mixing-c-rtl-kernels/workspace/my_project/src/vitis_rtl_kernel/rtl_kernel_wizard_0
 ```
 
-### ホスト コードのアップデート
+#### ホスト コードのアップデート
 
 RTL ベース カーネルにアクセスするには、ホスト コードをアップデートする必要があります。アップデートは、次のディレクトリの `host_step2.cpp` ファイルで実行しました。
 
@@ -273,7 +273,7 @@ RTL ベース カーネルにアクセスするには、ホスト コードを�
 ./reference-files/src/host/
 ```
 
-アップデートには、次に簡単に示した追加の OpenCL API 呼び出しが含まれます。この追加の OpenCL 呼び出しは、C++ ベース カーネルに使用されるものと同じで、引数が RTL ベース カーネル用に変更されているだけです。
+アップデートには、追加の OpenCL API 呼び出しが含まれます。この追加の OpenCL 呼び出しは、C++ ベース カーネルに使用されるものと同じですが、引数が RTL ベース カーネル用に変更されています。
 
 ```
 cl::Program::Binaries bins;
@@ -301,13 +301,13 @@ krnl_const_add.setArg(0,buffer_result);
 q.enqueueTask(krnl_const_add);
 ```
 
-### C++ および RTL ベースのカーネルを使用したアプリケーションのビルドおよびエミュレーション
+#### C++ および RTL ベースのカーネルを使用したアプリケーションのビルドおよびエミュレーション
 
-RTL ベース カーネルを追加し、ホスト コードをアップデートした状態で、`run2` ディレクトリのアップデートした makefile を使用して、ハードウェア エミュレーションをターゲットにしたアプリケーションをビルドします。makefile は、CPP と RTL ベースのカーネルをハードウェア プラットフォーム ファイル (xclbin) の両方を追加するようにアップデートされています。
+RTL ベース カーネルを追加し、ホスト コードをアップデートした状態で、`run2` ディレクトリのアップデートした makefile を使用して、ハードウェア エミュレーションをターゲットにしたアプリケーションをビルドします。makefile は、CPP と RTL ベースのカーネルをハードウェア プラットフォーム ファイル (`xclbin`) の両方を追加するようにアップデートされています。
 
 1. `./mixing-c-rtl-kernels/reference-files/run2` ディレクトリに移動します。
 
-2. ハードウェア エミュレーションをターゲットにするアプリケーションをビルドするには、`./reference-files/run2` ディレクトリから次の makefile を実行します。
+2. `./reference-files/run2` ディレクトリから次の makefile を実行し、ハードウェア エミュレーションをターゲットにするアプリケーションをビルドします。
 
    ```bash
    make all TARGET=hw_emu
@@ -330,44 +330,41 @@ RTL ベース カーネルを追加し、ホスト コードをアップデー�
 5. Vitis アナライザーでタイムライン トレース レポートを表示します。
 
    ```
-   vitis_analyzer -open ./timeline_trace.csv
+   vitis_analyzer krnl_vadd.hw_emu.xilinx_u200_xdma_201830_2.xclbin.run_summary
    ```
 
-6. **\[Device]** → **\[Binary Container]** の下のタイムラインをたどり、拡大表示します。krnl\_vadd\_1 および sdx\_kernel\_wizard\_0\_1 の両方の計算ユニットが実行されていることが示されます。  
+6. **\[Device]** → **\[Binary Container]** の下のタイムラインをたどって拡大表示します。krnl_vadd_1 と vitis_kernel_wizard_0_1 の両方の計算ユニットが実行されていることがわかります。  
 ![アプリケーション タイムライン 2](images/mixing-c-rtl-kernels_timeline_two_kernels_vitis.PNG)
 
 7. 確認したら、\[Application Timeline] を閉じます。
 
 Vitis コア開発キット アプリケーションは、開発した言語に関係なく、どの組み合わせのカーネルでも使用できます。
 
-CPP エミュレーション ファイルが RTL カーネルと一緒にパッケージされたので (RTL Kernel ウィザードを使用して)、ソフトウェア エミュレーションも実行できます。  ソフトウェア エミュレーションは、次の手順で実行できます。
+RTL Kernel ウィザードを使用することにより CPP エミュレーション ファイルが RTL カーネルと一緒にパッケージされたので、ソフトウェア エミュレーションも実行できます。ソフトウェア エミュレーションは、次の手順で実行できます。
 
 ```bash
-   # Build the application
-   make all TARGET=sw_emu
+# Build the application
+make all TARGET=sw_emu
 
-   # Set XCL_EMULATION_MODE environment variable for software emulation
-   export XCL_EMULATION_MODE=sw_emu
+# Set XCL_EMULATION_MODE environment variable for software emulation
+export XCL_EMULATION_MODE=sw_emu
 
-   # Run software emulation
-   ./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
+# Run software emulation
+./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
 
-   # Create timeline waveform and view in Vitis
-   vitis_analyzer -open ./timeline_trace.csv
+# Open Vitis analyzer and view the timeline waveform
+vitis_analyzer xclbin.run_summary
 ```
 
-## 次のステップ
+## 次の手順
 
-- アプリケーションをビルドし、エミュレーションを実行し、プロファイルおよびトレース レポートを生成する方法を理解するため、[アクセラレーションされたアプリケーションをビルドして実行するための基本的な概念](../../docs/Pathway3/README.md)チュートリアルを参照してください。
+- アプリケーションをビルドし、エミュレーションを実行し、プロファイルおよびトレース レポートを生成する方法を理解するため、[アクセラレーションされたアプリケーションをビルドして実行するための基本的な概念](../Pathway3/README.md)チュートリアルを参照してください。
 
 - RTL Kernel ウィザードの詳細は、次を参照してください。
 
-  - [RTL カーネル入門](../../docs/getting-started-rtl-kernels/README.md)チュートリアル
-  - [アプリケーションの開発](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html)の[RTL Kernel ウィザード](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk851038901.html#ouz1504034324041)セクション</br>
+  - [RTL カーネル入門](../getting-started-rtl-kernels/README.md)チュートリアル。
+  - 『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの [RTL Kernel ウィザード](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=devrtlkernel.html;a=ouz1504034324041)</br>
 
 <hr/>
-<p align= center><b><a href="../../README.md">メイン ページに戻る</a></b></p>
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
-
-この資料は表記のバージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。
-
+<p align="center" class="sphinxhide"><b><a href="/README.md">メイン ページに戻る</a></b></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

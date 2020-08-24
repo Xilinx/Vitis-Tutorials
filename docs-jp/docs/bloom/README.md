@@ -1,59 +1,70 @@
-<table>
+﻿
+
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ アプリケーション アクセラレーション開発フローのチュートリアル</h1><a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">SDAccel™ 開発環境 2019.1 チュートリアルを参照</a></td>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">2019.2 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
  </tr>
  <tr>
- <td align="center"><h1>アクセラレーション FPGA アプリケーション: ブルーム フィルターの例</td>
+ <td>
+ </td>
  </tr>
 </table>
 
-# 概要
+# アクセラレーション FPGA アプリケーションの最適化: ブルーム フィルターの例
 
-FPGA でのアプリケーションの高速化手法には 2 段階あり、1 つがアプリケーションの設計、もう 1 つがユーザーのパフォーマンス目標を満たすためのアクセラレータの開発です。
+## 概要
 
-* 第 1 段階では、どのソフトウェア ファンクションを FPGA カーネルにマップするか、どれくらい並列処理が必要か、その並列処理をどう実行するかなど、開発者がアプリケーションのアーキテクチャに関する重要事項を決定します。
-* 第 2 段階では、パフォーマンス目標を達成できるカーネル アーキテクチャを設計するため、ソース コードを変更し、pragma を適用して、カーネルをインプリメントします。
+FPGA 上でアプリケーションをアクセラレーションする手法は、複数の段階で構成されます。
 
-このチュートリアルは、ハードウェア アクセラレーションのポテンシャルを確認するため、ベースライン アプリケーションおよびプロファイルを使用して始めます。チュートリアル アプリケーションではまず、ブルーム フィルターを使用した検索プロファイルに基づいて、ユーザーの関心にぴったりと一致するドキュメントを探すため、ドキュメントの入力ストリームを検索します。
+- **アプリケーションの設計**: どのソフトウェア関数を FPGA カーネルにマップするか、どれくらい並列処理が必要か、どのように適用するかなど、アプリケーションのアーキテクチャに関する重要事項を決定します。
+- **パフォーマンス目標を達成するためのアクセラレータの開発**: パフォーマンス目標を達成できるカーネル アーキテクチャを作成するため、ソース コードを変更し、プラグマを適用して、カーネルをインプリメントします。
+- **ホスト コードの最適化**: アプリケーションのアクセス パターン、データの動き、CPU および FPGA のアイドル時間を調べ、パフォーマンス目標を満たすためにコードをアップデートします。
 
-一般的に、このアプリケーションにはデータ アナリティクスにおけるユース ケースがあり、たとえば、メールおよびテキスト ファイルの構造化されていないデータを検索し、特定ユーザーに関連したドキュメントを特定し、適切な通知を送信します。
+このチュートリアルでは、ベースライン アプリケーションから開始し、アプリケーションをプロファイリングしてハードウェア アクセラレーションの可能性を調べます。このチュートリアルのアプリケーションでは、検索プロファイルに基づいてユーザーの関心に一致するドキュメントを見つけるため、ドキュメントの入力ストリームを検索します。
 
-このチュートリアルでは、次の最適化テクニックを利用して作業します。
+ブルーム フィルター アプリケーションは、構造化されていない電子メールやテキスト ファイルのデータを検索し、特定のユーザーに関連したドキュメントを検索して通知を送信するなど、データ分析で使用されます。
 
-* メモリ転送最適化
-* データフローおよびストリーム
-* 複数の演算ユニット (CU) およびアウト オブ オーダー (データ部と演算部の重複)
-* 複数の DDR バンクおよび PLRAM
+## 開始前の確認事項
 
-# 始める前に
+> **ヒント**: このチュートリアルには、約 2 時間かかります。
 
-このチュートリアルの演習では次のものを使用します。
+このチュートリアルでは、次を使用します。
 
 * BASH Linux シェル コマンド。
-* 2019.2 Vitis コア開発キット リリースおよび *xilinx\_u200\_xdma\_201830\_2* プラットフォーム。必要であれば、ほかのバージョンおよびプラットフォームに簡単に移行できます。
-* `Makefile` (ステップや変数といった詳細情報が含まれています)。`Makefile` の構造および内容については、[Makefile について](./HowToRunTutorial.md)を参照してください。
+* 2020.1 Vitis コア開発キット リリースおよび xilinx\_u200\_xdma\_201830\_2 プラットフォーム。必要であれば、ほかのバージョンおよびプラットフォームを使用するように変更することもできます。
+
+このチュートリアルでは、設計したアクセラレータを FPGA 上で実行するので、ザイリンクス Alveo™ U200 データセンター アクセラレータ カードがこのチュートリアルを実行するために設定されていることが必要です。アクセラレータを実行するのに必要な複数の `xclbin` ファイルを生成するには 6 ～ 7 時間かかる可能性があるので、U200 カード用に生成済みの `xclbin` ファイルが提供されています。これらの生成済みファイルを使用するには、ハードウェア カーネルのビルド時またはハードウェアでのアクセラレータの実行時に、`SOLUTION=1` 引数を追加する必要があります。
 
 > **重要:**
 >
-> * サンプルを実行する前に、[インストール](https://japan.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html)で説明されているとおりに、Vitis コア開発キットがインストールされていることを確認してください。
-> * ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、『Alveo データセンター アクセラレータ カード入門』 ([UG1301](https://japan.xilinx.com/support/documentation/boards_and_kits/accelerator-cards/j_ug1301-getting-started-guide-alveo-accelerator-cards.pdf)) で説明されている手順に従って、このカードおよびソフトウェアで説明されている手順に従って、このカードおよびソフトウェア ドライバーが正しくインストールされていることを確認してください。
+> * 例を実行する前に、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの[インストール](https://japan.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html)の手順に従って、Vitis コア開発キットをインストールしてください。
+> * Alveo カードでアプリケーションを実行する場合は、[Alveo ポートフォリオ](https://japan.xilinx.com/products/boards-and-kits/alveo.html) ページの手順に従って、カードとソフトウェア ドライバーを正しくインストールしてください。
 
-## チュートリアル リファレンス ファイルへのアクセス
+### チュートリアル リファレンス ファイルの入手
 
-1. リファレンス ファイルにアクセスするには、ターミナルに「`git clone http://github.com/Xilinx/Vitis-Tutorials`」と入力します。
-2. `bloom` ディレクトリを参照してから `design` ディレクトリにアクセスします。
+1. チュートリアルの内容を入手するには、ターミナルに `git clone http://github.com/Xilinx/Vitis-Tutorials` と入力します。
+2. `bloom` ディレクトリに移動します。
+   * `makefile` ディレクトリの `Makefile` に、この演習で使用するコマンドが説明されています。異なるプラットフォームをターゲットとする場合は、`PLATFORM` 変数を使用します。
+   * `cpu_src` には、変更前のソース コードが含まれます。
+   * `reference_file` には、パフォーマンスを向上するために変更されたカーネルおよびホストに関連するファイルが含まれます。
+   * `xclbin_save` には、`make run` コマンドで `SOLUTION=1` を設定してハードウェア上で実行する際に使用可能な `xclbin` ファイルが含まれます。
 
-## チュートリアルの概要
+### チュートリアルの概要
 
-1. [元のアプリケーションの評価](original.md): この演習では、元の C++ ベースのアプリケーションで、ブルーム フィルターを使用したドキュメントのスコアを計算します。また、アクセラレーション アプリケーションの現実的なパフォーマンス目標の設定についても説明します。
-2. [C アプリケーションからの Vitis コア開発キット アプリケーションの作成](baseline_fpga.md): OpenCL™ API を使用してホストにより呼び出されるホスト プログラムおよびハードウェア カーネルに、元の C コードを変換します。
-3. [メモリ転送の最適化](localbuf.md): メモリ アクセスを向上させるため、ハードウェア カーネルを最適化する方法を学びます。FPGA 帯域幅を効率よく使用するためのローカル キャッシュの使用方法を学びます。
-4. [データフローを使用した最適化](dataflow.md): カーネルのデータパスを改善するため、データフローを適用してストリーミングして、カーネルの演算効率を改善します。
-5. [アウト オブ オーダー キューおよび複数の演算ユニットの使用](multicu.md): 複数のカーネルを合成してアウト オブ オーダー タスク実行を可能にし、アクセラレータでの並列処理を増やすため、ホスト プログラムの OpenCL API コールを変更します。
-6. [複数の DDR バンクを使用した最適化](multiddr.md): DDR バンクへのカーネル コネクティビティのために makefile を変更し、また、異なる DDR バンクに入力ドキュメントを正しく割り当てるためにホスト プログラムを変更します。
-7. [ハードウェアでのアクセラレータの実行](runningonhardware.md): ここまでのステップはすべてハードウェア エミュレーション モードで実行されています。ここではアクセラレーション ハードウェアでアプリケーションを実行します。</br>
+* [元のアプリケーションの概要](1_overview.md)
+* [アクセラレーション パフォーマンスの体験](2_experience-acceleration.md)
+* [デバイス アクセラレーション アプリケーションの構築](3_architect-the-application.md)
+* [カーネルのインプリメント](4_implement-kernel.md)
+* [ホストとカーネル間のデータの動きを解析](5_data-movement.md)
+* [複数 DDR バンクの使用](6_using-multiple-ddr.md)
 
+<!--
+1. [Overview of the Original Application](1_overview.md): Provides a brief overview of the Bloom filter application with some examples of how this application is used in real-world scenarios.
+2. [Experience Acceleration Performance](2_experience-acceleration.md): Profile the Bloom filter application and evaluate which sections are best suited for FPGA acceleration. You will also experience the acceleration potential by running the application first as a software-only version and then as an optimized FPGA-accelerated version.
+3. [Architecting the Application](3_architect-the-application.md): In this lab, the original C++ based application computes scores for the documents using a Bloom filter. This lab also discusses setting realistic performance goals for an accelerated application. At the end of this lab, you will have a specification of the kernel based on the [Methodology for Accelerating Applications with the Vitis Software Platform](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=methodologyacceleratingapplications.html#wgb1568690490380).
+4. [Implementing the Kernel](4_implement-kernel.md): Implement the kernel based on the specification from the previous lab, and run the compute part of the algorithm on the FPGA.
+5. [Analyze Data Movement Between Host and Kernel](5_data-movement.md): Analyze the performance results of the kernel you generated. Working with a predefined FPGA accelerator, you learn how to optimize data movements between the host and FPGA, how to efficiently invoke the FPGA kernel, and how to overlap computation on the CPU and FPGA to maximize application performance.
+6. [Using Multiple DDR Banks](6_using-multiple-ddr): Configure multiple DDR banks to improve the kernel performance.
+-->
 <hr/>
-<p align= center><b><a href="../../README.md">メイン ページに戻る</a> &mdash; <a href="../../docs/vitis-getting-started/README.md">入門ガイドの最初に戻る</a></b></p></br><p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
-
-この資料は表記のバージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。
+<p align= center class="sphinxhide"><b><a href="/README.md">メイン ページに戻る</a> &mdash; <a href="/docs/vitis-getting-started/">入門コースの初めに戻る</a></b></p></br><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

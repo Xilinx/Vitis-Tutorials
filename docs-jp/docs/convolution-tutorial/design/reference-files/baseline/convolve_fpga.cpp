@@ -13,19 +13,9 @@ void convolve_fpga(const RGBPixel* inFrame, RGBPixel* outFrame,
                   int img_width, int img_height)
 {
 
-#pragma HLS INTERFACE s_axilite port=return bundle=control
-#pragma HLS INTERFACE s_axilite port=inFrame bundle=control
-#pragma HLS INTERFACE s_axilite port=outFrame bundle=control
-#pragma HLS INTERFACE s_axilite port=coefficient bundle=control
-#pragma HLS INTERFACE s_axilite port=coefficient_size bundle=control
-#pragma HLS INTERFACE s_axilite port=img_width bundle=control
-#pragma HLS INTERFACE s_axilite port=img_height bundle=control
 #pragma HLS INTERFACE m_axi port=inFrame offset=slave bundle=gmem1
 #pragma HLS INTERFACE m_axi port=outFrame offset=slave bundle=gmem1
 #pragma HLS INTERFACE m_axi port=coefficient offset=slave bundle=gmem2
-
-#pragma HLS data_pack variable=inFrame
-#pragma HLS data_pack variable=outFrame
 
     int center = coefficient_size / 2;
 	

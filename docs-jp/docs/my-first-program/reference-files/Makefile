@@ -4,6 +4,7 @@ help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make all TARGET=<sw_emu/hw_emu/hw> DEVICE=<FPGA platform> VER=<host_cpp/host_c>"
 	$(ECHO) "      Command to pick the specific files and generates the design for specified Target and Device."
+	$(ECHO) "      e.g. make DEVICE=xilinx_u200_xdma_201830_2 all"
 	$(ECHO) ""
 	$(ECHO) "  make clean "
 	$(ECHO) "      Command to remove the generated non-hardware files."
@@ -164,7 +165,7 @@ endif
 
 #Generates profile summary report
 ifeq ($(PROFILE), yes)
-LDCLFLAGS += --profile_kernel data:all:all:all:all
-LDCFLAGS += --profile_kernel  stall:all:all:all:all
-LDCFALGS += --profile_kernel exec:all:all:all:all
+LDCLFLAGS += --profile_kernel data:all:all:all
+LDCFLAGS += --profile_kernel  stall:all:all:all
+LDCFLAGS += --profile_kernel exec:all:all:all
 endif

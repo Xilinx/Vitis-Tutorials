@@ -4,7 +4,7 @@
 
 #include "ap_fixed.h"
 #include <hls_stream.h>
-
+#include <iostream>
 #include <cmath>
 #include <cstring>
 
@@ -20,8 +20,10 @@ extern "C"
   void read_dataflow(hls::stream<RGBPixel>& read_stream, const RGBPixel *in,
                      int img_width, int elements, int half) {
   int pixel = 0;
+  RGBPixel a;
   while(elements--) {
-        read_stream <<  in[pixel++];
+        a = in[pixel++];
+         read_stream << a;
   }
   int padding = img_width * half + COEFFICIENT_SIZE;
   while(padding--) {
@@ -32,7 +34,7 @@ extern "C"
   void compute_dataflow(hls::stream<RGBPixel>& write_stream, hls::stream<RGBPixel>& read_stream,
                         const float* coefficient, int img_width, int elements, int center) {
       static RGBPixel window_mem[COEFFICIENT_SIZE][MAX_WIDTH];
-#pragma HLS data_pack variable=window_mem
+#pragma HLS AGGREGATE variable=window_mem
 #pragma HLS array_partition variable=window_mem complete dim=1
       static fixed coef[COEFFICIENT_SIZE * COEFFICIENT_SIZE];
 #pragma HLS array_partition variable=coef complete
@@ -98,28 +100,20 @@ extern "C"
   void write_dataflow(RGBPixel* outFrame, hls::stream<RGBPixel>& write_stream,
                       int elements) {
     int pixel = 0;
+    RGBPixel a;
     while(elements--) {
-        write_stream >> outFrame[pixel++];
-    }
+        write_stream >> a; 
+        outFrame[pixel++] = a;
+   }
   }
 
   void convolve_fpga(const RGBPixel* inFrame, RGBPixel* outFrame,
                      const float* coefficient, int coefficient_size,
                      int img_width, int img_height)
   {
-#pragma HLS INTERFACE s_axilite port=return bundle=control
-#pragma HLS INTERFACE s_axilite port=inFrame bundle=control
-#pragma HLS INTERFACE s_axilite port=outFrame bundle=control
-#pragma HLS INTERFACE s_axilite port=img_height bundle=control
-#pragma HLS INTERFACE s_axilite port=img_width bundle=control
-#pragma HLS INTERFACE s_axilite port=coefficient bundle=control
-#pragma HLS INTERFACE s_axilite port=coefficient_size bundle=control
 #pragma HLS INTERFACE m_axi port=inFrame bundle=gmem1
 #pragma HLS INTERFACE m_axi port=outFrame bundle=gmem2
 #pragma HLS INTERFACE m_axi port=coefficient bundle=gmem3
-#pragma HLS data_pack variable=inFrame
-#pragma HLS data_pack variable=outFrame
-
     int half = COEFFICIENT_SIZE / 2;
 
     hls::stream<RGBPixel> read_stream("read");

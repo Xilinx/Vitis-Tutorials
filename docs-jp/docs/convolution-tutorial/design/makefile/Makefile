@@ -74,6 +74,12 @@ else
 CU_NUM := 1
 endif
 
+ifeq ($(STEP), qdma)
+CU_NUM := 4
+endif
+
+
+
 ## Host Application files repository
 
 HOST_SRC_CPP := $(SRC_REPO)/common.cpp
@@ -94,9 +100,14 @@ HOST_SRC_H += $(SRC_REPO)/constants.h
 KERNEL_SRC_CPP := $(SRC_REPO)/convolve_fpga.cpp
 KERNEL_SRC_H := $(SRC_REPO)/constants.h
 KERNEL_SRC_H += $(SRC_REPO)/kernels.h
-KERNEL_SRC_H += $(SRC_REPO)/types.h
+#KERNEL_SRC_H += $(SRC_REPO)/kernel_types.h
 KERNEL_SRC_H_DIR := $(SRC_REPO)
 
+ifeq ($(STEP), qdma)
+KERNEL_SRC_H += $(SRC_REPO)/kernel_types.h
+else 
+KERNEL_SRC_H += $(SRC_REPO)/types.h
+endif
 
 # Host Compiler Global Settings and Include Libraries
 
@@ -110,7 +121,11 @@ CXXFLAGS += -O0 -g -Wall -fmessage-length=0 -std=c++11
 
 ## The following will enable the available solution code for each step
 ifeq ($(SOLUTION), 1)
-CXXFLAGS += -DBASELINE_ADD -DHOST_CODE_OPT -DLOCAL_BUF_OPT -DDF_OPT -DFP_OPT
+ifeq ($(STEP), qdma)
+CXXFLAGS += -s -DBASELINE_ADD -DKERNEL_HEADERS -DLOCAL_BUF_OPT -DDF_OPT -DFP_OPT
+else
+CXXFLAGS += -s -DBASELINE_ADD -DHOST_CODE_OPT -DLOCAL_BUF_OPT -DDF_OPT -DFP_OPT
+endif
 endif
 
 
@@ -120,7 +135,7 @@ ifeq ($(NUM_FRAMES), 1)
 ifeq ($(STEP), multicu)
 RUN_OPTS = --scale 512 40 --nframes 1
 GOLDEN_OUT = golden_out_small_40.mp4
-else
+else 
 RUN_OPTS = --scale 512 10 --nframes 1
 GOLDEN_OUT = golden_out_small.mp4
 endif
@@ -128,25 +143,39 @@ else
 GOLDEN_OUT = golden_out_full.mp4
 endif
 
+ifeq ($(NUM_FRAMES), 1)
+ifeq ($(STEP), qdma)
+RUN_OPTS = --scale 512 40 --nframes 1
+GOLDEN_OUT = golden_out_small_40.mp4
+endif
+else 
+GOLDEN_OUT = golden_out_full.mp4
+endif
+
 CXXLDFLAGS := -L$(XILINX_XRT)/lib/
 CXXLDFLAGS += -lxilinxopencl -lpthread -lrt
-
-
 ## Kernel Compiler and Linker Flags
 
 VPPFLAGS := -t $(TARGET)
 VPPFLAGS += --config design.cfg
+VPPFLAGS += --config sample_compile.ini
 VPPFLAGS += -I$(KERNEL_SRC_H_DIR)
 VPPFLAGS += --temp_dir $(BUILD_DIR)
 VPPFLAGS += --log_dir $(BUILD_DIR)
 
+
+
 ifeq ($(SOLUTION), 1)
-VPPFLAGS += -DBASELINE_ADD -DHOST_CODE_OPT -DLOCAL_BUF_OPT -DDF_OPT -DFP_OPT
 endif
 
-
-
-
+ifeq ($(SOLUTION), 1)
+ifeq ($(STEP), qdma)
+VPPFLAGS += --profile_kernel stall:all:all:all:all --profile_kernel exec:all:all:all:all -s -DBASELINE_ADD -DLOCAL_BUF_OPT -DDF_OPT -DFP_OPT -DKERNEL_HEADERS
+#-xp prop:solution.hls_pre_tcl=./script.tcl
+else 
+VPPFLAGS += -s -DBASELINE_ADD -DHOST_CODE_OPT -DLOCAL_BUF_OPT -DDF_OPT -DFP_OPT
+endif
+endif
 ## Host Executable File Generation
 
 $(BUILD_DIR)/$(HOST_EXE): $(HOST_SRC_CPP) $(HOST_SRC_H)
@@ -162,7 +191,7 @@ $(BUILD_DIR)/$(XO_NAME).xo: $(KERNEL_SRC_CPP) $(KERNEL_SRC_H)
 
 $(BUILD_DIR)/$(XCLBIN): $(BUILD_DIR)/$(XO_NAME).xo
 	mkdir -p $(BUILD_DIR)
-	v++ $(VPPFLAGS) -l -o $@ $(BUILD_DIR)/$(XO_NAME).xo
+	v++ $(VPPFLAGS) -l -g -o $@ $(BUILD_DIR)/$(XO_NAME).xo
 
 ## Emulation Files Generation
 
