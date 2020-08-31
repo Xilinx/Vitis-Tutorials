@@ -70,7 +70,7 @@ export LEARNRATE=0.001
 
 # target board
 export BOARD=ZCU104
-export ARCH=/opt/vitis_ai/compiler/arch/dpuv2/${BOARD}/${BOARD}.json
+export ARCH=/opt/vitis_ai/compiler/arch/DPUCZDX8G/${BOARD}/arch.json
 
 
 # DPU mode - best performance with DPU_MODE = normal
