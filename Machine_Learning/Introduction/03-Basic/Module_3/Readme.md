@@ -1,41 +1,30 @@
-3.3 Setting up board environment & Demo run
+3.3 Setting cross-compilation environment
 -----------------------
-Before we get our hands on the board, there are some dependencies that need to be prepared in advance. In the previous module_1, user has downloaded the board environment with DPU hardware integrated. In this module, We need to add some runtime level software dependencies.
-* The corresponding script is provided in the Module_3 repository. Copy the prerequisite files and compiled project to the evaluation board.
-    ```
-    $cd [DOWNLOAD_PATH]/Board_Dependency
-    $./get_dependency_zcu104.sh
-    $cp [SDK_INSTALLATION_PATH]/glog-0.4.0/build_for_petalinux/glog-0.4.0-Linux.tar.gz .
-    $cd ..
-    $scp -r Board_Dependency root@[IP_OF_BOARD]:~/
-    $scp -r ~/Vitis-AI/Vitis-AI-Library/overview root@[IP_OF_BOARD]:~/
-    $ssh root@[IP_OF_THE_BOARD]
-    ```
- * Now we can operate on the board through an ethernet connection.
-   * Install the Vitis AI related dependencies
+User could use either Windows or Linux OS to download the board image and burn it to SD card. But this module could only be done on Linux X86 server.
+* Download the [sdk-2020.1.0.0.sh](https://www.xilinx.com/bin/public/openDownload?filename=sdk-2020.1.0.0.sh) script on the host. The ```sdk``` file is generated through ```petalinux-build --sdk``` command, and applied to setup the sysroot headers, libs and include files for cross compilation of applications running on the embedded platforms.
+* Run the script to install the cross-compilation system dependency and sysroot.
    ```
-   root@xilinx-zcu104-2019_2:~# cd Board_Dependency
-   root@xilinx-zcu104-2019_2:~/Board_Dependency# ./install_dependency_zcu104.sh
+   $./sdk-2020.1.0.0.sh
    ```
-   * Run the demo
+  Follow the prompts to install, note that the read-write permissions is required for the installation path. The installation will take around 10mins. By default it will be installed on the directory of ``~/petalinux_sdk``, which user could modify to other location if prefer to.
+* When the installation completes, follow the prompts and execute the following command to install the embedded ARM cross-compilation environment on X86 server.
    ```
-   root@xilinx-zcu104-2019_2:~/Board_Dependency# cd ../overview/samples/refinedet
-   root@xilinx-zcu104-2019_2:~/overview/samples/refinedet# ./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list
+   $source [SDK_INSTALLATION_PATH]/environment-setup-aarch64-xilinx-linux
    ```
-   <p align="left">
-   <img src="images/demo_single_thread.png">
-   </p>
-   Note that the user could also use parameters to define the number of threads and running time as below. For more detailed instruction, please refer to the Readme file within the refinedet folder.
+  Note that the command needs to be re-executed each time when a new terminal interface is opened.
+* Now we need to add some AI related libs and includes to the existing sysroot by simply download the Vitis AI denpendencies [vitis_ai_2020.1-r1.2.0.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_2020.1-r1.2.0.tar.gz) and extract it to the sysroot.
+   ```
+   $tar -xzvf vitis_ai_2020.1-r1.2.0.tar.gz -C ~/petalinux_sdk/sysroots/aarch64-xilinx-linux
+   ```
 
-   ```
-   root@xilinx-zcu104-2019_2:~/overview/samples/refinedet# ./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list -t 8 -s 60
-   -t: <num_of_threads>
-   -s: <num_of_seconds>
-   ```
-   <p align="left">
-   <img src="images/demo_multi_threads.png">
-   </p>
-
-   Please follow the instruction on [Module 4](/Machine_Learning/Getting_Started/03-Basic/Module_4) for next step.
+* The host setup is completed and we could take refinedet as an example to do the cross-compile in the AI Library.
+    ```
+    $cd ~/Vitis-AI/Vitis-AI-Library/overview/samples/refinedet
+    $bash -x build.sh
+    ```
+  You will find four execuable files generated after compilation. Please follow the instruction on [Module 4](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_4) for next step.
+  <p align="left">
+  <img width="720" height="158" src="images/cross-compile.png">
+  </p>
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
