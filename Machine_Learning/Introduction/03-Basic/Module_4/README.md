@@ -3,7 +3,7 @@
 
 This module introduces the Vitis AI TensorFlow design process and illustrates how to go from a Python description of the network model to running a compiled model on the Xilinx&reg; DPU accelerator.
 
-The application code in this example design is written in Python and uses the Unified APIs and VART runtime that were introduced in Vitis&trade; AI v1.1.
+The application code in this example design is written in Python and uses the Unified APIs and VART runtime that were introduced in Vitis&trade; AI v1.2.
 
 We will run the following steps:
 
@@ -127,7 +127,7 @@ The host machine has several requirements that need to be met before we begin. Y
 
   + Optionally, a GPU card suitable for training (a trained checkpoint is provided for those who wish to skip the training step).
 
-  + The environment is supposed to be ready at this step. If not, please follow the setup instructions provided in [Module_2](/Machine_Learning/Getting_Started/03-Basic/Module_2) and in [Module_3](/Machine_Learning/Getting_Started/03-Basic/Module_3).
+  + The environment is supposed to be ready at this step. If not, please follow the setup instructions provided in [Module_2](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_2) and in [Module_3](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_3).
 
 ### Downloading the Design and Setting up the Workspace
 
@@ -135,12 +135,12 @@ This repository should be downloaded to the host machine as a zip file and then 
 
 Open a linux terminal, cd into the repository folder then into the 'files' folder. Start the Vitis AI docker - if you have a GPU in the host system, it is recommended that you use the GPU version of the docker container. If you intend running the model training, you will definitely need the GPU docker container. If you are going to skip the training phase, then the CPU docker container will be sufficient.
 
-As part of the [Setting up the host](https://www.xilinx.com/html_docs/vitis_ai/1_1/jck1570690043273.html) procedure, you will have cloned or downloaded The Vitis AI repository to the host machine. In the Vitis AI folder of that repo there is a shell script called docker_run.sh that will launch the chosen docker container. Open a terminal on the host machine and cd into the enter the following commands (note: start *either* the GPU or the CPU docker container, but not both):
+As part of the [Setting up the host](https://www.xilinx.com/html_docs/vitis_ai/1_2/jck1570690043273.html) procedure, you will have cloned or downloaded The Vitis AI repository to the host machine. In the Vitis AI folder of that repo there is a shell script called docker_run.sh that will launch the chosen docker container. Open a terminal on the host machine and cd into the enter the following commands (note: start *either* the GPU or the CPU docker container, but not both):
 
 
 ```shell
 # navigate to densenet tutorial folder
-cd <path_to_densenet_design>/files
+cd <path_to_densenet_design>/DenseNetX
 
 # to start GPU docker
 <path_to_Vitis-AI>/docker_run.sh xilinx/vitis-ai-gpu:latest
@@ -164,7 +164,7 @@ __      ___ _   _                   _____
 ==========================================
 
 Docker Image Version: latest
-Build Date: Wed Apr 15 11:01:32 CEST 2020
+Build Date: Thu Aug 20 03:35:38 MDT 2020
 VAI_ROOT=/opt/vitis_ai
 For TensorFlow Workflows do:
   conda activate vitis-ai-tensorflow
@@ -172,6 +172,14 @@ For Caffe Workflows do:
   conda activate vitis-ai-caffe
 For Neptune Workflows do:
   conda activate vitis-ai-neptune
+For pytorch Workflows do:
+  conda activate vitis-ai-pytorch
+For optimizer_darknet Workflows do:
+  conda activate vitis-ai-optimizer_darknet
+For optimizer_caffe Workflows do:
+  conda activate vitis-ai-optimizer_caffe
+For optimizer_tensorflow Workflows do:
+  conda activate vitis-ai-optimizer_tensorflow
 user@SERVER_NAME:/workspace$
 ```
 
@@ -301,7 +309,7 @@ The DPU IP is a soft-core IP whose only function is to accelerate the execution 
 
 The Vitis AI compiler will convert, and optimize where possible, the quantized deployment model to a set of micro-instructions and then output them in an ELF file.
 
-The generated instructions are specific to the particular configuration of the DPU. The DPU's parameters are contained in a .dcf file which needs to be created for each target board - see the [Vitis AI User Guide](https://www.xilinx.com/html_docs/vitis_ai/1_0/zkj1576857115470.html) for details.
+The generated instructions are specific to the particular configuration of the DPU. The DPU's parameters are contained in a .dcf file which needs to be created for each target board - see the [Vitis AI User Guide](https://www.xilinx.com/html_docs/vitis_ai/1_2/zkj1576857115470.html) for details.
 
 In the specific case of the ZCU104 and the prepared SDcard image file that we used back in the 'Preparing the host machine and target board' section, the .dcf file is included in the docker container and its location is passed to the vai_c_tensorflow command via the --arch argument.
 
@@ -342,7 +350,7 @@ With the target folder copied to the SD Card and the ZCU104 booted, you can issu
 The application can be started by navigating into the target folder and then issuing the command ``python3 app_mt.py``. The application will start and after a few seconds will show the throughput in frames/sec.
 
 ```shell
-root@xilinx-zcu104-2019_2:~/target# python3 app_mt.py
+root@xilinx-zcu104-2020_1:~/target# python3 app_mt.py
 Command line options:
  --image_dir :  images
  --threads   :  1
@@ -355,7 +363,7 @@ Correct: 9116 Wrong: 884 Accuracy: 0.9116
 For better throughput, the number of threads can be increased like this:
 
 ```shell
-root@xilinx-zcu104-2019_2:~/target# python3 app_mt.py -t 5
+root@xilinx-zcu104-2020_1:~/target# python3 app_mt.py -t 5
 Command line options:
  --image_dir :  images
  --threads   :  5
@@ -387,6 +395,6 @@ The approximate throughput (in frames/sec) for various batch sizes is shown belo
 |    4    |      820.57      |
 |    5    |      829.56      |
 
-Now, you could jump to [Module_5](/Machine_Learning/Getting_Started/03-Basic/Module_5) for a more practical use case.
+Now, you could jump to [Module_5](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_5) for a more practical use case.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

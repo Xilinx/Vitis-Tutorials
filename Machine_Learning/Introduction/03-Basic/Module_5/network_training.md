@@ -1,8 +1,8 @@
 # Journey from Original RefineDet
 
-This module will explain how to start from the original RefineDet [repo](https://github.com/sfzhang15/RefineDet) and get the model provided in the model zoo.
+This module will explain how to start from the original RefineDet [repo](https://github.com/sfzhang15/RefineDet) and get the model provided in the model zoo. 
 
-## Prerequisite
+## Prerequisite 
 
 - Internet connection avaliable
 - Vitis AI docker succesfully starts
@@ -12,9 +12,9 @@ This module will explain how to start from the original RefineDet [repo](https:/
 
 RefineDet is an one-stage objection detection network that could achieve better accuracy than two-stage networks before it's publication but still maintains comparable speed performance of one-stage networks.
 
-RefineDet can be seen as an improved version of SSD with addition of anchor refinement module (ARM), object detection module (ODM) and transfer connection block (TCB) to improve accuracy.
+RefineDet can be seen as an improved version of SSD with addition of anchor refinement module (ARM), object detection module (ODM) and transfer connection block (TCB) to improve accuracy. 
 
-The detailed introduction about network itself is beyond the scope of this module, please refer to the original paper.
+The detailed introduction about network itself is beyond the scope of this module, please refer to the original paper. 
 
 ## Adopt RefineDet to Vitis AI
 
@@ -38,7 +38,7 @@ http://pan.baidu.com/s/1gf8J7Yr
 ```
 Extract the file package and files will be like this
 
-```
+``` 
 --- VGGNet
 |   --- coco
 |   |   --- refinedet_vgg16_320x320
@@ -173,7 +173,7 @@ layer {
 
 **Item 2. Merge 'train.prototxt' and 'test.prototxt' into 'trainval.prototxt' for simpilicity (Optional)**
 
-In order to montior both loss and mAP during the training process, we could add last four layers from the test.prototxt into the end of the train.protoxt. At the same time, add AnnotatedData layer for TEST phase to get input data for testing.
+In order to montior both loss and mAP during the training process, we could add last four layers from the test.prototxt into the end of the train.protoxt. At the same time, add AnnotatedData layer for TEST phase to get input data for testing. 
 
 Add `multi_gpu_testing: false` into AnnotatedData layer for TEST phase.
 
@@ -181,34 +181,34 @@ An exmaple prototxt after merge is included here, i.e, `refinedet_baseline.proto
 
 **Item 3. Change the layer types of 'arm_loss', 'odm_loss', 'detection_out' and 'detection_eval' to be the type name in Xilinx Caffe**
 
-In Xilinx Caffe, in order to avoid potential confilct, the layer types using by RefineDet are renamed, which is shown in below table:
+In Xilinx Caffe, in order to avoid potential confilct, the layer types using by RefineDet are renamed, which is shown in below table: 
 
-| Layer          | Original Layer Type | Layer Type in Xilinx Caffe |
-| -------------- | ------------------- | -------------------------- |
-| arm_loss       | MultiBoxLoss        | MultiBoxLossRefine         |
-| odm_loss       | MultiBoxLoss        | MultiBoxLossRefine         |
-| detection_out  | DetectionOutput     | DetectionOutputRefine      |
-| detection_eval | DetectionEvaluate   | DetectionEvaluateRefine    |
+| Layer          |  Original Layer Type | Layer Type in Xilinx Caffe  |
+| ----           | ----              | ----                    |
+| arm_loss       | MultiBoxLoss      | MultiBoxLossRefine      |
+| odm_loss       | MultiBoxLoss      | MultiBoxLossRefine      |
+| detection_out  | DetectionOutput   | DetectionOutputRefine   |
+| detection_eval | DetectionEvaluate | DetectionEvaluateRefine |
 
 
-**Item 4. Modify path to the necessary files**
+**Item 4. Modify path to the necessary files** 
 
-In the AnnotatedData layer for trainning, please change
-
+In the AnnotatedData layer for trainning, please change 
+ 
     - the path to the folder holding the train LMDB file
-
+   
         data_param {
         source: "../cf_refinedet_coco_480_360_0.96_5.08G/data/coco2014_lmdb/train2014_lmdb/"
         batch_size: 20
         backend: LMDB
         }
-
+ 
     - the path to the labelmap file
 
         label_map_file: "../cf_refinedet_coco_480_360_0.96_5.08G/labelmap.prototxt"
 
-In the AnnotatedData layer for testing, please change
-
+In the AnnotatedData layer for testing, please change 
+ 
     - the path to the folder holding the train LMDB file
 
         data_param {
@@ -226,12 +226,12 @@ In the AnnotatedData layer for testing, please change
 
 In the detection_eval layer, please change
 
-    - the path to the name_size file
+    - the path to the name_size file 
 
         name_size_file: "../cf_refinedet_coco_480_360_0.96_5.08G/data/test_name_size.txt"
 
 
-**Item 5. Modify solver.prototxt to change hyperparameters**
+**Item 5. Modify solver.prototxt to change hyperparameters** 
 
 Configure the hyperparameters according to your own environment (like GPU memory size) and your own training strategy. Some parameters used are listed here as example.
 
@@ -255,11 +255,11 @@ ap_version: "11point"
 
 ### Customized Modification
 
-To customize the 320x320 COCO model into the 480x360 model provided in Vitis AI model zoo, apart from the fundemental changes mentioned above, extra modifications are needed.
+To customize the 320x320 COCO model into the 480x360 model provided in Vitis AI model zoo, apart from the fundemental changes mentioned above, extra modifications are needed. 
 
-RefineDet uses TCB, the FPN like structure from layer `conv4_3`, `conv5_3`, `fc7` to `conv 6_2` which constructed by three 2x downsampling and corrsponding three 2x upsampling in between. This structure has the strict requriement that the kernel size (k_w and k_h) of layer `conv4_3` must be the multiple of 8 (2^3). Also, before `conv4_3` there is also three 2x downsampling during feature extraction. If directly change resolution 320x320 to 480x360 on original network, the k_w and k_h of layer `conv4_3` will be 60 and 45, which will result in error for following TCB structure.
+RefineDet uses TCB, the FPN like structure from layer `conv4_3`, `conv5_3`, `fc7` to `conv 6_2` which constructed by three 2x downsampling and corrsponding three 2x upsampling in between. This structure has the strict requriement that the kernel size (k_w and k_h) of layer `conv4_3` must be the multiple of 8 (2^3). Also, before `conv4_3` there is also three 2x downsampling during feature extraction. If directly change resolution 320x320 to 480x360 on original network, the k_w and k_h of layer `conv4_3` will be 60 and 45, which will result in error for following TCB structure. 
 
-In order to have a 480x360 resolution network, special modificaitons have been made to make k_w and k_h of `conv4_3` to be 64 and 48, which are explained in detailed in item 2 below.
+In order to have a 480x360 resolution network, special modificaitons have been made to make k_w and k_h of `conv4_3` to be 64 and 48, which are explained in detailed in item 2 below. 
 
 **Item 1. Change input size from 320x320 to 480x360**
 
@@ -281,65 +281,65 @@ In the AnnotatedData layers, change width and height value in resize_param to be
 
 **Item 2. Change convlution layers, pooling layer parameters to support new resolution**
 
-If we use original network parameters and structure in 480x360 resolution, the feature map size after conv4_3 will be 60x45, which cannot satisfy the requirement of following TCB structure and result in error.
+If we use original network parameters and structure in 480x360 resolution, the feature map size after conv4_3 will be 60x45, which cannot satisfy the requirement of following TCB structure and result in error. 
 
-In order to arrive at the feature map size of 64x48 after conv4_3, we provide a version of implementation. Please note that this is just one way to achieve the requirment, and that the feature map size or network structure/parameter can be modified in many different ways.
+In order to arrive at the feature map size of 64x48 after conv4_3, we provide a version of implementation. Please note that this is just one way to achieve the requirment, and that the feature map size or network structure/parameter can be modified in many different ways. 
 
 
-|           Layer            |  Parameter  |   Original   | Modified | Feature Map Size |
-| :------------------------: | :---------: | :----------: | :------: | :--------------: |
-|          conv1_1           |     pad     |      1       |    2     |     482x362      |
-|          conv1_2           |     pad     |      1       |    2     |     484x364      |
-|          conv2_2           |     pad     |      1       |    2     |     244x184      |
-|          conv3_1           |     pad     |      1       |    2     |      124x94      |
-|          conv3_2           |     pad     |      1       |    2     |      126x96      |
-|          conv3_3           | kernel_size |      3       |    2     |      64x48       |
-|                            |   stride    |      1       |    2     |                  |
-|                            |    pad_w    |      1       |    1     |                  |
-|                            |    pad_h    |      1       |    0     |                  |
-|           pool3            |             |              |  delete  |                  |
-|          conv4_1           |   bottom    |    pool3     | conv3_3  |      64x48       |
-|         conv4_3_bn         |             |      -       |   add    |                  |
-|           pool4            |             |              |  delete  |                  |
-|          conv5_1           | kernel_size |      3       |    2     |      32x24       |
-|                            |   stride    |      1       |    2     |                  |
-|                            |     pad     |      1       |    0     |                  |
-|                            |   bottom    |    pool4     | conv4_3  |                  |
-|         conv5_3_bn         |             |      -       |   add    |                  |
-|           pool5            |             |              |  delete  |                  |
-|            fc6             | kernel_size |      3       |    2     |      16x12       |
-|                            |   stride    |      1       |    2     |                  |
-|                            |     pad     |      3       |    0     |                  |
-|                            |   bottom    |    pool5     | conv5_3  |                  |
-|        conv5_3_norm        |             |              |  delete  |                  |
-|           TL4_1            |   bottom    | conv5_3_norm | conv5_3  |                  |
-|        conv4_3_norm        |             |              |  delete  |                  |
-|           TL3_1            |   bottom    | conv4_3_norm | conv4_3  |                  |
-|   conv4_3_norm_mbox_loc    |   bottom    | conv4_3_norm | conv4_3  |                  |
-|   conv4_3_norm_mbox_conf   |   bottom    | conv4_3_norm | conv4_3  |                  |
-| conv4_3_norm_mbox_priorbox |   bottom    | conv4_3_norm | conv4_3  |                  |
-|   conv5_3_norm_mbox_loc    |   bottom    | conv5_3_norm | conv5_3  |                  |
-|   conv5_3_norm_mbox_conf   |   bottom    | conv5_3_norm | conv5_3  |                  |
-| conv5_3_norm_mbox_priorbox |   bottom    | conv5_3_norm | conv5_3  |                  |
-
+| Layer                      | Parameter   | Original     | Modified | Feature Map Size | 
+| :----:                     | :----:      | :----:       | :----:   | :----:           |
+| conv1_1                    | pad         | 1            | 2        | 482x362          |
+| conv1_2                    | pad         | 1            | 2        | 484x364          |
+| conv2_2                    | pad         | 1            | 2        | 244x184          |
+| conv3_1                    | pad         | 1            | 2        | 124x94           |
+| conv3_2                    | pad         | 1            | 2        | 126x96           |
+| conv3_3                    | kernel_size | 3            | 2        | 64x48            |
+|                            | stride      | 1            | 2        |                  |
+|                            | pad_w       | 1            | 1        |                  |
+|                            | pad_h       | 1            | 0        |                  |
+| pool3                      |             |              | delete   |                  |
+| conv4_1                    | bottom      | pool3        | conv3_3  | 64x48            |
+| conv4_3_bn                 |             | -            | add      |                  |
+| pool4                      |             |              | delete   |                  |
+| conv5_1                    | kernel_size | 3            | 2        | 32x24            |
+|                            | stride      | 1            | 2        |                  |
+|                            | pad         | 1            | 0        |                  |
+|                            | bottom      | pool4        | conv4_3  |                  |
+| conv5_3_bn                 |             | -            | add      |                  |
+| pool5                      |             |              | delete   |                  |
+| fc6                        | kernel_size | 3            | 2        | 16x12            |
+|                            | stride      | 1            | 2        |                  |
+|                            | pad         | 3            | 0        |                  |
+|                            | bottom      | pool5        | conv5_3  |                  |
+| conv5_3_norm               |             |              | delete   |                  |
+| TL4_1                      | bottom      | conv5_3_norm | conv5_3  |                  |
+| conv4_3_norm               |             |              | delete   |                  |
+| TL3_1                      | bottom      | conv4_3_norm | conv4_3  |                  |
+| conv4_3_norm_mbox_loc      | bottom      | conv4_3_norm | conv4_3  |                  |
+| conv4_3_norm_mbox_conf     | bottom      | conv4_3_norm | conv4_3  |                  |
+| conv4_3_norm_mbox_priorbox | bottom      | conv4_3_norm | conv4_3  |                  |
+| conv5_3_norm_mbox_loc      | bottom      | conv5_3_norm | conv5_3  |                  |
+| conv5_3_norm_mbox_conf     | bottom      | conv5_3_norm | conv5_3  |                  |
+| conv5_3_norm_mbox_priorbox | bottom      | conv5_3_norm | conv5_3  |                  |
+  
 
 All the above-mentioned modification can be found in the exmaple prototxt `refinedet_baseline.prototxt`.
 
 **Item 3. Change class number from 81 to 2**
 
-There five layers that relate to class number, four convlution layers and one loss layer:
+There five layers that relate to class number, four convlution layers and one loss layer: 
 
-    - In convolution_param of following layers, change num_output from 243 to 6.
+    - In convolution_param of following layers, change num_output from 243 to 6. 
       P3_mbox_conf
       P4_mbox_conf
       P5_mbox_conf
       P6_mbox_conf
-
-    - In odm_loss layer, change num_classes from 81 to 2
+        
+    - In odm_loss layer, change num_classes from 81 to 2 
 
 ## Train the Modified Network
 
-Use standard `VGG_ILSVRC_16_layers_fc_reduced.caffemodel` as the initial weights and train the modified version from scratch. Get it by running command
+Use standard `VGG_ILSVRC_16_layers_fc_reduced.caffemodel` as the initial weights and train the modified version from scratch. Get it by running command 
 
 ```
 wget http://vision.cs.unc.edu/wliu/projects/ParseNet/VGG_ILSVRC_16_layers_fc_reduced.caffemodel
@@ -381,6 +381,6 @@ I0602 18:18:52.569782 17132 solver.cpp:901]     Test net output #0: detection_ev
 I0602 21:29:55.022497 17132 solver.cpp:901]     Test net output #0: detection_eval = 0.692454
 ```
 
-The well trained network model (`refinedet_baseline.caffemodel`) is provided here in oder to save time. The baseline model could be used to test mAP and deploy onboard by Vitis AI toolchain.
+The well trained network model (`refinedet_baseline.caffemodel`) is provided here in oder to save time. The baseline model could be used to test mAP and deploy onboard by Vitis AI toolchain. 
 
-Continue toolchain content at the [main page](/Machine_Learning/Getting_Started/03-Basic/Module_5/README.md/#evaluate-model).
+Continue toolchain content at the [main page](/Machine_Learning_Tutorial/Section_3-Basic/Module_5/README.md/#evaluate-model).
