@@ -10,11 +10,11 @@ This tutorial is organized in 5 parts and is designed to walk you through all th
 
 * [**Part 1**](./Part1.md) covers all the essential concepts of the Vitis FPGA acceleration flow in under 10 minutes
 
-* [**Part 2**](./Part2.md) guides you through the process of installating the Vitis tools, platforms and runtime library.
+* [**Part 2**](./Part2.md) guides you through the process of installing the Vitis tools, platforms and runtime library.
 
 * [**Part 3**](./Part3.md) explains the source code of vector-add example used in the rest of the tutorial
 
-* [**Part 4**](./Part4.md) describes the commands required to compilate, link and run the example on your acceleration card 
+* [**Part 4**](./Part4.md) describes the commands required to compile, link and run the example on your acceleration card
 
 * [**Part 5**](./Part5.md) gives an overview of Vitis Analyzer and shows how to open and analyze reports
 
@@ -24,9 +24,9 @@ Vitis provides a unified flow for developing FPGA accelerated application target
 
 
 
-[**Click here to start the Vitis Flow 101 Tutorial**](./Part1.md) 
+[**Click here to start the Vitis Flow 101 Tutorial**](./Part1.md)
 
- 
+
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
 
