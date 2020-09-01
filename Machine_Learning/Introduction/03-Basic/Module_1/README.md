@@ -12,15 +12,21 @@ The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platfo
 
 * Download the pre-built DPU board image from the link below
 
-  * [ZCU104](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu104-dpu-v2019.2-v2.img.gz)
+  * [ZCU104 prebuilt image](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu104-dpu-v2020.1-v1.2.0.img.gz)
+  
+  **To improve the user experience, the Vitis AI Runtime packages, VART samples, Vitis-AI-Library samples and
+models have been built into the board image. Therefore, user does not need to install Vitis AI
+Runtime packages and model package on the board separately. However, users can still install
+the model or Vitis AI Runtime on their own image or on the official image by following these
+steps.**
 
 * Choose an unpartitioned SD card of size 8GB or greater. Use Etcher to burn the image file onto the SD card.
   * Etcher launches, as shown in the following figure.
-
+  
   <p align="left">
   <img width="452" height="232" src="images/etcher1.png">
-  </p>
-
+  </p>  
+  
   * Browse to the location of the image.You can select a .zip or .gz compressed file.
   * Etcher tries to detect the SD drive. Verify the drive designation and the image size.
   * Click 'Flash' and wait till the operation is complete
@@ -34,12 +40,12 @@ The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platfo
   * Plug in the power and boot the board using the serial port to operate on the system.
   * Find out the IP information of the board using the serial port.
     ```
-    root@xilinx-zcu104-2019_2:~# ifconfig
+    root@xilinx-zcu104-2020_1:~# ifconfig
     ```
     <p align="left">
     <img width="600" height="308" src="images/IP.png">
     </p>
-  * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](Getting_Started/03-Basictree/master/Machine_Learning/Getting_Started/03-Basic/Module_2) for next step.
+  * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_2) for next step.
   <p align="left">
   <img width="720" height="660" src="images/ZCU104.png">
   </p>
