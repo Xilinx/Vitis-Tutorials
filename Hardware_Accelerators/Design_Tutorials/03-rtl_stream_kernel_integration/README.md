@@ -45,22 +45,17 @@ The directory struction and brief explainations are as below.
 ├── rtc_gen                         # working directory for rtc_gen kernel development
 │   ├── font_sim_data.txt           # text format font library file for RTL simulation
 │   └── src/                        # RTL source code for rtc_gen kernel
-├── sw/                             # Test program directory
-│   ├── build/                      # Software build working directory
-│   │   ├── font.dat                # Font library file including 11 characters
-│   │   ├── setup_emu.sh            # setup script for emulation mode
-│   │   └── xrt.ini                 # XRT configuration for emulation and debug
-│   ├── CMakeLists.txt              # cmake configuration file
-│   ├── media/                      # Media files for test program
-│   └── src/                        # Test program source codes
-│       ├── rtc_alpha_tb.cpp        # Test program for the whole design
-│       ├── rtc_gen_test.cpp        # Test program for rtc_gen kernel
-│       └── xcl2/                   # Xilinx OpenCL include files
-└── xclbin/                         # Pre-built XCLBIN files
-    ├── u200/                       # Pre-built XCLBIN files for Alveo U200 card
-    ├── u250/                       # Pre-built XCLBIN files for Alveo U250 card
-    ├── u280/                       # Pre-built XCLBIN files for Alveo U280 card
-    └── u50/                        # Pre-built XCLBIN files for Alveo U50 card
+└── sw/                             # Test program directory
+    ├── build/                      # Software build working directory
+    │   ├── font.dat                # Font library file including 11 characters
+    │   ├── setup_emu.sh            # setup script for emulation mode
+    │   └── xrt.ini                 # XRT configuration for emulation and debug
+    ├── CMakeLists.txt              # cmake configuration file
+    ├── media/                      # Media files for test program
+    └── src/                        # Test program source codes
+        ├── rtc_alpha_tb.cpp        # Test program for the whole design
+        ├── rtc_gen_test.cpp        # Test program for rtc_gen kernel
+        └── xcl2/                   # Xilinx OpenCL include files
 ~~~
 
 ## RTL Kernel: rtc_gen (XO)
@@ -248,9 +243,11 @@ For example, if you would like to build all XO and XCLBIN files in hardware emul
 make all TARGET=hw_emu PLATFORM=xilinx_u50_gen3x16_xdma_201920_3
 ~~~
 
-Because the XCLBIN file building for hardware target needs a long time, to save your time, we also provide the pre-built XCLBIN files (*rtc_gen_test_hw.xclbin* and *rtc_alpha_hw.xclbin*) in *./xclbin* directory for each kind of Alveo card. Please note they are built with *TARGET=hw* option and cannot be used in *hw_emu* mode. For *hw_emu* target XCLBIN files, it's much faster to build and system dependent, so please build them by yourself.
+Because the XCLBIN file building for hardware target needs a long time, to save your time, we also provide the pre-built XCLBIN files (*rtc_gen_test_hw.xclbin* and *rtc_alpha_hw.xclbin*) for each kind of Alveo card. Please note they are built with *TARGET=hw* option and cannot be used in *hw_emu* mode. For *hw_emu* target XCLBIN files, it's much faster to build and system dependent, so please build them by yourself. 
 
-**To use the pre-built xclbin files, please copy them into *./hw* directory, which will be used directly in downstream steps.**
+You can download the pre-built XCLBIN files via the link: <https://www.xilinx.com/bin/public/openDownload?filename=rtl_stream_kernel_xclbins.tgz>
+
+**To use the pre-built xclbin files, please copy the two xclbin files corresponding to your target platform into *./hw* directory, which will be used directly in downstream steps.**
 
 ### Build and run the software
 
