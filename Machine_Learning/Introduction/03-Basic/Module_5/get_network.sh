@@ -15,7 +15,9 @@
 # limitations under the License.
 
 
-NETWORK_NAME=cf_refinedet_coco_480_360_0.96_1.1.zip
+#NETWORK_NAME=cf_refinedet_coco_480_360_0.96_1.1.zip
+NETWORK_NAME=cf_refinedet_coco_480_360_0.96_1.2.zip
+
 
 wget -O $NETWORK_NAME  https://www.xilinx.com/bin/public/openDownload?filename=$NETWORK_NAME
 
