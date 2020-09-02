@@ -24,21 +24,21 @@ We'll introduce the platform creation steps in the following pages. Each page de
   - [Test 2: Run Vector Addition Application](step4.md#test-2-run-vector-addition-application)
   - [Test 3: Run a DNNDK Demo](step4.md#test-3-run-a-dnndk-demo)
 
+***Let's start from [step 1: Vivado Design](./step1.md).***
 
 
-## Reference
+
+## References
 
 - [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/index.html)
-- [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vcm1596051749044.html) in UG1393
+  - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vcm1596051749044.html)
+  - [Setting up the Vitis environment](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/settingupvitisenvironment.html)
+  - [Installing Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/pjr1542153622642.html)
 - Vitis-AI Github Repository: https://github.com/Xilinx/Vitis-AI
-- Vitis Embedded Platform Source Github Repository: https://github.com/Xilinx/Vitis_Embedded_Platform_Source
-- https://github.com/Xilinx/Vitis-AI-Tutorials/tree/Vitis-AI-Custom-Platform
-- https://github.com/Xilinx/Edge-AI-Platform-Tutorials/tree/3.1/docs/DPU-Integration
+- [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
+- [Vitis AI (on Ultra96V2) Custom Platform Tutorial](https://github.com/Xilinx/Vitis-AI-Tutorials/tree/Vitis-AI-Custom-Platform)
 
-***Note: If you would like to try with one click creating VAI platform flow it is recommended to try with the official base platform source code for*** [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/zcu102_base) ***and*** [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/zcu104_base)***.***
-
-- [Setting up the Vitis environment](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/settingupvitisenvironment.html)
-- [Installing Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/pjr1542153622642.html)
+***Note: If you would like to try with one click creating VAI platform flow it is recommended to try with the official base platform source code for [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2020.1/Xilinx_Official_Platforms/zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2020.1/Xilinx_Official_Platforms/zcu104_base)***.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
 
