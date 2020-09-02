@@ -1,5 +1,7 @@
 # Vitis AI Custom Platform Creation
 
+***Version: Vitis 2020.1 + Vitis AI 1.2***
+
 In this module, we will create a custom platform to run Vitis-AI applications for ZCU104. Since ZCU104 is a validated Xilinx demo board and Vivado includes its processing system presets, we will skip step 0 mentioned in previous overview module and start to build the full hardware and generate XSA. To prepare the software components, we will import XSA into PetaLinux project and do some configurations. After building software and hardware components, we'll package the platform. At last, we'll run several test applications including Vitis-AI application on this platform to test this customized platform.
 
 
