@@ -15,7 +15,7 @@
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Introduction/README.md">Introduction to Vitis Hardware Accelerators</a></td>
+ <td align="center"><a href="../Introduction/README.md">Introduction to Vitis Hardware Accelerators</a></td>
  <td>This tutorial puts in practice the concepts of FPGA acceleration and illustrates how to gradually optimize a hardware accelerator implementing the Cholesky matrix decomposition algorithm.</td>
  </tr>
  </table>
@@ -33,15 +33,15 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/02-bloom/README.md">Bloom Filter Example</a></td>
+ <td align="center"><a href="./02-bloom/README.md">Bloom Filter Example</a></td>
  <td>This tutorial shows how to achieve a 10x speed-up on a data analytics application using a combination of kernel and host code optimization techniques.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/01-convolution-tutorial/README.md">Convolution Example</a></td>
+ <td align="center"><a href="./01-convolution-tutorial/README.md">Convolution Example</a></td>
  <td>This tutorial walks through the process of analyzing and optimizing a 2D convolution used for real-time processing of a video stream.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
+ <td align="center"><a href="./03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
  <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
  </tr>
  </table>
@@ -56,11 +56,11 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/01-rtl_kernel_workflow/README.md">Getting Started with RTL Kernels</a></td>
+ <td align="center"><a href="../Feature_Tutorials/01-rtl_kernel_workflow/README.md">Getting Started with RTL Kernels</a></td>
  <td>This tutorial demonstrates how to use the Vitis core development kit to program an RTL kernel into an FPGA and build a Hardware Emulation using a common development flow.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/02-mixing-c-rtl-kernels/README.md">Mixing C and RTL</a></td>
+ <td align="center"><a href="../Feature_Tutorials/02-mixing-c-rtl-kernels/README.md">Mixing C and RTL</a></td>
  <td>This tutorial demonstrates how to work with an application containing RTL and C kernels, along with various design analysis features.</td>
  </tr>
  </table>
