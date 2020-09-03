@@ -20,6 +20,6 @@ creating custom Vitis&trade; and Vitis AI&trade; ready platforms.
 
 [Module 1: Platform Creation Overview](./01-Overview/README.md)
 
-[Module 2: Vitis-AI Custom Platform Creation](./02-Edge-AI-ZCU104/README.md)
+[Module 2: Vitis Custom Embedded Platform Creation](./02-Edge-AI-ZCU104/README.md)
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
