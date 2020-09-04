@@ -6,44 +6,42 @@ RMDIR = rm -rf
 
 VIVADO:=${VIVADO_ROOT}/bin/vivado
 MPSOC_CXX:=aarch64-linux-gnu-g++
-
 TARGET := hw
 
-#SDX_PLATFORM = /proj/rdi/staff/jiaz/scout/platform_trd32/zcu102_0205/zcu102_dpu.xpfm
-XOCC_OPTS = -t ${TARGET} --platform ${SDX_PLATFORM} --save-temps --config ${DIR_PRJ}/config_file/prj_config_104_2dpu --xp param:compiler.userPostSysLinkTcl=${DIR_PRJ}/strip_interconnects.tcl 
+#EDGE_COMMON_SW:= /proj/rdi/staff/jiaz/scout/platfrom201/xilinx_zcu102_base_202010_1/sw/xilinx_zcu102_base_202010_1/xrt/image
+#SDX_PLATFORM = /proj/xcdhdstaff2/tianfang/2020.1/0518/102/platform_repo/xilinx_zcu102_base_202010_1/export/xilinx_zcu102_base_202010_1/xilinx_zcu102_base_202010_1.xpfm
+
+XOCC_OPTS = -t ${TARGET} --platform ${SDX_PLATFORM} --save-temps --config ${DIR_PRJ}/config_file/prj_config_104_2dpu --xp param:compiler.userPostSysLinkOverlayTcl=${DIR_PRJ}/syslink/strip_interconnects.tcl 
 dpu_HDLSRCS=kernel_xml/dpu/kernel.xml\
 	     scripts/package_dpu_kernel.tcl\
 	     scripts/gen_dpu_xo.tcl\
 	     ./dpu_conf.vh\
-	     ../../dpu_ip/Vitis/dpu/hdl/dpu_xrt_top.v\
+	     ../../dpu_ip/Vitis/dpu/hdl/DPUCZDX8G.v\
 	     ../../dpu_ip/Vitis/dpu/inc/arch_def.vh\
 	     ../../dpu_ip/Vitis/dpu/xdc/*.xdc\
-	     ../../dpu_ip/dpu_eu_*/hdl/dpu_eu_*_dpu.sv\
-	     ../../dpu_ip/dpu_eu_*/inc/function.vh\
-             ../../dpu_ip/dpu_eu_*/inc/arch_para.vh
+	     ../../dpu_ip/DPUCZDX8G_*/hdl/DPUCZDX8G_*_dpu.sv\
+	     ../../dpu_ip/DPUCZDX8G_*/inc/function.vh\
+             ../../dpu_ip/DPUCZDX8G_*/inc/arch_para.vh
 
 
 softmax_HDLSRCs=kernel_xml/sfm/kernel.xml\
                 scripts/package_sfm_kernel.tcl\
                 scripts/gen_sfm_xo.tcl\
 		../../dpu_ip/Vitis/sfm/hdl/*.v\
-		../../dpu_ip/dpu_eu_*/hdl/dpu_eu_*_sfm.sv\
-		../../dpu_ip/dpu_eu_*/xci/sfm/fp_*/*.xci		
+		../../dpu_ip/DPUCZDX8G_*/hdl/DPUCZDX8G_*_sfm.sv\
+		../../dpu_ip/DPUCZDX8G_*/xci/sfm/fp_*/*.xci		
 
 
 dpu_TCL=scripts/gen_dpu_xo.tcl
 softmax_TCL=scripts/gen_sfm_xo.tcl
 
 # Kernel name must match kernel name in kernel.xml
-DPU_KERN_NAME = dpu_xrt_top
+DPU_KERN_NAME = DPUCZDX8G
 SM_KERN_NAME = sfm_xrt_top
 
 dpu_sm_xo = binary_container_1/dpu.xo binary_container_1/softmax.xo
 dpu_xo = binary_container_1/dpu.xo
-
-
 PREPROCESSOR_FLAGS := --kernel pre_processor -I. -I./xf_opencv/L1/include -D__XF_USE_NEW_IMPL__
-
 
 ifeq ($(KERNEL),DPU_SM)
 kernel_xo = binary_container_1/dpu.xo binary_container_1/softmax.xo
@@ -53,9 +51,9 @@ else
 kernel_xo = binary_container_1/dpu.xo
 endif
 
-.PHONY: all clean
+.PHONY: all clean package
 
-all : binary_container_1/dpu.xclbin
+all : binary_container_1/dpu.xclbin package
 
 binary_container_1/dpu.xo: $(dpu_HDLSRCS)
 	@mkdir -p $(@D)
@@ -69,12 +67,14 @@ binary_container_1/softmax.xo: $(softmax_HDLSRCS)
 
 binary_container_1/pre_processor.xo: pre_processor.cpp pre_processor.h
 	v++ -t ${TARGET} --platform ${SDX_PLATFORM} ${PREPROCESSOR_FLAGS} --temp_dir binary_container_1 --kernel_frequency=300 --log_dir binary_container_1/logs --config preprocessor_config.ini -c -o $@ $<
-
 binary_container_1/dpu.xclbin: $(kernel_xo)
 	v++ $(XOCC_OPTS) -l --temp_dir binary_container_1 --log_dir binary_container_1/logs --remote_ip_cache binary_container_1/ip_cache -o "$@" $(+)
+
+package:
+	v++ -t ${TARGET} --platform ${SDX_PLATFORM} -p binary_container_1/dpu.xclbin --package.out_dir binary_container_1 --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.sd_file $(EDGE_COMMON_SW)/Image 
 	cp ./binary_*/link/vivado/vpl/prj/prj.srcs/sources_1/bd/*/hw_handoff/*.hwh ./binary_*/sd_card
-    
+
 clean:
-	${RM} *.o *.elf *.log *.jou sample*
-	${RMDIR} binary_container_1/ packaged_*/ tmp_*/ .Xil/
+	${RM} *.o *.elf *.log *.jou sample* v++*
+	${RMDIR} binary_container_1/ packaged_*/ tmp_*/ .Xil/ _x/
 

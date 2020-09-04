@@ -32,7 +32,9 @@ if(Glog_FOUND)
     message(STATUS "    libraries: ${Glog_LIBS}")
     message(STATUS "    include path: ${Glog_INCLUDE_DIRS}")    
 endif()
-include_directories("include" "/usr/include/CL" "/usr/include/xrt")
+include_directories("include" 
+"${CMAKE_SYSROOT}/usr/include/xrt"
+)
 set(MY_SRCS src/hlsV4l2Access.cpp
             src/hlsV4l2Capture.cpp
             src/hlsV4l2Device.cpp
@@ -40,15 +42,14 @@ set(MY_SRCS src/hlsV4l2Access.cpp
             src/hlsV4l2Output.cpp  
             src/hlsV4l2ReadWriteDevice.cpp
             src/xcl2.cpp 
-
-
 )
 
 add_library(hls_v4l2s SHARED ${MY_SRCS})
 target_link_libraries(hls_v4l2s ${OpenCV_LIBS} glog)
 install(TARGETS hls_v4l2s
         LIBRARY 
-            DESTINATION /usr/lib
+        DESTINATION /usr/lib
+        
         )
 install(FILES include/hlsV4l2Access.hpp  include/line_exception.hpp include/xcl2.hpp include/hlsV4l2Capture.hpp include/hlsV4l2ReadWriteDevice.hpp include/hlsV4l2Device.hpp include/hlsV4l2MmapDevice.hpp include/hlsV4l2Output.hpp 
     DESTINATION /usr/include
