@@ -1,12 +1,12 @@
 # Section 2: System Setup
 
-In this tutorial, we'll use Vitis 2019.2 and Vitis-AI v1.1 for demonstration. The tutorial will be updated when Vitis tools have updates. Vitis and Vitis-AI has a wide range of OS support list, from RHEL/CentOS 7.4, 7.5, 7.6 to Ubuntu 16.04 and 18.04. This tutorial is tested in Ubuntu 18.04.1 and CentOS 7.6.
+In this tutorial, we'll use Vitis 2020.1 and Vitis-AI v1.2 for demonstration. The tutorial will be updated when Vitis tools have updates. Vitis and Vitis-AI has a wide range of OS support list, from RHEL/CentOS 7.4-7.8 to Ubuntu 16.04/18.04. This tutorial is tested in Ubuntu 18.04.1 and CentOS 7.6.
 
 | Type                    | Version                       |
 | ----------------------- | ----------------------------- |
-| Vitis Software Platform | 2019.2                        |
-| Vitis-AI                | v1.1                          |
-| PetaLinux               | 2019.2                        |
+| Vitis Software Platform | 2020.1                        |
+| Vitis-AI                | v1.2                          |
+| PetaLinux               | 2020.1                        |
 | Host OS                 | Ubuntu 18.04.1 and CentOS 7.6 |
 
 The host OS can be a natively installed OS, or installed in a virtual machine. It needs to have at least 100GB hard disk to install all the tools, models and datasets. 16GB DDR memory is preferred for development flow.
@@ -19,7 +19,7 @@ The host OS can be a natively installed OS, or installed in a virtual machine. I
 
 ### Vitis Core Tools
 
-1. Download  Vitis Software Platform 2019.2 from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2019-2.html).
+1. Download  Vitis Software Platform 2020.1 from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2020-1.html).
 
 2. Install Vitis dependent packages
 
@@ -46,24 +46,24 @@ The host OS can be a natively installed OS, or installed in a virtual machine. I
 
 
 
-3. Install Vitis Software Platform ([Full User Guided](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/juk1557377661419.html))
+3. Install Vitis Software Platform ([Full User Guided](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/juk1557377661419.html))
 
    1. Ensure "Devices > Install devices for Alveo and Xilinx Edge acceleration platforms" is selected during installation.
 
 ### Xilinx Run Time
 
-1. Download XRT from [Xilinx Download Center - Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2019-2.html)
+1. Download XRT from [Xilinx Download Center - Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2020-1.html)
 
 2. Install XRT (Full User Guide)
 
-   1. Ubuntu: `sudo apt install <xrt_filename_OS>.deb`
-   2. CentOS: `sudo yum install <xrt_filename>.rpm`
+   1. Ubuntu: `sudo apt install ./<xrt_filename_OS>.deb`
+   2. CentOS: `sudo yum install ./<xrt_filename>.rpm`
 
 ### PetaLinux
 
 Note: PetaLinux is only needed for Platform Development for Customization Flow.
 
-1. Download PetaLinux from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools/2019-2.html)
+1. Download PetaLinux from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools/2020-1.html)
 
 2. Install PetaLinux dependencies (Full list: [UG1144](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2020_1/ug1144-petalinux-tools-reference-guide.pdf) Table 2)
 
@@ -84,7 +84,7 @@ Note: PetaLinux is only needed for Platform Development for Customization Flow.
 3. Install PetaLinux
 
    ```
-   ./petalinux-v2019.2-final-installer.run
+   ./petalinux-v2020.1-final-installer.run
    ```
 
 4. Setup PetaLinux requirements
@@ -101,9 +101,9 @@ Note: PetaLinux is only needed for Platform Development for Customization Flow.
 ### Load Vitis, XRT, and PetaLinux environment
 
    ```bash
-   source /tools/Xilinx/Vitis/2019.2/settings64.sh
+   source /tools/Xilinx/Vitis/2020.1/settings64.sh
    source /opt/xilinx/xrt/setup.sh
-   source /opt/petalinux-v2019.2/settings.sh
+   source /opt/petalinux-v2020.1/settings.sh
    ```
 
 
