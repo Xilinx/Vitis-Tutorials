@@ -41,8 +41,8 @@
 #include "guithread.hpp"
 #include "mythread.hpp"
 #include "sortthread.hpp"
-#include <hlsV4l2Capture.hpp>
-#include <hlsV4l2Device.hpp>
+#include <V4l2Capture.hpp>
+#include <V4l2Device.hpp>
 
 #ifndef USE_DRM
 #define USE_DRM 0
@@ -195,7 +195,7 @@ int main(int argc, char* argv[]) {
      */
     for (int i = 0; i < g_num_of_threads[0]; ++i) {
       dpu_thread.emplace_back(new DpuThread(
-          create_dpu_filter( [model_name]() {return vitis::ai::RefineDet::create(model_name, 0);}, process_result), 
+          create_dpu_filter( [model_name]() {return vitis::ai::RefineDet::create(model_name, true);}, process_result), 
           decode_queue.get(),sorting_queue.get(), std::to_string(i)));
     }
 
