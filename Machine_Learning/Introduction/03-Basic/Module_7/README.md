@@ -1,4 +1,4 @@
-# Acceleration with HLS kernel
+# 3.7 Acceleration with HLS kernel
 
 **_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
 This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. About how to immigrate from OpenCV to HLS, please refer to [README.md](app/README.md)
@@ -16,7 +16,6 @@ The directory structure and brief explanations as below:
 
 ```bash
 ├── app
-│   ├── build.sh                   #compile script             
 │   ├── include                    #headers directory of work pipeline
 │   │   ├── decodethread.hpp       #header file of decode thread
 │   │   ├── dputhread.hpp          #header file of dpu threadd
@@ -69,6 +68,7 @@ The directory structure and brief explanations as below:
 │       ├── test_hls_kernel.cpp     #test case for hls kernel
 │       └── test.yuv                #test data
 └── README.md
+└── CMakeLists.txt
 
 ```
 
@@ -127,20 +127,20 @@ example:
 - Step1: Use below commands to clone the Vitis-AI from github project.
 
 ```
-git clone -b v1.1 git@github.com:Xilinx/Vitis-AI.git
+$ git clone git@github.com:Xilinx/Vitis-AI.git
 ```
 
 - Step2: copy the files below to under the directory "\${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis"
 
 ```
-cp ${Module_7}/kernel/build/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
-cp ${Module_7}/kernel/src/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/build/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/src/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
 ```
 
 - Step3: Run the below commands to start IP integration and wait for it to complete.
 
 ```
-cd ${Module_7}/kernel/src/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
+$ cd ${Module_7}/kernel/src/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
 make -j
 ```
 
@@ -164,68 +164,47 @@ sudo ./flash_sd_card.sh
 
 How to setup the board environment you could refer to [Module_3/README.md](../../Module_3/README.md)
 
-## Setting up the software build environment
+## Setting Up the cross-compile environment and Build app.
+---
 
-- To set up the software environment, first install the lib and header files associated with hls_my_V4L2. Assume that you have copied Module_7 into ZCU104.
+- After cloning the project, use the following commands to compile the applications. Regard the sdk path to be ${SDK_PATH}.
+
 
 ```
-cd ${Section_3-Basic}/${Module_7}/HLS_V4L2s/
-mkdir build
-cd build
-cmake ..
-make
-make install
+$ source ${SDK_PATH}/environment-setup-aarch64-xilinx-linux
+$ cd ${Section_3-Basic}/Module_7/
+$ sh build_app.sh
 ```
+Copy the executable file to board.
 
+```
+$ scp ${Section_3-Basic}/Module_7/build/usb_input_multi_threads_refinedet_drm root@$[IP_OF_BOARD]:/home/root
+$ scp ${Section_3-Basic}/Module_7/build/myVHLS_V4l2s/libhls_v4l2s.so root@$[IP_OF_BOARD]:/usr/lib
+```
+Running zynqmp_dpu_optimize.sh on board to optimize the board setting.
+```
+#cd ~/dpu_sw_optimize/zynqmp/
+#./zynqmp_dpu_optimize.sh
+```
+The script runs automatically after the board boots up with the official image
 - Test the HLS kernel to see if it works properly with the test example. When the test example works, you will notice that two PNG files are generated in your execution directory.
-
 ```
-cd ${Section_3-Basic}/${Module_7}/HLS_V4l2s/test
-sh build.sh
-./test_hls_kernel
+# chmod +x test_hls_kernel
+# ./test_hls_kernel
 ```
 
-## Build the Applictions
 
-- Use the following command to build the application. This "build.sh " script generates two executables, one using ARM for color conversion and resize, and the other using the HLS kernel to speed up color conversion and image resizing.
-
+- Run the application.
+ Before you run, it's needed to stop the weston service to use drm display mode for the application.
 ```
-cd ${Module_7}/app/
-sh build.sh
-
+  ./usb_input_multi_threads_refinedet_hls_drm refinedet_pruned_0_8 0 -t 3
 ```
-
-- You need to run the power patch command on the board before you can run the application, otherwise the application may cause the board to crash.
-
-```
-irps5401
-```
-
--Run this two applications
-
-- Use the below command to close the weston service:
-
-```
-   /etc/init.d/weston stop
-```
-
-- Use the following command to run this application. Please note that this application will use ARM for color conversion and image resizing.
-
-```
-  ./usb_input_multi_threads_arm_refinedet_drm refinedet_pruned_0_8 0 -t 3
-
-```
-
-- Use the following command to run this application. Please note that this application will use "preprocess" HLS kernel for color conversion and image resizing.
-
-```
- ./usb_input_multi_threads_kernel_refinedet_drm refinedet_pruned_0_8 0 -t 3
-```
-
 - DESCRIPTION
+```
+    - refinedet_pruned_0_8: The model used;
+    - 0                   :  Camera input;
+    - -t 3                :  thread number 3;
 
-  - refinedet_pruned_0_8: The model used;
-  - 0 : Camera input;
-  - -t 3 : thread number 3;
+```
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

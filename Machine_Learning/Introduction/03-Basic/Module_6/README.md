@@ -1,6 +1,6 @@
 # 3.6 Usb Camera Input and Multi-Threads base on Vitis AI Library
 
-***Note***:The programs in Module_6 are compiled and install on Evaluation Board ZCU104. Assumed that you have installed the Vitis AI v1.1 package before you compile and run the application.
+***Note***:The programs in Module_6 are compiled in cross compile environment. Assumed that you have set up the cross compile environment, for the detail you could refer to [Module3](../Module_3/README.md).
 
 Some system level functions:
 - working with DRM on ZynqMP
@@ -12,7 +12,6 @@ Some system level functions:
 The directory structure and brief explanations as below:
 ```bash
 ├── app
-│   ├── build.sh
 │   ├── images
 │   │   ├── in_depth_demo_data_flow.jpg
 │   │   └── Solution_candidate.png
@@ -53,50 +52,45 @@ The directory structure and brief explanations as below:
 │   └── test
 │       └── test.cpp
 └── README.md
+└── CMakeLists.txt
 
 ```
 ## Program Prerequisites
 This design targets the ZCU104 Vitis platform. You can refer to the [quick start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development environment.
 
 
-## Setting Up the Software Build Environment
+## Setting Up the cross-compile environment and Build app.
 ---
 
-- Use the following commands to setup the software environment. This installs the my_v4l2 libs and headers. Assume that you have copied Module6 into ZCU104.
+- After cloning the project, use the following commands to compile the applications. Regard the sdk path to be ${SDK_PATH}.
+
 
 ```
-cd ${MODULE_6}/myV4L2/
-mkdir build
-cd build
-cmake ..
-make
-make install
+source ${SDK_PATH}/environment-setup-aarch64-xilinx-linux
+cd ${Section_3-Basic}/Module_6/
+sh build_app.sh
 ```
+Copy the executable file to board.
 
+```
+scp ${Section_3-Basic}/Module_6/build/usb_input_multi_threads_refinedet_drm root@$[IP_OF_BOARD]:/home/root
+scp ${Section_3-Basic}/Module_6/build/myV4L2/libmy_v4l2s.so root@$[IP_OF_BOARD]:/usr/lib
+```
+Running zynqmp_dpu_optimize.sh on board to optimize the board setting.
+```
+#cd ~/dpu_sw_optimize/zynqmp/
+#./zynqmp_dpu_optimize.sh
+```
+The script runs automatically after the board boots up with the official image
 - Test the libmy_v4l2s.so library to see if it works properly with the test example. When the test example works, you will notice that two JPEG files are generated in your execution directory.
 ```
 ./test
 ```
 
-## Building the main application (usb_input_multi_threads_refinedet)
-- Build the application
-
-```
-cd ${MODULE_6}/app/
-sh build.sh
-
-```
-- Run the power patch
- There's a small bug in ZCU104, you need to run the following command to prevent board from crashing before you running the application.
-```
-irps5401
-```
 
 - Run the application.
  Before you run, it's needed to stop the weston service to use drm display mode for the application.
 ```
-
-   /etc/init.d/weston stop;
   ./usb_input_multi_threads_refinedet_drm refinedet_pruned_0_8 0 -t 3
 ```
 - DESCRIPTION
