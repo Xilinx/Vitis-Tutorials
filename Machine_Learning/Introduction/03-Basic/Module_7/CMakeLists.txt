@@ -19,27 +19,29 @@ find_package(OpenCV COMPONENTS opencv_core opencv_video opencv_videoio opencv_im
 if(NOT OpenCV_FOUND)
   find_package(OpenCV_LIBS opencv_core opencv_video opencv_videoio opencv_imgproc opencv_imgcodecs opencv_highgui)
 endif(NOT OpenCV_FOUND)
-add_subdirectory(myV4L2)
+add_subdirectory(HLS_V4l2s)
 add_definitions("-DUSE_DRM")
 find_path(DRM_PATH drm)
 if(NOT ${DRM_PATH} EQUAL "DRM_PATH-NOTFOUND")
   set(CMAKE_REQUIRED_INCLUDES ${DRM_PATH}/drm)
 endif()
 message(STATUS "CMAKE_SYSROOT is ${CMAKE_SYSROOT}")
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include" "${CMAKE_SYSROOT}/usr/include/drm/" "${CMAKE_SYSROOT}/usr/include/vitis/ai")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include" 
+  "${CMAKE_CURRENT_SOURCE_DIR}/HLS_V4ls/include" 
+  "${CMAKE_SYSROOT}/usr/include/drm/" 
+  "${CMAKE_SYSROOT}/usr/include/vitis/ai" 
+  "${CMAKE_SYSROOT}/usr/include/xrt" 
+)
 add_definitions()
-add_executable(usb_input_multi_threads_refinedet_drm ${CMAKE_CURRENT_SOURCE_DIR}/app/test/usb_input_multi_threads_refinedet.cpp
+add_executable(usb_input_multi_threads_refinedet_hls_drm ${CMAKE_CURRENT_SOURCE_DIR}/app/test/usb_input_multi_threads_xcl_refinedet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/decodethread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/dputhread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/guithread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/sortthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/mythread.cpp
-
-
-
 )
-target_link_libraries(usb_input_multi_threads_refinedet_drm ${OpenCV}
- my_v4l2s
+target_link_libraries(usb_input_multi_threads_refinedet_hls_drm ${OpenCV}
+hls_v4l2s
 vitis_ai_library-refinedet
 vitis_ai_library-model_config
 json-c
@@ -48,4 +50,7 @@ pthread
 drm
 vart-runner
 xnnpp-xnnpp
+xrt_core
+xrt_coreutil
+xilinxopencl
 )
