@@ -185,7 +185,7 @@ If the script finishes with out error, the md5sum values of train and val mdb fi
 
 The model zoo package provides Xilinx version RefineDet with modifications on model struture to make it compatible with Vitis AI, and also network pruning optimization by Vitis AI optimizer.
 
-The **[Journey from Original RefineDet](/Machine_Learning_Tutorial/Section_3-Basic/Module_5/network_training.md)** documents the steps in detail of how to start from original model and arrive at the baseline version (not optimized, 125GOPs) of that in the model zoo package (optimized, 5GOPs model used in this example, 25GOPs and 10GOPs models also proivded in the model zoo). The pretrained baseline model is provided here and could be used in following parts.
+The **[Journey from Original RefineDet](/Machine_Learning/Introduction/03-Basic/Module_5/network_training.md)** documents the steps in detail of how to start from original model and arrive at the baseline version (not optimized, 125GOPs) of that in the model zoo package (optimized, 5GOPs model used in this example, 25GOPs and 10GOPs models also proivded in the model zoo). The pretrained baseline model is provided here and could be used in following parts.
 
 In advanced section, there will be a seperate module to documents the workflow of AI optimizer and the steps to prune the model from baseline to optimized version.
 
@@ -204,7 +204,7 @@ In the network package, both float model and quantized model are provided togeth
 
 Go to folder `cf_refinedet_coco_480_360_0.96_5.08G/code/test` and run the network on single image with command `python demo.py`. The output image will be stored in `output/res_output.jpg`. If you would like to use different image, please modify the image path in the `demo.py`.
 
-![Inference result](/Machine_Learning_Tutorial/Section_3-Basic/Module_5/res_output.jpg)
+![Inference result](/Machine_Learning/Introduction/03-Basic/Module_5/res_output.jpg)
 
 ### Test mAP
 
@@ -441,6 +441,6 @@ In this module, we use a Caffe detection network (RefineDet) introduce following
 - how to quantize and compile the model with ready-to-use Vitis AI toolchain inside docker
 - how to deploy the network with Vitis AI library and run on the board
 
-Hope you enjoy it and let's move to [next module](/Machine_Learning_Tutorial/Section_3-Basic/Module_6/README.md) .
+Hope you enjoy it and let's move to [next module](/Machine_Learning/Introduction/03-Basic/Module_6/README.md) .
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
