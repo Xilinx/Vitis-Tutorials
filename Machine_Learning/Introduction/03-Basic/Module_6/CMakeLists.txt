@@ -26,7 +26,7 @@ if(NOT ${DRM_PATH} EQUAL "DRM_PATH-NOTFOUND")
   set(CMAKE_REQUIRED_INCLUDES ${DRM_PATH}/drm)
 endif()
 message(STATUS "CMAKE_SYSROOT is ${CMAKE_SYSROOT}")
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include" "${CMAKE_SYSROOT}/usr/include/drm/" "${CMAKE_SYSROOT}/usr/include/vitis/ai")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include" "${CMAKE_SYSROOT}/usr/include/drm/" )
 add_definitions()
 add_executable(usb_input_multi_threads_refinedet_drm ${CMAKE_CURRENT_SOURCE_DIR}/app/test/usb_input_multi_threads_refinedet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/decodethread.cpp

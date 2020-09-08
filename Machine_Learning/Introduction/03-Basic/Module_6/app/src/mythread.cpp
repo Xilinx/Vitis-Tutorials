@@ -25,7 +25,7 @@ DEF_ENV_PARAM(DEBUG_DEMO, "1")
 #define USE_DRM 0
 #endif
 #if USE_DRM
-#include <vitis/ai/dpdrm.hpp>
+#include "dpdrm.hpp"
 #endif
 
 namespace vitis {
