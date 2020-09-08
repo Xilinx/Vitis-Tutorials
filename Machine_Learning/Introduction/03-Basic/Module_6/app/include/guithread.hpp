@@ -30,7 +30,7 @@
 #endif
 
 #if USE_DRM
-#include <vitis/ai/dpdrm.hpp>
+#include "dpdrm.hpp"
 #endif
 
 

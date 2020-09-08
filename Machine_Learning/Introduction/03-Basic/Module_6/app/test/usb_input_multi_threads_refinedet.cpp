@@ -48,7 +48,7 @@
 #define USE_DRM 0
 #endif
 #if USE_DRM
-#include <vitis/ai/dpdrm.hpp>
+#include "dpdrm.hpp"
 #endif
 
 // the multithreads number setting for DPU Thread
