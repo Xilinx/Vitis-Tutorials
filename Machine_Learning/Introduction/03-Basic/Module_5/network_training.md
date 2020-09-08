@@ -381,10 +381,6 @@ I0602 18:18:52.569782 17132 solver.cpp:901]     Test net output #0: detection_ev
 I0602 21:29:55.022497 17132 solver.cpp:901]     Test net output #0: detection_eval = 0.692454
 ```
 
-<<<<<<< HEAD
-The model zoo has provided well trained baseline model as well as other three optimized models in different pruning ratio, which are corrsponding to model 10 to 13 in [model download page](https://github.com/Xilinx/Vitis-AI/tree/master/AI-Model-Zoo#model-download). All models could be used to test mAP and deploy onboard by Vitis AI toolchain.
-=======
-The well trained network model (`refinedet_baseline.caffemodel`) is provided here in oder to save time. The baseline model could be used to test mAP and deploy onboard by Vitis AI toolchain. 
->>>>>>> 28faff7902636ecf25cb57b18ef26275a9f20f8d
+The model zoo has provided well trained baseline model as well as other three optimized models in different pruning ratio, which are corrsponding to model 10 to 13 in [model download page](https://github.com/Xilinx/Vitis-AI/tree/master/AI-Model-Zoo#model-download). All models could be used to test mAP and deploy onboard by Vitis AI toolchain. The well trained network model (`refinedet_baseline.caffemodel`) is provided here in oder to save time. The baseline model could be used to test mAP and deploy onboard by Vitis AI toolchain. 
 
-Continue toolchain content at the [main page](/Machine_Learning_Tutorial/Section_3-Basic/Module_5/README.md/#evaluate-model).
+Continue toolchain content at the [main page](/Machine_Learning/Introduction/03-Basic/Module_5/README.md/#evaluate-model).
