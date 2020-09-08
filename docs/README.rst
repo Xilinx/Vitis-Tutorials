@@ -5,7 +5,7 @@
    :keywords: Vitis, tutorials, core, development
    :description: Learn how to develop accelerated applications using the Vitis core development kit.
    :xlnxdocumentclass: Document
-   :xlnxdocumenttype: Tutorials
+   :xlnxdocumenttypes: Tutorials
    
 
    
