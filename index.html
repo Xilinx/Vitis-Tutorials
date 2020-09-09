@@ -1,8 +1,18 @@
 <html>
 <head>
 <title>Vitis Tutorials</title>
-<meta http-equiv="refresh" content="0; URL='https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html'" />
-<body>
+<body onload="urlredirect()">
 Vitis Tutorials documentation is organized by release version. Redirecting to the latest version.
+<script type="text/javascript">
+    function urlredirect(){
+        var userLang = navigator.language || navigator.userLanguage;
+        if (userLang == "ja") {
+            window.location.href = "https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html"
+        }
+        else {
+            window.location.href = "https://xilinx.github.io/Vitis-Tutorials/master/docs/README.html"
+        }
+    }
+</script>
 </body>
 </html>
