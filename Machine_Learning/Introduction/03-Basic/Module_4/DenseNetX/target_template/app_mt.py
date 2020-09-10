@@ -16,7 +16,9 @@ import cv2
 import numpy as np
 import runner
 import os
-import math
+import xir.graph
+import pathlib
+import xir.subgraph
 import threading
 import time
 import sys
@@ -35,6 +37,12 @@ def preprocess_fn(image_path):
     image = image/255.0
     return image
 
+def get_subgraph (g):
+    sub = []
+    root = g.get_root_subgraph()
+    sub = [ s for s in root.children
+            if s.metadata.get_attr_str ("device") == "DPU"]
+    return sub 
 
 
 def runDPU(id,start,dpu,img):
@@ -42,17 +50,9 @@ def runDPU(id,start,dpu,img):
     '''get tensor'''
     inputTensors = dpu.get_input_tensors()
     outputTensors = dpu.get_output_tensors()
-    tensorformat = dpu.get_tensor_format()
-    if tensorformat == dpu.TensorFormat.NCHW:
-        outputHeight = outputTensors[0].dims[2]
-        outputWidth = outputTensors[0].dims[3]
-        outputChannel = outputTensors[0].dims[1]
-    elif tensorformat == dpu.TensorFormat.NHWC:
-        outputHeight = outputTensors[0].dims[1]
-        outputWidth = outputTensors[0].dims[2]
-        outputChannel = outputTensors[0].dims[3]
-    else:
-        exit("Format error")
+    outputHeight = outputTensors[0].dims[1]
+    outputWidth = outputTensors[0].dims[2]
+    outputChannel = outputTensors[0].dims[3]
     outputSize = outputHeight*outputWidth*outputChannel
 
     batchSize = inputTensors[0].dims[0]
@@ -64,7 +64,7 @@ def runDPU(id,start,dpu,img):
             runSize = batchSize
         else:
             runSize=n_of_images-count
-        shapeIn = (runSize,) + tuple([inputTensors[0].dims[i] for i in range(inputTensors[0].ndims)][1:])
+        shapeIn = (runSize,) + tuple([inputTensors[0].dims[i] for i in range(inputTensors[0].ndim)][1:])
 
         '''prepare batch input/output '''
         outputData = []
@@ -98,19 +98,23 @@ def app(image_dir,threads,model):
     global out_q
     out_q = [None] * runTotal
 
+    g = xir.graph.Graph.deserialize(pathlib.Path(model))
+    subgraphs = get_subgraph (g)
+    assert len(subgraphs) == 1 # only one DPU kernel
     all_dpu_runners = []
-    threadAll = []
-
     for i in range(threads):
-        all_dpu_runners.append(runner.Runner(model)[0])
+        all_dpu_runners.append(runner.Runner(subgraphs[0], "run"))
 
     ''' preprocess images '''
+    print('Pre-processing',runTotal,'images...')
     img = []
     for i in range(runTotal):
         path = os.path.join(image_dir,listimage[i])
         img.append(preprocess_fn(path))
 
     '''run threads '''
+    print('Starting',threads,'threads...')
+    threadAll = []
     start=0
     for i in range(threads):
         if (i==threads-1):
@@ -167,8 +171,8 @@ def main():
                   help='Number of threads. Default is 1')
   ap.add_argument('-m', '--model',
                   type=str,
-                  default='model_dir',
-                  help='Path of folder with .elf & .json. Default is model_dir')
+                  default='model_dir/dpu_densenetx_0.elf',
+                  help='Path of .elf. Default is model_dir/dpu_densenetx_0.elf')
 
   args = ap.parse_args()  
   
