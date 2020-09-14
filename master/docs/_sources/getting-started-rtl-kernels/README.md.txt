@@ -115,12 +115,16 @@ These specifications serve as the basis for building your own RTL Kernel from an
 
 This tutorial demonstrates how to package RTL IPs as Vitis kernels (`.xo`), and use them in the Vitis core development kit. The tutorial offers two different approaches to accomplish this goal:
 
-1. Start by packaging an existing RTL module as Vivado IP, and package that IP as a Vitis kernel (`.xo`). This is the [Package IP/Package XO](./package_ip.md) flow.
-2. Then use the RTL Kernel wizard to create the elements of an RTL kernel, and fit the existing RTL module into that framework. This is the [RTL Kernel Wizard](./vitis_ide.md) flow.
+* [Package IP/Package XO](./package_ip.md)
+* [RTL Kernel Wizard](./vitis_ide.md)
 
->**TIP:** It is recommended that you follow the **Package IP/Package XO** flow first, then use the **RTL Kernel Wizard** flow. The first flow is simpler and more direct, but the second flow offers more options.
+>**TIP:** Start by packaging an existing RTL module as Vivado IP, and package that IP as a Vitis kernel (`.xo`). This is the [Package IP/Package XO](./package_ip.md) flow. Then use the RTL Kernel wizard to create the elements of an RTL kernel, and fit the existing RTL module into that framework. This is the [RTL Kernel Wizard](./vitis_ide.md) flow. The [Package IP/Package XO](./package_ip.md) flow is simpler and more direct, but the [RTL Kernel Wizard](./vitis_ide.md) flow offers more options.
+
 
 After creating the RTL Kernel, you will use the Vitis IDE to test the kernel in a Vitis application project, in hardware emulation.
+
+* [Using the RTL Kernel in a Vitis IDE Project](./using_the_rtl_kernel.md)
+* [Vivado Design Suite — RTL Design](./vivado_ip.md)
 
 </br>
 <hr/>

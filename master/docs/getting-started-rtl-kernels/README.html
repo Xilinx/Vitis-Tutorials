@@ -331,7 +331,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting Started Pathway</span></p>
+              <p class="caption"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started Pathway</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../vitis-getting-started/README.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vitis-execution-model/README.html">Execution Model of an FPGA Accelerated Application</a></li>
@@ -355,7 +359,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#vector-accumulate-rtl-ip">Vector-Accumulate RTL IP</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a><ul>
+<li class="toctree-l3"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/getting-started-rtl-kernels\package_ip.html">Package IP/Package XO</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/getting-started-rtl-kernels\vitis_ide.html">RTL Kernel Wizard</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/getting-started-rtl-kernels\using_the_rtl_kernel.html">Using the RTL Kernel in a Vitis IDE Project</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/getting-started-rtl-kernels\vivado_ip.html">Vivado Design Suite — RTL Design</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../vitis_hls_analysis/README.html">Vitis HLS Analysis and Optimization</a></li>
@@ -371,7 +381,7 @@
 <p class="caption"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">Master</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md">2019.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md">2019.2</a></li>
 </ul>
 
             
@@ -579,14 +589,22 @@
 <div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
 <p>This tutorial demonstrates how to package RTL IPs as Vitis kernels (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>), and use them in the Vitis core development kit. The tutorial offers two different approaches to accomplish this goal:</p>
-<ol class="simple">
-<li><p>Start by packaging an existing RTL module as Vivado IP, and package that IP as a Vitis kernel (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>). This is the <a class="reference internal" href="package_ip.html"><span class="doc">Package IP/Package XO</span></a> flow.</p></li>
-<li><p>Then use the RTL Kernel wizard to create the elements of an RTL kernel, and fit the existing RTL module into that framework. This is the <a class="reference internal" href="vitis_ide.html"><span class="doc">RTL Kernel Wizard</span></a> flow.</p></li>
-</ol>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/getting-started-rtl-kernels\package_ip.html">Package IP/Package XO</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/getting-started-rtl-kernels\vitis_ide.html">RTL Kernel Wizard</a></li>
+</ul>
+</div>
 <blockquote>
-<div><p><strong>TIP:</strong> It is recommended that you follow the <strong>Package IP/Package XO</strong> flow first, then use the <strong>RTL Kernel Wizard</strong> flow. The first flow is simpler and more direct, but the second flow offers more options.</p>
+<div><p><strong>TIP:</strong> Start by packaging an existing RTL module as Vivado IP, and package that IP as a Vitis kernel (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>). This is the <a class="reference internal" href="package_ip.html"><span class="doc">Package IP/Package XO</span></a> flow. Then use the RTL Kernel wizard to create the elements of an RTL kernel, and fit the existing RTL module into that framework. This is the <a class="reference internal" href="vitis_ide.html"><span class="doc">RTL Kernel Wizard</span></a> flow. The <a class="reference internal" href="package_ip.html"><span class="doc">Package IP/Package XO</span></a> flow is simpler and more direct, but the <a class="reference internal" href="vitis_ide.html"><span class="doc">RTL Kernel Wizard</span></a> flow offers more options.</p>
 </div></blockquote>
 <p>After creating the RTL Kernel, you will use the Vitis IDE to test the kernel in a Vitis application project, in hardware emulation.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/getting-started-rtl-kernels\using_the_rtl_kernel.html">Using the RTL Kernel in a Vitis IDE Project</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/getting-started-rtl-kernels\vivado_ip.html">Vivado Design Suite — RTL Design</a></li>
+</ul>
+</div>
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
@@ -621,7 +639,7 @@
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on August 04, 2020.
+        Last updated on September 14, 2020.
       </span>
 
     </p>
