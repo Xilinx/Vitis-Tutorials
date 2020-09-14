@@ -73,7 +73,6 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
       4. Define the part for the project by selecting the **...**.
 
             This opens the Device Selection dialog box.
-            
         ![Add Sources](./images/create_project-select_part.png)
 
          The Device Selection dialog box lets you specify a Xilinx device for the project or a board containing one or more Xilinx devices.

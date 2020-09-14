@@ -329,7 +329,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting Started Pathway</span></p>
+              <p class="caption"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started Pathway</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../vitis-getting-started/README.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vitis-execution-model/README.html">Execution Model of an FPGA Accelerated Application</a></li>
@@ -355,7 +359,7 @@
 <p class="caption"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">Master</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md">2019.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md">2019.2</a></li>
 </ul>
 
             
@@ -477,68 +481,68 @@
 <li><p>Right-click <strong>Vadd_A_B_tb.sv</strong>, and then select <strong>Move to Simulation Sources</strong>.</p>
 <p>This defines the test bench for use in simulation and enables the Vivado Design Suite to identify the <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.v</span></code> file as the new top level of the design. This RTL IP has an interface which is compatible with the requirements for RTL kernels in the Vitis core development kit. This can be seen in the module <code class="docutils literal notranslate"><span class="pre">Vadd_A_B</span></code> definition, as shown in the following code.</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">Vadd_A_B</span> <span class="p">#(</span>
-  <span class="k">parameter</span> <span class="k">integer</span> <span class="n">C_S_AXI_CONTROL_ADDR_WIDTH</span> <span class="o">=</span> <span class="mh">12</span> <span class="p">,</span>
-  <span class="k">parameter</span> <span class="k">integer</span> <span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span> <span class="o">=</span> <span class="mh">32</span> <span class="p">,</span>
-  <span class="k">parameter</span> <span class="k">integer</span> <span class="n">C_M00_AXI_ADDR_WIDTH</span>       <span class="o">=</span> <span class="mh">64</span> <span class="p">,</span>
-  <span class="k">parameter</span> <span class="k">integer</span> <span class="n">C_M00_AXI_DATA_WIDTH</span>       <span class="o">=</span> <span class="mh">512</span><span class="p">,</span>
-  <span class="k">parameter</span> <span class="k">integer</span> <span class="n">C_M01_AXI_ADDR_WIDTH</span>       <span class="o">=</span> <span class="mh">64</span> <span class="p">,</span>
-  <span class="k">parameter</span> <span class="k">integer</span> <span class="n">C_M01_AXI_DATA_WIDTH</span>       <span class="o">=</span> <span class="mh">512</span>
+  <span class="k">parameter</span> <span class="k">integer</span> <span class="no">C_S_AXI_CONTROL_ADDR_WIDTH</span> <span class="o">=</span> <span class="mh">12</span> <span class="p">,</span>
+  <span class="k">parameter</span> <span class="k">integer</span> <span class="no">C_S_AXI_CONTROL_DATA_WIDTH</span> <span class="o">=</span> <span class="mh">32</span> <span class="p">,</span>
+  <span class="k">parameter</span> <span class="k">integer</span> <span class="no">C_M00_AXI_ADDR_WIDTH</span>       <span class="o">=</span> <span class="mh">64</span> <span class="p">,</span>
+  <span class="k">parameter</span> <span class="k">integer</span> <span class="no">C_M00_AXI_DATA_WIDTH</span>       <span class="o">=</span> <span class="mh">512</span><span class="p">,</span>
+  <span class="k">parameter</span> <span class="k">integer</span> <span class="no">C_M01_AXI_ADDR_WIDTH</span>       <span class="o">=</span> <span class="mh">64</span> <span class="p">,</span>
+  <span class="k">parameter</span> <span class="k">integer</span> <span class="no">C_M01_AXI_DATA_WIDTH</span>       <span class="o">=</span> <span class="mh">512</span>
 <span class="p">)</span>
 <span class="p">(</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">ap_clk</span>               <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m00_axi_awvalid</span>      <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m00_axi_awready</span>      <span class="p">,</span>
-  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M00_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m00_axi_awaddr</span>       <span class="p">,</span>
+  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M00_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m00_axi_awaddr</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>                            <span class="n">m00_axi_awlen</span>        <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m00_axi_wvalid</span>       <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m00_axi_wready</span>       <span class="p">,</span>
-  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M00_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m00_axi_wdata</span>        <span class="p">,</span>
-  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M00_AXI_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>       <span class="n">m00_axi_wstrb</span>        <span class="p">,</span>
+  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M00_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m00_axi_wdata</span>        <span class="p">,</span>
+  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M00_AXI_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>       <span class="n">m00_axi_wstrb</span>        <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m00_axi_wlast</span>        <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m00_axi_bvalid</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m00_axi_bready</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m00_axi_arvalid</span>      <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m00_axi_arready</span>      <span class="p">,</span>
-  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M00_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m00_axi_araddr</span>       <span class="p">,</span>
+  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M00_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m00_axi_araddr</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>                            <span class="n">m00_axi_arlen</span>        <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m00_axi_rvalid</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m00_axi_rready</span>       <span class="p">,</span>
-  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M00_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m00_axi_rdata</span>        <span class="p">,</span>
+  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M00_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m00_axi_rdata</span>        <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m00_axi_rlast</span>        <span class="p">,</span>
   <span class="c1">// AXI4 master interface m01_axi</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m01_axi_awvalid</span>      <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m01_axi_awready</span>      <span class="p">,</span>
-  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M01_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m01_axi_awaddr</span>       <span class="p">,</span>
+  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M01_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m01_axi_awaddr</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>                            <span class="n">m01_axi_awlen</span>        <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m01_axi_wvalid</span>       <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m01_axi_wready</span>       <span class="p">,</span>
-  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M01_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m01_axi_wdata</span>        <span class="p">,</span>
-  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M01_AXI_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>       <span class="n">m01_axi_wstrb</span>        <span class="p">,</span>
+  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M01_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m01_axi_wdata</span>        <span class="p">,</span>
+  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M01_AXI_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>       <span class="n">m01_axi_wstrb</span>        <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m01_axi_wlast</span>        <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m01_axi_bvalid</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m01_axi_bready</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m01_axi_arvalid</span>      <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m01_axi_arready</span>      <span class="p">,</span>
-  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M01_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m01_axi_araddr</span>       <span class="p">,</span>
+  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M01_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m01_axi_araddr</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>                            <span class="n">m01_axi_arlen</span>        <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m01_axi_rvalid</span>       <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">m01_axi_rready</span>       <span class="p">,</span>
-  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="n">C_M01_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m01_axi_rdata</span>        <span class="p">,</span>
+  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="no">C_M01_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">m01_axi_rdata</span>        <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">m01_axi_rlast</span>        <span class="p">,</span>
   <span class="c1">// AXI4-Lite slave interface</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">s_axi_control_awvalid</span><span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">s_axi_control_awready</span><span class="p">,</span>
-  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="n">C_S_AXI_CONTROL_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">s_axi_control_awaddr</span> <span class="p">,</span>
+  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="no">C_S_AXI_CONTROL_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">s_axi_control_awaddr</span> <span class="p">,</span>
   <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">s_axi_control_wvalid</span> <span class="p">,</span>
   <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">s_axi_control_wready</span> <span class="p">,</span>
-  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">s_axi_control_wdata</span>  <span class="p">,</span>
-  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">s_axi_control_wstrb</span>  <span class="p">,</span>
+  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="no">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">s_axi_control_wdata</span>  <span class="p">,</span>
+  <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="no">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">s_axi_control_wstrb</span>  <span class="p">,</span>
  <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">s_axi_control_arvalid</span><span class="p">,</span>
  <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">s_axi_control_arready</span><span class="p">,</span>
- <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="n">C_S_AXI_CONTROL_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">s_axi_control_araddr</span> <span class="p">,</span>
+ <span class="k">input</span>  <span class="kt">wire</span> <span class="p">[</span><span class="no">C_S_AXI_CONTROL_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">s_axi_control_araddr</span> <span class="p">,</span>
  <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">s_axi_control_rvalid</span> <span class="p">,</span>
  <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">s_axi_control_rready</span> <span class="p">,</span>
- <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">s_axi_control_rdata</span>  <span class="p">,</span>
+ <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="no">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">s_axi_control_rdata</span>  <span class="p">,</span>
  <span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">2</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>                            <span class="n">s_axi_control_rresp</span>  <span class="p">,</span>
  <span class="k">output</span> <span class="kt">wire</span>                                    <span class="n">s_axi_control_bvalid</span> <span class="p">,</span>
  <span class="k">input</span>  <span class="kt">wire</span>                                    <span class="n">s_axi_control_bready</span> <span class="p">,</span>
@@ -634,7 +638,7 @@ The Generate RTL Kernel dialog box is opened, as shown in the following figure.<
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on August 04, 2020.
+        Last updated on September 14, 2020.
       </span>
 
     </p>
