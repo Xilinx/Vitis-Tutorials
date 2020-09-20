@@ -41,12 +41,13 @@ SM_KERN_NAME = sfm_xrt_top
 
 dpu_sm_xo = binary_container_1/dpu.xo binary_container_1/softmax.xo
 dpu_xo = binary_container_1/dpu.xo
-PREPROCESSOR_FLAGS := --kernel pre_processor -I. -I./xf_opencv/L1/include -D__XF_USE_NEW_IMPL__
+PREPROCESSOR_FLAGS := --kernel pre_processor -I. -I./Vitis_Libraries/vision/L1/include/ -D__XF_USE_NEW_IMPL__
+
 
 ifeq ($(KERNEL),DPU_SM)
 kernel_xo = binary_container_1/dpu.xo binary_container_1/softmax.xo
 else ifeq ($(KERNEL),DPU)
-kernel_xo = binary_container_1/dpu.xo binary_container_1/pre_processor.xo
+kernel_xo =binary_container_1/dpu.xo binary_container_1/pre_processor.xo 
 else
 kernel_xo = binary_container_1/dpu.xo
 endif
@@ -67,6 +68,8 @@ binary_container_1/softmax.xo: $(softmax_HDLSRCS)
 
 binary_container_1/pre_processor.xo: pre_processor.cpp pre_processor.h
 	v++ -t ${TARGET} --platform ${SDX_PLATFORM} ${PREPROCESSOR_FLAGS} --temp_dir binary_container_1 --kernel_frequency=300 --log_dir binary_container_1/logs --config preprocessor_config.ini -c -o $@ $<
+
+
 binary_container_1/dpu.xclbin: $(kernel_xo)
 	v++ $(XOCC_OPTS) -l --temp_dir binary_container_1 --log_dir binary_container_1/logs --remote_ip_cache binary_container_1/ip_cache -o "$@" $(+)
 
