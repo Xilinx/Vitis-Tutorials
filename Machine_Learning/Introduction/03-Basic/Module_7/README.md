@@ -1,7 +1,7 @@
 # 3.7 Acceleration with HLS kernel
 
 **_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
-This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. About how to immigrate from OpenCV to HLS, please refer to [README.md](app/README.md)
+This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. About how to immigrate from OpenCV to HLS, please refer to [app/README.md](app/README.md)
 
 Some system level functions:
 
@@ -79,19 +79,19 @@ The directory structure and brief explanations as below:
   - Micro-USB cable, connect to lattop for the terminal emulator.
   - SD card to burn the OS image.
 - Software required:
-- Vitis 2019.2 [Vitis Core Development Kit](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2019-2.html) install in server.
+- Vitis 2020.1 [Vitis Core Development Kit](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2020-1.html) install in server.
 - [Silicon Labs quad CP210x USB-to-UART bridge driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) install in laptop.
 - Serial terminal emulator e.g. teraterm, Mobaxterm install in laptop
-- [XRT 2019.2](https://github.com/Xilinx/XRT/tree/2019.2) install in laptop
-- [zcu104 dpu platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2019.2/Xilinx_Official_Platforms/zcu104_dpu) install in server
-- [Vitis AI runtime package](https://xilinx-ax-dl.entitlenow.com/dl/ul/2020/04/27/R210316037/vitis-ai-runtime-1.1.2.tar.gz/73b825a7fd3fb54fa9693eeb634ac491/5F0EBBB3?akdm=0&filename=vitis-ai-runtime-1.1.2.tar.gz)
-- [Vitis AI model packages for ZCU104](https://xilinx-ax-dl.entitlenow.com/dl/ul/2020/03/19/R210290235/vitis_ai_model_ZCU104_2019.2-r1.1.0.deb/960da8e4ed428df080602e9ba62e09f3/5F0EBB60?akdm=0&filename=vitis_ai_model_ZCU104_2019.2-r1.1.0.deb)
-
+- [XRT 2020.1](https://github.com/Xilinx/XRT/tree/2020.1) install in laptop
+- [zcu104 base platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/zcu104_base) install in server
+- [Vitis AI runtime package](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai-runtime-1.2.1.tar.gz) base on VAI1.2
+- [Vitis AI model packages ](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge)for ZCU104
+- [dpu_sw_optimize.tar.gz](https://github.com/Xilinx/Vitis-AI/blob/master/DPU-TRD/app/dpu_sw_optimize.tar.gz) Running zynqmp_dpu_optimize.sh to optimize the board setting
 ---
 
-## [Building the Vitis Platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2019.2/Xilinx_Official_Platforms/zcu104_dpu)
+## [Building the Vitis Platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/zcu104_base)
 
-Last Tested Vivado Release: 2019.2
+Last Tested Vivado Release: 2020.1
 The platform build process is entirely scripted. Note that as this platform build process involves cross-compiling Linux, build of the platform is supported on Linux environments only (although it is possible to build inside a VM or Docker container).
 
 Also note that the default PetaLinux configuration uses local scratchpad areas. This will not work if you are building on a networked file system; Yocto will error out. Update PetaLinux to change the build area to a locally-mounted hard drive (most Xilinx internal network servers have a /scratch or /tmp area for this purpose).
@@ -112,14 +112,17 @@ This packages comes with sources to generate hardware specification file (xsa) f
 
 Build platform from scratch: make all
 
-Build a platform without modifying hardware: make petalinux_proj XSA_DIR= make pfm XSA_DIR=
+Build a platform without modifying hardware:
+```
+ make petalinux_proj XSA_DIR= make pfm XSA_DIR=
 
+```
 ```
 example:
 	make petalinux_proj XSA_DIR=/home/user/zcu104_dpu/vivado
 	make pfm /home/user/zcu104_dpu/vivado
-```
 
+```
 ---
 
 ### IP Integrated
@@ -130,27 +133,27 @@ example:
 $ git clone git@github.com:Xilinx/Vitis-AI.git
 ```
 
-- Step2: copy the files below to under the directory "\${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis"
+- Step2: copy the files below to work directory
 
 ```
 $ cp ${Module_7}/kernel/build/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
 $ cp ${Module_7}/kernel/src/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/src/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis/config_file
 ```
+- Step3: Git clone the vitis library 
+```
+cd ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
+git clone https://github.com/Xilinx/Vitis_Libraries.git
+```
+- Step4: Run the below commands to start IP integration and wait for it to complete.
+- Step5: Export the platform path
 
-- Step3: Run the below commands to start IP integration and wait for it to complete.
 
 ```
 $ cd ${Module_7}/kernel/src/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
 make -j
 ```
 
-- Step4: Generate the system image
-
-```
-cp ${Module_7}/kernel/flash_sd_card.sh  ${Vitis-AI}/DPU-TRD/prj/Vitis/binary_container_1/sd_card
-cd ${Module_7}/kernel/flash_sd_card.sh ${Vitis-AI}/DPU-TRD/prj/Vitis/binary_container_1/sd_card
-sudo ./flash_sd_card.sh
-```
 
 - Step5: Use etcher or other tools to burn the image to 16GB sd card.
 - Step6: Set the Mode to SD card

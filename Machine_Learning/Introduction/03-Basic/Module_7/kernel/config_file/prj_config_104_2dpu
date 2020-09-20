@@ -55,4 +55,4 @@ prop=run.impl_1.strategy=Performance_ExploreWithRemap
 [connectivity]
 sp=pre_processor_1.image_in:HPC1
 sp=pre_processor_1.image_out:HPC1
-sp=pre_precessor_1.image_out_full:HPC1
+sp=pre_processor_1.image_out_full:HPC1
