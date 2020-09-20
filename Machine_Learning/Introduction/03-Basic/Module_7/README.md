@@ -1,4 +1,7 @@
 # 3.7 Acceleration with HLS kernel
+---
+
+***Version: Vitis 2020.1+Vitis AI 1.2***
 
 **_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
 This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. About how to immigrate from OpenCV to HLS, please refer to [app/README.md](app/README.md)
@@ -72,7 +75,9 @@ The directory structure and brief explanations as below:
 
 ```
 
-## Platform integrated
+
+
+## Pre-Requirement
 
 - Hardware required:
   - ZCU104 evaluation board
@@ -89,18 +94,24 @@ The directory structure and brief explanations as below:
 - [dpu_sw_optimize.tar.gz](https://github.com/Xilinx/Vitis-AI/blob/master/DPU-TRD/app/dpu_sw_optimize.tar.gz) Running zynqmp_dpu_optimize.sh to optimize the board setting
 ---
 
-## [Building the Vitis Platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/zcu104_base)
+## Workflow Overview
+- Step 1: Create Base Platform
+- Step 2: DPU and HLS kernel integration
+- Step 3: Cross Compiler Environtment Set up and Build application
+- Step 4: Board Development Setting
+- Step 5: Run the Application.
 
-Last Tested Vivado Release: 2020.1
-The platform build process is entirely scripted. Note that as this platform build process involves cross-compiling Linux, build of the platform is supported on Linux environments only (although it is possible to build inside a VM or Docker container).
+## Step 1:Create Base Platform 
+In this step you can choose build a platform form scratch, the detail tutorial you can refer to [Vitis_Platform_Creation](../../../../Vitis_Platform_Creation/README.md).
+
+The other way is to use the Official Platofrm code of [Xilinx_Official_Platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source), in which the platform build process is entirely scripted. Note that as this platform build process involves cross-compiling Linux, build of the platform is supported on Linux environments only (although it is possible to build inside a VM or Docker container).
 
 Also note that the default PetaLinux configuration uses local scratchpad areas. This will not work if you are building on a networked file system; Yocto will error out. Update PetaLinux to change the build area to a locally-mounted hard drive (most Xilinx internal network servers have a /scratch or /tmp area for this purpose).
 
-After cloning the platform source, and with both Vivado and PetaLinux set up, run make from the top-level platform directory.
+After cloning the platform source, and with both Vivado and PetaLinux set up, run ***make*** from the top-level platform directory. In this case we choose ZCU104_Base platform.
 
-Note that by default this Makefile will install the platform to "platform_repo/zcu104_dpu/export/zcu104_dpu/"
 
-### Installing the Yocto SDK
+### Installing the Yocto SDK ###
 
 A bundled Yocto SDK "sysroot" is not available with this package by default. To build non-trivial Linux software for this platform sysroot need to be built and installed. This can be done with command "make peta_sysroot" It is installed to "platform_repo/sysroot" once the build completes.
 
@@ -125,15 +136,15 @@ example:
 ```
 ---
 
-### IP Integrated
+###Step 2:  DPU and HLS kernel integration
 
-- Step1: Use below commands to clone the Vitis-AI from github project.
+-  Use below commands to clone the Vitis-AI from github project.
 
 ```
 $ git clone git@github.com:Xilinx/Vitis-AI.git
 ```
 
-- Step2: copy the files below to work directory
+- copy the files below to work directory
 
 ```
 $ cp ${Module_7}/kernel/build/* ${Vitis-AI/DPU-TRD}DPU-TRD/prj/Vitis
@@ -163,42 +174,49 @@ make -j
   Rev D2:   SW6[4:1] - on, off, on, off
   ```
 
-### Board development setting.
 
-How to setup the board environment you could refer to [Module_3/README.md](../../Module_3/README.md)
-
-## Setting Up the cross-compile environment and Build app.
+## Step 3: Cross Compiler Environtment Set up and Build application
 ---
-
-- After cloning the project, use the following commands to compile the applications. Regard the sdk path to be ${SDK_PATH}.
-
-
+- Install the SDK package.
 ```
-$ source ${SDK_PATH}/environment-setup-aarch64-xilinx-linux
+$sh sdk.sh
+```
+
+- After installing the sdk package, we use the script to set up the cross-compile environemnt by using the following commands.
+```
+$ source <full_path_of_sdk>/environment-setup-aarch64-xilinx-linux
 $ cd ${Section_3-Basic}/Module_7/
 $ sh build_app.sh
 ```
-Copy the executable file to board.
+
+### Step 4:Board development setting.
+
+Regarding the detail about how to set up the environment of the Board you can refer to  [Module_3/README.md](../../Module_3/README.md)
+
+Copy the executable file and the libraries to board.
 
 ```
 $ scp ${Section_3-Basic}/Module_7/build/usb_input_multi_threads_refinedet_drm root@$[IP_OF_BOARD]:/home/root
 $ scp ${Section_3-Basic}/Module_7/build/myVHLS_V4l2s/libhls_v4l2s.so root@$[IP_OF_BOARD]:/usr/lib
 ```
+- Download the board [optimized package](https://github.com/Xilinx/Vitis-AI/blob/master/DPU-TRD/app/dpu_sw_optimize.tar.gz) and run the script to complete the environment set up.
+
 Running zynqmp_dpu_optimize.sh on board to optimize the board setting.
 ```
-#cd ~/dpu_sw_optimize/zynqmp/
-#./zynqmp_dpu_optimize.sh
+# scp dpu_sw_optimize.tar.gz root@$[Board_of_IP]:/home/root
+# tar -xvzf dpu_sw_optimize.tar.gz
+# cd ~/dpu_sw_optimize/zynqmp/
+# sh zynqmp_dpu_optimize.sh
 ```
-The script runs automatically after the board boots up with the official image
+
+###Step 5: Run the Application.
+
 - Test the HLS kernel to see if it works properly with the test example. When the test example works, you will notice that two PNG files are generated in your execution directory.
 ```
 # chmod +x test_hls_kernel
 # ./test_hls_kernel
 ```
-
-
-- Run the application.
- Before you run, it's needed to stop the weston service to use drm display mode for the application.
+- In this case we use refinedet model to show the body detecition.
 ```
   ./usb_input_multi_threads_refinedet_hls_drm refinedet_pruned_0_8 0 -t 3
 ```
