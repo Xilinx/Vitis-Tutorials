@@ -175,54 +175,34 @@ We would store all the necessary files for Vitis platform creation flow. Here we
    petalinux-build
    ```
 
-
-
-2. Copy the generated Linux software boot components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/boot*** directory to prepare for running the Vitis platform packaging flow:
-
-   - zynqmp_fsbl.elf: ***rename as fsbl.elf*** as a workaround of a Vitis known issue.
-   - pmufw.elf
-   - bl31.elf
-   - u-boot.elf
-
-Note: These files are the sources of creating BOOT.BIN.
-
-3. Add a BIF file (linux.bif) to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/boot*** directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the <> symbols.<br />
-
-```
-/* linux */
- the_ROM_image:
- {
- 	[fsbl_config] a53_x64
- 	[bootloader] <fsbl.elf>
- 	[pmufw_image] <pmufw.elf>
- 	[destination_device=pl] <bitstream>
- 	[destination_cpu=a53-0, exception_level=el-3, trustzone] <bl31.elf>
- 	[destination_cpu=a53-0, exception_level=el-2] <u-boot.elf>
- }
-```
-
-4. Prepare image directory. Contents in this directory will be packaged to FAT32 partition by v++ package tool.
-
-   a) Copy the generated Linux software components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/image*** directory.
-
-   - boot.scr: script for u-boot initialization
-   - system.dtb: device tree file for Linux to boot
-
-   b) Copy ***init.sh*** and ***platform_description.txt*** from ***ref_files/step3_pfm*** to ***<full_pathname_to_zcu104_custom_pkg>/pfm/image*** directory.
-
-   - init.sh will set environment variable XILINX_XRT for XRT and copy platform_desc.txt to /etc/xocl.txt
-   - platform_desc.txt has the platform name. XRT will check platform name before loading xclbin file.
-
-5. Create a sysroot self-installer for the target Linux system
+2. Create a sysroot self-installer for the target Linux system
 
    ```
    petalinux-build --sdk
    ```
 
-6. Install sysroot: type ```./images/linux/sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***zcu104_custom_pkg/pfm*** (This is an example ) and confirm.<br />
+3. Install sysroot: type ```./images/linux/sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***zcu104_custom_pkg/pfm*** (This is an example ) and confirm.<br />
 
-  We would install Vitis AI library and DNNDK into this rootfs in the future.
+  We would install Vitis AI library and DNNDK into this rootfs during test phase.
 
 ***Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](./step3.md).***
+
+### Fast Track
+
+Scripts are provided to re-create PetaLinux project and generate outputs. To use these scripts, please run the following steps.
+
+1. Run build
+
+   ```
+   # cd to the step directory, e.g.
+   cd step2_petalinux
+   make all
+   ```
+
+2. To clean the generated files, please run
+
+   ```bash
+   make clean
+   ```
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
