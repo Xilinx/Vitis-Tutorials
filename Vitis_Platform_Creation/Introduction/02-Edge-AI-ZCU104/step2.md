@@ -15,7 +15,7 @@ A Vitis platform requires software components. Xilinx provides common software i
    ```
 
 3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu104-revc```.<br />
-   ***Note: If you are using a Xilinx development board it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. Otherwise you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
+   ***Note: If you are using a Xilinx development board it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. If you're using a custom board, you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
 
 
 
@@ -141,11 +141,29 @@ e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable
 
    Since Vitis-AI software stack is not included in PetaLinux yet, they need to be installed after PetaLinux generates rootfs. PetaLinux uses initramfs format for rootfs by default, it can't retain the rootfs changes in run time. To make the root file system retain changes, we'll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store boot.bin file.
 
-   Run `petalinux-config`, go to ***Image Packaging Configuration***, select ***Root File System Type*** as ***EXT4***, and append `ext4 ext4.gz` to ***Root File System Formats***.
+   Run `petalinux-config`, go to ***Image Packaging Configuration***, select ***Root File System Type*** as ***EXT4***, and append `ext4` to ***Root File System Formats***.
 
    ![](./images/petalinux_root_filesystem_type.png)
 
    ![](./images/petalinux_add_rootfs_types.png)
+
+   Update ***bootargs*** to allow Linux to boot from EXT4 partition. There are various ways to update bootargs. Please take either way below.
+   
+   - Update in `petalinux-config`: Change ***Device Tree -> SUBSYSTEM_BOOTARGS_AUTO*** to NO and update ***SUBSYSTEM_DTB_OVERLAY*** to `earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M`
+   
+   - Update in  ***system-user.dtsi***: add `chosen` node in root
+   ```
+   /include/ "system-conf.dtsi"
+   / {
+	   chosen {
+	   	bootargs = "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M";
+	   };
+   };
+   ```
+
+   Please note in the bootargs, we also set these options:
+   - ***clk_ignore_unused***: it tells Linux kernel don't turn off clocks if this clock is not used. It's useful clocks that only drives PL kernels because PL kernels are not represented in device tree.
+   - ***cma=512M***: CMA is used to exchange data between PS and PL kernel. The size for CMA is determined by PL kernel requirements. Vitis-AI/DPU needs at least 512MB CMA.
 
 ### Build Image and Prepare for Platform Packaging
 
