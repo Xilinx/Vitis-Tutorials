@@ -191,4 +191,22 @@ write_hw_platform -unified ./zcu104_custom_platform.xsa
 
 ***Now we finish the Hardware platform creation flow, then we should go to the [Step2: Software platform creation](./step2.md)***
 
+### Fast Track
+
+Scripts are provided to re-create projects and generate outputs. To use these scripts, please run the following steps.
+
+1. Run build
+
+   ```
+   # cd to the step directory, e.g.
+   cd step1_vivado
+   make
+   ```
+   
+2. To clean the generated files, please run
+   
+   ```bash
+   make clean
+   ```
+
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
