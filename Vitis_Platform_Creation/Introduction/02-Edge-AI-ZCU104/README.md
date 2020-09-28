@@ -1,4 +1,4 @@
-# Vitis Custom Embedded Platform Creation
+# Vitis Custom Embedded Platform Creation Example on ZCU104
 
 ***Version: Vitis 2020.1 + Vitis AI 1.2***
 

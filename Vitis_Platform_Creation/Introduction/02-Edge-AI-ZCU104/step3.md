@@ -40,6 +40,63 @@ Note: These files are the sources of creating BOOT.BIN.
 
    - init.sh will set environment variable XILINX_XRT for XRT and copy platform_desc.txt to /etc/xocl.txt
    - platform_desc.txt has the platform name. XRT will check platform name before loading xclbin file.
+   - User needs to run `source /mnt/sd-mmcblk0p1/init.sh` manually.
+
+### (Optional) Prepare Files to Enable Emulation
+
+To run software emulation or software emulation with Vitis, we'll need to prepare some emulation configuration files.
+
+- QEMU Data: boot components used by QEMU. It can reuse the boot directory that we've prepared
+- QEMU Arguments: QEMU arguments for launching Linux on ARM Cortex-A53
+- PMU QEMU Arguments: QEMU arguments for launching PMUFW on PMU
+
+1. Create directory qemu
+2. Copy ***pmu_args.txt*** and ***qemu_args.txt*** from ***ref_files/step3_pfm/qemu/*** to your qemu directory
+
+Example of ***qemu_args.txt***
+
+```
+-M
+arm-generic-fdt
+-serial
+mon:stdio
+-global
+xlnx,zynqmp-boot.cpu-num=0
+-global
+xlnx,zynqmp-boot.use-pmufw=true
+-net
+nic
+-net
+nic
+-net
+nic
+-net
+nic
+-net
+user
+-m
+4G
+-device
+loader,file=<xrt/qemu/bl31.elf>,cpu-num=0
+-device
+loader,file=<xrt/qemu/u-boot.elf>
+-boot
+mode=5
+
+```
+
+Example of ***pmu_args.txt***
+
+```
+-M
+microblaze-fdt
+-device
+loader,file=<xrt/qemu/pmufw.elf>
+-machine-path
+.
+-display
+none
+```
 
 
 ### Create a Vitis Platform
@@ -90,6 +147,12 @@ Next we setup software settings in Platform Settings view.
    - ***Bif file***: Browse to ***zcu104_custom_pkg/boot/linux.bif*** file and click OK.
    - ***Boot Components Direcotory***: Browse to ***zcu104_custom_pkg/boot*** and click OK.
    - ***Linux Image Directory***: Browse to ***zcu104_custom_pkg/image*** and click OK.
+
+3. (Optional) Setup emulation related files
+
+   - QEMU Data: Browse to ***zcu104_custom_pkg/boot*** and click OK
+   - QEMU Arguments: Browse to ***qemu_args.txt*** and click OK
+   - PMU QEMU Arguments: Browse to ***pmu_args.txt*** and click OK
 
 ![vitis_linux_config.png](./images/vitis_linux_config.png)
 
