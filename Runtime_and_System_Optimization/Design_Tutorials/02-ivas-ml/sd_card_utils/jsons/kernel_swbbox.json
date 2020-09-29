@@ -1,0 +1,13 @@
+{
+  "xclbin-location": "/usr/lib/dpu.xclbin",
+  "ivas-library-repo": "/usr/lib/ivas",
+  "element-mode": "inplace",
+  "kernels": [
+    {
+      "library-name": "libivas_xswbbox.so",
+      "config": {
+        "thickness": 2
+      }
+    }
+  ]
+}

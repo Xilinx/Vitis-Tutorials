@@ -1,0 +1,16 @@
+/ {
+        cpus {
+                cpu@1 {
+                        //compatible = "disabled";
+                        device_type = "none";
+                };
+                cpu@2 {
+                        //compatible = "disabled";
+                        device_type = "none";
+                };
+                cpu@3 {
+                        //compatible = "disabled";
+                        device_type = "none";
+                };
+        };
+};
