@@ -21,6 +21,11 @@ The methodology for developing optimized accelerated applications is comprised o
  <td>This tutorial demonstrates how to optimize your CPU host code to get the most out of interaction between your
  hardware accelerators and your runtime software.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/02-ivas-ml/README.md">Streaming Video Analytics with IVAS</a></td>
+ <td>This tutorial demonstrates a reference platform using the Xilinx IVAS framework for streaming video
+ analytics with Vitis and Vitis AI 1.2.</td>
+ </tr>
  </table>
 
 
