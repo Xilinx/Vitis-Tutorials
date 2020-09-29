@@ -1,0 +1,3 @@
+[submodule "Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/hw_src/Vitis_Libraries"]
+	path = Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/hw_src/Vitis_Libraries
+	url = https://github.com/Xilinx/Vitis_Libraries.git
