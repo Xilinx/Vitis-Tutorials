@@ -177,6 +177,7 @@ B | pointer argument | 0x024 | 64
 3. Use the following commands in the Tcl Console to add these properties.
 
     ```
+    set core [ipx::current_core]
     set_property xpm_libraries {XPM_CDC XPM_MEMORY XPM_FIFO} $core
     set_property sdx_kernel true $core
     set_property sdx_kernel_type rtl $core
