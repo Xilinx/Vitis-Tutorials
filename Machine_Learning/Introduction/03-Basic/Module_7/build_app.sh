@@ -19,5 +19,5 @@
 git pull
 rm -rf build
 mkdir build&&cd build
-cmake ..&& make
+cmake -DUSE_DRM=on -DUSE_KERNEL=on .. && make
 cp *drm ../

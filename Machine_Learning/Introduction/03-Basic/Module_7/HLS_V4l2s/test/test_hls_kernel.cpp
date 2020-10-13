@@ -111,7 +111,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        xocl.initialize("/mnt/dpu.xclbin");
+        xocl.initialize("/usr/lib/dpu.xclbin");
     }
 
     cl::CommandQueue q = xocl.get_command_queue();
