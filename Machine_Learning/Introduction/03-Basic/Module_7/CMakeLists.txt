@@ -32,6 +32,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include"
   "${CMAKE_SYSROOT}/usr/include/vitis/ai" 
   "${CMAKE_SYSROOT}/usr/include/xrt" 
 )
+add_definitions("-DUSE_KERNEL")
 add_executable(usb_input_multi_threads_refinedet_hls_drm ${CMAKE_CURRENT_SOURCE_DIR}/app/test/usb_input_multi_threads_xcl_refinedet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/decodethread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/dputhread.cpp
