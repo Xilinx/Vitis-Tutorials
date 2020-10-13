@@ -45,11 +45,19 @@ set(MY_SRCS src/hlsV4l2Access.cpp
 )
 
 add_library(hls_v4l2s SHARED ${MY_SRCS})
+
 target_link_libraries(hls_v4l2s ${OpenCV_LIBS} glog)
+add_executable(test_hls_kernel test/test_hls_kernel.cpp)
+target_link_libraries(test_hls_kernel
+      hls_v4l2s 
+      ${OpenCV_LIBS} 
+      glog xrt_core
+      xrt_coreutil
+      xilinxopencl
+      )
 install(TARGETS hls_v4l2s
         LIBRARY 
         DESTINATION /usr/lib
-        
         )
 install(FILES include/hlsV4l2Access.hpp  include/line_exception.hpp include/xcl2.hpp include/hlsV4l2Capture.hpp include/hlsV4l2ReadWriteDevice.hpp include/hlsV4l2Device.hpp include/hlsV4l2MmapDevice.hpp include/hlsV4l2Output.hpp 
     DESTINATION /usr/include
