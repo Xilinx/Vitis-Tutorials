@@ -19,5 +19,5 @@
 git pull
 rm -rf build
 mkdir build&&cd build
-cmake ..&& make
+cmake -DUSEDRM=1 -DUSE_KERNEL=1 .. && make
 cp *drm ../
