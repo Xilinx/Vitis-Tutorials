@@ -53,7 +53,7 @@ uint8_t *V4l2Capture::out_buf_back_0 = (uint8_t *)malloc(OUT_RESIZE_WIDTH * OUT_
 uint8_t *V4l2Capture::out_buf_back_1 = (uint8_t *)malloc(OUT_WIDTH * OUT_HEIGHT * 3);
 unsigned int V4l2Capture::resize_size = (OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
 unsigned int V4l2Capture::full_size = (OUT_WIDTH * OUT_HEIGHT * 3);
-bool V4l2Capture::xocl_initialized=false;
+bool V4l2Capture::xocl_initialized = false;
 // -----------------------------------------
 //    create video capture interface
 // -----------------------------------------
@@ -98,7 +98,7 @@ V4l2Capture::V4l2Capture(V4l2Device *device) : V4l2Access(device)
     }
     else
     {
-        xocl.initialize("/mnt/dpu.xclbin");
+        xocl.initialize("/usr/lib/dpu.xclbin");
     }
 }
 
@@ -210,8 +210,8 @@ int V4l2Capture::read_images_with_kernel(std::vector<cv::Mat> &readImage)
                 krnl.setArg(4, IN_HEIGHT);
                 krnl.setArg(5, OUT_RESIZE_WIDTH);
                 krnl.setArg(6, OUT_RESIZE_HEIGHT);
-                xocl_initialized=true;
-             }
+                xocl_initialized = true;
+            }
 
             q.enqueueWriteBuffer(imgToDevice, CL_TRUE, 0, rsize, (void *)buffer);
 
@@ -221,8 +221,7 @@ int V4l2Capture::read_images_with_kernel(std::vector<cv::Mat> &readImage)
 
             q.enqueueReadBuffer(resizeFromDevice, CL_TRUE, 0, resize_size, out_buf_0);
             q.enqueueReadBuffer(fullFromDevice, CL_TRUE, 0, full_size, out_buf_1);
-            LOG(INFO) << "OpenCL duration:" << 
-            std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start_calling).count() / 1000;
+            LOG(INFO) << "OpenCL duration:" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start_calling).count() / 1000;
 
             cv::Mat roi_mat0(OUT_RESIZE_HEIGHT, OUT_RESIZE_WIDTH, CV_8UC3, out_buf_0);
             cv::Mat roi_mat1(OUT_HEIGHT, OUT_WIDTH, CV_8UC3, out_buf_1);
