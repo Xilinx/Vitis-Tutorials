@@ -93,12 +93,19 @@ To specify the location of any Data-Center of Embedded platforms you have instal
 export PLATFORM_REPO_PATHS=<path to platforms>
 ```
 
- 
+*NOTE: On some Ubuntu distributions, you must also export LIBRARY_PATH to properly set up Vitis.*
+
+```bash
+export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
+```
+
+For more information see [Xilinx AR 73698](https://www.xilinx.com/support/answers/73698.html).
+
 
 ## Next Step
 
 Congratulations on successfully installing everything you need to use Vitis! You can now move on to [**Part 3**](./Part3.md) and get going with your first example project.
 
- 
+
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
