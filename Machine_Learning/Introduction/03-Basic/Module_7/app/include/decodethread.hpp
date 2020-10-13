@@ -21,8 +21,8 @@
 #include "mythread.hpp"
 #include <linux/videodev2.h>    
 #include <opencv2/core.hpp>
-#include <hlsV4l2Device.hpp>
-#include <hlsV4l2Capture.hpp>
+#include "hlsV4l2Device.hpp"
+#include "hlsV4l2Capture.hpp"
 
 namespace vitis{
     namespace ai{
