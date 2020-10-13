@@ -27,7 +27,7 @@ if(NOT ${DRM_PATH} EQUAL "DRM_PATH-NOTFOUND")
 endif()
 message(STATUS "CMAKE_SYSROOT is ${CMAKE_SYSROOT}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/app/include" 
-  "${CMAKE_CURRENT_SOURCE_DIR}/HLS_V4ls/include" 
+  "${CMAKE_CURRENT_SOURCE_DIR}/HLS_V4l2s/include" 
   "${CMAKE_SYSROOT}/usr/include/drm/" 
   "${CMAKE_SYSROOT}/usr/include/vitis/ai" 
   "${CMAKE_SYSROOT}/usr/include/xrt" 
