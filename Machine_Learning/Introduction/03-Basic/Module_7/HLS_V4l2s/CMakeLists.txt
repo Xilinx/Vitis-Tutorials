@@ -45,7 +45,10 @@ set(MY_SRCS src/hlsV4l2Access.cpp
 )
 
 add_library(hls_v4l2s SHARED ${MY_SRCS})
+
 target_link_libraries(hls_v4l2s ${OpenCV_LIBS} glog)
+add_executable(test_hls_kernel test/test_hls_kernel.cpp)
+target_link_libraries(test_hls_kernel hls_v4l2s ${OpenCV_LIBS} glog)
 install(TARGETS hls_v4l2s
         LIBRARY 
         DESTINATION /usr/lib
