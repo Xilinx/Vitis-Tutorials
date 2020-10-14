@@ -11,7 +11,7 @@
 
 # Platform Creation
 
-Xilinx provides base platforms for Xilinx demo boards to allow for quick out-of-the-box evaluations.
+Xilinx provides base platforms for Xilinx Evaluation Boards to allow for quick out-of-the-box evaluations.
 For additional customization or more in-depth development on Xilinx boards, or to develop on custom board,
 you may wish to create a fully customized hardware platform.
 
