@@ -4,7 +4,7 @@
 
 In this module, we will create a custom Vitis embedded platform for ZCU104. It will be capable to run ***Vitis acceleration applications*** including ***Vitis-AI applications***. Of course, general ***embedded software application*** can also run on this platform.
 
-Since ZCU104 is a validated Xilinx demo board and Vivado includes its processing system presets, we will skip step 0 mentioned in previous overview module and start to build the full hardware and generate XSA. 
+Since ZCU104 is a validated Xilinx Evaluation Board and Vivado includes its processing system presets, we will skip step 0 mentioned in previous overview module and start to build the full hardware and generate XSA.
 
 To prepare the software components, we will import XSA into PetaLinux project and do some configurations. After building software and hardware components, we'll package the platform. At last, we'll run several test applications including Vitis-AI application on this platform to test this customized platform.
 
@@ -27,7 +27,7 @@ On the software side, the platform needs to provide the XRT, ZOCL packages. Host
 
 ## Step-by-Step Tutorial
 
-We'll introduce the platform creation steps in the following pages. Each page describes one major step in the platform creation process.  
+We'll introduce the platform creation steps in the following pages. Each page describes one major step in the platform creation process.
 
 - [Step 1: Create the Vivado Hardware Design and Generate XSA](./step1.md)
 - [Step 2: Create the Software Components with PetaLinux](./step2.md)
