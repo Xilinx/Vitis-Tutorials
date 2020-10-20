@@ -22,7 +22,7 @@ This tutorial is organized in 5 parts and is designed to walk you through all th
 
 Vitis provides a unified flow for developing FPGA accelerated application targeted to either data-center or embedded platforms. This tutorial provides instructions for building and running on both ZCU102 and Alveo U200 cards. These instructions can be easily adapted to other Xilinx cards.
 
-NOTE: This tutorial requires Vitis 2020.1 or later to run.
+*NOTE: This tutorial requires Vitis 2020.1 or later to run.*
 
 [**Click here to start the Vitis Flow 101 Tutorial**](./Part1.md)
 
