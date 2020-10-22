@@ -14,7 +14,7 @@ In this fourth part of the Introduction to Vitis tutorial, you will compile and 
 
 There are slight differences when targeting data-center and embedded platforms. Instructions for both the ZCU102 and Alveo U200 cards are provided below. These instructions can be easily adapted to other cards. 
 
-
+> IMPORTANT: This tutorial requires Vitis 2020.1 or later to run.
 
 <details>
 <summary><b>Instructions for the ZCU102 platform, click here</b></summary>
