@@ -8,14 +8,15 @@ A Vitis platform requires software components. Xilinx provides common software i
 
 2. Create a PetaLinux project named ***zcu104_custom_plnx*** and configure the hw with the XSA file we created before:
 
-   ```
+   ```bash
    petalinux-create --type project --template zynqMP --name zcu104_custom_plnx
    cd zcu104_custom_plnx
-   petalinux-config --get-hw-description=<you_vivado_design_dir>
+   petalinux-config --get-hw-description=<vivado_design_dir>
    ```
 
-3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu104-revc```.<br />
-   ***Note: If you are using a Xilinx development board it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. If you're using a custom board, you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***<br />
+3. A petalinux-config menu would be launched, select ***DTG Settings->MACHINE_NAME***, modify it to ```zcu104-revc```. Select ***OK -> Exit -> Exit -> Yes*** to close this window.
+
+   ***Note: If you are using a Xilinx development board it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. If you're using a custom board, you would need to configure the associated settings(e.g. the PHY information DTS node) by yourself manually.***
 
 
 
@@ -39,13 +40,13 @@ A Vitis platform requires software components. Xilinx provides common software i
    CONFIG_parted
     ```
 
-    Packages for Vitis-AI dependencies support:
+    *Packages for Vitis-AI dependencies support:*
 
     ```
    CONFIG_packagegroup-petalinux-vitisai
     ```
 
-   Packages for natively building Vitis AI applications on target board:
+   *Packages for natively building Vitis AI applications on target board:*
 
     ```
    CONFIG_packagegroup-petalinux-self-hosted
@@ -58,7 +59,7 @@ A Vitis platform requires software components. Xilinx provides common software i
    CONFIG_packagegroup-petalinux-opencv-dev
     ```
 
-    Packages for running Vitis-AI demo applications with GUI
+    *Packages for running Vitis-AI demo applications with GUI*
 
     ```
     CONFIG_mesa-megadriver
@@ -67,31 +68,34 @@ A Vitis platform requires software components. Xilinx provides common software i
     CONFIG_packagegroup-petalinux-matchbox
     ```
 
-2. Run ```petalinux-config -c rootfs``` and select ***user packages***, select name of rootfs all the libraries listed above, save and exit.
+2. Run ```petalinux-config -c rootfs``` and select ***user packages***, select name of rootfs all the libraries listed above.
+
    ![petalinux_rootfs.png](./images/petalinux_rootfs.png)
 
-3. Enable OpenSSH and disable dropbear
-   Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve 4x times faster data transmission speed (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.
-   a) Run ```petalinux-config -c rootfs```
-   b) Go to ***Image Features***.
-   c) Disable ***ssh-server-dropbear*** and enable ***ssh-server-openssh***.
+3. *Enable OpenSSH and disable dropbear*
+   *Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve 4x times faster data transmission speed (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.*
+
+   a) Still in the RootFS configuration window, go to root directory by select ***Exit*** once.</br>
+   b) Go to ***Image Features***.</br>
+   c) Disable ***ssh-server-dropbear*** and enable ***ssh-server-openssh*** and click Exit.</br>
    ![ssh_settings.png](./images/ssh_settings.png)
 
 
-d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***.
+d) Go to ***Filesystem Packages-> misc->packagegroup-core-ssh-dropbear*** and disable ***packagegroup-core-ssh-dropbear***. Go to ***Filesystem Packages*** level by Exit twice.
 
-e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable ***openssh***, ***openssh-sftp-server***, ***openssh-sshd***, ***openssh-scp***.
+e) Go to ***console  -> network -> openssh*** and enable ***openssh***, ***openssh-sftp-server***, ***openssh-sshd***, ***openssh-scp***. Go to root level by Exit four times.
 
-4. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, store the change and exit.
+4. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, set ***package-feed-uris*** to `http://petalinux.xilinx.com/sswreleases/rel-v2020/feeds/zynqmp-generic`. Click OK, Exit twice and select Yes to save the changes.
 
-5. Disable CPU IDLE in kernel config.
+5. *Disable CPU IDLE in kernel config.*
 
-   CPU IDLE would cause CPU IDLE when JTAG is connected. So it is recommended to disable the selection during project development phase. It can be enabled for production to save power.
+   *CPU IDLE would cause CPU IDLE when JTAG is connected. So it is recommended to disable the selection during project development phase. It can be enabled for production to save power.*
    a) Type ```petalinux-config -c kernel```
-   b) Ensure the following are ***TURNED OFF*** by entering 'n' in the [ ] menu selection for:
+   b) Ensure the following items are ***TURNED OFF*** by entering 'n' in the [ ] menu selection:
 
    - ***CPU Power Mangement > CPU Idle > CPU idle PM support***
-     - ***CPU Power Management > CPU Frequency scaling > CPU Frequency scaling***
+   - ***CPU Power Management > CPU Frequency scaling > CPU Frequency scaling***
+   C) Exit and Save.
 
 6. Update the Device tree.
 
@@ -141,17 +145,15 @@ e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable
 
    Since Vitis-AI software stack is not included in PetaLinux yet, they need to be installed after PetaLinux generates rootfs. PetaLinux uses initramfs format for rootfs by default, it can't retain the rootfs changes in run time. To make the root file system retain changes, we'll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store boot.bin file.
 
-   Run `petalinux-config`, go to ***Image Packaging Configuration***, select ***Root File System Type*** as ***EXT4***, and append `ext4` to ***Root File System Formats***.
+   Run `petalinux-config`, go to ***Image Packaging Configuration***, select ***Root File System Type*** as ***EXT4***, and append `ext4` to ***Root File System Formats***. Exit and Save.
 
-   ![](./images/petalinux_root_filesystem_type.png)
-
-   ![](./images/petalinux_add_rootfs_types.png)
+   ![](./images/petalinux_image_packaging_configuration.png)
 
    Update ***bootargs*** to allow Linux to boot from EXT4 partition. There are various ways to update bootargs. Please take either way below.
    
-   - Update in `petalinux-config`: Change ***Device Tree -> SUBSYSTEM_BOOTARGS_AUTO*** to NO and update ***SUBSYSTEM_DTB_OVERLAY*** to `earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M`
+   - Change ***DTG settings -> Kernel Bootargs -> generate boot args automatically*** to NO and update ***User Set Kernel Bootargs*** to `earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M`. Click OK, Exit thrice and Save.
    
-   - Update in  ***system-user.dtsi***: add `chosen` node in root
+   - Update in  ***system-user.dtsi***: add `chosen` node in root in addition to the previous changes to this file.
    ```
    /include/ "system-conf.dtsi"
    / {
@@ -167,7 +169,13 @@ e) Go to ***Filesystem Packages  -> console  -> network -> openssh*** and enable
 
 ### Build Image and Prepare for Platform Packaging
 
-We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu104_custom_pkg ```. Then we create a pfm folder inside.
+1. We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu104_custom_pkg ```. Then we create a pfm folder inside. 
+
+   ```
+   mkdir zcu104_custom_pkg
+   cd zcu104_custom_pkg
+   mkdir pfm
+   ```
 
 1. From any directory within the PetaLinux project, build the PetaLinux project.
 
@@ -181,11 +189,13 @@ We would store all the necessary files for Vitis platform creation flow. Here we
    petalinux-build --sdk
    ```
 
-3. Install sysroot: type ```./images/linux/sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***zcu104_custom_pkg/pfm*** (This is an example ) and confirm.<br />
+3. Install sysroot: type ```./images/linux/sdk.sh``` to install PetaLinux SDK, provide a full pathname to the output directory ***zcu104_custom_pkg/pfm*** (This is an example ) and confirm.
 
-  We would install Vitis AI library and DNNDK into this rootfs during test phase.
+   - Note: The environment variable ***LD_LIBRARY_PATH*** must not be set when running this command
 
-***Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](./step3.md).***
+We would install Vitis AI library and DNNDK into this rootfs during test phase.
+
+***Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](step3.md).***
 
 ### Fast Track
 
