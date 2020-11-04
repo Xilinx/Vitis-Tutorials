@@ -102,12 +102,16 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
 3. Click ***next***<br />
 4. Select ***zcu104_custom*** as platform, click ***next***.<br />
 5. Name the project ***vadd***, click ***next***.<br />
-6. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***), keep the ***Kernel Image*** setting in default and click ***next***.<br />
+6. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***). Set the ***Root FS*** to rootfs.ext4 and ***Kernel Image*** to Image. These files are generated in Step 2. click ***next***.<br />
 7. Select ***System Optimization Examples -> Vector Addition*** and click ***finish*** to generate the application.<br />
-8. In the Explorer window double click the hello_dpu.prj file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
+8. In the Explorer window double click the ***vadd.prj*** file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
 9. Select ***vadd_system*** in Explorer window and Click ***Build*** icon in toolbar.
 
-#### Running Vector Addition Application
+***Note***: If you cannot see the ***zcu104_custom*** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to ***zcu104_custom_pkg/zcu104_custom*** directory.
+
+***Note***: If you'd like to test this application in emulation mode, plese change  ***Active Build configuration*** from ***Emulation-SW*** to ***Emulation-HW*** on Step 8.
+
+#### Running Vector Addition Application on the Board
 
 1. Copy ***zcu104_custom_pkg/vadd_system/Hardware/package/sd_card.img*** to local if Vitis is running on a remote server.
 
@@ -141,6 +145,23 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    TEST PASSED
    ```
 
+### Test Vector Addition Application in Emulation Mode
+
+***Note***: If you're on Ubuntu, set environment variable LIBRARY_PATH to /usr/lib to workaround a known issue on Vitis 2020.1. It's fixed in 2020.2.
+
+```
+export LIBRARY_PATH=/usr/lib
+```
+
+1. Use ***Vitis menu -> Xilinx -> Start/Stop Emulator*** to launch QEMU. Project is vadd, configuration is Emulation-HW. Click Start. Wait for Linux to boot. Log in with root/root.
+2. Righ click ***vadd*** project (not the vadd_system system project), select ***Run as -> Launch on Emulator***
+
+The result will show on Console tab.
+
+```
+Loading: './binary_container_1.xclbin'
+TEST PASSED
+```
 
 
 ### Test 3: Run a DNNDK Demo
