@@ -44,8 +44,17 @@ proc numberOfCPUs {} {
 add_files -norecurse [make_wrapper -files [get_files -norecurse *.bd] -top]
 update_compile_order -fileset sources_1
 
+# For Emulation Support
+set_property SELECTED_SIM_MODEL tlm [get_bd_cells /zynq_ultra_ps_e_0]
+
+
 # Setup Platform Properties
 set_property pfm_name {xilinx:zcu104:ZCU104_Custom_Platform:0.0} [get_files -norecurse *.bd]
+set_property platform.default_output_type "sd_card" [current_project]
+set_property platform.design_intent.embedded "true" [current_project]
+set_property platform.design_intent.server_managed "false" [current_project]
+set_property platform.design_intent.external_host "false" [current_project]
+set_property platform.design_intent.datacenter "false" [current_project]
 
 # Generate Block Design
 generate_target all [get_files [current_bd_design].bd]
