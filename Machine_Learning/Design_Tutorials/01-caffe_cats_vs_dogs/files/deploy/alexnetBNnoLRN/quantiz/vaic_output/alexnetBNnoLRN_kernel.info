@@ -1,0 +1,50 @@
+
+Kernel topology "alexnetBNnoLRN_kernel_graph.jpg" for network "alexnetBNnoLRN"
+kernel list info for network "alexnetBNnoLRN"
+                               Kernel ID : Name
+                                       0 : alexnetBNnoLRN_0
+                                       1 : alexnetBNnoLRN_1
+
+                             Kernel Name : alexnetBNnoLRN_0
+--------------------------------------------------------------------------------
+                             Kernel Type : DPUKernel
+                               Code Size : 0.18MB
+                              Param Size : 55.59MB
+                           Workload MACs : 2262.34MOPS
+                         IO Memory Space : 0.22MB
+                              Mean Value : 106, 116, 124, 
+                      Total Tensor Count : 9
+                Boundary Input Tensor(s)   (H*W*C)
+                               data:0(0) : 227*227*3
+
+               Boundary Output Tensor(s)   (H*W*C)
+                                fc8:0(0) : 1*1*2
+
+                        Total Node Count : 8
+                           Input Node(s)   (H*W*C)
+                                conv1(0) : 227*227*3
+
+                          Output Node(s)   (H*W*C)
+                                  fc8(0) : 1*1*2
+
+
+
+
+                             Kernel Name : alexnetBNnoLRN_1
+--------------------------------------------------------------------------------
+                             Kernel Type : CPUKernel
+                Boundary Input Tensor(s)   (H*W*C)
+                               loss:0(0) : 1*1*2
+
+               Boundary Output Tensor(s)   (H*W*C)
+                               loss:0(0) : 1*1*2
+
+                           Input Node(s)   (H*W*C)
+                                    loss : 1*1*2
+
+                          Output Node(s)   (H*W*C)
+                                    loss : 1*1*2
+
+
+
+
