@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -24,7 +24,7 @@ This tutorial uses a simple example of vector addition. It shows the `vadd` kern
 
 In this tutorial, you implement the vector addition application using three DDR banks.
 
-Because the default behavior of the Vitis core development kit is to use a single DDR bank for data exchange between kernels and global memory, all data access through ports `in1`, `in2`, and `out` will be done through the default DDR bank for the platform.  
+Because the default behavior of the Vitis core development kit is to use a single DDR bank for data exchange between kernels and global memory, all data access through ports `in1`, `in2`, and `out` will be done through the default DDR bank for the platform.
 
 ![](./images/mult-ddr-banks_fig_01.png)
 
@@ -47,7 +47,7 @@ The labs in this tutorial use:
 * BASH Linux shell commands.
 * 2020.1 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
 
->**IMPORTANT:**  
+>**IMPORTANT:**
 >
 > * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
@@ -133,7 +133,7 @@ You will instruct the `v++` Kernel Linker to connect the kernel arguments to the
 1. Define the `sp` command options for the vadd kernel and add this to the Makefile.
 
    The kernel instance name will be: `vadd_1`.
-   The arguments for the vadd kernel are specified in the `vadd.cpp` file. The kernel argument (`in1`, `in2`, and `out`) should be connected to `DDR[0]`, `DDR[1]`, and `DDR[2]`.  
+   The arguments for the vadd kernel are specified in the `vadd.cpp` file. The kernel argument (`in1`, `in2`, and `out`) should be connected to `DDR[0]`, `DDR[1]`, and `DDR[2]`.
    Therefore, the `sp` options should be:
 
    ```
