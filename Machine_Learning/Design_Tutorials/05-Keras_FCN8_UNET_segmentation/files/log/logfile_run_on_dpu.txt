@@ -1,0 +1,682 @@
+#!/bin/bash
+
+: '
+/**
+
+* © Copyright (C) 2016-2020 Xilinx, Inc
+*
+* Licensed under the Apache License, Version 2.0 (the "License"). You may
+* not use this file except in compliance with the License. A copy of the
+* License is located at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+* License for the specific language governing permissions and limitations
+* under the License.
+*/
+'
+
+# unpack test images
+tar -xvf ./test.tar.gz
+./workspace/dataset1/img_test/
+./workspace/dataset1/img_test/testing_48.png
+tar: ./workspace/dataset1/img_test/testing_48.png: time stamp 2020-02-11 04:00:00 is 204069.73232482 s in the future
+./workspace/dataset1/img_test/testing_82.png
+tar: ./workspace/dataset1/img_test/testing_82.png: time stamp 2020-02-11 04:00:00 is 204069.72761068 s in the future
+./workspace/dataset1/img_test/testing_60.png
+tar: ./workspace/dataset1/img_test/testing_60.png: time stamp 2020-02-11 04:00:00 is 204069.72286261 s in the future
+./workspace/dataset1/img_test/testing_80.png
+tar: ./workspace/dataset1/img_test/testing_80.png: time stamp 2020-02-11 04:00:00 is 204069.71813527 s in the future
+./workspace/dataset1/img_test/testing_34.png
+tar: ./workspace/dataset1/img_test/testing_34.png: time stamp 2020-02-11 04:00:00 is 204069.7134522 s in the future
+./workspace/dataset1/img_test/testing_41.png
+tar: ./workspace/dataset1/img_test/testing_41.png: time stamp 2020-02-11 04:00:00 is 204069.70869853 s in the future
+./workspace/dataset1/img_test/testing_8.png
+tar: ./workspace/dataset1/img_test/testing_8.png: time stamp 2020-02-11 04:00:00 is 204069.70401687 s in the future
+./workspace/dataset1/img_test/testing_70.png
+tar: ./workspace/dataset1/img_test/testing_70.png: time stamp 2020-02-11 04:00:00 is 204069.69926456 s in the future
+./workspace/dataset1/img_test/testing_3.png
+tar: ./workspace/dataset1/img_test/testing_3.png: time stamp 2020-02-11 04:00:00 is 204069.69455718 s in the future
+./workspace/dataset1/img_test/testing_15.png
+tar: ./workspace/dataset1/img_test/testing_15.png: time stamp 2020-02-11 04:00:00 is 204069.68984918 s in the future
+./workspace/dataset1/img_test/testing_81.png
+tar: ./workspace/dataset1/img_test/testing_81.png: time stamp 2020-02-11 04:00:00 is 204069.68510913 s in the future
+./workspace/dataset1/img_test/testing_10.png
+tar: ./workspace/dataset1/img_test/testing_10.png: time stamp 2020-02-11 04:00:00 is 204069.68040545 s in the future
+./workspace/dataset1/img_test/testing_32.png
+tar: ./workspace/dataset1/img_test/testing_32.png: time stamp 2020-02-11 04:00:00 is 204069.675684 s in the future
+./workspace/dataset1/img_test/testing_29.png
+tar: ./workspace/dataset1/img_test/testing_29.png: time stamp 2020-02-11 04:00:00 is 204069.67099488 s in the future
+./workspace/dataset1/img_test/testing_61.png
+tar: ./workspace/dataset1/img_test/testing_61.png: time stamp 2020-02-11 04:00:00 is 204069.66629031 s in the future
+./workspace/dataset1/img_test/testing_12.png
+tar: ./workspace/dataset1/img_test/testing_12.png: time stamp 2020-02-11 04:00:00 is 204069.6615591 s in the future
+./workspace/dataset1/img_test/testing_77.png
+tar: ./workspace/dataset1/img_test/testing_77.png: time stamp 2020-02-11 04:00:00 is 204069.65687563 s in the future
+./workspace/dataset1/img_test/testing_93.png
+tar: ./workspace/dataset1/img_test/testing_93.png: time stamp 2020-02-11 04:00:00 is 204069.65212454 s in the future
+./workspace/dataset1/img_test/testing_40.png
+tar: ./workspace/dataset1/img_test/testing_40.png: time stamp 2020-02-11 04:00:00 is 204069.64745343 s in the future
+./workspace/dataset1/img_test/testing_55.png
+tar: ./workspace/dataset1/img_test/testing_55.png: time stamp 2020-02-11 04:00:00 is 204069.64275755 s in the future
+./workspace/dataset1/img_test/testing_100.png
+tar: ./workspace/dataset1/img_test/testing_100.png: time stamp 2020-02-11 04:00:00 is 204069.63798844 s in the future
+./workspace/dataset1/img_test/testing_66.png
+tar: ./workspace/dataset1/img_test/testing_66.png: time stamp 2020-02-11 04:00:00 is 204069.63327873 s in the future
+./workspace/dataset1/img_test/testing_87.png
+tar: ./workspace/dataset1/img_test/testing_87.png: time stamp 2020-02-11 04:00:00 is 204069.6285476 s in the future
+./workspace/dataset1/img_test/testing_6.png
+tar: ./workspace/dataset1/img_test/testing_6.png: time stamp 2020-02-11 04:00:00 is 204069.62384957 s in the future
+./workspace/dataset1/img_test/testing_39.png
+tar: ./workspace/dataset1/img_test/testing_39.png: time stamp 2020-02-11 04:00:00 is 204069.61915664 s in the future
+./workspace/dataset1/img_test/testing_0.png
+tar: ./workspace/dataset1/img_test/testing_0.png: time stamp 2020-02-11 04:00:00 is 204069.61296229 s in the future
+./workspace/dataset1/img_test/testing_53.png
+tar: ./workspace/dataset1/img_test/testing_53.png: time stamp 2020-02-11 04:00:00 is 204069.60971152 s in the future
+./workspace/dataset1/img_test/testing_96.png
+tar: ./workspace/dataset1/img_test/testing_96.png: time stamp 2020-02-11 04:00:00 is 204069.60497651 s in the future
+./workspace/dataset1/img_test/testing_58.png
+tar: ./workspace/dataset1/img_test/testing_58.png: time stamp 2020-02-11 04:00:00 is 204069.59882715 s in the future
+./workspace/dataset1/img_test/testing_38.png
+tar: ./workspace/dataset1/img_test/testing_38.png: time stamp 2020-02-11 04:00:00 is 204069.5955562 s in the future
+./workspace/dataset1/img_test/testing_49.png
+tar: ./workspace/dataset1/img_test/testing_49.png: time stamp 2020-02-11 04:00:00 is 204069.58942123 s in the future
+./workspace/dataset1/img_test/testing_71.png
+tar: ./workspace/dataset1/img_test/testing_71.png: time stamp 2020-02-11 04:00:00 is 204069.58472885 s in the future
+./workspace/dataset1/img_test/testing_86.png
+tar: ./workspace/dataset1/img_test/testing_86.png: time stamp 2020-02-11 04:00:00 is 204069.58001492 s in the future
+./workspace/dataset1/img_test/testing_69.png
+tar: ./workspace/dataset1/img_test/testing_69.png: time stamp 2020-02-11 04:00:00 is 204069.57526302 s in the future
+./workspace/dataset1/img_test/testing_83.png
+tar: ./workspace/dataset1/img_test/testing_83.png: time stamp 2020-02-11 04:00:00 is 204069.57056329 s in the future
+./workspace/dataset1/img_test/testing_92.png
+tar: ./workspace/dataset1/img_test/testing_92.png: time stamp 2020-02-11 04:00:00 is 204069.5657886 s in the future
+./workspace/dataset1/img_test/testing_45.png
+tar: ./workspace/dataset1/img_test/testing_45.png: time stamp 2020-02-11 04:00:00 is 204069.56110141 s in the future
+./workspace/dataset1/img_test/testing_52.png
+tar: ./workspace/dataset1/img_test/testing_52.png: time stamp 2020-02-11 04:00:00 is 204069.55640711 s in the future
+./workspace/dataset1/img_test/testing_97.png
+tar: ./workspace/dataset1/img_test/testing_97.png: time stamp 2020-02-11 04:00:00 is 204069.55166681 s in the future
+./workspace/dataset1/img_test/testing_63.png
+tar: ./workspace/dataset1/img_test/testing_63.png: time stamp 2020-02-11 04:00:00 is 204069.54696619 s in the future
+./workspace/dataset1/img_test/testing_33.png
+tar: ./workspace/dataset1/img_test/testing_33.png: time stamp 2020-02-11 04:00:00 is 204069.54224001 s in the future
+./workspace/dataset1/img_test/testing_30.png
+tar: ./workspace/dataset1/img_test/testing_30.png: time stamp 2020-02-11 04:00:00 is 204069.53752861 s in the future
+./workspace/dataset1/img_test/testing_24.png
+tar: ./workspace/dataset1/img_test/testing_24.png: time stamp 2020-02-11 04:00:00 is 204069.53282929 s in the future
+./workspace/dataset1/img_test/testing_5.png
+tar: ./workspace/dataset1/img_test/testing_5.png: time stamp 2020-02-11 04:00:00 is 204069.52809653 s in the future
+./workspace/dataset1/img_test/testing_90.png
+tar: ./workspace/dataset1/img_test/testing_90.png: time stamp 2020-02-11 04:00:00 is 204069.52338522 s in the future
+./workspace/dataset1/img_test/testing_94.png
+tar: ./workspace/dataset1/img_test/testing_94.png: time stamp 2020-02-11 04:00:00 is 204069.51868933 s in the future
+./workspace/dataset1/img_test/testing_18.png
+tar: ./workspace/dataset1/img_test/testing_18.png: time stamp 2020-02-11 04:00:00 is 204069.51399376 s in the future
+./workspace/dataset1/img_test/testing_23.png
+tar: ./workspace/dataset1/img_test/testing_23.png: time stamp 2020-02-11 04:00:00 is 204069.50925577 s in the future
+./workspace/dataset1/img_test/testing_35.png
+tar: ./workspace/dataset1/img_test/testing_35.png: time stamp 2020-02-11 04:00:00 is 204069.50456365 s in the future
+./workspace/dataset1/img_test/testing_59.png
+tar: ./workspace/dataset1/img_test/testing_59.png: time stamp 2020-02-11 04:00:00 is 204069.4998532 s in the future
+./workspace/dataset1/img_test/testing_20.png
+tar: ./workspace/dataset1/img_test/testing_20.png: time stamp 2020-02-11 04:00:00 is 204069.49509669 s in the future
+./workspace/dataset1/img_test/testing_28.png
+tar: ./workspace/dataset1/img_test/testing_28.png: time stamp 2020-02-11 04:00:00 is 204069.49037783 s in the future
+./workspace/dataset1/img_test/testing_31.png
+tar: ./workspace/dataset1/img_test/testing_31.png: time stamp 2020-02-11 04:00:00 is 204069.4856843 s in the future
+./workspace/dataset1/img_test/testing_16.png
+tar: ./workspace/dataset1/img_test/testing_16.png: time stamp 2020-02-11 04:00:00 is 204069.48091625 s in the future
+./workspace/dataset1/img_test/testing_57.png
+tar: ./workspace/dataset1/img_test/testing_57.png: time stamp 2020-02-11 04:00:00 is 204069.47625573 s in the future
+./workspace/dataset1/img_test/testing_27.png
+tar: ./workspace/dataset1/img_test/testing_27.png: time stamp 2020-02-11 04:00:00 is 204069.47151412 s in the future
+./workspace/dataset1/img_test/testing_50.png
+tar: ./workspace/dataset1/img_test/testing_50.png: time stamp 2020-02-11 04:00:00 is 204069.46680695 s in the future
+./workspace/dataset1/img_test/testing_47.png
+tar: ./workspace/dataset1/img_test/testing_47.png: time stamp 2020-02-11 04:00:00 is 204069.46212529 s in the future
+./workspace/dataset1/img_test/testing_1.png
+tar: ./workspace/dataset1/img_test/testing_1.png: time stamp 2020-02-11 04:00:00 is 204069.45738584 s in the future
+./workspace/dataset1/img_test/testing_65.png
+tar: ./workspace/dataset1/img_test/testing_65.png: time stamp 2020-02-11 04:00:00 is 204069.45265439 s in the future
+./workspace/dataset1/img_test/testing_51.png
+tar: ./workspace/dataset1/img_test/testing_51.png: time stamp 2020-02-11 04:00:00 is 204069.44795738 s in the future
+./workspace/dataset1/img_test/testing_11.png
+tar: ./workspace/dataset1/img_test/testing_11.png: time stamp 2020-02-11 04:00:00 is 204069.44326209 s in the future
+./workspace/dataset1/img_test/testing_76.png
+tar: ./workspace/dataset1/img_test/testing_76.png: time stamp 2020-02-11 04:00:00 is 204069.43853978 s in the future
+./workspace/dataset1/img_test/testing_42.png
+tar: ./workspace/dataset1/img_test/testing_42.png: time stamp 2020-02-11 04:00:00 is 204069.4323423 s in the future
+./workspace/dataset1/img_test/testing_22.png
+tar: ./workspace/dataset1/img_test/testing_22.png: time stamp 2020-02-11 04:00:00 is 204069.42909086 s in the future
+./workspace/dataset1/img_test/testing_98.png
+tar: ./workspace/dataset1/img_test/testing_98.png: time stamp 2020-02-11 04:00:00 is 204069.42429812 s in the future
+./workspace/dataset1/img_test/testing_95.png
+tar: ./workspace/dataset1/img_test/testing_95.png: time stamp 2020-02-11 04:00:00 is 204069.41818709 s in the future
+./workspace/dataset1/img_test/testing_78.png
+tar: ./workspace/dataset1/img_test/testing_78.png: time stamp 2020-02-11 04:00:00 is 204069.41347155 s in the future
+./workspace/dataset1/img_test/testing_19.png
+tar: ./workspace/dataset1/img_test/testing_19.png: time stamp 2020-02-11 04:00:00 is 204069.40873797 s in the future
+./workspace/dataset1/img_test/testing_2.png
+tar: ./workspace/dataset1/img_test/testing_2.png: time stamp 2020-02-11 04:00:00 is 204069.40405186 s in the future
+./workspace/dataset1/img_test/testing_85.png
+tar: ./workspace/dataset1/img_test/testing_85.png: time stamp 2020-02-11 04:00:00 is 204069.40075177 s in the future
+./workspace/dataset1/img_test/testing_46.png
+tar: ./workspace/dataset1/img_test/testing_46.png: time stamp 2020-02-11 04:00:00 is 204069.39460554 s in the future
+./workspace/dataset1/img_test/testing_37.png
+tar: ./workspace/dataset1/img_test/testing_37.png: time stamp 2020-02-11 04:00:00 is 204069.38989957 s in the future
+./workspace/dataset1/img_test/testing_68.png
+tar: ./workspace/dataset1/img_test/testing_68.png: time stamp 2020-02-11 04:00:00 is 204069.38513218 s in the future
+./workspace/dataset1/img_test/testing_99.png
+tar: ./workspace/dataset1/img_test/testing_99.png: time stamp 2020-02-11 04:00:00 is 204069.38041837 s in the future
+./workspace/dataset1/img_test/testing_13.png
+tar: ./workspace/dataset1/img_test/testing_13.png: time stamp 2020-02-11 04:00:00 is 204069.375775 s in the future
+./workspace/dataset1/img_test/testing_25.png
+tar: ./workspace/dataset1/img_test/testing_25.png: time stamp 2020-02-11 04:00:00 is 204069.37104266 s in the future
+./workspace/dataset1/img_test/testing_36.png
+tar: ./workspace/dataset1/img_test/testing_36.png: time stamp 2020-02-11 04:00:00 is 204069.36632899 s in the future
+./workspace/dataset1/img_test/testing_26.png
+tar: ./workspace/dataset1/img_test/testing_26.png: time stamp 2020-02-11 04:00:00 is 204069.36161597 s in the future
+./workspace/dataset1/img_test/testing_54.png
+tar: ./workspace/dataset1/img_test/testing_54.png: time stamp 2020-02-11 04:00:00 is 204069.35690454 s in the future
+./workspace/dataset1/img_test/testing_56.png
+tar: ./workspace/dataset1/img_test/testing_56.png: time stamp 2020-02-11 04:00:00 is 204069.35221069 s in the future
+./workspace/dataset1/img_test/testing_44.png
+tar: ./workspace/dataset1/img_test/testing_44.png: time stamp 2020-02-11 04:00:00 is 204069.34747102 s in the future
+./workspace/dataset1/img_test/testing_72.png
+tar: ./workspace/dataset1/img_test/testing_72.png: time stamp 2020-02-11 04:00:00 is 204069.34276798 s in the future
+./workspace/dataset1/img_test/testing_7.png
+tar: ./workspace/dataset1/img_test/testing_7.png: time stamp 2020-02-11 04:00:00 is 204069.33803097 s in the future
+./workspace/dataset1/img_test/testing_21.png
+tar: ./workspace/dataset1/img_test/testing_21.png: time stamp 2020-02-11 04:00:00 is 204069.33334256 s in the future
+./workspace/dataset1/img_test/testing_79.png
+tar: ./workspace/dataset1/img_test/testing_79.png: time stamp 2020-02-11 04:00:00 is 204069.32863019 s in the future
+./workspace/dataset1/img_test/testing_73.png
+tar: ./workspace/dataset1/img_test/testing_73.png: time stamp 2020-02-11 04:00:00 is 204069.32388715 s in the future
+./workspace/dataset1/img_test/testing_17.png
+tar: ./workspace/dataset1/img_test/testing_17.png: time stamp 2020-02-11 04:00:00 is 204069.31920335 s in the future
+./workspace/dataset1/img_test/testing_64.png
+tar: ./workspace/dataset1/img_test/testing_64.png: time stamp 2020-02-11 04:00:00 is 204069.31441634 s in the future
+./workspace/dataset1/img_test/testing_75.png
+tar: ./workspace/dataset1/img_test/testing_75.png: time stamp 2020-02-11 04:00:00 is 204069.30971121 s in the future
+./workspace/dataset1/img_test/testing_62.png
+tar: ./workspace/dataset1/img_test/testing_62.png: time stamp 2020-02-11 04:00:00 is 204069.30502451 s in the future
+./workspace/dataset1/img_test/testing_9.png
+tar: ./workspace/dataset1/img_test/testing_9.png: time stamp 2020-02-11 04:00:00 is 204069.30029418 s in the future
+./workspace/dataset1/img_test/testing_14.png
+tar: ./workspace/dataset1/img_test/testing_14.png: time stamp 2020-02-11 04:00:00 is 204069.2955986 s in the future
+./workspace/dataset1/img_test/testing_91.png
+tar: ./workspace/dataset1/img_test/testing_91.png: time stamp 2020-02-11 04:00:00 is 204069.29087872 s in the future
+./workspace/dataset1/img_test/testing_74.png
+tar: ./workspace/dataset1/img_test/testing_74.png: time stamp 2020-02-11 04:00:00 is 204069.2861196 s in the future
+./workspace/dataset1/img_test/testing_89.png
+tar: ./workspace/dataset1/img_test/testing_89.png: time stamp 2020-02-11 04:00:00 is 204069.28136839 s in the future
+./workspace/dataset1/img_test/testing_67.png
+tar: ./workspace/dataset1/img_test/testing_67.png: time stamp 2020-02-11 04:00:00 is 204069.27523116 s in the future
+./workspace/dataset1/img_test/testing_84.png
+tar: ./workspace/dataset1/img_test/testing_84.png: time stamp 2020-02-11 04:00:00 is 204069.2704726 s in the future
+./workspace/dataset1/img_test/testing_4.png
+tar: ./workspace/dataset1/img_test/testing_4.png: time stamp 2020-02-11 04:00:00 is 204069.26579284 s in the future
+./workspace/dataset1/img_test/testing_88.png
+tar: ./workspace/dataset1/img_test/testing_88.png: time stamp 2020-02-11 04:00:00 is 204069.2574106 s in the future
+./workspace/dataset1/img_test/testing_43.png
+tar: ./workspace/dataset1/img_test/testing_43.png: time stamp 2020-02-11 04:00:00 is 204069.25548528 s in the future
+./workspace/dataset1/seg_test/
+tar: ./workspace/dataset1/img_test: time stamp 2020-02-11 04:00:00 is 204069.25539686 s in the future
+./workspace/dataset1/seg_test/seg_tst_36.png
+tar: ./workspace/dataset1/seg_test/seg_tst_36.png: time stamp 2020-02-11 04:00:00 is 204069.25511475 s in the future
+./workspace/dataset1/seg_test/seg_tst_3.png
+tar: ./workspace/dataset1/seg_test/seg_tst_3.png: time stamp 2020-02-11 04:00:00 is 204069.25488162 s in the future
+./workspace/dataset1/seg_test/seg_tst_15.png
+tar: ./workspace/dataset1/seg_test/seg_tst_15.png: time stamp 2020-02-11 04:00:00 is 204069.25461501 s in the future
+./workspace/dataset1/seg_test/seg_tst_14.png
+tar: ./workspace/dataset1/seg_test/seg_tst_14.png: time stamp 2020-02-11 04:00:00 is 204069.25435045 s in the future
+./workspace/dataset1/seg_test/seg_tst_87.png
+tar: ./workspace/dataset1/seg_test/seg_tst_87.png: time stamp 2020-02-11 04:00:00 is 204069.25409926 s in the future
+./workspace/dataset1/seg_test/seg_tst_42.png
+tar: ./workspace/dataset1/seg_test/seg_tst_42.png: time stamp 2020-02-11 04:00:00 is 204069.25386387 s in the future
+./workspace/dataset1/seg_test/seg_tst_16.png
+tar: ./workspace/dataset1/seg_test/seg_tst_16.png: time stamp 2020-02-11 04:00:00 is 204069.25363263 s in the future
+./workspace/dataset1/seg_test/seg_tst_43.png
+tar: ./workspace/dataset1/seg_test/seg_tst_43.png: time stamp 2020-02-11 04:00:00 is 204069.25334289 s in the future
+./workspace/dataset1/seg_test/seg_tst_66.png
+tar: ./workspace/dataset1/seg_test/seg_tst_66.png: time stamp 2020-02-11 04:00:00 is 204069.25305234 s in the future
+./workspace/dataset1/seg_test/seg_tst_71.png
+tar: ./workspace/dataset1/seg_test/seg_tst_71.png: time stamp 2020-02-11 04:00:00 is 204069.25280048 s in the future
+./workspace/dataset1/seg_test/seg_tst_33.png
+tar: ./workspace/dataset1/seg_test/seg_tst_33.png: time stamp 2020-02-11 04:00:00 is 204069.2525692 s in the future
+./workspace/dataset1/seg_test/seg_tst_55.png
+tar: ./workspace/dataset1/seg_test/seg_tst_55.png: time stamp 2020-02-11 04:00:00 is 204069.25231945 s in the future
+./workspace/dataset1/seg_test/seg_tst_92.png
+tar: ./workspace/dataset1/seg_test/seg_tst_92.png: time stamp 2020-02-11 04:00:00 is 204069.25208667 s in the future
+./workspace/dataset1/seg_test/seg_tst_30.png
+tar: ./workspace/dataset1/seg_test/seg_tst_30.png: time stamp 2020-02-11 04:00:00 is 204069.25183171 s in the future
+./workspace/dataset1/seg_test/seg_tst_79.png
+tar: ./workspace/dataset1/seg_test/seg_tst_79.png: time stamp 2020-02-11 04:00:00 is 204069.2515994 s in the future
+./workspace/dataset1/seg_test/seg_tst_65.png
+tar: ./workspace/dataset1/seg_test/seg_tst_65.png: time stamp 2020-02-11 04:00:00 is 204069.25133873 s in the future
+./workspace/dataset1/seg_test/seg_tst_2.png
+tar: ./workspace/dataset1/seg_test/seg_tst_2.png: time stamp 2020-02-11 04:00:00 is 204069.25107424 s in the future
+./workspace/dataset1/seg_test/seg_tst_28.png
+tar: ./workspace/dataset1/seg_test/seg_tst_28.png: time stamp 2020-02-11 04:00:00 is 204069.25084098 s in the future
+./workspace/dataset1/seg_test/seg_tst_84.png
+tar: ./workspace/dataset1/seg_test/seg_tst_84.png: time stamp 2020-02-11 04:00:00 is 204069.25059073 s in the future
+./workspace/dataset1/seg_test/seg_tst_75.png
+tar: ./workspace/dataset1/seg_test/seg_tst_75.png: time stamp 2020-02-11 04:00:00 is 204069.25033173 s in the future
+./workspace/dataset1/seg_test/seg_tst_8.png
+tar: ./workspace/dataset1/seg_test/seg_tst_8.png: time stamp 2020-02-11 04:00:00 is 204069.25007891 s in the future
+./workspace/dataset1/seg_test/seg_tst_23.png
+tar: ./workspace/dataset1/seg_test/seg_tst_23.png: time stamp 2020-02-11 04:00:00 is 204069.24984433 s in the future
+./workspace/dataset1/seg_test/seg_tst_45.png
+tar: ./workspace/dataset1/seg_test/seg_tst_45.png: time stamp 2020-02-11 04:00:00 is 204069.24960768 s in the future
+./workspace/dataset1/seg_test/seg_tst_38.png
+tar: ./workspace/dataset1/seg_test/seg_tst_38.png: time stamp 2020-02-11 04:00:00 is 204069.24936559 s in the future
+./workspace/dataset1/seg_test/seg_tst_59.png
+tar: ./workspace/dataset1/seg_test/seg_tst_59.png: time stamp 2020-02-11 04:00:00 is 204069.24913092 s in the future
+./workspace/dataset1/seg_test/seg_tst_5.png
+tar: ./workspace/dataset1/seg_test/seg_tst_5.png: time stamp 2020-02-11 04:00:00 is 204069.24888077 s in the future
+./workspace/dataset1/seg_test/seg_tst_58.png
+tar: ./workspace/dataset1/seg_test/seg_tst_58.png: time stamp 2020-02-11 04:00:00 is 204069.24864454 s in the future
+./workspace/dataset1/seg_test/seg_tst_39.png
+tar: ./workspace/dataset1/seg_test/seg_tst_39.png: time stamp 2020-02-11 04:00:00 is 204069.248394 s in the future
+./workspace/dataset1/seg_test/seg_tst_26.png
+tar: ./workspace/dataset1/seg_test/seg_tst_26.png: time stamp 2020-02-11 04:00:00 is 204069.2481598 s in the future
+./workspace/dataset1/seg_test/seg_tst_20.png
+tar: ./workspace/dataset1/seg_test/seg_tst_20.png: time stamp 2020-02-11 04:00:00 is 204069.24783845 s in the future
+./workspace/dataset1/seg_test/seg_tst_82.png
+tar: ./workspace/dataset1/seg_test/seg_tst_82.png: time stamp 2020-02-11 04:00:00 is 204069.24760149 s in the future
+./workspace/dataset1/seg_test/seg_tst_40.png
+tar: ./workspace/dataset1/seg_test/seg_tst_40.png: time stamp 2020-02-11 04:00:00 is 204069.24734604 s in the future
+./workspace/dataset1/seg_test/seg_tst_34.png
+tar: ./workspace/dataset1/seg_test/seg_tst_34.png: time stamp 2020-02-11 04:00:00 is 204069.24710189 s in the future
+./workspace/dataset1/seg_test/seg_tst_49.png
+tar: ./workspace/dataset1/seg_test/seg_tst_49.png: time stamp 2020-02-11 04:00:00 is 204069.24685015 s in the future
+./workspace/dataset1/seg_test/seg_tst_13.png
+tar: ./workspace/dataset1/seg_test/seg_tst_13.png: time stamp 2020-02-11 04:00:00 is 204069.24658706 s in the future
+./workspace/dataset1/seg_test/seg_tst_70.png
+tar: ./workspace/dataset1/seg_test/seg_tst_70.png: time stamp 2020-02-11 04:00:00 is 204069.24631628 s in the future
+./workspace/dataset1/seg_test/seg_tst_18.png
+tar: ./workspace/dataset1/seg_test/seg_tst_18.png: time stamp 2020-02-11 04:00:00 is 204069.24606944 s in the future
+./workspace/dataset1/seg_test/seg_tst_22.png
+tar: ./workspace/dataset1/seg_test/seg_tst_22.png: time stamp 2020-02-11 04:00:00 is 204069.24583325 s in the future
+./workspace/dataset1/seg_test/seg_tst_50.png
+tar: ./workspace/dataset1/seg_test/seg_tst_50.png: time stamp 2020-02-11 04:00:00 is 204069.24557572 s in the future
+./workspace/dataset1/seg_test/seg_tst_77.png
+tar: ./workspace/dataset1/seg_test/seg_tst_77.png: time stamp 2020-02-11 04:00:00 is 204069.24533106 s in the future
+./workspace/dataset1/seg_test/seg_tst_83.png
+tar: ./workspace/dataset1/seg_test/seg_tst_83.png: time stamp 2020-02-11 04:00:00 is 204069.24507589 s in the future
+./workspace/dataset1/seg_test/seg_tst_35.png
+tar: ./workspace/dataset1/seg_test/seg_tst_35.png: time stamp 2020-02-11 04:00:00 is 204069.24481917 s in the future
+./workspace/dataset1/seg_test/seg_tst_93.png
+tar: ./workspace/dataset1/seg_test/seg_tst_93.png: time stamp 2020-02-11 04:00:00 is 204069.24457906 s in the future
+./workspace/dataset1/seg_test/seg_tst_1.png
+tar: ./workspace/dataset1/seg_test/seg_tst_1.png: time stamp 2020-02-11 04:00:00 is 204069.24433405 s in the future
+./workspace/dataset1/seg_test/seg_tst_54.png
+tar: ./workspace/dataset1/seg_test/seg_tst_54.png: time stamp 2020-02-11 04:00:00 is 204069.24409339 s in the future
+./workspace/dataset1/seg_test/seg_tst_99.png
+tar: ./workspace/dataset1/seg_test/seg_tst_99.png: time stamp 2020-02-11 04:00:00 is 204069.24383195 s in the future
+./workspace/dataset1/seg_test/seg_tst_61.png
+tar: ./workspace/dataset1/seg_test/seg_tst_61.png: time stamp 2020-02-11 04:00:00 is 204069.24359371 s in the future
+./workspace/dataset1/seg_test/seg_tst_69.png
+tar: ./workspace/dataset1/seg_test/seg_tst_69.png: time stamp 2020-02-11 04:00:00 is 204069.2433343 s in the future
+./workspace/dataset1/seg_test/seg_tst_7.png
+tar: ./workspace/dataset1/seg_test/seg_tst_7.png: time stamp 2020-02-11 04:00:00 is 204069.24309216 s in the future
+./workspace/dataset1/seg_test/seg_tst_56.png
+tar: ./workspace/dataset1/seg_test/seg_tst_56.png: time stamp 2020-02-11 04:00:00 is 204069.2428523 s in the future
+./workspace/dataset1/seg_test/seg_tst_32.png
+tar: ./workspace/dataset1/seg_test/seg_tst_32.png: time stamp 2020-02-11 04:00:00 is 204069.24260263 s in the future
+./workspace/dataset1/seg_test/seg_tst_24.png
+tar: ./workspace/dataset1/seg_test/seg_tst_24.png: time stamp 2020-02-11 04:00:00 is 204069.24234493 s in the future
+./workspace/dataset1/seg_test/seg_tst_57.png
+tar: ./workspace/dataset1/seg_test/seg_tst_57.png: time stamp 2020-02-11 04:00:00 is 204069.2420862 s in the future
+./workspace/dataset1/seg_test/seg_tst_88.png
+tar: ./workspace/dataset1/seg_test/seg_tst_88.png: time stamp 2020-02-11 04:00:00 is 204069.24184382 s in the future
+./workspace/dataset1/seg_test/seg_tst_60.png
+tar: ./workspace/dataset1/seg_test/seg_tst_60.png: time stamp 2020-02-11 04:00:00 is 204069.24158602 s in the future
+./workspace/dataset1/seg_test/seg_tst_97.png
+tar: ./workspace/dataset1/seg_test/seg_tst_97.png: time stamp 2020-02-11 04:00:00 is 204069.24134607 s in the future
+./workspace/dataset1/seg_test/seg_tst_68.png
+tar: ./workspace/dataset1/seg_test/seg_tst_68.png: time stamp 2020-02-11 04:00:00 is 204069.24108553 s in the future
+./workspace/dataset1/seg_test/seg_tst_12.png
+tar: ./workspace/dataset1/seg_test/seg_tst_12.png: time stamp 2020-02-11 04:00:00 is 204069.24084381 s in the future
+./workspace/dataset1/seg_test/seg_tst_52.png
+tar: ./workspace/dataset1/seg_test/seg_tst_52.png: time stamp 2020-02-11 04:00:00 is 204069.24060203 s in the future
+./workspace/dataset1/seg_test/seg_tst_95.png
+tar: ./workspace/dataset1/seg_test/seg_tst_95.png: time stamp 2020-02-11 04:00:00 is 204069.24034291 s in the future
+./workspace/dataset1/seg_test/seg_tst_21.png
+tar: ./workspace/dataset1/seg_test/seg_tst_21.png: time stamp 2020-02-11 04:00:00 is 204069.24010336 s in the future
+./workspace/dataset1/seg_test/seg_tst_17.png
+tar: ./workspace/dataset1/seg_test/seg_tst_17.png: time stamp 2020-02-11 04:00:00 is 204069.23983989 s in the future
+./workspace/dataset1/seg_test/seg_tst_86.png
+tar: ./workspace/dataset1/seg_test/seg_tst_86.png: time stamp 2020-02-11 04:00:00 is 204069.23959602 s in the future
+./workspace/dataset1/seg_test/seg_tst_27.png
+tar: ./workspace/dataset1/seg_test/seg_tst_27.png: time stamp 2020-02-11 04:00:00 is 204069.23935519 s in the future
+./workspace/dataset1/seg_test/seg_tst_25.png
+tar: ./workspace/dataset1/seg_test/seg_tst_25.png: time stamp 2020-02-11 04:00:00 is 204069.23910297 s in the future
+./workspace/dataset1/seg_test/seg_tst_51.png
+tar: ./workspace/dataset1/seg_test/seg_tst_51.png: time stamp 2020-02-11 04:00:00 is 204069.23886003 s in the future
+./workspace/dataset1/seg_test/seg_tst_37.png
+tar: ./workspace/dataset1/seg_test/seg_tst_37.png: time stamp 2020-02-11 04:00:00 is 204069.23860192 s in the future
+./workspace/dataset1/seg_test/seg_tst_46.png
+tar: ./workspace/dataset1/seg_test/seg_tst_46.png: time stamp 2020-02-11 04:00:00 is 204069.23833846 s in the future
+./workspace/dataset1/seg_test/seg_tst_100.png
+tar: ./workspace/dataset1/seg_test/seg_tst_100.png: time stamp 2020-02-11 04:00:00 is 204069.23808047 s in the future
+./workspace/dataset1/seg_test/seg_tst_48.png
+tar: ./workspace/dataset1/seg_test/seg_tst_48.png: time stamp 2020-02-11 04:00:00 is 204069.23783654 s in the future
+./workspace/dataset1/seg_test/seg_tst_73.png
+tar: ./workspace/dataset1/seg_test/seg_tst_73.png: time stamp 2020-02-11 04:00:00 is 204069.23757638 s in the future
+./workspace/dataset1/seg_test/seg_tst_72.png
+tar: ./workspace/dataset1/seg_test/seg_tst_72.png: time stamp 2020-02-11 04:00:00 is 204069.23733373 s in the future
+./workspace/dataset1/seg_test/seg_tst_91.png
+tar: ./workspace/dataset1/seg_test/seg_tst_91.png: time stamp 2020-02-11 04:00:00 is 204069.23708803 s in the future
+./workspace/dataset1/seg_test/seg_tst_41.png
+tar: ./workspace/dataset1/seg_test/seg_tst_41.png: time stamp 2020-02-11 04:00:00 is 204069.23682955 s in the future
+./workspace/dataset1/seg_test/seg_tst_85.png
+tar: ./workspace/dataset1/seg_test/seg_tst_85.png: time stamp 2020-02-11 04:00:00 is 204069.23658574 s in the future
+./workspace/dataset1/seg_test/seg_tst_67.png
+tar: ./workspace/dataset1/seg_test/seg_tst_67.png: time stamp 2020-02-11 04:00:00 is 204069.23630442 s in the future
+./workspace/dataset1/seg_test/seg_tst_74.png
+tar: ./workspace/dataset1/seg_test/seg_tst_74.png: time stamp 2020-02-11 04:00:00 is 204069.23605343 s in the future
+./workspace/dataset1/seg_test/seg_tst_78.png
+tar: ./workspace/dataset1/seg_test/seg_tst_78.png: time stamp 2020-02-11 04:00:00 is 204069.23579361 s in the future
+./workspace/dataset1/seg_test/seg_tst_96.png
+tar: ./workspace/dataset1/seg_test/seg_tst_96.png: time stamp 2020-02-11 04:00:00 is 204069.23554764 s in the future
+./workspace/dataset1/seg_test/seg_tst_6.png
+tar: ./workspace/dataset1/seg_test/seg_tst_6.png: time stamp 2020-02-11 04:00:00 is 204069.23530966 s in the future
+./workspace/dataset1/seg_test/seg_tst_44.png
+tar: ./workspace/dataset1/seg_test/seg_tst_44.png: time stamp 2020-02-11 04:00:00 is 204069.23505468 s in the future
+./workspace/dataset1/seg_test/seg_tst_4.png
+tar: ./workspace/dataset1/seg_test/seg_tst_4.png: time stamp 2020-02-11 04:00:00 is 204069.23481123 s in the future
+./workspace/dataset1/seg_test/seg_tst_90.png
+tar: ./workspace/dataset1/seg_test/seg_tst_90.png: time stamp 2020-02-11 04:00:00 is 204069.23455122 s in the future
+./workspace/dataset1/seg_test/seg_tst_98.png
+tar: ./workspace/dataset1/seg_test/seg_tst_98.png: time stamp 2020-02-11 04:00:00 is 204069.23428605 s in the future
+./workspace/dataset1/seg_test/seg_tst_62.png
+tar: ./workspace/dataset1/seg_test/seg_tst_62.png: time stamp 2020-02-11 04:00:00 is 204069.2340196 s in the future
+./workspace/dataset1/seg_test/seg_tst_10.png
+tar: ./workspace/dataset1/seg_test/seg_tst_10.png: time stamp 2020-02-11 04:00:00 is 204069.23376969 s in the future
+./workspace/dataset1/seg_test/seg_tst_63.png
+tar: ./workspace/dataset1/seg_test/seg_tst_63.png: time stamp 2020-02-11 04:00:00 is 204069.23352548 s in the future
+./workspace/dataset1/seg_test/seg_tst_9.png
+tar: ./workspace/dataset1/seg_test/seg_tst_9.png: time stamp 2020-02-11 04:00:00 is 204069.23327444 s in the future
+./workspace/dataset1/seg_test/seg_tst_81.png
+tar: ./workspace/dataset1/seg_test/seg_tst_81.png: time stamp 2020-02-11 04:00:00 is 204069.23303158 s in the future
+./workspace/dataset1/seg_test/seg_tst_94.png
+tar: ./workspace/dataset1/seg_test/seg_tst_94.png: time stamp 2020-02-11 04:00:00 is 204069.23277075 s in the future
+./workspace/dataset1/seg_test/seg_tst_19.png
+tar: ./workspace/dataset1/seg_test/seg_tst_19.png: time stamp 2020-02-11 04:00:00 is 204069.23252337 s in the future
+./workspace/dataset1/seg_test/seg_tst_53.png
+tar: ./workspace/dataset1/seg_test/seg_tst_53.png: time stamp 2020-02-11 04:00:00 is 204069.23227913 s in the future
+./workspace/dataset1/seg_test/seg_tst_11.png
+tar: ./workspace/dataset1/seg_test/seg_tst_11.png: time stamp 2020-02-11 04:00:00 is 204069.23202758 s in the future
+./workspace/dataset1/seg_test/seg_tst_76.png
+tar: ./workspace/dataset1/seg_test/seg_tst_76.png: time stamp 2020-02-11 04:00:00 is 204069.23178065 s in the future
+./workspace/dataset1/seg_test/seg_tst_47.png
+tar: ./workspace/dataset1/seg_test/seg_tst_47.png: time stamp 2020-02-11 04:00:00 is 204069.23151783 s in the future
+./workspace/dataset1/seg_test/seg_tst_29.png
+tar: ./workspace/dataset1/seg_test/seg_tst_29.png: time stamp 2020-02-11 04:00:00 is 204069.23127303 s in the future
+./workspace/dataset1/seg_test/seg_tst_0.png
+tar: ./workspace/dataset1/seg_test/seg_tst_0.png: time stamp 2020-02-11 04:00:00 is 204069.23100832 s in the future
+./workspace/dataset1/seg_test/seg_tst_89.png
+tar: ./workspace/dataset1/seg_test/seg_tst_89.png: time stamp 2020-02-11 04:00:00 is 204069.23076277 s in the future
+./workspace/dataset1/seg_test/seg_tst_64.png
+tar: ./workspace/dataset1/seg_test/seg_tst_64.png: time stamp 2020-02-11 04:00:00 is 204069.23050042 s in the future
+./workspace/dataset1/seg_test/seg_tst_31.png
+tar: ./workspace/dataset1/seg_test/seg_tst_31.png: time stamp 2020-02-11 04:00:00 is 204069.23022852 s in the future
+./workspace/dataset1/seg_test/seg_tst_80.png
+tar: ./workspace/dataset1/seg_test/seg_tst_80.png: time stamp 2020-02-11 04:00:00 is 204069.22997991 s in the future
+tar: ./workspace/dataset1/seg_test: time stamp 2020-02-11 04:00:00 is 204069.22987129 s in the future
+
+# make softlinks
+cd fcn8
+ln -nsf ../workspace ./workspace
+cd ../fcn8ups
+ln -nsf ../workspace ./workspace
+cd ../unet/v2
+ln -nsf ../../workspace ./workspace
+
+
+# run python3 script on fcn8
+echo " "
+ 
+echo "NOW RUNNING FCN8"
+NOW RUNNING FCN8
+echo " " 
+ 
+cd ../../fcn8/
+make clean
+rm -f -rf /home/root/target_zcu102/fcn8/build
+rm -f fcn8
+make
+mkdir -p /home/root/target_zcu102/fcn8/build
+g++ -c -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../common/ -mcpu=cortex-a53 /home/root/target_zcu102/fcn8/src/fps_main.cc -o /home/root/target_zcu102/fcn8/build/fps_main.o
+/home/root/target_zcu102/fcn8/src/fps_main.cc: In function 'void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)':
+/home/root/target_zcu102/fcn8/src/fps_main.cc:202:7: warning: unused variable 'width' [-Wunused-variable]
+   int width         = dpuGetTensorWidth(dpu_in);
+       ^~~~~
+/home/root/target_zcu102/fcn8/src/fps_main.cc:203:7: warning: unused variable 'height' [-Wunused-variable]
+   int height        = dpuGetTensorHeight(dpu_in);
+       ^~~~~~
+/home/root/target_zcu102/fcn8/src/fps_main.cc:204:7: warning: unused variable 'size' [-Wunused-variable]
+   int size          = dpuGetTensorSize(dpu_in);
+       ^~~~
+/home/root/target_zcu102/fcn8/src/fps_main.cc: In function 'void run_CNN(DPUTask*, cv::Mat)':
+/home/root/target_zcu102/fcn8/src/fps_main.cc:226:7: warning: unused variable 'outSize' [-Wunused-variable]
+   int outSize   = dpuGetTensorSize(conv_out_tensor);
+       ^~~~~~~
+g++ -c -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../common/ -mcpu=cortex-a53 /home/root/target_zcu102/common/dputils.cpp -o /home/root/target_zcu102/fcn8/build/dputils.o
+g++ -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../common/ -mcpu=cortex-a53 /home/root/target_zcu102/fcn8/build/fps_main.o /home/root/target_zcu102/fcn8/build/dputils.o /home/root/target_zcu102/fcn8/model/dpu_fcn8.elf -o fcn8 -L/usr/share/OpenCV/3rdparty/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_face -lopencv_photo -lopencv_fuzzy -lopencv_hfs -lopencv_img_hash -lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_plot -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ml -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_flann -lopencv_xobjdetect -lopencv_imgcodecs -lopencv_objdetect -lopencv_xphoto -lopencv_imgproc -lopencv_core -lhineon -ln2cube -lpthread -lopencv_videoio
+make lib_so
+gcc  --sysroot= -fPIC -shared /home/root/target_zcu102/fcn8/model/dpu_fcn8.elf -o /home/root/target_zcu102/fcn8/model/libdpumodelfcn8.so
+cd model
+python3 ./run_fcn8_on_dpu.py 2>&1 | tee dpu_logfile_fcn8_py.txt
+fcn_config.py runs from  /home/root/target_zcu102/fcn8/model
+STARTING FCN8 on DPU...
+X tensor shape:  (101, 224, 224, 3)  Y tensor shape:  (101, 224, 224, 12)
+Input  tensor=  0 ch=  3 H=224 W=224 Size=150528 scale=  64
+Output tensor=  0 ch= 12 H=224 W=224 Size=602112
+Output tensor scaling factor 0.25
+prediction shape:  (224, 224, 12)
+y_pred shape:  (101, 224, 224, 12)
+y_test shape:  (101, 224, 224, 12)
+shape of y_testi and y_predi  (101, 224, 224) (101, 224, 224)
+class ( 0)          Sky: #TP= 432531, #FP=  36103, #FN=  23442, IoU=0.879
+class ( 1)         Wall: #TP=1132449, #FP= 162915, #FN= 171497, IoU=0.772
+class ( 2)         Pole: #TP=      3, #FP=     93, #FN=  36417, IoU=0.000
+class ( 3)         Road: #TP=1406785, #FP=  63319, #FN=  68234, IoU=0.914
+class ( 4)     Sidewalk: #TP= 387941, #FP=  93906, #FN=  60492, IoU=0.715
+class ( 5)   Vegetation: #TP= 785270, #FP=  93950, #FN=  41275, IoU=0.853
+class ( 6)         Sign: #TP=     12, #FP=    497, #FN=  53380, IoU=0.000
+class ( 7)        Fence: #TP=  41261, #FP=  28466, #FN= 115142, IoU=0.223
+class ( 8)      vehicle: #TP=  75874, #FP= 140336, #FN=  18186, IoU=0.324
+class ( 9)   Pedestrian: #TP=    117, #FP=    542, #FN=  36748, IoU=0.003
+class (10)    Bicyclist: #TP=   2917, #FP=   1730, #FN= 108055, IoU=0.026
+class (11)  miscellanea: #TP=  29918, #FP= 150841, #FN=  39830, IoU=0.136
+_________________
+DPU Mean IoU: 0.404
+Processed 101 images
+FINISHED
+rm -r ./config/__pycache__
+cd ..
+# run C++ executable with 1 thread
+./fcn8 1 2>&1 | tee dpu_logfile_fcn8_th1.txt
+now running ./fcn8 1
+total image : 101
+[Time]8677609us
+[FPS]11.6392
+make clean
+rm -f -rf /home/root/target_zcu102/fcn8/build
+rm -f fcn8
+rm *~
+rm: cannot remove '*~': No such file or directory
+rm ./workspace *~
+rm: cannot remove '*~': No such file or directory
+rm ./src/*~ ./src/.*~
+rm: cannot remove './src/*~': No such file or directory
+rm: cannot remove './src/.*~': No such file or directory
+
+
+# run python3 script on fcn8ups
+echo " " 
+ 
+echo "NOW RUNNING FCN8UPS"
+NOW RUNNING FCN8UPS
+echo " " 
+ 
+cd ../fcn8ups
+make clean
+rm -f -rf /home/root/target_zcu102/fcn8ups/build
+rm -f fcn8ups
+make
+mkdir -p /home/root/target_zcu102/fcn8ups/build
+g++ -c -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../common/ -mcpu=cortex-a53 /home/root/target_zcu102/fcn8ups/src/fps_main.cc -o /home/root/target_zcu102/fcn8ups/build/fps_main.o
+/home/root/target_zcu102/fcn8ups/src/fps_main.cc: In function 'void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)':
+/home/root/target_zcu102/fcn8ups/src/fps_main.cc:202:7: warning: unused variable 'width' [-Wunused-variable]
+   int width         = dpuGetTensorWidth(dpu_in);
+       ^~~~~
+/home/root/target_zcu102/fcn8ups/src/fps_main.cc:203:7: warning: unused variable 'height' [-Wunused-variable]
+   int height        = dpuGetTensorHeight(dpu_in);
+       ^~~~~~
+/home/root/target_zcu102/fcn8ups/src/fps_main.cc:204:7: warning: unused variable 'size' [-Wunused-variable]
+   int size          = dpuGetTensorSize(dpu_in);
+       ^~~~
+/home/root/target_zcu102/fcn8ups/src/fps_main.cc: In function 'void run_CNN(DPUTask*, cv::Mat)':
+/home/root/target_zcu102/fcn8ups/src/fps_main.cc:226:7: warning: unused variable 'outSize' [-Wunused-variable]
+   int outSize   = dpuGetTensorSize(conv_out_tensor);
+       ^~~~~~~
+g++ -c -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../common/ -mcpu=cortex-a53 /home/root/target_zcu102/common/dputils.cpp -o /home/root/target_zcu102/fcn8ups/build/dputils.o
+g++ -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../common/ -mcpu=cortex-a53 /home/root/target_zcu102/fcn8ups/build/fps_main.o /home/root/target_zcu102/fcn8ups/build/dputils.o /home/root/target_zcu102/fcn8ups/model/dpu_fcn8ups.elf -o fcn8ups -L/usr/share/OpenCV/3rdparty/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_face -lopencv_photo -lopencv_fuzzy -lopencv_hfs -lopencv_img_hash -lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_plot -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ml -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_flann -lopencv_xobjdetect -lopencv_imgcodecs -lopencv_objdetect -lopencv_xphoto -lopencv_imgproc -lopencv_core -lhineon -ln2cube -lpthread -lopencv_videoio
+make lib_so
+gcc  --sysroot= -fPIC -shared /home/root/target_zcu102/fcn8ups/model/dpu_fcn8ups.elf -o /home/root/target_zcu102/fcn8ups/model/libdpumodelfcn8ups.so
+cd model
+python3 ./run_fcn8ups_on_dpu.py 2>&1 | tee dpu_logfile_fcn8ups_py.txt
+fcn_config.py runs from  /home/root/target_zcu102/fcn8ups/model
+STARTING FCN8UPS on DPU...
+X tensor shape:  (101, 224, 224, 3)  Y tensor shape:  (101, 224, 224, 12)
+Input  tensor= 50 ch=  3 H=224 W=224 Size=150528 scale=  64
+Output tensor= 50 ch= 12 H=224 W=224 Size=602112
+Output tensor scaling factor 0.25
+prediction shape:  (224, 224, 12)
+y_pred shape:  (101, 224, 224, 12)
+y_test shape:  (101, 224, 224, 12)
+shape of y_testi and y_predi  (101, 224, 224) (101, 224, 224)
+class ( 0)          Sky: #TP= 439170, #FP=  66963, #FN=  16803, IoU=0.840
+class ( 1)         Wall: #TP=1159507, #FP= 250243, #FN= 144439, IoU=0.746
+class ( 2)         Pole: #TP=     19, #FP=    996, #FN=  36401, IoU=0.001
+class ( 3)         Road: #TP=1317938, #FP=  64643, #FN= 157081, IoU=0.856
+class ( 4)     Sidewalk: #TP= 348235, #FP= 148560, #FN= 100198, IoU=0.583
+class ( 5)   Vegetation: #TP= 795345, #FP= 243444, #FN=  31200, IoU=0.743
+class ( 6)         Sign: #TP=     44, #FP=    784, #FN=  53348, IoU=0.001
+class ( 7)        Fence: #TP=    702, #FP=   5221, #FN= 155701, IoU=0.004
+class ( 8)      vehicle: #TP=  64377, #FP=  90537, #FN=  29683, IoU=0.349
+class ( 9)   Pedestrian: #TP=    114, #FP=    264, #FN=  36751, IoU=0.003
+class (10)    Bicyclist: #TP=    154, #FP=    187, #FN= 110818, IoU=0.001
+class (11)  miscellanea: #TP=  12105, #FP=  58224, #FN=  57643, IoU=0.095
+_________________
+DPU Mean IoU: 0.352
+Processed 101 images
+FINISHED
+rm -r ./config/__pycache__
+cd ..
+# run C++ executable with 1 thread
+./fcn8ups 1 2>&1 | tee dpu_logfile_fcn8ups_th1.txt
+now running ./fcn8ups 1
+total image : 101
+[Time]8334542us
+[FPS]12.1182
+make clean
+rm -f -rf /home/root/target_zcu102/fcn8ups/build
+rm -f fcn8ups
+rm ./workspace *~
+rm: cannot remove '*~': No such file or directory
+rm ./src/*~ ./src/.*~
+rm: cannot remove './src/*~': No such file or directory
+rm: cannot remove './src/.*~': No such file or directory
+
+
+# run python3 script on unet
+echo " "
+ 
+echo "NOW RUNNING UNETv2"
+NOW RUNNING UNETv2
+echo " "
+ 
+cd ../unet/v2
+make clean
+rm -f -rf /home/root/target_zcu102/unet/v2/build
+rm -f unet2
+make
+mkdir -p /home/root/target_zcu102/unet/v2/build
+g++ -c -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../../common/ -mcpu=cortex-a53 /home/root/target_zcu102/unet/v2/src/fps_main.cc -o /home/root/target_zcu102/unet/v2/build/fps_main.o
+/home/root/target_zcu102/unet/v2/src/fps_main.cc: In function 'void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)':
+/home/root/target_zcu102/unet/v2/src/fps_main.cc:202:7: warning: unused variable 'width' [-Wunused-variable]
+   int width         = dpuGetTensorWidth(dpu_in);
+       ^~~~~
+/home/root/target_zcu102/unet/v2/src/fps_main.cc:203:7: warning: unused variable 'height' [-Wunused-variable]
+   int height        = dpuGetTensorHeight(dpu_in);
+       ^~~~~~
+/home/root/target_zcu102/unet/v2/src/fps_main.cc:204:7: warning: unused variable 'size' [-Wunused-variable]
+   int size          = dpuGetTensorSize(dpu_in);
+       ^~~~
+/home/root/target_zcu102/unet/v2/src/fps_main.cc: In function 'void run_CNN(DPUTask*, cv::Mat)':
+/home/root/target_zcu102/unet/v2/src/fps_main.cc:226:7: warning: unused variable 'outSize' [-Wunused-variable]
+   int outSize   = dpuGetTensorSize(conv_out_tensor);
+       ^~~~~~~
+g++ -c -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../../common/ -mcpu=cortex-a53 /home/root/target_zcu102/common/dputils.cpp -o /home/root/target_zcu102/unet/v2/build/dputils.o
+g++ -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I../../common/ -mcpu=cortex-a53 /home/root/target_zcu102/unet/v2/build/fps_main.o /home/root/target_zcu102/unet/v2/build/dputils.o /home/root/target_zcu102/unet/v2/model/dpu_unet2.elf -o unet2 -L/usr/share/OpenCV/3rdparty/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_face -lopencv_photo -lopencv_fuzzy -lopencv_hfs -lopencv_img_hash -lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_plot -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ml -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_flann -lopencv_xobjdetect -lopencv_imgcodecs -lopencv_objdetect -lopencv_xphoto -lopencv_imgproc -lopencv_core -lhineon -ln2cube -lpthread -lopencv_videoio
+make lib_so
+gcc  --sysroot= -fPIC -shared /home/root/target_zcu102/unet/v2/model/dpu_unet2.elf -o /home/root/target_zcu102/unet/v2/model/libdpumodelunet2.so
+cd model
+python3 ./run_unet2_on_dpu.py 2>&1 | tee dpu_logfile_unet2_py.txt
+fcn_config.py runs from  /home/root/target_zcu102/unet/v2/model
+STARTING UNETv2 on DPU...
+X tensor shape:  (101, 224, 224, 3)  Y tensor shape:  (101, 224, 224, 12)
+Input  tensor=  0 ch=  3 H=224 W=224 Size=150528 scale=  64
+Output tensor=  0 ch= 12 H=224 W=224 Size=602112
+Output tensor scaling factor 1.0
+prediction shape:  (224, 224, 12)
+y_pred shape:  (101, 224, 224, 12)
+y_test shape:  (101, 224, 224, 12)
+shape of y_testi and y_predi  (101, 224, 224) (101, 224, 224)
+class ( 0)          Sky: #TP= 454660, #FP=  64930, #FN=   1313, IoU=0.873
+class ( 1)         Wall: #TP=1117534, #FP= 219722, #FN= 186412, IoU=0.733
+class ( 2)         Pole: #TP=      0, #FP=      0, #FN=  36420, IoU=0.000
+class ( 3)         Road: #TP=1361898, #FP=  68446, #FN= 113121, IoU=0.882
+class ( 4)     Sidewalk: #TP= 339323, #FP=  53847, #FN= 109110, IoU=0.676
+class ( 5)   Vegetation: #TP= 761014, #FP= 172980, #FN=  65531, IoU=0.761
+class ( 6)         Sign: #TP=      0, #FP=      0, #FN=  53392, IoU=0.000
+class ( 7)        Fence: #TP=      0, #FP=      0, #FN= 156403, IoU=0.000
+class ( 8)      vehicle: #TP=  87159, #FP= 259987, #FN=   6901, IoU=0.246
+class ( 9)   Pedestrian: #TP=      0, #FP=      0, #FN=  36865, IoU=0.000
+class (10)    Bicyclist: #TP=      0, #FP=      0, #FN= 110972, IoU=0.000
+class (11)  miscellanea: #TP=  23700, #FP=  82576, #FN=  46048, IoU=0.156
+_________________
+DPU Mean IoU: 0.361
+Processed 101 images
+FINISHED
+rm -r ./config/__pycache__
+cd ..
+# run C++ executable with 1 thread
+./unet2 1 2>&1 | tee dpu_logfile_unet2_th1.txt
+now running ./unet2 1
+total image : 101
+[Time]13428637us
+[FPS]7.52124
+make clean
+rm -f -rf /home/root/target_zcu102/unet/v2/build
+rm -f unet2
+rm ./workspace *~
+rm ./src/*~ ./src/.*~
+rm: cannot remove './src/*~': No such file or directory
+rm: cannot remove './src/.*~': No such file or directory
+
+
+# remove test images
+cd ../..
+rm -r ./workspace
+
+
+
