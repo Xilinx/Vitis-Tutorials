@@ -1,0 +1,70 @@
+#
+# Copyright 2019 Xilinx Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART# cd src
+
+NOW RUNNING BASELINE ALEXNET in MULTITHREADING WITH PYTHON APIs
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 1 ../../baseline/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=71.96, time=5.002717 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 2 ../../baseline/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=86.38, time=8.335016 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 3 ../../baseline/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=127.53, time=8.468650 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 4 ../../baseline/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=144.26, time=9.982172 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 5 ../../baseline/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=139.08, time=12.942583 seconds
+
+NOW RUNNING PRUNED ALEXNET in MULTITHREADING WITH PYTHON APIs
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 1 ../../pruned/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=140.01, time=2.571209 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 2 ../../pruned/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=206.53, time=3.486112 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 3 ../../pruned/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=291.08, time=3.710310 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 4 ../../pruned/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=365.76, time=3.936970 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 5 ../../pruned/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=374.70, time=4.803808 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 6 ../../pruned/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=394.97, time=5.468788 seconds
+
+root@xilinx-zcu102-2020_1:~/Vitis-AI/VART/samples/alexnet_zcu102/VART/src# python3 ./alexnet.py 7 ../../pruned/model/arm64_4096/dpu_alexnetBNnoLRN_0.elf
+/home/root/Vitis-AI/VART/samples/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=392.55, time=6.419630 seconds
