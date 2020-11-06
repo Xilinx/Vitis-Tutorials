@@ -1,0 +1,122 @@
+/* 
+Copyright 2019 Xilinx Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+LINE:  test_images/cat.8653.jpg
+PREDICTED:  [1.] dog
+EXPECTED :  [0.] cat
+[Top]0 prob = 0.835484  name = dog
+[Top]1 prob = 0.164516  name = cat
+
+
+LINE:  test_images/dog.9236.jpg
+PREDICTED:  [0.] cat
+EXPECTED :  [1.] dog
+[Top]0 prob = 0.651355  name = cat
+[Top]1 prob = 0.348645  name = dog
+
+number of total images predicted  999
+number of top1 false predictions  60
+number of top1 right predictions  939
+top1 accuracy = 0.94
+
+
+./dbg_fps_alexnetBNnoLRN_method1 1
+now running ./dbg_fps_alexnetBNnoLRN_method1 1
+total image : 1
+[TimeTest]dpuSetInputImage              462       us
+[TimeTest]dpuRunTask                    14565     us
+[TimeTest]dpuRunSoftmax                 262       us
+[TimeTest]TopK                          3         us
+[Time]20147us
+[FPS]49.6352
+
+
+./fps_alexnetBNnoLRN_method1 1
+now running ./fps_alexnetBNnoLRN_method1 1
+total image : 1
+[TimeTest]dpuSetInputImage              468       us
+[TimeTest]dpuRunTask                    14113     us
+[TimeTest]dpuRunSoftmax                 243       us
+[TimeTest]TopK                          24        us
+[Time]19572us
+[FPS]51.0934
+
+
+./dbg_fps_alexnetBNnoLRN_method2 1
+now running ./dbg_fps_alexnetBNnoLRN_method2 1
+total image : 1
+[DNNDK] Performance profile - DPU Kernel "alexnetBNnoLRN_0" DPU Task "alexnetBNnoLRN_0-0"
+=====================================================================================================
+  ID                       NodeName Workload(MOP) Mem(MB) RunTime(ms) Perf(GOPS) Utilization    MB/S
+   1                          conv1       210.830    0.26       1.059      199.1        16.2%   244.2
+   2                          conv2       895.795    0.70       0.960      933.1        75.9%   729.6
+   3                          conv3       299.041    0.95       0.349      856.9        69.7%  2735.6
+   4                          conv4       448.561    1.40       0.516      869.3        70.7%  2708.3
+   5                          conv5       299.041    0.92       0.358      835.3        68.0%  2569.2
+   6                            fc6        75.497   36.09       7.485       10.1         0.8%  4821.2
+   7                            fc7        33.554   16.08       3.192       10.5         0.9%  5037.6
+   8                            fc8         0.016    0.01       0.018        0.9         0.1%   657.6
+
+                Total Nodes In Avg:
+                                All      2262.336   59.15      13.937      162.3        13.2%  4244.1
+=====================================================================================================
+[Time]20243us
+[FPS]49.3998
+
+
+./dbg_fps_alexnetBNnoLRN_method3 1
+now running ./dbg_fps_alexnetBNnoLRN_method3 1
+total image : 1
+[Time]19689us
+[FPS]50.7898
+
+now running multithreading
+
+./fps_alexnetBNnoLRN 1
+now running ./fps_alexnetBNnoLRN 1
+total image : 1000
+[Time]17293421us
+[FPS]57.8255
+
+./fps_alexnetBNnoLRN 2
+now running ./fps_alexnetBNnoLRN 2
+total image : 1000
+[Time]8717640us
+[FPS]114.71
+
+./fps_alexnetBNnoLRN 3
+now running ./fps_alexnetBNnoLRN 3
+total image : 1000
+[Time]7697964us
+[FPS]129.904
+
+./fps_alexnetBNnoLRN 4
+now running ./fps_alexnetBNnoLRN 4
+total image : 1000
+[Time]6862416us
+[FPS]145.721
+
+./fps_alexnetBNnoLRN 5
+now running ./fps_alexnetBNnoLRN 5
+total image : 1000
+[Time]6579195us
+[FPS]151.994
+
+./fps_alexnetBNnoLRN 6
+now running ./fps_alexnetBNnoLRN 6
+total image : 1000
+[Time]6567963us
+[FPS]152.254

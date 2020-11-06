@@ -1,0 +1,55 @@
+/*
+Copyright 2019 Xilinx Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+running alexnet for image classification of dogs and cats
+
+running Python multithreading
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=72.04, time=4.996910 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=85.55, time=8.416458 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=129.60, time=8.333625 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=142.22, time=10.125165 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=135.76, time=13.258598 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=147.55, time=14.638820 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=138.32, time=2.602743 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=206.67, time=3.483814 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=292.08, time=3.697664 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=364.23, time=3.953552 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=373.35, time=4.821178 seconds
+
+/home/root/alexnet_zcu102/VART/src/../../test_image/dog.98.jpg
+FPS=394.77, time=5.471510 seconds

@@ -1,0 +1,220 @@
+/*
+Copyright 2019 Xilinx Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+DNNDK Python API: FCN8
+f
+cn_config.py runs from  /home/root/fcn8_zcu102/fcn8/model
+STARTING FCN8 on DPU...
+X tensor shape:  (101, 224, 224, 3)  Y tensor shape:  (101, 224, 224, 12)
+Input  tensor=  0 ch=  3 H=224 W=224 Size=150528 scale=  64
+Output tensor=  0 ch= 12 H=224 W=224 Size=602112
+Output tensor scaling factor 0.25
+prediction shape:  (224, 224, 12)
+y_pred shape:  (101, 224, 224, 12)
+y_test shape:  (101, 224, 224, 12)
+shape of y_testi and y_predi  (101, 224, 224) (101, 224, 224)
+class ( 0)          Sky: #TP= 435475, #FP=  40238, #FN=  20498, IoU=0.878
+class ( 1)         Wall: #TP=1088122, #FP= 121655, #FN= 215824, IoU=0.763
+class ( 2)         Pole: #TP=      2, #FP=    245, #FN=  36418, IoU=0.000
+class ( 3)         Road: #TP=1423622, #FP=  82099, #FN=  51397, IoU=0.914
+class ( 4)     Sidewalk: #TP= 386831, #FP=  92331, #FN=  61602, IoU=0.715
+class ( 5)   Vegetation: #TP= 774492, #FP=  79461, #FN=  52053, IoU=0.855
+class ( 6)         Sign: #TP=      5, #FP=     88, #FN=  53387, IoU=0.000
+class ( 7)        Fence: #TP=  82619, #FP=  68728, #FN=  73784, IoU=0.367
+class ( 8)      vehicle: #TP=  75645, #FP= 172498, #FN=  18415, IoU=0.284
+class ( 9)   Pedestrian: #TP=    813, #FP=   2738, #FN=  36052, IoU=0.021
+class (10)    Bicyclist: #TP=   1438, #FP=   1154, #FN= 109534, IoU=0.013
+class (11)  miscellanea: #TP=  25611, #FP= 111866, #FN=  44137, IoU=0.141
+_________________
+DPU Mean IoU: 0.413
+Processed 101 images
+FINISHED
+
+DNNDK C++ API: FCN8 fps with multithreading
+
+now running ./fcn8 1
+total image : 101
+[Time]8818411us
+[FPS]11.4533
+
+now running ./fcn8 3
+total image : 101
+[Time]2989451us
+[FPS]33.7855
+
+now running ./fcn8 5
+total image : 101
+[Time]1936894us
+[FPS]52.1453
+
+now running ./fcn8 8
+total image : 101
+[Time]1516594us
+[FPS]66.5966
+
+DNNDK Python API: FCN8UPS
+
+fcn_config.py runs from  /home/root/fcn8_zcu102/fcn8ups/model
+STARTING FCN8UPS on DPU...
+X tensor shape:  (101, 224, 224, 3)  Y tensor shape:  (101, 224, 224, 12)
+Input  tensor= 50 ch=  3 H=224 W=224 Size=150528 scale=  64
+Output tensor= 50 ch= 12 H=224 W=224 Size=602112
+Output tensor scaling factor 0.25
+prediction shape:  (224, 224, 12)
+y_pred shape:  (101, 224, 224, 12)
+y_test shape:  (101, 224, 224, 12)
+shape of y_testi and y_predi  (101, 224, 224) (101, 224, 224)
+class ( 0)          Sky: #TP= 437135, #FP=  45153, #FN=  18838, IoU=0.872
+class ( 1)         Wall: #TP=1053298, #FP=  82491, #FN= 250648, IoU=0.760
+class ( 2)         Pole: #TP=      0, #FP=     83, #FN=  36420, IoU=0.000
+class ( 3)         Road: #TP=1427560, #FP=  95035, #FN=  47459, IoU=0.909
+class ( 4)     Sidewalk: #TP= 389070, #FP= 103949, #FN=  59363, IoU=0.704
+class ( 5)   Vegetation: #TP= 792464, #FP= 133072, #FN=  34081, IoU=0.826
+class ( 6)         Sign: #TP=     60, #FP=     24, #FN=  53332, IoU=0.001
+class ( 7)        Fence: #TP=  46545, #FP=  52288, #FN= 109858, IoU=0.223
+class ( 8)      vehicle: #TP=  76755, #FP= 198649, #FN=  17305, IoU=0.262
+class ( 9)   Pedestrian: #TP=     83, #FP=    243, #FN=  36782, IoU=0.002
+class (10)    Bicyclist: #TP=     48, #FP=     60, #FN= 110924, IoU=0.000
+class (11)  miscellanea: #TP=  28619, #FP= 105092, #FN=  41129, IoU=0.164
+_________________
+DPU Mean IoU: 0.394
+Processed 101 images
+FINISHED
+
+DNNDK C++ API: FCN8UPS fps with multithreading
+
+now running ./fcn8ups 1
+total image : 101
+[Time]8379408us
+[FPS]12.0534
+
+now running ./fcn8ups 3
+total image : 101
+[Time]2882362us
+[FPS]35.0407
+
+now running ./fcn8ups 5
+total image : 101
+[Time]1809280us
+[FPS]55.8233
+
+now running ./fcn8ups 8
+total image : 101
+[Time]1510934us
+[FPS]66.8461
+fine-grained profiling: FCN8
+
+
+now running ./dbg_fcn8 1
+total image : 1
+[DNNDK] Performance profile - DPU Kernel "fcn8" DPU Task "fcn8-0"
+=====================================================================================================
+  ID                       NodeName Workload(MOP) Mem(MB) RunTime(ms) Perf(GOPS) Utilization    MB/S
+   1       block1_conv1_convolution       173.408    3.22       0.754      230.0        18.7%  4267.6
+   2       block1_conv2_convolution      3699.376    3.88       3.254     1136.9        92.5%  1192.4
+   3       block2_conv1_convolution      1849.688    2.37       1.650     1121.0        91.2%  1439.3
+   4       block2_conv2_convolution      3699.376    2.07       3.255     1136.5        92.5%   634.9
+   5       block3_conv1_convolution      1849.688    1.44       1.652     1119.7        91.1%   870.3
+   6       block3_conv2_convolution      3699.376    2.11       3.261     1134.4        92.3%   646.8
+   7       block3_conv3_convolution      3699.376    1.53       3.257     1135.8        92.4%   470.9
+   8       block4_conv1_convolution      1849.688    1.71       1.877      985.4        80.2%   912.0
+   9       block4_conv2_convolution      3699.376    3.04       3.729      992.1        80.7%   814.6
+  10       block4_conv3_convolution      3699.376    2.75       3.730      991.8        80.7%   737.1
+  11           pool4_11_convolution         2.408    0.10       0.036       66.9         5.4%  2903.2
+  12       block5_conv1_convolution       924.844    2.45       0.967      956.4        77.8%  2536.1
+  13 conv2d_transpose_2_*                   0.226    0.01       0.022       10.3         0.8%   581.9
+  14       block5_conv2_convolution       924.844    2.45       0.965      958.4        78.0%  2541.4
+  15           pool3_11_convolution         4.817    0.21       0.057       84.5         6.9%  3765.4
+  16       block5_conv3_convolution       924.844    2.38       0.963      960.4        78.2%  2471.9
+  17              conv6_convolution      1258.815   12.31       4.088      307.9        25.1%  3011.4
+  18              conv7_convolution        25.690    0.31       0.091      282.3        23.0%  3373.7
+  19 conv2d_transpose_1_*                   9.634    0.13       0.056      172.0        14.0%  2280.6
+  20                add_layer_add_1         0.000    0.03       0.029        0.0         0.0%   998.3
+  21 conv2d_transpose_3_*                   14.451    0.61       0.322       44.9         3.7%  1893.5
+
+                Total Nodes In Avg:
+                                All     32009.303   47.31      34.015      941.0        76.6%  1390.9
+=====================================================================================================
+
+now running ./dbg_fcn8ups 1
+total image : 1
+[DNNDK] Performance profile - DPU Kernel "fcn8ups" DPU Task "fcn8ups-0"
+=====================================================================================================
+  ID                       NodeName Workload(MOP) Mem(MB) RunTime(ms) Perf(GOPS) Utilization    MB/S
+   1       block1_conv1_convolution       173.408    3.22       0.753      230.3        18.7%  4273.2
+   2       block1_conv2_convolution      3699.376    3.88       3.251     1137.9        92.6%  1193.5
+   3       block2_conv1_convolution      1849.688    2.37       1.651     1120.3        91.2%  1438.4
+   4       block2_conv2_convolution      3699.376    2.07       3.254     1136.9        92.5%   635.1
+   5       block3_conv1_convolution      1849.688    1.44       1.650     1121.0        91.2%   871.3
+   6       block3_conv2_convolution      3699.376    2.11       3.262     1134.1        92.3%   646.6
+   7       block3_conv3_convolution      3699.376    1.53       3.257     1135.8        92.4%   470.9
+   8       block4_conv1_convolution      1849.688    1.71       1.876      986.0        80.2%   912.5
+   9       block4_conv2_convolution      3699.376    3.04       3.729      992.1        80.7%   814.6
+  10       block4_conv3_convolution      3699.376    2.75       3.731      991.5        80.7%   736.9
+  11           pool4_11_convolution         2.408    0.10       0.036       66.9         5.4%  2903.2
+  12       block5_conv1_convolution       924.844    2.45       0.967      956.4        77.8%  2536.1
+  13          pool411_b_convolution         0.056    0.01       0.017        3.3         0.3%   313.7
+  14       block5_conv2_convolution       924.844    2.45       0.964      959.4        78.1%  2544.0
+  15 up_sampling2d_2_Resize*                0.000    0.01       0.019        0.0         0.0%   305.0
+  16       block5_conv3_convolution       924.844    2.38       0.963      960.4        78.2%  2471.9
+  17 up_sampling2d_2_ResizeBilinear         0.000    0.01       0.020        0.0         0.0%   638.0
+  18           conv7_4a_convolution        29.503    0.31       0.125      236.0        19.2%  2496.5
+  19           pool3_11_convolution         4.817    0.21       0.058       83.0         6.8%  3700.5
+  20           conv7_4b_convolution         0.014    0.00       0.015        0.9         0.1%   114.7
+  21 up_sampling2d_1_Resize*                0.000    0.00       0.016        0.0         0.0%   113.5
+  22 up_sampling2d_1_ResizeBilinear         0.000    0.01       0.025        0.0         0.0%   466.6
+  23                add_layer_add_1         0.000    0.03       0.028        0.0         0.0%  1033.9
+  24 conv2d_transpose_1_*                  14.451    0.61       0.321       45.0         3.7%  1899.4
+
+                Total Nodes In Avg:
+                                All     30744.512   34.30      29.988     1025.2        83.4%  1143.9
+=====================================================================================================
+
+g++ (GCC) 9.2.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+VART: FCN8 with C++ API
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I0710 12:33:42.974431  1011 main.cc:291] create running for subgraph: fcn8
+
+Image : testing_0.png
+Gtk-Message: 12:33:43.511: Failed to load module "canberra-gtk-module"
+Gtk-Message: 12:33:43.532: Failed to load module "canberra-gtk-module"
+
+VART: FCN8 multithreading with Python API
+
+/home/root/fcn8_zcu102/VART/src/img_test/testing_0.png
+FPS=22.19, time=16.219922 seconds
+
+/home/root/fcn8_zcu102/VART/src/img_test/testing_0.png
+FPS=40.21, time=17.904189 seconds
+
+/home/root/fcn8_zcu102/VART/src/img_test/testing_0.png
+FPS=62.14, time=17.380561 seconds
+
+/home/root/fcn8_zcu102/VART/src/img_test/testing_0.png
+FPS=70.28, time=20.489108 seconds
+
+/home/root/fcn8_zcu102/VART/src/img_test/testing_0.png
+FPS=76.62, time=23.491113 seconds
+
+/home/root/fcn8_zcu102/VART/src/img_test/testing_0.png
+FPS=78.98, time=27.349641 seconds
+
+/home/root/fcn8_zcu102/VART/src/img_test/testing_0.png
+FPS=77.58, time=32.483932 seconds
