@@ -180,7 +180,9 @@ This step is only needed when creating an emulation-capable platform.
 
 When a component comes with multiple types of simulation models, selecting SystemC TLM (Transaction-level Modeling) model would run much faster than RTL model. For Processing System component, it's mandatory to use TLM for Hardware Emulation.
 
-In Vivado GUI, select the PS instance, check the ***Block Properties*** window. In ***Properties*** tab, it shows `ALLOWED_SIM_MODELS=tlm,rtl`. Set `SELECTED_SIM_MODEL` to `tlm`.
+In Vivado GUI, select the PS instance, check the ***Block Properties*** window. In ***Properties*** tab, it shows `ALLOWED_SIM_MODELS=tlm,rtl`. It means this component supports two types of simulation models.
+
+Set `SELECTED_SIM_MODEL` property to `tlm` to use TLM as target simulation model.
 
 The equvalent Tcl command is:
 

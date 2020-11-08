@@ -12,6 +12,16 @@ We'll prepare BIF file and the files it refers to into ***boot*** directory; we'
    mkdir boot
    mkdir image
    ```
+   After this step, your directory hierarchy looks like this.
+
+   ```
+   - zcu104_custom_platform # Vivado Project Directory
+   - zcu104_custom_plnx     # PetaLinux Project Directory
+   - zcu104_custom_pkg      # Platform Packaging Directory
+     - pfm                  # Platform Packaging Sources
+       - boot               # Platform boot components
+       - image              # Files to be put in FAT32 partition
+   ```
 
 2. Copy the generated Linux software boot components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/boot*** directory to prepare for running the Vitis platform packaging flow:
 
@@ -37,9 +47,14 @@ Note: These files are the sources of creating BOOT.BIN.
  }
 ```
 
+   - The file names in `<>` are placeholders. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when buiding the final application would expand it further to the full path during image packaging.
+   - Filename placeholders point to the files in boot directory. The filenames in boot directory need to match with placeholders in BIF file.
+   - `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
+   - It's a known issue that v++ packager only recognizes FSBL with `<fsbl.elf>`. So for MPSoC, it's needed to copy `zynqmp_fsbl.elf` that PetaLinux generates to `fsbl.elf` in image directory. This issue is fixed in 2020.2.
+
 4. Prepare image directory. Contents in this directory will be packaged to FAT32 partition by v++ package tool.
 
-   a) Copy the generated Linux software components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/image*** directory.
+   a) Copy the generated Linux software components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/image*** directory.
 
    - boot.scr: script for u-boot initialization
    - system.dtb: device tree file for Linux to boot
@@ -64,6 +79,19 @@ To run software emulation or software emulation with Vitis, we'll need to prepar
    cd zcu104_custom_pkg/pfm
    mkdir qemu
    ```
+
+   After this step, your directory hierarchy looks like this.
+
+   ```
+   - zcu104_custom_platform # Vivado Project Directory
+   - zcu104_custom_plnx     # PetaLinux Project Directory
+   - zcu104_custom_pkg      # Platform Packaging Directory
+     - pfm                  # Platform Packaging Sources
+       - boot               # Platform boot components
+       - image              # Files to be put in FAT32 partition
+       - qemu               # Emulation configuration files
+   ```
+
 2. Copy ***pmu_args.txt*** and ***qemu_args.txt*** from ***ref_files/step3_pfm/qemu/*** to your qemu directory
 
 Example of ***qemu_args.txt***
@@ -144,7 +172,7 @@ Next we setup software settings in Platform Settings view.
 1. In the Platform Settings view, observe the following:
 
    - The name of the Platform Settings view matches the platform project name of ***zcu104_custom***.<br />
-   - A psu_cortexa53 device icon is shown, containing a Linux on psu_cortexa53 domain.
+   - A psu_cortexa53 device icon is shown, containing a ***Linux on psu_cortexa53*** domain.
 
 2. Click the ***linux on psu_cortexa53*** domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:
 
