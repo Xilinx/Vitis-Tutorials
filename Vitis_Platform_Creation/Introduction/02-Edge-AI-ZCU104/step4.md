@@ -102,7 +102,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
 3. Click ***next***<br />
 4. Select ***zcu104_custom*** as platform, click ***next***.<br />
 5. Name the project ***vadd***, click ***next***.<br />
-6. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***). Set the ***Root FS*** to rootfs.ext4 and ***Kernel Image*** to Image. These files are generated in Step 2. click ***next***.<br />
+6. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***). Set the ***Root FS*** to rootfs.ext4 and ***Kernel Image*** to Image. These files are loated in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click ***next***.<br />
 7. Select ***System Optimization Examples -> Vector Addition*** and click ***finish*** to generate the application.<br />
 8. In the Explorer window double click the ***vadd.prj*** file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
 9. Select ***vadd_system*** in Explorer window and Click ***Build*** icon in toolbar.
