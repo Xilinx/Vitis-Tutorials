@@ -1,0 +1,103 @@
+/*
+Copyright 2019 Xilinx Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+rm -f -rf /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build
+rm -f fcn8
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-gcc  --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -fPIC -shared /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/model/dpu_fcn8.elf -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/model/libdpumodelfcn8.so
+mkdir -p /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build/fps_main.o
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc:167:7: warning: unused variable ‘width’ [-Wunused-variable]
+  167 |   int width         = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc:168:7: warning: unused variable ‘height’ [-Wunused-variable]
+  168 |   int height        = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc:169:7: warning: unused variable ‘size’ [-Wunused-variable]
+  169 |   int size          = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc: In function ‘void run_CNN(DPUTask*, cv::Mat)’:
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc:191:7: warning: unused variable ‘outSize’ [-Wunused-variable]
+  191 |   int outSize   = dpuGetTensorSize(conv_out_tensor);
+      |       ^~~~~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/common/dputils.cpp -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build/dputils.o
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build/fps_main.o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build/dputils.o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/model/dpu_fcn8.elf -o fcn8 -ln2cube -lhineon -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib
+
+rm -f -rf /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build
+rm -f fcn8
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-gcc  --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -fPIC -shared /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/model/dpu_fcn8.elf -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/model/libdpumodelfcn8.so
+mkdir -p /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build/fps_main.o
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc:167:7: warning: unused variable ‘width’ [-Wunused-variable]
+  167 |   int width         = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc:168:7: warning: unused variable ‘height’ [-Wunused-variable]
+  168 |   int height        = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc:169:7: warning: unused variable ‘size’ [-Wunused-variable]
+  169 |   int size          = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc: In function ‘void run_CNN(DPUTask*, cv::Mat)’:
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/src/fps_main.cc:191:7: warning: unused variable ‘outSize’ [-Wunused-variable]
+  191 |   int outSize   = dpuGetTensorSize(conv_out_tensor);
+      |       ^~~~~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/common/dputils.cpp -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build/dputils.o
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build/fps_main.o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/build/dputils.o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8/model/dpu_fcn8.elf -o fcn8 -ln2cube -lhineon -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib
+
+rm -f -rf /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build
+rm -f fcn8ups
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-gcc  --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -fPIC -shared /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/model/dpu_fcn8ups.elf -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/model/libdpumodelfcn8ups.so
+mkdir -p /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build/fps_main.o
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc:167:7: warning: unused variable ‘width’ [-Wunused-variable]
+  167 |   int width         = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc:168:7: warning: unused variable ‘height’ [-Wunused-variable]
+  168 |   int height        = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc:169:7: warning: unused variable ‘size’ [-Wunused-variable]
+  169 |   int size          = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc: In function ‘void run_CNN(DPUTask*, cv::Mat)’:
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc:191:7: warning: unused variable ‘outSize’ [-Wunused-variable]
+  191 |   int outSize   = dpuGetTensorSize(conv_out_tensor);
+      |       ^~~~~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/common/dputils.cpp -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build/dputils.o
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build/fps_main.o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build/dputils.o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/model/dpu_fcn8ups.elf -o fcn8ups -ln2cube -lhineon -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib
+
+rm -f -rf /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build
+rm -f fcn8ups
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-gcc  --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -fPIC -shared /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/model/dpu_fcn8ups.elf -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/model/libdpumodelfcn8ups.so
+mkdir -p /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build/fps_main.o
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc:167:7: warning: unused variable ‘width’ [-Wunused-variable]
+  167 |   int width         = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc:168:7: warning: unused variable ‘height’ [-Wunused-variable]
+  168 |   int height        = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc:169:7: warning: unused variable ‘size’ [-Wunused-variable]
+  169 |   int size          = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc: In function ‘void run_CNN(DPUTask*, cv::Mat)’:
+/home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/src/fps_main.cc:191:7: warning: unused variable ‘outSize’ [-Wunused-variable]
+  191 |   int outSize   = dpuGetTensorSize(conv_out_tensor);
+      |       ^~~~~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/common/dputils.cpp -o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build/dputils.o
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -I../common/ -mcpu=cortex-a53 /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build/fps_main.o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/build/dputils.o /home/danieleb/vai1v2_bash/vitis-ai-staging-dpu_renaming/tutorials/VAI-Profiling/files/fcn8_zcu102/fcn8ups/model/dpu_fcn8ups.elf -o fcn8ups -ln2cube -lhineon -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib
