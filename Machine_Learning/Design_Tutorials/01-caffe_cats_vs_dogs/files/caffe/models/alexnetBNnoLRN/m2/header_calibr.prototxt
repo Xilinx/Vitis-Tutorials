@@ -1,0 +1,25 @@
+# add below layer for Quantization with Vitis AI
+#########################################################################
+name: "alexnetBNnoLRN m2 (as m3 but less DROP and less BN)"
+layer {
+  name: "data"
+  type: "ImageData"
+  top: "data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  transform_param {
+    crop_size: 227
+    mean_value: 106
+    mean_value: 116
+    mean_value: 124
+  }
+  image_data_param {
+    source:      "deploy/alexnetBNnoLRN/pruned/data/calib/calibration.txt"
+    root_folder: "deploy/alexnetBNnoLRN/pruned/data/calib/"
+    batch_size: 10
+    shuffle: true
+  }
+}
+

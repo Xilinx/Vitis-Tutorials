@@ -1,0 +1,66 @@
+/*
+Copyright 2019 Xilinx Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+
+
+./top2_alexnetBNnoLRN 1
+
+number of total images predicted  999
+number of top1 false predictions  47
+number of top1 right predictions  952
+top1 accuracy = 0.95
+
+./fps_alexnetBNnoLRN 1
+now running ./fps_alexnetBNnoLRN 1
+total image : 1000
+[Time]8533369us
+[FPS]117.187
+
+./fps_alexnetBNnoLRN 2
+now running ./fps_alexnetBNnoLRN 2
+total image : 1000
+[Time]4426687us
+[FPS]225.903
+
+./fps_alexnetBNnoLRN 3
+now running ./fps_alexnetBNnoLRN 3
+total image : 1000
+[Time]3225543us
+[FPS]310.025
+
+./fps_alexnetBNnoLRN 4
+now running ./fps_alexnetBNnoLRN 4
+total image : 1000
+[Time]2533133us
+[FPS]394.768
+
+./fps_alexnetBNnoLRN 5
+now running ./fps_alexnetBNnoLRN 5
+total image : 1000
+[Time]2401226us
+[FPS]416.454
+
+./fps_alexnetBNnoLRN 6
+now running ./fps_alexnetBNnoLRN 6
+total image : 1000
+[Time]2426202us
+[FPS]412.167
+
+./fps_alexnetBNnoLRN 7
+now running ./fps_alexnetBNnoLRN 7
+total image : 1000
+[Time]2472798us
+[FPS]404.4

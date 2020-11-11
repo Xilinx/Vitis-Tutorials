@@ -1,0 +1,155 @@
+## © Copyright (C) 2016-2020 Xilinx, Inc
+##
+## Licensed under the Apache License, Version 2.0 (the "License"). You may
+## not use this file except in compliance with the License. A copy of the
+## License is located at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+## WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+## License for the specific language governing permissions and limitations
+## under the License.
+cp: './model/dpu_LeNet_0.elf' and './model/dpu_LeNet_0.elf' are the same file
+rm -f -rf /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/build
+rm -f LeNet
+mkdir -p /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 tf_main.cc -o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/build/tf_main.o
+tf_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+tf_main.cc:195:7: warning: unused variable ‘width’ [-Wunused-variable]
+  195 |   int width = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+tf_main.cc:196:7: warning: unused variable ‘height’ [-Wunused-variable]
+  196 |   int height = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+tf_main.cc:197:7: warning: unused variable ‘size’ [-Wunused-variable]
+  197 |   int size = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/build/tf_main.o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/model/dpu_LeNet_0.elf -o LeNet --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib -ln2cube -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
+cp: './model/dpu_LeNet_0.elf' and './model/dpu_LeNet_0.elf' are the same file
+rm -f -rf /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/build
+rm -f LeNet
+mkdir -p /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 tf_main.cc -o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/build/tf_main.o
+tf_main.cc: In function ‘void TopK(const float*, int, int, std::vector<std::__cxx11::basic_string<char> >&)’:
+tf_main.cc:158:11: warning: unused variable ‘real_ki’ [-Wunused-variable]
+  158 |       int real_ki = ki.second;
+      |           ^~~~~~~
+tf_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+tf_main.cc:196:7: warning: unused variable ‘width’ [-Wunused-variable]
+  196 |   int width = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+tf_main.cc:197:7: warning: unused variable ‘height’ [-Wunused-variable]
+  197 |   int height = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+tf_main.cc:198:7: warning: unused variable ‘size’ [-Wunused-variable]
+  198 |   int size = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/build/tf_main.o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/LeNet/model/dpu_LeNet_0.elf -o LeNet --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib -ln2cube -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
+rm -f -rf /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/build
+rm -f miniVggNet
+mkdir -p /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 tf_main.cc -o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/build/tf_main.o
+tf_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+tf_main.cc:195:7: warning: unused variable ‘width’ [-Wunused-variable]
+  195 |   int width = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+tf_main.cc:196:7: warning: unused variable ‘height’ [-Wunused-variable]
+  196 |   int height = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+tf_main.cc:197:7: warning: unused variable ‘size’ [-Wunused-variable]
+  197 |   int size = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/build/tf_main.o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/model/dpu_miniVggNet_0.elf -o miniVggNet --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib -ln2cube -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
+rm -f -rf /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/build
+rm -f miniVggNet
+mkdir -p /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 tf_main.cc -o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/build/tf_main.o
+tf_main.cc: In function ‘void TopK(const float*, int, int, std::vector<std::__cxx11::basic_string<char> >&)’:
+tf_main.cc:156:11: warning: unused variable ‘real_ki’ [-Wunused-variable]
+  156 |       int real_ki = ki.second;
+      |           ^~~~~~~
+tf_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+tf_main.cc:194:7: warning: unused variable ‘width’ [-Wunused-variable]
+  194 |   int width = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+tf_main.cc:195:7: warning: unused variable ‘height’ [-Wunused-variable]
+  195 |   int height = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+tf_main.cc:196:7: warning: unused variable ‘size’ [-Wunused-variable]
+  196 |   int size = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/build/tf_main.o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniVggNet/model/dpu_miniVggNet_0.elf -o miniVggNet --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib -ln2cube -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
+cp: './model/dpu_miniGoogleNet_0.elf' and './model/dpu_miniGoogleNet_0.elf' are the same file
+rm -f -rf /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/build
+rm -f miniGoogleNet
+mkdir -p /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 tf_main.cc -o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/build/tf_main.o
+tf_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+tf_main.cc:195:7: warning: unused variable ‘width’ [-Wunused-variable]
+  195 |   int width = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+tf_main.cc:196:7: warning: unused variable ‘height’ [-Wunused-variable]
+  196 |   int height = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+tf_main.cc:197:7: warning: unused variable ‘size’ [-Wunused-variable]
+  197 |   int size = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/build/tf_main.o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/model/dpu_miniGoogleNet_0.elf -o miniGoogleNet --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib -ln2cube -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
+cp: './model/dpu_miniGoogleNet_0.elf' and './model/dpu_miniGoogleNet_0.elf' are the same file
+rm -f -rf /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/build
+rm -f miniGoogleNet
+mkdir -p /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 tf_main.cc -o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/build/tf_main.o
+tf_main.cc: In function ‘void TopK(const float*, int, int, std::vector<std::__cxx11::basic_string<char> >&)’:
+tf_main.cc:157:11: warning: unused variable ‘real_ki’ [-Wunused-variable]
+  157 |       int real_ki = ki.second;
+      |           ^~~~~~~
+tf_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+tf_main.cc:195:7: warning: unused variable ‘width’ [-Wunused-variable]
+  195 |   int width = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+tf_main.cc:196:7: warning: unused variable ‘height’ [-Wunused-variable]
+  196 |   int height = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+tf_main.cc:197:7: warning: unused variable ‘size’ [-Wunused-variable]
+  197 |   int size = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/build/tf_main.o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniGoogleNet/model/dpu_miniGoogleNet_0.elf -o miniGoogleNet --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib -ln2cube -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
+cp: './model/dpu_miniResNet_0.elf' and './model/dpu_miniResNet_0.elf' are the same file
+rm -f -rf /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/build
+rm -f miniResNet
+mkdir -p /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 tf_main.cc -o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/build/tf_main.o
+tf_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+tf_main.cc:195:7: warning: unused variable ‘width’ [-Wunused-variable]
+  195 |   int width = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+tf_main.cc:196:7: warning: unused variable ‘height’ [-Wunused-variable]
+  196 |   int height = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+tf_main.cc:197:7: warning: unused variable ‘size’ [-Wunused-variable]
+  197 |   int size = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/build/tf_main.o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/model/dpu_miniResNet_0.elf -o miniResNet --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib -ln2cube -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
+cp: './model/dpu_miniResNet_0.elf' and './model/dpu_miniResNet_0.elf' are the same file
+rm -f -rf /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/build
+rm -f miniResNet
+mkdir -p /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/build
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ -c --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 tf_main.cc -o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/build/tf_main.o
+tf_main.cc: In function ‘void TopK(const float*, int, int, std::vector<std::__cxx11::basic_string<char> >&)’:
+tf_main.cc:157:11: warning: unused variable ‘real_ki’ [-Wunused-variable]
+  157 |       int real_ki = ki.second;
+      |           ^~~~~~~
+tf_main.cc: In function ‘void set_input_image(DPUTask*, const string&, const cv::Mat&, float*)’:
+tf_main.cc:195:7: warning: unused variable ‘width’ [-Wunused-variable]
+  195 |   int width = dpuGetTensorWidth(dpu_in);
+      |       ^~~~~
+tf_main.cc:196:7: warning: unused variable ‘height’ [-Wunused-variable]
+  196 |   int height = dpuGetTensorHeight(dpu_in);
+      |       ^~~~~~
+tf_main.cc:197:7: warning: unused variable ‘size’ [-Wunused-variable]
+  197 |   int size = dpuGetTensorSize(dpu_in);
+      |       ^~~~
+/opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/include -I/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/include -I./include -mcpu=cortex-a53 /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/build/tf_main.o /home/danieleb/ML/Vitis-AI-1v2/tutorials/VAI-Keras-GoogleNet-ResNet/files/target_zcu102/cifar10/miniResNet/model/dpu_miniResNet_0.elf -o miniResNet --sysroot=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/local/lib/ -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/lib -L/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib -ln2cube -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
