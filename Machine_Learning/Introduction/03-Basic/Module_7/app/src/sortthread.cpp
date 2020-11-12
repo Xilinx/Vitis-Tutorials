@@ -52,9 +52,10 @@ namespace vitis{
     long duration = 0;
     if (!points_.empty()) {
       auto end = points_.back();
-      duration =
+   duration =
           std::chrono::duration_cast<std::chrono::milliseconds>(now - end)
               .count();
+      LOG(INFO)<<"Sort thread duration : "<<duration<< " ms";
       float duration2 = (float)duration;
       float total = (float)points_.size();
       fps = total / duration2 * 1000.0f;
