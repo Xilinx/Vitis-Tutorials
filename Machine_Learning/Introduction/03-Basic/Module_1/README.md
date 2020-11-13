@@ -7,8 +7,9 @@ The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platfo
 
 * Prerequisites
 
-  * [Terminal emulator](https://osdn.net/projects/ttssh2)
-* [Etcher](https://etcher.io/)
+  * Terminal emulator, e.g. [Tera Term](https://osdn.net/projects/ttssh2)
+
+  * SD Card Image Writer tool, e.g. [Etcher](https://etcher.io/)
 
 * Download the pre-built DPU board image from the link below
 
@@ -45,7 +46,7 @@ steps.**
     <p align="left">
     <img width="600" height="308" src="images/IP.png">
     </p>
-  * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_2) for next step.
+  * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](../Module_2) for next step.
   <p align="left">
   <img width="720" height="660" src="images/ZCU104.png">
   </p>

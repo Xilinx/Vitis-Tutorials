@@ -1,12 +1,20 @@
 3.2 Setting up board environment & Demo run
 -----------------------
 In Module_1, user has downloaded the board environment with DPU and corresponding runtime integrated. In this module, We only need to copy the images and videos in for inference.
-* The script is provided in this Module_2 repository to download the images and videos for demo purpose.
+* The script is provided in this Module_2 repository to download the images and videos for demo purpose. Running the following commands on host machine can download the images and copy them to the target board.
     ```
     $cd [DOWNLOAD_PATH]/Board_Dependency
     $sh get_image_video_zcu104.sh
     $scp vitis_ai_library_* root@[IP_OF_BOARD]:~/
     $ssh root@[IP_OF_THE_BOARD]
+    ```
+
+    Alternatively, if your board has Internet access, you can also download the images from the board directly.
+
+    ```bash
+    root@xilinx-zcu104-2020_1:~# wget -O vitis_ai_library_r1.2.0_images.tar.gz https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_library_r1.2.0_images.tar.gz
+    root@xilinx-zcu104-2020_1:~# wget -O vitis_ai_library_r1.2.0_video.tar.gz https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_library_r1.2.0_video.tar.gz 
+
     ```
  * Now we can operate on the board through an ethernet connection.
    * unpack the images and videos
@@ -33,6 +41,6 @@ In Module_1, user has downloaded the board environment with DPU and correspondin
    <img src="images/perf_multi_IDT.png">
    </p>
 
-   The prebuild models can run on ZCU104 now. If users want to do some modification and recompile the model, please follow the instruction on [Module 3](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_3) for next step.
+   The prebuild models can run on ZCU104 now. If users want to do some modification and recompile the model, please follow the instruction on [Module 3](../Module_3) for next step.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

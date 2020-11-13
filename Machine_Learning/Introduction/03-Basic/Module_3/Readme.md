@@ -22,7 +22,7 @@ User could use either Windows or Linux OS to download the board image and burn i
     $cd ~/Vitis-AI/Vitis-AI-Library/overview/samples/refinedet
     $bash -x build.sh
     ```
-  You will find four execuable files generated after compilation. Please follow the instruction on [Module 4](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/master/Machine_Learning_Tutorial/Section_3-Basic/Module_4) for next step.
+  You will find four execuable files generated after compilation. Please follow the instruction on [Module 4](../Module_4) for next step.
   <p align="left">
   <img width="720" height="158" src="images/cross-compile.png">
   </p>
