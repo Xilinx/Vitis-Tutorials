@@ -441,6 +441,6 @@ In this module, we use a Caffe detection network (RefineDet) introduce following
 - how to quantize and compile the model with ready-to-use Vitis AI toolchain inside docker
 - how to deploy the network with Vitis AI library and run on the board
 
-Hope you enjoy it and let's move to [next module](/Machine_Learning/Introduction/03-Basic/Module_6/README.md) .
+Hope you enjoy it and let's move to [next module](../Module_6/) .
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
