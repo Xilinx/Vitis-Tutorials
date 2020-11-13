@@ -39,9 +39,6 @@ The host OS can be a natively installed OS, or installed in a virtual machine. I
       ```bash
       # Install EPEL
       sudo yum install epel-release
-      # Install Kernel Headers
-      sudo yum install kernel-headers-`uname -r`
-      sudo yum install kernel-devel-`uname -r`
       ```
 
 
@@ -50,14 +47,7 @@ The host OS can be a natively installed OS, or installed in a virtual machine. I
 
    1. Ensure "Devices > Install devices for Alveo and Xilinx Edge acceleration platforms" is selected during installation.
 
-### Xilinx Run Time
 
-1. Download XRT from [Xilinx Download Center - Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2020-1.html)
-
-2. Install XRT (Full User Guide)
-
-   1. Ubuntu: `sudo apt install ./<xrt_filename_OS>.deb`
-   2. CentOS: `sudo yum install ./<xrt_filename>.rpm`
 
 ### PetaLinux
 
