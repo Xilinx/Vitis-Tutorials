@@ -102,8 +102,7 @@ Yocto or third-party Linux development tools can also be used as long as they pr
 4. Enable Package Management
 
     a) In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option </br>
-    b) Set ***package-feed-uris*** to `http://petalinux.xilinx.com/sswreleases/rel-v2020/feeds/zynqmp-generic`. </br>
-    c) Click OK, Exit twice and select Yes to save the changes.
+    b) Click OK, Exit twice and select Yes to save the changes.
 
 5. *Disable CPU IDLE in kernel config.*
 
@@ -186,42 +185,23 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    - ***clk_ignore_unused***: it tells Linux kernel don't turn off clocks if this clock is not used. It's useful clocks that only drives PL kernels because PL kernels are not represented in device tree.
    - ***cma=512M***: CMA is used to exchange data between PS and PL kernel. The size for CMA is determined by PL kernel requirements. Vitis-AI/DPU needs at least 512MB CMA.
 
-### Build Image and Prepare for Platform Packaging
+### Build PetaLinux Images
 
-1. We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu104_custom_pkg ```. Then we create a pfm folder inside. 
-
-   ```
-   mkdir zcu104_custom_pkg
-   cd zcu104_custom_pkg
-   mkdir pfm
-   ```
-
-   After this step, your directory hierarchy looks like this.
-
-   ```
-   - zcu104_custom_platform # Vivado Project Directory
-   - zcu104_custom_plnx     # PetaLinux Project Directory
-   - zcu104_custom_pkg      # Platform Packaging Directory
-     - pfm                  # Platform Packaging Sources
-   ```
-
-2. From any directory within the PetaLinux project, build the PetaLinux project.
+1. From any directory within the PetaLinux project, build the PetaLinux project.
 
    ```
    petalinux-build
    ```
 
-3. Create a sysroot self-installer for the target Linux system
+   The PetaLinux image files will be generated in <PetaLinux Project>/images/linux directory.
+
+2. Create a sysroot self-installer for the target Linux system
 
    ```
    petalinux-build --sdk
    ```
 
-4. Install sysroot: type ```./images/linux/sdk.sh``` to install PetaLinux SDK, use the `-d` option to provide a full pathname to the output directory ***zcu104_custom_pkg/pfm*** (This is an example ) and confirm.
-
-   - Note: The environment variable ***LD_LIBRARY_PATH*** must not be set when running this command
-
-We would install Vitis AI library and DNNDK into this rootfs during test phase.
+   The generated sysroot package ***sdk.sh*** will be located in <PetaLinux Project>linux/image directory. We'll extract it in next step.
 
 ***Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](step3.md).***
 
@@ -242,5 +222,7 @@ Scripts are provided to re-create PetaLinux project and generate outputs. To use
    ```bash
    make clean
    ```
+
+Note: The Fast Track scripts extracts the sysroot to <PetaLinux Project>/images/linux directory. It's different than the step-by-step instructions for the convenience of scripting.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
