@@ -1,11 +1,36 @@
 ## Step 3: Create the Vitis Platform
 
-
 ### Prepare Files for Platform Packaging
 
-We'll prepare BIF file and the files it refers to into ***boot*** directory; we'll prepare all files needed for FAT32 partition to ***image*** directory.
+1. We would store all the necessary files for Vitis platform creation flow. Here we name it ```zcu104_custom_pkg ```. Then we create a `pfm` folder inside to hold platform creation source components. 
 
-1. Create boot directory and image directory
+   ```
+   mkdir zcu104_custom_pkg
+   cd zcu104_custom_pkg
+   mkdir pfm
+   ```
+   After this step, your directory hierarchy looks like this.
+
+   ```
+   - zcu104_custom_platform # Vivado Project Directory
+   - zcu104_custom_plnx     # PetaLinux Project Directory
+   - zcu104_custom_pkg      # Platform Packaging Directory
+     - pfm                  # Platform Packaging Sources
+   ```
+
+2. Install sysroot: 
+
+    a) Go to <PetaLinux Project>/images/linux directory.
+
+    b) Type ```./sdk.sh -d <Install Target Dir>``` to install PetaLinux SDK. use the `-d` option to provide a full pathname to the output directory ***zcu104_custom_pkg/pfm*** (This is an example ) and confirm.
+
+   - Note: The environment variable ***LD_LIBRARY_PATH*** must not be set when running this command
+
+We would install Vitis AI library and DNNDK into this rootfs during test phase.
+
+
+
+3. Create `boot` directory and `image` directory inside pfm directory
 
    ```bash
    cd zcu104_custom_pkg/pfm
@@ -18,12 +43,16 @@ We'll prepare BIF file and the files it refers to into ***boot*** directory; we'
    - zcu104_custom_platform # Vivado Project Directory
    - zcu104_custom_plnx     # PetaLinux Project Directory
    - zcu104_custom_pkg      # Platform Packaging Directory
+     - sysroots             # Extracted Sysroot Directory
      - pfm                  # Platform Packaging Sources
        - boot               # Platform boot components
        - image              # Files to be put in FAT32 partition
    ```
 
-2. Copy the generated Linux software boot components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/boot*** directory to prepare for running the Vitis platform packaging flow:
+   We'll prepare BIF file and the files it refers to into ***boot*** directory; we'll prepare all files needed for FAT32 partition to ***image*** directory.
+
+
+4. Copy the generated Linux software boot components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/boot*** directory to prepare for running the Vitis platform packaging flow:
 
    - zynqmp_fsbl.elf: ***rename as fsbl.elf*** as a workaround of a Vitis known issue.
    - pmufw.elf
@@ -32,7 +61,7 @@ We'll prepare BIF file and the files it refers to into ***boot*** directory; we'
 
 Note: These files are the sources of creating BOOT.BIN.
 
-3. Add a BIF file (linux.bif) to the ***<full_pathname_to_zcu104_custom_pkg>/boot*** directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the <> symbols.<br />
+5. Add a BIF file (linux.bif) to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/boot*** directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the <> symbols.<br />
 
 ```
 /* linux */
@@ -52,7 +81,7 @@ Note: These files are the sources of creating BOOT.BIN.
    - `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
    - It's a known issue that v++ packager only recognizes FSBL with `<fsbl.elf>`. So for MPSoC, it's needed to copy `zynqmp_fsbl.elf` that PetaLinux generates to `fsbl.elf` in image directory. This issue is fixed in 2020.2.
 
-4. Prepare image directory. Contents in this directory will be packaged to FAT32 partition by v++ package tool.
+6. Prepare image directory. Contents in this directory will be packaged to FAT32 partition by v++ package tool.
 
    a) Copy the generated Linux software components from ***<your_petalinux_dir>/images/linux directory*** to the ***<full_pathname_to_zcu104_custom_pkg>/pfm/image*** directory.
 
