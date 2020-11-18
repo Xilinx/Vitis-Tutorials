@@ -16,7 +16,7 @@
 
 #!/bin/bash
 set -e
-BOARD_IP=10.176.19.95
+BOARD_IP=10.176.18.178
 
 build_command(){
     cmake -DUSE_DRM=on -DUSE_KERNEL=on .. && make

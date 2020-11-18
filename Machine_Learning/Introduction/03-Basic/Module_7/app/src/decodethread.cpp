@@ -52,7 +52,7 @@ std::vector<cv::Mat> DecodeThread::v4l2Mats(2);
     auto image_from_device_start = std::chrono::system_clock::now();
     v4l2_videoCapture(v4l2Mats);
         while (!queue_->push(FrameInfo{channel_id_, ++frame_id_, v4l2Mats[1], v4l2Mats[0]},
-                         std::chrono::milliseconds(3000))) {
+                         std::chrono::milliseconds(10000))) {
       if (is_stopped()) {
         return -1;
       }}

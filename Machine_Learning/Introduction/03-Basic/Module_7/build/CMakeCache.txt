@@ -251,7 +251,7 @@ OpenCV_DIR:PATH=/scratch/dachang/vai1.3/petalinux/sysroots/aarch64-xilinx-linux/
 USE_DRM:BOOL=on
 
 //using hls kernel to accelerate
-USE_KERNEL:BOOL=on
+USE_KERNEL:BOOL=OFF
 
 //The directory containing a CMake configuration file for gflags.
 gflags_DIR:PATH=/scratch/dachang/vai1.3/petalinux/sysroots/aarch64-xilinx-linux/usr/lib/cmake/gflags
