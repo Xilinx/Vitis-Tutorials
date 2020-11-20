@@ -94,7 +94,7 @@ With the host application code (`host.cpp`) and the RTL kernel code (`Vadd_A_B.x
 
 ## Build the Project
 
-With the host application code (`vadd.cpp`) and the RTL kernel code (`Vadd_A_B.xo`) added to the project, you are ready to build and run the project.
+With the host application code (`host.cpp`) and the RTL kernel code (`Vadd_A_B.xo`) added to the project, you are ready to build and run the project.
 
 >**TIP**: You can also use the RTL kernel you created in the Package IP/Package XO lab in the Vitis IDE.
 
