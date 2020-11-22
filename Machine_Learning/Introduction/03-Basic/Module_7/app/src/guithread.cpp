@@ -58,6 +58,7 @@ void GuiThread::clean_up_queue() {
   }
 }
 int GuiThread::run() {
+auto gui_start = std::chrono::system_clock::now();
   FrameInfo frame_info;
   if (!queue_->pop(frame_info, std::chrono::milliseconds(500))) {
     inactive_counter_++;
@@ -129,6 +130,9 @@ int GuiThread::run() {
     }
   }
 #endif
+LOG(INFO)<<"Gui duration :"<<std::chrono::duration_cast<std::chrono::microseconds>(
+    std::chrono::system_clock::now() - gui_start).count()/1000<<"ms";
+
   GuiThread::clean_up_queue();
   return 0;
 }

@@ -142,9 +142,9 @@ clWaitForEvents(1, (const cl_event *)&event_sp);
 cl_ulong start = 0;
 cl_ulong end = 0;
 double diff_prof = 0.0f;
-event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
-event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
-diff_prof = end - start;
+// event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
+// event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
+// diff_prof = end - start;
 std::cout << "Latency: " << (diff_prof / 1000000) << "ms" << std::endl;
 
 q.enqueueReadBuffer(resizeFromDevice, CL_TRUE, 0, resize_size, out_buf_0);
