@@ -112,7 +112,7 @@ void kernel(ap_uint<AXI_WIDTH> *image_in, ap_uint<AXI_WIDTH> *image_out,
 } // namespace xf
 
 extern "C" {
-void PREPROCESSOR(ap_uint<AXI_WIDTH> *image_in, ap_uint<AXI_WIDTH> *image_out,
+void pre_processor(ap_uint<AXI_WIDTH> *image_in, ap_uint<AXI_WIDTH> *image_out,
 		ap_uint<AXI_WIDTH> *image_out_full, int width_in, int height_in,
 		int width_out, int height_out) {
 #pragma HLS INTERFACE m_axi port=image_in       offset=slave bundle=image_in_gmem

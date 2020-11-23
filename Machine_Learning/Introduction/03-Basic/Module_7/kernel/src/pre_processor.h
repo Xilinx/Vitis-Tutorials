@@ -35,7 +35,7 @@
 #define STREAM_DEPTH 2
 
 extern "C" {
-void PREPROCESSOR(ap_uint<AXI_WIDTH> *image_in, ap_uint<AXI_WIDTH> *image_out,
+void pre_processor(ap_uint<AXI_WIDTH> *image_in, ap_uint<AXI_WIDTH> *image_out,
 		ap_uint<AXI_WIDTH> *image_out_full, int width_in, int height_in,
 		int width_out, int height_out);
 }
