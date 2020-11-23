@@ -115,14 +115,19 @@ extern "C" {
 void pre_processor(ap_uint<AXI_WIDTH> *image_in, ap_uint<AXI_WIDTH> *image_out,
 		ap_uint<AXI_WIDTH> *image_out_full, int width_in, int height_in,
 		int width_out, int height_out) {
-#pragma HLS INTERFACE m_axi port=image_in       offset=slave bundle=image_in_gmem
-#pragma HLS INTERFACE m_axi port=image_out      offset=slave bundle=image_out_gmem
-#pragma HLS INTERFACE m_axi port=image_out_full offset=slave bundle=image_out_full_gmem
+#pragma HLS INTERFACE m_axi port=image_in        bundle=image_in_gmem
+#pragma HLS INTERFACE m_axi port=image_out       bundle=image_out_gmem
+#pragma HLS INTERFACE m_axi port=image_out_full  bundle=image_out_full_gmem
 #pragma HLS INTERFACE s_axilite port=width_in   bundle=control
 #pragma HLS INTERFACE s_axilite port=height_in  bundle=control
 #pragma HLS INTERFACE s_axilite port=width_out  bundle=control
 #pragma HLS INTERFACE s_axilite port=height_out bundle=control
 #pragma HLS INTERFACE s_axilite port = return bundle = control
+#pragma HLS INTERFACE s_axilite port=image_in        bundle=control
+#pragma HLS INTERFACE s_axilite port=image_out       bundle=control
+#pragma HLS INTERFACE s_axilite port=image_out_full  bundle=control
+#pragma HLS INTERFACE s_axilite port=width_in             bundle=control
+
 
 	kernel(image_in, image_out, image_out_full, (uint32_t) width_in,
 			(uint32_t) height_in, (uint32_t) width_out, (uint32_t) height_out);
