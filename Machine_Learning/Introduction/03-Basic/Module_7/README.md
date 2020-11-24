@@ -1,7 +1,7 @@
 # 3.7 Acceleration with HLS kernel
 ---
 
-***Version: Vitis 2020.1+Vitis AI 1.2***
+***Version: Vitis 2020.2+Vitis AI 1.3***
 
 **_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
 This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. About how to immigrate from OpenCV to HLS, please refer to [app/README.md](app/README.md)
@@ -84,12 +84,12 @@ The directory structure and brief explanations as below:
   - Micro-USB cable, connect to lattop for the terminal emulator.
   - SD card to burn the OS image.
 - Software required:
-- Vitis 2020.1 [Vitis Core Development Kit](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2020-1.html) install in server.
+- Vitis 2020.2 [Vitis Core Development Kit](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2020-2.html) install in server.
 - [Silicon Labs quad CP210x USB-to-UART bridge driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) install in laptop.
 - Serial terminal emulator e.g. teraterm, Mobaxterm install in laptop
-- [XRT 2020.1](https://github.com/Xilinx/XRT/tree/2020.1) install in laptop
+- [XRT 2020.2](https://github.com/Xilinx/XRT/tree/2020.2) install in laptop
 - [zcu104 base platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/zcu104_base) install in server
-- [Vitis AI runtime package](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai-runtime-1.2.1.tar.gz) base on VAI1.2
+- [Vitis AI runtime package](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai-runtime-1.3.tar.gz) base on VAI1.3
 - [Vitis AI model packages ](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge)for ZCU104
 - [dpu_sw_optimize.tar.gz](https://github.com/Xilinx/Vitis-AI/blob/master/DPU-TRD/app/dpu_sw_optimize.tar.gz) Running zynqmp_dpu_optimize.sh to optimize the board setting
 ---
