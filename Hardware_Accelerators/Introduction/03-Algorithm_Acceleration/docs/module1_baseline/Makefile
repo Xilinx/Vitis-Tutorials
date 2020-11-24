@@ -99,7 +99,7 @@ VPPFLAGS += --config common.cfg
 
 $(BUILD_DIR)/$(HOST_EXE): $(HOST_SRC_CPP) $(HOST_SRC_H)
 	mkdir -p $(BUILD_DIR)
-	g++ $(CXXFLAGS) $(CXXLDFLAGS) -o $@ $(HOST_SRC_CPP)
+	g++ $(CXXFLAGS) -o $@ $(HOST_SRC_CPP) $(CXXLDFLAGS)
 
 
 ## Kernel XO and Xclbin File Generation
