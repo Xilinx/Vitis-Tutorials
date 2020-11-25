@@ -28,7 +28,7 @@ namespace vitis{namespace ai{
     auto image_from_device_start = std::chrono::system_clock::now();
     auto image=v4l2_videoCapture();
     LOG(INFO)<<"Decode and Resize :"<<std::chrono::duration_cast<std::chrono::microseconds>(
-    std::chrono::system_clock::now() - image_from_device_start).count();
+    std::chrono::system_clock::now() - image_from_device_start).count()<<"ms";
     LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "1080p decode queue size " << queue_->size();
     while (!queue_->push(FrameInfo{channel_id_, ++frame_id_, image[1], image[0]},
                          std::chrono::milliseconds(500))) {
