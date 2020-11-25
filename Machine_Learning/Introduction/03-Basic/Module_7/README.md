@@ -78,9 +78,6 @@ The directory structure and brief explanations as below:
 
 
 ## Pre-Requirement
-
-<<<<<<< HEAD
-=======
 - Hardware required:
   - ZCU104 evaluation board
   - Micro-USB cable, connect to lattop for the terminal emulator.
@@ -95,7 +92,6 @@ The directory structure and brief explanations as below:
 - [Vitis AI model packages ](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge)for ZCU104
 - [dpu_sw_optimize.tar.gz](https://github.com/Xilinx/Vitis-AI/blob/master/DPU-TRD/app/dpu_sw_optimize.tar.gz) Running zynqmp_dpu_optimize.sh to optimize the board setting
 ---
->>>>>>> b87524238f61dc2b5e4df2fcd93573a70d6fd925
 
 ## Workflow Overview
 - Step 1: Create Base Platform
