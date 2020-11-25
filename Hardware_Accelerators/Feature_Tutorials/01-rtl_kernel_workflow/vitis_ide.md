@@ -80,7 +80,7 @@ The General Settings page is displayed as shown below.
 Make the following selections:
 
 1. For **Kernel name** specify `Vadd_A_B`.
-2. For **Kernel control interface** select `ap_ctrl_chain`.
+2. For **Kernel control interface** select `ap_ctrl_hs`.
 3. For the remaining options, keep the default values, and click **Next** to proceed.  
 
 ## Scalars
