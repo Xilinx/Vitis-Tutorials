@@ -1,0 +1,8 @@
+{
+  "target": "DPUv2",
+  "lib": "libvart-dpu-runner.so",
+  "filename": "dpu_yolov4.elf",
+  "kernel": [ "yolov4" ],
+  "config_file": "yolov4_coco_tf.prototxt"
+}
+
