@@ -69,6 +69,12 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  </td>
  <td>Implement a convolutional neural network (CNN) and run it on the DPUv3E accelerator IP.</td>
  </tr>
+ <tr>
+ <td align="center">
+   <a href="./Design_Tutorials/07-yolov4-tutorial/README.md">Vitis AI YOLOv4 Tutorial</a>
+ </td>
+ <td>Learn how to train, evaluate, convert, quantize, compile, and deploy YOLOv4 on Xilinx devices using Vitis AI.</td>
+ </tr>
  </table>
 
 
