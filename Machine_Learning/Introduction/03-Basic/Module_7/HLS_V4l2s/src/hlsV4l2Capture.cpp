@@ -49,8 +49,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 uint8_t *V4l2Capture::out_buf_0 = (uint8_t *)malloc(OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
 uint8_t *V4l2Capture::out_buf_1 = (uint8_t *)malloc(OUT_WIDTH * OUT_HEIGHT * 3);
-uint8_t *V4l2Capture::out_buf_back_0 = (uint8_t *)malloc(OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
-uint8_t *V4l2Capture::out_buf_back_1 = (uint8_t *)malloc(OUT_WIDTH * OUT_HEIGHT * 3);
 unsigned int V4l2Capture::resize_size = (OUT_RESIZE_WIDTH * OUT_RESIZE_HEIGHT * 3);
 unsigned int V4l2Capture::full_size = (OUT_WIDTH * OUT_HEIGHT * 3);
 bool V4l2Capture::xocl_initialized = false;
@@ -107,8 +105,18 @@ V4l2Capture::V4l2Capture(V4l2Device *device) : V4l2Access(device)
 // -----------------------------------------
 V4l2Capture::~V4l2Capture()
 {
-    free(out_buf_0);
-    free(out_buf_1);
+
+    if(out_buf_0 != NULL)
+    {
+        free(out_buf_0);
+        out_buf_0 = NULL;
+    } 
+    if(out_buf_1 != NULL) 
+    {
+        free(out_buf_1);
+        out_buf_1 = NULL;
+    }
+    
 }
 
 // -----------------------------------------
