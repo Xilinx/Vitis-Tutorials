@@ -79,6 +79,23 @@ The directory structure and brief explanations as below:
 
 ## Pre-Requirement
 
+<<<<<<< HEAD
+=======
+- Hardware required:
+  - ZCU104 evaluation board
+  - Micro-USB cable, connect to lattop for the terminal emulator.
+  - SD card to burn the OS image.
+- Software required:
+- Vitis 2020.2 [Vitis Core Development Kit](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2020-2.html) install in server.
+- [Silicon Labs quad CP210x USB-to-UART bridge driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) install in laptop.
+- Serial terminal emulator e.g. teraterm, Mobaxterm install in laptop
+- [XRT 2020.2](https://github.com/Xilinx/XRT/tree/2020.2) install in laptop
+- [zcu104 base platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/zcu104_base) install in server
+- [Vitis AI runtime package](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai-runtime-1.3.tar.gz) base on VAI1.3
+- [Vitis AI model packages ](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge)for ZCU104
+- [dpu_sw_optimize.tar.gz](https://github.com/Xilinx/Vitis-AI/blob/master/DPU-TRD/app/dpu_sw_optimize.tar.gz) Running zynqmp_dpu_optimize.sh to optimize the board setting
+---
+>>>>>>> b87524238f61dc2b5e4df2fcd93573a70d6fd925
 
 ## Workflow Overview
 - Step 1: Create Base Platform
