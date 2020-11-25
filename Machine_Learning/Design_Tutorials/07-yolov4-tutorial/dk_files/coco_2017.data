@@ -1,0 +1,7 @@
+classes= 80
+train  = ../dk_files/train2017.txt
+valid  = ../dk_files/val2017.txt #make sure to update this path if using the testdev2017 set
+names = ../dk_files/coco.names
+backup = cfg/yolov4_leaky/snapshots
+eval=coco
+

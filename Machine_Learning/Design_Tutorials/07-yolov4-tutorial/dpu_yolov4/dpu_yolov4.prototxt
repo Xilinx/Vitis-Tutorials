@@ -1,0 +1,42 @@
+model {
+  name: "yolov4"
+  kernel {
+     name: "yolov4"
+     mean: 0.0
+     mean: 0.0
+     mean: 0.0
+     scale: 0.00390625
+     scale: 0.00390625
+     scale: 0.00390625
+  }
+  model_type : YOLOv3
+  yolo_v3_param {
+    num_classes: 80
+    anchorCnt: 3
+    layer_name: "109"
+    layer_name: "101"
+    layer_name: "93"
+    conf_threshold: 0.25
+    nms_threshold: 0.45
+    biases: 12
+    biases: 16
+    biases: 19
+    biases: 36
+    biases: 40
+    biases: 28
+    biases: 36
+    biases: 75
+    biases: 76
+    biases: 55
+    biases: 72
+    biases: 146
+    biases: 142
+    biases: 110
+    biases: 192
+    biases: 243
+    biases: 459
+    biases: 401
+    test_mAP: false
+  }
+  is_tf : false
+}
