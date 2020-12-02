@@ -17,7 +17,6 @@ package/sd_card.img: app.exe vadd.xclbin xrt.ini run_app.sh
 		--package.rootfs ${ROOTFS}/rootfs.ext4 \
 		--package.sd_file ${ROOTFS}/Image \
 		--package.sd_file xrt.ini \
-		--package.sd_file emconfig.json \
 		--package.sd_file app.exe \
 		--package.sd_file run_app.sh
 
