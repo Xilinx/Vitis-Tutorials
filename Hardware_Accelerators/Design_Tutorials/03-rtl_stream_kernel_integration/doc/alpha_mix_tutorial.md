@@ -13,7 +13,7 @@ Following code block is the top level function declaration for *alpha_mix* kerne
 
 ~~~c++
 void alpha_mix(hls::stream<ap_axiu<64, 0, 0, 0>> &time_img_input,   // time image input
-               ap_uint<512> *bgr_img_input,                         // background image input
+               ap_uint<256> *bgr_img_input,                         // background image input
                hls::stream<ap_axiu<64, 0, 0, 0>> &mix_img_output,   // mixed image output
                int     time_img_rows_in,                            // input time image height
                int     time_img_cols_in,                            // input time image width
