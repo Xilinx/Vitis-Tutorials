@@ -15,6 +15,7 @@
 //
 
 // default_nettype of none prevents implicit wire declaration.
+
 `default_nettype none
 `timescale 1 ns / 1 ps
 
@@ -131,6 +132,8 @@ module rtc_gen #(
   wire        rd_tready;
   wire        rd_tvalid;
   wire [31:0] rd_tdata;
+  
+  wire [31:0] time_val;
 
 // Register and invert reset signal.
 always @(posedge ap_clk) begin
@@ -219,11 +222,12 @@ inst_control_s_axi (
   .ap_done      ( ap_done               ),
   .ap_ready     ( ap_ready              ),
   .ap_idle      ( ap_idle               ),
-  .work_mode    (work_mode              ),
-  .cs_count     (cs_count               ),
-  .time_format  (time_format            ),
-  .time_set_val (time_set_val           ),
-  .time_set_en  (time_set_en            ),
+  .work_mode    ( work_mode             ),
+  .cs_count     ( cs_count              ),
+  .time_format  ( time_format           ),
+  .time_set_val ( time_set_val          ),
+  .time_set_en  ( time_set_en           ),
+  .time_val     ( time_val              ),
   .read_addr    ( ctrl_addr_offset      )
 );
 
@@ -258,7 +262,9 @@ assign ap_ready = ap_done;
   .axis_m_tready  (dataout_axis_m_tready),
   .axis_m_tdata   (dataout_axis_m_tdata),
   .axis_m_tkeep   (dataout_axis_m_tkeep),
-  .axis_m_tlast   (dataout_axis_m_tlast)
+  .axis_m_tlast   (dataout_axis_m_tlast),
+// Time value output
+  .time_value     (time_val)
 );
 
 
