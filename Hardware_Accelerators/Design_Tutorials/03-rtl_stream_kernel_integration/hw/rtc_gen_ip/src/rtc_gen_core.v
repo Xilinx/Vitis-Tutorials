@@ -46,7 +46,10 @@ module rtc_gen_core (
   input         axis_m_tready,
   output [63:0] axis_m_tdata,
   output [7:0]  axis_m_tkeep,
-  output reg    axis_m_tlast
+  output reg    axis_m_tlast,
+  
+// Time value output for AXI read
+  output [31:0] time_value
   
 );
 
@@ -126,6 +129,7 @@ localparam      COL_CNT_WIDTH   = $clog2(FONT_WIDTH/8);                     // f
   assign time_set_seconds = time_set_val[15:8];
   assign time_set_centisecs = time_set_val[7:0];
  
+  assign time_value = {2'b0, hour_acc, 2'b0, min_acc, 2'b0, sec_acc, 1'b0, cs_acc};
 
 // -=========================================================================================-  
 //  Function definition

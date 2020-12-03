@@ -1,7 +1,19 @@
-// ==============================================================
-// Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2020.1 (64-bit)
-// Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
-// ==============================================================
+//
+// Copyright 2020 Xilinx, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 `timescale 1ns/1ps
 module rtc_gen_control_s_axi
 #(parameter
@@ -38,6 +50,8 @@ module rtc_gen_control_s_axi
     output wire [31:0]                   time_format,
     output wire [31:0]                   time_set_val,
     output wire [31:0]                   time_set_en,
+    // output wire [31:0]                   time_val,
+    input  wire [31:0]                   time_val,   // added for time value read 
     output wire [63:0]                   read_addr
 );
 //------------------------Address Info-------------------
@@ -74,13 +88,15 @@ module rtc_gen_control_s_axi
 // 0x30 : Data signal of time_set_en
 //        bit 31~0 - time_set_en[31:0] (Read/Write)
 // 0x34 : reserved
-// 0x38 : Data signal of read_addr
+// 0x38 : Data signal of time_val
+//        bit 31~0 - time_val[31:0] (Read Only)
+// 0x3c : reserved
+// 0x40 : Data signal of read_addr
 //        bit 31~0 - read_addr[31:0] (Read/Write)
-// 0x3c : Data signal of read_addr
+// 0x44 : Data signal of read_addr
 //        bit 31~0 - read_addr[63:32] (Read/Write)
-// 0x40 : reserved
+// 0x48 : reserved
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
-
 //------------------------Parameter----------------------
 localparam
     ADDR_AP_CTRL             = 7'h00,
@@ -97,9 +113,11 @@ localparam
     ADDR_TIME_SET_VAL_CTRL   = 7'h2c,
     ADDR_TIME_SET_EN_DATA_0  = 7'h30,
     ADDR_TIME_SET_EN_CTRL    = 7'h34,
-    ADDR_READ_ADDR_DATA_0    = 7'h38,
-    ADDR_READ_ADDR_DATA_1    = 7'h3c,
-    ADDR_READ_ADDR_CTRL      = 7'h40,
+    ADDR_TIME_VAL_DATA_0     = 7'h38,
+    ADDR_TIME_VAL_CTRL       = 7'h3c,
+    ADDR_READ_ADDR_DATA_0    = 7'h40,
+    ADDR_READ_ADDR_DATA_1    = 7'h44,
+    ADDR_READ_ADDR_CTRL      = 7'h48,
     WRIDLE                   = 2'd0,
     WRDATA                   = 2'd1,
     WRRESP                   = 2'd2,
@@ -135,6 +153,7 @@ localparam
     reg  [31:0]                   int_time_format = 'b0;
     reg  [31:0]                   int_time_set_val = 'b0;
     reg  [31:0]                   int_time_set_en = 'b0;
+    // reg  [31:0]                   int_time_val = 'b0; // modified for time value read                                                
     reg  [63:0]                   int_read_addr = 'b0;
 
 //------------------------Instantiation------------------
@@ -258,6 +277,10 @@ always @(posedge ACLK) begin
                 ADDR_TIME_SET_EN_DATA_0: begin
                     rdata <= int_time_set_en[31:0];
                 end
+                ADDR_TIME_VAL_DATA_0: begin
+                    // rdata <= int_time_val[31:0];
+                    rdata <= time_val[31:0];    // modified for time value read
+                end
                 ADDR_READ_ADDR_DATA_0: begin
                     rdata <= int_read_addr[31:0];
                 end
@@ -278,6 +301,7 @@ assign cs_count     = int_cs_count;
 assign time_format  = int_time_format;
 assign time_set_val = int_time_set_val;
 assign time_set_en  = int_time_set_en;
+// assign time_val     = int_time_val;   // modified for time value read                                
 assign read_addr    = int_read_addr;
 // int_ap_start
 always @(posedge ACLK) begin
@@ -424,6 +448,17 @@ always @(posedge ACLK) begin
             int_time_set_en[31:0] <= (WDATA[31:0] & wmask) | (int_time_set_en[31:0] & ~wmask);
     end
 end
+
+// modified for time value read
+// int_time_val[31:0]
+//always @(posedge ACLK) begin
+//    if (ARESET)
+//        int_time_val[31:0] <= 0;
+//    else if (ACLK_EN) begin
+//        if (w_hs && waddr == ADDR_TIME_VAL_DATA_0)
+//            int_time_val[31:0] <= (WDATA[31:0] & wmask) | (int_time_val[31:0] & ~wmask);
+//    end
+//end
 
 // int_read_addr[31:0]
 always @(posedge ACLK) begin

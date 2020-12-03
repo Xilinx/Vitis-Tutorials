@@ -607,8 +607,13 @@
           <spirit:size spirit:format="long">32</spirit:size>
         </spirit:register>
         <spirit:register>
-          <spirit:name>read_addr</spirit:name>
+          <spirit:name>time_val</spirit:name>
           <spirit:addressOffset>0x038</spirit:addressOffset>
+          <spirit:size spirit:format="long">32</spirit:size>
+        </spirit:register>
+        <spirit:register>
+          <spirit:name>read_addr</spirit:name>
+          <spirit:addressOffset>0x040</spirit:addressOffset>
           <spirit:size spirit:format="long">64</spirit:size>
           <spirit:parameters>
             <spirit:parameter>
@@ -634,7 +639,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>ab23abe0</spirit:value>
+            <spirit:value>ee28cd91</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -650,7 +655,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>b106a94a</spirit:value>
+            <spirit:value>d8a47fc1</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -665,7 +670,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>041c0a15</spirit:value>
+            <spirit:value>0d3bc83f</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1459,7 +1464,7 @@
       <spirit:file>
         <spirit:name>src/rtc_gen.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_db631742</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_8e59398f</spirit:userFileType>
         <spirit:userFileType>IMPORTED_FILE</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1562,7 +1567,7 @@
         <xilinx:xpmLibrary>XPM_FIFO</xilinx:xpmLibrary>
       </xilinx:xpmLibraries>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2020-07-22T03:49:58Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2020-08-12T17:42:02Z</xilinx:coreCreationDateTime>
       <xilinx:sdxKernelAttributes>
         <xilinx:sdx_kernel>true</xilinx:sdx_kernel>
         <xilinx:sdx_kernel_type>rtl</xilinx:sdx_kernel_type>
@@ -1572,8 +1577,8 @@
       <xilinx:xilinxVersion>2020.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="2b4e227b"/>
       <xilinx:checksum xilinx:scope="addressSpaces" xilinx:value="6467198e"/>
-      <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="3b686fec"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="43ff0b83"/>
+      <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="a0af8d54"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="1ce1c8bb"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="f767b826"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="8147e1e7"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="75f9db1f"/>
