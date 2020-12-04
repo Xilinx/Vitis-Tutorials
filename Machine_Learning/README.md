@@ -99,6 +99,10 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  <td align="center"><a href="./Feature_Tutorials/03-edge-to-cloud/README.md">Moving Seamlessly between Edge and Cloud with Vitis AI (UG1488)</a></td>
  <td>Compile and run the same identical design and application code on either the Alveo U50 data center accelerator card or the Zynq UltraScale+™ MPSoC ZCU102 evaluation board. </td>
  </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/04-tensorflow-ai-optimizer/README.md">TensorFlow AI Optimizer Example Using Low-level Coding Style (UG1512)</a></td>
+ <td>Use AI Optimizer for TensorFlow to prune an AlexNet CNN by 80% while maintaining the original accuracy.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
