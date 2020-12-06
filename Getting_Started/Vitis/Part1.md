@@ -1,3 +1,15 @@
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Getting Started Tutorial</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table>
+
 # Vitis Flow 101 – Part 1 : Essential Concepts
 
 The Vitis unified software platform provides a framework for developing and delivering FPGA accelerated applications using standard programming languages. Vitis offers all of the features of a standard software development environment, including:
