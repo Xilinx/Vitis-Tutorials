@@ -1,15 +1,25 @@
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Getting Started Tutorial</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table>
+
 # Vitis Flow 101 – Part 2 : Installation Guide
 
 To develop and deploy applications with Vitis, you need to install the Vitis unified software environment, the Xilinx Runtime library (XRT) and the platform files specific to the acceleration card used in your project.
 
 
-
 ## Step 1 – Installation Requirements
 
-Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/aqm1532064088764.html).
+Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#igz1531201833632).
 
 *NOTE: Windows OS support is limited to the Vitis embedded software development flow. The Vitis acceleration flow is only supported on Linux.*
-
 
 
 ## Step 2 – Download Vitis
@@ -17,8 +27,16 @@ Prior to starting the installation process, make sure to check the [Vitis instal
 Download the latest version of the Vitis from the [Xilinx download website](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html). Make sure to download the Linux Self-Extracting web installer or the Single-File installer.
 
 
+## Step 3 – Install Downloaded Packages
 
-## Step 3 – Download XRT and Platform-specific files
+After downloading the Vitis, XRT and platform packages, installing them in the following order and according to the provided instructions:
+
+1. [Install the Vitis Software Platform](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045)
+
+2. [Install the Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#pjr1542153622642)
+
+
+## Step 4 – Download and Install Platform-specific files
 
 <details>
 
@@ -62,26 +80,13 @@ The packages required for each platform can be found on the corresponding downlo
 
 </details>
 
-## Step 4 – Install Downloaded Packages
-
-After downloading the Vitis, XRT and platform packages, installing them in the following order and according to the provided instructions:
-
-1. [Install the Vitis Software Platform](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/juk1557377661419.html)
-
-2. [Install the Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/pjr1542153622642.html)
-
-3. Install desired platforms
-    * Instructions for [Installing Embedded Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rvu1542160683426.html).
-    * Instructions for [Installing Data Center Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/lop1542162543761.html)
-
-
 
 ## Step 5 – Setup the environment to run Vitis
 
 To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2020.1/settings64.sh
+source <Vitis_install_path>/Vitis/2020.2/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
