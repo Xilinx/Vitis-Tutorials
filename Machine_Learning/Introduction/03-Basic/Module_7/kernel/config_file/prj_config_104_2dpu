@@ -37,7 +37,7 @@ sp=DPUCZDX8G_2.M_AXI_HP2:HP3
 #sp=DPUCZDX8G_3.M_AXI_HP0:HP3
 #sp=DPUCZDX8G_3.M_AXI_HP2:HP3
 
-nk=DPUCZDX8G:1
+nk=DPUCZDX8G:2
 
 [advanced]
 misc=:solution_name=link
