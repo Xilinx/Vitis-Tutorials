@@ -68,7 +68,7 @@ binary_container_1/pre_processor.xo: pre_processor.cpp pre_processor.h
 	v++ -t ${TARGET} --platform ${SDX_PLATFORM} ${PREPROCESSOR_FLAGS} --temp_dir binary_container_1 --kernel_frequency=300 --log_dir binary_container_1/logs --config preprocessor_config.ini -c -o $@ $<
 
 binary_container_1/dpu.xclbin: $(kernel_xo)
-	v++ $(XOCC_OPTS) -l  --profile_kernel --temp_dir binary_container_1 --log_dir binary_container_1/logs --remote_ip_cache binary_container_1/ip_cache -o "$@" $(+)
+	v++ $(XOCC_OPTS) -l --temp_dir binary_container_1 --log_dir binary_container_1/logs --remote_ip_cache binary_container_1/ip_cache -o "$@" $(+)
 
 package:
 	v++ -t ${TARGET} --platform ${SDX_PLATFORM} -p binary_container_1/dpu.xclbin  -o dpu.xclbin --package.out_dir binary_container_1 --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.sd_file $(EDGE_COMMON_SW)/Image 
