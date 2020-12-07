@@ -44,7 +44,7 @@ steps.**
     root@xilinx-zcu104-2020_1:~# ifconfig
     ```
     <p align="left">
-    <img width="600" height="308" src="images/IP_IDT.png">
+    <img width="607" height="167" src="images/IP_IDT.png">
     </p>
   * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](../Module_2) for next step.
   <p align="left">
