@@ -138,6 +138,7 @@ $ cp ${Module_7}/kernel/build/preprocessor_config.ini vitis-ai-staging/dsa/DPU-T
 $ cp ${Module_7}/kernel/build/dpu_conf.vh vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
 $ cp ${Module_7}/kernel/src/pre_processor.cpp vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
 $ cp ${Module_7}/kernel/src/pre_processor.h vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/config_file/prj_config_104_2dpu vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/config_file
 ```
 
 - Step4: Run the below commands to start IP integration and wait for it to complete.
