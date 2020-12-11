@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -12,9 +12,9 @@
 
 # Package IP/Package XO Flow
 
-The process described in this lab follows the Package IP/Package XO flow as described in the [RTL Kernel Development Flow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=devrtlkernel.html;a=rzv1504034325561) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+The process described in this lab follows the Package IP/Package XO flow as described in the [RTL Kernel Development Flow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=devrtlkernel.html;a=rzv1504034325561) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
->**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/settingupvitisenvironment.html#zks1565446519267) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >
 >   ```bash
 >    #setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.
@@ -25,7 +25,8 @@ The process described in this lab follows the Package IP/Package XO flow as desc
 
 ## Create a New Project
 
-1. To launch the Vivado®  IDE, enter the `vivado` command in a terminal window.
+1. Change directory to the tutorial folder: `cd ./01-rtl_kernel_workflow`.
+1. Launch the Vivado®  IDE, enter the `vivado` command in a terminal window.
 2. Select **Create Project**, or  **File** > **Project** > **New**.
 
    The New Project wizard opens.
@@ -104,21 +105,7 @@ With the files added to your project, you can package the IP for use as a kernel
 3. Select `ap_clk` and click **OK**.
 4. Repeat the process to associate `ap_clk` with the `m01_axi` interface, the `s_axi_control` interface.
 
-   Next you will add `FREQ_HZ` parameter to `ap_clk`. 
-
-5. Expand the **Clock and Reset Signals** in the Ports and Interfaces window. 
-      1. Right-click the `ap_clk` interface and select the **Edit Interface** command. This displays the Edit Interface dialog box. 
-      2. Select the **Parameters** tab. 
-      3. Expand the **Requires User Setting** category on the left side of the dialog box, select the `FREQ_HZ` parameter, and select the **Move selected parameters to the right** command, as shown in the following figure. 
-
-   ![Edit Interface](./images/edit_interface.png)  
-
-   6. Click **OK** to close the Edit Interface dialog box.
-6. The RTL kernel also requires the `value_resolve_type` property on the `FREQ_HZ` parameter to define how the tool should resolve value conflicts. In the Tcl Console, use the following command to define the property with a value of `user`.
- 
-   ```
-   set_property value_resolve_type user [ipx::get_bus_parameters -of [::ipx::get_bus_interfaces -of [ipx::current_core] *clk*] "FREQ_HZ"]
-   ```
+5. Click **OK** to close the Edit Interface dialog box.
 
 ## Add Control Registers and Address Offsets 
 
@@ -178,17 +165,18 @@ B | pointer argument | 0x024 | 64
 
     ```
     set core [ipx::current_core]
-    set_property xpm_libraries {XPM_CDC XPM_MEMORY XPM_FIFO} $core
     set_property sdx_kernel true $core
     set_property sdx_kernel_type rtl $core
     ```
 
-4. After setting these properties you can optionally rerun the **check_integrity** command, and your IP should pass the check. 
+4. After setting these properties you can optionally run the **ipx::check_integrity** command, and your IP should pass the check. 
 
    You are now ready to package the IP. However, first check that an archive file will be generated when packaging the IP. 
-5. Look in the After Packaging section of the Review and Package window. If you see that an archive will not be generated, then you should enable the archive: 
+
+5. Look in the **After Packaging** section of the Review and Package window. If you see that an archive will not be generated, then you should enable the archive: 
 
 6. In the Review and Package window, select **Edit packaging settings**.This displays the Settings dialog box with the IP Package section displayed.
+
 7. Under the After Packaging section of the dialog box, enable **Create archive of IP** as shown below, and click **OK**.
 
    ![Enable Archive](./images/enable_archive_settings.png)  
@@ -197,6 +185,8 @@ B | pointer argument | 0x024 | 64
 
 7. Click **Package IP**. 
 
+   After packaging the IP you should see dialog box indicating that the IP packaged successfully. 
+
 ## Create the Kernel with package_xo
 
 With the Vivado IP packaged, you can now run the **package_xo** command to create the Vitis kernel (`.xo`) file. The `package_xo` command also packages the IP files and the `kernel.xml` file into the generated `.xo` file. 
@@ -204,7 +194,7 @@ With the Vivado IP packaged, you can now run the **package_xo** command to creat
 1. In the Tcl Console, enter the following command.
 
    ```
-   package_xo  -force -xo_path <tutorial_path>/reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports/IP
+   package_xo  -force -xo_path <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/IP  -ctrl_protocol ap_ctrl_hs
    ```
 
    Where: 
@@ -213,10 +203,12 @@ With the Vivado IP packaged, you can now run the **package_xo** command to creat
    * -**xo_path**: Path and name of the xo file
    * -**kernel_name**: Name of the kernel to create, and should match the RTL module name. 
    * -**ip_directory**: Path to look for the packaged Vivado IP. 
+   * -**ctrl_protocol**: Specifies the control protocol the kernel implements. This can be one of the supported control protocols, but in this tutorial it must be ap_ctrl_hs.
 
-   >**TIP:** The `package_xo` command also has a -`kernel_xml` option to specify an existing `kernel.xml` file if desired. 
 
-2. After the package_xo command returns, navigate to the `reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports` folder and look at the `Vadd_A_B.xo` file. You can use this file in Vitis application acceleration flow as explained later in this tutorial.
+>**TIP:** The `package_xo` command also has a -`kernel_xml` option to specify an existing `kernel.xml` file if desired. 
+
+2. After the `package_xo` command returns, navigate to the `reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports` folder and look at the `Vadd_A_B.xo` file. You can use this file in Vitis application acceleration flow as explained later in this tutorial.
 
 ## Next Steps
 
