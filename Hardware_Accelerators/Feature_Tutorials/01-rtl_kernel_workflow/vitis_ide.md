@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -12,9 +12,9 @@
 
 # RTL Kernel Wizard Flow
 
-The process described in this lab follows the flow described in [RTL Kernel Wizard](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/devrtlkernel.html#ouz1504034324041) of the Vitis Unified Software Platform Documentation (UG1416).
+The process described in this lab follows the flow described in [RTL Kernel Wizard](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rtl_kernel_wizard.html#ouz1504034324041) of the Vitis Unified Software Platform Documentation (UG1416).
 
->**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/settingupvitisenvironment.html#zks1565446519267) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >
 >   ```bash
 >    #setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.
@@ -22,6 +22,8 @@ The process described in this lab follows the flow described in [RTL Kernel Wiza
 >    #Setup Xilinx runtime. XILINX_XRT will be set in this step.
 >    source <XRT_install_path>/setup.sh
 >   ```
+
+1. Change directory to the tutorial folder: `cd ./01-rtl_kernel_workflow`.
 
 1. To launch the Vitis IDE, enter the `vitis` command in a Linux terminal window.  
 The Workspace Launcher dialog box is displayed.  
@@ -51,7 +53,7 @@ The new project wizard closes and opens the Vitis IDE with your new project load
 
 # Configuration with the RTL Kernel Wizard
 
-From the top menu bar of the Vitis IDE, click **Xilinx -> RTL Kernel Wizard** to launch RTL Kernel wizard. 
+From the top menu bar of the Vitis IDE, click **Xilinx > Launch RTL Kernel Wizard > rtl_ke_t2_kernels**. 
 
  The RTL Kernel wizard opens to the Welcome page, which offers a brief introduction to the process used for defining RTL kernels. You will be following that process in this tutorial. Take a minute to read the instructions, and then click **Next** to proceed.
 
