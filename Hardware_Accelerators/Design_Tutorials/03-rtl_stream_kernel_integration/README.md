@@ -107,7 +107,7 @@ Following table summarizes the arguments used by *rtc_gen* kernel.
 |2     | time_format | 1      |[0]: determine whether centisecond is included in the output digit images <br> 0 - disable centiseconds output <br> 1 - enable centiseconds output |
 |3     | time_set_val| 32     |Set time value for internal free-running clock: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds |
 |4     | time_set_en | 1      |[0]: write 1 to this bit will load the time_set_value to internal free-running clock. |
-|5     | time_val    | 32     |Read-only regsiter for internal read-time-clock time value: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds |
+|5     | time_val    | 32     |Read-only regsiter for internal real-time-clock time value: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds |
 |6     | read_addr   | 64     |AXI master pointer, this is the FPGA device buffer address for font library |
 
 <br/><br/>
