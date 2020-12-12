@@ -1,7 +1,7 @@
 <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -23,19 +23,20 @@ Alveo cards have multiple DDR banks, and you can use multiple banks in ping-pong
 * When the host is writing words to DDR bank1, the kernel is reading flags from DDR bank2. 
 * When host is writing documents to DDR bank2, the kernel is reading flags from DDR bank1. 
 
-## Code Modifications
-
-1. Navigate to `$LAB_WORK_DIR/reference_files`, and with a file editor, open `run_sw_overlap_multiDDR.cpp`.
-
-2. The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port is connected to both DDR banks. Establish the connectivity of kernel arguments to the appropriate DDR banks shown as follows. This connectivity is added in `design.connectivity`.  
+The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/buildingdevicebinary.html#ejl1524519365386). In this case the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity. 
 
     ```
     [connectivity]
     sp=runOnfpga_1.input_words:DDR[1:2] 
     ```
-   - This option instructs the `v++` linker that input_words are connected to both DDR banks 1 and 2. You will need to rebuild the kernel because connectivity is now changed.
+   - The `-sp` option instructs the `v++` linker that `input_words` is connected to both DDR banks 1 and 2. You will need to rebuild the kernel because connectivity is now changed.
 
-3. From the host code, you will need to send the words to both DDR banks alternatively. The DDR bank assignment in the host code is supported by a Xilinx vendor extension. Two Xilinx extension pointer objects (`cl_mem_ext_ptr_t`) are created, `buffer_words_ext[0]` and `buffer_words_ext[1]`. The`flags` will determine which DDR bank the buffer will be send to, so that kernel can access it.
+
+## Code Modifications
+
+1. Navigate to `$LAB_WORK_DIR/reference_files`, and with a file editor, open `run_sw_overlap_multiDDR.cpp`.
+
+3. From the host code, you will need to send the words to both DDR banks alternatively. The DDR bank assignment in the host code is supported by a Xilinx vendor extension to the OpenCL API. Two Xilinx extension pointer objects (`cl_mem_ext_ptr_t`) are created, `buffer_words_ext[0]` and `buffer_words_ext[1]`. The`flags` will determine which DDR bank the buffer will be send to, so that kernel can access it.
 
    ```cpp
     cl_mem_ext_ptr_t buffer_words_ext[2];
@@ -171,7 +172,6 @@ Congratulations! You have successfully completed the tutorial.
 
 In this tutorial, you learned that optimizing how the host application interacts with the accelerator makes a significant difference. A native initial implementation delivered a 4x performance improvement over the reference software implementation. By leveraging data-parallelism, the overlapping data transfers, compute, and the overlapping CPU processing with FPGA processing, using multiple DDR banks, the application performance was increased by another 1.8x, achieving a total of 7.2x acceleration.
 
-In the next module, you will [create and optimize a two-dimensional convolution accelerator](../convolution-tutorial/README.md) used to filter a video stream at 30 fps.
 
 ---------------------------------------
 <p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
