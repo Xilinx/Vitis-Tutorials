@@ -2,9 +2,9 @@
 ./$(BUILDDIR)/runOnfpga_$(TARGET).xo: $(SRCDIR)/hls_stream_utils.h $(HOST_SRC_FPGA)
 	v++ -c -g -t $(TARGET) -R 1 -k runOnfpga \
 		--platform $(PLATFORM) \
-                --profile_kernel data:all:all:all \
-                --profile_kernel stall:all:all:all \
-		--trace_memory DDR[3] \
+        --profile.data all:all:all \
+        --profile.stall all:all:all \
+		--profile.trace_memory DDR[3] \
 		--save-temps \
 		--temp_dir ./$(BUILDDIR)/temp_dir \
 		--report_dir ./$(BUILDDIR)/report_dir \
@@ -18,9 +18,9 @@ ifeq ($(STEP),multiDDR)
 ./$(BUILDDIR)/runOnfpga_$(TARGET).xclbin: ./$(BUILDDIR)/runOnfpga_$(TARGET).xo
 	v++ -l -g -t $(TARGET) -R 1 \
 		--platform $(PLATFORM) \
-                --profile_kernel data:all:all:all \
-                --profile_kernel stall:all:all:all \
-		--trace_memory DDR[3] \
+        --profile.data all:all:all \
+        --profile.stall all:all:all \
+		--profile.trace_memory DDR[3] \
 		--temp_dir ./$(BUILDDIR)/temp_dir \
 		--report_dir ./$(BUILDDIR)/report_dir \
 		--log_dir ./$(BUILDDIR)/log_dir \
@@ -34,9 +34,9 @@ else
 ./$(BUILDDIR)/runOnfpga_$(TARGET).xclbin: ./$(BUILDDIR)/runOnfpga_$(TARGET).xo
 	v++ -l -g -t $(TARGET) -R 1 \
 		--platform $(PLATFORM) \
-                --profile_kernel data:all:all:all \
-                --profile_kernel stall:all:all:all \
-		--trace_memory DDR[3] \
+        --profile.data all:all:all \
+        --profile.stall all:all:all \
+		--profile.trace_memory DDR[3] \
 		--temp_dir ./$(BUILDDIR)/temp_dir \
 		--report_dir ./$(BUILDDIR)/report_dir \
 		--log_dir ./$(BUILDDIR)/log_dir \
