@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -32,8 +32,8 @@ The following figure shows a Bloom filter example representing the set `{x, y, z
 
 In this tutorial, each document consists of an array of words where: each word is a 32-bit unsigned integer comprised of a 24-bit word ID and an 8-bit integer representing the frequency. The search array consists of words of interest to the user, and represents a smaller set of 24-bit word IDs, where each word ID has a weight associated with it, determining the importance of the word.
 
-1. Navigate to `bloom` directory.
-2. Go to the `cpu_src` directory and look at line 65 in the `main.cpp` file. 
+1. Navigate to `Hardware_Accelerators/Design_Tutorials/02-bloom` directory.
+2. Go to the `cpu_src` directory, open the `main.cpp` file, and look at line 63. 
   
     The Bloom filter application is 64 KB, which is implemented as `1L<<bloom_size` where `bloom_size` is defined as 14 in the header file `sizes.h` (calculated as `(2^14)*4B = 64 KB`).
 
