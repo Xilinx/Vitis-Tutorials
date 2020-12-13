@@ -15,6 +15,7 @@ XCLBIN := vadd.$(MODE).xclbin
 EMCONFIG_FILE := emconfig.json
 
 # Linker options to map kernel ports to DDR banks
+VPP_LINK_OPTS := --profile.data all:all:all
 #VPP_LINK_OPTS := --config connectivity.cfg
 
 VPP_COMMON_OPTS := -s -t $(MODE) --platform $(PLATFORM)
