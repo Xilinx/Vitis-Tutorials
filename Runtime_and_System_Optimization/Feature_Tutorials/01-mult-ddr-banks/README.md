@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -45,17 +45,17 @@ The example in this tutorial uses a C++ kernel; however, the steps described are
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2020.1 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
+* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to the `mult-ddr-banks` directory, and then access the `reference-files` directory.
+2. Navigate to the `Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks` directory, and then access the `reference-files` directory.
 
 ### Tutorial Setup
 
@@ -80,7 +80,7 @@ The labs in this tutorial use:
    >* `MODE := hw_emu`: Set the build configuration mode to HW Emulation
    >* `PLATFORM := xilinx_u200_xdma_201830_2`: Select the target platform
    >* `KERNEL_SRC := src/vadd.cpp`: List the kernel source files
-   > * `HOST_SRC := src/host.cpp`: List the host source files
+   >* `HOST_SRC := src/host.cpp`: List the host source files
 
    As previously mentioned, the default implementation of the design uses a single DDR bank. Observe the messages in the Console view during the link step; you should see messages similar to the following.
 
@@ -148,9 +148,15 @@ You will instruct the `v++` Kernel Linker to connect the kernel arguments to the
 
    The three `sp` options are added in `connectivity.cfg` file and you need to modify the Makefile to use that config file.
 
-2. Open the Makefile and uncomment line 18 to add the config file into `v++` linker options.
+2. Open the Makefile and comment line 18, and uncomment line 19 to add the config file into `v++` linker options:
 
-   Using config files is the new feature for the Vitis software platform. You can put options into different files and use `--config` to specify them.
+   ```
+   # Linker options to map kernel ports to DDR banks
+   #VPP_LINK_OPTS := --profile.data all:all:all
+   VPP_LINK_OPTS := --config connectivity.cfg
+   ```
+
+   Using config files is a feature for the Vitis software platform. You can put options into different files and use `--config` to include them in a build.
 
 3. After you have saved the changes, complete a clean build of the design in HW Emulation mode.
 
@@ -191,7 +197,12 @@ vadd_1:m_axi_gmem1-DDR[1]          RD = 0.391 KB               WR = 0.000 KB
 vadd_1:m_axi_gmem2-DDR[2]          RD = 0.000 KB               WR = 0.391 KB
 ```
 
-  You can also open the Profile Summary report, `profile_summary.html` and look at the Memory Resources in the Kernel to Global Memory section showing data transfers. You will see the DDR banks assigned to each of the kernel arguments along with the traffic on each of the interfaces during HW-Emulation.
+  You can also open the `vadd.hw_emu.xclbin.run_summary` and look at the Profile Summary to examine the **Kernel to Global Memory** section showing data transfers. 
+
+   ```bash
+   vitis_analyzer vadd.hw_emu.xclbin.run_summary
+   ```
+You will see the DDR banks assigned to each of the kernel arguments along with the traffic on each of the interfaces during HW-Emulation.
 
   ![](./images/mult-ddr-banks_img_vitis.png)
 
