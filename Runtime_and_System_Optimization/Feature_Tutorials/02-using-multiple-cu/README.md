@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis™ Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -20,7 +20,7 @@ This tutorial demonstrates a flexible kernel linking process to increase the num
 
 By default, the Vitis™ core development kit creates one CU for each kernel. A host program can use the same kernel multiple times for different sets of data. In these cases, it is useful to generate multiple CUs of the kernel to let those CUs run concurrently and improve the performance of the overall system.  
 
-For more information, see [Creating Multiple Instances of a Kernel](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=buildingdevicebinary.html;a=yzb1524519238289) in the Application Acceleration
+For more information, see [Creating Multiple Instances of a Kernel](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=buildingdevicebinary.html;a=yzb1524519238289) in the Application Acceleration
 Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 During this tutorial, you will:
@@ -37,27 +37,27 @@ This tutorial uses an image filter example to demonstrate the multiple CU featur
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2020.1 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform.
+* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform.
 If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
 >
->* Before to running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration
+>* Before to running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration
 Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
->* This tutorial module contains a pre-compiled OpenCV™ library compiled by gcc-6.2.0. If you are using a host server with a older compiler, you might be required to set the LD_LIBRARY_PATH using the following code to pick required runtime library related to gcc-6.
+>* This tutorial module contains a pre-compiled OpenCV™ library compiled by gcc-6.2.0, and requires gcc/g++ version 5.5 at least, or will return an error during host code compilation. You must also set the LD_LIBRARY_PATH using the following code to pick the required runtime library related to gcc-6:
 >   ```
->   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<Vitis Install Directory>/installs/lin64/Vitis/2020.1/lib/lnx64.o/Default
+>   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$XILINX_VITIS/lib/lnx64.o/Default
 >   ```
 
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, enter the following in a terminal: `git clone http://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to `using-multiple-cu` directory, and then access the `reference-files` directory.
+2. Navigate to `Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu` directory, and then access the `reference-files` directory.
 
 ## Makefile Flow
 
-You can observe the Makefile used for this tutorial in `using-multiple-cu/reference-files/Makefile`. The top-level settings include:
+You can observe the Makefile used for this tutorial in `reference-files/Makefile`. The top-level settings include:
 
 * **VPP**: Vitis compiler path to compile the kernel code.
 * **EMCONFIGUTIL**: The path of the utility that creates emulation configuration file, `emconfig.json`.
@@ -80,7 +80,7 @@ Run hardware emulation with the following command.
 
 For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware model, which is run in a hardware simulator, while the rest of the system uses a C simulator. Building and running takes longer but provides a detailed, cycle-aware, view of kernel activity. This target is useful for testing the functionality of the logic that will run in the FPGA and for getting initial performance estimates.
 
->**NOTE:** For instructions on how to build the host software and hardware, refer to the [Building an Application](../Pathway3/BuildingAnApplication.md) lab.
+>**NOTE:** For instructions on how to build the host software and hardware, refer to the [Vitis Getting Started](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Getting_Started) tutorial.
 
 ### Inspect the Host Code
 
@@ -145,17 +145,14 @@ Review the generated Timeline Trace report (`timeline_trace.csv`).
 
 ### Improve the Host Code for Concurrent Kernel Enqueuing
 
-1. Change the `src/host/host.cpp` host file in line 75.  
-    This declares the command queue as an _out-of-order_ command queue.  
+1. Edit the `src/host/host.cpp` host file to change line 75. You will change this line to declare the command queue as an _out-of-order_ command queue.  
 
    Code before the change:
-
    ```
    mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE, &mErr);
    ```
 
    Code after the change:
-
    ```
    mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE | CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE, &mErr);
    ```
