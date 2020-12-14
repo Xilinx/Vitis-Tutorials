@@ -42,7 +42,7 @@ clean:
 	-$(RM) $(EMCONFIG_FILE) $(HOST_EXE) $(XCLBIN)
 
 $(XCLBIN): $(KERNEL_XO)
-	$(VPP) $(VPP_COMMON_OPTS) -l --profile_kernel data:all:all:all:all -o $@ $+ $(VPP_LINK_OPTS)
+	$(VPP) $(VPP_COMMON_OPTS) -l --profile.data all:all:all:all -o $@ $+ $(VPP_LINK_OPTS)
 
 $(KERNEL_XO) : $(KERNEL_SRC) $(KERNEL_HEADER)
 	$(VPP) $(VPP_COMMON_OPTS) -c -k Filter2DKernel -o $@ $(KERNEL_SRC)
@@ -50,7 +50,7 @@ $(KERNEL_XO) : $(KERNEL_SRC) $(KERNEL_HEADER)
 
 # host rules
 $(HOST_EXE): $(HOST_SRC)
-	$(XILINX_VITIS)/bin/xcpp $(CFLAGS) -o $@ $+ $(LFLAGS)
+	g++ $(CFLAGS) -o $@ $+ $(LFLAGS)
 	@echo 'Compiled Host Executable: $(HOST_EXE)'
 
 $(EMCONFIG_FILE):
