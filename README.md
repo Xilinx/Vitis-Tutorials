@@ -38,6 +38,11 @@ Learn how to use the Vitis core development kit to build, analyze, and optimize 
 
 Learn how to use Vitis HLS, compiler, analyzer, and debugger to identify performance bottlenecks and make modifications to increase algorithm efficiency and performance using an Alveo card.
 
+### [AI Engine Development](./AI_Engine_Development)
+Learn how to use the Vitis core tools to develop for Versal, the first Adaptive Compute Acceleration Platform (ACAP) device from Xilinx. 
+
+Learn how to target, develop, and deploy advance algorithms using Versal's AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
+
 ### [Platform Creation Tutorial](./Vitis_Platform_Creation)
 Learn how to build custom platforms for Vitis to target your own boards, and how to modify and extend existing platforms.
 
