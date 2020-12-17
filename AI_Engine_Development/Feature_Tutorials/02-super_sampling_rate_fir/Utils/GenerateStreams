@@ -1,0 +1,127 @@
+#
+# Copyright 2020 Xilinx, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+echo " "
+echo "Stream Content Generation"
+echo " "
+
+python - <<END
+
+import os
+
+from math import floor
+from shutil import copyfile
+from tkinter import *
+from GenerationLib import *
+from functools import partial
+
+
+
+# Generates interface
+F = Tk()
+F.option_add('*Font','Times 19')
+
+title = Label(F,text='Data File Generator')
+
+txt1 = Label(F, text = ' Data Type : ' )
+txt2 = Label(F, text = ' PLIO Width : ' )
+txt3 = Label(F, text = ' Number of Phases : ' )
+txt4 = Label(F, text = ' Number of Streams : ' )
+txt5 = Label(F, text = ' Number of Samples per Stream per Frame : ' )
+txt6 = Label(F, text = ' Number of Frames : ' )
+txt7 = Label(F, text = ' Type of signal : ' )
+txt8 = Label(F, text = ' Base of the filename : ' )
+
+dtval = StringVar();
+dtval.set('cint16')
+dt1 = Radiobutton(F,text='int16',variable=dtval,value='int16');
+dt2 = Radiobutton(F,text='cint16',variable=dtval,value='cint16');
+dt3 = Radiobutton(F,text='int32',variable=dtval,value='int32');
+
+pliow = IntVar()
+pliow.set(64)
+plio1 = Radiobutton(F,text='32',variable=pliow,value=32);
+plio2 = Radiobutton(F,text='64',variable=pliow,value=64);
+plio3 = Radiobutton(F,text='128',variable=pliow,value=128);
+
+NPhases_s = StringVar()
+NPhases_s.set('1')
+entr3 = Entry(F,textvariable=NPhases_s)
+
+NStreams_s = StringVar()
+NStreams_s.set('1')
+entr4 = Entry(F,textvariable=NStreams_s)
+
+NSamples_s = StringVar()
+NSamples_s.set('512')
+entr5 = Entry(F,textvariable=NSamples_s)
+
+NFrames_s = StringVar()
+NFrames_s.set('4')
+entr6 = Entry(F,textvariable=NFrames_s)
+
+SeqType_s = StringVar()
+SeqType_s.set('Linear')
+sq1 = Radiobutton(F,text='Dirac',variable=SeqType_s,value='Dirac');
+sq2 = Radiobutton(F,text='Linear',variable=SeqType_s,value='Linear');
+sq3 = Radiobutton(F,text='SinCos',variable=SeqType_s,value='SinCos');
+sq4 = Radiobutton(F,text='Random',variable=SeqType_s,value='Random');
+
+Basename_s = StringVar()
+Basename_s.set('PhaseIn')
+entr7 = Entry(F,textvariable=Basename_s)
+
+
+
+# Action definitions
+Generate = partial(GenerateTestVector,dtval,pliow,NPhases_s,NStreams_s,NSamples_s,NFrames_s,SeqType_s,Basename_s)
+
+but1 = Button(F,text='Exit',command=F.destroy)
+but2 = Button(F,text='Generate',command=Generate)
+
+title.grid(row = 1, column=1, columnspan = 5)
+txt1.grid(row = 2,column=1)
+txt2.grid(row = 3,column=1)
+txt3.grid(row = 4,column=1)
+txt4.grid(row = 5,column=1)
+txt5.grid(row = 6,column=1)
+txt6.grid(row = 7,column=1)
+txt7.grid(row = 8,column=1)
+txt8.grid(row = 9,column=1)
+
+dt1.grid(row=2,column=2)
+dt2.grid(row=2,column=3)
+dt3.grid(row=2,column=4)
+plio1.grid(row=3,column=2)
+plio2.grid(row=3,column=3)
+plio3.grid(row=3,column=4)
+entr3.grid(row=4,column=2,columnspan = 4)
+entr4.grid(row=5,column=2,columnspan = 4)
+entr5.grid(row=6,column=2,columnspan = 4)
+entr6.grid(row=7,column=2,columnspan = 4)
+sq1.grid(row=8,column=2)
+sq2.grid(row=8,column=3)
+sq3.grid(row=8,column=4)
+sq4.grid(row=8,column=5)
+entr7.grid(row=9,column=2,columnspan = 4)
+
+but1.grid(row=10,column=1)
+but2.grid(row=10,column=3,columnspan=3)
+
+
+F.mainloop()
+
+
+END
