@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -15,9 +15,9 @@
 ## Run the C Simulation
 
 With the source code and testbench added to the project, you can now run the C simulation.
->TIP: For more information about the features of a well-written test bench, refer to [Writing a Test Bench](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=verifyingcodecsimulation.html;a=sav1584759936384) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+>TIP: For more information about the features of a well-written test bench, refer to [Writing a Test Bench](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=verifyingcodecsimulation.html;a=sav1584759936384) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
-1. From the main toolbar, select **Run C Simulation**. 
+1. From the main menu, select **Project > Run C Simulation**. 
 
    The C Simulation Dialog is displayed.
 
@@ -79,37 +79,29 @@ With the source code and testbench added to the project, you can now run the C s
 
    Notice that the various sub-functions from the Pre-synthesis control flow diagram are no longer reported in the synthesis results. This is because the tool has inlined these functions automatically. You can disable the inlining of specific functions by adding the INLINE OFF pragma or directive for the function, or by adding the DATAFLOW optimization to the design, which you will be doing later in this tutorial.
 
-   The Vitis HLS tool also automatically pipelined loops that have fewer than a specified number of iterations. Pipelining loops with fewer than 64 iterations is the default setting. When pipelining, the tool tries to achieve an II of 1. The II is the number of clock cycles before the next iteration of the loop is processed.
-
-   When pipelining the loop with `II=1`, you want the next iteration to start at the next clock cycle. However, in this design the tool has failed to achieve that result, as it reports two II violations (in two loops).
+   The Vitis HLS tool also automatically pipelined loops that have fewer than a specified number of iterations. Pipelining loops with fewer than 64 iterations is the default setting. When pipelining, the tool tries to achieve an II of 1. The II is the number of clock cycles before the next iteration of the loop is processed. When pipelining the loop with `II=1`, you want the next iteration to start at the next clock cycle. 
 
 ## Analyze the Results
 
-The Synthesis Summary report displays the results. Now you can analyze the design to try to determine what is causing the II violations.
+The Synthesis Summary report displays the results of synthesis, including performance and utilization estimates, and data related to interfaces and data transfer in the design. Now you can analyze the design to examine any reported issues.
 
-1. At the bottom of the IDE, next to the Console view, select the **DRCs** view. This view reports a little more information related to the two II violations as shown in the following figure.
+1. At the bottom of the IDE, next to the Console view, select the **Guidance** view. This view reports a little more information related to any issues found in the design as shown in the following figure.
 
-   >**TIP**: If the DRCs view is not displayed, select **Window** > **Show View** > **DRCs**.
+   >**TIP**: If the Guidance view is not displayed, select **Window** > **Show View** > **Guidance**.
 
     ![Synthesis Results DRC](./images/synth-results-drc.png)
 
-   You can see from the Details in the report, there is a load operation related to the array `col_inbuf` in the loop `Col_DCT_Loop_DCT_Outer_Loop`. The buffer transaction is taking too long to complete in one clock cycle, thus preventing II=1.
+   Guidance messages report issues found during synthesis, suggest possible remedies, and provide links to more detailed information.
 
-2. In the upper right hand corner of the Vitis HLS IDE, click the **Analysis** perspective to change to the Analysis perspective, and open the Schedule Viewer.
+2. In the upper right hand corner of the Vitis HLS IDE, click the **Analysis** perspective to change to the Analysis perspective, and display the Schedule Viewer.
 
-      The Analysis perspective provides a view of different elements of your project, to evaluate the results of synthesis and the performance of your current solution. The Analysis perspective opens the Schedule Viewer by default.
+   The Analysis perspective provides a view of different elements of your project, to evaluate the results of synthesis and the performance of your current solution. The Analysis perspective opens the Schedule Viewer by default.
 
-   The Schedule Viewer shows each operation (in chronological order) in the synthesized function, and the clock cycle in which the operation is scheduled in. It is presented as a timeline starting at clock cycle 1, and running through to completion. You can select operations to view the connections between them.
+   The left side of the Schedule Viewer lists each operation in chronological order in the synthesized function. It displays the clock cycles presented horizontally as a timeline starting at clock cycle 0, and running through to completion. You can select operations from the list to view the connections between them.
 
-   The default view shows all of the operations, though the drop-down menu at the top of the view lets you select specific elements of the design that are of interest. In this case, you can view the II violations, as shown in the following figure.
+   The default view shows all of the operations. However, a drop-down menu at the top of the Schedule Viewer lets you select specific functions, loops, or elements of the design that are of interest. 
 
    ![Schedule Viewer](./images/schedule-viewer-ii-violation.png)
-
-3. Select the `col_inbuf_load_4` operation. You can see that the length of the operation is greater than a single clock cycle. This extends from clock cycle 86 into clock cycle 87. 
-
-   In the Schedule Viewer, the dotted line in each clock cycle represents the clock uncertainty region. If an operation extends into this dotted region, or into the next clock cycle, then it has exceeded the user requested budget of a single clock cycle.
-
-   Because the `col_inbuf_load_4` operation takes more than one clock cycle (effectively two), the scheduler determines that it either needs more memory ports to achieve an II of 1 or it needs to relax the II to 4 in order to achieve a possible schedule. Because the relax_latency attribute is set to TRUE, the scheduler relaxes the II to 4 to achieve a successful schedule.  
 
 ## Next Step
 
@@ -119,3 +111,21 @@ Next, learn about [using optimization techniques](./optimization_techniques.md) 
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+
+you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at:
+
+<a href="[/docs/vitis-getting-started/README.md](http://www.apache.org/licenses/LICENSE-2.0)">http://www.apache.org/licenses/LICENSE-2.0</a>
+    
+Unless required by applicable law or agreed to in writing, software
+
+distributed under the License is distributed on an "AS IS" BASIS,
+
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and
+
+limitations under the License.
