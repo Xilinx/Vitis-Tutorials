@@ -120,9 +120,16 @@ Finally, you can export the results of the high-level synthesis as a synthesized
 3. In the Output location field specify the `./vitis_hls_analysis/reference-files` folder to write the `dct.xo` file.
 4. To export the kernel, select **OK**.
 
-#### Next Step
+## Summary
 
-You can use the exported Vitis kernel, or the optimized C/C++ source code for use in a Vitis application acceleration development flow project. You will do this in the next lab, [Using the HLS Kernel in Vitis](./using_the_kernel.md).
+In this tutorial:
+
+1. You worked to optimize C/C++ code in the Vitis HLS tool, to synthesize it into RTL code for use in the Vitis application acceleration development flow. 
+2. With the code optimized, you exported the compiled kernel object (`.xo`) file for use in a Vitis application project. 
+
+These are the elements of building and accelerating applications and functions using the Vitis and Vitis HLS tools. You can mix the Vitis HLS kernels with RTL kernel objects (`.xo`) and uncompiled C/C++ kernel code (`.c`/`.cpp`) in the Vitis application project to create more complex accelerated applications. 
+
+You have the optimized but uncompiled C++ code (`dct.cpp`) that you saved in an earlier step of this tutorial. You can remove the HLS kernel object and add this optimized C++ code in the Vitis application project if you want. In this case, the Vitis IDE will call Vitis HLS as part of the build process when compiling the C++ kernel code.  
 
 </br>
 <hr/>
