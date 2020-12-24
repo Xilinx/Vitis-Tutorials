@@ -50,5 +50,8 @@ events, and more.
 
 On the back-end, learn how to control Vitis system-level topologies and low-level hardware implementation.
 
+### [AI Engine Development Tutorials](./AI_Engine_Development)
+Learn about the methodology for developing optimized accelerated applications, including architecting the application and developing the kernels.
+
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
