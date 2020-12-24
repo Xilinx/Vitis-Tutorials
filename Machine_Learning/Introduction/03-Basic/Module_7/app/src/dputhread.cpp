@@ -36,6 +36,7 @@ namespace vitis {
   }
 
    int DpuThread::run()  {
+     auto dpu_start = std::chrono::system_clock::now();
     FrameInfo frame;
     if (!queue_in_->pop(frame, std::chrono::milliseconds(500))) {
       return 0;
@@ -52,6 +53,8 @@ namespace vitis {
         return -1;
       }
     }
+    LOG(INFO)<<"DPU in single thread duration :"<<std::chrono::duration_cast<std::chrono::microseconds>(
+    std::chrono::system_clock::now() - dpu_start).count()/1000<<"ms";
     return 0;
   }
 

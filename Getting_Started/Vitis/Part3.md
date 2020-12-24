@@ -41,7 +41,7 @@ Other than this, the functionality of the vector-add kernel is very easily recog
 
 The pragmas are used to map function parameters to distinct kernel ports. By mapping the two inputs parameters to different input ports, the kernel will be able to read both inputs in parallel. As a general rule, and without going into further details in this introductory tutorial, it is important to think about interface requirements of hardware accelerators and they will have a determining impact on maximum achievable performance.
 
-The Vitis online documentation provides comprehensive information on [C++ kernel coding considerations](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/devckernels.html#rjk1519742919747) as well as a complete [pragma reference guide](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/tfo1593136615570.html).
+The Vitis online documentation provides comprehensive information on [C++ kernel coding considerations](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/devckernels.html#rjk1519742919747) as well as a complete [pragma reference guide](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/tfo1593136615570.html).
 
 
 
@@ -69,7 +69,7 @@ There are 4 main steps in the source code for this simple example.
 *NOTE: A common alternative is for the application to explicitly allocate host memory and reuse the corresponding pointers when creating the buffers. The approach used in this example was chosen because it is the most portable and efficient across both data-center and embedded platforms.*
 
 
-* Step 3: The host program sets the arguments of the kernel, then schedules three operations: the transfers of the two input vectors to device memory, the execution of the kernel, and lastly the transfer of the results back to host memory. These operations are enqueued in the command queue declared in Step 1. It is important to keep in my mind that these three function calls are non-blocking. The commands are put in the queue and the Xilinx Runtime is responsible for submitting them to the device. Because the queue used in this example is an ordered queue, these commands are guaranteed to execute in the specified order. The call to `q.finish()` is necessary to wait until all enqueued commands run to completion. 
+* Step 3: The host program sets the arguments of the kernel, then schedules three operations: the transfers of the two input vectors to device memory, the execution of the kernel, and lastly the transfer of the results back to host memory. These operations are enqueued in the command queue declared in Step 1. It is important to keep in mind that these three function calls are non-blocking. The commands are put in the queue and the Xilinx Runtime is responsible for submitting them to the device. Because the queue used in the host code in this example is an ordered queue, these commands are guaranteed to execute in the specified order. However, the queue could also be an out-of-order queue in which the non-blocking calls would be executed when ready, rather than in order. The call to `q.finish()` is necessary to wait until all enqueued commands run to completion. 
 
 ```cpp
     // Set kernel arguments
