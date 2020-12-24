@@ -6,7 +6,7 @@ To develop and deploy applications with Vitis, you need to install the Vitis uni
 
 ## Step 1 – Installation Requirements
 
-Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/aqm1532064088764.html).
+Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/aqm1532064088764.html).
 
 *NOTE: Windows OS support is limited to the Vitis embedded software development flow. The Vitis acceleration flow is only supported on Linux.*
 
@@ -66,13 +66,13 @@ The packages required for each platform can be found on the corresponding downlo
 
 After downloading the Vitis, XRT and platform packages, installing them in the following order and according to the provided instructions:
 
-1. [Install the Vitis Software Platform](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/juk1557377661419.html)
+1. [Install the Vitis Software Platform](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/juk1557377661419.html)
 
-2. [Install the Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/pjr1542153622642.html)
+2. [Install the Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/pjr1542153622642.html)
 
 3. Install desired platforms
-    * Instructions for [Installing Embedded Platforms](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/rvu1542160683426.html).
-    * Instructions for [Installing Data Center Platforms](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/lop1542162543761.html)
+    * Instructions for [Installing Embedded Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rvu1542160683426.html).
+    * Instructions for [Installing Data Center Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/lop1542162543761.html)
 
 
 
@@ -87,7 +87,7 @@ source /opt/xilinx/xrt/setup.sh
 
 *NOTE: .csh scripts are also provided but this tutorial assumes a bash shell is used.*
 
-To specify the location of any Data-Center of Embedded platforms you have installed, set the following environment variable:
+To specify the location of any Data-Center or Embedded platforms you have installed, set the following environment variable:
 
 ```bash
 export PLATFORM_REPO_PATHS=<path to platforms>

@@ -603,13 +603,13 @@ task automatic check_pointer_registers(output bit error_found);
   $display("%t : Checking post reset values of pointer registers", $time);
 
   ///////////////////////////////////////////////////////////////////////////
-  //Write ID 3: read_addr (0x038)
-  check_register_value(32'h038, 32, tmp_error_found);
+  //Write ID 6: read_addr (0x040)
+  check_register_value(32'h040, 32, tmp_error_found);
   error_found |= tmp_error_found;
 
   ///////////////////////////////////////////////////////////////////////////
-  //Write ID 3: read_addr (0x03C)
-  check_register_value(32'h03c, 32, tmp_error_found);
+  //Write ID 6: read_addr (0x044)
+  check_register_value(32'h044, 32, tmp_error_found);
   error_found |= tmp_error_found;
 
 endtask
@@ -620,12 +620,12 @@ task automatic set_memory_pointers();
   read_addr_ptr = get_random_ptr();
 
   ///////////////////////////////////////////////////////////////////////////
-  //Write ID 3: read_addr (0x038) -> Randomized 4k aligned address (Global memory, lower 32 bits)
-  write_register(32'h038, read_addr_ptr[31:0]);
+  //Write ID 6: read_addr (0x040) -> Randomized 4k aligned address (Global memory, lower 32 bits)
+  write_register(32'h040, read_addr_ptr[31:0]);
 
   ///////////////////////////////////////////////////////////////////////////
-  //Write ID 3: read_addr (0x03C) -> Randomized 4k aligned address (Global memory, upper 32 bits)
-  write_register(32'h03c, read_addr_ptr[63:32]);
+  //Write ID 6: read_addr (0x044) -> Randomized 4k aligned address (Global memory, upper 32 bits)
+  write_register(32'h044, read_addr_ptr[63:32]);
 
 endtask
 
@@ -670,7 +670,6 @@ task automatic multiple_iteration(input integer unsigned num_iterations, output 
     $display("Start font library loading");
 
     set_kernel_arguments_load();
-    //set_kernel_arguments_load();
     set_memory_pointers();
     fontread_axi_m_fill_font_buffer(read_addr_ptr);
     // Check that Kernel is IDLE before starting.
