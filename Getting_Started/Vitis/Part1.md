@@ -1,24 +1,24 @@
-# Vitis Flow 101 – Part 1 : Essential Concepts
+# Vitis Flow 101 – Part 1 : 필수 개념
 
-The Vitis unified software platform provides a framework for developing and delivering FPGA accelerated applications using standard programming languages. Vitis offers all of the features of a standard software development environment, including:
+Vitis 통합 소프트웨어 플랫폼은 표준 프로그래밍 언어를 사용하여 FPGA 가속 애플리케이션을 개발하고 제공하기위한 프레임 워크를 제공합니다. Vitis는 다음을 포함하여 표준 소프트웨어 개발 환경의 모든 기능을 제공합니다.:
 
-* Compiler or cross-compiler for host applications running on x86 or Arm® processors
+* x86 또는 Arm® 프로세서에서 실행되는 호스트 애플리케이션을위한 컴파일러 또는 크로스 컴파일러
 
-* Cross-compilers for building the FPGA binary
+* FPGA 바이너리 구축을위한 크로스 컴파일러
 
-* Debugging environment to help identify and resolve issues in the code
+* 코드의 문제를 식별하고 해결하는 데 도움이되는 디버깅 환경
 
-* Performance profilers to identify bottlenecks and help you optimize the application
+* 병목 현상을 식별하고 애플리케이션을 최적화하는 데 도움이되는 성능 프로파일러
 
   
 
-## Understanding the Vitis Programming and Execution Model
+## Vitis 프로그래밍 및 실행 모델 이해
 
-A Vitis accelerated application consists of two distinct components: a software program and an FPGA binary containing hardware accelerated kernels. 
+Vitis 가속 애플리케이션은 소프트웨어 프로그램과 하드웨어 가속 커널이 포함 된 FPGA 바이너리의 두 가지 구성 요소로 구성됩니다.
 
-* The software program is written in C/C++ and runs on a conventional CPU. The software program uses user-space APIs implemented by the Xilinx Runtime library (XRT) to interact with the acceleration kernel in the FPGA device.
+* 소프트웨어 프로그램은 C / C ++로 작성되었으며 기존 CPU에서 실행됩니다. 소프트웨어 프로그램은 Xilinx 런타임 라이브러리 (XRT)로 구현 된 사용자 공간 API를 사용하여 FPGA 장치의 가속 커널과 상호 작용합니다.
 
-* The hardware accelerated kernels can be written in C/C++ or RTL (Verilog or VHDL) and run within the programmable logic part of the FPGA device. The kernels are integrated with the Vitis hardware platform using standard AXI interfaces.
+* 하드웨어 가속 커널은 C / C ++ 또는 RTL (Verilog 또는 VHDL)로 작성 될 수 있으며 FPGA 장치의 프로그래밍 가능한 논리 부분 내에서 실행될 수 있습니다. 커널은 표준 AXI 인터페이스를 사용하여 Vitis 하드웨어 플랫폼과 통합됩니다.
 
   
 
@@ -26,52 +26,52 @@ A Vitis accelerated application consists of two distinct components: a software 
 
 
 
-Vitis accelerated applications can execute on either data-center or embedded acceleration platforms:
+Vitis 가속 애플리케이션은 데이터 센터 또는 임베디드 가속 플랫폼에서 실행할 수 있습니다.
 
-* On data-center platforms, the software program runs on an x86 server and the kernels run in the FPGA on a PCIe-attached acceleration card.
+* 데이터 센터 플랫폼에서 소프트웨어 프로그램은 x86 서버에서 실행되고 커널은 PCIe에 연결된 가속 카드의 FPGA에서 실행됩니다.
 
-* On embedded platforms, the software program runs on an ARM processor of an Xilinx MPSoC device and the kernels run within the same device. 
+* 임베디드 플랫폼에서 소프트웨어 프로그램은 Xilinx MPSoC 장치의 ARM 프로세서에서 실행되고 커널은 동일한 장치 내에서 실행됩니다. 
 
-Because the software and hardware components of a Vitis application use standardized interfaces (XRT APIs and AXI protocols) to interact with each other, the user’s source code remains mostly agnostic of platform-specific details and can be easily ported across different acceleration platforms.
+Vitis 애플리케이션의 소프트웨어 및 하드웨어 구성 요소는 표준화 된 인터페이스 (XRT API 및 AXI 프로토콜)를 사용하여 서로 상호 작용하기 때문에 사용자의 소스 코드는 대부분 플랫폼 별 세부 정보에 구애받지 않고 다양한 가속 플랫폼에 쉽게 이식 될 수 있습니다.
 
-There are multiple ways by which the software program can interact with the hardware kernels. The simplest method can be decomposed into the following steps:
+소프트웨어 프로그램이 하드웨어 커널과 상호 작용할 수있는 방법에는 여러 가지가 있습니다. 가장 간단한 방법은 다음 단계로 구분 할 수 있습니다.
 
-1. The host program writes the data needed by a kernel into the global memory of FPGA device.
-2. The host program sets up the input parameters of the kernel.
-3. The host program triggers the execution of the kernel.
-4. The kernel performs the required computation, accessing global memory to read or write data, as necessary. Kernels can also use streaming connections to communicate with other kernels.
-5. The kernel notifies the host that it has completed its task.
-6. The host program can transfer the data from global memory to host memory or can give ownership of the data to another kernel.
+1. 호스트 프로그램은 커널에 필요한 데이터를 FPGA 장치의 전역 메모리에 씁니다.
+2. 호스트 프로그램은 커널의 입력 매개 변수를 설정합니다.
+3. 호스트 프로그램은 커널 실행을 트리거합니다.
+4. 커널은 필요한 계산을 수행하고 필요에 따라 데이터를 읽거나 쓰기 위해 전역 메모리에 액세스합니다. 커널은 스트리밍 연결을 사용하여 다른 커널과 통신 할 수도 있습니다.
+5. 커널은 작업을 완료했음을 호스트에 알립니다.
+6. 호스트 프로그램은 데이터를 전역 메모리에서 호스트 메모리로 전송하거나 데이터 소유권을 다른 커널에 제공 할 수 있습니다.
 
 
 
-## Understanding the Vitis Build Process
+## Vitis 빌드 프로세스 이해
 
-The Vitis build process follows a standard compilation and linking process for both the host program and the kernel code:
+Vitis 빌드 프로세스는 호스트 프로그램과 커널 코드 모두에 대한 표준 컴파일 및 링크 프로세스를 따릅니다.
 
-* The host program is built using the GNU C++ compiler (g++) for data-center applications or the GNU C++ Arm cross-compiler for Xilinx MPSoC devices. 
+* 호스트 프로그램은 데이터 센터 애플리케이션 용 GNU C ++ 컴파일러 (g ++) 또는 Xilinx MPSoC 장치 용 GNU C ++ Arm 크로스 컴파일러를 사용하여 빌드됩니다.
 
-* The FPGA binary is built using the Vitis compiler. First the kernels are compiled into a Xilinx object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the FPGA binary (.xclbin) file. The Vitis compiler and linker accepts a wide range of options to tailor and optimize the results. 
+* FPGA 바이너리는 Vitis 컴파일러를 사용하여 빌드됩니다. 먼저 커널이 Xilinx 객체 (.xo) 파일로 컴파일됩니다. 그런 다음 .xo 파일은 하드웨어 플랫폼과 연결되어 FPGA 바이너리 (.xclbin) 파일을 생성합니다. Vitis 컴파일러 및 링커는 결과를 조정하고 최적화하기 위해 다양한 옵션을 허용합니다.
 
 ![img](./images/part1_build_flow.png)
 
 
 
-## Understanding Vitis Build Targets
+## Vitis 빌드 타겟 이해
 
-The Vitis compiler provides three different build targets: two emulation targets used for debug and validation purposes, and the default hardware target used to generate the actual FPGA binary:
+Vitis 컴파일러는 디버그 및 검증 목적으로 사용되는 두 개의 에뮬레이션 타겟과 실제 FPGA 바이너리를 생성하는 데 사용되는 기본 하드웨어 타겟의 세 가지 빌드 타겟을 제공합니다.:
 
-* Software Emulation - The kernel code is compiled to run on the host processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system.
+* 소프트웨어 에뮬레이션 - 커널 코드는 호스트 프로세서에서 실행되도록 컴파일됩니다. 이를 통해 빠른 빌드 및 실행 루프를 통해 반복적 인 알고리즘 개선이 가능합니다. 이 대상은 구문 오류를 식별하고 응용 프로그램과 함께 실행되는 커널 코드의 소스 수준 디버깅을 수행하고 시스템의 동작을 확인하는 데 유용합니다.
 
-* Hardware Emulation - The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates.
+* 하드웨어 에뮬레이션 - 커널 코드는 전용 시뮬레이터에서 실행되는 하드웨어 모델 (RTL)로 컴파일됩니다. 이 빌드 및 실행 루프는 시간이 더 걸리지 만 커널 활동에 대한 상세하고 정확한주기보기를 제공합니다. 이 타겟은 FPGA에 들어갈 로직의 기능을 테스트하고 초기 성능 추정치를 얻는 데 유용합니다.
 
-* Hardware - The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA.
+* 하드웨어-커널 코드는 하드웨어 모델 (RTL)로 컴파일 된 다음 FPGA에서 구현되어 실제 FPGA에서 실행되는 바이너리가 생성됩니다.
 
 
 
-## Next Step
+## 다음 단계
 
-Theory is useful, but nothing beats practice! Proceed to [**Part 2**](./Part2.md) to install the Vitis tools before starting your first example project.
+이론은 유용하지만 연습을 능가하는 것은 없습니다! 첫 번째 예제 프로젝트를 시작하기 전에 [**Part 2**](./Part2.md) 로 이동하여 Vitis 도구를 설치합니다.
 
  
 
