@@ -16,15 +16,11 @@
 # Target all: Generate the Vitis platform and verify it including base bootable design
 # Target main: Generate the Vitis platform and verify it without base bootable design
 # ---------------------------------
-.PHONY: all clean step0 step1 step2 step3 step4
-all: step0 step1 step2 step3 step4
-main: step1 step2 step3 step4
+.PHONY: all clean step0 step2 step3 
+all: step0 step2 step3 
 
 step0:
 	$(MAKE) -C step0_bootable_design all
-
-step1:
-	$(MAKE) -C step1_vivado all
 
 step2:
 	$(MAKE) -C step2_petalinux all
