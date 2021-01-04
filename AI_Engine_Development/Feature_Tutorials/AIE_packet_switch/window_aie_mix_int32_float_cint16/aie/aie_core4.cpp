@@ -10,31 +10,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-#include <ap_int.h>
-#include <hls_stream.h>
-#include <ap_axi_sdata.h>
-
-
-extern "C" {
-
-void mm2s(ap_uint<32>* mem, hls::stream<ap_axiu<32, 0, 0, 0>  >& s, int size) {
-#pragma HLS INTERFACE m_axi port=mem offset=slave bundle=gmem
-
-#pragma HLS interface axis port=s
-
-#pragma HLS INTERFACE s_axilite port=mem bundle=control
-#pragma HLS INTERFACE s_axilite port=size bundle=control
-#pragma HLS interface s_axilite port=return bundle=control
-
-	for(int i = 0; i < size; i++) {
-#pragma HLS PIPELINE II=1
-		ap_axiu<32, 0, 0, 0> x;
-		x.data=mem[i];
-		x.keep=-1;
-		x.last=0;
-		s.write(x);
+#include <adf.h>
+void aie_core4(input_window_cint16 *in,output_window_cint16 *out){
+	cint16 tmp;
+	for(int i=0;i<8;i++){
+		tmp=window_readincr(in);
+		tmp.real=tmp.real+4;
+		tmp.imag=tmp.imag+4;
+		window_writeincr(out,tmp);
 	}
-
-}
-
 }
