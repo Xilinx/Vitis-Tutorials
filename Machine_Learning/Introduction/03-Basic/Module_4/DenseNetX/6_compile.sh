@@ -18,7 +18,7 @@
 # compile
 compile() {
   vai_c_tensorflow \
-    --frozen_pb  ${QUANT}/deploy_model.pb \
+    --frozen_pb  ${QUANT}/quantize_eval_model.pb \
     --arch       ${ARCH} \
     --output_dir ${COMPILE} \
     --net_name   ${NET_NAME} \
