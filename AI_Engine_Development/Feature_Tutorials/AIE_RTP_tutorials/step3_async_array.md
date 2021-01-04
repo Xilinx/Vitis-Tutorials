@@ -16,13 +16,13 @@ This step demonstrates how runtime array parameters can be passed to kernels. Yo
 __Note: The default working directory in this step is "step3", unless specified explicitly.__  
 
 ### Review Graph and RTP Code
-`step3/src/fir24_sym_param.h`gives a forward declaration of a 24-tap symmetric FIR filter:
+`aie/fir24_sym_param.h`gives a forward declaration of a 24-tap symmetric FIR filter:
 
 	void fir24_sym (input_window_cint16 * iwin, output_window_cint16 * owin, const int32(&coeffs)[12]);
 	
-The filter has an input and output window which consumes and produces complex samples. This filter differs from previous filters you have seen because the coefficients of the filter can be set as a kernel parameter and changed on each invocation. The implementation of the filter is in `step3/src/kernels/hb24.cc`.
+The filter has an input and output window which consumes and produces complex samples. This filter differs from previous filters you have seen because the coefficients of the filter can be set as a kernel parameter and changed on each invocation. The implementation of the filter is in `aie/kernels/hb24.cc`.
 
-The `step3/src/fpga` directory contains a kernel that generates samples of random noise. The noise generator is implemented as a programmable logic (PL) block inside graph, with samples consumed by the filter: 
+The `aie/hls` directory contains a kernel that generates samples of random noise. The noise generator is implemented as a programmable logic (PL) block inside graph, with samples consumed by the filter: 
 
 	extern "C" void random_noise(hls::stream<std::complex<short> > & out) {
 	#pragma HLS INTERFACE axis port=out
@@ -30,7 +30,7 @@ The `step3/src/fpga` directory contains a kernel that generates samples of rando
 	
 The PL kernel has two `#pragma` specified for vitis HLS. `#pragma HLS INTERFACE axis port=out` indicates that port "`out`" will be implemented with AXI4-Stream interface, while `#pragma HLS INTERFACE ap_ctrl_none port=return` indicates that the kernel has no block control signals (i.e., it is a free-running kernel). Free-running means that the kernel will keep running after the FPGA has been configured, the clock has been activated, and the reset is deactivated. The execution of a free-running kernel depends on the availability of input data, or readiness of a receiving buffer. It does not require explicit control in the host code when running aiesimulator, HW emulation and HW flows.
 
-`step3/src/graph.h` has constraints to place the kernel in PL:
+`aie/graph.h` has constraints to place the kernel in PL:
 	
 	using namespace adf；
 	...
@@ -39,16 +39,16 @@ The PL kernel has two `#pragma` specified for vitis HLS. `#pragma HLS INTERFACE 
 
 The filter coefficients are given in:
 
-   * `step3/data/narrow_filter.txt` (with a normalized bandwidth of 0.3 pi)
+   * `data/narrow_filter.txt` (with a normalized bandwidth of 0.3 pi)
 
-   * `step3/data/wide_filter.txt` (with a normalized bandwidth of 0.8 pi)
+   * `data/wide_filter.txt` (with a normalized bandwidth of 0.8 pi)
 
-Examine `step3/src/graph.h` again. Notice the code to connect the coefficients input port of the graph to the `coeffs` parameter of the filter kernel. This should be specified as an asynchronous runtime parameter (with adf::async). 
+Examine `aie/graph.h` again. Notice the code to connect the coefficients input port of the graph to the `coeffs` parameter of the filter kernel. This should be specified as an asynchronous runtime parameter (with adf::async). 
 
 	// connect filter coefficients
 	connect< parameter >(coefficients, async(fir24.in[1]));
 	
-Check `step3/src/graph.cpp`. Examine the code to update the coefficients using `narrow_filter` in the ping buffer for 16 iterations.
+Check `aie/graph.cpp`. Examine the code to update the coefficients using `narrow_filter` in the ping buffer for 16 iterations.
 Then update the coefficients using `wide_filter` in the pong buffer for another 16 iterations. Note that `graph.cpp` specifies the `narrow_filter` and `wide_filter` coefficients in `int` arrays based on the data in the filter files.
 
 	//run for 16 iterations, update narrow filter coefficients, wait, update wide filter coefficients, run for 16 iterations
@@ -63,7 +63,7 @@ In this snippet, the first graph update call initializes the coefficients parame
 ### Run the AI Engine compiler and AI Engine simulator 
 Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 	
-	make libadf.a
+	make aie
 	
 After the AI Engine graph (`libadf.a`) has been generated, verify for correctness using the AI Engine simulator:
 	
@@ -76,7 +76,7 @@ After simulation completes, you should see `output.txt` under `aiesimulator_outp
 
 If you have MATLAB or Octave, you can use the following script to visualize the data:
 
-	data=[<copy and paste the content from aiesimulator_output/data/output_data.txt here>];
+	data=load('./aiesimulator_output/data/output_data.txt', '-ascii');
 	cxdata = data(:,1) + data(:,2)*i;
 	narrow_spectrum = 20*log10(abs(fftshift(fft(cxdata(1:1024)))));
 	wide_spectrum = 20*log10(abs(fftshift(fft(cxdata(1025:2048)))));
@@ -88,7 +88,7 @@ If you have MATLAB or Octave, you can use the following script to visualize the 
 ### Run Hardware Emulation and Hardware flow
 PL kernels inside graph still need to be compiled into Xilinx object (`.xo`) files. You can run a make command to compile it:
 	
-	make -C src/fpga
+	make -C aie/hls
 	
 The corresponding v++ -c command is:
 	
@@ -108,6 +108,8 @@ And in the Linux prompt, run the following commands:
 	export XCL_EMULATION_MODE=hw_emu
 	./host.exe a.xclbin
 	
+To exit QEMU press Ctrl+A, x. 
+
 For hw mode, run following make command to generate an SD card package:
 	
 	make package TARGET=hw
@@ -115,17 +117,15 @@ For hw mode, run following make command to generate an SD card package:
 And in hardware, after booting Linux from the SD card, run following commands in the Linux prompt:
 
 	export XILINX_XRT=/usr
-	chmod 755 host.exe
+	cd /mnt/sd-mmcblk0p1
 	./host.exe a.xclbin
 	
 The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print the following:
 
 	TEST PASSED
-
-To exit QEMU press Ctrl+A, x. 
 	
 ### Conclusion
-In this tutorial you learned about:
+In this step you learned about:
 
    * the concepts of asynchronous update of array RTP
    * How to control the execution between different RTP updates
