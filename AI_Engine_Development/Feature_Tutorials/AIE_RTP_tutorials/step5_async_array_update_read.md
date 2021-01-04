@@ -24,20 +24,20 @@ The system to be implemented is as follows:
 __Note__: The default working directory in this step is "step5", unless explicitly specified otherwise.
 
 ### Review Graph and RTP Code
-In the AI Engine kernel code (`src/kernels/hb24.cc`), the interface is declared as:
+In the AI Engine kernel code (`aie/kernels/hb24.cc`), the interface is declared as:
 
     void fir24_sym(input_window_cint16 *iwin, output_window_cint16 *owin,  const  int32  (&coeffs)[12], int32 (&coeffs_readback)[12]);
 
 For the RTP array input, `const` is used for the array reference. From the graph, the RTP port can only be `input` or `inout`. The `inout` port in the graph can only be read by the PS program, it cannot be written by the PS program. Therefore, another port `coeffs_readback` is defined to read back the coefficient. 
 
-In the graph definition (`src/graph.h`), the RTP declaration and connection are added as follows:
+In the graph definition (`aie/graph.h`), the RTP declaration and connection are added as follows:
 
     port<direction::in> coefficients;
     port<direction::inout> coefficients_readback;
     connect< parameter >(coefficients, async(fir24.in[1]));
     connect< parameter >(async(fir24.inout[0]),coefficients_readback);
 
-In `src/graph.cpp` (for AI Engine simulator), the RTP update and read are: 
+In `aie/graph.cpp` (for AI Engine simulator), the RTP update and read are: 
 
     gr.update(gr.coefficients, narrow_filter, 12);
     gr.run(16); // start PL kernel & AIE kernel
@@ -68,11 +68,11 @@ Because the RTP read is asynchronous, it can not ensure that reads are happening
 ### Run AI Engine Compiler and AI Engine Simulator
 Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 
-    make libadf.a
+    make aie
 
 The corresponding AI Engine compiler command is:
 
-    aiecompiler -platform=<PATH by PLATFORM_REPO_PATHS>/xilinx_vck190_base_202020_1/xilinx_vck190_base_202020_1.xpfm -include="./src" -include="./data" -include="./src/kernels" -include="./" --pl-axi-lite=true -workdir=./Work src/graph.cpp
+    aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-axi-lite=true -workdir=./Work aie/graph.cpp
 
 After the AI Engine graph (`libadf.a`) has been generated, verify for correctness using the AI Engine simulator:
 
@@ -142,7 +142,7 @@ Similar to the previous step, the `adf` API and the XRT API are used to control 
 
 Run the following `make` command to build the host exectuable file.
 
-    make -C sw
+    make host
     
 Notice the following linker script links libraries `adf_api_xrt`, and `xrt_coreutil`, which are necessary for the `adf` API to work together with the `XRT` API.
 
@@ -160,6 +160,8 @@ In the Linux prompt, run following commands:
     export XCL_EMULATION_MODE=hw_emu
     ./host.exe a.xclbin
         
+To exit QEMU press Ctrl+A, x
+
 For hw mode, run following make command to generate an SD card package:
 
     make package TARGET=hw
@@ -167,7 +169,7 @@ For hw mode, run following make command to generate an SD card package:
 In hardware, after booting Linux from the SD card, run following commands in the Linux prompt:
 
     export XILINX_XRT=/usr
-    chmod 755 host.exe
+    cd /mnt/sd-mmcblk0p1
     ./host.exe a.xclbin
 
 The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print a message similar to:
