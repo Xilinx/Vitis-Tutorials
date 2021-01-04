@@ -154,6 +154,7 @@ The docker container will start and you should see something like this in the te
 
 ```shell
 ==========================================
+
 __      ___ _   _                   _____
 \ \    / (_) | (_)            /\   |_   _|
  \ \  / / _| |_ _ ___ ______ /  \    | |
@@ -163,24 +164,29 @@ __      ___ _   _                   _____
 
 ==========================================
 
-Docker Image Version: latest
-Build Date: Thu Aug 20 03:35:38 MDT 2020
-VAI_ROOT=/opt/vitis_ai
+Docker Image Version:  latest
+Build Date: 2020-12-25
+VAI_ROOT: /opt/vitis_ai
+
 For TensorFlow Workflows do:
-  conda activate vitis-ai-tensorflow
+     conda activate vitis-ai-tensorflow
 For Caffe Workflows do:
-  conda activate vitis-ai-caffe
+     conda activate vitis-ai-caffe
 For Neptune Workflows do:
-  conda activate vitis-ai-neptune
-For pytorch Workflows do:
-  conda activate vitis-ai-pytorch
-For optimizer_darknet Workflows do:
-  conda activate vitis-ai-optimizer_darknet
-For optimizer_caffe Workflows do:
-  conda activate vitis-ai-optimizer_caffe
-For optimizer_tensorflow Workflows do:
-  conda activate vitis-ai-optimizer_tensorflow
-user@SERVER_NAME:/workspace$
+     conda activate vitis-ai-neptune
+For PyTorch Workflows do:
+     conda activate vitis-ai-pytorch
+For TensorFlow 2.3 Workflows do:
+     conda activate vitis-ai-tensorflow2
+For Darknet Optimizer Workflows do:
+     conda activate vitis-ai-optimizer_darknet
+For Caffe Optimizer Workflows do:
+     conda activate vitis-ai-optimizer_caffe
+For TensorFlow 1.15 Workflows do:
+     conda activate vitis-ai-optimizer_tensorflow
+For LSTM Workflows do:
+     conda activate vitis-ai-lstm
+Vitis-AI /workspace >
 ```
 
 Now run the environment setup script:  `source ./0_setenv.sh`
