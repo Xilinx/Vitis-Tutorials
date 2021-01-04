@@ -9,10 +9,16 @@
 </table>
 
 ## Window Based AI Engine Kernels with Mixed Data Types
-This example is similar to the previous [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the differences with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. Another difference is that the PS code has to take care of the input and output data types. 
+This example is similar to the previous [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the differences with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. See [Prepare Data for AI Engnie Simulator](#Prepare-Data-for-AI-Engnie-Simulator). Another difference is that the PS code has to take care of the input and output data types. See [PS Application and HW Emulation Flows](#PS-Application-and-HW-Emulation-Flows).
+
+Following topics are already covered in [Window Based AI Engine Kernels](./window_based_aie_kernel.md):
+* [Construct Graph with Packet Switching Capability](./window_based_aie_kernel.md/#Construct-Graph-with-Packet-Switching-Capability)
+* [Packet Format](./window_based_aie_kernel.md/#Packet-Format)
+* [Example PL Kernels for Packet Switching](./window_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
+* [Example PS code for Packet Switching](./window_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
 
 ### Prepare Data for AI Engnie Simulator
-Change the working directory to `window_aie_mix_int32_float_cint16`. The graph code of this example is same as the [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example. The AI Engine kernel `core[2]` (`src/aie_core3.cpp`) has floating point interfaces, and the AI Engine kernel `core[3]` (`src/aie_core4.cpp`) has `cint16` interfaces. 
+Change the working directory to `window_aie_mix_int32_float_cint16`. The graph code of this example is same as the [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example. The AI Engine kernel `core[2]` (`aie/aie_core3.cpp`) has floating point interfaces, and the AI Engine kernel `core[3]` (`aie/aie_core4.cpp`) has `cint16` interfaces. 
 
 When preparing the data for the AI Engnine simulator, all values should be in 32-bit integer format. The conversion is similar to the `reinterpret_cast` operation in C++. It is done manually in any language. For example, when you want to feed float data `1.0f`, `2.0f`,..., into the AI Engine kernel, the integer format can be generated in C as shown:
 
@@ -78,7 +84,7 @@ Run the following make command to run the AI Engine compiler and simulator:
     
 The output data is in `aiesimulator_output/data/output.txt`. Similarly, the output data can be converted from integer to `float` or `cint16` to be human readable.
 
-### PS Application and HW/HW Emulation Flows
+### PS Application and HW Emulation Flows
 The difference in the PS application from [Window Based AI Engine Kernels](./window_based_aie_kernel.md) is that the input buffers and output buffers for different data types should be modified accordingly. Take a look at the code in `sw/host.cpp`. Note how `float` and complex type (for `cint16`) is used in the code:
 
     // output memory
@@ -118,7 +124,7 @@ To run in hardware, first build the system and application using the following m
 After Linux has booted, run the following commands at the Linux prompt:
 
     export XILINX_XRT=/usr
-    chmod 755 host.exe
+    cd /mnt/sd-mmcblk0p1
     ./host.exe a.xclbin
     
 The host code is self-checking. It will check the correctness of output data. If the output data is correct, after the run has completed, it will print:
