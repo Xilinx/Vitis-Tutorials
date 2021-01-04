@@ -1,9 +1,9 @@
 3.4 CIFAR10 Classification using Vitis AI and TensorFlow
 -----------------------
 
-This module introduces the Vitis AI TensorFlow design process and illustrates how to go from a Python description of the network model to running a compiled model on the Xilinx&reg; DPU accelerator.
+This module introduces the Vitis AI TensorFlow design process and illustrates how to go from a Python description of the network model to running a compiled model on the Xilinx&reg; DPU accelerator. Please visit the following link for more [Design Tutorials](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/v1.3/Machine_Learning/Design_Tutorials)
 
-The application code in this example design is written in Python and uses the Unified APIs and VART runtime that were introduced in Vitis&trade; AI v1.2.
+The application code in this example design is written in Python and uses the Unified APIs and VART runtime that were introduced in Vitis&trade; AI v1.3.
 
 We will run the following steps:
 
@@ -13,7 +13,7 @@ We will run the following steps:
 4. Evaluation of the frozen model using the CIFAR-10 test dataset.
 5. Quantization of the floating-point frozen model.
 6. Evaluation of the quantized model using the CIFAR-10 test dataset.
-7. Compilation of the quantized model to create the ```.elf``` file ready for execution on the DPU accelerator IP.
+7. Compilation of the quantized model to create the ```.xmodel``` file ready for execution on the DPU accelerator IP.
 8. Download and execution of the application on an evaluation board.
 
 
@@ -350,7 +350,7 @@ With the target folder copied to the SD Card and the ZCU104 booted, you can issu
 The application can be started by navigating into the target folder and then issuing the command ``python3 app_mt.py``. The application will start and after a few seconds will show the throughput in frames/sec.
 
 ```shell
-root@xilinx-zcu104-2020_1:~/target# python3 app_mt.py
+root@xilinx-zcu104-2020_2:~/target# python3 app_mt.py
 Command line options:
  --image_dir :  images
  --threads   :  1
@@ -363,7 +363,7 @@ Correct: 9116 Wrong: 884 Accuracy: 0.9116
 For better throughput, the number of threads can be increased like this:
 
 ```shell
-root@xilinx-zcu104-2020_1:~/target# python3 app_mt.py -t 5
+root@xilinx-zcu104-2020_2:~/target# python3 app_mt.py -t 5
 Command line options:
  --image_dir :  images
  --threads   :  5
