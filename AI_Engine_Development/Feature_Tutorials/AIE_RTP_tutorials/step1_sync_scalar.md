@@ -18,17 +18,17 @@ In this example, a write from an ARM processor causes a partial sine wave to be 
 __Note: The default working directory in this step is "step1", unless specified explicitly.__
 
 ### Review Graph Programming Code
-1. Examine the header file, (`step1/src/dds.h`), of the sine kernel (DDS):
+1. Examine the header file, (`aie/dds.h`), of the sine kernel (DDS):
 	
 	   void sine(const int32 phase_increment, output_window_cint16 * owin);
   
-   Now examine `step1/src/kernels/dds.cc`, notice how `phase_increment` is used in the sine function:
+   Now examine `aie/kernels/dds.cc`, notice how `phase_increment` is used in the sine function:
 
 	   phase_in += (phase_increment << 6);
-	   int32 scvalues = sincos(phase_in << 14); //sincos is an instrinsic (see readme)
+	   cint16 scvalues = sincos(phase_in << 14); //sincos is an instrinsic (see readme)
 
   
-2. Examine `step1/src/graph.h` and `step1/src/graph.cpp`. These are provided as a starting point to specify the data flow graph of this example.
+2. Examine `aie/graph.h` and `aie/graph.cpp`. These are provided as a starting point to specify the data flow graph of this example.
 
    In `graph.h`, the kernel object `dds`, the graph input port `trigger`, and the graph output port `out` are declared in the `ddsgraph class`. The dds kernel object is bound to the `sine` function declared in the included `dds.h` header. The dds kernel output is connected to the graph output. It tells the compiler that the source for the function is in `kernels/dds.cc`.
 
@@ -55,7 +55,7 @@ __Note: The default working directory in this step is "step1", unless specified 
 
 ### Review RTP Update Code
 
-1. Examine `step1/src/graph.h` again. The following line is to connect the trigger input port of the graph to the first input port of the dds kernel (i.e., the `phase_increment` parameter of the `sine` function).
+1. Examine `aie/graph.h` again. The following line is to connect the trigger input port of the graph to the first input port of the dds kernel (i.e., the `phase_increment` parameter of the `sine` function).
 
 	   adf::connect<adf::parameter>(trigger, dds.in[0]);
 
@@ -65,7 +65,7 @@ __Note: The default working directory in this step is "step1", unless specified 
   
    Note that you need to use the template class argument `adf::parameter` to specialize the connection type to the parameter type (because you are now connecting parameters and not windows of data). The parameter does not need to be sized in the same way as a window, because the compiler can always determine its size.
 
-2. Examine `step1/src/graph.cpp`. You can see the lines of code to update the RTP. Note that the number of updates matches the iteration number specified in `gr.run(4)`.
+2. Examine `aie/graph.cpp`. You can see the lines of code to update the RTP. Note that the number of updates matches the number of iterations specified in `gr.run(4)`.
 
        gr.update(gr.trigger,10);
 	  
@@ -96,11 +96,11 @@ __Note: The default working directory in this step is "step1", unless specified 
 
    The make command to run the AI Engine compiler to generate the AI Engine design graph (`libadf.a`) is:
 	
-        make libadf.a
+        make aie
 	
    The corresponding command for aiecompiler is:
 
-       aiecompiler -platform=<PATH by PLATFORM_REPO_PATHS>/xilinx_vck190_base_202020_1/xilinx_vck190_base_202020_1.xpfm -include="./src" -include="./data" -include="./src/kernels" -include="./" -workdir=./Work src/graph.cpp
+       aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
   
    Switches for the AI Engine are as follows:
 
@@ -110,7 +110,7 @@ __Note: The default working directory in this step is "step1", unless specified 
 
    * `-workdir`: specifies the output directory. By default, the compiler generates all its output into a subdirectory called `Work`.
 
-   * `-src/graph.cpp`: specifies the graph source file
+   * `-aie/graph.cpp`: specifies the graph source file
 
    For more information about AI Engine programming and tools, refer to *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
 
@@ -122,7 +122,7 @@ __Note: The default working directory in this step is "step1", unless specified 
 
  	   aiesimulator --pkg-dir=./Work
   
-   After simulation completes, you should see the `output.txt` file in `aiesimulator_output/data`. The output file contains output data and timestamps. You can compare the generated `output.txt` file with the golden reference file (`step1/data/golden.txt`) using the following commands in command line:
+   After simulation completes, you should see the `output.txt` file in `aiesimulator_output/data`. The output file contains output data and timestamps. You can compare the generated `output.txt` file with the golden reference file (`data/golden.txt`) using the following commands in command line:
   
  	   grep -v T aiesimulator_output/data/output.txt > aiesimulator_output/data/output_data.txt
  	   diff -w aiesimulator_output/data/output_data.txt ./data/golden.txt
@@ -131,14 +131,14 @@ __Note: The default working directory in this step is "step1", unless specified 
 
    If you are using MATLAB or Octave, you can use the following script to visualize the data:
 
-       data=[<copy and paste the content from aiesimulator_output/data/output_data.txt here>];
+       data=load('./aiesimulator_output/data/output_data.txt', '-ascii');
        plot(data(:,1))
   
    This plots the first column (real part) of the output complex data.
 
 ![sine waveform - real](./images/figure2.PNG)
 
-   In `src/kernels/dds.cc`, the sine kernel function uses the sincos intrinsic with the phase parameter to generate 32-bit integer concatenating Sine (bits [31:16]) and Cosine (bits [15:0]) in signed Q.15 fixed-point format. The 32-bit integer output samples are cast and stored in a `cint16` window. As a result, the first column (real part) represents a cosine waveform. In the four iterations, the first two iterations use a value of 10 as the `phase_increment` parameter and the last two iterations use 100, so you see the cosine waveform frequency increases in the middle of the plot.
+   In `aie/kernels/dds.cc`, the sine kernel function uses the sincos intrinsic with the phase parameter to generate 32-bit integer concatenating Sine (bits [31:16]) and Cosine (bits [15:0]) in signed Q.15 fixed-point format. The 32-bit integer output samples are cast and stored in a `cint16` window. As a result, the first column (real part) represents a cosine waveform. In the four iterations, the first two iterations use a value of 10 as the `phase_increment` parameter and the last two iterations use 100, so you see the cosine waveform frequency increases in the middle of the plot.
  
 3. You can then use the following line to plot the second column (imaginary part) of the output complex data.
 
@@ -149,7 +149,7 @@ __Note: The default working directory in this step is "step1", unless specified 
 ![sine waveform - imaginary](./images/figure3.PNG)
 
 ### Build for Hardware Emulation and Hardware Flow
-In the previous step, you generated the AI Engine design graph (`libadf.a`) using the AI Engine compiler. Note that the graph has instantiated a PLIO (in `step1/src/graph.cpp`), which will be connected to the PL side. 
+In the previous step, you generated the AI Engine design graph (`libadf.a`) using the AI Engine compiler. Note that the graph has instantiated a PLIO (in `aie/graph.cpp`), which will be connected to the PL side. 
 
  	PLIO *dout = new PLIO("Dataout", plio_32_bits,  "data/output.txt");
 
@@ -159,11 +159,11 @@ __Note__: In this section, the make commands apply to `hw_emu` mode by default. 
 
 To compile the HLS PL kernel, run the following make command:
 
-	make -C pl_kernels
+	make kernels
 
 The corresponding v++ compiler command is as follows:
 
-	v++ -c --platform xilinx_vck190_base_202020_1 -k s2mm s2mm.cpp -o s2mm.xo --verbose --save-temps
+	v++ -c --platform xilinx_vck190_es1_base_202020_1 -k s2mm s2mm.cpp -o s2mm.xo --verbose --save-temps
 
 Switches for the v++ compiler are as follows:
 
@@ -179,7 +179,7 @@ The next step is to link the AI Engine graph and PL kernels to generate the hard
 	
 This make take 10 minutes or more to complete. The corresponding v++ linker command is as follows:
 
-	v++ -g -l --platform xilinx_vck190_base_202020_1 pl_kernels/s2mm.xo libadf.a --vivado.prop fileset.sim_1.xsim.simulate.runtime=800us -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
+	v++ -g -l --platform xilinx_vck190_es1_base_202020_1 pl_kernels/s2mm.xo libadf.a -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
 
 Switches for the v++ linker are as follows:
 
@@ -189,17 +189,15 @@ Switches for the v++ linker are as follows:
 
 * `--config`: specifies the configuration file. The configuration file (`system.cfg`), specifies stream connections between the Graph and PL kernels, and other optional selections.
 
-* `--vivado`: specifies directives for the Vivado tools. Here, `--vivado.prop fileset.sim_1.xsim.simulate.runtime=800us` is to set a runtime limit for HW emulation. This makes HW emulation terminate and return to shell.
-	
-After generating the hardware platform, host code (`step1/sw/host.cpp`) is to be compiled using the following make command:
+After generating the hardware platform, host code (`sw/host.cpp`) is to be compiled using the following make command:
 
-	make -C sw
+	make host
 	
 The detailed commands for compiling the host code are as follows:
 
-	aarch64-linux-gnu-g++ -std=c++14 -I$XILINX_HLS/include/ -I<PATH by PLATFORM_REPO_PATHS>/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=<PATH by PLATFORM_REPO_PATHS>/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../src -o aie_control_xrt.o aie_control_xrt.cpp
-	aarch64-linux-gnu-g++ -std=c++14 -I$XILINX_HLS/include/ -I<PATH by PLATFORM_REPO_PATHS>/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=<PATH by PLATFORM_REPO_PATHS>/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../src -o host.o host.cpp
-	aarch64-linux-gnu-g++ -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L<PATH by PLATFORM_REPO_PATHS>/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/lib/ --sysroot=<PATH by PLATFORM_REPO_PATHS>/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -L$XILINX_VITIS/aietools/lib/aarch64.o
+	aarch64-linux-gnu-g++ -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o aie_control_xrt.o aie_control_xrt.cpp
+	aarch64-linux-gnu-g++ -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o host.o host.cpp
+	aarch64-linux-gnu-g++ -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/lib/ --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -L$XILINX_VITIS/aietools/lib/aarch64.o
 	
 Here, the cross compiler `aarch64-linux-gnu-g++` is used to compile the linux host code. `aie_control_xrt.cpp` is copied from the directory `Work/ps/c_rts`.
 
@@ -282,9 +280,9 @@ The next step is to use v++ with `-p` to generate the package file. The make com
 	
 The corresponding v++ command to do package is:
 
-	v++ -p -t hw_emu -f <PATH by PLATFORM_REPO_PATHS>/xilinx_vck190_base_202020_1/xilinx_vck190_base_202020_1.xpfm \
-	--package.rootfs <PATH by PLATFORM_REPO_PATHS>/sw/versal/xilinx-versal-common-v2020.1/rootfs.ext4  \
-	--package.kernel_image <PATH by PLATFORM_REPO_PATHS>/sw/versal/xilinx-versal-common-v2020.1/Image  \
+	v++ -p -t hw_emu -f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm \
+	--package.rootfs $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.1/rootfs.ext4  \
+	--package.kernel_image $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.1/Image  \
 	--package.boot_mode=sd \
 	--package.image_format=ext4 \
 	--package.defer_aie_run \
@@ -303,9 +301,9 @@ The last step is to run HW emulation with the following make command:
 
 The corresponding script is as follows:
 
-	./launch_hw_emu.sh -add-env VITIS_LAUNCH_WAVEFORM_BATCH=1
+	./launch_hw_emu.sh 
 
-Here `-add-env VITIS_LAUNCH_WAVEFORM_BATCH=1` is to record the waveform of the platform into waveform file(*.wdb). It can be omitted if no recording of waveform is needed.
+__Hint: Option `-add-env VITIS_LAUNCH_WAVEFORM_BATCH=1` can be added to `launch_hw_emu.sh` to record the waveform of the platform into waveform file (`*.wdb`).__
 
 __Hint:If keyboard is accidentally hit that prevents system booting automatically, type `boot` in `Versal>` prompt to resume the system booting.__ 
 
@@ -322,7 +320,7 @@ To exit QEMU press Ctrl+A, x
 Alternatively, to run in hardware, after booting Linux, run following commands in the Linux prompt:
 	
 	export XILINX_XRT=/usr
-	chmod 755 host.exe
+	cd /mnt/sd-mmcblk0p1
 	./host.exe a.xclbin
 
 The host code is self-checking. It will check the output data against the golden data. If the output data matches the golden data, after the run is completed, it will print:
@@ -330,7 +328,7 @@ The host code is self-checking. It will check the output data against the golden
 	TEST PASSED
 
 ### Conclusion
-In this tutorial, you learned about the following core concepts:
+In this step, you learned about the following core concepts:
 
   * Synchronous update of scalar RTP
   * Flows to perform AIE simulation

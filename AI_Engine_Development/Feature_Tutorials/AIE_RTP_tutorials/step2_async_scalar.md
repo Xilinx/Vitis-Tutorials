@@ -13,18 +13,18 @@ This example demonstrates how to declare an asynchronous runtime parameter. Once
 
 The example is similar to [Synchronous Update of Scalar RTP](./step1_sync_scalar.md), with the exception of the code to handle the asynchronous runtime parameter.
 
-__Note: The default working directory in this step is "step2", unless specified explicitly.__
+__Note: The default working directory in this step is `step2`, unless specified explicitly.__
 
 ### Review RTP Update Code
 
-Open `step2/src/graph.h`. Examine the code to connect the trigger input port of the graph to the first input port of the dds kernel (i.e., the `phase_increment` parameter of the sine function).
+Open `aie/graph.h`. Examine the code to connect the trigger input port of the graph to the first input port of the dds kernel (i.e., the `phase_increment` parameter of the sine function).
 
 	//connect asynchronous runtime parameter
 	adf::connect<adf::parameter>(trigger, adf::async(dds.in[0]));
 
 __Note__: You need to use **adf::async** to indicate that the first port (`phase_increment` parameter) of the dds kernel will be updated asynchronously.
 
-Open `step2/src/graph.cpp`. Check the code that first updates the trigger input port of the graph has the value 10 in the ping buffer. Then run it for two iterations. Wait for the two iterations to complete, then update the trigger input port of the graph with the value 100 in the pong buffer. Run it for another two iterations and then end. 
+Open `aie/graph.cpp`. Check the code that first updates the trigger input port of the graph has the value 10 in the ping buffer. Then run it for two iterations. Wait for the two iterations to complete, then update the trigger input port of the graph with the value 100 in the pong buffer. Run it for another two iterations and then end. 
 
 	gr.init();
 	// asynchronous RTP trigger calls
@@ -40,7 +40,7 @@ Notice that using this code, the result is the same as that in the example given
 ### Run AI Engine compiler and AI Engine simulator
 Run the following make command to compile the design graph (`libadf.a`):
 	
-	make libadf.a
+	make aie
 	
 Run the following make command to launch the AI Engine simulator:
 	
@@ -51,7 +51,7 @@ After simulation, check the output data by running the following commands:
 	grep -v T aiesimulator_output/data/output.txt > aiesimulator_output/data/output_data.txt
 	diff -w aiesimulator_output/data/output_data.txt ./data/golden.txt
 
-To explore how asynchronous RTP updates are effective, you can replace the code in the `main()` function of `step2/src/graph.cpp` with the following code (please do it manually):
+To explore how asynchronous RTP updates are effective, you can replace the code in the `main()` function of `aie/graph.cpp` with the following code (please do it manually):
 
 	gr.init();
 	gr.run();
@@ -99,10 +99,12 @@ In the Linux prompt, run following commands:
 	export XCL_EMULATION_MODE=hw_emu
 	./host.exe a.xclbin
 	
+To exit QEMU press Ctrl+A, x
+
 Alternatively, to run in hardware, after booting Linux from an SD card, run the following commands in the Linux prompt:
 
 	export XILINX_XRT=/usr
-	chmod 755 host.exe
+	cd /mnt/sd-mmcblk0p1
 	./host.exe a.xclbin
 	
 The host code is self-checking. It will check the output data against the golden data. If the output data matches the golden data after the run is complete, it will print the following:
@@ -110,7 +112,7 @@ The host code is self-checking. It will check the output data against the golden
 	TEST PASSED
 	
 ### Conclusion
-In this tutorial, you learned learned about the core concepts of asynchronous update of scalar RTP, and how to control the execution between different RTP updates.
+In this step, you learned learned about the core concepts of asynchronous update of scalar RTP, and how to control the execution between different RTP updates.
 
 Next, review [Asynchronous Update of Array RTP](./step3_async_array.md).	
 
