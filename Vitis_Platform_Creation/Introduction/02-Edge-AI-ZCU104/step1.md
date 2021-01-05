@@ -101,8 +101,10 @@
 
    a) Select each clock under clk_wiz_0 in the Platform Interface Properties<br />
    b) In the General tab, enable it<br />
-   c) In the Options tab, set the ***id***'s of clk_{100,200,400}m to {2,1,0}, and enable ***is_default*** for clk_200m only<br />
+   c) In the Options tab, set the ***id***'s of clk_{100,200,400}m to {2,0,1}, and enable ***is_default*** for ***clk_200m*** only<br />
    ![](./images/platform_clock.png)
+
+   The clock ID needs to start from 0. The order of ID doesn't have to be matched with clock frequency. There can be one and only one default clock. V++ linker will use the default clock to link the acceleration kernels. Application developers can specify the clocks for the kernels by clock ID or by clock frequency. 
 
    ***Now we have added clock and reset IPs and enabled them for kernels to use***
 
