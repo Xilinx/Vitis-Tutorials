@@ -21,7 +21,7 @@ The example is similar to [Asynchronous Update of Array RTP](./step3_async_array
 __Note__: The default working directory for this step is "step4", unless explicitly specified otherwise.
 
 ### Review Graph and RTP Code
-For the PL kernel (`random_noise`) inside the graph , an additional parameter `size` has been added, which is different from the free-running kernel in [previous step](https://gitenterprise.xilinx.com/brucey/AIE_RTP_tutorials/blob/master/step3_async_array.md). And a loop is added in the kernel to iterate `size` times. The code in `src/fpga/random_noise.cpp` is as follows:
+For the PL kernel (`random_noise`) inside the graph , an additional parameter `size` has been added, which is different from the free-running kernel in [previous step](https://gitenterprise.xilinx.com/brucey/AIE_RTP_tutorials/blob/master/step3_async_array.md). And a loop is added in the kernel to iterate `size` times. The code in `aie/hls/random_noise.cpp` is as follows:
 
     extern "C" void random_noise(hls::stream<std::complex<short> > & out, int size) {
     #pragma HLS INTERFACE axis port=out
@@ -43,12 +43,12 @@ Kernels with runtime parameters must have an AXI4-Lite interface. For asynchrono
 
 For information about the pragmas and protocals for Vitis HLS, refer to the Vitis HLS User Guide. For information about pragmas for RTP, refer to the *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
 
-In the graph definition (`src/graph.h`), the RTP declaration and connection are added as follows:
+In the graph definition (`aie/graph.h`), the RTP declaration and connection are added as follows:
 
     port<direction::in> size;
     connect< parameter >(size, async(noisegen.in[0]));
 
-In `src/graph.cpp` (for AI Engine simulator), there is an update for `size`:   
+In `aie/graph.cpp` (for AI Engine simulator), there is an update for `size`:   
     
     gr.init();
     //update size -- 1024 for 16 iterations
@@ -66,11 +66,11 @@ __Note__: For PL kernels inside a graph, `update()` needs to be called before `r
 ### Run AI Engine Compiler and AI Engine Simulator
 Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 
-    make libadf.a
+    make aie
 
 The corresponding AI Engine compiler command is:
 
-    aiecompiler -platform=<PATH by PLATFORM_REPO_PATHS>/xilinx_vck190_base_202020_1/xilinx_vck190_base_202020_1.xpfm -include="./src" -include="./data" -include="./src/kernels" -include="./" --pl-axi-lite=true -workdir=./Work src/graph.cpp
+    aiecompiler -platform=<PATH by PLATFORM_REPO_PATHS>/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-axi-lite=true -workdir=./Work aie/graph.cpp
     
 It has an option `--pl-axi-lite=true` to instruct the AI Engine compiler to generate an AXI4-Lite interface for PL kernels. This is necessary for PL kernels with RTP. By default, `--pl-axi-lite` is set to false.
 
@@ -167,7 +167,7 @@ You can see that the XRT API to open, run, wait, and RTP update graph are: xrtGr
 
 Run the following `make` command to build the host exectuable file：
 
-    make -C sw
+    make host
     
 Notice the following linker script links the libraries `adf_api_xrt` and `xrt_coreutil`. these are necessary for the `adf` API to work together with the XRT API.
 
@@ -185,6 +185,8 @@ In the Linux prompt, run following commands:
     export XCL_EMULATION_MODE=hw_emu
     ./host.exe a.xclbin
         
+To exit QEMU press Ctrl+A, x
+
 For hw mode, run following `make` command to generate an SD card package:
 
     make package TARGET=hw
@@ -192,7 +194,7 @@ For hw mode, run following `make` command to generate an SD card package:
 In hardware, after booting Linux from the SD card, run following commands in the Linux prompt:
 
     export XILINX_XRT=/usr
-    chmod 755 host.exe
+    cd /mnt/sd-mmcblk0p1
     ./host.exe a.xclbin
 
 The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print the following:
@@ -200,7 +202,7 @@ The host code is self-checking. It will check the output data against the golden
     TEST PASSED
         
 ### Conclusion
-In this tutorial you learned about:
+In this step you learned about:
    * Asynchronous array RTP
    * Asynchronous scalar RTP for PL kernel inside the graph
    * Launching AI Engine simulator, HW cosimulation, and HW
