@@ -10,31 +10,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-#include <ap_int.h>
-#include <hls_stream.h>
-#include <ap_axi_sdata.h>
+#include "graph.h"
 
+using namespace adf;
 
-extern "C" {
+PLIO *din = new PLIO("Datain0", plio_32_bits,  "data/input.txt");
+PLIO *dout = new PLIO("Dataout0", plio_32_bits,  "data/output.txt");
+adf::simulation::platform<1,1> platform(din,dout);
 
-void mm2s(ap_uint<32>* mem, hls::stream<ap_axiu<32, 0, 0, 0>  >& s, int size) {
-#pragma HLS INTERFACE m_axi port=mem offset=slave bundle=gmem
+mygraph gr;
 
-#pragma HLS interface axis port=s
+adf::connect<> net0(platform.src[0], gr.in);
+adf::connect<> net1(gr.out, platform.sink[0]);
 
-#pragma HLS INTERFACE s_axilite port=mem bundle=control
-#pragma HLS INTERFACE s_axilite port=size bundle=control
-#pragma HLS interface s_axilite port=return bundle=control
-
-	for(int i = 0; i < size; i++) {
-#pragma HLS PIPELINE II=1
-		ap_axiu<32, 0, 0, 0> x;
-		x.data=mem[i];
-		x.keep=-1;
-		x.last=0;
-		s.write(x);
-	}
-
+#if defined(__AIESIM__) || defined(__ADF_FRONTEND__)
+int main(int argc, char ** argv) {
+  gr.init();
+  gr.run(2);
+  gr.end();
+  return 0;
 }
-
-}
+#endif
