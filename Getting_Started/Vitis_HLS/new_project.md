@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -69,8 +69,8 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 6. Make the following selections:
       1. Specify the **Solution Name**, or use the default name. 
       2. Specify the **Period** for the clock as the default period of 10 ns.
-      3. Specify the clock uncertainty as the default uncertainty of 12%, or simply leave it blank. For more information, refer to [Specifying the Clock Frequency](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=creatingnewvitishlsproject.html;a=ycw1585572210561) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
-      4. Define the part for the project by selecting the **...**.
+      3. Leave the clock uncertainty blank. The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=creatingnewvitishlsproject.html;a=ycw1585572210561) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+      4. Define the part for the project by selecting the **Browse (...)** command.
 
             This opens the Device Selection dialog box.
         ![Add Sources](./images/create_project-select_part.png)
@@ -81,13 +81,13 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
     1. Select **Board** at the top of the dialog box.
     2. In the Search field, enter `U200`. The selections are narrowed as you enter the search text.
        1. Select **Alveo U200 Data Center Accelerator Card**.
-         2. Click **OK**.
+         1. Click **OK**.
 
         You are returned to the Solution Configuration dialog window.
 
-8. In the Solution Configuration dialog box, select the **Vitis Kernel Flow** from the dropdown menu.
+8. In the Solution Configuration dialog box, select the **Vitis Kernel Flow Target** from the dropdown menu.
 
-   This enables the creation of a Vitis application acceleration hardware kernel (.xo) as an output for the project. For more information on how enabling the Vitis kernel flow configures the default behavior of the tool, refer to [Enabling the Vitis Kernel Flow](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/creatingnewvitishlsproject.html#uiy1584905571731) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+   This enables the creation of a Vitis application acceleration hardware kernel (.xo) as an output for the project. For more information on how enabling the Vitis kernel flow configures the default behavior of the tool, refer to [Vitis HLS Process Overview](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/vitis_hls_process.html#djn1584047476918) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 9. With your project settings now configured, click **Finish**.
     Vitis HLS opens the new project in the default view.
@@ -102,3 +102,21 @@ You created the DCT project, targeted your Xilinx device or board, and configure
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+
+you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at:
+
+<a href="[/docs/vitis-getting-started/README.md](http://www.apache.org/licenses/LICENSE-2.0)">http://www.apache.org/licenses/LICENSE-2.0</a>
+    
+Unless required by applicable law or agreed to in writing, software
+
+distributed under the License is distributed on an "AS IS" BASIS,
+
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and
+
+limitations under the License.
