@@ -1,8 +1,7 @@
-
 <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -26,11 +25,11 @@ Use the following interface requirements to create kernel:
 - Compute 4 words to be computed in parallel with each word requiring two `MurmurHash2` functions 
 - Compute the hash (two `MurmurHash2` functions) functions for 4 words every cycle. 
 
-Refer to [Methodology for Accelerating Applications with the Vitis Software](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=methodologyacceleratingapplications.html) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+Refer to [Methodology for Accelerating Applications with the Vitis Software](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=methodologyacceleratingapplications.html) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ### Macro Architecture Implementation
 
-Navigate to the function `runOnfpga` in `bloom/cpu_src/compute_score_fpga_kernel.cpp`.
+Navigate to the function `runOnfpga` in `02-bloom/reference_files/compute_score_fpga_kernel.cpp`.
 
 The algorithm has been updated to receive 512-bits of words from the DDR with the following arguments:
 
@@ -60,7 +59,7 @@ The algorithm has been updated to receive 512-bits of words from the DDR with th
   
     The function `runOnfpga` loads the Bloom filter coefficients and calls the `compute_hash_flags_dataflow` function which has the main functionality of the Load, Compute and Store functions. 
 
-    Refer to the function `compute_hash_flags_dataflow` in  the `bloom/cpu_src/compute_score_fpga_kernel.cpp` file. The following block diagram shows how the compute kernel connects to the device DDR memories and how it feeds the compute hash block processing unit. 
+    Refer to the function `compute_hash_flags_dataflow` in the `02-bloom/cpu_src/compute_score_fpga_kernel.cpp` file. The following block diagram shows how the compute kernel connects to the device DDR memories and how it feeds the compute hash block processing unit. 
 
     ![](./images/Kernel_block_diagram.PNG)
 

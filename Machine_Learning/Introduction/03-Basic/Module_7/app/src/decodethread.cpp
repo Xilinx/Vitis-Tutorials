@@ -52,14 +52,14 @@ std::vector<cv::Mat> DecodeThread::v4l2Mats(2);
     auto image_from_device_start = std::chrono::system_clock::now();
     v4l2_videoCapture(v4l2Mats);
         while (!queue_->push(FrameInfo{channel_id_, ++frame_id_, v4l2Mats[1], v4l2Mats[0]},
-                         std::chrono::milliseconds(500))) {
+                         std::chrono::milliseconds(10000))) {
       if (is_stopped()) {
         return -1;
       }}
 
     
     LOG(INFO)<<"Decode and Resize :"<<std::chrono::duration_cast<std::chrono::microseconds>(
-    std::chrono::system_clock::now() - image_from_device_start).count()/1000;
+    std::chrono::system_clock::now() - image_from_device_start).count()/1000<<"ms";
     return 0;
   }
 

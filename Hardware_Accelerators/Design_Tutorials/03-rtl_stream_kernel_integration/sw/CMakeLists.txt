@@ -16,53 +16,65 @@ project(rtl_stream_ref)
 cmake_minimum_required(VERSION 3.0)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS  "-Wno-deprecated-declarations -lxml2")
 set(XRT_INCLUDE_DIRS /opt/xilinx/xrt/include/)
+set(XRT_LIBS xilinxopencl xrt_core)
+set(XRT_LIBS_EMU xilinxopencl xrt_hwemu)
 
-find_package(OpenCL REQUIRED)
 find_package(OpenCV REQUIRED)
+
+include_directories(
+${XRT_INCLUDE_DIRS}
+${OpenCV_INCLUDE_DIRS}
+)
+
+link_directories(
+/opt/xilinx/xrt/lib
+)
 
 add_executable(rtc_gen_test 
 src/rtc_gen_test.cpp
 src/xcl2/xcl2.cpp
 )
 
-include_directories(
-${CMAKE_CURRENT_SOURCE_DIR}/src/xcl2
-${CMAKE_CURRENT_SOURCE_DIR}/src
-${XRT_INCLUDE_DIRS}
-${OpenCL_INCLUDE_DIRS}
-${OpenCV_INCLUDE_DIRS}
-)
-
-target_link_libraries(rtc_gen_test PRIVATE
+target_link_libraries(rtc_gen_test
 ${XRT_LIBS}
-${OpenCL_LIBRARIES}
-${CMAKE_DL_LIBS}
 ${OpenCV_LIBRARIES}
 )
-
-
 
 add_executable(rtc_alpha_tb 
 src/rtc_alpha_tb.cpp
 src/xcl2/xcl2.cpp
 )
 
-include_directories(
-${CMAKE_CURRENT_SOURCE_DIR}/src/xcl2
-${CMAKE_CURRENT_SOURCE_DIR}/src
-${XRT_INCLUDE_DIRS}
-${OpenCL_INCLUDE_DIRS}
-${OpenCV_INCLUDE_DIRS}
-)
-
-target_link_libraries(rtc_alpha_tb PRIVATE
+target_link_libraries(rtc_alpha_tb
 ${XRT_LIBS}
-${OpenCL_LIBRARIES}
-${CMAKE_DL_LIBS}
 ${OpenCV_LIBRARIES}
 )
+
+add_executable(rtc_gen_test_emu 
+src/rtc_gen_test.cpp
+src/xcl2/xcl2.cpp
+)
+
+target_link_libraries(rtc_gen_test_emu
+${XRT_LIBS_EMU}
+${OpenCV_LIBRARIES}
+)
+
+add_executable(rtc_alpha_tb_emu 
+src/rtc_alpha_tb.cpp
+src/xcl2/xcl2.cpp
+)
+
+target_link_libraries(rtc_alpha_tb_emu
+${XRT_LIBS_EMU}
+${OpenCV_LIBRARIES}
+)
+
+EXEC_PROGRAM(rm ARGS "-rf ./rtc_alpha_hw.xclbin")
+EXEC_PROGRAM(rm ARGS "-rf ./rtc_gen_test_hw.xclbin")
+EXEC_PROGRAM(rm ARGS "-rf ./rtc_alpha_hw_emu.xclbin")
+EXEC_PROGRAM(rm ARGS "-rf ./rtc_gen_test_hw_emu.xclbin")
 
 EXEC_PROGRAM(ln ARGS "-s ../../hw/rtc_alpha_hw.xclbin")
 EXEC_PROGRAM(ln ARGS "-s ../../hw/rtc_gen_test_hw.xclbin")

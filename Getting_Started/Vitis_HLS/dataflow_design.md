@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -12,13 +12,13 @@
 
 ### 4. Reviewing the DATAFLOW Optimization
 
-In the earlier steps, you found a way to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to increase task-level parallelism of the optimized functions or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=hlsoptimizationdirectives.html;a=rdd1585343102486) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
+In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to increase task-level parallelism of the optimized functions or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rdd1585343102486.html) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
 
 The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code on top of the loop-level parallelism where possible.
 
 #### Create a New Solution
 
-As described in [Creating Additional Solutions](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=cosimiulationinvitishls.html;a=fwf1584724080811) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416), you can create multiple solutions to let you pursue or explore different approaches to optimizing your design. Here you will create a new solution to explore the use of the DATAFLOW optimization.
+As described in [Creating Additional Solutions](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/optimizinghlsproject.html#wmt1584281647955) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416), you can create multiple solutions to let you pursue or explore different approaches to optimizing your design. Here you will create a new solution to explore the use of the DATAFLOW optimization.
 
 1. In the Explorer view, select the top-level project (`dct_prj`).
 2. Right-click and select **New Solution**.
@@ -48,7 +48,7 @@ As described in [Creating Additional Solutions](https://www.xilinx.com/cgi-bin/d
    1. In the the Directive Field, select **DATAFLOW**.
    2. In the Destination field, select **Directive File**.
    3. Click **OK** to close the form, and apply the directive.
-4. Select **Synthesis** > **All Solutions** to rerun synthesis. This runs synthesis for all solutions, letting you compare the results.
+4. Select **Solution > Run C Synthesis > All Solutions** to rerun synthesis. This runs synthesis for all solutions, letting you compare the results.
 
    ![All Solutions](./images/synthesis-all_solutions.png)
 
@@ -64,9 +64,9 @@ As described in [Creating Additional Solutions](https://www.xilinx.com/cgi-bin/d
 
 #### View the Dataflow Graph
 
-Vitis HLS also provides a Dataflow Graph viewer as one of the features in the Analysis perspective. The DATAFLOW optimization is a dynamic optimization that can only really be understood after C/RTL co-simulation which provides needed performance data. After synthesis, you must run co-simulation. For more information, refer to [C/RTL Co-Simulation in Vitis HLS](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=cosimiulationinvitishls.htmla=fwf1584724080811) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+Vitis HLS also provides a Dataflow Graph viewer as one of the features in the Analysis perspective. The DATAFLOW optimization is a dynamic optimization that can only really be understood after C/RTL co-simulation which provides needed performance data. After synthesis, you must run co-simulation. For more information, refer to [C/RTL Co-Simulation in Vitis HLS](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/cosimulationinvitishls.html) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
-1. From the toolbar menu, select **Run C/RTL Co-Simulation**.
+1. From the menu select **Solution > Run C/RTL Co-Simulation**.
    The Co-simulation dialog box displays.
 2. Make the following selections:
    1. Enable the **Channel (PIPO/FIFO) Profiling** checkbox.
@@ -76,8 +76,8 @@ Vitis HLS also provides a Dataflow Graph viewer as one of the features in the An
 
    After co-simulation completes, the tool opens the Co-simulation Report, which essentially says whether the tool passed your simulation testbench or not. In the case of Dataflow analysis, your testbench needs to call the synthesized function more than once to get the performance data from multiple iterations, and to make sure the design is flushing the FIFOs. When it comes to performance, one function call gives you latency, two or more calls to the function can give you the II.
 
-4. After the simulation completes, select **Analysis** in the upper right hand corner of the screen to switch to the Analysis perspective.
-5. In the Module Hierarchy view on the upper left, right click the `dct` function and select **Open Dataflow Viewer** as shown in the following figure.
+3. After the simulation completes, select **Analysis** in the upper right hand corner of the screen to switch to the Analysis perspective.
+4. In the Module Hierarchy view on the upper left, right click the `dct` function and select **Open Dataflow Viewer** as shown in the following figure.
 
    ![Open Dataflow Viewer](./images/open_dataflow_viewer.png)
 
@@ -103,8 +103,6 @@ Now that you have your optimized design, you can transfer the directives from a 
 
 3. In the Directive Editor, change the Destination to **Source File**, and click **OK**. This changes the directive to a pragma written to the source code files, which you can see displayed in the `dct.cpp` source file. 
 
-   >**TIP:** When you edit the `ARRAY_PARTITION` directive, you must specify the factor as 8 since the factor will not be automatically determined.
-
    When you change the `ARRAY_PARTITION` directive for the `col_inbuf` variable, the tool will return a **Warning** indicating that it cannot find the `col_inbuf` variable, and will insert the pragma at the first line of the function. Select **OK** to insert the pragma as indicated. 
 
    You must manually correct the placement of the pragma by cutting and pasting the `#pragma HLS ARRAY_PARTITION...` line into the `dct.cpp` file after the definition of the `col_inbuf` variable on line 71. The pragma must be defined after the variable in order to be associated correctly by the compiler. If this is not done, Vitis HLS will return an error when trying to compile the code.
@@ -117,17 +115,42 @@ Now that you have your optimized design, you can transfer the directives from a 
 
 Finally, you can export the results of the high-level synthesis as a synthesized kernel (`.xo`) file.
 
-1. From the main toolbar, select **Export RTL**. The Export RTL dialog box opens.
+1. From the main menu select **Solution > Export RTL**. The Export RTL dialog box opens.
 2. For Format Selection, select **Vitis Kernel (.xo)**.
 3. In the Output location field specify the `./vitis_hls_analysis/reference-files` folder to write the `dct.xo` file.
 4. To export the kernel, select **OK**.
 
-#### Next Step
+## Summary
 
-You can use the exported Vitis kernel, or the optimized C/C++ source code for use in a Vitis application acceleration development flow project. You will do this in the next lab, [Using the HLS Kernel in Vitis](./using_the_kernel.md).
+In this tutorial:
+
+1. You worked to optimize C/C++ code in the Vitis HLS tool, to synthesize it into RTL code for use in the Vitis application acceleration development flow. 
+2. With the code optimized, you exported the compiled kernel object (`.xo`) file for use in a Vitis application project. 
+
+These are the elements of building and accelerating applications and functions using the Vitis and Vitis HLS tools. You can mix the Vitis HLS kernels with RTL kernel objects (`.xo`) and uncompiled C/C++ kernel code (`.c`/`.cpp`) in the Vitis application project to create more complex accelerated applications. 
+
+You have the optimized but uncompiled C++ code (`dct.cpp`) that you saved in an earlier step of this tutorial. You can remove the HLS kernel object and add this optimized C++ code in the Vitis application project if you want. In this case, the Vitis IDE will call Vitis HLS as part of the build process when compiling the C++ kernel code.  
 
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="docs/README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+
+you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at:
+
+<a href="[/docs/vitis-getting-started/README.md](http://www.apache.org/licenses/LICENSE-2.0)">http://www.apache.org/licenses/LICENSE-2.0</a>
+    
+Unless required by applicable law or agreed to in writing, software
+
+distributed under the License is distributed on an "AS IS" BASIS,
+
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and
+
+limitations under the License.
