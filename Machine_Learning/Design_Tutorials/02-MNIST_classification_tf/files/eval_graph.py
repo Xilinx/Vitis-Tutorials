@@ -44,8 +44,9 @@ def calc_acc(testdata,testlabels,predictions):
     '''
     correct_predictions = 0
     wrong_predictions = 0
+
     for i in range(len(testdata)):
-        if (predictions[i][0] == np.argmax(testlabels[i])):
+        if (predictions[i] == np.argmax(testlabels[i])):
            correct_predictions += 1
         else:
             wrong_predictions += 1
@@ -63,7 +64,7 @@ def graph_eval(input_graph_def, graph, input_node, output_node):
     input_graph_def.ParseFromString(tf.io.gfile.GFile(graph, "rb").read())
 
     # CIFAR-10 dataset    
-    (x_train,y_train), (x_test,y_test) = datadownload()
+    _, (x_test,y_test) = datadownload()
 
     tf.import_graph_def(input_graph_def,name = '')
 
@@ -73,7 +74,7 @@ def graph_eval(input_graph_def, graph, input_node, output_node):
 
     # get output tensors
     logits = tf.compat.v1.get_default_graph().get_tensor_by_name(output_node+':0')
-    predicted_logit = tf.compat.v1.argmax(input=logits, axis=3, output_type=tf.int32)
+    predicted_logit = tf.compat.v1.argmax(input=logits, axis=1, output_type=tf.int32)
 
     with tf.compat.v1.Session() as sess:
         

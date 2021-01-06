@@ -19,7 +19,7 @@
 
 # train, evaluate & save trained model
 run_train() {  
-  python train.py \
+  python -u train.py \
     --input_height       ${INPUT_HEIGHT} \
     --input_width        ${INPUT_WIDTH} \
     --input_chan         ${INPUT_CHAN} \

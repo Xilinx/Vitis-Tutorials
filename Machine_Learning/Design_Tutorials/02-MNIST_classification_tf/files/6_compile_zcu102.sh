@@ -18,10 +18,9 @@
 
 ARCH=/opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json
 
-
 compile() {
   vai_c_tensorflow \
-    --frozen_pb  ${QUANT}/deploy_model.pb \
+    --frozen_pb  ${QUANT}/quantize_eval_model.pb \
     --arch       ${ARCH} \
     --output_dir ${COMPILE_ZCU102} \
     --net_name   ${NET_NAME}

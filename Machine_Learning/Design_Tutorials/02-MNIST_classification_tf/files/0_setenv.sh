@@ -16,7 +16,7 @@
 
 # Author: Mark Harvey
 
-# activate the conda virtual environment
+# activate the TF1.15 conda virtual environment
 conda activate vitis-ai-tensorflow
 
 # folders
@@ -26,10 +26,13 @@ export TB_LOG=${BUILD}/tb_logs
 export CHKPT_DIR=${BUILD}/chkpts
 export FREEZE=${BUILD}/freeze
 export QUANT=${BUILD}/quantize
+
 export COMPILE_U50=${BUILD}/compile_u50
 export COMPILE_ZCU102=${BUILD}/compile_zcu102
+
 export TARGET_U50=${BUILD}/target_u50
 export TARGET_ZCU102=${BUILD}/target_zcu102
+
 export APP=./application
 
 # make folders
@@ -53,13 +56,13 @@ export COMP_LOG_U50=compile_u50.log
 export COMP_LOG_ZCU102=compile_zcu102.log
 
 # training parameters
-export EPOCHS=5
-export LEARNRATE=0.001
+export EPOCHS=10
+export LEARNRATE=0.0001
 export BATCHSIZE=100
 
 # list of GPUs to use
 export CUDA_DEVICE_ORDER=PCI_BUS_ID
-export CUDA_VISIBLE_DEVICES="0"
+export CUDA_VISIBLE_DEVICES="1"
 
 export TF_FORCE_GPU_ALLOW_GROWTH=true
 
@@ -69,7 +72,7 @@ export INPUT_WIDTH=28
 export INPUT_CHAN=1
 export INPUT_SHAPE=?,${INPUT_HEIGHT},${INPUT_WIDTH},${INPUT_CHAN}
 export INPUT_NODE=images_in
-export OUTPUT_NODE=conv2d_3/BiasAdd
+export OUTPUT_NODE=flatten/Reshape
 export NET_NAME=customcnn
 
 

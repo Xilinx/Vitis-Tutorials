@@ -19,7 +19,7 @@
 # evaluate graph
 run_eval_graph() {
   graph=$1
-  python eval_graph.py \
+  python -u eval_graph.py \
     --graph         $graph \
     --input_node    ${INPUT_NODE} \
     --output_node   ${OUTPUT_NODE} \
