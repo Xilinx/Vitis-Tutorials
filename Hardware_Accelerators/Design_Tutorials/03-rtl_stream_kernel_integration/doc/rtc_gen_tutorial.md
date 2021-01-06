@@ -16,14 +16,15 @@ Thus we generalize the top level design specification for *rtc_gen* kernel as be
 
 **Control Register**
 
-| Register    | Width  | Description |
-| ----        | ----   | ---- |
-| work_mode   | 1      |[0]: determine the kernel working mode <br> 0 - load font from global memory to on-chip SRAM via AXI read master <br> 1 - output RTC digit figure via AXI steam master |
-| cs_count    | 32     |[21:0]: Centi-second counter. For example, if the system clock is 200MHz, cs_count should be set to 2,000,000 |
-| time_format | 1      |[0]: determine whether centisecond is included in the output digit images <br> 0 - disable centiseconds output <br> 1 - enable centiseconds output |
-| time_set_val| 32     |Set time value for internel free-running clock: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds |
-| time_set_en | 1      |[0]: write 1 to this bit will load the time_set_value to internel free-running clock. |
-| read_addr   | 64     |AXI master offset address, this is the pointer for FPGA device buffer address for reading font library |
+|No.   | Arguments   | Width  | Description |
+| ---- | ----        | ----   | ---- |
+|0     | work_mode   | 1      |[0]: determine the kernel working mode <br> 0 - load font from global memory to on-chip SRAM via AXI read master <br> 1 - output RTC digit figure via AXI steam master |
+|1     | cs_count    | 32     |[21:0]: Centi-second counter. For example, if the system clock is 200MHz, cs_count should be set to 2,000,000 |
+|2     | time_format | 1      |[0]: determine whether centisecond is included in the output digit images <br> 0 - disable centiseconds output <br> 1 - enable centiseconds output |
+|3     | time_set_val| 32     |Set time value for internal free-running clock: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds |
+|4     | time_set_en | 1      |[0]: write 1 to this bit will load the time_set_value to internal free-running clock. |
+|5     | time_val    | 32     |Read-only regsiter for internal real-time-clock time value: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds |
+|6     | read_addr   | 64     |AXI master pointer, this is the FPGA device buffer address for font library |
 
 
 <div align="center">
@@ -140,7 +141,7 @@ In the *Sources* view, *Hierarchy* tab, we can see the HDL file hierarchy. Now w
 We will use following generated RTL files in our *rtc_gen* kernel:
 + **rtc_gen_control_s_axi.v**
 
-  It is the AXI Lite slave interface to upper level system and XRT. It includes all the kernel argument as well as the kernel control signals (ap_start, ap_done, ap_idle, ap_ready).
+  It is the AXI Lite slave interface to upper level system and XRT. It includes all the kernel argument as well as the kernel control signals (ap_start, ap_done, ap_idle, ap_ready). We will modify this module a little to realize the read-only register *time_val*.
 
 + **rtc_gen_example_axi_read_master.sv**
   

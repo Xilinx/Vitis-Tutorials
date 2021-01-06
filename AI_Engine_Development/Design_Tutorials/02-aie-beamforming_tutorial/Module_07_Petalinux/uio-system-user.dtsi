@@ -1,0 +1,405 @@
+/include/ "system-conf.dtsi"
+/ {
+    chosen {
+        stdout-path = "serial0:115200";
+        bootargs = "console=ttyAMA0 earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused uio_pdrv_genirq.of_id=generic-uio";
+        };
+};
+
+
+&dlbf_data_00 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_data_00";
+};
+
+&dlbf_coeffs_00 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_00";
+};
+
+&dlbf_coeffs_01 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_01";
+};
+
+&dlbf_coeffs_02 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_02";
+};
+
+&dlbf_coeffs_03 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_03";
+};
+
+&dlbf_coeffs_04 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_04";
+};
+
+&dlbf_coeffs_05 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_05";
+};
+
+&dlbf_coeffs_06 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_06";
+};
+
+&dlbf_coeffs_07 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_07";
+};
+
+&dlbf_o00 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o00";
+};
+
+&dlbf_o01 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o01";
+};
+
+&dlbf_o02 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o02";
+};
+
+&dlbf_o03 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o03";
+};
+
+&dlbf_o04 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o04";
+};
+
+&dlbf_o05 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o05";
+};
+
+&dlbf_o06 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o06";
+};
+
+&dlbf_o07 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o07";
+};
+
+&ulbf_data_00 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_data_00";
+};
+
+&ulbf_coeffs_00 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_00";
+};
+
+&ulbf_coeffs_01 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_01";
+};
+
+&ulbf_coeffs_02 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_02";
+};
+
+&ulbf_coeffs_03 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_03";
+};
+
+&ulbf_o00 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o00";
+};
+
+&ulbf_o01 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o01";
+};
+
+&ulbf_o02 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o02";
+};
+
+&ulbf_o03 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o03";
+};
+
+&dlbf_data_10 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_data_10";
+};
+
+&dlbf_coeffs_10 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_10";
+};
+
+&dlbf_coeffs_11 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_11";
+};
+
+&dlbf_coeffs_12 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_12";
+};
+
+&dlbf_coeffs_13 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_13";
+};
+
+&dlbf_coeffs_14 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_14";
+};
+
+&dlbf_coeffs_15 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_15";
+};
+
+&dlbf_coeffs_16 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_16";
+};
+
+&dlbf_coeffs_17 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_17";
+};
+
+&dlbf_o10 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o10";
+};
+
+&dlbf_o11 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o11";
+};
+
+&dlbf_o12 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o12";
+};
+
+&dlbf_o13 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o13";
+};
+
+&dlbf_o14 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o14";
+};
+
+&dlbf_o15 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o15";
+};
+
+&dlbf_o16 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o16";
+};
+
+&dlbf_o17 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o17";
+};
+
+&ulbf_data_10 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_data_10";
+};
+
+&ulbf_coeffs_10 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_10";
+};
+
+&ulbf_coeffs_11 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_11";
+};
+
+&ulbf_coeffs_12 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_12";
+};
+
+&ulbf_coeffs_13 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_13";
+};
+
+&ulbf_o10 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o10";
+};
+
+&ulbf_o11 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o11";
+};
+
+&ulbf_o12 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o12";
+};
+
+&ulbf_o13 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o13";
+};
+
+&dlbf_data_20 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_data_20";
+};
+
+&dlbf_coeffs_20 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_20";
+};
+
+&dlbf_coeffs_21 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_21";
+};
+
+&dlbf_coeffs_22 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_22";
+};
+
+&dlbf_coeffs_23 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_23";
+};
+
+&dlbf_coeffs_24 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_24";
+};
+
+&dlbf_coeffs_25 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_25";
+};
+
+&dlbf_coeffs_26 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_26";
+};
+
+&dlbf_coeffs_27 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_coeffs_27";
+};
+
+&dlbf_o20 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o20";
+};
+
+&dlbf_o21 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o21";
+};
+
+&dlbf_o22 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o22";
+};
+
+&dlbf_o23 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o23";
+};
+
+&dlbf_o24 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o24";
+};
+
+&dlbf_o25 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o25";
+};
+
+&dlbf_o26 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o26";
+};
+
+&dlbf_o27 {
+    compatible = "generic-uio";
+    linux,uio-name = "dlbf_o27";
+};
+
+&ulbf_data_20 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_data_20";
+};
+
+&ulbf_coeffs_20 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_20";
+};
+
+&ulbf_coeffs_21 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_21";
+};
+
+&ulbf_coeffs_22 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_22";
+};
+
+&ulbf_coeffs_23 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_coeffs_23";
+};
+
+&ulbf_o20 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o20";
+};
+
+&ulbf_o21 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o21";
+};
+
+&ulbf_o22 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o22";
+};
+
+&ulbf_o23 {
+    compatible = "generic-uio";
+    linux,uio-name = "ulbf_o23";
+};
+
+&amba {
+    zyxclmm_drm {
+        compatible = "xlnx,zocl-versal";
+        status = "okay";
+    };
+};

@@ -1,8 +1,8 @@
 ﻿﻿
 <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -38,19 +38,20 @@ This tutorial guides you to run the designed accelerator on the FPGA; therefore,
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Alveo cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
 
 1. To access the tutorial content, enter the following in a terminal: `git clone http://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to the `bloom` directory.
-    * `Makefile` under the `makefile` directory explains the commands used in this lab. Use the `PLATFORM` variable if targeting different platforms.
+2. Navigate to the `Hardware_Accelerators/Design_Tutorials/02-bloom` directory.
     * `cpu_src` contains all the original source code before modification.
+    * `images` contains the figures in this tutorial. 
+    * `Makefile` in the `makefile` directory explains the commands used in this lab. Use the `PLATFORM` variable if targeting different platforms.
     * `reference_file` contains the modified kernel and host-related files for achieving higher performance.
     * `xclbin_save` contains the saved `xclbin` files that can be used directly for running on hardware by setting `SOLUTION=1` for the `make run` commands.
 
-### Tutorial Overview
+### Tutorial Outline
 
 * [Overview of the Original Application](1_overview.md)
 * [Experience Acceleration Performance](2_experience-acceleration.md)

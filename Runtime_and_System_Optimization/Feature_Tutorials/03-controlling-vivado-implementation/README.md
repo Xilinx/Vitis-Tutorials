@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -14,7 +14,7 @@
 
 ## Introduction
 
-The Vitis™ compiler creates kernel objects from the source code, links the kernels with the targeted shell, and runs the assembled design through the Vivado® tool implementation flows. It generates the platform file (`xclbin`) needed to program the FPGA-based acceleration cards. Sometimes, it is essential to use the advanced Vivado synthesis and implementation options to achieve your desired results, including timing closure. The topics discussed here are documented in [Managing FPGA Synthesis and Implementation Results in the Vivado Tool](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=buildingdevicebinary.html;a=hnw1523048617934) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+The Vitis™ compiler creates kernel objects from the source code, links the kernels with the targeted shell, and runs the assembled design through the Vivado® tool implementation flows. It generates the platform file (`xclbin`) needed to program the FPGA-based acceleration cards. Sometimes, it is essential to use the advanced Vivado synthesis and implementation options to achieve your desired results, including timing closure. The topics discussed here are documented in [Managing Vivado Synthesis and Implementation Results](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=buildingdevicebinary.html;a=hnw1523048617934) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ## Tutorial Overview
 
@@ -36,19 +36,19 @@ The Vitis core development kit provides two methods to control the Vivado tool f
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2020.1 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform.
+* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform.
 If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**
 >
->* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
->* Before running this lab, you should be familiar with the [Essential Concepts for Building and Running the Accelerated Application](../Pathway3/README.md) tutorial.
+>* Before running this lab, you should be familiar with the [Vitis Getting Started](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Getting_Started/Vitis) tutorial.
 
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, enter the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to the `controlling-vivado-impl` directory, and then access `reference-files/run` directory.
+2. Navigate to the `Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation` directory, and then access `reference-files/run` directory.
 
 ### Set Up the Vitis Environment
 
@@ -72,7 +72,7 @@ The `–-vivado` switch is paired with properties or parameters to configure the
 * `object_name`: Specifies the object instance to attach to.
 * `prop_name`: Defines the property_name/value pair which defines both the name and the value to assign.
 
-While you can use `--vivado` options from the `v++` command line, it makes more sense to do some from configuration files specified by the `--config` option. This is explained in [Vitis Compiler Configuration File](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vitiscommandcompiler.html;a=pni1524163195211) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416). In this tutorial, you will use the following options as examples to see how to control Vivado synthesis and implementation:
+While you can use `--vivado` options from the `v++` command line, it makes more sense to do some from configuration files specified by the `--config` option. This is explained in [Vitis Compiler Configuration File](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=vitiscommandcompiler.html;a=pni1524163195211) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416). In this tutorial, you will use the following options as examples to see how to control Vivado synthesis and implementation:
 
 * Completely flatten the hierarchy during RTL synthesis by specifying the `FLATTEN_HIERARCHY=full` property.
   * `--vivado.prop run.my_rm_synth_1.{STEPS.SYNTH_DESIGN.ARGS.FLATTEN_HIERARCHY}={full}`

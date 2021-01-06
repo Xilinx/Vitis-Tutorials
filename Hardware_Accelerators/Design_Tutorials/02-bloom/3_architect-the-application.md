@@ -1,7 +1,7 @@
 <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -16,7 +16,7 @@ In this lab, you evaluate the available functions or loops from the original C c
 
 ## Identify Functions to Accelerate on the FPGA
 
-In the `bloom/cpu_src` directory, the main function calls the `runOnCPU` function. This function is implemented in the `bloom/cpu_src/compute_score_host.cpp` file.
+In the `02-bloom/cpu_src` directory, the main function calls the `runOnCPU` function. This function is implemented in the `02-bloom/cpu_src/compute_score_host.cpp` file.
 
 The algorithm can be divided into two sections:
 
@@ -27,7 +27,7 @@ You will evaluate which of these sections are a good fit for the FPGA.
 
 ### Evaluate the MurmurHash2 Function
 
-1. Navigate to the `$LAB_WORK_DIR/bloom/cpu_src` directory for the original source code.
+1. Navigate to the `$LAB_WORK_DIR/cpu_src` directory for the original source code.
 
 2. With a file editor, open the `MurmurHash2.c` file.
 

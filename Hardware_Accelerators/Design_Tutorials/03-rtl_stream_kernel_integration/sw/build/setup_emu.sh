@@ -16,12 +16,17 @@
 
 print_usage () {
   echo "Usage: "
-  echo "  setup_emu.sh -m EMU_MODE -p PLATFORM        set emulation mode"
-  echo "  setup_emu.sh off                            turn off emulation mode"
+  echo "  setup_emu.sh -s EMU_MODE -p PLATFORM        set emulation mode"
   echo ""
-  echo "  EMU_MODE: hw - hw_emu"
-  echo "            sw - sw_emu"
-  echo "  PLATFORM: u200/u250/u50/u280"
+  echo "  EMU_MODE: on  - turn on hw_emu mode"
+  echo "            off - turn off emulation mode"
+  echo "  PLATFORM: the installed development platform name, which can be ..."
+  echo "              xilinx_u200_gen3x16_xdma_1_1_202020_1 (default)"
+  echo "              xilinx_u200_xdma_201830_2"
+  echo "              xilinx_u250_gen3x16_xdma_3_1_202020_1"
+  echo "              xilinx_u250_xdma_201830_2"
+  echo "              xilinx_u280_xdma_201920_3"
+  echo "              xilinx_u50_gen3x16_xdma_201920_3"
   echo "" 
 }
 
@@ -30,37 +35,35 @@ then
   print_usage
 fi
 
+switch=""
+platform="xilinx_u200_gen3x16_xdma_1_1_202020_1"
+
 while true;
 do
     case "$1" in
-        off)
-            echo "Exit Emulation Mode"
-            unset XCL_EMULATION_MODE
-            break;;
-        -m)
+        -s)
             case "$2" in
-                hw) echo "Enter Hardware Emulation Mode"; export XCL_EMULATION_MODE=hw_emu; shift 2;;
-                sw) echo "Enter Software Emulation Mode"; export XCL_EMULATION_MODE=sw_emu; shift 2;;
-                *) print_usage; break;;
+                on) switch="on"; shift 2;;
+                off) switch="off"; break;;
+                *) print_usage;;
             esac ;;
         -p)
-            case "$2" in
-                u200) echo "Preparing for U200 Platform Emulation"
-                      emconfigutil --platform xilinx_u200_xdma_201830_2
-                      shift 2;;
-                u250) echo "Preparing for U200 Platform Emulation"
-                      emconfigutil --platform xilinx_u250_xdma_201830_2
-                      shift 2;;
-                u50)  echo "Preparing for U50 Platform Emulation"
-                      emconfigutil --platform xilinx_u50_gen3x16_xdma_201920_3
-                      shift 2;;
-                u280) echo "Preparing for U280 Platform Emulation"
-                      emconfigutil --platform xilinx_u280_xdma_201920_3
-                      shift 2;;
-                *) print_usage ; break ;;
-            esac ;;
+            platform="$2"; shift 2;;
         "") break;;
-        *) print_usage; break;;
+        *) print_usage; break ;;
     esac
 done
 
+if [ "$switch" = "off" ]
+then
+  echo "Exit Emulation Mode"
+  unset XCL_EMULATION_MODE
+else 
+  if [ "$switch" = "on" ]
+  then
+    echo "Generating emulation config file for platform $platform.."
+    export XCL_EMULATION_MODE=hw_emu
+    emconfigutil --platform $platform
+    echo "Enter Hardware Emulation Mode"
+  fi
+fi
