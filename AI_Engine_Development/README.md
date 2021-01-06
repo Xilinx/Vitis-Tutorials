@@ -53,6 +53,14 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/04-packet-switching/README.md">Packet Switching</a></td>
  <td>This tutorial illustrates how to use data packet switching with AI Engine designs to optimize efficiency.</td>
  </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/05-AI-engine-versal-integration/README.md">AI Engine Versal Integration for Hardware Emulation and Hardware</a></td>
+ <td>This tutorial demonstrates creating a system design running on the AI Engine, PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/06-versal-system-design-clocking-tutorial/README.md">Versal System Design Clocking</a></td>
+ <td>In this tutorial you will learn clocking concepts for the Vitis compiler via how to define clocking for ADF Graph PL kernels, PLIO kernels by using clocking automation functionality..</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
