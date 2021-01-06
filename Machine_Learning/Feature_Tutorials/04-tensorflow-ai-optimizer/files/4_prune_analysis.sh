@@ -19,7 +19,7 @@
 
 # pruning analysis
 # writes a file named .ana to the --workspace folder
-ana() {
+prune_analysis() {
   vai_p_tensorflow \
     --action            ana \
     --input_graph       ${TRAIN_DIR}/${BASE_GRAPH} \
@@ -38,6 +38,8 @@ echo "-----------------------------------------"
 echo "PRUNING ANALYSIS STARTED"
 echo "-----------------------------------------"
 
+TF_CPP_MIN_LOG_LEVEL=0
+
 # activate the TF pruning conda environment
 conda activate vitis-ai-optimizer_tensorflow
 
@@ -45,7 +47,7 @@ conda activate vitis-ai-optimizer_tensorflow
 rm -rf ${PRUNE_ANA}
 mkdir -p ${PRUNE_ANA}
 
-ana 2>&1 | tee ${LOG}/${PRUNE_ANA_LOG}
+prune_analysis 2>&1 | tee ${LOG}/${PRUNE_ANA_LOG}
 
 echo "-----------------------------------------"
 echo "PRUNING ANALYSIS FINISHED"

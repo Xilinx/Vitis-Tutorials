@@ -17,7 +17,7 @@
 '''
 Description:
     Training or fine-tuning of AlexNet on dogs-vs-cats dataset.
-    Training can optionally start from a previously trained checkpoint.
+    Training must leave the --input_ckpt at default value.
     Fine-tuning must start from a previously trained checkpoint.
 '''
 
@@ -44,13 +44,13 @@ tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 
 
-
-
-def train(dataset_dir,input_ckpt,epochs,batchsize,init_lr,output_ckpt,tboard_logs):
+def train(target_acc,dataset_dir,input_ckpt,epochs,batchsize,init_lr,output_ckpt, \
+          tboard_logs,input_height,input_width,input_chan):
 
     # if an input checkpoint is specified, we are doing pruning fine-tune 
     if (input_ckpt!=''):
         tf.set_pruning_mode()
+        print('Doing fine-tuning', flush=True)
 
     # unpack dataset from npz files
     npz_file = np.load(os.path.join(dataset_dir,'trainData.npz'))
@@ -69,7 +69,7 @@ def train(dataset_dir,input_ckpt,epochs,batchsize,init_lr,output_ckpt,tboard_log
 
 
     # define placeholders for training mode and droput rate
-    images_in = tf.compat.v1.placeholder(tf.float32, shape=[None,224,224,3], name='images_in')
+    images_in = tf.compat.v1.placeholder(tf.float32, shape=[None,input_height,input_width,input_chan], name='images_in')
     labels_ph = tf.compat.v1.placeholder(tf.float32, shape=[None,2], name='labels_ph')
     train_ph = tf.compat.v1.placeholder(tf.bool, shape=None, name='train_ph')
     drop_ph = tf.compat.v1.placeholder(tf.float32, shape=None, name='drop_ph')
@@ -83,7 +83,7 @@ def train(dataset_dir,input_ckpt,epochs,batchsize,init_lr,output_ckpt,tboard_log
     # global step
     global_step=tf.compat.v1.train.get_or_create_global_step()
     
-    # stepped larning rate - divides the learning rate by 10 at each step
+    # stepped learning rate - divides the learning rate by 10 at each step
     # number of steps is defined by n
     n = 2
     decay_steps = int((epochs/n)*(len(x_train)/batchsize))
@@ -130,7 +130,7 @@ def train(dataset_dir,input_ckpt,epochs,batchsize,init_lr,output_ckpt,tboard_log
         if (input_ckpt!=''):
             saver.restore(sess, input_ckpt)
    
-        # Training and test
+        # Training and test over specified number of epochs
         for epoch in range(epochs):
             print('\nEpoch', epoch+1, '/', epochs,':', flush=True)   
 
@@ -159,12 +159,17 @@ def train(dataset_dir,input_ckpt,epochs,batchsize,init_lr,output_ckpt,tboard_log
             score = sess.run(tf_acc)
             print (' - Accuracy with test set:', score, flush=True)
 
+            # save checkpoint if accuracy improved
             if (score > best_acc):
-                # save post-training checkpoint
                 saver.save(sess, output_ckpt)
                 print(' - Saved checkpoint to %s' % output_ckpt, flush=True)
                 best_acc = score
                 best_epoch = epoch+1
+
+            # exit if target accuracy reached
+            if (best_acc >= target_acc):
+                print('Accuracy of',best_acc,'is better than target accuracy of',target_acc,'..exiting train/fine-tune',flush=True)
+                break
 
     print('\nBest epoch:',best_epoch,' Accuracy:',best_acc, flush=True)
     writer.flush()
@@ -178,13 +183,17 @@ def main():
     
     # construct the argument parser and parse the arguments
     ap = argparse.ArgumentParser() 
-    ap.add_argument('-d', '--dataset_dir', type=str,  default='./dataset',   help='path to dataset root folder. Default is ./dataset')
+    ap.add_argument('-a', '--target_acc',  type=float,default=1.0,           help='Target accuracy. Default is 1.0 (100%)')
+    ap.add_argument('-d', '--dataset_dir', type=str,  default='dataset',     help='path to dataset root folder. Default is dataset')
     ap.add_argument('-i', '--input_ckpt',  type=str,  default='',            help='Path of input checkpoint. Default is no checkpoint')  
     ap.add_argument('-e', '--epochs',      type=int,  default=1,             help='Number of training epochs, must be integer value. Default is 1') 
     ap.add_argument('-b', '--batchsize',   type=int,  default=100,           help='Training batchsize, must be integer value. Default is 100') 
-    ap.add_argument('-il','--init_lr',     type=float,default=0.01,          help='Initial learning rate, must be floating-point value. Default is 0.01')
+    ap.add_argument('-il','--init_lr',     type=float,default=0.001,         help='Initial learning rate, must be floating-point value. Default is 0.001')
     ap.add_argument('-o', '--output_ckpt', type=str,  default='output.ckpt', help='Path of output checkpoint. Default is output.ckpt')
-    ap.add_argument('-tb','--tboard_logs', type=str,  default='./tb_logs',   help='Path of TensorBoard log files. Default is tb_logs')
+    ap.add_argument('-tb','--tboard_logs', type=str,  default='tb_logs',     help='Path of TensorBoard log files. Default is tb_logs')
+    ap.add_argument('-ih','--input_height',type=int,  default=224,           help='Input height. Default is 224') 
+    ap.add_argument('-iw','--input_width', type=int,  default=224,           help='Input width. Default is 224') 
+    ap.add_argument('-ic','--input_chan',  type=int,  default=3,             help='Input channels. Default is 3')
     ap.add_argument('-g', '--gpu',         type=str,  default='0',           help='String value to select which CUDA GPU devices to use. Default is 0')
     args = ap.parse_args()
   
@@ -194,6 +203,7 @@ def main():
     print(sys.version)
     print('------------------------------------')
     print ('Command line options:')
+    print (' --target_acc   : ',args.target_acc)
     print (' --dataset_dir  : ',args.dataset_dir)
     print (' --input_ckpt   : ',args.input_ckpt)
     print (' --epochs       : ',args.epochs)
@@ -201,6 +211,9 @@ def main():
     print (' --init_lr      : ',args.init_lr)
     print (' --output_ckpt  : ',args.output_ckpt)
     print (' --tboard_logs  : ',args.tboard_logs)
+    print (' --input_height : ',args.input_height)
+    print (' --input_width  : ',args.input_width)
+    print (' --input_chan   : ',args.input_chan) 
     print (' --gpu          : ',args.gpu)
     print('------------------------------------\n')
 
@@ -211,7 +224,9 @@ def main():
     os.environ["CUDA_VISIBLE_DEVICES"]=args.gpu
  
   
-    _,_ = train(args.dataset_dir,args.input_ckpt,args.epochs,args.batchsize,args.init_lr,args.output_ckpt,args.tboard_logs)
+    _,_ = train(args.target_acc, args.dataset_dir, args.input_ckpt, args.epochs, \
+                args.batchsize, args.init_lr, args.output_ckpt, args.tboard_logs, \
+                args.input_height, args.input_width, args.input_chan )
 
 
 if __name__ == '__main__':

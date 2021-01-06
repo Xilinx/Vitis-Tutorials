@@ -23,15 +23,13 @@ export DSET_ROOT=./dataset
 export LOG=${BUILD}/logs
 export TRAIN_DIR=${BUILD}/train
 export TB_DIR=${BUILD}/tb_logs
-export PRUNE_ANA=${BUILD}/prune_ana
-export PRUNE_DIR=${BUILD}/prune
-export TRSF_DIR=${BUILD}/transform
 export FREEZE_DIR=${BUILD}/freeze
-export FT_DIR=${BUILD}/ft
 export QUANT_DIR=${BUILD}/quant
 export COMPILE_ZCU102=${BUILD}/compile_zcu102
+export COMPILE_U50=${BUILD}/compile_u50
 export APP=./application
 export TARGET_ZCU102=${BUILD}/target_zcu102
+export TARGET_U50=${BUILD}/target_u50
 
 
 mkdir -p ${BUILD}
@@ -41,16 +39,12 @@ mkdir -p ${LOG}
 # logs & results filenames
 export DSET_LOG=create_dataset.log
 export TRAIN_LOG=train.log
-export PRUNE_ANA_LOG=prune_analysis.log
-export PRUNE_LOG=prune.log
-export EVAL_FT_LOG=eval_tuned_graph.log
-export FT_LOG=fine_tune.log
-export GEN_DENSE_LOG=generate_dense.log
 export FREEZE_LOG=freeze.log
 export EVAL_FR_LOG=eval_frozen_graph.log
 export QUANT_LOG=quant.log
 export EVAL_Q_LOG=eval_quant_graph.log
 export COMP_LOG_ZCU102=compile_zcu102.log
+export COMP_LOG_U50=compile_u50.log
 
 
 
@@ -62,27 +56,18 @@ export INPUT_SHAPE="1,${INPUT_HEIGHT},${INPUT_WIDTH},${INPUT_CHAN}"
 export INPUT_SHAPE_Q="?,${INPUT_HEIGHT},${INPUT_WIDTH},${INPUT_CHAN}"
 export INPUT_NODES=images_in
 export OUTPUT_NODES=dense_2/BiasAdd
-export BATCHSIZE=200
+export BATCHSIZE=250
 export INIT_LR=0.001
-# training epochs
 export TRAIN_EPOCHS=200
-# fine-tuning epochs
-export FT_EPOCHS=80
 
 # checkpoint & graph names
 export BASE_GRAPH=inference_graph.pbtxt
 export BASE_CKPT=trained.ckpt
-export PRUNE_IN_GRAPH=prune_in_graph.pbtxt
-export PRUNE_IN_CKPT=prune_in.ckpt
-export PRUNED_GRAPH=pruned_graph.pbtxt
-export PRUNED_CKPT=pruned.ckpt
-export FT_CKPT=fine_tuned.ckpt
-export TRSF_CKPT=transform.ckpt
 export FROZEN_PB=frozen_graph.pb
 
 # list of GPUs to use
 export CUDA_DEVICE_ORDER=PCI_BUS_ID
-export CUDA_VISIBLE_DEVICES="0"
+export CUDA_VISIBLE_DEVICES="1"
 
 export TF_FORCE_GPU_ALLOW_GROWTH=true
-
+export TF_CPP_MIN_LOG_LEVEL=3

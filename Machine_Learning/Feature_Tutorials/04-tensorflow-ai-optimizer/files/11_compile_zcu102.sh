@@ -16,22 +16,24 @@
 
 # Author: Mark Harvey, Xilinx Inc
 
-# This shell script compiles the quantized model and generates an .elf to
+# This shell script compiles the quantized model and generates an xmodel to
 # be executed by the DPU.
+
+TF_CPP_MIN_LOG_LEVEL=3
 
 ARCH=/opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json
 
 
 compile() {
   vai_c_tensorflow \
-    --frozen_pb  ${QUANT_DIR}/deploy_model.pb \
+    --frozen_pb  ${QUANT_DIR}/quantize_eval_model.pb \
     --arch       ${ARCH} \
     --output_dir ${COMPILE_ZCU102} \
     --net_name   ${NET_NAME}
 }
 
 echo "-----------------------------------------"
-echo "COMPILE STARTED.."
+echo "COMPILE FOR ZCU102 STARTED.."
 echo "-----------------------------------------"
 
 conda activate vitis-ai-tensorflow
@@ -39,7 +41,7 @@ conda activate vitis-ai-tensorflow
 rm -rf ${COMPILE_ZCU102}
 mkdir -p ${COMPILE_ZCU102}
 
-compile | tee ${LOG}/${COMP_LOG_ZCU102}
+compile 2>&1 | tee ${LOG}/${COMP_LOG_ZCU102}
 
 echo "-----------------------------------------"
 echo "COMPILE FINISHED"

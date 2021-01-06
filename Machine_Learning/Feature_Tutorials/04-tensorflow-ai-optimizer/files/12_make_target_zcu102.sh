@@ -32,9 +32,9 @@ cp -ar ${APP}/* ${TARGET_ZCU102}
 echo "  Copied application to target folder"
 
 
-# copy elf to TARGET_ZCU102 folder
-cp ${COMPILE_ZCU102}/*.elf ${TARGET_ZCU102}/model_dir/.
-echo "  Copied ${COMPILE_ZCU102}/*.elf file(s) to target folder"
+# copy xmodel to TARGET_ZCU102 folder
+cp ${COMPILE_ZCU102}/${NET_NAME}.xmodel ${TARGET_ZCU102}/model_dir/.
+echo "  Copied ${COMPILE_ZCU102}/${NET_NAME}.xmodel file(s) to target folder"
 
 
 mkdir -p ${TARGET_ZCU102}/images

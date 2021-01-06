@@ -16,28 +16,36 @@
 
 # Author: Mark Harvey, Xilinx Inc
 
+# This shell script compiles the quantized model and generates an xmodel to
+# be executed by the DPU.
 
-# evaluate graph
-eval_graph() {
-  graph=$1
-  python -u eval_graph.py \
-    --graph       $graph \
-    --input_node  ${INPUT_NODES} \
-    --output_node ${OUTPUT_NODES} \
-    --batchsize   ${BATCHSIZE} \
-    --gpu         ${CUDA_VISIBLE_DEVICES} 
+TF_CPP_MIN_LOG_LEVEL=3
+
+
+ARCH=/opt/vitis_ai/compiler/arch/DPUCAHX8H/U50/arch.json
+
+compile() {
+  vai_c_tensorflow \
+    --frozen_pb  ${QUANT_DIR}/quantize_eval_model.pb \
+    --arch       ${ARCH} \
+    --output_dir ${COMPILE_U50} \
+    --net_name   ${NET_NAME}
 }
 
-
 echo "-----------------------------------------"
-echo "EVALUATING QUANTIZED GRAPH.."
+echo "COMPILE FOR U50 STARTED.."
 echo "-----------------------------------------"
 
 conda activate vitis-ai-tensorflow
 
-eval_graph ${QUANT_DIR}/quantize_eval_model.pb 2>&1 | tee ${LOG}/${EVAL_Q_LOG}
+
+rm -rf ${COMPILE_U50}
+mkdir -p ${COMPILE_U50}
+
+compile 2>&1 | tee ${LOG}/${COMP_LOG_U50}
 
 echo "-----------------------------------------"
-echo "EVALUATION FINISHED"
+echo "COMPILE FINISHED"
 echo "-----------------------------------------"
+
 

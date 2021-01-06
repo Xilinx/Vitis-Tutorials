@@ -19,12 +19,16 @@
 
 # runs initial training and writes out a trained, float-pt checkpoint
 train() {
-  python train_ft.py \
+  python -u train_ft.py \
+          --target_acc    1.0 \
           --epochs        ${TRAIN_EPOCHS} \
           --batchsize     ${BATCHSIZE} \
           --init_lr       ${INIT_LR} \
           --output_ckpt   ${TRAIN_DIR}/${BASE_CKPT} \
           --tboard_logs   ${TB_DIR} \
+          --input_height  ${INPUT_HEIGHT} \
+          --input_width   ${INPUT_WIDTH} \
+          --input_chan    ${INPUT_CHAN} \
           --gpu           ${CUDA_VISIBLE_DEVICES}
 }
 

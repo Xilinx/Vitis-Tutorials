@@ -43,7 +43,7 @@ conda activate vitis-ai-tensorflow
 rm -rf ${QUANT_DIR}
 mkdir -p ${QUANT_DIR}
 
-quantize | tee ${LOG}/${QUANT_LOG}
+quantize 2>&1 | tee ${LOG}/${QUANT_LOG}
 
 echo "-----------------------------------------"
 echo "QUANTIZATION FINISHED"

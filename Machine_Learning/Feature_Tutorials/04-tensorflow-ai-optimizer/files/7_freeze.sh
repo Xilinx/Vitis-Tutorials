@@ -31,7 +31,8 @@ echo "FREEZING THE GRAPH.."
 echo "-----------------------------------------"
 
 # activate the TF  conda environment
-conda activate vitis-ai-tensorflow
+#conda activate vitis-ai-tensorflow
+conda activate vitis-ai-optimizer_tensorflow
 
 rm -rf ${FREEZE_DIR}
 mkdir -p ${FREEZE_DIR}

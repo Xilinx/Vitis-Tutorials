@@ -19,7 +19,7 @@
 # evaluate graph
 eval_graph() {
   graph=$1
-  python eval_graph.py \
+  python -u eval_graph.py \
     --dataset_dir ${DSET_ROOT} \
     --graph       $graph \
     --input_node  ${INPUT_NODES} \
@@ -33,6 +33,7 @@ echo "EVALUATING FROZEN GRAPH.."
 echo "-----------------------------------------"
 
 conda activate vitis-ai-tensorflow
+
 
 eval_graph ${FREEZE_DIR}/${FROZEN_PB} 2>&1 | tee ${LOG}/${EVAL_FR_LOG}
 

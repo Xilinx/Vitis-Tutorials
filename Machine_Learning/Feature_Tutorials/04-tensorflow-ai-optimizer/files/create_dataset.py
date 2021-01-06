@@ -32,24 +32,27 @@ import random
 import cv2
 import shutil
 import numpy as np
-from progressbar import ProgressBar
+from tqdm import tqdm
 
 DIVIDER = '-----------------------------------------'
 
 
 
-def center_crop(image,out_height,out_width):
+def center_crop(image,target_h,target_w):
   '''
-  center crop images to size out_height x out_width
+  Center crop images to size out_height x out_width
   '''
   image_height, image_width = image.shape[:2]
-  offset_height = (image_height - out_height) // 2
-  offset_width = (image_width - out_width) // 2
-  image = image[offset_height:offset_height+out_height, offset_width:offset_width+out_width,:]
+  offset_height = (image_height - target_h) // 2
+  offset_width = (image_width - target_w) // 2
+  image = image[offset_height:offset_height+target_h, offset_width:offset_width+target_w,:]
   return image
 
 
 def resize_maintain_aspect(image,target_h,target_w):
+  '''
+  Resize image but maintain aspect ratio
+  '''
   image_height, image_width = image.shape[:2]
   if image_height > image_width:
     new_width = target_w
@@ -64,7 +67,6 @@ def resize_maintain_aspect(image,target_h,target_w):
 
 
 def img_to_npz(listImages,image_height,image_width,output_file,save_image):
-
   '''
   Converts a list of images to a single compressed numpy file.
   Images are resized and cropped to image_height x image_width, then 
@@ -79,9 +81,7 @@ def img_to_npz(listImages,image_height,image_width,output_file,save_image):
   # make labels array for labels
   y = np.ndarray(shape=(len(listImages),2), dtype=np.float32, order='C')
 
-  progress = ProgressBar()
-
-  for i in progress(range(len(listImages))):
+  for i in tqdm(range(len(listImages))):
 
     # open image to numpy array
     img = cv2.imread(listImages[i])
@@ -122,7 +122,9 @@ def img_to_npz(listImages,image_height,image_width,output_file,save_image):
 
 
 def create_datasets(dataset_dir,input_height,input_width):
-
+  '''
+  Convert images and labels into numpy arrays
+  '''
 
   # remove any previous data
   shutil.rmtree(os.path.join(dataset_dir))
