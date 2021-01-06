@@ -41,6 +41,18 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/README.md">A to Z Bare-metal Flow</a></td>
  <td>This tutorial introduces a complete end to end flow for a bare-metal host application using AI Engines and PL kernels.</td>
  </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/02-using-gmio/README.md">Using GMIO with AIE</a></td>
+ <td>This tutorial introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engines and external DDR</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/03-rtp-reconfiguration/README.md">Runtime Parameter Reconfiguration</a></td>
+ <td>Learn how to dynamically update AI Engine runtime parameters</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/04-packet-switching/README.md">Packet Switching</a></td>
+ <td>This tutorial illustrates how to use data packet switching with AI Engine designs to optimize efficiency.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
