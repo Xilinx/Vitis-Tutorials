@@ -1,3 +1,15 @@
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Getting Started Tutorial</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table>
+
 # Vitis Flow 101 Tutorial
 
 Welcome to the Vitis 101 tutorial. If you are looking to learn more about Vitis in order to get started with FPGA acceleration, you've come to the right place.
@@ -22,7 +34,7 @@ This tutorial is organized in 5 parts and is designed to walk you through all th
 
 Vitis provides a unified flow for developing FPGA accelerated application targeted to either data-center or embedded platforms. This tutorial provides instructions for building and running on both ZCU102 and Alveo U200 cards. These instructions can be easily adapted to other Xilinx cards.
 
-> NOTE: This tutorial requires Vitis 2020.1 or later to run.
+> NOTE: This tutorial requires Vitis 2020.2 or later to run.
 
 [**Click here to start the Vitis Flow 101 Tutorial**](./Part1.md)
 

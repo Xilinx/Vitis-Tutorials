@@ -1,10 +1,18 @@
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Getting Started Tutorial</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table>
+
 # Vitis Flow 101 – Part 5 : Visualizing Results and Analyzing Reports
 
- 
-
 Now that you successfully built and ran the vector-add example, let's look at the results and reports generated along the way.
-
-
 
 ## Locating the Run Summary
 
@@ -16,17 +24,15 @@ timeline_trace.csv
 vadd.xclbin.run_summary
 ```
 
-*NOTE: If you targeted ZCU102, these files are stored on the SD card and you need to copy them back to your workstation to continue this lab.*
+*NOTE: If you targeted the ZCU102 hardware, these files are stored on the SD card and you need to copy them back to your workstation to continue this lab.*
 
-* The generation of these files and reports is controlled by runtime options located in the xrt.ini file.  This tutorial contains a pre-existing xrt.ini file with the following content:
+* The generation of these files and reports is controlled by runtime options located in the xrt.ini file.  This tutorial contains a pre-existing xrt.ini file which enables the generation of profile data and a timeline of execution with the following content:
 
 ```
 [Debug]
 profile=true
 timeline_trace=true
 ```
-
-
 
 ## Opening the Run Summary with Vitis Analyzer
 
@@ -69,9 +75,9 @@ Now that you have learned the basics of the Vitis flow, you can try some experim
 
 * In the host program, the size of the vectors is hardcoded to 4096 elements (through the DATA_SIZE macro). 
   * What happens if you increase this size to a much larger value?
-  * What do you now see in Vitis Analyzer?
+  * What do you see in Vitis Analyzer?
 * The host program only calls the accelerator once. 
-  * What happens if you put a loop around Section 4 in host.cpp to iterate a few more times?
+  * What happens if you put a loop around Step 4 in `host.cpp` to iterate a few more times?
   * How does the Application Timeline trace now look like?
   * Now can you make it so that the programs sends different vectors to the accelerator each time it calls it?
 
@@ -87,7 +93,7 @@ The vector-add example is as simple as it gets, yet it offers a lot to learn and
 
 
 
-Return to the [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials/blob/master/README.md) home page.
+Return to the [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials) home page.
 
 
 

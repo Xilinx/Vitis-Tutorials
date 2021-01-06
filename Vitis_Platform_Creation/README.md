@@ -18,8 +18,10 @@ you may wish to create a fully customized hardware platform.
 These tutorials introduce the basics of platform creation and provide step-by-step tutorials for
 creating custom Vitis&trade; and Vitis AI&trade; ready platforms.
 
-[Module 1: Platform Creation Overview](./Introduction/01-Overview/README.md)
+[Module 1: Platform Creation Overview](Introduction/01-Overview/README.md)
 
-[Module 2: Vitis-AI Custom Platform Creation](./Introduction/02-Edge-AI-ZCU104/README.md)
+[Module 2: Vitis Custom Embedded Platform Creation Tutorial on MPSoC](Introduction/02-Edge-AI-ZCU104/README.md)
+
+[Module 3: Versal Custom Platform Creation Tutorial](Introduction/03_Edge_VCK190/README.md)
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
