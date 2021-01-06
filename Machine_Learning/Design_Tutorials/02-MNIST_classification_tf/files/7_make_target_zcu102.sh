@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Author: Mark Harvey
+
 
 echo "-----------------------------------------"
 echo "MAKE TARGET ZCU102 STARTED.."
@@ -23,13 +25,14 @@ echo "-----------------------------------------"
 rm -rf ${TARGET_ZCU102}
 mkdir -p ${TARGET_ZCU102}/model_dir
 
-# copy application to target folder
+# copy application to TARGET_ZCU102 folder
 cp ${APP}/*.py ${TARGET_ZCU102}
-echo "  Copied application to target folder"
+echo "  Copied application to TARGET_ZCU102 folder"
 
-# copy elf to target folder
-cp ${COMPILE_ZCU102}/*.elf ${TARGET_ZCU102}/model_dir/.
-echo "  Copied elf file(s) to target folder"
+
+# copy xmodel to TARGET_ZCU102 folder
+cp ${COMPILE_ZCU102}/${NET_NAME}.xmodel ${TARGET_ZCU102}/model_dir/.
+echo "  Copied xmodel file(s) to TARGET_ZCU102 folder"
 
 # create image files and copy to target folder
 mkdir -p ${TARGET_ZCU102}/images
@@ -40,9 +43,12 @@ python generate_images.py  \
     --image_format=jpg \
     --max_images=10000
 
-echo "  Copied images to target folder"
+echo "  Copied images to TARGET_ZCU102 folder"
 
 echo "-----------------------------------------"
 echo "MAKE TARGET ZCU102 COMPLETED"
 echo "-----------------------------------------"
+
+
+
 

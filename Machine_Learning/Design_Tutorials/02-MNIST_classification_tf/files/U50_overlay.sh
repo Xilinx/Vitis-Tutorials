@@ -16,8 +16,8 @@
 
 # Author: Mark Harvey
 
-wget --no-clobber https://www.xilinx.com/bin/public/openDownload?filename=alveo_xclbin-1.2.1.tar.gz -O alveo_xclbin-1.2.1.tar.gz
-tar xfz alveo_xclbin-1.2.1.tar.gz
-sudo cp -f ./alveo_xclbin-1.2.1/U50/6E300M/* /usr/lib
-#rm -rf alveo_xclbin-1.2.1*
-
+wget --no-clobber https://www.xilinx.com/bin/public/openDownload?filename=alveo_xclbin-1.3.0.tar.gz -O alveo_xclbin-1.3.0.tar.gz
+tar xfz alveo_xclbin-1.3.0.tar.gz
+sudo cp alveo_xclbin-1.3.0/U50/6E300M/dpu.xclbin /usr/lib
+sudo cp alveo_xclbin-1.3.0/U50/6E300M/hbm_address_assignment.txt /usr/lib
+#rm alveo_xclbin-1.3.0.tar.gz

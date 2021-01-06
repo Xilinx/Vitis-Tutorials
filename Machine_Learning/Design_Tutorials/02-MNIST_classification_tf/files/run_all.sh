@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Author: Mark Harvey
+# Author: Mark Harvey, Xilinx Inc
 
 
 source ./0_setenv.sh
@@ -23,8 +23,10 @@ source ./2_freeze.sh
 source ./3_eval_frozen_graph.sh
 source ./4_quant.sh
 source ./5_eval_quant_graph.sh
+
 source ./6_compile_zcu102.sh
 source ./6_compile_u50.sh
+
 source ./7_make_target_zcu102.sh
 source ./7_make_target_u50.sh
 
