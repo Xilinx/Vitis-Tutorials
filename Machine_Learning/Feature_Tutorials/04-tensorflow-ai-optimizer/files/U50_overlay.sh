@@ -14,8 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Author: Mark Harvey, Xilinx Inc
 
+#--------------------------
+# U50 overlay
+#--------------------------
 
-# example of how to start Vitis-AI 1.2 docker (GPU version)
-./docker_run.sh xilinx/vitis-ai-gpu:latest
+wget --no-clobber https://www.xilinx.com/bin/public/openDownload?filename=alveo_xclbin-1.3.0.tar.gz -O alveo_xclbin-1.3.0.tar.gz
+tar xfz alveo_xclbin-1.3.0.tar.gz
+sudo cp -f ./alveo_xclbin-1.3.0/U50/6E300M/* /usr/lib
+#rm -rf alveo_xclbin-1.3.0*
+
 

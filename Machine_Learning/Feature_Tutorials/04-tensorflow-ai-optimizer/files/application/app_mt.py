@@ -16,13 +16,13 @@ Author: Mark Harvey, Xilinx Inc
 '''
 
 from ctypes import *
+from typing import List
 import cv2
 import numpy as np
-import runner
+import vart
 import os
-import xir.graph
 import pathlib
-import xir.subgraph
+import xir
 import threading
 import time
 import sys
@@ -44,16 +44,25 @@ def preprocess_fn(image_path):
     image = image/255.0
     return image
 
-def get_subgraph (g):
+
+def get_child_subgraph_dpu(graph: "Graph") -> List["Subgraph"]:
     '''
     interrogate model file to return subgraphs
     Returns a list of subgraph objects
     '''
-    sub = []
-    root = g.get_root_subgraph()
-    sub = [ s for s in root.children
-            if s.metadata.get_attr_str ("device") == "DPU"]
-    return sub 
+    assert graph is not None, "'graph' should not be None."
+    root_subgraph = graph.get_root_subgraph()
+    assert (root_subgraph is not None), "Failed to get root subgraph of input Graph object."
+    if root_subgraph.is_leaf:
+        return []
+    child_subgraphs = root_subgraph.toposort_child_subgraph()
+    assert child_subgraphs is not None and len(child_subgraphs) > 0
+    return [
+        cs
+        for cs in child_subgraphs
+        if cs.has_attr("device") and cs.get_attr("device").upper() == "DPU"
+    ]
+
 
 
 def runDPU(id,start,dpu,img):
@@ -72,35 +81,43 @@ def runDPU(id,start,dpu,img):
     get_input_tensors() and get_output_tensors() return lists of tensors objects.
     The lists will contain one element for each input or output of the network.
     The shape of each tensor object is (batch,height,width,channels)
-    For Edge DPU, batchsize is always 1.
+    For Zynq DPUCZDX8G DPU, batchsize is always 1 and this code can be simplified.
     '''
     inputTensors = dpu.get_input_tensors()
     outputTensors = dpu.get_output_tensors()
-    #print('Input tensor :',inputTensors[0].name,inputTensors[0].shape)
-    #print('Output Tensor:',outputTensors[0].name,outputTensors[0].shape)
+    input_ndim = tuple(inputTensors[0].dims)
+    output_ndim = tuple(outputTensors[0].dims)
 
-    outputSize = outputTensors[0].dims[1]*outputTensors[0].dims[2]*outputTensors[0].dims[3]
-    shapeIn = inputTensors[0].shape
-    shapeOut = outputTensors[0].shape
+    batchSize = input_ndim[0]
+    n_of_images = len(img)
+    count = 0
+    write_index = start
+    while count < n_of_images:
+        if (count+batchSize<=n_of_images):
+            runSize = batchSize
+        else:
+            runSize=n_of_images-count
 
-    for i in range(len(img)):
-
-        '''prepare lists of np arrays to hold input & output tensors '''
-        inputData = []
-        inputData.append(img[i].reshape(shapeIn))
+        '''prepare batch input/output '''
         outputData = []
-        outputData.append(np.empty((shapeOut), dtype = np.float32, order = 'C'))
+        inputData = []
+        inputData = [np.empty(input_ndim, dtype=np.float32, order="C")]
+        outputData = [np.empty(output_ndim, dtype=np.float32, order="C")]
 
-        '''start DPU, wait until it finishes '''
+        '''init input image to input buffer '''
+        for j in range(runSize):
+            imageRun = inputData[0]
+            imageRun[j, ...] = img[(count + j) % n_of_images].reshape(input_ndim[1:])
+
+        '''run with batch '''
         job_id = dpu.execute_async(inputData,outputData)
         dpu.wait(job_id)
 
-        ''' output data shape is currently (batch,height,width,channels)
-        so flatten it into (batch,height*width*channels)'''
-        outputData[0] = outputData[0].reshape(1, outputSize)
-
-        ''' store results in global lists '''
-        out_q[start+i] = outputData[0][0]
+        '''store output vectors in global results list '''
+        for j in range(runSize):
+            out_q[write_index] = np.argmax(outputData[0][j])
+            write_index += 1
+        count = count + runSize
     
     return
 
@@ -120,16 +137,9 @@ def app(image_dir,threads,model):
 
 
     ''' get a list of subgraphs from the compiled model file '''
-    g = xir.graph.Graph.deserialize(pathlib.Path(model))
-    subgraphs = get_subgraph (g)
+    g = xir.Graph.deserialize(model)
+    subgraphs = get_child_subgraph_dpu(g)
     print('Found',len(subgraphs),'subgraphs in',model)
-
-    ''' preprocess images '''
-    print('Pre-processing',runTotal,'images...')
-    img = []
-    for i in range(runTotal):
-        path = os.path.join(image_dir,listimage[i])
-        img.append(preprocess_fn(path))
 
 
     ''' create dpu runners
@@ -138,8 +148,16 @@ def app(image_dir,threads,model):
     '''
     all_dpu_runners = []
     for i in range(threads):
-        all_dpu_runners.append(runner.Runner(subgraphs[0], "run"))
+        all_dpu_runners.append(vart.Runner.create_runner(subgraphs[0], "run"))
         
+
+    ''' preprocess images '''
+    print('Pre-processing',runTotal,'images...')
+    img = []
+    for i in range(runTotal):
+        path = os.path.join(image_dir,listimage[i])
+        img.append(preprocess_fn(path))
+
 
     ''' create threads
     Each thread receives a section of the preprocessed images list as input and 
@@ -173,8 +191,7 @@ def app(image_dir,threads,model):
     correct = 0
     wrong = 0
     for i in range(len(out_q)):
-        argmax = np.argmax((out_q[i]))
-        prediction = classes[argmax]
+        prediction = classes[out_q[i]]
         ground_truth, _ = listimage[i].split('.',1)
         if (ground_truth==prediction):
             correct += 1
@@ -182,7 +199,7 @@ def app(image_dir,threads,model):
             wrong += 1
     accuracy = correct/len(out_q)
     print (divider)
-    print('Correct:',correct,'Wrong:',wrong,'Accuracy:', accuracy)
+    print('Correct:%d, Wrong:%d, Accuracy:%.4f' %(correct,wrong,accuracy))
     
     print (divider)
     fps = float(runTotal / threads_time)
@@ -200,7 +217,7 @@ def main():
   ap = argparse.ArgumentParser()  
   ap.add_argument('-d', '--image_dir',type=str,default='images',   help='Path to folder of images. Default is images')  
   ap.add_argument('-t', '--threads',  type=int,default=1,          help='Number of threads. Default is 1')
-  ap.add_argument('-m', '--model',    type=str,default='model_dir/dpu_alexnet_np.elf',  help='Path of folder with .elf or .xmodel. Default is model_dir/dpu_alexnet_np.elf')
+  ap.add_argument('-m', '--model',    type=str,default='model_dir/alexnet_np.xmodel',  help='Path of folder containing .xmodel. Default is model_dir/alexnet_np.xmodel')
 
   args = ap.parse_args()  
   print (divider)

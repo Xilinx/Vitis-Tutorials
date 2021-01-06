@@ -29,6 +29,10 @@ source ./8_eval_frozen.sh
 
 source ./9_quant.sh
 source ./10_eval_quant.sh
+
 source ./11_compile_zcu102.sh
 source ./12_make_target_zcu102.sh
+
+source ./11_compile_u50.sh
+source ./12_make_target_u50.sh
 

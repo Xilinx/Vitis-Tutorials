@@ -31,7 +31,7 @@ source ./0_setenv_common.sh
 export FREEZE_IN_GRAPH=${TRAIN_DIR}/${BASE_GRAPH}
 export FREEZE_IN_CKPT=${TRAIN_DIR}/${BASE_CKPT}
 
-# network name - elf file will include this string
+# network name - xmodel filename will include this string
 export NET_NAME=alexnet_np
 
 

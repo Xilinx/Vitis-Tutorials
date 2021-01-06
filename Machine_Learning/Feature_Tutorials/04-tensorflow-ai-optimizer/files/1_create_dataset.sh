@@ -20,7 +20,7 @@
 
 
 create_dataset() {
-  python create_dataset.py \
+  python -u create_dataset.py \
     --dataset_dir  ${DSET_ROOT} \
     --input_height ${INPUT_HEIGHT} \
     --input_width  ${INPUT_WIDTH}
@@ -32,6 +32,7 @@ echo "CREATING DATASET."
 echo "-----------------------------------------"
 
 conda activate vitis-ai-tensorflow
+
 
 rm -rf ${DSET_ROOT}
 mkdir -p ${DSET_ROOT}

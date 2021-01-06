@@ -38,33 +38,31 @@ prune() {
     --gpu                   ${CUDA_VISIBLE_DEVICES}
 }
 
-# fine tuning
+# fine tuning is just training starting from a trained model
+# the output of the pruning command is checkpoint which requires to
+# be fine-tuned (i.e. retrained)
 finetune_pruned_model() {
-  python train_ft.py \
+  target_acc=$1
+  python -u train_ft.py \
+    --target_acc      $target_acc \
     --input_ckpt      ${PRUNE_DIR}/${PRUNED_CKPT} \
     --epochs          ${FT_EPOCHS} \
     --batchsize       ${BATCHSIZE} \
     --init_lr         ${INIT_LR} \
     --output_ckpt     ${FT_DIR}/${FT_CKPT} \
     --tboard_logs     ${BUILD}/prune_tb \
+    --input_height    ${INPUT_HEIGHT} \
+    --input_width     ${INPUT_WIDTH} \
+    --input_chan      ${INPUT_CHAN} \
     --gpu             ${CUDA_VISIBLE_DEVICES}
 }
-
-
-# evaluate pruned/fine-tuned checkpoint
-eval_checkpoint() {
-  python eval_ckpt.py \
-       --dataset_dir  ${DSET_ROOT} \
-       --input_ckpt   "$1" \
-       --batchsize    ${BATCHSIZE} \
-       --gpu          ${CUDA_VISIBLE_DEVICES}
-}
-
 
 
 echo "-----------------------------------------"
 echo "PRUNING STARTED"
 echo "-----------------------------------------"
+
+TF_CPP_MIN_LOG_LEVEL=0
 
 # activate the TF pruning conda environment
 conda activate vitis-ai-optimizer_tensorflow
@@ -81,8 +79,9 @@ cp -f ${TRAIN_DIR}/${BASE_CKPT}.index ${FT_DIR}/${FT_CKPT}.index
 cp -f ${TRAIN_DIR}/${BASE_CKPT}.meta ${FT_DIR}/${FT_CKPT}.meta 
 
 
-# pruning loop - 8 iterations of 10% reduction
-for i in {1..8}
+# pruning loop - 8 iterations of 10% reduction each
+# first 7 iterations in this loop are done with a lower target_acc
+for i in {1..7}
 do
    echo "----------------------------------"
    echo " PRUNING STEP" $i
@@ -97,13 +96,25 @@ do
    # fine-tuning
    echo " ** Running fine-tune.."
    rm ${FT_DIR}/*
-   finetune_pruned_model 2>&1 | tee ${LOG}/${FT_LOG}_$i
-
-   # evaluate fine-tuned checkpoint
-#   echo " ** Evaluating fine-tuned checkpoint.."
-#   eval_checkpoint ${FT_DIR}/${FT_CKPT} 2>&1 | tee ${LOG}/${EVAL_FT_LOG}_$i
+   finetune_pruned_model 0.90 2>&1 | tee ${LOG}/${FT_LOG}_$i
 
 done
+
+# last iteration with final target_acc
+echo "----------------------------------"
+echo " PRUNING STEP 8"
+echo "----------------------------------"
+# sparsity value, increments by 0.1 at each step
+SPARSITY=0.8
+echo " ** Sparsity value:" $SPARSITY
+
+# prune
+prune ${SPARSITY} 2>&1 | tee ${LOG}/${PRUNE_LOG}_8
+
+# fine-tuning
+echo " ** Running fine-tune.."
+rm ${FT_DIR}/*
+finetune_pruned_model 0.92 2>&1 | tee ${LOG}/${FT_LOG}_8
 
 
 echo "-----------------------------------------"

@@ -18,7 +18,7 @@
 
 # export inference graph
 export_inf_graph() {
-  python export_inf_graph.py \
+  python -u export_inf_graph.py \
        --output_file    ${TRAIN_DIR}/${BASE_GRAPH} \
        --input_nodes    ${INPUT_NODES}
 }

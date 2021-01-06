@@ -14,30 +14,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 # Author: Mark Harvey, Xilinx Inc
 
 
-# evaluate graph
-eval_graph() {
-  graph=$1
-  python -u eval_graph.py \
-    --graph       $graph \
-    --input_node  ${INPUT_NODES} \
-    --output_node ${OUTPUT_NODES} \
-    --batchsize   ${BATCHSIZE} \
-    --gpu         ${CUDA_VISIBLE_DEVICES} 
-}
-
-
 echo "-----------------------------------------"
-echo "EVALUATING QUANTIZED GRAPH.."
+echo "MAKE TARGET U50 STARTED.."
 echo "-----------------------------------------"
 
-conda activate vitis-ai-tensorflow
+# remove previous results
+rm -rf ${TARGET_U50}
+mkdir -p ${TARGET_U50}
+mkdir -p ${TARGET_U50}/model_dir
 
-eval_graph ${QUANT_DIR}/quantize_eval_model.pb 2>&1 | tee ${LOG}/${EVAL_Q_LOG}
+# copy application to TARGET_U50 folder
+cp -ar ${APP}/* ${TARGET_U50}
+echo "  Copied application to target folder"
+
+
+# copy xmodel to TARGET_U50 folder
+cp ${COMPILE_U50}/${NET_NAME}.xmodel ${TARGET_U50}/model_dir/.
+echo "  Copied ${COMPILE_U50}/${NET_NAME}.xmodel file(s) to target folder"
+
+
+mkdir -p ${TARGET_U50}/images
+cp ${DSET_ROOT}/test_images/* ${TARGET_U50}/images/.
+echo "  Copied images to target folder"
 
 echo "-----------------------------------------"
-echo "EVALUATION FINISHED"
+echo "MAKE TARGET U50 COMPLETED"
 echo "-----------------------------------------"
 
