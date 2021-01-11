@@ -32,7 +32,7 @@ Before beginning this tutorial you should be familiar with Versal ACAP architect
 
 Software requirements include:
 * [Vitis](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
-* [Python](https://www.python.org/downloads/)
+* [Python 3](https://www.python.org/downloads/)
 
 
 ## Accessing the Tutorial Reference Files
