@@ -55,7 +55,9 @@ With the source code and testbench added to the project, you can now run the C s
        * If memory accesses are on different branches, then these accesses would be consider mutually exclusive (and therefore no conflict can occur). 
       * If however, the memory accesses are on the same branch, then loop II violations can occur because of multiple memory accesses in the same sequential portion of the code. 
 
-6. To run synthesis, simply click the **C Synthesis** toolbar button. The synthesis command runs, and writes a transcript in the Console view. Examine the transcript to see what steps the tool takes during synthesis. The following list describes some of the steps listed:
+## Run the C Synthesis
+
+1. To run synthesis, simply click the **C Synthesis** toolbar button. The synthesis command runs, and writes a transcript in the Console view. Examine the transcript to see what steps the tool takes during synthesis. The following list describes some of the steps listed:
    * Project and solution initialization loads source and constraints files, and configures the active solution for synthesis.
    * Start compilation reads source files into memory. 
    * Interface detection and setup reviews and generates port and block interfaces for the function. 
@@ -73,7 +75,7 @@ With the source code and testbench added to the project, you can now run the C s
 
    The Vitis HLS tool also automatically inlines small functions, dissolving the logic into the higher-level calling functions, and pipelines small loops with limited iterations. These features are configurable by user directives or pragmas.
 
-7. After synthesis completes, the Synthesis Summary report displays as shown in the following figure. Review the results.
+2. After synthesis completes, the Synthesis Summary report displays as shown in the following figure. Review the results.
 
    ![Simplified Synthesis Report](./images/dct_synthesis_report.png)
 
