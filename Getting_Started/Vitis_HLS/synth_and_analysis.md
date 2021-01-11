@@ -10,7 +10,7 @@
  </tr>
 </table>
 
-# 2. Running High-Level Synthesis and Analyzing Results
+# 2. Running Simulation, Synthesis and Analyzing Results
 
 ## Run the C Simulation
 
@@ -45,7 +45,7 @@ With the source code and testbench added to the project, you can now run the C s
 
    Some of the key highlights of the Control Flow graph are as follows:
 
-   * Shows the critical path in your C/C++ code (as indicated by the red arrows and is an artifact of code profiling). 
+   * Shows the control paths in your C/C++ code (as indicated by the red arrows and is an artifact of code profiling). 
 
        * The percentages on the red arrows indicate the percentage of time that particular branch is taken versus the other branch. This gives you an idea of where the time is spent inside the design and the areas to focus on.
          
