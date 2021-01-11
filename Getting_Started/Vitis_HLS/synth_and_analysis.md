@@ -97,7 +97,7 @@ The Synthesis Summary report displays the results of synthesis, including perfor
 
    The Analysis perspective provides a view of different elements of your project, to evaluate the results of synthesis and the performance of your current solution. The Analysis perspective opens the Schedule Viewer by default.
 
-   The left side of the Schedule Viewer lists each operation in chronological order in the synthesized function. It displays the clock cycles presented horizontally as a timeline starting at clock cycle 0, and running through to completion. You can select operations from the list to view the connections between them.
+   The left side of the Schedule Viewer lists each operation in chronological order in the synthesized function. It displays the design control steps presented horizontally as a timeline starting at step 0, and running through to completion. You can select operations from the list to view the connections between them.
 
    The default view shows all of the operations. However, a drop-down menu at the top of the Schedule Viewer lets you select specific functions, loops, or elements of the design that are of interest. 
 
