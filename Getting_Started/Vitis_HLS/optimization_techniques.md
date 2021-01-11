@@ -23,7 +23,7 @@ This lab discusses various optimization techniques that you can use to reconcile
    
     ![Config Compile](./images/config_compile.png)
 
-3. In the **Configuration Settings** dialog box edit `pipeline_loops` to specify  `6`. This indicates that the tool should only automatically pipeline loops with six or fewer iterations. The default setting is 64.
+3. In the **Configuration Settings** dialog box edit `pipeline_loops` to specify  `6`. This indicates that the tool should automatically unroll inner loops with six or fewer iterations. The default setting is 64.
 
 5. Click **OK**  to add the `config_compile` command to limit the automatic loop pipelining as specified.
 
