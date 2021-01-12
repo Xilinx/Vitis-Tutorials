@@ -35,7 +35,7 @@ This lab discusses various optimization techniques that you can use to reconcile
 
 ## Configure the Pipeline Initiation Interval
 
-Another possible optimization is to tell the tool that a specific latency is acceptable performance, for example of two or four clock cycles. This eliminates II violations because the latency would match your specification. The overall latency of an application indicates that perhaps II=4 for some loops is not really a problem.
+Another possible optimization is to tell the tool that a specific number of clock cycles before processing another sample is acceptable, for example of two or four clock cycles. This eliminates II violations because the latency would then match your specification. The overall latency of an application indicates that perhaps II=4 for some loops is not really a problem.
 
 In the last section, the **config_compile** command is a tool configuration command that affects the compilation of the whole design. This optimization uses a code directive applied to a specific portion of the source code rather than to the tool itself.
 
