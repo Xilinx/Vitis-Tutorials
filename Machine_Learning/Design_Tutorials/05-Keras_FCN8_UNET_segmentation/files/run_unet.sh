@@ -19,8 +19,8 @@
 */
 '
 
-# daniele.bagni@xilinx.com
-# date 14 March 2020
+# modified by daniele.bagni@xilinx.com
+# date 4 Jan 2021
 
 ## clean up previous log files
 #rm -f ./log/*.log
@@ -28,11 +28,12 @@
 CNN=unet
 
 # folders
-WORK_DIR=./workspace
+WORK_DIR=./build
 LOG_DIR=${WORK_DIR}/../log
 RPT_DIR=${WORK_DIR}/../rpt
-TARGET_DIR=${WORK_DIR}/../target_zcu102/${CNN}
-TARGET_DIR4=${WORK_DIR}/../target_zcu104/${CNN}
+TARGET_190=${WORK_DIR}/../target_vck190
+TARGET_102=${WORK_DIR}/../target_zcu102
+TARGET_104=${WORK_DIR}/../target_zcu104
 KERAS_MODEL_DIR=${WORK_DIR}/../keras_model
 DATASET_DIR=${WORK_DIR}/dataset1
 
@@ -44,7 +45,7 @@ QUANT_DIR=${WORK_DIR}/quantize_results
 
 # checkpoints & graphs filenames
 CHKPT_FILENAME=float_model.ckpt
-INFER_GRAPH_FILENAME=infer_graph.pb
+META_GRAPH_FILENAME=${CHKPT_FILENAME}.meta
 FROZEN_GRAPH_FILENAME=frozen_graph.pb
 QUANTIZED_FILENAME=quantize_eval_model.pb
 
@@ -59,7 +60,7 @@ COMP_LOG=${CNN}_compile.log
 
 # CNN parameters
 INPUT_NODE="input_1"
-OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
+OUTPUT_NODE="conv2d_18/Relu" # output node of floating point CNN UNET v1 and v3
 
 ##################################################################################
 #setup the environment and check DNNDK relese
@@ -113,7 +114,7 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
 
 ##################################################################################
 # Keras to TF chkpt files
-3_fcn8_Keras2TF() {
+3_unet_Keras2TF() {
     echo " "
     echo "#######################################################################################"
     echo "Step3: KERAS to TENSORFLOW GRAPH CONVERSION"
@@ -133,7 +134,7 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
 
 ##################################################################################
 # freeze the inference graph
-4a_fcn8_freeze() {
+4a_unet_freeze() {
     echo " "
     echo "##############################################################################"
     echo "Step4a: FREEZE TF GRAPHS"
@@ -141,7 +142,7 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
     echo " "
     # freeze the TF graph
     freeze_graph \
-	--input_graph       ${CHKPT_DIR}/${CNN}1/${INFER_GRAPH_FILENAME} \
+  --input_meta_graph  ${CHKPT_DIR}/${CNN}1/${META_GRAPH_FILENAME} \
 	--input_checkpoint  ${CHKPT_DIR}/${CNN}1/${CHKPT_FILENAME} \
 	--input_binary      true \
 	--output_graph      ${FREEZE_DIR}/${CNN}1/${FROZEN_GRAPH_FILENAME} \
@@ -149,15 +150,15 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
 
     # freeze the TF graph
     freeze_graph \
-	--input_graph       ${CHKPT_DIR}/${CNN}2/${INFER_GRAPH_FILENAME} \
+  --input_meta_graph  ${CHKPT_DIR}/${CNN}2/${META_GRAPH_FILENAME} \
 	--input_checkpoint  ${CHKPT_DIR}/${CNN}2/${CHKPT_FILENAME} \
 	--input_binary      true \
 	--output_graph      ${FREEZE_DIR}/${CNN}2/${FROZEN_GRAPH_FILENAME} \
-	--output_node_names "conv2d_23/Relu"
+	--output_node_names "conv2d_22/Relu"
 
     # freeze the TF graph
     freeze_graph \
-	--input_graph       ${CHKPT_DIR}/${CNN}3/${INFER_GRAPH_FILENAME} \
+  --input_meta_graph  ${CHKPT_DIR}/${CNN}3/${META_GRAPH_FILENAME} \
 	--input_checkpoint  ${CHKPT_DIR}/${CNN}3/${CHKPT_FILENAME} \
 	--input_binary      true \
 	--output_graph      ${FREEZE_DIR}/${CNN}3/${FROZEN_GRAPH_FILENAME} \
@@ -193,7 +194,7 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
     python eval_graph.py \
 	   --graph=../${FREEZE_DIR}/${CNN}2/${FROZEN_GRAPH_FILENAME} \
 	   --input_node=${INPUT_NODE} \
-	   --output_node="conv2d_23/Relu" \
+	   --output_node="conv2d_22/Relu" \
 	   --gpu=0
 
     python eval_graph.py \
@@ -229,7 +230,7 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
 	 --input_frozen_graph  ../${FREEZE_DIR}/${CNN}2/${FROZEN_GRAPH_FILENAME} \
 	 --input_nodes         ${INPUT_NODE} \
 	 --input_shapes        ?,224,224,3 \
-	 --output_nodes        "conv2d_23/Relu" \
+	 --output_nodes        "conv2d_22/Relu" \
 	 --output_dir          ../${QUANT_DIR}/${CNN}2/ \
 	 --method              1 \
 	 --input_fn            graph_input_fn.calib_input \
@@ -237,7 +238,7 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
 	 --gpu 0
 
    vai_q_tensorflow quantize \
-	 --input_frozen_graph  ../${FREEZE_DIR}/${CNN}1/${FROZEN_GRAPH_FILENAME} \
+	 --input_frozen_graph  ../${FREEZE_DIR}/${CNN}3/${FROZEN_GRAPH_FILENAME} \
 	 --input_nodes         ${INPUT_NODE} \
 	 --input_shapes        ?,224,224,3 \
 	 --output_nodes        ${OUTPUT_NODE} \
@@ -271,7 +272,7 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
     python eval_quantized_graph.py \
 	   --graph=../${QUANT_DIR}/${CNN}2/${QUANTIZED_FILENAME} \
 	   --input_node=${INPUT_NODE} \
-	   --output_node="conv2d_23/Relu" \
+	   --output_node="conv2d_22/Relu" \
 	   --gpu=0
 
     python eval_quantized_graph.py \
@@ -285,20 +286,22 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
 
 
 ##################################################################################
-# Compile ELF file for ZCU102 with Vitis AI
-6_compile_vai() {
+# Compile ELF file for VCK190 with Vitis AI
+6_compile_vai_vck190() {
   echo " "
   echo "##########################################################################"
-  echo "COMPILE UNET ELF FILE WITH Vitis AI for ZCU102"
+  echo "COMPILE UNET XMODEL FILE WITH Vitis AI for VCK190 TARGET"
   echo "##########################################################################"
   echo " "
   # for Vitis AI == 1.0
   #python /opt/vitis_ai/compiler/vai_c_tensorflow \
 
   # for Vitis AI >= 1.1
+  --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
+
   vai_c_tensorflow \
-	 --frozen_pb ${QUANT_DIR}/${CNN}1/deploy_model.pb \
-	 --arch /opt/vitis_ai/compiler/arch/dpuv2/ZCU102/ZCU102.json \
+      --frozen_pb ${QUANT_DIR}/${CNN}1/quantize_eval_model.pb \
+      --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
 	 --output_dir ${COMPILE_DIR}/${CNN}1 \
 	 --options    "{'mode':'normal'}" \
 	 --net_name ${CNN}1
@@ -308,66 +311,104 @@ OUTPUT_NODE="conv2d_19/Relu" # output node of floating point CNN UNET v1 and v3
 
    # for Vitis AI >= 1.1
   vai_c_tensorflow \
-	 --frozen_pb ${QUANT_DIR}/${CNN}2/deploy_model.pb \
-	 --arch /opt/vitis_ai/compiler/arch/dpuv2/ZCU102/ZCU102.json \
+	 --frozen_pb ${QUANT_DIR}/${CNN}2/quantize_eval_model.pb \
+   --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
 	 --output_dir ${COMPILE_DIR}/${CNN}2 \
 	 --options    "{'mode':'normal'}" \
 	 --net_name ${CNN}2
+
+   vai_c_tensorflow \
+    --frozen_pb ${QUANT_DIR}/${CNN}2/quantize_eval_model.pb \
+    --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
+    --output_dir ${COMPILE_DIR}/${CNN}2 \
+    --options    "{'mode':'debug'}" \
+    --net_name dbg_${CNN}2
+
 
    # for Vitis AI == 1.0
    #python /opt/vitis_ai/compiler/vai_c_tensorflow \
 
    # for Vitis AI >= 1.1
   vai_c_tensorflow \
-	 --frozen_pb ${QUANT_DIR}/${CNN}3/deploy_model.pb \
-	 --arch /opt/vitis_ai/compiler/arch/dpuv2/ZCU102/ZCU102.json \
+	 --frozen_pb ${QUANT_DIR}/${CNN}3/quantize_eval_model.pb \
+   --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
 	 --output_dir ${COMPILE_DIR}/${CNN}3 \
 	 --options    "{'mode':'normal'}" \
 	 --net_name ${CNN}3
  }
 
-##################################################################################
-# Compile ELF file for ZCU104 with Vitis AI
-6_compile_vai_zcu104(){
+ 6_compile_vai_zcu102() {
    echo " "
    echo "##########################################################################"
-   echo "COMPILE UNET ELF FILE WITH Vitis AI for ZCU104"
+   echo "COMPILE UNET XMODEL FILE WITH Vitis AI for ZCU102 TARGET"
    echo "##########################################################################"
    echo " "
-   # for Vitis AI == 1.0
-   #python /opt/vitis_ai/compiler/vai_c_tensorflow \
 
-   # for Vitis AI >= 1.1
    vai_c_tensorflow \
- 	 --frozen_pb ${QUANT_DIR}/${CNN}1/deploy_model.pb \
- 	 --arch /opt/vitis_ai/compiler/arch/dpuv2/ZCU104/ZCU104.json \
+       --frozen_pb ${QUANT_DIR}/${CNN}1/quantize_eval_model.pb \
+       --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
  	 --output_dir ${COMPILE_DIR}/${CNN}1 \
  	 --options    "{'mode':'normal'}" \
  	 --net_name ${CNN}1
 
-   # for Vitis AI == 1.0
-   #python /opt/vitis_ai/compiler/vai_c_tensorflow \
-
-   # for Vitis AI >= 1.1
    vai_c_tensorflow \
- 	 --frozen_pb ${QUANT_DIR}/${CNN}2/deploy_model.pb \
- 	 --arch /opt/vitis_ai/compiler/arch/dpuv2/ZCU104/ZCU104.json \
+ 	 --frozen_pb ${QUANT_DIR}/${CNN}2/quantize_eval_model.pb \
+   --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
  	 --output_dir ${COMPILE_DIR}/${CNN}2 \
  	 --options    "{'mode':'normal'}" \
  	 --net_name ${CNN}2
 
-   # for Vitis AI == 1.0
-   #python /opt/vitis_ai/compiler/vai_c_tensorflow \
+    vai_c_tensorflow \
+     --frozen_pb ${QUANT_DIR}/${CNN}2/quantize_eval_model.pb \
+     --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
+     --output_dir ${COMPILE_DIR}/${CNN}2 \
+     --options    "{'mode':'debug'}" \
+     --net_name dbg_${CNN}2
 
-   # for Vitis AI >= 1.1
    vai_c_tensorflow \
- 	 --frozen_pb ${QUANT_DIR}/${CNN}3/deploy_model.pb \
- 	 --arch /opt/vitis_ai/compiler/arch/dpuv2/ZCU104/ZCU104.json \
+ 	 --frozen_pb ${QUANT_DIR}/${CNN}3/quantize_eval_model.pb \
+   --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
  	 --output_dir ${COMPILE_DIR}/${CNN}3 \
  	 --options    "{'mode':'normal'}" \
  	 --net_name ${CNN}3
-}
+  }
 
+
+  6_compile_vai_zcu104() {
+    echo " "
+    echo "##########################################################################"
+    echo "COMPILE UNET XMODEL FILE WITH Vitis AI for ZCU104 TARGET"
+    echo "##########################################################################"
+    echo " "
+
+    vai_c_tensorflow \
+        --frozen_pb ${QUANT_DIR}/${CNN}1/quantize_eval_model.pb \
+        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
+  	 --output_dir ${COMPILE_DIR}/${CNN}1 \
+  	 --options    "{'mode':'normal'}" \
+  	 --net_name ${CNN}1
+
+    vai_c_tensorflow \
+  	 --frozen_pb ${QUANT_DIR}/${CNN}2/quantize_eval_model.pb \
+    --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
+  	 --output_dir ${COMPILE_DIR}/${CNN}2 \
+  	 --options    "{'mode':'normal'}" \
+  	 --net_name ${CNN}2
+
+     vai_c_tensorflow \
+      --frozen_pb ${QUANT_DIR}/${CNN}2/quantize_eval_model.pb \
+      --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
+      --output_dir ${COMPILE_DIR}/${CNN}2 \
+      --options    "{'mode':'debug'}" \
+      --net_name dbg_${CNN}2
+
+    vai_c_tensorflow \
+  	 --frozen_pb ${QUANT_DIR}/${CNN}3/quantize_eval_model.pb \
+    --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
+  	 --output_dir ${COMPILE_DIR}/${CNN}3 \
+  	 --options    "{'mode':'normal'}" \
+  	 --net_name ${CNN}3
+   }
 
 ##################################################################################
 ##################################################################################
@@ -380,66 +421,75 @@ main() {
 
 : '
     # clean up previous results
-    rm -rf ${WORK_DIR}; mkdir ${WORK_DIR}
-    rm -rf ${LOG_DIR}; mkdir ${LOG_DIR}
-    rm -rf ${RPT_DIR}; mkdir ${RPT_DIR}
-    rm -rf ${CHKPT_DIR}; mkdir ${CHKPT_DIR}
-    rm -rf ${DATASET_DIR}; mkdir ${DATASET_DIR}
-    mkdir ${DATASET_DIR}/img_calib ${DATASET_DIR}/img_test ${DATASET_DIR}/img_train ${DATASET_DIR}/img_valid
-    mkdir ${DATASET_DIR}/seg_calib ${DATASET_DIR}/seg_test ${DATASET_DIR}/seg_train ${DATASET_DIR}/seg_valid
-    rm -rf ${FREEZE_DIR}; mkdir ${FREEZE_DIR}
-    rm -rf ${QUANT_DIR}; mkdir ${QUANT_DIR}
-    rm -rf ${COMPILE_DIR}; mkdir ${COMPILE_DIR}
+    #rm -rf ${WORK_DIR}; mkdir ${WORK_DIR}
+    #rm -rf ${LOG_DIR}; mkdir ${LOG_DIR}
+    #rm -rf ${RPT_DIR}; mkdir ${RPT_DIR}
+    #rm -rf ${CHKPT_DIR}; mkdir ${CHKPT_DIR}
+    #rm -rf ${DATASET_DIR}; mkdir ${DATASET_DIR}
+    #mkdir ${DATASET_DIR}/img_calib ${DATASET_DIR}/img_test ${DATASET_DIR}/img_train ${DATASET_DIR}/img_valid
+    #mkdir ${DATASET_DIR}/seg_calib ${DATASET_DIR}/seg_test ${DATASET_DIR}/seg_train ${DATASET_DIR}/seg_valid
+    #rm -rf ${FREEZE_DIR}; mkdir ${FREEZE_DIR}
+    #rm -rf ${QUANT_DIR}; mkdir ${QUANT_DIR}
+    #rm -rf ${COMPILE_DIR}; mkdir ${COMPILE_DIR}
 '
-: '
+
     mkdir ${LOG_DIR}/${CNN}
+
+    rm -r ${CHKPT_DIR}/${CNN}1   ${CHKPT_DIR}/${CNN}2   ${CHKPT_DIR}/${CNN}3
+    rm -r ${FREEZE_DIR}/${CNN}1  ${FREEZE_DIR}/${CNN}2  ${FREEZE_DIR}/${CNN}3
+    rm -r ${QUANT_DIR}/${CNN}1   ${QUANT_DIR}/${CNN}2   ${QUANT_DIR}/${CNN}3
+    rm -r ${COMPILE_DIR}/${CNN}1 ${COMPILE_DIR}/${CNN}2 ${COMPILE_DIR}/${CNN}3
     mkdir ${CHKPT_DIR}/${CNN}1   ${CHKPT_DIR}/${CNN}2   ${CHKPT_DIR}/${CNN}3
     mkdir ${FREEZE_DIR}/${CNN}1  ${FREEZE_DIR}/${CNN}2  ${FREEZE_DIR}/${CNN}3
     mkdir ${QUANT_DIR}/${CNN}1   ${QUANT_DIR}/${CNN}2   ${QUANT_DIR}/${CNN}3
     mkdir ${COMPILE_DIR}/${CNN}1 ${COMPILE_DIR}/${CNN}2 ${COMPILE_DIR}/${CNN}3
 
-    #copy target_zcu102 files into the new target_zcu104 folder if you have also the ZCU104 board
-    cp -r  ${TARGET_DIR}/* ${TARGET_DIR4}
-    mv ${TARGET_DIR4}/run_on_zcu102.sh  ${TARGET_DIR4}/run_on_zcu104.sh
-
-
     ## create the proper folders and images from the original dataset
-    #1_generate_images 2>&1 | tee ${LOG_DIR}/${CNN}/${PREPARE_DATA_LOG}
-
-'
+    #1_generate_images #2>&1 | tee ${LOG_DIR}/${CNN}/${PREPARE_DATA_LOG}
 
     # do the training and make predictions
-    2_unet_train     2>&1 | tee ${LOG_DIR}/${CNN}/${TRAIN_LOG}
+    2_unet_train     #2>&1 | tee ${LOG_DIR}/${CNN}/${TRAIN_LOG}
 
     # from Keras to TF
-    3_fcn8_Keras2TF  2>&1 | tee ${LOG_DIR}/${CNN}/unet_keras2tf.log
+    3_unet_Keras2TF  #2>&1 | tee ${LOG_DIR}/${CNN}/unet_keras2tf.log
 
     # freeze the graph and inspect it
-    4a_fcn8_freeze   2>&1 | tee ${LOG_DIR}/${CNN}/${FREEZE_LOG}
+    4a_unet_freeze   #2>&1 | tee ${LOG_DIR}/${CNN}/${FREEZE_LOG}
 
     # evaluate the frozen graph performance
-    4b_eval_graph 2>&1 | tee ${LOG_DIR}/${CNN}/${EVAL_FR_LOG}
+    4b_eval_graph #2>&1 | tee ${LOG_DIR}/${CNN}/${EVAL_FR_LOG}
 
     # quantize
-    5a_unet_quantize 2>&1 | tee ${LOG_DIR}/${CNN}/${QUANT_LOG}
+    5a_unet_quantize #2>&1 | tee ${LOG_DIR}/${CNN}/${QUANT_LOG}
 
     # evaluate post-quantization model
-    5b_eval_quantized_graph 2>&1 | tee ${LOG_DIR}/${CNN}/${EVAL_Q_LOG}
+    5b_eval_quantized_graph #2>&1 | tee ${LOG_DIR}/${CNN}/${EVAL_Q_LOG}
 
     # compile with Vitis AI to generate elf file for ZCU102
-    6_compile_vai 2>&1 | tee ${LOG_DIR}/${CNN}/${COMP_LOG}
-    # move elf and so files to  ZCU102 board directory
-    #mv  ${COMPILE_DIR}/${CNN}1/dpu*.elf    ${TARGET_DIR}/v1/model/
-    mv  ${COMPILE_DIR}/${CNN}2/dpu*.elf    ${TARGET_DIR}/v2/model/
-    #mv  ${COMPILE_DIR}/${CNN}3/dpu*.elf    ${TARGET_DIR}/v3/model/
+    6_compile_vai_vck190 #2>&1 | tee ${LOG_DIR}/${CNN}/${COMP_LOG}
+    # move xmodel to  target board directory
+    mv  ${COMPILE_DIR}/${CNN}2/*.xmodel    ${TARGET_190}/${CNN}/v2/model/
+    rm ${TARGET_190}/${CNN}/v2/model/*_org.xmodel
+
+    # compile with Vitis AI to generate elf file for ZCU102
+    6_compile_vai_zcu102 #2>&1 | tee ${LOG_DIR}/${CNN}/${COMP_LOG}
+    # move xmodel to  target board directory
+    mv  ${COMPILE_DIR}/${CNN}2/*.xmodel    ${TARGET_102}/${CNN}/v2/model/
+    rm ${TARGET_102}/${CNN}/v2/model/*_org.xmodel
 
     # compile with Vitis AI to generate elf file for ZCU104
-    6_compile_vai_zcu104 2>&1 | tee ${LOG_DIR}/${CNN}/${COMP_LOG}_zcu104
+    6_compile_vai_zcu104 #2>&1 | tee ${LOG_DIR}/${CNN}/${COMP_LOG}
+    # move xmodel to  target board directory
+    mv  ${COMPILE_DIR}/${CNN}2/*.xmodel    ${TARGET_104}/${CNN}/v2/model/
+    rm ${TARGET_104}/${CNN}/v2/model/*_org.xmodel
 
-    # move elf and so files to target board directory
-    #mv  ${COMPILE_DIR}/${CNN}1/dpu*.elf    ${TARGET_DIR4}/v1/model/
-    mv  ${COMPILE_DIR}/${CNN}2/dpu*.elf    ${TARGET_DIR4}/v2/model/
-    #mv  ${COMPILE_DIR}/${CNN}3/dpu*.elf    ${TARGET_DIR4}/v3/model/
+    # copy test images into target board
+    #tar -cvf "test.tar" ${DATASET_DIR}/img_test ${DATASET_DIR}/seg_test
+    #gzip test.tar
+    #cp test.tar.gz ${TARGET_190}/ ${TARGET_102}/ ${TARGET_104}/
+    tar -cvf target_vck190.tar ${TARGET_190}/
+    tar -cvf target_zcu102.tar ${TARGET_102}/
+    tar -cvf target_zcu104.tar ${TARGET_104}/
 
 
     echo "#####################################"

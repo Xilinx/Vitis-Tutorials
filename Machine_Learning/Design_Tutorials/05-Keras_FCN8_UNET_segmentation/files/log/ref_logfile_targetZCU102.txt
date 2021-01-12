@@ -1,0 +1,755 @@
+/**
+
+* © Copyright (C) 2016-2020 Xilinx, Inc
+*
+* Licensed under the Apache License, Version 2.0 (the "License"). You may
+* not use this file except in compliance with the License. A copy of the
+* License is located at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+* License for the specific language governing permissions and limitations
+* under the License.
+*/
+
+
++ python3 ./code/src/app_mt.py --model ./fcn8/model/fcn8.xmodel --thread 1 --images ./dataset1/img_test/ --miou 1
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  1
+ --model   :  ./fcn8/model/fcn8.xmodel
+ --miou    :  1
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./fcn8/model/fcn8.xmodel
+
+APP- Starting 1 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  101
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  101
+
+APP- FPS=21.63, total frames = 101 , time=4.6702 seconds
+
+
+
+APP- now computing IoU over testing data set:
+class ( 0)          Sky: #TP= 429601, #FP=  32750, #FN=  26372, IoU=0.879
+class ( 1)         Wall: #TP=1144415, #FP= 196009, #FN= 159531, IoU=0.763
+class ( 2)         Pole: #TP=      5, #FP=    138, #FN=  36415, IoU=0.000
+class ( 3)         Road: #TP=1415656, #FP= 106294, #FN=  59363, IoU=0.895
+class ( 4)     Sidewalk: #TP= 375942, #FP=  87544, #FN=  72491, IoU=0.701
+class ( 5)   Vegetation: #TP= 793971, #FP= 150766, #FN=  32574, IoU=0.812
+class ( 6)         Sign: #TP=     10, #FP=    429, #FN=  53382, IoU=0.000
+class ( 7)        Fence: #TP=    192, #FP=   1274, #FN= 156211, IoU=0.001
+class ( 8)      vehicle: #TP=  79842, #FP= 161891, #FN=  14218, IoU=0.312
+class ( 9)   Pedestrian: #TP=     16, #FP=     38, #FN=  36849, IoU=0.000
+class (10)    Bicyclist: #TP=      5, #FP=      7, #FN= 110967, IoU=0.000
+class (11)  miscellanea: #TP=  15422, #FP=  75559, #FN=  54326, IoU=0.106
+_________________
+Mean IoU: 0.373
++ python3 ./code/src/app_mt.py --model ./fcn8/model/fcn8.xmodel --thread 2 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  2
+ --model   :  ./fcn8/model/fcn8.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./fcn8/model/fcn8.xmodel
+
+APP- Starting 2 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  50
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  51
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  50
+
+runDPU: write_index :  101
+
+APP- FPS=41.19, total frames = 101 , time=2.4523 seconds
+
++ python3 ./code/src/app_mt.py --model ./fcn8/model/fcn8.xmodel --thread 4 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  4
+ --model   :  ./fcn8/model/fcn8.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./fcn8/model/fcn8.xmodel
+
+APP- Starting 4 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  26
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  50
+
+runDPU: write_index :  75
+
+runDPU: write_index :  25
+
+runDPU: write_index :  101
+
+APP- FPS=56.30, total frames = 101 , time=1.7939 seconds
+
++ python3 ./code/src/app_mt.py --model ./fcn8/model/fcn8.xmodel --thread 6 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  6
+ --model   :  ./fcn8/model/fcn8.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./fcn8/model/fcn8.xmodel
+
+APP- Starting 6 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  21
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  16
+
+runDPU: write_index :  64
+
+runDPU: write_index :  32
+
+runDPU: write_index :  80
+
+runDPU: write_index :  48
+
+runDPU: write_index :  101
+
+APP- FPS=55.29, total frames = 101 , time=1.8268 seconds
+
++ python3 ./code/src/app_mt.py --model ./fcn8ups/model/fcn8ups.xmodel --thread 1 --images ./dataset1/img_test/ --miou 1
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  1
+ --model   :  ./fcn8ups/model/fcn8ups.xmodel
+ --miou    :  1
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./fcn8ups/model/fcn8ups.xmodel
+
+APP- Starting 1 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  101
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  101
+
+APP- FPS=23.18, total frames = 101 , time=4.3565 seconds
+
+
+
+APP- now computing IoU over testing data set:
+class ( 0)          Sky: #TP= 402550, #FP=  51512, #FN=  53423, IoU=0.793
+class ( 1)         Wall: #TP= 915004, #FP=  92401, #FN= 388942, IoU=0.655
+class ( 2)         Pole: #TP=     19, #FP=   1168, #FN=  36401, IoU=0.001
+class ( 3)         Road: #TP=1451659, #FP= 273772, #FN=  23360, IoU=0.830
+class ( 4)     Sidewalk: #TP= 294248, #FP= 178081, #FN= 154185, IoU=0.470
+class ( 5)   Vegetation: #TP= 752410, #FP= 136469, #FN=  74135, IoU=0.781
+class ( 6)         Sign: #TP=    722, #FP=   1380, #FN=  52670, IoU=0.013
+class ( 7)        Fence: #TP=  25475, #FP=  41947, #FN= 130928, IoU=0.128
+class ( 8)      vehicle: #TP=  71698, #FP= 194481, #FN=  22362, IoU=0.248
+class ( 9)   Pedestrian: #TP=    165, #FP=   1074, #FN=  36700, IoU=0.004
+class (10)    Bicyclist: #TP=     89, #FP=    309, #FN= 110883, IoU=0.001
+class (11)  miscellanea: #TP=  19384, #FP= 161759, #FN=  50364, IoU=0.084
+_________________
+Mean IoU: 0.334
++ python3 ./code/src/app_mt.py --model ./fcn8ups/model/fcn8ups.xmodel --thread 2 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  2
+ --model   :  ./fcn8ups/model/fcn8ups.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./fcn8ups/model/fcn8ups.xmodel
+
+APP- Starting 2 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  50
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  51
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  50
+
+runDPU: write_index :  101
+
+APP- FPS=45.16, total frames = 101 , time=2.2367 seconds
+
++ python3 ./code/src/app_mt.py --model ./fcn8ups/model/fcn8ups.xmodel --thread 4 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  4
+ --model   :  ./fcn8ups/model/fcn8ups.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./fcn8ups/model/fcn8ups.xmodel
+
+APP- Starting 4 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  26
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  50
+
+runDPU: write_index :  75
+
+runDPU: write_index :  25
+
+runDPU: write_index :  101
+
+APP- FPS=62.50, total frames = 101 , time=1.6159 seconds
+
++ python3 ./code/src/app_mt.py --model ./fcn8ups/model/fcn8ups.xmodel --thread 6 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  6
+ --model   :  ./fcn8ups/model/fcn8ups.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./fcn8ups/model/fcn8ups.xmodel
+
+APP- Starting 6 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  21
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  16
+
+runDPU: write_index :  64
+
+runDPU: write_index :  32
+
+runDPU: write_index :  80
+
+runDPU: write_index :  48
+
+runDPU: write_index :  101
+
+APP- FPS=68.58, total frames = 101 , time=1.4727 seconds
+
++ python3 ./code/src/app_mt.py --model ./unet/v2/model/unet2.xmodel --thread 1 --images ./dataset1/img_test/ --miou 1
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  1
+ --model   :  ./unet/v2/model/unet2.xmodel
+ --miou    :  1
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./unet/v2/model/unet2.xmodel
+
+APP- Starting 1 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  101
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  101
+
+APP- FPS=10.39, total frames = 101 , time=9.7226 seconds
+
+
+
+APP- now computing IoU over testing data set:
+class ( 0)          Sky: #TP= 445813, #FP=  23528, #FN=  10160, IoU=0.930
+class ( 1)         Wall: #TP=1156971, #FP= 407599, #FN= 146975, IoU=0.676
+class ( 2)         Pole: #TP=      0, #FP=     17, #FN=  36420, IoU=0.000
+class ( 3)         Road: #TP=1438436, #FP= 122129, #FN=  36583, IoU=0.901
+class ( 4)     Sidewalk: #TP= 355111, #FP= 109092, #FN=  93322, IoU=0.637
+class ( 5)   Vegetation: #TP= 699928, #FP=  80090, #FN= 126617, IoU=0.772
+class ( 6)         Sign: #TP=      0, #FP=      8, #FN=  53392, IoU=0.000
+class ( 7)        Fence: #TP=      5, #FP=    451, #FN= 156398, IoU=0.000
+class ( 8)      vehicle: #TP=  73033, #FP=  72370, #FN=  21027, IoU=0.439
+class ( 9)   Pedestrian: #TP=      0, #FP=      0, #FN=  36865, IoU=0.000
+class (10)    Bicyclist: #TP=      0, #FP=      0, #FN= 110972, IoU=0.000
+class (11)  miscellanea: #TP=  16901, #FP=  66294, #FN=  52847, IoU=0.124
+_________________
+Mean IoU: 0.373
++ python3 ./code/src/app_mt.py --model ./unet/v2/model/unet2.xmodel --thread 2 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  2
+ --model   :  ./unet/v2/model/unet2.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./unet/v2/model/unet2.xmodel
+
+APP- Starting 2 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  50
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  51
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  50
+
+runDPU: write_index :  101
+
+APP- FPS=20.25, total frames = 101 , time=4.9877 seconds
+
++ python3 ./code/src/app_mt.py --model ./unet/v2/model/unet2.xmodel --thread 4 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  4
+ --model   :  ./unet/v2/model/unet2.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./unet/v2/model/unet2.xmodel
+
+APP- Starting 4 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  25
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  26
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  50
+
+runDPU: write_index :  75
+
+runDPU: write_index :  25
+
+runDPU: write_index :  101
+
+APP- FPS=23.24, total frames = 101 , time=4.3454 seconds
+
++ python3 ./code/src/app_mt.py --model ./unet/v2/model/unet2.xmodel --thread 6 --images ./dataset1/img_test/
+Command line options:
+ --images  :  ./dataset1/img_test/
+ --threads :  6
+ --model   :  ./unet/v2/model/unet2.xmodel
+ --miou    :  0
+
+APP- loading segmentation images and preprocessing test images
+
+APP- Found 1 subgraphs in ./unet/v2/model/unet2.xmodel
+
+APP- Starting 6 threads...
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  16
+
+runDPU- # runSize :  1
+
+runDPU-  INPUT DIM:  (1, 224, 224, 3)
+
+runDPU- OUTPUT DIM:  (1, 224, 224, 12)
+
+
+runDPU- batchSize:  1
+
+runDPU- # images :  21
+
+runDPU- # runSize :  1
+
+runDPU: write_index :  16
+
+runDPU: write_index :  64
+
+runDPU: write_index :  32
+
+runDPU: write_index :  80
+
+runDPU: write_index :  48
+
+runDPU: write_index :  101
+
+APP- FPS=26.91, total frames = 101 , time=3.7537 seconds

@@ -28,9 +28,6 @@ import os
 import numpy as np
 import cv2
 import sys
-import keras
-#import seaborn as sns
-#import matplotlib.pyplot as plt
 
 ###############################################################################
 # project folders
@@ -45,7 +42,7 @@ SCRIPT_DIR = get_script_directory()
 print("fcn_config.py runs from ", SCRIPT_DIR)
 
 # dataset top level folder
-DATASET_DIR = os.path.join(SCRIPT_DIR, "../workspace/dataset1")
+DATASET_DIR = os.path.join(SCRIPT_DIR, "../build/dataset1")
 # train, validation, test and calibration folders
 SEG_TRAIN_DIR = os.path.join(DATASET_DIR, "annotations_prepped_train")
 IMG_TRAIN_DIR = os.path.join(DATASET_DIR, "images_prepped_train")
@@ -77,10 +74,10 @@ dir_valid_seg = os.path.join(DATASET_DIR, "seg_valid")
 KERAS_MODEL_DIR = os.path.join(SCRIPT_DIR, "../keras_model")
 
 # TF checkpoints folder
-CHKPT_MODEL_DIR = os.path.join(SCRIPT_DIR, "../workspace/tf_chkpts")
+CHKPT_MODEL_DIR = os.path.join(SCRIPT_DIR, "../build/tf_chkpts")
 
 # TensorBoard folder
-TB_LOG_DIR = os.path.join(SCRIPT_DIR, "../workspace/tb_logs")
+TB_LOG_DIR = os.path.join(SCRIPT_DIR, "../build/tb_logs")
 
 
 ###############################################################################

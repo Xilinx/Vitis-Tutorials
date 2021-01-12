@@ -52,15 +52,18 @@ SOFTWARE.
 '''
 
 # modified by daniele.bagni@xilinx.com
-# date 15 feb 2020
+# date 20 / 11 / 2020
 
+import sys, time, warnings, os
+
+# Silence TensorFlow messages
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ## Import usual libraries
 import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
-import keras, sys, time, warnings
-from keras.models import *
-from keras.layers import *
-from keras.utils import plot_model #DB
+#from tensorflow.keras.backend import set_session
+from tensorflow.keras.models import *
+from tensorflow.keras.layers import *
+from tensorflow.keras.utils import plot_model #DB
 
 warnings.filterwarnings("ignore")
 

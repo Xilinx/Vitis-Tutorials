@@ -20,39 +20,49 @@
 */
 '''
 
+# modified by daniele.bagni@xilinx.com
+# date 20 / 11 / 2020
+
 
 import cv2, os
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-## Import usual libraries
-import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
-import keras, sys, time, warnings
-from keras.models import *
-from keras.layers import *
-from keras import backend
+import sys, time, warnings
 from datetime import datetime #DB
-from keras.utils import plot_model #DB
-from keras.preprocessing.image import ImageDataGenerator #DB
+
 import gc #DB
 from config import fcn_config as cfg
 from config import fcn8_cnn as cnn
 from sklearn.utils import shuffle
-from config import fcn_config as cfg #DB
-from config import fcn8_cnn as cnn #DB
 from config import unet as unet #DB
 
 import pandas as pd
 warnings.filterwarnings("ignore")
 
+# Silence TensorFlow messages
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+## Import usual libraries
+import tensorflow as tf
+
+from tensorflow.keras import optimizers
+from tensorflow.keras.backend               import set_session
+from tensorflow.keras                       import backend
+from tensorflow.keras.utils                 import plot_model #DB
+from tensorflow.keras.preprocessing.image   import ImageDataGenerator #DB
+from tensorflow.keras.models                import *
+from tensorflow.keras.layers                import *
+from tensorflow.keras.optimizers            import RMSprop, SGD
+
+# workaround for TF1.15 bug "Could not create cudnn handle: CUDNN_STATUS_INTERNAL_ERROR"
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-config = tf.ConfigProto()
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.85
 #config.gpu_options.allow_growth = True
 config.gpu_options.visible_device_list = "0"
-set_session(tf.Session(config=config))
+set_session(tf.compat.v1.Session(config=config))
 
 import argparse #DB
 # construct the argument parse and parse the arguments
@@ -144,8 +154,7 @@ X_valid, Y_valid = shuffle(X_valid, Y_valid)
 #########################################################################################################
 
 
-from keras import optimizers
-sgd = optimizers.SGD(lr=1E-2, decay=5**(-4), momentum=0.9, nesterov=True)
+sgd = SGD(lr=1E-2, decay=5**(-4), momentum=0.9, nesterov=True)
 
 model.compile(loss='categorical_crossentropy',
               optimizer=sgd,
