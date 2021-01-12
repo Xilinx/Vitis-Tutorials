@@ -96,7 +96,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 
 ## Conclusion
 
-You created the DCT project, targeted your Xilinx device or board, and configured the solution characteristics. You are ready to move to the next lab, [Running High-Level Synthesis and Analyzing Results](./synth_and_analysis.md).
+You created the DCT project, targeted your Xilinx device or board, and configured the solution characteristics. You are ready to move to the next lab, [Running Simulation, C Synthesis and Analyzing Results](./synth_and_analysis.md).
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
