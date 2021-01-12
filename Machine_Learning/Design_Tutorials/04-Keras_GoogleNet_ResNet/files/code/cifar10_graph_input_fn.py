@@ -17,12 +17,14 @@
 ## under the License.
 '''
 
+# modified by daniele.bagni@xilinx.com
+# date 24 / 11 / 2020
 
 import cv2
 import os
 import numpy as np
 
-from keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import img_to_array
 from config import cifar10_config as cfg
 
 

@@ -55,22 +55,22 @@ History:
 
 
 # import the necessary packages
-from keras.models import Model
-from keras.layers import Input
-from keras.layers import add
-from keras.regularizers import l2
-from keras.layers import BatchNormalization
-from keras.layers import Conv2D
-from keras.layers import MaxPooling2D
-from keras.layers import AveragePooling2D
-from keras.layers import ZeroPadding2D
-from keras.layers import Dense
-from keras.layers import Activation
-from keras.layers import Flatten
-from keras.layers import Dropout
-from keras.layers import Dense
-from keras.layers import concatenate
-from keras import backend as K
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import add
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.layers import AveragePooling2D
+from tensorflow.keras.layers import ZeroPadding2D
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import concatenate
+from tensorflow.keras import backend as K
 
 
 class ConvNetFactory:
@@ -289,11 +289,11 @@ class ConvNetFactory:
                         shortcut = BatchNormalization(axis=chanDim, epsilon=bnEps, momentum=bnMom)(shortcut)
                 # add together the shortcut and the final CONV
                 x = add([bn3, shortcut])
-                x = Activation("relu")(x)                
+                x = Activation("relu")(x)
                 # return the addition as the output of the ResNet module
                 return x
 
-        
+
         @staticmethod
         def new_miniResNet(width, height, depth, classes, stages, filters, reg=0.0001, bnEps=2e-5, bnMom=0.9, dataset="cifar"):
                 # initialize the input shape to be "channels last" and the channels dimension itself
@@ -305,7 +305,7 @@ class ConvNetFactory:
                         chanDim = 1
 
                 inputs = Input(shape=inputShape, name="conv2d_1_input")
-                x = Conv2D(filters[0], (3, 3), use_bias=False, padding="same", kernel_regularizer=l2(reg))(inputs)                
+                x = Conv2D(filters[0], (3, 3), use_bias=False, padding="same", kernel_regularizer=l2(reg))(inputs)
                 x = BatchNormalization(axis=chanDim, epsilon=bnEps,momentum=bnMom)(x)
                 x = Activation("relu")(x)
                 # loop over the number of stages
@@ -319,9 +319,9 @@ class ConvNetFactory:
                                 # apply a ResNet module
                                 x = ConvNetFactory.new_residual_module(x, filters[i + 1],(1, 1), chanDim, bnEps=bnEps, bnMom=bnMom)
                 # apply BN => ACT => POOL
-                x = Conv2D(filters[3], (3, 3), use_bias=False, padding="same", kernel_regularizer=l2(reg))(x)                                
+                x = Conv2D(filters[3], (3, 3), use_bias=False, padding="same", kernel_regularizer=l2(reg))(x)
                 x = BatchNormalization(axis=chanDim, epsilon=bnEps,momentum=bnMom)(x)
-                x = Activation("relu")(x)                
+                x = Activation("relu")(x)
                 x = AveragePooling2D((8, 8))(x)
                 # softmax classifier
                 x = Flatten()(x)
@@ -331,7 +331,7 @@ class ConvNetFactory:
                 model = Model(inputs, x, name="miniResNet")
                 # return the constructed network architecture
                 return model
-        
+
         # miniGoogleNet
         @staticmethod
         def conv_module(x, K, kX, kY, stride, chanDim, padding="same"):

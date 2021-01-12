@@ -17,22 +17,26 @@
 ## under the License.
 '''
 
+# modified by daniele.bagni@xilinx.com
+# date 24 / 11 / 2020
+
 # USAGE
 # python Keras2TFy -c miniVggNet -d cifar10
 
-import os
-import sys
-import shutil
-from keras import backend as K
-#from tensorflow.keras.models import model_from_json
-from keras.models import load_model
+import os, sys, shutil
+
+# Silence TensorFlow messages
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 import tensorflow as tf
+from tensorflow.keras import backend as K
+from tensorflow.keras.models import load_model
 
 import argparse #DB
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-n",  "--network", default="LeNet",          help="input CNN")
-ap.add_argument("-d",  "--dataset", default="fashion-mnist",  help="input dataset")
+ap.add_argument("-d",  "--dataset", default="fmnist",  help="input dataset")
 args = vars(ap.parse_args())
 cnn_name = args["network"]
 dataset_name = args["dataset"]
@@ -67,13 +71,13 @@ model.summary()
 output_names=[out.op.name for out in model.outputs]
 
 # set up tensorflow saver object
-saver = tf.train.Saver()
+saver = tf.compat.v1.train.Saver()
 
 # fetch the tensorflow session using the Keras backend
-sess = K.get_session()
+sess = tf.compat.v1.keras.backend.get_session()
 
-# get the tensorflow session graph
-graph_def = sess.graph.as_graph_def()
+## get the tensorflow session graph
+#graph_def = sess.graph.as_graph_def()
 
 
 # Check the input and output name
@@ -84,7 +88,6 @@ print(model.outputs)
 
 # write out tensorflow checkpoint & inference graph (from MH's "MNIST classification with TensorFlow and Xilinx DNNDK")
 save_path = saver.save(sess, os.path.join(CHKPT_MODEL_DIR, cnn_name, "float_model.ckpt"))
-tf.train.write_graph(graph_def, os.path.join(CHKPT_MODEL_DIR, cnn_name), "infer_graph.pb", as_text=False)
 
 
 print ("\nFINISHED CREATING TF FILES\n")
