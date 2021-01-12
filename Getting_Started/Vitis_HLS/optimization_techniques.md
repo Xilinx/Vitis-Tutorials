@@ -35,7 +35,7 @@ This lab discusses various optimization techniques that you can use to reconcile
 
 ## Configure the Pipeline Initiation Interval
 
- >**T0 DO**: Back out the change before proceeding, right-click on the solution. Select **Solution Settings** command, and reset the `config_compile pipeline_loop` command to its default value. 
+ >**TO DO**: Back out the change before proceeding, right-click on the solution. Select **Solution Settings** command, and reset the `config_compile pipeline_loop` command to its default value. 
 
 Another possible optimization is to tell the tool that a specific number of clock cycles before processing another sample is acceptable, for example of two or four clock cycles. This eliminates II violations because the latency would then match your specification. The overall latency of an application indicates that perhaps II=4 for some loops is not really a problem.
 
