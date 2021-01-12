@@ -83,7 +83,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
        1. Select **Alveo U200 Data Center Accelerator Card**.
          1. Click **OK**.
 
-        You are returned to the Solution Configuration dialog window.
+        You are back to the New vitis HLS Project dialog window.
 
 8. In the Solution Configuration dialog box, select the **Vitis Kernel Flow Target** from the dropdown menu.
 
