@@ -27,7 +27,7 @@ output_dir=${work_dir}/vaiq_output
 #force a soft link to the calibration data
 ln -nsf $ML_DIR/input/jpg/calib  $ML_DIR/deploy/${CNN}/quantiz/data/calib
 
-# copy input files from miniVggNet Caffe project via soft links force (nf) 
+# copy input files from miniVggNet Caffe project via soft links force (nf)
 ln -nsf $ML_DIR/caffe/models/${CNN}/m${ALX_MOD_NUM}/q_train_val_${ALX_MOD_NUM}_${CNN}.prototxt $ML_DIR/deploy/${CNN}/quantiz/float.prototxt
 
 ln -nsf $ML_DIR/caffe/models/${CNN}/m${ALX_MOD_NUM}/snapshot_${ALX_MOD_NUM}_${CNN}__iter_${ALX_NUMIT}.caffemodel $ML_DIR/deploy/${CNN}/quantiz/float.caffemodel
@@ -38,6 +38,6 @@ vai_q_caffe   quantize                                    \
            -model ${model_dir}/float.prototxt     \
            -weights ${model_dir}/float.caffemodel \
            -output_dir ${output_dir} \
+           -keep_fixed_neuron \
 	   -method 1 \
 	   -auto_test -test_iter 50
-

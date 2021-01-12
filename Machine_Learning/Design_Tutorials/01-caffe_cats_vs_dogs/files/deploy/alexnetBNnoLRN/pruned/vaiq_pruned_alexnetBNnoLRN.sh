@@ -30,7 +30,7 @@ ln -nsf $ML_DIR/input/jpg/calib  ${work_dir}/data/calib
 python3 ${work_dir}/calibr.py -f ${work_dir}/../../../pruning/${CNN}/regular_rate_0.7/final.prototxt -i ${ML_DIR}/caffe/models/alexnetBNnoLRN/m2/header_calibr.prototxt -o ${model_dir}/q_final.prototxt
 
 
-# copy input files from CNN Caffe project via soft links force (nf) 
+# copy input files from CNN Caffe project via soft links force (nf)
 ln -nsf ${model_dir}/q_final.prototxt ${model_dir}/float.prototxt
 ln -nsf ${work_dir}/../../../pruning/${CNN}/transformed.caffemodel ${model_dir}/float.caffemodel
 
@@ -40,6 +40,6 @@ vai_q_caffe   quantize                                    \
            -model ${model_dir}/float.prototxt     \
            -weights ${model_dir}/float.caffemodel \
            -output_dir ${output_dir} \
+           -keep_fixed_neuron \
 	   -method 1 \
 	   -auto_test -test_iter 50
-

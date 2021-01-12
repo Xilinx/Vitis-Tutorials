@@ -21,7 +21,7 @@
 '''
 
 # USAGE
-# python3 ~/ML/cats-vs-dogs/caffe/code/check_dpu_runtime_accuracy.py -i ~/ML/cats-vs-dogs/deephi//quantiz/zcu102/rpt/logfile_top2_alexnetBNnoLRN.txt 
+# python3 ~/ML/cats-vs-dogs/caffe/code/check_dpu_runtime_accuracy.py -i ~/ML/cats-vs-dogs/deephi//quantiz/zcu102/rpt/logfile_top2_alexnetBNnoLRN.txt
 
 # It checks the top-1 and top-2 accuracy obtained at runtime by DeePhi DPU, by analysis of the related logfile
 
@@ -80,11 +80,11 @@ idx = 0
 
 for ln in range(0, tot_lines):
 
-    if "DBG" in lines[ln]:
+    if "Image" in lines[ln]:
 
         top2_lines = lines[ln:ln+3]
 
-        filename= top2_lines[0].split("images/")[1]
+        filename= top2_lines[0].split("Image :")[1]
         s2 = filename.index(".")
         class_name = filename[: s2].strip()
         #print("DBG: found class ", class_name, " in line ", ln, ": ", lines[ln])
@@ -104,7 +104,7 @@ for ln in range(0, tot_lines):
         preds[idx]    = labelNames[predicted ] # actual prediction
 
         if (predicted != class_name) :
-            print("LINE: ", top2_lines[0].split("./")[1].strip())
+            print("LINE: ", top2_lines[0].split(":")[1].strip())
             print("PREDICTED: ", preds[idx], predicted)
             print("EXPECTED : ", test_ids[idx], class_name)
             for k in range(1, 3):

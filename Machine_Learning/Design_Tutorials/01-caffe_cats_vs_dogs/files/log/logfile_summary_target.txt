@@ -1,0 +1,55 @@
+Copyright © 2020 Xilinx, Inc.
+
+Redistribution and use in binary form only, without modification, is permitted provided that the following conditions are met:
+
+1. Redistributions must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+2. The name of Xilinx, Inc. may not be used to endorse or promote products redistributed with this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+#BASELINE
+number of total images predicted  999
+number of top1 false predictions  55
+number of top1 right predictions  944
+top1 accuracy = 0.94
+
+#PRUNED
+number of total images predicted  999
+number of top1 false predictions  51
+number of top1 right predictions  948
+top1 accuracy = 0.95
+
+
+#BASELINE CNN WITH PYTHON APP AND MULTITHREADING
+--threads :  1
+FPS=76.72, total frames = 1000 , time=13.0351 seconds
+--threads :  2
+FPS=118.83, total frames = 1000 , time=8.4151 seconds
+--threads :  3
+FPS=98.53, total frames = 1000 , time=10.1487 seconds
+--threads :  4
+FPS=117.19, total frames = 1000 , time=8.5330 seconds
+--threads :  5
+FPS=129.70, total frames = 1000 , time=7.7104 seconds
+--threads :  6
+FPS=102.74, total frames = 1000 , time=9.7332 seconds
+--threads :  7
+FPS=112.99, total frames = 1000 , time=8.8500 seconds
+
+#PRUNED CNN WITH PYTHON APP AND MULTITHREADING
+--threads :  1
+FPS=144.69, total frames = 1000 , time=6.9112 seconds
+--threads :  2
+FPS=249.52, total frames = 1000 , time=4.0077 seconds
+--threads :  3
+FPS=281.83, total frames = 1000 , time=3.5483 seconds
+--threads :  4
+FPS=341.33, total frames = 1000 , time=2.9297 seconds
+--threads :  5
+FPS=366.42, total frames = 1000 , time=2.7291 seconds
+--threads :  6
+FPS=332.40, total frames = 1000 , time=3.0084 seconds
+--threads :  7
+FPS=367.89, total frames = 1000 , time=2.7182 seconds
