@@ -23,7 +23,7 @@ This lab discusses various optimization techniques that you can use to reconcile
    
     ![Config Compile](./images/config_compile.png)
 
-3. In the **Configuration Settings** dialog box edit `pipeline_loops` to specify  `6`. This indicates that the tool should only automatically pipeline loops with six or fewer iterations. The default setting is 64.
+3. In the **Configuration Settings** dialog box edit `pipeline_loops` to specify  `6`. This indicates that the tool should automatically unroll inner loops with six or fewer iterations. The default setting is 64.
 
 5. Click **OK**  to add the `config_compile` command to limit the automatic loop pipelining as specified.
 
@@ -31,11 +31,13 @@ This lab discusses various optimization techniques that you can use to reconcile
 
     This configuration might be an acceptable response to II violations when the loops are not in the critical path of the design, or they represent a small problem relative to some larger problems that must be resolved. In other words, not all violations need to be resolved, and in some cases, not all violations can be resolved. They are simply artifacts of performance.
 
-    >**TIP**: Back out the change before proceeding, right-click on the solution. Select **Solution Settings** command, and reset the `config_compile pipeline_loop` command to its default value. 
+   
 
-## Configure Pipeline Latency
+## Configure the Pipeline Initiation Interval
 
-Another possible optimization is to tell the tool that a specific latency is acceptable performance, for example of two or four clock cycles. This eliminates II violations because the latency would match your specification. The overall latency of an application indicates that perhaps II=4 for some loops is not really a problem.
+ >**ACTION**: Back out the change before proceeding, right-click on the solution. Select **Solution Settings** command, and reset the `config_compile pipeline_loop` command to its default value. 
+
+Another possible optimization is to tell the tool that a specific number of clock cycles before processing another sample is acceptable, for example of two or four clock cycles. This eliminates II violations because the latency would then match your specification. The overall latency of an application indicates that perhaps II=4 for some loops is not really a problem.
 
 In the last section, the **config_compile** command is a tool configuration command that affects the compilation of the whole design. This optimization uses a code directive applied to a specific portion of the source code rather than to the tool itself.
 
@@ -74,9 +76,11 @@ The `HLS PIPELINE II=4` is added to the Directive view.
 
     ![Pipeline Defined II](./images/pipeline-defined-ii.png)
 
->**TIP**: Back out the change before proceeding. Select the source code tab to make it active and display the Directive view. Right-click **HLS PIPELINE II=4** and select **Remove Directive**. 
+
 
 ## Assign Dual-Port RAMs with BIND_STORAGE
+
+>**ACTION**: Back out the change before proceeding. Select the source code tab to make it active and display the Directive view. Right-click **HLS PIPELINE II=4** and select **Remove Directive**. 
 
 In some designs, a Guidance message `Unable to schedule load operation...` indicates a load/load (or read/read conflict) issue with memory transactions. In these cases rather than accepting the latency, you could try to optimize the implementation to achieve the best performance (II=1).
 
@@ -106,9 +110,9 @@ The specific problem of reading or writing to memory can possibly be addressed b
 
 8. Click **Run C Synthesis** to rerun synthesis to see the results. 
 
- >**TIP:** Back out the change before proceeding. Select the Source Code tab to make it active and display the Directive view. Right-click on **HLS BIND_STORAGE** pragmas and select **Remove Directive**.  
-
 ## Assign an Array Partition
+
+ >**ACTION:** Back out the change before proceeding. Select the Source Code tab to make it active and display the Directive view. Right-click on **HLS BIND_STORAGE** pragmas and select **Remove Directive**.  
 
 Another approach to solve memory port conflicts is to use the ARRAY_PARTITION directive to reconfigure the structure of an array. ARRAY_PARTITION lets you partition an array into smaller arrays or into individual registers instead of one large array. This effectively either increases the amount of read and write ports for the storage and potentially improves the throughput of the design. 
 

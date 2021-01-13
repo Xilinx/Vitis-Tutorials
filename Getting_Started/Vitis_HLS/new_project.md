@@ -72,7 +72,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
       3. Leave the clock uncertainty blank. The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=creatingnewvitishlsproject.html;a=ycw1585572210561) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
       4. Define the part for the project by selecting the **Browse (...)** command.
 
-            This opens the Device Selection dialog box.
+            This opens the Device Selection dialog box (our device shows in the **Boards** category, see next step...).
         ![Add Sources](./images/create_project-select_part.png)
 
          The Device Selection dialog box lets you specify a Xilinx device for the project or a board containing one or more Xilinx devices.
@@ -83,7 +83,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
        1. Select **Alveo U200 Data Center Accelerator Card**.
          1. Click **OK**.
 
-        You are returned to the Solution Configuration dialog window.
+        You are back to the New vitis HLS Project dialog window.
 
 8. In the Solution Configuration dialog box, select the **Vitis Kernel Flow Target** from the dropdown menu.
 
@@ -96,7 +96,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 
 ## Conclusion
 
-You created the DCT project, targeted your Xilinx device or board, and configured the solution characteristics. You are ready to move to the next lab, [Running High-Level Synthesis and Analyzing Results](./synth_and_analysis.md).
+You created the DCT project, targeted your Xilinx device or board, and configured the solution characteristics. You are ready to move to the next lab, [Running Simulation, Synthesis and Analyzing Results](./synth_and_analysis.md).
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
