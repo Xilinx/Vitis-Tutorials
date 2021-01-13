@@ -35,7 +35,7 @@ This lab discusses various optimization techniques that you can use to reconcile
 
 ## Configure the Pipeline Initiation Interval
 
- >**TO DO**: Back out the change before proceeding, right-click on the solution. Select **Solution Settings** command, and reset the `config_compile pipeline_loop` command to its default value. 
+ >**ACTION**: Back out the change before proceeding, right-click on the solution. Select **Solution Settings** command, and reset the `config_compile pipeline_loop` command to its default value. 
 
 Another possible optimization is to tell the tool that a specific number of clock cycles before processing another sample is acceptable, for example of two or four clock cycles. This eliminates II violations because the latency would then match your specification. The overall latency of an application indicates that perhaps II=4 for some loops is not really a problem.
 
@@ -80,7 +80,7 @@ The `HLS PIPELINE II=4` is added to the Directive view.
 
 ## Assign Dual-Port RAMs with BIND_STORAGE
 
->**TO DO**: Back out the change before proceeding. Select the source code tab to make it active and display the Directive view. Right-click **HLS PIPELINE II=4** and select **Remove Directive**. 
+>**ACTION**: Back out the change before proceeding. Select the source code tab to make it active and display the Directive view. Right-click **HLS PIPELINE II=4** and select **Remove Directive**. 
 
 In some designs, a Guidance message `Unable to schedule load operation...` indicates a load/load (or read/read conflict) issue with memory transactions. In these cases rather than accepting the latency, you could try to optimize the implementation to achieve the best performance (II=1).
 
