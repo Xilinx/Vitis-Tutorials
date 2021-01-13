@@ -82,8 +82,6 @@ Complete the labs in the following order:
 
 4. [Reviewing the Dataflow Optimization](./dataflow_design.md) - Add the Dataflow optimization to achieve even better results.
 
-5. [Using the HLS Kernel in the Vitis Tool](./using_the_kernel.md) - Use the Vitis integrated design environment (IDE) to create a new application project with the host and kernel code.
-
 -->
 
 </br>
