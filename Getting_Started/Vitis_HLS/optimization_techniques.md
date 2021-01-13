@@ -110,9 +110,9 @@ The specific problem of reading or writing to memory can possibly be addressed b
 
 8. Click **Run C Synthesis** to rerun synthesis to see the results. 
 
- >**TIP:** Back out the change before proceeding. Select the Source Code tab to make it active and display the Directive view. Right-click on **HLS BIND_STORAGE** pragmas and select **Remove Directive**.  
-
 ## Assign an Array Partition
+
+ >**ACTION:** Back out the change before proceeding. Select the Source Code tab to make it active and display the Directive view. Right-click on **HLS BIND_STORAGE** pragmas and select **Remove Directive**.  
 
 Another approach to solve memory port conflicts is to use the ARRAY_PARTITION directive to reconfigure the structure of an array. ARRAY_PARTITION lets you partition an array into smaller arrays or into individual registers instead of one large array. This effectively either increases the amount of read and write ports for the storage and potentially improves the throughput of the design. 
 
