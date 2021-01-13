@@ -10,7 +10,7 @@
  </tr>
 </table>
 
-# 2. Running High-Level Synthesis and Analyzing Results
+# 2. Running Simulation, Synthesis and Analyzing Results
 
 ## Run the C Simulation
 
@@ -45,7 +45,7 @@ With the source code and testbench added to the project, you can now run the C s
 
    Some of the key highlights of the Control Flow graph are as follows:
 
-   * Shows the critical path in your C/C++ code (as indicated by the red arrows and is an artifact of code profiling). 
+   * Shows the control paths in your C/C++ code (as indicated by the red arrows and is an artifact of code profiling). 
 
        * The percentages on the red arrows indicate the percentage of time that particular branch is taken versus the other branch. This gives you an idea of where the time is spent inside the design and the areas to focus on.
          
@@ -55,7 +55,9 @@ With the source code and testbench added to the project, you can now run the C s
        * If memory accesses are on different branches, then these accesses would be consider mutually exclusive (and therefore no conflict can occur). 
       * If however, the memory accesses are on the same branch, then loop II violations can occur because of multiple memory accesses in the same sequential portion of the code. 
 
-6. To run synthesis, simply click the **C Synthesis** toolbar button. The synthesis command runs, and writes a transcript in the Console view. Examine the transcript to see what steps the tool takes during synthesis. The following list describes some of the steps listed:
+## Run the C Synthesis
+
+1. To run synthesis, simply click the **C Synthesis** toolbar button. The synthesis command runs, and writes a transcript in the Console view. Examine the transcript to see what steps the tool takes during synthesis. The following list describes some of the steps listed:
    * Project and solution initialization loads source and constraints files, and configures the active solution for synthesis.
    * Start compilation reads source files into memory. 
    * Interface detection and setup reviews and generates port and block interfaces for the function. 
@@ -73,7 +75,7 @@ With the source code and testbench added to the project, you can now run the C s
 
    The Vitis HLS tool also automatically inlines small functions, dissolving the logic into the higher-level calling functions, and pipelines small loops with limited iterations. These features are configurable by user directives or pragmas.
 
-7. After synthesis completes, the Synthesis Summary report displays as shown in the following figure. Review the results.
+2. After synthesis completes, the Synthesis Summary report displays as shown in the following figure. Review the results.
 
    ![Simplified Synthesis Report](./images/dct_synthesis_report.png)
 
@@ -97,7 +99,7 @@ The Synthesis Summary report displays the results of synthesis, including perfor
 
    The Analysis perspective provides a view of different elements of your project, to evaluate the results of synthesis and the performance of your current solution. The Analysis perspective opens the Schedule Viewer by default.
 
-   The left side of the Schedule Viewer lists each operation in chronological order in the synthesized function. It displays the clock cycles presented horizontally as a timeline starting at clock cycle 0, and running through to completion. You can select operations from the list to view the connections between them.
+   The left side of the Schedule Viewer lists each operation in chronological order in the synthesized function. It displays the design control steps presented horizontally as a timeline starting at step 0, and running through to completion. You can select operations from the list to view the connections between them.
 
    The default view shows all of the operations. However, a drop-down menu at the top of the Schedule Viewer lets you select specific functions, loops, or elements of the design that are of interest. 
 

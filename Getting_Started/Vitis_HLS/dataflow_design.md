@@ -12,7 +12,7 @@
 
 ### 4. Reviewing the DATAFLOW Optimization
 
-In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to increase task-level parallelism of the optimized functions or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rdd1585343102486.html) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
+In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to enable task-level parallelism for functions or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rdd1585343102486.html) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
 
 The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code on top of the loop-level parallelism where possible.
 
