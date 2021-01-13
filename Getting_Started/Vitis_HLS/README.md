@@ -70,7 +70,6 @@ Complete the labs in the following order:
 * [Running High-Level Synthesis and Analyzing Results](./synth_and_analysis.md)
 * [Using Optimization Techniques](./optimization_techniques.md)
 * [Reviewing the DATAFLOW Optimization](./dataflow_design.md)
-* [Using the HLS Kernel in the Vitis Tool](./using_the_kernel.md)
 
 <!--
 
