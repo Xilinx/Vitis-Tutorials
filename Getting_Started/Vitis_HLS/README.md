@@ -70,7 +70,6 @@ Complete the labs in the following order:
 * [Running High-Level Synthesis and Analyzing Results](./synth_and_analysis.md)
 * [Using Optimization Techniques](./optimization_techniques.md)
 * [Reviewing the DATAFLOW Optimization](./dataflow_design.md)
-* [Using the HLS Kernel in the Vitis Tool](./using_the_kernel.md)
 
 <!--
 
@@ -81,8 +80,6 @@ Complete the labs in the following order:
 3. [Using Optimization Techniques](./optimization_techniques.md) - Try different optimization techniques to achieve the initiation interval (II)=1.
 
 4. [Reviewing the Dataflow Optimization](./dataflow_design.md) - Add the Dataflow optimization to achieve even better results.
-
-5. [Using the HLS Kernel in the Vitis Tool](./using_the_kernel.md) - Use the Vitis integrated design environment (IDE) to create a new application project with the host and kernel code.
 
 -->
 
