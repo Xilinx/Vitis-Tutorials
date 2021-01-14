@@ -11,17 +11,17 @@ VPPFLAGS := --platform $(PFM) -t $(TARGET) -s -g
 VPPLFLAGS := --jobs $(JOBS) --config profile.ini
 
 BOARD_CONFIG := connectivity_u200.ini
-ifeq (xilinx_u250, $(findstring xilinx_u250, $(PLATFORM)))
+ifeq (u250, $(findstring u250, $(PLATFORM)))
 	BOARD_CONFIG := connectivity_u250.ini
 endif
-ifeq (xilinx_u50, $(findstring xilinx_u50, $(PLATFORM)))
+ifeq (u50, $(findstring u50, $(PLATFORM)))
 	BOARD_CONFIG := connectivity_u50.ini
 endif
 VPPLFLAGS += --config $(BOARD_CONFIG)
 
 XOS = vadd.xo wide_vadd.xo resize_rgb.xo resize_blur.xo
 
-IP_CACHE_DIR ?= ../../../../ip_cache
+IP_CACHE_DIR ?= ./ip_cache
 
 .phony: clean traces help
 
