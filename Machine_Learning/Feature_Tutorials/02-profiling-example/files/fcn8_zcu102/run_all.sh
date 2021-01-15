@@ -18,18 +18,31 @@
 * under the License.
 */
 '
+
+#########################################################################
+
+cd ~
+mv fcn8_zcu102.tar ~/DNNDK/
+cd ~/DNNDK
+tar -xvf fcn8_zcu102.tar
+cd fcn8_zcu102
+
 #unpack test images
-tar -xvf ./test.tar.gz
+tar -xvf ./test.tar
 tar -xvf ./test1.tar
+
+#########################################################################
+
+# crosscompile the C++ applications with VART APIs
+bash ./crosscompile_target.sh
+
+#########################################################################
 
 # make softlinks
 cd fcn8
 ln -nsf ../workspace ./workspace
-cd ../fcn8ups
-ln -nsf ../workspace ./workspace
 
 #run python3 script on fcn8
-cd ../fcn8/
 cd model
 python3 ./run_fcn8_on_dpu.py
 cd ..
@@ -38,16 +51,7 @@ cd ..
 ./fcn8 5
 ./fcn8 8
 
-#run python3 script on fcn8ups
-cd ../fcn8ups
-cd model
-python3 ./run_fcn8ups_on_dpu.py
-cd ..
-./fcn8ups 1
-./fcn8ups 3
-./fcn8ups 5
-./fcn8ups 8
-
+#########################################################################
 
 # profiling
 dexplorer -m profile
@@ -57,15 +61,7 @@ ln -nsf ../workspace1 ./workspace
 #run C++ executable with 1 thread
 ./dbg_fcn8 1
 
-cd ../fcn8ups
-ln -nsf ../workspace1 ./workspace
-#run C++ executable with 1 thread
-./dbg_fcn8ups 1
+#########################################################################
 
 
 cd ..
-
-
-
-
-

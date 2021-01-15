@@ -17,12 +17,12 @@ CNN=fcn8
 
 PROJECT = $(CNN)
 
-#override CROSS_COMPILE := /opt/petalinux/2019.2/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-
-override CROSS_COMPILE := /opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-
+##override CROSS_COMPILE := /opt/petalinux/2019.2/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-
+#override CROSS_COMPILE := /opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-
 
-# If need to compile the model on the board directly, just comment out SYSROOT
-#override SYSROOT := /opt/petalinux/2019.2/sysroots/aarch64-xilinx-linux
-override SYSROOT := /opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux
+## If need to compile the model on the board directly, just comment out SYSROOT
+##override SYSROOT := /opt/petalinux/2019.2/sysroots/aarch64-xilinx-linux
+#override SYSROOT := /opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux
 
 LDFLAGS   :=  -ln2cube -lhineon -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
 LDFLAGS	  +=	--sysroot=$(SYSROOT) -L$(SYSROOT)/usr/local/lib/ -L${SYSROOT}/lib -L${SYSROOT}/usr/lib

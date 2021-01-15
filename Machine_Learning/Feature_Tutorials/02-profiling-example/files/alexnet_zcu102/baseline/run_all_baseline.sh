@@ -18,8 +18,16 @@
 
 # *******************************************************************************
 
-echo " "
-echo "./top2_alexnetBNnoLRN 1"
-./top2_alexnetBNnoLRN 1 | tee tmp_logfile.txt
-python3 ./check_dpu_runtime_accuracy.py -i ./tmp_logfile.txt
-#rm ./tmp_logfile.txt
+cd ../
+tar -xvf test_images.tar
+cd ./baseline
+
+ln -nsf ../test_images ./test_images
+ln -nsf ../test_image  ./test_image
+
+# run image classification for prediction accuracy
+source ./run_top2_alexnet.sh
+
+
+# run profiling
+source ./run_fps_alexnet.sh

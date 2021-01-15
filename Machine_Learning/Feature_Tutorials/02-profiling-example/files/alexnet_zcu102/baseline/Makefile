@@ -16,12 +16,13 @@ CNN=alexnetBNnoLRN
 
 PROJECT = $(CNN)
 
+define UNUSED
 # If need to compile the model on the board directly, just comment out SYSROOT
 
 #override CROSS_COMPILE := /opt/petalinux/2019.2/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-
-override  CROSS_COMPILE := /opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-
+override  CROSS_COMPILE := ~/petalinux_sdk/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-
 #override SYSROOT := /opt/petalinux/2019.2/sysroots/aarch64-xilinx-linux
-override  SYSROOT := /opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux
+override  SYSROOT := ~/petalinux_sdk/sysroots/aarch64-xilinx-linux
 
 LDFLAGS   :=  -ln2cube -lhineon -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread
 LDFLAGS   +=  --sysroot=$(SYSROOT) -L$(SYSROOT)/usr/local/lib/ -L${SYSROOT}/lib -L${SYSROOT}/usr/lib
@@ -31,6 +32,17 @@ CC        :=   $(CROSS_COMPILE)gcc
 
 CFLAGS    :=   --sysroot=$(SYSROOT) -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math
 CFLAGS    +=   -I$(SYSROOT)/usr/include -I$(SYSROOT)/usr/local/include -I./include -I../common/
+endef
+
+
+CXX       ?=   g++
+CC        ?=   gcc
+
+CFLAGS    +=   -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math
+CFLAGS    +=   -I../common/
+
+LDFLAGS   +=  -ln2cube -lhineon -lopencv_videoio  -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_core -lpthread 
+
 
 CUR_DIR =   $(shell pwd)
 
@@ -69,7 +81,9 @@ $(PROJECT) : $(OBJ)
 
 clean:
 	$(RM) -rf $(BUILD)
-	$(RM) $(PROJECT)
+	$(RM) $(PROJECT) 
+ultraclean:	
+	$(RM) *fps_$(PROJECT)* top2_$(PROJECT)* *~ main.*
 
 $(BUILD) :
 	-mkdir -p $@
