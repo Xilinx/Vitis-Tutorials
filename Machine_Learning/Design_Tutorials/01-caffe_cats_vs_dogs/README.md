@@ -12,13 +12,13 @@
 
 ### Current status
 
-1. Tested with Vitis AI 1.3 (docker image ``xdock.xilinx.com/vitis-ai-gpu:1.3.326``)
+1. Tested with Vitis AI 1.3.
 
 2. Tested in hardware on ZCU102 board.
 
-3. Totally replaced old DNNDK APIs with VART APIs
+3. Totally replaced old DNNDK APIs with VART APIs.
 
-** Date: 9 Jan 2021 **
+** Date: 13 Jan 2021 **
 
 
 
@@ -64,7 +64,7 @@ AlexNet is a well-known CNN that works with images 227x227x3 in size. It is desc
 - Familiarity with Caffe (here is the official [online Caffe tutorial](http://caffe.berkeleyvision.org/tutorial/)).
 
 
-### Dos-to-Unix Conversion (TO BE VAI1v3 UPDATED)
+### Dos-to-Unix Conversion
 
 In case you might get some strange errors during the execution of the scripts, you have to pre-process -just once- all the``*.sh`` shell and the python ``*.py`` scripts with the [dos2unix](http://archive.ubuntu.com/ubuntu/pool/universe/d/dos2unix/dos2unix_6.0.4.orig.tar.gz) utility.
 In that case run the following commands from your Ubuntu host PC (out of the Vitis AI docker images):
