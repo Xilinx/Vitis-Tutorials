@@ -101,6 +101,6 @@ Complete the labs in the following order:
 
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a> — <a href="/../README.md">Return to Getting Started Pathway</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a> — <a href="./Getting_Started/README.md">Return to Getting Started Pathway</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
