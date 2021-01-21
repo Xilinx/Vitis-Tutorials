@@ -1,6 +1,6 @@
 # Mixed Kernels Design Tutorial with AXI Stream and Vitis
 
-This tutorial demostrate the design flow for an example mixed kernels hardware design, which includes both RTL kernel and HLS C kernel, as well as Vitis Vision Library. The design generates a real-time clock image, resize it, then alpha-mix it with an input image in global memory, finally output the result image to global memory. AXI stream interface is used for the kernel-to-kernel connection.
+This tutorial demonstrate the design flow for an example mixed kernels hardware design, which includes both RTL kernel and HLS C kernel, as well as Vitis Vision Library. The design generates a real-time clock image, resizes it, then alpha-mix it with an input image in global memory, finally output the result image to global memory. AXI stream interface is used for the kernel-to-kernel connection.
 
 <div align="center">
 <img src="./doc/images/alpha_mixing.jpg" alt="Alpha Mixing" >
@@ -96,7 +96,7 @@ The kernel is composed of three blocks: *rtc_gen_axi_read_master* for AXI master
 <img src="./doc/images/rtc_gen_block.png" alt="rtc_gen Block" >
 </div>
 
-When trigger by the host, the kernel will read time value from internel real-time-clock, and output a frame of time image corresponding to the time value.
+When triggered by the host, the kernel will read time value from internel real-time-clock, and output a frame of time image corresponding to the time value.
 
 Following table summarizes the arguments used by *rtc_gen* kernel.
 
@@ -112,7 +112,7 @@ Following table summarizes the arguments used by *rtc_gen* kernel.
 
 <br/><br/>
 
-Please read [RTC_GEN RTL Kernel Creation](./doc/rtc_gen_tutorial.md) for more detailes of the RTL kernel *rtc_gen* and the step-by-step guideline to create this RTL kernel.
+Please read [RTC_GEN RTL Kernel Creation](./doc/rtc_gen_tutorial.md) for more details of the RTL kernel *rtc_gen* and the step-by-step guideline to create this RTL kernel.
 
 ## HLS C Kernel: alpha_mix (XO)
 
@@ -158,7 +158,7 @@ You could refer to below figure for the meaning of some kernel arguments.
 <img src="./doc/images/alpha_arg.png" alt="alpha_mix kernel arguments" >
 </div>
 
-Please read [ALPHA_MIX HLS C Kernel Creation](./doc/alpha_mix_tutorial.md) for more detailes of the HLS C kernel *alpha_mix*.
+Please read [ALPHA_MIX HLS C Kernel Creation](./doc/alpha_mix_tutorial.md) for more details of the HLS C kernel *alpha_mix*.
 
 ## HLS C Kernel: strm_dump (XO)
 
@@ -184,7 +184,7 @@ This is a simple test system for *rtc_gen* kernel, which integrates two kernels:
 
 ### rtc_alpha_hw.xclbin / rtc_alpha_hw_emu.xclbin
 
-This is the fully implemented system, which integrated all the three kernels: *rtc_gen*, *alpha_mix* and *strm_dump*, which are connected together via AXI stream bus. Please note the function of the kernel *strm_dump* is very easy to be merged into *alpha_mix* kernel. We seperated the *strm_dump* kernel here just to demostrate the kernel-to-kernel AXI stream connection functionality. Refer to the following connection diagram on U50 platform. According to the different building target (hw or hw_emu), two XCLBIN files will be generated.
+This is the fully implemented system, which integrated all the three kernels: *rtc_gen*, *alpha_mix* and *strm_dump*, which are connected together via AXI stream bus. Please note the function of the kernel *strm_dump* is very easy to be merged into *alpha_mix* kernel. We separated the *strm_dump* kernel here just to demonstrate the kernel-to-kernel AXI stream connection functionality. Refer to the following connection diagram on U50 platform. According to the different building target (hw or hw_emu), two XCLBIN files will be generated.
 
 <div align="center">
 <img src="./doc/images/rtc_alpha_diagram.png" alt="rtc_alpha Diagram" >
@@ -194,7 +194,7 @@ This is the fully implemented system, which integrated all the three kernels: *r
 
 ### rtc_gen_test.cpp
 
-This program first judge the running mode according to the environment variable *XCL_EMULATION_MODE*, then choose to  use binary file *rtc_gen_test_hw.xclbin* or *rtc_gen_test_hw_emu.xclbin* to finish the testing of RTL kernel *rtc_gen*. It will test both the 8-digit and 11-digit clock format, and the generated clock image will be displayed directly. The program also uses XRT low-level API *xclRegRead* to read and print out the value of regsiter *time_val* of *rtc_gen* kernel, namely the value of the internal hardware time counter. The value of *time_val* is also used to control the image display refresh. To ensure the correct operation of *xclRegRead* function, please ensure to create or modify *xrt.ini* file in the execution directory to add following lines:
+This program first judges the running mode according to the environment variable *XCL_EMULATION_MODE*, then chooses to  use binary file *rtc_gen_test_hw.xclbin* or *rtc_gen_test_hw_emu.xclbin* to finish the testing of RTL kernel *rtc_gen*. It will test both the 8-digit and 11-digit clock format, and the generated clock image will be displayed directly. The program also uses XRT low-level API *xclRegRead* to read and print out the value of register *time_val* of *rtc_gen* kernel, namely the value of the internal hardware time counter. The value of *time_val* is also used to control the image display refresh. To ensure the correct operation of *xclRegRead* function, please ensure to create or modify *xrt.ini* file in the execution directory to add following lines:
 
 ~~~
 [Runtime]
@@ -202,13 +202,13 @@ exclusive_cu_context=true
 ~~~
 ### rtc_alpha_tb.cpp
 
-This program first judge the running mode according to the environment variable *XCL_EMULATION_MODE*, then choose to use binary file *rtc_alpha_hw.xclbin* or *rtc_alpha_hw_emu.xclbin* to mix the generated real time clock images to a background image. The user can select background image, set time format, set clock time by command parameters. The user can also change the color, size, and position of the clock image by modified the program source code. This test program also use *xclRegRead* API to read the value of register *time_val* of *rtc_gen* kernel and use to value to control image display refresh.
+This program first judges the running mode according to the environment variable *XCL_EMULATION_MODE*, then chooses to use binary file *rtc_alpha_hw.xclbin* or *rtc_alpha_hw_emu.xclbin* to mix the generated real time clock images to a background image. The user can select background image, set time format, and set clock time by command parameters. The user can also change the color, size, and position of the clock image by modifying the program source code. This test program also uses *xclRegRead* API to read the value of register *time_val* of *rtc_gen* kernel and use that value to control image display refresh.
 
 <br/>
 
 ## How to Use This Repository
 
-Before go through the following steps, don't forget to source XRT and Vitis setup files, for example:
+Before going through the following steps, don't forget to source XRT and Vitis setup files, for example:
 
 ~~~
 source /opt/xilinx/xrt/setup.sh
@@ -237,7 +237,7 @@ make clean
       Command to remove all the generated files.
 ~~~
 
-In the make commond options, the TARGET can be *hw* or *hw_emu*. Because the *rtc_gen* kernel doesn't provide software emulation model, so *sw_emu* mode cannot be used. When the TARGET is *hw*, the XCLBIN and XO files will be with *_hw* postfix; when the TARGET is *hw_emu*, the XCLBIN and XO files will be with *_hw_emu* postfix. Please note the RTL kernel *rtc_gen* will not be affected by the *hw* or *hw_emu* option, and there will only be a XO file *rtc_gen.xo*.
+In the make command options, the TARGET can be *hw* or *hw_emu*. Because the *rtc_gen* kernel doesn't provide software emulation model, *sw_emu* mode cannot be used. When the TARGET is *hw*, the XCLBIN and XO files will be with *_hw* postfix; when the TARGET is *hw_emu*, the XCLBIN and XO files will be with *_hw_emu* postfix. Please note the RTL kernel *rtc_gen* will not be affected by the *hw* or *hw_emu* option, and there will only be a XO file *rtc_gen.xo*.
 
 The PLATFORM could be one of the six choices: xilinx_u200_gen3x16_xdma_1_1_202020_1, xilinx_u200_xdma_201830_2, xilinx_u250_gen3x16_xdma_3_1_202020_1, xilinx_u250_xdma_201830_2, xilinx_u50_gen3x16_xdma_201920_3 and xilinx_u280_xdma_201920_3. No matter whether you have these Alveo cards installed, you can use the platform as the build PLATFORM if you have installed the development platform package (deb or rpm packages) on your system. You can look into */opt/xilinx/platform* directory or use command *platforminfo -l* to check which platforms have been installed. The finally generated xclbin and xo files will be in *./hw* directory after the successful execution of the make command. 
 
@@ -308,7 +308,7 @@ source setup_emu.sh -s on -p xilinx_u50_gen3x16_xdma_201920_3
 
 *setup_emu.sh* will generate necessary configuration file and setting up the environment. 
 
-**Note:** The *PLATFORM_NAME* you input here should be consistant with the XCLBIN files in *./sw/build* directory.
+**Note:** The *PLATFORM_NAME* you input here should be consistent with the XCLBIN files in *./sw/build* directory.
 
 For more detailes on the hardware emulation for this example design, please read [Emulation Turotial](./doc/hw_emu_tutorial.md)
 
@@ -395,6 +395,6 @@ You could make modification to following *#define* section at the beginning of *
 
 * Step 6: try Vitis profiling function with **rtc_gen_test** and **rtc_alpha_tb** program.
 
-Vitis provides powerful profiling features which enable you to get deeper view into the performance, bandwidth usage, design bottleneck, etc. Please read [Profiling the Application](./doc/profile_tutorial.md) for more details. 
+Vitis provides powerful profiling features which enable you to get a deeper view into the performance, bandwidth usage, design bottleneck, etc. Please read [Profiling the Application](./doc/profile_tutorial.md) for more details. 
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
