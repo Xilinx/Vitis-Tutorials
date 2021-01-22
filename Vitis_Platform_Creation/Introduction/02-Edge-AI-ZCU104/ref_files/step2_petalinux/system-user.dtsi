@@ -41,8 +41,6 @@
 &axi_intc_0 {
       xlnx,kind-of-intr = <0x0>;
       xlnx,num-intr-inputs = <0x20>;
-      interrupt-parent = <&gic>;
-      interrupts = <0 89 4>;
 };
 
 &sdhci1 {

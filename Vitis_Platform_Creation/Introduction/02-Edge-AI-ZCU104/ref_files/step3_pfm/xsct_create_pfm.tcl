@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-setws ./build
+# setws ./build
 set platform_name [lindex $argv 0]
 puts "The platform name is \"$platform_name\"" 
 
@@ -20,13 +20,13 @@ set xsa_path [lindex $argv 1]
 puts "The xsa path is \"$xsa_path\"" 
 
 set OUTPUT platform_repo
-set SW_COMP platform_repo/tmp/sw_components/
+# set SW_COMP platform_repo/tmp/sw_components/
 
 platform create -name $platform_name -desc "A custom platform ZCU104 platform" -hw $xsa_path/$platform_name.xsa -out ./$OUTPUT -no-boot-bsp 
 
 # Linux domain
 domain create -name xrt -proc psu_cortexa53 -os linux -arch {64-bit} -runtime {ocl} -image {./image}  -bootmode {sd}
-domain active xrt
+# domain active xrt
 domain config -boot {./boot}
 domain config -bif ./boot/linux.bif
 domain config -pmuqemu-args ./qemu/pmu_args.txt

@@ -41,17 +41,20 @@ update_config:
 	# PetaLinux Config: Use ZCU104 device tree
 	echo 'CONFIG_SUBSYSTEM_MACHINE_NAME="zcu104-revc"' >> $(PETALINUX_CONFIG)
 	echo 'CONFIG_YOCTO_MACHINE_NAME="zcu104-zynqmp"' >> $(PETALINUX_CONFIG)
+	# PetaLinux Config: allow auto login for easy debugging
+	echo 'CONFIG_auto-login=y' >> $(PETALINUX_ROOTFS_CONFIG)
 
 update_rootfs_config:
 	# PetaLinux Rootfs: Enable XRT
 	echo 'CONFIG_packagegroup-petalinux-xrt=y' >> $(PETALINUX_ROOTFS_CONFIG)
-	echo 'CONFIG_xrt-dev=y' >> $(PETALINUX_ROOTFS_CONFIG)
+	# echo 'CONFIG_xrt-dev=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	# PetaLinux Rootfs: Enable DNF
 	echo 'CONFIG_dnf=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	echo 'CONFIG_imagefeature-package-management=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	# PetaLinux Rootfs: Enable packages for EoU
 	echo 'CONFIG_e2fsprogs-resize2fs=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	echo 'CONFIG_parted=y' >> $(PETALINUX_ROOTFS_CONFIG)
+	echo 'CONFIG_resize-part=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	# PetaLinux Rootfs: Enable Vitis AI dependencies
 	echo 'CONFIG_packagegroup-petalinux-vitisai=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	# PetaLinux Rootfs: Enable Vitis AI demo dependencies

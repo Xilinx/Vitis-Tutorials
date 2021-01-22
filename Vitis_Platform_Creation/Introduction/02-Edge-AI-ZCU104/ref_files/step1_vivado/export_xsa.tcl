@@ -60,14 +60,7 @@ set_property platform.design_intent.datacenter "false" [current_project]
 generate_target all [get_files [current_bd_design].bd]
 
 
-# Implement design to genereate PDI
-# with all CPU available on this server
-#launch_runs impl_1 -to_step write_device_image -jobs [numberOfCPUs]
-#wait_on_run impl_1
-
 # Write expandable XSA to vivado directory
-# Use "-include_bit" to include PDI in XSA, which is reqired by PetaLinux
-#write_hw_platform -include_bit -force -file ./zcu104_custom.xsa
 write_hw_platform -force -file ./zcu104_custom.xsa
 
 
