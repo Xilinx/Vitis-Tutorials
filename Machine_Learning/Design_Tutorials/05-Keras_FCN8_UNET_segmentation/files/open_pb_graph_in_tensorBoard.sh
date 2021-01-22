@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-: '
+
 /**
 
 * © Copyright (C) 2016-2020 Xilinx, Inc
@@ -20,10 +20,9 @@
 */
 '
 
-MODEL=$1 #./workspace/freeze/fcn8/frozen_graph.pb
+MODEL=$1 #./build/freeze/fcn8/frozen_graph.pb
 
-#PYSCRIPT=/opt/vitis_ai/conda/pkgs/tensorflow_decent_gpu-1.12.0-py36h39e3cac_1/lib/python3.6/site-packages/tensorflow/python/tools/import_pb_to_tensorboard.py
-PYSCRIPT=/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib/python3.6/site-packages/tensorflow/python/tools/import_pb_to_tensorboard.py
+PYSCRIPT=/workspace/Vitis-AI-Quantizer/vai_q_tensorflow/tensorflow/python/tools/import_pb_to_tensorboard.py
 
 python $PYSCRIPT --model_dir=$MODEL --log_dir=./tb_log/
 

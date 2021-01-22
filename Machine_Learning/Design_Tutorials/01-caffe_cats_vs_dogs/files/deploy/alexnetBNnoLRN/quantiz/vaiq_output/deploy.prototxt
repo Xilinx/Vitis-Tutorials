@@ -19,6 +19,22 @@ layer {
   }
 }
 layer {
+  name: "data_fixed"
+  type: "FixedNeuron"
+  bottom: "data"
+  top: "data"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: OVER_FLOW
+    bit_width: 8
+    follow_data_layer: true
+  }
+}
+layer {
   name: "conv1"
   type: "Convolution"
   bottom: "data"
@@ -65,6 +81,21 @@ layer {
     pool: MAX
     kernel_size: 3
     stride: 2
+  }
+}
+layer {
+  name: "pool1_fixed"
+  type: "FixedNeuron"
+  bottom: "pool1"
+  top: "pool1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
   }
 }
 layer {
@@ -117,6 +148,21 @@ layer {
   }
 }
 layer {
+  name: "pool2_fixed"
+  type: "FixedNeuron"
+  bottom: "pool2"
+  top: "pool2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
   name: "conv3"
   type: "Convolution"
   bottom: "pool2"
@@ -150,6 +196,21 @@ layer {
   bottom: "conv3"
   top: "relu3"
   phase: TRAIN
+}
+layer {
+  name: "relu3_fixed"
+  type: "FixedNeuron"
+  bottom: "relu3"
+  top: "relu3"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
 }
 layer {
   name: "conv4"
@@ -186,6 +247,21 @@ layer {
   bottom: "conv4"
   top: "relu4"
   phase: TRAIN
+}
+layer {
+  name: "relu4_fixed"
+  type: "FixedNeuron"
+  bottom: "relu4"
+  top: "relu4"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
 }
 layer {
   name: "conv5"
@@ -236,6 +312,21 @@ layer {
   }
 }
 layer {
+  name: "pool5_fixed"
+  type: "FixedNeuron"
+  bottom: "pool5"
+  top: "pool5"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
   name: "fc6"
   type: "InnerProduct"
   bottom: "pool5"
@@ -267,6 +358,21 @@ layer {
   bottom: "fc6"
   top: "relu6"
   phase: TRAIN
+}
+layer {
+  name: "relu6_fixed"
+  type: "FixedNeuron"
+  bottom: "relu6"
+  top: "relu6"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
 }
 layer {
   name: "fc7"
@@ -303,6 +409,21 @@ layer {
   phase: TRAIN
 }
 layer {
+  name: "relu7_fixed"
+  type: "FixedNeuron"
+  bottom: "relu7"
+  top: "relu7"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
   name: "fc8"
   type: "InnerProduct"
   bottom: "relu7"
@@ -326,6 +447,21 @@ layer {
       type: "constant"
       value: 0
     }
+  }
+}
+layer {
+  name: "fc8_fixed"
+  type: "FixedNeuron"
+  bottom: "fc8"
+  top: "fc8"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  phase: TRAIN
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
   }
 }
 layer {

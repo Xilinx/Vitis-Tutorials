@@ -1,0 +1,170 @@
+## © Copyright (C) 2016-2020 Xilinx, Inc
+##
+## Licensed under the Apache License, Version 2.0 (the "License"). You may
+## not use this file except in compliance with the License. A copy of the
+## License is located at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+## WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+## License for the specific language governing permissions and limitations
+## under the License.
+
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  1
+ --model   :  ./fmnist/LeNet/model/LeNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/LeNet/model/LeNet.xmodel
+
+FPS=773.31, total frames = 5000 , time=6.4657 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  5
+ --model   :  ./fmnist/LeNet/model/LeNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/LeNet/model/LeNet.xmodel
+
+FPS=1063.02, total frames = 5000 , time=4.7036 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  6
+ --model   :  ./fmnist/LeNet/model/LeNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/LeNet/model/LeNet.xmodel
+
+FPS=787.37, total frames = 5000 , time=6.3502 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  1
+ --model   :  ./fmnist/miniVggNet/model/miniVggNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniVggNet/model/miniVggNet.xmodel
+
+FPS=1563.23, total frames = 5000 , time=3.1985 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  5
+ --model   :  ./fmnist/miniVggNet/model/miniVggNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniVggNet/model/miniVggNet.xmodel
+
+FPS=3821.91, total frames = 5000 , time=1.3082 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  6
+ --model   :  ./fmnist/miniVggNet/model/miniVggNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniVggNet/model/miniVggNet.xmodel
+
+FPS=3422.90, total frames = 5000 , time=1.4607 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  1
+ --model   :  ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel
+
+FPS=907.82, total frames = 5000 , time=5.5077 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  5
+ --model   :  ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel
+
+FPS=2067.28, total frames = 5000 , time=2.4186 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  6
+ --model   :  ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel
+
+FPS=1656.78, total frames = 5000 , time=3.0179 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  1
+ --model   :  ./fmnist/miniResNet/model/miniResNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniResNet/model/miniResNet.xmodel
+
+FPS=499.53, total frames = 5000 , time=10.0094 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  5
+ --model   :  ./fmnist/miniResNet/model/miniResNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniResNet/model/miniResNet.xmodel
+
+FPS=1383.32, total frames = 5000 , time=3.6145 seconds
+
+Command line options:
+ --images  :  ./fmnist_test/
+ --threads :  6
+ --model   :  ./fmnist/miniResNet/model/miniResNet.xmodel
+ --classes :  fmnist
+Found 5000 images - processing 5000 of them
+Found 1 subgraphs in ./fmnist/miniResNet/model/miniResNet.xmodel
+
+FPS=1389.66, total frames = 5000 , time=3.5980 seconds
+
+./rpt/logfile_fmnist_LeNet.txt  has  35005  lines
+number of total images predicted  4999
+number of top1 false predictions  338
+number of top1 right predictions  4661
+number of top5 false predictions  8
+number of top5 right predictions  4991
+top1 accuracy = 0.93
+top5 accuracy = 1.00
+
+./rpt/logfile_fmnist_miniVggNet.txt  has  35005  lines
+number of total images predicted  4999
+number of top1 false predictions  239
+number of top1 right predictions  4760
+number of top5 false predictions  2
+number of top5 right predictions  4997
+top1 accuracy = 0.95
+top5 accuracy = 1.
+
+./rpt/logfile_fmnist_miniGoogleNet.txt  has  35005  lines
+number of total images predicted  4999
+number of top1 false predictions  328
+number of top1 right predictions  4671
+number of top5 false predictions  7
+number of top5 right predictions  4992
+top1 accuracy = 0.93
+top5 accuracy = 1.00
+
+./rpt/logfile_fmnist_miniResNet.txt  has  35005  lines
+number of total images predicted  4999
+number of top1 false predictions  247
+number of top1 right predictions  4752
+number of top5 false predictions  0
+number of top5 right predictions  4999
+top1 accuracy = 0.95
+top5 accuracy = 1.00

@@ -23,6 +23,10 @@
 # python train_cifar10.py --network miniVggNet --weights keras_model/cifar10/miniVggNet --epochs  40 --init_lr 0.01 --batch_size 64
 # python train_cifar10.py --network miniResNet --weights keras_model/cifar10/miniResNet --epochs 100 --init_lr 0.1  --batch_size 128
 
+# modified by daniele.bagni@xilinx.com
+# date 24 / 11 / 2020
+
+
 
 # set the matplotlib backend so figures can be saved in the background
 import matplotlib
@@ -33,29 +37,34 @@ from custom_cnn import ConvNetFactory
 
 # import the necessary packages
 from sklearn.metrics import classification_report
-from keras.optimizers import SGD
-from keras.datasets import cifar10
-from keras.utils import to_categorical
-from keras import backend as K
-#import tensorflow.keras as K
 #from imutils import build_montages
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
-
 from datetime import datetime #DB
-from keras.utils import plot_model #DB
-from keras.callbacks import ModelCheckpoint #DB
-from keras.callbacks import LearningRateScheduler
-import os # DB
 
+import os # DB
 from random import seed
 from random import random
 from random import shuffle #DB
-
 import glob
-from keras.preprocessing.image import ImageDataGenerator
-from keras.preprocessing.image import img_to_array
+
+## Silence TensorFlow messages
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+## Import usual libraries
+import tensorflow as tf
+from tensorflow.keras.backend               import set_session
+from tensorflow.keras                       import backend as K
+from tensorflow.keras.utils                 import plot_model, to_categorical #DB
+from tensorflow.keras.preprocessing.image   import ImageDataGenerator #DB
+from tensorflow.keras                       import optimizers
+from tensorflow.keras.optimizers            import SGD
+from tensorflow.keras.callbacks             import ModelCheckpoint, TensorBoard, LearningRateScheduler
+from tensorflow.keras.datasets import cifar10
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import img_to_array
+
 
 ##################################################################################
 

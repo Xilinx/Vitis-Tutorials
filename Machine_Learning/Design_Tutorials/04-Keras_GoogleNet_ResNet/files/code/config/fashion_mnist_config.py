@@ -17,6 +17,8 @@
 ## under the License.
 '''
 
+# modified by daniele.bagni@xilinx.com
+# date 24 / 11 / 2020
 
 import os
 import numpy as np
@@ -33,7 +35,7 @@ def get_script_directory():
 SCRIPT_DIR = get_script_directory()
 
 # dataset top level folder
-DATASET_DIR = os.path.join(SCRIPT_DIR, "dataset/fashion-mnist")
+DATASET_DIR = os.path.join(SCRIPT_DIR, "dataset/fmnist")
 # train, validation, test and calibration folders
 TRAIN_DIR = os.path.join(DATASET_DIR, "train")
 VALID_DIR = os.path.join(DATASET_DIR, "valid")

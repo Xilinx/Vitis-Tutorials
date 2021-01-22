@@ -1,6 +1,6 @@
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ - Runtime and System Optimization - Acceleration Basics</h1>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - Runtime and System Optimization - Acceleration Basics</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -193,4 +193,4 @@ extensions for FPGA-specific tasks.)
 In the next [**section**](./runtime_sw_design.md), you'll learn the basic concepts of memory management
 you'll need to understand to optimize your application.
 
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p>

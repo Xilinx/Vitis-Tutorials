@@ -20,6 +20,9 @@
 */
 '''
 
+# modified by daniele.bagni@xilinx.com
+# date 20 / 11 / 2020
+
 
 ######################################################################
 ## Import libraries
@@ -31,31 +34,39 @@ import matplotlib.pyplot as plt
 from random import seed
 from random import random
 from random import shuffle
-import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
-import keras, sys, time, warnings
-from keras.models import *
-from keras.layers import *
-from keras import backend
-from datetime import datetime
-from keras.utils import plot_model
+import sys, time, warnings
 import gc
+import pandas as pd
+from datetime import datetime
+
 from config import fcn_config as cfg
 from config import fcn8_cnn as cnn
-import pandas as pd
+
+# Silence TensorFlow messages
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+import tensorflow as tf
+from tensorflow.keras.backend               import set_session
+from tensorflow.keras                       import backend
+from tensorflow.keras.models                import *
+from tensorflow.keras.layers                import *
+
 warnings.filterwarnings("ignore")
 
 ######################################################################
+
+# workaround for TF1.15 bug "Could not create cudnn handle: CUDNN_STATUS_INTERNAL_ERROR"
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-config = tf.ConfigProto()
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.85
 #config.gpu_options.allow_growth = True
 config.gpu_options.visible_device_list = "0"
-set_session(tf.Session(config=config))
+set_session(tf.compat.v1.Session(config=config))
 
 print("\n")
 print("python {}".format(sys.version))
-print("keras version {}".format(keras.__version__)); del keras
+print("keras version {}".format(tf.keras.__version__)); 
 print("tensorflow version {}".format(tf.__version__))
 print(backend.image_data_format())
 print("\n")

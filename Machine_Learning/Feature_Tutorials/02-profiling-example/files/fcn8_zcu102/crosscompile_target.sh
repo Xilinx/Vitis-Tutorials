@@ -38,12 +38,4 @@ cp ./fcn8 ./dbg_fcn8
 cp ./model/nor_dpu_fcn8.elf ./model/dpu_fcn8.elf
 make clean all
 
-cd ../fcn8ups
-cp ./model/dbg_dpu_fcn8ups.elf ./model/dpu_fcn8ups.elf
-make clean all
-cp ./fcn8ups ./dbg_fcn8ups
-
-cp ./model/nor_dpu_fcn8ups.elf ./model/dpu_fcn8ups.elf
-make clean all
-
-cd ../..
+cd ..

@@ -20,34 +20,44 @@
 */
 '''
 
+# modified by daniele.bagni@xilinx.com
+# date 20 / 11 / 2020
+
 
 import cv2, os
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
+import sys, time, warnings
+from datetime import datetime #DB
 
 ## Import usual libraries
 import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
-import keras, sys, time, warnings
-from keras.models import *
-from keras.layers import *
-from datetime import datetime #DB
-from keras.utils import plot_model #DB
+from tensorflow.keras.backend import set_session
+from tensorflow.keras.models import *
+from tensorflow.keras.layers import *
+from tensorflow.keras.utils import plot_model #DB
+
 import gc #DB
 from config import fcn_config as cfg #DB
 from config import fcn8_cnn as cnn #DB
 from config import unet as unet #DB
 
-import pandas as pd
 warnings.filterwarnings("ignore")
+# Silence TensorFlow messages
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-config = tf.ConfigProto()
+
+# workaround for TF1.15 bug "Could not create cudnn handle: CUDNN_STATUS_INTERNAL_ERROR"
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.85
 #config.gpu_options.allow_growth = True
 config.gpu_options.visible_device_list = "0"
-set_session(tf.Session(config=config))
+set_session(tf.compat.v1.Session(config=config))
 
 import argparse #DB
 # construct the argument parse and parse the arguments

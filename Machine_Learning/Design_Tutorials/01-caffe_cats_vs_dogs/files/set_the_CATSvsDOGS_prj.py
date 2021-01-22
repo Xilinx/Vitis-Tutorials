@@ -53,8 +53,8 @@ if (not os.path.exists(path_root)):
     print("ERROR: the ", path_root, "  directory does not exist!")
     sys.exit(0)
 
-## check the train.zip file is there
-#if (not os.path.exists(path_root + "/train.zip")):
+## check the kaggle_dogs_vs_cats.zip  file is there
+#if (not os.path.exists(path_root + "/kaggle_dogs_vs_cats.zip ")):
 #    print("ERROR: missing train.zip archive !")
 #    sys.exit(0)
 
@@ -62,11 +62,12 @@ if (not os.path.exists(path_root)):
 if (not os.path.exists(path_root + "/input")):
     os.mkdir(path_root + "/input")
 
-## unzip the train.zip file
-#os.system("unzip train.zip -d" + path_root + "/input")
+## unzip the kaggle_dogs_vs_cats.zip file
+os.system("unzip kaggle_dogs_vs_cats.zip -d" + path_root + "/input")
 
 # rename "/input/train" as "input/jpg"
-os.system("mv " + path_root + "/input/train " + path_root + "/input/jpg")
+os.system("mv "    + path_root + "/input/kaggle_dogs_vs_cats/train " + path_root + "/input/jpg")
+os.system("rm -r " + path_root + "/input/kaggle_dogs_vs_cats")
 
 # create subdirectories "input/jpg/cats" and "input/jpg/dogs"
 os.mkdir(path_root + "/input/jpg/cats")

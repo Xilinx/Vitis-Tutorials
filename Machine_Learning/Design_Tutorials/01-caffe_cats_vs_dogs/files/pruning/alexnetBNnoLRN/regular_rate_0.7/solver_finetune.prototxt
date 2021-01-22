@@ -1,0 +1,16 @@
+test_iter: 80
+test_interval: 1000
+base_lr: 0.001
+display: 50
+max_iter: 12000
+lr_policy: "step"
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0005
+stepsize: 2500
+snapshot: 6000
+snapshot_prefix: "pruning/alexnetBNnoLRN/regular_rate_0.7/snapshots/"
+solver_mode: GPU
+random_seed: 1201
+net: "pruning/alexnetBNnoLRN/regular_rate_0.7/net_finetune.prototxt"
+type: "Adam"

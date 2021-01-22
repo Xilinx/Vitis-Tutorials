@@ -49,16 +49,25 @@ SOFTWARE.
 '''
 
 # modified by daniele.bagni@xilinx.com
-# date 15 feb 2020
+# date 20 / 11 / 2020
 
 
 ## Import usual libraries
 import cv2, os
 import numpy as np
 import tensorflow as tf
-import keras, sys, time, warnings
-from keras.models import *
-from keras.layers import *
+import sys, time, warnings
+
+# Silence TensorFlow messages
+#0 = all messages are logged (default behavior)
+#1 = INFO messages are not printed
+#2 = INFO and WARNING messages are not printed
+#3 = INFO, WARNING, and ERROR messages are not printed
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Conv2D,BatchNormalization,Add,Dropout,MaxPooling2D,Input
+from tensorflow.keras.layers import Activation,UpSampling2D, Conv2DTranspose
+
 import matplotlib.pyplot as plt
 
 warnings.filterwarnings("ignore")

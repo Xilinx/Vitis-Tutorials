@@ -42,7 +42,6 @@ if [ ! -d $ML_DIR/input/lmdb/ ]; then
 
 fi
 
-
 ################################################################################################################
 # SCRIPT 4  (SOLVER AND TRAINING AND LEARNING CURVE)
 #echo "TRAINING. Remember that: <Epoch_index = floor((iteration_index * batch_size) / (# data_samples))>"
@@ -65,15 +64,14 @@ python $WORK_DIR/code/6_make_predictions.py -d $WORK_DIR/models/$NET/m$MOD_NUM/d
 # ################################################################################################################
 # The below code is commented, as not needed to run this tutorial. But I think it can be useful for reference
 # ################################################################################################################
-: '
+
 #training by direct command
-$CAFFE_TOOLS_DIR/bin/caffe.bin train --solver $WORK_DIR/models/$NET/m$MOD_NUM/solver_$MOD_NUM\_$NET.prototxt 2>&1 | tee $WORK_DIR/models/$NET/m$MOD_NUM/logfile_$MOD_NUM\_$NET.log
-'
+caffe train --solver $WORK_DIR/models/$NET/m$MOD_NUM/solver_$MOD_NUM\_$NET.prototxt 2>&1 | tee $WORK_DIR/models/$NET/m$MOD_NUM/logfile_$MOD_NUM\_$NET.log
 
 : '
 # example of trainining the CNN from a certain snapshot
 echo "RETRAINING from previous snapshot"
-$CAFFE_TOOLS_DIR/bin/caffe.bin train --solver $WORK_DIR/models/$NET/m$MOD_NUM/solver_$MOD_NUM\_$NET.prototxt --snapshot $WORK_DIR/models/$NET/m3/snapshot_3\$NET__iter_20000.solverstate 2>&1 | tee $WORK_DIR/models/$NET/m$MOD_NUM/retrain_logfile_$MOD_NUM\_$NET.log
+caffe  train --solver $WORK_DIR/models/$NET/m$MOD_NUM/solver_$MOD_NUM\_$NET.prototxt --snapshot $WORK_DIR/models/$NET/m3/snapshot_3\$NET__iter_20000.solverstate 2>&1 | tee $WORK_DIR/models/$NET/m$MOD_NUM/retrain_logfile_$MOD_NUM\_$NET.log
 cp -f $WORK_DIR/models/$NET/m$MOD_NUM/logfile_$MOD_NUM\_$NET.log $WORK_DIR/models/$NET/m$MOD_NUM/orig_logfile_$MOD_NUM\_$NET.log
 cp -f $WORK_DIR/models/$NET/m$MOD_NUM/retrain_logfile_$MOD_NUM\_$NET.log $WORK_DIR/models/$NET/m$MOD_NUM/logfile_$MOD_NUM\_$NET.log
 '

@@ -22,4 +22,4 @@ echo " "
 echo "./top2_alexnetBNnoLRN 1"
 ./top2_alexnetBNnoLRN 1 | tee tmp_logfile.txt
 python3 ./check_dpu_runtime_accuracy.py -i ./tmp_logfile.txt
-rm ./tmp_logfile.txt
+#rm ./tmp_logfile.txt

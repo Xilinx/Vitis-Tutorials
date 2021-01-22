@@ -26,9 +26,15 @@ for file in $(find $PWD -name "*.sh"); do
 done
 
 
+# clean rpt directory
+rm -r ./rpt
+mkdir rpt
+
+cp -r target_zcu102 target_vck190
+cp -r target_zcu102 target_zcu104
+
+
+# launch CNNs
 source ./run_fcn8.sh
 source ./run_fcn8ups.sh
 source ./run_unet.sh
-
-
-

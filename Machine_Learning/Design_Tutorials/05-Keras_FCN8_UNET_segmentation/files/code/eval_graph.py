@@ -20,6 +20,9 @@
 */
 '''
 
+# modified by daniele.bagni@xilinx.com
+# date 20 / 11 / 2020
+
 
 ##################################################################
 # Evaluation of frozen/quantized graph
@@ -35,10 +38,19 @@ import numpy as np
 import cv2
 import gc # memory garbage collector #DB
 
+
+# reduce TensorFlow messages in console
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
+
+# workaround for TF1.15 bug "Could not create cudnn handle: CUDNN_STATUS_INTERNAL_ERROR"
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+
+
 import tensorflow.contrib.decent_q
 
 from tensorflow.python.platform import gfile
-from keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import img_to_array
 
 from config import fcn_config as cfg
 from config import fcn8_cnn   as cnn
@@ -59,14 +71,14 @@ def graph_eval(input_graph_def, input_node, output_node):
     tf.import_graph_def(input_graph_def,name = '')
 
     # Get input & output tensors
-    x = tf.get_default_graph().get_tensor_by_name(input_node+':0')
-    y = tf.get_default_graph().get_tensor_by_name(output_node+':0')
+    x = tf.compat.v1.get_default_graph().get_tensor_by_name(input_node+':0')
+    y = tf.compat.v1.get_default_graph().get_tensor_by_name(output_node+':0')
 
 
     # Create the Computational graph
-    with tf.Session() as sess:
+    with tf.compat.v1.Session() as sess:
 
-        sess.run(tf.initializers.global_variables())
+        sess.run(tf.compat.v1.initializers.global_variables())
 
         feed_dict={x: x_test} #, labels: y_test}
         y_pred = sess.run(y, feed_dict)
@@ -86,7 +98,7 @@ def graph_eval(input_graph_def, input_node, output_node):
 def main(unused_argv):
     os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.gpu
     input_graph_def = tf.Graph().as_graph_def()
-    input_graph_def.ParseFromString(tf.gfile.GFile(FLAGS.graph, "rb").read())
+    input_graph_def.ParseFromString(tf.io.gfile.GFile(FLAGS.graph, "rb").read())
     x_test,y_testi,y_predi,img_file,seg_file = graph_eval(input_graph_def, FLAGS.input_node, FLAGS.output_node)
     '''
     #save some segmented images
@@ -131,4 +143,4 @@ if __name__ ==  "__main__":
                         default="0",
                         help="gpu device id.")
     FLAGS, unparsed = parser.parse_known_args()
-    tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+    tf.compat.v1.app.run(main=main, argv=[sys.argv[0]] + unparsed)
