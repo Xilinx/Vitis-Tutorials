@@ -74,10 +74,10 @@ extern "C"
 
                 if ((row >= time_img_pos_row) && 
                     (row <  (time_img_pos_row + time_img.rows)) &&
-                    (col >= (time_img_pose_col >> XF_BITSHIFT(XF_NPP8))) && 
-                    (col <  ((time_img_pose_col >> XF_BITSHIFT(XF_NPP8)) + (time_img.cols >> XF_BITSHIFT(XF_NPP8)))))
+                    (col >= (time_img_pos_col >> XF_BITSHIFT(XF_NPPC8))) && 
+                    (col <  ((time_img_pos_col >> XF_BITSHIFT(XF_NPPC8)) + (time_img.cols >> XF_BITSHIFT(XF_NPPC8)))))
                 {
-                    din_time = time_img.read((row - time_img_pos_row) * (time_img.cols >> XF_BITSHIFT(XF_NPP8)) + (col - (time_img_pose_col >> XF_BITSHIFT(XF_NPP8))));
+                    din_time = time_img.read((row - time_img_pos_row) * (time_img.cols >> XF_BITSHIFT(XF_NPPC8)) + (col - (time_img_pos_col >> XF_BITSHIFT(XF_NPPC8))));
                     for (int i = 0; i < (1 << XF_BITSHIFT(XF_NPPC8)); i++)
                     {
                         // clang-format off
@@ -109,7 +109,7 @@ extern "C"
     void cvmat_stream_out(xf::cv::Mat<XF_8UC3, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8> &input_img, 
                        hls::stream<ap_axiu<64, 0, 0, 0>> &stream_out)
     {
-        for (int i = 0; i < input_img.rows * (input_img.cols >> XF_BITSHIFT(XF_NPP8)); i++)
+        for (int i = 0; i < input_img.rows * (input_img.cols >> XF_BITSHIFT(XF_NPPC8)); i++)
         {
             ap_uint<24 * XF_NPPC8> data;
             ap_axiu<64, 0, 0, 0> v;
