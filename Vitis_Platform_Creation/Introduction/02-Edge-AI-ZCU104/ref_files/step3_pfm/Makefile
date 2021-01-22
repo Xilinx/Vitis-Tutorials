@@ -12,10 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-all: sw_comp pfm
+.PHONY: sw_comp pfm prep_sw_comp prep_sysroot all
+
+all: sw_comp pfm prep_sw_comp prep_sysroot
+main: sw_comp pfm prep_sw_comp
 
 sw_comp:
-	cp ../step2_petalinux/build/petalinux/images/linux/zynqmp_fsbl.elf ./boot/fsbl.elf
+	cp ../step2_petalinux/build/petalinux/images/linux/zynqmp_fsbl.elf ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/pmufw.elf ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/bl31.elf ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/u-boot.elf ./boot/
@@ -23,7 +26,18 @@ sw_comp:
 	cp ../step2_petalinux/build/petalinux/images/linux/system.dtb ./image/
 
 pfm:
-	xsct xsct_create_pfm.tcl zcu104_custom ../step1_vivado/build/vivado
+	xsct xsct_create_pfm.tcl zcu104_custom_platform ../step1_vivado/build/vivado
+
+prep_sw_comp:
+	mkdir -p sw_comp && \
+	cp ../step2_petalinux/build/petalinux/images/linux/rootfs.ext4 ./sw_comp && \
+	cp ../step2_petalinux/build/petalinux/images/linux/Image ./sw_comp
+
+prep_sysroot:
+	rm -rf ./sysroot && ../step2_petalinux/build/petalinux/images/linux/sdk.sh -d ./sw_comp -y
 
 clean:
-	$(RM) -r vitis_* xrc.log build platform_repo image/boot.scr image/system.dtb boot/*.elf
+	$(RM) -r vitis_* xrc.log build platform_repo image/boot.scr boot/*.elf
+
+ultraclean: clean
+	$(RM) -r sw_comp

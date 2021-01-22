@@ -1,20 +1,47 @@
+<!--
+# Copyright 2020 Xilinx Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+
+- [Step 4: Test the Platform](#step-4-test-the-platform)
+  - [Test 1: Read Platform Info](#test-1-read-platform-info)
+  - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
+  - [Test 3: Run a Vitis-AI Demo](#test-3-run-a-vitis-ai-demo)
+    - [Create the design](#create-the-design)
+    - [Run Application on Board](#run-application-on-board)
+  - [Congratulations](#congratulations)
+
 ## Step 4: Test the Platform
 
 ### Test 1: Read Platform Info
 
-With Vitis environment setup, platforminfo tool can report XPFM platform information.
+With Vitis environment setup, **platforminfo** tool can report XPFM platform information.
 
-```
+<details>
+
+<summary><strong>Click for detailed logs</strong></summary>  
+
+```bash
 # in zcu104_custom_pkg directory
 platforminfo ./zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 ==========================
 Basic Platform Information
 ==========================
-Platform:           zcu104_custom
-File:               /scratch/rickys/work/idt_platform/zcu104_custom_pkg/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
-Description:
-zcu104_custom
-
+Platform:           zcu104_custom_platform
+File:               <your path to>/zcu104_custom_platform.xpfm
+Description:        
+A custom platform ZCU104 platform
 
 =====================================
 Hardware Platform (Shell) Information
@@ -23,26 +50,28 @@ Vendor:                           xilinx
 Board:                            zcu104_custom_platform
 Name:                             zcu104_custom_platform
 Version:                          0.0
-Generated Version:                2020.1
+Generated Version:                2020.2
+Hardware:                         1
 Software Emulation:               1
-Hardware Emulation:               0
+Hardware Emulation:               1
+Hardware Emulation Platform:      0
 FPGA Family:                      zynquplus
 FPGA Device:                      xczu7ev
 Board Vendor:                     xilinx.com
 Board Name:                       xilinx.com:zcu104:1.1
 Board Part:                       xczu7ev-ffvc1156-2-e
-Maximum Number of Compute Units:  60
 
 =================
 Clock Information
 =================
-  Default Clock Index: 0
-  Clock Index:         2
-    Frequency:         100.000000
+  Default Clock Index: 1
   Clock Index:         0
-    Frequency:         200.000000
+    Frequency:         100.000000
   Clock Index:         1
+    Frequency:         200.000000
+  Clock Index:         2
     Frequency:         400.000000
+
 
 ==================
 Memory Information
@@ -53,39 +82,39 @@ Memory Information
   Bus SP Tag: HP3
   Bus SP Tag: HPC0
   Bus SP Tag: HPC1
-=======================
-Feature ROM Information
-=======================
+
 =============================
 Software Platform Information
 =============================
 Number of Runtimes:            1
-Default System Configuration:  zcu104_custom
+Default System Configuration:  zcu104_custom_platform
 System Configurations:
-  System Config Name:                      zcu104_custom
-  System Config Description:               zcu104_custom
-  System Config Default Processor Group:   linux_domain
+  System Config Name:                      zcu104_custom_platform
+  System Config Description:               zcu104_custom_platform
+  System Config Default Processor Group:   xrt
   System Config Default Boot Image:        standard
-  System Config Is QEMU Supported:         0
+  System Config Is QEMU Supported:         1
   System Config Processor Groups:
-    Processor Group Name:      linux on psu_cortexa53
+    Processor Group Name:      xrt
     Processor Group CPU Type:  cortex-a53
     Processor Group OS Name:   linux
   System Config Boot Images:
     Boot Image Name:           standard
-    Boot Image Type:
-    Boot Image BIF:            zcu104_custom/boot/linux.bif
-    Boot Image Data:           zcu104_custom/linux_domain/image
+    Boot Image Type:           
+    Boot Image BIF:            zcu104_custom_platform/boot/linux.bif
+    Boot Image Data:           zcu104_custom_platform/xrt/image
     Boot Image Boot Mode:      sd
-    Boot Image RootFileSystem:
+    Boot Image RootFileSystem: 
     Boot Image Mount Path:     /mnt
-    Boot Image Read Me:        zcu104_custom/boot/generic.readme
-    Boot Image QEMU Args:
-    Boot Image QEMU Boot:
-    Boot Image QEMU Dev Tree:
+    Boot Image Read Me:        zcu104_custom_platform/boot/generic.readme
+    Boot Image QEMU Args:      zcu104_custom_platform/qemu/pmu_args.txt:zcu104_custom_platform/qemu/qemu_args.txt
+    Boot Image QEMU Boot:      
+    Boot Image QEMU Dev Tree:  
 Supported Runtimes:
   Runtime: OpenCL
 ```
+
+</details>
 
 We can verify clock information and memory information are set as expected.
 
@@ -95,293 +124,309 @@ We can verify clock information and memory information are set as expected.
 
 Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface and interrupt setting in platform are working properly.
 
-#### Creating Vector Addition Application
+1. Creating Vector Addition Application
 
-1. Open Vitis workspace you were using before.<br />
-2. Select ***File -> New -> Application Project***.<br />
-3. Click ***next***<br />
-4. Select ***zcu104_custom*** as platform, click ***next***.<br />
-5. Name the project ***vadd***, click ***next***.<br />
-6. Set Domain to ***linux on psu_cortexa53***, set ***Sys_root path*** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***). Set the ***Root FS*** to rootfs.ext4 and ***Kernel Image*** to Image. These files are loated in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click ***next***.<br />
-7. Select ***System Optimization Examples -> Vector Addition*** and click ***finish*** to generate the application.<br />
-8. In the Explorer window double click the ***vadd.prj*** file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
-9. Select ***vadd_system*** in Explorer window and Click ***Build*** icon in toolbar.
+   - Open Vitis workspace you were using before.
+   - Select **File -> New -> Application Project**.
+   - Click **next**
+   - Select **zcu104_custom** as platform, click **next**.
+   - Name the project **vadd**, click **next**.
+   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running **sdk.sh**). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click **next**.
+   - Select **System Optimization Examples -> Vector Addition** and click **finish** to generate the application.
+   - In the Explorer window double click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
+   - Select **vadd_system** in Explorer window and Click **Build** icon in toolbar.
 
-***Note***: If you cannot see the ***zcu104_custom*** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to ***zcu104_custom_pkg/zcu104_custom*** directory.
+   **Note**: If you cannot see the **zcu104_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **zcu104_custom_pkg/zcu104_custom** directory.
 
-***Note***: If you'd like to test this application in emulation mode, plese change  ***Active Build configuration*** from ***Emulation-SW*** to ***Emulation-HW*** on Step 8.
+   **Note**: If you'd like to test this application in emulation mode, plese change  **Active Build configuration** from **Emulation-SW** to **Emulation-HW** on Step 8.
 
-#### Running Vector Addition Application on the Board
+2. Running Vector Addition Application on the Board
 
-1. Copy ***zcu104_custom_pkg/vadd_system/Hardware/package/sd_card.img*** to local if Vitis is running on a remote server.
-
-2. Write ***sd_card.img*** into SD Card with SD Card image writer applications like Etcher on Windows or dd on Linux.
-
-3. Boot ZCU104 board with the SD card in SD boot mode.
-
-4. Login with username ***root*** and password ***root***.
-
-5. Go to auto mounted FAT32 partition
+   - Copy **zcu104_custom_pkg/vadd_system/Hardware/package/sd_card.img** to local if Vitis is running on a remote server.
+   - Write **sd_card.img** into SD Card with SD Card image writer applications like Etcher on Windows or dd on Linux.
+   - Boot ZCU104 board with the SD card in SD boot mode.
+   - Go to auto mounted FAT32 partition
 
    ```bash
    cd /mnt/sd-mmcblk0p1
    ```
 
-6. Initialize XRT running environment
-
-   ```bash
-   source ./init.sh
-   ```
-
-7. Run vadd appliation
+   - Run vadd application
 
    ```bash
    ./vadd vadd.xclbin
    ```
 
-8. It should show program prints and XRT debug info.
+   - It should show program prints and XRT debug info.
 
    ```
    TEST PASSED
    ```
 
-### Test Vector Addition Application in Emulation Mode
+3. Test Vector Addition Application in Emulation Mode (Optional)
 
-***Note***: If you're on Ubuntu, set environment variable LIBRARY_PATH to /usr/lib to workaround a known issue on Vitis 2020.1. It's fixed in 2020.2.
+   - Use **Vitis menu -> Xilinx -> Start/Stop Emulator** to launch QEMU. Project is vadd, configuration is Emulation-HW. Click Start. Wait for Linux to boot. Log in with root/root.
+   - Right click **vadd** project (not the vadd_system system project), select **Run as -> Launch on Emulator**
 
-```
-export LIBRARY_PATH=/usr/lib
-```
+   The result will show on Console tab.
 
-1. Use ***Vitis menu -> Xilinx -> Start/Stop Emulator*** to launch QEMU. Project is vadd, configuration is Emulation-HW. Click Start. Wait for Linux to boot. Log in with root/root.
-2. Righ click ***vadd*** project (not the vadd_system system project), select ***Run as -> Launch on Emulator***
-
-The result will show on Console tab.
-
-```
-Loading: './binary_container_1.xclbin'
-TEST PASSED
-```
+   ```
+   Loading: './binary_container_1.xclbin'
+   TEST PASSED
+   ```
 
 
-### Test 3: Run a DNNDK Demo
+### Test 3: Run a Vitis-AI Demo
 
-This test will run a simple DNNDK test application to test DPU function.
+This test will run a Vitis-AI test application in DPU-TRD to verify DPU function on our custom platform. The most instructions below follows [Vitis-AI DPU-TRD document](https://github.com/Xilinx/Vitis-AI/tree/master/dsa/DPU-TRD/prj/Vitis#6-gui-flow).
 
-#### Prepare for the DPU Kernel
+#### Create the design
 
-1. Download Vitis AI by calling command ```git clone https://github.com/Xilinx/Vitis-AI.git```.<br />
-2. Navigate to the repository:```cd Vitis-AI```, set the tag to proper tag(here we use **v1.2**) by typing: ```git checkout v1.2```.<br />
-3. If you don't want to destroy the TRD reference design. Copy ***DPU-TRD*** folder into another directory. For example I would copy that into my ***zcu104_custom_pkg*** folder: ```cp -r DPU-TRD ./zcu104_custom_pkg/```<br />
-4. Source Vitis tools setting sh file: ```source <vitis install path>/Vitis/2020.1/settings64.sh```.<br />
-5. Source XRT sh file:```source opt/xilinx/xrt/setup.sh```.<br />
-6. Export ***PLATFORM_REPO_PATHS*** with the directory of the custom platform xpfm file which you created before so that it can be found by Vitis. Here in my project it would be: ```export PLATFORM_REPO_PATHS=<path_to/zcu104_custom_pkg/zcu104_custom/export/zcu104_custom>```. Remember now this custom platform name is ***zcu104_custom***.<br />
-7. Navigate to the copy of the ***DPU-TRD*** folder, then go to the ***./prj/Vitis*** folder.<br />
-   There are 2 files can be used to modify the DPU settings: The ***config_file/prj_config*** file is for DPU connection in Vitis project and the ***dpu_conf.vh*** is for other DPU configurations. Here we would modify the ***prj_config*** so that 2 DPU cores are enabled. And then we modify ***dpu_conf.vh*** as [DPU-TRD readme](https://github.com/Xilinx/Vitis-AI/blob/v1.2/DPU-TRD/README.md) suggested.<br />
-8. Modify the ***config_file/prj_config*** like below:<br />
+1. Add Vitis-AI repository into Vitis IDE
+   
+   - Launch Vitis IDE if you have not. We can reuse the workspace of vadd application.
+   - Open menu Window -> Preferences
+   - Go to Library Repository tab
+   - Add Vitis-AI:
+     - Click Add button
+     - Input ID: vitis-ai
+     - Name: Vitis AI
+     - Location: keep empty or assign a target download directory
+     - Git URL: https://github.com/Xilinx/Vitis-AI.git
+     - Branch: v1.3
 
-```
-[clock]
+   ![](./images/vitis_repo_add_vai.png)
 
-id=0:DPUCZDX8G_1.aclk
-id=1:DPUCZDX8G_1.ap_clk_2
-id=0:DPUCZDX8G_2.aclk
-id=1:DPUCZDX8G_2.ap_clk_2
+   Note: If **Location** is empty, Vitis IDE will clone the git repo to `~/.Xilinx` directory. In this example, we set it to a directory with large storage capability due to home directory size limitation.
 
-[connectivity]
+2. Download the Vitis-AI library
+   
+   - Open menu Xilinx -> Libraries
+   - Find the Vitis-AI entry we just added. Click the Download button on it.
+   - Wait until the download of Vitis-AI repository completes
+   - Click OK to close this window.
 
-sp=DPUCZDX8G_1.M_AXI_GP0:HPC0
-sp=DPUCZDX8G_1.M_AXI_HP0:HP0
-sp=DPUCZDX8G_1.M_AXI_HP2:HP1
-sp=DPUCZDX8G_2.M_AXI_GP0:HPC1
-sp=DPUCZDX8G_2.M_AXI_HP0:HP2
-sp=DPUCZDX8G_2.M_AXI_HP2:HP3
+   ![](images/vitis_download_lib.png)
 
-[advanced]
-misc=:solution_name=link
-#param=compiler.addOutputTypes=sd_card
+   Vitis IDE will check the upstream status of each repository. If there are updates, it will allow users to download the updates if the source URL is a remote Git repository.
 
-#param=compiler.skipTimingCheckAndFrequencyScaling=1
+3. Create a Vitis-AI design on our zcu104_custom_platform
 
-[vivado]
-prop=run.impl_1.strategy=Performance_Explore
-#param=place.runPartPlacer=0
+   - Go to menu **File** -> **New** -> **Application Project**
+   - Click **Next** in Welcome page
+   - Select platform **zcu104_custom_platform**. Click Next.
+   - Name the project **dpu_trd**, click **next**.
+   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running **sdk.sh**). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click **next**.
+   - Select **dsa -> DPU Kernel (RTL Kernel)** and click **Finish** to generate the application.
+   ![](images/vitis_add_dpu.png)
 
-```
+4. Review and update DPU settings for ZCU104. The default created design has the DPU settings for ZCU102.
 
-​	Here clock ID 0 is 200MHz, clock ID 1 is 400MHz.
+   - Open **dpu_conf.vh** from **dpu_trd_kernels/src/prj/Vitis** directory
+   - Update line 37 from `URAM_DISABLE` to `URAM_ENABLE`
+   - Press Ctrl+S to save the changes.
 
-​	This file describes the link connections between DPU and the platform. It will be used by Vitis application in next step.
+   **Note**: ZCU104 has ZU7EV device on board. It has less BRAM than ZU9EG on ZCU102 but it has URAM. Turning on URAM support can fulfill the on chip memory requirement by DPU.
 
-​	***Note***: an example of prj_config file is provided in ***ref_files/step4_test3/app_src***.
+5. Update system_hw_link for proper kernel instantiation
 
-9. Modify ***dpu_conf.vh*** to enable URAM because ZU7EV device on ZCU104 board has URAM resources. Change from:<br />
+   The DPU kernel requires two phase aligned clocks, 1x clock and 2x clock. The configuration is stored in **dpu_trd/src/prj/Vitis/config_file/prj_config_gui**. It sets up clock and AXI interface connections between the DPU kernel to the platform. This configuration file also sets up implementation strategy so that it works well for timing closure.
 
-```
-`define URAM_DISABLE
-```
+   Here's how to use it in our project.
 
-to<br />
+   - Double click dpu_trd_system_hw_link.prj.
+   - In **Hardware Functions** window, right click the binary container "dpu", select **Edit V++ Options**
+   - Input `--config ../../dpu_trd/src/prj/Vitis/config_file/prj_config_gui`. Click OK.
 
-```
-`define URAM_ENABLE
-```
+   Since ZCU104 has less LUT resources than ZCU102, it's hard to meet timing closure target if we include the softmax IP in PL like ZCU102. The implementation would take quite a long time. The Vitis-AI DPU-TRD design removes the softmax IP in hardware for ZCU104. When the host application detects no softmax IP in hardware, it will calculate softmax with software. The result will be identical but the calculation time will be different. Since our target is to verify the platform, we will remove the softmax kernel in our test application.
 
-10. Generate the XO file by typing: ```make binary_container_1/dpu.xo DEVICE=zcu104_custom```.<br />
-11. Verify if the XO file is generated here: ***<zcu104_custom_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo***.<br />
+   - Remove **sfm_xrt_top** instance by right clicking it and select **Remove**.
 
-#### Create and Build a Vitis Application
 
-1. Open Vitis workspace you were using before.<br />
-2. Select ***File -> New -> Application Project***.<br />
-3. Click ***next***<br />
-4. Select ***zcu104_custom*** as platform, click ***next***.<br />
-5. Name the project ```hello_dpu```, click ***next***.<br />
-6. Set Domain to ***linux on psu_cortexa53***
-7. Set ***Sys_root path*** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running ***sdk.sh***)
-8. Set the ***Kernel Image*** to ***zcu104_custom_plnx/images/linux/Image***
-9. Set Root Filesystem to ***zcu104_custom_plnx/images/linux/rootfs.ext4*** and click ***next***.<br />
-10. Select ***System Optimization Examples -> Empty application*** and click ***finish*** to generate the application.<br />
-11. Right click on the ***src*** folder under your ***hello_dpu*** application  in the Explorer window, and select "Import Sources"
-      ![import_sources.png](./images/import_sources.png)<br /><br />
-12. Choose from directory ***<zcu104_custom_pkg directory>/DPU-TRD/prj/Vitis/binary_container_1/*** as the target location, and import the ***dpu.xo*** file that we just created.<br />
-13. Import sources again, and add all files from ***ref_files/step4_test3/app_src*** folder provided by this Git repository, including prj_config.
-14. In the Explorer window double click the hello_dpu.prj file to open it, change the ***Active Build configuration*** from ***Emulation-SW*** to ***Hardware***.<br />
-15. Under Hardware Functions, click the lightning bolt logo to ***Add Hardware Function***.<br />
-    ![add_hardware_function.png](./images/add_hardware_function.png)<br /><br />
-16. Select the "DPUCZDX8G" included as part of the dpu.xo file that we included earlier.<br />
-17. Click on binary_container_1 to change the name to dpu.<br />
-18. Click on ***DPUCZDX8G*** and change the ***Compute Units*** from ```1``` to ```2``` because we have 2 dpu cores involved.<br />
-19. Right click on "dpu", select ***Edit V++ Options***, add ```--config ../src/prj_config -s``` as ***V++ Options***, then click ***OK***.<br />
-20. Go back to the ***Explorer*** window, right click on the ***hello_dpu*** project folder select ***C/C++ Building Settings***.<br />
-21. In ***Properties for hello_dpu*** dialog box, select ***C/C++ Build->Settings->Tool Settings->GCC Host Linker->Libraries***
-    , click the green "+" to add the following libraries:
+6. Update host code build options
 
-```
-opencv_core
-opencv_imgcodecs
-opencv_highgui
-opencv_imgproc
-opencv_videoio
-n2cube
-hineon
-```
+   - Double click the system project file dpu_trd_system.sprj
+   - Change Active Build Configuration to **Hardware**
+   - Right click dpu_trd, the host application, select C/C++ Build Settings
+   - Go to **GCC Host Linker** -> **Libraries** tab
+   - Click + button on **Library Search Path (-L)**
+   - Click workspace, select **dpu_trd/src/app/samples/lib**
+   - Click OK. It generates the path `${workspace_loc:/${ProjName}/src/app/samples/lib}`
+   - Click OK.
+   - Adjust the search order to make sure the added path is above the SYSROOT path.
+   - Click Apply and Close.
 
-18. In the same page, Check the ***Library search path*** to makesure the ```${SYSROOT}/usr/lib/``` is added, click ***Apply***<br />
-    ![vitis_lib_settings.png](./images/vitis_lib_settings.png)<br /><br />
-19. Then go to ***C/C++ Build->Settings->Tool Settings->GCC Host Compiler->Includes***, remove the HLS include directory and add ```${SYSROOT}/usr/include/``` like below, then click ***Apply and Close*** to save the changes.<br />
-    ![vitis_include_settings.png](./images/vitis_include_settings.png)These steps are used to make sure your application can call libs in rootfs directly on Vitis application build***
-20. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
+   Note: the DPU design template automatically sets up the C++ standard to c++17 and adds libraries to link to. User needs to manually setup the library search path. The libraries in src/app/samples/lib are identical to the VART libraries that have been installed in the rootfs. 
 
-#### Prepare the Network Deployment File
+7. Update package options to add models into SD Card
 
-1. Find HWH file from your Vitis application folder ***hello_dpu/Hardware/dpu.build/link/vivado/vpl/prj/prj.srcs/sources_1/bd/system/hw_handoff/system.hwh***<br />
-   Or go to your Vitis application folder use command ```find -name *.hwh``` to search for the file.<br />
-2. Copy the ***ref_files/step4_test3/Tool-Example*** folder provided by this Github repository to your Vitis AI download directory.<br />
-3. Copy this HWH file into ***<Vitis-AI-download_directory>/Tool-Example*** folder.<br />
-4. Go to ***<Vitis-AI-download_directory>*** folder and launch the docker.
+   - Double click dpu_trd_system.sprj
+   - Click ... button on Package options
+   - Input `--package.sd_dir=../../dpu_trd/src/app`
+   - Click OK
 
-```
-./docker_run.sh xilinx/vitis-ai:latest
-```
+   All contents in the `--package.sd_dir` assigned directory will be added to the FAT32 partition of the sd_card.img. We package samples and models for verification. 
+   
+   The dpu_trd in the path name is the application project name in this example. If your project name is different, please update the project name accordingly.
 
-5. Use following command to activate TensorFlow tool conda environment:<br />
+8. Build the hardware design
 
-```
-conda activate vitis-ai-tensorflow
-```
+   - Select the dpu_trd_system system project
+   - Click the hammer button to build the system project
+   - The generated SD card image is located at **dpu_trd_system/Hardware/package/sd_card.img**.
 
-6. Go to ***/workspace/Tool-Example*** folder and run ```dlet -f ./system.hwh```.<br />
-   You should get the running log like below:
-
-```
-$ dlet -f ./system.hwh
-[DLet]Generate DPU DCF file dpu-06-18-2020-12-00.dcf successfully.<br />
-```
-
-7. Open the ***arch.json*** file and make sure the ***"dcf"*** parameter is set with the name you got on the previous step:<br />
-   ```"dcf"      : "./dpu-06-18-2020-12-00.dcf",```<br />
-8. Run command ```sh download_model.sh``` to download the Xilinx Model Zoo files for resnet-50.<br />
-9. Run command ```sh custom_platform_compile.sh```, you'll get the result at ***tf_resnetv1_50_imagenet_224_224_6.97G/vai_c_output_ZCU104/dpu_resnet50_0.elf*** .<br />
-10. Copy that file to the ***src*** folder of Vitis application ***hello_dpu***<br />
-11. Right click on the ***hello_dpu*** project folder in Vitis select ***C/C++ Building Settings**.<br />
-12. In ***Properties for Hello_DPU*** dialog box, select ***C/C++ Build->Settings->Tool Settings->GCC Host Linker->Miscellaneous->Other objects***, add a new object: ```${workspace_loc:/${ProjName}/src/dpu_resnet50_0.elf}```, click ***Apply and Close***.<br />
-13. Right click the ***hello_dpu*** project folder and select ***Build Project***<br />
-    ***Now you should get an updated hello_dpu with a size of about 20MB(the ConvNet model is involved).***
+**Note**: Please refer to [Vitis-AI document](https://github.com/Xilinx/Vitis-AI/tree/master/dsa/DPU-TRD/prj/Vitis#6-gui-flow) for details about Vitis-AI project creation flow.
 
 #### Run Application on Board
 
-1. If you have run Test 2 vadd application, copy all the files from ***sd_card folder*** inside your Vitis application like ***<hello_dpu_application_directory>/Hardware/sd_card/*** to SD card FAT32 partition. It's not necessary to write sd_card.img again because the EXT4 partition is the same.
+1. Write image to SD 
 
-   If you haven't run Test 2 vadd application, please copy ./hello_dpu_system/Hardware/package/sd_card.img to local and write it to SD card with tools like Etcher on Windows or dd on Linux.
+   - Copy the sd_card.img to a local workstation or laptop with SD card readers.
+   - Write the image to SD card with [balena Etcher](https://www.balena.io/etcher/) or similar tools
 
-2. Download dnndk installer [vitis-ai_v1.2_dnndk.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.2_dnndk.tar.gz) , dnndk sample image package [vitis-ai_v1.2_dnndk_sample_img.tar.gz](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.2_dnndk_sample_img.tar.gz)  and [DPU specific board optimization scripts](https://github.com/Xilinx/Vitis-AI/raw/b3773aa2f21ca9afaa9656ce7ec3f74242eb74f1/DPU-TRD/app/dpu_sw_optimize.tar.gz
-   cp ) to host and copy them to FAT32 partition on SD card. For more information about these packages, please refer to  [DNNDK example readme file](https://github.com/Xilinx/Vitis-AI/blob/v1.2/mpsoc/README.md)
+2. Boot the board
 
-3. Set ZCU104 to SD boot mode and boot up the board, connect the board with serial port.<br />
+   - Insert the SD card to ZCU104
+   - Set boot mode to SD boot
+   - Connect USB UART cable
+   - Power on the board. It should boot Linux properly in a minute.
 
-4. Connect SSH:<br />
-   a) Connect Ethernet cable.
+3. Resize ext4 partition
 
-   b) Run ```ifconfig``` on ZCU104 board to get the IP address, here we take ```172.16.75.189``` as example.<br />c) Using SSH terminal to connect ZCU104 with SSH: ```ssh -x root@172.16.75.189```, or use MobaXterm in Windows.<br />
-
-5. Go to auto-mounted SD card partition /mnt/sd-mmcblk0p1 folder and copy these files to home directory
-
-   ```
-   cd /mnt/sd-mmcblk0p1
-   cp dpu_sw_optimize.tar.gz vitis-ai_v1.2_dnndk.tar.gz vitis-ai_v1.2_dnndk_sample_img.tar.gz ~
-   ```
-
-6. Run DPU Software Optimization
+   - Connect UART console if it's not connected.
+   - On the ZCU104 board UART console, run `df .` to check current available disk size
 
    ```bash
-   cd ~
-   tar -xzf dpu_sw_optimize.tar.gz
-   cd dpu_sw_optimize/zynqmp/
-   ./zynqmp_dpu_optimize.sh
+   root@petalinux:~# df .
+   Filesystem           1K-blocks      Used Available Use% Mounted on
+   /dev/root               564048    398340    122364  77% /
    ```
 
-   It will show the optimization results
+   - Run `resize-part /dev/mmcblk0p2` to resize the ext4 partition. You need to input **Yes** and **100% **for confirming the resize to utilize full of the rest of SD card.
 
-   ```
-   Auto resize ext4 partition ...[✔]
-   Start QoS config ...[✔]
-   Config PMIC irps5401 ...Successful[✔]
-   ```
+   ```bash
+   root@petalinux:~# resize-part /dev/mmcblk0p2
+   /dev/mmcblk0p2
+   Warning: Partition /dev/mmcblk0p2 is being used. Are you sure you want to continue?
+   parted: invalid token: 100%
+   Yes/No? yes
+   End?  [2147MB]? 100%
+   Information: You may need to update /etc/fstab.
 
-   - Auto resize scripts expands the EXT4 partition to rest of the SD card so that we can store more contents.
-
-   - QoS config makes AXI interface for DPU has higher priority.
-
-   - PMIC config makes ZCU104 can use more power when running Vitis-AI applications.
-
-7. Install DNNDK package like below:<br />
-
-   ```
-   tar -zxvf vitis-ai_v1.2_dnndk.tar.gz
-   cd vitis-ai_v1.2_dnndk/
-   ./install.sh
+   resize2fs 1.45.3 (14-Jul-2019)
+   Filesystem at /dev/mmcblk0p2 is mounted on /media/sd-mmcblk0p2; o[   72.751329] EXT4-fs (mmcblk0p2): resizing filesystem from 154804 to 1695488 blocks
+   n-line resizing required
+   old_desc_blocks = 1, new_desc_blocks = 1
+   [   75.325525] EXT4-fs (mmcblk0p2): resized filesystem to 1695488
+   The filesystem on /dev/mmcblk0p2 is now 1695488 (4k) blocks long.
    ```
 
-   ***install.sh*** copies ***dpu.xclbin*** from FAT32 partition to /usr/lib because DNNDK requires xclbin to be placed in this location.
+   - Check available size again to verify that the ext4 partition size is enlarged.
 
-   ***Note: Vitis-AI Library has the similar installation method. Please refer to Vitis-AI user guide for more info.***
-
-8. Extract vitis_ai_dnndk_samples and put hello_dpu into it:
-
-   ```
-   cd ~
-   tar -zxvf vitis-ai_v1.2_dnndk_sample_img.tar.gz
-   cd vitis_ai_dnndk_samples
-   mkdir test
-   cd test
-   cp /mnt/sd-mmcblk0p1/hello_dpu ./
-   ./hello_dpu
+   ```bash
+   root@petalinux:~# df . -h
+   Filesystem                Size      Used Available Use% Mounted on
+   /dev/root                 6.1G    390.8M      5.4G   7% /
    ```
 
-   ***We store the hello_dpu to vitis_ai_dnndk_samples/test folder to suit the relative path in my code, you can do that according to your code context. The hello_dpu is generated in Vitis application build and was copied to sd card from previous operation.***<br />
+   **Note**: The available size would be different according to your SD card size.
 
-9. You should see the result like below:<br />
-   ![test_result.PNG](./images/test_result.PNG)
+   **Note**: **resize-part** is a script we added in [Step 2](./step2.md). It calls Linux utilities **parted** and **resize2fs** to extend the ext4 partition to take the rest of the SD card.
+
+4. Copy dependency files to home folder
+
+   ```bash
+   # Libraries
+   root@petalinux:~# cp -r /mnt/sd-mmcblk0p1/app/samples/ ~
+   # Model
+   root@petalinux:~# cp /mnt/sd-mmcblk0p1/app/model/resnet50.xmodel ~
+   # Host app
+   root@petalinux:~# cp /mnt/sd-mmcblk0p1/dpu_trd .
+   # Image to test
+   root@petalinux:~# wget https://github.com/Xilinx/Vitis-AI/raw/v1.1/DPU-TRD/app/img/bellpeppe-994958.JPEG
+   ```
+
+5. Run the application
+
+   ```bash
+   env LD_LIBRARY_PATH=samples/lib XLNX_VART_FIRMWARE=/mnt/sd-mmcblk0p1/dpu.xclbin ./dpu_trd bellpeppe-994958.JPEG
+   ```
+
+   It would show bell pepper has the highest possibility.
+
+   ```bash
+   score[945]  =  0.992235     text: bell pepper,
+   score[941]  =  0.00315807   text: acorn squash,
+   score[943]  =  0.00191546   text: cucumber, cuke,
+   score[939]  =  0.000904801  text: zucchini, courgette,
+   score[949]  =  0.00054879   text: strawberry,
+   ```
+  
+
+<details>
+<summary><strong>Here's the detailed prints</strong></summary>  
+
+   ```bash
+   [  196.247066] [drm] Pid 948 opened device
+   [  196.250926] [drm] Pid 948 closed device
+   [  196.254833] [drm] Pid 948 opened device
+   [  196.258679] [drm] Pid 948 closed device
+   [  196.269515] [drm] Pid 948 opened device
+   [  196.273384] [drm] Pid 948 closed device
+   [  196.277243] [drm] Pid 948 opened device
+   [  196.281076] [drm] Pid 948 closed device
+   [  196.285073] [drm] Pid 948 opened device
+   [  196.288984] [drm] Pid 948 closed device
+   [  196.293230] [drm] Pid 948 opened device
+   [  196.297096] [drm] Pid 948 closed device
+   [  196.300963] [drm] Pid 948 opened device
+   [  196.307660] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+   [  196.307672] [drm] zocl_xclbin_read_axlf 1cdede23-0755-458e-8dac-7ef1b3845fa4 ret: 0
+   [  196.317747] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, ref=1
+   [  196.325431] [drm] Reconfiguration not supported
+   [  196.337206] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, ref=0
+   [  196.337361] [drm] Pid 948 opened device
+   [  196.348581] [drm] Pid 948 closed device
+   [  196.352580] [drm] Pid 948 opened device
+   [  196.356638] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, ref=1
+   [  196.356659] [drm] Pid 948 opened device
+   [  196.367712] [drm] Pid 948 closed device
+   [  196.371560] [drm] Pid 948 opened device
+   [  196.375507] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, ref=2
+   [  196.375539] [drm] Pid 948 opened device
+   [  196.386590] [drm] Pid 948 closed device
+   [  196.390439] [drm] Pid 948 opened device
+   [  196.394331] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, ref=3
+   [  196.394822] [drm] Pid 948 opened device
+   [  196.405867] [drm] Pid 948 closed device
+   [  196.409717] [drm] Pid 948 opened device
+   score[945]  =  0.992235     text: bell pepper,
+   score[941]  =  0.00315807   text: acorn squash,
+   score[943]  =  0.00191546   text:[  196.413579] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, ref=4
+   cucumber, cuke,
+   score[939]  =  0.000904801  text: zucchini, co[  197.997865] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, ref=3
+   urgette,
+   score[949]  =  0.00054879   text: strawberry,
+   [  198.010569] [drm] Pid 948 closed device
+   [  198.032534] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, ref=2
+   [  198.032546] [drm] Pid 948 closed device
+   [  198.229797] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, ref=0
+   [  198.229803] [drm] Pid 948 closed device
+   [  198.241056] [drm] bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, ref=0
+   [  198.241059] [drm] Pid 948 closed device
+   [  198.252434] [drm] Pid 948 closed device
+   ```
+
+
+
+   The XRT prints can be eliminated by running `echo 6 > /proc/sys/kernel/printk` before launching the application.
+
+</details>
+
+### Congratulations
+
+We have completed creating a custom platform from scratch and verifying it with a simple vadd application and a relatively complex Vitis-AI use cases.
+
+Please feel free to check more tutorials in this repository.
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
