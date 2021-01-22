@@ -10,6 +10,22 @@
  </tr>
 </table>
 
+<!-- 
+# Copyright 2021 Xilinx Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+
 ### 4. Reviewing the DATAFLOW Optimization
 
 In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to enable task-level parallelism for functions or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rdd1585343102486.html) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
@@ -133,24 +149,6 @@ You have the optimized but uncompiled C++ code (`dct.cpp`) that you saved in an 
 
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="docs/README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
-
-Licensed under the Apache License, Version 2.0 (the "License");
-
-you may not use this file except in compliance with the License.
-
-You may obtain a copy of the License at:
-
-<a href="[/docs/vitis-getting-started/README.md](http://www.apache.org/licenses/LICENSE-2.0)">http://www.apache.org/licenses/LICENSE-2.0</a>
-    
-Unless required by applicable law or agreed to in writing, software
-
-distributed under the License is distributed on an "AS IS" BASIS,
-
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-See the License for the specific language governing permissions and
-
-limitations under the License.
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
