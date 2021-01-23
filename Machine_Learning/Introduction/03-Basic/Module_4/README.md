@@ -1,9 +1,9 @@
 3.4 CIFAR10 Classification using Vitis AI and TensorFlow
 -----------------------
 
-This module introduces the Vitis AI TensorFlow design process and illustrates how to go from a Python description of the network model to running a compiled model on the Xilinx&reg; DPU accelerator.
+This module introduces the Vitis AI TensorFlow design process and illustrates how to go from a Python description of the network model to running a compiled model on the Xilinx&reg; DPU accelerator. Please visit the following link for more [Design Tutorials](https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial/tree/v1.3/Machine_Learning/Design_Tutorials)
 
-The application code in this example design is written in Python and uses the Unified APIs and VART runtime that were introduced in Vitis&trade; AI v1.2.
+The application code in this example design is written in Python and uses the Unified APIs and VART runtime that were introduced in Vitis&trade; AI v1.3.
 
 We will run the following steps:
 
@@ -13,7 +13,7 @@ We will run the following steps:
 4. Evaluation of the frozen model using the CIFAR-10 test dataset.
 5. Quantization of the floating-point frozen model.
 6. Evaluation of the quantized model using the CIFAR-10 test dataset.
-7. Compilation of the quantized model to create the ```.elf``` file ready for execution on the DPU accelerator IP.
+7. Compilation of the quantized model to create the ```.xmodel``` file ready for execution on the DPU accelerator IP.
 8. Download and execution of the application on an evaluation board.
 
 
@@ -154,6 +154,7 @@ The docker container will start and you should see something like this in the te
 
 ```shell
 ==========================================
+
 __      ___ _   _                   _____
 \ \    / (_) | (_)            /\   |_   _|
  \ \  / / _| |_ _ ___ ______ /  \    | |
@@ -163,24 +164,29 @@ __      ___ _   _                   _____
 
 ==========================================
 
-Docker Image Version: latest
-Build Date: Thu Aug 20 03:35:38 MDT 2020
-VAI_ROOT=/opt/vitis_ai
+Docker Image Version:  latest
+Build Date: 2020-12-25
+VAI_ROOT: /opt/vitis_ai
+
 For TensorFlow Workflows do:
-  conda activate vitis-ai-tensorflow
+     conda activate vitis-ai-tensorflow
 For Caffe Workflows do:
-  conda activate vitis-ai-caffe
+     conda activate vitis-ai-caffe
 For Neptune Workflows do:
-  conda activate vitis-ai-neptune
-For pytorch Workflows do:
-  conda activate vitis-ai-pytorch
-For optimizer_darknet Workflows do:
-  conda activate vitis-ai-optimizer_darknet
-For optimizer_caffe Workflows do:
-  conda activate vitis-ai-optimizer_caffe
-For optimizer_tensorflow Workflows do:
-  conda activate vitis-ai-optimizer_tensorflow
-user@SERVER_NAME:/workspace$
+     conda activate vitis-ai-neptune
+For PyTorch Workflows do:
+     conda activate vitis-ai-pytorch
+For TensorFlow 2.3 Workflows do:
+     conda activate vitis-ai-tensorflow2
+For Darknet Optimizer Workflows do:
+     conda activate vitis-ai-optimizer_darknet
+For Caffe Optimizer Workflows do:
+     conda activate vitis-ai-optimizer_caffe
+For TensorFlow 1.15 Workflows do:
+     conda activate vitis-ai-optimizer_tensorflow
+For LSTM Workflows do:
+     conda activate vitis-ai-lstm
+Vitis-AI /workspace >
 ```
 
 Now run the environment setup script:  `source ./0_setenv.sh`
@@ -191,7 +197,7 @@ The 0_setenv.sh script also activates the 'vitis-ai-tensorflow' TensorFlow conda
 
 
 ```shell
-(vitis-ai-tensorflow) user@SERVER_NAME:/workspace$
+(vitis-ai-tensorflow) Vitis-AI /workspace$
 ```
 
 ### Step 1: Training Your Model
@@ -305,28 +311,15 @@ The exact same Python script, eval_graph.py, that was used to evaluate the froze
 
 To run step 6: ``source ./6_compile.sh``
 
-The DPU IP is a soft-core IP whose only function is to accelerate the execution of convolutional neural networks. It is a co-processor which has its own instruction set - those instructions are passed to the DPU in ELF file format.
+The DPU IP is a soft-core IP whose only function is to accelerate the execution of convolutional neural networks. It is a co-processor which has its own instruction set - those instructions are passed to the DPU in Xmodel file format.
 
-The Vitis AI compiler will convert, and optimize where possible, the quantized deployment model to a set of micro-instructions and then output them in an ELF file.
+The Vitis AI compiler will convert, and optimize where possible, the quantized deployment model to a set of micro-instructions and then output them in an Xmodel file.
 
-The generated instructions are specific to the particular configuration of the DPU. The DPU's parameters are contained in a .dcf file which needs to be created for each target board - see the [Vitis AI User Guide](https://www.xilinx.com/html_docs/vitis_ai/1_2/zkj1576857115470.html) for details.
+The generated instructions are specific to the particular configuration of the DPU. The DPU's parameters are contained in a arch.json file which needs to be created for each target board - see the [Vitis AI User Guide](https://www.xilinx.com/html_docs/vitis_ai/1_3/zmw1606771874842.html) for details.
 
-In the specific case of the ZCU104 and the prepared SDcard image file that we used back in the 'Preparing the host machine and target board' section, the .dcf file is included in the docker container and its location is passed to the vai_c_tensorflow command via the --arch argument.
+In the specific case of the ZCU104 and the prepared SDcard image file that we used back in the 'Preparing the host machine and target board' section, the arch.json file is included in the docker container and its location is passed to the vai_c_tensorflow command via the --arch argument.
 
-
-When you compile, you will see a warning like this:
-
-
-```shell
-[VAI_C][Warning] layer [activation_99_Softmax] (type: Softmax) is not supported in DPU, deploy it in CPU instead.
-```
-
-
-This message tells us that we have an unsupported layer, Softmax in this case, in the quantized model. The Vitis AI compiler will ignore this layer and only compile the network up to the output of the previous layer. Generally, for unsupported layers, you must provide an equivalent software function that will be executed on the CPU - but be aware that in the particular case of Softmax, the DPUv2 has an optional hardware block to implement it.
-
-In this tutorial, we will not include a Softmax function in our application code but instead use a Numpy argmax function to extract the predicted class from the vector of probabilities returned by the DPU.
-
-Once compile is complete, the ELF file will be stored in the ./files/build/compile folder.
+Once compile is complete, the Xmodel file will be stored in the ./build/compile folder.
 
 
 ### Step 7: Running the Application on the Board
@@ -334,7 +327,7 @@ Once compile is complete, the ELF file will be stored in the ./files/build/compi
 To run step 7: ``source ./7_make_target.sh``
 
 
-This final step will copy all the required files for running on the board into the ./files/build/target folder. The entire target folder will be copied to the ZCU104 SDcard. The 7_make_target.sh script also creates 10000 images from the CIFAR10 test set - the application code will preprocess and classify these images.
+This final step will copy all the required files for running on the board into the ./build/target folder. The entire target folder will be copied to the ZCU104 SDcard. The 7_make_target.sh script also creates 10000 images from the CIFAR10 test set - the application code will preprocess and classify these images.
 
 Copy it to the /home/root folder of the flashed SD card, this can be done with ```scp``` command.
 
@@ -350,27 +343,31 @@ With the target folder copied to the SD Card and the ZCU104 booted, you can issu
 The application can be started by navigating into the target folder and then issuing the command ``python3 app_mt.py``. The application will start and after a few seconds will show the throughput in frames/sec.
 
 ```shell
-root@xilinx-zcu104-2020_1:~/target# python3 app_mt.py
+root@xilinx-zcu104-2020_2:~/target# python3 app_mt.py
 Command line options:
  --image_dir :  images
  --threads   :  1
- --model     :  model_dir
-FPS=478.31, total frames = 10000 , time=20.9068 seconds
+ --model     :  model_dir/densenetx.xmodel
+Pre-processing 10000 images...
+Starting 1 threads...
+FPS=453.83, total frames = 10000 , time=22.0348 seconds
 output buffer length: 10000
-Correct: 9116 Wrong: 884 Accuracy: 0.9116
+Correct: 9145 Wrong: 855 Accuracy: 0.9145
 ```
 
 For better throughput, the number of threads can be increased like this:
 
 ```shell
-root@xilinx-zcu104-2020_1:~/target# python3 app_mt.py -t 5
+root@xilinx-zcu104-2020_2:~/target# python3 app_mt.py -t 5
 Command line options:
  --image_dir :  images
  --threads   :  5
- --model     :  model_dir
-FPS=829.44, total frames = 10000 , time=12.0563 seconds
+ --model     :  model_dir/densenetx.xmodel
+Pre-processing 10000 images...
+Starting 5 threads...
+FPS=792.44, total frames = 10000 , time=12.6192 seconds
 output buffer length: 10000
-Correct: 9116 Wrong: 883 Accuracy: 0.9116
+Correct: 9145 Wrong: 855 Accuracy: 0.9145
 ```
 
 
@@ -381,7 +378,7 @@ The floating-point post-training and frozen graph evaluations can be compared to
 
 | Post-training (Float) | Frozen Graph (Float) | Quantized Model (INT8) | Hardware model (INT8) |
 | :-------------------: | :------------------: | :--------------------: | :-------------------: |
-|        92.94%         |        93.03%        |         92.66%         |       91.16  %        |
+|        92.94%         |        93.03%        |         92.66%         |       91.45  %        |
 
 
 The approximate throughput (in frames/sec) for various batch sizes is shown below:

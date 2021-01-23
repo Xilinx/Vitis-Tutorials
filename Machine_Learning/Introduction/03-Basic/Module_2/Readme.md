@@ -12,20 +12,20 @@ In Module_1, user has downloaded the board environment with DPU and correspondin
     Alternatively, if your board has Internet access, you can also download the images from the board directly.
 
     ```bash
-    root@xilinx-zcu104-2020_1:~# wget -O vitis_ai_library_r1.2.0_images.tar.gz https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_library_r1.2.0_images.tar.gz
-    root@xilinx-zcu104-2020_1:~# wget -O vitis_ai_library_r1.2.0_video.tar.gz https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_library_r1.2.0_video.tar.gz 
+    root@xilinx-zcu104-2020_2:~# wget -O vitis_ai_library_r1.3.0_images.tar.gz https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_library_r1.3.0_images.tar.gz
+    root@xilinx-zcu104-2020_2:~# wget -O vitis_ai_library_r1.3.0_video.tar.gz https://www.xilinx.com/bin/public/openDownload?filename=vitis_ai_library_r1.3.0_video.tar.gz 
 
     ```
  * Now we can operate on the board through an ethernet connection.
    * unpack the images and videos
    ```
-   root@xilinx-zcu104-2020_1:~# tar -xzvf vitis_ai_library_r1.2.0_images.tar.gz -C ~/Vitis-AI/vitis_ai_library
-   root@xilinx-zcu104-2020_1:~# tar -xzvf vitis_ai_library_r1.2.0_video.tar.gz -C ~/Vitis-AI/vitis_ai_library
+   root@xilinx-zcu104-2020_2:~# tar -xzvf vitis_ai_library_r1.3.0_images.tar.gz -C ~/Vitis-AI/demo/Vitis_AI_Library
+   root@xilinx-zcu104-2020_2:~# tar -xzvf vitis_ai_library_r1.3.0_video.tar.gz -C ~/Vitis-AI/demo/Vitis_AI_Library
    ```
    * Run the demo
    ```
-   root@xilinx-zcu104-2020_1:~# cd Vitis-AI/vitis_ai_library/samples/refinedet
-   root@xilinx-zcu104-2020_1:~/Vitis-AI/vitis_ai_library/samples/refinedet# ./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list
+   root@xilinx-zcu104-2020_2:~# cd Vitis-AI/demo/Vitis_AI_Library/samples/refinedet
+   root@xilinx-zcu104-2020_2:~/Vitis-AI/demo/Vitis_AI_Library/samples/refinedet# ./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list
    ```
    <p align="left">
    <img src="images/perf_IDT.png">
@@ -33,7 +33,7 @@ In Module_1, user has downloaded the board environment with DPU and correspondin
    Note that the user could also use parameters to define the number of threads and running time as below. For more detailed instruction, please refer to the Readme file within the refinedet folder.
 
    ```
-   root@xilinx-zcu104-2020_1:~/Vitis-AI/vitis_ai_library/samples/refinedet# ./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list -t 8 -s 60
+   root@xilinx-zcu104-2020_2:~/Vitis-AI/demo/Vitis_AI_Library/samples/refinedet# ./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list -t 8 -s 60
    -t: <num_of_threads>
    -s: <num_of_seconds>
    ```

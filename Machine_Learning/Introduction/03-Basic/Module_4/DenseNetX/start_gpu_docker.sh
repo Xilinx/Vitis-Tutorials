@@ -16,6 +16,8 @@
 
 
 
-# example of how to start Vitis-AI 1.1 docker (GPU version)
-/home/mharvey/Vitis-AI/docker_run.sh xilinx/vitis-ai-gpu:latest
+# example of how to start Vitis-AI 1.3 docker (GPU version)
+#~/Vitis-AI/docker_run.sh xilinx/vitis-ai-gpu:latest
+sh docker_run.sh xilinx/vitis-ai-gpu:latest
+
 

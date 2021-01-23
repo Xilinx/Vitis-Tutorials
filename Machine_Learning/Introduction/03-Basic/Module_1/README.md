@@ -2,7 +2,7 @@
 
 ## 3.1 "Hello World" Preparation
 
-The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platform which is dedecated for machine learning applications is provided in this module, user could simply retrieve it and write it into SD card to prepare the running environment.
+The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.3/DPU-TRD) platform which is dedecated for machine learning applications is provided in this module, user could simply retrieve it and write it into SD card to prepare the running environment.
 
 
 * Prerequisites
@@ -13,7 +13,7 @@ The pre-built [DPU](https://github.com/Xilinx/Vitis-AI/tree/v1.1/DPU-TRD) platfo
 
 * Download the pre-built DPU board image from the link below
 
-  * [ZCU104 prebuilt image](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu104-dpu-v2020.1-v1.2.0.img.gz)
+  * [ZCU104 prebuilt image](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu104-dpu-v2020.2-v1.3.0.img.gz)
   
   **To improve the user experience, the Vitis AI Runtime packages, VART samples, Vitis-AI-Library samples and
 models have been built into the board image. Therefore, user does not need to install Vitis AI
@@ -41,10 +41,10 @@ steps.**
   * Plug in the power and boot the board using the serial port to operate on the system.
   * Find out the IP information of the board using the serial port.
     ```
-    root@xilinx-zcu104-2020_1:~# ifconfig
+    root@xilinx-zcu104-2020_2:~# ifconfig
     ```
     <p align="left">
-    <img width="600" height="308" src="images/IP.png">
+    <img width="607" height="167" src="images/IP_IDT.png">
     </p>
   * Now the board is ready to be operated by using SSH. Please follow the instruction on [Module 2](../Module_2) for next step.
   <p align="left">
