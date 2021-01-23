@@ -134,12 +134,12 @@ $ gzip -d rootfs.ext4.gz
 - copy the kernel source code and config files below to DPU-TRD work directory
 
 ```
-$ cp ${Module_7}/kernel/build/Makefile vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/build/preprocessor_config.ini vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/build/dpu_conf.vh vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/src/pre_processor.cpp vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/src/pre_processor.h vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/config_file/prj_config_104_2dpu vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/config_file
+$ cp ${Module_7}/kernel/build/Makefile Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/build/preprocessor_config.ini Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/build/dpu_conf.vh Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/src/pre_processor.cpp Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/src/pre_processor.h Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/config_file/prj_config_104_2dpu Vitis-AI/dsa/DPU-TRD/prj/Vitis/config_file
 ```
 
 - Step4: Run the below commands to start IP integration and wait for it to complete.
@@ -152,8 +152,8 @@ make KERNEL=DPU DEVICE=ZCU104
 There are two methods to set up the target environment
 1. Replace the BOOT.BIN and the dpu.xclbin on target.
 ```
-$ scp vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/binary_container_1/BOOT.BIN root@<zcu104 board ip>:/mnt/sd-mmcblk0p1/
-$ scp vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/binary_container_1/dpu.xclbin root@<zcu104 board ip>:/mnt/sd-mmcblk0p1/
+$ scp Vitis-AI/dsa/DPU-TRD/prj/Vitis/binary_container_1/BOOT.BIN root@<zcu104 board ip>:/mnt/sd-mmcblk0p1/
+$ scp Vitis-AI/dsa/DPU-TRD/prj/Vitis/binary_container_1/dpu.xclbin root@<zcu104 board ip>:/mnt/sd-mmcblk0p1/
 
 
 ```
@@ -206,20 +206,22 @@ $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:
 
 ```
 - Option
+
   If you are interested in the gap between the processing performance of hls kenel and the processing performance of ARM. You can also try the same application by preprocessing on the arm side. 
+
   - Build the application
-```
-$ build_app_arm.sh
+  ```
+  $ build_app_arm.sh
 
-```
+  ```
 
-- Copy the library and the applications to target board
-```
-$ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/home/root
-$ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
-$ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
+  - Copy the library and the applications to target board
+  ```
+  $ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/home/root
+  $ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
+  $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
 
 
-```
+  ```
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
