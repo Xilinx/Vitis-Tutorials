@@ -3,7 +3,7 @@
 
 ***Version: Vitis 2020.2+Vitis AI 1.3***
 
-**_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
+**_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/demo/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
 This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. About how to immigrate from OpenCV to HLS, please refer to [app/README.md](app/README.md)
 
 Some system level functions:
@@ -72,6 +72,8 @@ The directory structure and brief explanations as below:
 │       └── test.yuv                #test data
 └── README.md
 └── CMakeLists.txt
+└── build_app_arm.sh                # Build application with hls kernel
+└── build_app_hls.sh                # Build application with arm preprocessing
 
 ```
 
@@ -111,13 +113,12 @@ After cloning the platform source, and with both Vivado and PetaLinux set up, ru
 
 
 
-###Step 2:  DPU and HLS kernel integration
+### Step 2:  DPU and HLS kernel integration
 
--  Clone the repository of vitis-ai-staging and vitis_library
-
+-  Clone the repository of Vitis-AI and vitis_library, the preprocessor kernel implements base on vitis_library, Befor you build the haredware design, you need to clone the vitis_library under the ***${DPU-TRD}/prj/Vitis*** directory.
 ```
-$ git clone -b ML-2605-folder-structure git@gitenterprise.xilinx.com:Vitis/vitis-ai-staging.git
-$ cd vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/
+$ git clone https://github.com/Xilinx/Vitis-AI.git
+$ cd Vitis-AI/dsa/DPU-TRD/prj/Vitis/
 $ git clone https://github.com/Xilinx/Vitis_Libraries.git
 
 
@@ -156,7 +157,7 @@ $ scp vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/binary_container_1/dpu.xclbin root@
 
 
 ```
-2. Burn the SD card with the image generated in ***vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/binary_container_1/sd_card.img***
+2. Burn the SD card with the image generated in ***${Vitis-AI}/dsa/DPU-TRD/prj/Vitis/binary_container_1/sd_card.img***
 
 ## Step 3: Cross Compiler Environtment Set up and Build application
 ---
@@ -177,7 +178,14 @@ $ sh build_app_hls.sh
 ```
 $ scp test.yuv root@<zcu104 ip>:/home/root
 ```
+- Copy the library and the applications to target board
+```
+$ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/home/root
+$ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
+$ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
 
+
+```
 
 ### Step 4: Run the Application on Target
 
@@ -195,6 +203,22 @@ $ scp test.yuv root@<zcu104 ip>:/home/root
     - refinedet_pruned_0_8: The model used;
     - 0                   :  Camera input;
     - -t 3                :  thread number 3;
+
+```
+- Option
+  If you are interested in the gap between the processing performance of hls kenel and the processing performance of ARM. You can also try the same application by preprocessing on the arm side. 
+  - Build the application
+```
+$ build_app_arm.sh
+
+```
+
+- Copy the library and the applications to target board
+```
+$ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/home/root
+$ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
+$ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
+
 
 ```
 
