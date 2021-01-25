@@ -26,7 +26,7 @@ mkdir build&&cd build
 cmake ..&& make
 mkdir -pv ../install
 mkdir -pv ../test
-cp usb_input_multi_threads_refinedet_drm ../install/
-cp myV4L2/libmy_v4l2s.so ../test/
+cp usb_input_multi_threads_refinedet_drm ../test/
+cp myV4L2/libmy_v4l2s.so ../install/
 cp myV4L2/test_v4l2 ../test/
 echo "[INFO] Build success"
