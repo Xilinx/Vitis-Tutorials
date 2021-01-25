@@ -35,8 +35,6 @@ add_executable(usb_input_multi_threads_refinedet_drm ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/sortthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/app/src/mythread.cpp
 
-
-
 )
 target_link_libraries(usb_input_multi_threads_refinedet_drm ${OpenCV}
  my_v4l2s
