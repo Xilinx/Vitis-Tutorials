@@ -122,11 +122,11 @@ $ git clone https://github.com/Xilinx/Vitis_Libraries.git
 
 
 ```
-- download the [mpsoc common system](https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-zynqmp-common-v2020.1.tar.gz), and unzip the files.
+- download the [mpsoc common system](https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-zynqmp-common-v2020.2.tar.gz), and unzip the files.
 
 ```
-$ tar -xvzf  xilinx-zynqmp-common-v2020.1.tar.gz
-$ cd xilinx-zynqmp-common-v2020.1
+$ tar -xvzf  xilinx-zynqmp-common-v2020.2.tar.gz
+$ cd xilinx-zynqmp-common-v2020.2
 $ gzip -d rootfs.ext4.gz
 ```
 
@@ -179,7 +179,7 @@ $ scp test.yuv root@<zcu104 ip>:/home/root
 ```
 - Copy the library and the applications to target board
 ```
-$ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/home/root
+$ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/usr/lib
 $ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
 $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
 
@@ -204,11 +204,12 @@ $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:
     - -t 3                :  thread number 3;
 
 ```
-- Option
+- Optional
 
-  If you are interested in the gap between the processing performance of hls kenel and the processing performance of ARM. You can also try the same application by preprocessing on the arm side. 
+If you are interested in the gap between hls kenel's preprocessing performance and arm's processing performance. You can also recompile the program to see the performance
 
-  - Build the application
+   - Build the application
+
   ```
   $ build_app_arm.sh
 
@@ -216,7 +217,7 @@ $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:
 
   - Copy the library and the applications to target board
   ```
-  $ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/home/root
+  $ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/usr/lib
   $ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
   $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
 
