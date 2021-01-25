@@ -179,6 +179,7 @@ $ scp test.yuv root@<zcu104 ip>:/home/root
 ```
 - Copy the library and the applications to target board
 ```
+
 $ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/usr/lib
 $ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
 $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
@@ -204,6 +205,7 @@ $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:
     - -t 3                :  thread number 3;
 
 ```
+
 - Optional
 
 If you are interested in the gap between hls kenel's preprocessing performance and arm's processing performance. You can also recompile the program to see the performance
@@ -217,6 +219,7 @@ If you are interested in the gap between hls kenel's preprocessing performance a
 
   - Copy the library and the applications to target board
   ```
+  
   $ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/usr/lib
   $ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
   $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
