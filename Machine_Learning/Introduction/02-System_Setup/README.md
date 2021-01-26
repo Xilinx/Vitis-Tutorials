@@ -142,7 +142,8 @@ docker pull xilinx/vitis-ai:latest
 
 To build it by yourself, use following comamnd:
 ~~~
-~/workspace/Vitis-AI/docker/docker_build_cpu.sh
+cd ~/workspace/Vitis-AI/setup/docker
+./docker_build_cpu.sh
 ~~~
 
 In either way, you could finally get the docker image *vitis-ai:latest* settled on your host.
@@ -150,7 +151,8 @@ In either way, you could finally get the docker image *vitis-ai:latest* settled 
 #### GPU Docker
 You have to build the docker using following comamnd:
 ~~~
-~/workspace/Vitis-AI/docker/docker_build_gpu.sh
+cd ~/workspace/Vitis-AI/setup/docker
+./docker_build_gpu.sh
 ~~~
 
 After that, you could get the docker image *vitis-ai-gpu:latest* on your host.
