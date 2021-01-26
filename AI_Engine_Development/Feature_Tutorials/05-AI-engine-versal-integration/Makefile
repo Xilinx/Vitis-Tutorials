@@ -14,7 +14,7 @@ BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202020_1/xilinx_v
 
 ROOTFS  := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 
 IMAGE   := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/Image 
-SYSROOT := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/
+SYSROOT := ${SDKTARGETSYSROOT} # environment variable from running environment-setup-aarch64-xilinx-linux script
 
 # Command-line options
 VPP := v++
