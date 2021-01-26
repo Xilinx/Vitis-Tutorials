@@ -20,7 +20,7 @@ Tensorflow graph evaluation
 
 
 '''
-Autor: Mark Harvey
+Author: Mark Harvey, Xilinx Inc
 '''
 
 

@@ -16,26 +16,23 @@
 
 # Author: Mark Harvey, Xilinx Inc
 
+conda activate vitis-ai-pytorch
+
+# run training
+python -u train.py 2>&1 | tee train.log
 
 
-# evaluate graph with test dataset
-eval_graph() {
-  dir_name=$1
-  graph=$2
-  python -u eval_graph.py \
-    --graph        $dir_name/$graph \
-    --input_node   ${INPUT_NODE} \
-    --output_node  ${OUTPUT_NODE} \
-    --batchsize    ${BATCHSIZE} \
-    --gpu          ${CUDA_VISIBLE_DEVICES}
-}
+# quantize & export quantized model
+python -u quantize.py --quant_mode calib 2>&1 | tee quant_calib.log
+python -u quantize.py --quant_mode test  2>&1 | tee quant_test.log
 
-echo "-----------------------------------------"
-echo "EVALUATING THE FROZEN GRAPH.."
-echo "-----------------------------------------"
 
-eval_graph ${FREEZE} ${FROZEN_GRAPH} 2>&1 | tee ${LOG}/${EVAL_FR_LOG}
+# compile for target boards
+source compile.sh zcu102
+source compile.sh u50
+source compile.sh vck190
 
-echo "-----------------------------------------"
-echo "EVALUATION COMPLETED"
-echo "-----------------------------------------"
+# make target folders
+python -u target.py --target zcu102
+python -u target.py --target vck190
+python -u target.py --target u50

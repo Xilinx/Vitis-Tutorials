@@ -19,8 +19,9 @@ Trains the DenseNetX model on the CIFAR-10 dataset
 '''
 
 '''
-Author: Mark Harvey
+Author: Mark Harvey, Xilinx Inc
 '''
+
 
 
 import numpy as np
@@ -212,6 +213,10 @@ def run_main():
                     type=str,
                     default='./tb_logs',
     	            help='path to folder for saving TensorBoard data. Default is ./tb_logs.')    
+    ap.add_argument('-g', '--gpu',
+                    type=str,
+                    default='0',
+    	            help='List of GPUs to use. Default is 0')    
     args = ap.parse_args()
 
 
@@ -224,7 +229,14 @@ def run_main():
     print ('--epochs       : ',args.epochs)
     print ('--keras_hdf5   : ',args.keras_hdf5)
     print ('--tboard       : ',args.tboard)
+    print ('--gpu          : ',args.gpu)
     print(DIVIDER)
+
+    
+    os.environ["CUDA_DEVICE_ORDER"]='PCI_BUS_ID'
+    
+    # indicate which GPU to use
+    os.environ["CUDA_VISIBLE_DEVICES"]=args.gpu
 
     train(args.input_height,args.input_width,args.input_chan,args.batchsize,args.learnrate,args.epochs,args.keras_hdf5,args.tboard)
 

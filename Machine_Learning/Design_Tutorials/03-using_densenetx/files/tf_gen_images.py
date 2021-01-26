@@ -18,6 +18,12 @@
 Creates JPEG image files from Keras dataset in numpy array format
 '''
 
+'''
+Author: Mark Harvey, Xilinx Inc
+'''
+
+
+
 import argparse
 import os
 

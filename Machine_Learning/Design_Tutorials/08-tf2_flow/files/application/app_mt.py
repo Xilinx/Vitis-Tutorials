@@ -24,6 +24,8 @@ import time
 import sys
 import argparse
 
+divider = '------------------------------------'
+
 def preprocess_fn(image_path):
     '''
     Image pre-processing.
@@ -108,6 +110,7 @@ def app(image_dir,threads,model):
         all_dpu_runners.append(vart.Runner.create_runner(subgraphs[0], "run"))
 
     ''' preprocess images '''
+    print (divider)
     print('Pre-processing',runTotal,'images...')
     img = []
     for i in range(runTotal):
@@ -137,23 +140,25 @@ def app(image_dir,threads,model):
     timetotal = time2 - time1
 
     fps = float(runTotal / timetotal)
+    print (divider)
     print("Throughput=%.2f fps, total frames = %.0f, time=%.4f seconds" %(fps, runTotal, timetotal))
 
 
     ''' post-processing '''
-    classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck']  
+    classes = ['dog','cat']  
     correct = 0
     wrong = 0
-    print('output buffer length:',len(out_q))
+    print('Post-processing',len(out_q),'images..')
     for i in range(len(out_q)):
         prediction = classes[out_q[i]]
-        ground_truth, _ = listimage[i].split('_',1)
+        ground_truth, _ = listimage[i].split('.',1)
         if (ground_truth==prediction):
             correct += 1
         else:
             wrong += 1
     accuracy = correct/len(out_q)
     print('Correct:%d, Wrong:%d, Accuracy:%.4f' %(correct,wrong,accuracy))
+    print (divider)
 
     return
 
@@ -166,10 +171,11 @@ def main():
   ap = argparse.ArgumentParser()  
   ap.add_argument('-d', '--image_dir', type=str, default='images', help='Path to folder of images. Default is images')  
   ap.add_argument('-t', '--threads',   type=int, default=1,        help='Number of threads. Default is 1')
-  ap.add_argument('-m', '--model',     type=str, default='model_dir/densenetx.xmodel', help='Path of xmodel. Default is model_dir/densenetx.xmodel')
+  ap.add_argument('-m', '--model',     type=str, default='customcnn.xmodel', help='Path of xmodel. Default is customcnn.xmodel')
 
-  args = ap.parse_args()  
-  
+  args = ap.parse_args()
+
+  print(divider)  
   print ('Command line options:')
   print (' --image_dir : ', args.image_dir)
   print (' --threads   : ', args.threads)

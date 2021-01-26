@@ -24,15 +24,18 @@ import time
 import sys
 import argparse
 
+
+divider='---------------------------'
+
 def preprocess_fn(image_path):
     '''
     Image pre-processing.
-    Rearranges from BGR to RGB then normalizes to range 0:1
+    Opens image as grayscale then normalizes to range 0:1
     input arg: path of image file
     return: numpy array
     '''
-    image = cv2.imread(image_path)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    image = image.reshape(28,28,1)
     image = image/255.0
     return image
 
@@ -61,7 +64,6 @@ def runDPU(id,start,dpu,img):
     output_ndim = tuple(outputTensors[0].dims)
 
     batchSize = input_ndim[0]
-
     n_of_images = len(img)
     count = 0
     write_index = start
@@ -88,7 +90,7 @@ def runDPU(id,start,dpu,img):
 
         '''store output vectors '''
         for j in range(runSize):
-            out_q[write_index] = np.argmax((outputData[0][j]))
+            out_q[write_index] = np.argmax(outputData[0][j])
             write_index += 1
         count = count + runSize
 
@@ -137,14 +139,14 @@ def app(image_dir,threads,model):
     timetotal = time2 - time1
 
     fps = float(runTotal / timetotal)
+    print(divider)
     print("Throughput=%.2f fps, total frames = %.0f, time=%.4f seconds" %(fps, runTotal, timetotal))
 
 
     ''' post-processing '''
-    classes = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck']  
+    classes = ['zero','one','two','three','four','five','six','seven','eight','nine'] 
     correct = 0
     wrong = 0
-    print('output buffer length:',len(out_q))
     for i in range(len(out_q)):
         prediction = classes[out_q[i]]
         ground_truth, _ = listimage[i].split('_',1)
@@ -154,8 +156,10 @@ def app(image_dir,threads,model):
             wrong += 1
     accuracy = correct/len(out_q)
     print('Correct:%d, Wrong:%d, Accuracy:%.4f' %(correct,wrong,accuracy))
+    print(divider)
 
     return
+
 
 
 
@@ -166,14 +170,15 @@ def main():
   ap = argparse.ArgumentParser()  
   ap.add_argument('-d', '--image_dir', type=str, default='images', help='Path to folder of images. Default is images')  
   ap.add_argument('-t', '--threads',   type=int, default=1,        help='Number of threads. Default is 1')
-  ap.add_argument('-m', '--model',     type=str, default='model_dir/densenetx.xmodel', help='Path of xmodel. Default is model_dir/densenetx.xmodel')
+  ap.add_argument('-m', '--model',     type=str, default='CNN_zcu102.xmodel', help='Path of xmodel. Default is CNN_zcu102.xmodel')
 
   args = ap.parse_args()  
-  
+  print(divider)
   print ('Command line options:')
   print (' --image_dir : ', args.image_dir)
   print (' --threads   : ', args.threads)
   print (' --model     : ', args.model)
+  print(divider)
 
   app(args.image_dir,args.threads,args.model)
 

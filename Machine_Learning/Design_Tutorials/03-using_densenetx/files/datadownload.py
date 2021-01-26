@@ -14,6 +14,12 @@
  limitations under the License.
 '''
 
+'''
+Author: Mark Harvey, Xilinx Inc
+'''
+
+
+
 import numpy as np
 import os
 

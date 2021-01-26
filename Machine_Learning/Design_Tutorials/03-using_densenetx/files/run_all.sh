@@ -15,21 +15,35 @@
 # limitations under the License.
 
 
-source ./0_setenv.sh
+source 0_setenv.sh
 
 # Uncomment the next line if you want to train from scratch
-#source ./1_train.sh
+#source 1_train.sh
 
 # unzip & copy pretrained checkpoint
 # Comment this line if running training from scratch
-unzip -o pretrained/keras_model.zip -d ${BUILD}
+unzip -o pretrained/k_model.zip -d ${KERAS}
+
+# convert Keras model to Tensorflow frozen graph
+source 2_keras2tf.sh
+
+# Evaluate frozen graph
+source 3_eval_frozen.sh
+
+# Quantize
+source 4_quant.sh
+
+# Evaluate quantized model
+source 5_eval_quant.sh
+
+# compile for ZCU102
+source 6_compile.sh zcu102
+
+# compile for U50
+source 6_compile.sh u50
 
 
-source ./2_keras2tf.sh
-source ./3_eval_frozen.sh
-source ./4_quant.sh
-source ./5_eval_quant.sh
-source ./6_compile.sh
-source ./7_make_target.sh
+source 7_make_target_zcu102.sh
+source 7_make_target_vck190.sh
 
 

@@ -1,15 +1,36 @@
-<table width="100%">
-  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Using DenseNetX on the Xilinx DPU Accelerator</h1>
-    </td>
+<!--
+Copyright 2020 Xilinx Inc.
+ 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+ 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: Mark Harvey, Xilinx Inc
+-->
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis AI Tutorials</h1>
+  </td>
  </tr>
- </table>
+ <tr>
+ <td align="center"><h1>Using DenseNetX on the Xilinx DPU Accelerator</h1>
+ </td>
+ </tr>
+</table>
 
 
-# Current Status
 
-Tested on ZCU102 with Vitis&trade; AI 1.2 and VART runtime.
+## Current Status
 
++ Tested on ZCU102 and Alveo U50 with Vitis&trade; AI 1.3 and TensorFlow 1.15.
 
 
 # Introduction
@@ -26,7 +47,7 @@ We will run the following steps:
 4. Evaluation of the frozen model using the CIFAR-10 test dataset.
 5. Quantization of the floating-point frozen model.
 6. Evaluation of the quantized model using the CIFAR-10 test dataset.
-7. Compilation of the quantized model to create the .elf file ready for execution on the DPU accelerator IP.
+7. Compilation of the quantized model to create the .xmodel file ready for execution on the DPU accelerator IP.
 8. Download and execution of the application on an evaluation board.
 
 
@@ -128,93 +149,112 @@ The DenseNetX model provided in this tutorial has 3 dense blocks each of which h
 ```
 
 
-# Implementing the Design
+# Implementing the design
 
 This section will lead you through the steps necessary to run the design in hardware.
 
 
-## Preparing the Host Machine and Target Board
+## Before you begin
 
 The host machine has several requirements that need to be met before we begin. You will need:
 
-  + An x86 host machine that meets the [system requirements](https://github.com/Xilinx/Vitis-AI/blob/master/doc/system_requirements.md)
+  + An x86 host machine with a supported OS and the GPU version of the Vitis-AI docker installed - see [System Requirements](https://github.com/Xilinx/Vitis-AI/blob/master/docs/system_requirements.md).
 
-  + Optionally, a GPU card suitable for training (a trained checkpoint is provided for those who wish to skip the training step).
+  + The host machine will require Docker to be installed and the Vitis-AI GPU docker image to be built - see [Getting Started](https://github.com/Xilinx/Vitis-AI#getting-started).
 
-  + This tutorial assumes that the user has followed all the steps in the [Getting Started](https://github.com/Xilinx/Vitis-AI) section to install Docker and also all steps in the [Quick setup for Edge](https://github.com/Xilinx/Vitis-AI/tree/master/VART#quick-start-for-edge) VART setup.
+  + A GPU card suitable for ML training - a GPU with at least 8GB of memory is recommended.
 
-  + A target board - in this tutorial, the Xilinx ZCU102 board is used. The SDcard needs to be flashed with the image file as indicated in the 'Setting up the target' section of the [Quick setup for Edge](https://github.com/Xilinx/Vitis-AI/tree/master/VART#quick-start-for-edge) VART setup.
+  + If you plan to use the ZCU102 evaluation board, it should be prepared with the board image as per the [Setup the Target](https://github.com/Xilinx/Vitis-AI/tree/master/setup/mpsoc/VART#step2-setup-the-target) instructions. Hints on how to connect the various cables to the ZCU102 are also available [here](https://www.xilinx.com/html_docs/vitis_ai/1_3/installation.html#yjf1570690235238).
 
+  + For the Alveo U50, follow the [Setup Alveo Accelerator Card with HBM for DPUCAHX8H/L](https://github.com/Xilinx/Vitis-AI/tree/master/setup/alveo/u50_u50lv_u280#setup-alveo-accelerator-card-with-hbm-for-dpucahx8hl) instructions. You will need to install the specified version of XRT on your host system (i.e. *not* in the Vitis-AI docker container), install the Alveo U50 card target platform also on your host system and then flash the Alveo U50 card. Note that a cold reboot will be necessary afer flashing the Alveo U50.
 
+ 
+For more details, refer to the latest version of the *Vitis AI User Guide* ([UG1414](https://www.xilinx.com/html_docs/vitis_ai/1_3/zmw1606771874842.html)).
 
-It is highly recommended to test the SDcard in the ZCU102 and ensure that it boots correctly before goign any further.
+This tutorial assumes the user is familiar with Python3, TensorFlow and has some knowledge of machine learning principles.
 
-
-Refer to the latest version of the [Vitis AI User Guide](https://www.xilinx.com/html_docs/vitis_ai/1_2/zkj1576857115470.html) for other details.
 
 ## Downloading the Design and Setting up the Workspace
 
-This repository should be downloaded to the host machine as a zip file and then unzipped to a folder, or cloned using the ``git clone`` command from a terminal.
+1. Copy the repository by doing either of the following:
 
-Open a linux terminal, cd into the repository folder then into the 'files' folder. Start the Vitis AI docker - if you have a GPU in the host system, it is recommended that you use the GPU version of the docker container. If you intend running the model training, you will definitely need the GPU docker container. If you are going to skip the training phase, then the CPU docker container will be sufficient.
+    + Download the repository as a ZIP file to the host machine, and then unzip the archive.
+    + From a terminal, use the `git clone` command.
 
-Open a terminal on the host machine and cd into the enter the following commands (note: start *either* the GPU or the CPU docker container, but not both):
 
+2. Open a linux terminal on the host machine, cd into the repository folder then into the 'files' folder. If you have a GPU in the host system, it is recommended that you use the GPU version of the docker container. If you intend running the model training, you will definitely need the GPU docker container. If you are going to skip the training phase, then the CPU docker container will be sufficient.
+To start the Vitis-AI Docker container, enter on of the following commands (note: start *either* the GPU or the CPU docker container, but not both):
 
-```shell
-# navigate to densenet tutorial folder
-cd <path_to_densenet_design>/files
+     ```shell
+     # navigate to densenet tutorial folder
+     cd <path_to_densenet_design>/files
 
-# to start GPU docker
-source ./start_gpu_docker.sh
+     # to start GPU docker container
+     source start_gpu_docker.sh
 
-# ..or to start CPU docker
-source ./start_cpu_docker.sh
-```
+     # to start CPU docker container
+     source start_cpu_docker.sh
+    ```
+
 
 The docker container will start and you should see something like this in the terminal:
 
 
 ```shell
-==========================================
-__      ___ _   _                   _____
-\ \    / (_) | (_)            /\   |_   _|
- \ \  / / _| |_ _ ___ ______ /  \    | |  
-  \ \/ / | | __| / __|______/ /\ \   | |  
-   \  /  | | |_| \__ \     / ____ \ _| |_
-    \/   |_|\__|_|___/    /_/    \_\_____|
+     ==========================================
+     
+     __      ___ _   _                   _____
+     \ \    / (_) | (_)            /\   |_   _|
+      \ \  / / _| |_ _ ___ ______ /  \    | |
+       \ \/ / | | __| / __|______/ /\ \   | |
+        \  /  | | |_| \__ \     / ____ \ _| |_
+         \/   |_|\__|_|___/    /_/    \_\_____|
+     
+     ==========================================
 
-==========================================
+     Docker Image Version:  1.3 
+     Build Date: 2020-12-20
+     VAI_ROOT: /opt/vitis_ai
 
-Docker Image Version: latest
-Build Date: Fri Jul 10 17:35:27 CEST 2020
-VAI_ROOT=/opt/vitis_ai
-For TensorFlow Workflows do:
-  conda activate vitis-ai-tensorflow
-For Caffe Workflows do:
-  conda activate vitis-ai-caffe
-For Neptune Workflows do:
-  conda activate vitis-ai-neptune
-For pytorch Workflows do:
-  conda activate vitis-ai-pytorch
-For optimizer_darknet Workflows do:
-  conda activate vitis-ai-optimizer_darknet
-For optimizer_caffe Workflows do:
-  conda activate vitis-ai-optimizer_caffe
-For optimizer_tensorflow Workflows do:
-  conda activate vitis-ai-optimizer_tensorflow
-mharvey@XITMHARVEY33:/workspace$
+     For TensorFlow Workflows do:
+          conda activate vitis-ai-tensorflow 
+     For Caffe Workflows do:
+          conda activate vitis-ai-caffe 
+     For Neptune Workflows do:
+          conda activate vitis-ai-neptune 
+     For PyTorch Workflows do:
+          conda activate vitis-ai-pytorch 
+     For TensorFlow 2.3 Workflows do:
+          conda activate vitis-ai-tensorflow2 
+     For Darknet Optimizer Workflows do:
+          conda activate vitis-ai-optimizer_darknet 
+     For Caffe Optimizer Workflows do:
+          conda activate vitis-ai-optimizer_caffe 
+     For TensorFlow 1.15 Workflows do:
+          conda activate vitis-ai-optimizer_tensorflow 
+     For LSTM Workflows do:
+          conda activate vitis-ai-lstm 
+     Vitis-AI /workspace > 
 ```
+
+
+>:bulb: If you get a "Permission Denied" error when running the start_gpu_docker.sh or start_cpu_docker.sh scripts, it is almost certainly because the docker_run.sh script is not set to be executable. You can fix this by running the following command:
+>
+>```shell
+> chmod +x ./docker_run.sh
+>```
+
+## Step 0 - Set up the environment
 
 Now run the environment setup script:  `source ./0_setenv.sh`
 
-This will set up all the environment variables (..mainly pointers to folder and files..) most of which users can edit as required. It will also create the folders for the logs and the trained keras checkpoint.
+This will set up all the environment variables (..mainly pointers to folders and files..) most of which users can edit as required. It will also create the folders for the logs and the trained keras checkpoint.
 
 The 0_setenv.sh script also activates the 'vitis-ai-tensorflow' TensorFlow conda environment, so you should now see that the terminal prompt looks like this:
 
 
 ```shell
-(vitis-ai-tensorflow) mharvey@XITMHARVEY33:/workspace$
+  (vitis-ai-tensorflow) user@my_pc:/workspace$
 ```
 
 
@@ -222,12 +262,12 @@ The 0_setenv.sh script also activates the 'vitis-ai-tensorflow' TensorFlow conda
 
 :pushpin: Training takes a considerable time, between 8-12 hours depending on the GPU. Users can either:
 
-+ Reduce the number of epochs by editing the ``export EPOCHS=160`` line in the 0_setenv.sh shell script. Obviously, less epochs of training will have a negative impact on the final accuracy. You need sto run the 0_setenv.sh shell script again if you modify it.
++ Reduce the number of epochs by editing the ``export EPOCHS=200`` line in the 0_setenv.sh shell script. Obviously, less epochs of training will have a negative impact on the final accuracy. You need sto run the 0_setenv.sh shell script again if you modify it.
 + The batchsize is set by the line `export BATCHSIZE=150`. If you run into out-of-memory issues, then try reducing the batchsize.
-+ Skip the training phase altogether and use the pretrained Keras checkpoint available in ./files/pretrained/keras_model.zip. The k_model.h5 file inside this zip archive should be copied to the ./files/build/keras_model folder and the remaining parts of Step 1 should be skipped and users should go direct to Step 2.   
++ Skip the training phase altogether and use the pretrained Keras checkpoint available in ./files/pretrained/keras_model.zip. The k_model.h5 file inside this zip archive should be copied to the ./files/build/keras_model folder and the remaining parts of Step 1 should be skipped, and users should go direct to Step 2 (see run_all.sh) 
 
 
-To run step 1: ``source ./1_train.sh``
+To run step 1: ``source 1_train.sh``
 
 The training process is defined by the train.py Python script. First, the CIFAR10 dataset is downloaded and pre-processed by the datadownload.py script which is called by train.py. All images undergo simple pre-processing before being used for training, evaluation and quantization calibration. The images are normalized to bring all pixel values into the range 0 to 1.0 by dividing them by 255.
 
@@ -265,7 +305,7 @@ After training has finished, the trained Keras checkpoint will be found in the .
 
 ## Step 2 - Convert the Keras HDF5 Checkpoint to a TensorFlow Frozen Graph
 
-To run step 2: ``source ./2_keras2tf.sh``
+To run step 2: ``source 2_keras2tf.sh``
 
 The Vitis AI tools cannot operate directly on Keras checkpoints and require a TensorFlow compatible frozen graph as the input format. The 2_keras2tf.sh shell script will create the frozen graph in two steps:
 
@@ -279,14 +319,14 @@ After this step is completed, there should be a protobuf file called 'frozen_gra
 
 ## Step 3 - Evaluate the Frozen Graph
 
-To run step 2: ``source ./3_eval_frozen.sh``
+To run step 2: ``source 3_eval_frozen.sh``
 
 This is an optional step as the frozen graph is still in floating-point format and should give almost identical accuracy results as the evaluation done during the training phase (step 1). All 10k images of CIFAR10 test images are passed through the frozen model and the accuracy is calculated.
 
 
 ## Step 4 - Quantize the Frozen Graph
 
-To run step 4: ``source ./4_quant.sh``
+To run step 4: ``source 4_quant.sh``
 
 The DPU accelerator IP executes all calculations in 8bit integer format, so we must quantize our floating-point frozen graph. This is done by the Vitis AI tools, in particular by the 'vai_q_tensorflow quantize' command. This command can be seen in the 4_quant.sh script and has several arguments that we must provide values for:
 
@@ -319,7 +359,7 @@ Once quantization has completed, we will have the quantized deployment model (de
 
 ## Step 5 - Evaluate the Quantized Model
 
-To run step 5: ``source ./5_eval_quant.sh``
+To run step 5: ``source 5_eval_quant.sh``
 
 This is an optional, but *highly* recommended step. The conversion from a floating-point model where the values can have a very wide dynamic range to an 8bit model where values can only have one of 256 values almost inevitably leads to a small loss of accuracy. We use the quantized evaluation model to see exactly how much impact the quantization has had.
 
@@ -328,104 +368,119 @@ The exact same Python script, eval_graph.py, that was used to evaluate the froze
 
 ## Step 6 - Compile the Quantized Model
 
-To run step 6: ``source ./6_compile.sh``
+To run step 6: ``source 6_compile.sh zcu102`` or ``source 6_compile.sh u50``
 
-The DPU IP is a soft-core IP whose only function is to accelerate the execution of convolutional neural networks. It is a co-processor which has its own instruction set - those instructions are passed to the DPU in ELF file format.
+The DPU IP is a soft-core IP whose only function is to accelerate the execution of convolutional neural networks. It is a co-processor which has its own instruction set - those instructions are passed to the DPU in a proprietary format know as xmodel.
 
-The Vitis AI compiler will convert, and optimize where possible, the quantized deployment model to a set of micro-instructions and then output them in an ELF file.
+The Vitis AI compiler will convert, and optimize where possible, the quantized model to a set of micro-instructions and then output them in an .xmodel file.
 
-The generated instructions are specific to the particular configuration of the DPU. The DPU's parameters are contained in a .dcf file which needs to be created for each target board - see the Vitis AI User Guide for details.
-
-In the specific case of the ZCU102 and the prepared SDcard image file that we used back in the 'Preparing the host machine and target board' section, the .dcf file is included in the docker container and its location is passed to the vai_c_tensorflow command via the --arch argument.
-
-
-When you compile, you will see a warning like this:
-
-
-```shell
-[VAI_C][Warning] layer [activation_99_Softmax] (type: Softmax) is not supported in DPU, deploy it in CPU instead.
-```
-
-
-This message tells us that we have an unsupported layer, Softmax in this case, in the quantized model. The Vitis AI compiler will ignore this layer and only compile the network up to the output of the previous layer. Generally, for unsupported layers the user must provide an equivalent software function that will be executed on the CPU - but be aware that in the particular case of Softmax, the DPUv2 has an optional hardware block that ca ne used to implement Softmax in hardware.
+The generated instructions are specific to the particular configuration of the DPU. The DPU's parameters are contained in a .dcf file which needs to be created for each target board - see the Vitis AI User Guide for details. In the specific case of Xilinx evaluation boards, Alveo accelerator cards and the prepared SDcard image file that we used back in the 'Preparing the host machine and target board' section, the .dcf file is included in the docker container and its location is passed to the vai_c_tensorflow command via the --arch argument.
 
 In this tutorial, we will not include a Softmax function in our application code but instead use a Numpy argmax function to extract the predicted class from the vector of probabilities returned by the DPU.
 
-Once compile is complete, the ELF file will be stored in the ./files/build/compile folder.
+Once compile is complete, the .xmodel file will be stored in the files/build/compile_zcu102 or files/build/compile_u50 folder.
 
 
-## Step 7 - Run the Application on the Board
+## Step 7 - Run the Application on the target board
 
-To run step 7: ``source ./7_make_target.sh``
+To run step 7: ``source ./7_make_target.sh zcu102`` or ``source ./7_make_target.sh u50``
 
 
-This final step will copy all the required files for running on the board into the ./files/build/target folder. The entire target folder will be copied to the ZCU102 SDcard. The 7_make_target.sh script also creates 10000 images from the CIFAR10 test set - the application code will preprocess and classify these images.
+This final step will copy all the required files for running on the board into the files/build/target_zcu102 or files/build/target_u50 folder. The scripts also create 10000 images from the CIFAR10 test set - the application code will preprocess and classify these images.
 
-Copy it to the /home/root folder of the flashed SD card, this can be done in one of several ways:
+### ZCU102
+
+For the ZCU102, it will be necessary to copy the entire target_zcu102 folder to the evaluation board SDcard. Copy it to the /home/root folder of the flashed SD card, this can be done in one of several ways:
 
 1. Direct copy to SD Card:
 
-  + If the host machine has an SD card slot, insert the flashed SD card and when it is recognised you will see two volumes, BOOT and ROOTFS. Navigate into the ROOTFS and then into the /home folder.  Make the ./root folder writeable by issuing the command ``sudo chmod -R 777 root`` and then copy the entire target folder from the host machine into the /home/root folder of the SD card.
+  + If the host machine has an SD card slot, insert the flashed SD card and when it is recognised you will see two volumes, BOOT and ROOTFS. Navigate into the ROOTFS and then into the /home folder.  Make the ./root folder writeable by issuing the command ``sudo chmod -R 777 root`` and then copy the entire target_zcu102 (or target_vck190) folder from the host machine into the /home/root folder of the SD card.
 
   + Unmount both the BOOT and ROOTFS volumes from the host machine and then eject the SD Card from the host machine.
 
 2. With scp command:
 
-  + If the ZCU102 is connected to the same network as the host machine, the target folder can be copied using scp.
+  + If the target evaluation board is connected to the same network as the host machine, the target_zcu102 folder can be copied using scp.
 
-  + The command will be something like ``scp -r ./build/target root@192.168.1.227:~/.``  assuming that the ZCU102 IP address is 192.168.1.227 - adjust this and the path to the target folder as appropriate for your system.
+  + The command will be something like ``scp -r ./build/target_zcu102 root@192.168.1.227:~/.``  assuming that the target board IP address is 192.168.1.227 - adjust this as appropriate for your system.
 
   + If the password is asked for, insert 'root'.
 
 
-With the target folder copied to the SD Card and the ZCU102 booted, you can issue the command for launching the application - note that this done on the ZCU102 board, not the host machine, so it requires a connection to the ZCU102 such as a serial connection to the UART or an SSH connection via Ethernet.
+With the target_zcu102 folder copied to the SD Card and the evaluation board booted, you can issue the command for launching the application - note that this done on the target evaluation board, not the host machine, so it requires a connection to the board such as a serial connection to the UART or an SSH connection via Ethernet.
 
-The application can be started by navigating into the target folder and then issuing the command ``python3 app_mt.py``. The application will start and after a few seconds will show the throughput in frames/sec.
+The application can be started by navigating into the target_zcu102 folder and then issuing the command ``python3 app_mt.py``. The application will start and after a few seconds will show the throughput in frames/sec, like this:
 
 ```shell
-root@xilinx-zcu102-2020_1:~/target# python3 app_mt.py                   
+root@xilinx-zcu102-2020_2:~# cd target_zcu102/
+root@xilinx-zcu102-2020_2:~/target_zcu102# python3 app_mt.py 
 Command line options:
  --image_dir :  images
  --threads   :  1
- --model     :  model_dir/dpu_densenetx_0.elf
-FPS=437.48, total frames = 10000 , time=22.8581 seconds
+ --model     :  model_dir/densenetx.xmodel
+Pre-processing 10000 images...
+Starting 1 threads...
+Throughput=417.97 fps, total frames = 10000, time=23.9252 seconds
 output buffer length: 10000
-Correct: 9145 Wrong: 855 Accuracy: 0.9145
+Correct:9126, Wrong:874, Accuracy:0.9126
 ```
 
 For better throughput, the number of threads can be increased like this:
 
 ```shell
-root@xilinx-zcu102-2019_2:~/target# python3 app_mt.py -t 6
+root@xilinx-zcu102-2020_2:~/target_zcu102# python3 app_mt.py -t 5
+Command line options:
+ --image_dir :  images
+ --threads   :  5
+ --model     :  model_dir/densenetx.xmodel
+Pre-processing 10000 images...
+Starting 5 threads...
+Throughput=855.58 fps, total frames = 10000, time=11.6879 seconds
+output buffer length: 10000
+Correct:9126, Wrong:874, Accuracy:0.9126
+```
+
+### U50
+
+Note that these steps need to be run from inside of the Vitis-AI Docker container.
+
+Run the `U50_overlay.sh` script (internet connection required) to download and install the correct overlay. Note that the U50 will need to have been flashed with the correct deployment shell - this should have been done in the [Before you begin](#before-you-begin) section above. The complete steps to run on the Alveo U50 are as follows:
+
+
+```shell
+Vitis-AI /workspace > source U50_overlay.sh
+Vitis-AI /workspace > cd build/target_u50
+Vitis-AI /workspace > /usr/bin/python3 app_mt.py
+```
+The output on the host machine will be like this:
+
+```shell
+Command line options:
+ --image_dir :  images
+ --threads   :  1
+ --model     :  model_dir/densenetx.xmodel
+Pre-processing 10000 images...
+Starting 1 threads...
+Throughput=560.81 fps, total frames = 10000, time=17.8312 seconds
+output buffer length: 10000
+Correct:9126, Wrong:874, Accuracy:0.9126
+```
+
+As for the ZCU102, performance can be increased by using more than one thread:
+
+```shell
+Vitis-AI /workspace/build/target_u50 > /usr/bin/python3 app_mt.py  -t 6
 Command line options:
  --image_dir :  images
  --threads   :  6
- --model     :  model_dir/dpu_densenetx_0.elf
-FPS=805.64, total frames = 10000 , time=12.4125 seconds
+ --model     :  model_dir/densenetx.xmodel
+Pre-processing 10000 images...
+Starting 6 threads...
+Throughput=1313.83 fps, total frames = 10000, time=7.6113 seconds
 output buffer length: 10000
-Correct: 9145 Wrong: 855 Accuracy: 0.9145
+Correct:9126, Wrong:874, Accuracy:0.9126
 ```
 
-
-# Accuracy & Performance results
-
-The floating-point post-training and frozen graph evaluations can be compared to the INT8 post-quantization model and actual results obtained by the hardware model running on the ZCU102 board:
-
-
-| Post-training (Float) | Hardware model (INT8) |
-| :-------------------: | :-------------------: |
-|       92.94%          |        91.45  %       |
-
-
-The approximate throughput (in frames/sec) for increasing number of threads is shown below:
-
-
-| Threads   | Throughput (fps) |
-| :-------: | :--------------: |
-|     1     |      438.48      |
-|     2     |      517.33      |
-|     4     |      788.92      |
-|     6     |      805.64      |
 
 
 # References
@@ -433,4 +488,6 @@ The approximate throughput (in frames/sec) for increasing number of threads is s
 1. Huang et al. <a href="https://arxiv.org/pdf/1608.06993.pdf">"Densely Connected Convolutional Networks" (v5) Jan 28 2018</a>.
 2. Krizhevsky, Alex. <a href="https://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf">"Learning Multiple Layers of Features from Tiny Images"</a>.
 
-<!-- Edited 072920-->
+
+</hr>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>

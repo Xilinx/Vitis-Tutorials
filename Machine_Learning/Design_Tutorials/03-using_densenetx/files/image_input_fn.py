@@ -19,8 +19,9 @@ Image pre-processing for quantization
 '''
 
 '''
-Author: Mark Harvey
+Author: Mark Harvey, Xilinx Inc
 '''
+
 
 
 import os

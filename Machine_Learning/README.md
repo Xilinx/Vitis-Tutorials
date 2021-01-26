@@ -1,4 +1,4 @@
-<table width="100%">
+<table class="sphinxhide">
  <tr width="100%">
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ 2020.2 / Vitis-AI™ 1.3 - Machine Learning Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -47,7 +47,7 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  </tr>
  <tr>
  <td align="center">
-   <a href="./Design_Tutorials/03-using-densenetx/README.md">Using DenseNetX on the Xilinx DPU Accelerator (UG1340)</a>
+   <a href="./Design_Tutorials/03-using_densenetx/README.md">Using DenseNetX on the Xilinx DPU Accelerator (UG1340)</a>
  </td>
  <td>Learn about the Vitis AI TensorFlow design process and how to go from a Python description of the network model to running a compiled model on the Xilinx DPU accelerator.</td>
  </tr>
@@ -61,7 +61,7 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  <td align="center">
    <a href="./Design_Tutorials/05-Keras_FCN8_UNET_segmentation/README.md">FCN8 and UNET Semantic Segmentation with Keras and Xilinx Vitis AI (UG1445)</a>
  </td>
- <td>Train the FCN8 and UNET Convolutional Neural Networks (CNNs) for Semantic Segmentation in Keras adopting a small custom dataset, quantize the floating point weights files to an 8-bit fixed point representation, and then deploy them on the Xilinx® ZCU102 board using Vitis AI.</td>
+ <td>Train the FCN8 and UNET Convolutional Neural Networks (CNNs) for Semantic Segmentation in Keras adopting a small custom dataset, quantize the floating point weights files to an 8-bit fixed point representation, and then deploy them on the Xilinx ZCU102 board using Vitis AI.</td>
  </tr>
  <tr>
  <td align="center">
@@ -71,9 +71,20 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  </tr>
  <tr>
  <td align="center">
-   <a href="./Design_Tutorials/07-yolov4-tutorial/README.md">Vitis AI YOLOv4 Tutorial</a>
+   <a href="./Design_Tutorials/07-yolov4-tutorial/README.md">Vitis AI YOLOv4</a>
  </td>
  <td>Learn how to train, evaluate, convert, quantize, compile, and deploy YOLOv4 on Xilinx devices using Vitis AI.</td>
+ </tr>
+  <td align="center">
+   <a href="./Design_Tutorials/08-tf2_flow/README.md">TensorFlow2 and Vitis AI design flow</a>
+ </td>
+ <td>Learn about the TF2 flow for Vitis AI. In this tutorial, you'll be trained on TF2, including conversion of a dataset into TFRecords, optimization with a plug-in, and compiling and execution on a Xilinx ZCU102 board or Xilinx Alveo U50 Data Center Accelerator card.</td>
+ </tr>
+  <td align="center">
+   <a href="./Design_Tutorials/09-mnist_pyt-master/README.md">PyTorch flow for Vitis AI</a>
+ </td>
+ <td>Learn how to use by using PyTorch. You'll use a simple `get-you-started` example to get started, and then be trained on quantization with a plug-in, and then compiling and execution on a Xilinx ZCU102 board or Xilinx Alveo U50 Data Center Accelerator card.
+</td>
  </tr>
  </table>
 
@@ -105,4 +116,5 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+</hr>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>

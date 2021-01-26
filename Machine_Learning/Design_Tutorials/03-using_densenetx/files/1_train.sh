@@ -14,10 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Author: Mark Harvey, Xilinx Inc
 
 # train, evaluate and save trained keras model
 train() {
-  python train.py \
+  python -u train.py \
     --input_height ${INPUT_HEIGHT} \
     --input_width  ${INPUT_WIDTH} \
     --input_chan   ${INPUT_CHAN} \
@@ -25,7 +26,8 @@ train() {
     --learnrate    ${LEARNRATE} \
     --batchsize    ${BATCHSIZE} \
     --tboard       ${TB_LOG} \
-    --keras_hdf5   ${KERAS}/${K_MODEL}
+    --keras_hdf5   ${KERAS}/${K_MODEL} \
+    --gpu          ${CUDA_VISIBLE_DEVICES}
 }
 
 echo "-----------------------------------------"

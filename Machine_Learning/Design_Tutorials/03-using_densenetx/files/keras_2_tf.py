@@ -35,8 +35,9 @@
 '''
 
 '''
-Author: Mark Harvey
+Author: Mark Harvey, Xilinx Inc
 '''
+
 
 import os
 import argparse

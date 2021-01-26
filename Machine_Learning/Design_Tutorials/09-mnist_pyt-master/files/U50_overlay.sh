@@ -16,26 +16,12 @@
 
 # Author: Mark Harvey, Xilinx Inc
 
+#--------------------------
+# U50 overlay
+#--------------------------
 
+wget --no-clobber https://www.xilinx.com/bin/public/openDownload?filename=alveo_xclbin-1.3.0.tar.gz -O alveo_xclbin-1.3.0.tar.gz
+tar xfz alveo_xclbin-1.3.0.tar.gz
+sudo cp -f ./alveo_xclbin-1.3.0/U50/6E300M/* /usr/lib
+#rm -rf alveo_xclbin-1.3.0*
 
-# evaluate graph with test dataset
-eval_graph() {
-  dir_name=$1
-  graph=$2
-  python -u eval_graph.py \
-    --graph        $dir_name/$graph \
-    --input_node   ${INPUT_NODE} \
-    --output_node  ${OUTPUT_NODE} \
-    --batchsize    ${BATCHSIZE} \
-    --gpu          ${CUDA_VISIBLE_DEVICES}
-}
-
-echo "-----------------------------------------"
-echo "EVALUATING THE FROZEN GRAPH.."
-echo "-----------------------------------------"
-
-eval_graph ${FREEZE} ${FROZEN_GRAPH} 2>&1 | tee ${LOG}/${EVAL_FR_LOG}
-
-echo "-----------------------------------------"
-echo "EVALUATION COMPLETED"
-echo "-----------------------------------------"

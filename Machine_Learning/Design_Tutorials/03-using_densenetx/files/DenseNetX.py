@@ -27,11 +27,16 @@ Reference: Densely Connected Convolutional Networks
          : https://arxiv.org/abs/1608.06993
 '''
 
+'''
+Author: Mark Harvey, Xilinx Inc
+'''
+
+
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.layers import Conv2D,BatchNormalization,Dense,Dropout,MaxPooling2D,Input
-from tensorflow.keras.layers import Activation,Concatenate,AveragePooling2D,GlobalAveragePooling2D
+from tensorflow.keras.layers import Activation,Concatenate,AveragePooling2D,Flatten
 
 
 
@@ -78,7 +83,7 @@ def transition_layer(net_in,theta,drop_rate,weight_decay):
     chan =  K.int_shape(net_in)[-1] 
 
     # 1 x 1 convolution
-    net = Conv2D(int(chan*theta),1,use_bias=False,kernel_initializer='he_uniform',kernel_regularizer=l2(weight_decay))(net_in)
+    net = Conv2D(int(chan*theta),1, use_bias=False, kernel_initializer='he_uniform',kernel_regularizer=l2(weight_decay))(net_in)
     net = BatchNormalization()(net)
     net = Activation('relu')(net)
     net = Dropout(rate=drop_rate)(net)
@@ -117,7 +122,7 @@ def densenetx(input_shape=(224,224,3),classes=1000,k=32,drop_rate=0.2,theta=0.5,
 
     # Use this for CIFAR-10, CIFAR-100
     # first convolutional layer + BN + ReLU (Imagenet style)
-    net = Conv2D((2*k),3,strides=1,use_bias=False,kernel_initializer='he_uniform',kernel_regularizer=l2(weight_decay),padding='same')(input_layer)
+    net = Conv2D((2*k),3,strides=1, use_bias=False, kernel_initializer='he_uniform',kernel_regularizer=l2(weight_decay),padding='same')(input_layer)
     net = BatchNormalization()(net)
     net = Activation('relu')(net)
 
@@ -125,7 +130,7 @@ def densenetx(input_shape=(224,224,3),classes=1000,k=32,drop_rate=0.2,theta=0.5,
     ''' 
     # Use this for IMAGENET
     # first convolutional layer + BN + ReLU
-    net = Conv2D((2*k), 7, strides=2, use_bias=False)(input_layer)
+    net = Conv2D((2*k), 7, use_bias=False, strides=2,kernel_regularizer=l2(weight_decay))(input_layer)
     net = BatchNormalization()(net)
     net = Activation('relu')(net)
 
@@ -139,8 +144,13 @@ def densenetx(input_shape=(224,224,3),classes=1000,k=32,drop_rate=0.2,theta=0.5,
         net = transition_layer(net,theta,drop_rate,weight_decay)
     net = dense_block(net, convlayers[-1],k,drop_rate,weight_decay)
 
-    # Global average Pooling 2D
-    net = GlobalAveragePooling2D()(net)
+    
+    # Global average pooling implemented as multiple average pooling layers
+    # followed by a flatten layer
+    net = AveragePooling2D(pool_size=4, strides=4, padding='valid')(net)
+    net = AveragePooling2D(pool_size=2, strides=1, padding='valid')(net)
+    net = Flatten()(net)
+    
     net = Dense(classes, kernel_initializer='he_normal')(net)
     output_layer = Activation('softmax')(net)
     
