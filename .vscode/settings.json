@@ -1,7 +1,0 @@
-{
-    "C_Cpp.errorSquiggles": "Disabled",
-    "files.associations": {
-        "chrono": "cpp",
-        "*.tcc": "cpp"
-    }
-}
