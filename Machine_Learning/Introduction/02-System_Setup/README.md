@@ -20,7 +20,7 @@ The host OS can be a natively installed OS, or installed in a virtual machine. P
 
 ### Vitis Core Tools
 
-1. Download the Vitis Software Platform from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html).
+1. Download the Vitis Software Platform from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html.
 
 2. Install the Vitis Software Platform 
 
