@@ -3,7 +3,7 @@
 
 ***Version: Vitis 2020.2+Vitis AI 1.3***
 
-**_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
+**_Note_**: You need to use the new image you generated in Section_3-Module_7. After the OS boot succesfully, you can refer to [quick_start](https://github.com/Xilinx/Vitis-AI/tree/master/demo/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development evironment.
 This example suite, for the Vitis AI Library and Vitis Accelerated Kernel, shows how to use the Vitis AI Library runs neural networks on DPUs and how to use the HLS kernel to speed up pre/... Postprocessing. About how to immigrate from OpenCV to HLS, please refer to [app/README.md](app/README.md)
 
 Some system level functions:
@@ -72,15 +72,14 @@ The directory structure and brief explanations as below:
 │       └── test.yuv                #test data
 └── README.md
 └── CMakeLists.txt
+└── build_app_arm.sh                # Build application with hls kernel
+└── build_app_hls.sh                # Build application with arm preprocessing
 
 ```
 
 
 
 ## Pre-Requirement
-
-<<<<<<< HEAD
-=======
 - Hardware required:
   - ZCU104 evaluation board
   - Micro-USB cable, connect to lattop for the terminal emulator.
@@ -90,12 +89,10 @@ The directory structure and brief explanations as below:
 - [Silicon Labs quad CP210x USB-to-UART bridge driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) install in laptop.
 - Serial terminal emulator e.g. teraterm, Mobaxterm install in laptop
 - [XRT 2020.2](https://github.com/Xilinx/XRT/tree/2020.2) install in laptop
-- [zcu104 base platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/zcu104_base) install in server
-- [Vitis AI runtime package](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai-runtime-1.3.tar.gz) base on VAI1.3
-- [Vitis AI model packages ](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge)for ZCU104
-- [dpu_sw_optimize.tar.gz](https://github.com/Xilinx/Vitis-AI/blob/master/DPU-TRD/app/dpu_sw_optimize.tar.gz) Running zynqmp_dpu_optimize.sh to optimize the board setting
+- [zcu104 base platform](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/master/Xilinx_Official_Platforms/xilinx_zcu104_base) install in server
+- [Vitis AI runtime package](https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai-runtime-1.3.0.tar.gz) base on VAI1.3
+- [dpu_sw_optimize.tar.gz](https://github.com/Xilinx/Vitis-AI/blob/master/dsa/DPU-TRD/app/dpu_sw_optimize.tar.gz) Running zynqmp_dpu_optimize.sh to optimize the board setting
 ---
->>>>>>> b87524238f61dc2b5e4df2fcd93573a70d6fd925
 
 ## Workflow Overview
 - Step 1: Create Base Platform
@@ -115,33 +112,33 @@ After cloning the platform source, and with both Vivado and PetaLinux set up, ru
 
 
 
-###Step 2:  DPU and HLS kernel integration
+### Step 2:  DPU and HLS kernel integration
 
--  Clone the repository of vitis-ai-staging and vitis_library
-
+-  Clone the repository of Vitis-AI and vitis_library, the preprocessor kernel implements base on vitis_library, Befor you build the haredware design, you need to clone the vitis_library under the ***${DPU-TRD}/prj/Vitis*** directory.
 ```
-$ git clone -b ML-2605-folder-structure git@gitenterprise.xilinx.com:Vitis/vitis-ai-staging.git
-$ cd vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/
+$ git clone https://github.com/Xilinx/Vitis-AI.git
+$ cd Vitis-AI/dsa/DPU-TRD/prj/Vitis/
 $ git clone https://github.com/Xilinx/Vitis_Libraries.git
 
 
 ```
-- download the [mpsoc common system](https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-zynqmp-common-v2020.1.tar.gz), and unzip the files.
+- download the [mpsoc common system](https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-zynqmp-common-v2020.2.tar.gz), and unzip the files.
 
 ```
-$ tar -xvzf  xilinx-zynqmp-common-v2020.1.tar.gz
-$ cd xilinx-zynqmp-common-v2020.1
+$ tar -xvzf  xilinx-zynqmp-common-v2020.2.tar.gz
+$ cd xilinx-zynqmp-common-v2020.2
 $ gzip -d rootfs.ext4.gz
 ```
 
 - copy the kernel source code and config files below to DPU-TRD work directory
 
 ```
-$ cp ${Module_7}/kernel/build/Makefile vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/build/preprocessor_config.ini vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/build/dpu_conf.vh vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/src/pre_processor.cpp vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
-$ cp ${Module_7}/kernel/src/pre_processor.h vitis-ai-staging/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/build/Makefile Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/build/preprocessor_config.ini Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/build/dpu_conf.vh Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/src/pre_processor.cpp Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/src/pre_processor.h Vitis-AI/dsa/DPU-TRD/prj/Vitis
+$ cp ${Module_7}/kernel/config_file/prj_config_104_2dpu Vitis-AI/dsa/DPU-TRD/prj/Vitis/config_file
 ```
 
 - Step4: Run the below commands to start IP integration and wait for it to complete.
@@ -154,12 +151,12 @@ make KERNEL=DPU DEVICE=ZCU104
 There are two methods to set up the target environment
 1. Replace the BOOT.BIN and the dpu.xclbin on target.
 ```
-$ scp vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/binary_container_1/BOOT.BIN root@<zcu104 board ip>:/mnt/sd-mmcblk0p1/
-$ scp vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/binary_container_1/dpu.xclbin root@<zcu104 board ip>:/mnt/sd-mmcblk0p1/
+$ scp Vitis-AI/dsa/DPU-TRD/prj/Vitis/binary_container_1/BOOT.BIN root@<zcu104 board ip>:/mnt/sd-mmcblk0p1/
+$ scp Vitis-AI/dsa/DPU-TRD/prj/Vitis/binary_container_1/dpu.xclbin root@<zcu104 board ip>:/mnt/sd-mmcblk0p1/
 
 
 ```
-2. Burn the SD card with the image generated in ***vitis-ai-staging/dsa/DPU-TRD/prj/Vitis/binary_container_1/sd_card.img***
+2. Burn the SD card with the image generated in ***${Vitis-AI}/dsa/DPU-TRD/prj/Vitis/binary_container_1/sd_card.img***
 
 ## Step 3: Cross Compiler Environtment Set up and Build application
 ---
@@ -180,7 +177,15 @@ $ sh build_app_hls.sh
 ```
 $ scp test.yuv root@<zcu104 ip>:/home/root
 ```
+- Copy the library and the applications to target board
+```
 
+$ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/usr/lib
+$ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
+$ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
+
+
+```
 
 ### Step 4: Run the Application on Target
 
@@ -200,5 +205,26 @@ $ scp test.yuv root@<zcu104 ip>:/home/root
     - -t 3                :  thread number 3;
 
 ```
+
+- Optional
+
+If you are interested in the gap between hls kenel's preprocessing performance and arm's processing performance. You can also recompile the program to see the performance
+
+   - Build the application
+
+  ```
+  $ build_app_arm.sh
+
+  ```
+
+  - Copy the library and the applications to target board
+  ```
+  
+  $ scp ${Module_7}/install/libhls_v4l2s.so root@Board_IP:/usr/lib
+  $ scp ${Module_7}/test/test_hls_kernel  root@Board_IP:/home/root
+  $ scp ${Module_7}/test/usb_input_multi_threads_refinedet_hls_drm  root@Board_IP:/home/root
+
+
+  ```
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

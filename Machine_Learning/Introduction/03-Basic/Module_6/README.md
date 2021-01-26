@@ -56,7 +56,7 @@ The directory structure and brief explanations as below:
 
 ```
 ## Program Prerequisites
-This design targets the ZCU104 Vitis platform. You can refer to the [quick start](https://github.com/Xilinx/Vitis-AI/tree/master/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development environment.
+This design targets the ZCU104 Vitis platform. You can refer to the [quick start](https://github.com/Xilinx/Vitis-AI/tree/master/demo/Vitis-AI-Library#quick-start-for-edge) guide to learn how to prepare the development environment.
 
 
 ## Setting Up the cross-compile environment and Build app.
@@ -73,8 +73,8 @@ sh build_app.sh
 Copy the executable file to board.
 
 ```
-scp ${Section_3-Basic}/Module_6/build/usb_input_multi_threads_refinedet_drm root@$[IP_OF_BOARD]:/home/root
-scp ${Section_3-Basic}/Module_6/build/myV4L2/libmy_v4l2s.so root@$[IP_OF_BOARD]:/usr/lib
+scp ${Section_3-Basic}/Module_6/test/usb_input_multi_threads_refinedet_drm root@$[IP_OF_BOARD]:/home/root
+scp ${Section_3-Basic}/Module_6/install/libmy_v4l2s.so root@$[IP_OF_BOARD]:/usr/lib
 ```
 Running zynqmp_dpu_optimize.sh on board to optimize the board setting.
 ```
@@ -84,7 +84,7 @@ Running zynqmp_dpu_optimize.sh on board to optimize the board setting.
 The script runs automatically after the board boots up with the official image
 - Test the libmy_v4l2s.so library to see if it works properly with the test example. When the test example works, you will notice that two JPEG files are generated in your execution directory.
 ```
-./test
+./test_v4l2
 ```
 
 

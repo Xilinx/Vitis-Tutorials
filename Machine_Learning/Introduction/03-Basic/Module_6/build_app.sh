@@ -15,9 +15,18 @@
 #
 
 #!/bin/bash
-
+set -e
+echo "[INFO] Pull the repo"
 git pull
-rm -rf build
+rm -rf ./build
+rm -rf ./install
+rm -rf ./test
+echo "[INFO] Start to build"
 mkdir build&&cd build
 cmake ..&& make
-cp *drm ../
+mkdir -pv ../install
+mkdir -pv ../test
+cp usb_input_multi_threads_refinedet_drm ../test/
+cp myV4L2/libmy_v4l2s.so ../install/
+cp myV4L2/test_v4l2 ../test/
+echo "[INFO] Build success"

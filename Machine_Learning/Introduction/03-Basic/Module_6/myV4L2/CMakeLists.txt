@@ -53,8 +53,8 @@ set(MY_SRCS src/V4l2Access.cpp
 
 add_library(my_v4l2s SHARED ${MY_SRCS})
 target_link_libraries(my_v4l2s ${OpenCV_LIBS} glog)
-add_executable(test test/test.cpp)
-target_link_libraries(test my_v4l2s  ${OpenCV_LIBS} glog)
+add_executable(test_v4l2 test/test.cpp)
+target_link_libraries(test_v4l2 my_v4l2s  ${OpenCV_LIBS} glog)
 install(TARGETS my_v4l2s
         LIBRARY 
             DESTINATION /usr/lib
