@@ -16,14 +16,17 @@
 
 
 #NETWORK_NAME=cf_refinedet_coco_480_360_0.96_1.1.zip
-NETWORK_NAME=cf_refinedet_coco_480_360_0.96_1.2.zip
+#NETWORK_NAME=cf_refinedet_coco_480_360_0.96_1.2.zip
+NETWORK_NAME_PRUNED_5G=cf_refinedet_coco_360_480_0.96_5.08G_1.3.zip
+NETWORK_NAME_BASELINE=cf_refinedet_coco_360_480_123G_1.3.zip
 
 
-wget -O $NETWORK_NAME  https://www.xilinx.com/bin/public/openDownload?filename=$NETWORK_NAME
+wget -O $NETWORK_NAME_PRUNED_5G  https://www.xilinx.com/bin/public/openDownload?filename=$NETWORK_NAME_PRUNED_5G
+wget -O $NETWORK_NAME_BASELINE  https://www.xilinx.com/bin/public/openDownload?filename=$NETWORK_NAME_BASELINE
 
-unzip $NETWORK_NAME 
+unzip $NETWORK_NAME_PRUNED_5G
+unzip $NETWORK_NAME_BASELINE
 
-rm $NETWORK_NAME
+rm $NETWORK_NAME_PRUNED_5G
+rm $NETWORK_NAME_BASELINE
 
-mv cf_refinedet_coco_480_360_0.96_5.08G/code cf_refinedet_coco_480_360_0.96_5.08G/code_bak
-cp -r reference_scripts/code cf_refinedet_coco_480_360_0.96_5.08G/

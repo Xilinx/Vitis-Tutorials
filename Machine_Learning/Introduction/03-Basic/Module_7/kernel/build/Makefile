@@ -8,8 +8,8 @@ VIVADO:=${VIVADO_ROOT}/bin/vivado
 MPSOC_CXX:=aarch64-linux-gnu-g++
 TARGET := hw
 
-#EDGE_COMMON_SW:= /proj/rdi/staff/jiaz/scout/platfrom201/xilinx_zcu102_base_202010_1/sw/xilinx_zcu102_base_202010_1/xrt/image
-#SDX_PLATFORM = /proj/xcdhdstaff2/tianfang/2020.1/0518/102/platform_repo/xilinx_zcu102_base_202010_1/export/xilinx_zcu102_base_202010_1/xilinx_zcu102_base_202010_1.xpfm
+#EDGE_COMMON_SW := /proj/rdi/staff/jiaz/common_rootfs/xilinx-zynqmp-common-v2020.1
+#SDX_PLATFORM = /proj/xbuilds/2020.1_0603_1/internal_platforms/xilinx_zcu102_base_202010_1/xilinx_zcu102_base_202010_1.xpfm
 
 XOCC_OPTS = -t ${TARGET} --platform ${SDX_PLATFORM} --save-temps --config ${DIR_PRJ}/config_file/prj_config_104_2dpu --xp param:compiler.userPostSysLinkOverlayTcl=${DIR_PRJ}/syslink/strip_interconnects.tcl 
 dpu_HDLSRCS=kernel_xml/dpu/kernel.xml\
@@ -43,7 +43,6 @@ dpu_sm_xo = binary_container_1/dpu.xo binary_container_1/softmax.xo
 dpu_xo = binary_container_1/dpu.xo
 PREPROCESSOR_FLAGS := --kernel pre_processor -I. -I./Vitis_Libraries/vision/L1/include/ -D__XF_USE_NEW_IMPL__
 
-
 ifeq ($(KERNEL),DPU_SM)
 kernel_xo = binary_container_1/dpu.xo binary_container_1/softmax.xo
 else ifeq ($(KERNEL),DPU)
@@ -65,19 +64,18 @@ binary_container_1/softmax.xo: $(softmax_HDLSRCS)
 	@mkdir -p $(@D)
 	-@$(RM) $@
 	$(VIVADO) -mode batch -source $(softmax_TCL) -tclargs $@ $(SM_KERN_NAME) ${TARGET} ${DEVICE}
-
 binary_container_1/pre_processor.xo: pre_processor.cpp pre_processor.h
 	v++ -t ${TARGET} --platform ${SDX_PLATFORM} ${PREPROCESSOR_FLAGS} --temp_dir binary_container_1 --kernel_frequency=300 --log_dir binary_container_1/logs --config preprocessor_config.ini -c -o $@ $<
-
 
 binary_container_1/dpu.xclbin: $(kernel_xo)
 	v++ $(XOCC_OPTS) -l --temp_dir binary_container_1 --log_dir binary_container_1/logs --remote_ip_cache binary_container_1/ip_cache -o "$@" $(+)
 
 package:
-	v++ -t ${TARGET} --platform ${SDX_PLATFORM} -p binary_container_1/dpu.xclbin --package.out_dir binary_container_1 --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.sd_file $(EDGE_COMMON_SW)/Image 
-	cp ./binary_*/link/vivado/vpl/prj/prj.srcs/sources_1/bd/*/hw_handoff/*.hwh ./binary_*/sd_card
+	v++ -t ${TARGET} --platform ${SDX_PLATFORM} -p binary_container_1/dpu.xclbin  -o dpu.xclbin --package.out_dir binary_container_1 --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.sd_file $(EDGE_COMMON_SW)/Image 
+	cp ./binary_*/link/vivado/vpl/prj/prj*/sources_1/bd/*/hw_handoff/*.hwh ./binary_*/sd_card
+	cp ./binary_*/link/vivado/vpl/prj/prj.gen/sources_1/bd/*/ip/*_DPUCZDX8G_1_0/arch.json ./binary_*/sd_card
 
 clean:
-	${RM} *.o *.elf *.log *.jou sample* v++*
+	${RM} *.o *.elf *.log *.jou sample* v++* *.xclbin *.xclbin*
 	${RMDIR} binary_container_1/ packaged_*/ tmp_*/ .Xil/ _x/
 

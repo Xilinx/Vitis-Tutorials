@@ -18,112 +18,62 @@ We will use Caffe RefineDet network as example in this tutorial. More examples w
 
 ## Download Network Package from Vitis AI Model Zoo
 
-[Vitis AI model zoo](https://github.com/Xilinx/Vitis-AI/tree/master/AI-Model-Zoo) provides a varity of networks pre-trained in Caffe/TensorFlow/DarkNet, covering different applications including but not limited to image classification, ADAS/AD, video surveillance and etc. Several mainstream networks are further optimized using [Xilinx Optmizer](https://www.xilinx.com/member/ai_optimizer.html) to achieve much higher performance.
+[Vitis AI model zoo](https://github.com/Xilinx/Vitis-AI/tree/master/models/AI-Model-Zoo) provides a varity of networks pre-trained in Caffe/TensorFlow/DarkNet, covering different applications including but not limited to image classification, ADAS/AD, video surveillance and etc. Several mainstream networks are further optimized using [Xilinx Optmizer](https://www.xilinx.com/member/ai_optimizer.html) to achieve much higher performance.
 
-In each network packages, float models and quantized models are provided together with training and evaluation scripts. We use Caffe [RefineDet](https://arxiv.org/abs/1711.06897) (No. 12 model in the Model Zoo) to build people detection application.
+In each network packages, float models and quantized models are provided together with training and evaluation scripts. We use Caffe [RefineDet](https://arxiv.org/abs/1711.06897) (Model No. 10-13 in the Model Zoo) to build people detection application.
 
 RefineDet is an one-stage objection detection network that could achieve better accuracy than two-stage networks before
 publication but still maintains comparable speed performance of one-stage networks.
 
-RefineDet can be seen as an improved version of SSD with addition of anchor refinement module (ARM), object detection m
-and transfer connection block (TCB) to improve accuracy. 
+RefineDet can be seen as an improved version of SSD with addition of anchor refinement module (ARM), object detection module (OBM) and transfer connection block (TCB) to improve accuracy. 
 
 The detailed introduction about network itself is beyond the scope of this module, please refer to the original paper. 
 
 ### Get RefineDet Model Package
-After the git clone the whole repository, go to the module 5 folder (Vitis-In-Depth-Tutorial/Machine_Learning_Tutorial/Section_3-Basic/Module_5) and run `sh get_network.sh` to download RefineDet network package, which is trained with people subset selected from COCO2014 and optimized to reduce 96% of the computation complexity (GOP).
+After the git clone the whole repository, go to the module 5 folder (Vitis-In-Depth-Tutorial/tree/v1.3/Machine_Learning/Introduction/03-Basic/Module_5) and run `sh get_network.sh` to download RefineDet network package, which is trained with people subset selected from COCO2014 and optimized to reduce 96% of the computation complexity (GOP).
 
-If no error occurs, your workspace in module 5 folder will be like below
+If no error occurs, the model folder will be like below
 ```
-Module_5/
-|-- cf_refinedet_coco_480_360_0.96_5.08G
-|   |-- codeco_480_360_0.96_5.08G
-|   |-- code_bak
-|   |-- data
-|   |-- float
+cf_refinedet_coco_360_480_0.96_5.08G_1.3/
+|-- code
+|   |-- gen_data
+|   |   |-- convert_coco2voc_like.py
+|   |   |-- create_data.py
+|   |   |-- gen_quantize_data_list.py
+|   |   `-- get_dataset.sh
+|   |-- test
+|   |   |-- demo.py
+|   |   |-- evaluation.py
+|   |   |-- evaluation_py2.py
+|   |   |-- quantized_test.sh
+|   |   |-- quantize.sh
+|   |   |-- test.py
+|   |   `-- test.sh
+|   `-- train
+|       |-- solver.prototxt
+|       `-- train.sh
+|-- data
+|   |-- demo_list.txt
 |   |-- labelmap.prototxt
-|   |-- quantizedototxt
-|   `-- readme.md
-|-- cf_refinedet_coco_baseline_125G
-|   |-- refinedet_baseline.prototxtco_baseline_125G
-|   `-- solver.prototxtaseline.prototxt
-|-- get_network.sh
-|-- network_training.mdg.md
-|-- README.mdts
-|-- reference_scripts
-|   `-- code
-`-- res_output.jpg
-
+|   `-- test_name_size.txt
+|-- float
+|   |-- quantize.prototxt
+|   |-- test.prototxt
+|   |-- trainval.caffemodel
+|   `-- trainval.prototxt
+|-- quantized
+|   |-- deploy.caffemodel
+|   |-- deploy.prototxt
+|   |-- DNNC
+|   |   `-- deploy.prototxt
+|   |-- quantized_test.prototxt
+|   |-- quantized_train_test.caffemodel
+|   `-- quantized_train_test.prototxt
+`-- readme.md
 ```
 
-Go to folder `cf_refinedet_coco_480_360_0.96_5.08G` and follow the steps described below to start the real works.
+Go into the folder `cf_refinedet_coco_360_480_0.96_5.08G_1.3/` and follow the steps described below to start the real works.
 
-```
-cf_refinedet_coco_480_360_0.96_5.08G/
-├── code
-│   ├── gen_data
-│   │   ├── convert_coco2voc_like.py
-│   │   ├── create_data.py
-│   │   └── get_dataset.sh
-│   ├── test
-│   │   ├── demo
-│   │   │   ├── COCO_val2014_000000209468.jpg
-│   │   │   ├── COCO_val2014_000000425226.jpg
-│   │   │   └── res_output.jpg
-│   │   ├── demo.py
-│   │   ├── evaluation_py2.py
-│   │   └── test.py
-│   └── train
-│       ├── convert_coco2voc_like.py
-│       ├── create_data.py
-│       ├── solver.prototxt
-│       └── train.sh
-├── data
-├── float
-│   ├── test.prototxt
-│   ├── trainval.caffemodel
-│   └── trainval.prototxt
-├── labelmap.prototxt
-├── quantized
-│   ├── deploy.caffemodel
-│   ├── deploy.prototxt
-│   ├── quantize_test.prototxt
-│   ├── quantize_train_test.caffemodel
-│   └── quantize_train_test.prototxt
-└── readme.md
-```
-
-## Modify Scripts to be Python3 Compatible
-
-Vitis AI docker is built with Python3 environment while Caffe is developed originally with Python2. Hence Minor modificaiton in several scripts are needed to be Python3 compatible. Ready-to-use scripts are prepared and located in folder `reference scripts`, which will be copied into code folder for simplicity when running "get_network.sh".
-
-Detailed modifications are as below
-
-- create_annoset.py
-
-  change `print` to `print()`
-
-  change the command and path to call Caffe prebuilt binaries
-
-- /code/gen_data/create_data.py
-
-  change `print` to `print()`
-
-  change `import commands` to `import subprocess`
-
-  change `commands.getoutput()` to `subprocess.getoutput()`
-
-  change the path to the script `create_annoset.py` in line 122 according to your environment
-
- - /code/test/test.py
-
-   change `print` to `print()`
-
-   change `xrange` to `range`
-
-   comment line 91 to let script use python env in conda
-
-   change GPU ID in line 171 if nessaray, default value is 3
 
 ## Prepare Customized COCO Dataset
 
@@ -131,17 +81,17 @@ COCO is a large-scale object detection, segmentation, and captioning dataset inc
 
 If you would like to retrain the network, evaluate mAP before directly deploying the network on board, the COCO dataset used by this network needs to be prepared with necessary process.
 
-Related scripts are provided in folder `cf_refinedet_coco_480_360_0.96_5.08G/code/gen_data`.
+Related scripts are provided in folder `code/gen_data`:
 
 ```
 gen_data/
 |-- convert_coco2voc_like.py
-|-- create_annoset.py
 |-- create_data.py
+|-- gen_quantize_data_list.py
 `-- get_dataset.sh
 ```
 
-Use `sh get_dataset.sh` to download and generate the dataset which only contains **one class** *person* seleted from COCO2014. If you already have COCO2014 in the hard drive, please comment the download code in `get_dataset.sh` and put COCO2014 files into folder `cf_refinedet_coco_480_360_0.96_5.08G/data` for simplicity, in which the expected file structure is shown as below
+Use `sh get_dataset.sh` to download and generate the dataset which only contains **one class** *person* seleted from COCO2014. If you already have COCO2014 in the hard drive, please comment the download code in `get_dataset.sh` and put COCO2014 files into folder `cf_refinedet_coco_480_360_0.96_5.08G/data` for simplicity, in which the expected file structure is shown as below:
 
 ```
 coco2014/
@@ -151,25 +101,27 @@ coco2014/
       |->instances_val2014.json
 ```
 
-If the script finishes without error, the generated LMBD files and images will have following structure
+If the script finishes without error, the generated LMBD files and images will have following structure:
 ```
 data/
-|-- coco2014
-|   |-- Annotations
-|   |-- Images
-|   |-- instances_train2014.json
-|   |-- instances_val2014.json
-|   |-- train2014.txt
-|   |-- train_image2anno.txt
-|   |-- val2014.txt
-|   `-- val_image2anno.txt
-|-- coco2014_lmdb
-|   |-- train2014_lmdb
-|   `-- val2014_lmdb
-|-- link_480_360
-|   |-- train2014_lmdb -> ../../data/coco2014_lmdb/train2014_lmdb
-|   `-- val2014_lmdb -> ../../data/coco2014_lmdb/val2014_lmdb
-`-- test_name_size.txt
+├── coco2014
+│   ├── Annotations
+│   ├── Images
+│   ├── instances_train2014.json
+│   ├── instances_val2014.json
+│   ├── train2014.txt
+│   ├── train_image2anno.txt
+│   ├── val2014.txt
+│   └── val_image2anno.txt
+├── coco2014_lmdb
+│   ├── train2014_lmdb
+│   └── val2014_lmdb
+├── demo_list.txt
+├── labelmap.prototxt
+├── link_480_360
+│   ├── train2014_lmdb -> ../../data/coco2014_lmdb/train2014_lmdb
+│   └── val2014_lmdb -> ../../data/coco2014_lmdb/val2014_lmdb
+└── test_name_size.txt
 ```
 If the script finishes with out error, the md5sum values of train and val mdb files are as below:
 
@@ -194,7 +146,7 @@ In advanced section, there will be a seperate module to documents the workflow o
 Vitis AI toolchain is used to quantize float 32bit network model into INT8 model with optimization and then compile it into instructions which run efficiently on the DPU in FPGA. The toolchain could support Caffe, DarkNet and TensorFlow framework.
 
 Comprehensive introduction of Vitis AI toolchain can be found in [Vitis AI User Documentation
-](https://www.xilinx.com/html_docs/vitis_ai/1_2/zkj1576857115470.html).Here we only use RefineDet as example to demostrate Caffe workflow. The following steps are based on network package from model zoo (cf_refinedet_coco_480_360_0.96_5.08G), but it could be easily used with baseline model with some changes on file paths in scripts, prototxt and commands.
+](https://www.xilinx.com/html_docs/vitis_ai/1_3/zmw1606771874842.html).Here we only use RefineDet as example to demostrate Caffe workflow. The following steps are based on network package from model zoo (cf_refinedet_coco_480_360_0.96_5.08G), but it could be easily used with baseline model with some changes on file paths in scripts, prototxt and commands.
 
 ### <span id = "tool">Evaluate Model</span>
 
@@ -202,21 +154,23 @@ In the network package, both float model and quantized model are provided togeth
 
 ### Run single image
 
-Go to folder `cf_refinedet_coco_480_360_0.96_5.08G/code/test` and run the network on single image with command `python demo.py`. The output image will be stored in `output/res_output.jpg`. If you would like to use different image, please modify the image path in the `demo.py`.
+Go to folder `cf_refinedet_coco_360_480_0.96_5.08G_1.3/code/test`. 
+
+Modify the image path in line 19 of the `demo.py` according to the need and run the inference on single image with command `python demo.py`. The output image will be stored in `output/res_output.jpg`. 
 
 ![Inference result](./res_output.jpg)
 
 ### Test mAP
 
-The network package provides scripts to varify the mAP of the pretrained network (both float model and quantized model). To use the scripts, please make sure the evaluation dataset are correctly prepared and file paths in function 'parse_args' (line 54 to 85 in `test.py`)  are modified according to your environment.
+The network package provides scripts to varify the mAP of the pretrained network (both float model and quantized model). To use the scripts, please make sure the evaluation dataset are correctly prepared and file paths in function 'parse_args' (line 54 to 85 in `test.py`) are modified according to your environment.
 
-By default, the script will evaluate float model (trainval.caffemodel and test.prototxt) stored under folder `cf_refinedet_coco_480_360_0.96_5.08G/float`.
+By default, the script will evaluate float model (trainval.caffemodel and test.prototxt) stored under folder `cf_refinedet_coco_360_480_0.96_5.08G_1.3/float`.
 
 Use command `python test.py` to run the evaluation which will takes around 30~60 minutes depending on your CPU/GPU capability. If no error occurs, it will display the mAP result as below:
 ```
 evaluate 21634 images
-person AP: 0.6120284761439228
-mAP: 0.612028476144
+person AP: 0.6120358325758232
+mAP: 0.6120358325758232
 ```
 It's also easy to evaluate quantized model in the same way, just change the prototxt file and caffemodel file in the script into `quantize_test.prototxt` and `quantize_train_test.caffemodel`. After evaluation is finished the result will be displayed.
 ```
@@ -233,7 +187,7 @@ The float baseline model could also be evaluated using the same script, just cha
 ### Quantize Float Model
 
 The ready-to-use quantized models are already provided in the package. If you would like to try the quantization steps by yourself, detailed explaination could be found in [Vitis AI User Documentation
-](https://www.xilinx.com/html_docs/vitis_ai/1_2/uim1570695919827.html).
+](https://www.xilinx.com/html_docs/vitis_ai/1_3/uim1570695919827.html).
 
 For Caffe example, the `vai_q_caffe` will be used to execute quantization with following commands:
 
@@ -242,21 +196,23 @@ vai_q_caffe quantize -model trainval.prototxt \
                      -weights trainval.caffemodel \
                      -calib_iter 20 \
                      -auto_test  \
-                     -test_iter 2100 \
+                     -test_iter 100 \
                      -output_dir quantization \
                      -gpu 0 \
-                     -ignore_layers arm_priorbox
+                     -ignore_layers arm_priorbox \
+                     -keep_fixed_neuron
 ```
 
 Plesse note that the 'arm_priorbox' (which concats all previous priorbox layer together) needs to be ignored because it will not run on DPU and quantization will affect bounding box results. Generated quantized model will be stored in the folder spcified by `-output_dir`, which in this case is `quantization`.
 
+Please note that from Vitis AI 1.3 the xmodel is also used on DPUCZDX8G, thus 'keep_fixed_neuron' flag is needed when quantizing caffe network.  
+
 ```
-I0527 01:37:05.329720  9006 net_test.cpp:212] Test iter: 2100/2100
-I0527 01:37:05.755471  9006 net_test.cpp:259] Test Results:
-I0527 01:37:05.755494  9006 net_test.cpp:260]     Test net output #0: detection_eval = 0.610996
-I0527 01:37:05.757798  9006 net_test.cpp:398] Test Done!
-I0527 01:37:06.175303  9006 decent_q.cpp:361] Start Deploy
-I0527 01:37:06.209132  9006 decent_q.cpp:369] Deploy Done!
+I0112 02:46:12.526528  3810 net_test.cpp:308] Test Results:
+I0112 02:46:12.526546  3810 net_test.cpp:309]     Test net output #0: detection_eval = 0.611557
+I0112 02:46:12.527979  3810 net_test.cpp:450] Test Done!
+I0112 02:46:13.067780  3810 vai_q.cpp:360] Start Deploy
+I0112 02:46:13.100937  3810 vai_q.cpp:368] Deploy Done!
 --------------------------------------------------
 Output Quantized Train&Test Model:   "quantization/quantize_train_test.prototxt"
 Output Quantized Train&Test Weights: "quantization/quantize_train_test.caffemodel"
@@ -268,7 +224,7 @@ Using the same step and command, we could also generate quantized model for base
 
 ### Compile Quantized Model
 
-To deploy quantized model on board, we use `vai_c_caffe` to generate elf file by compiling deploy.prototxt and deploy.caffemodel. Here we could use files in both folder `cf_refinedet_coco_480_360_0.96_5.08G/quantized` (provided in the network package) or `quantization` (generated by ourselves, please check where you put it).
+To deploy quantized model on board, we use `vai_c_caffe` to generate xmodel file by compiling deploy.prototxt and deploy.caffemodel. Here we could use files in both folder `cf_refinedet_coco_480_360_0.96_5.08G/quantized` (provided in the network package) or `quantization` (generated by ourselves, please check where you put it).
 
 Before compilation, in the any deploy.prototxt, please make sure all the layers after the layer block `odm_conf` are deleted as they are not needed for deployment and compilation .
 
@@ -277,10 +233,9 @@ Run below command in the quantized model folder to compile the model in to elf f
 ```
 vai_c_caffe --prototxt    deploy.prototxt \
             --caffemodel  deploy.caffemodel \
-            --arch        /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/ZCU104.json \
+            --arch        /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
             --output_dir  board_file_zcu104_5G \
             --net_name    refinedet_5G \
-            --options     "{'save_kernel':''}"
 ```
 
 Please note that you could also specify the path for prototxt, caffemodel and output_dir as you wish.
@@ -291,57 +246,48 @@ During compilation, the compiler will give following output which will show usef
 **************************************************
 * VITIS_AI Compilation - Xilinx Inc.
 **************************************************
-
-Kernel topology "refinedet_5G_kernel_graph.jpg" for network "refinedet_5G"
-kernel list info for network "refinedet_5G"
-                               Kernel ID : Name
-                                       0 : refinedet_5G
-
-                             Kernel Name : refinedet_5G
---------------------------------------------------------------------------------
-                             Kernel Type : DPUKernel
-                               Code Size : 0.14MB
-                              Param Size : 0.32MB
-                           Workload MACs : 5084.69MOPS
-                         IO Memory Space : 3.35MB
-                              Mean Value : 104, 117, 123,
-                      Total Tensor Count : 53
-                Boundary Input Tensor(s)   (H*W*C)
-                               data:0(0) : 360*480*3
-
-               Boundary Output Tensor(s)   (H*W*C)
-                            arm_loc:0(0) : 1*1*48960
-                           arm_conf:0(1) : 1*1*24480
-                            odm_loc:0(2) : 1*1*48960
-                           odm_conf:0(3) : 1*1*24480
-
-                        Total Node Count : 52
-                           Input Node(s)   (H*W*C)
-                              conv1_1(0) : 360*480*3
-
-                          Output Node(s)   (H*W*C)
-                              odm_loc(0) : 1*1*48960
-                             odm_conf(0) : 1*1*24480
-                              arm_loc(0) : 1*1*48960
-                             arm_conf(0) : 1*1*24480
+[INFO] Namespace(inputs_shape=None, layout='NCHW', model_files=['deploy.caffemodel'], model_type='caffe', out_filename='board_file_zcu104_5G/refinedet_5G_org.xmodel', proto='deploy.prototxt')
+[INFO] caffe model: deploy.caffemodel
+[INFO] caffe model: deploy.prototxt
+[INFO] parse raw model     :100%|███████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:00<00:00, 2777.05it/s]
+[INFO] infer shape (NCHW)  :100%|███████████████████████████████████████████████████████████████████████████████████████████████| 168/168 [00:00<00:00, 23427.19it/s]
+[INFO] infer shape (NHWC)  :100%|███████████████████████████████████████████████████████████████████████████████████████████████| 168/168 [00:00<00:00, 20118.86it/s]
+[INFO] generate xmodel     :100%|███████████████████████████████████████████████████████████████████████████████████████████████| 168/168 [00:00<00:00, 12205.84it/s]
+[INFO] generate xmodel: /workspace/Vitis-In-Depth-Tutorial/Machine_Learning/Introduction/03-Basic/Module_5/cf_refinedet_coco_360_480_0.96_5.08G_1.3/float/quantization/board_file_zcu104_5G/refinedet_5G_org.xmodel
+[UNILOG][INFO] The compiler log will be dumped at "/tmp/vitis-ai-user/log/xcompiler-20210112-034036-4505"
+[UNILOG][INFO] Target architecture: DPUCZDX8G_ISA0_B4096_MAX_BG2
+[UNILOG][INFO] Compile mode: dpu
+[UNILOG][INFO] Debug mode: function
+[UNILOG][INFO] Target architecture: DPUCZDX8G_ISA0_B4096_MAX_BG2
+[UNILOG][INFO] Graph name: deploy, with op num: 360
+[UNILOG][INFO] Begin to compile...
+[UNILOG][INFO] Total device subgraph number 7, DPU subgraph number 1
+[UNILOG][INFO] Compile done.
+[UNILOG][INFO] The meta json is saved to "/workspace/Vitis-In-Depth-Tutorial/Machine_Learning/Introduction/03-Basic/Module_5/cf_refinedet_coco_360_480_0.96_5.08G_1.3/float/quantization/board_file_zcu104_5G/meta.json"
+[UNILOG][INFO] The compiled xmodel is saved to "/workspace/Vitis-In-Depth-Tutorial/Machine_Learning/Introduction/03-Basic/Module_5/cf_refinedet_coco_360_480_0.96_5.08G_1.3/float/quantization/board_file_zcu104_5G/refinedet_5G.xmodel"
+[UNILOG][INFO] The compiled xmodel's md5sum is cfa5b17ccea8932186ae1153edb0ef7d, and been saved to "/workspace/Vitis-In-Depth-Tutorial/Machine_Learning/Introduction/03-Basic/Module_5/cf_refinedet_coco_360_480_0.96_5.08G_1.3/float/quantization/board_file_zcu104_5G/md5sum.txt"
 
 ```
 After compilation finished, elf file, kernel info file and kernel graph files are generated and saved.
 
 ```
-board_file_zcu104_5G
-|-- dpu_refinedet_5G.elf
-|-- refinedet_5G_kernel.info
-`-- refinedet_5G_kernel_graph.gv
+board_file_zcu104_5G/
+├── md5sum.txt
+├── meta.json
+├── refinedet_5G_org.xmodel
+└── refinedet_5G.xmodel
 ```
+
+The 'refinedet_5G_org.xmodel' is the float xmodel generated by compiler and 'refinedet_5G.xmodel' is the compiled xmodel for DPU execution.
 
 Using the same step and command in the folder containing the deploy model for baseline model, we could also generate elf file for baseline model
 
 ```
-board_file_zcu104_125G
-|-- dpu_refinedet_125G.elf
-|-- refinedet_125G_kernel.info
-`-- refinedet_125G_kernel_graph.gv
+board_file_zcu104_125G/
+├── md5sum.txt
+├── meta.json
+├── refinedet_125G_org.xmodel
+└── refinedet_125G.xmodel
 ```
 
 
@@ -349,17 +295,17 @@ board_file_zcu104_125G
 
 Before starting this part, please make sure:
 
-- the zcu104 board is running with Vitis AI 1.1 release board image and Vitis AI Library/VART are installed correctly based on previouse modules
+- the zcu104 board is running with Vitis AI 1.3 release board image and Vitis AI Library/VART are installed correctly based on previouse modules
 
 - host and zcu104 board are in same network. In our example, board IP (TARGET_IP) is 10.176.18.133
 
 ### Transfer Compiler Output to Board
 
-Tranfer the compiler output `board_file_zcu104_5G` and `board_file_zcu104_125G` to board and place it under `~/overview/samples/refinedet` with scp command
+Tranfer the compiler output `board_file_zcu104_5G` and `board_file_zcu104_125G` to board and place it under with scp command
 
-`scp -r /PATH_TO/board_file_zcu104_5G root@10.176.18.133:~/overview/samples/refinedet`
+`scp -r /PATH_TO/board_file_zcu104_5G root@10.176.18.133:~/`
 
-`scp -r /PATH_TO/board_file_zcu104_125G root@10.176.18.133:~/overview/samples/refinedet`
+`scp -r /PATH_TO/board_file_zcu104_125G root@10.176.18.133:~/`
 
 
 ### Connect to Board
@@ -370,59 +316,47 @@ enter password root to connect to the board.
 
 Go to refinedet example application folder
 
-`cd /overview/samples/refinedet`
+`cd /home/root/Vitis_AI/examples/Vitis-AI-Library/samples/refinedet`
 
-### Create Model File Folder
+### Copy the xmodel files to Vitis AI model folder
 
-Copy model file folder example into current folder
+The Vitis AI library already provide pre-built models but we will copy our compiled xmodel to the model folders with names required by Vitis AI library. 
 
-`cp /usr/share/vitis_ai_library/models/refinedet_pruned_0_96/ refinedet_test_5G/`
+`cp board_file_zcu104_5G/refinedet_5G.xmodel /usr/share/vitis_ai_library/models/refinedet_pruned_0_96/refinedet_pruned_0_96.xmodel`
 
-`cp /usr/share/vitis_ai_library/models/refinedet_pruned_0_96/ refinedet_test_125G/`
-
-Copy elf files generated by ourselves into folder `refinedet_test_5G` and ` refinedet_test_125G/`
-
-`cp board_file_zcu104_5G/dpu_refinedet_5G.elf refinedet_test_5G/refinedet_5G.elf`
-
-`cp board_file_zcu104_125G/dpu_refinedet_125G.elf refinedet_test_125G/refinedet_125G.elf`
+`cp board_file_zcu104_125G/refinedet_125G.xmodel /usr/share/vitis_ai_library/models/refinedet_baseline/refinedet_baseline.xmodel`
 
 
 ### Run the application
 
 - Performance test
 
-  For example we could test performance in 60s with 4 threads with following command
+  For example we could test performance in 10s with 4 threads with following command
 
-  `./test_performance_refinedet refinedet_test_5G/ test_performance_refinedet.list -t 4 -s 60`
-
-  ```
-  I0513 08:32:18.886174 21870 benchmark.hpp:175] writing report to <STDOUT>
-  I0513 08:32:18.951648 21870 benchmark.hpp:201] waiting for 0/60 seconds, 4 threads running
-  I0513 08:32:28.951963 21870 benchmark.hpp:201] waiting for 10/60 seconds, 4 threads running
-  I0513 08:32:38.952139 21870 benchmark.hpp:201] waiting for 20/60 seconds, 4 threads running
-  I0513 08:32:48.952313 21870 benchmark.hpp:201] waiting for 30/60 seconds, 4 threads running
-  I0513 08:32:58.952564 21870 benchmark.hpp:201] waiting for 40/60 seconds, 4 threads running
-  I0513 08:33:08.953136 21870 benchmark.hpp:201] waiting for 50/60 seconds, 4 threads running
-  I0513 08:33:18.953428 21870 benchmark.hpp:210] waiting for threads terminated
-  FPS=235.63
-  E2E_MEAN=16964.4
-  DPU_MEAN=14459.7
-  ```
-
-  `./test_performance_refinedet refinedet_test_125G/ test_performance_refinedet.list -t 4 -s 60`
+  `./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list -t 4 -s 10`
 
   ```
-  I0513 08:34:38.699662  3631 benchmark.hpp:175] writing report to <STDOUT>
-  I0513 08:34:38.773613  3631 benchmark.hpp:201] waiting for 0/60 seconds, 4 threads running
-  I0513 08:34:48.773798  3631 benchmark.hpp:201] waiting for 10/60 seconds, 4 threads running
-  I0513 08:34:58.773970  3631 benchmark.hpp:201] waiting for 20/60 seconds, 4 threads running
-  I0513 08:35:08.774128  3631 benchmark.hpp:201] waiting for 30/60 seconds, 4 threads running
-  I0513 08:35:18.775049  3631 benchmark.hpp:201] waiting for 40/60 seconds, 4 threads running
-  I0513 08:35:28.775233  3631 benchmark.hpp:201] waiting for 50/60 seconds, 4 threads running
-  I0513 08:35:38.775465  3631 benchmark.hpp:210] waiting for threads terminated
-  FPS=18.2661
-  E2E_MEAN=218638
-  DPU_MEAN=216079
+  root@xilinx-zcu104-2020_2:~/Vitis_AI/examples/Vitis-AI-Library/samples/refinedet# ./test_performance_refinedet refinedet_pruned_0_96 test_performance_refinedet.list -t 4 -s 10
+  WARNING: Logging before InitGoogleLogging() is written to STDERR
+  I0110 18:53:33.324429  8773 benchmark.hpp:176] writing report to <STDOUT>
+  I0110 18:53:33.451941  8773 benchmark.hpp:203] waiting for 0/10 seconds, 4 threads running
+  I0110 18:53:43.452201  8773 benchmark.hpp:211] waiting for threads terminated
+  FPS=216.327
+  E2E_MEAN=18394.5
+  DPU_MEAN=15711.6
+  ```
+
+  `./test_performance_refinedet refinedet_baseline test_performance_refinedet.list -t 4 -s 10`
+
+  ```
+  root@xilinx-zcu104-2020_2:~/Vitis_AI/examples/Vitis-AI-Library/samples/refinedet# ./test_performance_refinedet refinedet_baseline test_performance_refinedet.list -t 4 -s 10
+  WARNING: Logging before InitGoogleLogging() is written to STDERR
+  I0110 18:43:53.120203  7733 benchmark.hpp:176] writing report to <STDOUT>
+  I0110 18:43:53.551745  7733 benchmark.hpp:203] waiting for 0/10 seconds, 4 threads running
+  I0110 18:44:03.552002  7733 benchmark.hpp:211] waiting for threads terminated
+  FPS=18.0589
+  E2E_MEAN=217547
+  DPU_MEAN=214647
   ```
 
 From comparison we can see huge performance improvement between baseline model and pruned model which is brought by AI optimizer. The non-linear FPS improvement ratio vs compression ratio is because of

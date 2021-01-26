@@ -16,9 +16,9 @@ import cv2
 import numpy as np
 import runner
 import os
-import xir.graph
+import xir
 import pathlib
-import xir.subgraph
+import vart
 import threading
 import time
 import sys
@@ -40,8 +40,8 @@ def preprocess_fn(image_path):
 def get_subgraph (g):
     sub = []
     root = g.get_root_subgraph()
-    sub = [ s for s in root.children
-            if s.metadata.get_attr_str ("device") == "DPU"]
+    sub = [ s for s in root.toposort_child_subgraph()
+            if s.has_attr("device") and s.get_attr("device").upper() == "DPU"]
     return sub 
 
 
@@ -50,12 +50,10 @@ def runDPU(id,start,dpu,img):
     '''get tensor'''
     inputTensors = dpu.get_input_tensors()
     outputTensors = dpu.get_output_tensors()
-    outputHeight = outputTensors[0].dims[1]
-    outputWidth = outputTensors[0].dims[2]
-    outputChannel = outputTensors[0].dims[3]
-    outputSize = outputHeight*outputWidth*outputChannel
+    shapeIn = tuple(inputTensors[0].dims)
+    shapeOut = tuple(outputTensors[0].dims)
 
-    batchSize = inputTensors[0].dims[0]
+    batchSize = shapeIn[0]
     n_of_images = len(img)
     count = 0
     write_index = start
@@ -64,25 +62,21 @@ def runDPU(id,start,dpu,img):
             runSize = batchSize
         else:
             runSize=n_of_images-count
-        shapeIn = (runSize,) + tuple([inputTensors[0].dims[i] for i in range(inputTensors[0].ndim)][1:])
-
+        
         '''prepare batch input/output '''
         outputData = []
         inputData = []
-        outputData.append(np.empty((runSize,outputHeight,outputWidth,outputChannel), dtype = np.float32, order = 'C'))
-        inputData.append(np.empty((shapeIn), dtype = np.float32, order = 'C'))
-
+        outputData = [np.empty(shapeOut, dtype = np.float32, order = 'C')]
+        inputData = [np.empty(shapeIn, dtype = np.float32, order = 'C')]
+        
         '''init input image to input buffer '''
         for j in range(runSize):
             imageRun = inputData[0]
-            imageRun[j,...] = img[(count+j)% n_of_images].reshape(inputTensors[0].dims[1],inputTensors[0].dims[2],inputTensors[0].dims[3])
+            imageRun[j, ...] = img[(count+j)% n_of_images].reshape(shapeIn[1:])
 
         '''run with batch '''
         job_id = dpu.execute_async(inputData,outputData)
         dpu.wait(job_id)
-
-        for j in range(len(outputData)):
-            outputData[j] = outputData[j].reshape(runSize, outputSize)
 
         '''store output vectors '''
         for j in range(runSize):
@@ -98,7 +92,8 @@ def app(image_dir,threads,model):
     global out_q
     out_q = [None] * runTotal
 
-    g = xir.graph.Graph.deserialize(pathlib.Path(model))
+    g = xir.Graph.deserialize(model)
+    #g = xir.Graph.deserialize('model_dir/densenetx.xmodel')
     subgraphs = get_subgraph (g)
     assert len(subgraphs) == 1 # only one DPU kernel
     all_dpu_runners = []
@@ -146,6 +141,7 @@ def app(image_dir,threads,model):
     for i in range(len(out_q)):
         argmax = np.argmax((out_q[i]))
         prediction = classes[argmax]
+        #prediction = classes[out_q[i]]
         ground_truth, _ = listimage[i].split('_')
         if (ground_truth==prediction):
             correct += 1
@@ -153,6 +149,8 @@ def app(image_dir,threads,model):
             wrong += 1
     accuracy = correct/len(out_q)
     print('Correct:',correct,'Wrong:',wrong,'Accuracy:', accuracy)
+
+
 
 
 
@@ -171,8 +169,8 @@ def main():
                   help='Number of threads. Default is 1')
   ap.add_argument('-m', '--model',
                   type=str,
-                  default='model_dir/dpu_densenetx_0.elf',
-                  help='Path of .elf. Default is model_dir/dpu_densenetx_0.elf')
+                  default='model_dir/densenetx.xmodel',
+                  help='Path of .elf. Default is model_dir/densenetx.xmodel')
 
   args = ap.parse_args()  
   

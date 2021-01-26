@@ -21,6 +21,7 @@ namespace vitis {
   }
 
    int DpuThread::run()  {
+    auto dpu_start = std::chrono::system_clock::now();
     FrameInfo frame;
     if (!queue_in_->pop(frame, std::chrono::milliseconds(500))) {
       return 0;
@@ -31,7 +32,8 @@ namespace vitis {
     }
     LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
         << "dpu queue size " << queue_out_->size();
-
+    LOG(INFO)<<"DPU :"<<std::chrono::duration_cast<std::chrono::microseconds>(
+    std::chrono::system_clock::now() - dpu_start).count()<<"ms";
     while (!queue_out_->push(frame, std::chrono::milliseconds(500))) {
       if (is_stopped()) {
         return -1;

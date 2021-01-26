@@ -16,33 +16,40 @@
 
 #!/bin/bash
 set -e
-BOARD_IP=10.176.18.178
 
 build_command(){
     cmake -DUSE_DRM=on -DUSE_KERNEL=on .. && make
-    cp *drm ../
+    
 
 }
 
 clean_workspace(){
     if [ -d build ]; then
     rm -rf build
+    rm -rf ../install
+    rm -rf ../test
     fi
     mkdir -pv build
     cd build
     
 }
-copy_file()
+create_dir()
 {
-    scp usb_input* root@$BOARD_IP:/home/root/
-    scp HLS_*/lib* root@$BOARD_IP:/usr/lib
-    scp HLS_*/test_hls_kernel root@$BOARD_IP:/home/root/
+    mkdir -pv ../install
+    mkdir -pv ../test
+}
+copy_file()
+{   
+    cp usb_input_multi_threads_refinedet_hls_drm ../test
+    cp HLS_*/lib* ../install
+    cp HLS_*/test_hls_kernel ../test
 }
 
 main(){
     clean_workspace
     git pull
     build_command
+    create_dir
     copy_file
 }
 
