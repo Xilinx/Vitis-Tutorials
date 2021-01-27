@@ -99,7 +99,7 @@ An ADF Graph can be connected to an extensible Vitis platform. That is, the grap
 To compile the graph type to be used in either HW or HW_EMU, use:
 
 ```bash
-make graph
+make aie
 ```
 
 Or
