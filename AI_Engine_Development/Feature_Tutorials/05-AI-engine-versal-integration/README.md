@@ -180,7 +180,7 @@ After all the new AI Engine outputs are created, you can compile your host appli
 3. Close the Makefile, and run the command:
 		
 	```bash
-	make application
+	make host
 	```
 
 	Or
