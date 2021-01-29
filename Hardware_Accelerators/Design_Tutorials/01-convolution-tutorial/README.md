@@ -51,7 +51,7 @@ export CONV_TUTORIAL_DIR=/VITIS_TUTORIAL_REPO_PATH/Hardware_Accelerators/Design_
 
 where **VITIS_TUTORIAL_REPO_PATH** is the local path where git repo is placed by the user after cloning.
 
-  **NOTE**: Make sure during all of the labs in this tutorial you have set this variable appropriately  
+  **NOTE**: Make sure during all of the labs in this tutorial you have set `CONV_TUTORIAL_DIR` variable appropriately 
 
 Run the application to measure performance as follows:
 

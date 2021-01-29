@@ -20,7 +20,7 @@ This section discusses the design of a convolution filter in detail. It goes thr
 
 ### Top Level Structure of Kernel
 
-The top-level of the convolution filter is modeled using a dataflow process. The dataflow consists of four different functions as given below. For full implementation details please refer to source file  **"src/filter2d_hw.cpp"**.
+The top-level of the convolution filter is modeled using a dataflow process. The dataflow consists of four different functions as given below. For full implementation details please refer to source file  **"src/filter2d_hw.cpp"** in convolutional tutorial directory.
 
 ```cpp
 void Filter2DKernel(
@@ -64,7 +64,7 @@ The dataflow chain consists of four different functions as follows:
 
 Two functions at the input and output read and write data from the device's global memory. The `ReadFromMem` function reads data and streams it for filtering. The `WriteToMem` function at the end of the chain writes processed pixel data to the device memory. The input data(pixels) read from the main memory is passed to the `Window2D` function, which creates a local cache and, on every cycle, provides a 15x15 pixel sample to the filter function/block. The `Filter2D` function can consume the 15x15 pixel sample in a single cycle to perform 225(15x15) MACs per cycle. 
 
-Please open the **"src/filter2d_hw.cpp"** source file and examine the implementation details of these individual functions. In the next section, you will elaborate on the implementation details of Window2D and Filter2D functions. The following figure shows how data flows between different functions (dataflow modules).
+Please open the **"src/filter2d_hw.cpp"** source file  from convolutioanl tutorial directory and examine the implementation details of these individual functions. In the next section, you will elaborate on the implementation details of Window2D and Filter2D functions. The following figure shows how data flows between different functions (dataflow modules).
 
    ![Datflow](images/filterBlkDia.jpg)
 
@@ -100,7 +100,7 @@ Step `B` in the figure highlights what is required for producing pixel number 11
 
 The line buffer holds FILTER_V_SIZE-1 lines. In general, it requires FILTER_V_SIZE lines, but a line is reduced by using the line buffer in a circular fashion and by exploiting the fact that pixels at the start of the first line buffer can be used to write new incoming pixels since they are no longer needed. The window buffer is implemented as FILTER_V_SIZE * FILTER_H_SIZE storage fully partitioned, giving parallel access to all elements inside the window. The data moves as a column vector of size FILTER_V_SIZE from line buffer to window buffer, and then this whole widow is passed through a stream to the `Filter2D` function for processing.
 
-The overall scheme (data mover) is built to maximize the data reuse providing maximum parallel data to the processing element. For a deeper understanding of the modeling style and minute details of the data mover examine the `Window2D` function details in the source code. The function can be found in the **"src/filter2d_hw.cpp"** source file.
+The overall scheme (data mover) is built to maximize the data reuse providing maximum parallel data to the processing element. For a deeper understanding of the modeling style and minute details of the data mover examine the `Window2D` function details in the source code. The function can be found in the **"src/filter2d_hw.cpp"** source file in convolutioanl tutorial directory .
 
 ## Building and Simulating the Kernel using Vitis HLS
 
@@ -111,7 +111,7 @@ In this section, you will build and simulate the 2D convolution filter using Vit
 Now you will build the kernel module as a standalone kernel with AXI interfaces to memory, which are also used for simulation. To do this, please follow the steps listed below:
 
 ```bash
-  cd  hls_build
+  cd  $CONV_TUTORIAL_DIR/hls_build
   vitis_hls -f build.tcl 
 ```
 

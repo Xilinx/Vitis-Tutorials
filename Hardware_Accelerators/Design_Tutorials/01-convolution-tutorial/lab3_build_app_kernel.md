@@ -25,7 +25,7 @@ This section briefly discusses how the host application is written to orchestrat
 Please go to the top-level folder for the convolution tutorial and change the directory to `src`, and list the files:
 
 ```bash
-cd ./Vitis-Tutorial/tree/master/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/src
+cd  $CONV_TUTORIAL_DIR/src
 ls
 ```
 
@@ -109,7 +109,7 @@ To build the host application with randomized data please follow these steps:
 1. Edit the Makefile options:
  
   ```bash
-  cd ./Vitis-Tutorial/tree/master/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial
+  cd  $CONV_TUTORIAL_DIR/
   vim make_options.mk
   ```
 
@@ -124,7 +124,7 @@ To build the host application with randomized data please follow these steps:
 
   ```makefile
   ############## OpenCV Installation Paths
-  OPENCV_INCLUDE :=/**OpenCV.24 User Install Path**/include
+  OPENCV_INCLUDE :=/**OpenCV2.4 User Install Path**/include
   OPENCV_LIB :=/**OpenCV2.4 User Install Path**/lib
   ```
 

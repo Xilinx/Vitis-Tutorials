@@ -102,7 +102,7 @@ void Filter2D(
 }
 ```
 
-The following snapshot shows how the top-level function calls the convolution filter function for an image with three components or channels. Here OpenMP pragma is used to parallelize software execution using multiple threads. You can open **_src/host_randomized.cpp_** and **_src/filter2d_sw.cpp_** to examine all implementation details.
+The following snapshot shows how the top-level function calls the convolution filter function for an image with three components or channels. Here OpenMP pragma is used to parallelize software execution using multiple threads. You can open **_src/host_randomized.cpp_** and **_src/filter2d_sw.cpp_** from tutorial directory to examine all implementation details.
 
 ```cpp
    #pragma omp parallel for num_threads(3)
@@ -120,7 +120,7 @@ The following snapshot shows how the top-level function calls the convolution fi
 To run the software application, go to the directory called "sw_run" and launch the application as follows:
 
 ```bash
-cd sw_run
+cd $CONV_TUTORIAL_DIR/sw_run
 ./run.sh
 ```
 
