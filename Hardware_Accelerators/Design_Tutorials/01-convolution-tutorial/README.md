@@ -42,10 +42,21 @@ source <XRT_INSTALL_PATH>/setup.sh
 
 ### Baseline the Application Performance
 
-The software application processes High Definition(HD) video frames/images with 1920x1080 resolution. It performs convolution on a set of images and prints the summary of performance results. It is used for measuring baseline software performance. Run the application to measure performance as follows:
+The software application processes High Definition(HD) video frames/images with 1920x1080 resolution. It performs convolution on a set of images and prints the summary of performance results. It is used for measuring baseline software performance. Please the set the environment variable that points to tutorial direction relative to repo path as follow:
 
 ```bash
-cd ./Vitis-Tutorial/tree/master/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/sw_run
+export CONV_TUTORIAL_DIR=/VITIS_TUTORIAL_REPO_PATH/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial
+./run.sh 
+```
+
+where **VITIS_TUTORIAL_REPO_PATH** is the local path where git repo is placed by the user after cloning.
+
+  **NOTE**: Make sure during all of the labs in this tutorial you have set this variable appropriately  
+
+Run the application to measure performance as follows:
+
+```bash
+cd $CONV_TUTORIAL_DIR/sw_run
 ./run.sh 
 ```
 
@@ -73,7 +84,7 @@ CPU  Throughput   :    12.7112 MB/s
 Now launch the application, which uses FPGA accelerated video convolution filter. The application will be run on an actual FPGA card, also called System Run.
 
 ```bash
-cd ./Vitis-Tutorial/tree/master/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/
+cd $CONV_TUTORIAL_DIR
 make run
 ```
 
