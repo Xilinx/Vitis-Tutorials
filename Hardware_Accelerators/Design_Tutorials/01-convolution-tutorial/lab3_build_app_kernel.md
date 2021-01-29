@@ -240,19 +240,18 @@ Once the kernel functionality is verified, and its resource usage is satisfactor
   USE_PRE_BUILT_XCLBIN := 0
   ```
 
-2. Launch the build and run as follows:
+2. Launch the build follows:
 
   ```bash
-  make build
+  make build TARGET=hw
   ```
 
 
 ### Application Run Using FPGA Kernel
 
-If you are using a pre-built `xclbin` file, make sure **USE_PRE_BUILT_XCLBIN := 1** is set to "1", otherwise build the xclbin as described in the last step and keep **USE_PRE_BUILT_XCLBIN := 0**. Also, make sure that in `make_options.mk` file, the TARGET is set to "hw". You can also enable the performance comparison with CPU by setting "ENABLE_PROF?=yes".
+If you are using a pre-built `xclbin` file, make sure **USE_PRE_BUILT_XCLBIN := 1** is set to "1", otherwise build the xclbin as described in the last step and keep **USE_PRE_BUILT_XCLBIN := 0**. You can also enable the performance comparison with CPU by setting "ENABLE_PROF?=yes".
 
   ```bash
-  TARGET ?=hw
   .
   .
   ENABLE_PROF?=yes
@@ -264,7 +263,7 @@ If you are using a pre-built `xclbin` file, make sure **USE_PRE_BUILT_XCLBIN := 
 1. To run the application, please proceed as follows:
 
   ```bash
-  make run
+  make run TARGET=hw
   ```
 
 It should produce a console log similar to the one shown below:
