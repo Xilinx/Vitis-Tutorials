@@ -46,7 +46,6 @@ The software application processes High Definition(HD) video frames/images with 
 
 ```bash
 export CONV_TUTORIAL_DIR=/VITIS_TUTORIAL_REPO_PATH/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial
-./run.sh 
 ```
 
 where **VITIS_TUTORIAL_REPO_PATH** is the local path where git repo is placed by the user after cloning.
