@@ -355,7 +355,7 @@ In this lab, you have learned:
 - How to estimate kernel performance and compare it with measured performance
 
 ## Conclusion
-Congratulations! You have successfully completed the tutorial. In this tutorial, you have learned how to estimate the performance and acceleration requirements for the hardware implementation of a Vitis Kernel. You have analyzed kernel performance using different tools and compared the measured and estimated performance, which showed how close are estimated and measured performance for Vitis kernel.  You have also seen that you can create an optimized memory cache or hierarchy for FPGA based implementation easily that significantly boost application performance.  
+Congratulations! You have successfully completed the tutorial. In this tutorial, you have learned how to estimate the performance and acceleration requirements for the hardware implementation of a Vitis Kernel. You have analyzed kernel performance using different tools and compared measured and estimated performance, to see how close both performance number are. You have also seen that you can create an optimized memory cache or hierarchy for FPGA based implementation easily that significantly boost application performance. Finally you have learnt how to write optimized host code to get best performance out of multiple CUs for a given kernel.  
 
 ---------------------------------------
 
