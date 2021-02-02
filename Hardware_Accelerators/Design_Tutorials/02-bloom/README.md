@@ -49,8 +49,15 @@ This tutorial guides you to run the designed accelerator on the FPGA; therefore,
     * `images` contains the figures in this tutorial. 
     * `Makefile` in the `makefile` directory explains the commands used in this lab. Use the `PLATFORM` variable if targeting different platforms.
     * `reference_file` contains the modified kernel and host-related files for achieving higher performance.
-    * `xclbin_save` contains the saved `xclbin` files that can be used directly for running on hardware by setting `SOLUTION=1` for the `make run` commands.
+3. Copy and extract large files in as follows:
 
+   ```
+   wget https://www.xilinx.com/bin/public/openDownload?filename=xclbin_save.tar.gz -O xclbin_save.tar.gz
+   tar -xvzf  xclbin_save.tar.gz
+   ```
+
+   **TIP:** The `xclbin_save` contains the saved `xclbin` files that can be used directly for running on hardware by setting `SOLUTION=1` for the `make run` commands.
+   
 ### Tutorial Outline
 
 * [Overview of the Original Application](1_overview.md)
