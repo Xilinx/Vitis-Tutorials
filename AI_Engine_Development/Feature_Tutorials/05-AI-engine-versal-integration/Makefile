@@ -47,11 +47,7 @@ GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 .PHONY: clean all kernels aie xclbin host package run_emu
 
 guard-%:
-ifeq ( ${$*},PLATFORM_REPO_PATHS)
-	@#$(${$*}, $(error $* is not set.))
-else
 	@#$(${$*}, $(error $* is not set. Run: environment-setup-aarch64-xilinx-linux))
-endif 
 
 all: kernels aie xclbin host package 
 
