@@ -16,7 +16,7 @@ project(rtl_stream_ref)
 cmake_minimum_required(VERSION 3.0)
 
 set(CMAKE_CXX_STANDARD 14)
-set(XRT_INCLUDE_DIRS /opt/xilinx/xrt/include/)
+set(XRT_INCLUDE_DIRS $ENV{XILINX_XRT}/include)
 set(XRT_LIBS xilinxopencl xrt_core)
 set(XRT_LIBS_EMU xilinxopencl xrt_hwemu)
 
@@ -28,7 +28,7 @@ ${OpenCV_INCLUDE_DIRS}
 )
 
 link_directories(
-/opt/xilinx/xrt/lib
+$ENV{XILINX_XRT}/lib
 )
 
 add_executable(rtc_gen_test 
