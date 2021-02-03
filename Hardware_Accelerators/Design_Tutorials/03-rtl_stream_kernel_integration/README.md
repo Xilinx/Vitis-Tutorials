@@ -276,7 +276,7 @@ Please note because XRT low level API *xclRegRead* is used in the test program, 
 
 * Step 3: configure running mode (hardware or hardware emulation)
 
-Script *set_emu.sh* is provided to set the running mode.
+Script *setup_emu.sh* is provided to set the running mode.
 
 **Run in hardware mode**
 
@@ -291,13 +291,13 @@ source setup_emu.sh -s off
 To try the test programs in hardware emulation mode, you should use the executables *rtc_gen_test_emu* and *rtc_alpha_tb_emu*. Before running them, please run following command firstly：
 
 ~~~
-source set_emu.sh -s on -p PLATFORM_NAME
+source setup_emu.sh -s on -p PLATFORM_NAME
 ~~~
 
 The *PLATFORM_NAME* is one of the six supported platform, you could run following command to get help information:
 
 ~~~
-source set_emu.sh
+source setup_emu.sh
 ~~~
 
 For example, if you want to run the executable in hardware emulation mode with U50 platform, just input:
