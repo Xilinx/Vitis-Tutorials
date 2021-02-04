@@ -32,7 +32,7 @@ DST_LOG_FILE_PATH = ${AIE_BUILD_DIR}/build.log
 PLATFORM = xilinx_vck190_es1_base_202020_1
 
 # AIE compiler settings
-AIE_FLAGS = -v -dataflow -include="${XILINX_VITIS_AIE_TOOLS}/include" -include="${XILINX_VITIS_AIE_TOOLS}/../include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/src" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=${PLATFORM_REPO_PATHS}/${PLATFORM}/${PLATFORM}.xpfm -workdir=$(AIE_OUT_DIR)
+AIE_FLAGS = -v -dataflow -include="${XILINX_VITIS}/aietools/include" -include="${XILINX_HLS}/include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/src" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=${PLATFORM_REPO_PATHS}/${PLATFORM}/${PLATFORM}.xpfm -workdir=$(AIE_OUT_DIR)
 
 # Sources
 SRCS = ${AIE_TOP_DIR}/src/aie_kernels/FirSingleStream.cpp ${AIE_TOP_DIR}/src/aie_kernels/FirSingleStream.h ${AIE_TOP_DIR}/src/SSRgraph.cpp  ${AIE_TOP_DIR}/src/SSRgraph.h  ${AIE_TOP_DIR}/src/system_settings.h  ${AIE_TOP_DIR}/src/aie_kernels.h
