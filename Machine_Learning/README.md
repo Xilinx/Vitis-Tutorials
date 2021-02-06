@@ -75,15 +75,25 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  </td>
  <td>Learn how to train, evaluate, convert, quantize, compile, and deploy YOLOv4 on Xilinx devices using Vitis AI.</td>
  </tr>
+ <tr>
   <td align="center">
    <a href="./Design_Tutorials/08-tf2_flow/README.md">TensorFlow2 and Vitis AI design flow</a>
  </td>
  <td>Learn about the TF2 flow for Vitis AI. In this tutorial, you'll be trained on TF2, including conversion of a dataset into TFRecords, optimization with a plug-in, and compiling and execution on a Xilinx ZCU102 board or Xilinx Alveo U50 Data Center Accelerator card.</td>
  </tr>
+ <tr>
   <td align="center">
    <a href="./Design_Tutorials/09-mnist_pyt-master/README.md">PyTorch flow for Vitis AI</a>
  </td>
- <td>Learn how to use by using PyTorch. You'll use a simple `get-you-started` example to get started, and then be trained on quantization with a plug-in, and then compiling and execution on a Xilinx ZCU102 board or Xilinx Alveo U50 Data Center Accelerator card.
+ <td>Learn how to use Vitis AI by using PyTorch. You'll use a simple `get-you-started` example to get started, and then be trained on quantization with a plug-in, and then compiling and execution on a Xilinx ZCU102 board or Xilinx Alveo U50 Data Center Accelerator card.
+</td>
+ </tr>
+ <tr>
+  <td align="center">
+   <a href="./Design_Tutorials/10-RF_modulation_recognition">RF Modulation Recognition with TensorFlow 2</a>
+ </td>
+ <td>Machine learning applications are certainly not limited to image processing! Learn how to apply
+ machine learning with Vitis AI to the recognition of RF modulation from signal data.
 </td>
  </tr>
  </table>
