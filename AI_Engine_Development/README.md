@@ -65,6 +65,10 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/06-versal-system-design-clocking-tutorial/README.md">Versal System Design Clocking</a></td>
  <td>In this tutorial you will learn clocking concepts for the Vitis compiler via how to define clocking for ADF Graph PL kernels, PLIO kernels by using clocking automation functionality..</td>
  </tr>
+   <tr>
+ <td align="center"><a href="./Feature_Tutorials/07-AI-Engine-Floating-Point">Floating Point Design with AI Engine</a></td>
+ <td>Learn how to write code using floating point vector operations in AI engine.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
