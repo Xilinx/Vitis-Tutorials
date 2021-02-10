@@ -61,14 +61,18 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/05-AI-engine-versal-integration/README.md">AI Engine Versal Integration for Hardware Emulation and Hardware</a></td>
  <td>This tutorial demonstrates creating a system design running on the AI Engine, PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation.</td>
  </tr>
-  <tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/06-versal-system-design-clocking-tutorial/README.md">Versal System Design Clocking</a></td>
- <td>In this tutorial you will learn clocking concepts for the Vitis compiler via how to define clocking for ADF Graph PL kernels, PLIO kernels by using clocking automation functionality..</td>
+ <td>This tutorial demonstrates clocking concepts for the Vitis compiler by defining clocking for ADF graph PL kernels and PLIO kernels, using the clocking automation functionality.</td>
  </tr>
-   <tr>
- <td align="center"><a href="./Feature_Tutorials/07-AI-Engine-Floating-Point">Floating Point Design with AI Engine</a></td>
- <td>Learn how to write code using floating point vector operations in AI engine.</td>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/07-AI-Engine-Floating-Point/README.md">Using Floating-Point in the AI Engine</a></td>
+ <td>These examples demonstrate floating-point vector computations in the AI Engine.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/08-dsp-library/README.md">DSP Library Tutorial</a></td>
+ <td>This tutorial demonstrates how to use kernels provided by the DSP library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation.</td>
  </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
