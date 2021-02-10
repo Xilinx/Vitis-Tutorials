@@ -19,7 +19,6 @@ SYSROOT := ${SDKTARGETSYSROOT}
 # Command-line options
 VPP := v++
 AIECC := aiecompiler
-CXX := aarch64-linux-gnu-g++
 
 AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
 AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=100 -workdir=./Work 
