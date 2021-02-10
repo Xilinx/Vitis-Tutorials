@@ -1,11 +1,11 @@
 # © Copyright 2020 Xilinx, Inc.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,11 +20,11 @@ PFM := tutorial
 GRAPH := aie/graph.cpp
 GRAPH_O := libadf.a
 
-KERNEL := s2mm.cpp mm2s.cpp 
+KERNEL := s2mm.cpp mm2s.cpp
 KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
-BASE_PLATFORM := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm 
+BASE_PLATFORM := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
 ROOTFS :=../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/rootfs.ext4
 IMAGE := ../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/Image
 SYSROOT := ${SDKTARGETSYSROOT}
@@ -34,15 +34,14 @@ VPP := v++
 AIECC := aiecompiler
 
 AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS_AIETOOLS)/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  -workdir=./Work 
+AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  -workdir=./Work
 
-VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) -g --save-temps 
+VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) -g --save-temps
 VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
 
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
-			 -Wno-int-to-pointer-cast \
-			 --sysroot=$(SYSROOT)
+			 -Wno-int-to-pointer-cast
 
 GCC_INCLUDES := -I$(SYSROOT)/usr/include/xrt \
 				-I$(SYSROOT)/usr/include \
@@ -52,7 +51,6 @@ GCC_INCLUDES := -I$(SYSROOT)/usr/include/xrt \
 
 GCC_LIB := -ladf_api_xrt -lxrt_coreutil \
 		   -L$(SYSROOT)/usr/lib \
-		   --sysroot=$(SYSROOT) \
 		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
 
 .ONESHELL:
@@ -61,7 +59,7 @@ GCC_LIB := -ladf_api_xrt -lxrt_coreutil \
 guard-%:
 	@#$(${$*}, $(error $* is not set. Run: environment-setup-aarch64-xilinx-linux))
 
-all: kernels aie xclbin host package 
+all: kernels aie xclbin host package
 
 ######################################################
 # This step compiles the HLS C kernels and creates an SDF Graph
@@ -93,15 +91,15 @@ xclbin: $(GRAPH_O) $(KERNEL_XO)
 ############################################################################################################################
 # For hardware and hardware emulation, compile the PS code and generate the main.elf. This is needed for creating the PDI.
 host: guard-SYSROOT guard-CXX
-	cd ./sw 
+	cd ./sw
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
-	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe 
+	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe
 ############################################################################################################################
 
 ##################################################################################################
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
-package:  
+package:
 ifeq (${TARGET},hw_emu)
 	cd ./sw
 	v++ -p -t hw_emu \
@@ -129,10 +127,10 @@ endif
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to follow the Confluence page for
 # running on a board farm system.
-run_emu: 
+run_emu:
 ifeq (${TARGET},hw_emu)
 	cd ./sw
-	./launch_hw_emu.sh 
+	./launch_hw_emu.sh
 else
 	@echo "Hardware build, no emulation executed."
 endif
