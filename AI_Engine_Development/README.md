@@ -20,7 +20,7 @@ The methodology for developing optimized accelerated applications is comprised o
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/01-aie_lenet_tutorial/">LeNet Tutorial</a></td>
- <td>This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory..</td>
+ <td>This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory.</td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/">Super Sampling Rate FIR Filters</a></td>
@@ -29,6 +29,10 @@ The methodology for developing optimized accelerated applications is comprised o
   <tr>
  <td align="center"><a href="./Design_Tutorials/03-beamforming/">Beamforming Design</a></td>
  <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Design_Tutorials/04-custom-platform-emulation/">AIE Emulation on Custom Platforms</a></td>
+ <td>This tutorial demonstrates the creation and emulation of an AIE design including the Adaptive DataFlow (ADF) graph, RTL kernels, and a custom VCK190 platform.</td>
  </tr>
  </table>
 
