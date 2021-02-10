@@ -92,7 +92,7 @@ xclbin: $(GRAPH_O) $(KERNEL_XO)
 
 ############################################################################################################################
 # For hardware and hardware emulation, compile the PS code and generate the main.elf. This is needed for creating the PDI.
-host: guard-SYSROOT
+host: guard-SYSROOT guard-CXX
 	cd ./sw 
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
