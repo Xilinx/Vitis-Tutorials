@@ -1,0 +1,24 @@
+# Feature options for plugins without external deps
+option('ivas_xdpuinfer', type : 'feature', value : 'auto')
+option('ivas_xcrop', type : 'feature', value : 'auto')
+option('ivas_xresize_bgr', type : 'feature', value : 'auto')
+option('ivas_xreid', type : 'feature', value : 'auto')
+option('ivas_xswbbox', type : 'feature', value : 'auto')
+
+# ivas_xdpuinfer Model selection
+option('YOLOV3', type: 'string', value: '1',
+       description: 'Enable disable YOLOV3 models')
+option('CLASSIFICATION', type: 'string', value: '1',
+       description: 'Enable disable CLASSIFICATION models')
+option('FACEDETECT', type: 'string', value: '1',
+       description: 'Enable disable FACEDETECT models')
+option('REID', type: 'string', value: '1',
+       description: 'Enable disable REID models')
+option('REFINEDET', type: 'string', value: '1',
+       description: 'Enable disable REFINEDET models')
+option('SSD', type: 'string', value: '1',
+       description: 'Enable disable SSD models')
+option('TFSSD', type: 'string', value: '1',
+       description: 'Enable disable TFSSD models')
+option('YOLOV2', type: 'string', value: '1',
+       description: 'Enable disable YOLOV2 models')
