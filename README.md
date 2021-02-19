@@ -1,3 +1,4 @@
+<p align="right"><a>English</a> | <a href="docs-jp/README.md">日本語</a></p>
 <table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ In-Depth Tutorials</h1>
@@ -39,7 +40,7 @@ Learn how to use the Vitis core development kit to build, analyze, and optimize 
 Learn how to use Vitis HLS, compiler, analyzer, and debugger to identify performance bottlenecks and make modifications to increase algorithm efficiency and performance using an Alveo card.
 
 ### [AI Engine Development](./AI_Engine_Development)
-Learn how to use the Vitis core tools to develop for Versal, the first Adaptive Compute Acceleration Platform (ACAP) device from Xilinx. 
+Learn how to use the Vitis core tools to develop for Versal, the first Adaptive Compute Acceleration Platform (ACAP) device from Xilinx.
 
 Learn how to target, develop, and deploy advance algorithms using Versal's AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
 
