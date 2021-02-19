@@ -1,0 +1,11 @@
+[Emulation]
+#debug_mode=batch
+#launch_waveform=batch
+[Debug]
+profile=true
+timeline_trace=true
+data_transfer_trace=coarse
+#stall_trace=all
+lop_trace=true
+#continuous_trace=true
+#continuous_trace_interval_ms=2

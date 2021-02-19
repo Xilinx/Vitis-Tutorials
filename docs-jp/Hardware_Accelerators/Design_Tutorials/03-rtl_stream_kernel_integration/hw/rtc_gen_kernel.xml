@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root versionMajor="1" versionMinor="6">
+  <kernel name="rtc_gen" language="ip_c" vlnv="xilinx.com:kernel:rtc_gen:1.0" attributes="" preferredWorkGroupSizeMultiple="0" workGroupSize="1" interrupt="true" hwControlProtocol="ap_ctrl_hs">
+    <ports>
+      <port name="s_axi_control" mode="slave" range="0x1000" dataWidth="32" portType="addressable" base="0x0"/>
+      <port name="fontread_axi_m" mode="master" range="0xFFFFFFFFFFFFFFFF" dataWidth="32" portType="addressable" base="0x0"/>
+      <port name="dataout_axis_m" mode="write_only" dataWidth="64" portType="stream"/>
+    </ports>
+    <args>
+      <arg name="work_mode" addressQualifier="0" id="0" port="s_axi_control" size="0x4" offset="0x010" type="uint" hostOffset="0x0" hostSize="0x4"/> 
+      <arg name="cs_count" addressQualifier="0" id="1" port="s_axi_control" size="0x4" offset="0x018" type="uint" hostOffset="0x0" hostSize="0x4"/> 
+      <arg name="time_format" addressQualifier="0" id="2" port="s_axi_control" size="0x4" offset="0x020" type="uint" hostOffset="0x0" hostSize="0x4"/> 
+      <arg name="time_set_val" addressQualifier="0" id="3" port="s_axi_control" size="0x4" offset="0x028" type="uint" hostOffset="0x0" hostSize="0x4"/> 
+      <arg name="time_set_en" addressQualifier="0" id="4" port="s_axi_control" size="0x4" offset="0x030" type="uint" hostOffset="0x0" hostSize="0x4"/> 
+      <arg name="time_val" addressQualifier="0" id="5" port="s_axi_control" size="0x4" offset="0x038" type="uint" hostOffset="0x0" hostSize="0x4"/> 
+      <arg name="read_addr" addressQualifier="1" id="6" port="fontread_axi_m" size="0x8" offset="0x040" type="int*" hostOffset="0x0" hostSize="0x8"/> 
+      <arg name="dataout_axis_m" addressQualifier="4" id="7" port="dataout_axis_m" size="0x4" offset="0x048" hostOffset="0x0" hostSize="0x4" type="stream&lt;qdma_axis&lt;64,0,0,0>>&amp;" />
+    </args>
+  </kernel>
+</root>
+
