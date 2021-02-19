@@ -1,0 +1,13 @@
+model {
+   name : "reid"
+   kernel {
+     name: "reid_0"
+     mean: 103.0
+     mean: 116.0
+     mean: 123.0
+     scale: 0.017429
+     scale: 0.017429
+     scale: 0.017429
+   }
+   model_type :REID 
+}
