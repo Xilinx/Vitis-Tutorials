@@ -33,7 +33,6 @@ CREATE_XO_TCL := run_$(KERNEL_NAME).tcl
 # =========================================================
 DEPS := $(CREATE_XO_TCL)
 DEPS += bd_$(KERNEL_NAME).tcl
-DEPS += kernel_$(KERNEL_NAME).xml
 
 # =========================================================
 # COMMAND OPTIONS
