@@ -1,0 +1,35 @@
+# Copyright 2020 Xilinx Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+test_iter: 10000
+test_interval: 2000
+base_lr: 0.000001
+display: 500
+max_iter: 64000
+lr_policy: "multistep"
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 10000
+snapshot_prefix: "./snapshot/refinedet"
+solver_mode: GPU
+net: "../../float/trainval.prototxt"
+test_initialization: false
+stepvalue: 32000
+stepvalue: 48000
+type: "SGD"
+eval_type: "detection"  
+ap_version: "11point"
+
+
