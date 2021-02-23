@@ -33,7 +33,7 @@ In this step, we will create the hardware design for the ZCU104 Vitis acceleatio
 
    - Select **File->Project->New**, Click **Next**.
    - In Project Name dialog set Project name to **zcu104_custom_platform**. Click **Next**.
-   - Enable **project is an extensible platform**. Click **Next**.
+   - Enable **Project is an extensible Vitis platform**. Click **Next**.
 
    ![](images/vivado_project_type.png)
 
