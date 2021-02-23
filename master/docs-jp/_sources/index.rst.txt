@@ -1,0 +1,173 @@
+.. 
+   Copyright 2020-2021 Xilinx, Inc.
+
+.. meta::
+   :keywords: Vitis, チュートリアル, コア, 開発, tutorials, core, development
+   :description: Vitis 統合ソフトウェア プラットフォームでは、FPGA、SoC、Versal ACAP を含むヘテロジニアス ザイリンクス プラットフォームでエンベデッド ソフトウェアおよびアクセラレーション アプリケーションを開発できます。
+   :xlnxdocumentclass: Document
+   :xlnxdocumenttype: Tutorials
+   
+   
+Vitis™ チュートリアル
+########################################################################
+
+
+.. _JP:
+
+.. toctree::
+   :maxdepth: 2
+   :caption: English version
+   :hidden:
+
+   Master <https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html>
+   
+
+
+.. _Overview:
+
+|intro_video|
+
+.. |intro_video| image:: ./Machine_Learning/Introduction/01-Workflows/images/intro_video.png
+   :target: http://www.youtube.com/watch?v=vFPNlcXAeWI
+
+.. _Unlocking a new design:
+
+
+すべての開発者に新しい設計経験を提供
+========================================================================================================================
+
+Vitis 統合ソフトウェア プラットフォームを使用すると、FPGA、SoC、Versal ACAP などのヘテロジニアス ザイリンクス プラットフォームのエンベデッド ソフトウェアおよびアクセラレーション アプリケーションの開発ができます。エッジ、クラウド、ハイブリッド計算アプリケーションをアクセラレーションする統合プログラミング モデルが提供されます。
+
+ハイレベル フレームワークとの統合に使用したり、アクセラレーションされたライブラリを使用して C、C++、Python で開発したり、RTL ベースのアクセラレータおよび下位レベルのランタイム API を使用して、インプリメンテーションをより詳細に制御できます。抽象度のレベルは、選択できます。
+
+
+.. _Tutorials:
+
+
+チュートリアル
+========================
+
+Vitis 詳細チュートリアルでは、すべてのザイリンクス プラットフォームでアクセラレーションされたアプリケーションを運用する設計手法およびプログラミング モデルを使用して説明します。
+
+|vitis-landing-graphic-boards-u50|
+
+.. |vitis-landing-graphic-boards-u50| image:: ./Machine_Learning/Introduction/01-Workflows/images/vitis-landing-graphic-boards-u50.png
+
+
+.. _Introduction:
+
+:doc:`Getting_Started/README`
+************************************************************************************************************
+
+ここから開始してください。初めてのアプリケーションをまとめて Vitis プログラミング モデルの基礎を学びます。経験は必要ありません。
+
+.. toctree::
+   :maxdepth: 5
+   :caption: 入門
+   :hidden:
+
+   Getting_Started/Vitis/README
+   Getting_Started/Vitis_HLS/README
+
+
+.. _Machine Learning Tutorial:
+
+:doc:`Machine_Learning/README`
+*****************************************************************************************************************
+
+Vitis、Vitis AI、および Vitis アクセラレーション ライブラリを使用して、純粋なソフトウェア定義フローを使用して完全なエンド ツー エンドのアクセラレーションされたアプリケーションをインプリメントする方法を学びます。ハードウェアの専門知識は必要ありません。
+
+Tensorflow フレームワークを使用してザイリンクス ハードウェアをコンフィギュレーションするには、Vitis AI を使用します。Vitis AI を使用すると、ユーザーは推論モデルを数分で量子化、コンパイル、運用できます。
+
+.. toctree::
+   :maxdepth: 5
+   :caption: 機械学習 (英語版)
+   :hidden:
+
+   Machine_Learning/README
+
+
+
+.. _Acceleration Tutorial:
+
+:doc:`Hardware_Accelerators/README`
+*****************************************************************************************************************************************
+
+Vitis コア開発キットを使用して、C++、OpenCL、さらには Verilog や VHDL などの下位レベルのハードウェア記述言語 (HDL) で開発されたアクセラレーション アルゴリズムをビルド、解析、最適化する方法を説明します。
+
+Vitis HLS、コンパイラ、アナライザー、デバッガーを使用してパフォーマンスのボトルネックを特定し、Alveo カードを使用してアルゴリズムの効率とパフォーマンスを向上させる方法について説明します。
+
+.. toctree::
+   :maxdepth: 5
+   :caption: アクセラレーション
+   :hidden:
+
+   Hardware_Accelerators/README
+
+
+.. _AI Engine Development:
+
+:doc:`AI_Engine_Development/README`
+*********************************************************************************************************************************
+
+ザイリンクス初の ACAP (Adaptive Compute Acceleration Platform) デバイスである Versal を開発するための Vitis コア ツールの使用方法を説明します。
+
+Versal の AI エンジン アレイと PL IP/カーネルおよびエンベデッド プロセッサ上で動作するソフトウェア アプリケーションを組み合わせて使用し、高度なアルゴリズムをターゲットにし、開発、運用する方法について説明します。
+
+.. toctree::
+   :maxdepth: 5
+   :caption: AI エンジン開発 (英語版)
+   :hidden:
+
+   AI_Engine_Development/README
+
+
+
+.. _Platform Creation:
+
+:doc:`Vitis_Platform_Creation/README`
+*********************************************************************************************************
+
+独自のボードをターゲットにしたカスタム プラットフォームのビルド方法と、既存のプラットフォームの変更と拡張方法について説明します。
+
+プラットフォームのハードウェア ソースの設定方法、ランタイム ソフトウェア環境の構築方法、ソフトウェアおよびハードウェア エミュレーションのサポートの追加方法などを説明します。
+
+.. toctree::
+   :maxdepth: 5
+   :caption: プラットフォーム作成チュートリアル
+   :hidden:
+
+   Vitis_Platform_Creation/README
+
+
+
+.. _Xilinx Runtime (XRT) and Vitis System Optimization Tutorials:
+
+:doc:`Runtime_and_System_Optimization/README`
+************************************************************************************************************************
+
+アプリケーションの CPU 側を最適化して効率的にメモリを割り当てる方法、システム レベルのイベントを順番に並べる方法などについて説明します。
+
+また、システム レベルのトポロジと下位レベルのハードウェア インプリメンテーションを制御する方法について説明します。
+
+.. toctree::
+   :maxdepth: 5
+   :caption: XRT および Vitis システム最適化
+   :hidden:
+
+   Runtime_and_System_Optimization/README
+
+
+.. _Versions:
+
+.. toctree::
+   :maxdepth: 2
+   :caption: バージョン
+   :hidden:
+
+   2020.1 <https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html>
+   
+   2019.2 <https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md>
+   
+   この資料は 2021 年 1 月 22 日時点の表記バージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。
+日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。   
