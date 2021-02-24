@@ -23,7 +23,7 @@ package/sd_card.img: app.exe emconfig.json vadd.xclbin xrt.ini run_app.sh
 		--package.sd_file run_app.sh
 
 emconfig.json:
-	emconfigutil --platform xilinx_zcu102_base_202010_1 --nd 1
+	emconfigutil --platform xilinx_zcu102_base_202020_1 --nd 1
 
 clean:
 	rm -rf vadd* app.exe *json *csv *log *summary _x package *.json .run .Xil .ipcache *.jou
