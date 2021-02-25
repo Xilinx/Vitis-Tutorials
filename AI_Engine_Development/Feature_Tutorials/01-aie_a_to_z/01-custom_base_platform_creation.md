@@ -31,7 +31,7 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 
      ![](images/CIPS.png)
 
-4. To avoid having to manually configure the CIPS and NoC blocks to get a working base configuration, click the ***Run Block Automation*** link that appears at the top of the IP integrator canvas. Configure the system with one memory controller, one PL clock, and one PL reset.
+4. To avoid having to manually connect the CIPS and NoC blocks to get a working base configuration, click the ***Run Block Automation*** link that appears at the top of the IP integrator canvas. Configure the system with one memory controller, one PL clock, and one PL reset.
 
      ![](images/cips_blockauto.png)
 
@@ -39,19 +39,27 @@ Your block design should look as follows:
 
 ![](images/cips_bd.png)
 
-5. Rename the NoC block created by the automation tool (`axi_noc_0`) to `ps_noc` using the Block Properties window. This step is optional but allows a better understanding of the design.
+5. Double click on the CIPS to open its configuration GUI. In the Board Section select **cips_fixed_io** in the board interface section. This will configure the CIPS for the VCK190.
 
-6. Configure the `ps_noc` as shown in the following image. The Inter-NoC Slave interface will be used to connect a second AXI NoC to the memory controller.
+	![](images/cips_GUI.png)
+	
+6. Double click on the AXI NoC IP to open its configuration GUI. In the Board tab select **ddr4_dimm1** in the board interface section for the line `CH0_DDR4_0` and **ddr4_dimm1_sma_clk** for the line `sys_clk0`. This will configure the AXI NoC for the DDR on the VCK190.
+
+	![](images/axi_noc_gui.png)
+	
+7. Rename the NoC block created by the automation tool (`axi_noc_0`) to `ps_noc` using the Block Properties window. This step is optional but allows a better understanding of the design.
+
+8. Configure the `ps_noc` as shown in the following image (General Tab). The Inter-NoC Slave interface will be used to connect a second AXI NoC to the memory controller.
 
      ![](images/ps_noc.png)
 
 >**Note**: It is not mandatory to have multiple AXI NoCs. This design splits the AXI interfaces from the PS (with the `ps_noc`) and the AXI interfaces from the PL (with the `pl_noc` which will be added later).
 
-7. Add an AI Engine IP from the IP catalog. Note that the design only requires the configuration interface from the Processing System, the rest of the connections will be made through the Vitis compiler later.
+9. Add an AI Engine IP from the IP catalog. Note that the design only requires the configuration interface from the Processing System, the rest of the connections will be made through the Vitis compiler later.
 
-8. Run connection automation with the default settings to connect the AI Engine block to the PS NoC.
+10. Run connection automation with the default settings to connect the AI Engine block to the PS NoC.
 
-9. Double-click on the CIPS IP block to open its configuration wizard.
+11. Double-click on the CIPS IP block to open its configuration wizard.
 
       a. Enable `M_AXI_FPD` with a data width of 128 bits.
 
@@ -65,7 +73,7 @@ Your block design should look as follows:
 
       ![](images/cips_cfg3.png)
 
-10. Add a Clocking Wizard IP. Double-click on the clocking wizard to open its configuration wizard.
+12. Add a Clocking Wizard IP. Double-click on the clocking wizard to open its configuration wizard.
 
       a. Enable three output clocks with the frequencies, 100 MHz, 150 MHz, and 300 MHz.
 
@@ -77,7 +85,7 @@ Your block design should look as follows:
 
       c. Connect the `clk_in1` of the clocking wizard to the `pl0_ref_clk` of the CIPS IP.
 
-11. Add three Processor System Reset IPs from the IP catalog. Run Connection Automation and configure the Processor System Reset IPs as follows:
+13. Add three Processor System Reset IPs from the IP catalog. Run Connection Automation and configure the Processor System Reset IPs as follows:
 
       a. Select the `pl0_resetn` of the CIPS as the source for the external reset of all the Processor System Reset IPs.
 
@@ -91,7 +99,7 @@ Your block design should look as follows:
 
       ![](images/proc_reset_cfg3.png)
 
-12. Add another AXI NoC IP to which the kernels will be connected and change its name to `pl_noc` in the Block Properties window.
+14. Add another AXI NoC IP to which the kernels will be connected and change its name to `pl_noc` in the Block Properties window.
 
       a. Configure the `pl_noc` to have zero AXI interfaces and one inter-NoC master interface. This NoC will be used as access to the memory for the IPs in the PL (example RTL kernels added from the Vitis tools):   
 
@@ -103,23 +111,23 @@ Your block design should look as follows:
 
       c. Connect the `M00_INI` interface from the `pl_noc` to the `S00_INI` interface of the `ps_noc`.
 
-13. Open the configuration wizard for the `ps_noc` and enable the connectivity of `S00_INI` to the MC Port 0.
+15. Open the configuration wizard for the `ps_noc` and enable the connectivity of `S00_INI` to the MC Port 0.
 
       ![](images/ps_noc_cfg1.png)
 
-14. Add an AXI Smartconnect block from the IP catalog. This AXI Smartconnect will be used for the AXI4-Lite slave interfaces of the PL IPs (to be controlled from the PS). Configure the AXI Smartconnect as follows:
+16. Add an AXI Smartconnect block from the IP catalog. This AXI Smartconnect will be used for the AXI4-Lite slave interfaces of the PL IPs (to be controlled from the PS). Configure the AXI Smartconnect as follows:
 
       ![](images/smartconnect_cfg1.JPG)     
 
-15. Connect the `M_AXI_FPD` interface from the CIPS to the `S00_AXI` interface of the AXI Smartconnect.
+17. Connect the `M_AXI_FPD` interface from the CIPS to the `S00_AXI` interface of the AXI Smartconnect.
 
-16. Run connection automation and make sure the clock source is `clk_out1`.
+18. Run connection automation and make sure the clock source is `clk_out1`.
 
       ![](images/fpd_blockauto.JPG)
 
-17. Connect the `aresetn` input of the Smartconnect to the `interconnect_aresetn` output of the `processor_sys_reset_0` IP.
+19. Connect the `aresetn` input of the Smartconnect to the `interconnect_aresetn` output of the `processor_sys_reset_0` IP.
 
-18. Add an AXI Interrupt Controller IP from the IP catalog and configure it as follows:
+20. Add an AXI Interrupt Controller IP from the IP catalog and configure it as follows:
 
       ![](images/intc_cfg1.png)
 
@@ -129,7 +137,7 @@ Click Run connection automation and configure it as follows:
 
 Connect the `irq` output of the AXI Interrupt Controller IP to the `pl_ps_irq0` input of the CIPS IP.
 
-19. The finished block design should look similar to the following:
+21. The finished block design should look similar to the following:
 
       ![](images/bd_complete.png)
 
@@ -141,7 +149,8 @@ Validate the design and you should see no errors. There might be a warning relat
 In this step, the platform interfaces are exposed to the Vitis software platform.
 
 1. Enable the platform window by clicking ***Window > Platform Setup***. You will see different settings for AXI ports, clocking, and interrupts.
-Under the clocking wizard, select all the clocks and right-click to enable them for platform use.
+
+2. In the Clock section, under the clocking wizard, select Enabled for all the clocks to enable them for platform use.
 Set the `clk_out1` id to `1`. Set the `clk_out2` id to `0` and enable `is_default`. Set the `clk_out3` id to `2`.
 
       ![](images/enable_clk.png)
@@ -155,7 +164,7 @@ set_property PFM.CLOCK { \
     clk_out3 {id "2" is_default "false" proc_sys_reset "/proc_sys_reset_2" status "fixed"}} [get_bd_cells /clk_wizard_0]
  ```
 
-2. Select the ***S00_AXI*** to ***S15_AXI*** interfaces of the `pl_noc` and right-click to enable them.
+3. Select the ***S00_AXI*** to ***S15_AXI*** interfaces of the `pl_noc` and right-click to enable them.
 
       ![](images/enable_axi_plnoc.png)
 
@@ -169,7 +178,7 @@ for {set i 0} {$i < 16} {incr i} {
 set_property PFM.AXI_PORT $noc_slaves [get_bd_cells /pl_noc]
 ```
 
-3. Select ***M01_AXI*** to ***M15_AXI*** under `smartconnect_0` and right-click to enable them. For each interface, change the memport setting to `M_AXI_GP`.
+4. In the AXI Ports section, select ***M01_AXI*** to ***M15_AXI*** under `smartconnect_0` and right-click to enable them. For each interface, change the memport setting to `M_AXI_GP`.
 
       ![](images/enable_axi_smartconnect.png)
 
@@ -182,17 +191,19 @@ for {set i 1} {$i < 16} {incr i} {
 set_property PFM.AXI_PORT $axi_sc_masters [get_bd_cells /smartconnect_0]
 ```
 
-4. Run the following Tcl command to enable the IRQ inputs for the AXI interrupt controller for the platform.
+5. In the Interrupt section, enable ***intr*** under `axi_intc_0` to enable the IRQ inputs for the AXI interrupt controller for the platform.
+The preceding operations can also be done using the following Tcl command.
+![](images/enable_intr.png)
 ```
 set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]
 ```
 
-5. Run the following Tcl command to set up platform property to expose the `M00_AXI` port of the NoC so the AI Engine IP can be detected by the Vitis tools.
+6. Run the following Tcl command to set up platform property to expose the `M00_AXI` port of the NoC so the AI Engine IP can be detected by the Vitis tools.
 ```
 set_property PFM.AXI_PORT {M00_AXI {memport "NOC_MASTER"}} [get_bd_cells /ps_noc]
 ```
 
-6. Set the following platform properties using the following Tcl commands.
+7. Set the following platform properties using the following Tcl commands.
 ```
 set_property platform.default_output_type "sd_card" [current_project]
 set_property platform.design_intent.embedded "true" [current_project]
