@@ -42,7 +42,6 @@ There are slight differences when targeting data-center and embedded platforms. 
 source <VITIS_install_path>/settings64.sh
 source <XRT_install_path>/setup.sh
 unset LD_LIBRARY_PATH
-source $XILINX_VITIS/data/emulation/qemu/unified_qemu_v5_0/environment-setup-aarch64-xilinx-linux
 ```
 
 * Then make sure the following environment variables are correctly set to point to the your ZCU102 platform, rootfs and sysroot directories respectively.
@@ -50,8 +49,15 @@ source $XILINX_VITIS/data/emulation/qemu/unified_qemu_v5_0/environment-setup-aar
 ```bash
 export PLATFORM_REPO_PATHS=<path to the ZCU102 platform install dir>
 export ROOTFS=<path to the ZYNQMP common image directory, containing rootfs>
-export SYSROOT=$ROOTFS/sysroots/aarch64-xilinx-linux
 ```
+
+To properly source the cross-compilation SDK, run the `environment-setup-aarch64-xilinx-linux` script in the directory
+where you extracted the SDK source.
+
+```bash
+source <path to the SDK>/environment-setup-aarch64-xilinx-linux
+```
+
 *NOTE: The ZYNQMP common image file can be downloaded from the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) page, and contains the Sysroot, Rootfs, and boot Image for Xilinx Zynq MPSoC devices.*
 
 
@@ -63,7 +69,7 @@ export SYSROOT=$ROOTFS/sysroots/aarch64-xilinx-linux
 ```bash
 cd <Path to the cloned repo>/Getting_Started/Vitis/example/zcu102/sw_emu
 
-aarch64-linux-gnu-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${SYSROOT}/usr/include/xrt -L${SYSROOT}/usr/lib -lOpenCL -lpthread -lrt -lstdc++ --sysroot=${SYSROOT}
+$(CXX) -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I/usr/include/xrt -lOpenCL -lpthread -lrt -lstdc++
 v++ -c -t sw_emu --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
 v++ -l -t sw_emu --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
 v++ -p -t sw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file run_app.sh
@@ -71,7 +77,7 @@ v++ -p -t sw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir p
 
 
 Here is a brief explanation of each of these five commands:
-1. `aarch64-linux-gnu-g++` compiles the host application using the ARM cross-compiler.
+1. `$(CXX)` compiles the host application using the ARM cross-compiler. This variable contains the full compiler executable plus flags relevant to cross-compilation, and is set when you source the SDK environment setup script.
 2. `v++ -c` compiles the source code for the vector-add accelerator into a compiled kernel object (.xo file). 
 3. `v++ -l` links the compiled kernel with the target platform and generates the FPGA binary (.xclbin file). 
 4. `v++ -p` packages the host executable, the rootfs, the FPGA binary and a few other files and generates a bootable image.
@@ -100,13 +106,10 @@ data=all:all:all
 * This command with launch software emulation, start the Xilinx Quick Emulation (QEMU) and initiate the boot sequence. Once Linux has finished booting, enter the following commands to run the example program:
 
 ```bash
-mount /dev/mmcblk0p1 /mnt
-cd /mnt
-cp platform_desc.txt /etc/xocl.txt
+cd /media/sd-mmcblk0p1
 export XILINX_XRT=/usr
-export XILINX_VITIS=/mnt
 export XCL_EMULATION_MODE=sw_emu
-./app.exe
+./app.exe vadd.xclbin
 ```
 
 * You should see the following messages, indicating that the run completed successfully:
@@ -129,7 +132,7 @@ TEST PASSED
 ```bash
 cd ../hw_emu
 
-aarch64-linux-gnu-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${SYSROOT}/usr/include/xrt -L${SYSROOT}/usr/lib -lOpenCL -lpthread -lrt -lstdc++ --sysroot=${SYSROOT}
+$(CXX) -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I/usr/include/xrt -lOpenCL -lpthread -lrt -lstdc++
 v++ -c -t hw_emu --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
 v++ -l -t hw_emu --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
 v++ -p -t hw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file run_app.sh
@@ -146,13 +149,10 @@ v++ -p -t hw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir p
 * Once Linux has finished booting, enter the following commands on the QEMU command line to run the example program:
 
 ```bash
-mount /dev/mmcblk0p1 /mnt
-cd /mnt
-cp platform_desc.txt /etc/xocl.txt
+cd /media/sd-mmcblk0p1
 export XILINX_XRT=/usr
-export XILINX_VITIS=/mnt
 export XCL_EMULATION_MODE=hw_emu
-./app.exe
+./app.exe vadd.xclbin
 ```
 
 * You should see messages that say TEST PASSED indicating that the run completed successfully
@@ -168,7 +168,7 @@ export XCL_EMULATION_MODE=hw_emu
 ```bash
 cd ../hw
 
-aarch64-linux-gnu-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${SYSROOT}/usr/include/xrt -L${SYSROOT}/usr/lib -lOpenCL -lpthread -lrt -lstdc++ --sysroot=${SYSROOT}
+$(CXX) -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I/usr/include/xrt -llOpenCL -lpthread -lrt -lstdc++
 v++ -c -t hw --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
 v++ -l -t hw --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
 v++ -p -t hw --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file run_app.sh
@@ -179,12 +179,9 @@ v++ -p -t hw --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir packa
 * After the build process completes, copy the sd_card directory to an SD card and plug it into the platform and boot until you see the Linux prompt. At that point, enter the following commands to execute the accelerated application:
 
 ```bash
-mount /dev/mmcblk0p1 /mnt
-cd /mnt
-cp platform_desc.txt /etc/xocl.txt
+cd /media/sd-mmcblk0p1
 export XILINX_XRT=/usr
-export XILINX_VITIS=/mnt
-./app.exe
+./app.exe vadd.xclbin
 ```
 
 * You will see the same TEST PASSED message indicating that the run completed successfully.
