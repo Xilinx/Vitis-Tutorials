@@ -74,10 +74,10 @@ extern "C"
 
                 if ((row >= time_img_pos_row) && 
                     (row <  (time_img_pos_row + time_img.rows)) &&
-                    (col >= (time_img_pose_col >> XF_BITSHIFT(XF_NPP8))) && 
-                    (col <  ((time_img_pose_col >> XF_BITSHIFT(XF_NPP8)) + (time_img.cols >> XF_BITSHIFT(XF_NPP8)))))
+                    (col >= (time_img_pos_col >> XF_BITSHIFT(XF_NPPC8))) && 
+                    (col <  ((time_img_pos_col >> XF_BITSHIFT(XF_NPPC8)) + (time_img.cols >> XF_BITSHIFT(XF_NPPC8)))))
                 {
-                    din_time = time_img.read((row - time_img_pos_row) * (time_img.cols >> XF_BITSHIFT(XF_NPP8)) + (col - (time_img_pose_col >> XF_BITSHIFT(XF_NPP8))));
+                    din_time = time_img.read((row - time_img_pos_row) * (time_img.cols >> XF_BITSHIFT(XF_NPPC8)) + (col - (time_img_pos_col >> XF_BITSHIFT(XF_NPPC8))));
                     for (int i = 0; i < (1 << XF_BITSHIFT(XF_NPPC8)); i++)
                     {
                         // clang-format off
@@ -109,7 +109,7 @@ extern "C"
     void cvmat_stream_out(xf::cv::Mat<XF_8UC3, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8> &input_img, 
                        hls::stream<ap_axiu<64, 0, 0, 0>> &stream_out)
     {
-        for (int i = 0; i < input_img.rows * (input_img.cols >> XF_BITSHIFT(XF_NPP8)); i++)
+        for (int i = 0; i < input_img.rows * (input_img.cols >> XF_BITSHIFT(XF_NPPC8)); i++)
         {
             ap_uint<24 * XF_NPPC8> data;
             ap_axiu<64, 0, 0, 0> v;
@@ -125,7 +125,7 @@ extern "C"
 
     // Top level kernel function
     void alpha_mix(hls::stream<ap_axiu<64, 0, 0, 0>> &time_img_input,   // time image input
-                   ap_uint<512> *bgr_img_input,                         // background image input
+                   ap_uint<256> *bgr_img_input,                         // background image input
                    hls::stream<ap_axiu<64, 0, 0, 0>> &mix_img_output,   // mixed image output
                    int     time_img_rows_in,                            // input time image height
                    int     time_img_cols_in,                            // input time image width
@@ -142,28 +142,28 @@ extern "C"
     {
         xf::cv::Mat<XF_8UC1, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8> time_img;
         // clang-format off
-        #pragma HLS stream variable=time_img.data depth=4
+        #pragma HLS stream variable=time_img.data
         // clang-format on
         time_img.rows = time_img_rows_in;
         time_img.cols = time_img_cols_in;
 
         xf::cv::Mat<XF_8UC1, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8> resized_time_img;
         // clang-format off
-        #pragma HLS stream variable=resized_time_img.data depth=4
+        #pragma HLS stream variable=resized_time_img.data
         // clang-format on
         resized_time_img.rows = time_img_rows_rsz;
         resized_time_img.cols = time_img_cols_rsz;
 
         xf::cv::Mat<XF_8UC3, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8> bgr_img;
         // clang-format off
-        #pragma HLS stream variable=resized_time_img.data depth=4
+        #pragma HLS stream variable=bgr_img.data
         // clang-format on
         bgr_img.rows = bgr_img_rows;
         bgr_img.cols = bgr_img_cols;
 
         xf::cv::Mat<XF_8UC3, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8> mixed_img;
         // clang-format off
-        #pragma HLS stream variable=mixed_img.data depth=4
+        #pragma HLS stream variable=mixed_img.data
         // clang-format on
         mixed_img.rows = bgr_img_rows;
         mixed_img.cols = bgr_img_cols;
@@ -172,11 +172,12 @@ extern "C"
         #pragma HLS DATAFLOW
         // clang-format on
 
-        // convert to axi stream to xfMat
+        // convert axi stream to xfMat
         xf::cv::axiStrm2xfMat<64, XF_8UC1, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8>(time_img_input, time_img);
 
         // convert array (axi master) to xfMat
-        xf::cv::Array2xfMat<512, XF_8UC3, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8>(bgr_img_input, bgr_img);
+        //xf::cv::Array2xfMat<512, XF_8UC3, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8>(bgr_img_input, bgr_img); 
+        xf::cv::Array2xfMat<256, XF_8UC3, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8>(bgr_img_input, bgr_img); // yuang
 
         // Resize time image
         xf::cv::resize<XF_INTERPOLATION_BILINEAR, XF_8UC1, MAX_HEIGHT, MAX_WIDTH, MAX_HEIGHT, MAX_WIDTH, XF_NPPC8, MAXDOWNSCALE>(time_img, resized_time_img);
