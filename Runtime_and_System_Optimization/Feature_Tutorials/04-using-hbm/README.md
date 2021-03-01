@@ -8,7 +8,7 @@ This tutorial covers essential steps on migrating an existing application using 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* and *xilinx_u50_gen3x16_xdma_201920_3* platforms. If necessary, it can be easily ported to other versions and platforms. Its also expected that you have a Xilinx® Alveo™ Data Center accelerator card that supports DDR and HBM to run this tutorial. 
+* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* and *xilinx_u50_gen3x16_xdma_201920_3* platforms. If necessary, it can be easily ported to other versions and platforms. Its also expected that you have a Xilinx® Alveo™ Data Center accelerator card that supports DDR and HBM to run this tutorial.
 
 >**IMPORTANT:**
 >
@@ -24,7 +24,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ### Generating all the xclbins
 
-1. The tutorial provides the results as you go through. But if you intend to generate the xclbins, this can take several hours to generate the multiple `xclbin`. Its recommended to build all of these upfront so that you can focus on tutorial without waiting on these builds. The following steps will build the necessary xclbins for next two modules. 
+1. The tutorial provides the results as you go through. But if you intend to generate the xclbins, this can take several hours to generate the multiple `xclbin`. Its recommended to build all of these upfront so that you can focus on tutorial without waiting on these builds. The following steps will build the necessary xclbins for next two modules.
 2. Update the `PLATFORM` variable in the `makefile/Makefile` as shown below with the platform intended to be used.
     ```
     ifeq ($(memtype), DDR)
@@ -40,7 +40,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 4. Run the following command to build ten xclbins for module 3 (HBM Bandwidth Results). The expected time to build xclbins is about 5-6 hours since the following command will run parallel jobs by default
 
     ``` cd 04-using-hbm/makefile;  make build_without_rama build_with_rama```
-    
+
     If your machine doesn't have enough resources to run multiple build jobs in parallel, you can always run these serially using the following commands but it may take about several hours.
 
     ```cd 04-using-hbm/makefile;  make noramajob-64 noramajob-128 noramajob-256 noramajob-512 noramajob-1024 ramajob-64 ramajob-128 ramajob-256 ramajob-512 ramajob-1024;```
@@ -53,8 +53,8 @@ Please refer to the ./makefile/Makefile for more information.
 
 2. [Migration from DDR to HBM](2_Migrating_to_HBM.md): Walks through the steps of migrating an existing DDR based application to HBM
 
-3.  [HBM Bandwidth Explorations](3_BW_Explorations.md): Shows the achievable bandwidth using a single kernel port based on access pattern and transaction size. 
-### 
+3.  [HBM Bandwidth Explorations](3_BW_Explorations.md): Shows the achievable bandwidth using a single kernel port based on access pattern and transaction size.
+###
 
 
 
@@ -63,7 +63,7 @@ Start the next step: <a href="1_overview.md"> HBM Overview
 </b></p>
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/README.md">Return to Start of Tutorial</a></b></p>
+<p align="center"><b><a href="docs/README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
 
