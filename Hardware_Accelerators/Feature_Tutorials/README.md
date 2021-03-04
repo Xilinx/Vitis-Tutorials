@@ -63,6 +63,10 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./02-mixing-c-rtl-kernels/README.md">Mixing C and RTL</a></td>
  <td>This tutorial demonstrates how to work with an application containing RTL and C kernels, along with various design analysis features.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a></td>
+ <td>This tutorial demonstrates how to debug and optimize the dataflow optimization in Vitis HLS.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
