@@ -44,7 +44,7 @@ After synthesizing your design, the GUI will automatically show the Synthesis Su
 
 In the Synthesis Summary report, the Dataflow icon (![icon](./images/dataflow_icon.png)) alongside the function indicates that a Dataflow viewer report is available. 
 
-   ![Open Dataflow Viewer](./images/open_dataflow_viewer.PNG)
+   ![Open Dataflow Viewer](./images/open_dataflow_viewer.png)
 
 3. Right-click on the top-level function name (diamond) and select the **Open Dataflow Viewer** command to open a new Dataflow viewer window for the function as shown below.
 
