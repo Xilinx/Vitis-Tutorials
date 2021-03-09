@@ -54,7 +54,7 @@ kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}:
 	make -C pl_kernels/
 
-host: guard-ROOTFS guard-IMAGE guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
+host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
 
 ${HOST_EXE}: sw/*.cpp
 	make -C sw/
