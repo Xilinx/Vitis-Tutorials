@@ -54,7 +54,7 @@ kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}:
 	make -C pl_kernels/
 
-host: guard-ROOTFS guard-IMAGE guard-CXX guard-SDKTARGETSYSROOT$ {HOST_EXE}
+host: guard-ROOTFS guard-IMAGE guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
 
 ${HOST_EXE}: sw/*.cpp
 	make -C sw/
@@ -86,7 +86,7 @@ guard-SDKTARGETSYSROOT:
 	$(call check_defined, SDKTARGETSYSROOT, Ensure xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux script was run)
 ###
 
-package: guard-PLATFORM_REPO_PATHS package_${TARGET}
+package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
 package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}  
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} \
 		--package.rootfs ${ROOTFS} \
@@ -97,7 +97,7 @@ package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
 		--package.sd_dir data \
 		--package.sd_file ${HOST_EXE} ${XCLBIN} ${LIBADF}
 
-package_dbg: guard-PLATFORM_REPO_PATHS package_dbg_${TARGET}
+package_dbg: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_dbg_${TARGET}
 package_dbg_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}  
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} \
 		--package.rootfs ${ROOTFS} \
