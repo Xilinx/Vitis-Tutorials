@@ -77,6 +77,11 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/08-dsp-library/">DSP Library Tutorial</a></td>
  <td>This tutorial demonstrates how to use kernels provided by the DSP library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/09-debug-walkthrough/">Debug Walkthrough Tutorial</a></td>
+ <td>
+This tutorial demonstrates how to debug a multi-processor application using the Versal ACAP AI Engines, using a beamformer example design. The tutorial illustrates functional debug and performance level debug techniques.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
