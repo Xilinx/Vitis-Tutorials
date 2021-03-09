@@ -23,10 +23,10 @@ LDFLAGS += -ladf_api_xrt -lxrt_coreutil -lxaiengine -lgcc -lc -lxilinxopencl -lp
 .PHONY: clean
 
 ${HOST_EXE}: ${HOST_OBJ}
-	${HOST_CXX} -o $@ $^ ${LDFLAGS}
+	${CXX} -o $@ $^ ${LDFLAGS}
 
 %.o: %.cpp
-	${HOST_CXX} ${CXXFLAGS} -o $@ $<
+	${CXX} ${CXXFLAGS} -o $@ $<
 
 aie_control_xrt.cpp: ${AIE_CTRL_CPP}
 	cp -f ${AIE_CTRL_CPP} .
