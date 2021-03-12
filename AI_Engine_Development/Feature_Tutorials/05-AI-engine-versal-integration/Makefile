@@ -63,7 +63,7 @@ guard-CXX:
 	$(call check_defined, CXX, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSDKTARGETSYSROOT, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
 
 ###
 
