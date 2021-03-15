@@ -118,6 +118,8 @@ For PetaLinux design, please
 <details>
   <summary><b>Show Detailed Steps</b></summary>
 
+This step can be run if you created your custom hardware design from scratch rather than from the Vivado example design. You didn't select "This project is a Vitis Platform project" during platform creation.
+
 1. Validate the Block Design
 
    - Click ***Validate Design (F6)*** button in block diagram toolbar.
@@ -238,6 +240,7 @@ For a quick verification in this step, we'll use VCK190 pre-built device tree. I
    ```
 
    - The created PetaLinux project name is ***petalinux***. Please feel free to change the PetaLinux project name with ***petalinux-create -n*** option.
+   - The XSA used for PetaLinux needs to be a post implementation XSA.
 
 2. Apply VCK190 device tree
 
