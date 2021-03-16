@@ -38,13 +38,13 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    petalinux-config --get-hw-description=<path to xsa directory> --silentconfig
    ```
 
-   - The created PetaLinux project name is ***petalinux***. Please feel free to change the PetaLinux project name with ***petalinux-create -n*** option.
+   - The created PetaLinux project name is **petalinux**. Please feel free to change the PetaLinux project name with **petalinux-create -n** option.
 
 3. Apply VCK190 device tree
 
    - Run `petalinux-config`
-   - Go to ***DTG Settings***
-   - Enter ***versal-vck190-reva-x-ebm-02-reva*** for ***MACHINE_NAME*** option (Config option name is CONFIG_SUBSYSTEM_MACHINE_NAME)
+   - Go to **DTG Settings**
+   - Enter **versal-vck190-reva-x-ebm-02-reva** for **MACHINE_NAME** option (Config option name is CONFIG_SUBSYSTEM_MACHINE_NAME)
    
    Note: This preset device setting will add ethernet PHY info to device tree. The [device tree source code][1] will be applied to the PetaLinux project. If your VCK190 board version is different, please check the device tree source code directory whether it has a corresponding device tree version for your board and apply it in the PetaLinux project. You can clone the git repository, or use find file feature in github.
 
@@ -55,9 +55,9 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
 ### Customize Root File System, Kernel, Device Tree and U-boot
 
-1. Add user packages by appending the CONFIG_x lines below to the ***<your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig*** file.
+1. Add user packages by appending the CONFIG_x lines below to the **<your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig** file.
 
-   ***Note: This step is not a must but it makes it easier to find and select all required packages in next step.***
+   **Note: This step is not a must but it makes it easier to find and select all required packages in next step.**
 
    Packages for base XRT support (required):
 
@@ -89,13 +89,20 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
 
 
-2. Run ```petalinux-config -c rootfs``` and select ***user packages***, select name of rootfs all the libraries listed above, save and exit. If step1 is skipped, please use search function with `/` to find these packages and enable them.
+2. Run ```petalinux-config -c rootfs``` and select **user packages**, select name of rootfs all the libraries listed above, save and exit. If step1 is skipped, please use search function with `/` key to find these packages and enable them.
 
    ![petalinux rootfs settings](./images/step2/petalinux_user_packages.png)
 
    
    
-3. In rootfs config go to ***Image Features*** and enable ***package-management*** and ***debug_tweaks*** option, store the change and exit. (Recommended)
+3. In rootfs config, go to **Image Features** and enable **package-management** and **debug_tweaks** option, store the change and exit. (Recommended)
+
+   - Exit from **user packages** to root configuration window by select **Exit** and press **Enter**.
+   - Select **Image Features** and enter. 
+   - Enable **package-management** and **debug_tweaks** by pressing space key. Sub items of package-management is not needed.
+   - Exit
+   - Exit
+   - Save
 
    ![](./images/step2/petalinux_package_management.png)
 
@@ -103,11 +110,11 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
 4. Update the system-user device tree (required).
 
-   Append the following contents to the ***project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi*** file.
+   Append the following contents to the **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi** file.
 
-   - ***zyxclmm_drm*** node is required by zocl driver, which is a part of XRT.
-   - ***axi_intc_0*** node defines 32 interrupt inputs. This can not be inferred by the hardware settings in Vivado. So we have to add it here manually.
-   - ***Note***: an example file is provided in ***ref_files/step2_petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi***.
+   - **zyxclmm_drm** node is required by zocl driver, which is a part of XRT.
+   - **axi_intc_0** node defines 32 interrupt inputs. This can not be inferred by the hardware settings in Vivado. So we have to add it here manually.
+   - **Note**: an example file is provided in **ref_files/step2_petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi**.
 
    ```
    &amba {
@@ -137,9 +144,9 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
 5. Add EXT4 rootfs support (Recommended)
 
-   PetaLinux uses ***initrd*** format for rootfs by default. This format extracts rootfs in DDR memory, which means it reduces the usable DDR memory for runtime and can't retain the rootfs changes after reboot. To enable the root file system to retain changes, we'll use EXT4 format for rootfs as the second partition on SD card while keep the first partition FAT32 to store other boot files.
+   PetaLinux uses **initrd** format for rootfs by default. This format extracts rootfs in DDR memory, which means it reduces the usable DDR memory for runtime and can't retain the rootfs changes after reboot. To enable the root file system to retain changes, we'll use EXT4 format for rootfs as the second partition on SD card while keep the first partition FAT32 to store other boot files.
 
-   - Run `petalinux-config`, go to ***Image Packaging Configuration***, select ***Root File System Type*** as ***EXT4***, and append `ext4` to ***Root File System Formats***.
+   - Run `petalinux-config`, go to **Image Packaging Configuration**, select **Root File System Type** as **EXT4**, and append `ext4` to **Root File System Formats**.
 
    ![](./images/step2/petalinux_root_filesystem_type.png)
 
@@ -165,7 +172,7 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    petalinux-build
    ```
 
-   The generated u-boot and Linux images will be located in ***images/linux*** directory.
+   The generated u-boot and Linux images will be located in **images/linux** directory.
 
 2. Build and install sysroot
 
@@ -173,7 +180,7 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    petalinux-build --sdk
    ```
 
-   Sysroot ***sdk.sh*** will be generated in ***images/linux*** directory. We will extract it in next step.
+   Sysroot **sdk.sh** will be generated in **images/linux** directory. We will extract it in next step.
 
 ### Fast Track
 
@@ -197,6 +204,6 @@ Scripts are provided to re-create PetaLinux project and generate outputs. To use
 
 
 
-***Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](./step3.md).***
+**Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](./step3.md).**
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

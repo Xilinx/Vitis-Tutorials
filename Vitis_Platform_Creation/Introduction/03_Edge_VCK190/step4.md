@@ -176,11 +176,11 @@ To verify the platform functionality, we will create an acceleation project with
 
 #### Test the Application on Hardware
 
-1. Copy `vadd_system/Hardware/package/sd_card.img` to local
+1. Copy `vadd_system/Hardware/package/sd_card.img` to local if you build the project on a remote server.
 
-1. Program sd_card.img to SD card.
+2. Program sd_card.img to SD card. Refer to [AR#73711](https://www.xilinx.com/support/answers/73711.html) for detailed steps.
 
-2. Insert the SD card and boot VCK190 with SD boot mode (SW6[4:1]=0001).
+3. Insert the SD card to VCK190 board; set boot mode to SD (SW6[4:1]=0001).
 
 4. Connect to UART console
 
@@ -234,19 +234,19 @@ To verify the platform functionality, we will create an acceleation project with
 #### (Optional) Test the Application on Hardware Emulation
 1. Launch Emulator for PS
 
-   - Click menu Xilinx -> Start/Stop Emulator
-   - Select Project: plaie_system, Configuration: Emulation-HW
+   - Click menu **Xilinx -> Start/Stop Emulator**
+   - Select Project: **vadd_system**, Configuration: **Emulation-HW**
 
    ![Launch Emulator for Vadd Project](images/step4/vitis_emulation_vadd.png)
  
-   - Click Start
+   - Click **Start**
    - There will be prints on Emulation Console. 
    - Wait for it to boot Linux. The wait window will disappear after it detects Linux boot successfully.
 
 2. Launch PL emulation
 
    - Right click **vadd_system**, select **Run as -> Run Configiratuions**
-   - Select **vadd_system-Launch**
+   - Select **vadd_system-Default**
    - Change **Build Configuration** to **Emulation-HW**
    - Change **Remote Working Directory** to **/mnt/sd-mmcblk1p1**
 
@@ -260,8 +260,8 @@ To verify the platform functionality, we will create an acceleation project with
 
 3. Stop the Emulator
 
-   - Click menu Xilinx -> Start/Stop Emulator
-   - Click Stop button
+   - Click menu **Xilinx -> Start/Stop Emulator**
+   - Click **Stop** button
 
 **What Just Happened?**
 
@@ -297,11 +297,19 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
 #### Test the Application on Hardware
 
-1. Copy the **sd_card.img** from plaie_system/Hardware/package_no_aie_debug directory to local, if the project is run on a server or virtual machine.
+1. Copy the **sd_card.img** from `plaie_system/Hardware/package_no_aie_debug` directory to local, if the project is run on a server or virtual machine.
 
-2. Program **sd_card.img** to the SD card.
+   > Note: Vitis will generate images with aie_debug enabled and disabled. The image with aie_debug disabled will run freely; The image with aie_debug enabled will halt AI Engine and wait for the debugger to connect to it.
 
-3. Insert the SD card and boot the VCK190 board with SD boot mode (SW6[4:1]=0001).
+2. Program **sd_card.img** to the SD card. Refer to [AR#73711](https://www.xilinx.com/support/answers/73711.html) to detailed steps.
+
+   > Note: The programmed SD card has two partitions. FAT32 partition with boot components; EXT4 partition with Linux root file system. Windows system by default cannot see the contents of EXT4 partition.
+
+   > Note: Please eject the SD card properly from the system after programming it.
+
+3. Insert the SD card and boot the VCK190 board with SD boot mode (SW1[4:1] = "1110": OFF, OFF, OFF, ON) and power on.
+
+   > Note: Refer to [VCK190 Evaluation Board User Guide](https://www.xilinx.com/support/documentation/boards_and_kits/vck190/ug1366-vck190-eval-bd.pdf) for details about boot mode.
 
 4. Setup XRT runtime environment and launch test application
 
