@@ -131,6 +131,7 @@ To verify the platform functionality, we will create an acceleation project with
 1. Launch Vitis
 
    ```
+   mkdir -p ref_files/step4_verify
    cd ref_files/step4_verify
    vitis -workspace ./ &
    ```
@@ -139,18 +140,25 @@ To verify the platform functionality, we will create an acceleation project with
 
 2. Add custom platform
 
-   - Select menu Xilinx -> Add custom platform...
-   - Click add button
-   - Select the directory that step3 generates. For example ref_files/step3_pfm/platform_repo
-   - Click OK
+   - Select menu **Xilinx -> Add custom platform...**
+   - Click **add** button
+   - Select the directory that [step3](./step3.md) generates. For example `ref_files/step3_pfm/platform_repo`
+   - Click **OK**
 
 3. Create vector addtion application on the custom platform
 
    - Select menu **File -> New -> Application Project**.
    - Go through the welcome page and click **Next**.
    - On Platform page, select **vck190_custom** platform in the platform list. Click **Next**.
-   - Set application name **vadd**, target processor **psv_cortexa72_SMP**. Click **Next**.
-   - Input Sysroot path, RootFS path and Kernel Image. Click **Next**.
+
+   - Set **Application project name** to **vadd**, target processor **psv_cortexa72_SMP**. Click **Next**.
+   
+     ![](./images/step4/vitis_create_vadd.png)
+
+   - Input **Sysroot** path (step3_pfm/sw_comp/sysroots/aarch64-xilinx-linux), **RootFS** path (step3_pfm/sw_comp/rootfs.ext4) and **Kernel Image** path (step3_pfm/sw_comp/Image). These components were prepared in [step 3](./step3.md). Click **Next**. 
+
+      ![](./images/step4/vitis_create_vadd_swcomp.png)
+
    - Select template **Vector Addition**. Click **Finish**.
 
 4. Build the vector addtion application for hardware
