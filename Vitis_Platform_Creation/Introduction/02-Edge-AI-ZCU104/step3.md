@@ -37,7 +37,7 @@
 2. Install sysroot: 
 
    - Go to <PetaLinux Project>/images/linux directory.
-   - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. use the `-d` option to provide a full pathname to the output directory **zcu104_custom_pkg/pfm** (This is an example ) and confirm.
+   - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. use the `-d` option to provide a full pathname to the output directory **zcu104_custom_pkg** (This is an example ) and confirm.
    - Note: The environment variable **LD_LIBRARY_PATH** must not be set when running this command
 
    We would install Vitis AI library and DNNDK into this rootfs during test phase.
