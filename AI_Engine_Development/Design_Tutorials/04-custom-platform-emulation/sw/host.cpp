@@ -26,7 +26,7 @@ limitations under the License.
 #include "xrt/xrt.h"
 #include "xrt/experimental/xrt_kernel.h"
 
-// Using the Cardano API that call XRT API
+// Using the adf API that call XRT API
 #include "adf/adf_api/XRTConfig.h"
 
 static std::vector<char>

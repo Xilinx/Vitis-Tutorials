@@ -34,7 +34,7 @@ For more detailed info on this, look for *Table 40* of UG1076.
 
 Before starting this tutorial run the steps below:
 
-1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
+1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
 2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2020.2` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
@@ -191,7 +191,7 @@ There are many more options available for `v++`. For a full list, see the docume
 **IMPORTANT: Clocking for ADF Graph and PL Kernels follow a few rules. One, PL Kernels that are inside the ADF Graph will have to have their clock specified in three locations: Graph creation, `v++` kernel compilation, and lastly in `v++` linker. For PL Kernels outside the ADF Graph, only: `v++` kernel compilation and `v++` linker.**
 
 ## Step 4 - Compiling Host Code
-When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SYSROOT**, or representation of the root file system, that can be used to cross-compile the host code.
+When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SDKTARGETSYSROOT**, or representation of the root file system, that can be used to cross-compile the host code.
 
 1. Open `./sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
    
