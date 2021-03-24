@@ -14,23 +14,47 @@ HOST_EXE     = ../host.exe
 HOST_INC   = -I../ -I../aie
 HOST_OBJ   = aie_control_xrt.o host.o
 AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
-SYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/
 
-HOST_CXX      = aarch64-linux-gnu-g++
+CXXFLAGS += -std=c++14 -D__USE_ADF_API__ -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
-
-CXXFLAGS += -std=c++14 -D__USE_ADF_API__ -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
-
-LDFLAGS += -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SYSROOT}/usr/lib/ --sysroot=${SYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
+LDFLAGS += -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
 
 
 .PHONY: clean
 
-${HOST_EXE}: ${HOST_OBJ}
-	${HOST_CXX} -o $@ $^ ${LDFLAGS}
+###
+# Guarding Checks. Do not modify.
+###
+check_defined = \
+	$(strip $(foreach 1,$1, \
+		$(call __check_defined,$1,$(strip $(value 2)))))
+
+__check_defined = \
+	$(if $(value $1),, \
+		$(error Undefined $1$(if $2, ($2))))
+
+guard-PLATFORM_REPO_PATHS:
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_2020210_1)
+
+guard-ROOTFS:
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2020.2/rootfs.ext4)
+
+guard-IMAGE:
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2020.2/Image)
+
+guard-CXX:
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+
+guard-SDKTARGETSYSROOT:
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+
+###
+
+${HOST_EXE}: guard-CXX guard-SDKTARGETSYSROOT ${HOST_OBJ}
+	${CXX} -o $@ $^ ${LDFLAGS}
 
 %.o: %.cpp
-	${HOST_CXX} ${CXXFLAGS} -o $@ $<
+	${CXX} ${CXXFLAGS} -o $@ $<
 
 aie_control_xrt.cpp: ${AIE_CTRL_CPP}
 	cp -f ${AIE_CTRL_CPP} .

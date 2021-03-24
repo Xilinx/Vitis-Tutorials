@@ -146,7 +146,7 @@ Run the following `make` command to build the host exectuable file.
     
 Notice the following linker script links libraries `adf_api_xrt`, and `xrt_coreutil`, which are necessary for the `adf` API to work together with the `XRT` API.
 
-    aarch64-linux-gnu-g++ -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SYSROOT}/usr/lib/ --sysroot=${SYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
+    ${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
 
 Run the following make command to build all necessary files and launch HW cosimulation:
 
