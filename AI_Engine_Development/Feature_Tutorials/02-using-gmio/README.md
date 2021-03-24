@@ -11,7 +11,13 @@
 ## Introduction
 A GMIO port attribute is used to make external memory-mapped connections to or from the global memory. These connections are made between AI Engine kernels or programmable logic kernels and the logical global memory ports of a hardware platform design. This tutorial is designed to demonstrate how to work with the GMIO interface in AI Engine simulator and hardware flows. It includes the AI Engine GMIO, as well as PL GMIO.
 
-__Note:__ In this tutorial, the variable "PLATFORM_REPO_PATHS" is used to find the platform installation path. Set this variable appropriately.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the VCK190 base platform. 
+
+Before starting this tutorial run the steps below:
+
+1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
+2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2020.2` directory.
+3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 

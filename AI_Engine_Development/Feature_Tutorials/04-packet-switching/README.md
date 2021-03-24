@@ -15,7 +15,13 @@ This tutorial walks you through the steps to create window interface AI Engine k
 
 There is a limitation in the current version of the AI Engine tools that only integer format values are supported in data files for the AI Engine simulator. Details on the data format and how to convert data from other types to integer format are covered in steps 1 and 2.
 
-__Note:__ In this tutorial, the variable "PLATFORM_REPO_PATHS" is used to find the platform installation path. Set this variable appropriately or set paths to your installation for all Makefiles.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the VCK190 base platform. 
+
+Before starting this tutorial run the steps below:
+
+1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
+2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2020.2` directory.
+3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 
