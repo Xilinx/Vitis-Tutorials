@@ -14,13 +14,13 @@
 </div>
 
 ## </br>Unlocking a new design experience for all developers
-The Vitis unified software platform enables the development of embedded software and accelerated applications on heterogeneous Xilinx platforms including FPGAs, SoCs, and Versal ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications.
+The Vitis&trade; unified software platform enables the development of embedded software and accelerated applications on heterogeneous Xilinx&reg; platforms including FPGAs, SoCs, and Versal ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications.
 
 Leverage integration with high-level frameworks, develop in C, C++, or Python using accelerated libraries or use RTL-based accelerators & low-level runtime APIs for more fine-grained control over implementation — Choose the level of abstraction you need.
 
 ## Tutorials
 
-The Vitis In-Depth Tutorials takes users through the design methodology and programming model for deploying accelerated application on all Xilinx platforms.
+The Vitis Tutorials take users through the design methodology and programming model for deploying accelerated application on all Xilinx platforms.
 
 <p align="center">
     <img src="./Machine_Learning/Introduction/01-Workflows/images/vitis-landing-graphic-boards-u50.png">
@@ -30,19 +30,22 @@ The Vitis In-Depth Tutorials takes users through the design methodology and prog
 Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!
 
 ### [Machine Learning Tutorial](./Machine_Learning)
-Learn how to use Vitis, Vitis-AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
+Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
 
-Use Vitis-AI to configure Xilinx hardware using the Tensorflow framework. Vitis-AI allows the user to quantize, compile, and deploy an inference model in a matter of minutes.
+Use Vitis AI to configure Xilinx hardware using the Tensorflow framework. Vitis AI allows the user to quantize, compile, and deploy an inference model in a matter of minutes.
 
 ### [Acceleration Tutorial](./Hardware_Accelerators)
 Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL.
 
-Learn how to use Vitis HLS, compiler, analyzer, and debugger to identify performance bottlenecks and make modifications to increase algorithm efficiency and performance using an Alveo card.
+Learn how to use Vitis High-Level Synthesis (HLS), compiler, analyzer, and debugger to identify performance bottlenecks and make modifications to increase algorithm efficiency and performance using an Alveo&trade; Data Center acceleration card.
 
 ### [AI Engine Development](./AI_Engine_Development)
-Learn how to use the Vitis core tools to develop for Versal, the first Adaptive Compute Acceleration Platform (ACAP) device from Xilinx.
+Learn how to use the Vitis core tools to develop for Versal&trade;, the first Adaptive Compute Acceleration Platform (ACAP) device from Xilinx.
 
 Learn how to target, develop, and deploy advance algorithms using Versal's AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
+
+### [Embedded Design Tutorials](http://xilinx.github.io/Embedded-Design-Tutorials)
+Learn how to create your embedded system using Xilinx Zynq&reg; SoC and Zynq UltraScale+&trade; MPSoC devices, MicroBlaze™ processor cores, and Arm&reg; Cortex&reg;-M1/M3 micro controllers including open source operating systems and bare metal drivers, multiple runtimes and Multi-OS environments, sophisticated Integrated Development Environments, and compilers, debuggers, and profiling tools.
 
 ### [Platform Creation Tutorial](./Vitis_Platform_Creation)
 Learn how to build custom platforms for Vitis to target your own boards, and how to modify and extend existing platforms.
