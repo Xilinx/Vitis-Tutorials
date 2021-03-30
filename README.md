@@ -45,7 +45,7 @@ Learn how to use the Vitis core tools to develop for Versal&trade;, the first Ad
 Learn how to target, develop, and deploy advance algorithms using Versal's AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
 
 ### [Embedded Design Tutorials](http://xilinx.github.io/Embedded-Design-Tutorials)
-Learn how to create your embedded system using Xilinx Zynq&reg; SoC and Zynq UltraScale+&trade; MPSoC devices, MicroBlaze™ processor cores, and Arm&reg; Cortex&reg;-M1/M3 micro controllers including open source operating systems and bare metal drivers, multiple runtimes and Multi-OS environments, sophisticated Integrated Development Environments, and compilers, debuggers, and profiling tools.
+Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
 
 ### [Platform Creation Tutorial](./Vitis_Platform_Creation)
 Learn how to build custom platforms for Vitis to target your own boards, and how to modify and extend existing platforms.
