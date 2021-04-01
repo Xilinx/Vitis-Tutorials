@@ -5,7 +5,7 @@
  </tr>
 </table>
 
-In this tutorial, you will learn how to add custom IPs into a Versal™ ACAP platform. This tutorial is an 'add-on' to the basic Versal platform creation tutorial at this link: https://github.com/Xilinx/Vitis-Tutorials/tree/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190. So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
+In this tutorial, you will learn how to add custom IPs into a Versal™ ACAP platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../Introduction/03_Edge_VCK190). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 
@@ -21,7 +21,7 @@ The tutorial is structured as follows:
 
 In this tutorial, you will use the prebuilt example design for VCK190 board to build the hardware platform. This method saves time instead of having to manually create the IP integrator block design.
 
-Follow the instructions on this link: https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/step0.md. You can skip the optional steps.
+Follow the instructions in [Versal platform creation tutorial-Step0](../Introduction/03_Edge_VCK190/step0.md). You can skip the optional steps.
 
 
 ### Step 2: Add Custom IP into the Block Design
@@ -39,19 +39,19 @@ In this step, you will add a DDS compiler IP into the platform design that you c
     a. Configuration Tab Settings:
 
     ![](images/dds_config.png)
-    
+
     b. Implementation Tab Settings:
 
     ![](images/dds_impl.png)
-  
+
     c. Detailed Implementation Tab Settings:
-  
+
     Keep the default settings for this page.
-  
+
     d. Output Frequency Tab Settings:
-    
+
     You can adjust the frequency value but keep the sample rate in mind. The clocking rate is 300 MHz. If there are too few samples within one cycle, the sine wave cannot be sampled correctly.
-  
+
     ![](images/dds_freq.png)   
 
 5. Exit the configuration page and connect the `aclk` port to the `clk_out3` signal of clocking wizard.
@@ -71,20 +71,19 @@ In this step, you will add a DDS compiler IP into the platform design that you c
 
 ### Step 3: Create the Software Components with PetaLinux
 
-In this step, you will create a PetaLinux project that includes the Vitis unified software platform required components. Follow the instructions at this link:
-https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/step2.md.
+In this step, you will create a PetaLinux project that includes the Vitis unified software platform required components. Follow the instructions in [Versal platform creation tutorial-Step2](../Introduction/03_Edge_VCK190/step2.md).
 
 
 ### Step 4: Package the Platform in the Vitis Software Platform
 
-In this step, you will package the hardware XSA with software components in the Vitis IDE. Follow the instructions at this link: https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/step3.md.
+In this step, you will package the hardware XSA with software components in the Vitis IDE. Follow the instructions in [Versal platform creation tutorial-Step3](../Introduction/03_Edge_VCK190/step3.md).
 
 
 ### Step 5: Test the Platform
 
-In this step, you will build a simple `vadd` application and run hardware emulation to test the platform. Follow the instructions at this link but make some modifications. https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/step4.md.
+In this step, you will build a simple `vadd` application and run hardware emulation to test the platform. Follow the instructions in [Versal platform creation tutorial-Step4](../Introduction/03_Edge_VCK190/step4.md), but we will make some modifications.
 
-You will just run test 2 on that page. After creating the `vadd` system project, make the following changes.
+You just need to run test 2 on that page. After creating the `vadd` system project, make the following changes.
 
 1. Open up the `krnl_vadd.cpp` file under the `src` folder of the `vadd_kernels` project. Add the following header files at the beginning of this file. These are used to support the AXIS data type and HLS stream data type.
 
@@ -144,42 +143,42 @@ Specify the config file in binary container settings:
 6. Now modify the host code to read back the data from the DDR. Open up the `vadd.cpp` file under the `src` folder of the `vadd` project and modify the following items.
 
     a.  Add header files.
-    
+
     ```
     #include "ap_int.h"
     #include <stdio.h>
     ```
-    
+
     b. Create a new `cl_mem buffer` for the DDS output data.
 
     ```
     cl::Buffer buffer_waveout(context, CL_MEM_WRITE_ONLY, 1024*sizeof(int));
     ```
-    
+
     c. Bond the buffer with the kernel.
-    
+
     ```
     krnl_vector_add.setArg(narg++,buffer_waveout);
     ```
-    
+
     d. Map the host buffer with the device buffer.
-    
+
     ```
     int *ptr_waveout = (int *) q.enqueueMapBuffer (buffer_waveout , CL_TRUE , CL_MAP_READ , 0, 1024*sizeof(int));
     ```
-    
+
     e. Read the data from the DDR.  
-    
+
     ```
     q.enqueueMigrateMemObjects({buffer_waveout},CL_MIGRATE_MEM_OBJECT_HOST);
     ```
-    
+
     f. Save the data into a file. The data is left shifted by 17 bits because the DDS compiler IP output is 16-bit signed data and the host buffer 32-bit integer data. This is to remove the extra signed bits and keep the actual payload data.
-    
+
     ```
      FILE *fp;
      fp=fopen("wave_out.txt","w");
-    
+
      for (int i = 0; i < 1024; i++) {
        fprintf(fp,"%d\n",ptr_waveout[i]<<17);
      }
@@ -188,14 +187,14 @@ Specify the config file in binary container settings:
     ```
 
     g. Unmap the buffer.
-    
+
      ```
      q.enqueueUnmapMemObject(buffer_waveout , ptr_waveout);
      ```
-    
+
     > Note: For the complete modification code reference on the `vadd` host application, see [host code modifications](./golden/host_modifications.md).
 
-7. Now run emulation on the modified `vadd` application. Follow the instructions here: https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/step4.md#optional-test-the-application-on-hardware-emulation.
+7. Now run emulation on the modified `vadd` application. Follow the instructions in [Versal platform creation tutorial-Step4 Emulation](../Introduction/03_Edge_VCK190/step4.md#optional-test-the-application-on-hardware-emulation).
 
 8. After 'Test Passed' appears in the console window, copy over the generated `wave_out.txt` file from the QEMU target. First, launch the XSCT console window from `Xilinx` menu if you have not already done so.
 
