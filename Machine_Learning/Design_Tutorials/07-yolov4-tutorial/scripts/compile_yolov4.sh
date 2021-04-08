@@ -14,14 +14,13 @@
 # limitations under the License.
 
 TARGET=ZCU102
-NET_NAME=yolov4
+NET_NAME=dpu_yolov4 
+ARCH=/opt/vitis_ai/compiler/arch/DPUCZDX8G/${TARGET}/arch.json
 
-ARCH=${CONDA_PREFIX}/arch/dpuv2/${TARGET}/${TARGET}.json
-
-vai_c_tensorflow --frozen_pb ../yolov4_quantized/deploy_model.pb \
+vai_c_tensorflow --frozen_pb ../yolov4_quantized/quantize_eval_model.pb \
                  --arch ${ARCH} \
 		 --output_dir ../yolov4_compiled/ \
 		 --net_name ${NET_NAME} \
-		 --options "{'mode':'normal','save_kernel':''}"
+		 --options "{'mode':'normal','save_kernel':'', 'input_shape':'1,512,512,3'}"
 
 
