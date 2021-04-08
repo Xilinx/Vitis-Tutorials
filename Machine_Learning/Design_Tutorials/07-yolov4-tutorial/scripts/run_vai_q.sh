@@ -12,4 +12,4 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-vai_q_caffe quantize -model voc/yolov4_quant.prototxt -calib_iter 100 -weights voc/yolov4.caffemodel -sigmoided_layers layer135-conv,layer146-conv,layer157-conv -output_dir yolov4_quantized/ -method 1
+vai_q_caffe quantize -model voc/yolov4_quant.prototxt -keep_fixed_neuron -calib_iter 100 -weights voc/yolov4.caffemodel -sigmoided_layers layer133-conv,layer144-conv,layer155-conv -output_dir yolov4_quantized/ -method 1
