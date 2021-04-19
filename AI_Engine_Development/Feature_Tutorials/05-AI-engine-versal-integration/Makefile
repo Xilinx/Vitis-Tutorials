@@ -112,7 +112,7 @@ host: guard-CXX guard-SDKTARGETSYSROOT
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS 
 	cd ./sw
-	v++ -p -t hw_emu \
+	v++ -p -t ${TARGET} \
 		-f ${BASE_PLATFORM} \
 		--package.rootfs=${ROOTFS} \
 		--package.image_format=ext4 \
