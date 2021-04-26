@@ -12,10 +12,6 @@ CONFIG_FILE := system.cfg
 
 BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm
 
-ROOTFS  := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 
-IMAGE   := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/Image 
-SYSROOT := ${SDKTARGETSYSROOT}
-
 # Command-line options
 VPP := v++
 AIECC := aiecompiler
@@ -29,25 +25,47 @@ VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TA
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
 			 -Wno-int-to-pointer-cast \
-			 --sysroot=$(SYSROOT) \
 
-GCC_INCLUDES := -I$(SYSROOT)/usr/include/xrt \
-				-I$(SYSROOT)/usr/include \
+GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
+				-I$(SDKTARGETSYSROOT)/usr/include \
 				-I./ -I../aie \
 				-I${XILINX_VITIS}/aietools/include \
 				-I${XILINX_VITIS}/include
 
 GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
-		   -L$(SYSROOT)/usr/lib \
-		   --sysroot=$(SYSROOT) \
+		   -L$(SDKTARGETSYSROOT)/usr/lib \
 		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
 
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
 
-guard-%:
-	@#$(${$*}, $(error $* is not set. Run: environment-setup-aarch64-xilinx-linux))
+###
+# Guarding Checks. Do not modify.
+###
+check_defined = \
+	$(strip $(foreach 1,$1, \
+		$(call __check_defined,$1,$(strip $(value 2)))))
 
+__check_defined = \
+	$(if $(value $1),, \
+		$(error Undefined $1$(if $2, ($2))))
+
+guard-PLATFORM_REPO_PATHS:
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_2020210_1)
+
+guard-ROOTFS:
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2020.2/rootfs.ext4)
+
+guard-IMAGE:
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2020.2/Image)
+
+guard-CXX:
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+
+guard-SDKTARGETSYSROOT:
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+
+###
 all: kernels aie xclbin host package 
 
 ######################################################
@@ -91,8 +109,7 @@ host: guard-CXX guard-SDKTARGETSYSROOT
 
 ##################################################################################################
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
-package:  
-ifeq (${TARGET},hw_emu)
+package: guard-IMAGE guard-ROOTFS guard-PLATFORM_REPO_PATHS
 	cd ./sw
 	v++ -p -t hw_emu \
 		-f ${BASE_PLATFORM} \
@@ -103,24 +120,12 @@ ifeq (${TARGET},hw_emu)
 		--package.defer_aie_run \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
 	@echo "COMPLETE: hw_emu package created."
-else
-	cd ./sw && \
-	v++ -p -t hw \
-		-f ${BASE_PLATFORM} \
-		--package.rootfs=${ROOTFS} \
-		--package.image_format=ext4 \
-		--package.boot_mode=sd \
-		--package.kernel_image=${IMAGE} \
-		--package.defer_aie_run \
-		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
-	@echo "COMPLETE: hw package created."
-endif
+
 ###################################################################################################
 
 ###########################################################################
 # If the target is for HW_EMU, launch the emulator
-# If the target is for HW, you'll have to follow the Confluence page for
-# running on a board farm system.
+# If the target is for HW, you'll have to load it onto an sd_card for the device
 run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw

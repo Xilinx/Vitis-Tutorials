@@ -28,6 +28,18 @@ simulation::platform<1,1> platform(in0, out0);
 
 2. The main function in `project.cpp` will not be used in the hardware run, so you need to add a switch (`#ifdef __AIESIM__`) so that main will not be taken into account for the hardware build.
 
+```
+#ifdef __AIESIM__
+
+int main(void) {
+  mygraph.init();
+  mygraph.run(4);
+  mygraph.end();
+  return 0;
+}
+#endif
+```
+
 3. Change the Active build configuration to Hardware and rebuild the project.
 
 ### Step 2. Add PL Kernels
@@ -43,6 +55,8 @@ In this example, HLS kernels are used which bridge between memory and the AXI4-S
 3. Right-click the ***hw-kernel project*** and click ***import sources***. Browse into the ***src*** folder and select the ***mm2s.cpp*** and ***s2mm.cpp*** files.
 
 4. In the ***hw-kernels.prj*** page, click on the lightning icon (***Add HW*** function) icon and select both functions (`mm2s` and `s2mm`) as hardware functions.
+
+![](images/hw_kernels.png)
 
 
 ### Step 3. Configure Hardware Linking Project

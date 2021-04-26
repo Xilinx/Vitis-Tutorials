@@ -15,23 +15,16 @@ HOST_INC   = -I../ -I../aie
 HOST_OBJ   = aie_control_xrt.o graph.o
 AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
 GRAPH_CPP = ../aie/graph.cpp
-SYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/
 
-HOST_CXX      = aarch64-linux-gnu-g++
+CXXFLAGS += -std=c++14 -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
-
-CXXFLAGS += -std=c++14 -I$(XILINX_VIVADO)/include/ -I${SYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
-
-LDFLAGS += -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SYSROOT}/usr/lib/ --sysroot=${SYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
-
-
-.PHONY: clean
+LDFLAGS += -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
 
 ${HOST_EXE}: ${HOST_OBJ}
-	${HOST_CXX} -o $@ $^ ${LDFLAGS}
+	${CXX} -o $@ $^ ${LDFLAGS}
 
 %.o: %.cpp
-	${HOST_CXX} ${CXXFLAGS} -o $@ $<
+	${CXX} ${CXXFLAGS} -o $@ $<
 
 aie_control_xrt.cpp: ${AIE_CTRL_CPP}
 	cp -f ${AIE_CTRL_CPP} .

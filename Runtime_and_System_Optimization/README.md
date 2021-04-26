@@ -50,6 +50,10 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/03-controlling-vivado-implementation/README.md">Controlling Vivado Implementation</a></td>
  <td>This tutorial demonstrates how you can control the Vivado&reg; tools flow when implementing your project.</td>
  </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/04-using-hbm/">Optimizing for HBM</a></td>
+ <td>This tutorial demonstrates how you can take best advantage of HBM on platforms that support it.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

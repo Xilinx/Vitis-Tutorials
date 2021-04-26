@@ -30,7 +30,14 @@ In the design the following clocking steps are used:
 | `mm2s` & `s2mm` | 150MHz and 100MHz (`v++ -c` & `v++ -l`) | 
 For more detailed info on this, look for *Table 40* of UG1076.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the platform. Also, the variable `PLATFORM_REPO_PATHS` is used to find the platform installation path. Set this variable appropriately. Make sure to run the `environment-setup-aarch64-xilinx-linux` script as to setup the `SDKTARGETSYSROOT` environment variable used to define the `SYSROOT` location.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the VCK190 base platform. 
+
+Before starting this tutorial run the steps below:
+
+1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
+2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2020.2` directory.
+3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 
@@ -184,7 +191,7 @@ There are many more options available for `v++`. For a full list, see the docume
 **IMPORTANT: Clocking for ADF Graph and PL Kernels follow a few rules. One, PL Kernels that are inside the ADF Graph will have to have their clock specified in three locations: Graph creation, `v++` kernel compilation, and lastly in `v++` linker. For PL Kernels outside the ADF Graph, only: `v++` kernel compilation and `v++` linker.**
 
 ## Step 4 - Compiling Host Code
-When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SYSROOT**, or representation of the root file system, that can be used to cross-compile the host code.
+When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SDKTARGETSYSROOT**, or representation of the root file system, that can be used to cross-compile the host code.
 
 1. Open `./sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
    

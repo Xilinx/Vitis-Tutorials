@@ -31,9 +31,11 @@ std::vector<cint16> taps = std::vector<cint16>({
 	{  -273,  -198},{    22,    30},{    63,   194},{     0,   266}
 });
 
+std::vector<cint16> taps_aie(taps.rbegin(),taps.rend());
+
 #define GetPhase(Start,Step) {\
-	taps[Start],taps[Start+Step],taps[Start+2*Step],taps[Start+3*Step],\
-	taps[Start+4*Step],taps[Start+5*Step],taps[Start+6*Step],taps[Start+7*Step]}
+	taps_aie[Start],taps_aie[Start+Step],taps_aie[Start+2*Step],taps_aie[Start+3*Step],\
+	taps_aie[Start+4*Step],taps_aie[Start+5*Step],taps_aie[Start+6*Step],taps_aie[Start+7*Step]}
 
 std::vector<cint16> taps4_0 = std::vector<cint16>(GetPhase(0,1));
 

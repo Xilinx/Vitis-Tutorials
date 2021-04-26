@@ -11,11 +11,17 @@
 # Introduction
 The Xilinx Versal ACAP is a fully software-programmable, heterogeneous compute platform that combines the PS (Scalar Engine which includes the Arm processors), PL (Adaptable Engines which includes the FPGA fabric) and AI Engines (AI Engines; Intelligent Engines).
 
-This tutorial demonstrates creating a system design running on the AI Engine, PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation.
+This tutorial demonstrates creating a system design running on the AI Engine, PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation. Finally it also takes you through the steps of running this design on the VCK190 board.
 
 This tutorial steps through hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. A Makefile is provided, which can be modified to suit your own needs in a different context. By default the Makefile is set for `hw_emu`. If you need to build for `hw`, add `TARGET=hw` to the `make` commands.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the platform. Also, the variable `PLATFORM_REPO_PATHS` is used to find the platform installation path. Set this variable appropriately. Make sure to run the `environment-setup-aarch64-xilinx-linux` script as to setup the `SDKTARGETSYSROOT` environment variable used to define the `SYSROOT` location.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the VCK190 base platform. 
+
+Before starting this tutorial run the steps below:
+
+1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
+2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2020.2` directory.
+3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 
@@ -71,9 +77,9 @@ make kernels
 Or
 
 ```bash
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k s2mm s2mm.cpp -o s2mm.xo
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k mm2s mm2s.cpp -o mm2s.xo
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k polar_clip polar_clip.cpp -o polar_clip.xo
+v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
+v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
+v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k polar_clip pl_kernels/polar_clip.cpp -o polar_clip.xo
 ```
 
 Looking at the `v++` command line, you will see several options. The following table describes each option:
@@ -176,7 +182,7 @@ After all the new AI Engine outputs are created, you can compile your host appli
 
 2. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS`, `GCC_INCLUDES`.
    1. `GCC_FLAGS`: Self-explanatory that you will be compiling this code with C++ 14. More explanation will be provided in the packaging step.
-   2. `GCC_INCLUDES`: Has the list of all the necessary include files from the SYSROOT as well as the AI Engine tools.
+   2. `GCC_INCLUDES`: Has the list of all the necessary include files from the SDKTARGETSYSROOT as well as the AI Engine tools.
 3. Close the Makefile, and run the command:
 		
 	```bash
@@ -187,9 +193,9 @@ After all the new AI Engine outputs are created, you can compile your host appli
 
 	```bash
 	cd ./sw 
-	aarch64-linux-gnu-g++ -Wall -c -std=c++14 -Wno-int-to-pointer-cast --sysroot=$SYSROOT -I$SYSROOT/usr/include/xrt -I$SYSROOT/usr/include -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
-	aarch64-linux-gnu-g++ -Wall -c -std=c++14 -Wno-int-to-pointer-cast --sysroot=$SYSROOT -I$SYSROOT/usr/include/xrt -I$SYSROOT/usr/include -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include -o main.o main.cpp
-	aarch64-linux-gnu-g++ main.o aie_control_xrt.o -ladf_api_xrt -lxrt_coreutil -L$SYSROOT/usr/lib --sysroot=$SYSROOT -L$XILINX_VITIS/aietools/lib/aarch64.o -o host.exe 
+	$CXX -Wall -c -std=c++14 -Wno-int-to-pointer-cast --sysroot=$SDKTARGETSYSROOT -I$SDKTARGETSYSROOT/usr/include/xrt -I$SDKTARGETSYSROOT/usr/include -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
+	$CXX -Wall -c -std=c++14 -Wno-int-to-pointer-cast --sysroot=$SDKTARGETSYSROOT -I$SDKTARGETSYSROOT/usr/include/xrt -I$SDKTARGETSYSROOT/usr/include -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include -o main.o host.cpp
+	$CXX main.o aie_control_xrt.o -ladf_api_xrt -lxrt_coreutil -L$SDKTARGETSYSROOT/usr/lib --sysroot=$SDKTARGETSYSROOT -L$XILINX_VITIS/aietools/lib/aarch64.o -o host.exe 
 	cd ..
 	```
 

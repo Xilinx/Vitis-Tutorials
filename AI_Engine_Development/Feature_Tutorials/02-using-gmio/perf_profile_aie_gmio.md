@@ -147,7 +147,7 @@ The code to end profling and calculate performance is as follows:
     
 The code is guarded by macro `__TIME_STAMP__`. To use this method of profiling, define `__TIME_STAMP__` for g++ cross compiler in `sw/Makefile`:
 
-    CXXFLAGS += -std=c++14 -D__TIME_STAMP__ -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+    CXXFLAGS += -std=c++14 -D__TIME_STAMP__ -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
 To run it in hardware, use following make command to build hardware image:
 
@@ -288,7 +288,7 @@ For detailed usage about event API, refer to the *Versal ACAP AI Engine Programm
 
 The code is guarded by macro `__USE_EVENT_PROFILE__`. To use this method of profiling, define `__USE_EVENT_PROFILE__` for g++ cross compiler in `sw/Makefile`:
 
-    CXXFLAGS += -std=c++14 -D__USE_EVENT_PROFILE__ -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+    CXXFLAGS += -std=c++14 -D__USE_EVENT_PROFILE__ -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
     
 The commands to build and run in hardware is same as previously shown. The output in hardware is as follows:
 
