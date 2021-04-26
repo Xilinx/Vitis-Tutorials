@@ -14,8 +14,6 @@ TARGET   = hw_emu
 PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm
 XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 HOST_EXE = host.exe
-ROOTFS   = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 
-IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/Image 
 
 GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
@@ -34,27 +32,55 @@ VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}
 
 .PHONY: clean
 
+###
+# Guarding Checks. Do not modify.
+###
+check_defined = \
+	$(strip $(foreach 1,$1, \
+		$(call __check_defined,$1,$(strip $(value 2)))))
+
+__check_defined = \
+	$(if $(value $1),, \
+		$(error Undefined $1$(if $2, ($2))))
+
+guard-PLATFORM_REPO_PATHS:
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_2020210_1)
+
+guard-ROOTFS:
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2020.2/rootfs.ext4)
+
+guard-IMAGE:
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2020.2/Image)
+
+guard-CXX:
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+
+guard-SDKTARGETSYSROOT:
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+
+###
+
 all: ${XCLBIN} ${HOST_EXE} package
 
-aie: ${LIBADF}
+aie: guard-PLATFORM_REPO_PATHS ${LIBADF}
 ${LIBADF}: ${GRAPH}
 	${AIE_CMPL_CMD}
 
 aiesim: ${LIBADF}
 	${AIE_SIM_CMD}
 
-xclbin: ${XCLBIN}
+xclbin: guard-PLATFORM_REPO_PATHS ${XCLBIN}
 ${XCLBIN}: ${LIBADF} ${VPP_SPEC} ${XOS}
 	${VCC} -g -l --platform ${PLATFORM} ${XOS} ${LIBADF} -t ${TARGET} ${VPP_FLAGS} -o $@
 
-kernels: ${XOS}
+kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}: 
 	make -C pl_kernels/
-host: ${HOST_EXE}
+host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
 ${HOST_EXE}: sw/*.cpp
 	make -C sw/
 
-package: package_${TARGET}
+package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
 package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}  
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} \
 		--package.rootfs ${ROOTFS} \

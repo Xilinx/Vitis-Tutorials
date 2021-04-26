@@ -37,8 +37,8 @@ Software requirements include:
 
 ## Accessing the Tutorial Reference Files
 
-1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/SSR-FIR-Tutorial`.
-2. Navigate to the `Utils` directory, and type `source InitPythonPath` to have this directory in your path for Python libraries and executable search path.
+1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials.git`.
+2. Navigate to the `Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/Utils/` directory, and type `source InitPythonPath` to have this directory in your path for Python libraries and executable search path.
 
 You can now start the tutorial.
 
@@ -138,7 +138,19 @@ Input data samples are in general called **x** (blue squares), the coefficients 
 
 <img src="./Images/FIR_Equation.jpg" width=300><br>
 
-DSP experts may say that this equation represents a _correlation_ and not a _convolution_ which is the mathematical expression of the filtering operation. The easy answer may be to say that it is simply a question of coefficients ordering (and perhaps conjugation for complex coefficients). Regardless, this equation is the one that will be implemented in the AI Engine throughout this tutorial.
+DSP experts may say that this equation represents a _correlation_ and not a _convolution_ which is the mathematical expression of the filtering operation. The easy answer may be to say that it is simply a question of coefficients ordering (and perhaps conjugation for complex coefficients). 
+
+That's why you will always see at the beginning of the various _graph.h_ files the 2 lines:
+
+```C++
+std::vector<cint16> taps = std::vector<cint16>({
+  ...
+});
+
+std::vector<cint16> taps_aie(taps.rbegin(),taps.rend());
+```
+
+The first line is the taps vector definition in the correct order for a DSP expert, and the second line defines the vector that will be used in the AI Engine implementation as the same vector but in the reverse order.
 
 
 <a name="UtilsDirectory"></a>

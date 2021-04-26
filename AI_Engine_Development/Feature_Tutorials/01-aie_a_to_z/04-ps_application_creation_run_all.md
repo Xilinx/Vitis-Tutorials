@@ -12,7 +12,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 ### Step 1. Create a New Platform in the Bare-metal Domain
 
-1. Open the Vitis softwware platform 2020.2 in the same workspace directory as the previous step. Click ***File → New →  Platform Project***.
+1. Open the Vitis software platform 2020.2 in the same workspace directory as the previous step. Click ***File → New →  Platform Project***.
 
 2. Set the Platform Project Name to ***AIE_A-to-Z_pfm_vck190*** and click ***Next***.
 
@@ -73,19 +73,14 @@ There are two options to enable an AI Engine graph from a system:
 
   ![](images/ps_app_cfg2.png)
 
-11. When the PS is enabling the AI Engine graph as it is in this example, you also need to use the symbol ***_ _ PS_ENABLE_AIE_ _***.
-In the Symbols section under ARM v8 g++ compiler, add the symbol ***__PS_ENABLE_AIE _ _***.
-
-   ![](images/ps_app_cfg3.png)
-
-12. Build the A72 PS application (`A-to-Z_app`) .     
+11. Build the A72 PS application (`A-to-Z_app`) .     
 
 ### Step 3. Build the Full System
 
 1. Click ***simple_application_system.sprj***. Add the following options in the Packaging option box:
 
 ```
---package.ps_elf ../../A-to-Z_app/Debug/A-to-Z_app.elf,a72-0  --package.defer_aie_run
+--package.ps_elf ../../A-to-Z_app/Debug/A-to-Z_app.elf,a72-0 --package.defer_aie_run
 ```
 
   ![](images/package_option.png)

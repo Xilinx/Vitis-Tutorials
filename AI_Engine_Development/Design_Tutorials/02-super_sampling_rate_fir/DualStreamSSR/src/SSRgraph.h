@@ -32,7 +32,9 @@ std::vector<cint16> taps = std::vector<cint16>({
 	{  -273,  -198},{    22,    30},{    63,   194},{     0,   266}
 });
 
-	#define PHASE(N,NP) {taps[N],taps[N+NP],taps[N+2*NP],taps[N+3*NP]}
+	std::vector<cint16> taps_aie(taps.rbegin(),taps.rend());
+
+	#define PHASE(N,NP) {taps_aie[N],taps_aie[N+NP],taps_aie[N+2*NP],taps_aie[N+3*NP]}
 
 	std::vector<cint16> taps8p[8] = { PHASE(0,8), PHASE(1,8), PHASE(2,8), PHASE(3,8),
 		PHASE(4,8), PHASE(5,8), PHASE(6,8), PHASE(7,8) };
