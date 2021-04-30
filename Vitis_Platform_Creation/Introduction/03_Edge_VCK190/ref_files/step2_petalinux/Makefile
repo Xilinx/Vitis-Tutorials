@@ -1,4 +1,4 @@
-# Copyright 2020 Xilinx Inc.
+# Copyright 2021 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -40,16 +40,17 @@ main: get_xsa petalinux_proj petalinux_build
 get_xsa:
 	cd $(ROOT_DIR); cp ../step0_bootable_design/build/vivado/*.xsa .
 
+# update dtsi:
+# - update bootargs for ext4 rootfs
 update_dtsi:
 	@cp -f system-user.dtsi $(PETALINUX_DIR)/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi
 
 update_config:
 	# PetaLinux Config: Use EXT4 as rootfs format
 	echo "CONFIG_SUBSYSTEM_ROOTFS_EXT4=y" >> $(PETALINUX_CONFIG)
-	echo 'CONFIG_SUBSYSTEM_RFS_FORMATS="cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"' >> $(PETALINUX_CONFIG)
-	# PetaLinux Config: Use ZCU104 device tree
+	# echo 'CONFIG_SUBSYSTEM_RFS_FORMATS="cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"' >> $(PETALINUX_CONFIG)
+	# PetaLinux Config: Use VCK190 device tree
 	echo 'CONFIG_SUBSYSTEM_MACHINE_NAME="versal-vck190-reva-x-ebm-02-reva"' >> $(PETALINUX_CONFIG)
-	#echo 'CONFIG_YOCTO_MACHINE_NAME="zcu104-zynqmp"' >> $(PETALINUX_CONFIG)
 	# PetaLinux Config: Customize Bootargs
 	# echo 'CONFIG_SUBSYSTEM_BOOTARGS_AUTO=y' >> $(PETALINUX_CONFIG)
 	# echo 'CONFIG_SUBSYSTEM_USER_CMDLINE="console=ttyAMA0 earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk1p2 rw rootwait rootfs=ext4"' >> $(PETALINUX_CONFIG)
@@ -57,7 +58,8 @@ update_config:
 
 update_rootfs_config:
 	# PetaLinux Rootfs: Enable XRT
-	echo 'CONFIG_packagegroup-petalinux-xrt=y' >> $(PETALINUX_ROOTFS_CONFIG)
+	# echo 'CONFIG_packagegroup-petalinux-xrt=y' >> $(PETALINUX_ROOTFS_CONFIG)
+	echo 'CONFIG_xrt=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	#echo 'CONFIG_xrt-dev=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	# PetaLinux Rootfs: Enable DNF
 	echo 'CONFIG_dnf=y' >> $(PETALINUX_ROOTFS_CONFIG)
@@ -65,7 +67,7 @@ update_rootfs_config:
 	# PetaLinux Rootfs: Enable packages for EoU
 	echo 'CONFIG_e2fsprogs-resize2fs=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	echo 'CONFIG_parted=y' >> $(PETALINUX_ROOTFS_CONFIG)
-	echo 'CONFIG_auto-login=y' >> $(PETALINUX_ROOTFS_CONFIG)
+	# echo 'CONFIG_auto-login=y' >> $(PETALINUX_ROOTFS_CONFIG)
 
 petalinux_proj:
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template versal --force -n $(PETALINUX_PROJ_NAME)
