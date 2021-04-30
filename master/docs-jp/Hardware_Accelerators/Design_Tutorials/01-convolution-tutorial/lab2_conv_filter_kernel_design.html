@@ -1,4 +1,4 @@
-﻿
+
 
 
 <!DOCTYPE HTML>
@@ -327,7 +327,7 @@
             
             
               
-            
+                 
             
               <p class="caption"><span class="caption-text">English version</span></p>
 <ul>
@@ -352,8 +352,7 @@
 </ul>
 <p class="caption"><span class="caption-text">AI エンジン開発 (英語版)</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/README.html">Design Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/README.html#feature-tutorials">Feature Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AI_Engine_Development/README.html">AI Engine Development</a></li>
 </ul>
 <p class="caption"><span class="caption-text">プラットフォーム作成チュートリアル</span></p>
 <ul>
@@ -374,7 +373,7 @@
 			
 			<p class="caption"><span class="caption-text">This Page</span></p>
 				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../_sources/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/lab2_conv_filter_kernel_design.md.txt"
+				  <li class="toctree-l1"><a href="../../../_sources/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/lab1_app_introduction_performance_estimation.md.txt"
 						rel="nofollow">Show Source</a></li>
 				</ul>
           
@@ -382,7 +381,6 @@
         
       </div>
     </nav>
-
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
@@ -439,16 +437,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p align="right"><a href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">English</a> | <a>日本語</a></p>
-﻿<table class="sphinxhide">
- <tr>
+  <p align="right"><a href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">English</a> | 日本語</p>
+﻿<table class="sphinxhide"> <tr>
    <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">2020.1 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
- </tr>
- <tr>
- <td>
- </td>
- </tr>
-</table>
+ </tr></table>
 <h1>2-D ビデオたたみ込みフィルター用のハードウェア カーネル モジュールの設計と解析</h1><p>この演習では、たたみ込みフィルター モジュールの設計、パフォーマンス解析、およびハードウェア リソース使用率の解析について説明します。ボトムアップ アプローチの後に、まずハードウェア カーネルを開発し、パフォーマンスを解析してから、ホスト アプリケーションと統合します。Vitis HLS を使用して、カーネルのパフォーマンスをビルドして見積もります。</p>
 <div class="section" id="d">
 <h1>2-D たたみ込みフィルターのインプリメンテーション<a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h1>
@@ -508,7 +500,7 @@ Memory Accesses to Write to <span class="nv">Output</span>           <span class
 Total Memory <span class="nv">Accesses</span>                       <span class="o">=</span> <span class="m">451</span>
 </pre></div>
 </div>
-<p>純粋なソフトウェア インプリメンテーションでは、キャッシュによってこれらのアクセスの多くが高速になる可能性があるのに、大量のメモリ アクセスがパフォーマンスのボトルネックになります。しかし、FPGA 上で設計すると、効率的にデータが移動でき、アクセス方式を容易に構築できます。主な利点の 1 つは、大量のオンチップ メモリ帯域幅 (分散メモリおよびブロック メモリ) が使用可能になり、この帯域幅のカスタム コンフィギュレーションを選択できるようになる点です。このカスタム コンフィギュレーションを選択すると、特定のアルゴリズム用にカスタマイズされたオンデマンド キャッシュ アーキテクチャを作成できます。次のセクションでは、<code class="docutils literal notranslate"><span class="pre">Window2D</span></code> ブロックのデザインについて詳しく説明します。</p>
+<p>純粋なソフトウェア インプリメンテーションでは、キャッシュによってこれらのアクセスの多くが高速になる可能性があるのに、大量のメモリ アクセスがパフォーマンスのボトルネックになります。ただし、FPGA 上で設計すると、効率的にデータが移動でき、アクセス方式を容易に構築できます。主な利点の 1 つは、大量のオンチップ メモリ帯域幅 (分散メモリおよびブロック メモリ) が使用可能になり、この帯域幅のカスタム コンフィギュレーションを選択できるようになる点です。このカスタム コンフィギュレーションを選択すると、特定のアルゴリズム用にカスタマイズされたオンデマンド キャッシュ アーキテクチャを作成できます。次のセクションでは、<code class="docutils literal notranslate"><span class="pre">Window2D</span></code> ブロックのデザインについて詳しく説明します。</p>
 <div class="section" id="window2d">
 <h3>Window2D: ライン バッファーおよびウィンドウ バッファー<a class="headerlink" href="#window2d" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Window2D</span></code> ブロックは基本的に「ライン バッファー」と「ウィンドウ」の 2 つの基本ブロックから構築されます。</p>
@@ -574,7 +566,7 @@ Total Memory <span class="nv">Accesses</span>                       <span class=
 </ul>
 <hr class="docutils" />
 <p align="center"><b>次の演習モジュール: <a href="./lab3_build_app_kernel.html">2 D たたみ込みカーネルとホスト アプリケーションのビルド</a><p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></b></p>
-<p align="center"><sup>この資料は 2021 年 2 月 8 日時点の表記バージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。
+<p align="center"><sup>この資料は 2021 年 4 月 23 日時点の表記バージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。
 日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。</sup></p></div>
 </div>
 
