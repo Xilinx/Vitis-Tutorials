@@ -96,29 +96,33 @@ enable_beta_device xcvc*
 
 ***For a custom board, platform developers need to configure CIPS and NOC for processor settings and DDR settings. Please complete the following testings before going to next steop.***
 
-### Custom Board Considerations
+### Custom Board Additional Steps
+
+#### Custom Board Considerations
 
 When designing platform for a custom board, user needs to setup these parameters by themselves.
 
 On Vivado project side, please
 
-- Create a design based on your silicon model rather than board type.
+- Create a design based on your silicon model rather than board type. You can start from scratch, or update device after creating a design fromm Versal Extensible Platform Example.
 - Make sure clock input parameters match hardware setup.
 - Configure PS Peripherals: UART, SD Card, QSPI, etc.
 - Write pinout location in XDC file, including clock, reset, DDR, etc.
 
 For PetaLinux design, please
 
-- Continue to use default ***MACHINE_NAME***
-- Write board specific device tree in ***system_user.dtsi*** to enable peripherals like Ethernet, EEPROM, etc.
+- Use default ***MACHINE_NAME***
+- Update device tree in ***system_user.dtsi*** for your custom peripherals on the board, like Ethernet, EEPROM, etc.
 
 
-### (Optional) Generate PDI (Device Image) and XSA
+### (Optional) Go through Implementation and Device Image Generation
+
+If the custom platform is created from scratch, it's recommended to run through implementation and device image generation to find errors in early stage. It's not required for platform creation, but it can reduce issues you find in the last platform validation stage.
+
+To run this step, please make sure **This project is a Vitis Platform project** is **NOT** selected during platform creation.
 
 <details>
   <summary><b>Show Detailed Steps</b></summary>
-
-This step can be run if you created your custom hardware design from scratch rather than from the Vivado example design. You didn't select "This project is a Vitis Platform project" during platform creation.
 
 1. Validate the Block Design
 
@@ -155,6 +159,10 @@ This step can be run if you created your custom hardware design from scratch rat
 </details>
 
 ### (Optional) Validate PDI on Hardware
+
+If the custom platform is created from scratch, it's recommended to test the device image (PDI) on hardware to make sure the device initialization configuration is set correctly. This is not a step required for platform creation, but it can reduce issues you find in the last platform validation stage.
+
+To run this step, please make sure **This project is a Vitis Platform project** is **NOT** selected during platform creation.
 
 <details>
   <summary><b>Show Detailed Steps</b></summary>
@@ -224,12 +232,14 @@ If the PDI can't load successfully, please check the CIPS configruation.
 
 ### (Optional) Create PetaLinux Project
 
+If the custom platform is created from scratch, it's recommended to test building the PetaLinux image and run on hardware before turning this project into a platform project. This is not a step required for platform creation, but it can reduce issues you find in the step 2 - software preparation.
+
+To run this step, please make sure **This project is a Vitis Platform project** is **NOT** selected during platform creation.
+
 <details>
   <summary><b>Show Detailed Steps</b></summary>
 
-In a custom design, if you designed your own CIPS, NOC and AI Engine connection and properties, it's recommended to make sure this hardware design can boot Linux properly before going forward. 
-
-For a quick verification in this step, we'll use VCK190 pre-built device tree. It helps to setup peripheral properties, such as Ethernet MAC phy address, etc. These settings are specific to each board. It needs BSP engineers to develop during board bring up phase for custom boards.
+For a quick demonstration in this step, we'll use VCK190 pre-built device tree. It helps to setup peripheral properties, such as Ethernet MAC phy address, etc. These settings are specific to each board. It needs BSP engineers to develop during board bring up phase for custom boards.
 
 1. Create PetaLinux Project with XSA
 
@@ -261,20 +271,15 @@ For a quick verification in this step, we'll use VCK190 pre-built device tree. I
 
    Output ***BOOT.BIN***, ***boot.scr*** and ***image.ub*** are located in ***images/linux*** directory.
 
-</details>
 
+4. Validate PetaLinux image on Board
 
-### (Optional) Validate PetaLinux image on Board
-
-<details>
-  <summary><b>Show Detailed Steps</b></summary>
-
-1. Copy ***BOOT.BIN***, ***image.ub*** and ***boot.scr*** from **build/petalinux/images/linux** directory to SD card (fat32 partition).
-2. Insert SD card to VCK190, set boot mode to SD boot (0001) and boot the board.
-3. Make sure Linux boot successfully. Login with username: root, password: root
+   - Copy ***BOOT.BIN***, ***image.ub*** and ***boot.scr*** from **build/petalinux/images/linux** directory to SD card (fat32 partition).
+   - Insert SD card to VCK190, set boot mode to SD boot (0001) and boot the board.
+   - Make sure Linux boot successfully. Login with username: root, password: root
 
 <details>
-  <summary><b>Show Log</b></summary>
+  <summary><b>Show Boot Log</b></summary>
   
 ```
 root@petalinux:~# [391.115631]****************************************
@@ -456,8 +461,11 @@ petalinux login:
 
 ```
 </details>
+<!--For boot log-->
 
 </details>
+<!--For Create PetaLinux Project-->
+
 
 ### Fast Track
 
