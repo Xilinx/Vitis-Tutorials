@@ -1,4 +1,4 @@
-﻿
+
 
 
 <!DOCTYPE HTML>
@@ -325,9 +325,7 @@
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
             
             
-            
-              
-            
+                 
             
               <p class="caption"><span class="caption-text">English version</span></p>
 <ul>
@@ -352,8 +350,7 @@
 </ul>
 <p class="caption"><span class="caption-text">AI エンジン開発 (英語版)</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/README.html">Design Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/README.html#feature-tutorials">Feature Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AI_Engine_Development/README.html">AI Engine Development</a></li>
 </ul>
 <p class="caption"><span class="caption-text">プラットフォーム作成チュートリアル</span></p>
 <ul>
@@ -374,7 +371,7 @@
 			
 			<p class="caption"><span class="caption-text">This Page</span></p>
 				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../_sources/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.md.txt"
+				  <li class="toctree-l1"><a href="../../../_sources/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/lab1_app_introduction_performance_estimation.md.txt"
 						rel="nofollow">Show Source</a></li>
 				</ul>
           
@@ -382,6 +379,7 @@
         
       </div>
     </nav>
+
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
@@ -420,7 +418,7 @@
     
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>ビデオたたみ込みフィルター アプリケーションのアクセラレーション</li>
+      <li>アクセラレーションの概要</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -439,15 +437,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p align="right"><a href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">English</a> | <a>日本語</a></p>
-<table class="sphinxhide"> <tr>
+  <p align="right"><a href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">English</a> | 日本語</p>
+﻿<table class="sphinxhide"> <tr>
    <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">2020.1 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
- </tr>
-</table><div class="section" id="id1">
-<h1>ビデオたたみ込みフィルター アプリケーションのアクセラレーション<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>このチュートリアルでは、ザイリンクス Alveo データセンター アクセラレータ カードを使用してアクセラレーションされた計算量の多いアプリケーションについて説明します。FPGA 上で実行する特定のカーネルを設計し、パフォーマンスのためのホスト側アプリケーションの最適化について簡単に説明します。カーネルはスループットが最大になるように設計され、ホスト アプリケーションは、ホストと FPGA カードの間でデータが効率的に転送されるように最適化されます。ホスト アプリケーションは、複数のカーネル呼び出しに対処できるようにデータ転送を重複させて、データ移動の遅延をなくします。このチュートリアルでは、<strong>Vitis HLS を使用してビルド可能なハードウェア カーネルのパフォーマンスを簡単に見積もる方法と、その見積もりがどれくらい正確で実際のハードウェア パフォーマンスに近いか</strong>についても説明します。</p>
-<div class="section" id="id2">
-<h2>アクセラレーションの概要<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+ </tr></table>
+<h1>ビデオたたみ込みフィルター アプリケーションのアクセラレーション</h1><p>このチュートリアルでは、ザイリンクス Alveo データセンター アクセラレータ カードを使用してアクセラレーションされた計算量の多いアプリケーションについて説明します。FPGA 上で実行する特定のカーネルを設計し、パフォーマンスのためのホスト側アプリケーションの最適化について簡単に説明します。カーネルはスループットが最大になるように設計され、ホスト アプリケーションは、ホストと FPGA カードの間でデータが効率的に転送されるように最適化されます。ホスト アプリケーションは、複数のカーネル呼び出しに対処できるようにデータ転送を重複させて、データ移動の遅延をなくします。このチュートリアルでは、<strong>Vitis HLS を使用してビルド可能なハードウェア カーネルのパフォーマンスを簡単に見積もる方法と、その見積もりがどれくらい正確で実際のハードウェア パフォーマンスに近いか</strong>についても説明します。</p>
+<div class="section" id="id1">
+<h1>アクセラレーションの概要<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>1 つ目の演習は、ビデオ フィルターをザイリンクス Alveo アクセラレータ カードに移植することで達成可能なアクセラレーション パフォーマンスをすばやく体験できるように設計されています。Alveo シリーズ カードは、データセンター アプリケーションをアクセラレーションするために設計されています。ただし、このチュートリアルはいくつかの簡単な変更を加えると、ほかのアクセラレータ カードにも適用できます。</p>
 <p>この最初の演習で実行する手順は次のとおりです。</p>
 <ul class="simple">
@@ -456,19 +452,36 @@
 </ul>
 <p>この演習では、CPU のパフォーマンスと比較すると、かなりパフォーマンスを向上できることを示します。このチュートリアルの次の演習では、2D たたみ込みカーネルとホスト側アプリケーションのさまざまな最適化および設計手法を使用して、このようなパフォーマンスを達成する方法について説明します。</p>
 <div class="section" id="github-vitis">
-<h3>GitHub リポジトリのクローンおよび Vitis ツールの設定<a class="headerlink" href="#github-vitis" title="Permalink to this headline">¶</a></h3>
+<h2>GitHub リポジトリのクローンおよび Vitis ツールの設定<a class="headerlink" href="#github-vitis" title="Permalink to this headline">¶</a></h2>
+<p>このチュートリアルを実行するには、次の手順に従って git リポジトリのクローンを作成し、圧縮ファイルをダウンロードして抽出する必要があります。</p>
+<div class="section" id="git-repo">
+<h3>git repo のクローン<a class="headerlink" href="#git-repo" title="Permalink to this headline">¶</a></h3>
 <p>次のコマンドを使用して、リポジトリをクローンします。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/Xilinx/Vitis-Tutorials.git
 </pre></div>
 </div>
+</div>
+<div class="section" id="id2">
+<h3>大容量ファイルのコピーおよび抽出<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>次のたたみ込みチュートリアル ディレクトリに大きなファイルをコピーして抽出します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /VITIS_TUTORIAL_REPO_PATH/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial
+wget https://japan.xilinx.com/bin/public/openDownload?filename<span class="o">=</span>conv_tutorial_files.tar.gz -O conv_tutorial_files.tar.gz
+tar -xvzf  conv_tutorial_files.tar.gz
+</pre></div>
+</div>
+<p><strong>注記</strong>: VITIS_TUTORIAL_REPO_PATH は、git repo のクローンが作成されたローカル ディレクトリ パスです。</p>
+</div>
+<div class="section" id="vitis">
+<h3>Vitis ツールの設定<a class="headerlink" href="#vitis" title="Permalink to this headline">¶</a></h3>
 <p>ローカル インストールごとに、次のコマンドを使用して、アプリケーション ビルドおよびランタイム環境を設定します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;XILINX_VITIS_INSTALL_PATH&gt;/settings64.sh
 <span class="nb">source</span> &lt;XRT_INSTALL_PATH&gt;/setup.sh
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="id3">
-<h3>アプリケーション パフォーマンスのベースライン<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h2>アプリケーション パフォーマンスのベースライン<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>ソフトウェア アプリケーションは、解像度 1920x1080 の高解像度 (HD) ビデオフレーム/画像を処理します。一連の画像にたたみ込みを実行し、パフォーマンス結果のサマリを表示します。これは、ベースライン ソフトウェアのパフォーマンスを測定するために使用されます。次のように、チュートリアルを指定する環境変数を repo のパスを基準に設定してください。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CONV_TUTORIAL_DIR</span><span class="o">=</span>/VITIS_TUTORIAL_REPO_PATH/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial
 </pre></div>
@@ -498,9 +511,9 @@ CPU  Throughput   :    <span class="m">12</span>.7112 MB/s
 </div>
 </div>
 <div class="section" id="fpga">
-<h2>FPGA アクセラレーション アプリケーションの実行<a class="headerlink" href="#fpga" title="Permalink to this headline">¶</a></h2>
+<h1>FPGA アクセラレーション アプリケーションの実行<a class="headerlink" href="#fpga" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id4">
-<h3>ホスト アプリケーションの起動<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h2>ホスト アプリケーションの起動<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>FPGA アクセラレーションされたビデオたたみ込みフィルターを使用するアプリケーションを起動します。アプリケーションは、実際の FPGA カードで実行されます (システム実行とも呼ばれます)。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>
 make run
@@ -536,13 +549,12 @@ FPGA Speedup      :    <span class="m">68</span>.1764 x
 </div>
 </div>
 <div class="section" id="id5">
-<h3>結果<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h2>結果<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>ホスト アプリケーション コンソールの出力から、FPGA アクセラレーション カーネルが 68x の係数で CPU のみのインプリメンテーションを上回ることがわかります。CPU よりもパフォーマンスが大きく向上します。次の演習では、このパフォーマンスによって 1080p の解像度で 3 つ以上の HD ビデオ チャンネルを並列処理する方法を説明します。このチュートリアルでは、C++ で記述されたカーネルとホスト アプリケーションをビルドして、このようなパフォーマンス向上を達成する方法について説明します。  ホスト アプリケーションは、OpenCL API とザイリンクス ランタイム (XRT) を使用して、このカスタム ビルド ハードウェア カーネルの計算能力を効果的に引き出します。</p>
 <hr class="docutils" />
 <p align="center"><b>次の演習モジュール: <a href="./lab1_app_introduction_performance_estimation.html">ビデオたたみ込みフィルター: 概要とパフォーマンス見積もり</a><p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></b></p>
-<p align="center"><sup>この資料は 2021 年 2 月 8 日時点の表記バージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。
+<p align="center"><sup>この資料は 2021 年 4 月 23 日時点の表記バージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。
 日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。</sup></p></div>
-</div>
 </div>
 
 
