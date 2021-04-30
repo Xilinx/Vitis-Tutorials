@@ -115,7 +115,7 @@ For PetaLinux design, please
 - Update device tree in ***system_user.dtsi*** for your custom peripherals on the board, like Ethernet, EEPROM, etc.
 
 
-### (Optional) Go through Implementation and Device Image Generation
+#### (Optional) Go through Implementation and Device Image Generation
 
 If the custom platform is created from scratch, it's recommended to run through implementation and device image generation to find errors in early stage. It's not required for platform creation, but it can reduce issues you find in the last platform validation stage.
 
@@ -158,7 +158,7 @@ To run this step, please make sure **This project is a Vitis Platform project** 
 
 </details>
 
-### (Optional) Validate PDI on Hardware
+#### (Optional) Validate PDI on Hardware
 
 If the custom platform is created from scratch, it's recommended to test the device image (PDI) on hardware to make sure the device initialization configuration is set correctly. This is not a step required for platform creation, but it can reduce issues you find in the last platform validation stage.
 
@@ -230,7 +230,7 @@ If the PDI can't load successfully, please check the CIPS configruation.
 </details>
 
 
-### (Optional) Create PetaLinux Project
+#### (Optional) Create PetaLinux Project
 
 If the custom platform is created from scratch, it's recommended to test building the PetaLinux image and run on hardware before turning this project into a platform project. This is not a step required for platform creation, but it can reduce issues you find in the step 2 - software preparation.
 
