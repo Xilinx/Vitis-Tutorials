@@ -73,6 +73,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 set list_projs [get_projects -quiet]
 if { $list_projs eq "" } {
    create_project custom_pfm_vck190 custom_pfm_vck190 -part xcvc1902-vsva2197-2MP-e-S
+   set_property platform.extensible true [current_project]
    set_property BOARD_PART xilinx.com:vck190:part0:2.0 [current_project]
 }
 
