@@ -27,18 +27,18 @@ platform create -name $platform_name -desc "A custom platform VCK190 platform" -
 # AIE domain
 domain create -name aiengine -os aie_runtime -proc ai_engine
 # AIE domain emulation
-domain config -pmcqemu-args ./qemu/aie/pmc_args.txt
-domain config -qemu-args ./qemu/aie/qemu_args.txt
-domain config -qemu-data ./boot
+# domain config -pmcqemu-args ./qemu/aie/pmc_args.txt
+# domain config -qemu-args ./qemu/aie/qemu_args.txt
+# domain config -qemu-data ./boot
 # Linux domain
-domain create -name xrt -proc psv_cortexa72 -os linux -arch {64-bit} -runtime {ocl} -image {./image}  -bootmode {sd}
+domain create -name xrt -proc psv_cortexa72 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./image}  -bootmode {sd}
 domain active xrt
 domain config -boot {../step2_petalinux/build/petalinux/images/linux}
-domain config -bif ./boot/linux.bif
+domain config -generate-bif
 # Linux domain emulation
 # domain config -pmcqemu-args ./qemu/lnx/pmc_args.txt
 # domain config -qemu-args ./qemu/lnx/qemu_args.txt
-domain config -qemu-data ./boot
+# domain config -qemu-data ./boot
 
 
 # Standalone Domain
