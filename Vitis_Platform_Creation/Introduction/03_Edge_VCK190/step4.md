@@ -44,7 +44,7 @@ We can verify hardware configuration (clocks, memory) and software configuration
    Basic Platform Information
    ==========================
    Platform:           vck190_custom
-   File:               /scratch/rickys/work/vck190_platform/merge/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
+   File:               .../03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
    Description:        
    A custom platform VCK190 platform
       
@@ -52,11 +52,11 @@ We can verify hardware configuration (clocks, memory) and software configuration
    =====================================
    Hardware Platform (Shell) Information
    =====================================
-   Vendor:                           xilinx.com
-   Board:                            xilinx_vck190_base
-   Name:                             xilinx_vck190_base
-   Version:                          1.0
-   Generated Version:                2020.2
+   Vendor:                           xilinx
+   Board:                            name
+   Name:                             name
+   Version:                          0.0
+   Generated Version:                2021.1
    Hardware:                         1
    Software Emulation:               1
    Hardware Emulation:               1
@@ -64,25 +64,24 @@ We can verify hardware configuration (clocks, memory) and software configuration
    FPGA Family:                      versal
    FPGA Device:                      xcvc1902
    Board Vendor:                     xilinx.com
-   Board Name:                       xilinx.com:vck190_es:1.1
-   Board Part:                       xcvc1902-vsva2197-2MP-e-S-es1
+   Board Name:                       xilinx.com:vck190:2.2
+   Board Part:                       xcvc1902-vsva2197-2MP-e-S
 
    =================
    Clock Information
    =================
    Default Clock Index: 0
    Clock Index:         0
-      Frequency:         149.998499
+      Frequency:         200.000000
    Clock Index:         1
-      Frequency:         99.999000
+      Frequency:         100.000000
    Clock Index:         2
-      Frequency:         299.996999
+      Frequency:         300.000000
 
    ==================
    Memory Information
    ==================
    Bus SP Tag: DDR
-
    =============================
    Software Platform Information
    =============================
@@ -115,6 +114,7 @@ We can verify hardware configuration (clocks, memory) and software configuration
       Boot Image QEMU Dev Tree:  
    Supported Runtimes:
    Runtime: OpenCL
+
 
 
   ```
@@ -387,4 +387,4 @@ Congratulations now you've created a custom platform that PL acceleration kernel
 
 [In next chapter](./faq.md), we'll list some frequently encountered problems and frequently asked questions. Please take a look if you'd like to understand more of platform creation.
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
