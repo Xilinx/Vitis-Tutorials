@@ -17,6 +17,6 @@
 / {
 	chosen {
 		stdout-path = "serial0:115200";
-        bootargs = "console=ttyAMA0 earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk1p2 rw rootwait rootfs=ext4";
+        bootargs = "console=ttyAMA0 earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait rootfs=ext4";
 	};
 };
