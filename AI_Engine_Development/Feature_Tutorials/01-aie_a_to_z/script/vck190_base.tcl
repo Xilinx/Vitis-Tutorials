@@ -68,11 +68,12 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # If there is no project opened, this script will create a
 # project, but make sure you do not have an existing project
-# <./myproj/project_1.xpr> in the current working folder.
+# <./custom_pfm_vck190/custom_pfm_vck190.xpr> in the current working folder.
 
 set list_projs [get_projects -quiet]
 if { $list_projs eq "" } {
-   create_project project_1 myproj -part xcvc1902-vsva2197-2MP-e-S
+   create_project custom_pfm_vck190 custom_pfm_vck190 -part xcvc1902-vsva2197-2MP-e-S
+   set_property platform.extensible true [current_project]
    set_property BOARD_PART xilinx.com:vck190:part0:2.0 [current_project]
 }
 
@@ -418,6 +419,7 @@ proc create_root_design { parentCell } {
   # Create instance: versal_cips_0, and set properties
   set versal_cips_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:versal_cips:2.1 versal_cips_0 ]
   set_property -dict [ list \
+   CONFIG.PS_BOARD_INTERFACE {cips_fixed_io}  \
    CONFIG.PMC_CRP_PL0_REF_CTRL_ACT_FREQMHZ {99.999001} \
    CONFIG.PMC_CRP_PL0_REF_CTRL_DIVISOR0 {12} \
    CONFIG.PMC_CRP_PL0_REF_CTRL_FREQMHZ {100} \

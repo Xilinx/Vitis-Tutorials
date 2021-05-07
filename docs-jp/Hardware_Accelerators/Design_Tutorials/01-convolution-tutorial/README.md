@@ -1,11 +1,11 @@
-<p align="right"><a href="../../../../README.md">English</a> | <a>日本語</a></p>
-<table class="sphinxhide">
+<p align="right"><a href="/../../../../README.md">English</a> | 日本語</p>
+﻿<table class="sphinxhide">
 
  <tr>
    <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1><a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">2020.1 Vitis アプリケーション アクセラレーション開発フロー チュートリアル</a></td>
  </tr>
-</table>
 
+</table>
 # ビデオたたみ込みフィルター アプリケーションのアクセラレーション
 
 このチュートリアルでは、ザイリンクス Alveo データセンター アクセラレータ カードを使用してアクセラレーションされた計算量の多いアプリケーションについて説明します。FPGA 上で実行する特定のカーネルを設計し、パフォーマンスのためのホスト側アプリケーションの最適化について簡単に説明します。カーネルはスループットが最大になるように設計され、ホスト アプリケーションは、ホストと FPGA カードの間でデータが効率的に転送されるように最適化されます。ホスト アプリケーションは、複数のカーネル呼び出しに対処できるようにデータ転送を重複させて、データ移動の遅延をなくします。このチュートリアルでは、**Vitis HLS を使用してビルド可能なハードウェア カーネルのパフォーマンスを簡単に見積もる方法と、その見積もりがどれくらい正確で実際のハードウェア パフォーマンスに近いか**についても説明します。
@@ -23,11 +23,29 @@
 
 ### GitHub リポジトリのクローンおよび Vitis ツールの設定
 
+このチュートリアルを実行するには、次の手順に従って git リポジトリのクローンを作成し、圧縮ファイルをダウンロードして抽出する必要があります。
+
+#### git repo のクローン
+
 次のコマンドを使用して、リポジトリをクローンします。
 
 ```bash
 git clone https://github.com/Xilinx/Vitis-Tutorials.git
 ```
+
+#### 大容量ファイルのコピーおよび抽出
+
+次のたたみ込みチュートリアル ディレクトリに大きなファイルをコピーして抽出します。
+
+```bash
+cd /VITIS_TUTORIAL_REPO_PATH/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial
+wget https://japan.xilinx.com/bin/public/openDownload?filename=conv_tutorial_files.tar.gz -O conv_tutorial_files.tar.gz
+tar -xvzf  conv_tutorial_files.tar.gz
+```
+
+**注記**: VITIS_TUTORIAL_REPO_PATH は、git repo のクローンが作成されたローカル ディレクトリ パスです。
+
+#### Vitis ツールの設定
 
 ローカル インストールごとに、次のコマンドを使用して、アプリケーション ビルドおよびランタイム環境を設定します。
 
@@ -44,7 +62,7 @@ source <XRT_INSTALL_PATH>/setup.sh
 export CONV_TUTORIAL_DIR=/VITIS_TUTORIAL_REPO_PATH/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial
 ```
 
-**VITIS\_TUTORIAL\_REPO\_PATH** は、クローン後にユーザーが配置した git repo のローカル パスです。
+**VITIS_TUTORIAL_REPO_PATH** は、クローン後にユーザーが配置した git repo のローカル パスです。
 
 **注記**: このチュートリアルのすべての演習で `CONV_TUTORIAL_DIR` 変数が正しく設定されるようにしてください。
 
@@ -119,7 +137,6 @@ FPGA Speedup      :    68.1764 x
 
 ---------------------------------------
 
-
 <p align="center"><b>次の演習モジュール: <a href="./lab1_app_introduction_performance_estimation.md">ビデオたたみ込みフィルター: 概要とパフォーマンス見積もり</a><p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></b></p>
-<p align="center"><sup>この資料は 2021 年 2 月 8 日時点の表記バージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。
+<p align="center"><sup>この資料は 2021 年 4 月 23 日時点の表記バージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。
 日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。</sup></p>

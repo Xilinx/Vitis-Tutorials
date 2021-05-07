@@ -111,9 +111,8 @@ host: guard-CXX guard-SDKTARGETSYSROOT
 ##################################################################################################
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS 
-ifeq (${TARGET},hw_emu)
 	cd ./sw
-	v++ -p -t hw_emu \
+	v++ -p -t ${TARGET} \
 		-f ${BASE_PLATFORM} \
 		--package.rootfs=${ROOTFS} \
 		--package.image_format=ext4 \
@@ -122,24 +121,11 @@ ifeq (${TARGET},hw_emu)
 		--package.defer_aie_run \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
 	@echo "COMPLETE: hw_emu package created."
-else
-	cd ./sw && \
-	v++ -p -t hw \
-		-f ${BASE_PLATFORM} \
-		--package.rootfs=${ROOTFS} \
-		--package.image_format=ext4 \
-		--package.boot_mode=sd \
-		--package.kernel_image=${IMAGE} \
-		--package.defer_aie_run \
-		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
-	@echo "COMPLETE: hw package created."
-endif
 ###################################################################################################
 
 ###########################################################################
 # If the target is for HW_EMU, launch the emulator
-# If the target is for HW, you'll have to follow the Confluence page for
-# running on a board farm system.
+# If the target is for HW, you'll have to load it onto an sd_card for the device
 run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw
