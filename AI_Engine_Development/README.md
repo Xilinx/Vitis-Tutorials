@@ -82,6 +82,11 @@ The methodology for developing optimized accelerated applications is comprised o
  <td>
 This tutorial demonstrates how to debug a multi-processor application using the Versal ACAP AI Engines, using a beamformer example design. The tutorial illustrates functional debug and performance level debug techniques.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AI Engine DSP Library and Model Composer Tutorial</a></td>
+ <td>
+This tutorial shows how to design AI Engine applications using Model Composer. This set of blocksets for Simulink is used to demonstrate how easy it is to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>

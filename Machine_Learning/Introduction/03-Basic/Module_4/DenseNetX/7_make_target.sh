@@ -30,8 +30,8 @@ echo "  Copied target template to target folder"
 
 
 # copy elf to target folder
-cp ${COMPILE}/*.elf ${TARGET}/model_dir/.
-echo "  Copied elf file(s) to target folder"
+cp ${COMPILE}/*.xmodel ${TARGET}/model_dir/.
+echo "  Copied xmodel file(s) to target folder"
 
 
 mkdir -p ${TARGET}/images

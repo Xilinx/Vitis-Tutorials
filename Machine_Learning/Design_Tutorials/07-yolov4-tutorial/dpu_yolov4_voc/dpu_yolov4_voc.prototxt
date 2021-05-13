@@ -13,10 +13,10 @@ model {
   yolo_v3_param {
     num_classes: 20
     anchorCnt: 3
-    layer_name: "135"
-    layer_name: "146"
-    layer_name: "157"
-    conf_threshold: 0.005
+    layer_name: "133"
+    layer_name: "144"
+    layer_name: "155"
+    conf_threshold: 0.3
     nms_threshold: 0.45   
 	biases: 142
     biases: 110

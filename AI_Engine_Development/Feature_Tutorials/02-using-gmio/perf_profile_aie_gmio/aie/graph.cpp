@@ -15,7 +15,7 @@ limitations under the License.
 #include <unistd.h>
 #include <fstream>
 #if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
-    #include "cardano/cardano_api/XRTConfig.h"
+    #include "adf/adf_api/XRTConfig.h"
     #include "experimental/xrt_kernel.h"
     #include <chrono>
     #include <ctime>

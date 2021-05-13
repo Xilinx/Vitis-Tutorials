@@ -16,4 +16,4 @@
 # reformat data for evaluation function
 sed -i 's/images\//''/g' yolov4_quantized/caffe_result_quant.txt ;
 sed -i 's/.jpg//g' yolov4_quantized/caffe_result_quant.txt ;
-python  scripts/evaluation.py -mode detection -detection_use_07_metric True  -gt_file model_data/2007_test_gt.txt -result_file yolov4_quantized/caffe_result_quant.txt -detection_iou 0.5 -detection_thresh 0.005; 
+python  scripts/evaluation.py -mode detection -detection_use_07_metric True  -gt_file voc/2007_test_gt.txt -result_file yolov4_quantized/caffe_result_quant.txt -detection_iou 0.5 -detection_thresh 0.005; 
