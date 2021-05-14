@@ -128,7 +128,7 @@ Click the **AI Engine** section. This reveals see four subsections:
 - Tools
 - User-Defined functions
 
-6. Click the **DSP** sub-section and drag and drop  the **AIE FIR Filter** block in the canvas as shown in the following figure.
+6. Click the **DSP** sub-section and drag-and-drop  the **AIE FIR Filter** block in the canvas as shown in the following figure.
 
 ![](Images/Image_007.png)
 
