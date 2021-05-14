@@ -48,7 +48,7 @@ private:
     {    14 ,  -121 } , {   -21 ,    26 } , {   -83 ,    21 } , {   -54 ,   -21 }
     });
 
-    std::vector<cint16> taps_aie(taps.rbegin(),taps.rend());
+    std::vector<cint16> taps_aie{taps.rbegin(),taps.rend()};
 
     std::vector<cint16> taps4_p3 = std::vector<cint16>(GetPhase(0,4));
 
@@ -72,25 +72,25 @@ public:
 		//      1,3   1,2   1,1   1,0 <--
 		//  --> 0,0   0,1   0,2   0,3
 
-		k[0][0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT>>(taps4_p0);
-		k[0][1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p1);
-		k[0][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p2);
-		k[0][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT>>(taps4_p3);
+		k[0][0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,0>>(taps4_p0);
+		k[0][1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,0>>(taps4_p1);
+		k[0][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,0>>(taps4_p2);
+		k[0][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,0>>(taps4_p3);
 
-		k[1][0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT>>(taps4_p2);
-		k[1][1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p1);
-		k[1][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p0);
-		k[1][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT>>(taps4_p3);
+		k[1][0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,0>>(taps4_p2);
+		k[1][1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,0>>(taps4_p1);
+		k[1][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,0>>(taps4_p0);
+		k[1][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,1>>(taps4_p3);
 
-		k[2][0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT>>(taps4_p2);
-		k[2][1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p3);
-		k[2][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p0);
-		k[2][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT>>(taps4_p1);
+		k[2][0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,1>>(taps4_p2);
+		k[2][1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,1>>(taps4_p3);
+		k[2][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,0>>(taps4_p0);
+		k[2][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,0>>(taps4_p1);
 
-		k[3][0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT>>(taps4_p0);
-		k[3][1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p3);
-		k[3][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p2);
-		k[3][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT>>(taps4_p1);
+		k[3][0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,0>>(taps4_p0);
+		k[3][1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,1>>(taps4_p3);
+		k[3][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,1>>(taps4_p2);
+		k[3][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,1>>(taps4_p1);
 
 		const int NPhases = 4;
 
@@ -108,52 +108,6 @@ public:
 			int j = (i%2?28:25); // 25 on even rows and 28 on odd rows
 			location<kernel>(k[i][0]) = tile(j,i);
 		}
-
-
-		// The Upper-Left triangle must discard a sample (diagonal not included)
-		//      3,3   3,2   3,1   3,0 <--
-		//  --> 2,0   2,1   2,2   2,3
-		//      1,3   1,2   1,1   1,0 <--
-		//  --> 0,0   0,1   0,2   0,3
-		// initialization_function(k[0][0]) = "SingleStream::FIRinit<0>";
-		// initialization_function(k[0][1]) = "SingleStream::FIRinit<0>";
-		// initialization_function(k[0][2]) = "SingleStream::FIRinit<0>";
-		// initialization_function(k[0][3]) = "SingleStream::FIRinit<0>";
-		//
-		// initialization_function(k[1][0]) = "SingleStream::FIRinit<0>";
-		// initialization_function(k[1][1]) = "SingleStream::FIRinit<0>";
-		// initialization_function(k[1][2]) = "SingleStream::FIRinit<0>";
-		// initialization_function(k[1][3]) = "SingleStream::FIRinit<1>";
-		//
-		// initialization_function(k[2][0]) = "SingleStream::FIRinit<1>";
-		// initialization_function(k[2][1]) = "SingleStream::FIRinit<1>";
-		// initialization_function(k[2][2]) = "SingleStream::FIRinit<0>";
-		// initialization_function(k[2][3]) = "SingleStream::FIRinit<0>";
-		//
-		// initialization_function(k[3][0]) = "SingleStream::FIRinit<0>";
-		// initialization_function(k[3][1]) = "SingleStream::FIRinit<1>";
-		// initialization_function(k[3][2]) = "SingleStream::FIRinit<1>";
-		// initialization_function(k[3][3]) = "SingleStream::FIRinit<1>";
-
-		// The below initialization is more scalable
-
-		// Discard the first element when the (Coef Phase)+(Output Phase)>= NPhases
-		// Output phase = row
-		// Coef Phase = changes on every row
-		for(int row=0;row<NPhases;row++)					// Output phase
-			for(int phase=0;phase<NPhases;phase++)  // Coef Phase
-			{
-				// Computes the column on which this coef phase is
-				int col = (row+phase)%NPhases;
-				if(row%2) col = NPhases-col-1; // revert order on odd rows
-
-				// if(phase<=row)
-				if(row+phase>=NPhases)
-					initialization_function(k[row][col]) = "SingleStream::FIRinit<1>";
-				else
-					initialization_function(k[row][col]) = "SingleStream::FIRinit<0>";
-			}
-
 
 		// Cascade Connections
 		for(int row=0;row<NPhases;row++)

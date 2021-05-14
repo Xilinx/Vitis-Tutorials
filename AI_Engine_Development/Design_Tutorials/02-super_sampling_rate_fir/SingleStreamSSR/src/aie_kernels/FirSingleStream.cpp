@@ -18,8 +18,8 @@
 
 #include "FirSingleStream.h"
 
-template <int NSamples,int ShiftAcc>
-void SingleStream::FIR_MultiKernel_cout<NSamples,ShiftAcc>::filter(input_stream_cint16* sin,output_stream_cacc48* cout)
+template <int NSamples,int ShiftAcc, int Delay>
+void SingleStream::FIR_MultiKernel_cout<NSamples,ShiftAcc,Delay>::filter(input_stream_cint16* sin,output_stream_cacc48* cout)
 {
 	v8cint16 taps =  *(v8cint16*) weights;
 	v16cint16 *ptr_delay_line = (v16cint16 *)delay_line;
@@ -70,8 +70,8 @@ void SingleStream::FIR_MultiKernel_cout<NSamples,ShiftAcc>::filter(input_stream_
 
 
 
-template <int NSamples,int ShiftAcc>
-void SingleStream::FIR_MultiKernel_cincout<NSamples,ShiftAcc>::filter(input_stream_cint16* sin,input_stream_cacc48* cin,output_stream_cacc48* cout)
+template <int NSamples,int ShiftAcc, int Delay>
+void SingleStream::FIR_MultiKernel_cincout<NSamples,ShiftAcc,Delay>::filter(input_stream_cint16* sin,input_stream_cacc48* cin,output_stream_cacc48* cout)
 {
 
 	v8cint16 taps =  *(v8cint16*) weights;
@@ -124,8 +124,8 @@ void SingleStream::FIR_MultiKernel_cincout<NSamples,ShiftAcc>::filter(input_stre
 }
 
 
-template <int NSamples,int ShiftAcc>
-void SingleStream::FIR_MultiKernel_cin<NSamples,ShiftAcc>::filter(input_stream_cint16* sin,input_stream_cacc48* cin,output_stream_cint16* sout)
+template <int NSamples,int ShiftAcc, int Delay>
+void SingleStream::FIR_MultiKernel_cin<NSamples,ShiftAcc,Delay>::filter(input_stream_cint16* sin,input_stream_cacc48* cin,output_stream_cint16* sout)
 {
 
 	v8cint16 taps =  *(v8cint16*) weights;
