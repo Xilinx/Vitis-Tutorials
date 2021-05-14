@@ -90,7 +90,6 @@ Perform the next two steps to enhance the User Experience. This allows you to ha
 3. Right-click in the canvas and select **Model Properties**:
     - Click the **Callbacks** tab.
     - Click **PreLoadFcn** and type `setupLab;` in the edit window on the right. This will automatically run the `setupLab` script when the model is opened.
-    - Click **InitFcn** and type `CreateFilter;` in the edit window on the right.
     - Click **Apply**, then **OK**.
 
 ![](Images/Image_003.png)
