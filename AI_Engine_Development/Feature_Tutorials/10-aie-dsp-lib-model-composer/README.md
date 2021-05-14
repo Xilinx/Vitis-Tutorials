@@ -133,7 +133,7 @@ Click the **AI Engine** section. This reveals see four subsections:
 ![](Images/Image_007.png)
 
 
-7. Double-click the **AIE FIR Filter** block to open the GUI. Populate the GUI with the following parameters and click **OK**:
+7. Double-click on the **AIE FIR Filter** block to open the GUI. Populate the GUI with the following parameters and click **OK**:
     - **Filter type**: Halfband Decimator
     - **Filter length**: length(hb1)
     - **Filter coefficients**: hb1_aie
