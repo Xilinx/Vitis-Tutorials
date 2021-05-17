@@ -1,3 +1,22 @@
+<!--
+Copyright 2021 Xilinx Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: Daniele Bagni, Xilinx Inc
+-->
+
+
 <div style="page-break-after: always;"></div>
 <table style="width:100%">
   <tr>
@@ -7,16 +26,17 @@
 </table>
 </div>
 
+
 ### Current status
 
-1. Tested with Vitis AI 1.3.
+1. Tested with Vitis AI 1.3.2 (with [April 2021 Patch](https://github.com/Xilinx/Vitis-AI/blob/master/docs/quick-start/install/Vitis%20AI%201.3.2%20April%202021%20Patch.md)) on an Ubuntu 16.04.7 Desktop PC.
 
-2. Fully working in hardware on ZCU102. It should work also on ZCU104.
+2. Tested in hardware on ZCU102 and ZCU104 boards respectively with  ``xilinx-zcu102-dpu-v2020.2-v1.3.1.img.gz`` and ``xilinx-zcu104-dpu-v2020.2-v1.3.1.img.gz`` sd cards.
 
-3. In hardware on VCK190 only FCN8 works fine.
+3. Tested in hardware with Depth-Wise Convolution enabled on XVDPU TRD with VCK190 ES1 in Vitis 2020.2 environment.
 
 
-#### Date: 8 Jan 2021
+#### Date: 17 May 2021
 
 
 # 1 Introduction
@@ -35,12 +55,14 @@ Once the selected CNN has been correctly trained in Keras, the [HDF5](https://ww
 -  Accurate reading of [Vitis AI User Guide UG1414 v1.3](https://www.xilinx.com/support/documentation/sw_manuals/vitis_ai/1_3/ug1414-vitis-ai.pdf). In particular:
 
   1. "Vitis AI Overview" in Chapter 1 with DPU naming and guidelines to download the tools container available from [docker hub](https://hub.docker.com/r/xilinx/vitis-ai/tags) and the Runtime Package for edge (MPSoC) devices.
-  2. "Installation and Setup" instructions of Chapter 2 for both host and target;
+    2. "Installation and Setup" instructions of Chapter 2 for both host and target, it is recommended you build a GPU-based docker image.
   3. "Quantizing the Model" in Chapter 4 and "Compiling the Model" in Chapter 5.
   4. "Programming with VART" APIs in Chapter 6.
 
 
-- A Vitis AI Evaluation board such as the [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) with its [image file](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu102-dpu-v2020.2-r1.3.0.2.0.img.gz), which contains a pre-built working design for the ZCU102 with the DPUCZDX8G (renamed shortly as "DPUv2" in the following).
+- A Vitis AI Evaluation board such as the [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) with its [image file](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu102-dpu-v2020.2-r1.3.0.2.0.img.gz), which contains a pre-built working design for the ZCU102 with the DPUCZDX8G (renamed shortly as "DPUv2"), or the [ZCU104](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu104-g.html) with its [image file](https://www.xilinx.com/bin/public/openDownload?filename=xilinx-zcu104-dpu-v2020.2-r1.3.0.2.0.img.gz).
+
+- Alternatively to such boards you can use also the VCK190, yThe [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) evaluation board with its image file, which contains a pre-built working design for the VCK190 with the DPUCVDX8G_DW, renamed shortly as "XVDPU" in the following of this document.
 
 - Familiarity with Deep Learning principles.
 
@@ -57,57 +79,139 @@ for file in $(find . -name "*.sh"); do
 done
 ```
 
-### Vitis AI 1.2
+### Working Directory
 
-If you need to use the older Vitis AI 1.2 release, just replace this ``README.md`` file with the one placed in the subfolder
-``vai_1v2`` and go on in following the instructions on that file and the related ``vai_1v2.zip`` archive, then skip the rest of this document.
+In the following of this document it is assumed you have installed Vitis AI 1.3.2 somewhere in your file system and this will be your working directory ``<WRK_DIR>``, for example in my case ``<WRK_DIR>`` is set to
+``~/ML/Vitis-AI.1.3.2``.  You have also created a folder named ``tutorials`` under such ``<WRK_DIR>`` and you have copied this tutorial there and renamed it ``VAI-KERAS-FCN8-SEMSEG``:
+
+```text
+Vitis-AI-1.3.2   # your WRK_DIR
+   ├── data
+   ├── demo
+   ├── docs
+   ├── dsa
+   ├── examples
+   ├── external
+   ├── models
+   │   └── AI-Model-Zoo
+   ├── setup
+   │   ├── alveo
+   │   ├── docker
+   │   └── mpsoc
+   ├── tools
+   │   ├── Vitis-AI-* # different subfolders
+   └── tutorials      # created by you
+       ├── 08-tf2_flow
+       ├── 09-mnist_pyt-master
+       ├── VAI-KERAS-FCN8-SEMSEG # this repo
+           ├── files
+               ├── application
+               ├── build
+                   ├── ref_log
+               ├── doc
+```  
+
+Note that for your comfort the reference log files for each step of the flow are placed in the [ref_log.zip](files/log/ref_log.zip) archive.  
 
 
-# 3 Before starting with Vitis AI 1.3
+# 3 The Docker Tools Image
 
-In the following of this document, it is assumed that you have cloned the [Vitis AI stack release 1.3](https://github.com/Xilinx/Vitis-AI) in your working directory ``<WRK_DIR>``, for example a folder named ``~/ML/VAI1v3``.
+You have to know few things about [Docker](https://docs.docker.com/) in order to run the Vitis AI smoothly on your host environment.
 
-It is also assumed that your target board is called just "TARGET", once not specified in more details.
+## 3.1 Installing Docker Client/Server
 
-To list the currently available docker images run:
+To [install docker client/server](https://docs.docker.com/engine/install/ubuntu/)  for Ubuntu, execute the following commands:
+
+```shell
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo docker run hello-world
+docker version
+```
+
+Once done, in my case, I could see the following:
+```
+Client: Docker Engine - Community
+ Version:           20.10.5
+ API version:       1.41
+ Go version:        go1.13.15
+ Git commit:        55c4c88
+ Built:             Tue Mar  2 20:18:15 2021
+ OS/Arch:           linux/amd64
+ Context:           default
+ Experimental:      true
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          20.10.5
+  API version:      1.41 (minimum version 1.12)
+  Go version:       go1.13.15
+  Git commit:       363e9a8
+  Built:            Tue Mar  2 20:16:12 2021
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.4.4
+  GitCommit:        05f951a3781f4f2c1911b05e61c160e9c30eaa8e
+ runc:
+  Version:          1.0.0-rc93
+  GitCommit:        12644e614e25b05da6fd08a38ffa0cfe1903fdec
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+```
+
+## 3.2 Build the Docker GPU Image
+
+Download the [Vitis AI 1.3.2](https://github.com/Xilinx/Vitis-AI/tree/v1.3.2) and execute the [docker_build_gpu.sh](https://github.com/Xilinx/Vitis-AI/blob/v1.3.2/setup/docker/docker_build_gpu.sh) script.
+
+Once done that, to list the currently available docker images run:
 ```bash
 docker images # to list the current docker images available in the host pc
 ```
 and you should see something like in the following text:
 ```text
-REPOSITORY                      TAG                               IMAGE ID            CREATED             SIZE
-xilinx/vitis-ai-gpu             1.3                               f42fb3515bcd        About an hour ago   27.5GB
+REPOSITORY            TAG                               IMAGE ID       CREATED         SIZE
+xilinx/vitis-ai-gpu   latest                            7623d3de1f4d   6 hours ago     27.9GB
 ```
-
-To launch the docker container with Vitis AI tools, based on CPU (or GPU), execute the following commands from the ``<WRK_DIR>`` folder:
-
-```bash
-cd <WRK_DIR> # you are now in Vitis_AI subfolder
-./docker_run.sh xilinx/vitis-ai-gpu:1.3
-```
-
-Note that the container maps the shared folder ``/workspace`` with the file system of the Host PC from where you launch the above command, which is ``<WRK_DIR>`` in your case.
-This shared folder enables you to transfer files from the Host PC to the docker container and vice versa.
-
-The docker container do not have any graphic editor, so it is recommended that you work with two terminals and you point to the same folder, in one terminal you use the docker container commands and in the other terminal you open any graphic editor you like.
 
 Note that docker does not have an automatic garbage collection system as of now. You can use this command to do a manual garbage collection:
 ```
 docker rmi -f $(docker images -f "dangling=true" -q)
 ```
 
-Starting from Vitis AI 1.1 release there is no more Docker Runtime Container, and you can cross compile the application files directly from the Xilinx ``petalinux_sdk`` environment on your host PC to the target board.
-In the following of this tutorial it is assumed that ``petalinux_sdk`` is installed into ``~/petalinux_sdk`` of your host PC, as recommended in [UG1414](https://www.xilinx.com/support/documentation/sw_manuals/vitis_ai/1_3/ug1414-vitis-ai.pdf).
+## 3.3 Install Packages and Patches on the Vitis AI Tools Container  
 
+According to the [April 2021 Patch](https://github.com/Xilinx/Vitis-AI/blob/master/docs/quick-start/install/Vitis%20AI%201.3.2%20April%202021%20Patch.md), Vitis AI 1.3.2 requires some new packages to be installed in all the conda virtual environments of the docker tools container.
 
-## 3.1 Install Missing Packages on the Vitis AI Tools Container
+For example, in the case of pytorch (which applies python 3.6) you would have to execute the following commands:
 
-This tutorial requires some packages that were not included in the original Vitis AI tools container. Here are the commands to include such packages:
 ```bash
-./docker_run.sh xilinx/vitis-ai-gpu:1.3     
+cd <WRK_DIR>
+./docker_run.sh xilinx/vitis-ai-gpu:latest     
 sudo su # you must be root
-conda activate vitis-ai-tensorflow # as root, enter into Vitis AI TF (anaconda-based) virtual environment
-conda install seaborn
+conda activate vitis-ai-tensorflow # as root, enter into Vitis AI PyTorch (anaconda-based) virtual environment
+sudo env PATH=/opt/vitis_ai/conda/bin:$PATH
+CONDA_PREFIX=/opt/vitis_ai/conda/envs/vitis-ai-pytorch
+conda install unilog-1.3.2-h7b12538_35.tar.bz2
+conda install target_factory-1.3.2-hf484d3e_35.tar.bz2
+conda install xir-1.3.2-py36h7b12538_47.tar.bz2
+#conda install xir-1.3.2-py37h7b12538_47.tar.bz2 # good only for python 3.7
+conda install xcompiler-1.3.2-py36h7b12538_53.tar.bz2
+#conda install xcompiler-1.3.2-py37h7b12538_53.tar.bz2 # good only for python 3.7
+conda install xnnc-1.3.2-py36_48.tar.bz2
+#conda install xnnc-1.3.2-py37_48.tar.bz2 # good only for python 3.7
+```
+
+This tutorial requires also some packages that were not included in the original Vitis AI tools container.
+Following the previous commands, here are the further commands to include such packages:
+```bash
+pip install seaborn
 conda deactivate
 exit # to exit from root
 conda activate vitis-ai-tensorflow # as normal user, enter into Vitis AI TF (anaconda-based) virtual environment
@@ -121,22 +225,32 @@ sudo docker ps -l # To get the Docker CONTAINER ID
 you will see the following text (the container ID might have a different number):
 
 ```text
-CONTAINER ID        IMAGE                     COMMAND             CREATED             STATUS              PORTS               NAMES
-967212b35a06        xilinx/vitis-ai-gpu:1.3   "bash"              5 minutes ago       Up 5 minutes                            admiring_minsky
+CONTAINER ID        IMAGE                        COMMAND                CREATED             STATUS              NAMES
+7c9927375b06        xilinx/vitis-ai-gpu:latest   "/etc/login.sh bash"   30 minutes ago      Up 30 minutes       heuristic_lamport
 ```
 now save the modified docker image:
 
 ```bash
-sudo docker commit -m"comment" 7c9927375b06 xilinx/vitis-ai-gpu:1.3
+sudo docker commit -m"comment" 7c9927375b06 xilinx/vitis-ai-gpu:latest
 ```
 
-Assuming you have renamed this project ``VAI-KERAS-FCN8-SEMSEG`` and placed it in the directory named ``<WRK_DIR>/tutorials/`` so that it is two levels below the ``<WRK_DIR>`` folder, you can launch the modified tools container by running the following commands:
+
+## 3.4 Launch the Docker Image
+
+To launch the docker container with Vitis AI tools, execute the following commands from the ``<WRK_DIR>`` folder:
+
 ```bash
-cd <WRK_DIR>
+cd <WRK_DIR> # you are now in Vitis_AI subfolder
 ./docker_run.sh xilinx/vitis-ai-gpu:latest
-cd /workspace/tutorials/VAI-KERAS-FCN8-SEMSEG
 conda activate vitis-ai-tensorflow
+cd /workspace/tutorials/
+cd VAI-KERAS-FCN8-SEMSEG/files #your working directory
 ```
+
+Note that the container maps the shared folder ``/workspace`` with the file system of the Host PC from where you launch the above command, which is ``<WRK_DIR>`` in your case.
+This shared folder enables you to transfer files from the Host PC to the docker container and vice versa.
+
+The docker container does not have any graphic editor, so it is recommended that you work with two terminals and you point to the same folder, in one terminal you use the docker container commands and in the other terminal you open any graphic editor you like.
 
 
 
@@ -175,7 +289,7 @@ Here is an overview of each step.
 
 ## 4.1 Organize the Data
 
-You have to download the data from [here](https://drive.google.com/file/d/0B0d9ZiqAgFkiOHR1NTJhWVJMNEU/view) and save the file ``dataset1.zip`` (of size ~120MB) in the folder [files](files) at the same level of other sub-folders like [code](files/code) and [log](files/log).
+You have to download the data from [here](https://drive.google.com/file/d/0B0d9ZiqAgFkiOHR1NTJhWVJMNEU/view) and save the file ``dataset1.zip`` (of size ~120MB) in the folder [files](files) at the same level of other sub-folders like [code](files/code).
 
 The subroutine ``1_generate_images()`` within the script [run_fcn8.sh](files/run_fcn8.sh) calls the [prepare_data.py](files/code/prepare_data.py) python module and creates the sub-folders: ``img_train``, ``img_valid``, ``img_test``, and ``img_calib`` that are located in the ``dataset1`` directory and fills them with 311 images for training, 56 images for validation (taken from the images of the original training dataset), 101 images for testing (all the images of the original testing dataset), and 104 images for the calibration process (copied from the training images).
 
@@ -224,27 +338,25 @@ source run_fcn8.sh     # original FCN8
 #source run_fcn8ups.sh  # FCN8 with UpSampling2D
 ```
 
-Once the training is completed, the [fcn8_make_predictions.py](files/code/fcn8_make_predictions.py) module makes predictions on both the test and validation datasets and you should get a  ``Mean IoU`` accuracy respectively of 0.406 and 0.426, as reported in the logfile placed in [log](files/log) folder for the original FCN8 CNN, and  0.406 and 0.427 for the FCN8 with ``Upsampling2D`` (named FCN8UPS).
-
-The learning curves are illustrated in Figure 5.
+Once the training is completed, the [fcn8_make_predictions.py](files/code/fcn8_make_predictions.py) module makes predictions on both the test and validation datasets and you should get the  ``Mean IoU`` accuracy reported in the log files. The learning curves are illustrated in Figure 5.
 
 Note that, being the training dataset pretty small (only 311 images), the prediction accuracy is not very good (in that case it should be at least ``Mean IoU >= 0.5``), as reported in the following text fragment of the logfile, in fact some classes are not even predicted (i.e. the classes 02, 06, 09 and 10). All in all the purpose of this tutorial is to show you what steps are needed to go from the ``.pb`` weight file of a trained FCN8 CNN to the run time execution on the FPGA device of the target board.  
 
 ``` text
-class ( 0)          Sky: #TP= 431733, #FP=  23570, #FN=  24240, IoU=0.900
-class ( 1)         Wall: #TP=1097453, #FP= 108340, #FN= 206493, IoU=0.777
-class ( 2)         Pole: #TP=      3, #FP=     57, #FN=  36417, IoU=0.000
-class ( 3)         Road: #TP=1406806, #FP=  59897, #FN=  68213, IoU=0.917
-class ( 4)     Sidewalk: #TP= 399167, #FP= 104818, #FN=  49266, IoU=0.721
-class ( 5)   Vegetation: #TP= 786947, #FP= 108697, #FN=  39598, IoU=0.841
-class ( 6)         Sign: #TP=   3784, #FP=   2894, #FN=  49608, IoU=0.067
-class ( 7)        Fence: #TP=  54427, #FP=  40537, #FN= 101976, IoU=0.276
-class ( 8)      vehicle: #TP=  73622, #FP= 142380, #FN=  20438, IoU=0.311
-class ( 9)   Pedestrian: #TP=     44, #FP=    300, #FN=  36821, IoU=0.001
-class (10)    Bicyclist: #TP=   2057, #FP=    838, #FN= 108915, IoU=0.018
-class (11)  miscellanea: #TP=  39417, #FP= 179988, #FN=  30331, IoU=0.158
+cclass ( 0)          Sky: #TP= 433991, #FP=  51314, #FN=  21982, IoU=0.856
+class ( 1)         Wall: #TP=1087042, #FP= 232633, #FN= 216904, IoU=0.707
+class ( 2)         Pole: #TP=     19, #FP=    686, #FN=  36401, IoU=0.001
+class ( 3)         Road: #TP=1372356, #FP=  66189, #FN= 102663, IoU=0.890
+class ( 4)     Sidewalk: #TP= 386992, #FP= 152063, #FN=  61441, IoU=0.644
+class ( 5)   Vegetation: #TP= 773301, #FP= 128493, #FN=  53244, IoU=0.810
+class ( 6)         Sign: #TP=     54, #FP=   7802, #FN=  53338, IoU=0.001
+class ( 7)        Fence: #TP=  20348, #FP=  25736, #FN= 136055, IoU=0.112
+class ( 8)      vehicle: #TP=  73103, #FP= 130003, #FN=  20957, IoU=0.326
+class ( 9)   Pedestrian: #TP=     82, #FP=   4144, #FN=  36783, IoU=0.002
+class (10)    Bicyclist: #TP=   1007, #FP=   1152, #FN= 109965, IoU=0.009
+class (11)  miscellanea: #TP=  18851, #FP= 100415, #FN=  50897, IoU=0.111
 _________________
-Mean IoU: 0.416
+Mean IoU: 0.372
 ```
 
 ![figure3](files/doc/images/fcn8_model224x224.png)
@@ -277,7 +389,7 @@ Learning curves and block diagram of UNET-v2 model are illustrated in Figures 6 
 
 ## 4.3 Create TF Inference Graphs from Keras Models
 
-The subroutine ``3_fcn8_Keras2TF()`` within the  [run_fcn8.sh](files/run_fcn8.sh) script gets the computation graph of the TF backend representing the Keras model and generates the output files named ``infer_graph.pb`` and ``float_model.chkpt.*`` which are then placed in the folder ``./workspace/tf_chkpts/fcn8``. The generated logfile in the [log](files/log) folder also contains the TF names of the  input and output nodes that are needed to [Freeze the TF Graphs](#freeze-the-tf-graphs). For example, in the case of FCN8, such nodes are called ``input_1`` and ``activation_1/truediv `` respectively.
+The subroutine ``3_fcn8_Keras2TF()`` within the  [run_fcn8.sh](files/run_fcn8.sh) script gets the computation graph of the TF backend representing the Keras model and generates the output files named ``infer_graph.pb`` and ``float_model.chkpt.*`` which are then placed in the folder ``./workspace/tf_chkpts/fcn8``. The generated log file also contains the TF names of the  input and output nodes that are needed to [Freeze the TF Graphs](#freeze-the-tf-graphs). For example, in the case of FCN8, such nodes are called ``input_1`` and ``activation_1/truediv `` respectively.
 
 
 ## 4.4 Freeze the TF Graphs
@@ -295,7 +407,7 @@ print ("\n TF output node name:")
 print (model.outputs)
 ```
 
-The frozen graphs evaluation with [eval_graph.py](files/code/eval_graph.py) generates a ``Mean IoU`` prediction accuracy of 0.406 and 0.406 for the first and second variant of FCN8 CNN, as reported in the  logfile.
+The frozen graphs evaluation with [eval_graph.py](files/code/eval_graph.py) generate the ``Mean IoU`` prediction accuracy reported in the log files.
 
 
 ## 4.5 Quantize the Frozen Graphs
@@ -399,18 +511,6 @@ import xir
 ## 4.7 Build and Run on ZCU102 Target Board
 
 In this design, you will use C++ to measure the performance in terms of fps and the Python APIs to get the prediction accuracy.
-
-You have to cross-compile the hybrid (CPU + DPU) application from the host side (out of the docker tools image) with [build_app.sh](files/target_zcu102/code/build_app.sh) shell script:
-  ```bash
-  unset LD_LIBRARY_PATH   
-  sh ~/petalinux_sdk/2020.2/environment-setup-aarch64-xilinx-linux # set petalinux environment of Vitis AI 1.3
-  cd <WRK_DIR>/tutorials/VAI-KERAS-FCN8-SEMSEG/files
-  cd target_zcu102/code
-  bash -x ./build_app.sh
-  cd ..
-  tar -cvf target_zcu102.tar ./target_zcu102 # to be copied on the SD card
-  ```
-
 Note that a subset of the ``petalinux_sdk`` environment is also available directly on the SD card target board, so you can compile the application directly from there. In fact this is what the script ``run_all_target.sh`` indeed does, once you will launch it from the target board.  
 
 Assuming you have transferred the ``target_zcu102.tar`` archive from the host to the target board with the ``scp`` utility, you can now run the following command directly on the target board:
@@ -423,27 +523,153 @@ Assuming you have transferred the ``target_zcu102.tar`` archive from the host to
 The purpose of [run_all_target.sh](files/target_zcu102/run_all_target.sh) shell script is
 1. to extract the test images from the ``test.tar.gz``  archive;
 2. to launch the ``app_mt.py`` application based on VART Python APIs and measure the effective fps performance at run time;
-3. to run the C++ executable in order of creating images with segmentation results overlapped.
-Note that the code to compute the effective ``Mean IoU`` prediction accuracy is still missing, but you should be easily derive it from  the python scripts of the training process.
+3. to run the C++ executable in order of creating images with segmentation results overlapped, as a post-processing operation (which you can skip if you like). Note that the code to compute the effective ``Mean IoU`` prediction accuracy is still missing, but you should be easily derive it from  the python scripts of the training process. Being compiled instead of interpreted, the appliction in C++ is fatser than in Python and therefore the fps performance is better.
 
 
-# 5 Accuracy & Performance results
-
-The ``Mean IoU`` prediction accuracy evaluations of the floating-point and of the quantized frozen graphs can be compared to the INT8 post-quantization model and actual results obtained by the hardware model running on the ZCU102 board:
 
 
-| Floating point  |  quantized model      | Hardware model (INT8) |
-| :-------------: | :-------------------: | :-------------------: |
-|        0.383     |        0.375         |          0.373        |
 
-The approximate throughput (in frames/sec) for increasing number of threads is shown below:
 
-| Threads   | Throughput (fps) |
-| :-------: | :--------------: |
-|     1     |      21.62       |
-|     2     |      41.09       |
-|     4     |      55.53       |
-|     6     |      55.28       |
+# 5  C++ Multi-threading Code
+
+The file [main_mt.cc](files/targte_zcu102/code/src/main_mt.cc) contains fragments of code to execute up to 6 threads in parallel, differently from the original [main.cc](https://github.com/Xilinx/Vitis-AI/blob/master/demo/VART/resnet50/src/main.cc) code provided in the Vitis-AI demo VART examples, which is just a single thread. The user can select from 1 to 6 threads (for more threads you have to change the code).
+
+The code is organized in three main parts: 1) pre-processing, 2) multithreading execution and throughput computation in terms of fps, 3) post-processing.
+The entire pre-processing is done on the whole list of input images, then the pre-processed images are split in chunks of equal size (multiple of the batch size) assigned to each thread. Finally, the post-processing is applied to compute the top-1 average prediction accuracy.
+
+
+## 5.1 Pre-processing
+
+The images to be sent to the DPU are in BGR format, because the training was originally done with OpenCV reading the images in BGR, thanks to the ``0+c`` fragment in the C++ code. If you replace it with just ``2-c`` (to convert in RGB) you will incur in severe degradation of the average prediction accuracy.
+
+```cpp
+vector<Mat> imageList;
+float* imageInputs = new float[(num_of_images)*inSize];
+float* FCResult    = new float[(num_of_images)*outSize];
+
+// preprocess all images at once
+for (unsigned int n = 0; n < num_of_images; n++)
+{
+    Mat image = imread(baseImagePath + image_filename[n]);
+    Mat image2 = cv::Mat(inHeight, inWidth, CV_8SC3);
+    resize(image, image2, Size(inHeight, inWidth), 0, 0, INTER_LINEAR); //0);
+    for (int y = 0; y < inHeight; y++) {
+      for (int x = 0; x < inWidth; x++) {
+        for (int c = 0; c < 3; c++) {
+          //imageInputs[n*inSize + 3*(y*inWidth+x) + 2-c] = ((float)image2.at<Vec3b>(y,x)[c])/127.5 -1.0; //RGB conversion
+            imageInputs[n*inSize + 3*(y*inWidth+x) + 0+c] = ((float)image2.at<Vec3b>(y,x)[c])/127.5 -1.0; //BGR format
+        }
+      }
+    }
+    imageList.push_back(image2);
+}
+// split images in chunks, each chunks for its own thead
+// avoid pointing to wrong memory locations
+float *imagesInput0 = imageInputs+ inSize*(num_threads==1 ? 0*num_images_x_thread : 0);
+float *imagesInput1 = imageInputs+ inSize*(num_threads==2 ? 1*num_images_x_thread : 0);
+float *imagesInput2 = imageInputs+ inSize*(num_threads==3 ? 2*num_images_x_thread : 0);
+float *imagesInput3 = imageInputs+ inSize*(num_threads==4 ? 3*num_images_x_thread : 0);
+float *imagesInput4 = imageInputs+ inSize*(num_threads==5 ? 4*num_images_x_thread : 0);
+float *imagesInput5 = imageInputs+ inSize*(num_threads==6 ? 5*num_images_x_thread : 0);
+
+float *FCResult0    = FCResult+   outSize*(num_threads==1 ? 0*num_images_x_thread : 0);
+float *FCResult1    = FCResult+   outSize*(num_threads==2 ? 1*num_images_x_thread : 0);
+float *FCResult2    = FCResult+   outSize*(num_threads==3 ? 2*num_images_x_thread : 0);
+float *FCResult3    = FCResult+   outSize*(num_threads==4 ? 3*num_images_x_thread : 0);
+float *FCResult4    = FCResult+   outSize*(num_threads==5 ? 4*num_images_x_thread : 0);
+float *FCResult5    = FCResult+   outSize*(num_threads==6 ? 5*num_images_x_thread : 0);
+```
+
+
+## 5.2 Multi-threading and Throughput
+
+The next fragment of code illustrates the multi-threading part. I was not able to find a method to create a dynamic list of ``runners``, so I had to
+write it in this way (if you can suggest a more elegant solution, you are welcome).
+
+```cpp
+#include <thread>
+thread workers[num_threads];
+t_start = system_clock::now();
+
+for (auto i = 0; i < num_threads; i++)
+{
+    if (i == 0) workers[i] = thread(runResnet50, runner.get(),   ref(imagesInput0), ref(FCResult0) );
+    if (i == 1) workers[i] = thread(runResnet50, runner1.get(),  ref(imagesInput1), ref(FCResult1) );
+    if (i == 2) workers[i] = thread(runResnet50, runner2.get(),  ref(imagesInput2), ref(FCResult2) );
+    if (i == 3) workers[i] = thread(runResnet50, runner3.get(),  ref(imagesInput3), ref(FCResult3) );
+    if (i == 4) workers[i] = thread(runResnet50, runner4.get(),  ref(imagesInput4), ref(FCResult4) );
+    if (i == 5) workers[i] = thread(runResnet50, runner5.get(),  ref(imagesInput5), ref(FCResult5) );
+}
+// Release thread resources.
+for (auto &w : workers) {
+  if (w.joinable()) w.join();
+}
+
+t_end = system_clock::now();
+auto duration = (duration_cast<microseconds>(t_end - t_start)).count();
+cout << "\n" << endl;
+cout << "[Time] " << duration << "us" << endl;
+cout << "[FPS ] "  << num_of_images*1000000.0/duration  << endl;
+cout << "\n" << endl;
+```
+
+The throughput is computed  using the ``chrono`` C++ library:
+
+```cpp
+#include <chrono>
+using namespace std::chrono;
+//using std::chrono::system_clock;
+system_clock::time_point t_start, t_end;
+```
+
+
+## 5.3 Post-processing
+
+In the post-processing part you can use OpenCV functions to show the segmented images  on the display of the target board (or of your host PC if you are using X11 forwarding):
+
+```
+if (use_post_processing==1)
+{
+  for (unsigned int n = 0; n < num_of_images; n ++)
+  {
+      cout << "\nImage : " << image_filename[n] << endl;
+      Mat image3 = imageList[n].clone();
+
+      Mat segMat(outHeight, outWidth, CV_8UC3);
+      Mat showMat(inHeight,  inWidth, CV_8UC3);
+      float *OutData = &FCResult[n * outSize];
+      for (int row = 0; row < outHeight; row++) {
+        for (int col = 0; col < outWidth; col++) {
+          int ii = row * outWidth * num_of_classes + col * num_of_classes;
+          auto max_ind = max_element(OutData + ii, OutData + ii + num_of_classes);
+          int posit = distance(OutData + ii, max_ind);
+          segMat.at<Vec3b>(row, col) = Vec3b(colorB[posit], colorG[posit], colorR[posit]);
+        }
+      }
+      for ( int ii = 0; ii < showMat.rows * showMat.cols * 3; ii++) {
+        showMat.data[ii] = segMat.data[ii]; //copy SegMat into showMat
+        image3.data[ii] = image3.data[ii] * 0.4 + showMat.data[ii] * 0.6;
+      }
+      if (n<20)
+      {
+        char s[20]; sprintf(s, "image %03d", n);
+        // putText(image3, s, Point(10,10), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(0,255,0), 2.0);
+
+        Mat dst;            
+        cv::hconcat(imageList[n], image3, dst); // horizontal
+        cv::imshow(s, dst);
+        cv::waitKey(1000);
+        cv::imwrite(format("%03d.png",n), image3);
+        cv::destroyAllWindows();
+      }
+  }
+  imageList.clear();
+}
+```
+
+You will see something like this (the picture was generated by UNET CNN):
+
+![figure](files/doc/images/015.png)
 
 
 # 6 Summary
@@ -452,9 +678,14 @@ In this tutorial you have seen how to implement on the Xilinx [ZCU102](https://w
 
 Taking FCN8 CNN as an example, the Xilinx [Vitis AI stack release 1.3](https://github.com/Xilinx/Vitis-AI) has quantized the ``ep200_trained_fcn8_224x224hdf5`` 32-bit floating point weights file (of ~224MB size) generated by the training process in Keras, into an 8-bit fixed point ``deploy_model.pb`` file (of ~112MB size) and such ``pb`` file is then transformed into the ``fcn8.xmodel`` (of ~65MB size) file for the DPU accelerator.
 
-The advantage of this small dataset is that it makes the training process in Keras short enough, but the ``Mean IoU`` prediction accuracy is only ~0.38. To get a larger value you probably need a larger dataset, as the [MS COCO](http://cocodataset.org/#home) or the [Cityscapes](https://www.cityscapes-dataset.com/), although this would probably need to re-architect the deepness of FCN8 to make it suitable to images of size 1920x1080, instead of 224x224 as in this case study.
+The advantage of this small dataset is that it makes the training process in Keras short enough, but the ``Mean IoU`` prediction accuracy is only ~0.38 also due to a certain level of unbalancing among the classes. To get a larger value you probably need a larger and more balanced dataset, as the [MS COCO](http://cocodataset.org/#home) or the [Cityscapes](https://www.cityscapes-dataset.com/), although this would probably need to re-architect the deepness of FCN8 to make it suitable to images of size 1920x1080, instead of 224x224 as in this case study.
 
-Despite that, you have seen how easy is to control the DPU core from the embedded Linux Ubuntu OS on the ZC102 board via the **DPU Python VART APIs** with the [app_mt.py](files/target_zcu102/code/src/app_mt.py) script. The traditional C++ programming of the embedded system composed by the ARM CPU and the DPU accelerator is also available in the [main.cc](files/target_zcu102/code/src/main.cc) application file.
+Despite that, you have seen how easy is to control the DPU core from the embedded Linux Ubuntu OS on the ZC102 board via the **DPU Python VART APIs** with the [app_mt.py](files/target_zcu102/code/src/app_mt.py) script. The traditional C++ programming of the embedded system composed by the ARM CPU and the DPU accelerator is also available in the [main_mt.cc](files/target_zcu102/code/src/main_mt.cc) application file.
+
+
+The [Excel table](files/doc/summary_results.xlsx) summarizes the CNN features for each network in terms of mean IoI (mIoU) and frames per second (fps).
+The second is measured on all the three target boards at run time execution and it includes reading the images with OpenCV function from ARM CPU (while in the real life case these images will be stored into DDR memory and so their access time should be negligible as seen from the DPU IP core).
+
 
 
 # Appendix
@@ -520,43 +751,44 @@ There are some nice tutorials on Semantic Segmentation with Keras/TensorFlow, he
 
 ## A2 Build and Run on VCK190 Target Board
 
-Alternatively to ZCU102, you can also use the [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) and its  following files, available only from the [Versal ML EA Lounge](https://www.xilinx.com/member/versal-ml-ea.html#versal-dpu) (you need to be registered to it to get access to its content):
-```text
-permissions | size (bytes) | filename
--rwxrwxrwx  |       2397   | readme.txt
--rwxrwxrwx  |      14868   | VCK190 Network Support List.xlsx
--rwxrwxrwx  | 2264655516   | xilinx_model_zoo_vck190-1.3.0-r200-Linux.tar.gz
--rwxrwxrwx  |  372211940   | xilinx-vck190-dpu-v2020.1-v1.3.0.img.gz
+Alternatively to ZCU102, you can also use the [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) available only from the [Versal ML EA Lounge](https://www.xilinx.com/member/versal-ml-ea.html#versal-dpu) (you need to be registered to it to get access to its content).
+
+The sd card was generated with Depth-Wise Convolution enabled on [Versal DPU TRD](https://www.xilinx.com/member/versal-ml-ea.html#versal-dpu-trd) with VCK190 ES1 in Vitis 2020.2 environment (you need to be registered at the Versal ML Early Access Lounge), using architecture ``DPUCVDX8G_ISA0_B8192C32B3_DW``; you might need to edit manually the ``/opt/vitis_ai/compiler/arc/DPUCVDX8G/VCK190/arch.json`` file
+of your Vitis AI conda environment to enable it, as in the following:
 ```
+{
+      "target": "DPUCVDX8G_ISA0_B8192C32B3_DW"
+}
+```
+then the file was renamed as ``arch_dw.json`` and used accordingly in the ``compile_vck190()`` routine from the ``run_*.sh`` shell scripts.
+
 
 The ``xmodel`` files generated for VCK190 are necessarily different from the ones of ZCU102, because the DPU architecture of the first board is different from the DPU of the second board. No changes to the C++ or Python files are needed for these four CNN examples.
 
 Working with VCK190 board requires just to adopt the ``6_compile_vai_vck190()`` routine from the script [run_fcn8.sh](files/[run_fcn8.sh), instead of the ``6_compile_vai_zcu102()`` which is related to ZCU102.
 
-Make a ``tar`` file of the ``target_vck190``  folder, copy it from the host PC to the target ZCU104 board. For example, in case of an Ubuntu PC, use the following command (assuming the board IP address is always the same):
+Make a ``tar`` file of the ``target_vck190``  folder, copy it from the host PC to the target VCK190 board. For example, in case of an Ubuntu PC, use the following command (assuming the board IP address is always the same):
 ```
 scp target_vck190.tar root@192.168.1.100:/root/
+tar -xvf target_vck1980.tar
 cd target_vck190
-source ./run_all_target.sh
+bash -x ./run_all_target.sh
 ```
 
-The ``Mean IoU`` prediction accuracy evaluations of the floating-point and of the quantized frozen graphs can be compared to the INT8 post-quantization model and actual results obtained by the hardware model running on the ZCU102 board:
+
+## A3 Build and Run on ZCU104 Target Board
+
+Working with ZCU104 board requires just to adopt the ``6_compile_vai_zcu104()`` routine from the script [run_fcn8.sh](files/[run_fcn8.sh), instead of the ``6_compile_vai_zcu102()`` which is related to ZCU102.
+
+Make a ``tar`` file of the ``target_zcu104``  folder, copy it from the host PC to the target ZCU104 board. For example, in case of an Ubuntu PC, use the following command (assuming the board IP address is always the same):
+```
+scp target_zcu104.tar root@192.168.1.100:/root/
+tar -xvf target_zcu104.tar
+cd target_zcu104
+bash -x ./run_all_target.sh
+```
 
 
-| Floating point  |  quantized model      | Hardware model (INT8) |
-| :-------------: | :-------------------: | :-------------------: |
-|        0.383     |        0.375         |        0.373         |
-
-The approximate throughput (in frames/sec) for increasing number of threads is shown below:
-
-| Threads   | Throughput (fps) |
-| :-------: | :--------------: |
-|     1     |      151.62      |
-|     2     |      278.23      |
-|     4     |      313.88      |
-|     6     |      304.60      |
-
-Note that FCN8UPS and UNET CNNs do not work as the ``depth-wise conv`` layer  is not yet supported on the Versal DPU. Alternatively the CNN should be split into more sub-graphs, with the unsupported layer implemented in a subgraph running on the ARM CPU.
 
 
 
