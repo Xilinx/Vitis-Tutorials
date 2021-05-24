@@ -49,7 +49,7 @@ SOFTWARE.
 '''
 
 # modified by daniele.bagni@xilinx.com
-# date 20 / 11 / 2020
+# date 10 May 2021
 
 
 ## Import usual libraries
@@ -76,14 +76,16 @@ from config import fcn_config as cfg #DB
 
 
 def NormalizeImageArr( path ):
-    img = cv2.imread(path, 1)
+    img1 = cv2.imread(path, 1)
+    img = cv2.resize(img1, (cfg.WIDTH, cfg.HEIGHT))
     img = img.astype(np.float32)
     img = img/cfg.NORM_FACTOR - 1.0
     return img
 
 def LoadSegmentationArr( path , nClasses,  width , height ):
     seg_labels = np.zeros((  height , width  , nClasses ))
-    img = cv2.imread(path, 1)
+    img1 = cv2.imread(path, 1)
+    img = cv2.resize(img1, (cfg.WIDTH, cfg.HEIGHT))
     img = img[:, : , 0]
     for c in range(nClasses):
         seg_labels[: , : , c ] = (img == c ).astype(int)
@@ -335,7 +337,8 @@ def FCN8( nClasses ,  input_height, input_width, upscale="False"):
     if upscale=="True" :
         conv7_4a=( Conv2D( nClasses , ( 7 , 7 ) ,  activation='relu', padding='same', name="conv7_4a", data_format=IMAGE_ORDERING))(pool5)
         conv7_4b=( Conv2D( nClasses , ( 1 , 1 ) ,  activation='relu', padding='same', name="conv7_4b", data_format=IMAGE_ORDERING))(conv7_4a)
-        conv7_4 = UpSampling2D(size=(4,4), data_format=IMAGE_ORDERING, interpolation="bilinear")(conv7_4b)
+        #conv7_4 = UpSampling2D(size=(4,4), data_format=IMAGE_ORDERING, interpolation="bilinear")(conv7_4b)
+        conv7_4 = UpSampling2D(size=(4,4), data_format=IMAGE_ORDERING, interpolation="nearest")(conv7_4b)
     else :
         n = 512 #4096
         o =     ( Conv2D( n , ( 7 , 7 ) , activation='relu' , padding='same', name="conv6", data_format=IMAGE_ORDERING))(pool5)
@@ -347,7 +350,9 @@ def FCN8( nClasses ,  input_height, input_width, upscale="False"):
     pool411 = ( Conv2D( nClasses , ( 1 , 1 ) , activation='relu' , padding='same', name="pool4_11", data_format=IMAGE_ORDERING))(pool4)
     if upscale == "True" :
         pool411_b = ( Conv2D( nClasses , ( 1 , 1 ) ,  activation='relu', padding='same', name="pool411_b", data_format=IMAGE_ORDERING))(pool411)
-        pool411_2 = (UpSampling2D(size=(2,2), data_format=IMAGE_ORDERING, interpolation="bilinear"))(pool411_b)
+        #pool411_2 = (UpSampling2D(size=(2,2), data_format=IMAGE_ORDERING, interpolation="bilinear"))(pool411_b)
+        pool411_2 = (UpSampling2D(size=(2,2), data_format=IMAGE_ORDERING, interpolation="nearest"))(pool411_b)
+
     else:
         pool411_2 = (Conv2DTranspose( nClasses , kernel_size=(2,2) ,  strides=(2,2) , use_bias=False, data_format=IMAGE_ORDERING ))(pool411)
 

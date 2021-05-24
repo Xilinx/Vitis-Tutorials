@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-
+: '
 /**
 
 * © Copyright (C) 2016-2020 Xilinx, Inc
@@ -22,7 +22,7 @@
 
 MODEL=$1 #./build/freeze/fcn8/frozen_graph.pb
 
-PYSCRIPT=/workspace/Vitis-AI-Quantizer/vai_q_tensorflow/tensorflow/python/tools/import_pb_to_tensorboard.py
+PYSCRIPT=/workspace/tools/Vitis-AI-Quantizer/vai_q_tensorflow1.x/tensorflow/python/tools/import_pb_to_tensorboard.py
 
 python $PYSCRIPT --model_dir=$MODEL --log_dir=./tb_log/
 

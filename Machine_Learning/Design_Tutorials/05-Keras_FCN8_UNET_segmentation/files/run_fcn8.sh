@@ -20,7 +20,7 @@
 '
 
 # modified by daniele.bagni@xilinx.com
-# date 4 Jan 2021
+# date 10 May 2021
 
 
 ## clean up previous log files
@@ -102,7 +102,7 @@ a_clean_and_make_directories() {
     # clean files in pre-built sub-directories
     rm -f ${DATASET_DIR}/img_*/* ${DATASET_DIR}/seg_*/*
     # unzip the original dataset
-    unzip ${WORK_DIR}/../dataset1.zip -d ${WORK_DIR}
+    unzip ${WORK_DIR}/../dataset1.zip -d ${WORK_DIR} >& /dev/null
     cd code
     # put the data into proper folders
     python prepare_data.py
@@ -112,6 +112,7 @@ a_clean_and_make_directories() {
 
     # YOU MUST HAVE THE the HDF5 weights file for VGG encoder subnet of FCN8
     cd $KERAS_MODEL_DIR
+    rm -f vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5*  #remove any previous file, if any
     wget https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5
     cd ..
 
@@ -259,7 +260,7 @@ a_clean_and_make_directories() {
 
   vai_c_tensorflow \
       --frozen_pb ${QUANT_DIR}/${CNN}/quantize_eval_model.pb \
-      --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
+      --arch ./arch_vck190_dw.json \
       --output_dir ${COMPILE_DIR}/${CNN} \
       --options    "{'mode':'normal'}" \
       --net_name ${CNN}
@@ -339,30 +340,33 @@ main() {
     # compile to generate xmodel file for target board
     6_compile_vai_vck190 #2>&1 | tee ${LOG_DIR}/${CNN}/${COMP_LOG}
     # move xmodel file to target board directory
-    mv  ${COMPILE_DIR}/${CNN}/*.xmodel    ${TARGET_190}/${CNN}/model/
+    mv  ${COMPILE_DIR}/${CNN}/*.xmodel   ${TARGET_190}/${CNN}/model/
+    cp ${COMPILE_DIR}/${CNN}/*.json      ${TARGET_190}/${CNN}/model/
     rm ${TARGET_190}/${CNN}/model/*_org.xmodel
 
     6_compile_vai_zcu104 #2>&1 | tee ${LOG_DIR}/${CNN}/${COMP_LOG}
     # move xmodel file to target board directory
-    mv  ${COMPILE_DIR}/${CNN}/*.xmodel    ${TARGET_104}/${CNN}/model/
+    mv  ${COMPILE_DIR}/${CNN}/*.xmodel   ${TARGET_104}/${CNN}/model/
+    cp ${COMPILE_DIR}/${CNN}/*.json      ${TARGET_104}/${CNN}/model/
     rm ${TARGET_104}/${CNN}/model/*_org.xmodel
 
     6_compile_vai_zcu102 #2>&1 | tee ${LOG_DIR}/${CNN}/${COMP_LOG}
     # move xmodel file to target board directory
-    mv  ${COMPILE_DIR}/${CNN}/*.xmodel    ${TARGET_102}/${CNN}/model/
+    mv  ${COMPILE_DIR}/${CNN}/*.xmodel   ${TARGET_102}/${CNN}/model/
+    cp ${COMPILE_DIR}/${CNN}/*.json      ${TARGET_102}/${CNN}/model/
     rm ${TARGET_102}/${CNN}/model/*_org.xmodel
 
 
     # copy test images into target board
-    tar -cvf "test.tar" ${DATASET_DIR}/img_test ${DATASET_DIR}/seg_test
-    gzip test.tar
-    cp test.tar.gz ${TARGET_190}/ ${TARGET_102}/ ${TARGET_104}/
+    tar -cvf "test.tar" ${DATASET_DIR}/img_test ${DATASET_DIR}/seg_test >& /dev/null
+    gzip -f test.tar
+    cp -f test.tar.gz ${TARGET_190}/
+    cp -f test.tar.gz ${TARGET_102}/
+    cp -f test.tar.gz ${TARGET_104}/
 
-    : '
-    tar -cvf target_vck190.tar ${TARGET_190}/
-    tar -cvf target_zcu102.tar ${TARGET_102}/
-    tar -cvf target_zcu104.tar ${TARGET_104}/
-    '
+    tar -cvf target_vck190.tar ${TARGET_190}/  >& /dev/null
+    tar -cvf target_zcu102.tar ${TARGET_102}/  >& /dev/null
+    tar -cvf target_zcu104.tar ${TARGET_104}/  >& /dev/null
 
     echo "#####################################"
     echo "MAIN FCN8 FLOW COMPLETED"
