@@ -125,10 +125,12 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  <td>Use AI Optimizer for TensorFlow to prune an AlexNet CNN by 80% while maintaining the original accuracy.</td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/05-pytorch-subgraphs/README.md">Learn how to deploy a CNN on the Xilinx [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) board using Vitis AI.</td>
+ <td align="center"><a href="./Feature_Tutorials/05-pytorch-subgraphs/README.md">Partitioning Vitis AI SubGraphs on CPU/DPU</a></td>
+ <td>Learn how to deploy a CNN on the Xilinx [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) board using Vitis AI.</td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/06-tf2_quant_fine_tune/README.md">Learn how to implement the Vitis-AI quantization fine-tuning for TensorFlow2.3.</td>
+ <td align="center"><a href="./Feature_Tutorials/06-tf2_quant_fine_tune/README.md">Fine-Tuning TensorFlow2 quantized models</a></td>
+ <td>Learn how to implement the Vitis-AI quantization fine-tuning for TensorFlow2.3.</td>
  </tr>
  </table>
 
