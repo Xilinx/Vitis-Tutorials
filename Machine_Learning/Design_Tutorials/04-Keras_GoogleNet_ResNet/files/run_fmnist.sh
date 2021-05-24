@@ -16,7 +16,7 @@
 ## under the License.
 
 # author daniele.bagni@xilinx.com
-# date: 26 Nov 2020
+# date: 6 May 2021
 
 
 CNN_INP_NODE="conv2d_1_input"
@@ -98,68 +98,68 @@ dos2unix_conversion() {
   echo "##########################################################################"
   echo "FREEZE GRAPH of LeNet on FMNIST"
   echo "##########################################################################"
-  rm ./freeze/fmnist/Lenet/*
-  freeze_graph --input_meta_graph=./tf_chkpts/fmnist/LeNet/float_model.ckpt.meta \
-               --input_checkpoint=./tf_chkpts/fmnist/LeNet/float_model.ckpt \
+  rm ./build/freeze/fmnist/Lenet/*
+  freeze_graph --input_meta_graph=./build/tf_chkpts/fmnist/LeNet/float_model.ckpt.meta \
+               --input_checkpoint=./build/tf_chkpts/fmnist/LeNet/float_model.ckpt \
                --input_binary=true \
-               --output_graph=./freeze/fmnist/LeNet/frozen_graph.pb \
+               --output_graph=./build/freeze/fmnist/LeNet/frozen_graph.pb \
                --output_node_names=${LENET_OUT_NODE}
                #2>&1 | tee rpt/fmnist/3a_freeze_graph_LeNet.log
   echo " "
   echo "##########################################################################"
   echo "INSPECT FROZEN GRAPH of LeNet  on FMNIST"
   echo "##########################################################################"
-  vai_q_tensorflow inspect --input_frozen_graph=./freeze/fmnist/LeNet/frozen_graph.pb
+  vai_q_tensorflow inspect --input_frozen_graph=./build/freeze/fmnist/LeNet/frozen_graph.pb
 
   echo " "
   echo "##########################################################################"
   echo "FREEZE GRAPH of miniVggNet  on FMNIST"
   echo "##########################################################################"
-  rm ./freeze/fmnist/miniVggNet/*
-  freeze_graph --input_meta_graph=./tf_chkpts/fmnist/miniVggNet/float_model.ckpt.meta \
-               --input_checkpoint=./tf_chkpts/fmnist/miniVggNet/float_model.ckpt \
+  rm ./build/freeze/fmnist/miniVggNet/*
+  freeze_graph --input_meta_graph=./build/tf_chkpts/fmnist/miniVggNet/float_model.ckpt.meta \
+               --input_checkpoint=./build/tf_chkpts/fmnist/miniVggNet/float_model.ckpt \
                --input_binary=true \
-               --output_graph=./freeze/fmnist/miniVggNet/frozen_graph.pb \
+               --output_graph=./build/freeze/fmnist/miniVggNet/frozen_graph.pb \
                --output_node_names=${VGG_OUT_NODE}
                #2>&1 | tee rpt/fmnist/3a_freeze_graph_miniVggNet.log
   echo " "
   echo "##########################################################################"
   echo "INSPECT FROZEN GRAPH of miniVggNet on FMNIST"
   echo "##########################################################################"
-  vai_q_tensorflow inspect --input_frozen_graph=./freeze/fmnist/miniVggNet/frozen_graph.pb
+  vai_q_tensorflow inspect --input_frozen_graph=./build/freeze/fmnist/miniVggNet/frozen_graph.pb
 
   # freeze trained graph
   echo "##########################################################################"
   echo "FREEZE GRAPH of miniGoogleNet  on FMNIST"
   echo "##########################################################################"
-  rm ./freeze/fmnist/miniGoogleNet/*
-  freeze_graph --input_meta_graph=./tf_chkpts/fmnist/miniGoogleNet/float_model.ckpt.meta \
-               --input_checkpoint=./tf_chkpts/fmnist/miniGoogleNet/float_model.ckpt \
+  rm ./build/freeze/fmnist/miniGoogleNet/*
+  freeze_graph --input_meta_graph=./build/tf_chkpts/fmnist/miniGoogleNet/float_model.ckpt.meta \
+               --input_checkpoint=./build/tf_chkpts/fmnist/miniGoogleNet/float_model.ckpt \
                --input_binary=true \
-               --output_graph=./freeze/fmnist/miniGoogleNet/frozen_graph.pb \
+               --output_graph=./build/freeze/fmnist/miniGoogleNet/frozen_graph.pb \
                --output_node_names=${GOOGLE_OUT_NODE}
                #2>&1 | tee rpt/fmnist/3a_freeze_graph_miniGoogleNet.log
   echo " "
   echo "##########################################################################"
   echo "INSPECT FROZEN GRAPH of miniGoogleNet  on FMNIST"
   echo "##########################################################################"
-  vai_q_tensorflow inspect --input_frozen_graph=./freeze/fmnist/miniGoogleNet/frozen_graph.pb
+  vai_q_tensorflow inspect --input_frozen_graph=./build/freeze/fmnist/miniGoogleNet/frozen_graph.pb
 
   echo "##########################################################################"
   echo "FREEZE GRAPH of miniResNet  on FMNIST"
   echo "##########################################################################"
-  rm ./freeze/fmnist/miniResNet/*
-  freeze_graph --input_meta_graph=./tf_chkpts/fmnist/miniResNet/float_model.ckpt.meta \
-               --input_checkpoint=./tf_chkpts/fmnist/miniResNet/float_model.ckpt \
+  rm ./build/freeze/fmnist/miniResNet/*
+  freeze_graph --input_meta_graph=./build/tf_chkpts/fmnist/miniResNet/float_model.ckpt.meta \
+               --input_checkpoint=./build/tf_chkpts/fmnist/miniResNet/float_model.ckpt \
                --input_binary=true \
-               --output_graph=./freeze/fmnist/miniResNet/frozen_graph.pb \
+               --output_graph=./build/freeze/fmnist/miniResNet/frozen_graph.pb \
                --output_node_names=${RESNET_OUT_NODE}
                #2>&1 | tee rpt/fmnist/3a_freeze_graph_miniResNet.log
   echo " "
   echo "##########################################################################"
   echo "INSPECT FROZEN GRAPH of miniResNet"
   echo "##########################################################################"
-  vai_q_tensorflow inspect --input_frozen_graph=./freeze/fmnist/miniResNet/frozen_graph.pb
+  vai_q_tensorflow inspect --input_frozen_graph=./build/freeze/fmnist/miniResNet/frozen_graph.pb
 
   echo " "
   echo "##########################################################################"
@@ -173,22 +173,22 @@ dos2unix_conversion() {
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH of LeNet on FMNIST"
   echo "##########################################################################"
-  python code/fmnist_eval_graph.py --dataset fmnist --graph ./freeze/fmnist/LeNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${LENET_OUT_NODE} --gpu 0  #2>&1 | tee rpt/fmnist/3b_evaluate_frozen_graph_LeNet.log
+  python code/fmnist_eval_graph.py --dataset fmnist --graph ./build/freeze/fmnist/LeNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${LENET_OUT_NODE} --gpu 0  #2>&1 | tee rpt/fmnist/3b_evaluate_frozen_graph_LeNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH of miniVggNet  on FMNIST"
   echo "##########################################################################"
-  python code/fmnist_eval_graph.py --dataset fmnist --graph ./freeze/fmnist/miniVggNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${VGG_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/fmnist/3b_evaluate_frozen_graph_miniVggNet.log
+  python code/fmnist_eval_graph.py --dataset fmnist --graph ./build/freeze/fmnist/miniVggNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${VGG_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/fmnist/3b_evaluate_frozen_graph_miniVggNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH of GoogleNet  on FMNIST"
   echo "##########################################################################"
-  python code/fmnist_eval_graph.py --dataset fmnist --graph ./freeze/fmnist/miniGoogleNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${GOOGLE_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/fmnist/3b_evaluate_frozen_graph_miniGoogleNet.log
+  python code/fmnist_eval_graph.py --dataset fmnist --graph ./build/freeze/fmnist/miniGoogleNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${GOOGLE_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/fmnist/3b_evaluate_frozen_graph_miniGoogleNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH of ResNet  on FMNIST"
   echo "##########################################################################"
-  python code/fmnist_eval_graph.py --dataset fmnist --graph ./freeze/fmnist/miniResNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${RESNET_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/fmnist/3b_evaluate_frozen_graph_miniResNet.log
+  python code/fmnist_eval_graph.py --dataset fmnist --graph ./build/freeze/fmnist/miniResNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${RESNET_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/fmnist/3b_evaluate_frozen_graph_miniResNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH COMPLETED  on FMNIST"
@@ -203,11 +203,11 @@ dos2unix_conversion() {
   echo "QUANTIZE LeNet on FMNIST"
   echo "##########################################################################"
   vai_q_tensorflow  quantize \
-	--input_frozen_graph ../freeze/fmnist/LeNet/frozen_graph.pb \
+	--input_frozen_graph ../build/freeze/fmnist/LeNet/frozen_graph.pb \
 	--input_nodes ${CNN_INP_NODE} \
 	--input_shapes ?,32,32,3 \
 	--output_nodes ${LENET_OUT_NODE}\
-	--output_dir ../quantized_results/fmnist/LeNet/ \
+	--output_dir ../build/quantized_results/fmnist/LeNet/ \
 	--method 1 \
 	--input_fn fmnist_graph_input_fn.calib_input \
 	--calib_iter 20 \
@@ -218,11 +218,11 @@ dos2unix_conversion() {
   echo "QUANTIZE miniVggNet  on FMNIST"
   echo "##########################################################################"
   vai_q_tensorflow quantize \
-	--input_frozen_graph ../freeze/fmnist/miniVggNet/frozen_graph.pb \
+	--input_frozen_graph ../build/freeze/fmnist/miniVggNet/frozen_graph.pb \
 	--input_nodes ${CNN_INP_NODE} \
 	--input_shapes ?,32,32,3 \
 	--output_nodes ${VGG_OUT_NODE} \
-	--output_dir ../quantized_results/fmnist/miniVggNet/ \
+	--output_dir ../build/quantized_results/fmnist/miniVggNet/ \
 	--method 1 \
 	--input_fn fmnist_graph_input_fn.calib_input \
 	--calib_iter 20 \
@@ -233,11 +233,11 @@ dos2unix_conversion() {
   echo "QUANTIZE miniGoogleNet  on FMNIST"
   echo "##########################################################################"
   vai_q_tensorflow quantize \
-	--input_frozen_graph ../freeze/fmnist/miniGoogleNet/frozen_graph.pb \
+	--input_frozen_graph ../build/freeze/fmnist/miniGoogleNet/frozen_graph.pb \
 	--input_nodes ${CNN_INP_NODE} \
 	--input_shapes ?,32,32,3 \
 	--output_nodes ${GOOGLE_OUT_NODE} \
-	--output_dir ../quantized_results/fmnist/miniGoogleNet/ \
+	--output_dir ../build/quantized_results/fmnist/miniGoogleNet/ \
 	--method 1 \
 	--input_fn fmnist_graph_input_fn.calib_input \
 	--calib_iter 20 \
@@ -248,11 +248,11 @@ dos2unix_conversion() {
   echo "QUANTIZE miniResNet  on FMNIST"
   echo "##########################################################################"
   vai_q_tensorflow quantize \
-	--input_frozen_graph ../freeze/fmnist/miniResNet/frozen_graph.pb \
+	--input_frozen_graph ../build/freeze/fmnist/miniResNet/frozen_graph.pb \
 	--input_nodes ${CNN_INP_NODE} \
 	--input_shapes ?,32,32,3 \
 	--output_nodes ${RESNET_OUT_NODE} \
-	--output_dir ../quantized_results/fmnist/miniResNet/ \
+	--output_dir ../build/quantized_results/fmnist/miniResNet/ \
 	--method 1 \
 	--input_fn fmnist_graph_input_fn.calib_input \
 	--calib_iter 20 \
@@ -272,22 +272,22 @@ dos2unix_conversion() {
   echo "##########################################################################"
   echo "EVALUATE QUANTIZED GRAPH of LeNet on FMNIST"
   echo "##########################################################################"
-  python code/fmnist_eval_graph.py --dataset fmnist --graph ./quantized_results/fmnist/LeNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${LENET_OUT_NODE} --gpu 0  #2>&1 | tee rpt/fmnist/4b_evaluate_quantized_graph_LeNet.log
+  python code/fmnist_eval_graph.py --dataset fmnist --graph ./build/quantized_results/fmnist/LeNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${LENET_OUT_NODE} --gpu 0  #2>&1 | tee rpt/fmnist/4b_evaluate_quantized_graph_LeNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE QUANTIZED GRAPH of miniVggNet  on FMNIST"
   echo "##########################################################################"
-  python code/fmnist_eval_graph.py --dataset fmnist --graph ./quantized_results/fmnist/miniVggNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${VGG_OUT_NODE} --gpu 0 #2>&1 | tee rpt/fmnist/4b_evaluate_quantized_graph_miniVggNet.log
+  python code/fmnist_eval_graph.py --dataset fmnist --graph ./build/quantized_results/fmnist/miniVggNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${VGG_OUT_NODE} --gpu 0 #2>&1 | tee rpt/fmnist/4b_evaluate_quantized_graph_miniVggNet.log
   echo " "
   echo "##############################################################################"
   echo "EVALUATE QUANTIZED GRAPH of miniGoogleNet  on FMNIST"
   echo "##############################################################################"
-  python code/fmnist_eval_graph.py --dataset fmnist --graph ./quantized_results/fmnist/miniGoogleNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${GOOGLE_OUT_NODE} --gpu 0 #2>&1 | tee rpt/fmnist/4b_evaluate_quantized_graph_miniGoogleNet.log
+  python code/fmnist_eval_graph.py --dataset fmnist --graph ./build/quantized_results/fmnist/miniGoogleNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${GOOGLE_OUT_NODE} --gpu 0 #2>&1 | tee rpt/fmnist/4b_evaluate_quantized_graph_miniGoogleNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE QUANTIZED GRAPH of miniResNet  on FMNIST"
   echo "##########################################################################"
-  python code/fmnist_eval_graph.py --dataset fmnist --graph ./quantized_results/fmnist/miniResNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${RESNET_OUT_NODE} --gpu 0 #2>&1 | tee rpt/fmnist/4b_evaluate_quantized_graph_miniResNet.log
+  python code/fmnist_eval_graph.py --dataset fmnist --graph ./build/quantized_results/fmnist/miniResNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${RESNET_OUT_NODE} --gpu 0 #2>&1 | tee rpt/fmnist/4b_evaluate_quantized_graph_miniResNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE QUANTIZED GRAPH COMPLETED  on FMNIST"
@@ -301,58 +301,55 @@ dos2unix_conversion() {
     echo "COMPILE WITH Vitis  on VCK190: LeNet on FMNIST"
     echo "##########################################################################"
     vai_c_tensorflow \
-        --frozen_pb=./quantized_results/fmnist/LeNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/fmnist/LeNet \
+        --frozen_pb=./build/quantized_results/fmnist/LeNet/quantize_eval_model.pb \
+          --arch ./arch_vck190_dw.json \
+          --output_dir=./build/compile/fmnist/LeNet \
         --net_name=LeNet \
         --options    "{'mode':'normal'}"
         #2>&1 | tee rpt/fmnist/5_vai_compile_LeNet.log
-    mv  ./compile/fmnist/LeNet/*.xmodel ./target_vck190/fmnist/LeNet/model/
-    rm ./target_vck190/fmnist/LeNet/model/*_org.xmodel
+    mv  ./build/compile/fmnist/LeNet/*.xmodel ./target_vck190/fmnist/LeNet/
+    rm ./target_vck190/fmnist/LeNet/*_org.xmodel
     echo " "
     echo "##########################################################################"
     echo "COMPILE WITH Vitis AI on VCK190: miniVggNet  on FMNIST"
     echo "##########################################################################"
     vai_c_tensorflow \
-        --frozen_pb=./quantized_results/fmnist/miniVggNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/fmnist/miniVggNet \
+        --frozen_pb=./build/quantized_results/fmnist/miniVggNet/quantize_eval_model.pb \
+          --arch ./arch_vck190_dw.json \
+          --output_dir=./build/compile/fmnist/miniVggNet \
         --net_name=miniVggNet \
         --options    "{'mode':'normal'}"
         #2>&1 | tee rpt/fmnist/5_vai_compile_miniVggNet.log
-    mv  ./compile/fmnist/miniVggNet/*.xmodel ./target_vck190/fmnist/miniVggNet/model/
-    rm ./target_vck190/fmnist/miniVggNet/model/*_org.xmodel
+    mv  ./build/compile/fmnist/miniVggNet/*.xmodel ./target_vck190/fmnist/miniVggNet/
+    rm ./target_vck190/fmnist/miniVggNet/*_org.xmodel
 
     echo " "
     echo "##########################################################################"
     echo "COMPILE WITH Vitis AI on VCK190: miniGoogleNet  on FMNIST"
     echo "##########################################################################"
     vai_c_tensorflow \
-        --frozen_pb=./quantized_results/fmnist/miniGoogleNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/fmnist/miniGoogleNet \
+        --frozen_pb=./build/quantized_results/fmnist/miniGoogleNet/quantize_eval_model.pb \
+          --arch ./arch_vck190_dw.json \
+          --output_dir=./build/compile/fmnist/miniGoogleNet \
         --net_name=miniGoogleNet \
         --options    "{'mode':'normal'}"
         #2>&1 | tee rpt/fmnist/5_vai_compile_miniGoogleNet.log
-    mv  ./compile/fmnist/miniGoogleNet/*.xmodel ./target_vck190/fmnist/miniGoogleNet/model/
-    rm ./target_vck190/fmnist/miniGoogleNet/model/*_org.xmodel
+    mv  ./build/compile/fmnist/miniGoogleNet/*.xmodel ./target_vck190/fmnist/miniGoogleNet/
+    rm ./target_vck190/fmnist/miniGoogleNet/*_org.xmodel
 
-    : '
-    # this CNN is not yet supported by XVDPU due to a missing layer
     echo " "
     echo "##########################################################################"
     echo "COMPILE WITH Vitis AI on VCK190: miniResNet  on FMNIST"
     echo "##########################################################################"
     vai_c_tensorflow \
-        --frozen_pb=./quantized_results/fmnist/miniResNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/fmnist/miniResNet \
+        --frozen_pb=./build/quantized_results/fmnist/miniResNet/quantize_eval_model.pb \
+          --arch ./arch_vck190_dw.json \
+          --output_dir=./build/compile/fmnist/miniResNet \
         --net_name=miniResNet \
         --options    "{'mode':'normal'}"
         #2>&1 | tee rpt/fmnist/5_vai_compile_miniResNet.log
-    mv  ./compile/fmnist/miniResNet/*.xmodel ./target_vck190/fmnist/miniResNet/model/
-    rm ./target_vck190/fmnist/miniResNet/model/*_org.xmodel
-    '
+    mv  ./build/compile/fmnist/miniResNet/*.xmodel ./target_vck190/fmnist/miniResNet/
+    rm ./target_vck190/fmnist/miniResNet/*_org.xmodel
 
     echo " "
     echo "##########################################################################"
@@ -368,15 +365,15 @@ echo "##########################################################################
 echo "COMPILE WITH Vitis AI on ZCU104: LeNet on FMNIST"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/fmnist/LeNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/fmnist/LeNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/fmnist/LeNet \
+       --output_dir=./build/compile/fmnist/LeNet \
        --net_name=LeNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/fmnist/5_vai_compile_LeNet.log
 
-mv  ./compile/fmnist/LeNet/*.xmodel ./target_zcu104/fmnist/LeNet/model/
-rm ./target_zcu104/fmnist/LeNet/model/*_org.xmodel
+mv  ./build/compile/fmnist/LeNet/*.xmodel ./target_zcu104/fmnist/LeNet/
+rm ./target_zcu104/fmnist/LeNet/*_org.xmodel
 
 # Compile
 echo " "
@@ -384,45 +381,45 @@ echo "##########################################################################
 echo "COMPILE WITH Vitis AI on ZCU104: miniVggNet  on FMNIST"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/fmnist/miniVggNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/fmnist/miniVggNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/fmnist/miniVggNet \
+       --output_dir=./build/compile/fmnist/miniVggNet \
        --net_name=miniVggNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/fmnist/5_vai_compile_miniVggNet.log
 
-mv  ./compile/fmnist/miniVggNet/*.xmodel ./target_zcu104/fmnist/miniVggNet/model/
-rm ./target_zcu104/fmnist/miniVggNet/model/*_org.xmodel
+mv  ./build/compile/fmnist/miniVggNet/*.xmodel ./target_zcu104/fmnist/miniVggNet/
+rm ./target_zcu104/fmnist/miniVggNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
 echo "COMPILE WITH Vitis AI on ZCU104: miniGoogleNet  on FMNIST"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/fmnist/miniGoogleNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/fmnist/miniGoogleNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/fmnist/miniGoogleNet \
+       --output_dir=./build/compile/fmnist/miniGoogleNet \
        --net_name=miniGoogleNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/fmnist/5_vai_compile_miniGoogleNet.log
 
-mv  ./compile/fmnist/miniGoogleNet/*.xmodel ./target_zcu104/fmnist/miniGoogleNet/model/
-rm  ./target_zcu104/fmnist/miniGoogleNet/model/*_org.xmodel
+mv  ./build/compile/fmnist/miniGoogleNet/*.xmodel ./target_zcu104/fmnist/miniGoogleNet/
+rm  ./target_zcu104/fmnist/miniGoogleNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
 echo "COMPILE WITH Vitis AI on ZCU104: miniResNet  on FMNIST"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/fmnist/miniResNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/fmnist/miniResNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/fmnist/miniResNet \
+       --output_dir=./build/compile/fmnist/miniResNet \
        --net_name=miniResNet \
        --options    "{'mode':'normal'}"
       # 2>&1 | tee rpt/fmnist/5_vai_compile_miniResNet.log
 
-mv  ./compile/fmnist/miniResNet/*.xmodel ./target_zcu104/fmnist/miniResNet/model/
-rm ./target_zcu104/fmnist/miniResNet/model/*_org.xmodel
+mv  ./build/compile/fmnist/miniResNet/*.xmodel ./target_zcu104/fmnist/miniResNet/
+rm ./target_zcu104/fmnist/miniResNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
@@ -438,15 +435,15 @@ echo "##########################################################################
 echo "COMPILE WITH Vitis AI on ZCU102: LeNet on FMNIST"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/fmnist/LeNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/fmnist/LeNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/fmnist/LeNet \
+       --output_dir=./build/compile/fmnist/LeNet \
        --net_name=LeNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/fmnist/5_vai_compile_LeNet.log
 
-mv ./compile/fmnist/LeNet/*.xmodel ./target_zcu102/fmnist/LeNet/model/
-rm ./target_zcu102/fmnist/LeNet/model/*_org.xmodel
+mv ./build/compile/fmnist/LeNet/*.xmodel ./target_zcu102/fmnist/LeNet/
+rm ./target_zcu102/fmnist/LeNet/*_org.xmodel
 
 # Compile
 echo " "
@@ -454,45 +451,45 @@ echo "##########################################################################
 echo "COMPILE WITH Vitis AI on ZCU102: miniVggNet  on FMNIST"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/fmnist/miniVggNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/fmnist/miniVggNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/fmnist/miniVggNet \
+       --output_dir=./build/compile/fmnist/miniVggNet \
        --net_name=miniVggNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/fmnist/5_vai_compile_miniVggNet.log
 
-mv  ./compile/fmnist/miniVggNet/*.xmodel ./target_zcu102/fmnist/miniVggNet/model/
-rm ./target_zcu102/fmnist/miniVggNet/model/*_org.xmodel
+mv  ./build/compile/fmnist/miniVggNet/*.xmodel ./target_zcu102/fmnist/miniVggNet/
+rm ./target_zcu102/fmnist/miniVggNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
 echo "COMPILE WITH Vitis AI on ZCU102: miniGoogleNet  on FMNIST"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/fmnist/miniGoogleNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/fmnist/miniGoogleNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/fmnist/miniGoogleNet \
+       --output_dir=./build/compile/fmnist/miniGoogleNet \
        --net_name=miniGoogleNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/fmnist/5_vai_compile_miniGoogleNet.log
 
-mv  ./compile/fmnist/miniGoogleNet/*.xmodel ./target_zcu102/fmnist/miniGoogleNet/model/
-rm  ./target_zcu102/fmnist/miniGoogleNet/model/*_org.xmodel
+mv  ./build/compile/fmnist/miniGoogleNet/*.xmodel ./target_zcu102/fmnist/miniGoogleNet/
+rm  ./target_zcu102/fmnist/miniGoogleNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
 echo "COMPILE WITH Vitis AI on ZCU102: miniResNet  on FMNIST"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/fmnist/miniResNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/fmnist/miniResNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/fmnist/miniResNet \
+       --output_dir=./build/compile/fmnist/miniResNet \
        --net_name=miniResNet \
        --options    "{'mode':'normal'}"
       # 2>&1 | tee rpt/fmnist/5_vai_compile_miniResNet.log
 
-mv  ./compile/fmnist/miniResNet/*.xmodel ./target_zcu102/fmnist/miniResNet/model/
-rm ./target_zcu102/fmnist/miniResNet/model/*_org.xmodel
+mv  ./build/compile/fmnist/miniResNet/*.xmodel ./target_zcu102/fmnist/miniResNet/
+rm ./target_zcu102/fmnist/miniResNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
@@ -503,15 +500,17 @@ echo " "
 
 main() {
 
+: '
   ##copy target_zcu102 files into the new target_zcu104 folder if you have also the ZCU104 board
   cp -r target_zcu102 target_zcu104
   ##copy target_zcu102 files into the new target_vck190 folder if you have also the VCK190 board
   cp -r target_zcu102 target_vck190
+'
 
   # training from scratch with FMNIST
   1_fmnist_train
 
-  # convert Keras model into TF inference graph
+  # convert Keras model into TF  --arch ./arch_vck190_dw.json \ inference graph
   2_fmnist_Keras2TF
 
   # freeze the graph to make predictions later
@@ -526,24 +525,25 @@ main() {
   # make predictions with quantized frozen graph
   4b_fmnist_evaluate_quantized_graph
 
-  ## compile ELF file for VCK190 target board
+  ## compile xmodel file for VCK190 target board
   5_fmnist_vai_compile_vck190
 
-  # compile ELF file for ZCU102 target board
+  # compile xmodel file for ZCU102 target board
   5_fmnist_vai_compile_zcu102
 
-  # compile ELF file for ZCU104 target board
+  # compile xmodel file for ZCU104 target board
   5_fmnist_vai_compile_zcu104
 
-  # compile ELF file for VCK190 target board
-  5_cifar10_vai_compile_vck190
 
   ## copy test images into target board
-  tar -cvf fmnist_test.tar ./dataset/fmnist/test
-  cp ./fmnist_test.tar ./target_zcu102/
-  cp ./fmnist_test.tar ./target_vck190/
-  mv ./fmnist_test.tar ./target_zcu104/
-
+  cd build/dataset/fmnist
+  cp -r ./test ./fmnist_test
+  tar -cvf fmnist_test.tar ./fmnist_test  &> /dev/null
+  rm -rf ./fmnist_test
+  cd ../../../
+  cp ./build/dataset/fmnist/fmnist_test.tar ./target_zcu102/
+  cp ./build/dataset/fmnist/fmnist_test.tar ./target_vck190/
+  mv ./build/dataset/fmnist/fmnist_test.tar ./target_zcu104/
 
 }
 

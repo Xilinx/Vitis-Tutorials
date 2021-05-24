@@ -16,6 +16,9 @@
 ## License for the specific language governing permissions and limitations
 ## under the License.
 '''
+# Author: Daniele Bagni, Xilinx Inc
+# date 6 May 2021
+
 
 
 ##############################################################################################
@@ -49,7 +52,7 @@ DATASET_DIR = cfg.DATASET_DIR
 TRAIN_DIR = cfg.TRAIN_DIR
 VALID_DIR = cfg.VALID_DIR
 TEST_DIR  = cfg.TEST_DIR
-CALIB_DIR = cfg.CALIB_DIR
+CALIB_DIR = os.path.join(SCRIPT_DIR, "./build/dataset/cifar10/calib")
 
 # remove any previous data
 dir_list = [DATASET_DIR, TRAIN_DIR, VALID_DIR, TEST_DIR, CALIB_DIR]

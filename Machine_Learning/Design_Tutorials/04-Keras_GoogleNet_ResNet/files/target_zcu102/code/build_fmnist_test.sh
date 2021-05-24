@@ -17,9 +17,9 @@
 
 # airplane automobile bird cat deer dog frog horse ship truck
 
-tar -xvf fmnist_test.tar
+tar -xvf fmnist_test.tar &> /dev/null
 
-cd ./dataset/fmnist/test
+cd ./fmnist_test
 
 cd ankleBoot
 mv *.png ../
@@ -72,8 +72,3 @@ cd ..
 rm -r trouser
 
 cd ..
-mv test fmnist_test
-mv fmnist_test ../../
-cd ../../
-rm -r dataset
-#cp ./fmnist/LeNet/labels.txt ./fmnist_test/
