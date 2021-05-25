@@ -29,4 +29,9 @@ visualize:
 clean:
 	make -C Emulation-AIE clean
 
+clean_data:
+	ls data/* | grep -v dummy.txt | xargs echo rm | sh
+
+
+
 .PHONY: all clean compile  simulate visualize
