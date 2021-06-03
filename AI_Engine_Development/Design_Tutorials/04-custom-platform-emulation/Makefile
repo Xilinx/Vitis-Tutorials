@@ -19,7 +19,7 @@ ifndef PLATFORM_REPO_PATHS
 endif
 
 ifndef SDKTARGETSYSROOT
-  SDKTARGETSYSROOT = $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux
+  SDKTARGETSYSROOT = $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux
   export SDKTARGETSYSROOT
 endif
 
@@ -35,10 +35,16 @@ KERNEL := s2mm.cpp mm2s.cpp
 KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
-BASE_PLATFORM := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
-ROOTFS :=../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/rootfs.ext4
-IMAGE := ../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/Image
-SYSROOT := ${SDKTARGETSYSROOT}
+TEST := SPRITE
+ifeq (${TEST}, SPRITE)
+	BASE_PLATFORM := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/vck190_custom.xpfm
+	ROOTFS := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/rootfs.ext4
+	IMAGE := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/Image
+else
+	BASE_PLATFORM := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
+	ROOTFS :=../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/rootfs.ext4
+	IMAGE := ../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/Image
+endif
 
 # Command-line options
 VPP := v++
@@ -54,21 +60,21 @@ GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
 			 -Wno-int-to-pointer-cast
 
-GCC_INCLUDES := -I$(SYSROOT)/usr/include/xrt \
-				-I$(SYSROOT)/usr/include \
+GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
+				-I$(SDKTARGETSYSROOT)/usr/include \
 				-I./ -I../aie \
 				-I${XILINX_VITIS}/aietools/include \
 				-I${XILINX_VITIS}/include
 
 GCC_LIB := -ladf_api_xrt -lxrt_coreutil \
-		   -L$(SYSROOT)/usr/lib \
+		   -L$(SDKTARGETSYSROOT)/usr/lib \
 		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
 
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
 
 guard-%:
-	@#$(${$*}, $(error $* is not set. Run: environment-setup-aarch64-xilinx-linux))
+	@#$(${$*}, $(error $* is not set. Run: environment-setup-cortexa72-cortexa53-xilinx-linux))
 
 run: all
 all: kernels aie xclbin host package
@@ -112,7 +118,7 @@ host: guard-SYSROOT guard-CXX
 
 ##################################################################################################
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
-package:
+package: guard-IMAGE guard-ROOTFS
 	cd ./sw
 	v++ -p -t ${TARGET} \
 		-f ../${BASE_PLATFORM} \

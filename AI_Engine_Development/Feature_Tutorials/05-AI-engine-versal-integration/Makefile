@@ -10,7 +10,7 @@ KERNEL := s2mm.cpp mm2s.cpp
 KERNEL_XO := s2mm.xo mm2s.xo
 CONFIG_FILE := system.cfg
 
-BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
+BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
 
 # Command-line options
 VPP := v++
@@ -51,7 +51,7 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_202110_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202110_1)
 
 guard-ROOTFS:
 	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.1/rootfs.ext4)
@@ -124,6 +124,9 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 	@echo "COMPLETE: hw_emu package created."
 
 ###################################################################################################
+
+#Build the design and then run hardware emulation 
+run: all run_emu
 
 ###########################################################################
 # If the target is for HW_EMU, launch the emulator
