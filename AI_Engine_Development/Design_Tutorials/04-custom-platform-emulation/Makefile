@@ -12,6 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#Check environment setup
+ifndef PLATFORM_REPO_PATHS
+  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
+  export PLATFORM_REPO_PATHS
+endif
+
+ifndef SDKTARGETSYSROOT
+  SDKTARGETSYSROOT = $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux
+  export SDKTARGETSYSROOT
+endif
+
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
@@ -59,7 +70,9 @@ GCC_LIB := -ladf_api_xrt -lxrt_coreutil \
 guard-%:
 	@#$(${$*}, $(error $* is not set. Run: environment-setup-aarch64-xilinx-linux))
 
+run: all
 all: kernels aie xclbin host package
+sd_card: kernels aie xclbin host package
 
 ######################################################
 # This step compiles the HLS C kernels and creates an SDF Graph
@@ -100,9 +113,8 @@ host: guard-SYSROOT guard-CXX
 ##################################################################################################
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
 package:
-ifeq (${TARGET},hw_emu)
 	cd ./sw
-	v++ -p -t hw_emu \
+	v++ -p -t ${TARGET} \
 		-f ../${BASE_PLATFORM} \
 		--package.rootfs=${ROOTFS} \
 		--package.image_format=ext4 \
@@ -110,17 +122,6 @@ ifeq (${TARGET},hw_emu)
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
-else
-	cd ./sw && \
-	v++ -p -t hw \
-		-f ../${BASE_PLATFORM} \
-		--package.rootfs=${ROOTFS} \
-		--package.image_format=ext4 \
-		--package.boot_mode=sd \
-		--package.kernel_image=${IMAGE} \
-		--package.defer_aie_run \
-		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
-endif
 ###################################################################################################
 
 ###########################################################################

@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -12,7 +12,7 @@
 ## Introduction
 Developing an accelerated AI Engine design for the VCK190, can be done using the Vitis™ compiler (`v++`). This compiler can be used to compile programmable logic kernels (PL kernels), and connect these PL kernels to the AI Engine and PS device.
 
-In this tutorial you will learn clocking concepts for the Vitis compiler via how to define clocking for ADF Graph PL kernels, PLIO kernels by using clocking automation functionality. The design being used is a simple classifier design: 
+In this tutorial you will learn clocking concepts for the Vitis compiler via how to define clocking for ADF Graph, and PL kernels by using clocking automation functionality. The design being used is a simple classifier design: 
 
 ![Design diagram](./images/event_noinfo.PNG)
 
@@ -25,35 +25,32 @@ In the design the following clocking steps are used:
 
 | Kernel Location | Compile Setting |
 | --- | --- |
-| Interpolator & Classifier | AI Engine Frequency (1GHz) |
-| `polar_clip` | 200MHz (`aiecompiler`, `v++ -c`, & `v++ -l`)
+| Interpolator, Polar Clip, & Classifier | AI Engine Frequency (1GHz) |
 | `mm2s` & `s2mm` | 150MHz and 100MHz (`v++ -c` & `v++ -l`) | 
 For more detailed info on this, look for *Table 40* of UG1076.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the VCK190 base platform. 
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.1) for setting up software and installing the VCK190 base platform. 
 
 Before starting this tutorial run the steps below:
 
-1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
-2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2020.2` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
+2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2021.1` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
-
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 
 ## Objectives
 You will learn the following:
-* Clocking of the PL kernel in the ADF Graph
-* CLocking of PL kernels outside the ADF Graph
+* CLocking of PL kernels
 * Introduction of datawidth converters, clock-domain crossing, and FIFOs in `v++`
 
 ## Step 1 - Building ADF Graph
-The ADF graph has a PL kernel associated with it, `polar_clip`. The `aiecompiler` will bring in the interfaces for connectivity (for `aiesimulator` purpose only). You will have to compile this PL Kernel with `v++` for emulation and hardware builds. For clocking PL kernels inside the ADF Graph, this info is necessary, and the `--pl-freq` is used to determine the appropriate frequency (in MHz).
+The ADF graph has connections to the programmable logic through the PLIO interfaces. These interfaces can have reference clocking either from the `graph.cpp` through the `PLIO()` constructor or through the `--pl-freq`. This will help with knowing what kind of clock can be set on the PL Kernels that are going to connect to the PLIO. Here you will set the reference frequency to be 200MHz for all PLIO interfaces.
+
+**NOTE**: If you do not specify the `--pl-freq` it will be set to 1/4 the frequency of the AI Engine frequency.
 
 ```bash
-aiecompiler -target=hw -I ./aie \
-    --platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm \
-    --pl-freq=200 ./aie/graph.cpp --workdir=./Work
+aiecompiler --target=hw -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-freq=200 --workdir=./Work
 ```
 
 or 
@@ -66,42 +63,20 @@ make aie
 | ---- | ----------- |
 | --target | Target how the compiler will build the graph. Default is `hw` |
 | --include | All the typical include files needed to build the graph |
-| --pl-freq | Sets all PL kernels in the graph to this frequency in MHz |
+| --pl-freq | Sets all PLIO reference frequencies (in MHz) |
 | --workdir | The location of where the Work directory will be created |
 
-**Note**: Building PL kernels can be an iterative process.
-
-## Step 1 - Clocking for PL Kernels in ADF Graph
-After the graph knows the clocking the PL Kernel is using, you'll have to make sure the kernel is compiled with the same frequency (this is to make sure the kernel is optimized to the specified frequency). Notice in the next command the `--hls.clock`. This is used to handle the new frequency, and is explained more *Versal ACAP AI Engine Programming Environment - Chapter 13*.
-
-1. Run the following command:
-    ```bash
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip \
-        ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps
-    ```
-    Notice that the `--hls.clock` is missing in this command. This is because the clocking is pre-defined in the graph from the `aiecompiler`.
-
-    |Switch/flag|Description|
-    |  ---  |  ---  |
-    |`-c`|Tells v++ to just compile the kernel|
-    |`--platform/-f`|Specifies the path to an extensible platform|
-    |`-k`|The kernel name. This has to match the function name in the corresponding file defining the kernel.|
-    |`-o`|The output. Because you are building a kernel, the output must be `.xo`|
-    |`--save-temps/-s`|Saves the generated output process in the `_x` directory|
-
-When complete, you will have a `libadf.a` and `polar_clip.xo` files ready to use with `v++`. A key point to this `polar_clip` kernel is that it is considered a free running kernel. This means that the host application will never be able to control it, and it is already running and waiting for data at launch. As mentioned in the **Overview**, data will exit the AI Engine, go to the `polar_clip`, and then return to the AI Engine. 
-
-## Step 2 - Clocking the PLIO Kernels
-An ADF graph communicates with the PL fabric through the means of inputs and outputs defined in the graph. These specific interfaces need to be hooked up to what is called a programmable logic input/output (PLIO) kernel. 
-
-In this design you will use two of these kernels called: **MM2S** and **S2MM**. These are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. Clocking of these PLIO kernels are separate from the ADF Graph and you'd specify them when compiling the kernel, and when you link the design together.
+## Step 2 - Clocking the PL Kernels
+In this design you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels are separate from the ADF Graph and you'd specify them when compiling the kernel, and when you link the design together.
 
 Run the following commands:
     ```bash
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp \
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp \
         --hls.clock 150000000:mm2s -o mm2s.xo --save-temps
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp \
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp \
         --hls.clock 150000000:s2mm -o s2mm.xo --save-temps
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip \
+        ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps
     ```
 
     Or this command:
@@ -120,17 +95,17 @@ A brief explanation of the `v++` options:
 | `-o` | (required) The output, which will always be .xo.|
 | `--save-temps` | (optional) Will create a folder structure and save the compilation of the kernel.|
 
-For additional information, see [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/vitiscommandcompiler.html).
+For additional information, see [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).
 
-Once completed, you will have the `mm2s.xo` and `s2mm.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
+Once completed, you will have the `mm2s.xo`, `s2mm.xo`, `polar_clip.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
 
 ## Step 3 - `v++` linker -- Building the System
-Now that you have a compiled graph (`libadf.a`), the PLIO kernels (`mm2s.xo` and `s2mm.xo`), and the PL kernel for the graph (`polar_clip.xo`), you can link everything up for the VCK190 platform.
+Now that you have a compiled graph (`libadf.a`), the PLIO kernels (`mm2s.xo`, `s2mm.xo`, and`polar_clip.xo`), you can link everything up for the VCK190 platform.
 
 A few of things to remember in this step:
 
 1. For PLIO kernels, you need to specify their connectivity for the system.
-2. Specify the clocking per PL/PLIO Kernel
+2. Specify the clocking per PL Kernel
 3. You need to determine the `TARGET`: *hw* or *hw_emu*.
 
 To link kernels up to the platform and AI Engine, you will need to look at the `system.cfg` file. For this design the config file looks like this:
@@ -139,16 +114,19 @@ To link kernels up to the platform and AI Engine, you will need to look at the `
 [connectivity]
 nk=mm2s:1:mm2s
 nk=s2mm:1:s2mm
+nk=polar_clip:1:polar_clip
 stream_connect=mm2s.s:ai_engine_0.Datain
+stream_connect=ai_engine_0.clip_in:polar_clip.in_sample
+stream_connect=polar_clip.out_sample:ai_engine_0.clip_out
 stream_connect=ai_engine_0.Dataout:s2mm.s
 ```
 
 Here you may notice some connectivity and clocking options.
     
- * `nk` This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm` and `mm2s` kernels.
+ * `nk` This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
  * `stream_connect` -- This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces. You can also define a FIFO on this line by adding a depth value to the end.
 
-There are many more options available for `v++`. For a full list, see the documentation [here](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/vitiscommandcompiler.html).
+There are many more options available for `v++`. For a full list, see the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).
 
 1. Modify the `system.cfg` file so that the second `stream_connect` has a stream depth of `1024`. Replace the line with `ai_engine_0.Dataout` line with this: `stream_connect=ai_engine_0.Dataout:s2mm.s:1024`
    * Keep this file open for now.
@@ -157,13 +135,13 @@ There are many more options available for `v++`. For a full list, see the docume
 3. Because the `s2mm` kernel is running slower than the AI Engine output, you need to override the clock provided to it in **Step 2**. That was just for kernel compilation, and linking is to make sure that clock is connected correctly. In the `system.cfg` file uncomment these lines:
     ```ini
     [clock]
-    freqHz=100000000:s2mm.ap_clk
+    freqHz=200000000:s2mm.ap_clk
     tolerance=1000000:s2mm.ap_clk
     ```
-    Here you are telling the `v++` linker to override the default clock frequency to 100MHz for the `s2mm` kernel, and setting the clock tolerance to 1MHz. By setting a tolerance you are giving the linker a better chance to make sure a clock can be generated and meet your bandwidth.
+    Here you are telling the `v++` linker to override the default clock frequency to 200MHz for the `s2mm` kernel, and setting the clock tolerance to 1MHz. By setting a tolerance you are giving the linker a better chance to make sure a clock can be generated and meet your bandwidth.
 4. With the changes made you can now run the following command:
     ```bash
-    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm s2mm.xo \
+    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm s2mm.xo \
         mm2s.xo polar_clip.xo ./aie/libadf.a --config system.cfg \
         --save-temps -o tutorial1.xclbin 
     ```
@@ -186,16 +164,14 @@ There are many more options available for `v++`. For a full list, see the docume
    * From the changes made above, you will notice a new clock, a Datawidth Converter, Clock Converter, and a new FIFO on the `s2mm` kernel.
       * Do note that if you change a kernel or connectivity you have to re-run v++ linker.
 
-**NOTE: Any change to the `system.cfg` file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/vitiscommandcompiler.html).**
-
-**IMPORTANT: Clocking for ADF Graph and PL Kernels follow a few rules. One, PL Kernels that are inside the ADF Graph will have to have their clock specified in three locations: Graph creation, `v++` kernel compilation, and lastly in `v++` linker. For PL Kernels outside the ADF Graph, only: `v++` kernel compilation and `v++` linker.**
+**NOTE: Any change to the `system.cfg` file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).**
 
 ## Step 4 - Compiling Host Code
 When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SDKTARGETSYSROOT**, or representation of the root file system, that can be used to cross-compile the host code.
 
 1. Open `./sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
    
-    Do take note that [XRT](https://xilinx.github.io/XRT/2020.2/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application" of UG1076. 
+    Do take note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application" of UG1076. 
 
     The output size of the kernel run is half of what was allocated earlier. This is something to keep in mind. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call will be adjusted. If this is not changed, it will hang because XRT is waiting for the full length to be processed when in reality half the count was done (even though all the data will be present). In the `host.cpp` look at line 117 and 118 and comment them out. You should have uncommented the following line:
 
@@ -216,7 +192,7 @@ To run the design on hardware using an SD card, you need to package all the file
 1. Open the `Makefile` with your editor of choice, and familiarize yourself with the contents specific to the `package` task.
 2. In an easier to read command-line view, here is the command:
     ```bash
-    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202020_1/xilinx_vck190_base_202020_1.xpfm \
+    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm \
         --package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
 		--package.boot_mode=sd \
@@ -248,7 +224,6 @@ When running the VCK190 board, make sure you have the right onboard switches fli
 2. In an attached monitor and keyboard, wait for the Linux command prompt to be available.
 3. Run the following commands:
     ```bash
-    dmesg -n 4 && echo "Hide DRM messages..."
     cd /mnt/sd-mmcblk0p1
     export XILINX_XRT=/usr
     ```
