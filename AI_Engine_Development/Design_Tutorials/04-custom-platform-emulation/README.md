@@ -19,8 +19,6 @@ The ability to control your platform, and convert your RTL IP to an RTL kernel a
 
 Prior to starting this tutorial read and execute the platform creation tutorial https://github.com/Xilinx/Vitis-In-Depth-Tutorial/tree/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190.
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
-
 ## Overview
 In this tutorial you will learn:
 * How to create an RTL kernel (outside the ADF graph) to be used with the ADF graph.
