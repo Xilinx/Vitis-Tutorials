@@ -1,8 +1,21 @@
+#
+# © Copyright 2021 Xilinx, Inc.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
 # Remove all waveforms before adding new ones
 remove_wave -of [get_wave_config] [get_waves -of [get_wave_config] -regexp ".*"]
 
 # Set the appropriate paths based upon the platform being used
-set scope_path "/xilinx_vck190_es1_base_wrapper_sim_wrapper/xilinx_vck190_es1_base_wrapper_i/xilinx_vck190_es1_base_i"
+set scope_path "/xilinx_vck190_base_wrapper_sim_wrapper/xilinx_vck190_base_wrapper_i/xilinx_vck190_base_i"
 
 # Create a wave group called CIPS and add all signals for the CIPS_0 to it
 set CIPS [add_wave_group CIPS]

@@ -1,5 +1,5 @@
 /**********
-© Copyright 2020 Xilinx, Inc.
+© Copyright 2021 Xilinx, Inc.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -13,7 +13,6 @@ limitations under the License.
 #include <adf.h>
 
 #include "fir24_sym_param.h"
-#include "noise.h"
 
 using namespace adf;
 
