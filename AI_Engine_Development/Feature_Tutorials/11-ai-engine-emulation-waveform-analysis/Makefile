@@ -1,3 +1,23 @@
+#Check environment setup
+ifndef PLATFORM_REPO_PATHS
+  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
+  export PLATFORM_REPO_PATHS
+endif
+ifndef ROOTFS
+  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
+  export ROOTFS
+endif
+ifndef IMAGE
+  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/Image
+  export IMAGE
+endif
+
+SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/Xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
+
+
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
@@ -21,6 +41,8 @@ AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --xlopt=0 --pl-freq=100 -workdir=.
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
 VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
+VPP_FLAGS := $(VPP_LINK_FLAGS)
+LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
