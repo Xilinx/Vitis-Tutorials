@@ -40,6 +40,8 @@ AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=200 -workdir=./Work
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
 VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
+VPP_FLAGS := $(VPP_LINK_FLAGS)
+LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
