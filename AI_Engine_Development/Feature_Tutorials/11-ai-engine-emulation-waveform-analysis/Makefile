@@ -64,6 +64,8 @@ GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
 
+
+
 ###
 # Guarding Checks. Do not modify.
 ###
@@ -92,7 +94,9 @@ guard-SDKTARGETSYSROOT:
 
 ###
 
-all: kernels aie aiesim xclbin host package 
+all: kernels aie aiesim xclbin host package
+run: all
+sd_card: all 
 
 ######################################################
 # This step compiles the HLS C kernels and creates an ADF Graph
