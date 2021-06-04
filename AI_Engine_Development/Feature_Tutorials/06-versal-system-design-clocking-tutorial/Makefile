@@ -1,3 +1,22 @@
+#Check environment setup
+ifndef PLATFORM_REPO_PATHS
+  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
+  export PLATFORM_REPO_PATHS
+endif
+ifndef ROOTFS
+  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
+  export ROOTFS
+endif
+ifndef IMAGE
+  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/Image
+  export IMAGE
+endif
+
+SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/Xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
+
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial

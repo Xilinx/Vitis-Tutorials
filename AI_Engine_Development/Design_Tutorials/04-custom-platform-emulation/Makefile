@@ -18,10 +18,11 @@ ifndef PLATFORM_REPO_PATHS
   export PLATFORM_REPO_PATHS
 endif
 
-ifndef SDKTARGETSYSROOT
-  SDKTARGETSYSROOT = $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux
-  export SDKTARGETSYSROOT
-endif
+EMBEDDED_PLATFORM=$(lastword $(subst :, ,$(PLATFORM_REPO_PATHS)))
+SYSROOT:=$(EMBEDDED_PLATFORM)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux
+CXX:=$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SYSROOT}
+
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
 # Makefile input options
 TARGET := hw_emu
@@ -41,7 +42,7 @@ ifeq (${TEST}, SPRITE)
 	ROOTFS := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/rootfs.ext4
 	IMAGE := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/Image
 else
-	BASE_PLATFORM := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
+	BASE_PLATFORM := ../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
 	ROOTFS :=../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/rootfs.ext4
 	IMAGE := ../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/Image
 endif
@@ -74,7 +75,7 @@ GCC_LIB := -ladf_api_xrt -lxrt_coreutil \
 .PHONY: clean all kernels aie xclbin host package run_emu
 
 guard-%:
-	@#$(${$*}, $(error $* is not set. Run: environment-setup-cortexa72-cortexa53-xilinx-linux))
+	@#$(or ${$*}, $(error $* is not set. Run: environment-setup-cortexa72-cortexa53-xilinx-linux))
 
 run: all
 all: kernels aie xclbin host package
@@ -121,7 +122,7 @@ host: guard-SYSROOT guard-CXX
 package: guard-IMAGE guard-ROOTFS
 	cd ./sw
 	v++ -p -t ${TARGET} \
-		-f ../${BASE_PLATFORM} \
+		-f ${BASE_PLATFORM} \
 		--package.rootfs=${ROOTFS} \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
