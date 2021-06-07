@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 **********/
 
-
 #include <adf.h>
 #include "../../include.h"
 
@@ -92,7 +91,6 @@ limitations under the License.
 
 int16_t coeffs_27_d[DECIMATOR27_COEFFICIENTS]  = {33, -158, 0, 0, 491, -1214, 2674, 0, 0, -5942, 20503, 32767, 0, 0, 0, 0};
 
-
 // Default implementation (shift=6)
 /**
  * Modified marray arguments to fit the offset inputs.
@@ -121,7 +119,6 @@ int16_t coeffs_27_d[DECIMATOR27_COEFFICIENTS]  = {33, -158, 0, 0, 491, -1214, 26
  * <o4..7> = F(<c0..cB>, <d24..33>, <d28..working>)
 **********/
 
-
 //36 version with circular_buffer
 void fir_27taps_symm_hb_dec2
 (
@@ -130,14 +127,13 @@ void fir_27taps_symm_hb_dec2
 ) {
     const int shift = 1 ;
     const unsigned output_samples =  DECIMATOR27_OUTPUT_SAMPLES ;
-
+    static int loopct = 0;
     const v16int16 coe =  *((const v16int16 *) coeffs_27_d) ;
 
     //create a copy of the input window to handle symmetry
     input_window_cint16 temp_w;
     input_window_cint16 * restrict symw = &temp_w;
     *symw = *inputw;
-
 
     v8cint16 vdata;
 
@@ -151,7 +147,6 @@ void fir_27taps_symm_hb_dec2
 
     window_readincr(symw, vdata);
     rbuff = upd_w0(rbuff, vdata);   //|0:7|X|---|24:31|X| ->32
-
 
     const unsigned lc = (output_samples / 4/ 2);
     for ( unsigned l=0; l<lc; ++l )
@@ -203,5 +198,4 @@ void fir_27taps_symm_hb_dec2
         window_writeincr(outputw,fsrs(acc0,shift));
     }
     window_incr_v8(inputw, 3);
-
 }

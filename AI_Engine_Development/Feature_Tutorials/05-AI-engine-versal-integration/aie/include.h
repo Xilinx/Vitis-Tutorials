@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 **********/
 
-
 #ifndef __INCLUDE_H__
 #define __INCLUDE_H__
 
 #define INTERPOLATOR27_INPUT_SAMPLES 128
+//NOTE: THIS AMOUNT MUST AGREE WITH THE INPUT_SAMPLES IN HOST.CPP
+
 #define INTERPOLATOR27_INPUT_MARGIN (16*4)
 #define INTERPOLATOR27_COEFFICIENTS 16
 #define INTERPOLATOR27_OUTPUT_SAMPLES (INTERPOLATOR27_INPUT_SAMPLES * 2)

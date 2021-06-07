@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -19,10 +19,6 @@ The ability to control your platform, and convert your RTL IP to an RTL kernel a
 
 Prior to starting this tutorial read and execute the platform creation tutorial https://github.com/Xilinx/Vitis-In-Depth-Tutorial/tree/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190.
 
-**Important**: Make sure to have the platform creation tutorial cloned on the same level as this tutorial.
-
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
-
 ## Overview
 In this tutorial you will learn:
 * How to create an RTL kernel (outside the ADF graph) to be used with the ADF graph.
@@ -30,13 +26,12 @@ In this tutorial you will learn:
 * How to build and emulate the design with a custom platform.
 
 ## Step 1 - Creating Custom RTL IP with the Vivado® Design Suite
-After creating the custom platform from the previous tutorial, the next step is package your RTL code as a Vivado IP and generate a Vitis RTL kernel..
+After creating the custom platform from the previous tutorial, the next step is package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
 
 1. Open the `polar_clip_rtl_kernel.tcl` file.
-2. This Tcl script creates an IP following the Vivado IP Packaging flow as described in the [Creating and Packaging Custom IP User Guide (UG1118)](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2020_2/ug1118-vivado-creating-packaging-custom-ip.pdf).
+2. This Tcl script creates an IP following the Vivado IP Packaging flow as described in the [Creating and Packaging Custom IP User Guide (UG1118)](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1118-vivado-creating-packaging-custom-ip.pdf).
 
     Note the following points:
-
 
     * The script creates a Vivado Design Suite project, and is required to create any IP because all source and constraint files need to be local to the IP.
     * Lines 40 and 41 are used to associate the correct clock pins to the interfaces. This is required for the Vitis compiler which links those interfaces to the platform clocking.
@@ -117,7 +112,7 @@ To set up the ADF graph to interface with the `polar_clip` RTL kernel, you must 
    * The `simulation::platform` object now has the two extra PLIO interfaces.
    * There are additional net objects to hook up the RTL kernel to the rest of the platform object.
 
-For more information on RTL kernels in the AI Engine see: [https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/programmable_logic_integration.html#ariaid-title10](Design Flow Using RTL Programmable Logic).
+For more information on RTL kernels in the AI Engine see: [https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/programmable_logic_integration.html#ariaid-title10](Design Flow Using RTL Programmable Logic).
 
 3. Compile the graph using the following command:
 
@@ -137,8 +132,8 @@ Similar to the `polar_clip` kernel, the `mm2s` and `s2mm` kernels are not part o
 To build these kernels run the following commands:
 
 ```bash
-v++ -c --platform ../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm -g --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
-v++ -c --platform ../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm -g --save-temps -k mm2s pl_kernels/s2mm.cpp -o s2mm.xo
+v++ -c --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm -g --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
+v++ -c --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm -g --save-temps -k mm2s pl_kernels/s2mm.cpp -o s2mm.xo
 ```
 
 or
@@ -163,7 +158,7 @@ Because there is no HLS kernel in the ADF graph, the `system.cfg` file, which is
 3. Build the emulation design using the following command:
 
     ```bash
-    v++ -l --platform ../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xclbin
+    v++ -l --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xclbin
     ```
 
     or
@@ -178,20 +173,20 @@ Build the host application:
 
 ```bash
 aarch64-linux-gnu-g++ -Wall -c -std=c++14 -Wno-int-to-pointer-cast \
-    --sysroot=../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux \
-    -I../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/xrt \
-    -I../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include \
+    --sysroot=../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux \
+    -I../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+    -I../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include \
     -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include \
     -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
 aarch64-linux-gnu-g++ -Wall -c -std=c++14 -Wno-int-to-pointer-cast \
-    --sysroot=../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux  \
-    -I../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/xrt \
-    -I../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include \
+    --sysroot=../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux  \
+    -I../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+    -I../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include \
     -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include \
     -o host.o host.cpp
 aarch64-linux-gnu-g++ *.o -ladf_api_xrt -lxrt_coreutil \
-    -L../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib \
-    --sysroot=../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux \
+    -L../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib \
+    --sysroot=../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/sdk/sysroots/aarch64-xilinx-linux \
     -L$XILINX_VITIS/aietools/lib/aarch64.o -std=c++14 -o host.exe
 ```
 
@@ -207,12 +202,13 @@ When packaging the design, make sure that the `rootfs`, `kernel_image`, and `pla
 To package the design run:
 
 ```bash
+cd ./sw
 v++ -p -t hw_emu \
-    -f ../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm \
-    --package.rootfs=../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/rootfs.ext4 \
+    -f ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm \
+    --package.rootfs=../../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/rootfs.ext4 \
     --package.image_format=ext4 \
     --package.boot_mode=sd \
-    --package.kernel_image=../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/Image \
+    --package.kernel_image=../../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/Image \
     --package.defer_aie_run \
     --package.sd_file host.exe ../tutorial.xclbin ../libadf.a
 cd ..
@@ -248,7 +244,6 @@ When launched, use the Linux prompt to run the design.
 	```bash
 	cd /mnt/sd-mmcblk0p1
 	export XILINX_XRT=/usr
-	dmesg -n 4 && echo "Hide DRM messages..."
 	```
 
     This sets up the design to run emulation. Run the design using the following command:
@@ -281,7 +276,6 @@ This tutorial shows how to:
 * Create a custom RTL kernel from a Vivado IP.
 * Modify the ADF graph to handle more PLIO interfacing.
 * Build and execute the design in emulation.
-
 
 # License
 

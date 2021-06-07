@@ -1,3 +1,22 @@
+#Check environment setup
+ifndef PLATFORM_REPO_PATHS
+  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
+  export PLATFORM_REPO_PATHS
+endif
+ifndef ROOTFS
+  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
+  export ROOTFS
+endif
+ifndef IMAGE
+  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/Image
+  export IMAGE
+endif
+
+SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/Xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
+
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
@@ -6,11 +25,11 @@ PFM := tutorial
 GRAPH := aie/graph.cpp
 GRAPH_O := libadf.a
 
-KERNEL := s2mm.cpp mm2s.cpp polar_clip.cpp
-KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
+KERNEL := s2mm.cpp mm2s.cpp
+KERNEL_XO := s2mm.xo mm2s.xo
 CONFIG_FILE := system.cfg
 
-BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm
+BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
 
 # Command-line options
 VPP := v++
@@ -21,6 +40,8 @@ AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=200 -workdir=./Work
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
 VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
+VPP_FLAGS := $(VPP_LINK_FLAGS)
+LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
@@ -51,22 +72,25 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_2020210_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202110_1)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2020.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2020.2/Image)
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2021.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
 ###
-all: kernels aie xclbin host package 
+
+all: kernels aie aiesim xclbin host package 
+run: all
+sd_card: all
 
 ######################################################
 # This step compiles the HLS C kernels and creates an ADF Graph
@@ -81,7 +105,7 @@ kernels: guard-PLATFORM_REPO_PATHS $(KERNEL_XO)
 aie: $(GRAPH_O)
 
 aiesim: $(GRAPH_O)
-	aiesmulator --pkg-dir=./Work 
+	aiesmulator --profile --pkg-dir=./Work 
 
 $(GRAPH_O): $(GRAPH)
 	$(AIECC) $(AIE_FLAGS) $(GRAPH)
@@ -109,7 +133,7 @@ host: guard-CXX guard-SDKTARGETSYSROOT
 
 ##################################################################################################
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
-package: guard-IMAGE guard-ROOTFS guard-PLATFORM_REPO_PATHS
+package: guard-PLATFORM_REPO_PATHS guard-ROOTFS guard-IMAGE 
 	cd ./sw
 	v++ -p -t ${TARGET} \
 		-f ${BASE_PLATFORM} \
@@ -119,7 +143,6 @@ package: guard-IMAGE guard-ROOTFS guard-PLATFORM_REPO_PATHS
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
-	@echo "COMPLETE: hw_emu package created."
 
 ###################################################################################################
 
