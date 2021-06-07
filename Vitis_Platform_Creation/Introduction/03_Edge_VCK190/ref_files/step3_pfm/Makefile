@@ -15,16 +15,16 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 
 
-.PHONY: all pfm prep_image prep_sw_comp prep_sysroot ultraclean clean
+.PHONY: all pfm prep_sd_dir prep_sw_comp prep_sysroot ultraclean clean
 
 # Since making the platform doesn't require sysroot, sometimes we can skip running prep_sysroot by target main
-all: prep_image prep_sw_comp pfm prep_sysroot
-main: prep_image prep_sw_comp pfm 
+all: prep_sd_dir prep_sw_comp pfm prep_sysroot
+main: prep_sd_dir prep_sw_comp pfm 
 
 # Target: sw_comp
 # Copy PetaLinux genreated software components to platform preparation directory
-prep_image:
-	mkdir -p image && cp ../step2_petalinux/build/petalinux/images/linux/boot.scr ./image/
+prep_sd_dir:
+	mkdir -p sd_dir && cp ../step2_petalinux/build/petalinux/images/linux/boot.scr ./sd_dir/
 
 # Target: prep_sw_comp
 # Copy rootfs and kernel image to sw_comp directory
@@ -45,7 +45,7 @@ pfm:
 	xsct xsct_create_pfm.tcl vck190_custom ../step0_bootable_design/build/vivado
 
 clean:
-	$(RM) -r vitis_* xrc.log build platform_repo ./image/boot.scr rootfs
+	$(RM) -r vitis_* xrc.log build platform_repo ./sd_dir/boot.scr rootfs
 
 ultraclean:
-	$(RM) -r vitis_* xrc.log build platform_repo ./image/boot.scr rootfs sw_comp
+	$(RM) -r vitis_* xrc.log build platform_repo ./sd_dir/boot.scr rootfs sw_comp

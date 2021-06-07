@@ -1,5 +1,5 @@
 <!-- 
-# Copyright 2020 Xilinx Inc.
+# Copyright 2021 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -62,15 +62,16 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    Packages for base XRT support (required):
 
    ```
-   CONFIG_packagegroup-petalinux-xrt
+   CONFIG_xrt
    ```
 
-   - XRT package group contains all the packages for Vitis acceleration runtime.
+   - XRT package contains all the packages for Vitis acceleration runtime.
+   - Note: `CONFIG_packagegroup-petalinux-xrt` is not needed from 2021.1
    
    Packages for on-board acceleration application compiling support (optional):
 
    ```
-   CONFIG_packagegroup-petalinux-xrt-dev
+   CONFIG_xrt-dev
    ```
    
    - package names with `-dev` suffix means header files, dependency libraries and soft links required by compiling environment in Yocto.
@@ -108,36 +109,11 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
    
 
-4. Update the system-user device tree (required).
+4. (Optional) Update the system-user device tree.
 
-   Append the following contents to the **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi** file.
+   If you have any custom peripherals on board that needs special settings, please update it in system-user.dtsi.
 
-   - **zyxclmm_drm** node is required by zocl driver, which is a part of XRT.
-   - **axi_intc_0** node defines 32 interrupt inputs. This can not be inferred by the hardware settings in Vivado. So we have to add it here manually.
-   - **Note**: an example file is provided in **ref_files/step2_petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi**.
-
-   ```
-   &amba {
-       zyxclmm_drm {
-           compatible = "xlnx,zocl-versal";
-           status = "okay";
-           interrupt-parent = <&axi_intc_0>;
-           interrupts = <0  4>, <1  4>, <2  4>, <3  4>,
-                    <4  4>, <5  4>, <6  4>, <7  4>,
-                    <8  4>, <9  4>, <10 4>, <11 4>,
-                    <12 4>, <13 4>, <14 4>, <15 4>,
-                    <16 4>, <17 4>, <18 4>, <19 4>,
-                    <20 4>, <21 4>, <22 4>, <23 4>,
-                    <24 4>, <25 4>, <26 4>, <27 4>,
-                    <28 4>, <29 4>, <30 4>, <31 4>;
-       };
-   };
-   
-   &axi_intc_0 {
-         xlnx,kind-of-intr = <0x0>;
-         xlnx,num-intr-inputs = <0x20>;
-   };
-   ```
+   Note: DTG (Device Tree Generator), which is invoked by PetaLinux, will create ZOCL node in device tree automatically and update interrupt input number according to your hardware settings in XSA if the XSA is an extensible XSA. This is a new feature from 2021.1.
 
 
 
@@ -206,4 +182,4 @@ Scripts are provided to re-create PetaLinux project and generate outputs. To use
 
 **Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](./step3.md).**
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>

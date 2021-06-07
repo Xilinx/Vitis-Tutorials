@@ -178,4 +178,4 @@ Some blocks in the block design has multiple types of simulation models. Vitis e
 
 [AR# 72033: How do I add boards and example designs to my Vivado environment?](https://www.xilinx.com/support/answers/72033.html)
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>

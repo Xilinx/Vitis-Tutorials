@@ -512,4 +512,4 @@ make clean
 
 https://github.com/Xilinx/XilinxBoardStore/wiki/Accessing-the-Board-Store-Repository
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
