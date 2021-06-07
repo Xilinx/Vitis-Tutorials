@@ -201,9 +201,10 @@ void DoubleStream::FIR_MultiKernel_cin<NSamples,ShiftAcc,DiscardSample,SwapRead>
 }
 
 
-template<int Delay>
-void DoubleStream::FIRinit()
+void DoubleStream::FIRinit(const int Delay)
 {
+  if(Delay==0) return;
+  
 	int D = Delay - (Delay%2); // remove the 1 element if it exists
 	int Block = (D+4)/8;
 	int NTot = D/4;

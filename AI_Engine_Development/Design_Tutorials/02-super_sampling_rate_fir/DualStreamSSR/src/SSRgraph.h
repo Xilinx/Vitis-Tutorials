@@ -79,23 +79,24 @@ std::vector<cint16> taps = std::vector<cint16>({
 					int PhaseSelect = col-row;
 					if(PhaseSelect<0) PhaseSelect += NPhases;
 					int DiscardSample = (row>col?1:0); // Must discard 1 sample on some aie_kernels
+          int Delay = 0; // A single AI Engine is enough for each and every phase
 
 					if(DiscardSample == 1) // Don't know how to make DiscardSample a constant suitable for a template parameter
 					{
 						// kernel instanciation
 						if(col1==0)
 						{
-							k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,true,false>>(taps8p[PhaseSelect]);
+							k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,true,false>>(taps8p[PhaseSelect],Delay);
 						}
 						else
 						{
 							if(col1==NPhases-1)
 							{
-								k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,true,false>>(taps8p[PhaseSelect]);
+								k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,true,false>>(taps8p[PhaseSelect],Delay);
 							}
 							else
 							{
-								k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,true,false>>(taps8p[PhaseSelect]);
+								k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,true,false>>(taps8p[PhaseSelect],Delay);
 							}
 						}
 					}
@@ -104,17 +105,17 @@ std::vector<cint16> taps = std::vector<cint16>({
 						// kernel instanciation
 						if(col1==0)
 						{
-							k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,false,false>>(taps8p[PhaseSelect]);
+							k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,false,false>>(taps8p[PhaseSelect],Delay);
 						}
 						else
 						{
 							if(col1==NPhases-1)
 							{
-								k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,false,false>>(taps8p[PhaseSelect]);
+								k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,false,false>>(taps8p[PhaseSelect],Delay);
 							}
 							else
 							{
-								k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,false,false>>(taps8p[PhaseSelect]);
+								k[row][col1] = kernel::create_object<DoubleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,false,false>>(taps8p[PhaseSelect],Delay);
 							}
 						}
 					}
