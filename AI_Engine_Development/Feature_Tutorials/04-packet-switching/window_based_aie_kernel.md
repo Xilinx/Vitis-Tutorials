@@ -28,7 +28,7 @@ Finally, you can see how to [Run Hardware Emulation and Hardware flows](#Run-Har
 ### Construct Graph with Packet Switching Capability
 To explicitly control the multiplexing and de-multiplexing of packets, two new templated node classes are added to the ADF graph library: `pktsplit<n>` and `pktmerge<n>`. A node instance of class `pktmerge<n>` is a n:1 multiplexer of n packet streams producing a single packet stream. A node instance of class `pktsplit<n>` is a 1:n de-multiplexer of a packet stream producing n different packet streams. 
 
-__Note: The maximum number of allowable packet streams is four on a single physical channel (**n≤4**).__
+__Note: The maximum number of allowable packet streams is thirty-two on a single physical channel (**n≤32**).__
 
 The data from the PLIO is first connected to the `pktsplit<n>` instance, which splits the packet depending on the packet ID. It automatically discards the packet header and fills the window input buffers. It automatically discards the `TLAST` signal of the packet when the window data is fully filled. 
 
