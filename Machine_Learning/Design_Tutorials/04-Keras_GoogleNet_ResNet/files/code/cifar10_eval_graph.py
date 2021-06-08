@@ -16,13 +16,12 @@
 ## License for the specific language governing permissions and limitations
 ## under the License.
 '''
+# Author: Daniele Bagni, Xilinx Inc
+# date 6 May 2021
 
 ##################################################################
 # Evaluation of frozen/quantized graph
 #################################################################
-
-# modified by daniele.bagni@xilinx.com
-# date 24 / 11 / 2020
 
 import os
 import sys
