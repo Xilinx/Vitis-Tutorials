@@ -30,7 +30,7 @@ $CXX -O3 -fno-inline -I. \
      -L=/install/Debug/lib \
      -L=/install/Release/lib \
      -I$PWD/common  -o $name -std=c++17 \
-     $PWD/src/main.cc \
+     $PWD/src/main_mt.cc \
      $PWD/common/common.cpp  \
      -Wl,-rpath=$PWD/lib \
      -lvart-runner \
@@ -52,7 +52,7 @@ $CXX -O3 -fno-inline -I. \
      -Wl,-rpath=${install_prefix_default}.Debug/lib \
      -Wl,-rpath=${install_prefix_default}.Release/lib \
      -I$PWD/common  -o $name -std=c++17 \
-     $PWD/src/main.cc \
+     $PWD/src/main_mt.cc \
      $PWD/common/common.cpp  \
      -Wl,-rpath=$PWD/lib \
      -lvart-runner \

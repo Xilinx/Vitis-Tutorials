@@ -26,10 +26,10 @@ bash ./code/build_fmnist_test.sh
 '
 
 # now run the fmnist classification with 4 CNNs uing VART C++ APIs
-./run_cnn ./fmnist/LeNet/model/LeNet.xmodel                 ./fmnist_test/ ./code/fmnist_labels.txt | tee ./rpt/logfile_fmnist_LeNet.txt
-./run_cnn ./fmnist/miniVggNet/model/miniVggNet.xmodel       ./fmnist_test/ ./code/fmnist_labels.txt | tee ./rpt/logfile_fmnist_miniVggNet.txt
-./run_cnn ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel ./fmnist_test/ ./code/fmnist_labels.txt | tee ./rpt/logfile_fmnist_miniGoogleNet.txt
-./run_cnn ./fmnist/miniResNet/model/miniResNet.xmodel       ./fmnist_test/ ./code/fmnist_labels.txt | tee ./rpt/logfile_fmnist_miniResNet.txt
+./run_cnn ./fmnist/LeNet/LeNet.xmodel                 ./fmnist_test/ ./code/fmnist_labels.txt | tee ./rpt/logfile_fmnist_LeNet.txt
+./run_cnn ./fmnist/miniVggNet/miniVggNet.xmodel       ./fmnist_test/ ./code/fmnist_labels.txt | tee ./rpt/logfile_fmnist_miniVggNet.txt
+./run_cnn ./fmnist/miniGoogleNet/miniGoogleNet.xmodel ./fmnist_test/ ./code/fmnist_labels.txt | tee ./rpt/logfile_fmnist_miniGoogleNet.txt
+./run_cnn ./fmnist/miniResNet/miniResNet.xmodel       ./fmnist_test/ ./code/fmnist_labels.txt | tee ./rpt/logfile_fmnist_miniResNet.txt
 # check DPU prediction accuracy
 bash -x ./code/check_fmnist_accuracy.sh | tee ./rpt/summary_fmnist_prediction_accuracy_on_dpu.txt
 

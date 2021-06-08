@@ -1,0 +1,32 @@
+Copyright 2021 Xilinx Inc.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+root
+    subgraph_CNN__input_0 [device=USER]
+    subgraph_CNN__CNN_Conv2d_conv1__18 [device=DPU,fingerprint=0x1000020f6014407,DPU=DPUCZDX8G_ISA0_B4096_MAX_BG2,I=[xir_tensor{CNN__input_0_fix:(1,32,32,3), fixpos=6 # of elements= 3072}],O=[xir_tensor{CNN__CNN_Conv2d_conv1__18_fix:(1,32,32,16), fixpos=6 # of elements= 16384}]]
+        subgraph_CNN__input_0_upload_0
+        subgraph_CNN__CNN_Conv2d_conv1__18
+        subgraph_CNN__CNN_Conv2d_conv1__18_download_0
+    subgraph_CNN__CNN_Conv2d_conv1__18_fix_CNN__CNN_Tanh_act1__19 [device=CPU]
+    subgraph_CNN__CNN_Conv2d_conv2__35 [device=DPU,fingerprint=0x1000020f6014407,DPU=DPUCZDX8G_ISA0_B4096_MAX_BG2,I=[xir_tensor{CNN__CNN_Tanh_act1__19_fix:(1,32,32,16), fixpos=7 # of elements= 16384}],O=[xir_tensor{CNN__CNN_Conv2d_conv2__35_fix:(1,16,16,8), fixpos=4 # of elements= 2048}]]
+        subgraph_CNN__CNN_Tanh_act1__19_fix_upload_0
+        subgraph_CNN__CNN_MaxPool2d_pool1__input_2
+        subgraph_CNN__CNN_Conv2d_conv2__35
+        subgraph_CNN__CNN_Conv2d_conv2__35_download_0
+    subgraph_CNN__CNN_Conv2d_conv2__35_fix_CNN__CNN_Sigmoid_act2__36 [device=CPU]
+    subgraph_CNN__CNN_Linear_fc1__48(TransferMatMulToConv2d) [device=DPU,fingerprint=0x1000020f6014407,DPU=DPUCZDX8G_ISA0_B4096_MAX_BG2,I=[xir_tensor{CNN__CNN_Sigmoid_act2__36_fix:(1,16,16,8), fixpos=7 # of elements= 2048}],O=[xir_tensor{CNN__CNN_Linear_fc1__48_fix:(1,32), fixpos=4 # of elements= 32}]]
+        subgraph_CNN__CNN_Sigmoid_act2__36_fix_upload_0
+        subgraph_CNN__CNN_MaxPool2d_pool2__42
+        subgraph_CNN__CNN_Linear_fc1__48(TransferMatMulToConv2d)
+        subgraph_CNN__CNN_Linear_fc1__48(TransferMatMulToConv2d)_inserted_fix_2_reshaped
+        subgraph_CNN__CNN_Linear_fc1__48(TransferMatMulToConv2d)_inserted_fix_2_reshaped_download_0
+    subgraph_CNN__CNN_Linear_fc1__48_fix_CNN__CNN_Sigmoid_act3__input [device=CPU]

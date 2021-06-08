@@ -16,13 +16,11 @@
 ## License for the specific language governing permissions and limitations
 ## under the License.
 '''
-
-# modified by daniele.bagni@xilinx.com
-# date 24 / 11 / 2020
+# Author: Daniele Bagni, Xilinx Inc
+# date 6 May 2021
 
 import os
 import numpy as np
-import cv2
 
 ###############################################################################
 # project folders
@@ -36,12 +34,12 @@ def get_script_directory():
 SCRIPT_DIR = get_script_directory()
 
 # dataset top level folder
-DATASET_DIR = os.path.join(SCRIPT_DIR, "dataset/cifar10")
+DATASET_DIR = os.path.join(SCRIPT_DIR, "./build/dataset/cifar10")
 # train, validation, test and calibration folders
 TRAIN_DIR = os.path.join(DATASET_DIR, "train")
 VALID_DIR = os.path.join(DATASET_DIR, "valid")
 TEST_DIR  = os.path.join(DATASET_DIR, "test")
-CALIB_DIR = os.path.join(DATASET_DIR, "calib")
+CALIB_DIR = os.path.join(SCRIPT_DIR, "../build/dataset/cifar10/calib")
 
 # Augmented images folder
 #AUG_IMG_DIR = os.path.join(SCRIPT_DIR,'aug_img/cifar10')
@@ -50,10 +48,10 @@ CALIB_DIR = os.path.join(DATASET_DIR, "calib")
 KERAS_MODEL_DIR = os.path.join(SCRIPT_DIR, "keras_model/cifar10")
 
 # TF checkpoints folder
-CHKPT_MODEL_DIR = os.path.join(SCRIPT_DIR, "tf_chkpts/cifar10")
+CHKPT_MODEL_DIR = os.path.join(SCRIPT_DIR, "./build/tf_chkpts/cifar10")
 
 # TensorBoard folder
-TB_LOG_DIR = os.path.join(SCRIPT_DIR, "tb_logs/cifar10")
+TB_LOG_DIR = os.path.join(SCRIPT_DIR, "./build/tb_logs/cifar10")
 
 ###############################################################################
 # global variables
@@ -84,6 +82,9 @@ labelNames_list = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog
 # global functions
 ###############################################################################
 
+'''
+import cv2
+
 _R_MEAN = 0
 _G_MEAN = 0
 _B_MEAN = 0
@@ -97,7 +98,7 @@ def mean_image_subtraction(image, means):
   R = R - means[2]
   image = cv2.merge([R, G, B])
   return image
-
+'''
 
 def Normalize(x_test):
     x_test  = np.asarray(x_test)

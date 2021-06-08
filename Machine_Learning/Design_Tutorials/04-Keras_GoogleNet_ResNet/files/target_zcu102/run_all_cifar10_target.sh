@@ -24,10 +24,10 @@ mv code ../run_cnn # change name of the application
 cd ..
 
 # now run the cifar10 classification with 4 CNNs uing VART C++ APIs
-./run_cnn ./cifar10/LeNet/model/LeNet.xmodel                 ./cifar10_test/ ./code/cifar10_labels.txt | tee ./rpt/logfile_cifar10_LeNet.txt
-./run_cnn ./cifar10/miniVggNet/model/miniVggNet.xmodel       ./cifar10_test/ ./code/cifar10_labels.txt | tee ./rpt/logfile_cifar10_miniVggNet.txt
-./run_cnn ./cifar10/miniGoogleNet/model/miniGoogleNet.xmodel ./cifar10_test/ ./code/cifar10_labels.txt | tee ./rpt/logfile_cifar10_miniGoogleNet.txt
-./run_cnn ./cifar10/miniResNet/model/miniResNet.xmodel       ./cifar10_test/ ./code/cifar10_labels.txt | tee ./rpt/logfile_cifar10_miniResNet.txt
+./run_cnn ./cifar10/LeNet/LeNet.xmodel                 ./cifar10_test/ ./code/cifar10_labels.txt | tee ./rpt/logfile_cifar10_LeNet.txt
+./run_cnn ./cifar10/miniVggNet/miniVggNet.xmodel       ./cifar10_test/ ./code/cifar10_labels.txt | tee ./rpt/logfile_cifar10_miniVggNet.txt
+./run_cnn ./cifar10/miniGoogleNet/miniGoogleNet.xmodel ./cifar10_test/ ./code/cifar10_labels.txt | tee ./rpt/logfile_cifar10_miniGoogleNet.txt
+./run_cnn ./cifar10/miniResNet/miniResNet.xmodel       ./cifar10_test/ ./code/cifar10_labels.txt | tee ./rpt/logfile_cifar10_miniResNet.txt
 
 # check DPU prediction accuracy
 bash -x ./code/check_cifar10_accuracy.sh | tee ./rpt/summary_cifar10_prediction_accuracy_on_dpu.txt

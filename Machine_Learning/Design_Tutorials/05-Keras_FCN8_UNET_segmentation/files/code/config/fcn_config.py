@@ -85,8 +85,8 @@ TB_LOG_DIR = os.path.join(SCRIPT_DIR, "../build/tb_logs")
 ###############################################################################
 
 #Size of images
-WIDTH  = 224
-HEIGHT = 224
+WIDTH  = 224 #1088 #448 #224
+HEIGHT = 224 #1920 #448 #224
 
 #normalization factor
 NORM_FACTOR = 127.5

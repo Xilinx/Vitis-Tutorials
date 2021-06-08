@@ -26,6 +26,9 @@ import sys
 import argparse
 import math
 
+HDTV_W = 1920
+HDTV_H = 1088
+NUM_TEST_IMAGES = 4
 
 def get_script_directory():
     path = os.getcwd()
@@ -57,15 +60,24 @@ def CPUCalcSoftmax(data,size):
 
 
 
-def NormalizeImageArr( path ):
-    img = cv2.imread(path, 1)
+def NormalizeImageArr( path, hdtv_size ):
+    img1 = cv2.imread(path, 1)
+    if hdtv_size :
+        img = cv2.resize(img1, (HDTV_W, HDTV_H))
+    else :
+        img = img1
     img = img.astype(np.float32)
     img = img/127.5 - 1.0
     return img
 
-def LoadSegmentationArr( path , nClasses,  width , height ):
-    seg_labels = np.zeros((  height , width  , nClasses ))
-    img = cv2.imread(path, 1)
+def LoadSegmentationArr( path , nClasses,  width , height, hdtv_size ):
+    img1 = cv2.imread(path, 1)
+    if hdtv_size :
+        img = cv2.resize(img1, (HDTV_W, HDTV_H), interpolation = cv2.INTER_NEAREST )
+        seg_labels = np.zeros((  HDTV_H, HDTV_W, nClasses ))
+    else :
+        img = img1
+        seg_labels = np.zeros((  height , width  , nClasses ))
     img = img[:, : , 0]
     for c in range(nClasses):
         seg_labels[: , : , c ] = (img == c ).astype(int)
@@ -134,16 +146,16 @@ def runDPU(id,start,dpu,img):
     n_of_images = len(img)
     count = 0
     write_index = start
-    print("\nrunDPU- batchSize: ", batchSize)
-    print("\nrunDPU- # images : ", n_of_images)
+    #print("\nrunDPU- batchSize: ", batchSize)
+    #print("\nrunDPU- # images : ", n_of_images)
 
     while count < n_of_images:
         if (count+batchSize<=n_of_images):
             runSize = batchSize
         else:
             runSize=n_of_images-count
-        if count==0:
-            print("\nrunDPU- # runSize : ", runSize)
+        #if count==0:
+            #print("\nrunDPU- # runSize : ", runSize)
 
         '''prepare batch input/output '''
         outputData = []
@@ -154,6 +166,9 @@ def runDPU(id,start,dpu,img):
         '''init input image to input buffer '''
         for j in range(runSize):
             imageRun = inputData[0]
+            #print("count = ", count, " j = ", j, " (count+j)%n_of_images ", (count+j)%n_of_images )
+            #print("(input_ndim[1:]) = ", input_ndim[1:])
+            #print(img[(count+j)%n_of_images].shape)
             imageRun[j, ...] = img[(count + j) % n_of_images].reshape(input_ndim[1:])
 
         '''run with batch '''
@@ -167,9 +182,16 @@ def runDPU(id,start,dpu,img):
 
         count = count + runSize
 
-    print("\nrunDPU: write_index : ", write_index)
+    #print("\nrunDPU: write_index : ", write_index)
 
-def app(image_dir,threads,model, compute_miou):
+def app(image_dir,threads,model, compute_miou, hdtv_size):
+
+    if hdtv_size :
+        h = HDTV_H
+        w = HDTV_W
+    else :
+        h = 224
+        w = 224
 
     # load testing images
     print("\nAPP- loading segmentation images and preprocessing test images")
@@ -179,6 +201,9 @@ def app(image_dir,threads,model, compute_miou):
     #print("\nAPP- LEN TEST IMAGES = ", len(test_images))
 
     runTotal = len(test_images)
+    if runTotal > NUM_TEST_IMAGES :
+        runTotal = NUM_TEST_IMAGES
+
     dir_test_seg = image_dir + "../seg_test"
     test_segmentations  = os.listdir(dir_test_seg)
     test_segmentations.sort()
@@ -187,23 +212,27 @@ def app(image_dir,threads,model, compute_miou):
 
     X_test = []
     Y_test = []
+    cnt = 0
     for im , seg in zip(test_images,test_segmentations) :
-        X_test.append(NormalizeImageArr(  os.path.join(image_dir, im)) )
-        Y_test.append(LoadSegmentationArr(os.path.join(dir_test_seg, seg), 12, 224, 224))
+        if cnt < NUM_TEST_IMAGES :
+            X_test.append(NormalizeImageArr(  os.path.join(image_dir, im), hdtv_size ))
+            Y_test.append(LoadSegmentationArr(os.path.join(dir_test_seg, seg), 12, w, h, hdtv_size))
+            cnt = cnt +1
+
     X_test = np.array(X_test)
     Y_test = np.array(Y_test)
     #print("\nAPP- testing    data (X) (Y) shapes", X_test.shape,Y_test.shape)
     #print("\n")
 
     global out_q
-    out_q = np.zeros((runTotal,224,224,12),dtype=np.float32)
+    out_q = np.zeros((runTotal,h,w,12),dtype=np.float32)
     all_dpu_runners = []
     #print("\nAPP- out_q: ", np.array(out_q).shape)
 
     g = xir.Graph.deserialize(model)
     subgraphs = get_child_subgraph_dpu(g)
     assert len(subgraphs) == 1  # only one DPU kernel
-    print('\nAPP- Found',len(subgraphs),'subgraphs in',model)
+    #print('\nAPP- Found',len(subgraphs),'subgraphs in',model)
     for i in range(threads):
         all_dpu_runners.append(vart.Runner.create_runner(subgraphs[0], "run"))
 
@@ -235,13 +264,13 @@ def app(image_dir,threads,model, compute_miou):
 
     ''' put post-processing here if you have one '''
     if (compute_miou==1):
-        y_pred1 = np.zeros((runTotal,224,224,12),dtype=np.float32)
+        y_pred1 = np.zeros((runTotal,h, w,12),dtype=np.float32)
         #print("out_q.shape : ", out_q.shape)
         for i in range( len(X_test) ):
             #print("i= ", i)
-            tmp = np.reshape(out_q[i], 224*224*12)
-            y_pred = CPUCalcSoftmax(tmp, 224*224*12)
-            y_pred1[i] = np.reshape(y_pred, (224,224,12))
+            tmp = np.reshape(out_q[i], h*w*12)
+            y_pred = CPUCalcSoftmax(tmp, h*w*12)
+            y_pred1[i] = np.reshape(y_pred, (h, w,12))
         print("\n\nAPP- now computing IoU over testing data set:")
         #np.save("dpu_out_q.npy", out_q)
         y_pred1_i = np.argmax(y_pred1, axis=3)
@@ -260,6 +289,7 @@ def main():
   ap.add_argument('-t', '--threads', type=int, default=1, help='Number of threads. Default is 1')
   ap.add_argument('-m', '--model',   type=str,            help='Path of xmodel')
   ap.add_argument('-i', '--miou',    type=int, default=0, help='Compute Mean IoU: 1(YES)/0(NO). Default is 0')
+  ap.add_argument('-s', '--hdtv',    type=int, default=0, help='HDTV size: 1(YES)/0(NO). Default is 0')
 
   args = ap.parse_args()
 
@@ -268,8 +298,9 @@ def main():
   print (' --threads : ', args.threads)
   print (' --model   : ', args.model)
   print (' --miou    : ', args.miou)
+  print (' --hdtv    : ', args.hdtv)
 
-  app(args.images,args.threads,args.model, args.miou)
+  app(args.images,args.threads,args.model, args.miou, args.hdtv)
 
 if __name__ == '__main__':
   main()
