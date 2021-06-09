@@ -1,11 +1,11 @@
-
+﻿
 > **In this section...**   
 We look at the export phase of the flow to packages the RTL either the Vivado or the Vitis flow.
 In addition,  we run the Vivado tool directly from the Vitis HLS GUI to get more accurate timing and resource estimates.
 
 <table width=100%>
  <tr width=50%>
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h2>2020.2 Vitis™ - The Traveler Salesman Problem - Tutorial</h2>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h2>2020.2 Vitis™ - The Traveler Salesman Problem - Tutorial</h2>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
