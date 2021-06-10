@@ -132,6 +132,11 @@ These tutorials illustrate end-to-end design concepts or workflows using Vitis A
  <td align="center"><a href="./Feature_Tutorials/06-tf2_quant_fine_tune/README.md">Fine-Tuning TensorFlow2 quantized models</a></td>
  <td>Learn how to implement the Vitis-AI quantization fine-tuning for TensorFlow2.3.</td>
  </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/Vitis-AI-based-Deployment-Flow-on-VCK190/README.md">Vitis-AI-based-Deployment-Flow-on-VCK190</a></td>
+ <td>DPU integration with VCK190 production platform.</td>
+ </tr>
+ Vitis-AI-based-Deployment-Flow-on-VCK190
  </table>
 
 </hr>
