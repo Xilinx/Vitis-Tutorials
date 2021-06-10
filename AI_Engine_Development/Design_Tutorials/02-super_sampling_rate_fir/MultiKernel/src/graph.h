@@ -64,10 +64,10 @@ public:
 	FIRGraph_4Kernels()
 	{
 
-		k[0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT>>(taps4_0);
-		k[1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_1);
-		k[2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_2);
-		k[3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT>>(taps4_3);
+		k[0] = kernel::create_object<SingleStream::FIR_MultiKernel_cout<NUM_SAMPLES,SHIFT,0>>(taps4_0);
+		k[1] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,8>>(taps4_1);
+		k[2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT,16>>(taps4_2);
+		k[3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT,24>>(taps4_3);
 
 
 		const int NChunks = 4;
@@ -83,10 +83,10 @@ public:
 		location<kernel>(k[0]) = tile(25,0);
 
 		// Discard first elements of the stream, depending on position in the cascade
-		initialization_function(k[0]) = "SingleStream::FIRinit<0>";
-		initialization_function(k[1]) = "SingleStream::FIRinit<8>";
-		initialization_function(k[2]) = "SingleStream::FIRinit<16>";
-		initialization_function(k[3]) = "SingleStream::FIRinit<24>";
+		// initialization_function(k[0]) = "SingleStream::FIRinit<0>";
+		// initialization_function(k[1]) = "SingleStream::FIRinit<8>";
+		// initialization_function(k[2]) = "SingleStream::FIRinit<16>";
+		// initialization_function(k[3]) = "SingleStream::FIRinit<24>";
 
 
 		// Cascade Connections and output connection
