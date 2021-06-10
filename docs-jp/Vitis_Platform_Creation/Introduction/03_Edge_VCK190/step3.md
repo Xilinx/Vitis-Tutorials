@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 # Copyright 2020 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 <p align="right"><a href="../../../README.md">English</a> | <a>日本語</a></p>
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal カスタム プラットフォーム作成チュートリアル</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal カスタム プラットフォーム作成チュートリアル</h1>
     </td>
  </tr>
 </table>
