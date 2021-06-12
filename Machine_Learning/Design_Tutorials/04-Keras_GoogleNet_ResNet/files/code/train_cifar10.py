@@ -17,15 +17,8 @@
 ## License for the specific language governing permissions and limitations
 ## under the License.
 '''
-
-# USAGE
-# python train_cifar10.py --network LeNet      --weights keras_model/cifar10/LeNet      --epochs  20 --init_lr 0.01 --batch_size 32
-# python train_cifar10.py --network miniVggNet --weights keras_model/cifar10/miniVggNet --epochs  40 --init_lr 0.01 --batch_size 64
-# python train_cifar10.py --network miniResNet --weights keras_model/cifar10/miniResNet --epochs 100 --init_lr 0.1  --batch_size 128
-
-# modified by daniele.bagni@xilinx.com
-# date 24 / 11 / 2020
-
+# Author: Daniele Bagni, Xilinx Inc
+# date 6 May 2021
 
 
 # set the matplotlib backend so figures can be saved in the background

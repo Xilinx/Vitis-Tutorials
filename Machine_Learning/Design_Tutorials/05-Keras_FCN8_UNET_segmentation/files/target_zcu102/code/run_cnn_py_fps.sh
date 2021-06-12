@@ -15,8 +15,7 @@
 ## under the License.
 
 # now run semantic segmentation with 3 CNNs using VART C++ APIs with multithreads
-python3 ./code/src/app_mt.py  --model ./fcn8/model/fcn8.xmodel --thread 1 --images ./dataset1/img_test/ --miou 1 
-
+python3 ./code/src/app_mt.py  --model ./fcn8/model/fcn8.xmodel --thread 1 --images ./dataset1/img_test/ --miou 1
 python3 ./code/src/app_mt.py  --model ./fcn8/model/fcn8.xmodel --thread 2 --images ./dataset1/img_test/
 python3 ./code/src/app_mt.py  --model ./fcn8/model/fcn8.xmodel --thread 4 --images ./dataset1/img_test/
 python3 ./code/src/app_mt.py  --model ./fcn8/model/fcn8.xmodel --thread 6 --images ./dataset1/img_test/

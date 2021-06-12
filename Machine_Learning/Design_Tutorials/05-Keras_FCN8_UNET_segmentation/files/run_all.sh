@@ -18,6 +18,9 @@
 * under the License.
 */
 '
+# modified by daniele.bagni@xilinx.com
+# date 10 May 2021
+
 
 #dos2unix conversion
 for file in $(find $PWD -name "*.sh"); do
@@ -27,11 +30,11 @@ done
 
 
 # clean rpt directory
-rm -r ./rpt
+rm -rf ./rpt
 mkdir rpt
 
-cp -r target_zcu102 target_vck190
-cp -r target_zcu102 target_zcu104
+cp -rf target_zcu102 target_vck190
+cp -rf target_zcu102 target_zcu104
 
 
 # launch CNNs

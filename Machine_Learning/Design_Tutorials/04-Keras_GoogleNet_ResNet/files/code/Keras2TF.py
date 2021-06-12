@@ -16,12 +16,8 @@
 ## License for the specific language governing permissions and limitations
 ## under the License.
 '''
-
-# modified by daniele.bagni@xilinx.com
-# date 24 / 11 / 2020
-
-# USAGE
-# python Keras2TFy -c miniVggNet -d cifar10
+# Author: Daniele Bagni, Xilinx Inc
+# date 6 May 2021
 
 import os, sys, shutil
 

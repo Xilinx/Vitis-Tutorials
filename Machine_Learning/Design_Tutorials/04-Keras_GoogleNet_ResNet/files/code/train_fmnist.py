@@ -16,16 +16,8 @@
 ## License for the specific language governing permissions and limitations
 ## under the License.
 '''
-
-# modified by daniele.bagni@xilinx.com
-# date 24 / 11 / 2020
-
-
-# USAGE
-# python train_fashion_mnist.py --network LeNet      --weights keras_model/fmnist/LeNet      --epochs   5 --init_lr 0.01 --batch_size 32
-# python train_fashion_mnist.py --network miniVggNet --weights keras_model/fmnist/miniVggNet --epochs  25 --init_lr 0.01 --batch_size 64
-# python train_fashion_mnist.py --network miniResNet --weights keras_model/fmnist/miniResNet --epochs 100 --init_lr 0.1  --batch_size 128
-
+# Author: Daniele Bagni, Xilinx Inc
+# date 6 May 2021
 
 # set the matplotlib backend so figures can be saved in the background
 import matplotlib

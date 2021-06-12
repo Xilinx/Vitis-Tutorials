@@ -16,9 +16,8 @@
 ## License for the specific language governing permissions and limitations
 ## under the License.
 '''
-
-# modified by daniele.bagni@xilinx.com
-# date 24 / 11 / 2020
+# Author: Daniele Bagni, Xilinx Inc
+# date 6 May 2021
 
 import cv2
 import os
@@ -27,51 +26,22 @@ import numpy as np
 from config import fashion_mnist_config as cfg
 
 
-calib_image_dir  = cfg.SCRIPT_DIR + "/../dataset/fmnist/calib/"
-calib_image_list = calib_image_dir +  "calib_list.txt"
+calib_image_dir  = cfg.CALIB_DIR
+calib_image_list = os.path.join(calib_image_dir,"calib_list.txt")
 print("script running on folder ", cfg.SCRIPT_DIR)
 print("CALIB DIR ", calib_image_dir)
 
 calib_batch_size = 50
-
-_R_MEAN = 0
-_G_MEAN = 0
-_B_MEAN = 0
-
-MEANS = np.array([_B_MEAN,_G_MEAN,_R_MEAN],np.dtype(np.int32))
-
-def mean_image_subtraction(image, means):
-  B, G, R = cv2.split(image)
-  B = B - means[0]
-  G = G - means[1]
-  R = R - means[2]
-  image = cv2.merge([R, G, B])
-  return image
-
-def central_crop(image, crop_height, crop_width):
-  image_height = image.shape[0]
-  image_width = image.shape[1]
-
-  offset_height = (image_height - crop_height) // 2
-  offset_width = (image_width - crop_width) // 2
-
-  return image[offset_height:offset_height + crop_height, offset_width:
-               offset_width + crop_width]
-
-'''
-def normalize(image):
-  image=image/cfg.NORM_FACTOR
-  image=image-0.5
-  image=image*2
-  return image
-'''
+line = open(calib_image_list).readlines()
+tot_num_images = len(line)
 
 def calib_input(iter):
+  assert(int(iter)<=int(tot_num_images/calib_batch_size)),"number of iterations must be <=20"
   images = []
-  line = open(calib_image_list).readlines()
   #print(line)
   for index in range(0, calib_batch_size):
-      curline = line[iter * calib_batch_size + index]
+
+      curline = line[(iter-1) * calib_batch_size + index]
       #print(curline)
       calib_image_name = curline.strip()
 
@@ -79,7 +49,8 @@ def calib_input(iter):
       #image = cv2.imread(calib_image_dir + calib_image_name, cv2.IMREAD_GRAYSCALE)
 
       # read image as rgb, returns numpy array (28,28, 3)
-      image = cv2.imread(calib_image_dir + calib_image_name)
+      filename = os.path.join(calib_image_dir, calib_image_name)
+      image = cv2.imread(filename)
 
       # scale the pixel values to range 0 to 1.0
       #image = image/255.0

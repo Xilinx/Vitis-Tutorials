@@ -1,6 +1,6 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - Hardware Accelerators Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - Hardware Accelerators Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -67,6 +67,10 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a></td>
  <td>This tutorial demonstrates how to debug and optimize the dataflow optimization in Vitis HLS.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./bottom_up_rtl_kernel/README.md">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></td>
+ <td>This tutorial introduces a bottom-up Vitis-based RTL kernel construct and wrap-up process, as well as the host-kernel interaction with Xilinx Runtime library (XRT).</td>
+ </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p>

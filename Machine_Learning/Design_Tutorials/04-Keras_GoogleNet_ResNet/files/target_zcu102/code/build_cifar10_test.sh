@@ -17,9 +17,9 @@
 
 # airplane automobile bird cat deer dog frog horse ship truck
 
-tar -xvf cifar10_test.tar
+tar -xvf cifar10_test.tar &> /dev/null
 
-cd ./dataset/cifar10/test
+cd ./cifar10_test
 
 cd automobile
 mv *.png ../
@@ -72,8 +72,3 @@ cd ..
 rm -r truck
 
 cd ..
-mv test cifar10_test
-mv cifar10_test ../../
-cd ../../
-rm -r dataset
-#cp ./cifar10/LeNet/labels.txt ./cifar10_test/

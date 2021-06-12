@@ -1,0 +1,13 @@
+./rtl/AesControl.v
+./rtl/AesDecipher.v
+./rtl/AesEncipher.v
+./rtl/AesInvMixColumns.v
+./rtl/AesInvShiftRows.v
+./rtl/AesInvSubBytes.v
+./rtl/AesKeyExpansion.v
+./rtl/AesMixColumns.v
+./rtl/AesShiftRows.v
+./rtl/AesSubBytes.v
+./rtl/Aes.v
+./rtl/SPSR.v
+./tbench/tb_aes.v
