@@ -10,9 +10,9 @@
 </table>
 
 ## Introduction
-Developing an accelerated AI Engine design for the VCK190, can be done using the Vitis™ compiler (`v++`). This compiler can be used to compile programmable logic (PL) kernels, and connect these PL kernels to the AI Engine and PS device.
+Developing an accelerated AI Engine design for the VCK190, can be done using the Vitis™ compiler (`v++`). This compiler can be used to compile programmable logic (PL) kernels and connect these PL kernels to the AI Engine and PS device.
 
-In this tutorial you will learn clocking concepts for the Vitis compiler via how to define clocking for ADF Graph, and PL kernels by using clocking automation functionality. The design being used is a simple classifier design as shown in the following figure.
+In this tutorial you will learn clocking concepts for the Vitis compiler and how to define clocking for ADF Graph, as well as PL kernels using clocking automation functionality. The design being used is a simple classifier design as shown in the following figure.
 
 ![Design diagram](./images/event_noinfo.PNG)
 
@@ -27,7 +27,7 @@ In the design the following clocking steps are used:
 | --- | --- |
 | Interpolator, Polar Clip, & Classifier | AI Engine Frequency (1 GHz) |
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
-For detailed information on this, look for *Table 40* of UG1076.
+For detailed information, see the Clocking the PL Kernels section [here](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/integrate_ai_engine_application.html?hl=default%2Ckernel%2Cclocks).
 
 **IMPORTANT**: Before beginning the tutorial, make sure to read and follow the *Vitis Software Platform Release Notes* (v2021.1) for setting up software and installing the VCK190 base platform.
 
@@ -45,7 +45,7 @@ You will learn the following:
 * Introduction of datawidth converters, clock-domain crossing, and FIFOs in `v++`
 
 ## Step 1 - Building ADF Graph
-The ADF graph has connections to the PL through the PLIO interfaces. These interfaces can have reference clocking either from the `graph.cpp` through the `PLIO()` constructor or through the `--pl-freq`. This will help with knowing what kind of clock can be set on the PL Kernels that are going to connect to the PLIO. Here you will set the reference frequency to be 200 MHz for all PLIO interfaces.
+The ADF graph has connections to the PL through the PLIO interfaces. These interfaces can have reference clocking either from the `graph.cpp` through the `PLIO()` constructor or through the `--pl-freq`. This will help with determining what kind of clock can be set on the PL Kernels that are going to connect to the PLIO. Here you will set the reference frequency to be 200 MHz for all PLIO interfaces.
 
 **NOTE**: If you do not specify the `--pl-freq` it will be set to 1/4 the frequency of the AI Engine frequency.
 
@@ -67,7 +67,7 @@ make aie
 | --workdir | The location of where the work directory will be created |
 
 ## Step 2 - Clocking the PL Kernels
-In this design you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels are separate from the ADF Graph and these are specified when compiling the kernel, and when linking the design together.
+In this design you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels is separate from the ADF Graph and these are specified when compiling the kernel, and when linking the design together.
 
 Run the following commands:
     ```bash
@@ -132,13 +132,13 @@ There are many more options available for `v++`. For a full list, see the docume
    * Keep this file open for now.
 2. The data output of the AI Engine is at 32-bit and at a high clock frequency. To reduce the possibilities of dropping data, you can attach the `s2mm` kernel to the AI Engine with a larger datawidth (eg. 64-bits) and the clock frequency to `s2mm` to keep relative bandwidth the same. To do this the Vitis Compiler will auto instantiate a Clock Converter block and Datawidth Converter block to make sure connectivity is achieved.
    * Open the `s2mm.cpp` in `./pl_kernels` to see that the line `23` has 64-bit defined for both input and output.
-3. Because the `s2mm` kernel is running slower than the AI Engine output, you need to override the clock provided to it in **Step 2**. That was just for kernel compilation, and linking is to make sure that clock is connected correctly. In the `system.cfg` file uncomment these lines:
+3. Because the `s2mm` kernel is running slower than the AI Engine output, you need to override the clock provided to it in **Step 2**. That was just for kernel compilation and linking is to make sure that clock is connected correctly. In the `system.cfg` file uncomment these lines:
     ```ini
     [clock]
     freqHz=200000000:s2mm.ap_clk
     tolerance=1000000:s2mm.ap_clk
     ```
-    Here you are telling the `v++` linker to override the default clock frequency to 200 MHz for the `s2mm` kernel, and setting the clock tolerance to 1 MHz. By setting a tolerance you are giving the linker a better chance to make sure a clock can be generated and meet your bandwidth.
+    Here you are telling the `v++` linker to override the default clock frequency to 200 MHz for the `s2mm` kernel, and setting the clock tolerance to 1 MHz. By setting a tolerance you are giving the linker a better chance to make sure a clock can be generated that meets your bandwidth.
 4. With the changes made you can now run the following command:
     ```bash
     v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm s2mm.xo \
@@ -171,7 +171,7 @@ When the `v++` linker is complete, you can compile the host code that will run o
 
 1. Open `./sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
 
-    Do take note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application" of UG1076.
+    Do take note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application see [Programming the PS Host Application](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/program_ps_host_application.html#ykt1590616160037).
 
     The output size of the kernel run is half of what was allocated earlier. This is something to keep in mind. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call will be adjusted. If this is not changed, it will hang because XRT is waiting for the full length to be processed when in reality half the count was done (even though all the data will be present). In the `host.cpp` look at line 117 and 118 and comment them out. You should have uncommented the following line:
 
