@@ -1,0 +1,238 @@
+#© Copyright 2021 Xilinx, Inc.
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing, software
+#distributed under the License is distributed on an "AS IS" BASIS,
+#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#See the License for the specific language governing permissions and
+#limitations under the License.
+#
+
+
+#Check environment setup
+ifndef PLATFORM_REPO_PATHS
+  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
+  export PLATFORM_REPO_PATHS
+endif
+ifndef ROOTFS
+  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
+  export ROOTFS
+endif
+ifndef IMAGE
+  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/Image
+  export IMAGE
+endif
+
+
+#DSP LIB Includes
+DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/hw
+DSP_KERNEL_SRC         := $(DSPLIB_ROOT)/L1/src/hw
+DSP_GRAPH_SRC          := $(DSPLIB_ROOT)/L2/include/hw
+DSP_INC                := $(DSPLIB_ROOT)/L1/tests/inc/
+
+
+
+SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+
+
+###From LENET makefile
+RELATIVE_PROJECT_DIR := ./
+PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+BUILD_DIR 	:= $(PROJECT_REPO)/build
+WORK_DIR	:= Work
+BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
+EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
+PERL ?= /tools/xgs/perl/5.8.5/bin/perl
+######
+
+
+# Makefile input options
+TARGET := hw_emu
+PFM := tutorial
+PLIO_WIDTH := 64
+
+# File names and locations
+GRAPH := aie/graph.cpp
+GRAPH_O := libadf.a
+
+KERNEL := 
+KERNEL_XO := $(XILINX_VITIS)/data/emulation/XO/sim_ipc_axis_master_${PLIO_WIDTH}.xo $(XILINX_VITIS)/data/emulation/XO/sim_ipc_axis_slave_${PLIO_WIDTH}.xo
+CONFIG_FILE := system.cfg
+
+BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
+
+# Command-line options
+VPP := v++
+AIECC := aiecompiler
+
+AIE_DSPLIB_INCLUDE := -include=$(DSP_KERNEL_HDR) -include=$(DSP_KERNEL_SRC) -include=$(DSP_GRAPH_SRC) -include=$(DSP_INC)
+#AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
+AIE_INCLUDE_FLAGS := $(AIE_DSPLIB_INCLUDE) -include="$(XILINX_VITIS)/aietools/include"  -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
+AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --xlopt=0 -workdir=./Work 
+
+VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
+VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
+VPP_FLAGS := $(VPP_LINK_FLAGS)
+LDCLFLAGS :=
+
+GCC_FLAGS := -Wall -c \
+			 -std=c++14 \
+			 -Wno-int-to-pointer-cast 
+
+GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
+				-I$(SDKTARGETSYSROOT)/usr/include \
+				-I./ -I../aie \
+				-I${XILINX_VITIS}/aietools/include \
+				-I${DSP_INC}\
+				-I${DSP_KERNEL_HDR}\
+				-I${DSP_KERNEL_SRC}\
+				-I${DSP_GRAPH_SRC}\
+				-I${XILINX_VITIS}/include
+
+GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
+		   -L$(SDKTARGETSYSROOT)/usr/lib \
+		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
+
+LDCLFLAGS := $(GCC_LIB)
+
+XF_PROJ_ROOT := .
+
+.ONESHELL:
+.PHONY: clean all kernels aie xclbin host package
+
+###
+# Guarding Checks. Do not modify.
+###
+check_defined = \
+	$(strip $(foreach 1,$1, \
+		$(call __check_defined,$1,$(strip $(value 2)))))
+
+__check_defined = \
+	$(if $(value $1),, \
+		$(error Undefined $1$(if $2, ($2))))
+
+guard-PLATFORM_REPO_PATHS:
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202110_1)
+
+guard-ROOTFS:
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.1/rootfs.ext4)
+
+guard-IMAGE:
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2021.1/Image)
+
+guard-CXX:
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux)
+
+guard-SDKTARGETSYSROOT:
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux)
+
+guard-DSPLIBROOT:
+	$(call check_defined, DSPLIB_ROOT, Please define DSPLIB ROOT)
+
+### SPRITE PYTHON SECTION
+DEST_DIR ?= $(CURDIR)
+MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+MK_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
+
+
+
+
+all: kernels aie xclbin host package
+sd_card: all
+
+######################################################
+# This step compiles the HLS C kernels and creates an ADF Graph
+# the %.xo is used as the output and creates from the %.cpp files
+# The graph is generated by having the -target=hw
+kernels: guard-DSPLIBROOT guard-PLATFORM_REPO_PATHS $(KERNEL_XO)
+	@echo "COMPLETE: Kernels Created."	
+
+%.xo: pl_kernels/%.cpp
+	$(VPP) $(VPP_XO_FLAGS) -k $(basename $(notdir $<)) $< -o $@
+
+aie: guard-DSPLIBROOT $(GRAPH_O)
+
+aiesim: guard-DSPLIBROOT $(GRAPH_O)
+	aiesimulator --profile --pkg-dir=./Work 
+
+$(GRAPH_O): $(GRAPH)
+	$(AIECC) $(AIE_FLAGS) $(GRAPH)
+	@echo "COMPLETE: libadf.a created."
+#####################################################
+
+########################################################
+# Once the kernels and graph are generated, you can build
+# the hardware part of the design. This creates an xclbin
+# that will be used to run the design on the platform.
+xclbin: guard-PLATFORM_REPO_PATHS $(GRAPH_O) $(KERNEL_XO)
+	$(VPP) $(VPP_LINK_FLAGS) || (echo "task: [xclbin] failed error code: $$?"; exit 1)
+	@echo "COMPLETE: .xclbin created."
+########################################################
+
+############################################################################################################################
+# For hardware and hardware emulation, compile the PS code and generate the host.exe. This is needed for creating the sd_card.
+host: guard-CXX guard-SDKTARGETSYSROOT 
+	cd ./sw 
+	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
+	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o host.cpp
+	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe 
+	@echo "COMPLETE: Host application created."
+############################################################################################################################
+
+##################################################################################################
+# Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
+package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
+	cd ./sw
+	v++ -p -t ${TARGET} \
+		-f ${BASE_PLATFORM} \
+		--package.rootfs=${ROOTFS} \
+		--package.image_format=ext4 \
+		--package.boot_mode=sd \
+		--package.kernel_image=${IMAGE} \
+		--package.defer_aie_run \
+		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
+	@echo "COMPLETE: hw_emu package created."
+
+###################################################################################################
+
+#Build the design and then run hardware emulation 
+run: all run_emu
+
+###########################################################################
+# If the target is for HW_EMU, launch the emulator
+# If the target is for HW, you'll have to load it onto an sd_card for the device
+run_emu: 
+ifeq (${TARGET},hw_emu)
+	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} &
+	cd ./sw
+	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
+
+	# ifeq (${TEST}, SPRITE)
+	# 	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} &
+	# 	cd ./sw
+	# 	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
+	# else	
+	# 	./launch_hw_emu.sh
+	# endif
+else
+	@echo "Hardware build, no emulation executed."
+endif
+
+
+
+###########################################################################
+
+clean:
+	rm -rf _x v++* $(GRAPH_O) *.o *.compile_summary* *.xpe xnwOut *.xclbin* *.log *.xsa Work *.db *.csv *$(PFM)* *.jou .Xil
+	rm -rf sw/*.log sw/*.xclbin sw/cfg/ sw/*.sh sw/qemu_dts_files sw/emu_qemu_scripts sw/*.exe sw/_x/ sw/*summary sw/*.o sw/*.elf sw/*.xpe sw/xnwOut sw/Work sw/*.csv sw/*.db sw/*.bin sw/*.BIN sw/*.bif sw/launch_hw_emulator.sh sw/*.txt sw/emulation sw/.Xil
+	rm -rf sw/sd_card sw/sd_card.img
+	
+run_tgen:
+	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH}
