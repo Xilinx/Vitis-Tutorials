@@ -206,23 +206,18 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 run: all run_emu
 
 ###########################################################################
-# If the target is for HW_EMU, launch the emulator
-# If the target is for HW, you'll have to load it onto an sd_card for the device
+# If the customer is running SPRITE wont be defined and they'll follow the tutorial instructions
+# to open a separate terminal.
+# If SPRITE is running python will run in a background process.
+ifeq (${TEST}, SPRITE)
 run_emu: 
-ifeq (${TARGET},hw_emu)
-	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} &
+	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} 1 &
 	cd ./sw
 	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
-
-	# ifeq (${TEST}, SPRITE)
-	# 	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} &
-	# 	cd ./sw
-	# 	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
-	# else	
-	# 	./launch_hw_emu.sh
-	# endif
 else
-	@echo "Hardware build, no emulation executed."
+run_emu:
+	cd ./sw
+	./launch_hw_emu.sh
 endif
 
 
@@ -235,4 +230,4 @@ clean:
 	rm -rf sw/sd_card sw/sd_card.img
 	
 run_tgen:
-	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH}
+	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} 0

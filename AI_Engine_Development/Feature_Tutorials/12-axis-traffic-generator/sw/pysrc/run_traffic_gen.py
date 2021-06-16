@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 import sys
 
 class IQData():
-    def __init__(self, numpy_cplx_data,aietype='cint16',plio_width=32):
+    def __init__(self, numpy_cplx_data,aietype='cint16',plio_width=32,supressplots=0):
         """ Initialization """
         self.input_cplx_data = numpy_cplx_data
         self.parent_conn0, self.child_conn0 = mp.Pipe()
@@ -38,6 +38,7 @@ class IQData():
         self.plio_width = plio_width
         self.rx_payload_len = -1
         self.tx_payload_len = -1
+        self.supressplots = supressplots
  
     def self_test(self):
         print("inside self_test")        
@@ -112,8 +113,8 @@ class IQData():
     
             p.join()
         
-        #if plot:
-            #self.plot_results(self.input_cplx_data,aie_output)
+        if (not self.supressplots):
+            self.plot_results(self.input_cplx_data,aie_output)
         
    
         input("Enter any key to end simulation")
@@ -225,12 +226,15 @@ if __name__ == "__main__":
     for i, arg in enumerate(sys.argv):
         if( i == 1):
             cmd_line_pliowidth = int(arg)
+        if( i == 2):
+            skipplots=int(arg)
+            print(skipplots)
 
     
     NSamps=128
     iqdata =MakeInputStim(NSamps)
     #iqdata = MakeCountingPattern(NSamps)
-    obj = IQData(iqdata,aietype="cint16",plio_width=cmd_line_pliowidth)
+    obj = IQData(iqdata,aietype="cint16",plio_width=cmd_line_pliowidth,supressplots=skipplots)
     
     obj.run_test(ipc=True)
     print("Test complete")
