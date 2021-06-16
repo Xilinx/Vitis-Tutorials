@@ -105,7 +105,7 @@ kernels: guard-PLATFORM_REPO_PATHS $(KERNEL_XO)
 aie: $(GRAPH_O)
 
 aiesim: $(GRAPH_O)
-	aiesmulator --profile --pkg-dir=./Work 
+	aiesimulator --profile --pkg-dir=./Work 
 
 $(GRAPH_O): $(GRAPH)
 	$(AIECC) $(AIE_FLAGS) $(GRAPH)
