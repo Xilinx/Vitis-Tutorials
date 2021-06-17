@@ -9,7 +9,7 @@
 </table>
 
 # Introduction
-The Xilinx Versal ACAP is a fully software-programmable, heterogeneous compute platform that combines the PS (Scalar Engine which includes the Arm processors), PL (Adaptable Engines which includes the FPGA fabric) and AI Engines (AI Engines; Intelligent Engines).
+Versal™ adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
 
 This tutorial demonstrates creating a system design running on the AI Engine, PS, and Programmable logic. The AI Engine domain contains a simple graph consisting of 3 kernels. These kernels are connected by both windows and streams. The PL domain contains data movers that provide input and capture output from the AI Engine. The PS domain contains a host application that controls the entire system. You'll validate the design running on these heterogeneous domains by using first by emulating the hardware and then running on actual hardware. 
 
@@ -17,7 +17,7 @@ This tutorial steps through hardware emulation and hardware flow in the context 
 
 **IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.1) for setting up software and installing the VCK190 base platform. 
 
-Before starting this tutorial run the steps below:
+Before starting this tutorial run the following steps:
 
 1. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
 2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2021.1` directory.
@@ -28,12 +28,12 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 # Objectives
 After completing this tutorial, you should be able to:
 
-* Compile HLS functions for integration in the Programmable Logic (PL)
-* Compile ADF graphs
-* Explore Vitis Analyzer to viewing the compilation and simulation summary reports
-* Create a configuration file that describes system connections and use it during the link stage
-* Create a software application that runs on Linux
-* Package the design into run on hardware emulation and an easy-to-boot SD card image to run on hardware
+* Compile HLS functions for integration in the Programmable Logic (PL).
+* Compile ADF graphs.
+* Explore Vitis Analyzer to viewing the compilation and simulation summary reports.
+* Create a configuration file that describes system connections and use it during the link stage.
+* Create a software application that runs on Linux.
+* Package the design into run on hardware emulation and an easy-to-boot SD card image to run on hardware.
 
 # Tutorial Overview
 **Section 1**: Compile AI Engine code using the AI Engine compiler, viewing compilation results in Vitis Analyzer.
@@ -56,16 +56,16 @@ The design that will be used is shown in the following figure:
 
 |Kernel|Type|Comment|
 |  ---  |  ---  |  ---  |
-|MM2S|HLS|Memory Map to Stream HLS kernel to feed input data from DDR to AI Engine interpolator kernel via the PL DMA|
+|MM2S|HLS|Memory Map to Stream HLS kernel to feed input data from DDR to AI Engine interpolator kernel via the PL DMA.|
 |Interpolator |AI Engine| Half-band 2x up-sampling FIR filter with 16 coefficients. Its input and output are cint16 window interfaces and the input interface has a 16 sample margin. |
 |Polar_clip|AI Engine| Determines the magnitude of the complex input vector and clips the output magnitude if it is greater than a threshold. The polar_clip has a single input stream of complex 16-bit samples, and a single output stream whose underlying samples are also complex 16-bit elements.|
-|Classifier |AI Engine| This kernel determines the quadrant of the complex input vector and outputs a single real value depending which quadrant. The input interface is a cint16 stream and the output is a int32 window  |
-|S2MM|HLS|Stream to Memory Map HLS kernel to feed output result data from AI Engine classifier kernel to DDR via the PL DMA|
+|Classifier |AI Engine| This kernel determines the quadrant of the complex input vector and outputs a single real value depending which quadrant. The input interface is a cint16 stream and the output is a int32 window.  |
+|S2MM|HLS|Stream to Memory Map HLS kernel to feed output result data from AI Engine classifier kernel to DDR via the PL DMA.|
 
 ## Section 1: Compile AI Engine code using the AI Engine compiler, viewing compilation results in Vitis Analyzer.
 The first step is to take any v++ kernels (HLS C), and your AI Engine kernels, and graph then compile them into their respective `.xo` and `.o` files. You can compile the kernels and graph in parallel because they do not rely on each other at this step.
 
-This tutorial design has 3 AI Engine kernels (`interpolator`, and `polar_clip`, `classifier`,) and two HLS PL kernels (`s2mm` and `mm2s`):
+This tutorial design has 3 AI Engine kernels (`interpolator`, and `polar_clip`, `classifier`,) and two HLS PL kernels (`s2mm` and `mm2s`).
 
 ### Compiling HLS Kernels Using v++
 
@@ -88,12 +88,12 @@ Looking at the `v++` command line, you will see several options. The following t
 
 |Switch/flag|Description|
 |  ---  |  ---  |
-|`-c`|Tells v++ to just compile the kernel|
-|`--platform/-f`|Specifies the path to an extensible platform|
-|`-g`|Required for the hw_emu target to capture waveform data|
-|`-k`|The kernel name. This has to match the function name in the corresponding file defining the kernel. (Eg: For kernel `mm2s` needs to make the function name in `mm2s.cpp`|
-|`-o`|The output file must always have the suffix of `.xo`|
-|`--save-temps/-s`|Saves the generated output process in the `_x` directory|
+|`-c`|Tells v++ to just compile the kernel.|
+|`--platform/-f`|Specifies the path to an extensible platform.|
+|`-g`|Required for the hw_emu target to capture waveform data.|
+|`-k`|The kernel name. This has to match the function name in the corresponding file defining the kernel. (E.g., For kernel `mm2s` the function name needs to be `mm2s.cpp`.|
+|`-o`|The output file must always have the suffix of `.xo`.|
+|`--save-temps/-s`|Saves the generated output process in the `_x` directory.|
 
 ### Compiling an AI Engine ADF Graph for V++ Flow
 An ADF Graph can be connected to an extensible Vitis platform. That is, the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through the `v++` connectivity directives.
@@ -121,7 +121,7 @@ An ADF Graph can be connected to an extensible Vitis platform. That is, the grap
 | --target | Target how the compiler will build the graph. Default is `hw` |
 | --include | All the include files needed to build the graph |
 | --xlopt | Optimization of the kernel and graph code. Default is 1. |
-| --workdir | The location of where the Work directory will be created |
+| --workdir | The location where the Work directory will be created |
 
 The generated output from `aiecompiler` is the `Work` directory, and the `libadf.a` file. This file contains the compiled AI Engine configuration, graph, and Kernel `.elf` files.
 
@@ -136,8 +136,7 @@ The **Summary View** displays compilation runtime,  version of the compiler was 
 
 	![Vitis Analyzer Kernel Guidance](./images/vitis_analyzer_kernel_guidance.png)
 
-<!-- Text reports -->
-5. Click **Mapping Analysis**. This report provides detailed mapping information the `aiecompiler` generates for mapping the graph to the AI Engine. 
+2. Click **Mapping Analysis**. This report provides detailed mapping information the `aiecompiler` generates for mapping the graph to the AI Engine. 
 
 	![Vitis Analyzer Mapping Analysis](./images/vitis_analyzer_mapping_analysis.png)
 
@@ -246,7 +245,7 @@ The **Array View** gives you a logical device view of the AI Engine and how the 
 * Cross probe to kernel and graph source files
 * The table at the bottom would show the following:
   * Kernels - The kernels in the graph.
-  * PL - Shows connections between the graph and PLIO
+  * PL - Shows connections between the graph and PLIO.
   * Buffers - Will show all the buffers used for inputs/outputs of the graph and the buffers for kernels.
   * Ports - Shows all the ports of each kernels and ADF Graph.
   * Nets - Shows all nets, named and generated, mapped in the ADF Graph.
@@ -294,16 +293,16 @@ sc=ai_engine_0.DataOut1:s2mm.s
 
 | Option/Flag | Description |
 | --- | --- |
-| `nk` | This specifies the kernel and how many are there be instantiated. As example, the `nk=mm2s:1:mm2s` means that the kernel `mm2s` will instantiate one kernel with the name of `mm2s`.|
-| `stream_connect/sc` | This specifies the streaming connections to be made between PL/AIE or PL/PL. In this case, it should always be an output of a kernel to the input of a kernel.|
+| `nk` | This specifies the kernel and how many there are ti be instantiated. For example, `nk=mm2s:1:mm2s` means that the kernel `mm2s` will instantiate one kernel with the name `mm2s`.|
+| `stream_connect/sc` | This specifies the streaming connections to be made between PL/AI Engine or PL/PL. In this case, it should always be an output of a kernel to the input of a kernel.|
 
 **NOTE:** The `v++` command-line can get cluttered, and using the `system.cfg` file can help contain it.
 
-For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a `PLIO` object. For this design, as an example, this line `PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
+For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a `PLIO` object. For the design, as an example, this line `PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
 
 You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1393-vitis-application-acceleration.pdf).
 
-1. To build the design you can run the follow command:
+1. To build the design run the follow command:
 
 	```bash
 	make xclbin
@@ -317,23 +316,23 @@ You can see the `v++` switches in more detail in the [Vitis Unified Software Pla
 
 | Flag/Switch | Description |
 | --- | --- |
-| `--link`/`-l` | Tells v++ that it will be linking a design, so only the `*.xo` and `libadf.a` files are valid inputs |
+| `--link`/`-l` | Tells v++ that it will be linking a design, so only the `*.xo` and `libadf.a` files are valid inputs. |
 | `--target`/`-t `| Tells v++ how far of a build it should go, hardware (which will build down to a PDI) or hardware emulation (which will build the emulation models) |
-| `--platform` |  Same from the previous two steps |
+| `--platform` |  Same as the previous two steps. |
 | `--config` | This allows you to simplify the v++ command-line if it gets too unruly and have items in an `.ini` style file. |
 
 Now you have a generated `.xclbin` that will be used to execute your design on the platform.
 
 ## Section 4: Compile the A72 Host Application
-After all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code is using [XRT](http://www.github.com/Xilinx/XRT) (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker that it is using the the libraries: `-ladf_api_xrt -lxrt_coreutil`. 
+After all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code uses [XRT](http://www.github.com/Xilinx/XRT) (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker, it is using the the libraries: `-ladf_api_xrt -lxrt_coreutil`. 
 
 1. Open `sw/main.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
    
-   Note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application". 
+   Note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to ["Programming the PS Host Application"](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/program_ps_host_application.html). 
 
 2. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS`, `GCC_INCLUDES`.
    - `GCC_FLAGS`: Self-explanatory that you will be compiling this code with C++ 14. More explanation will be provided in the packaging step.
-   - `GCC_INCLUDES`: Has the list of all the necessary include files from the SDKTARGETSYSROOT as well as the AI Engine tools.
+   - `GCC_INCLUDES`: Contains the list of all the necessary include files from the SDKTARGETSYSROOT as well as the AI Engine tools.
 3. Close the Makefile, and run the command:
 		
 	```bash
@@ -354,10 +353,10 @@ The follow table describes some of the GCC options being used:
 
 | Flag | Description |
 | ---- | ----------- |
-| `-Wall` | Print out all warnings            |
-| `-Wno-int-to-pointer-cast` | Warn about an integer to pointer cast |
-| `--sysroot` | Tells the compiler where to find the headers/libs for cross-compile |
-| `-std=c++14` | This is required for Linux applications using XRT |
+| `-Wall` | Print out all warnings. |
+| `-Wno-int-to-pointer-cast` | Warn about an integer to pointer cast. |
+| `--sysroot` | Tells the compiler where to find the headers/libs for cross-compile. |
+| `-std=c++14` | This is required for Linux applications using XRT. |
 
 
 ## Section 5: Package the Design
@@ -390,12 +389,12 @@ The following table describes the packager options:
 
 | Switch/flag | Description |
 | --- | --- |
-| `rootfs` | Points to the formatted image of the platform |
-| `image_format` | Tells packager what the image format is |
-| `boot_mode` | Signifies how the design is going to be run |
-| `kernel_image` | Points to the Image file created by Petalinux |
-| `defer_aie_run` | Tells packager at boot to not start the AI Engine and let the host application control it |
-| `sd_file` | Tell the packager what file is to be packaged in the `sd_card` directory. You'll have to specify this multiple times for all the files you want packaged |
+| `rootfs` | Points to the formatted image of the platform. |
+| `image_format` | Tells packager what the image format is. |
+| `boot_mode` | Signifies how the design is going to be run. |
+| `kernel_image` | Points to the Image file created by Petalinux. |
+| `defer_aie_run` | Tells packager at boot to not start the AI Engine and let the host application control it. |
+| `sd_file` | Tell the packager what file is to be packaged in the `sd_card` directory. You'll have to specify this multiple times for all the files you want packaged. |
 
 ## Section 6: Run Hardware Emulation
 After packaging, everything is set to run emulation. Since you ran `aiesimulator` with profiling enabled, you can bring that to hardware emulation. You can pass the `aiesim_options.txt` to the `launch_hw_emu.sh` which will enable the profiling options used in `aiesimulator` to be applied to hardware emulation. To do this, you will just add the `-aie-sim-options ../aiesimulator_output/aiesim_options.txt`.
@@ -459,7 +458,7 @@ The final two views: **Graph** and **Array** are same to what you saw in the `ai
 Explore the two reports and take notice of any differences and similarities. These will help you debug and optimize your design.
 
 10. Close out of the **Vitis Analyzer** and build for hardware.
-## Section 6: Build and Run on Hardware
+## Section 7: Build and Run on Hardware
 1. To build for hardware run the following command:
 
 	```bash
@@ -511,7 +510,7 @@ You should see **TEST PASSED**. You have successfully run your design on hardwar
 ## Summary
 In this tutorial you learned the following:
 
-* How to compile PLIO and PL Kernels using v++ -c
+* How to compile PLIO and PL Kernels using `v++ -c`.
 * How to link the `libadf.a`, PLIO and PL kernels to the `xilinx_vck190_es1_202110_1` platform
 * How to use Vitis Analyzer to explore the various reports generated from compilation and emulation/simulation
 * How to package your host code, and the generated `xclbin` and `libadf.a` into an SD card directory
@@ -520,7 +519,7 @@ In this tutorial you learned the following:
 
 To read more about the use of Vitis in the AI Engine flow see: *UG1076: Versal ACAP AI Engine Programming Environment Chapter 13: Integrating the Application Using the Vitis Tool Flow*. 
 
-© Copyright 2020 Xilinx, Inc.
+© Copyright 2021 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -534,4 +533,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD002</sup></p>
+<p align="center"><sup>XD002 | © Copyright 2021 Xilinx, Inc.</sup></p>
