@@ -317,7 +317,7 @@ You can see the `v++` switches in more detail in the [Vitis Unified Software Pla
 | Flag/Switch | Description |
 | --- | --- |
 | `--link`/`-l` | Tells v++ that it will be linking a design, so only the `*.xo` and `libadf.a` files are valid inputs. |
-| `--target`/`-t `| Tells v++ how far of a build it should go, hardware (which will build down to a PDI) or hardware emulation (which will build the emulation models) |
+| `--target`/`-t `| Tells v++ to build to hardware (which will build down to a PDI) or hardware emulation (which will build the emulation models) |
 | `--platform` |  Same as the previous two steps. |
 | `--config` | This allows you to simplify the v++ command-line if it gets too unruly and have items in an `.ini` style file. |
 
