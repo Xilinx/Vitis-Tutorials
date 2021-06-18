@@ -12,7 +12,7 @@ ifndef IMAGE
   export IMAGE
 endif
 
-SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/Xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
 CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
@@ -105,7 +105,7 @@ kernels: guard-PLATFORM_REPO_PATHS $(KERNEL_XO)
 aie: $(GRAPH_O)
 
 aiesim: $(GRAPH_O)
-	aiesmulator --profile --pkg-dir=./Work 
+	aiesimulator --profile --pkg-dir=./Work 
 
 $(GRAPH_O): $(GRAPH)
 	$(AIECC) $(AIE_FLAGS) $(GRAPH)
