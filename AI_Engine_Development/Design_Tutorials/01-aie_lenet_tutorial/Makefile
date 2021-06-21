@@ -39,10 +39,44 @@ help::
 	@echo  ""
 	@echo  ""
 
+
+EMBEDDED_PACKAGE_OUT=./out_dir
+EMBEDDED_EXEC_SCRIPT=./run_script.sh
+
+#Check environment setup
+ifndef PLATFORM_REPO_PATHS
+  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms/
+  export PLATFORM_REPO_PATHS
+endif
+ifndef XILINX_VITIS
+  XILINX_VITIS = /opt/xilinx/Vitis/$(TOOL_VERSION)
+  export XILINX_VITIS
+endif
+ifndef XILINX_XRT
+  XILINX_XRT = /opt/xilinx/xrt
+  export XILINX_XRT
+endif
+
+
+EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
+EMBEDDED_EXEC_SCRIPT = run_script.sh
+PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)
+SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd_file))
+MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
+PERL ?= /tools/xgs/perl/5.8.5/bin/perl
+
+RESULT_VAL ?= 
+RUN_LEVEL ?= 7
+
+print-%  : ; @echo $* = $($*)
 # =========================================================
 # platform selection
 # =========================================================
-PLATFORM := xilinx_vck190_es1_base_202020_1
+#PLATFORM := xilinx_vck190_es1_base_202020_1
+PLATFORM := xilinx_vck190_base_202110_1
+
+
 
 # =========================================================
 # TARGET can be set as:
@@ -55,26 +89,29 @@ TARGET := hw_emu
 # Choose the compiler based on the A72 Processor in the 
 # Versal device
 # =========================================================
-HOST_CXX := aarch64-linux-gnu-g++
+#HOST_CXX := aarch64-linux-gnu-g++
+export LD_LIBRARY_PATH := $(XILINX_VIVADO)/tps/lnx64/gcc-6.2.0/lib64:$(LD_LIBRARY_PATH)
+CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
+
 
 # =========================================================
 # Choose the XRT and XAIENGINE
 # =========================================================
-SYSROOT_PATH 	:= $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux
+SYSROOT_PATH 	:= $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
 XRT_PATH 	:= $(SYSROOT_PATH)/usr/include/xrt
 
 # =========================================================
 # Source directory
 # =========================================================
 #relative lenet directory
-RELATIVE_PROJECT_DIR := ../
+RELATIVE_PROJECT_DIR := ./
 
 #absolute lenet directory = <user path>/Tutorials/AI_Engine/lenet
 PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
 AIE_SRC_REPO 	:= $(PROJECT_REPO)/design/aie_src
 PL_SRC_REPO 	:= $(PROJECT_REPO)/design/pl_src
-MAKEFILES_REPO 	:= $(PROJECT_REPO)/Makefiles
+MAKEFILES_REPO 	:= $(PROJECT_REPO)
 BUILD_DIR 	:= $(PROJECT_REPO)/build
 WORK_DIR	:= Work
 BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
@@ -224,9 +261,9 @@ $(BUILD_TARGET_DIR)/$(XCLBIN): 	$(BUILD_TARGET_DIR)/$(DMA_KERNEL_XO).xo \
 #	lenet_app.o 
 # 	lenet_xrt.elf
 application:
-	$(HOST_CXX) $(GCC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_DIR)/app_control.o
-	$(HOST_CXX) $(GCC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/lenet_app.o $(GCC_LIB)
-	$(HOST_CXX) $(BUILD_DIR)/app_control.o $(BUILD_DIR)/lenet_app.o $(GCC_LIB) -o $(BUILD_DIR)/$(APP_ELF) 
+	$(CXX) $(GCC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_DIR)/app_control.o
+	$(CXX) $(GCC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/lenet_app.o $(GCC_LIB)
+	$(CXX) $(BUILD_DIR)/app_control.o $(BUILD_DIR)/lenet_app.o $(GCC_LIB) -o $(BUILD_DIR)/$(APP_ELF) 
 
 
 # =========================================================
@@ -241,17 +278,18 @@ application:
 # 	v++.package_summary
 # 	v++_package.log 
 package:
+	cp $(MAKEFILES_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p -t $(TARGET) --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x	\
 		-f $(PLATFORM) 							\
 		--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 		\
-		--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 \
-		--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image \
+		--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
+		--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
 		--package.boot_mode=sd 						\
 		--package.out_dir $(BUILD_TARGET_DIR)/package 			\
 		--package.sd_dir $(AIE_SRC_REPO)/data 				\
 		--package.image_format=ext4 					\
-		--package.sd_file $(BUILD_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XCLBIN) $(LIBADF_A) \
+		--package.sd_file $(BUILD_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XCLBIN) $(LIBADF_A) $(SD_FILES_WITH_PREFIX) \
 		--package.defer_aie_run
 
 # =========================================================
@@ -260,10 +298,15 @@ package:
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to follow the 
 # instructions in the README.md 
+
+sd_card: kernels graph xclbin application package
+
 run_emu: 
 ifeq ($(TARGET),hw_emu)
 	cd $(BUILD_TARGET_DIR)/package;	\
-	./launch_hw_emu.sh 
+	$(PERL) $(XF_PROJ_ROOT)/ext/make_utility/embedded_run_emulation.pl "$(EMBEDDED_PACKAGE_OUT)/launch_$(TARGET).sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
+
+	#./launch_hw_emu.sh 
 else
 	@echo "Hardware build, no emulation executed."
 endif
