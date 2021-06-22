@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
- #pragma once
+#pragma once
 
 #include <adf.h>
 
@@ -33,8 +33,7 @@ public:
 	{
 		for(int i=0;i<8;i++) weights[i] = taps[i];
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
-
-    FIRinit(Delay);
+        FIRinit(Delay);
   };
 
 	void filter(input_stream_cint16*  sin,output_stream_cacc48*  cout);
@@ -57,8 +56,7 @@ public:
 	{
 		for(int i=0;i<8;i++) weights[i] = taps[i];
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
-
-    FIRinit(Delay);
+        FIRinit(Delay);
 	};
 
 	void filter(input_stream_cint16*  sin,input_stream_cacc48*  cin,output_stream_cacc48*  cout);
@@ -81,8 +79,7 @@ public:
 	{
 		for(int i=0;i<8;i++) weights[i] = taps[i];
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
-
-    FIRinit(Delay);
+        FIRinit(Delay);
 	};
 
 	void filter(input_stream_cint16*  sin,input_stream_cacc48*  cin,output_stream_cint16*  sout);
