@@ -12,8 +12,11 @@ ifndef IMAGE
   export IMAGE
 endif
 
-SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+TEST :=
+ifeq (${TEST}, SPRITE)
+	SDKTARGETSYSROOT := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+	CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+endif
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
@@ -126,6 +129,9 @@ xclbin: guard-PLATFORM_REPO_PATHS $(GRAPH_O) $(KERNEL_XO)
 host: guard-CXX guard-SDKTARGETSYSROOT
 	cd ./sw 
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
+	ifeq (${TEST},SPRITE)
+		$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o /wrk/vitis_collateral/06-versal-system-design-clocking/host.cpp
+	endif
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o host.cpp
 	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe 
 	@echo "COMPLETE: Host application created."

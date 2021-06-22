@@ -12,8 +12,11 @@ ifndef IMAGE
   export IMAGE
 endif
 
-SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+TEST :=
+ifeq (${TEST}, SPRITE)
+	SDKTARGETSYSROOT := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+	CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+endif
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
@@ -58,8 +61,6 @@ GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
 
 LDCLFLAGS := $(GCC_LIB)
-
-XF_PROJ_ROOT := .
 
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
