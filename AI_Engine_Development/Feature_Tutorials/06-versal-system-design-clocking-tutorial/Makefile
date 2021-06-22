@@ -91,7 +91,15 @@ guard-SDKTARGETSYSROOT:
 
 ###
 
-all: kernels aie aiesim xclbin host package 
+ifeq (${TEST}, SPRITE)
+all: setup kernels aie aiesim xclbin host package 
+
+setup:
+	sh /proj/xbuilds/2021.1_daily_latest/internal_platforms/sw/versal/xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux
+else
+all: kernels aie aiesim xclbin host package
+endif
+
 run: all
 sd_card: all
 
@@ -130,7 +138,7 @@ host: guard-CXX guard-SDKTARGETSYSROOT
 	cd ./sw 
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
 	ifeq (${TEST},SPRITE)
-		$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o /wrk/vitis_collateral/06-versal-system-design-clocking/host.cpp
+		$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o /wrk/vitis_collateral/Jenkins_Infra_Support/06-versal-system-design-clocking/host.cpp
 	endif
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o host.cpp
 	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe 
