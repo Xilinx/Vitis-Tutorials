@@ -114,35 +114,20 @@ int run(int argc, char* argv[]){
 #else
 	int narrow_filter[12] = {180, 89, -80, -391, -720, -834, -478, 505, 2063, 3896, 5535, 6504};
 	int wide_filter[12] = {-21, -249, 319, -78, -511, 977, -610, -844, 2574, -2754, -1066, 18539};
-	auto ghdl=xrtGraphOpen(dhdl,uuid.get(),"gr");
-	if(!ghdl){
-		std::cout << "Graph Open error" << std::endl;
-	}else{
-		std::cout << "Graph Open ok" <<std::endl;
-	}
-	ret=xrtGraphUpdateRTP(ghdl,"gr.fir24.in[1]",(char*)narrow_filter,12*sizeof(int));
-	if(ret){
-		std::cout<<"Graph RTP update fail"<<std::endl;;
-		return 1;
-	}
-	xrtGraphRun(ghdl,16);
-	ret=xrtGraphReadRTP(ghdl, "gr.fir24.inout[0]", (char*)coeffs_readback, 12*sizeof(int));//Async read
-	if(ret){
-		std::cout<<"Graph RTP read fail"<<std::endl;;
-		return 1;
-	}
+	std::cout<<"size of cofficient read back:"<<sizeof(coeffs_readback)<<std::endl;
+	std::cout<<"size of filter"<<sizeof(narrow_filter)<<std::endl;
+	auto ghdl=xrt::graph(device,uuid,"gr");
+	ghdl.update("gr.fir24.in[1]",narrow_filter);
+	ghdl.run(16);
+	ghdl.read("gr.fir24.inout[0]", coeffs_readback);//Async read
 	std::cout<<"Coefficients read back are:";
 	for(int i=0;i<12;i++){
 		std::cout<<coeffs_readback[i]<<",\t";
 	}
 	std::cout<<std::endl;
-	xrtGraphWait(ghdl,0);
+	ghdl.wait();
 	std::cout<<"Graph wait done"<<std::endl;
-	ret=xrtGraphReadRTP(ghdl, "gr.fir24.inout[0]", (char*)coeffs_readback, 12*sizeof(int));//read after gr.wait, gr.update has been taken effective
-	if(ret){
-		std::cout<<"Graph RTP read fail"<<std::endl;
-		return 1;
-	}
+	ghdl.read("gr.fir24.inout[0]",coeffs_readback);//read after gr.wait, gr.update has been taken effective
 	std::cout<<"Coefficients read back are:";
 	for(int i=0;i<12;i++){
 		std::cout<<coeffs_readback[i]<<",\t";
@@ -150,17 +135,9 @@ int run(int argc, char* argv[]){
 	std::cout<<std::endl;
 	
 	//second run
-	ret=xrtGraphUpdateRTP(ghdl,"gr.fir24.in[1]",(char*)wide_filter,12*sizeof(int));
-	if(ret!=0){
-		std::cout<<"Graph RTP update fail"<<std::endl;
-	return 1;
-	}
-	xrtGraphRun(ghdl,16);
-	ret=xrtGraphReadRTP(ghdl, "gr.fir24.inout[0]", (char*)coeffs_readback, 12*sizeof(int));//Async read
-	if(ret){
-		std::cout<<"Graph RTP read fail"<<std::endl;
-		return 1;
-	}
+	ghdl.update("gr.fir24.in[1]",wide_filter);
+	ghdl.run(16);
+	ghdl.read("gr.fir24.inout[0]", coeffs_readback);//Async read
 	std::cout<<"Coefficients read back are:";
 	for(int i=0;i<12;i++){
 		std::cout<<coeffs_readback[i]<<",\t";
@@ -192,13 +169,8 @@ int run(int argc, char* argv[]){
 #if __USE_ADF_API__
 	gr.end();
 #else
-	ret=xrtGraphEnd(ghdl,0);
-	if(ret){
-		std::cout << "Graph end error" << std::endl;
-	}
-	xrtGraphClose(ghdl);
+	ghdl.end(0);
 #endif
-	xrtDeviceClose(dhdl);
 
 	return match;
 }
