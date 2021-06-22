@@ -9,18 +9,18 @@
 </table>
 
 ## Introduction
-AI Engine kernels can share a single processor and execute in a interleaved manner. In addition they can also share multiple stream connections on a single physical channel. The Explicit Packet Switching feature allows fine-grain control over how packets are generated, distributed, and consumed in a graph computation. Explicit packet switching is typically recommended in cases where many low bandwidth streams from a common PL source can be distributed to different AI Engine destinations. Similarly many low bandwidth streams from different AI Engine sources to a common PL destination can also take advantage of this feature. Because a single physical channel is shared between multiple streams, you minimize the number of AI Engine - PL interface streams used.
+AI Engine kernels can share a single processor and execute in an interleaved manner. In addition, they can also share multiple stream connections on a single physical channel. The explicit packet switching feature allows fine-grain control over how packets are generated, distributed, and consumed in a graph computation. Explicit packet switching is typically recommended in cases where many low bandwidth streams from a common programmable logic (PL) source can be distributed to different AI Engine destinations. Similarly many low bandwidth streams from different AI Engine sources to a common PL destination can also take advantage of this feature. Because a single physical channel is shared between multiple streams, you minimize the number of AI Engine - PL interface streams used.
 
-This tutorial walks you through the steps to create window interface AI Engine kernels that share the same AI Engine - PL interface streams (step 1), to create designs with float and `cint16` data types (step 2), and to create packet stream interface AI Engine kernels that share AI Engine - PL interface streams (step 3). The AI Engine kernels are different in these steps. In particular, packet stream interfaces and associated built-in functions are introduced in step 3. The graph construction is covered in detail in step 1 and step 3 (only with differences). All these designs share the same PL kernels, which are introduced in step 1. The PS codes for those steps are similar, which is coverred in detail in step 1 and step 2 (only with differences). 
+This tutorial walks you through the steps to create window interface AI Engine kernels that share the same AI Engine - PL interface streams (step 1), to create designs with float and `cint16` data types (step 2), and to create packet stream interface AI Engine kernels that share AI Engine - PL interface streams (step 3). The AI Engine kernels are different in these steps. In particular, packet stream interfaces and associated built-in functions are introduced in step 3. The graph construction is covered in detail in step 1 and step 3 (only with differences). All these designs share the same PL kernels that are introduced in step 1. The PS codes for these steps are similar; this is covered in detail in step 1 and step 2 (with differences). 
 
 There is a limitation in the current version of the AI Engine tools that only integer format values are supported in data files for the AI Engine simulator. Details on the data format and how to convert data from other types to integer format are covered in steps 1 and 2.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the VCK190 base platform. 
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes* (v2021.1)](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/zeq1569273658063.html) for setting up software and installing the VCK190 base platform. 
 
-Before starting this tutorial run the steps below:
+Before starting this tutorial run the following steps.
 
-1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
-2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2020.2` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
+2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2021.1` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
@@ -45,8 +45,6 @@ __Note:__ In this tutorial, a Makefile and instructions are provided. For detail
 
 __Hint:__ In this tutorial, the designs are self-contained in each step, but the steps refer to previous steps. Therefore, it is highly recommended to start from the beginning and progress to completion.
 
-© Copyright 2020 Xilinx, Inc.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -59,4 +57,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD029</sup></p>
+<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p>

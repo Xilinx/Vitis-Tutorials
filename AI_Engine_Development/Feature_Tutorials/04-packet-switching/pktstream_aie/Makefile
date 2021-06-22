@@ -29,6 +29,7 @@ XOS      = $(subst .cpp,.xo,$(wildcard pl_kernels/*.cpp))
 VCC      = v++
 VPP_SPEC =system.cfg
 VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}  
+LDCLFLAGS=
 
 .PHONY: clean
 

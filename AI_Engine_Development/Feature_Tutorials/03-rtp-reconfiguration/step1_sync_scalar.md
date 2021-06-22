@@ -9,13 +9,13 @@
 </table>
 
 ## Synchronous Update of Scalar RTP
-Kernel execution depends on the availability of windows of data on their inputs, and the space to write windows of data on their outputs. This example illustrates a complementary method, whereby a kernel will only get triggered to run after a write of data from another processor. This can be an ARM processor or another AI Engine.
+Kernel execution depends on the availability of windows of data on their inputs, and the space to write windows of data on their outputs. This example illustrates a complementary method, whereby a kernel will only get triggered to run after a write of data from another processor. This can be an ARM® processor or another AI Engine.
 
 In this example, a write from an ARM processor causes a partial sine wave to be generated using the direct digital synthesis (DDS) kernel on the AI Engine. The ARM processor can control the frequency of the sine wave by writing different values to the `runtime` parameter. In HW and HW Cosim flow, the AI Engine output is streamed to the PL kernels, and the PS controls the running AI Engine and PL. The following figure shows this example. 
 
 ![design structure and flow](./images/figure1.PNG)
 
-__Note: The default working directory in this step is "step1", unless specified explicitly.__
+__Note:__ The default working directory in this step is "step1", unless specified explicitly otherwise.
 
 ### Review Graph Programming Code
 1. Examine the header file, (`aie/dds.h`), of the sine kernel (DDS):
@@ -63,7 +63,7 @@ __Note: The default working directory in this step is "step1", unless specified 
 
  	   adf::connect<adf::parameter>(input_port&, output_port&);
   
-   Note that you need to use the template class argument `adf::parameter` to specialize the connection type to the parameter type (because you are now connecting parameters and not windows of data). The parameter does not need to be sized in the same way as a window, because the compiler can always determine its size.
+   __Note:__ You need to use the template class argument `adf::parameter` to specialize the connection type to the parameter type (because you are now connecting parameters and not windows of data). The parameter does not need to be sized in the same way as a window, because the compiler can always determine its size.
 
 2. Examine `aie/graph.cpp`. You can see the lines of code to update the RTP. Note that the number of updates matches the number of iterations specified in `gr.run(4)`.
 
@@ -91,8 +91,8 @@ __Note: The default working directory in this step is "step1", unless specified 
 
    Because the `runtime` parameter in this example is synchronous, the graph execution on the AI Engine will start after the first update call for one iteration, then wait for the next trigger by the next update call. Four consecutive update calls will run the graph for four iterations, where the first two iterations use 10 as the value for the `phase_increment` parameter and the last two iterations use 100.
 
-### Run AI Engine compiler and AI Engine simulator 
-1. Run the AI Engine compiler and the AI Engine simulator to verify the functional correctness of the design. Note that `graph.cpp` is only used for AI Engine simulator, which is a SystemC simulation. 
+### Run AI Engine Compiler and AI Engine Simulator 
+1. Run the AI Engine compiler and the AI Engine simulator to verify the functional correctness of the design. Note that `graph.cpp` is only used for the AI Engine simulator, which is a SystemC simulation. 
 
    The make command to run the AI Engine compiler to generate the AI Engine design graph (`libadf.a`) is:
 	
@@ -112,7 +112,7 @@ __Note: The default working directory in this step is "step1", unless specified 
 
    * `-aie/graph.cpp`: specifies the graph source file
 
-   For more information about AI Engine programming and tools, refer to *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
+   For more information about AI Engine programming and tools, refer to the *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
 
 2. After the graph has been compiled, run `aiesimulator` using the following make command:
 
@@ -140,7 +140,7 @@ __Note: The default working directory in this step is "step1", unless specified 
 
    In `aie/kernels/dds.cc`, the sine kernel function uses the sincos intrinsic with the phase parameter to generate 32-bit integer concatenating Sine (bits [31:16]) and Cosine (bits [15:0]) in signed Q.15 fixed-point format. The 32-bit integer output samples are cast and stored in a `cint16` window. As a result, the first column (real part) represents a cosine waveform. In the four iterations, the first two iterations use a value of 10 as the `phase_increment` parameter and the last two iterations use 100, so you see the cosine waveform frequency increases in the middle of the plot.
  
-3. You can then use the following line to plot the second column (imaginary part) of the output complex data.
+3. Use the following line to plot the second column (imaginary part) of the output complex data.
 
        plot(data(:,2))
 
@@ -177,7 +177,7 @@ The next step is to link the AI Engine graph and PL kernels to generate the hard
 
 	make xclbin
 	
-This make take 10 minutes or more to complete. The corresponding v++ linker command is as follows:
+This make takes 10 minutes or more to complete. The corresponding v++ linker command is as follows:
 
 	v++ -g -l --platform xilinx_vck190_es1_base_202020_1 pl_kernels/s2mm.xo libadf.a -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
 
@@ -189,7 +189,7 @@ Switches for the v++ linker are as follows:
 
 * `--config`: specifies the configuration file. The configuration file (`system.cfg`), specifies stream connections between the Graph and PL kernels, and other optional selections.
 
-After generating the hardware platform, host code (`sw/host.cpp`) is to be compiled using the following make command:
+After generating the hardware platform, compile the host code (`sw/host.cpp`) using the following make command:
 
 	make host
 	
@@ -201,7 +201,7 @@ The detailed commands for compiling the host code are as follows:
 	
 Here, the cross compiler pointed by `CXX` is used to compile the linux host code. `aie_control_xrt.cpp` is copied from the directory `Work/ps/c_rts`.
 
-The host code for HW emulation and HW (`sw/host.cpp`) includes OpenCL APIs to control the executions of PL kernels, and adf APIs `(*init(),update(),run(),wait()*)`. The execution model of the PL kernel is made up of the following steps:
+The host code for HW emulation and HW (`sw/host.cpp`) includes OpenCL APIs to control the executions of PL kernels, and adf APIs `(*init(),update(),run(),wait()*)`. The execution model of the PL kernel is composed of the following steps:
 
 1. Get the OpenCL platform and device:
 
@@ -272,13 +272,13 @@ Following is a code snippet from `sw/host.cpp` to illustrate these concepts:
 
 Head files "adf/adf_api/XRTConfig.h" and "experimental/xrt_kernel.h" are needed by `adf` API and XRT API. 
 
-__Note__: In this example, graph execution needs to start before `finish()` for command queue. If `finish()` is invoked first, which is a blocking call, the graph will never start and provide output to s2mm, and hence the application will hang on the blocked point.
+__Note__: In this example, graph execution needs to start before `finish()` for the command queue. If `finish()` is invoked first, which is a blocking call, the graph will never start and provide output to s2mm, and hence the application will hang on the blocked point.
 
 The next step is to use v++ with `-p` to generate the package file. The make command is:
 
 	make package
 	
-The corresponding v++ command to do package is:
+The corresponding v++ command is:
 
 	v++ -p -t hw_emu -f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm \
 	--package.rootfs $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.1/rootfs.ext4  \
@@ -289,13 +289,17 @@ The corresponding v++ command to do package is:
 	--package.sd_dir data \
 	--package.sd_file host.exe vck190_aie_base_graph_hw_emu.xclbin libadf.a
 
-Here `--package.defer_aie_run` specifies that the Versal AI Engine cores will be enabled by the PS. When not specified, the tool will generate CDO commands to enable the AI Engine cores during PDI load instead. `--package.sd_dir <arg>` specifies a directory path to package into the *`sd_card* directory/image`, which is helpful for including some golden data into the package. "`--package.sd_file <arg>`" is used to specify files to package into the *`sd_card* directory/image`.
+Here `--package.defer_aie_run` specifies that the Versal AI Engine cores will be enabled by the PS. When not specified, the tool will generate CDO commands to enable the AI Engine cores during PDI load instead. 
+
+`--package.sd_dir <arg>` specifies a directory path to package into the *`sd_card* directory/image`, which is helpful for including some golden data into the package. 
+
+"`--package.sd_file <arg>`" is used to specify files to package into the *`sd_card* directory/image`.
 	
-For more details about `v++ -p (--package)` options, refer to UG1393.
+For more details about `v++ -p (--package)` options, refer to *Application Acceleration Development* (UG1393).
 
 ### Deploy for Hardware Emulation and Hardware Flow
 
-The last step is to run HW emulation with the following make command:
+The final step is to run HW emulation using the following make command:
 
 	make run_hw_emu
 
@@ -303,9 +307,9 @@ The corresponding script is as follows:
 
 	./launch_hw_emu.sh 
 
-__Hint: Option `-add-env VITIS_LAUNCH_WAVEFORM_BATCH=1` can be added to `launch_hw_emu.sh` to record the waveform of the platform into waveform file (`*.wdb`).__
+__Hint:__ Option `-add-env VITIS_LAUNCH_WAVEFORM_BATCH=1` can be added to `launch_hw_emu.sh` to record the waveform of the platform into waveform file (`*.wdb`).
 
-__Hint:If keyboard is accidentally hit that prevents system booting automatically, type `boot` in `Versal>` prompt to resume the system booting.__ 
+__Hint:__ Hitting a key accidentally will prevent the system booting automatically. If this happens, type `boot` in the `Versal>` prompt to resume the system booting.
 
 After Linux has booted, run following commands in Linux prompt (this is only for HW cosim):
 
@@ -331,9 +335,9 @@ The host code is self-checking. It will check the output data against the golden
 In this step, you learned about the following core concepts:
 
   * Synchronous update of scalar RTP
-  * Flows to perform AIE simulation
+  * Flows to perform AI Engine simulation
   * HW emulation and HW run
 
 Next, review [Asynchronous Update of Scalar RTP](./step2_async_scalar.md).
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD001</sup></br></p>
+<p align="center"><sup>XD001 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
