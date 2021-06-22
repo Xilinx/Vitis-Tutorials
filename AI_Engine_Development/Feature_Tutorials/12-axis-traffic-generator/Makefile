@@ -28,18 +28,18 @@ ifndef IMAGE
   export IMAGE
 endif
 
+TEST :=
+ifeq (${TEST}, SPRITE)
+	SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+	CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+	DSPLIB_ROOT := /wrk/vitis_collateral/xf_dsp
+endif
 
 #DSP LIB Includes
 DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/hw
 DSP_KERNEL_SRC         := $(DSPLIB_ROOT)/L1/src/hw
 DSP_GRAPH_SRC          := $(DSPLIB_ROOT)/L2/include/hw
 DSP_INC                := $(DSPLIB_ROOT)/L1/tests/inc/
-
-
-
-SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
-
 
 ###From LENET makefile
 RELATIVE_PROJECT_DIR := ./
@@ -51,7 +51,6 @@ EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 ######
-
 
 # Makefile input options
 TARGET := hw_emu
@@ -102,8 +101,6 @@ GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 
 LDCLFLAGS := $(GCC_LIB)
 
-XF_PROJ_ROOT := .
-
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package
 
@@ -140,9 +137,6 @@ guard-DSPLIBROOT:
 DEST_DIR ?= $(CURDIR)
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MK_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
-
-
-
 
 all: kernels aie xclbin host package
 sd_card: all
@@ -219,8 +213,6 @@ run_emu:
 	cd ./sw
 	./launch_hw_emu.sh
 endif
-
-
 
 ###########################################################################
 
