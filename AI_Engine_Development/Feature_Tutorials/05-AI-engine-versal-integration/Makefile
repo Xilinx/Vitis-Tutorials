@@ -93,7 +93,15 @@ guard-SDKTARGETSYSROOT:
 
 ###
 
-all: kernels aie aiesim xclbin host package 
+ifeq (${TEST}, SPRITE)
+all: setup kernels aie aiesim xclbin host package 
+
+setup:
+	sh /proj/xbuilds/2021.1_daily_latest/internal_platforms/sw/versal/xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux
+else
+all: kernels aie aiesim xclbin host package
+endif
+
 sd_card: all
 
 ######################################################

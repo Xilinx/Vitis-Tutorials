@@ -1,271 +1,425 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Versal Emulation Waveform Analysis</h1>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Versal System Design Clocking</h1>
  </td>
  </tr>
 </table>
 
-## Introduction
-Developing an accelerated AI Engine design for the VCK190, can be done using the Vitis™ compiler (`v++`). This compiler can be used to compile programmable logic kernels (PL kernels), and connect these PL kernels to the AI Engine and PS device.
+# Introduction
+Simulating a complete system in the Vitis™ unified software platform allows for a near-hardware run of a design without the hardware, and has the added benefit of detailed waveform analysis during hardware emulation to identify issues in the programmable logic (PL), AI Engine interfaces, and memory read/writes that might be harder to debug on hardware.
 
-In this tutorial you will learn clocking concepts for the Vitis compiler via how to define clocking for ADF Graph, and PL kernels by using clocking automation functionality. The design being used is a simple classifier design: 
+This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal™  ACAP. It steps through the process of building a design for hardware emulation, launching emulation with waveform viewing, and detailed information on how to read the waveforms, as well as using the Vitis analyzer to continue the analysis with generated trace output waveforms and data. 
+ 
+It is strongly recommended to go through the **Versal Integration tutorial** and the **Versal System Design Clocking tutorial** before running this tutorial.
 
-![Design diagram](./images/event_noinfo.PNG)
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.1)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=acceleration_release_notes.html;a=wlk1553469789555) for setting up software and installing the VCK190 base platform. 
 
-Pre-requisites for this tutorial are: 
+Before starting this tutorial run the following steps.
 
-* Familiarity with the `aiecompiler` flow
-* Familiarity with the `gcc` style command-line compilation
-
-In the design the following clocking steps are used:
-
-| Kernel Location | Compile Setting |
-| --- | --- |
-| Interpolator, Polar Clip, & Classifier | AI Engine Frequency (1GHz) |
-| `mm2s` & `s2mm` | 150MHz and 100MHz (`v++ -c` & `v++ -l`) | 
-For more detailed info on this, look for *Table 40* of UG1076.
-
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.1) for setting up software and installing the VCK190 base platform. 
-
-Before starting this tutorial run the steps below:
-
-1. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
+1. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run `xilinx-versal-common-v2021.1/sdk.sh`.
 2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2021.1` directory.
-3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+3. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+# Objectives
+After completing this tutorial you should be able to:
+* Use XSIM as a live waveform viewer to view signals to and from the AI Engine including stream data and run-time parameters (RTP).
+* Read/understand Transaction Level Modeling (TLM) information in a waveform.
+* Use the Vitis analyzer to read trace and profile data.
+# Tutorial Overview
 
-## Objectives
-You will learn the following:
-* CLocking of PL kernels
-* Introduction of datawidth converters, clock-domain crossing, and FIFOs in `v++`
+## Design Overview
+The design is a simple FIR filter that takes in random noise generated by the PL kernel, `random_noise`, and gets asynchronous RTP updates to the AI Engine to update the FIR filter coefficients. To confirm the coefficients are applied, the host code reads back the coefficients.
 
-## Step 1 - Building ADF Graph
-The ADF graph has connections to the programmable logic through the PLIO interfaces. These interfaces can have reference clocking either from the `graph.cpp` through the `PLIO()` constructor or through the `--pl-freq`. This will help with knowing what kind of clock can be set on the PL Kernels that are going to connect to the PLIO. Here you will set the reference frequency to be 200MHz for all PLIO interfaces.
+![Block Diagram](./images/design_block_diagram.png)
 
-**NOTE**: If you do not specify the `--pl-freq` it will be set to 1/4 the frequency of the AI Engine frequency.
+## Transaction Level Modeling
+Transaction level modeling (TLM) models CIPS, NoC, and AI Engine blocks, using SystemC, to show transaction-level communication in the waveform. It is cycle-approximate modeling. It can provide high-level information such as the address and data of the transactions to/from DDR memory or a specific PL kernel.
 
-```bash
-aiecompiler --target=hw -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-freq=200 --workdir=./Work
-```
+In the following diagram, the CIPS, NoC, and AI Engine are modeled in SystemC.
 
-or 
+![Model Block Diagram](./images/model_block_diagram.png)
 
-```bash
-make aie
-```
+# Steps
 
-| Flag | Description |
-| ---- | ----------- |
-| --target | Target how the compiler will build the graph. Default is `hw` |
-| --include | All the typical include files needed to build the graph |
-| --pl-freq | Sets all PLIO reference frequencies (in MHz) |
-| --workdir | The location of where the Work directory will be created |
+**Step 1**: Building the Design
 
-## Step 2 - Clocking the PL Kernels
-In this design you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels are separate from the ADF Graph and you'd specify them when compiling the kernel, and when you link the design together.
+**Step 2**: Launching Emulation with the XSIM Waveform GUI
 
-Run the following commands:
-    ```bash
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp \
-        --hls.clock 150000000:mm2s -o mm2s.xo --save-temps
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp \
-        --hls.clock 150000000:s2mm -o s2mm.xo --save-temps
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip \
-        ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps
-    ```
+**Step 3**: Using XSIM Waveform GUI and [QEMU](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=runemulation1.html;a=goq1602614131386)
 
-    Or this command:
+**Step 4**: Using Vitis Analyzer
+
+## Step 1: Build Design
+
+1. To build the design run the following commands.
+
+     ```bash
+     make aie
+     ```
+
+2. After the ADF graph is compiled, run the AI Engine simulator (`aiesimulator`) to get additional profile data. This ensures the design is simulating correctly and generates extra profile information for performance analysis and optimizing the kernels.
+
+    To run the simulator, run the following commands.
+
+     ```bash
+     make aiesim
+     ```
+
+   After running emulation a new directory, `aiesimulator_output`, is created and inside this directory, there is a file called `aiesim-options.txt`.
+
+3. Open the `aiesim-options.txt` and you should see content similar to the following.
+
+     ```
+     AIE_PKG_DIR=/path/to/<tutorial>/./Work
+     AIE_DUMP_VCD=tutorial
+     AIE_PROFILE=All
+     ```
+
+4. Close the text file.
+
+    **NOTE**: To view all the `aiesim_option.txt` values, see [Simulator Options for Hardware Emulation](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=simulate_graph_application.html;a=ilk1591226013297).
+
+5. Run the rest of the build process using the following commands.
+
     ```bash
     make kernels
+    make xclbin
+    make host
+    make package
     ```
 
-A brief explanation of the `v++` options:
+## Step 2: Launching Emulation with XSIM Waveform GUI
+After the building and packaging of the design is complete you can run hardware emulation on your design. Ensure that `launch_hw_emu.sh` is in the `sw` directory.
 
-| Flag/Switch | Description |
-| --- | ---|
-| `-c` | Tells `v++` to run the compiler.|
-| `--platform` | (required) The platform to be compiled towards.|
-| `-k` | (required) Kernel name.|
-| `--hls.clock` | Tells the Vitis compiler to use a specific clock defined by a 9-digit number (in the previous example above the clock is 100 MHz). Specifying this will help with the compiler make optimizations based on kernel timing.|
-| `-o` | (required) The output, which will always be .xo.|
-| `--save-temps` | (optional) Will create a folder structure and save the compilation of the kernel.|
+1. To launch emulation with the XSIM Waveform GUI run the following command.
 
-For additional information, see [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).
-
-Once completed, you will have the `mm2s.xo`, `s2mm.xo`, `polar_clip.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
-
-## Step 3 - `v++` linker -- Building the System
-Now that you have a compiled graph (`libadf.a`), the PLIO kernels (`mm2s.xo`, `s2mm.xo`, and`polar_clip.xo`), you can link everything up for the VCK190 platform.
-
-A few of things to remember in this step:
-
-1. For PLIO kernels, you need to specify their connectivity for the system.
-2. Specify the clocking per PL Kernel
-3. You need to determine the `TARGET`: *hw* or *hw_emu*.
-
-To link kernels up to the platform and AI Engine, you will need to look at the `system.cfg` file. For this design the config file looks like this:
-
-```ini
-[connectivity]
-nk=mm2s:1:mm2s
-nk=s2mm:1:s2mm
-nk=polar_clip:1:polar_clip
-stream_connect=mm2s.s:ai_engine_0.Datain
-stream_connect=ai_engine_0.clip_in:polar_clip.in_sample
-stream_connect=polar_clip.out_sample:ai_engine_0.clip_out
-stream_connect=ai_engine_0.Dataout:s2mm.s
-```
-
-Here you may notice some connectivity and clocking options.
-    
- * `nk` This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
- * `stream_connect` -- This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces. You can also define a FIFO on this line by adding a depth value to the end.
-
-There are many more options available for `v++`. For a full list, see the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).
-
-1. Modify the `system.cfg` file so that the second `stream_connect` has a stream depth of `1024`. Replace the line with `ai_engine_0.Dataout` line with this: `stream_connect=ai_engine_0.Dataout:s2mm.s:1024`
-   * Keep this file open for now.
-2. The data output of the AI Engine is at 32-bit, and at a high clock frequency. To reduce the possibilities of dropping data, you can attach the `s2mm` kernel to the AI Engine with a larger datawidth (eg. 64-bits) and the clock frequency to `s2mm` to keep relative bandwidth the same. To do this the Vitis Compiler will auto instantiate a Clock Converter block and Datawidth Converter block to make sure connectivity is achieved.
-   * Open the `s2mm.cpp` in `./pl_kernels` to see that the line `23` has 64-bit defined for both input and output.
-3. Because the `s2mm` kernel is running slower than the AI Engine output, you need to override the clock provided to it in **Step 2**. That was just for kernel compilation, and linking is to make sure that clock is connected correctly. In the `system.cfg` file uncomment these lines:
-    ```ini
-    [clock]
-    freqHz=200000000:s2mm.ap_clk
-    tolerance=1000000:s2mm.ap_clk
-    ```
-    Here you are telling the `v++` linker to override the default clock frequency to 200MHz for the `s2mm` kernel, and setting the clock tolerance to 1MHz. By setting a tolerance you are giving the linker a better chance to make sure a clock can be generated and meet your bandwidth.
-4. With the changes made you can now run the following command:
     ```bash
-    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm s2mm.xo \
-        mm2s.xo polar_clip.xo ./aie/libadf.a --config system.cfg \
-        --save-temps -o tutorial1.xclbin 
+    ./launch_hw_emu.sh -g -aie-sim-options ../aiesimulator_output/aiesim_options.txt
     ```
 
-    | Flag/Switch | Description |
-    | --- | --- |
-    | `--link` | Tells v++ that it will be linking a design, so only the *.xo and libadf.a files are valid inputs |
-    | `--target` | Tells v++ how far of a build it should go, hardware (which will build down to a bitstream) or hardware emulation (which will build the emulation models) |
-    | `--platform` |  Same from the previous two steps |
-    | `--config` | This allows you to simplify the `v++` command-line if it gets too unruly and have items in an ini style file. |
+    OR
 
-5. When the linking is complete you can view what the design looks like in the Vivado® tools. Navigate to `_x/link/vivado/vpl`.
-   1. Run the command in the terminal: `vivado -source openprj.tcl`
-   2. When the tool is open, locate the button on the left in the Flow Navigator and click, "Open Block Design". You should see an output similar to the following figure. (The following figure has reduced nets visible to see the added FIFO, Datawidth Converter, and Clock Converter).
-        
-    ![IPI Diagram](./images/vivado_ipi.PNG)
+    ```bash
+    make run_emu
+    ```
 
-    **IMPORTANT: Do not change anything in this view. This is only for demonstration purposes.**
+    The terminal shows the following.
 
-   * From the changes made above, you will notice a new clock, a Datawidth Converter, Clock Converter, and a new FIFO on the `s2mm` kernel.
-      * Do note that if you change a kernel or connectivity you have to re-run v++ linker.
+    ```log
+    Starting QEMU
+    - Press <Ctrl-a h> for help 
+    Waiting for QEMU to start. 
+    running directly on console
+    QEMU started. qemu_pid=3208
+    Waiting for PMU to start. 
+    qemu-system-aarch64: -chardev socket,path=./qemu-rport-_pmc@0,server,id=ps-pmc-rp: info: QEMU waiting for connection on: disconnected:unix:./qemu-rport-_pmc@0,server
+    PMC started. pmc_pid=3243
+    qemu-system-aarch64: -chardev socket,id=pl-rp,host=127.0.0.1,port=7043,server: info: QEMU waiting for connection on: disconnected:tcp:127.0.0.1:7043,server
+    XSIM started. xsim_pid=3300
+    ```
 
-**NOTE: Any change to the `system.cfg` file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).**
+    This shows QEMU starting and launching XSIM. Note that QEMU and XSIM are linked together, meaning closing one closes the other. The use of the `-g` flag opens up the XSIM Waveform GUI as shown in the following image.
 
-## Step 4 - Compiling Host Code
-When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SDKTARGETSYSROOT**, or representation of the root file system, that can be used to cross-compile the host code.
+    ![XSIM GUI Startup](./images/xsim_gui_startup.png)
 
-1. Open `./sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
+    In this view you can select the signals you want to watch from the **Scope** and **Objects** views. 
+
+2. In the **Tcl Console** at the bottom of the view, run the following command.
+
+    ```Tcl
+    source ../../../../add_waveforms.tcl
+    ```
+    The `add_waveforms.tcl` file removes any default signals provided by the simulation environment, and adds in all the signals you want to view. There are some signals that are important to have such as: NoC, DDR memory, PL Kernel, and CIPS signals. Your design interacts with these components, and being able to trace signal changes from CIPS to the NoC to/from DDR memory, and then to your design can prove helpful in debugging any potential issue with data transfers. 
+    This file contains the following.
+
+    ```Tcl
+    # Remove all waveforms before adding new ones
+    remove_wave -of [get_wave_config] [get_waves -of [get_wave_config] -regexp ".*"]
+
+    # Set the appropriate paths based upon the platform being used
+    set scope_path "/xilinx_vck190_base_wrapper_sim_wrapper/xilinx_vck190_base_wrapper_i/xilinx_vck190_base_i"
+
+    # Create a wave group called CIPS and add all signals for the CIPS_0 to it
+    set CIPS [add_wave_group CIPS]
+    set cips_intf [get_objects -r $scope_path/CIPS_0/* -filter {type==proto_inst}]
+    add_wave -into $CIPS $cips_intf
+
+    # Create a wave group called NOISE and add all signals of the random_noise_1 to it
+    set NOISE [add_wave_group NOISE]
+    set noise_intf [get_objects -r $scope_path/random_noise_1/* -filter {type==proto_inst}]
+    add_wave -into $NOISE $noise_intf
+
+    # Create a wave group called S2MM and add all signals of the S2MM kernel to it
+    set S2MM [add_wave_group S2MM]
+    set s2mm_intf [get_objects -r $scope_path/s2mm_1/* -filter {type==proto_inst}]
+    add_wave -into $S2MM $s2mm_intf
+
+    # Create a wave group called CIPS_NOC and all signals of the CIPS NoC to it
+    set CIPS_NOC [add_wave_group CIPS_NOC]
+    set cips_intf [get_objects -r $scope_path/cips_noc/* -filter {type==proto_inst}]
+    add_wave -into $CIPS_NOC $cips_intf
+
+    # Create a wave group called DDR4 and all signals to/from DDR4
+    set DDR4 [add_wave_group DDR4]
+    set ddr4_intf [get_objects -r $scope_path/noc_ddr4/* -filter {type==proto_inst}]
+    add_wave -into $DDR4 $ddr4_intf
+
+    # Create a wave group called AIENGINE and all signals of the AI Engine block to it
+    set AIENGINE [add_wave_group AIENGINE]
+    set aie_intf [get_objects -r $scope_path/ai_engine_0/* -filter {type==proto_inst}]
+    add_wave -into $AIENGINE $aie_intf
+    ```
+
+    **NOTE**: This file can be executed automatically from the `launch_hw_emu.sh` command by using the `-user-pre-sim-script add_waveforms.tcl`.
+
+    **IMPORTANT**: Add all the signals you need before starting emulation. If, after starting emulation, you pause it and add more signals there will not be any data for the new signals.
+
+    You will see a waveform view as shown in the following.
+
+    ![XSIM with new signals](./images/xsim_with_signals.png)
+
+3. Expand the all signal groups in the view to get the following view.
+
+    ![Expanded signals](./images/expanded_signals.png)
+
+4. The tutorial design runs very fast and you will not be able to see anything meaningful on this small scale.
+     
+     Adjust the scale to 100 us.
    
-    Do take note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application" of UG1076. 
+    ![Proper Scale](./images/proper_scale.png)
 
-    The output size of the kernel run is half of what was allocated earlier. This is something to keep in mind. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call will be adjusted. If this is not changed, it will hang because XRT is waiting for the full length to be processed when in reality half the count was done (even though all the data will be present). In the `host.cpp` look at line 117 and 118 and comment them out. You should have uncommented the following line:
+    **TIP**: The scale can be adjusted when emulation is running to fit your needs.
 
-   ```C++
-   xrtRunHandle s2mm_rhdl = xrtKernelRun(s2mm_khdl, out_bohdl, nullptr, sizeOut/2);
-   ```
+**NOTE**: For more information about this simulator view and how to use it, see the [UG900 Vivado Design Suite User Guide: Logic Simulation](https://www.xilinx.com/cgi-bin/docs/rdoc?d=xilinx2021_1/ug900-vivado-logic-simulation.pdf).
 
-2. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS`, and `GCC_LLIBS`.
-   * `GCC_FLAGS` Should be self-explanatory that you will be compiling this code with C++14.
-   * `GCC_LLIBS` Has the list of all the specific libraries you will be compiling and linking with. This is the minimum list of libraries needed to compile an AI Engine application for Linux.
-3. Close the makefile and run the command: `make host`.
+## Step 3: Using XSIM Waveform GUI and QEMU
+A great benefit of having a waveform viewer showing live data is so you can see how the signals interact with each other. This includes the programming of the AI Engine and device traffic to/from the DDR memory, traffic to/from the PL kernels, as well as seeing RTP data being written to the AI Engine.
 
-With the host application fully compiled, you can now move to packaging the entire system.
+1. Click the **Run All** button (![run all](./images/run_all.png)). 
 
-## Step 5 - Packaging Design and Running on Board
-To run the design on hardware using an SD card, you need to package all the files created. For a Linux application, you must make sure that the generated `.xclbin`, `libadf.a`, and all Linux info from the platform are in an easy to copy directory.
+2. Click back to the terminal where `./launch_hw_emu.sh` was launched. Notice that the QEMU instance has begun booting and when you see the following messages QEMU has finished launching.
 
-1. Open the `Makefile` with your editor of choice, and familiarize yourself with the contents specific to the `package` task.
-2. In an easier to read command-line view, here is the command:
-    ```bash
-    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm \
-        --package.rootfs ${ROOTFS} \
-		--package.kernel_image ${IMAGE} \
-		--package.boot_mode=sd \
-		--package.image_format=ext4 \
-		--package.defer_aie_run \
-		--package.sd_file host.exe \
-        tutorial1.xclbin libadf.a
+    ```text
+    root@versal-rootfs-common-2021_1:~# Enabling notebook extension jupyter-js-widgets/extension...
+        - Validating: OK
+    xinit: giving up
+    xinit: unable to connect to X server: Connection refused
+    xinit: server error
+    [C 17:53:36.686 NotebookApp] Bad config encountered during initialization: No such notebook dir: ''/usr/share/example-notebooks''
     ```
-    **NOTE:** Remember to change the `${ROOTFS}` and `${IMAGE}` to the proper paths.
-    
-    Here you are invoking the packaging capabilities of v++ and defining how it needs to package your design.
+    **IMPORTANT**: Ignore the messages above.
 
-    | Switch/Flag | Description |
-    | --- | --- |
-    | `--package.rootfs` | This specifies the root file system to be used. In the case of the tutorial it is using the pre-built one from the platform. |
-    | `--package.kernel_image` | This is the Linux kernel image to be used. This is also a using a pre-built one from the platform. |
-    | `--package.boot_mode` | Used to specify how the design is to be booted. For this tutorial an sd_card will be used, and it will create a directory with all the contents needed to boot from one. |
-    | `--package.image_format` | Tells the packager the format of the Kernel image and root file system. For Linux, this should be `ext4`. |
-    | `--package.defer_aie_run` | This tells the packager than when building the boot system to program the AI Engine, but to stop execution. In some designs, you do not want the AI Engine to run until the application is fully loaded. |
-    | `--package.sd_file` | Specify this to sell the packager what additional files need to be copied to the sd_card directory and image. |
+3. Hit **Enter** a few times to clear these messages and you should see this prompt.
 
-3. Run the command: `make package`
-4. When the packaging is complete do an `cd ./sw && ls` and notice that several new files were created, including the `sd_card` directory.
-5. Format the SD card with the `sd_card.img` file.
-
-When running the VCK190 board, make sure you have the right onboard switches flipped for booting from the SD card.
-
-1. Insert the SD card and turn on the board.
-2. In an attached monitor and keyboard, wait for the Linux command prompt to be available.
-3. Run the following commands:
     ```bash
-    cd /mnt/sd-mmcblk0p1
+    root@versal-rootfs-common-2021_1:~#
+    ```
+
+4. Type in the following commands to launch the tutorial application.
+
+    ```bash
     export XILINX_XRT=/usr
+    cd /mnt/sd*1
+    ./host.exe a.xclbin
     ```
-4. To run your application enter the command: `./host.exe a.xclbin`
-5. You should see a **TEST PASSED** which means that the application ran successfully!
 
-**IMPORTANT**: To rerun the application you need to power cycle the board.
+    **NOTE**: This might take some time to complete because hardware emulation is collecting profiling data as well as VCD data.
 
-## Challenge (Optional)
-### Build the design for Hardware Emulation
-Modifying the target for both **Step 3** and **Step 4** link and package a design for hardware emulation and run such emulation with the generated script, `launch_hw_emu.sh`. 
+5. Navigate back to the XSIM Waveform GUI and notice thata signals are toggling. Scroll up and down to see all the signals that are starting to display data.
 
-## Summary
-In this tutorial you learned the following:
+6. Pause the execution of the design when you see all signals in the view stop toggling. 
 
-* Adjusted clocking for PL Kernels and PLIO Kernels
-* How to modify the `v++` linker options through command-line and the config file
-* Learned how datawidth converters, clock-domain crossing, and FIFOs are inserted in `v++`
-* How to run an AI Engine application on a VCK190 board
+### Exploring the Waveforms
+One of the things the waveform viewer can help with is figuring out the order in which data is transferred from a source to a destination. In the following sections you can see how to explore the various waveforms specific to certain communication/data transfer.
 
-<p align="center"><sup>&copy;  Copyright 2020 Xilinx, Inc.</sup></p>
+**NOTE**: If AI Engine kernels contain `printf` statements, the output will show up in the XSIM Waveform GUI in the **Tcl Console** and will be written to the `simulate.log` file after emulation is closed.
+
+#### Checking Proper Boot-up Using PMC
+The first key step to ensure emulation is operating correctly is making sure that the PS is able to program the platform management controller (PMC). This system is responsible for booting and configuring the device. Seeing the signal through the CIPS, NoC, and the AI Engine is a sign that things are operating normally. 
+
+1. To see this signal only run the following Tcl script.
+
+    ```tcl
+    source ../../../../bootup_signals.tcl
+    ```
+
+    ![Bootup Signals](./images/bootup_signals.png)
+
+2. Zoom in to the first transactions by clicking and dragging the mouse from the upper left to the bottom right. You should see something like the following.
+
+    ![Bootup Zoomed In](./images/bootup_zoom_in.png)
+
+    Expand these signals and notice that the NoC and the CIPS signals are all matched. This is showing that the CIPS is transferring configuration information to the PMC. These signals are TLM signals, because the blocks of the device they are targeting are modeled in SystemC. In this view, a wide colored block might not be one transaction (because it is a ***us*** timescale), so zoom in and notice there are more transactions occurring in a short amount of time. 
+    
+    Looking at the last interface, ***xilinx_vck190_base_ai_engine_0_0_S00_AXI_tlm***, the majority of the transactions are writes, and are configuring the AI Engine to the graph created in **Step 1**. These writes are specific to the Configuration Data Objects (CDO) that are commands that are passed to the PLM to configure the device, and in this interface, the AI Engine.
+
+3. Zoom the window to full by clicking the mouse on the lower right side, and drag to the upper left.
+
+#### PL to AI Engine
+After bootup and the device is configured, the application can begin to run. In this design, there is a PL kernel called `random noise` that is generating data that is being fed directly into the AI Engine. The key here is looking at the `s_axi_control` interface to see when the PS sends the `run` signal.
+
+1. To view the specific signals controlling the PL kernel, run the following.
+
+    ```tcl
+    source ../../../../pl_to_aie.tcl
+    ```
+
+2. Expand the **CIPS** group down to the **Row 0**. Zoom into a specific region. In the following screenshot the red area is the zoom region.
+
+    ![Zoom region](./images/pl_to_aie_zoom_region.png)
+
+    After the zoom in, you should see something similar to the following.
+
+    ![Zoomed in](./images/pl_to_aie_zoomed_in.png)
+
+    Here you can see the PS is using the Full Power Domain (FPD) interface to send the AXI signal to turn on. Notice that there are two blocks shown. This is the PS telling the `random_noise` and `s2mm` kernels to start running.
+
+    If you zoom in more, you can see more specifics of the transactions.
+
+    ![Zoomed in 2x](./images/pl_to_aie_zoom_2x.png)
+
+    Notice that the `s_axi_control` has a read transaction slightly after the second transaction has started of the ***FPD*** interface.
+
+3. Expand the **xilinx_vck190_base_CIPS_0_0_M_AXI_FPD_tlm** interface and the **Outstanding Reads** and you will see a **Row 0**. If you move the mouse over the **#3** or **#4** a context help menu shows you some signal information on where data is being transfered. Notice the `ARADDR` value of `0xa4060000` for **#3** and `0xa4050000` for **#4**, and understand that this is the address to the PL kernels that the Vitis linker auto-assigns it during linking. From the host code, you can determine that these kernels are activated before the AI Engine, soon after the application starts, so it is safe to say these signals are used to start them. Do remember that these kernels are simpler than others; more complex kernels will result in different transactions.
+
+4. Zoom to fit by clicking the **Zoom Fit** button (![zoom fit](./images/zoom_to_fit.png)). Expand the ***NOISE*** group and expand ***Out_V***.
+
+    ![Random Noise](./images/pl_noise.png)
+
+5. Notice after the `random_noise` kernel starts, you see the large green-line. This is a series of many transactions of the PL kernel transferring data to the AI Engine. There are a few red sections in the waveform. This is a link stall, or where the kernel has been stalled and is caused by the AI Engine.
+
+6. Zoom to fit by clicking the **Zoom Fit** button.
+    
+#### AI Engine RTP Signals
+As mentioned in the **Overview** this design is sending RTP values to the AI Engine through the `graph.update()` host application. From the host code, you can see that there are two updates being done, both with an array size of 12. Because these only apply to the AI Engine kernel, these will write signals to the `AIENGINE/S00_AXI` interface. However, there are other signals that show the same values because these are the interfaces the data traverses to the destination.
+
+1. Run the following Tcl script to see only the AI Engine signal.
+    
+    ```tcl
+    source ../../../../rtp_signals.tcl
+    ```
+
+2. Expand the **AIENGINE** group, **xilinx_vck190_base_ai_engine_0_0_S00_AXI** interface, and expand the **Outstanding Writes**. You will see some write transactions; go to the second visible instance shown in the following.
+  
+    ![RTP zoom loc](./images/rtp_zoom_loc.png)
+
+3. Zoom into the transaction of writes until you can see something similar to the following screenshot.  
+    
+    ![RTP Signals](./images/rtp_signals.png)
+
+    **NOTE**: Depending on the time the host application runs you will not see the exact same times.
+    
+    Here you can see that there are 12 writes that are being sent to the AI Engine which are the RTP coefficients that are to be updated in the design.
+
+    Expand **Row 0** and hover the mouse over **#262** where it says **Data** and you will see a pop-up as shown in the following.
+
+    ![RTP One](./images/rtp_data.png)
+
+    You can see that there is data presented here. It is in the radix of hexidecimal, and reads `0xB4`. Converting this to decimal is `180`, which is the first coefficent in the area for updates. 
+
+    **TIP**: There are two RTP updates occurring. If you follow the same write signal, you will find the write transactions for the second update.
+
+4. Click the **Zoom to Fit** button.
+
+#### AI Engine to PL to DDR Memory
+After the RTP update has been sent, you can start to see output data being written to DDR memory. In this design, the AI Engine is sending data from the `S00_AXIS` interface and getting it to the `s2mm` kernel. This kernel is a FIFO written in HLS and is used to write the output to DDR memory.
+
+1. To view these signals run the following. 
+
+    ```tcl
+    source ../../../../aie_to_ddr.tcl
+    ```
+    
+    You should see something similar to the following.
+
+    ![AIE to DDR](./images/aie_to_ddr.png)
+
+    As you can see, the transactions in green are slightly ahead of the tan. This means those signals are going first. The data path is the AI Engine kernel, to the interface tile, then to the **AIENGINE/M00_AXIS** interface. Notice how **AIENGINE/M00_AXIS** and **S2MM/s** interfaces are matched, meaning they are connected together. The same applies to the **S2MM/m_axi_gmem** and the **DDR4/S00_AXI** interfaces on the **noc_ddr4** IP. 
+
+    After the data is stored into DDR memory, the host application can then access it.
+
+2. Expand the **CIPS_NOC** group. Notice that the last transactions on the **cips_noc_0_M00_AXI_tlm** and the **cips_noc_0_S00_AXI_tlm** interfaces and zoom in. This is the host application reading the data that was stored by the `s2mm` kernel. 
+
+    ![DDR to PS](./images/ddr_to_ps.png)
+
+3. When emulation is finished, close the XSIM GUI, which closes the QEMU and the emulation. Discard the waveform at the pop-up prompt.
+4. Navigate back to the terminal that launched emulation.
+
+#### Limitations
+Note the following limitations of the waveform viewer.
+- Signals internal to the AI Engine can be viewed using VCD. They are not integrated in the general XSIM Waveform GUI.
+- CIPS (QEMU model) which executes the software program is purely a functional model with no timing accuracy. The NoC, DDR memory, and AI Engine are cycle-approximate models.
+- Bandwidth and latency estimation are approximate, based on the accuracy of the individual IP models.
+
+## Step 4: Using Vitis Analyzer
+After emulation is complete, you can look at the profiling and VCD trace data that was also generated at the same time. Note that if profiling and VCD signal features are not used, emulation runs faster.
+
+Using the XSIM Waveform GUI to view waveforms is powerful in allowing you to see the data path and flow of the design, as well as debug potential issues like a hang. However, this will only show the programmable logic side of the system. To investigate the AI Engine signals, you need to use the VCD trace in the Vitis analyzer. To use the Vitis analyzer, open up a `.aierun_summary` file.
+
+1. Open the run summary of the design by running the following command.
+
+   ```bash
+   vitis_analyzer sw/sim/behav_waveform/xsim/default.aierun_summary &
+   ```
+  
+    When the summary is open, you should see something similar to the following.
+
+    ![Vitis Analyzer Summary](./images/vitis_analyzer_summary.png)
+
+2. Here you can see various reports: **Summary**, **Trace**, **Profile**, **Graph**, **Array**. Click on **Trace** to open up the VCD data that was collected during hardware emulation.
+   
+     ![Vitis Analyzer Trace](./images/vitis_analyzer_trace.png)
+
+    Here you can see the inner traces of the graph through a tile hierarchy. Selecting a net, tile, function, or any object in this view will cross-select to various views. This can help with identifying specific nets and functions. 
+
+3. Open the **Graph** view and click on the **Buffers** tab.
+4. To find the RTP buffers, click on the search button (![search](./images/search.png)) and type in `coeffs`.
+
+    You should see a window like the following.
+    
+    ![rtp search](./images/graph_buffers.png)
+
+5. Select the three `coeffs` buffers, and click the **Trace** view again, and see that the lock signals are highlighted.
+
+    ![Selected RTP](./images/selected_rtp.png)
+
+6. If you scroll up you can see that the FIR filter kernel begins to process data soon after the RTP is read. 
+
+    ![Vitis Analyzer FIR](./images/fir_filter.png)
+
+6. Open up the **Profile** report and see specific information about the kernel and the tile it is placed in.
+
+    ![Vitis Analyzer Profile](./images/vitis_analyzer_profile.png)
+
+7. Click on **Total Function Time** and see the following:
+
+    ![Total Function Time](./images/profile_total_time.png)
+
+    This information is useful because it helps determine how long the kernel runs and can be used with the **Trace** to help determine if kernels are running optimally, or if there are stalls.
+    
+8. Close the Vitis analyzer.
+
+# Summary
+In this tutorial you have learned:
+- To read the waveform viewer to follow data flow pathing for a simple Versal design.
+- To add/remove signals to the XSIM viewer to look at specific signals such as, NoC, DDR memory, PS, AI Engine.
+- View TLM signals and how they interact with the AI Engine and Versal blocks.
+- Open and view Trace and Profile info in Vitis Analyzer.
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
-
 you may not use this file except in compliance with the License.
-
 You may obtain a copy of the License at
-
-
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-
-
 Unless required by applicable law or agreed to in writing, software
-
 distributed under the License is distributed on an "AS IS" BASIS,
-
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
 See the License for the specific language governing permissions and
-
 limitations under the License.
 
-<p align="center"><sup>XD004</sup></p>
+<p align="center"><sup>XD067 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
