@@ -26,7 +26,6 @@ The Xilinx® Versal™ adaptive compute acceleration platform (ACAP) is a fully 
 
 This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation. 
 
-
 **IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the VCK190 base platform. 
 
 Before starting this tutorial Complete the following steps:
@@ -48,7 +47,7 @@ After completing the tutorial, you should be able to:
 
 ## Prerequisites
 
-To demonstrate this feature in a meaningful way we'll also make use of a DSPLibrary function - the "Fast Fourier Transform" or FFT. The DSP Library Tutorial provides detailed instructions on how to setup your environment to compile DSPLIB. Please complete that tutorial before continuing. 
+To demonstrate this feature in a meaningful way you'll also make use of a DSPLibrary function - the "Fast Fourier Transform" or FFT. The DSP Library Tutorial provides detailed instructions on how to setup your environment to compile DSPLIB. Please complete that tutorial before continuing. 
 
 * https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/08-dsp-library
 
@@ -61,7 +60,6 @@ The following figure gives an overview of how the data will flow through this ex
 One way this flow enhances simulation coverage is by emulating the PLIO interface and the XRT Host interactions.
 
 Additionally, this allows the same input data to be run through hardware emulation and a Python (or other language) model of your computation. This can be helpful for verifying correctness, understanding numerical precision, and regression testing mathematical algorithms. This tutorial will demonstrate an FFT running in the AI Engine array and compare its output to a Numpy FFT.  
-
 
 ## Directory Structure
 
@@ -76,13 +74,11 @@ traffic_generator_install
 
 # Before You Begin
 
-
 ## *Documentation*: Explore AI Engine Architecture
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
 * [AM009 AI Engine Architecture Manual](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
-
 
 ## *Tools*: Installing the Tools
 
@@ -115,6 +111,7 @@ export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
 
 source <XILINX-INSTALL-LOCATION>/Vitis/2021.1/settings64.sh
 ```
+
 Then source the environment script: 
 ```bash
 source env_setup_2021.sh
@@ -128,15 +125,13 @@ which aiecompiler
 echo $DSPLIB_ROOT
 ```
 ## *Validation*: Python Environment
-A python 3.6 or newer environment is required for this tutorial. Struct, numpy and matplot lib packages are also required. To confirm they are installed open a terminal and type these commands.
+A python 3.6 or newer environment is required for this tutorial. Struct, numpy, and matplotlib packages are also required. To confirm they are installed open a terminal and type this command.
+
 ```bash
-python3 
-import numpy
-import matplotlib
-import struct
+python3 -c 'import numpy, matplotlib, struct'
 ``` 
 
-If all return without error, you have the libraries required to proceed.
+If this returns without error, you have the libraries required to proceed.
 
 ## *Other Tutorials*: Learn Basic Vitis Compiler and AI Engine Concepts
 For novice users, following link provides tutorials to understand the basic Vitis compiler concepts and building simple AI Engine designs: 
@@ -147,8 +142,7 @@ For novice users, following link provides tutorials to understand the basic Viti
 
 ![Alt Text](images/v777_sysOverview.png)
 
-In the previous figure the AXIS traffic generator provides a path to the AI Engine input via a sim_ipc IP core. You will see this IP core on the BD in a later step. The AI Engine array has multiple AXI streaming inputs but for this tutorial you will use just one. Different application requirements such as precision and throughput will use different data types and PLIO widths. For example the cint16 datatype often maximizes AI Engine compute capabilities while floating point datatypes provide the most dynamic range. The traffic generator XO files see all data as byte arrays of different widths based on the PLIO width and the corresponding XO file linked with V++. For this tutorial you will send an array of complex 16-bit integers into the AI Engine array and perform a Fast Fourier Transform (FFT) using the DSP Library for AI Engine. 
-
+In the previous figure the AXIS traffic generator provides a path to the AI Engine input via a sim_ipc IP core. You will see this IP core on the BD in a later step. The AI Engine array has multiple AXI streaming inputs but for this tutorial you will use just one. Different application requirements such as precision and throughput will use different data types and PLIO widths. For example the cint16 datatype often maximizes AI Engine compute capabilities while floating point datatypes provide the most dynamic range. The traffic generator XO files see all data as byte arrays of different widths based on the PLIO width and the corresponding XO file linked with `v++`. For this tutorial you will send an array of complex 16-bit integers into the AI Engine array and perform a Fast Fourier Transform (FFT) using the DSP Library for AI Engine. 
 
 ## Connecting the AXI Traffic XOs
 ![Alt Text](images/v777_tgen_picture.png)
@@ -170,10 +164,8 @@ In the previous figure the AXIS traffic generator provides a path to the AI Engi
     VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
     ```
 
-
 ## Understanding the Python
 The following diagram illustrates the connections between the several steps required to interact with the traffic generators. 
-
 
 1. For this tutorial the user data generator will be a complex sine wave. 
 2. You will convert it to a byte array
@@ -186,29 +178,24 @@ The following diagram illustrates the connections between the several steps requ
 5. Convert to byte to array numpy
 6. Plot the data
 
-
 ![Alt Text](images/v777_python_threading.png)
 
-Regardless of the PLIO width the AXI Traffic Master and Slave both operate on a python bytes-like object. Numpy arrays can be either real or complex valued and have a convenient built-in method called "tobytes()" that makes interacting with the ipc_axis_master_util/slav_util very straightforward. 
-
-
-There are several steps to this we will now cover in more detail.
+Regardless of the PLIO width the AXI Traffic Master and Slave both operate on a python bytes-like object. Numpy arrays can be either real or complex valued and have a convenient built-in method called "tobytes()" that makes interacting with the ipc_axis_master_util/slave_util very straightforward. 
 
 ### Creating a Sine Wave Data Vector
 ```python
-    n = np.arange(0,Nsamps)
-    Fs = 245.76e6
-    ft = 30.72e6/16
-    cplxt =  1.0* np.exp(-2*1j*np.pi*ft/Fs*n)
+n = np.arange(0,Nsamps)
+Fs = 245.76e6
+ft = 30.72e6/16
+cplxt =  1.0* np.exp(-2*1j*np.pi*ft/Fs*n)
 
-    Nbits =  16    
-    #Quantize to NBits
-    mx = np.max(np.abs(cplxt))
-    cscaled = np.round(cplxt/mx  * 2**(Nbits-1)-1)
- 
-    return cscaled
+Nbits =  16    
+#Quantize to NBits
+mx = np.max(np.abs(cplxt))
+cscaled = np.round(cplxt/mx  * 2**(Nbits-1)-1)
+
+return cscaled
 ```
-
 
 ### Convert Numpy to Byte Array
 Following is an example of python code showing the axis_master side for cint16 data types. 
@@ -217,7 +204,6 @@ Following is an example of python code showing the axis_master side for cint16 d
 #Convert numpy complex vector into two columns of int16s 
 rVec = np.real(data).astype(np.int16) 
 iVec = np.imag(data).astype(np.int16)
-
 
 out2column = np.zeros((L,2)).astype(np.int16) 
 out2column[:,0] = rVec
@@ -233,47 +219,45 @@ See the provided python file for examples of floats and cfloat data types.
 
 ### Generate AXI Transactions
 
-Next we will examine the AXI Streaming transactions required to interact with the traffic generators. The provided python script performs these steps for you if you would like to provide only a numpy array. Having a better understanding of the underlying transactions can be helpful and that is what will be explained in detail now.
+Next you will examine the AXI Streaming transactions required to interact with the traffic generators. The provided python script performs these steps for you if you would like to provide only a numpy array. Having a better understanding of the underlying transactions can be helpful and that is what will be explained in detail now.
 
 In the code snippet below on lines 1 to 5 the byte array to be sent needs to be broken into pieces equal to the width of the PLIO interface. Because the PLIO interface width is commonly identified with units of bits (PLIO32/64/128 are 32, 64, and 128 bits wide) the width of the transaction in bytes is divided by 8. 
 
-
 ```
-      1 #Determine number of transactions based on
-      2 # packet length and PLIO WIDTH
-      3 NumBytesToSend = len(iq_data_as_bytes)
-      4 NumBytesPerBeat = self.plio_width//8
-      5 NumTrans = NumBytesToSend//NumBytesPerBeat
-```
-On line 5 we see that by dividing the PLIO width in bytes by the total number of bytes we can compute how many "TVALID" transactions.
-
-
-```
-      7 for i in range(NumTrans):
-      8     
-      9     payload = xtlm_ipc.axi_stream_packet()    
-     10 
-     11     data2send = iq_data_as_bytes[(i*NumBytesPerBeat):(i*NumBytesPerBeat)+NumBytesPerBeat]
-     12     #Grab a "chunk" of the byte array of size PLIO
-     13 
-     14     payload.data_length = NumBytesPerBeat
-     15     payload.data  =data2send
+    1 #Determine number of transactions based on
+    2 # packet length and PLIO WIDTH
+    3 NumBytesToSend = len(iq_data_as_bytes)
+    4 NumBytesPerBeat = self.plio_width//8
+    5 NumTrans = NumBytesToSend//NumBytesPerBeat
 ```
 
-Here we see lines 7-15 containing a for loop construction. Each iteration of the loop creates an axi_stream packet object and populates all of its elements. The data is broken into appropriately sized chunks of NumBytesPerBeat. 
+On line 5 you see that by dividing the PLIO width in bytes by the total number of bytes you can compute how many "TVALID" transactions.
 
 ```
-     19     if(i == NumTrans-1):
-     20         payload.tlast = True
-     21     else:
-     22         payload.tlast = False
-     23         
-     24 
-     25     self.in0_util.b_transport(payload)
+    7 for i in range(NumTrans):
+    8     
+    9     payload = xtlm_ipc.axi_stream_packet()    
+    10 
+    11     data2send = iq_data_as_bytes[(i*NumBytesPerBeat):(i*NumBytesPerBeat)+NumBytesPerBeat]
+    12     #Grab a "chunk" of the byte array of size PLIO
+    13 
+    14     payload.data_length = NumBytesPerBeat
+    15     payload.data  =data2send
 ```
 
-Finally, lines 19-25 contain the handling of the TLast as well as the actual transmission of the full payload object using the b_transport() method. 
+Here you see lines 7-15 containing a for loop construction. Each iteration of the loop creates an axi_stream packet object and populates all of its elements. The data is broken into appropriately sized chunks of NumBytesPerBeat. 
 
+```
+    19     if(i == NumTrans-1):
+    20         payload.tlast = True
+    21     else:
+    22         payload.tlast = False
+    23         
+    24 
+    25     self.in0_util.b_transport(payload)
+```
+
+Finally, lines 19-25 contain the handling of the TLast as well as the actual transmission of the full payload object using the `b_transport()` method. 
 
 <!-- 
 [//]: #Lines 17-22
@@ -281,7 +265,6 @@ Finally, lines 19-25 contain the handling of the TLast as well as the actual tra
  -->
 
 For more information see: [UG761 AXI Reference Guide](https://www.xilinx.com/support/documentation/ip_documentation/ug761_axi_reference_guide.pdf).
-
 
 ### Receive AI Engine Array Output
 ```python
@@ -305,8 +288,7 @@ cVec = np.array(rvec) + 1j*np.array(ivec)
 
 ### Convert Byte Array to Numpy
 
-This section briefly covers how to capture data from the AI Engine array. For full details please see the python function convert_bytes_to_numpy(). The sample_transaction() method blocks and returns a full AXI payload consisting of all the data received from the AI Engine array. This is different than the transmitting AXI side because the data is captured as an array of bytes with TLAST forming the packet boundary. The format string variable is important for interpreting the byte array appropriately. For this tutorial a cint16 window type was used as the output. The unpack() method interprets the output as an array of int16s (2 bytes each) and then takes the even samples to form the real and imaginary components of the complex vector. These are packed into a single complex data vector.
-
+This section briefly covers how to capture data from the AI Engine array. For full details please see the python function `convert_bytes_to_numpy()`. The `sample_transaction()` method blocks and returns a full AXI payload consisting of all the data received from the AI Engine array. This is different than the transmitting AXI side because the data is captured as an array of bytes with TLAST forming the packet boundary. The format string variable is important for interpreting the byte array appropriately. For this tutorial a cint16 window type was used as the output. The `unpack()` method interprets the output as an array of int16s (2 bytes each) and then takes the even samples to form the real and imaginary components of the complex vector. These are packed into a single complex data vector.
 
 ```python
 #Receive byte array from AXI traffic generator slave
@@ -333,6 +315,7 @@ Matplotlib is a helpful python library that mimics other plotting tools. In this
 The python function "plot results" displays several graphs of the output data with different colors defined in a legend. 
 
 See www.matplotlib.org for more information on Matplotlib's features.
+
 ```python
 plt.plot( list(range(0,len(aie_out))),np.real(aie_out),label ="aie_out R")
 plt.plot( list(range(0,len(aie_out))),np.imag(aie_out),label  ="aie_out I ")   
@@ -341,16 +324,14 @@ plt.plot( list(range(0,len(aie_out))),np.imag(aie_out),label  ="aie_out I ")
 # Running Hardware Emulation
 
 ## AI Engine and Versal Integration
-The process of linking XO files via V++ and the system.cfg is covered in depth in the following two tutorials. For this tutorial these steps are handled by the provided makefile and you will review only the highlights.
+The process of linking XO files via `v++` and the `system.cfg` is covered in depth in the following two tutorials. For this tutorial these steps are handled by the provided makefile and you will review only the highlights.
 
 https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration
 
 https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_04_AI_Engine_and_PL_Integration
 
-
 ## Section 1: Compile XO Files and AI Engine Graph
 The first step is to take any v++ kernels (HLS C) and your AI Engine kernels and graph and compile them into their respective `.xo` and `.o` files. You can compile the kernels and graph in parallel because they do not rely on each other at this stage.
-
 
 ### Compiling the XO Files Using v++
 
@@ -373,7 +354,7 @@ An ADF Graph can be connected to an extensible Vitis platform. That is, the grap
 * No dangling ports or implicit "connections" are allowed by `v++`.
 * Stream connections are specified through the `v++ --sc` option, including employment of PL-based data movers, either in the platform or defined outside the ADF graph as Vitis PL kernels.
 
-To compile the graph type to be used in HW_EMU, use:
+To compile the graph type to be used in hardware emulation, use:
 
 ```bash
 make aie
@@ -395,7 +376,7 @@ stream_connect=tx_iqdata.M00_AXIS:ai_engine_0.DataIn
 stream_connect=ai_engine_0.DataOut:rx_iqdata.S00_AXIS
 ```
 
-If additional master and slave traffic generator interfaces are required, change the "1" (between the sim_ipc_axis and the instance name) instead of instantiating more new kernels with the nk command. 
+If additional master and slave traffic generator interfaces are required, change the "1" (between the sim_ipc_axis and the instance name) instead of instantiating more new kernels with the `nk` command. 
 
 For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a `PLIO` object. For this design, as an example, this line `PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
 
@@ -413,18 +394,18 @@ This will likely take more than 5 or 10 minutes.
 ## Section 3: Compile the A72 Host Application
 After all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code is using [XRT](http://www.github.com/Xilinx/XRT) (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker that it is using the the libraries: `-ladf_api_xrt -lxrt_coreutil`. 
 
-1. Open `sw/main.cpp` and familiarize yourself with the contents. A benefit of the AXI Traffic Generators is the Host code required is quite simple. 
+1. Open `sw/main.cpp` and familiarize yourself with the contents. A benefit of the AXI Traffic Generators is the host code required is quite simple. 
 
-```bash
-mygraph_float<WIN_SAMPS>  graph_top;
-graph_top.init();
-graph_top.run(1);
-graph_top.end();
-```
+    ```bash
+    mygraph_float<WIN_SAMPS>  graph_top;
+    graph_top.init();
+    graph_top.run(1);
+    graph_top.end();
+    ```
    
    Note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application". 
 
-2. Close the main.cpp, and run the command:
+2. Close the main.cpp, and run the command.
 		
 	```bash
 	make host
@@ -435,7 +416,7 @@ This won't take very long.
 ## Section 4: Package the Design
 With all the AI Engine outputs and the new platform created, you can now generate the Programmable Device Image (PDI) and a package to be used in the hardware emulated SD card. The PDI contains all executables, bitstreams, and configurations of every element of the device, and the packaged SD card directory contains everything to boot Linux and have your generated application and `.xclbin`.
 
-To package the design, run the following command:
+To package the design, run the following command.
 
 ```bash
 make package
@@ -444,7 +425,7 @@ make package
 ## Section 5: Run Hardware Emulation
 After packaging, everything is set to run emulation or hardware. 
 
-1. To run emulation use the following command:
+1. To run emulation use the following command.
 
 ```bash
 make run_emu
@@ -478,18 +459,16 @@ The host and graph are now running waiting for input from the traffic generators
 
 ![Alt Text](images/v777_qemu_wait.png)
 
-3. In a new terminal execute run_traffic_generators.py with the following command.
+3. In a new terminal execute `run_traffic_generators.py` with the following command.
 ```bash
 make run_tgen
 ```
 
-In the makefile run_tgen simply executes the python script.
+In the makefile run_tgen task simply executes the python script.
 
 For 128 samples (the default amount for this tutorial) - this step will take 1 or 2 minutes to run.
 
-
 The default settings for this tutorial is only 128 samples which will execute in the hardware emulation environment quite quickly. A matplotlib window will appear that looks as follows:
-
 
 ![Alt Text](images/V777_tutorial_fftout.png)
 
@@ -508,7 +487,6 @@ In this tutorial you learned how to:
 * Configure the design for different PLIO widths
 * Capture the AI Engine output in python
 * Plot/Graph the data in python and compare against a golden reference model
-
 
 To read more about the use of Vitis in the AI Engine flow see: *UG1076: Versal ACAP AI Engine Programming Environment Chapter 13: Running Hardware Emulation & Traffic Generators*. 
 
