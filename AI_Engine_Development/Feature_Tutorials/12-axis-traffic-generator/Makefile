@@ -32,13 +32,15 @@ TEST :=
 ifeq (${TEST}, SPRITE)
 	SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
 	CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
-	DSPLIB_ROOT := /wrk/vitis_collateral/xf_dsp
+	DSPLIB_ROOT := /wrk/vitis_collateral/Jenkins_Infra_Support/xf_dsp
+	PYTHONPATH := ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
+	PYTHON := /tools/batonroot/rodin/engkits/lnx64/python-3.6.5_metropolis/bin/python3
 endif
 
 #DSP LIB Includes
-DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/hw
-DSP_KERNEL_SRC         := $(DSPLIB_ROOT)/L1/src/hw
-DSP_GRAPH_SRC          := $(DSPLIB_ROOT)/L2/include/hw
+DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/aie
+DSP_KERNEL_SRC         := $(DSPLIB_ROOT)/L1/src/aie
+DSP_GRAPH_SRC          := $(DSPLIB_ROOT)/L2/include/aie
 DSP_INC                := $(DSPLIB_ROOT)/L1/tests/inc/
 
 ###From LENET makefile
@@ -205,7 +207,7 @@ run: all run_emu
 # If SPRITE is running python will run in a background process.
 ifeq (${TEST}, SPRITE)
 run_emu: 
-	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} 1 &
+	$(PYTHON) sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} 1 &
 	cd ./sw
 	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
 else

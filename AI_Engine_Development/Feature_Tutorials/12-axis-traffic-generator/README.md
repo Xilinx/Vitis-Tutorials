@@ -4,7 +4,7 @@
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Vitis 777 Feature Tutorial</h1>
+ <td align="center"><h1>AXIS External Traffic Generator Feature Tutorial</h1>
  </td>
  </tr>
 </table>
@@ -107,7 +107,7 @@ To run through this tutorial, you will need to download and install the followin
 ## *Environment*: Setting Up Your Target Platform Environment
 When the elements of the Vitis software platform are installed, update the target platform environment script. 
 
-Create a script file named `env_setup_2021.sh` in your favourite text editor. Replace the placeholders with the appropriate paths: 
+Create a script file named `env_setup_2021.sh` in your favorite text editor. Replace the placeholders with the appropriate paths: 
 
 ```bash
 export DSPLIB_ROOT=<YOUR-DSPLIB-DIRECTORY>
@@ -128,7 +128,7 @@ which aiecompiler
 echo $DSPLIB_ROOT
 ```
 ## *Validation*: Python Environment
-A python 3.7 or newer environment is required for this tutorial. Struct, numpy and matplot lib packages are also required. To confirm they are installed open a terminal and type these commands.
+A python 3.6 or newer environment is required for this tutorial. Struct, numpy and matplot lib packages are also required. To confirm they are installed open a terminal and type these commands.
 ```bash
 python3 
 import numpy
@@ -152,16 +152,16 @@ In the previous figure the AXIS traffic generator provides a path to the AI Engi
 
 ## Connecting the AXI Traffic XOs
 ![Alt Text](images/v777_tgen_picture.png)
-1. To integrate the appropriate sim_ipc_axis you need to tell the linker how you want to connect them together. These connections are described in a configuration file: system.cfg in this tutorial.
+1. To integrate the appropriate sim_ipc_axis you need to tell the linker how you want to connect them together. These connections are described in a configuration file: `system.cfg` in this tutorial.
 
-    ```bash
+    ```ini
     [connectivity]
     nk=sim_ipc_axis_master:1:tx_iqdata
     nk=sim_ipc_axis_slave:1:rx_iqdata
     stream_connect=tx_iqdata.M00_AXIS:ai_engine_0.DataIn
     stream_connect=ai_engine_0.DataOut:rx_iqdata.S00_AXIS
     ```
-2. Link the XO files using the V++ link command. The makefile handles this by bringing in the correct width of XO based on the PLIO_WIDTH makefile command
+2. Link the XO files using the `v++` link command. The makefile handles this by bringing in the correct width of XO based on the PLIO_WIDTH makefile command.
 
     ```bash
     PLIO_WIDTH := 64
@@ -180,11 +180,11 @@ The following diagram illustrates the connections between the several steps requ
 3. Handle the AXI transactions
 4. Pass the data to the XTLM python
     1. XTLM will pass data to the AIE array 
-    1. XTLM AXIS Slave will capture the output data
-    1. Capture the data in the rx_from_aie thread() 
-    1. Pass the data to the parent thread via a pipe
-1. Convert to byte to array numpy
-1. Plot the data
+    2. XTLM AXIS Slave will capture the output data
+    3. Capture the data in the rx_from_aie thread() 
+    4. Pass the data to the parent thread via a pipe
+5. Convert to byte to array numpy
+6. Plot the data
 
 
 ![Alt Text](images/v777_python_threading.png)
@@ -195,7 +195,7 @@ Regardless of the PLIO width the AXI Traffic Master and Slave both operate on a 
 There are several steps to this we will now cover in more detail.
 
 ### Creating a Sine Wave Data Vector
-```
+```python
     n = np.arange(0,Nsamps)
     Fs = 245.76e6
     ft = 30.72e6/16
@@ -213,7 +213,7 @@ There are several steps to this we will now cover in more detail.
 ### Convert Numpy to Byte Array
 Following is an example of python code showing the axis_master side for cint16 data types. 
 
-```
+```python
 #Convert numpy complex vector into two columns of int16s 
 rVec = np.real(data).astype(np.int16) 
 iVec = np.imag(data).astype(np.int16)
@@ -280,11 +280,11 @@ Finally, lines 19-25 contain the handling of the TLast as well as the actual tra
 [//]: #For each transaction of PLIOWIDTH a single bit representing a byte-enable flag must be set. For PLIO32, which is 4 bytes, those 4 enable flags can be encoded as 0b1111 or 0xF. Similarly, PLIO64 is 0xFF and PLIO128 is 0xFFFF.
  -->
 
-For more information see: https://www.xilinx.com/support/documentation/ip_documentation/ug761_axi_reference_guide.pdf
+For more information see: [UG761 AXI Reference Guide](https://www.xilinx.com/support/documentation/ip_documentation/ug761_axi_reference_guide.pdf).
 
 
 ### Receive AI Engine Array Output
-```
+```python
 #Receive byte array from AXI traffic generator slave
 payload = self.out0_util.sample_transaction()
 #Note: this is a blocking call
@@ -308,7 +308,7 @@ cVec = np.array(rvec) + 1j*np.array(ivec)
 This section briefly covers how to capture data from the AI Engine array. For full details please see the python function convert_bytes_to_numpy(). The sample_transaction() method blocks and returns a full AXI payload consisting of all the data received from the AI Engine array. This is different than the transmitting AXI side because the data is captured as an array of bytes with TLAST forming the packet boundary. The format string variable is important for interpreting the byte array appropriately. For this tutorial a cint16 window type was used as the output. The unpack() method interprets the output as an array of int16s (2 bytes each) and then takes the even samples to form the real and imaginary components of the complex vector. These are packed into a single complex data vector.
 
 
-```
+```python
 #Receive byte array from AXI traffic generator slave
 payload = self.out0_util.sample_transaction()
 #Note: this is a blocking call
@@ -333,7 +333,7 @@ Matplotlib is a helpful python library that mimics other plotting tools. In this
 The python function "plot results" displays several graphs of the output data with different colors defined in a legend. 
 
 See www.matplotlib.org for more information on Matplotlib's features.
-```
+```python
 plt.plot( list(range(0,len(aie_out))),np.real(aie_out),label ="aie_out R")
 plt.plot( list(range(0,len(aie_out))),np.imag(aie_out),label  ="aie_out I ")   
 ```
@@ -363,25 +363,6 @@ make kernels
 ```
 
 This won't take for long for this tutorial. 
-<!-- 
-Or
-
-```bash
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm --save-temps -g -k polar_clip pl_kernels/polar_clip.cpp -o polar_clip.xo
-``` -->
-
-<!-- Looking at the `v++` command line, you will see several options. The following table describes each option:
-
-|Switch/flag|Description|
-|  ---  |  ---  |
-|`-c`|Tells v++ to just compile the kernel|
-|`--platform/-f`|Specifies the path to an extensible platform|
-|`-g`|Required for the hw_emu target to capture waveform data|
-|`-k`|The kernel name. This has to match the function name in the corresponding file defining the kernel. (Eg: For kernel `mm2s` needs to make the function name in `mm2s.cpp`|
-|`-o`|The output file must always have the suffix of `.xo`|
-|`--save-temps/-s`|Saves the generated output process in the `_x` directory| -->
 
 ### Compiling an AI Engine ADF Graph for V++ Flow
 An ADF Graph can be connected to an extensible Vitis platform. That is, the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through the `v++` connectivity directives. Note the following:
@@ -399,22 +380,6 @@ make aie
 ```
 
 This may take a few minutes. 
-<!-- Or
-
-```bash
-aiecompiler --target=hw -include="$XILINX_VITIS/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-freq=100 -workdir=./Work  aie/graph.cpp
-```
-
-| Flag | Description |
-| ---- | ----------- |
-| --target | Target how the compiler will build the graph. Default is `hw` |
-| --include | All the include files needed to build the graph |
-| --pl-freq | Sets the frequency (in MHz) to all PL kernels in the graph |
-| --workdir | The location of where the Work directory will be created |
-
-The generated output from `aiecompiler` is the `Work` directory, and the `libadf.a` file. This file contains the compiled AI Engine configuration, graph, and Kernel `.elf` files.
-## Section 2: Use V++ to Link AI Engine, HLS Kernels with the Platform
-After the AI Engine kernels, graph, PL kernel, and HLS kernels have been compiled, you can use `v++` to link them with the platform to generate an `.xclbin`. -->
 
 ### Connecting the traffic generators with V++
 
@@ -432,14 +397,6 @@ stream_connect=ai_engine_0.DataOut:rx_iqdata.S00_AXIS
 
 If additional master and slave traffic generator interfaces are required, change the "1" (between the sim_ipc_axis and the instance name) instead of instantiating more new kernels with the nk command. 
 
-<!-- 
-| Option/Flag | Description |
-| --- | --- |
-| `nk` | This specifies the kernel and how many are there be instantiated. As example, the `nk=mm2s:1:mm2s` means that the kernel `mm2s` will instantiate one kernel with the name of `mm2s`.|
-| `stream_connect/sc` | This specifies the streaming connections to be made between PL/AIE or PL/PL. In this case, it should always be an output of a kernel to the input of a kernel.|
-
-**NOTE:** The `v++` command-line can get unruly, and using the `system.cfg` file can help contain it. -->
-
 For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a `PLIO` object. For this design, as an example, this line `PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
 
 
@@ -452,22 +409,6 @@ make xclbin
 ```
 
 This will likely take more than 5 or 10 minutes. 
-
-<!-- 
-Or
-
-```bash
-v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xclbin 
-```
-
-| Flag/Switch | Description |
-| --- | --- |
-| `--link`/`-l` | Tells v++ that it will be linking a design, so only the `*.xo` and `libadf.a` files are valid inputs |
-| `--target`/`-t `| Tells v++ how far of a build it should go, hardware (which will build down to a PDI) or hardware emulation (which will build the emulation models) |
-| `--platform` |  Same from the previous two steps |
-| `--config` | This allows you to simplify the v++ command-line if it gets too unruly and have items in an `.ini` style file. |
-
-Now you have a generated `.xclbin` that will be used to execute your design on the platform. -->
 
 ## Section 3: Compile the A72 Host Application
 After all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code is using [XRT](http://www.github.com/Xilinx/XRT) (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker that it is using the the libraries: `-ladf_api_xrt -lxrt_coreutil`. 
@@ -490,27 +431,6 @@ graph_top.end();
 	```
 
 This won't take very long.
-<!-- 
-	Or
-
-	```bash
-	cd ./sw 
-	$CXX -Wall -c -std=c++14 -Wno-int-to-pointer-cast --sysroot=$SDKTARGETSYSROOT -I$SDKTARGETSYSROOT/usr/include/xrt -I$SDKTARGETSYSROOT/usr/include -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
-	$CXX -Wall -c -std=c++14 -Wno-int-to-pointer-cast --sysroot=$SDKTARGETSYSROOT -I$SDKTARGETSYSROOT/usr/include/xrt -I$SDKTARGETSYSROOT/usr/include -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include -o main.o host.cpp
-	$CXX main.o aie_control_xrt.o -ladf_api_xrt -lxrt_coreutil -L$SDKTARGETSYSROOT/usr/lib --sysroot=$SDKTARGETSYSROOT -L$XILINX_VITIS/aietools/lib/aarch64.o -o host.exe 
-	cd ..
-	```
-
-The follow table describes some of the GCC options being used:
-
-| Flag | Description |
-| ---- | ----------- |
-| `-Wall` | Print out all warnings            |
-| `-Wno-int-to-pointer-cast` | Warn about an integer to pointer cast |
-| `--sysroot` | Tells the compiler where to find the headers/libs for cross-compile |
-| `-std=c++14` | This is required for Linux applications using XRT |
-
- -->
 
 ## Section 4: Package the Design
 With all the AI Engine outputs and the new platform created, you can now generate the Programmable Device Image (PDI) and a package to be used in the hardware emulated SD card. The PDI contains all executables, bitstreams, and configurations of every element of the device, and the packaged SD card directory contains everything to boot Linux and have your generated application and `.xclbin`.
@@ -520,36 +440,6 @@ To package the design, run the following command:
 ```bash
 make package
 ```
-
-
-<!-- 
-Or
-
-```bash
-cd ./sw
-v++ --package -t hw_emu \
-	-f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm \
-	--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
-	--package.image_format=ext4 \
-	--package.boot_mode=sd \
-	--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/Image \
-	--package.defer_aie_run \
-	--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
-cd ..
-```
-
-**NOTE:** By default the `--package` flow will create a `a.xclbin` automatically if the `-o` switch is not set.
-
-The following table describes the packager options:
-
-| Switch/flag | Description |
-| --- | --- |
-| `rootfs` | Points to the formatted image of the platform |
-| `image_format` | Tells packager what the image format is |
-| `boot_mode` | Signifies how the design is going to be run |
-| `kernel_image` | Points to the Image file created by Petalinux |
-| `defer_aie_run` | Tells packager at boot to not start the AI Engine and let the host application control it |
-| `sd_file` | Tell the packager what file is to be packaged in the `sd_card` directory. You'll have to specify this multiple times for all the files you want packaged | -->
 
 ## Section 5: Run Hardware Emulation
 After packaging, everything is set to run emulation or hardware. 
@@ -577,7 +467,6 @@ When launched, use the Linux prompt presented to run the design.
 	```bash
 	cd /mnt/sd-mmcblk0p1
 	export XILINX_XRT=/usr
-	dmesg -n 4 && echo "Hide DRM messages..."
 	```
 
 This will set up the design to run emulation. Run the design using the following command:
@@ -589,9 +478,8 @@ The host and graph are now running waiting for input from the traffic generators
 
 ![Alt Text](images/v777_qemu_wait.png)
 
-3. In a new terminal execute run_traffic_generators.py with the following command
+3. In a new terminal execute run_traffic_generators.py with the following command.
 ```bash
-source internal_settings.sh
 make run_tgen
 ```
 
