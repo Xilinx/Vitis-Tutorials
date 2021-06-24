@@ -19,6 +19,7 @@ ifndef PLATFORM_REPO_PATHS
 endif
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
+PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
 # Makefile input options
 TARGET := hw_emu
@@ -149,12 +150,19 @@ package: guard-IMAGE guard-ROOTFS
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to follow the Confluence page for
 # running on a board farm system.
+ifeq (${TEST}, SPRITE)
 run_emu:
+	cd ./sw
+	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
+else
+run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw
 	./launch_hw_emu.sh
 else
 	@echo "Hardware build, no emulation executed."
+endif
+
 endif
 ###########################################################################
 

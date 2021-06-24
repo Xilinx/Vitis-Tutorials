@@ -19,7 +19,7 @@ ifeq (${TEST}, SPRITE)
 endif
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-
+PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
 # Makefile input options
 TARGET := hw_emu
@@ -159,12 +159,19 @@ package: guard-PLATFORM_REPO_PATHS
 ###########################################################################
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to load it onto an sd_card for the device
+ifeq (${TEST}, SPRITE)
+run_emu:
+	cd ./sw
+	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
+else
 run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw
-	./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt -g
+	./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt
 else
 	@echo "Hardware build, no emulation executed."
+endif
+
 endif
 ###########################################################################
 
