@@ -29,7 +29,7 @@ In this tutorial you will learn:
 After creating the custom platform from the previous tutorial, the next step is to package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
 
 1. Open the `polar_clip_rtl_kernel.tcl` file.
-2. This Tcl script creates an IP following the Vivado IP Packaging flow as described in the [Creating and Packaging Custom IP User Guide (UG1118)](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1118-vivado-creating-packaging-custom-ip.pdf).
+2. This Tcl script creates an IP following the Vivado IP Packaging flow as described in the [Creating and Packaging Custom IP User Guide (UG1118)](https://www.xilinx.com/cgi-bin/docs/rdoc?d=xilinx2021_1/ug1118-vivado-creating-packaging-custom-ip.pdf).
 
     Note the following points:
 
