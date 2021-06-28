@@ -14,10 +14,8 @@
 #limitations under the License.
 #
 
-
 import os
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
-
 
 from xilinx_xtlm import ipc_axis_master_util
 from xilinx_xtlm import ipc_axis_slave_util
@@ -47,8 +45,6 @@ class IQData():
 
         t1 = self.convert_numpy_to_bytes()
         self.convert_bytes_to_numpy(t1)
-
-
     
     def rx_from_aie(self):        
         payload = self.rx_axis.sample_transaction()
@@ -238,4 +234,3 @@ if __name__ == "__main__":
     
     obj.run_test(ipc=True)
     print("Test complete")
-        
