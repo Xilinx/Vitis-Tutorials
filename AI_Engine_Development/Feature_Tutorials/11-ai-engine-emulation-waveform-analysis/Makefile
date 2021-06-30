@@ -1,8 +1,4 @@
 #Check environment setup
-ifndef PLATFORM_REPO_PATHS
-  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
-  export PLATFORM_REPO_PATHS
-endif
 ifndef ROOTFS
   ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
   export ROOTFS
@@ -12,7 +8,7 @@ ifndef IMAGE
   export IMAGE
 endif
 
-SDKTARGETSYSROOT := ${SYSROOT}
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
@@ -29,7 +25,7 @@ KERNEL := s2mm.cpp random_noise.cpp
 KERNEL_XO := s2mm.xo random_noise.xo
 CONFIG_FILE := system.cfg
 
-BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
+BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
 
 # Command-line options
 VPP := v++
@@ -46,7 +42,7 @@ LDCLFLAGS :=
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
 			 -Wno-int-to-pointer-cast \
-			 --sysroot=$(SDKTARGETSYSROOT) \
+			 --sysroot=$(SDKTARGETSYSROOT) 
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 				-I$(SDKTARGETSYSROOT)/usr/include \
