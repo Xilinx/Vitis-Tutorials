@@ -125,7 +125,7 @@ xclbin: guard-PLATFORM_REPO_PATHS $(GRAPH_O) $(KERNEL_XO)
 host: guard-CXX guard-SDKTARGETSYSROOT
 	cd ./sw 
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
-	ifeq (${TEST},SPRITE)
+	ifeq (${HOST_ARCH},aarch64)
 		$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o /wrk/vitis_collateral/Jenkins_Infra_Support/06-versal-system-design-clocking/host.cpp
 	endif
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o host.cpp
