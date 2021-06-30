@@ -15,10 +15,6 @@
 
 
 #Check environment setup
-ifndef PLATFORM_REPO_PATHS
-  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
-  export PLATFORM_REPO_PATHS
-endif
 ifndef ROOTFS
   ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
   export ROOTFS
@@ -79,7 +75,8 @@ LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
-			 -Wno-int-to-pointer-cast 
+			 -Wno-int-to-pointer-cast \
+			 --sysroot=${SDKTARGETSYSROOT}
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 				-I$(SDKTARGETSYSROOT)/usr/include \
@@ -93,7 +90,8 @@ GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 
 GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 		   -L$(SDKTARGETSYSROOT)/usr/lib \
-		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
+		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
+		   --sysroot=${SDKTARGETSYSROOT}
 
 LDCLFLAGS := $(GCC_LIB)
 
