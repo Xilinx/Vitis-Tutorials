@@ -38,7 +38,7 @@ BUILD_DIR 	:= $(PROJECT_REPO)/build
 WORK_DIR	:= Work
 BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
 EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
-XF_PROJ_ROOT ?= $(shell bash -c 'export sMK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
 # Makefile input options
 TARGET := hw_emu
