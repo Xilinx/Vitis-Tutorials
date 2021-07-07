@@ -22,7 +22,7 @@
  </tr>
 </table>
 
-***Version: 2020.2***
+***Version: 2021.1***
 
 In this module, we will create a custom platform to run acceleration applications for VCK190 evaluation board. 
 
@@ -51,8 +51,8 @@ Please navigate through these steps with the following table of contents links.
 
 This tutorial design supports VCK190 production board and VCK190 ES1 board.
 
-- Vitis 2020.2 supports VCK190 production board. No addtional licenses and settings are needed to use this board.
-- Vitis 2020.2 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
+- Vitis 2021.1 supports VCK190 production board. No addtional licenses and settings are needed to use this board.
+- Vitis 2021.1 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
 
 This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux. 
 
