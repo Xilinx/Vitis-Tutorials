@@ -10,9 +10,9 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 #
-TARGET   = hw
+TARGET   = hw_emu
 MODE	 = linux
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
 XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 XSA	 = vck190_aie_base_graph_${TARGET}.xsa
 XPFM	 = vck190_xpfm
@@ -31,6 +31,7 @@ AIE_SIM_CMD = aiesimulator --pkg-dir=./Work --dump-vcd foo
 VCC      = v++
 VPP_SPEC =system.cfg
 VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}  
+LDCLFLAGS=
 
 .PHONY: clean
 
@@ -49,16 +50,16 @@ guard-PLATFORM_REPO_PATHS:
 	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_2020210_1)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2020.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2020.2/Image)
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2021.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux)
 
 ###
 
@@ -88,7 +89,12 @@ package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
 		--package.boot_mode=sd \
 		--package.image_format=ext4 \
 		--package.defer_aie_run \
-		--package.sd_file ${HOST_EXE} ${XCLBIN} ${LIBADF}
+		--package.sd_file ${HOST_EXE} \
+		${XCLBIN} ${LIBADF}
+
+run_hw_emu: launch_hw_emu.sh
+launch_hw_emu.sh: package_hw_emu
+	./launch_hw_emu.sh 
 
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \

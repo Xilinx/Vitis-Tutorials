@@ -33,7 +33,6 @@ extern "C" void random_noise(hls::stream<std::complex<short> > & out, int size) 
 #pragma HLS INTERFACE s_axilite port=return bundle=control
 #pragma HLS INTERFACE ap_ctrl_hs port=return
 #pragma HLS interface s_axilite port=size bundle=control
-#pragma HLS interface ap_none port=size
 	for(int i=0;i<size;i++){
   		std::complex<short>  sample;
   		sample.real ( (my_rand() % 256) - 127);

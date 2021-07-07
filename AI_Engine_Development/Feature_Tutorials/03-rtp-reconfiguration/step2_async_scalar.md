@@ -13,7 +13,7 @@ This example demonstrates how to declare an asynchronous runtime parameter. Once
 
 The example is similar to [Synchronous Update of Scalar RTP](./step1_sync_scalar.md), with the exception of the code to handle the asynchronous runtime parameter.
 
-__Note: The default working directory in this step is `step2`, unless specified explicitly.__
+__Note:__ The default working directory in this step is `step2`, unless specified explicitly otherwise.
 
 ### Review RTP Update Code
 
@@ -37,7 +37,7 @@ Open `aie/graph.cpp`. Check the code that first updates the trigger input port o
 
 Notice that using this code, the result is the same as that in the example given in step 1, but they are in different control modes. In synchronous RTP mode, the graph run is implicitly controlled by the RTP update, while in asynchronous RTP mode, the "`_wait()_`" function is used to explictly wait the graph running to be completed. In asynchronous RTP mode, there is no guarantee when the RTP update will be effective while the graph is running. 
 
-### Run AI Engine compiler and AI Engine simulator
+### Run AI Engine Compiler and AI Engine Simulator
 Run the following make command to compile the design graph (`libadf.a`):
 	
 	make aie
@@ -51,7 +51,7 @@ After simulation, check the output data by running the following commands:
 	grep -v T aiesimulator_output/data/output.txt > aiesimulator_output/data/output_data.txt
 	diff -w aiesimulator_output/data/output_data.txt ./data/golden.txt
 
-To explore how asynchronous RTP updates are effective, you can replace the code in the `main()` function of `aie/graph.cpp` with the following code (please do it manually):
+To explore how asynchronous RTP updates are effective, you can replace the code in the `main()` function of `aie/graph.cpp` with the following code (do this manually):
 
 	gr.init();
 	gr.run();
@@ -69,7 +69,7 @@ Run the AI Engine simulator and trim the timestamps from the output data file:
 	make aiesim
 	grep -v T aiesimulator_output/data/output.txt > aiesimulator_output/data/output_data.txt
 
-Then plot the data (only real part) using the following commands in Octave:
+Then plot the data (only the real part) using the following commands in Octave:
 	
 	data=load("aiesimulator_output/data/output_data.txt")
 	plot(data(:,1))
@@ -79,7 +79,7 @@ Then plot the data (only real part) using the following commands in Octave:
 You can change the timeout cycle numbers in different runs and plot output data to observe how aynchronous RTP updates work.
 
 ### Run Hardware Cosimulation and Hardware Flow
-The Makefile rule targets introduced in [Synchronous Update of Scalar RTP](./step1_sync_scalar.md) still apply here. However, you can run following make command to compile and build all the dependent files for the package (this is for `hw_emu`):
+The Makefile rule targets introduced in [Synchronous Update of Scalar RTP](./step1_sync_scalar.md) still apply here. However, you can run the following make command to compile and build all the dependent files for the package (this is for `hw_emu`):
 
 	make package
 
@@ -116,4 +116,4 @@ In this step, you learned learned about the core concepts of asynchronous update
 
 Next, review [Asynchronous Update of Array RTP](./step3_async_array.md).	
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD001</sup></br></p>
+<p align="center"><sup>XD001 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>

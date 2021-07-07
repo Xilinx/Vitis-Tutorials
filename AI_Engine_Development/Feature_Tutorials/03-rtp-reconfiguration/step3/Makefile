@@ -11,7 +11,7 @@
 #limitations under the License.
 #
 TARGET   = hw_emu
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
 XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 HOST_EXE = host.exe
 
@@ -30,6 +30,7 @@ GRAPH_XOS= $(subst .cpp,.xo,$(wildcard aie/hls/*.cpp))
 VCC      = v++
 VPP_SPEC =system.cfg
 VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}  
+LDCLFLAGS=
 
 .PHONY: clean
 

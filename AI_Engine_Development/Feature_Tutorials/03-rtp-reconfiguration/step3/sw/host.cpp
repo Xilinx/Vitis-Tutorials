@@ -14,7 +14,7 @@ limitations under the License.
 #include <fstream>
 #include <iostream>
 #include "host.h"
-#include "graph.h"
+#include "graph.cpp"
 #include <unistd.h>
 #include <complex>
 #include "adf/adf_api/XRTConfig.h"
@@ -23,14 +23,6 @@ limitations under the License.
 #define OUTPUT_SIZE 2048
 
 using namespace adf;
-
-PLIO *dout = new PLIO("Dataout0", plio_32_bits,  "data/output.txt");
-simulation::platform<0,1> plat(dout);
-
-adaptive_graph gr;
-
-// send complex output samples to the output file
-connect<> netout(gr.dataout, plat.sink[0]);
 
 int main(int argc, char* argv[]) {
 

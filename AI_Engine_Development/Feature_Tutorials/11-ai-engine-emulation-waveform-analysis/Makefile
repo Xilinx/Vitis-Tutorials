@@ -12,15 +12,14 @@ ifndef IMAGE
   export IMAGE
 endif
 
-SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/Xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+SDKTARGETSYSROOT := ${SYSROOT}
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-
 
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
+EMU_CMD := 	./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -63,8 +62,6 @@ GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
-
-
 
 ###
 # Guarding Checks. Do not modify.
@@ -139,7 +136,7 @@ host: guard-CXX guard-SDKTARGETSYSROOT
 
 ##################################################################################################
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
-package: guard-PLATFORM_REPO_PATHS 
+package: guard-PLATFORM_REPO_PATHS guard-ROOTFS guard-IMAGE
 	cd ./sw
 	v++ -p -t ${TARGET} \
 		-f ${BASE_PLATFORM} \
@@ -149,6 +146,7 @@ package: guard-PLATFORM_REPO_PATHS
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_dir ../data \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file host.exe \
 		../tutorial.xclbin ../libadf.a
 	@echo "COMPLETE: hw_emu package created."
@@ -161,10 +159,11 @@ package: guard-PLATFORM_REPO_PATHS
 run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw
-	./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt -g
+	$(EMU_CMD)
 else
 	@echo "Hardware build, no emulation executed."
 endif
+
 ###########################################################################
 
 clean:

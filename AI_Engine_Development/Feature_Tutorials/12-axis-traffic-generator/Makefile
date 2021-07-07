@@ -28,20 +28,17 @@ ifndef IMAGE
   export IMAGE
 endif
 
+SDKTARGETSYSROOT ?= ${SYSROOT}
+DSPLIB_ROOT := /wrk/vitis_collateral/Jenkins_Infra_Support/xf_dsp
+PYTHONPATH := ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
+PYTHON := /tools/batonroot/rodin/engkits/lnx64/python-3.6.5_metropolis/bin/python3
 
 #DSP LIB Includes
-DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/hw
-DSP_KERNEL_SRC         := $(DSPLIB_ROOT)/L1/src/hw
-DSP_GRAPH_SRC          := $(DSPLIB_ROOT)/L2/include/hw
+DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/aie
+DSP_KERNEL_SRC         := $(DSPLIB_ROOT)/L1/src/aie
+DSP_GRAPH_SRC          := $(DSPLIB_ROOT)/L2/include/aie
 DSP_INC                := $(DSPLIB_ROOT)/L1/tests/inc/
 
-
-
-SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
-
-
-###From LENET makefile
 RELATIVE_PROJECT_DIR := ./
 PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 BUILD_DIR 	:= $(PROJECT_REPO)/build
@@ -49,14 +46,12 @@ WORK_DIR	:= Work
 BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
 EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-PERL ?= /tools/xgs/perl/5.8.5/bin/perl
-######
-
 
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
 PLIO_WIDTH := 64
+EMU_CMD := python3 sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & ./launch_hw_emu.sh 
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -102,8 +97,6 @@ GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 
 LDCLFLAGS := $(GCC_LIB)
 
-XF_PROJ_ROOT := .
-
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package
 
@@ -140,9 +133,6 @@ guard-DSPLIBROOT:
 DEST_DIR ?= $(CURDIR)
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MK_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
-
-
-
 
 all: kernels aie xclbin host package
 sd_card: all
@@ -206,26 +196,13 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 run: all run_emu
 
 ###########################################################################
-# If the target is for HW_EMU, launch the emulator
-# If the target is for HW, you'll have to load it onto an sd_card for the device
+# If the customer is running SPRITE wont be defined and they'll follow the tutorial instructions
+# to open a separate terminal.
+# If SPRITE is running python will run in a background process.
 run_emu: 
-ifeq (${TARGET},hw_emu)
-	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} &
+# $(PYTHON) sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 1 &
 	cd ./sw
-	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
-
-	# ifeq (${TEST}, SPRITE)
-	# 	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} &
-	# 	cd ./sw
-	# 	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
-	# else	
-	# 	./launch_hw_emu.sh
-	# endif
-else
-	@echo "Hardware build, no emulation executed."
-endif
-
-
+	$(EMU_CMD)
 
 ###########################################################################
 
@@ -235,4 +212,4 @@ clean:
 	rm -rf sw/sd_card sw/sd_card.img
 	
 run_tgen:
-	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH}
+	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} 0

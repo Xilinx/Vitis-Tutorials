@@ -18,15 +18,12 @@ ifndef PLATFORM_REPO_PATHS
   export PLATFORM_REPO_PATHS
 endif
 
-EMBEDDED_PLATFORM=$(lastword $(subst :, ,$(PLATFORM_REPO_PATHS)))
-SYSROOT:=$(EMBEDDED_PLATFORM)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux
-CXX:=$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SYSROOT}
-
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
+EMU_CMD := ./launch_hw_emu.sh 
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -36,15 +33,18 @@ KERNEL := s2mm.cpp mm2s.cpp
 KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
-TEST := SPRITE
 ifeq (${TEST}, SPRITE)
+	SDKTARGETSYSROOT:=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+	override CXX += --sysroot=${SDKTARGETSYSROOT}
+
 	BASE_PLATFORM := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/vck190_custom.xpfm
 	ROOTFS := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/rootfs.ext4
 	IMAGE := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/Image
 else
-	BASE_PLATFORM := ../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
-	ROOTFS :=../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/rootfs.ext4
-	IMAGE := ../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step2_petalinux/build/petalinux/images/linux/Image
+	SDKTARGETSYSROOT := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux
+	BASE_PLATFORM := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
+	ROOTFS :=../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/rootfs.ext4
+	IMAGE := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/Image
 endif
 
 # Command-line options
@@ -124,12 +124,13 @@ host: guard-SYSROOT guard-CXX
 package: guard-IMAGE guard-ROOTFS
 	cd ./sw
 	v++ -p -t ${TARGET} \
-		-f ${BASE_PLATFORM} \
-		--package.rootfs=${ROOTFS} \
+		-f ..${BASE_PLATFORM} \
+		--package.rootfs=../${ROOTFS} \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
-		--package.kernel_image=${IMAGE} \
+		--package.kernel_image=../${IMAGE} \
 		--package.defer_aie_run \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
 ###################################################################################################
 
@@ -137,13 +138,14 @@ package: guard-IMAGE guard-ROOTFS
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to follow the Confluence page for
 # running on a board farm system.
-run_emu:
+run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw
-	./launch_hw_emu.sh
+	$(EMU_CMD)
 else
 	@echo "Hardware build, no emulation executed."
 endif
+
 ###########################################################################
 
 clean:

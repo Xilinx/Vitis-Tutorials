@@ -12,14 +12,14 @@ ifndef IMAGE
   export IMAGE
 endif
 
-SDKTARGETSYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/Xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
+EMU_CMD := ./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -59,8 +59,6 @@ GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 
 LDCLFLAGS := $(GCC_LIB)
 
-XF_PROJ_ROOT := .
-
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
 
@@ -92,7 +90,15 @@ guard-SDKTARGETSYSROOT:
 
 ###
 
-all: kernels aie aiesim xclbin host package 
+ifeq (${TEST}, SPRITE)
+all: setup kernels aie aiesim xclbin host package 
+
+setup:
+	sh /proj/xbuilds/2021.1_daily_latest/internal_platforms/sw/versal/xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux
+else
+all: kernels aie aiesim xclbin host package
+endif
+
 sd_card: all
 
 ######################################################
@@ -159,10 +165,11 @@ run: all run_emu
 run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw
-	./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt
+	$(EMU_CMD)
 else
 	@echo "Hardware build, no emulation executed."
 endif
+
 ###########################################################################
 
 clean:

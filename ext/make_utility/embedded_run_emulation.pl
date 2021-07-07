@@ -22,17 +22,14 @@ $exp-> spawn("$command")
 or die "Cannot spawn $command: $!\n";
  
  while ($i<3) {
-    #if( $exp->expect(300, ':/mnt#')) {
+    if( $exp->expect(300, ':/mnt#')) {
       
-    if( $exp->expect(300, ':versal-rootfs-common-2021_1:')) {
     }
      
     sleep(10);
-    #exp-> send( "mount /dev/mmcblk0p1 /mnt\r");
-	$exp-> send( "cd /mnt/sd-mmcblk0p1\r");
-  $exp-> send( "./host.exe a.xclbin\r");
-  #$exp-> send( "cd /mnt\r");
-	#$exp-> send( "$EXECUTABLE\r");
+    $exp-> send( "mount /dev/mmcblk0p1 /mnt\r");
+	$exp-> send( "cd /mnt\r");
+	$exp-> send( "$EXECUTABLE\r");
     sleep(10);
     last;
      

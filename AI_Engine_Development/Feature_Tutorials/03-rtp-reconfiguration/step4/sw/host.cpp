@@ -61,6 +61,13 @@ int main(int argc, char* argv[]) {
     xrtRunStart(s2mm_rhdl);
     printf("run s2mm\n");
 
+    // random_noise ip
+    xrtKernelHandle random_noise_khdl = xrtPLKernelOpen(dhdl, uuid, "random_noise");
+    xrtRunHandle random_noise_rhdl = xrtRunOpen(random_noise_khdl);
+    xrtRunSetArg(random_noise_rhdl, 1, OUTPUT_SIZE);
+    xrtRunStart(random_noise_rhdl);
+    printf("run random_noise\n");
+
 #if __USE_ADF_API__
     // update graph parameters (RTP) & run
     adf::registerXRT(dhdl, uuid);
@@ -68,15 +75,11 @@ int main(int argc, char* argv[]) {
     int narrow_filter[12] = {180, 89, -80, -391, -720, -834, -478, 505, 2063, 3896, 5535, 6504};
     int wide_filter[12] = {-21, -249, 319, -78, -511, 977, -610, -844, 2574, -2754, -1066, 18539};
     gr.run(16);//start PL kernel & AIE kernel
-    gr.update(gr.noisegen.in[0], 1024);//update PL kernel RTP
-    std::cout<<"Update noisegen done"<<std::endl;
     gr.update(gr.fir24.in[1], narrow_filter, 12);//update AIE kernel RTP
     std::cout<<"Update fir24 done"<<std::endl;
     std::cout<<"Graph run done"<<std::endl;
     gr.wait(); // wait for PL kernel & AIE kernel to complete
     std::cout<<"Graph wait done"<<std::endl;
-    gr.update(gr.noisegen.in[0], 1024);//update PL kernel RTP
-    std::cout<<"Update noisegen done"<<std::endl;
     gr.update(gr.fir24.in[1], wide_filter, 12);//Update AIE kernel RTP
     std::cout<<"Update fir24 done"<<std::endl;
     gr.run(16);//start PL kernel & AIE kernel
@@ -90,17 +93,7 @@ int main(int argc, char* argv[]) {
     }else{
 	std::cout << "Graph Open ok" <<std::endl;
     }
-    int size=1024;
-    xrtKernelHandle noisegen_khdl = xrtPLKernelOpen(dhdl, uuid, "random_noise");
-    xrtRunHandle noisegen_rhdl = xrtRunOpen(noisegen_khdl);
-    xrtRunSetArg(noisegen_rhdl, 1, size);
-    xrtRunStart(noisegen_rhdl);
-    printf("run noisegen\n");
     ret=xrtGraphUpdateRTP(ghdl,"gr.fir24.in[1]",(char*)narrow_filter,12*sizeof(int));
-    if(ret!=0){
-	printf("Graph RTP update fail\n");
-	return 1;
-    }
     ret=xrtGraphRun(ghdl,16);
     if(ret){
 	std::cout << "Graph run error" << std::endl;
@@ -113,15 +106,7 @@ int main(int argc, char* argv[]) {
     }else{
 	std::cout << "Graph wait ok" <<std::endl;
     }
-    xrtRunWait(noisegen_rhdl);
-    xrtRunSetArg(noisegen_rhdl, 1, size);
-    xrtRunStart(noisegen_rhdl);
-    printf("run noisegen\n");
     ret=xrtGraphUpdateRTP(ghdl,"gr.fir24.in[1]",(char*)wide_filter,12*sizeof(int));
-    if(ret!=0){
-	printf("Graph RTP update fail\n");
-	return 1;
-    }
     ret=xrtGraphRun(ghdl,16);
     if(ret){
 	std::cout << "Graph run error" << std::endl;
@@ -158,12 +143,12 @@ int main(int argc, char* argv[]) {
     if(ret){
 	std::cout << "Graph end error" << std::endl;
     }
-    xrtRunClose(noisegen_rhdl);
-    xrtKernelClose(noisegen_khdl);
     xrtGraphClose(ghdl);
 #endif
     xrtRunClose(s2mm_rhdl);
     xrtKernelClose(s2mm_khdl);
+    xrtRunClose(random_noise_rhdl);
+    xrtKernelClose(random_noise_khdl);
     xrtBOFree(out_bohdl);
     xrtDeviceClose(dhdl);
 

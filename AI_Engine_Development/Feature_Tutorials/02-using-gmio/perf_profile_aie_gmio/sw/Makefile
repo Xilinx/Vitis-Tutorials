@@ -19,6 +19,7 @@ GRAPH_CPP = ../aie/graph.cpp
 CXXFLAGS += -std=c++14 -D__TIME_STAMP__ -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
 LDFLAGS += -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
+LDCLFLAGS=
 
 ${HOST_EXE}: ${HOST_OBJ}
 	${CXX} -o $@ $^ ${LDFLAGS}
