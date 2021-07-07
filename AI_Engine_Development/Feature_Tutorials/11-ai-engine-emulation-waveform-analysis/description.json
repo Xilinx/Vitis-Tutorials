@@ -1,6 +1,6 @@
 {
-    "name": "AI_Engine_Development-06-versal-system-design-clocking-tutorial",
-    "description": "06-versal-system-design-clocking-tutorial",
+    "name": "AI_Engine_Development-11-ai-engine-emulation-waveform_analysis",
+    "description": "11-ai-engine-emulation-waveform_analysis",
     "flow": "versal",
 
     "platform_whitelist": [ "vck190"],
