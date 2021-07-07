@@ -390,7 +390,7 @@ application: $(APP_SRC_CPP) $(APP_CONTROL_CPP)
 # 	v++_package.log 
 # 	package/
 package:
-	cp $(MAKEFILES_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
+	cp $(MAKEFILES_DIR)/run_script.sh $(BUILD_TARGET_DIR)/
 	v++ -p  -t $(TARGET) --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x 					\
 		-f $(PLATFORM) 											\
 		--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 						\
