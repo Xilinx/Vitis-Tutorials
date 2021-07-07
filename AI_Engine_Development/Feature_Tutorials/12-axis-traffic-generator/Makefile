@@ -13,7 +13,6 @@
 #limitations under the License.
 #
 
-
 #Check environment setup
 ifndef ROOTFS
   ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
@@ -25,9 +24,7 @@ ifndef IMAGE
 endif
 
 SDKTARGETSYSROOT ?= ${SYSROOT}
-DSPLIB_ROOT := /wrk/vitis_collateral/Jenkins_Infra_Support/xf_dsp
-PYTHONPATH := ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
-PYTHON := /tools/batonroot/rodin/engkits/lnx64/python-3.6.5_metropolis/bin/python3
+PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
 
 #DSP LIB Includes
 DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/aie

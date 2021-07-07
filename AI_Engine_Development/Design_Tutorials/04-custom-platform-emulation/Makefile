@@ -23,7 +23,7 @@ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
-EMU_CMD := ./launch_hw_emu.sh 
+EMU_CMD := ./launch_hw_emu.sh
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -60,7 +60,8 @@ LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
-			 -Wno-int-to-pointer-cast
+			 -Wno-int-to-pointer-cast \
+			 --sysroot=${SDKTARGETSYSROOT}
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 				-I$(SDKTARGETSYSROOT)/usr/include \
@@ -70,7 +71,8 @@ GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 
 GCC_LIB := -ladf_api_xrt -lxrt_coreutil \
 		   -L$(SDKTARGETSYSROOT)/usr/lib \
-		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
+		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
+		   --sysroot=${SDKTARGETSYSROOT}
 
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
