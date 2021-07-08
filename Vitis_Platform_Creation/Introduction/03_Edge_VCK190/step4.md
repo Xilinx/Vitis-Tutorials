@@ -161,17 +161,17 @@ To verify the platform functionality, we will create an acceleation project with
 
    - Select template **Vector Addition**. Click **Finish**.
 
-4. Build the vector addtion application for hardware
+4. Build the vector addition application for hardware
 
    - Select **vadd_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
 
 
-5. (Optional) Build the vector addtion application for hardware emulation
+5. (Optional) Build the vector addition application for hardware emulation
 
    - Select **vadd_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click build icon.
-   - If it pops-up a dialouge to ask whether to clean the project, select **Don't clean**.
+   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
 
 
 #### Test the Application on Hardware
@@ -231,7 +231,7 @@ To verify the platform functionality, we will create an acceleation project with
 
 </details>
 
-   **Note**: the `[   35.116279] [drm]` messages are print from XRT for debugging purpose. It only shows up on UART. It will now print on ssh. This debugging message can be turned off by turnning down the system dmesg reporting level.
+   **Note**: the `[   35.116279] [drm]` messages are print from XRT for debugging purpose. It only shows up on UART. It will now print on ssh. This debugging message can be turned off by turning down the system dmesg reporting level.
 
    ```
    echo "4" > /proc/sys/kernel/printk
@@ -251,7 +251,7 @@ To verify the platform functionality, we will create an acceleation project with
 
 2. Launch PL emulation
 
-   - Right click **vadd_system**, select **Run as -> Run Configiratuions**
+   - Right click **vadd_system**, select **Run as -> Run Configurations**
    - Select **vadd_system-Default**
    - Change **Build Configuration** to **Emulation-HW**
    - Change **Remote Working Directory** to **/mnt/sd-mmcblk1p1**
@@ -277,7 +277,7 @@ Vitis runs PS emulation in QEMU, PL and AIE emulation in XSIM. They can communic
 
 To verify the platform functionality, we will create a project with AIE + PL kernel and PS application and run it on VCK190 board.
 
-1. Create vector addtion application on the custom platform
+1. Create vector addition application on the custom platform
 
    - Select menu **File -> New -> Application Project**.
    - Go through the welcome page and click **Next**.
@@ -286,7 +286,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
    - Input Sysroot path, RootFS path and Kernel Image. Click **Next**.
    - Select template **AI Engine System Design Examples -> AI Engine, PL and PS System Design**. Click **Finish**.
 
-2. Build the vector addtion application for hardware
+2. Build the vector addition application for hardware
 
    - Select **plaie_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
