@@ -97,19 +97,19 @@ Tools Documentation:
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
 
 To build and run the Lenet tutorial, you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2020.2](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
+* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
 
-* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_es1_base_202020_1` platform)
+* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202110_1` platform)
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT)
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT)
 
-* Download and setup the [VCK190 Vitis Platform for 2020.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 </details>
 
@@ -119,7 +119,7 @@ To build and run the Lenet tutorial, you will need the following tools downloade
 ## Environment: Setting Up the Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system specific paths. 
 
-Edit `env_setup_2020.sh` script with your file paths: 
+Edit `env_setup.sh` script with your file paths: 
 ```bash
 export XILINX_XRT=<XRT-LOCATION>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY> 
@@ -129,7 +129,7 @@ source $XILINX_XRT/setup.sh
 ```
 Then source the environment script: 
 ```bash
-source env_setup_2020.sh
+source env_setup.sh
 ```  
 
 </details>
@@ -145,11 +145,11 @@ which aiecompiler
 
 Confirm you have the VCK190 ES1 Base Platform. 
 ```bash
-platforminfo --list | grep -m 1 -A 9 vck190_es1
+platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the above command should be as follows:
 ```bash
- "baseName": "xilinx_vck190_es1_base_202020_1",
+"baseName": "xilinx_vck190_base_202110_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -177,10 +177,7 @@ At the end of this section, the design flow will generate a new directory (calle
 </details>
 
 # Make Steps 
-To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
-```bash
-cd Makefiles
-```
+To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the lenet tutorial folder.
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
 	
