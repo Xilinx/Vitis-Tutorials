@@ -65,7 +65,9 @@ lenet
 |    |   |___data
 |    |___pl_src
 |___images......................contains images that appear in the README.md
-|___Makefiles...................contains Makefile and configuration (.cfg) files and HLS kernel Vivado optimizations Tcl scripts
+|___Makefile
+|___system.cfg...................configuration (.cfg) file
+|___xrt.ini
 ```
 
 </details>
