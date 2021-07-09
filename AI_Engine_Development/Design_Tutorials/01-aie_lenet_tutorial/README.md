@@ -915,12 +915,12 @@ Below is the snapshot of the time trace for the Lenet design run
 ![Image of Lenet design Timeline Trace](images/Lenet_1x_trace.PNG)
 
 Throughput calculation is as follows:
+```
 Difference in timeline (execution time) = 1,446.973us
 Throughput = no of images / execution time
           = 100 / 1,446.973us
           = 69,109 images/s
 ```
-
 
 # References
 The following documents provide supplemental information for this tutorial.
