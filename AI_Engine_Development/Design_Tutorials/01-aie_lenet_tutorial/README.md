@@ -16,6 +16,8 @@
 
 [Software Design Details](#software-design-details)
 
+[Throughput Measurement Details](#throughput-measurement-details)
+
 [References](#references)
 
 # Introduction
