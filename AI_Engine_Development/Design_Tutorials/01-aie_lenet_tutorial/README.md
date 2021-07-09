@@ -895,6 +895,33 @@ After post-processing the data, release the allocated objects using `xrtBOFree`,
 
 </details>
 
+# Throughput Measurement Details
+To measure throughput the design is run in hardware and trace data is captured in run time. Refer to Vitis Unified Software Development Platform for more information.
+To setup the flow to measure throughput, build the design with `TARGET`=hw and `EN_TRACE`=1. A xrt.ini with below contents is included:
+```
+[Debug]
+xrt_trace=true
+data_transfer_trace=fine
+trace_buffer_size=500M
+```
+Transfer the .csv and _summary files back to the design directory, e.g.
+```
+Scp -r *.csv *_summary <user>@10.10.71.101:<path>
+```
+Then run vitis_analyzer on the summary file, for example, xclbin.ex.run_summary
+
+Below is the snapshot of the time trace for the Lenet design run 
+
+![Image of Lenet design Timeline Trace](Lenet_1x_trace.PNG)
+
+Throughput calculation is as follows:
+Difference in timeline (execution time) = 1,446.973us
+Throughput = no of images / execution time
+          = 100 / 1,446.973us
+          = 69,109 images/s
+```
+
+
 # References
 The following documents provide supplemental information for this tutorial.
 
