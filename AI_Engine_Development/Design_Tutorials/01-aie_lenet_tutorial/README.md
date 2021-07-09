@@ -602,7 +602,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2020_2` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands into the TeraTerm terminal: 
 ```
@@ -640,7 +640,7 @@ For this design, the components are added by v++ -l step (make XCLBIN in the too
 
 To see a schematic view of the design with the extended platform (as shown in the following figure), open in the Vivado  `build/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr` folder.
 
-![Image of Lenet Block Schematic](images/Lenet_sch.PNG)
+![Image of Lenet Block Schematic](images/Lenet_block_diagram_2021.PNG)
 
 </details>
 
@@ -863,7 +863,7 @@ auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 Additionally, the `memcpy` and `memset` functions are used to initialize the data in global memory.
 
 ### 5. Open Graph, Obtain Handle and Execute Graph
-The following registration function is added in 2020.2 for XRT to use ADF API callbacks:
+The following registration function is added in 2021.1 for XRT to use ADF API callbacks:
 
 `adf::registerXRT(dhdl, top->m_header.uuid);`
 
@@ -904,14 +904,14 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2020.2 Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/irn1582730075765.html)
+* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html)
 
 # Revision History
 * Dec 2020 - Initial Release
