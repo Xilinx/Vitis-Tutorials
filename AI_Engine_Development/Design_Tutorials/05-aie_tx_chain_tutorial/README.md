@@ -1230,7 +1230,7 @@ The TX Chain graph contains a DPD filter subgraph (`DPD_LUT_FILT_1G_32T`) which 
   <summary>PL Kernels</summary>
 	
 ## PL Kernels
-In addition to kernels operating on the AI Engines, this design specifies five kernels to run on the PL region of the device (written in HLS C++). The CFG PL kernels are directly used in the `tx_chain200MHz` graph. The two data mover kernels are brought into the design during the Vitis kernel compilation. Review the [AI Engine/Programmable Logic Integration Section in the AI Engine Documentation](#ai-engine-documentation) for an introduction to PL kernel development with the AI Engine. 
+In addition to kernels operating on the AI Engines, this design specifies five kernels to run on the PL region of the device (written in HLS C++). The CFG PL kernels are directly used in the `tx_chain200MHz` graph. The two data mover kernels are brought into the design during the Vitis kernel compilation. Review the [AI Engine/Programmable Logic Integration Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/programmable_logic_integration.html#lci1512606550399) for an introduction to PL kernel development with the AI Engine. 
 
 The TX Chain tutorial is made up of five PL kernels: 
 
@@ -1266,23 +1266,23 @@ The mm2s kernel has three arguments:
 A mm2s kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
 
 ##### #pragma HLS INTERFACE m_axi
-A mm2s kernel has one `m_axi` interface (specifying a AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_read_burst_length=256`. Part of this AXI4 interface is the Read Address Channel containing the signals `ARBURST` and `ARLEN`. This interface has a burst type `ARBURST=INCR` and can support burst length `ARLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_read_burst_length=256` sets the burst length `ARLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the `mem` argument) is the previous address plus four.      
+An `mm2s` kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_read_burst_length=256`. Part of this AXI4 interface is the Read Address Channel containing the signals `ARBURST` and `ARLEN`. This interface has a burst type `ARBURST=INCR` and can support burst length `ARLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_read_burst_length=256` sets the burst length `ARLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the `mem` argument) is the previous address plus four.      
 
 References: 
 * [Vivado AXI Reference](https://www.xilinx.com/support/documentation/ip_documentation/axi_ref_guide/latest/ug1037-vivado-axi-reference-guide.pdf)
 * [AMBA AXI Protocol Specification](https://developer.arm.com/documentation/ihi0022/c)
 
 #### #pragma HLS INTERFACE axis
-A mm2s kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol) associated with the `s` argument. 
+An `mm2s` kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol) associated with the `s` argument. 
 
 #### #pragma HLS PIPELINE II=1
-A mm2s kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.  
+An `mm2s` kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.  
 
 ### s2mm (s2mm.cpp) 
-The s2mm kernel reads 128 bits of data from an AXI4-Stream interface (using the `s` argument) and writes it to an AXI Memory mapped interface (to the `mem` argument). 
+The `s2mm` kernel reads 128 bits of data from an AXI4-Stream interface (using the `s` argument) and writes it to an AXI Memory mapped interface (to the `mem` argument). 
 
 #### Arguments 
-The s2mm kernel has three arguments:
+The `s2mm` kernel has three arguments:
 
 * `ap_int<128>* mem`
 * `hls::stream<qdma_axis<128,0,0,0>>&s`
@@ -1293,16 +1293,16 @@ The s2mm kernel has three arguments:
 * `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface and is set to 128 (same as the `mem` argument). The remaining three parameters should be set to 0. 
 
 #### #pragma HLS INTERFACE s_axilite
-A s2mm kernel has one `s_axilite` interface  (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
+An `s2mm` kernel has one `s_axilite` interface  (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
 
 #### #pragma HLS INTERFACE m_axi
-An s2mm kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_write_burst_length=256`. Part of this AXI4 interface is the Write Address channel containing the signals `AWBURST` and `AWLEN`. This interface has a burst type `AWBURST=INCR` and can support burst length `AWLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_write_burst_length=256` sets the burst length `AWLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the mem argument) is the previous address plus four.      
+An `s2mm` kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_write_burst_length=256`. Part of this AXI4 interface is the Write Address channel containing the signals `AWBURST` and `AWLEN`. This interface has a burst type `AWBURST=INCR` and can support burst length `AWLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_write_burst_length=256` sets the burst length `AWLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the mem argument) is the previous address plus four.      
 
 #### #pragma HLS INTERFACE axis
-A s2mm kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol) associated with the `s` argument. 
+An `s2mm` kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol) associated with the `s` argument. 
 
 #### #pragma HLS PIPELINE II=1
-An s2mm kernel has a `for` loop that is a candidate for burst write because the memory addresses (mem\[i]) are contiguous (memory accesses across loop iterations are consecutive). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.  
+An `s2mm` kernel has a `for` loop that is a candidate for burst write because the memory addresses (mem\[i]) are contiguous (memory accesses across loop iterations are consecutive). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.  
 
 </details>
 
@@ -1814,7 +1814,7 @@ As described in previous sections, the TX Chain design operates in a multi-clock
 # References
 These documents provide supplemental material useful with this tutorial. 
 
-### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
+### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
 Contains sections on how to develop AI Engine graphs, how to use the Ai Engine compiler, and AI Engine simulation, and performance analysis.
 
 ### [UG1274 Versal ACAP Communications Library for AI Engine](https://www.xilinx.com/member/forms/registration/versal_ai_engine_commslib_ea.html)
@@ -1829,17 +1829,18 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2020.2 Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/index.html)
-Below are links to everything Vitis related used in this tutorial:
+### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
+The following are links to Vitis-related documentation used in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/irn1582730075765.html)
+* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html)
  
 
 # Revision History
-* December 2020 - Initial Release to Versal Early Access Lounge
+* December 2020 - Initial Release to Versal Communications Library Lounge
+* July 2021 - Updated to 2021.1 release
  
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD014</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup><br><sup>XD014</sup></br></p>
