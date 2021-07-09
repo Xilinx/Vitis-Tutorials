@@ -31,7 +31,7 @@ all: hw
 # Build bare minial Vivado design and export XSA
 hw: $(ABS_BD_TCL)
 	mkdir -p $(ABS_HW_PATH)
-	cd $(ABS_HW_PATH); vivado -mode batch -notrace -source $(ABS_BD_TCL)
+	cd $(ABS_HW_PATH); vivado -mode batch -notrace -source $(ABS_BD_TCL) -tclargs VCK190
 
 # target: petalinux
 # Use Vivado exported XSA to create PetaLinux design
