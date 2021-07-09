@@ -1,10 +1,10 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorial</h1>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Transmit Chain Tutorial</h1>
+ <td align="center"><h3>Transmit Chain Tutorial</h3>
  </td>
  </tr>
 </table>
@@ -29,30 +29,30 @@
 9. [Revision History](#revision-history)
 
 # Introduction
-The Xilinx Versal ACAP is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include the ARM processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.
+The Xilinx® Versal™ ACAP is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include the ARM processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.
 
-This tutorial demonstrates creating a system to implement a transmit (TX) chain design running on the AI Engine, PL, and PS, and validating the design running on this heterogeneous domain. This tutorial requires a basic understanding of wireless communication systems and crest-factor reduction techniques.
+This tutorial demonstrates creating a system to implement a transmit (TX) chain design running on the AI Engine, PL, and PS, and validating the design running in this heterogeneous domain. This tutorial requires a basic understanding of wireless communication systems and crest-factor reduction techniques.
 
 The tutorial also takes you through hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. A Makefile is provided that you can modify to suit your own needs in a different context.
 ## Objectives 
 After completing the tutorial, you should be able to:
-* Build a complete system design by going through the various steps in the Vitis™ tools flow, including creating the AI Engine Adaptive Data Flow API (ADF) graph, compiling the A72 Linux-based Host Application and compiling PL kernels, using the Vitis compiler (V++) to link the AI Engine and HLS kernels with the platform, and packaging the design. 
-* Run the design through the hardware emulation and hardware flow in a mixed SystemC/RTL Cycle-Accurate/QEMU-based simulator
-* Develop an understanding of capabilities for interfacing with the Network on Chip (NoC)/DDR and details on the AXI transfer requirements of data mover kernels
-* Develop an understanding of various clock and throughput requirements in a multi-domain clock system design and using Vitis automation features for timing closure
-* Develop an understanding of graph control APIs to enable run-time updates using the run-time parameter (RTP) interface
-* Develop an understanding of performance measurement and functional/throughput debug at the application level
+* Build a complete system design by going through the various steps in the Vitis™ unified software platform tools flow, including creating the AI Engine adaptive data flow (ADF) API graph, compiling the A72 Linux-based host application and compiling PL kernels, using the Vitis compiler (`v++`) to link the AI Engine and HLS kernels with the platform, and packaging the design. 
+* Run the design through the hardware emulation and hardware flow in a mixed SystemC/RTL cycle-accurate/QEMU-based simulator.
+* Develop an understanding of capabilities for interfacing with the Network on Chip (NoC)/DDR and details on the AXI transfer requirements of data mover kernels.
+* Develop an understanding of various clock and throughput requirements in a multi-domain clock system design and using the Vitis tools automation features for timing closure.
+* Develop an understanding of graph control APIs to enable run-time updates using the run-time parameter (RTP) interface.
+* Develop an understanding of performance measurement and functional/throughput debug at the application level.
 
 ## Tutorial Overview 
 
-In this application, the design under test (DUT) is wireless digital front end (DFE) transmit (Tx) chain design for 200 MHz system (available in Xilinx Communication Library (Commslib)). It includes Digital Up-conversion (DUC), Crest Factor Reduction (CFR), Digital Predistortion (DPD) and an example fractional interpolation filter between CFR and DPD. This Tx chain design should be viewed as a representative example using AIE and PL resources typically needed in wireless DFE applications. This design should be used mainly as a learning/reference design and not be used as-is in a production design. This tutorial is intended to show how such heterogenous designs can be integrated and validated on Versal devices using various Xilinx tools.
+In this application, the design under test (DUT) is a wireless digital front end (DFE) transmit (TX) chain design for a 200 MHz system (available in the Xilinx® Communications Library (Commslib)). It includes digital up-conversion (DUC), crest factor reduction (CFR), digital predistortion (DPD), and an example fractional interpolation filter between the CFR and DPD. This TX chain design should be viewed as a representative example using AI Engine and PL resources typically needed in wireless DFE applications. This design should be used mainly as a learning/reference design and not be used as-is in a production design. This tutorial is intended to show how such heterogenous designs can be integrated and validated on Versal ACAPs using Xilinx tools.
 
-This tutorial focuses on guiding you to use DDR memory on the board as source and capture memory. The Memory Map to Stream (MM2S) data mover kernels move data from the DDR memory to the AI Engine through the vertical NoC (VNoC). The AI Engine and the PL subsystem implement the 5G transmit chain pipeline and the final digital pre-distortion (DPD) output is moved back to DDR memory via the Stream to Memory Map (S2MM) data mover kernel.
+This tutorial focuses on guiding you to use DDR memory on the board as source and capture memory. The memory map to stream (MM2S) data mover kernels move data from the DDR memory to the AI Engine through the vertical NoC (VNoC). The AI Engine and the PL subsystem implement the 5G transmit chain pipeline and the final digital pre-distortion (DPD) output is moved back to DDR memory using the stream to memory map (S2MM) data mover kernel.
 
 The design implements multiple kernels in the AI Engine and PL and uses multiple clock frequencies to meet the TX chain sampling frequency requirement. The various interfaces to the AI Engine run at different clock frequencies, including the following: 
-* The MM2S kernel grabs the data from the DDR through the VNoC and sends it to the AI Engine array. 
-* Crest Factor Reduction solution splits functionality between AIE kernels and PL kernels, which operate to satisfy a minimum of 307.2 Msps sampling rate for CFR functionality (Peak Cancellation Crest Factor Reduction (PC-CFR) with smart peak processing followed by Peak Windowing Crest Factor Reduction (WCFR)).
-* Data comes out of the DPD filter in the AI Engine at a sampling rate of 983.04 Psps (with AIE clock of 1GHz). The data then comes out of the AI Engine array interface at 500 MHz with a data width of 64 bits. 
+* The MM2S kernel gets the data from the DDR memory through the VNoC and sends it to the AI Engine array. 
+* The crest factor reduction solution splits the functionality between AI Engine kernels and PL kernels, which operate to satisfy a minimum of a 307.2 MSPS sampling rate for CFR functionality (peak cancellation CFR (PC-CFR) with smart peak processing followed by peak windowing CFR (WCFR)).
+* Data comes out of the DPD filter in the AI Engine at a sampling rate of 983.04 PSPS (with an AI Engine clock of 1 GHz). The data then comes out of the AI Engine array interface at 500 MHz with a data width of 64 bits. 
 
 In addition, this tutorial demonstrates the application mapping and datapath acceleration which is mapped to the AXI4-Stream interfaces. The AI Engine has a run-time parameter (RTP) interface that enables run-time updates. The RTP feature can be accessed through the Xilinx Runtime Library (XRT) APIs and are documented in this tutorial as they apply to the TX Chain design.
 
@@ -80,7 +80,7 @@ Note: This tutorial targets the VCK190 ES board (see https://www.xilinx.com/prod
 
 ## *Documentation*: Explore AI Engine Architecture
 
-* [AM009 AI Engine Architecture Manual](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
+* [AM009 AI Engine Architecture Manual](https://www.xilinx.com/cgi-bin/docs/ndoc?t=architecture-manuals;d=am009-versal-ai-engine.pdf)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -90,25 +90,25 @@ Note: This tutorial targets the VCK190 ES board (see https://www.xilinx.com/prod
 
 Tools Documentation: 
 
-* [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
+* [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_engines.html#documentation)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
 
 * [UG1274 Versal ACAP Communications Library for AI Engine](https://www.xilinx.com/member/forms/registration/versal_ai_engine_commslib_ea.html)
 
-To build and run the TX Chain tutorial, you will need the following tools downloaded/installed:
+To build and run the TX Chain tutorial, you need the following:
 
-* Install the [Vitis Software Platform 2020.2](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
+* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
 
-* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_es1_base_202020_1` platform)
+* Obtain a license to enable beta devices in Xilinx tools (to use the `xilinx_vck190_es1_base_202020_1` platform)
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT) 
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT) 
 
 * Download and setup the [Xilinx Communications Library (CommsLib) EA7](https://www.xilinx.com/member/forms/registration/versal_ai_engine_commslib_ea.html)
 
-* Download and setup the [VCK190 Vitis Platform for 2020.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 ## *Environment*: Setting Up Your Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the `TUTORIAL_PATH` and `XILINX_PATH` env variables to your system specific paths. 
@@ -128,16 +128,16 @@ Then source the environment script:
 source env_setup_2020.sh
 ```  
 ## *Validation*: Confirming Tool Installation
-Make sure you are using the 2020.2 version of Xilinx tools. 
+Make sure you are using the 2021.1 version of Xilinx tools. 
 ```bash
 which vitis
 which aiecompiler
 ```
-Confirm you have the VCK190 ES1 Base Platform. 
+Confirm you have the VCK190 ES1 base platform. 
 ```bash
 platforminfo --list | grep -m 1 -A 9 vck190_es1
 ```
-Output of the above command should be as follows:
+The output of the preceding command should be as follows:
 ```bash
  "baseName": "xilinx_vck190_es1_base_202020_1",
             "version": "1.0",
@@ -150,11 +150,11 @@ Output of the above command should be as follows:
             "usesPR": "false",
 ```
 ## *Other Tutorials*: Learn Basic V++ and AI Engine Concepts
-For novice users, please review the following tutorials to understand the basic V++ concepts and building simple AI Engine designs: 
+For novice users, review the following tutorials to understand the basic Vitis compiler (`v++`) concepts and how to build simple AI Engine designs: 
 
-* XD002: AI Engine Versal Integration and Cosim Tutorial (TBD ADD LINK)
+* XD002: AI Engine Versal Integration for Hardware Emulation and Hardware Tutorial (https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration)
 
-* XD004: V++ Intermediate Flow (TBD ADD LINK)
+* XD004: System Clocking Tutorial (https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/06-versal-system-design-clocking-tutorial)
 
 # Building the TX Chain Design
 In this section, you will build and run the TX Chain design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step. 
