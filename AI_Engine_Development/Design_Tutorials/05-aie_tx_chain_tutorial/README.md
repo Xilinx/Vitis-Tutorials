@@ -798,15 +798,15 @@ The following figure shows a high level block diagram of the design. For a more 
   <summary>Design Details</summary>
 	
 ## Design Details
-The design in this tutorial starts with a base platform containing the Control Interface and Processing System (CIPS), NoC, and AI Engine and the interfaces among them. The v++ linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system level design, PL kernels are added to the base platform depending on the application, that is, the PL kernels present in each design may vary. An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the the Vitis compiler connectivity directives.
-As indicated, the components are added by the linker "`v++ -l`" step (`make xclbin` in the tool flow section above) and include the following:
+The design in this tutorial starts with a base platform containing the Control Interface and Processing System (CIPS), NoC, and AI Engine and the interfaces among them. The `v++` linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system level design, PL kernels are added to the base platform depending on the application, that is, the PL kernels present in each design might vary. An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the the Vitis compiler connectivity directives.
+As indicated, the components are added by the linker "`v++ -l`" step (`make xclbin` in the tool flow section) and include the following:
 
 * `libadf.a`
 * `mm2s` and `ss2m` data mover kernels
 * `ai_engine_system` block which includes the PC-CFR PL kernels, WCFR PL kernel, data width converter, and clock converter kernels
 * Any other necessary connections and interfaces
 
-To see a schematic view of the design with the extended platform (as shown in the following diagram), open in the Vivado `build/hw_emu/_x/link/vivado/vpl/prj/prj.xpr`.
+To see a schematic view of the design with the extended platform (as shown in the following diagram), open `build/hw_emu/_x/link/vivado/vpl/prj/prj.xpr`.
 ![Alt Text](images/TX_chain_sch.PNG)
 
 </details>
@@ -814,7 +814,7 @@ To see a schematic view of the design with the extended platform (as shown in th
 <details>
 	<summary>TX Chain Graph Details</summary>
 	
-## TX CHain Graph Details
+## TX Chain Graph Details
 A description of the AI Engine and PL kernels used in the TX Chain design together with a top level diagram have been provided in the previous sections. The overall design consists of two input streams at 153.6 MSPS to channel filter and interpolating half band filter feeding into a mixer, through PC-CFR followed by WCFR, DPD pre-processing and the DPD subsystem. This section goes into more details about the CFR and DPD kernels in this design. 
 
 Crest Factor Reduction (CFR) is a technique to reduce the PAPR (Peak to Average Power Ratio) of the transmitted signals that so the power amplifier can operate more efficiently. The algorithms in the TX Chain design use the Peak Cancellation CFR (PC-CFR) and Windows CFR (WCFR). The descriptions of the two functions are given as follows.
