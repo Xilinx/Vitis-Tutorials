@@ -257,11 +257,6 @@ To verify the platform functionality, we will create an acceleation project with
    - Right click **vadd_system**, select **Run as -> Run Configurations**
    - Select **vadd_system-Default**
    - Change **Build Configuration** to **Emulation-HW**
-   - Change **Remote Working Directory** to **/mnt/sd-mmcblk0p1**
-
-   ![Vitis Emulation Vadd Configuration](images/step4/vitis_emulation_vadd_configuration.png)
-
-   - Click Apply
    - Click Run
    - Check run result
 
@@ -294,11 +289,11 @@ To verify the platform functionality, we will create a project with AIE + PL ker
    - Select **plaie_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
 
-3. (Optional) Build the vector addtion application for hardware emulation
+3. (Optional) Build the vector addition application for hardware emulation
 
    - Select **plaie_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click build icon.
-   - If it pops-up a dialouge to ask whether to clean the project, select **Don't clean**.
+   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
 
 4. After a successful build, **sd_card.img** is generated in `plaie_system/Hardware/package` and `plaie_system/Hardware/package_no_aie_debug` directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the **sd_card.img** in **package** directory has a package parameter `enable_aie_debug=1`. It's used for debugging. The one in **package_no_aie_debug** can work for free running.
 
@@ -373,10 +368,8 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
 2. Launch PL and AIE emulation
 
-   - Right click plaie_system, select Run as -> Run Configiratuions
+   - Right click plaie_system, select Run as -> Run Configurations
    - Select plaie_system-Launch
-   - Change **Remote Working Directory** to **/mnt/sd-mmcblk0p1**
-   - Click Apply
    - Click Run
 
    ![Emulation Result of PLAIE Project](images/step4/vitis_emulation_plaie_result.png)

@@ -67,8 +67,10 @@ This design requires a Linux host machine with Internet access. The Linux OS nee
 
 ### 2021.1
 - Step 0: Vivado example design has more customizable options for clocks and interrupts.
+- Step 1: Removed tcl commands for platform setup because the Platform Setup Wizard can do the job well.
 - Step 2: In PetaLinux root file system configuration, only **xrt** package is needed. **packagegroup-petalinux-xrt** is removed by PetaLinux.
 - Step 2: PetaLinux can create ZOCL node device tree. So manual update device tree instructions are removed.
+- Step 2: PetaLinux 2021.1 requires GCC > 6.0. Workaround is to enable "Enable buildtools extended" in Yocto settings.
 - Step 3: Vitis can generate BIF. Manual steps of adding custom BIF are removed.
 
 
