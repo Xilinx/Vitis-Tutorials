@@ -185,14 +185,18 @@ To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you 
 If you are an advanced user and are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design with one command: 
 
 ```bash
-make build TARGET=hw_emu 
+make build TARGET=hw_emu
 ```
 or 
 ```bash
-make build TARGET=hw
+make build TARGET=hw EN_TRACE=0
+```
+or 
+```bash
+make build TARGET=hw EN_TRACE=1
 ```
 
-This command will run the `make kernels` `make graph` `make xclbin` `make application` and `make package` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify.
+This command will run the `make kernels` `make graph` `make xclbin` `make application` and `make package` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
 
 You can also run the following command to build the entire Lenet tutorial *and* launch hardware emulation: 
 ```bash
