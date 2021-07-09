@@ -145,7 +145,7 @@ To verify the platform functionality, we will create an acceleation project with
    - Select the directory that [step3](./step3.md) generates. For example `ref_files/step3_pfm/platform_repo`
    - Click **OK**
 
-3. Create vector addtion application on the custom platform
+3. Create vector addition application on the custom platform
 
    - Select menu **File -> New -> Application Project**.
    - Go through the welcome page and click **Next**.
@@ -164,13 +164,14 @@ To verify the platform functionality, we will create an acceleation project with
 4. Build the vector addition application for hardware
 
    - Select **vadd_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
+   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click the build icon.
+   - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in vadd_system/Hardware/package directory.
 
 
 5. (Optional) Build the vector addition application for hardware emulation
 
    - Select **vadd_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click build icon.
+   - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click the build icon.
    - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
 
 
@@ -193,9 +194,11 @@ To verify the platform functionality, we will create an acceleation project with
 5. Launch the test application from UART console
 
    ```
-   cd /mnt/sd-mmcblk1p1
+   cd /mnt/sd-mmcblk0p1
    ./vadd binary_container_1.xclbin
    ```
+
+   > Note: Depends on the device tree version, the mount point of the SD card could be /mnt/sd-mmcblk1p1. Please try this path if /mnt/sd-mmcblk0p1 is not available on your system.
 
 6. Expected print on UART console
 
@@ -203,7 +206,7 @@ To verify the platform functionality, we will create an acceleation project with
   <summary><b>Show Log</b></summary>
 
   ```
-  root@petalinux:/mnt/sd-mmcblk1p1# ./vadd binary_container_1.xclbin
+  root@petalinux:/mnt/sd-mmcblk0p1# ./vadd binary_container_1.xclbin
   [   34.747622] [drm] Pid 770 opened device
   [   34.751501] [drm] Pid 770 closed device
   [   34.759710] [drm] Pid 770 opened device
@@ -254,7 +257,7 @@ To verify the platform functionality, we will create an acceleation project with
    - Right click **vadd_system**, select **Run as -> Run Configurations**
    - Select **vadd_system-Default**
    - Change **Build Configuration** to **Emulation-HW**
-   - Change **Remote Working Directory** to **/mnt/sd-mmcblk1p1**
+   - Change **Remote Working Directory** to **/mnt/sd-mmcblk0p1**
 
    ![Vitis Emulation Vadd Configuration](images/step4/vitis_emulation_vadd_configuration.png)
 
@@ -320,7 +323,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 4. Setup XRT runtime environment and launch test application from UART console
 
    ```
-   cd /mnt/sd-mmcblk1p1
+   cd /mnt/sd-mmcblk0p1
    ./plaie binary_container_1.xclbin
    ```
 
@@ -330,7 +333,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
   <summary><b>Show Log</b></summary>
 
    ```
-   root@petalinux:/mnt/sd-mmcblk1p1# ./plaie binary_container_1.xclbin
+   root@petalinux:/mnt/sd-mmcblk0p1# ./plaie binary_container_1.xclbin
    [  381.642589] [drm] Pid 693 opened device
    [  381.646455] [drm] Pid 693 closed device
    [  381.654748] [drm] Pid 693 opened device
@@ -372,7 +375,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
    - Right click plaie_system, select Run as -> Run Configiratuions
    - Select plaie_system-Launch
-   - Change **Remote Working Directory** to **/mnt/sd-mmcblk1p1**
+   - Change **Remote Working Directory** to **/mnt/sd-mmcblk0p1**
    - Click Apply
    - Click Run
 

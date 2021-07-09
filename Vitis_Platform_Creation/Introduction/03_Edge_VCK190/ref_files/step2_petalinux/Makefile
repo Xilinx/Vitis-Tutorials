@@ -42,39 +42,35 @@ get_xsa:
 
 # update dtsi:
 # - update bootargs for ext4 rootfs
-update_dtsi:
-	@cp -f system-user.dtsi $(PETALINUX_DIR)/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi
+# update_dtsi:
+# 	@cp -f system-user.dtsi $(PETALINUX_DIR)/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi
 
 update_config:
-	# PetaLinux Config: Use EXT4 as rootfs format
+# PetaLinux Config: Use EXT4 as rootfs format
 	echo "CONFIG_SUBSYSTEM_ROOTFS_EXT4=y" >> $(PETALINUX_CONFIG)
-	# echo 'CONFIG_SUBSYSTEM_RFS_FORMATS="cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"' >> $(PETALINUX_CONFIG)
-	# PetaLinux Config: Use VCK190 device tree
+# PetaLinux Config: Use VCK190 device tree
 	echo 'CONFIG_SUBSYSTEM_MACHINE_NAME="versal-vck190-reva-x-ebm-02-reva"' >> $(PETALINUX_CONFIG)
-	# PetaLinux Config: Customize Bootargs
-	# echo 'CONFIG_SUBSYSTEM_BOOTARGS_AUTO=y' >> $(PETALINUX_CONFIG)
-	# echo 'CONFIG_SUBSYSTEM_USER_CMDLINE="console=ttyAMA0 earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk1p2 rw rootwait rootfs=ext4"' >> $(PETALINUX_CONFIG)
-	# echo 'CONFIG_YOCTO_MACHINE_NAME="versal-generic"' >> $(PETALINUX_CONFIG)
+# For GCC < 6.0, enable prebuilt build tools
+	echo "CONFIG_YOCTO_BUILDTOOLS_EXTENDED=y" >> $(PETALINUX_CONFIG)
+
 
 update_rootfs_config:
-	# PetaLinux Rootfs: Enable XRT
-	# echo 'CONFIG_packagegroup-petalinux-xrt=y' >> $(PETALINUX_ROOTFS_CONFIG)
+# PetaLinux Rootfs: Enable XRT
 	echo 'CONFIG_xrt=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	#echo 'CONFIG_xrt-dev=y' >> $(PETALINUX_ROOTFS_CONFIG)
-	# PetaLinux Rootfs: Enable DNF
+# PetaLinux Rootfs: Enable DNF
 	echo 'CONFIG_dnf=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	echo 'CONFIG_imagefeature-package-management=y' >> $(PETALINUX_ROOTFS_CONFIG)
-	# PetaLinux Rootfs: Enable packages for EoU
+# PetaLinux Rootfs: Enable packages for EoU
 	echo 'CONFIG_e2fsprogs-resize2fs=y' >> $(PETALINUX_ROOTFS_CONFIG)
 	echo 'CONFIG_parted=y' >> $(PETALINUX_ROOTFS_CONFIG)
-	# echo 'CONFIG_auto-login=y' >> $(PETALINUX_ROOTFS_CONFIG)
 
 petalinux_proj:
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template versal --force -n $(PETALINUX_PROJ_NAME)
-	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(ROOT_DIR) --silentconfig
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_config
+	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(ROOT_DIR) --silentconfig
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_rootfs_config
-	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_dtsi
+# $(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_dtsi
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
 
 petalinux_build:
