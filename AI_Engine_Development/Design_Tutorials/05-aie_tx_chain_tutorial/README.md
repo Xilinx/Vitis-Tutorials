@@ -525,9 +525,9 @@ freqHz=154390998:mm2s_1.ap_clk
 |Switch|Comment|
 |  ---  |  ---  |
 |--connectivity.nk|Number of kernels. `mm2s:2:mm2s_0.mm2s_1` means that the Vitis compiler should instantiate two mm2s kernels and name those instances 'mm2s_0' and 'mm2s_1'.|
-|--connectivity.stream_connect|How the kernels will connect to IPs, platforms, or other kernels. The output of the AI Engine compiler will tell you the interfaces that need to be connected. `mm2s_0.s:ai_engine_0.lte_0` means that the Vitis compiler should connect the port 's' of 'mm2s' to the port 'lte_0' of AI Engine port 0. The name of the AI Engine port has been defined in the `tx_chain.cpp` PLIO instantiation.|
+|--connectivity.stream_connect|How the kernels connect to IPs, platforms, or other kernels. The output of the AI Engine compiler tells you the interfaces that need to be connected. `mm2s_0.s:ai_engine_0.lte_0` means that the Vitis compiler should connect the port 's' of 'mm2s' to the port 'lte_0' of AI Engine port 0. The name of the AI Engine port has been defined in the `tx_chain.cpp` PLIO instantiation.|
 |--advanced.param=hw_emu.enableProfiling=false|???|
-|param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XCLBIN, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software developement.|
+|param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XCLBIN, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
 |param=compiler.skipTimingCheckAndFrequencyScaling=true||
 |--clock.freqHz \<arg\>|Specifies a clock frequency in Hz and assigns it to a list of associated compute units (CUs) and optionally specifies clock pins on the CU.|
 |--clock.defaultTolerance \<arg\>|Specifies a default clock tolerance as a value, or as a percentage of the default clock frequency.|
@@ -613,12 +613,12 @@ aarch64-linux-gnu-g++ 	../build/aie_control_xrt.o			\
 |  ---  |  ---  |
 |-O \| Optimize| Optimizing compilation takes more time, and a lot of memory for a large function. With `-O`, the compiler tries to reduce code size and execution time, without performing any optimizations that take a great deal of compilation time.|
 |-D__linux__||
-|-D__PS_ENABLE_AIE__|This flag indicates that the host application will be the one to enable the AI Engine at execution.|
+|-D__PS_ENABLE_AIE__|This flag indicates that the host application enables the AI Engine at execution.|
 |-DXAIE_DEBUG|Enable debug interface capabilities where certain core status, event status, or stack trace can be dumped out.|
 |-I \<dir\>|Add the directory `dir` to the list of directories to be searched for header files.|
-|-o \<file\>|Place output in file <file>. This applies regardless of whatever sort of output is being produced, whether it be an executable file, an object file, an assembler file, or preprocessed C code.|
-|--sysroot=\<dir\>|Use dir as the logical root directory for headers and libraries. For example, if the compiler would normally search for headers in `/usr/include` and libraries in `/usr/lib`, it will instead search `dir/usr/include` and `dir/usr/lib`.|
-|-l\<library\>|Search the library named library when linking. The TX Chain tutorial needs `adf_api`, `xrt_coreutil`, `xrt_core`, `aiengine`, `metal`, `open_amp` libraries.|
+|-o \<file\>|Place output in file \<file\>. This applies regardless of whatever sort of output is being produced, whether it is an executable file, an object file, an assembler file, or preprocessed C code.|
+|--sysroot=\<dir\>|Use \<dir\> as the logical root directory for headers and libraries. For example, if the compiler normally searches for headers in `/usr/include` and libraries in `/usr/lib`, it will instead search `dir/usr/include` and `dir/usr/lib`.|
+|-l\<library\>|Search the library named \<library\> when linking. The TX Chain tutorial requires `adf_api`, `xrt_coreutil`, `xrt_core`, `aiengine`, `metal`, `open_amp` libraries.|
 |-L \<dir\>|Add directory <dir> to the list of directories to be searched for -l.|
 
 The following is a description of the input sources compiled by the AI Engine compiler command. 
@@ -626,9 +626,9 @@ The following is a description of the input sources compiled by the AI Engine co
 |Inputs Sources|Description|
 |  ---  |  ---  |
 |aie_src/tx_chain_app.cpp|Source application file for the `tx_chain.elf` that will run on an A72 processor.|
-|build/Work/ps/\_crts_aie_control.cpp|This is the AI Engine control code generated implementing the `tx_chain0.init()`, `tx_chain0.run()`, `tx_chain0.end()` graph APIs for the TX Chain graph.|
+|build/Work/ps/\_crts_aie_control.cpp|This is the AI Engine control code generated implementing the `tx_chain0.init()`, `tx_chain0.run()`, and `tx_chain0.end()` graph APIs for the TX Chain graph.|
 
-The following is a description of the output objects that results from executing the AI Engine compiler command with the above inputs and options. 
+The following is a description of the output objects that results from executing the AI Engine compiler command with the preceding inputs and options. 
 
 |Output Objects|Description|
 |  ---  |  ---  |
@@ -641,7 +641,7 @@ The following is a description of the output objects that results from executing
 ## make package: Package the Design
 With all the AI Engine outputs created as well as the new platform, you can now generate the Programmable Device Image (PDI) and a package to be used on an SD card. The PDI contains all executables, bitstreams, and configurations of every element of the device and the packaged SD card directory contains everything to boot Linux, and contains your generated applications and the XCLBIN file.
 
-To package the design, you can run the following command: 
+To package the design, run the following command: 
 ```
 make package
 ``` 
@@ -673,23 +673,23 @@ v++	-p  							\
 |--platform \| -f|Specifies the name of a supported acceleration platform as specified by the $PLATFORM_REPO_PATHS environment variable or the full path to the platform XPFM file.|
 |--package.sd_dir \<arg\>|Where \<arg\> specifies a folder to package into the SD card `directory/image`.|
 |--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. See the Vitis Software Platform Installation for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. See the Vitis Software Platform Installation for more information.|
-|--package.boot_mode \<arg\>|Where \<arg\> specifies `<ospi\|qspi\|sd>` Boot mode used for running the application in emulation or on hardware.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. See the Vitis unified software platform installation for more information.|
+|--package.boot_mode \<arg\>|Where \<arg\> specifies `<ospi\|qspi\|sd>` boot mode used for running the application in emulation or on hardware.|
 |--package.out_dir \<arg\>|Where \<arg\> specifies the absolute or relative path to the output directory of the `--package` command.|
 |--package.image_format \<arg\>|Where \<arg\> specifies `<ext4\|fat32>` output image file format. ext4: Linux file system and fat32: Windows file system.|
 |--package.sd_file \<arg\>|Where \<arg\> specifies an ELF or other data file to package into the SD card directory/image. This option can be used repeatedly to specify multiple files to add to the SD card.|
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
-|$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS Host Application needs the XRT headers in this folder to execute.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4|The Root Filesystem file for Petalinux.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image|The pre-built Petalinux Image the processor boots from.|
-|design/aie_src/data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS Host Application uses to verify the DPD output data from the AI Engine.|
-|build/hw_emu/tx_chain_xrt.elf|The PS Host Application executable we created in the `make application` step.|
-|build/hw_emu/vck190_aie_tx_chain.xclbin|The XCLBIN file we created in the `make xclbin` step.|
-|build/libadf.a|The compiled AI Engine design graph we created in the `make graph` step.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS host application needs the XRT headers in this folder to execute.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4|The root filesystem file for Petalinux.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image|The pre-built Petalinux image the processor boots from.|
+|design/aie_src/data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS host application used to verify the DPD output data from the AI Engine.|
+|build/hw_emu/tx_chain_xrt.elf|The PS host application executable created in the `make application` step.|
+|build/hw_emu/vck190_aie_tx_chain.xclbin|The XCLBIN file created in the `make xclbin` step.|
+|build/libadf.a|The compiled AI Engine design graph created in the `make graph` step.|
 
-The output of the V++ Package step is the package directory that contains the contents to run hardware emulation. 
+The output of the `v++ package` step is the package directory that contains the contents to run hardware emulation. 
 
 |Output Objects|Description|
 |  ---  |  ---  |
@@ -790,7 +790,7 @@ A72-Info: Test Passed for DPD0
 
 # Hardware Design Details
 ## Block Diagram
-The following figure shows a high level block diagram of the design. For a more detailed illustration of the design under test (DUT) unit, refer to "Transmit Chain (200 MHz) block diagram" in UG1274.
+The following figure shows a high level block diagram of the design. For a more detailed illustration of the design under test (DUT) unit, refer to "Transmit Chain (200 MHz) block diagram" in UG1274, available in the [Communication Library lounge](https://www.xilinx.com/member/versal_ai_engine_commslib_ea.html#documents).
 
 ![Alt Text](images/tx_chain_block_design_v3.PNG)
 
