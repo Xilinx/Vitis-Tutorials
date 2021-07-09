@@ -152,12 +152,12 @@ The output of the preceding command should be as follows:
 ## *Other Tutorials*: Learn Basic V++ and AI Engine Concepts
 For novice users, review the following tutorials to understand the basic Vitis compiler (`v++`) concepts and how to build simple AI Engine designs: 
 
-* XD002: AI Engine Versal Integration for Hardware Emulation and Hardware Tutorial (https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration)
+* XD002: [AI Engine Versal Integration for Hardware Emulation and Hardware Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration)
 
-* XD004: System Clocking Tutorial (https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/06-versal-system-design-clocking-tutorial)
+* XD004: [System Clocking Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/06-versal-system-design-clocking-tutorial)
 
 # Building the TX Chain Design
-In this section, you will build and run the TX Chain design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step. 
+In this section, you will build and run the TX Chain design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#mpe1572279880565) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step. 
 
 ![Vitis Toolflow for TX Chain](images/Compilation_process.png)
 
@@ -167,46 +167,46 @@ The steps to build the TX Chain AI Engine design are summarized below:
 
 #### 1. Compiling an AI Engine Graph Application 
 
-One of the first steps is to create and compile the AI Engine graph using the AI Engine compiler (aiecompiler). The TX chain design has been provided for you in the `design` folder. The AI Engine compiler (during the `make graph` step) compiles the `tx_chain_200MHz` graph, and builds the TX Chain AI Engine application. You can review [Compiling an AI Engine Graph Application Section in AI Engine Documentation](#ai-engine-documentation) for general details on how to use the AI Engine compiler. The `tx_chain_200MHz` graph is composed of nine AI Engine subgraphs which are further composed of a total of 22 AI Engine kernels. The following is a description of each AI Engine subgraph and the AI Engine kernels it uses. A more detailed description of each AI engine kernel is provided later on in the [Software Design Details](#software-design-details). 
+One of the first steps is to create and compile the AI Engine graph using the AI Engine compiler (`aiecompiler`). The TX chain design has been provided for you in the `design` folder. The AI Engine compiler (during the `make graph` step) compiles the `tx_chain_200MHz` graph, and builds the TX Chain AI Engine application. You can review [Compiling an AI Engine Graph Application Section in AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/compile_graph_application.html#rsb1512607764188) for general details on how to use the AI Engine compiler. The `tx_chain_200MHz` graph is composed of nine AI Engine subgraphs which are further composed of a total of 22 AI Engine kernels. The following is a description of each AI Engine subgraph and the AI Engine kernels it uses. A more detailed description of each AI engine kernel is provided later on in the [Software Design Details](#software-design-details). 
 
 The `interp_chain` is a user-defined AI Engine subgraph (defined in `tx_subsystem.h`) used to limit the signal to the frequency of interest and remove unwanted signals and prevent blocking signals. It uses the `fir_63t_sym` and `fir_23t_sym_hb_2i` CommsLib AI Engine kernels.
 
 The `mixer_subsystem` is a user-defined AI Engine subgraph (defined in `tx_subsystem.h`) used to combine the signals from the `interp_chain` subgraphs. It uses the `mixer_2out` user-defined AI Engine kernel. 
 
-The `pc_cfr_chain_itr_win` is a CommsLib AI Engine subgraph used for peak cancellation crest factor reduction to limit the dynamic range of signals being transmitted. It uses the `pccfr_sma_itr_win` Commslib AI Engine subgraph which contains two instances of the `pccfr_scaleadd_itr_window`, `fir_23t_sym_hb_2i`,  and `window_copy_1in_2out` CommsLib AI Engine kernels.
+The `pc_cfr_chain_itr_win` is a CommsLib AI Engine subgraph used for PC-CFR to limit the dynamic range of signals being transmitted. It uses the `pccfr_sma_itr_win` Commslib AI Engine subgraph which contains two instances of the `pccfr_scaleadd_itr_window`, `fir_23t_sym_hb_2i`,  and `window_copy_1in_2out` CommsLib AI Engine kernels.
 
 The `wcfr_graph` is a CommsLib AI Engine subgraph used to remove the peak above threshold after detection by PC-CFR. It uses the `wcfr_int_mag` CommsLib AI Engine subgraph which contains the `fir_23t_sym_hb_2i`, `fir_11t_sym_hb_2i`, and `wcfr_mag_pack` CommsLib AI Engine kernels. It also uses the `wcfr_filt_sub` CommsLib AI Engine subgraph which contains the `fir_96t_real_sym`  and `wcfr_correction` CommsLib AI Engine kernels.  
 
-The `dpd_upsampler_8by5_up2` is a user-defined AI Engine subgraph (`tx_subsystem.h`) used to change the signal after Crest Factor Reduction (CFR) to the DPD sampling frequency. It uses the  `fir_11t_sym_hb_2i`, `fir_95t_sym_8i_5d`, and `gain_magsqr` CommsLib AI Engine kernels.  
-The `DPD_LUT_FILT_1G_32T` is a CommsLib AI Engine subgraph is used to maintain average signal-to-noise ratio by subtracting the distortion component in the outbound signal. It uses the `dpd_1g_core0`, `dpd_1g_core1`, `dpd_1g_core2`, `dpd_1g_core3`, and `cl2_kernel` CommsLib AI Engine kernels. 
+The `dpd_upsampler_8by5_up2` is a user-defined AI Engine subgraph (`tx_subsystem.h`) used to change the signal after CFR to the DPD sampling frequency. It uses the  `fir_11t_sym_hb_2i`, `fir_95t_sym_8i_5d`, and `gain_magsqr` CommsLib AI Engine kernels.  
+The `DPD_LUT_FILT_1G_32T` is a CommsLib AI Engine subgraph used to maintain average signal-to-noise ratio by subtracting the distortion component in the outbound signal. It uses the `dpd_1g_core0`, `dpd_1g_core1`, `dpd_1g_core2`, `dpd_1g_core3`, and `cl2_kernel` CommsLib AI Engine kernels. 
 
 #### 2. Compiling the PL Kernels
 The Vitis compiler (during the `make kernels` step) compiles five PL kernels for implementation in the PL region of the target platform (`xilinx_vck190_es1_base_202020_1`). These C++ kernels are compiled into `*.xo` object (XO) files. The following is a description of each HLS PL kernel.
 
-+ `mm2s` Data Mover kernel is a Memory Map to Stream kernel to feed data from the DDR memory through the NoC to the AI Engine through the PL DMA
++ `mm2s` data mover kernel is a memory map to stream kernel to feed data from the DDR memory through the NoC to the AI Engine through the PL DMA
 + `pccfr_pl_pds_itr1` CFR kernel performs peak detection, scale factor compute, CP address and offset generation
 + `pccfr_pl_pds_itr2` CFR kernel conducts a second iteration of peak detection, scale factor compute, CP address and offset generation
 + `wcfr_peak_d` CFR kernel performs peak detection and scale factor compute for the WCFR function
-+ `s2mm` Data Mover kernel is a Stream to Memory Map kernel to feed data from the AI Engine through the NoC to DDR memory through the PL DMA
++ `s2mm` data mover kernel is a stream to memory map kernel to feed data from the AI Engine through the NoC to DDR memory through the PL DMA
 
 #### 3. Linking the System
 The Vitis compiler link step (during `make xclbin`) combines the compiled AI Engine graph (`build/libadf.a`) with the C++ PL kernels onto the target platform. This process creates an XCLBIN file to load and run an AI Engine graph and PL kernel code on the target platform. 
 
 #### 4. Compile the Embedded Application for the Cortex-A72 Processor
-The TX Chain design uses a host program running the A72 processor to interact with the AI Engine kernels. The Arm® GNU Compiler (during the `make application` step) compiles an embedded PS host application to run on the Cortex-A72 core processor. This step uses the GNU Arm cross-compiler to create an ELF file. The host program interacts with the AI Engine kernels and data mover PL kernels.
+The TX Chain design uses a host program running the A72 processor to interact with the AI Engine kernels. The Arm® GNU compiler (during the `make application` step) compiles an embedded PS host application to run on the Cortex-A72 core processor. This step uses the GNU Arm cross-compiler to create an ELF file. The host program interacts with the AI Engine kernels and data mover PL kernels.
 
 #### 5. Packaging the system
 The Vitis compiler package step (during `make package`) gathers the required files to configure and boot the system, to load and run the application (including the AI Engine graph and PL kernels). If your target is hardware emulation, this step creates the necessary package as the `build/hw_emu/package` folder. If your target is to run your application on hardware, this step creates the necessary package as the `build/hw/package` folder. 
 
 # Make Steps 
-To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
+To run the following `make` steps (for example, `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
 ```bash
 cd Makefiles
 ```
 <details>
-  <summary>Build the Entire Tx Chain Design with a Single Command</summary>
+  <summary>Build the Entire TX Chain Design with a Single Command</summary>
 	
-## Build the Entire Tx Chain Design with a Single Command
+## Build the Entire TX Chain Design with a Single Command
 If you are an advanced user and are already familier with the AI Engine and Vitis kernel compilation flows, you can build the entire TX Chain design with one command: 
 
 ```bash
@@ -217,7 +217,7 @@ or
 make build TARGET=hw
 ```
 
-This command will run the `make kernels` `make graph` `make xclbin` `make application` and `make package` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify.
+This command runs `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or hardware (VCK190 board), depending on the `TARGET` you specify.
 
 You can also run the following command to build the entire TX Chain tutorial *and* launch hardware emulation: 
 ```bash
@@ -312,7 +312,7 @@ cd ../../Makefiles;
 |--platform \| -f|Specifies the name of a supported acceleration platform as specified by the $PLATFORM_REPO_PATHS environment variable or the full path to the platform XPFM file.|
 |--save-temps \| -s|Directs the Vitis compiler command to save intermediate files/directories created during the compilation and link process. Use the ```--temp_dir``` option to specify a location to write the intermediate files to.|
 |--temp_dir <string>|This allows you to manage the location where the tool writes temporary files created during the build process. The temporary results are written by the Vitis compiler and then removed, unless the `--save-temps` option is also specified.|
-|--verbose|Display verbose/debug information|
+|--verbose|Display verbose/debug information.|
 |--config <config_file>|Specifies a configuration file containing Vitis compiler switches.|
 |--compile \| -c|Required for compilation to generate `.xo` files from kernel source files.|
 |--output \| -o|Specifies the name of the output file generated by the Vitis compiler command. The DMA HLS kernels output should be `.xo`.|
@@ -322,19 +322,19 @@ The options listed in the `pccfr_pl_pds_itr1.cfg`, `pccfr_pl_pds_itr2.cfg`, and 
 
 |Switch|Description|
 |  ---  |  ---  |
-|--hls.clock <arg\>|Specifies a frequency in Hz at which the listed kernel(s) should be compiled by Vitis HLS. Where \<arg\> is specified as: <frequency_in_Hz>:<cu_name1>,<cu_name2>,..,<cu_nameN>|
+|--hls.clock <arg\>|Specifies a frequency in Hz at which the listed kernel(s) should be compiled by Vitis HLS. Where \<arg\> is specified as: <frequency_in_Hz>:<cu_name1>,<cu_name2>,..,<cu_nameN>.|
 |--advanced.prop solution.hls_pre_tcl|Specifies the path to a Vitis HLS Tcl file, which is executed before the C code is synthesized. This allows the Vitis HLS configuration settings to be applied prior to synthesis.|
 
 |Input|Description|
 |  ---  |  ---  |
-|design/kernel_src/pccfr_pds_itr1.cpp|Defines the `pccfr_pds_itr1` PL kernel|
-|design/kernel_src/pccfr_pds_itr1.cpp|Defines the `pccfr_pds_itr2` PL kernel|
-|design/kernel_src/wcfr_peak_d.cpp|Defines the `wcfr_peak_d` PL kernel|
-|design/kernel_src/mm2s.cpp|Defines the `mm2s` PL data mover kernel|
-|design/kernel_src/s2mm.cpp|Defines the `s2mm` PL data mover kernel|
-|design/pccfr_pds_itr1.cfg|The configuration file with additional options to compile the `pccfr_pds_itr1` kernel|
-|design/pccfr_pds_itr2.cfg|The configuration file with additional options to compile the `pccfr_pds_itr2` kernel|
-|design/wcfr_peak_d.cfg|The configuration file with additional options to compile the `wcfr_peak_d kernel`|
+|design/kernel_src/pccfr_pds_itr1.cpp|Defines the `pccfr_pds_itr1` PL kernel.|
+|design/kernel_src/pccfr_pds_itr1.cpp|Defines the `pccfr_pds_itr2` PL kernel.|
+|design/kernel_src/wcfr_peak_d.cpp|Defines the `wcfr_peak_d` PL kernel.|
+|design/kernel_src/mm2s.cpp|Defines the `mm2s` PL data mover kernel.|
+|design/kernel_src/s2mm.cpp|Defines the `s2mm` PL data mover kernel.|
+|design/pccfr_pds_itr1.cfg|The configuration file with additional options to compile the `pccfr_pds_itr1` kernel.|
+|design/pccfr_pds_itr2.cfg|The configuration file with additional options to compile the `pccfr_pds_itr2` kernel.|
+|design/wcfr_peak_d.cfg|The configuration file with additional options to compile the `wcfr_peak_d kernel`.|
 |design/directives/pccfr_pds_itr12.tcl|The Tcl file that contains additional Vivado® commands to optimize the `pccfr_pds_itr1/2` kernels.|
 |design/directives/wcfr_pl.tcl|The Tcl file that contains additional Vivado commands to optimize the `wcfr_pl` kernel.|
 
@@ -369,10 +369,10 @@ build/hw_emu/<kernel_name>.log
 ## make graph: Creating the AI Engine ADF Graph for the Vitis Compiler Flow
 An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives). 
 * The AI Engine ADF C++ graph of this TX Chain design contains AI Engine subgraphs (which contain AI Engine kernels) and CFR PL kernels. 
-* All interconnects between kernels are defined in the C++ graph (`tx_chain.h` and `tx_chain_subsystem.h`)
-* All interconnections to external I/O are fully specified in the C++ simulation testbench (`tx_chain.cpp`) that instantiates the C++ ADF graph object. All `adf::sim` platform connections from graph to PLIO map onto ports on the AI Engine subsystem graph that are connected using the Vitis compiler connectivity directives. No dangling ports or implicit connections are allowed by the Vitis compiler. 
+* All interconnects between kernels are defined in the C++ graph (`tx_chain.h` and `tx_chain_subsystem.h`).
+* All interconnections to external I/O are fully specified in the C++ simulation testbench (`tx_chain.cpp`) that instantiates the C++ ADF graph object. All `adf::sim` platform connections from the graph to the PLIO map onto ports on the AI Engine subsystem graph that are connected using the Vitis compiler connectivity directives. No dangling ports or implicit connections are allowed by the Vitis compiler. 
 
-Review the `tx_chain.h` and `tx_subsystem.h` to better understand the graph connections. You'll notice that in the `tx_chain_200MHz` graph definition, the `mm2s` and `s2mm` PL Data Mover kernels are not instantiated while the PL CFR kernels (`pccfr_pds_itr1`, `pccfr_pds_itr2`, and `wcfr_peak_d`) are. This is because the PL data mover kernels are not required for the `aiesimulator`, and only the ports to these data mover PL kernels are described in this graph. Review the AI Engine application `tx_chain.cpp` file and you will see the PLIOs that hookup to the data mover kernels during the Vitis linking step (`make xclbin`).  
+Review the `tx_chain.h` and `tx_subsystem.h` to better understand the graph connections. Notice that in the `tx_chain_200MHz` graph definition, the `mm2s` and `s2mm` PL data mover kernels are not instantiated while the PL CFR kernels (`pccfr_pds_itr1`, `pccfr_pds_itr2`, and `wcfr_peak_d`) are. This is because the PL data mover kernels are not required for the `aiesimulator`, and only the ports to these data mover PL kernels are described in this graph. Review the AI Engine application `tx_chain.cpp` file and you will see the PLIOs that hook up to the data mover kernels during the Vitis linking step (`make xclbin`).  
 
 To compile the graph using the Makefile flow type:
 ```
@@ -488,12 +488,12 @@ cd ../../Makefiles;
 |--debug \| -g|Generates code for debugging the kernel. Using this option adds features to facilitate debugging the kernel as it is compiled and the FPGA binary is built.|
 |--link \| -l|This is a required option for the linking process, which follows compilation. The PL kernel source code was compiled into their respective XO files during the `make kernels` step. Run the Vitis compiler in link mode to link the XO input files and generate an XCLBIN output file.|
 |--platform \| -f|Specifies the name of a supported acceleration platform as specified by the $PLATFORM_REPO_PATHS environment variable or the full path to the platform XPFM file.|
-|--save-temps \| -s|Directs the the Vitis compiler command to save intermediate files/directories created during the compilation and link process. Use the `--temp_dir` option to specify a location to write the intermeidate files to.|
+|--save-temps \| -s|Directs the the Vitis compiler command to save intermediate files/directories created during the compilation and link process. Use the `--temp_dir` option to specify a location to write the intermediate files to.|
 |--temp_dir <string>|This allows you to manage the location where the tool writes temporary files created during the build process. The temporary results are written by the Vitis compiler, and then removed, unless the `--save-temps` option is also specified.|
-|--verbose|Display verbose/debug information|
+|--verbose|Display verbose/debug information.|
 |--config <config_file>|Specifies a configuration file containing the Vitis compiler switches.|
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
-|--output \| -o|Specifies the name of the output file generated by the Vitis compiler command. The DMA HLS kernels output should be `.xo`. The PL HLS kernels interfacing with the AI Engine should be `.o`.|
+|--output \| -o|Specifies the name of the output file generated by the Vitis compiler command. The DMA HLS kernels output should be `.xo` files. The PL HLS kernels interfacing with the AI Engine should be `.o` files.|
 
 You have a number of kernels at your disposal but you need to tell the linker the way you want to connect them all together from the AI Engine array to the PL and vice versa. These connections are described in a configuration file `system.cfg`. This file has a number of lines that describes the overall connection scheme of the system. 
 
@@ -524,7 +524,7 @@ freqHz=154390998:mm2s_1.ap_clk
 
 |Switch|Comment|
 |  ---  |  ---  |
-|--connectivity.nk|Number of kernels. `mm2s:2:mm2s_0.mm2s_1` means that the Vitis compiler should instantiate two mm2s kernels and name those instances 'mm2s_0' and 'mm2s_1'|
+|--connectivity.nk|Number of kernels. `mm2s:2:mm2s_0.mm2s_1` means that the Vitis compiler should instantiate two mm2s kernels and name those instances 'mm2s_0' and 'mm2s_1'.|
 |--connectivity.stream_connect|How the kernels will connect to IPs, platforms, or other kernels. The output of the AI Engine compiler will tell you the interfaces that need to be connected. `mm2s_0.s:ai_engine_0.lte_0` means that the Vitis compiler should connect the port 's' of 'mm2s' to the port 'lte_0' of AI Engine port 0. The name of the AI Engine port has been defined in the `tx_chain.cpp` PLIO instantiation.|
 |--advanced.param=hw_emu.enableProfiling=false|???|
 |param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XCLBIN, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software developement.|
