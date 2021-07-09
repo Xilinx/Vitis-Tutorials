@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Versal™ AI Engine LeNet Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine LeNet Tutorial</h1>
    </td>
  </tr>
 </table>
@@ -15,6 +15,8 @@
 [Hardware Design Details](#hardware-design-details)
 
 [Software Design Details](#software-design-details)
+
+[Throughput Measurement Details](#throughput-measurement-details)
 
 [References](#references)
 
@@ -65,7 +67,9 @@ lenet
 |    |   |___data
 |    |___pl_src
 |___images......................contains images that appear in the README.md
-|___Makefiles...................contains Makefile and configuration (.cfg) files and HLS kernel Vivado optimizations Tcl scripts
+|___Makefile
+|___system.cfg...................configuration (.cfg) file
+|___xrt.ini
 ```
 
 </details>
@@ -95,19 +99,19 @@ Tools Documentation:
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
 
 To build and run the Lenet tutorial, you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2020.2](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
+* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
 
-* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_es1_base_202020_1` platform)
+* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202110_1` platform)
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT)
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT)
 
-* Download and setup the [VCK190 Vitis Platform for 2020.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 </details>
 
@@ -117,7 +121,7 @@ To build and run the Lenet tutorial, you will need the following tools downloade
 ## Environment: Setting Up the Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system specific paths. 
 
-Edit `env_setup_2020.sh` script with your file paths: 
+Edit `env_setup.sh` script with your file paths: 
 ```bash
 export XILINX_XRT=<XRT-LOCATION>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY> 
@@ -127,7 +131,7 @@ source $XILINX_XRT/setup.sh
 ```
 Then source the environment script: 
 ```bash
-source env_setup_2020.sh
+source env_setup.sh
 ```  
 
 </details>
@@ -143,11 +147,11 @@ which aiecompiler
 
 Confirm you have the VCK190 ES1 Base Platform. 
 ```bash
-platforminfo --list | grep -m 1 -A 9 vck190_es1
+platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the above command should be as follows:
 ```bash
- "baseName": "xilinx_vck190_es1_base_202020_1",
+"baseName": "xilinx_vck190_base_202110_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -175,10 +179,7 @@ At the end of this section, the design flow will generate a new directory (calle
 </details>
 
 # Make Steps 
-To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
-```bash
-cd Makefiles
-```
+To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the lenet tutorial folder.
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
 	
@@ -186,14 +187,18 @@ cd Makefiles
 If you are an advanced user and are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design with one command: 
 
 ```bash
-make build TARGET=hw_emu 
+make build TARGET=hw_emu
 ```
 or 
 ```bash
-make build TARGET=hw
+make build TARGET=hw EN_TRACE=0
+```
+or 
+```bash
+make build TARGET=hw EN_TRACE=1
 ```
 
-This command will run the `make kernels` `make graph` `make xclbin` `make application` and `make package` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify.
+This command will run the `make kernels` `make graph` `make xclbin` `make application` and `make package` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
 
 You can also run the following command to build the entire Lenet tutorial *and* launch hardware emulation: 
 ```bash
@@ -205,7 +210,7 @@ make run TARGET=hw_emu
   <summary>make kernels: Compile PL Kernels</summary> 
  
 ## make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_es1_base_202020_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. Users can access the source code by unzipping the .xo file
+In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202110_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. Users can access the source code by unzipping the .xo file
 
 `unzip lenet_kernel.xo`
 
@@ -219,12 +224,12 @@ make kernels
 
 The expanded command is as follow:
 ```
-mkdir -p ../build/hw_emu
+mkdir -p ./build/hw_emu
 
-cd ../build/hw_emu
+cd ./build/hw_emu
 
 v++       --target hw_emu			     \
-          --platform xilinx_vck190_es1_base_202020_1 \
+          --platform xilinx_vck190_base_202110_1     \
           --save-temps                               \
 	  --temp_dir _x	                             \
           --verbose                                  \
@@ -232,7 +237,7 @@ v++       --target hw_emu			     \
           -k dms_hls                                 \
           -o dma_hls.hw_emu.xo 
  
- cd ../../Makefiles; 
+ cd ../../; 
  ```
 |Switch|Description|
 |  ---  |  ---  |
@@ -270,7 +275,7 @@ make graph
 ```
 The following AI Engine compiler command compiles the AI Engine design graph: 
 ```
-cd ../build;
+cd ./build;
 aiecompiler --include= ../design/aie_src \	
 	    --include= ../design/aie_src/data   \
             --verbose                    \
@@ -281,7 +286,7 @@ aiecompiler --include= ../design/aie_src \
             --workdir=Work               \
             ../design/aie_src/graph.cpp
 	    
-cd ../../Makefiles; 
+cd ../../; 
 
  ```
 |Switch|Description|
@@ -325,7 +330,7 @@ The expanded command is as follow:
 cd ../build/hw_emu;
 
 v++       -l                                                \
-          --platform xilinx_vck190_es1_base_202020_1        \
+          --platform xilinx_vck190_base_202110_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -337,7 +342,7 @@ v++       -l                                                \
           ../build/libadf.a                             \
           -o vck190_aie_lenet.hw_emu.xclbin   
 	  
-cd ../../Makefiles; 
+cd ../../; 
  
 ```
 The options to run this step are as follows:
@@ -398,31 +403,31 @@ or
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib \
 			../build//Work/ps/c_rts/aie_control_xrt.cpp   \
 			-o ../build/app_control.o                   
 			
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib \
 			../design/aie_src/main.cpp                              \
 			-o ../build/lenet_app.o                    
 
 aarch64-linux-gnu-g++   ../build/app_control.o			                \
 			../build/lenet_app.o			                \
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux \
-			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib\ 
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
+			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib\ 
                         -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o    		\
                         -L$(XILINX_VITIS_AIETOOLS)/lib/lnx64.o       		\
                         -ladf_api_xrt                      		        \
@@ -430,7 +435,7 @@ aarch64-linux-gnu-g++   ../build/app_control.o			                \
                         -std=c++14                          		        \
 			-o ../build/lenet_xrt.elf 
 			
-cd ../../Makefiles; 
+cd ../../; 
 
 ```
 |Switch|Description|
@@ -475,10 +480,10 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ../build/hw_emu/_x			        \
-	-f xilinx_vck190_es1_base_202020_1			\
+	-f xilinx_vck190_base_202110_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
-	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 \
-	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image \
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ../build/hw_emu/package	        \
 	--package.sd_dir ../design/aie_src/data	                \
@@ -486,7 +491,7 @@ v++	-p  							\
 	--package.sd_file ../build/lenet_xrt.elf ../build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ../build/libadf.a \
 	--package.defer_aie_run
 	
-cd ../../Makefiles; 
+cd ../../; 
 
 ```
 |Switch|Description|
@@ -503,8 +508,8 @@ cd ../../Makefiles;
 |Inputs Sources|Description|
 |  ---  |  ---  |
 |$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS Host Application needs the XRT headers in this folder to execute.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4|The Root Filesystem file for Petalinux.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image|The pre-built Petalinux Image the processor boots from.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4|The Root Filesystem file for Petalinux.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image|The pre-built Petalinux Image the processor boots from.|
 |design/aie_src/data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS Host Application uses to verify the output data from the AI Engine.|
 |build/hw_emu/lenet_xrt.elf|The PS Host Application executabled created in the `make application` step.|
 |build/hw_emu/vck190_aie_lenet.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
@@ -533,12 +538,12 @@ cd ../build/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up: 
 ```bash
-root@versal-rootfs-common-2020_2:~#
+root@versal-rootfs-common-2021_1:~#
 ```
 
 In some cases, the following error may come up on the screen
 ```
-root@versal-rootfs-common-2020_2:~# xinit: giving up
+root@versal-rootfs-common-2021_1:~# xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -603,7 +608,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2020_2` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands into the TeraTerm terminal: 
 ```
@@ -641,7 +646,7 @@ For this design, the components are added by v++ -l step (make XCLBIN in the too
 
 To see a schematic view of the design with the extended platform (as shown in the following figure), open in the Vivado  `build/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr` folder.
 
-![Image of Lenet Block Schematic](images/Lenet_sch.PNG)
+![Image of Lenet Block Schematic](images/Lenet_block_diagram_2021.PNG)
 
 </details>
 
@@ -864,7 +869,7 @@ auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 Additionally, the `memcpy` and `memset` functions are used to initialize the data in global memory.
 
 ### 5. Open Graph, Obtain Handle and Execute Graph
-The following registration function is added in 2020.2 for XRT to use ADF API callbacks:
+The following registration function is added in 2021.1 for XRT to use ADF API callbacks:
 
 `adf::registerXRT(dhdl, top->m_header.uuid);`
 
@@ -890,6 +895,33 @@ After post-processing the data, release the allocated objects using `xrtBOFree`,
 
 </details>
 
+# Throughput Measurement Details
+To measure throughput the design is run in hardware and trace data is captured in run time. Refer to Vitis Unified Software Development Platform for more information.
+To setup the flow to measure throughput, build the design with `TARGET`=hw and `EN_TRACE`=1. A xrt.ini with below contents is included:
+```
+[Debug]
+xrt_trace=true
+data_transfer_trace=fine
+trace_buffer_size=500M
+```
+Transfer the .csv and _summary files back to the design directory, e.g.
+```
+Scp -r *.csv *_summary <user>@10.10.71.101:<path>
+```
+Then run vitis_analyzer on the summary file, for example, xclbin.ex.run_summary
+
+Below is the snapshot of the time trace for the Lenet design run 
+
+![Image of Lenet design Timeline Trace](images/Lenet_1x_trace.PNG)
+
+Throughput calculation is as follows:
+Difference in timeline (execution time) = 1,446.973us
+Throughput = no of images / execution time
+          = 100 / 1,446.973us
+          = 69,109 images/s
+```
+
+
 # References
 The following documents provide supplemental information for this tutorial.
 
@@ -905,14 +937,14 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2020.2 Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/irn1582730075765.html)
+* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html)
 
 # Revision History
 * Dec 2020 - Initial Release
