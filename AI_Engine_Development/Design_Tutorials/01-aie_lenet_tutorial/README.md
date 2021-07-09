@@ -204,7 +204,7 @@ make run TARGET=hw_emu
   <summary>make kernels: Compile PL Kernels</summary> 
  
 ## make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_es1_base_202020_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. Users can access the source code by unzipping the .xo file
+In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202110_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. Users can access the source code by unzipping the .xo file
 
 `unzip lenet_kernel.xo`
 
@@ -218,12 +218,12 @@ make kernels
 
 The expanded command is as follow:
 ```
-mkdir -p ../build/hw_emu
+mkdir -p ./build/hw_emu
 
-cd ../build/hw_emu
+cd ./build/hw_emu
 
 v++       --target hw_emu			     \
-          --platform xilinx_vck190_es1_base_202020_1 \
+          --platform xilinx_vck190_base_202110_1     \
           --save-temps                               \
 	  --temp_dir _x	                             \
           --verbose                                  \
@@ -231,7 +231,7 @@ v++       --target hw_emu			     \
           -k dms_hls                                 \
           -o dma_hls.hw_emu.xo 
  
- cd ../../Makefiles; 
+ cd ../../; 
  ```
 |Switch|Description|
 |  ---  |  ---  |
@@ -269,7 +269,7 @@ make graph
 ```
 The following AI Engine compiler command compiles the AI Engine design graph: 
 ```
-cd ../build;
+cd ./build;
 aiecompiler --include= ../design/aie_src \	
 	    --include= ../design/aie_src/data   \
             --verbose                    \
@@ -280,7 +280,7 @@ aiecompiler --include= ../design/aie_src \
             --workdir=Work               \
             ../design/aie_src/graph.cpp
 	    
-cd ../../Makefiles; 
+cd ../../; 
 
  ```
 |Switch|Description|
@@ -324,7 +324,7 @@ The expanded command is as follow:
 cd ../build/hw_emu;
 
 v++       -l                                                \
-          --platform xilinx_vck190_es1_base_202020_1        \
+          --platform xilinx_vck190_base_202110_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -336,7 +336,7 @@ v++       -l                                                \
           ../build/libadf.a                             \
           -o vck190_aie_lenet.hw_emu.xclbin   
 	  
-cd ../../Makefiles; 
+cd ../../; 
  
 ```
 The options to run this step are as follows:
@@ -397,31 +397,31 @@ or
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib \
 			../build//Work/ps/c_rts/aie_control_xrt.cpp   \
 			-o ../build/app_control.o                   
 			
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib \
 			../design/aie_src/main.cpp                              \
 			-o ../build/lenet_app.o                    
 
 aarch64-linux-gnu-g++   ../build/app_control.o			                \
 			../build/lenet_app.o			                \
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux \
-			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib\ 
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
+			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib\ 
                         -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o    		\
                         -L$(XILINX_VITIS_AIETOOLS)/lib/lnx64.o       		\
                         -ladf_api_xrt                      		        \
@@ -429,7 +429,7 @@ aarch64-linux-gnu-g++   ../build/app_control.o			                \
                         -std=c++14                          		        \
 			-o ../build/lenet_xrt.elf 
 			
-cd ../../Makefiles; 
+cd ../../; 
 
 ```
 |Switch|Description|
@@ -474,10 +474,10 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ../build/hw_emu/_x			        \
-	-f xilinx_vck190_es1_base_202020_1			\
+	-f xilinx_vck190_base_202110_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
-	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 \
-	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image \
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ../build/hw_emu/package	        \
 	--package.sd_dir ../design/aie_src/data	                \
@@ -485,7 +485,7 @@ v++	-p  							\
 	--package.sd_file ../build/lenet_xrt.elf ../build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ../build/libadf.a \
 	--package.defer_aie_run
 	
-cd ../../Makefiles; 
+cd ../../; 
 
 ```
 |Switch|Description|
@@ -502,8 +502,8 @@ cd ../../Makefiles;
 |Inputs Sources|Description|
 |  ---  |  ---  |
 |$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS Host Application needs the XRT headers in this folder to execute.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4|The Root Filesystem file for Petalinux.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image|The pre-built Petalinux Image the processor boots from.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4|The Root Filesystem file for Petalinux.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image|The pre-built Petalinux Image the processor boots from.|
 |design/aie_src/data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS Host Application uses to verify the output data from the AI Engine.|
 |build/hw_emu/lenet_xrt.elf|The PS Host Application executabled created in the `make application` step.|
 |build/hw_emu/vck190_aie_lenet.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
@@ -532,12 +532,12 @@ cd ../build/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up: 
 ```bash
-root@versal-rootfs-common-2020_2:~#
+root@versal-rootfs-common-2021_1:~#
 ```
 
 In some cases, the following error may come up on the screen
 ```
-root@versal-rootfs-common-2020_2:~# xinit: giving up
+root@versal-rootfs-common-2021_1:~# xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
