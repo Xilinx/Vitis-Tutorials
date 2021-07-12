@@ -33,19 +33,14 @@ KERNEL := s2mm.cpp mm2s.cpp
 KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
-SDKTARGETSYSROOT ?= $(SYSROOT)
+#SDKTARGETSYSROOT ?= $(SYSROOT)
 # override CXX += --sysroot=${SDKTARGETSYSROOT}
 
-ifeq (${HOST_ARCH}, aarch64)
-	BASE_PLATFORM := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/vck190_custom.xpfm
-	ROOTFS := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/rootfs.ext4
-	IMAGE := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/Image
-else 
-	SDKTARGETSYSROOT := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux
-	BASE_PLATFORM := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
-	ROOTFS :=../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/rootfs.ext4
-	IMAGE := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/Image
-endif
+SDKTARGETSYSROOT := $(if $(filter-out $(SYSROOT)),../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux,$(SYSROOT))
+BASE_PLATFORM ?= ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
+ROOTFS ?=../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/rootfs.ext4
+IMAGE ?= ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/Image
+
 # Command-line options
 VPP := v++
 AIECC := aiecompiler
@@ -125,11 +120,11 @@ host: guard-SYSROOT guard-CXX
 package: guard-IMAGE guard-ROOTFS
 	cd ./sw
 	v++ -p -t ${TARGET} \
-		-f ..${BASE_PLATFORM} \
-		--package.rootfs=../${ROOTFS} \
+		-f ${BASE_PLATFORM} \
+		--package.rootfs=${ROOTFS} \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
-		--package.kernel_image=../${IMAGE} \
+		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_file embedded_exec.sh \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
