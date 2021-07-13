@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -71,12 +71,19 @@ tx_chain
 |    |   |_____versal_run
 |    |_____kernel_src
 |___images......................contains images that appear in README.md
-|___Makefiles...................contains Makefile and configuration (.cfg) files and HLS kernel Vivado optimizations Tcl scripts
-|    |_____directives
+|___Makefile...................contains Makefile and configuration (.cfg) files and HLS kernel Vivado optimizations Tcl scripts
+|___directives
+|___clk_automation_cleanup.tcl
+|___env_setup.sh..................Shell script for environment settings
+|___pccfr_pds_itr1.cfg
+|___pccfr_pds_itr2.cfg 
+|___system.cfg
+|___wcfr_peak_d.cfg
+|___sample_link.ini
 ```
 
 # Before You Begin
-Note: This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 
 ## *Documentation*: Explore AI Engine Architecture
 
@@ -92,40 +99,41 @@ Tools Documentation:
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
 
 * [UG1274 Versal ACAP Communications Library for AI Engine](https://www.xilinx.com/member/forms/registration/versal_ai_engine_commslib_ea.html)
 
 To build and run the TX Chain tutorial, you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2020.2](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
+* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
 
-* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_es1_base_202020_1` platform)
+* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202110_1` platform)
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT) 
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT) 
 
-* Download and setup the [Xilinx Communications Library (CommsLib) EA7](https://www.xilinx.com/member/forms/registration/versal_ai_engine_commslib_ea.html)
+* Download and setup the [Xilinx Communications Library (CommsLib) EA8](https://www.xilinx.com/member/forms/registration/versal_ai_engine_commslib_ea.html)
 
-* Download and setup the [VCK190 Vitis Platform for 2020.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 ## *Environment*: Setting Up Your Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the `TUTORIAL_PATH` and `XILINX_PATH` env variables to your system specific paths. 
 
-Edit `env_setup_2020.sh` script with your file paths: 
+Edit `env_setup.sh` script with your file paths: 
 
 ```bash
 export XILINX_XRT=/opt/xilinx/xrt
 export COMMSLIB_ROOT=<YOUR-COMMSLIB-DIRECTORY>
+export DSPLIB_ROOT=<YOUR-DSPLIB-DIRECTORY>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY> 
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2020.2/settings64.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2021.1/settings64.sh
 source $XILINX_XRT/setup.sh
 ```
 Then source the environment script: 
 ```bash
-source env_setup_2020.sh
+source env_setup.sh
 ```  
 ## *Validation*: Confirming Tool Installation
 Make sure you are using the 2020.2 version of Xilinx tools. 
