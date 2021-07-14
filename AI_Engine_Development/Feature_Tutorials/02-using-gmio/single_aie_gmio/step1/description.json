@@ -25,7 +25,7 @@
             }
         ],
         "targets": [
-		"aiesim"
+		"vitis_aie_sim"
         ],
         "category": "canary"
     }
