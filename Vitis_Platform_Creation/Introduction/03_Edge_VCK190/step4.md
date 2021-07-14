@@ -145,7 +145,7 @@ To verify the platform functionality, we will create an acceleation project with
    - Select the directory that [step3](./step3.md) generates. For example `ref_files/step3_pfm/platform_repo`
    - Click **OK**
 
-3. Create vector addtion application on the custom platform
+3. Create vector addition application on the custom platform
 
    - Select menu **File -> New -> Application Project**.
    - Go through the welcome page and click **Next**.
@@ -161,17 +161,18 @@ To verify the platform functionality, we will create an acceleation project with
 
    - Select template **Vector Addition**. Click **Finish**.
 
-4. Build the vector addtion application for hardware
+4. Build the vector addition application for hardware
 
    - Select **vadd_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
+   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click the build icon.
+   - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in vadd_system/Hardware/package directory.
 
 
-5. (Optional) Build the vector addtion application for hardware emulation
+5. (Optional) Build the vector addition application for hardware emulation
 
    - Select **vadd_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click build icon.
-   - If it pops-up a dialouge to ask whether to clean the project, select **Don't clean**.
+   - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click the build icon.
+   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
 
 
 #### Test the Application on Hardware
@@ -193,9 +194,11 @@ To verify the platform functionality, we will create an acceleation project with
 5. Launch the test application from UART console
 
    ```
-   cd /mnt/sd-mmcblk1p1
+   cd /mnt/sd-mmcblk0p1
    ./vadd binary_container_1.xclbin
    ```
+
+   > Note: Depends on the device tree version, the mount point of the SD card could be /mnt/sd-mmcblk1p1. Please try this path if /mnt/sd-mmcblk0p1 is not available on your system.
 
 6. Expected print on UART console
 
@@ -203,7 +206,7 @@ To verify the platform functionality, we will create an acceleation project with
   <summary><b>Show Log</b></summary>
 
   ```
-  root@petalinux:/mnt/sd-mmcblk1p1# ./vadd binary_container_1.xclbin
+  root@petalinux:/mnt/sd-mmcblk0p1# ./vadd binary_container_1.xclbin
   [   34.747622] [drm] Pid 770 opened device
   [   34.751501] [drm] Pid 770 closed device
   [   34.759710] [drm] Pid 770 opened device
@@ -231,7 +234,7 @@ To verify the platform functionality, we will create an acceleation project with
 
 </details>
 
-   **Note**: the `[   35.116279] [drm]` messages are print from XRT for debugging purpose. It only shows up on UART. It will now print on ssh. This debugging message can be turned off by turnning down the system dmesg reporting level.
+   **Note**: the `[   35.116279] [drm]` messages are print from XRT for debugging purpose. It only shows up on UART. It will now print on ssh. This debugging message can be turned off by turning down the system dmesg reporting level.
 
    ```
    echo "4" > /proc/sys/kernel/printk
@@ -251,14 +254,9 @@ To verify the platform functionality, we will create an acceleation project with
 
 2. Launch PL emulation
 
-   - Right click **vadd_system**, select **Run as -> Run Configiratuions**
+   - Right click **vadd_system**, select **Run as -> Run Configurations**
    - Select **vadd_system-Default**
    - Change **Build Configuration** to **Emulation-HW**
-   - Change **Remote Working Directory** to **/mnt/sd-mmcblk1p1**
-
-   ![Vitis Emulation Vadd Configuration](images/step4/vitis_emulation_vadd_configuration.png)
-
-   - Click Apply
    - Click Run
    - Check run result
 
@@ -277,7 +275,7 @@ Vitis runs PS emulation in QEMU, PL and AIE emulation in XSIM. They can communic
 
 To verify the platform functionality, we will create a project with AIE + PL kernel and PS application and run it on VCK190 board.
 
-1. Create vector addtion application on the custom platform
+1. Create vector addition application on the custom platform
 
    - Select menu **File -> New -> Application Project**.
    - Go through the welcome page and click **Next**.
@@ -286,16 +284,16 @@ To verify the platform functionality, we will create a project with AIE + PL ker
    - Input Sysroot path, RootFS path and Kernel Image. Click **Next**.
    - Select template **AI Engine System Design Examples -> AI Engine, PL and PS System Design**. Click **Finish**.
 
-2. Build the vector addtion application for hardware
+2. Build the vector addition application for hardware
 
    - Select **plaie_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
 
-3. (Optional) Build the vector addtion application for hardware emulation
+3. (Optional) Build the vector addition application for hardware emulation
 
    - Select **plaie_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click build icon.
-   - If it pops-up a dialouge to ask whether to clean the project, select **Don't clean**.
+   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
 
 4. After a successful build, **sd_card.img** is generated in `plaie_system/Hardware/package` and `plaie_system/Hardware/package_no_aie_debug` directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the **sd_card.img** in **package** directory has a package parameter `enable_aie_debug=1`. It's used for debugging. The one in **package_no_aie_debug** can work for free running.
 
@@ -320,7 +318,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 4. Setup XRT runtime environment and launch test application from UART console
 
    ```
-   cd /mnt/sd-mmcblk1p1
+   cd /mnt/sd-mmcblk0p1
    ./plaie binary_container_1.xclbin
    ```
 
@@ -330,7 +328,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
   <summary><b>Show Log</b></summary>
 
    ```
-   root@petalinux:/mnt/sd-mmcblk1p1# ./plaie binary_container_1.xclbin
+   root@petalinux:/mnt/sd-mmcblk0p1# ./plaie binary_container_1.xclbin
    [  381.642589] [drm] Pid 693 opened device
    [  381.646455] [drm] Pid 693 closed device
    [  381.654748] [drm] Pid 693 opened device
@@ -370,10 +368,8 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
 2. Launch PL and AIE emulation
 
-   - Right click plaie_system, select Run as -> Run Configiratuions
+   - Right click plaie_system, select Run as -> Run Configurations
    - Select plaie_system-Launch
-   - Change **Remote Working Directory** to **/mnt/sd-mmcblk1p1**
-   - Click Apply
    - Click Run
 
    ![Emulation Result of PLAIE Project](images/step4/vitis_emulation_plaie_result.png)
