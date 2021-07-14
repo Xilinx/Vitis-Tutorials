@@ -1,6 +1,6 @@
 {
-    "name": "AI_Engine_Development-12-axis-traffic-generator",
-    "description": "12-axis-traffic-generator",
+    "name": "AI_Engine_Development-02-Using-GMIO--single-pl-step1",
+    "description": "02-using-gmio--single-pl-step1",
     "flow": "versal",
 
     "platform_whitelist": [ "vck190"],
@@ -25,7 +25,6 @@
             }
         ],
         "targets": [
-            "vitis_hw_emu",
             "vitis_hw_build",
             "vitis_hw_run"
         ],
