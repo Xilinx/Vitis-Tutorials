@@ -14,6 +14,7 @@ TARGET   = hw_emu
 PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
 XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 HOST_EXE = host.exe
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 GRAPH    = aie/graph.cpp
 PACKET_JSON_REPORT = Work/reports/packet_switching_report.json
