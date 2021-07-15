@@ -326,7 +326,7 @@ make xclbin
 
 The expanded command is as follow: 
 ```
-cd ../build/hw_emu;
+cd ./build/hw_emu;
 
 v++       -l                                                \
           --platform xilinx_vck190_base_202110_1            \
@@ -421,8 +421,8 @@ aarch64-linux-gnu-g++   -O							\
 			../design/aie_src/main.cpp                              \
 			-o ../build/lenet_app.o                    
 
-aarch64-linux-gnu-g++   ../build/app_control.o			                \
-			../build/lenet_app.o			                \
+aarch64-linux-gnu-g++   ./build/app_control.o			                \
+			./build/lenet_app.o			                \
 			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
 			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib\ 
                         -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o    		\
@@ -476,16 +476,16 @@ or
 v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
-	--temp_dir ../build/hw_emu/_x			        \
+	--temp_dir ./build/hw_emu/_x			        \
 	-f xilinx_vck190_base_202110_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
 	--package.boot_mode=sd					\
-	--package.out_dir ../build/hw_emu/package	        \
-	--package.sd_dir ../design/aie_src/data	                \
+	--package.out_dir ./build/hw_emu/package	        \
+	--package.sd_dir ./design/aie_src/data	                \
 	--package.image_format=ext4				\
-	--package.sd_file ../build/lenet_xrt.elf ../build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ../build/libadf.a \
+	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ./build/libadf.a \
 	--package.defer_aie_run
 	
 cd ../../; 
@@ -530,7 +530,7 @@ make run_emu
 ```
 or
 ```
-cd ../build/hw_emu/package
+cd ./build/hw_emu/package
 ./launch_hw_emu.sh 
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up: 
