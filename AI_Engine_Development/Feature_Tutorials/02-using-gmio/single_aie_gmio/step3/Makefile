@@ -17,6 +17,7 @@ XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 XSA	 = vck190_aie_base_graph_${TARGET}.xsa
 XPFM	 = vck190_xpfm
 HOST_EXE = host.exe
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
