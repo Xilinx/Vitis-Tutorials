@@ -8,7 +8,7 @@
 # Table of Contents
 [Introduction](#introduction)
 
-[Before You Begin](#Before-you-Begin)
+[Before You Begin](#Before-you-begin)
 
 [Building the Lenet Design](#building-the-lenet-design)
 
@@ -650,7 +650,7 @@ To see a schematic view of the design with the extended platform (as shown in th
 	<summary>AI Engine and PL Kernel details</summary>
 	
 ## AI Engine and PL Kernel Details
-The design implements the LeNet CNN to perform digital classification on gray scale images. The AI Engine kernels have been covered in the [Tutorial Overview](#Tutorial Overview) section and more details will be provided in the [Software Design Details](#Software Design Details] section.
+The design implements the LeNet CNN to perform digital classification on gray scale images. The AI Engine kernels have been covered in the [Tutorial Overview](#tutorial-overview) section and more details will be provided in the [Software Design Details](#software-design-details) section.
 
 The PL kernels perform the following functions:
 *  loading input images of LeNet into block RAMs through the AXI interfaces
