@@ -145,7 +145,7 @@ which vitis
 which aiecompiler
 ```
 
-Confirm you have the VCK190 ES1 Base Platform. 
+Confirm you have the VCK190 Production Base Platform. 
 ```bash
 platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
