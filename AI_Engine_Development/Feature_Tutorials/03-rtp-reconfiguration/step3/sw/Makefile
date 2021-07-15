@@ -14,7 +14,6 @@ HOST_EXE     = ../host.exe
 HOST_INC   = -I../ -I../aie
 HOST_OBJ   = aie_control_xrt.o host.o
 AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
-SDKTARGETSYSROOT ?= ${SYSROOT}
 
 CXXFLAGS += -std=c++14 -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
