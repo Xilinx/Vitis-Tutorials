@@ -64,6 +64,8 @@ guard-SDKTARGETSYSROOT:
 ###
 
 all: ${XCLBIN} ${HOST_EXE} package
+run: all run_hw_emu
+sd_card: all
 
 aie: guard-PLATFORM_REPO_PATHS ${LIBADF}
 ${LIBADF}: ${GRAPH}
