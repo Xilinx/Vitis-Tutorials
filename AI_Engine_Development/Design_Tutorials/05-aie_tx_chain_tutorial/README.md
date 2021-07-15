@@ -665,16 +665,16 @@ or
 v++	-p  							\
  	-t hw_emu						\
 	--save-temps						\
-	--temp_dir ../build/hw_emu/_x				\
-	-f xilinx_vck190_es1_base_202020_1				\
+	--temp_dir ./build/hw_emu/_x				\
+	-f xilinx_vck190_base_202110_1				\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 \
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image \
 	--package.boot_mode=sd					\
-	--package.out_dir ../build/hw_emu/package		\
-	--package.sd_dir ../design/aie_src/data			\
+	--package.out_dir ./build/hw_emu/package		\
+	--package.sd_dir ./design/aie_src/data			\
 	--package.image_format=ext4				\
-	--package.sd_file ../build/hw_emu/tx_chain_xrt.elf ../build/hw_emu/vck190_aie_tx_chain.xclbin ../build/libadf.a    
+	--package.sd_file ./build/hw_emu/tx_chain_xrt.elf ./build/hw_emu/vck190_aie_tx_chain.xclbin ./build/libadf.a    
 ```
 
 |Switch|Description|
@@ -718,12 +718,12 @@ make run_emu
 ```
 or
 ```
-cd ../build/hw_emu/package
+cd ./build/hw_emu/package
 ./launch_hw_emu.sh
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt: 
 ```bash
-root@versal-rootfs-common-2020_2:~#
+root@versal-rootfs-common-2021_1:~#
 ```
 
 At the root prompt, run the following commands to run the design:  
@@ -784,7 +784,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2020_2` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands into the TeraTerm terminal: 
 ```
