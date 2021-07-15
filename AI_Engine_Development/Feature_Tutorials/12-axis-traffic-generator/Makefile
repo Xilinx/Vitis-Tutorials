@@ -13,12 +13,7 @@
 #limitations under the License.
 #
 
-
 #Check environment setup
-ifndef PLATFORM_REPO_PATHS
-  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
-  export PLATFORM_REPO_PATHS
-endif
 ifndef ROOTFS
   ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
   export ROOTFS
@@ -29,9 +24,7 @@ ifndef IMAGE
 endif
 
 SDKTARGETSYSROOT ?= ${SYSROOT}
-DSPLIB_ROOT := /wrk/vitis_collateral/Jenkins_Infra_Support/xf_dsp
-PYTHONPATH := ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
-PYTHON := /tools/batonroot/rodin/engkits/lnx64/python-3.6.5_metropolis/bin/python3
+PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
 
 #DSP LIB Includes
 DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/aie
@@ -51,7 +44,7 @@ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_
 TARGET := hw_emu
 PFM := tutorial
 PLIO_WIDTH := 64
-EMU_CMD := python3 sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & ./launch_hw_emu.sh 
+EMU_CMD := python3 sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 1 & ./launch_hw_emu.sh 
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -79,7 +72,8 @@ LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
-			 -Wno-int-to-pointer-cast 
+			 -Wno-int-to-pointer-cast \
+			 --sysroot=${SDKTARGETSYSROOT}
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 				-I$(SDKTARGETSYSROOT)/usr/include \
@@ -93,7 +87,8 @@ GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 
 GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 		   -L$(SDKTARGETSYSROOT)/usr/lib \
-		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
+		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
+		   --sysroot=${SDKTARGETSYSROOT}
 
 LDCLFLAGS := $(GCC_LIB)
 
@@ -187,6 +182,7 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 		--package.boot_mode=sd \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
 	@echo "COMPLETE: hw_emu package created."
 
@@ -208,7 +204,7 @@ run_emu:
 
 clean:
 	rm -rf _x v++* $(GRAPH_O) *.o *.compile_summary* *.xpe xnwOut *.xclbin* *.log *.xsa Work *.db *.csv *$(PFM)* *.jou .Xil
-	rm -rf sw/*.log sw/*.xclbin sw/cfg/ sw/*.sh sw/qemu_dts_files sw/emu_qemu_scripts sw/*.exe sw/_x/ sw/*summary sw/*.o sw/*.elf sw/*.xpe sw/xnwOut sw/Work sw/*.csv sw/*.db sw/*.bin sw/*.BIN sw/*.bif sw/launch_hw_emulator.sh sw/*.txt sw/emulation sw/.Xil
+	rm -rf sw/*.log sw/*.xclbin sw/cfg/ sw/qemu_dts_files sw/emu_qemu_scripts sw/*.exe sw/_x/ sw/*summary sw/*.o sw/*.elf sw/*.xpe sw/xnwOut sw/Work sw/*.csv sw/*.db sw/*.bin sw/*.BIN sw/*.bif sw/launch_hw_emulator.sh sw/*.txt sw/emulation sw/.Xil
 	rm -rf sw/sd_card sw/sd_card.img
 	
 run_tgen:

@@ -22,7 +22,7 @@
  </tr>
 </table>
 
-***Version: 2020.2***
+***Version: 2021.1***
 
 In this module, we will create a custom platform to run acceleration applications for VCK190 evaluation board. 
 
@@ -51,8 +51,8 @@ Please navigate through these steps with the following table of contents links.
 
 This tutorial design supports VCK190 production board and VCK190 ES1 board.
 
-- Vitis 2020.2 supports VCK190 production board. No addtional licenses and settings are needed to use this board.
-- Vitis 2020.2 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
+- Vitis 2021.1 supports VCK190 production board. No additional licenses and settings are needed to use this board.
+- Vitis 2021.1 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
 
 This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux. 
 
@@ -62,5 +62,17 @@ This design requires a Linux host machine with Internet access. The Linux OS nee
    - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/create_embedded_platforms.html#rjs1596051748503)
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+
+## Changelog
+
+### 2021.1
+- Step 0: Vivado example design has more customizable options for clocks and interrupts.
+- Step 1: Removed tcl commands for platform setup because the Platform Setup Wizard can do the job well.
+- Step 2: In PetaLinux root file system configuration, only **xrt** package is needed. **packagegroup-petalinux-xrt** is removed by PetaLinux.
+- Step 2: PetaLinux can create ZOCL node device tree. So manual update device tree instructions are removed.
+- Step 2: PetaLinux 2021.1 requires GCC > 6.0. Workaround is to enable "Enable buildtools extended" in Yocto settings.
+- Step 3: Vitis can generate BIF. Manual steps of adding custom BIF are removed.
+
+
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
 

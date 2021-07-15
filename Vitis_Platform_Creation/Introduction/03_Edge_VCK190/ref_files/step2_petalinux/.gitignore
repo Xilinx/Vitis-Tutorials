@@ -1,6 +1,6 @@
 */*/config.old
 */*/rootfs_config.old
-build/
+build
 images/linux/
 pre-built/linux/
 .petalinux/*
@@ -10,3 +10,4 @@ pre-built/linux/
 *.log
 /components/plnx_workspace
 /components/yocto
+*.xsa
