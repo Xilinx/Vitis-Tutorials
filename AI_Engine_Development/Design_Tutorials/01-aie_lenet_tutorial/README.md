@@ -172,7 +172,7 @@ Output of the above command should be as follows:
 ## LeNet Design Build
 In this section, you will build and run the LeNet design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step. 
 
-![Image of LeNet Vitis Tool Flow](images/Lenet_vitis_toolflow_2020_2.PNG)
+![Image of LeNet Vitis Tool Flow](images/Lenet_vitis_toolflow_2021_1.PNG)
 
 At the end of this section, the design flow will generate a new directory (called `build/`) that contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.   
 
