@@ -198,7 +198,7 @@ or
 make build TARGET=hw EN_TRACE=1
 ```
 
-This command runs the `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
+The default value of EN_TRACE is 0. This command runs the `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
 
 You can also run the following command to build the entire Lenet tutorial *and* launch hardware emulation: 
 ```bash
@@ -276,15 +276,15 @@ make graph
 The following AI Engine compiler command compiles the AI Engine design graph: 
 ```
 cd ./build;
-aiecompiler --include= ../design/aie_src \	
-	    --include= ../design/aie_src/data   \
+aiecompiler --include= ./design/aie_src \	
+	    --include= ./design/aie_src/data   \
             --verbose                    \
             --log-level=5                \
             --test-iterations=100        \      
             --dataflow                   \
             --heapsize=2048              \
             --workdir=Work               \
-            ../design/aie_src/graph.cpp
+            ./design/aie_src/graph.cpp
 	    
 cd ../../; 
  ```
