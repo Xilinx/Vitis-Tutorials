@@ -43,21 +43,6 @@ help::
 EMBEDDED_PACKAGE_OUT=./out_dir
 EMBEDDED_EXEC_SCRIPT=./run_script.sh
 
-#Check environment setup
-ifndef PLATFORM_REPO_PATHS
-  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms/
-  export PLATFORM_REPO_PATHS
-endif
-ifndef XILINX_VITIS
-  XILINX_VITIS = /opt/xilinx/Vitis/$(TOOL_VERSION)
-  export XILINX_VITIS
-endif
-ifndef XILINX_XRT
-  XILINX_XRT = /opt/xilinx/xrt
-  export XILINX_XRT
-endif
-
-
 EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
 EMBEDDED_EXEC_SCRIPT = run_script.sh
 PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)

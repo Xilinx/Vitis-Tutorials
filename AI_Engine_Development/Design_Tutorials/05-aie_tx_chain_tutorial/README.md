@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -71,12 +71,19 @@ tx_chain
 |    |   |_____versal_run
 |    |_____kernel_src
 |___images......................contains images that appear in README.md
-|___Makefiles...................contains Makefile and configuration (.cfg) files and HLS kernel Vivado optimizations Tcl scripts
-|    |_____directives
+|___Makefile...................contains Makefile and configuration (.cfg) files and HLS kernel Vivado optimizations Tcl scripts
+|___directives
+|___clk_automation_cleanup.tcl
+|___env_setup.sh..................Shell script for environment settings
+|___pccfr_pds_itr1.cfg
+|___pccfr_pds_itr2.cfg 
+|___system.cfg
+|___wcfr_peak_d.cfg
+|___sample_link.ini
 ```
 
 # Before You Begin
-Note: This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 
 ## *Documentation*: Explore AI Engine Architecture
 
@@ -100,32 +107,33 @@ To build and run the TX Chain tutorial, you need the following:
 
 * Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
 
-* Obtain a license to enable beta devices in Xilinx tools (to use the `xilinx_vck190_es1_base_202020_1` platform)
+* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202110_1` platform)
 
 * Obtain licenses for AI Engine tools
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT) 
 
-* Download and setup the [Xilinx Communications Library (CommsLib) EA7](https://www.xilinx.com/member/forms/registration/versal_ai_engine_commslib_ea.html)
+* Download and setup the [Xilinx Communications Library (CommsLib) EA8](https://www.xilinx.com/member/forms/registration/versal_ai_engine_commslib_ea.html)
 
 * Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 ## *Environment*: Setting Up Your Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the `TUTORIAL_PATH` and `XILINX_PATH` env variables to your system specific paths. 
 
-Edit `env_setup_2020.sh` script with your file paths: 
+Edit `env_setup.sh` script with your file paths: 
 
 ```bash
 export XILINX_XRT=/opt/xilinx/xrt
 export COMMSLIB_ROOT=<YOUR-COMMSLIB-DIRECTORY>
+export DSPLIB_ROOT=<YOUR-DSPLIB-DIRECTORY>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY> 
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2020.2/settings64.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2021.1/settings64.sh
 source $XILINX_XRT/setup.sh
 ```
 Then source the environment script: 
 ```bash
-source env_setup_2020.sh
+source env_setup.sh
 ```  
 ## *Validation*: Confirming Tool Installation
 Make sure you are using the 2021.1 version of Xilinx tools. 
@@ -133,13 +141,13 @@ Make sure you are using the 2021.1 version of Xilinx tools.
 which vitis
 which aiecompiler
 ```
-Confirm you have the VCK190 ES1 base platform. 
+Confirm you have the VCK190 Production Base Platform. 
 ```bash
-platforminfo --list | grep -m 1 -A 9 vck190_es1
+platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 The output of the preceding command should be as follows:
 ```bash
- "baseName": "xilinx_vck190_es1_base_202020_1",
+"baseName": "xilinx_vck190_base_202110_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -181,7 +189,7 @@ The `dpd_upsampler_8by5_up2` is a user-defined AI Engine subgraph (`tx_subsystem
 The `DPD_LUT_FILT_1G_32T` is a CommsLib AI Engine subgraph used to maintain average signal-to-noise ratio by subtracting the distortion component in the outbound signal. It uses the `dpd_1g_core0`, `dpd_1g_core1`, `dpd_1g_core2`, `dpd_1g_core3`, and `cl2_kernel` CommsLib AI Engine kernels. 
 
 #### 2. Compiling the PL Kernels
-The Vitis compiler (during the `make kernels` step) compiles five PL kernels for implementation in the PL region of the target platform (`xilinx_vck190_es1_base_202020_1`). These C++ kernels are compiled into `*.xo` object (XO) files. The following is a description of each HLS PL kernel.
+The Vitis compiler (during the `make kernels` step) compiles five PL kernels for implementation in the PL region of the target platform (`xilinx_vck190_base_202110_1`). These C++ kernels are compiled into `*.xo` object (XO) files. The following is a description of each HLS PL kernel.
 
 + `mm2s` data mover kernel is a memory map to stream kernel to feed data from the DDR memory through the NoC to the AI Engine through the PL DMA
 + `pccfr_pl_pds_itr1` CFR kernel performs peak detection, scale factor compute, CP address and offset generation
@@ -253,11 +261,11 @@ make kernels TARGET=hw_emu
 ```
 or 
 ```
-mkdir -p ../build/hw_emu; 					\
-cd ../build/hw_emu; 						
+mkdir -p ./build/hw_emu; 					\
+cd ./build/hw_emu; 						
 
 v++         --target hw_emu					\
-            --platform xilinx_vck190_es1_base_202020_1		\
+            --platform xilinx_vck190_base_202110_1		\
             --save-temps					\
             --temp_dir _x					\
             --verbose						\
@@ -267,7 +275,7 @@ v++         --target hw_emu					\
             -o pccfr_pl_pds_itr1.xo		
             
 v++         --target hw_emu					\
-            --platform xilinx_vck190_es1_base_202020_1		\
+            --platform xilinx_vck190_base_202110_1		\
             --save-temps					\
             --temp_dir _x					\
             --verbose						\
@@ -277,7 +285,7 @@ v++         --target hw_emu					\
             -o pccfr_pl_pds_itr2.xo		
             
 v++         --target hw_emu					\
-            --platform xilinx_vck190_es1_base_202020_1		\
+            --platform xilinx_vck190_base_202110_1		\
             --save-temps					\
             --temp_dir _x					\
             --verbose						\
@@ -287,7 +295,7 @@ v++         --target hw_emu					\
             -o wcfr_pd.xo			
 
 v++         --target hw_emu					\
-            --platform xilinx_vck190_es1_base_202020_1		\
+            --platform xilinx_vck190_base_202110_1		\
             --save-temps					\
             --temp_dir _x					\
             --verbose						\
@@ -296,15 +304,14 @@ v++         --target hw_emu					\
             -o s2mm.xo			
             
 v++         --target hw_emu					\
-            --platform xilinx_vck190_es1_base_202020_1		\
+            --platform xilinx_vck190_base_202110_1		\
             --save-temps					\
             --temp_dir _x					\
             --verbose						\
             -c ../../design/kernel_src/mm2s.cpp			\
             -k mm2s						\
 	    -o mm2s.xo		
-
-cd ../../Makefiles; 		            
+cd ../		            
 ```
 |Switch|Description|
 |  ---  |  ---  |
@@ -380,35 +387,36 @@ make graph
 ```
 The following AI Engine compiler command compiles the AI Engine design graph.
 ```
-cd ../build;  
+cd ./build;  
 
-aiecompiler --include=../design/aie_src/commslib/common/inc	\
-            --include=../design/aie_src/commslib/common/src	\
-            --include=../design/aie_src/commslib/filters/src	\      
-            --include=../design/aie_src/commslib/filters/inc	\
-            --include=../design/aie_src/commslib/radio/src	\
-            --include=../design/aie_src/commslib/radio/inc	\
-            --include=../design/aie_src/local/inc		\
-            --include=../design/aie_src/local/src		\
-            --include=../design/aie_src/common/inc		\
-            --include=../design/aie_src/common/src		\
+aiecompiler --include=./design/aie_src/commslib/common/inc	\
+            --include=./design/aie_src/commslib/common/src	\
+            --include=./design/aie_src/commslib/filters/src	\      
+            --include=./design/aie_src/commslib/filters/inc	\
+            --include=./design/aie_src/commslib/radio/src	\
+            --include=./design/aie_src/commslib/radio/inc	\
+            --include=./design/aie_src/local/inc		\
+            --include=./design/aie_src/local/src		\
+            --include=./design/aie_src/common/inc		\
+            --include=./design/aie_src/common/src		\
+            --include=./design/aie_src/dsplib/L2/include/hw     \
+	    --include=./design/aie_src/dsplib/L1/src/hw         \
+	    --include=./design/aie_src/dsplib/L1/tests/inc      \
+	    --include=./design/aie_src/dsplib/L1/include/hw     \
             -v                                          		\
-	    --dataflow 							\
             --Xchess=main:llvm.xargs=-Wno-shift-negative-value 		\
             --Xchess="gain_magsqr:cpp.define=USER_PARAMS"      		\
             --Xpreproc=-DDOPWRSQRT                             		\
             --Xpreproc=-DABSCONSTRAINTS                        		\
-            --Xmapper=BufferOptLevel8                          		\
+            --Xmapper=BufferOptLevel7                          		\
             --genArchive                               			\
-	    --test-iterations=-1					\
             --log-level=5                                      		\
             --write-unified-data=true                          		\
-            --pl-register-threshold=125                        		\
             --pl-axi-lite=false                                		\  
             --workdir=Work						\
-            ../design/aie_src/tx_chain.cpp
+            ./design/aie_src/tx_chain.cpp
 
-cd ../../Makefiles; 		            
+cd ../../; 		            
 
 ```
 |Switch|Description|
@@ -462,11 +470,11 @@ make xclbin TARGET=hw_emu
 ```
 or 
 ```
-cd ../build/hw_emu;
+cd ./build/hw_emu;
 
 v++         -g						\ 
             -l						\ 
-            --platform xilinx_vck190_es1_base_202020_1	\
+            --platform xilinx_vck190_base_202110_1 	\
             --save-temps				\
             --temp_dir _x				\
             --verbose					\
@@ -480,7 +488,7 @@ v++         -g						\
             ../libadf.a					\
             -o vck190_aie_tx_chain.xclbin
 
-cd ../../Makefiles; 		            
+cd ../../; 		            
 
 ```
 |Switch|Description|
@@ -512,13 +520,10 @@ param=compiler.addOutputTypes=hw_export
 param=compiler.skipTimingCheckAndFrequencyScaling=true
 
 [clock]
-freqHz=307686153:i28.ap_clk 	
-freqHz=307686153:i29.ap_clk 	
-freqHz=307686153:i30.ap_clk	
-defaultTolerance=0.0001		
-freqHz=249994998:s2mm_0.ap_clk 	
-freqHz=154390998:mm2s_0.ap_clk 	
-freqHz=154390998:mm2s_1.ap_clk
+freqHz=250000000:s2mm_0
+freqHz=153600000:mm2s_0
+freqHz=153600000:mm2s_1
+defaultTolerance=0.001
 
 ```
 
@@ -558,22 +563,26 @@ aarch64-linux-gnu-g++ 	-O						\
 			 -D__PS_ENABLE_AIE__				\
 			-D__linux__                         		\
 			-DXAIE_DEBUG					\
- 			-I ../design/local/inc/ 			\
-			-I ../design/aie_src/commslib/common/inc	\
-                        -I ../design/aie_src/commslib/common/src	\
-			-I ../design/aie_src/commslib/filters/inc	\
-                        -I ../design/aie_src/commslib/filters/src	\
-			-I ../design/aie_src/commslib/radio/inc		\
-                        -I ../design/aie_src/commslib/radio/src		\
-			-I ../design/aie_src/local/inc                	\
-                        -I ../design/aie_src/local/src                	\
+ 			-I ./design/local/inc/ 			\
+			-I ./design/aie_src/commslib/common/inc	\
+                        -I ./design/aie_src/commslib/common/src	\
+			-I ./design/aie_src/commslib/filters/inc	\
+                        -I ./design/aie_src/commslib/filters/src	\
+			-I ./design/aie_src/commslib/radio/inc		\
+                        -I ./design/aie_src/commslib/radio/src		\
+			-I ./design/aie_src/local/inc                	\
+                        -I ./design/aie_src/local/src                	\
+                        -I ./design/aie_src/dsplib/L2/include/hw        \
+	                -I ./design/aie_src/dsplib/L1/src/hw            \
+	                -I ./design/aie_src/dsplib/L1/tests/inc         \
+	                -I ./design/aie_src/dsplib/L1/include/hw        \			
 			-I$(XILINX_VITIS_AIETOOLS)/include/ 		\
 			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux \
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include\
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib\
-			../build/Work/ps/c_rts/aie_control_xrt.cpp 	\
-			-o ../build/aie_control_xrt.o
+			./build/Work/ps/c_rts/aie_control_xrt.cpp 	\
+			-o ./build/aie_control_xrt.o
 
 aarch64-linux-gnu-g++ 	-O						\
 			-c						\
@@ -581,25 +590,29 @@ aarch64-linux-gnu-g++ 	-O						\
 			 -D__PS_ENABLE_AIE__				\
 			-D__linux__                         		\
 			-DXAIE_DEBUG					\
- 			-I ../design/local/inc/ 			\
-			-I ../design/aie_src/commslib/common/inc	\
-                        -I ../design/aie_src/commslib/common/src	\
-			-I ../design/aie_src/commslib/filters/inc	\
-                        -I ../design/aie_src/commslib/filters/src	\
-			-I ../design/aie_src/commslib/radio/inc		\
-                        -I ../design/aie_src/commslib/radio/src		\
-			-I ../design/aie_src/local/inc                	\
-                        -I ../design/aie_src/local/src                	\
+ 			-I ./design/local/inc/ 			\
+			-I ./design/aie_src/commslib/common/inc	\
+                        -I ./design/aie_src/commslib/common/src	\
+			-I ./design/aie_src/commslib/filters/inc	\
+                        -I ./design/aie_src/commslib/filters/src	\
+			-I ./design/aie_src/commslib/radio/inc		\
+                        -I ./design/aie_src/commslib/radio/src		\
+			-I ./design/aie_src/local/inc                	\
+                        -I ./design/aie_src/local/src                	\
+                        -I ./design/aie_src/dsplib/L2/include/hw        \
+	                -I ./design/aie_src/dsplib/L1/src/hw            \
+	                -I ./design/aie_src/dsplib/L1/tests/inc         \
+	                -I ./design/aie_src/dsplib/L1/include/hw        \			
 			-I$(XILINX_VITIS_AIETOOLS)/include/ 		\
 			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux \
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/include\
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib\
-			../design/aie_src/tx_chain_app.cpp		\
-			-o ../build/tx_chain_app.o
+			./design/aie_src/tx_chain_app.cpp		\
+			-o ./build/tx_chain_app.o
 
-aarch64-linux-gnu-g++ 	../build/aie_control_xrt.o			\ 
-			../build/tx_chain_app.o				\
+aarch64-linux-gnu-g++ 	./build/aie_control_xrt.o			\ 
+			./build/tx_chain_app.o				\
 			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux\
 			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/usr/lib\  
 			-L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o	\ 
@@ -607,7 +620,7 @@ aarch64-linux-gnu-g++ 	../build/aie_control_xrt.o			\
 			-ladf_api_xrt					\ 
 			-lxrt_coreutil					\ 
 			-std=c++14					\					 
-			-o ../build/tx_chain_xrt.elf
+			-o ./build/tx_chain_xrt.elf
 ```
 |Switch|Description|
 |  ---  |  ---  |
@@ -654,16 +667,16 @@ or
 v++	-p  							\
  	-t hw_emu						\
 	--save-temps						\
-	--temp_dir ../build/hw_emu/_x				\
-	-f xilinx_vck190_es1_base_202020_1				\
+	--temp_dir ./build/hw_emu/_x				\
+	-f xilinx_vck190_base_202110_1				\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 \
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2020.2/Image \
 	--package.boot_mode=sd					\
-	--package.out_dir ../build/hw_emu/package		\
-	--package.sd_dir ../design/aie_src/data			\
+	--package.out_dir ./build/hw_emu/package		\
+	--package.sd_dir ./design/aie_src/data			\
 	--package.image_format=ext4				\
-	--package.sd_file ../build/hw_emu/tx_chain_xrt.elf ../build/hw_emu/vck190_aie_tx_chain.xclbin ../build/libadf.a    
+	--package.sd_file ./build/hw_emu/tx_chain_xrt.elf ./build/hw_emu/vck190_aie_tx_chain.xclbin ./build/libadf.a    
 ```
 
 |Switch|Description|
@@ -707,12 +720,12 @@ make run_emu
 ```
 or
 ```
-cd ../build/hw_emu/package
+cd ./build/hw_emu/package
 ./launch_hw_emu.sh
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt: 
 ```bash
-root@versal-rootfs-common-2020_2:~#
+root@versal-rootfs-common-2021_1:~#
 ```
 
 At the root prompt, run the following commands to run the design:  
@@ -773,7 +786,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2020_2` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands into the TeraTerm terminal: 
 ```

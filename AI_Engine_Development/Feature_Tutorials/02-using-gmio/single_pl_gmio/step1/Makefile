@@ -63,6 +63,8 @@ guard-SDKTARGETSYSROOT:
 ###
 
 all: ${XCLBIN} ${HOST_EXE} package
+run: all run_hw_emu
+sd_card: all
 
 aie: guard-PLATFORM_REPO_PATHS ${LIBADF}
 ${LIBADF}: ${GRAPH}
@@ -90,6 +92,7 @@ package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
 		--package.boot_mode=sd \
 		--package.image_format=ext4 \
 		--package.defer_aie_run \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file ${HOST_EXE} ${XCLBIN} ${LIBADF}
 
 clean:

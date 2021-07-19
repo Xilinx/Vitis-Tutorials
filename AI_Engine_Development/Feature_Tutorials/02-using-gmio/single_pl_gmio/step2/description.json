@@ -1,6 +1,6 @@
 {
-    "name": "AI_Engine_Development-03-rtp-reconfiguration--step5",
-    "description": "03-rtp-reconfiguration--step5",
+    "name": "AI_Engine_Development-02-Using-GMIO--single-pl-step2",
+    "description": "02-using-gmio--single-pl-step2",
     "flow": "versal",
 
     "platform_whitelist": [ "vck190"],
@@ -25,7 +25,6 @@
             }
         ],
         "targets": [
-            "vitis_hw_emu",
             "vitis_hw_build",
             "vitis_hw_run"
         ],

@@ -44,7 +44,7 @@ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_
 TARGET := hw_emu
 PFM := tutorial
 PLIO_WIDTH := 64
-EMU_CMD := python3 sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & ./launch_hw_emu.sh 
+EMU_CMD := python3 sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 1 & ./launch_hw_emu.sh 
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -182,6 +182,7 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 		--package.boot_mode=sd \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
 	@echo "COMPLETE: hw_emu package created."
 
@@ -203,7 +204,7 @@ run_emu:
 
 clean:
 	rm -rf _x v++* $(GRAPH_O) *.o *.compile_summary* *.xpe xnwOut *.xclbin* *.log *.xsa Work *.db *.csv *$(PFM)* *.jou .Xil
-	rm -rf sw/*.log sw/*.xclbin sw/cfg/ sw/*.sh sw/qemu_dts_files sw/emu_qemu_scripts sw/*.exe sw/_x/ sw/*summary sw/*.o sw/*.elf sw/*.xpe sw/xnwOut sw/Work sw/*.csv sw/*.db sw/*.bin sw/*.BIN sw/*.bif sw/launch_hw_emulator.sh sw/*.txt sw/emulation sw/.Xil
+	rm -rf sw/*.log sw/*.xclbin sw/cfg/ sw/qemu_dts_files sw/emu_qemu_scripts sw/*.exe sw/_x/ sw/*summary sw/*.o sw/*.elf sw/*.xpe sw/xnwOut sw/Work sw/*.csv sw/*.db sw/*.bin sw/*.BIN sw/*.bif sw/launch_hw_emulator.sh sw/*.txt sw/emulation sw/.Xil
 	rm -rf sw/sd_card sw/sd_card.img
 	
 run_tgen:
