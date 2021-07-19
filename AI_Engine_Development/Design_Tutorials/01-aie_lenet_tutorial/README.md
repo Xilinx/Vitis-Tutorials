@@ -319,7 +319,7 @@ The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into 
  
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
  
-The command to run this step is shown as follows (default TARGET=hw_emu):
+The command to run this step is shown as follows (default TARGET=hw_emu, default EN_TARCE=0):
 ```
 make xclbin
 ``` 
@@ -343,6 +343,29 @@ v++       -l                                                \
 	  
 cd ../../; 
 ```
+
+If EN_TRACE=1, the command is expanded as follow:
+```
+cd ./build/hw;
+
+v++       -l                                                \
+          --platform xilinx_vck190_base_202110_1            \
+          --save-temps                                      \
+	  --temp_dir _x	                                    \
+          --verbose                                         \
+	  --g                                               \
+          --config system.cfg                               \
+          --profile.data dma_hls:all:all                    \
+          --profile.trace_memory DDR                        \
+	  -t hw                                             \
+          dma_hls.hw_emu.xo                                 \	  
+          ../../design/pl_src/lenet_kernel/lenet_kernel.xo  \
+          ../build/libadf.a                             \
+          -o vck190_aie_lenet.hw_emu.xclbin   
+	  
+cd ../../; 
+```
+
 The options to run this step are as follows:
 
 |Switch|Description|
@@ -491,6 +514,35 @@ v++	-p  							\
 cd ../../; 
 
 ```
+
+If TARGET=hw and EN_TRACE=1
+
+```
+make package
+``` 
+or 
+```
+
+v++	-p  							\
+ 	-t hw_emu					        \
+	--save-temps						\
+	--temp_dir ./build/hw_emu/_x			        \
+	-f xilinx_vck190_base_202110_1  			\
+	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
+	--package.boot_mode=sd					\
+	--package.out_dir ./build/hw_emu/package	        \
+	--package.sd_dir ./design/aie_src/data	                \
+	--package.image_format=ext4				\
+	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ./build/libadf.a \
+	--package.defer_aie_run                                                                                \
+        --package.sd_file $(MAKEFILES_REPO)/xrt.ini
+	
+cd ../../; 
+
+```
+
 |Switch|Description|
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
