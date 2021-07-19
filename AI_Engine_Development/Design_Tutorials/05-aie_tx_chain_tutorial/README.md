@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -1226,7 +1226,7 @@ This is done by the following actions:
 
 * Allocate a `PLIO` pointer for each input and output to the graph (two inputs, one output). Refer the [PLIO Attributes Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/use_virtual_program.html#bna1512607665307). 
 
-* Instantiate the templated `simulation:platform<>` object. This is a virtual platform specification to execute the data flow graph in a software simulation environment. You need to specify the parameters `<2,1>` for two inputs and one output. You will also need to pass in the `PLIO` pointers as constructor arguments. Refer to the [Using a Virtual Platform Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/use_virtual_program.html#oul1512606721147).  
+* Instantiate the templated `simulation:platform<>` object. This is a virtual platform specification to execute the data flow graph in a software simulation environment. You need to specify the parameters `<2,1>` for two inputs and one output. You also need to pass in the `PLIO` pointers as constructor arguments. Refer to the [Using a Virtual Platform Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/use_virtual_program.html#oul1512606721147).  
 
 * Instantiate the TX chain graph object. You need to specify the parameters `<0,0,1>` to ensure the AI Engine kernel locations are constrained to the bottom-left corner of the AI Engine array and the direction of kernel placement is '1' (that is, towards the right).
 
@@ -1245,7 +1245,7 @@ The TX Chain graph contains a DPD filter subgraph (`DPD_LUT_FILT_1G_32T`) which 
 ## PL Kernels
 In addition to kernels operating on the AI Engines, this design specifies five kernels to run on the PL region of the device (written in HLS C++). The CFG PL kernels are directly used in the `tx_chain200MHz` graph. The two data mover kernels are brought into the design during the Vitis kernel compilation. Review the [AI Engine/Programmable Logic Integration Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/programmable_logic_integration.html#lci1512606550399) for an introduction to PL kernel development with the AI Engine. 
 
-The TX Chain tutorial is made up of five PL kernels: 
+The TX Chain tutorial is made up of the following PL kernels: 
 
 **CFR Kernels** 
 * pccfr_pds_itr1
@@ -1276,17 +1276,17 @@ The mm2s kernel has three arguments:
 * `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 32 (same as the `mem` argument). The remaining three parameters should be set to 0. 
   
 #### #pragma HLS INTERFACE s_axilite
-A mm2s kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
+An mm2s kernels has one `s_axilite` interface (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
 
 ##### #pragma HLS INTERFACE m_axi
 An `mm2s` kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_read_burst_length=256`. Part of this AXI4 interface is the Read Address Channel containing the signals `ARBURST` and `ARLEN`. This interface has a burst type `ARBURST=INCR` and can support burst length `ARLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_read_burst_length=256` sets the burst length `ARLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the `mem` argument) is the previous address plus four.      
 
 References: 
-* [Vivado AXI Reference](https://www.xilinx.com/support/documentation/ip_documentation/axi_ref_guide/latest/ug1037-vivado-axi-reference-guide.pdf)
+* [Vivado AXI Reference](https://www.xilinx.com/cgi-bin/docs/ipdoc?c=axi_ref_guide;v=latest;d=ug1037-vivado-axi-reference-guide.pdf)
 * [AMBA AXI Protocol Specification](https://developer.arm.com/documentation/ihi0022/c)
 
 #### #pragma HLS INTERFACE axis
-An `mm2s` kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol) associated with the `s` argument. 
+An `mm2s` kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol) associated with the `s` argument. 
 
 #### #pragma HLS PIPELINE II=1
 An `mm2s` kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.  
@@ -1309,7 +1309,7 @@ The `s2mm` kernel has three arguments:
 An `s2mm` kernel has one `s_axilite` interface  (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
 
 #### #pragma HLS INTERFACE m_axi
-An `s2mm` kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_write_burst_length=256`. Part of this AXI4 interface is the Write Address channel containing the signals `AWBURST` and `AWLEN`. This interface has a burst type `AWBURST=INCR` and can support burst length `AWLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_write_burst_length=256` sets the burst length `AWLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the mem argument) is the previous address plus four.      
+An `s2mm` kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_write_burst_length=256`. Part of this AXI4 interface is the Write Address channel containing the signals `AWBURST` and `AWLEN`. This interface has a burst type `AWBURST=INCR` and can support a burst length `AWLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_write_burst_length=256` sets the burst length `AWLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the `mem` argument) is the previous address plus four.      
 
 #### #pragma HLS INTERFACE axis
 An `s2mm` kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol) associated with the `s` argument. 
@@ -1323,7 +1323,7 @@ An `s2mm` kernel has a `for` loop that is a candidate for burst write because th
   <summary>A72 Application</summary>
 	
 ## PS Host Application
-The TX Chain tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application. 
+The TX Chain tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/program_ps_host_application.html#ykt1590616160037) to understand the process to create a host application. 
 
 In addition to the PS host application (`tx_chain_app.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code. The AI Engine control code is used by the PS host application for the following reasons: 
 
