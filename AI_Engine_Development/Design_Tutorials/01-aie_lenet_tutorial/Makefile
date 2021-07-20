@@ -1,4 +1,4 @@
-# © Copyright 2020 Xilinx, Inc.
+# © Copyright 2021 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,21 +43,6 @@ help::
 EMBEDDED_PACKAGE_OUT=./out_dir
 EMBEDDED_EXEC_SCRIPT=./run_script.sh
 
-#Check environment setup
-ifndef PLATFORM_REPO_PATHS
-  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms/
-  export PLATFORM_REPO_PATHS
-endif
-ifndef XILINX_VITIS
-  XILINX_VITIS = /opt/xilinx/Vitis/$(TOOL_VERSION)
-  export XILINX_VITIS
-endif
-ifndef XILINX_XRT
-  XILINX_XRT = /opt/xilinx/xrt
-  export XILINX_XRT
-endif
-
-
 EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
 EMBEDDED_EXEC_SCRIPT = run_script.sh
 PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)
@@ -99,6 +84,13 @@ CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 # =========================================================
 SYSROOT_PATH 	:= $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
 XRT_PATH 	:= $(SYSROOT_PATH)/usr/include/xrt
+
+# =========================================================
+# Profiling/Trace and Datamover type Switches...
+# =========================================================
+EN_TRACE	:= 0
+
+
 
 # =========================================================
 # Source directory
@@ -193,6 +185,21 @@ VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 VPP_FLAGS += --verbose 
 VPP_FLAGS += -g
 
+VPP_LINK_FLAGS := --config $(MAKEFILES_REPO)/system.cfg 
+ifneq ($(EN_TRACE),0)
+	VPP_LINK_FLAGS += --profile.data dma_hls:all:all
+	VPP_LINK_FLAGS += --profile.trace_memory DDR
+endif
+
+
+PKG_FLAGS := 
+ifneq ($(EN_TRACE),0)
+
+	PKG_FLAGS += --package.sd_file $(MAKEFILES_REPO)/xrt.ini
+
+endif
+
+
 # =========================================================
 # Step 1. Kernel XO File Generation
 # ========================================================
@@ -246,7 +253,7 @@ $(BUILD_TARGET_DIR)/$(XCLBIN): 	$(BUILD_TARGET_DIR)/$(DMA_KERNEL_XO).xo \
 				$(LENET_KERNEL_XO) 			\
 				$(LIBADF_A)
 	cd $(BUILD_TARGET_DIR);	\
-	v++ -l $(VPP_FLAGS) --config $(MAKEFILES_REPO)/system.cfg -t $(TARGET) -o $@ 	\
+	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) -t $(TARGET) -o $@ 	\
 		$(BUILD_TARGET_DIR)/$(DMA_KERNEL_XO).xo 		\
 		$(LENET_KERNEL_XO) 					\
 		$(LIBADF_A) 
@@ -290,7 +297,9 @@ package:
 		--package.sd_dir $(AIE_SRC_REPO)/data 				\
 		--package.image_format=ext4 					\
 		--package.sd_file $(BUILD_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XCLBIN) $(LIBADF_A) $(SD_FILES_WITH_PREFIX) \
-		--package.defer_aie_run
+		--package.defer_aie_run                                                                                     \
+		$(PKG_FLAGS)
+
 
 # =========================================================
 # Step 6. Run Hardware Emulation  

@@ -1,8 +1,4 @@
 #Check environment setup
-ifndef PLATFORM_REPO_PATHS
-  PLATFORM_REPO_PATHS=/proj/xbuilds/${TOOLVERSION}/internal_platforms
-  export PLATFORM_REPO_PATHS
-endif
 ifndef ROOTFS
   ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
   export ROOTFS
@@ -12,18 +8,14 @@ ifndef IMAGE
   export IMAGE
 endif
 
-TEST :=
-ifeq (${TEST}, SPRITE)
-	SDKTARGETSYSROOT := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-	CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SDKTARGETSYSROOT}
-endif
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
+EMU_CMD := ./launch_hw_emu.sh
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -50,6 +42,7 @@ LDCLFLAGS :=
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
 			 -Wno-int-to-pointer-cast \
+			 --sysroot=${SDKTARGETSYSROOT}
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 				-I$(SDKTARGETSYSROOT)/usr/include \
@@ -59,7 +52,8 @@ GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 
 GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 		   -L$(SDKTARGETSYSROOT)/usr/lib \
-		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
+		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
+		   --sysroot=${SDKTARGETSYSROOT}
 
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
@@ -92,14 +86,7 @@ guard-SDKTARGETSYSROOT:
 
 ###
 
-ifeq (${TEST}, SPRITE)
-all: setup kernels aie aiesim xclbin host package 
-
-setup:
-	sh /proj/xbuilds/2021.1_daily_latest/internal_platforms/sw/versal/xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux
-else
 all: kernels aie aiesim xclbin host package
-endif
 
 run: all
 sd_card: all
@@ -138,9 +125,6 @@ xclbin: guard-PLATFORM_REPO_PATHS $(GRAPH_O) $(KERNEL_XO)
 host: guard-CXX guard-SDKTARGETSYSROOT
 	cd ./sw 
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
-	ifeq (${TEST},SPRITE)
-		$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o /wrk/vitis_collateral/Jenkins_Infra_Support/06-versal-system-design-clocking/host.cpp
-	endif
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o host.cpp
 	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe 
 	@echo "COMPLETE: Host application created."
@@ -157,6 +141,7 @@ package: guard-PLATFORM_REPO_PATHS guard-ROOTFS guard-IMAGE
 		--package.boot_mode=sd \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
 
 ###################################################################################################
@@ -164,20 +149,14 @@ package: guard-PLATFORM_REPO_PATHS guard-ROOTFS guard-IMAGE
 ###########################################################################
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to load it onto an sd_card for the device
-ifeq (${TEST}, SPRITE)
-run_emu:
-	cd ./sw
-	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
-else
 run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw
-	./launch_hw_emu.sh
+	${EMU_CMD}
 else
 	@echo "Hardware build, no emulation executed."
 endif
 
-endif
 ###########################################################################
 
 clean:

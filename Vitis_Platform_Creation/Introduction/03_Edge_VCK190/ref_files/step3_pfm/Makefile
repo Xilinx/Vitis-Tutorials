@@ -42,7 +42,9 @@ prep_sysroot: ../step2_petalinux/build/petalinux/images/linux/sdk.sh
 # Generate the Vitis platform with XSCT
 # Input: vck190_custom.xsa in ../step1_vivado/build/vivado directory
 pfm:
-	xsct xsct_create_pfm.tcl vck190_custom ../step0_bootable_design/build/vivado
+	xsct xsct_create_pfm.tcl vck190_custom ../step0_bootable_design/build/vivado && \
+	echo "Platform created:" && \
+	find . -name "*.xpfm"
 
 clean:
 	$(RM) -r vitis_* xrc.log build platform_repo ./sd_dir/boot.scr rootfs

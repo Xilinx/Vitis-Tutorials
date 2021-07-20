@@ -19,11 +19,11 @@ ifndef PLATFORM_REPO_PATHS
 endif
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
+EMU_CMD := ./launch_hw_emu.sh
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -33,21 +33,13 @@ KERNEL := s2mm.cpp mm2s.cpp
 KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
-TEST := SPRITE
-ifeq (${TEST}, SPRITE)
-	EMBEDDED_PLATFORM=$(lastword $(subst :, ,$(PLATFORM_REPO_PATHS)))
-	SYSROOT:=$(EMBEDDED_PLATFORM)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-	CXX:=$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++ --sysroot=${SYSROOT}
+# SDKTARGETSYSROOT ?= $(SYSROOT)
+# override CXX += --sysroot=${SDKTARGETSYSROOT}
 
-	BASE_PLATFORM := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/vck190_custom.xpfm
-	ROOTFS := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/rootfs.ext4
-	IMAGE := /wrk/vitis_collateral/vck190_artifacts/vck190_xpfm/Image
-else
-	SDKTARGETSYSROOT := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux
-	BASE_PLATFORM := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
-	ROOTFS :=../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/rootfs.ext4
-	IMAGE := ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/Image
-endif
+SDKTARGETSYSROOT ?= ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux
+BASE_PLATFORM ?= ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
+ROOTFS ?=../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/rootfs.ext4
+IMAGE ?= ../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/Image
 
 # Command-line options
 VPP := v++
@@ -63,7 +55,8 @@ LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
-			 -Wno-int-to-pointer-cast
+			 -Wno-int-to-pointer-cast \
+			 --sysroot=${SDKTARGETSYSROOT}
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 				-I$(SDKTARGETSYSROOT)/usr/include \
@@ -73,7 +66,8 @@ GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 
 GCC_LIB := -ladf_api_xrt -lxrt_coreutil \
 		   -L$(SDKTARGETSYSROOT)/usr/lib \
-		   -L${XILINX_VITIS}/aietools/lib/aarch64.o
+		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
+		   --sysroot=${SDKTARGETSYSROOT}
 
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
@@ -125,45 +119,29 @@ host: guard-SYSROOT guard-CXX
 # Depending on the TARGET, it'll either generate the PDI for hw_emu or hw.
 package: guard-IMAGE guard-ROOTFS
 	cd ./sw
-	ifeq (${TEST}, SPRITE)
-		v++ -p -t ${TARGET} \
-			-f ${BASE_PLATFORM} \
-			--package.rootfs=${ROOTFS} \
-			--package.image_format=ext4 \
-			--package.boot_mode=sd \
-			--package.kernel_image=${IMAGE} \
-			--package.defer_aie_run \
-			--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
-	else
-		v++ -p -t ${TARGET} \
-			-f ..${BASE_PLATFORM} \
-			--package.rootfs=../${ROOTFS} \
-			--package.image_format=ext4 \
-			--package.boot_mode=sd \
-			--package.kernel_image=../${IMAGE} \
-			--package.defer_aie_run \
-			--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
-	endif
+	v++ -p -t ${TARGET} \
+		-f ${BASE_PLATFORM} \
+		--package.rootfs=${ROOTFS} \
+		--package.image_format=ext4 \
+		--package.boot_mode=sd \
+		--package.kernel_image=${IMAGE} \
+		--package.defer_aie_run \
+		--package.sd_file embedded_exec.sh \
+		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
 ###################################################################################################
 
 ###########################################################################
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to follow the Confluence page for
 # running on a board farm system.
-ifeq (${TEST}, SPRITE)
-run_emu:
-	cd ./sw
-	$(PERL) embedded_run_emulation.pl "./launch_hw_emu.sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
-else
 run_emu: 
 ifeq (${TARGET},hw_emu)
 	cd ./sw
-	./launch_hw_emu.sh
+	$(EMU_CMD)
 else
 	@echo "Hardware build, no emulation executed."
 endif
 
-endif
 ###########################################################################
 
 clean:

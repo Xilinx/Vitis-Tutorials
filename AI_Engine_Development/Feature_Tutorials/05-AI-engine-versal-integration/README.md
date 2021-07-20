@@ -293,7 +293,7 @@ sc=ai_engine_0.DataOut1:s2mm.s
 
 | Option/Flag | Description |
 | --- | --- |
-| `nk` | This specifies the kernel and how many there are ti be instantiated. For example, `nk=mm2s:1:mm2s` means that the kernel `mm2s` will instantiate one kernel with the name `mm2s`.|
+| `nk` | This specifies the kernel and how many there are it be instantiated. For example, `nk=mm2s:1:mm2s` means that the kernel `mm2s` will instantiate one kernel with the name `mm2s`.|
 | `stream_connect/sc` | This specifies the streaming connections to be made between PL/AI Engine or PL/PL. In this case, it should always be an output of a kernel to the input of a kernel.|
 
 **NOTE:** The `v++` command-line can get cluttered, and using the `system.cfg` file can help contain it.
