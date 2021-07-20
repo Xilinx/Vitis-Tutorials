@@ -87,6 +87,12 @@ This tutorial demonstrates how to debug a multi-processor application using the 
  <td>
 This tutorial shows how to design AI Engine applications using Model Composer. This set of blocksets for Simulink is used to demonstrate how easy it is to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.</td>
  </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/13-aie-performance-analysis/">AI Engine Performance and Deadlock Analysis Tutorial</a></td>
+ <td>
+This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example. </td>
+ </tr>
+
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
