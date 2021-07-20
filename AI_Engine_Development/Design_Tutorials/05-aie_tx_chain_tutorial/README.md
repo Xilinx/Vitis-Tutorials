@@ -167,7 +167,7 @@ For novice users, review the following tutorials to understand the basic Vitis c
 # Building the TX Chain Design
 In this section, you will build and run the TX Chain design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#mpe1572279880565) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step. 
 
-![Vitis Toolflow for TX Chain](images/Compilation_process.png)
+![Vitis Toolflow for TX Chain](images/TX_chain_vitis_toolflow_2021_1.PNG)
 
 At the end of this section, you will generate a new directory (called `build/`) that contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.   
 
