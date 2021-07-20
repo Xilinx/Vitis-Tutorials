@@ -14,6 +14,12 @@ Model Composer can be used to create complex systems targeting the PL (RTL and H
 
 # Before You Begin
 
+See [Model Composer and SystemGenerator User Guide (UG1483)](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2020_2/ug1483-model-composer-sys-gen-user-guide.pdf) and verify that a supported OS is being used.
+
+* Windows 10 Pro and Enterprise: 10.0 1809 Update; 10.0 1903 Update; 10.0 1909 Update;10.0 2004 Update
+* Red Hat Enterprise Workstation/Server 7: 7.4 (MATLAB R2019b only); 7.5; 7.6; 7.7; 7.8
+* Ubuntu Linux: 16.04.5 LTS; 16.04.6 LTS; 18.04.1 LTS; 18.04.2 LTS; 18.04.3 LTS; 18.04.4
+
 Install the tools:
 
 * Get and install [MATLAB and Simulink 2019b or 2020a](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
@@ -28,10 +34,12 @@ Install the tools:
 
 ![Decimation Filter Chain](Images/DecimationChain.svg "Decimation Filter Chain")
 
-1. Open MATLAB by typing `xmc_sysgen`. The path to the various blocksets of Model Composer are automatically added.
-2. In order to initialize the tutorial environment type `setupLab` in the **MATLAB** command window.
+1. Move to the location of this directory `cd ${PATH_TO}/10-aie-dsp-lib-model-composer`
+2. Setup the environment by typing `source ${PATH_TO_MODEL_COMPOSER}/settings64.sh` on a terminal.
+3. Open MATLAB by typing `xmc_sysgen` on a terminal. The path to the various Model Composer blocksets are automatically added.
+4. Initialize the tutorial environment by typing `setupLab` at the **MATLAB** command prompt.
 
-This function includes the directory ``LabUtils`` in the search path and runs the filter coefficients initialization. The output in the MATLAB command window is:
+This script includes the directory ``LabUtils`` in the search path and runs the `CreateFilter` script to initialize the filter coefficients. The output in the MATLAB command window is:
 
 ```
 >> setupLab
@@ -57,12 +65,12 @@ Channel Filter Norm: 32768
 >>
 ```
 
-In the workspace sub-window you can see that a number of variables that are defined:
+The variables created by the `CreateFilter` script may be examined in the workspace window:
 - ``hb1``, ``hb2``, ``hb3``, ``cfi``: Coefficients of the filters which are used in the Simulink model.
 - ``hb1_aie``, ``hb2_aie``, ``hb3_aie``, ``cfi_aie``: Coefficients vectors which are used in the AI Engine design:
-  - For half-band filters this vector contains only the left-hand side non-null taps including the centre tap.
-  - For symmetric filters this vector contains only the left-hand side taps, including the center tap if the filter length is odd.
-- Shift1, Shift2, Shift3, ShiftCF: The number of bits bits by which the result has to be shifted before the result is sent to the ouput port.
+  - For half-band filters, this vector contains only the left-hand side non-null taps including the centre tap.
+  - For symmetric filters, this vector contains only the left-hand side taps, including the center tap if the filter length is odd.
+- Shift1, Shift2, Shift3, ShiftCF: The number of bits by which the result has to be shifted before the result is sent to the ouput port.
 
 ![Workspace](Images/Workspace.png "Workspace variables")
 
@@ -81,13 +89,12 @@ Perform the next two steps to enhance the User Experience. This allows you to ha
 
 3. Right-click in the canvas and select **Model Properties**:
     - Click the **Callbacks** tab.
-    - Click **PreLoadFcn** and type `CreateFilter;` in the edit window on the right.
-    - Click **InitFcn** and type `CreateFilter;` in the edit window on the right.
-    - Click **Apply**.
+    - Click **PreLoadFcn** and type `setupLab;` in the edit window on the right. This will automatically run the `setupLab` script when the model is opened.
+    - Click **Apply**, then **OK**.
 
 ![](Images/Image_003.png)
 
-4. Click on the canvas and type `subsys`. Select the first **Subsystem** displayed in the list (Subsystem, Simulink/Ports & Subsystem).
+4. Click on the canvas and type `subsys`. Select the first **Subsystem** displayed in the list (Subsystem, Simulink/Ports & Subsystems).
 
 ![](Images/Image_004.png)
 
@@ -101,11 +108,11 @@ Perform the next two steps to enhance the User Experience. This allows you to ha
   - Click the **Callbacks** tab.
   - Select **OpenFcn** in the **Callback function list**.
   - Type `open('CreateFilter.m');` in the edit window on the right.
-  - Click **Apply** and **OK**.
+  - Click **Apply**, then **OK**.
 
-Now when you double-lick this bock you will open the initialization matlab function (_CreateFilter.m_) in the MATLAB editor. Save the model **CTRL+S** and assign the name **XMC_DSPLib**.
+Double-clicking on this block will open the initialization script (_CreateFilter.m_) in the MATLAB editor. Save the model **CTRL+S** with the name **XMC_DSPLib**.
 
-5. Click the **Library Browser** icon.
+5. In the Simulink window, click on the **Library Browser** icon.
 
 ![](Images/Image_006.png)
 
@@ -121,12 +128,12 @@ Click the **AI Engine** section. This reveals see four subsections:
 - Tools
 - User-Defined functions
 
-6. Click the **DSP** sub-section and place the **AIE FIR Filter** block in the canvas as shown in the following figure.
+6. Click the **DSP** sub-section and drag-and-drop  the **AIE FIR Filter** block in the canvas as shown in the following figure.
 
 ![](Images/Image_007.png)
 
 
-7. Double-click the **AIE FIR Filter** block to open the GUI. Populate the GUI with the following parameters and click **OK**:
+7. Double-click on the **AIE FIR Filter** block to open the GUI. Populate the GUI with the following parameters and click **OK**:
     - **Filter type**: Halfband Decimator
     - **Filter length**: length(hb1)
     - **Filter coefficients**: hb1_aie
@@ -139,9 +146,9 @@ Click the **AI Engine** section. This reveals see four subsections:
 
 ![](Images/Image_008.png)
 
-Now create a data source to feed this filter.
+Now create a signal source to feed this filter.
 
-8. Create the following two blocks by clicking the canvas and typing the beginning of the name of the block. Then enter the given parameters:
+8. Create the following two blocks by double-clicking on the canvas and typing the beginning of the name of the block. Double-click on the block to set the parameters:
 
 | Name to Type | Block Name to Select | Parameters |
 | :--- | :--- | :--- |
@@ -157,7 +164,7 @@ Now create a data source to feed this filter.
 
 12. Ensure that the parameter **Output Size** of the block **To Fixed Size** is set to 1024.
 
-13. Set the **Stop Time** to ``5000`` and run the design. The FIR filter is compiled and the design is run. The scope should show a completely null difference.
+13. Set the simulation **Stop Time** to ``5000``, save, then run the simulation by clicking on the **Run** icon. The FIR filter is compiled and the design is run. The scope should show a completely null difference. If the scope plot is not shown, double-click on the scope block. The top plot shows the result of the AIE FIR filter; the middle plot shows the difference; and the bottom plot shows the result of the native Simulink block. The plots will show 2 colors: one for the real part, and another for the imaginary part.
 
 14. To gain more information about the signals traveling through the wires, update the following display parameters:
     - Right-click the canvas and select **Other Displays --> Signals and Ports --> Signal Dimensions**.
@@ -168,7 +175,7 @@ After updating the design with **CTRL-D**, the display should look as follows:
 
 ![](Images/Image_010.png)
 
-Notice that before the implementing the Decimation Filter the vector length was ``2048``, but after implementation this was reduced to ``1024``.
+Notice that the vector length before the Decimation Filters was ``2048``, but reduced to ``1024`` at the output.
 
 15. Update the design with the other three filters using the following parameters:
 
@@ -185,7 +192,7 @@ Notice that before the implementing the Decimation Filter the vector length was 
 | Input sampling rate (MSPS)	| 1000	| 500	| 250	| 125 |
 | Number of Cascade stages	| N/A	| N/A	| N/A	| 1 |
 | Scale output down by 2^	| Shift1	| Shift2	| Shift3	| ShiftCF |
-| Rounding mode	floor	| floor	| floor	| floor |
+| Rounding mode	floor	| floor	| floor	| floor | floor |
 
 16. Update the **Output Size** parameter of the **To Fixed Size** block to ``256``. The design should look like as follows:
 
@@ -196,9 +203,9 @@ Notice that before the implementing the Decimation Filter the vector length was 
 
 # Stage 2: Further Analysis of the Design
 
-When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink the spectrum can be easily displayed using a spectrum scope.
+When creating a DSP design, one important characteristic to consider is the power spectrum. In Simulink the spectrum can be easily displayed using a spectrum analyzer.
 
-1. Right-click the canvas and type ``spectrum``. Select **Spectrum Analyzer**. Set the following parameters (click the left-most button of the icon bar to display the GUI).
+1. Double-click on the canvas and type ``spectrum``. Select **Spectrum Analyzer**. Double-click on the spectrum analyzer block and set the following parameters (click the left-most button of the icon bar to display the Spectrum Settings GUI).
     - **Overlap**: 50%
     - **Average**: 16
 2. Set the Stop Time of the simulation to **inf**.
@@ -236,27 +243,27 @@ Now add a block coming from a standard templated C++ kernel which source is in t
 
 ![](Images/Image_021.png)
 
-9. Switch the **Stop Time** back to ``5000`` and verify that the difference is still 0.
+9. Switch the **Stop Time** back to ``5000``, rerun the simulation and verify that the difference is still 0.
 
-Developing an AI Engine graph in Model Composer is relatively straightforward. What you have learned here is that you can easily place a spectrum scope within the design at the output of a design, but actually it could be placed anywhere in between two blocks without modifying anything in the kernels and the graph. Furthermore, Simulink has a lot of specific blocksets that can be used to generate test vectors, create a reference model, and compare the signals at any point in the design.
+Developing an AI Engine graph in Model Composer is relatively straightforward. What you have learned here is that you can easily place a spectrum analyzer within the design at the output of a block, but actually it could be placed anywhere in between two blocks without modifying anything in the kernels or the graph. Furthermore, Simulink has a many blocks that can be used to generate test vectors, create a reference model, and compare the signals at any point in the design.
 
 If you want to save some data in a workspace variable for some more complex analysis. This can be done using the **Variable Size Signal** to Workspace block within the **Xilinx Toolbox --> AI Engine --> Tools  blockset**:
 
 ![](Images/Image_015.png)
 
-All the simulations that occur in Simulink are the so-called 'Emulation-SW'. These types of simulation are bit-exact, but they do not provide any information about timing.
+All the simulations that occur in Simulink use the 'Emulation-SW' mode. This mode is bit-exact, but they do not provide any information about timing.
 
 # Stage 3: Generate the Code and Perform Emulation-AI Engine
 
-In this stage you will generate the graph code of this design and perform bit-true and cycle true simulations with the AI Engine Simulator.
+In this stage you will generate the graph code of this design and perform bit-true and cycle-accurate simulations with the AI Engine Simulator.
 
 1. Select the four AIE FIR Filters and the Frequency shifting block and type **CTRL+G** to group them in a subsystem. Assign a new name: **FIRchain**.
-2. Click the canvas and type ``model co``. Select the block **Model Composer Hub** and set the following parameters:
+2. Double-click on the canvas and type ``model co``. Select the block **Model Composer Hub** and set the following parameters:
     - **Subsystem name**: ``FIRchain``
     - Check **Create testbench**
     - Check **Run cycle-accurate SystemC simulator**
     - Check **Launch Vitis Analyzer**
-3. Click **Apply** and **Generate and Run**.
+3. Click **Apply**, then **Generate and Run**.
 
 The simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/src_aie/FIRchain.h``:
 
@@ -306,7 +313,12 @@ Finally, the bit-exact simulation (Emulation-AIE) is performed and the result co
 
 ![](Images/Image_012.png)
 
-Vitis Analyzer is then launched. From here you can see the **Graph View**, the **Array View**, the **Timeline**, and the **Profile** information.
+Vitis Analyzer is then launched. From here you can see the **Graph View**, the **Array View**, the **Timeline**, and the **Profile** information. Vitis Analyzer may also be launched manually from the terminal:
+
+```
+$ cd code
+$ vitis_analyzer ./system.wdb ./data/aiesimulator_output/default.aierun_summary
+```
 
 ![](Images/Image_022.png)
 
@@ -314,7 +326,7 @@ Vitis Analyzer is then launched. From here you can see the **Graph View**, the *
 
 Model Composer is a very efficient way to create graphs either using your own kernels or using the DSPLib FIR Filter (other blocks will be available in subsequent releases).
 
-This tool shows its incredible flexibility when it comes to display spectrum or save data at any stage of the graph. All the source and sink blocks can be used anywhere, allowing you to efficiently debug your design in all corner cases.
+This tool shows its incredible flexibility when it comes to displaying signal spectrum or saving data at any stage of the graph. All the source and sink blocks can be used anywhere, allowing you to efficiently debug your design in all corner cases.
 
 ---
 
