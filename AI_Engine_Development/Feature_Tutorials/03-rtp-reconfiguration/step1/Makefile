@@ -80,10 +80,10 @@ ${XCLBIN}: ${LIBADF} ${VPP_SPEC} ${XOS}
 
 kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}: 
-	make -C pl_kernels/
+	$(MAKE) -C pl_kernels/
 host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
 ${HOST_EXE}: sw/*.cpp
-	make -C sw/
+	$(MAKE) -C sw/
 
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
 package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}  
@@ -105,5 +105,5 @@ clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
 	       vck190_aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
 	       ilpProblem* sol.db drivers .Xil
-	make -C pl_kernels clean
-	make -C sw clean
+	$(MAKE) -C pl_kernels clean
+	$(MAKE) -C sw clean
