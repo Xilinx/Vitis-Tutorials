@@ -1271,9 +1271,9 @@ The mm2s kernel has three arguments:
 * `hls::stream<qdma_axis<32,0,0,0>>&s`
 * `int size`
 
-* `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 32. 
+`ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 32. 
 
-* `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 32 (same as the `mem` argument). The remaining three parameters should be set to 0. 
+`hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 32 (same as the `mem` argument). The remaining three parameters should be set to 0. 
   
 #### #pragma HLS INTERFACE s_axilite
 An mm2s kernels has one `s_axilite` interface (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
@@ -1301,9 +1301,9 @@ The `s2mm` kernel has three arguments:
 * `hls::stream<qdma_axis<128,0,0,0>>&s`
 * `int size`
 
-* `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 128.
+`ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 128.
 
-* `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface and is set to 128 (same as the `mem` argument). The remaining three parameters should be set to 0. 
+`hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface and is set to 128 (same as the `mem` argument). The remaining three parameters should be set to 0. 
 
 #### #pragma HLS INTERFACE s_axilite
 An `s2mm` kernel has one `s_axilite` interface  (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
@@ -1320,7 +1320,7 @@ An `s2mm` kernel has a `for` loop that is a candidate for burst write because th
 </details>
 
 <details>
-  <summary>A72 Application</summary>
+  <summary>PS Host Application</summary>
 	
 ## PS Host Application
 The TX Chain tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/program_ps_host_application.html#ykt1590616160037) to understand the process to create a host application. 
@@ -1330,11 +1330,11 @@ In addition to the PS host application (`tx_chain_app.cpp`), the AI Engine contr
 * Control the initial loading of the AI Engine kernels.
 * Run the graph for several iterations, update the run time parameters associated with the graph, exit, and reset the AI Engine tiles. 
 
-The PS Host application stack diagram for the TX Chain tutorial is shown below: 
+The PS Host application stack diagram for the TX Chain tutorial is as follows: 
 
 ![Image of A72 Application Stack Diagram](images/XRT_stack_diagram_v3.PNG)
 
-In the TX Chain tutorial, the A72 application have been divided into multiple steps for learning purposes. Each step is represented by a corresponding message in the console window during the application run. In addition, these steps are tagged in the A72 application (`tx_chain_app.cpp`) code using notations Step 1, Step 2, Step 2.1, etc.  
+In the TX Chain tutorial, the A72 application has been divided into multiple steps for learning purposes. Each step is represented by a corresponding message in the console window during the application run. In addition, these steps are tagged in the A72 application (`tx_chain_app.cpp`) code using notations Step 1, Step 2, Step 2.1, etc.  
 
 ### Step 1: Include the AI Engine Graph Application and XRT and ADF Headers
 The AI Engine Graph Application (`tx_chain.cpp`) contains an instantiation of the `tx_chain_200MHz` graph (`tx_chain0`) that will be used in this A72 host application. 
@@ -1342,7 +1342,7 @@ The AI Engine Graph Application (`tx_chain.cpp`) contains an instantiation of th
 #include "tx_chain.cpp"
 ```
 
-#### Step 2: Check Command Line Argument
+### Step 2: Check Command Line Argument
 The beginning of the A72 application is represented by the main function: 
 ```C++
 int main (int argc, char* argv[])
@@ -1352,8 +1352,8 @@ The main function has one argument:
 
 * argv[1]: XCLBIN - the name of the Xilinx binary container where the PL kernels are precompiled. 
 
-#### Step 3: Open XCLBIN and Create Data Mover Kernel Handles
-At this step, the A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the Versal device. This process consists of two steps:
+### Step 3: Open XCLBIN and Create Data Mover Kernel Handles
+At this step, the A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the Versal ACAP. This process consists of two steps:
 
 *Step 3.1* loads the XCLBIN binary file (passed to the main using `argv[1]` argument) using `load_xclbin` function (which calls the `xrtDeviceLoadXclbin` XRT function).
 
@@ -1361,7 +1361,7 @@ At this step, the A72 application loads the XCLBIN binary file and creates the d
 
 The CFR PL kernels are not controlled by the PS and are not included in the `tx_chain_app.cpp`. 
 
-#### Step 4: Allocate buffers for Input data and Results in Global Memory 
+### Step 4: Allocate buffers for Input data and Results in Global Memory 
 Before the A72 application can launch the data mover kernel executions, it needs to accomplish two tasks: 
 * Pass the input data to the kernel to process it 
 * Allocate the memory where the kernels can store the output results
@@ -1372,7 +1372,7 @@ This is done by using the `xrtBOAlloc` and `xrtBOMap` functions.
 
 ![Image of Step 4](images/tx_chain_app_step4.png)
 
-#### Step 5: Prepare VCK190 board and Run TX Chain Graph 
+### Step 5: Prepare VCK190 board and Run TX Chain Graph 
 Before executing the data mover kernels, the A72 processor must reset the VCK190 board and then use the XRT run time graph control API calls to run the AI Engine TX chain dataflow graph. 
 
 *Step 5.1* resets the VCK190 board by executing the `versal_run/reset-board.sh` script with the `system()` function. Before running the script, the A72 processor must wait 1000 microseconds before and after running the reset script with the `usleep()` function. This allows time for the PS to define the three memory locations in DDR memory. 
@@ -1381,7 +1381,7 @@ Before executing the data mover kernels, the A72 processor must reset the VCK190
 
 The A72 processor then updates the DPD filter with the coefficients using the `xrtGraphUpdateRTP` function. 
 
-#### Step 6:  Write Input Data to Global Memory
+### Step 6:  Write Input Data to Global Memory
 The A72 processor copies the input data text files in the SD memory to global memory (two channels of `NR100`). 
 
 *Step 6.1* reads input data from the `data/Input0_hex.txt` and `data/Input1_hex.txt` files. 
@@ -1390,14 +1390,14 @@ The A72 processor copies the input data text files in the SD memory to global me
 
 ![Image of Step 6](images/tx_chain_app_step6.png)
 
-#### Step 7: Execute the Data Mover Kernels
+### Step 7: Execute the Data Mover Kernels
 Now that the data is loaded in DDR memory, the A72 processor launches the data mover kernels and generates the output results which is written to global memory. 
 
 It starts the mm2s data mover kernels to read data from DDR memory and send to the AI Engine. The A72 processor also starts the s2mm data mover kernel to move data streaming out the AI Engine and write the results in DDR memory. For all three data mover kernels, the A72 processor must create the kernel run handles, wait for kernels to complete running, and close them. This is done with the `xrtRunOpen`, `xrtRunSetArg`, `xrtRunStart`, `xrtRunWait`, `xrtRunClose`, and `xrtKernelClose` XRT functions. 
 
 ![Image of Step 7](images/tx_chain_app_step7.png)
 
-#### Step 8: Verify Output Results
+### Step 8: Verify Output Results
 After the kernels’ executions have been completed, the A72 processor copies the output results from global memory to the SD memory and verifies that the output results are correct. If the results are not correct, the A72 processor reports the test failed. 
 
 *Step 8.1* copies the two channels of `NR100` input data, and `dpd0` output data from DDR memory to SD memory (to `log_lte0.txt`, `log_lte1`, and `log_output.txt` files). 
@@ -1406,7 +1406,7 @@ After the kernels’ executions have been completed, the A72 processor copies th
 
 ![Image of Step 8](images/tx_chain_app_step8.png)
 
-#### Step 9: Release Allocated Resources
+### Step 9: Release Allocated Resources
 At the final step, the A72 processor frees previously allocated resources. 
 
 </details>
