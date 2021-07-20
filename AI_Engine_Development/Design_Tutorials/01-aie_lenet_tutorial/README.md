@@ -172,7 +172,7 @@ Output of the above command should be as follows:
 ## LeNet Design Build
 In this section, you will build and run the LeNet design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step. 
 
-![Image of LeNet Vitis Tool Flow](images/Lenet_vitis_toolflow_2020_2.PNG)
+![Image of LeNet Vitis Tool Flow](images/Lenet_vitis_toolflow_2021_1.PNG)
 
 At the end of this section, the design flow will generate a new directory (called `build/`) that contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.   
 
@@ -198,7 +198,7 @@ or
 make build TARGET=hw EN_TRACE=1
 ```
 
-This command runs the `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
+The default value of EN_TRACE is 0. This command runs the `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
 
 You can also run the following command to build the entire Lenet tutorial *and* launch hardware emulation: 
 ```bash
@@ -276,15 +276,15 @@ make graph
 The following AI Engine compiler command compiles the AI Engine design graph: 
 ```
 cd ./build;
-aiecompiler --include= ../design/aie_src \	
-	    --include= ../design/aie_src/data   \
+aiecompiler --include= ./design/aie_src \	
+	    --include= ./design/aie_src/data   \
             --verbose                    \
             --log-level=5                \
             --test-iterations=100        \      
             --dataflow                   \
             --heapsize=2048              \
             --workdir=Work               \
-            ../design/aie_src/graph.cpp
+            ./design/aie_src/graph.cpp
 	    
 cd ../../; 
  ```
@@ -319,14 +319,14 @@ The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into 
  
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
  
-The command to run this step is shown as follows (default TARGET=hw_emu):
+The command to run this step is shown as follows (default TARGET=hw_emu, default EN_TARCE=0):
 ```
 make xclbin
 ``` 
 
 The expanded command is as follow: 
 ```
-cd ../build/hw_emu;
+cd ./build/hw_emu;
 
 v++       -l                                                \
           --platform xilinx_vck190_base_202110_1            \
@@ -343,6 +343,29 @@ v++       -l                                                \
 	  
 cd ../../; 
 ```
+
+If EN_TRACE=1, the command is expanded as follow:
+```
+cd ./build/hw;
+
+v++       -l                                                \
+          --platform xilinx_vck190_base_202110_1            \
+          --save-temps                                      \
+	  --temp_dir _x	                                    \
+          --verbose                                         \
+	  --g                                               \
+          --config system.cfg                               \
+          --profile.data dma_hls:all:all                    \
+          --profile.trace_memory DDR                        \
+	  -t hw                                             \
+          dma_hls.hw_emu.xo                                 \	  
+          ../../design/pl_src/lenet_kernel/lenet_kernel.xo  \
+          ../build/libadf.a                             \
+          -o vck190_aie_lenet.hw_emu.xclbin   
+	  
+cd ../../; 
+```
+
 The options to run this step are as follows:
 
 |Switch|Description|
@@ -421,8 +444,8 @@ aarch64-linux-gnu-g++   -O							\
 			../design/aie_src/main.cpp                              \
 			-o ../build/lenet_app.o                    
 
-aarch64-linux-gnu-g++   ../build/app_control.o			                \
-			../build/lenet_app.o			                \
+aarch64-linux-gnu-g++   ./build/app_control.o			                \
+			./build/lenet_app.o			                \
 			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
 			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib\ 
                         -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o    		\
@@ -476,21 +499,50 @@ or
 v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
-	--temp_dir ../build/hw_emu/_x			        \
+	--temp_dir ./build/hw_emu/_x			        \
 	-f xilinx_vck190_base_202110_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
 	--package.boot_mode=sd					\
-	--package.out_dir ../build/hw_emu/package	        \
-	--package.sd_dir ../design/aie_src/data	                \
+	--package.out_dir ./build/hw_emu/package	        \
+	--package.sd_dir ./design/aie_src/data	                \
 	--package.image_format=ext4				\
-	--package.sd_file ../build/lenet_xrt.elf ../build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ../build/libadf.a \
+	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ./build/libadf.a \
 	--package.defer_aie_run
 	
 cd ../../; 
 
 ```
+
+If TARGET=hw and EN_TRACE=1
+
+```
+make package
+``` 
+or 
+```
+
+v++	-p  							\
+ 	-t hw_emu					        \
+	--save-temps						\
+	--temp_dir ./build/hw_emu/_x			        \
+	-f xilinx_vck190_base_202110_1  			\
+	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
+	--package.boot_mode=sd					\
+	--package.out_dir ./build/hw_emu/package	        \
+	--package.sd_dir ./design/aie_src/data	                \
+	--package.image_format=ext4				\
+	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ./build/libadf.a \
+	--package.defer_aie_run                                                                                \
+        --package.sd_file $(MAKEFILES_REPO)/xrt.ini
+	
+cd ../../; 
+
+```
+
 |Switch|Description|
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
@@ -530,7 +582,7 @@ make run_emu
 ```
 or
 ```
-cd ../build/hw_emu/package
+cd ./build/hw_emu/package
 ./launch_hw_emu.sh 
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up: 

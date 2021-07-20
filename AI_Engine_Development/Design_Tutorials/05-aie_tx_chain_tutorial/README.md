@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -167,7 +167,7 @@ For novice users, review the following tutorials to understand the basic Vitis c
 # Building the TX Chain Design
 In this section, you will build and run the TX Chain design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#mpe1572279880565) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step. 
 
-![Vitis Toolflow for TX Chain](images/Compilation_process.png)
+![Vitis Toolflow for TX Chain](images/TX_chain_vitis_toolflow_2021_1.PNG)
 
 At the end of this section, you will generate a new directory (called `build/`) that contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.   
 
@@ -1226,7 +1226,7 @@ This is done by the following actions:
 
 * Allocate a `PLIO` pointer for each input and output to the graph (two inputs, one output). Refer the [PLIO Attributes Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/use_virtual_program.html#bna1512607665307). 
 
-* Instantiate the templated `simulation:platform<>` object. This is a virtual platform specification to execute the data flow graph in a software simulation environment. You need to specify the parameters `<2,1>` for two inputs and one output. You will also need to pass in the `PLIO` pointers as constructor arguments. Refer to the [Using a Virtual Platform Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/use_virtual_program.html#oul1512606721147).  
+* Instantiate the templated `simulation:platform<>` object. This is a virtual platform specification to execute the data flow graph in a software simulation environment. You need to specify the parameters `<2,1>` for two inputs and one output. You also need to pass in the `PLIO` pointers as constructor arguments. Refer to the [Using a Virtual Platform Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/use_virtual_program.html#oul1512606721147).  
 
 * Instantiate the TX chain graph object. You need to specify the parameters `<0,0,1>` to ensure the AI Engine kernel locations are constrained to the bottom-left corner of the AI Engine array and the direction of kernel placement is '1' (that is, towards the right).
 
@@ -1245,7 +1245,7 @@ The TX Chain graph contains a DPD filter subgraph (`DPD_LUT_FILT_1G_32T`) which 
 ## PL Kernels
 In addition to kernels operating on the AI Engines, this design specifies five kernels to run on the PL region of the device (written in HLS C++). The CFG PL kernels are directly used in the `tx_chain200MHz` graph. The two data mover kernels are brought into the design during the Vitis kernel compilation. Review the [AI Engine/Programmable Logic Integration Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/programmable_logic_integration.html#lci1512606550399) for an introduction to PL kernel development with the AI Engine. 
 
-The TX Chain tutorial is made up of five PL kernels: 
+The TX Chain tutorial is made up of the following PL kernels: 
 
 **CFR Kernels** 
 * pccfr_pds_itr1
@@ -1271,22 +1271,22 @@ The mm2s kernel has three arguments:
 * `hls::stream<qdma_axis<32,0,0,0>>&s`
 * `int size`
 
-* `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 32. 
+`ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 32. 
 
-* `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 32 (same as the `mem` argument). The remaining three parameters should be set to 0. 
+`hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 32 (same as the `mem` argument). The remaining three parameters should be set to 0. 
   
 #### #pragma HLS INTERFACE s_axilite
-A mm2s kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
+An mm2s kernels has one `s_axilite` interface (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
 
 ##### #pragma HLS INTERFACE m_axi
 An `mm2s` kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_read_burst_length=256`. Part of this AXI4 interface is the Read Address Channel containing the signals `ARBURST` and `ARLEN`. This interface has a burst type `ARBURST=INCR` and can support burst length `ARLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_read_burst_length=256` sets the burst length `ARLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the `mem` argument) is the previous address plus four.      
 
 References: 
-* [Vivado AXI Reference](https://www.xilinx.com/support/documentation/ip_documentation/axi_ref_guide/latest/ug1037-vivado-axi-reference-guide.pdf)
+* [Vivado AXI Reference](https://www.xilinx.com/cgi-bin/docs/ipdoc?c=axi_ref_guide;v=latest;d=ug1037-vivado-axi-reference-guide.pdf)
 * [AMBA AXI Protocol Specification](https://developer.arm.com/documentation/ihi0022/c)
 
 #### #pragma HLS INTERFACE axis
-An `mm2s` kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol) associated with the `s` argument. 
+An `mm2s` kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol) associated with the `s` argument. 
 
 #### #pragma HLS PIPELINE II=1
 An `mm2s` kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.  
@@ -1301,15 +1301,15 @@ The `s2mm` kernel has three arguments:
 * `hls::stream<qdma_axis<128,0,0,0>>&s`
 * `int size`
 
-* `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 128.
+`ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 128.
 
-* `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface and is set to 128 (same as the `mem` argument). The remaining three parameters should be set to 0. 
+`hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface and is set to 128 (same as the `mem` argument). The remaining three parameters should be set to 0. 
 
 #### #pragma HLS INTERFACE s_axilite
 An `s2mm` kernel has one `s_axilite` interface  (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`. 
 
 #### #pragma HLS INTERFACE m_axi
-An `s2mm` kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_write_burst_length=256`. Part of this AXI4 interface is the Write Address channel containing the signals `AWBURST` and `AWLEN`. This interface has a burst type `AWBURST=INCR` and can support burst length `AWLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_write_burst_length=256` sets the burst length `AWLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the mem argument) is the previous address plus four.      
+An `s2mm` kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem` associated with the `mem` argument. This interface also has `max_write_burst_length=256`. Part of this AXI4 interface is the Write Address channel containing the signals `AWBURST` and `AWLEN`. This interface has a burst type `AWBURST=INCR` and can support a burst length `AWLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_write_burst_length=256` sets the burst length `AWLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of four bytes (32-bits from the `mem` argument) is the previous address plus four.      
 
 #### #pragma HLS INTERFACE axis
 An `s2mm` kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol) associated with the `s` argument. 
@@ -1320,21 +1320,21 @@ An `s2mm` kernel has a `for` loop that is a candidate for burst write because th
 </details>
 
 <details>
-  <summary>A72 Application</summary>
+  <summary>PS Host Application</summary>
 	
 ## PS Host Application
-The TX Chain tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application. 
+The TX Chain tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/program_ps_host_application.html#ykt1590616160037) to understand the process to create a host application. 
 
 In addition to the PS host application (`tx_chain_app.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code. The AI Engine control code is used by the PS host application for the following reasons: 
 
 * Control the initial loading of the AI Engine kernels.
 * Run the graph for several iterations, update the run time parameters associated with the graph, exit, and reset the AI Engine tiles. 
 
-The PS Host application stack diagram for the TX Chain tutorial is shown below: 
+The PS Host application stack diagram for the TX Chain tutorial is as follows: 
 
 ![Image of A72 Application Stack Diagram](images/XRT_stack_diagram_v3.PNG)
 
-In the TX Chain tutorial, the A72 application have been divided into multiple steps for learning purposes. Each step is represented by a corresponding message in the console window during the application run. In addition, these steps are tagged in the A72 application (`tx_chain_app.cpp`) code using notations Step 1, Step 2, Step 2.1, etc.  
+In the TX Chain tutorial, the A72 application has been divided into multiple steps for learning purposes. Each step is represented by a corresponding message in the console window during the application run. In addition, these steps are tagged in the A72 application (`tx_chain_app.cpp`) code using notations Step 1, Step 2, Step 2.1, etc.  
 
 ### Step 1: Include the AI Engine Graph Application and XRT and ADF Headers
 The AI Engine Graph Application (`tx_chain.cpp`) contains an instantiation of the `tx_chain_200MHz` graph (`tx_chain0`) that will be used in this A72 host application. 
@@ -1342,7 +1342,7 @@ The AI Engine Graph Application (`tx_chain.cpp`) contains an instantiation of th
 #include "tx_chain.cpp"
 ```
 
-#### Step 2: Check Command Line Argument
+### Step 2: Check Command Line Argument
 The beginning of the A72 application is represented by the main function: 
 ```C++
 int main (int argc, char* argv[])
@@ -1352,53 +1352,55 @@ The main function has one argument:
 
 * argv[1]: XCLBIN - the name of the Xilinx binary container where the PL kernels are precompiled. 
 
-#### Step 3: Open XCLBIN and Create Data Mover Kernel Handles
-At this step, the A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the Versal device. This process consists of two steps:
+### Step 3: Open XCLBIN and Create Data Mover Kernel Handles
+At this step, the A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the Versal ACAP. This process consists of two steps:
 
-*Step 3.1* loads the XCLBIN binary file (passed to the main using `argv[1]` argument) using `load_xclbin` function (which calls the `xrtDeviceLoadXclbin` XRT function).
+*Step 3.1* loads the XCLBIN binary file (passed to `main` using the `argv[1]` argument) using `load_xclbin` function (which calls the `xrtDeviceLoadXclbin` XRT function).
 
 *Step 3.2* creates the data mover kernel handles (`mm2s_0`, `mm2s_1`, and `s2mm`) using the `xrtPLKernelOpen` XRT function.
 
-The CFR PL kernels are not controlled by the PS and are not included in the `tx_chain_app.cpp`. 
+The CFR PL kernels are not controlled by the PS and are not included in the `tx_chain_app.cpp` file. 
 
-#### Step 4: Allocate buffers for Input data and Results in Global Memory 
-Before the A72 application can launch the data mover kernel executions, it needs to accomplish two tasks: 
-* Pass the input data to the kernel to process it 
-* Allocate the memory where the kernels can store the output results
+### Step 4: Allocate buffers for Input data and Results in Global Memory 
+Before the A72 application can launch the data mover kernel executions, it needs to do the following: 
+* Pass the input data to the kernel to process it.
+* Allocate the memory where the kernels can store the output results.
 
-The A72 application allocates BOs (buffer objects) to store the two channels of `NR100` input data in global memory (DDR memory). This data is loaded from the `data/input0_hex` and `data/input1_hex` text data files in a later step. In addition, it allocates a BO to store the results (`dpd0`) in global memory (DDR memory). The results are generated by the s2mm kernel and are stored in the `log_output` text file (in a later step).
+The A72 application allocates BOs (buffer objects) to store the two channels of `NR100` input data in global memory (DDR memory). This data is loaded from the `data/input0_hex` and `data/input1_hex` text data files in a later step. In addition, it allocates a BO to store the results (`dpd0`) in global memory (DDR memory). The results are generated by the `s2mm` kernel and are stored in the `log_output` text file (in a later step).
 
 This is done by using the `xrtBOAlloc` and `xrtBOMap` functions. 
 
 ![Image of Step 4](images/tx_chain_app_step4.png)
 
-#### Step 5: Prepare VCK190 board and Run TX Chain Graph 
-Before executing the data mover kernels, the A72 processor must reset the VCK190 board and then use the XRT run time graph control API calls to run the AI Engine TX chain dataflow graph. 
+### Step 5: Prepare VCK190 board and Run TX Chain Graph 
+Before executing the data mover kernels, the A72 processor must reset the VCK190 board and then use the XRT run-time graph control API calls to run the AI Engine TX chain dataflow graph. 
 
 *Step 5.1* resets the VCK190 board by executing the `versal_run/reset-board.sh` script with the `system()` function. Before running the script, the A72 processor must wait 1000 microseconds before and after running the reset script with the `usleep()` function. This allows time for the PS to define the three memory locations in DDR memory. 
 
-*Step 5.2* reads the DPD filter coefficients from the `data/coefs_4c2l_ps01.txt` and `data/coefs_42cl_ps23.txt` files using the `readIntegersFromFile` function. The A72 processor then opens, resets, and runs the TX chain graph using the `xrtGraphOpen`, `xrtGraphReset` and `xrtGraphRun` functions. The A72 processor must wait 1000 microseconds after running the graph to allow the PS to configure the AI Engine before updating the coefficients. 
+*Step 5.2* reads the DPD filter coefficients from the `data/coefs_4c2l_ps01.txt` and `data/coefs_42cl_ps23.txt` files using the `readIntegersFromFile` function. The A72 processor then opens, resets, and runs the TX chain graph using the `xrtGraphOpen`, `xrtGraphReset`, and `xrtGraphRun` functions. The A72 processor must wait 1000 microseconds after running the graph to allow the PS to configure the AI Engine before updating the coefficients. 
 
 The A72 processor then updates the DPD filter with the coefficients using the `xrtGraphUpdateRTP` function. 
 
-#### Step 6:  Write Input Data to Global Memory
+### Step 6:  Write Input Data to Global Memory
 The A72 processor copies the input data text files in the SD memory to global memory (two channels of `NR100`). 
 
 *Step 6.1* reads input data from the `data/Input0_hex.txt` and `data/Input1_hex.txt` files. 
+
 *Step 6.2* writes input data to the two `NR100` BOs mapped to global memory through the `lte0_mapped` and `lte1_mapped` memory-mapped `xclBufferHandle` objects. 
-*Step 6.3* synchronizes the data content in the mapped BOs to the Versal device. This ensures that the device DDR memory has the same data as the BOs in the A72 processor. This operation might require DMA to the device and CPU cache flushing/invalidation. This is done with the `xrtBOSync` XRT function.
+
+*Step 6.3* synchronizes the data content in the mapped BOs to the Versal ACAP. This ensures that the device DDR memory has the same data as the BOs in the A72 processor. This operation might require DMA to the device and CPU cache flushing/invalidation. This is done with the `xrtBOSync` XRT function.
 
 ![Image of Step 6](images/tx_chain_app_step6.png)
 
-#### Step 7: Execute the Data Mover Kernels
+### Step 7: Execute the Data Mover Kernels
 Now that the data is loaded in DDR memory, the A72 processor launches the data mover kernels and generates the output results which is written to global memory. 
 
-It starts the mm2s data mover kernels to read data from DDR memory and send to the AI Engine. The A72 processor also starts the s2mm data mover kernel to move data streaming out the AI Engine and write the results in DDR memory. For all three data mover kernels, the A72 processor must create the kernel run handles, wait for kernels to complete running, and close them. This is done with the `xrtRunOpen`, `xrtRunSetArg`, `xrtRunStart`, `xrtRunWait`, `xrtRunClose`, and `xrtKernelClose` XRT functions. 
+It starts the `mm2s` data mover kernels to read data from DDR memory and send to the AI Engine. The A72 processor also starts the `s2mm` data mover kernel to move data streaming out the AI Engine and write the results in DDR memory. For all three data mover kernels, the A72 processor must create the kernel run handles, wait for kernels to complete running, and close them. This is done with the `xrtRunOpen`, `xrtRunSetArg`, `xrtRunStart`, `xrtRunWait`, `xrtRunClose`, and `xrtKernelClose` XRT functions. 
 
 ![Image of Step 7](images/tx_chain_app_step7.png)
 
-#### Step 8: Verify Output Results
-After the kernels’ executions have been completed, the A72 processor copies the output results from global memory to the SD memory and verifies that the output results are correct. If the results are not correct, the A72 processor reports the test failed. 
+### Step 8: Verify Output Results
+After the kernels’ executions have been completed, the A72 processor copies the output results from global memory to the SD memory and verifies that the output results are correct. If the results are not correct, the A72 processor reports that the test failed. 
 
 *Step 8.1* copies the two channels of `NR100` input data, and `dpd0` output data from DDR memory to SD memory (to `log_lte0.txt`, `log_lte1`, and `log_output.txt` files). 
 
@@ -1406,7 +1408,7 @@ After the kernels’ executions have been completed, the A72 processor copies th
 
 ![Image of Step 8](images/tx_chain_app_step8.png)
 
-#### Step 9: Release Allocated Resources
+### Step 9: Release Allocated Resources
 At the final step, the A72 processor frees previously allocated resources. 
 
 </details>
@@ -1418,7 +1420,7 @@ At the final step, the A72 processor frees previously allocated resources.
 Review the Makefile file. The following section describes the various steps the Makefile performs. 
 
 ### Help 
-The make help command is provided below: 
+The make help command is provided as follows: 
 ```make
 %.PHONY: help
 
@@ -1451,17 +1453,17 @@ help::
 A phony target is one that is not really the name of a file; rather it is just the name for a recipe to be executed when you make an explicit request. That is, explicitly declare the target to be phony by making it a prerequisite of the special .PHONY as help. 
 The command “make help” will run the recipe. This will display the Makefile use. 
 
-### Select the target platform
-Set the target platform to xilinx_vck190_202020_1 
+### Select the Target Platform
+Set the target platform to xilinx_vck190_202110_1 
 ```make
 # =========================================================
 # platform selection
 # =========================================================
-PLATFORM := xilinx_vck190_es1_base_202020_1
+PLATFORM := xilinx_vck190_es1_base_202110_1
 ```
 
-### Select the target build configuration
-Set the TARGET build configuration to be hardware emulation (`hw_emu`) or system run (`hw`). The $(TARGET) variable defines the build configuration (`hw_emu` or `hw`). The default value of the TARGET variable is `hw_emu`. You can override the default build configuration by entering a command such as `make kernels TARGET=hw`. The build configuration matters for the `make kernels`, `make xclbin`, and `make package` steps. The outputs of those commands are stored in `build/hw_emu/` or `build/hw/` folders. The build configuration does not matter for the `make graph` and `make application` steps. The outputs of those commands are stored in the `build/` folder. 
+### Select the Target Build Configuration
+Set the TARGET build configuration to be hardware emulation (`hw_emu`) or system run (`hw`). The `$(TARGET)` variable defines the build configuration (`hw_emu` or `hw`). The default value of the TARGET variable is `hw_emu`. You can override the default build configuration by entering a command such as `make kernels TARGET=hw`. The build configuration matters for the `make kernels`, `make xclbin`, and `make package` steps. The outputs of those commands are stored in the `build/hw_emu/` or `build/hw/` folders. The build configuration does not matter for the `make graph` and `make application` steps. The outputs of those commands are stored in the `build/` folder. 
 ```make
 # =========================================================
 # TARGET can be set as:
@@ -1471,7 +1473,7 @@ Set the TARGET build configuration to be hardware emulation (`hw_emu`) or system
 TARGET := hw_emu
 ```
 
-### Select the cross compiler
+### Select the Cross Compiler
 Set the cross compiler to `aarch64-linux-gnu-g++`. This is used by the `make application` step. 
 ```make
 # =========================================================
@@ -1523,7 +1525,7 @@ LOCAL_COMM_SRC	:= $(AIE_SRC_REPO)/common/src
 ```
 
 ### Name AI Engine ADF Graph, AI Engine Graph Executable, A72 Application Executable, Kernel Executables, and XCLBIN File
-The $(LIBADF_A) variable defines the AI Engine ADF graph name. The $(LIBADF_A) variable defines the AI Engine graph executable file name. The $(APP_ELF) variable defines the A72 application executable file name. The kernel executable names are the following: 
+The `$(LIBADF_A)` variable defines the AI Engine ADF graph name. The `$(LIBADF_A)` variable defines the AI Engine graph executable file name. The `$(APP_ELF)` variable defines the A72 application executable file name. The kernel executable names are as follows: 
 
 * pccfr_pl_pds_itr1.\[hw_emu | hw].xo
 * pccfr_pl_pds_itr2.\[hw_emu | hw].xo
@@ -1533,7 +1535,7 @@ The $(LIBADF_A) variable defines the AI Engine ADF graph name. The $(LIBADF_A) v
 
 ```make
 # ==========================================================
-# Below are the names for ADF graph, application executable,
+# The following are the names for ADF graph, application executable,
 # kernel executables, and xclbin
 # ==========================================================
 LIBADF_A		:= libadf.a
@@ -1604,7 +1606,7 @@ AIE_FLAGS += --pl-axi-lite=false
 AIE_FLAGS += --workdir=$(WORK_DIR) 
 ```
 
-### Select the A72 Application Compiler Settings, Include Libraries, and Linker Flags:
+### Select the A72 Application Compiler Settings, Include Libraries, and Linker Flags
 ```make
 # =========================================================
 # Application Compiler and Linker Flags
@@ -1640,7 +1642,7 @@ GCC_LIB += -lmetal
 GCC_LIB += -lopen_amp
 ```
 
-### Select the v++ Kernel Compiler Settings 
+### Select the V++ Kernel Compiler Settings 
 ```make
 # =========================================================
 # Kernel Compiler and Linker Flags
@@ -1716,7 +1718,7 @@ $(BUILD_TARGET_DIR)/$(XCLBIN): 	$(BUILD_TARGET_DIR)/$(S2MM_XO).xo		\
 ```
 
 ### Step 4. A72 Application Compilation
-The $(APP_ELF) variable provides the name of `tx_chain.elf`. This executable is generated from the `$(APP_SRC_CPP)` variable (`tx_chain_app.cpp`, and `aie_control.cpp`). The GNU Arm cross-compiler is used. The compiled files are the same for `TARGET=hw_emu` and `TARGET=hw` and placed under `$(BUILD_DIR)`.
+The `$(APP_ELF)` variable provides the name of `tx_chain.elf`. This executable is generated from the `$(APP_SRC_CPP)` variable (`tx_chain_app.cpp`, and `aie_control.cpp`). The GNU Arm cross-compiler is used. The compiled files are the same for `TARGET=hw_emu` and `TARGET=hw` and placed under `$(BUILD_DIR)`.
 ```make
 application: $(BUILD_DIR)/$(APP_ELF) 
 
@@ -1755,7 +1757,7 @@ else
 endif
 ```
 ### Review the Primary Build Targets 
-This Makefile also provides the commands `make build`, `make run`, and `make clean`. The `build` target builds the design without running hardware emulation. the `run` target builds the design and runs hardware emulation. The `clean` target removes all generated files. 
+This Makefile also provides the commands `make build`, `make run`, and `make clean`. The `build` target builds the design without running hardware emulation. The `run` target builds the design and runs hardware emulation. The `clean` target removes all generated files. 
 ```make
  =========================================================
 # Primary Build Targets
@@ -1789,12 +1791,12 @@ clean:
 # Throughput Requirements
 
 <details>
-	<summary>Hardware Throughput specification</summary>
+	<summary>Hardware Throughput Specification</summary>
 	
-## Hardware Throughput specifications
-In the 200 MHz TX Chain design, two channels of NR100 are mixed together to form composite signal of 200 MHz. DPD processes the signal for predistorting PA nonlinearities at ~5x over sampling, and hence 983.04 Msps design is chosen.
+## Hardware Throughput Specifications
+In the 200 MHz TX Chain design, two channels of NR100 are mixed together to form a composite signal of 200 MHz. DPD processes the signal for predistorting PA nonlinearities at ~5x over-sampling, and hence the 983.04 MSPS design is chosen.
 
-The PC-CFR and WCFR PL kernels are targeted to run at 307.2 Msps. To provide the re-sampling stage from the CFR output to the DPD, a filter with a fractional interpolation of 8/5 (interpolating by 8 and decimating by 5) is implemented. It is followed by an interpolation filter which provides a further 2x interpolation to achieve 983.04 Msps sampling rate. The design takes two NR data inputs and the frequency for each is given by the following equation.
+The PC-CFR and WCFR PL kernels are targeted to run at 307.2 MSPS. To provide the re-sampling stage from the CFR output to the DPD, a filter with a fractional interpolation of 8/5 (interpolating by 8 and decimating by 5) is implemented. It is followed by an interpolation filter which provides a further 2x interpolation to achieve a 983.04 MSPS sampling rate. The design takes two NR data inputs and the frequency for each is given by the following equation.
 
 Input sampling rate * (carrier multiplier in mixer) * (DPD preprocessing rate filter sampling rate change) * (DPD preprocessing interpolation) = 983.04
 
@@ -1802,7 +1804,7 @@ Input sampling rate * 2 * (8/5) * 2 = 983.04
 
 Input frequency = 153.6 MHz
 
-which is the minimum clock frequency the MM2S data mover kernel.
+which is the minimum clock frequency for the `mm2s` data mover kernel.
 
 </details>
 
@@ -1810,7 +1812,7 @@ which is the minimum clock frequency the MM2S data mover kernel.
 	<summary>NoC/DDR Memory Bandwidth Requirement</summary>
 
 ## NoC/DDR Memory Bandwidth Requirement
-There are four vertical NoC channels in the VC1902 each supporting 32 GB/s in either direction. Multiple data mover kernels can be connected to each NoC channel. The default maximum read and write bandwidth for each kernel is specified in the AXI NoC IP tab QoS to be 64 MB/s. In the TX Chain design where the write case (S2MM data mover) is the more limiting case, with AXI transfer size of 4 KB and data width of 128 bits, the NoC IP parameter AxLen should be set by specifying `max_write_burst_length` in `s2mm.cpp` to be 256 for maximum transfer efficiency.
+There are four vertical NoC channels in the VC1902 each supporting 32 GB/s in either direction. Multiple data mover kernels can be connected to each NoC channel. The default maximum read and write bandwidth for each kernel is specified in the AXI NoC IP tab QoS to be 64 MB/s. In the TX Chain design where the write case (`s2mm` data mover) is the more limiting case, with AXI transfer size of 4 KB and data width of 128 bits, the NoC IP parameter `AxLen` should be set by specifying `max_write_burst_length` in `s2mm.cpp` to be 256 for maximum transfer efficiency.
 
 </details>
 
@@ -1818,7 +1820,7 @@ There are four vertical NoC channels in the VC1902 each supporting 32 GB/s in ei
 	<summary>Timing and Clocking Requirement</summary>
 	
 # Timing and Clocking Requirement
-As described in previous sections, the TX Chain design operates in a multi-clock environment to meet the sampling frequency requirements. With the frequencies for various kernels specified in the Makefiles, a number of clocking wizards are instantiated to generate the required clocks to the various kernels. The PC-CFR and WCFR PL kernels operate at 307.2 MHz and the MM2S kernels at half that frequency at 153.6 MHz. With the current implementation, the S2MM kernel can only operate at 250 MHz with a data width of 128 bits. Because of the timing requirement of the PL running at 500 MHz at the AI Engine array interface, a data width converter and a clock converter are instantiated to enable timing closure and sustained bandwidth of 983.04  Msps at the DPD out of the AI Engine array. See the blocks in the `aie_engine_system` module in the Vivado Design Suite.
+As described in previous sections, the TX Chain design operates in a multi-clock environment to meet the sampling frequency requirements. With the frequencies for various kernels specified in the Makefiles, a number of clocking wizards are instantiated to generate the required clocks to the various kernels. The PC-CFR and WCFR PL kernels operate at 307.2 MHz and the `mm2s` kernels at half that frequency at 153.6 MHz. With the current implementation, the `s2mm` kernel can only operate at 250 MHz with a data width of 128 bits. Because of the timing requirement of the PL running at 500 MHz at the AI Engine array interface, a data width converter and a clock converter are instantiated to enable timing closure and sustained bandwidth of 983.04 MSPS at the DPD out of the AI Engine array. See the blocks in the `aie_engine_system` module in the Vivado Design Suite.
 
 </details>
 

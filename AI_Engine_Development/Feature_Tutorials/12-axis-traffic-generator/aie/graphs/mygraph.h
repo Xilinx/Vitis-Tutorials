@@ -26,7 +26,7 @@ class mygraph : public graph {
 
   private:
     kernel  passth_i;
-    xf::dsp::aie::fft::dit_1ch::fft_ifft_dit_1ch_graph<cint16, cint16, 128, 1> fwd_fft;
+    xf::dsp::aie::fft::dit_1ch::fft_ifft_dit_1ch_graph<cint16, cint16, 128, 1, 1> fwd_fft;
 
   public:
     port<input>   in;
