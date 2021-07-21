@@ -27,7 +27,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 </p>
 
 ### [Introduction](./Getting_Started)
-Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!!
+Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!
 
 ### [Machine Learning Tutorial](./Machine_Learning)
 Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
