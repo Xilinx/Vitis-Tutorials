@@ -1,6 +1,6 @@
 {
     "name": "AI_Engine_Development-02-Using-GMIO--single-step1",
-    "description": "02-using-gmio-single-step1",
+    "description": "02-using-gmio--single-step1",
     "flow": "versal",
 
     "platform_whitelist": [ "vck190"],
