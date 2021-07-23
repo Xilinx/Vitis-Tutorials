@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -73,40 +73,37 @@ dsplib_tutorial_install
 
 Tools Documentation: 
 
-* [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
+* [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1076-ai-engine-environment.pdf)
 
-* [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/member/versal_ai_core_docs_ea.html)
-
-* [UG1295 Digital Signal Processing Library for AI Engine](https://www.xilinx.com/member/versal_ai_engines.html#documentation)
+* [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/index.html)
 
 To run through this tutorial, you will need to download and install the following tools:
 
-* Install the [Vitis Software Platform 2020.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) 
+* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) 
 
 * Obtain licenses for the AI Engine tools
 
-* Download and setup the [Xilinx DSP Library (DSPLib) 2020.2](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
+* Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
-* Download and setup the [VCK190 Vitis Platform for 2020.2](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
+* Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
 
 ## *Environment*: Setting Up Your Target Platform Environment
 When the elements of the Vitis software platform are installed, update the target platform environment script. 
 
-Create a script file named `env_setup_2020.sh` in your favourite text editor. Replace the placeholders with the appropriate paths: 
+Edit the provided template setup script `env_setup.sh` in your favourite text editor. Replace the placeholders with the appropriate paths: 
 
 ```bash
-export DSPLIB_ROOT=<YOUR-DSPLIB-DIRECTORY>
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY> 
-
-source <XILINX-INSTALL-LOCATION>/Vitis/2020.2/settings64.sh
+#Setup environment variables 
+export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
+export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
 ```
 Then source the environment script: 
 ```bash
-source env_setup_2020.sh
+source env_setup.sh
 ```  
 
 ## *Validation*: Confirming Tool Installation
-Ensure that you are using the 2020.2 version of Xilinx tools. 
+Ensure that you are using the 2021.1 version of Xilinx tools. 
 ```bash
 which vitis
 which aiecompiler
@@ -138,7 +135,7 @@ Part 1 of this tutorial will:
 
 3. Click **Create Application Project**. The Create a New Application Project window will appear, which explains the basic concepts of a Vitis project. Click **Next** when ready.
 
-4. The Platform window will appear. Select **xilinx_vck190_base_202020_1** and click **Next**.
+4. The Platform window will appear. Select **xilinx_vck190_base_202100_1** and click **Next**.
 
 5. The Application Project Details window appears next. Give the application the name **displib_tutorial_part_1**. For the target processor, select **ai_engine**,  and click **Next**.
 
@@ -429,44 +426,26 @@ This concludes this tutorial.
 # References
 The following documents provide supplemental material useful with this tutorial. 
 
-### [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/member/versal_ai_core_docs_ea.html)
+### [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1076-ai-engine-environment.pdf)
 Contains chapters on how to develop AI Engine graphs, how to use the Ai Engine compiler, and AI Engine simulation, and performance analysis.
 
-### [UG1295 Digital Signal Processing Library for AI Engine](https://www.xilinx.com/member/versal_ai_engines.html#documentation)
+### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/index.html)
 Contains information regarding the DSPLib example kernels used by this tutorial.
 
-### [Vitis Unified Software Development Platform 2020.2 Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
 Following links point to Vitis software platform related documents referred in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
 
 # License
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
-you may not use this file except in compliance with the License.
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
-You may obtain a copy of the License at
-
-
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-
-
-Unless required by applicable law or agreed to in writing, software
-
-distributed under the License is distributed on an "AS IS" BASIS,
-
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-See the License for the specific language governing permissions and
-
-limitations under the License.
-
-
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 <p align="center"><sup>XD022 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
