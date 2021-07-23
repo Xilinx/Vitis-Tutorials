@@ -84,7 +84,8 @@ ${XCLBIN}: ${LIBADF} ${VPP_SPEC}
 
 host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
 ${HOST_EXE}: ${GRAPH} ./Work/ps/c_rts/aie_control_xrt.cpp
-	make -C sw/
+	$(MAKE) -C sw/
+
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
 package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE} 
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} \
@@ -105,4 +106,4 @@ clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
 	       vck190_aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
 	       ilpProblem* sol.db drivers .Xil
-	make -C sw clean
+	$(MAKE) -C sw clean

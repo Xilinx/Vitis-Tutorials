@@ -69,36 +69,33 @@ After creating the custom platform from the previous tutorial, the next step is 
     make polar_clip.xo
     ```
 
-## Step 2 - Adjusting the ADF Graph to add the PLIO Kernel
-To set up the ADF graph to interface with the `polar_clip` RTL kernel, you must modify the `graph.cpp` file. Initially, the `polar_clip` kernel was an HLS kernel that was part of the ADF graph. Now that the kernel is an RTL kernel, adjustments to the graph need to be made.
+## Step 2 - Interfacing PLIO Kernels to graph
+To set up the ADF graph to interface with the `polar_clip` RTL kernel, you must add other connections to more PLIO that will represent the RTL Kernel.
 
-1. The following shows the difference between this tutorial graph and the one it was modified from [here](./aie/graph_hls.cpp). One uses the HLS kernel, and the other uses the RTL kernel.
+1. The following `graph.cpp` is how to connect to the RTL Kernel.
 
-    ```diff
+    ```cpp
     #include "graph.h"
 
     PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");
 
-    +// RTL Kernel PLIO
-    +PLIO *ai_to_pl = new PLIO("clip_in",adf::plio_32_bits, "data/output.txt");
-    +PLIO *pl_to_ai = new PLIO("clip_out", adf::plio_32_bits,"data/input2.txt");
+    // RTL Kernel PLIO
+    PLIO *ai_to_pl = new PLIO("clip_in",adf::plio_32_bits, "data/output.txt");
+    PLIO *pl_to_ai = new PLIO("clip_out", adf::plio_32_bits,"data/input2.txt");
 
     PLIO *out0 = new PLIO("DataOut1",adf::plio_32_bits, "data/output.txt");
 
-    +// RTL Kernel Addition to the platform
-    -simulation::platform<1,1> platform(in0, out0);
-    +simulation::platform<2,2> platform(in0, pl_to_ai, out0, ai_to_pl);
+    // RTL Kernel Addition to the platform
+    simulation::platform<2,2> platform(in0, pl_to_ai, out0, ai_to_pl);
 
     clipped clipgraph;
 
-    +connect<> net0(platform.src[0], clipgraph.in);
+    connect<> net0(platform.src[0], clipgraph.in);
 
-    -connect<> net1(clipgraph.out, platform.sink[0]);
-
-    +// Additional nets to the RTL Kernel
-    +connect<> net1(clipgraph.clip_in,platform.sink[0]);
-    +connect<> net2(platform.src[1],clipgraph.clip_out);
-    +connect<> net3(clipgraph.out, platform.sink[1]);
+    // Additional nets to the RTL Kernel
+    connect<> net1(clipgraph.clip_in,platform.sink[0]);
+    connect<> net2(platform.src[1],clipgraph.clip_out);
+    connect<> net3(clipgraph.out, platform.sink[1]);
 
     #ifdef __AIESIM__
     int main(int argc, char ** argv) {
