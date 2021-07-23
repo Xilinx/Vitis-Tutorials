@@ -70,9 +70,9 @@ After creating the custom platform from the previous tutorial, the next step is 
     ```
 
 ## Step 2 - Interfacing PLIO Kernels to graph
-To set up the ADF graph to interface with the `polar_clip` RTL kernel, you must add other connections to more PLIO that will represent the RTL Kernel.
+To set up the ADF graph to interface with the `polar_clip` RTL kernel, you must add other connections to PLIOs that represent the RTL kernel.
 
-1. The following `graph.cpp` is how to connect to the RTL Kernel.
+1. The following `graph.cpp` shows how to connect to the RTL kernel.
 
     ```cpp
     #include "graph.h"
