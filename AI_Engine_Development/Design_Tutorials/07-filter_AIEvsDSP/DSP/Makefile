@@ -216,10 +216,8 @@ VPP_LINK_FLAGS += --vivado.impl.jobs  16
 
 EMBEDDED_EXEC_SCRIPT = run_script.sh
 EMBEDDED_EXEC_PATH   = $(MAKEFILES_REPO)/$(EMBEDDED_EXEC_SCRIPT)
-#TODO: Figure out the below
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-#XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-XF_PROJ_ROOT ?= $(dir $(MK_PATH))
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
 RESULT_VAL ?= 
@@ -332,8 +330,8 @@ package:
 run_emu: 
 ifeq ($(TARGET),hw_emu)
 	cd $(BUILD_TARGET_DIR)/package;	\
-	$(PERL) $(XF_PROJ_ROOT)/embedded_run_emulation.pl "$(BUILD_TARGET_DIR)/package/launch_hw_emu.sh -no-reboot" "./$(EMBEDDED_EXEC_SCRIPT)" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
-	#./launch_hw_emu.sh
+	$(PERL) $(XF_PROJ_ROOT)/ext/make_utility/embedded_run_emulation.pl "$(BUILD_TARGET_DIR)/package/launch_hw_emu.sh -no-reboot" "./$(EMBEDDED_EXEC_SCRIPT)" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
+	./launch_hw_emu.sh
 else
 	@echo ""
 	@echo "Hardware build, no emulation executed."
