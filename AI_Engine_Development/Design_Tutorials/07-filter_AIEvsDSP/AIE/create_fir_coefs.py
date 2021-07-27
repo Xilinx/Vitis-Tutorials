@@ -39,7 +39,7 @@ def create_fir_coefs(n_taps, area):
     coefs = []
 
     midpoint = (n_taps + 1.0) / 2.0
-    for ix in range (0, (n_taps + 1)/2) :
+    for ix in range (0, (n_taps + 1) // 2) :
         tap = area * (ix + 1) / midpoint**2
         coefs.append(int(tap))
 

@@ -422,7 +422,9 @@ endif
 # =========================================================
 
 #Build the design without running the hardware emulation
-build: kernels graph xclbin application package
+
+sd_card: kernels graph xclbin application package
+build:   kernels graph xclbin application package
 
 #Build the design and then run hardware emulation
 run: build run_emu

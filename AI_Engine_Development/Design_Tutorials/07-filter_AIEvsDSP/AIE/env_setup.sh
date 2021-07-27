@@ -19,7 +19,7 @@ export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
 export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
 
 #Source setup scripts
-source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh
+source $XILINX_VITIS/settings64.sh
 source $XILINX_XRT/setup.sh
 
 #Print env variables
@@ -28,4 +28,5 @@ echo "XILINX_VIVADO      : "$XILINX_VIVADO
 echo "XILINX_HLS         : "$XILINX_HLS
 echo "XILINX_XRT         : "$XILINX_XRT
 echo "PLATFORM_REPO_PATHS: "$PLATFORM_REPO_PATHS
+echo "DSPLIB_ROOT        : "$DSPLIB_ROOT
 
