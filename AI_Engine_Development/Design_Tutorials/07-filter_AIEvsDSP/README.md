@@ -37,7 +37,7 @@ A frequently asked question is whether using AI Engines or DSPs produces the bet
 ## Objectives
 After completing the tutorial, you should be able to:
 * Develop a system level design (FIR filter in this case) by identifying the algorithm and deploying the same algorithm on AI Engine and DSP.
-* Build a complete system design by going through the various steps in the Vitis unified software platform flow, including creating the AI Engine adaptive data flow API (ADF) graph, compiling the A72 host application, and compiling PL kernels, using the Vitis compiler (`v++`) to link the AI Engine and HLS kernels with the platform, and packaging the design. You will also be able to run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator
+* Build a complete system design by going through the various steps in the Vitis unified software platform flow, including creating the AI Engine adaptive data flow (ADF) API graph, compiling the A72 host application, and compiling PL kernels, using the Vitis compiler (`v++`) to link the AI Engine and HLS kernels with the platform, and packaging the design. You will also be able to run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator
 * Develop a consistent harness to have the data mover kernels maintain a similar interface with AI Engine/DSP kernels (with AXI4-stream) and DDR memory (memory-mapped AXI4)
 * Develop an understanding of graph control APIs to enable run-time updates using the run-time parameter (RTP) interface for the AI Engine implementation and HLS APIs for controlling HLS/PL kernels
 * Develop an understanding of the various factors that influence the performance, resources, latency, and power of AI Engine and DSP implementations, so that an informed choice can be made between the two implementations.
@@ -56,7 +56,7 @@ FIR filters provide a large design space to explore. For the purposes of this tu
 * Symmetric
 * Fixed (i.e., non-reloadable) coefficients
 
-The number of filter taps in the filters and the number of cascaded filters in the chain can be specified as parameters in the build process. Each filter in the chain consists of an identical number of taps with identical coefficients. While this is not necessarily a realistic situation, it provides a simple means for generating and managing the filter chain.  One further simplification is the use of a triangular window for the filter coefficients, allowing the taps to be generated simply through linear interpolation. (See https://www.recordingblogs.com/wiki/triangular-window or https://en.wikipedia.org/wiki/Window_function#Triangular_window)
+The number of filter taps in the filters and the number of cascaded filters in the chain can be specified as parameters in the build process. Each filter in the chain consists of an identical number of taps with identical coefficients. While this is not necessarily a realistic situation, it provides a simple means for generating and managing the filter chain. One further simplification is the use of a triangular window for the filter coefficients, allowing the taps to be generated simply through linear interpolation. (See https://www.recordingblogs.com/wiki/triangular-window or https://en.wikipedia.org/wiki/Window_function#Triangular_window)
 
 The same filter chain is deployed in the two implementations using AI and DSP Engines. The design will compile through `v++`, and create a Petalinux-based platform via script as well as generate the PDI and host application.
 
@@ -261,7 +261,7 @@ This can been seen in the following dynamic power graph for 240-tap FIR chains w
 <summary>Computational Efficiency</summary>
 
 ## Computational Efficiency
-Computational efficiency is perhaps the best metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (Msamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240 tap filter chain with 1, 5 and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for one a DSP implementation one filter chain, but the AI Engine implementation efficiency is better as the number of filters increases.
+Computational efficiency is perhaps the best metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (Msamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240 tap filter chain with 1, 5, and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for one a DSP implementation one filter chain, but the AI Engine implementation efficiency is better as the number of filters increases.
 
 ![Image of 240 Tap FIR computational efficiency](images/fir_graph_240tap_efficiency.png)
 
@@ -332,7 +332,7 @@ Then open the implemented design and select **Report Utilization**.
 <summary>Throughput and Latency Measurements</summary>
 
 ## Throughput and Latency Measurements
-To maintain consistency between the AI Engine and DSP implementation, the same flow to measure throughput is used to run the design in hardware and capture trace data in run time. Refer to [Vitis Unified Software Development Platform documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) for more information.
+To maintain consistency between the AI Engine and DSP implementation, the same flow to measure throughput is used to run the design in hardware and capture trace data in run time. Refer to the [Vitis Unified Software Development Platform documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) for more information.
 To setup the flow to measure throughput, refer to the section "Run on Hardware" in the AI Engine and DSP implementation documentation, and run the application.
 
 After the application has been run, three files will be created:
