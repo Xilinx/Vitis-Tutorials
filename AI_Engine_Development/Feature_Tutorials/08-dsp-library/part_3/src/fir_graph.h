@@ -60,9 +60,10 @@ public:
 		connect<>(chan_FIR.out, hb_FIR.in);
 		connect<>(hb_FIR.out, out);
 
-        for (int i=0; i < AIES_CHAN; i++)
+        for (int i=0; i < AIES_CHAN; i++)  {
         	location<kernel>(chan_FIR.m_firKernels[i]) = tile(18+i, 0);
+        }
+        location<kernel>(hb_FIR.m_firKernels[0]) = tile(23,0);
 	};
-	location<kernel>(hb_FIR.m_firKernel) = tile(23,0);
 };
 
