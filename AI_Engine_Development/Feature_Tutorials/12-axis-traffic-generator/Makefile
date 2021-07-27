@@ -40,7 +40,7 @@ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_
 TARGET := hw_emu
 PFM := tutorial
 PLIO_WIDTH := 64
-EMU_CMD := python3 pysrc/run_traffic_gen.py ${PLIO_WIDTH} 1 & ./launch_hw_emu.sh 
+EMU_CMD := python3 pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & ./launch_hw_emu.sh 
 
 # File names and locations
 GRAPH := aie/graph.cpp
