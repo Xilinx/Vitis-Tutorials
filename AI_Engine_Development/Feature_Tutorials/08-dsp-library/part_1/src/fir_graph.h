@@ -52,7 +52,7 @@ public:
 		connect<>(in, chan_FIR.in);
 		connect<>(chan_FIR.out, out);
 
-		location<kernel>(chan_FIR.m_firKernel) = tile(18,0);
+		location<kernel>(chan_FIR.m_firKernels[0]) = tile(18,0);
 
 	};
 };
