@@ -111,8 +111,7 @@ class IQData():
         
         if (not self.supressplots):
             self.plot_results(self.input_cplx_data,aie_output)
-        else        
-            input("Enter any key to end simulation")
+            input("Enter any key to end simulation")   
 
         self.rx_axis.disconnect()
         self.tx_axis.end_of_simulation()
