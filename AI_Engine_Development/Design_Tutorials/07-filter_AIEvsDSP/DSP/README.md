@@ -809,7 +809,7 @@ Close the mm2s and s2mm kernel objects.
 The following documents provide supplemental information for this tutorial.
 
 ### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
-Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
+Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
 ### [Vitis FIR Filter IP Library](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_ip_libraries.html#aqn1539734237760)
 Describes how to use the FIR Filter IP Library, which is basically a C++ wrapper that instantiates the Xilinx FIR Compiler
