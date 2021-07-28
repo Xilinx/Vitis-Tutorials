@@ -609,7 +609,7 @@ To see a schematic view of the design with the extended platform as shown in the
 
 ![Image of FIR Filter AIE Platform schematic](images/fir_aie_vivado.png)
 
-The actual FIR filter chain itself is implemented in the AI Engine domain. The graph connects together in a chain the specified number of filters.  For purposes of simplicity in benchmarking, all the filters in the chain are identical, though it is unlikely such a chain would be used in a practical application.
+The actual FIR filter chain itself is implemented in the AI Engine domain. The graph connects together in a chain the specified number of filters. For purposes of simplicity in benchmarking, all the filters in the chain are identical, though it is unlikely such a chain would be used in a practical application.
 
 Notice the system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine run-time trace data if the EN_TRACE option is enabled in the design. The mm2s/s2mm kernels and the AI Engine Array Interface are both operating at 300 MHz.
 
@@ -661,7 +661,7 @@ This section describes the overall data-flow graph specification of the FIR filt
 The overall graph definition of the design is contained in the `fir_aiegraph.cpp` file. The top level graph in turns contains the subgraph, `fir_aie_graph.h`, which is described the following subsection.
 
 ### Define the Graph Class
-Define the FIR graph class by using the objects defined in the appropriate name space. It must include the ADF library. To access ADB library elements, the following declaration is used to scope into it:
+Define the FIR graph class by using the objects defined in the appropriate name space. It must include the ADF library. To access ADF library elements, the following declaration is used to scope into it:
 ` using namespace adf;`
 In addition the following namespace is declared to access the DSPLib library:
 `namespace dsplib = xf::dsp::aie`
@@ -678,7 +678,7 @@ Declare the top level ports to the subgraph:
 
 ### Instantiate DSPLib FIR Filters
 
-The DSPLib symmetric FIR Filter kernels are created using the following array declaration. Since in C++ each array element requires its own template parameters, even if they are identical, the pre-processor #if statement is used as a workaround here:
+The DSPLib symmetric FIR Filter kernels are created using the following array declaration. The pre-processor #if statement is used as a workaround here because in C++ each array element requires its own template parameters, even if they are identical:
 ```
         FirGraph():  FIR_ARRAY {
                 dsplib::fir::sr_sym::fir_sr_sym_graph<T_DATA, T_COEF, N_FIR_TAPS, FIR_DOWNSHIFT, FIR_ROUND_MODE, FIR_WINDOW_SIZE, N_AIES_PER_FIR> (FIR_TAP_COEFS)
@@ -807,7 +807,7 @@ Include the `fir_aie_graph.cpp` AI Engine application file. This file contains t
 ```
 
 ### Define Input and Output Files
-A single data file is provides data to stimulate the filter chain.  However, the output data will depend on the value of the makefile parameters N_FIR_FILTERS and N_FIR_TAPS. Data files have been generated for the four corner cases (1 FILTERS / 15 TAPS, 10 FILTERS / 15 TAPS, 1 FILTERS / 240 TAPS, 10 FILTERS / 240 TAPS).  For other configurations, the data is not checked.
+A single data file is provides data to stimulate the filter chain.  However, the output data will depend on the value of the makefile parameters N_FIR_FILTERS and N_FIR_TAPS. Data files have been generated for the four corner cases (1 FILTERS / 15 TAPS, 10 FILTERS / 15 TAPS, 1 FILTERS / 240 TAPS, 10 FILTERS / 240 TAPS). For other configurations, the data is not checked.
 ```
 #include "input_data.h"
 
