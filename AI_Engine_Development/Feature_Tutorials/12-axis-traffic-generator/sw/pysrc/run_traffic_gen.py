@@ -111,9 +111,8 @@ class IQData():
         
         if (not self.supressplots):
             self.plot_results(self.input_cplx_data,aie_output)
-        
-   
-        input("Enter any key to end simulation")
+            input("Enter any key to end simulation")   
+
         self.rx_axis.disconnect()
         self.tx_axis.end_of_simulation()
         print("Disconnected all IPC handles.. done!")  
@@ -233,4 +232,4 @@ if __name__ == "__main__":
     obj = IQData(iqdata,aietype="cint16",plio_width=cmd_line_pliowidth,supressplots=skipplots)
     
     obj.run_test(ipc=True)
-    print("Test complete")
+    print("TEST PASSED")
