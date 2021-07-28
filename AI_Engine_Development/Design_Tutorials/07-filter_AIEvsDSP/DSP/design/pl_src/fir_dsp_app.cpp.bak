@@ -1,0 +1,95 @@
+
+#include <complex>
+
+#include <hls_stream.h>
+#include <ap_axi_sdata.h>
+
+#include "fir_dsp.h"
+
+
+int main() {
+
+    static Complex_t input_data[WINDOW_LENGTH] = {
+    		Complex_t (  0,   16384),
+    		Complex_t (	 7,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	 0,      -1),
+    		Complex_t (	 0,       0),
+    		Complex_t (512,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	-1,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	 0,       0),
+    		Complex_t (	 0,       0)
+
+/*     0,       0,
+   103,   16383,
+   206,       0,
+   309,       0,
+   412,       0,
+   515,       0,
+   617,       0,
+   720,       0,
+   823,       0,
+   926,       0,
+  1029,       0,
+  1131,       0,
+  1234,       0,
+  1337,       0,
+  1439,       0,
+  1542,       0
+  1644,       0,
+  1747,       0,
+  1849,       0,
+  1951,       0,
+  2053,       0,
+  2155,       0,
+  2257,       0,
+  2359,       0,
+  2461,       0,
+  2563,       0,
+  2664,       0,
+  2766,       0,
+  2867,       0,
+  2969,       0,
+  3070,       0,
+  3171,       0
+  */
+};
+
+    static Complex_t output_data[WINDOW_LENGTH];
+    hls::stream<ap_axiu<32, 0, 0, 0> > StreamIn;
+	hls::stream<ap_axiu<32, 0, 0, 0> > StreamOut;
+
+    for (int ix = 0; ix < WINDOW_LENGTH; ix++)  {
+    	printf("Data in:  %2d ->  %5d %5di\n", ix, (int) real(input_data[ix]), (int) imag(input_data[ix]));
+    }
+
+    for (int ix = 0 ; ix < WINDOW_LENGTH; ix++)  {
+    	uint32_t word = (((uint32_t) real(input_data[ix])) << 16) | (imag(input_data[ix]) & 0XFFFF);
+    	ap_axiu<32, 0, 0, 0> StreamWord;
+    	printf("StreamIn  %2d ->  %8x\n", ix, word);
+    	StreamWord.data = word;
+    	StreamIn.write(StreamWord);
+    }
+
+
+    fir_dsp(StreamIn, StreamOut);
+
+    for (int ix = 0 ; ix < WINDOW_LENGTH; ix++)  {
+    	ap_axiu<32, 0, 0, 0> StreamWord = StreamOut.read();
+    	uint32_t word = StreamWord.data;
+       	printf("StreamOut  %2d ->  %8x\n", ix, word);
+        output_data[ix] = Complex_t  {((word >> 16) & 0xFFFF), (word & 0xFFFF)};
+    }
+
+    for (int ix = 0; ix < WINDOW_LENGTH; ix++)  {
+    	printf("Data out:  %2d ->  %5d %5di\n", ix, (int) real(output_data[ix]), (int) imag(output_data[ix]));
+    }
+
+}

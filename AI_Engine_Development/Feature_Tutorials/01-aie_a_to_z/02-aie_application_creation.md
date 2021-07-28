@@ -12,17 +12,17 @@ In this section of the tutorial, you will learn how to create a new AI Engine ap
 
 ### Step 1. Create a new AI Engine Application Project
 
-1. Open the Vitis 2020.2 IDE if you have already closed it. You can use the same workspace as the previous stage or create a new one.
+1. Open the Vitis 2021.1 IDE if you have closed it. You can use the same workspace as the previous stage or create a new one.
 
 2. On the Welcome Page, click on ***Create Application Project*** or click ***File → New →  Application Project***.
 
-3. On the platform page, if you do not have the platform created on the previous step, click on ***Add*** and select the folder `base_pfm_vck190/export`
+3. On the platform page, select the ***base_pfm_vck190*** platform you just created in last step. If you do not use the same workspace from last step, click on ***Add*** and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
 
 4. Set the application name as ***simple_application*** and select ***ai_engine*** for the processor.
 
       ![](images/aie_app_pg1.png)
 
-5. Keep the default setting for next page and click ***Next***.
+5. Keep the default setting for the next page and click ***Next***.
 
 6. In the Template page, select the ***Simple*** template. Click ***Finish*** to create the application project.
 
@@ -72,7 +72,7 @@ void simple(input_window_cint16 * in, output_window_cint16 * out) {
 
 2. Click on the hammer icon to build the project.
 
-3. To run System C simulation (called ***Emulation-AIE***), click on the arrow next to the run button and click ***Launch AIE Emulator***.
+3. To run System C simulation (called ***Emulation-AIE***), right-click on the ***simple_application*** project and select ***Run as*** -> ***Launch AIE Emulator*** from the pop-up menu.
 
 4. You should see the simulation running successfully in the console.
 The output data is written to the file `Emulation-AIE/aiesimulator_output/data/output.txt`. You can compare the file `output.txt` with the `golden.txt` file. The output data should match the golden value.
@@ -101,7 +101,7 @@ A pop-up window should appear saying that the two files match which means that t
 <p align="center"><b><a href="./01-custom_base_platform_creation.md">Return to Step 1</a> — <a href="./03-pl_application_creation.md">Go to Step 3</a></b></p>
 
 
-<p align="center">© Copyright 2020 Xilinx, Inc.</p>
+<p align="center">© Copyright 2020-2021 Xilinx, Inc.</p>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
