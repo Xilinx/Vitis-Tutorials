@@ -90,7 +90,8 @@ IMPULSE_AREA	:= 16383
 # Choose the compiler based on the A72 Processor in the 
 # Versal device
 # =========================================================
-HOST_CXX        := aarch64-linux-gnu-g++
+export LD_LIBRARY_PATH := $(XILINX_VIVADO)/tps/lnx64/gcc-6.2.0/lib64:$(LD_LIBRARY_PATH)
+CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 
 # =========================================================
 # Choose the XRT and XAIENGINE
@@ -222,6 +223,7 @@ PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
 RESULT_VAL ?= 
 RUN_LEVEL  ?= 7
+LDCLFLAGS=
 
 # =========================================================
 # Packaging Flags
@@ -303,8 +305,8 @@ $(XCLBIN): $(S2MM_KERNEL_XO)	\
 #	fir_dsp_app.o 
 # 	fir_dsp_xrt.elf
 application:
-	$(HOST_CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/fir_dsp_app.o $(GCC_LIB_INC) $(GCC_LIB)
-	$(HOST_CXX) $(BUILD_DIR)/fir_dsp_app.o $(GCC_LIB_INC) $(GCC_LIB) -o $(APP_ELF)
+	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/fir_dsp_app.o $(GCC_LIB_INC) $(GCC_LIB)
+	$(CXX) $(BUILD_DIR)/fir_dsp_app.o $(GCC_LIB_INC) $(GCC_LIB) -o $(APP_ELF)
 
 # =========================================================
 # Step 4. Package Generation  
