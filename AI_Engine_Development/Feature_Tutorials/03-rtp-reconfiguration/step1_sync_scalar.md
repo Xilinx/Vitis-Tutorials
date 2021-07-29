@@ -100,7 +100,7 @@ __Note:__ The default working directory in this step is "step1", unless specifie
 	
    The corresponding command for aiecompiler is:
 
-       aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
+       aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
   
    Switches for the AI Engine are as follows:
 
@@ -163,7 +163,7 @@ To compile the HLS PL kernel, run the following make command:
 
 The corresponding v++ compiler command is as follows:
 
-	v++ -c --platform xilinx_vck190_es1_base_202020_1 -k s2mm s2mm.cpp -o s2mm.xo --verbose --save-temps
+	v++ -c --platform xilinx_vck190_es1_base_202110_1 -k s2mm s2mm.cpp -o s2mm.xo --verbose --save-temps
 
 Switches for the v++ compiler are as follows:
 
@@ -179,7 +179,7 @@ The next step is to link the AI Engine graph and PL kernels to generate the hard
 	
 This make takes 10 minutes or more to complete. The corresponding v++ linker command is as follows:
 
-	v++ -g -l --platform xilinx_vck190_es1_base_202020_1 pl_kernels/s2mm.xo libadf.a -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
+	v++ -g -l --platform xilinx_vck190_es1_base_202110_1 pl_kernels/s2mm.xo libadf.a -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
 
 Switches for the v++ linker are as follows:
 
@@ -195,9 +195,9 @@ After generating the hardware platform, compile the host code (`sw/host.cpp`) us
 	
 The detailed commands for compiling the host code are as follows:
 
-	${CXX} -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o aie_control_xrt.o aie_control_xrt.cpp
-	${CXX} -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o host.o host.cpp
-	${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux//usr/lib/ --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.2/sysroots/aarch64-xilinx-linux/ -L$XILINX_VITIS/aietools/lib/aarch64.o
+	${CXX} -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o aie_control_xrt.o aie_control_xrt.cpp
+	${CXX} -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o host.o host.cpp
+	${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux//usr/lib/ --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/ -L$XILINX_VITIS/aietools/lib/aarch64.o
 	
 Here, the cross compiler pointed by `CXX` is used to compile the linux host code. `aie_control_xrt.cpp` is copied from the directory `Work/ps/c_rts`.
 
@@ -280,9 +280,9 @@ The next step is to use v++ with `-p` to generate the package file. The make com
 	
 The corresponding v++ command is:
 
-	v++ -p -t hw_emu -f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm \
-	--package.rootfs $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.1/rootfs.ext4  \
-	--package.kernel_image $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2020.1/Image  \
+	v++ -p -t hw_emu -f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm \
+	--package.rootfs $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4  \
+	--package.kernel_image $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/Image  \
 	--package.boot_mode=sd \
 	--package.image_format=ext4 \
 	--package.defer_aie_run \
