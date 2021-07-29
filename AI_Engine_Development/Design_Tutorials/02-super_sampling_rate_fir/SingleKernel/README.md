@@ -210,11 +210,11 @@ These four blocks have to be written eight times with different parameters to co
 Ensure that the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `SingleKernel` directory. In the `Makefile`, three methods are defined:
-- `compile`
+- `aie`
   - Compiles the graph and the kernels
-- `simulate`
+- `aiesim`
   - Runs the AI Engine System C simulator
-- `visualize`
+- `aieviz`
   - Runs `vitis_analyzer`on the output summary
 
 Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instanciation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
@@ -248,11 +248,11 @@ The top graph reflects the outputs where the abscissa is at the time at which th
 The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (`Emulation-AIE/aiesimulator_output/data`) type `StreamThroughput Output_0.txt`:
 
 ```
-Output_0.txt -->   225.28 Msps
+Output_0.txt -->   225.40 Msps
 
 -----------------------
 
-Total Throughput -->     225.28 Msps
+Total Throughput -->     225.40 Msps
 ```
 
 Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum throughput attainable is 250 Msps which is in line with what was achieved.

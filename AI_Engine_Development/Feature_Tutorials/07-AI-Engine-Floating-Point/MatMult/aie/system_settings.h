@@ -62,3 +62,5 @@ Complex Floating-Point case
 
 #define NBYTES_FLOAT 4
 #define NBYTES_CFLOAT 8
+
+#define NITERATIONS 2

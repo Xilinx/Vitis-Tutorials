@@ -17,21 +17,22 @@
 #pragma once
 
 void matmult_float(
-  input_window_float* restrict matA,
-  input_window_float* restrict matB,
-  output_window_float* restrict matC);
+  input_window_float* __restrict matA,
+  input_window_float* __restrict matB,
+  output_window_float* __restrict matC);
 
 void matmult_cfloat(
-  input_window_cfloat* restrict matA,
-  input_window_cfloat* restrict matB,
-  output_window_cfloat* restrict matC);
+  input_window_cfloat* __restrict matA,
+  input_window_cfloat* __restrict matB,
+  output_window_cfloat* __restrict matC);
 
   void matmult_cfloat_conf(
-    input_window_cfloat* restrict matA,
-    input_window_cfloat* restrict matB,
-    output_window_cfloat* restrict matC);
+    input_window_cfloat* __restrict matA,
+    input_window_cfloat* __restrict matB,
+    output_window_cfloat* __restrict matC);
 
     void matmult_cfloat_conj(
-      input_window_cfloat* restrict matA,
-      input_window_cfloat* restrict matB,
-      output_window_cfloat* restrict matC);
+      input_window_cfloat* __restrict matA,
+      input_window_cfloat* __restrict matB,
+      output_window_cfloat* __restrict matC);
+

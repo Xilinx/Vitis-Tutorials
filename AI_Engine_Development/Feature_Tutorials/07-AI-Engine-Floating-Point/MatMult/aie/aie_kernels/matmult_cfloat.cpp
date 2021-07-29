@@ -21,9 +21,9 @@
 // 16x4  x  4x4
 // Can be extended to (2L)x(4M)  (4M)x(4N)
 void matmult_cfloat(
-    input_window_cfloat* restrict matA,
-    input_window_cfloat* restrict matB,
-    output_window_cfloat* restrict matC)
+    input_window_cfloat* __restrict matA,
+    input_window_cfloat* __restrict matB,
+    output_window_cfloat* __restrict matC)
 {
 
    v8cfloat buf_matA = window_readincr_v8(matA);      // holds the first 8 elements of matA
@@ -63,9 +63,9 @@ void matmult_cfloat(
 
 
 void matmult_cfloat_conf(
-    input_window_cfloat* restrict matA,
-    input_window_cfloat* restrict matB,
-    output_window_cfloat* restrict matC)
+    input_window_cfloat* __restrict matA,
+    input_window_cfloat* __restrict matB,
+    output_window_cfloat* __restrict matC)
 {
 
    v16float buf_matA = as_v16float(window_readincr_v8(matA));      // holds the first 8 elements of matA
@@ -165,9 +165,9 @@ void matmult_cfloat_conf(
 
 
 void matmult_cfloat_conj(
-    input_window_cfloat* restrict matA,
-    input_window_cfloat* restrict matB,
-    output_window_cfloat* restrict matC)
+    input_window_cfloat* __restrict matA,
+    input_window_cfloat* __restrict matB,
+    output_window_cfloat* __restrict matC)
 {
 
    v16float buf_matA = as_v16float(window_readincr_v8(matA));      // holds the first 8 elements of matA

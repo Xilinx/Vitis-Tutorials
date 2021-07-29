@@ -38,7 +38,7 @@ public:
     connect< window<NSAMPLES_WINDOW*NBYTES_FLOAT,NSAMPLES_OVERLAP*NBYTES_FLOAT> > float_in(in, k.in[0]);
     connect< window<NSAMPLES_WINDOW*NBYTES_FLOAT> > float_out(k.out[0], out);
 
-    source(k) = "./fir_float.cpp";
+    source(k) = "aie_kernels/fir_float.cpp";
     location<kernel>(k) = tile(COL,ROW);
     runtime<ratio>(k) = 0.6;
   }
@@ -61,7 +61,7 @@ public:
     connect< window<NSAMPLES_WINDOW*NBYTES_CFLOAT,NSAMPLES_OVERLAP*NBYTES_CFLOAT> > cfloat_in(in, k.in[0]);
     connect< window<NSAMPLES_WINDOW*NBYTES_CFLOAT> > cfloat_out(k.out[0], out);
 
-    source(k) = "./fir_cfloat.cpp";
+    source(k) = "aie_kernels/fir_cfloat.cpp";
     location<kernel>(k) = tile(COL,ROW);
     runtime<ratio>(k) = 0.6;
   }

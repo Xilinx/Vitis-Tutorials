@@ -1,7 +1,7 @@
 ﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
-   <h1>Designing with the AI Engine DSPLib and Model Composer</h1>
+   <h1>Designing with the AI Engine DSPLib and Vitis Model Composer</h1>
    </td>
  </tr>
 </table>
@@ -9,16 +9,16 @@
 # Introduction
 
 The purpose of this tutorial is to provide hands-on experience for designing AI Engine applications using Model Composer. This tool is a set of blocksets for Simulink that makes it easy to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.
-Model Composer can be used to create complex systems targeting the PL (RTL and HLS blocksets) and the AI Engine array (AIE blockset) at the same time. The complete system can be simulated in Simulink, and the code generated (RTL for the PL and C++ graph for the AI Engine array).
+Vitis Model Composer can be used to create complex systems targeting the PL (RTL and HLS blocksets) and the AI Engine array (AIE blockset) at the same time. The complete system can be simulated in Simulink, and the code generated (RTL for the PL and C++ graph for the AI Engine array).
 
 
 # Before You Begin
 
 Install the tools:
 
-* Get and install [MATLAB and Simulink 2019b or 2020a](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
+* Get and install [MATLAB and Simulink 2020a, 2020b or 2021a](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
   - Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [Xilinx Vitis 2020.2](https://www.xilinx.com/support/download.html).
+* Get and install [Xilinx Vitis 2021.1](https://www.xilinx.com/support/download.html).
 
 
 
@@ -28,7 +28,7 @@ Install the tools:
 
 ![Decimation Filter Chain](Images/DecimationChain.svg "Decimation Filter Chain")
 
-1. Open MATLAB by typing `xmc_sysgen`. The path to the various blocksets of Model Composer are automatically added.
+1. Open MATLAB by typing `model_composer`. The path to the various blocksets of Model Composer are automatically added.
 2. In order to initialize the tutorial environment type `setupLab` in the **MATLAB** command window.
 
 This function includes the directory ``LabUtils`` in the search path and runs the filter coefficients initialization. The output in the MATLAB command window is:
@@ -66,6 +66,12 @@ In the workspace sub-window you can see that a number of variables that are defi
 
 ![Workspace](Images/Workspace.png "Workspace variables")
 
+There are 3 additional files:
+- XMC_DSPLib_Solution_Stage1.slx
+- XMC_DSPLib_Solution_Stage2.slx
+- XMC_DSPLib_Solution_Stage3.slx
+
+These are there to help you if you cannot complete any of the 3 stages.
 
 # Stage 1: Create and Simulate the Design
 
@@ -93,7 +99,7 @@ Perform the next two steps to enhance the User Experience. This allows you to ha
 
    - Double-click the new block and remove all blocks inside (**CTRL-A** and **Del**).
    - Go back to the top level by clicking on the Up-arrow.
-   
+
 
 ![](Images/Image_005.png)
 
@@ -121,19 +127,17 @@ Click the **AI Engine** section. This reveals see four subsections:
 - Tools
 - User-Defined functions
 
-6. Click the **DSP** sub-section and place the **AIE FIR Filter** block in the canvas as shown in the following figure.
+6. Click the **DSP** sub-section and place the **AIE FIR Halfband Decimator** block in the canvas as shown in the following figure.
 
 ![](Images/Image_007.png)
 
 
-7. Double-click the **AIE FIR Filter** block to open the GUI. Populate the GUI with the following parameters and click **OK**:
-    - **Filter type**: Halfband Decimator
-    - **Filter length**: length(hb1)
-    - **Filter coefficients**: hb1_aie
-    - **Filter coefficients data type**: int16
+7. Double-click the **AIE FIR HalfBand Decimator** block to open the GUI. Populate the GUI with the following parameters and click **OK**:
     - **Input/output data type**: cint16
+    - **Filter coefficients data type**: int16
+    - **Filter coefficients**: hb1_aie
     - **Input Window size (Number of samples)**: 2048
-    - **Input sampling rate (MSPS)**: 1000
+    - **Input sampling rate (MSPS)**: 800
     - **Scale output down by 2^: Shift1
     - **Rounding mode**: Floor
 
@@ -175,15 +179,14 @@ Notice that before the implementing the Decimation Filter the vector length was 
 
 | Parameter |HB1 |	HB2	| HB3	| Channel Filter |
 | :--- | :--- |  :--- | :--- | :--- |
-| Filter Type	| HalfBand Decimator	| HalfBand Decimator	| HalfBand Decimator	| Single Rate Filter |
-| Symmetric Filter	| N/A	| N/A | 	N/A	| Check |
-| Filter Length	| length(hb1)	| length(hb2)	| length(hb3)	| length(cfi) |
-| Filter Coefficients	| hb1_aie	| hb2_aie	| hb3_aie	| cfi_aie |
-| Filter Coefficients Data Type	| int16	| int16	| int16	| int16 |
+| Filter Block	| FIR HalfBand Decimator | FIR HalfBand Decimator	| FIR HalfBand Decimator	| FIR Symmetric Filter |
 | Input Output data type	| cint16	| cint16	| cint16	| cint16 |
+| Filter Coefficients Data Type	| int16	| int16	| int16	| int16 |
+| Filter Coefficients	| hb1_aie	| hb2_aie	| hb3_aie	| cfi_aie |
+| Filter Length	| N/A | N/A	| N/A | length(cfi) |
 | Input window size (Number of samples)	| 2048	| 1024	| 512	| 256 |
 | Input sampling rate (MSPS)	| 1000	| 500	| 250	| 125 |
-| Number of Cascade stages	| N/A	| N/A	| N/A	| 1 |
+| Specify Number of Cascade Stage   | Uncheck  |  Uncheck | Uncheck  | Uncheck  |
 | Scale output down by 2^	| Shift1	| Shift2	| Shift3	| ShiftCF |
 | Rounding mode	floor	| floor	| floor	| floor |
 
@@ -198,9 +201,9 @@ Notice that before the implementing the Decimation Filter the vector length was 
 
 When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink the spectrum can be easily displayed using a spectrum scope.
 
-1. Right-click the canvas and type ``spectrum``. Select **Spectrum Analyzer**. Set the following parameters (click the left-most button of the icon bar to display the GUI).
-    - **Overlap**: 50%
-    - **Average**: 16
+1. Right-click the canvas and type ``spectrum``. Double-click the **Spectrum Analyzer** block to open the GUI. Set the following parameters (click the left-most button of the icon bar to display the GUI).
+    - **Overlap** (Window options): 50%
+    - **Average** (Trace options): 16
 2. Set the Stop Time of the simulation to **inf**.
 3. Connect the spectrum scope at the output of the last filter (the Channel Filter):
 
@@ -213,7 +216,7 @@ Run the simulation. The spectrum scope should display similar to the following:
 
 Now add a block coming from a standard templated C++ kernel which source is in the directory ``aiecode_src``. This function will be a frequency shift operation that will be placed after the downsampling chain.
 
-4. Select the block from the **User-defined Functions** section of the AI Engine Library and place it in the canvas:
+4. Select the block _AIE Kernel_ from the **User-defined Functions** section of the AI Engine Library and place it in the canvas:
 
 ![](Images/Image_017.png)
 
@@ -251,11 +254,11 @@ All the simulations that occur in Simulink are the so-called 'Emulation-SW'. The
 In this stage you will generate the graph code of this design and perform bit-true and cycle true simulations with the AI Engine Simulator.
 
 1. Select the four AIE FIR Filters and the Frequency shifting block and type **CTRL+G** to group them in a subsystem. Assign a new name: **FIRchain**.
-2. Click the canvas and type ``model co``. Select the block **Model Composer Hub** and set the following parameters:
+2. Click the canvas and type ``model co``. Double-click the block **Model Composer Hub** and set the following parameters:
     - **Subsystem name**: ``FIRchain``
     - Check **Create testbench**
-    - Check **Run cycle-accurate SystemC simulator**
-    - Check **Launch Vitis Analyzer**
+    - Check **Run AIE Simulation**
+    - Check **Collect Data for Vitis Analyzer**
 3. Click **Apply** and **Generate and Run**.
 
 The simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/src_aie/FIRchain.h``:
@@ -265,37 +268,39 @@ The simulink design is run to generate the testbench, then the graph code is gen
 #define __XMC_FIRCHAIN_H__
 
 #include <adf.h>
-#include "./AIE_FIR_Filter_ddde/AIE_FIR_Filter_ddde.h"
-#include "./AIE_FIR_Filter2_8ddc/AIE_FIR_Filter2_8ddc.h"
-#include "./AIE_FIR_Filter3_4d1d/AIE_FIR_Filter3_4d1d.h"
-#include "./AIE_FIR_Channel_4f5d/AIE_FIR_Channel_4f5d.h"
+#include "./FIR_Halfband_Decimator_c76b579e/FIR_Halfband_Decimator_c76b579e.h"
+#include "./FIR_Halfband_Decimator_6375a0e3/FIR_Halfband_Decimator_6375a0e3.h"
+#include "./FIR_Halfband_Decimator_66ef926b/FIR_Halfband_Decimator_66ef926b.h"
+#include "./FIR_Symmetric_Filter_7df0435a/FIR_Symmetric_Filter_7df0435a.h"
 #include "aiecode_src/FreqShift.h"
 
-class FIRchain : public adf::graph {
-private:
-   AIE_FIR_Filter_ddde AIE_FIR_Filter;
-   AIE_FIR_Filter2_8ddc AIE_FIR_Filter2;
-   AIE_FIR_Filter3_4d1d AIE_FIR_Filter3;
-   AIE_FIR_Channel_4f5d AIE_FIR_Channel;
-   adf::kernel AIE_Template_Kernel;
+class FIRChain : public adf::graph {
+public:
+   FIR_Halfband_Decimator_c76b579e FIR_Halfband_Decimator1;
+   FIR_Halfband_Decimator_6375a0e3 FIR_Halfband_Decimator2;
+   FIR_Halfband_Decimator_66ef926b FIR_Halfband_Decimator3;
+   FIR_Symmetric_Filter_7df0435a FIR_Symmetric_Filter;
+   adf::kernel FreqShift_0;
 
 public:
    adf::input_port In1;
    adf::output_port Out1;
 
-   FIRchain() {
-      // create kernel AIE_Template_Kernel
-      AIE_Template_Kernel = adf::kernel::create(FreqShift<256>);
-      adf::source(AIE_Template_Kernel) = "aiecode_src/FreqShift.cpp";
-      adf::runtime<ratio>(AIE_Template_Kernel) = 0.9;
+   FIRChain() {
+      // create kernel FreqShift_0
+      FreqShift_0 = adf::kernel::create(FreqShift<256>);
+      adf::source(FreqShift_0) = "aiecode_src/FreqShift.cpp";
+
+      // create kernel constraints FreqShift_0
+      adf::runtime<ratio>( FreqShift_0 ) = 0.9;
 
       // create nets to specify connections
-      adf::connect<  > net0 (In1, AIE_FIR_Filter.in);
-      adf::connect<  > net1 (AIE_FIR_Filter.out, AIE_FIR_Filter2.in);
-      adf::connect<  > net2 (AIE_FIR_Filter2.out, AIE_FIR_Filter3.in);
-      adf::connect<  > net3 (AIE_FIR_Filter3.out, AIE_FIR_Channel.in);
-      adf::connect< adf::window<1024> > net4 (AIE_FIR_Channel.out, AIE_Template_Kernel.in[0]);
-      adf::connect< adf::window<1024> > net5 (AIE_Template_Kernel.out[0], Out1);
+      adf::connect<  > net0 (In1, FIR_Halfband_Decimator1.in);
+      adf::connect<  > net1 (FIR_Halfband_Decimator1.out, FIR_Halfband_Decimator2.in);
+      adf::connect<  > net2 (FIR_Halfband_Decimator2.out, FIR_Halfband_Decimator3.in);
+      adf::connect<  > net3 (FIR_Halfband_Decimator3.out, FIR_Symmetric_Filter.in);
+      adf::connect< adf::window<1024> > net4 (FIR_Symmetric_Filter.out, FreqShift_0.in[0]);
+      adf::connect< adf::window<1024> > net5 (FreqShift_0.out[0], Out1);
    }
 };
 
@@ -309,6 +314,8 @@ Finally, the bit-exact simulation (Emulation-AIE) is performed and the result co
 Vitis Analyzer is then launched. From here you can see the **Graph View**, the **Array View**, the **Timeline**, and the **Profile** information.
 
 ![](Images/Image_022.png)
+
+![](Images/Image_023.png)
 
 # Conclusion
 
