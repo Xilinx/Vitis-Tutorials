@@ -339,4 +339,4 @@ Scripts are provided to re-create projects and generate outputs. To use these sc
    make clean
    ```
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>

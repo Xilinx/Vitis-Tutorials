@@ -429,4 +429,4 @@ We have completed creating a custom platform from scratch and verifying it with 
 
 Please feel free to check more tutorials in this repository.
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
