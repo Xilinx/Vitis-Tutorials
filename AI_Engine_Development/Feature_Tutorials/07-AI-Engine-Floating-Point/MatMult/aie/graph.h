@@ -38,7 +38,7 @@ public:
     connect< window<NSAMPLES_WINDOW_F_A*NBYTES_FLOAT> > float_ina(ina, k.in[0]);
     connect< window<NSAMPLES_WINDOW_F_B*NBYTES_FLOAT> > float_inb(inb, k.in[1]);
     connect< window<NSAMPLES_WINDOW_F_C*NBYTES_FLOAT> > float_outc(k.out[0], outc);
-    source(k) = "./matmult_float.cpp";
+    source(k) = "aie_kernels/matmult_float.cpp";
     location<kernel>(k) = tile(COL,ROW);
     runtime<ratio>(k) = 0.6;
   }
@@ -73,15 +73,15 @@ public:
     connect< window<NSAMPLES_WINDOW_CF_C*NBYTES_CFLOAT> > float_outc_conj(k_conj.out[0], outc_conj);
 
 
-    source(k) = "./matmult_cfloat.cpp";
+    source(k) = "aie_kernels/matmult_cfloat.cpp";
     location<kernel>(k) = tile(COL,ROW);
     runtime<ratio>(k) = 0.6;
 
-    source(k_conf) = "./matmult_cfloat.cpp";
+    source(k_conf) = "aie_kernels/matmult_cfloat.cpp";
     location<kernel>(k_conf) = tile(COL,ROW+1);
     runtime<ratio>(k_conf) = 0.6;
 
-    source(k_conj) = "./matmult_cfloat.cpp";
+    source(k_conj) = "aie_kernels/matmult_cfloat.cpp";
     location<kernel>(k_conj) = tile(COL,ROW+2);
     runtime<ratio>(k_conj) = 0.6;
 

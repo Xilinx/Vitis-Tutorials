@@ -17,16 +17,16 @@
 all:
 	make -C Emulation-AIE all
 
-compile:
-	make -C Emulation-AIE compile
+aie:
+	make -C Emulation-AIE aie
 
-simulate:
-	make -C Emulation-AIE simulate
+aiesim:
+	make -C Emulation-AIE aiesim
 
-visualize:
-	make -C Emulation-AIE visualize
+aieviz:
+	make -C Emulation-AIE aieviz
 
 clean:
 	make -C Emulation-AIE clean
 
-.PHONY: all clean compile  simulate visualize
+.PHONY: all clean  aie aiesim aieviz
