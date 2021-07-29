@@ -333,7 +333,7 @@ run_emu:
 ifeq ($(TARGET),hw_emu)
 	cd $(BUILD_TARGET_DIR)/package;	\
 	$(PERL) $(XF_PROJ_ROOT)/ext/make_utility/embedded_run_emulation.pl "$(BUILD_TARGET_DIR)/package/launch_hw_emu.sh -no-reboot" "./$(EMBEDDED_EXEC_SCRIPT)" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
-	./launch_hw_emu.sh
+	#./launch_hw_emu.sh
 else
 	@echo ""
 	@echo "Hardware build, no emulation executed."
