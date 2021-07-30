@@ -21,9 +21,9 @@
 // 16x8  x  8x8
 // Can be extended to (2L)x(8M)  (8M)x(8N)
 void matmult_float(
-    input_window_float* restrict matA,
-    input_window_float* restrict matB,
-    output_window_float* restrict matC)
+    input_window_float* __restrict matA,
+    input_window_float* __restrict matB,
+    output_window_float* __restrict matC)
 {
 
    v16float buf_matA = window_readincr_v16(matA);      // holds the first 16 elements of matA

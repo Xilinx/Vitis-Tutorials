@@ -30,11 +30,11 @@ connect<> net11(P.src[1], G.in[1]);
 connect<> net20(G.out[0], P.sink[0]);
 connect<> net21(G.out[1], P.sink[1]);
 
-#ifdef __AIESIM__
+#if defined(__AIESIM__) || defined(__X86SIM__)
    int main(int argc, char ** argv)
    {
       G.init();
-      G.run(2);
+      G.run(NITERATIONS);
       G.end();
 
       return 0;

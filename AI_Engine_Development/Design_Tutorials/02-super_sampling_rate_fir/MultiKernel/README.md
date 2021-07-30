@@ -229,11 +229,11 @@ void SingleStream::FIRinit()
 Ensure that the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
-- `compile`
+- `aie`
   - Compiles the graph and the kernels
-- `simulate`
+- `aiesim`
   - Runs the AI Engine System C simulator
-- `visualize`
+- `aieviz`
   - Runs `vitis_analyzer` on the output summary
 
 Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instantiation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
@@ -271,11 +271,12 @@ The top graph reflects the outputs where the abscissa is the time at which this 
 The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`) type `StreamThroughput Output_0.txt`:
 
 ```
-Output_0.txt -->   950.35 Msps
+Output_0.txt -->   951.67 Msps
 
 -----------------------
 
-Total Throughput -->     950.35 Msps
+
+Total Throughput -->     951.67 Msps
 ```
 
 This architecture achieves very close to 1 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.

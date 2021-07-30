@@ -34,17 +34,13 @@ DSP_INC                := $(DSPLIB_ROOT)/L1/tests/inc/
 
 RELATIVE_PROJECT_DIR := ./
 PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
-BUILD_DIR 	:= $(PROJECT_REPO)/build
-WORK_DIR	:= Work
-BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
-EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
 PLIO_WIDTH := 64
-EMU_CMD := python3 pysrc/run_traffic_gen.py ${PLIO_WIDTH} 1 & ./launch_hw_emu.sh 
+EMU_CMD := python3 pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & ./launch_hw_emu.sh 
 
 # File names and locations
 GRAPH := aie/graph.cpp

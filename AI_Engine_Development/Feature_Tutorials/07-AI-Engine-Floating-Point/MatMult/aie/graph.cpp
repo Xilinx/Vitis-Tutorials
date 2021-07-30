@@ -44,7 +44,7 @@ connect<> net23(G.out[3], P.sink[3]);
    int main(int argc, char ** argv)
    {
       G.init();
-      G.run(2);
+      G.run(NITERATIONS);
       G.end();
 
       return 0;

@@ -19,8 +19,9 @@ This tutorial introduces you to performance analysis and optimization methods, a
 Before you begin this tutorial, run the following steps:
 
 1. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
-2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2021.1/rootfs.ext4` and `xilinx-versal-common-v2021.1/Image`.
-3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+2. Set up your ROOTFS to point to the xilinx-versal-common-v2021.1/rootfs.ext4 
+3.	Set up your IMAGE to point to xilinx-versal-common-v2021.1/Image.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ## Objectives
 
@@ -43,18 +44,16 @@ After completing this tutorial, you will understand how to:
 
 - July 2021: Initial release.
 
-
 # Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+© Copyright 2021 Xilinx, Inc.
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
-You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
+  ```
+  http://www.apache.org/licenses/LICENSE-2.0
+  ```
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-<p align="center"><sup>XD051 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>

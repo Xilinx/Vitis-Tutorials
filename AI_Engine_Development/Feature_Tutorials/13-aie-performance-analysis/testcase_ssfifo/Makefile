@@ -19,6 +19,7 @@ GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
 AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH} --pl-freq=250
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work --dump-vcd=foo --profile
+EMU_CMD = ./launch_hw_emu.sh
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
@@ -61,6 +62,8 @@ guard-SDKTARGETSYSROOT:
 ###
 
 all: ${XCLBIN} ${HOST_EXE} package
+run: all run_hw_emu
+sd_card: all 
 
 aie: guard-PLATFORM_REPO_PATHS ${LIBADF}
 ${LIBADF}: ${GRAPH}
@@ -90,11 +93,12 @@ package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
 		--package.image_format=ext4 \
 		--package.defer_aie_run \
 		--package.sd_dir data \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file ${HOST_EXE} ${XCLBIN} ${LIBADF}
 
 run_hw_emu: launch_hw_emu.sh
 launch_hw_emu.sh: package_hw_emu
-	./launch_hw_emu.sh 
+	$(EMU_CMD)
 
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \

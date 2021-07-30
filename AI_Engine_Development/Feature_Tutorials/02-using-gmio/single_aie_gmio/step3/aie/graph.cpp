@@ -89,7 +89,7 @@ int main(int argc, char ** argv) {
  
     gr.end();
     if(error==0){
-	std::cout<<"PASS!"<<std::endl;
+	std::cout<<"TEST PASSED!"<<std::endl;
     }else{
 	std::cout<<"ERROR!"<<std::endl;
     }
