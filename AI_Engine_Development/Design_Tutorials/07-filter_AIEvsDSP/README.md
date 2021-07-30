@@ -261,7 +261,7 @@ This can been seen in the following dynamic power graph for 240-tap FIR chains w
 <summary>Computational Efficiency</summary>
 
 ## Computational Efficiency
-Computational efficiency is perhaps the best metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (Msamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240 tap filter chain with 1, 5, and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for one a DSP implementation one filter chain, but the AI Engine implementation efficiency is better as the number of filters increases.
+Computational efficiency is perhaps the best metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (Msamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240 tap filter chain with 1, 5, and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for a one DSP implementation of a single filter chain, but the AI Engine implementation efficiency is better as the number of filters increases.
 
 ![Image of 240 Tap FIR computational efficiency](images/fir_graph_240tap_efficiency.png)
 
@@ -283,7 +283,7 @@ However, some application may need every bit of throughput performance available
 
 The following table provides some additional information on data on throughput for various filter sizes using different cascade lengths:
 
-| Taps | Throughput (CASC_LEN=1) | Throughput (CASC_LEN=1) | Throughput (CASC_LEN=2) |
+| Taps | Throughput (CASC_LEN=1) | Throughput (CASC_LEN=2) | Throughput (CASC_LEN=4) |
 |------|-------------------------|-------------------------|-------------------------|
 |   15 | 986.1 Msps(*)           | Too small to cascade    | Too small to cascade    |
 |   64 | 266.3 Msps              | 352.6 Msps              | 450.0 Msps              |
