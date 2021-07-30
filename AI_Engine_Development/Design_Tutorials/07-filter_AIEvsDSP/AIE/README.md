@@ -647,7 +647,7 @@ DSPLib FIR filter kernels are C/C++ programs written using specialized intrinsic
 
 The following figures show the graph representation of the AI Engine kernels (N_FIR_FILTERS=5, N_FIR_TAPS=64).
 
-![Image of FIR Filter] Chain, 5 Filters, each 64 taps (images/fir_aie_5firs_64taps_graph.png)
+![Image of FIR Filter Chain, 5 Filters, each 64 taps](images/fir_aie_5firs_64taps_graph.png)
 
 </details>
 
