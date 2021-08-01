@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -32,7 +32,7 @@
 ## Run the C Simulation
 
 With the source code and testbench added to the project, you can now run the C simulation.
->TIP: For more information about the features of a well-written test bench, refer to [Writing a Test Bench](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=verifyingcodecsimulation.html;a=sav1584759936384) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+>TIP: For more information about the features of a well-written test bench, refer to [Writing a Test Bench](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=verifyingcodecsimulation.html;a=sav1584759936384) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 1. From the main menu, select **Project > Run C Simulation**. 
 
@@ -44,7 +44,7 @@ With the source code and testbench added to the project, you can now run the C s
 
 3. Click **OK**.
 
-   After the simulation completes, the tool displays the `dct_sim.log` file with the results of simulation, and also displays the Pre-synthesis Control Flow graph. The log file does not display information other that the test passed. That is always a good sign.
+   After the simulation completes, the tool displays the `dct_csim.log` file with the results of simulation, and also displays the Pre-synthesis Control Flow graph. The log file does not display information other that the test passed. That is always a good sign.
 
    The Control Flow graph, as shown in the following figure, offers some insight into the control structure of your code. Take a look at to see how Vitis HLS understands your code.
    >**NOTE**: Control structure here refers to the branches in your code caused by various kinds of loops and conditional statements like `if` and `switch` statements.
@@ -94,7 +94,7 @@ With the source code and testbench added to the project, you can now run the C s
 
 2. After synthesis completes, the Synthesis Summary report displays as shown in the following figure. Review the results.
 
-   ![Simplified Synthesis Report](./images/dct_synthesis_report.png)
+   ![Synthesis Summary Report](./images/dct_synthesis_report.png)
 
    Notice that the various sub-functions from the Pre-synthesis control flow diagram are no longer reported in the synthesis results. This is because the tool has inlined these functions automatically. You can disable the inlining of specific functions by adding the INLINE OFF pragma or directive for the function, or by adding the DATAFLOW optimization to the design, which you will be doing later in this tutorial.
 
@@ -112,9 +112,7 @@ The Synthesis Summary report displays the results of synthesis, including perfor
 
    Guidance messages report issues found during synthesis, suggest possible remedies, and provide links to more detailed information.
 
-2. In the upper right hand corner of the Vitis HLS IDE, click the **Analysis** perspective to change to the Analysis perspective, and display the Schedule Viewer.
-
-   The Analysis perspective provides a view of different elements of your project, to evaluate the results of synthesis and the performance of your current solution. The Analysis perspective opens the Schedule Viewer by default.
+2. In the main menu of the Vitis HLS IDE, click the **Solution** > **Open Schedule Viewer** command to display the Schedule Viewer.
 
    The left side of the Schedule Viewer lists each operation in chronological order in the synthesized function. It displays the design control steps presented horizontally as a timeline starting at step 0, and running through to completion. You can select operations from the list to view the connections between them.
 
