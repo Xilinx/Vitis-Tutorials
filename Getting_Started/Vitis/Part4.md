@@ -241,7 +241,7 @@ The -t option of the v++ tool specifies the build target. Here it is set to sw_e
 Notice also the --config option which is used to specify the name of a configuration file containing additional options. Here we are using this configuration file to specify, amongst others, the name of the targeted platform and the mapping of kernel arguments to DDR banks.
 
 ```
-platform=xilinx-u200-gen3x16-xdma-1-202110-1
+platform=xilinx_u200_gen3x16_xdma_1_202110_1
 debug=1
 save-temps=1
 
