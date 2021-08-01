@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -12,9 +12,9 @@
 
 # Package IP/Package XO Flow
 
-The process described in this lab follows the Package IP/Package XO flow as described in the [RTL Kernel Development Flow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=devrtlkernel.html;a=rzv1504034325561) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+The process described in this lab follows the Package IP/Package XO flow as described in the [RTL Kernel Development Flow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html;a=rzv1504034325561) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
->**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/settingupvitisenvironment.html#zks1565446519267) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/settingupvitisenvironment.html#zks1565446519267) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >
 >   ```bash
 >    #setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.
