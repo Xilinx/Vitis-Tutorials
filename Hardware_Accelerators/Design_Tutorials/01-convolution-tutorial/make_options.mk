@@ -1,6 +1,6 @@
 ############## Default Vitis Build Target : Select only ONE  #
 TARGET ?=hw
-PLATFORM ?= xilinx_u200_xdma_201830_2
+PLATFORM ?= xilinx_u200_gen3x16_xdma_1_202110_1
 ENABLE_STALL_TRACE ?= yes
 TRACE_DDR=DDR[3]
 
