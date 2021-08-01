@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -65,7 +65,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 
          The Add/Remove Testbench Files page of the New Project wizard displays.
 
-         Writing a good testbench can greatly increase your productivity because C functions execute in orders of magnitude faster than RTL simulations. Using C to develop and validate the algorithm before synthesis is much faster than developing and debugging RTL code. For more information, refer to [Writing a Testbench](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/verifyingcodecsimulation.html#sav1584759936384) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+         Writing a good testbench can greatly increase your productivity because C functions execute in orders of magnitude faster than RTL simulations. Using C to develop and validate the algorithm before synthesis is much faster than developing and debugging RTL code. For more information, refer to [Writing a Testbench](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/verifyingcodecsimulation.html#sav1584759936384) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
       ![Add Sources](./images/create_project-add_testbench.png)
 
@@ -85,7 +85,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 6. Make the following selections:
       1. Specify the **Solution Name**, or use the default name. 
       2. Specify the **Period** for the clock as the default period of 10 ns.
-      3. Leave the clock uncertainty blank. The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=creatingnewvitishlsproject.html;a=ycw1585572210561) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+      3. Leave the clock uncertainty blank. The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=creatingnewvitishlsproject.html;a=ycw1585572210561) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
       4. Define the part for the project by selecting the **Browse (...)** command.
 
             This opens the Device Selection dialog box (our device shows in the **Boards** category, see next step...).
@@ -103,7 +103,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 
 8. In the Solution Configuration dialog box, select the **Vitis Kernel Flow Target** from the dropdown menu.
 
-   This enables the creation of a Vitis application acceleration hardware kernel (.xo) as an output for the project. For more information on how enabling the Vitis kernel flow configures the default behavior of the tool, refer to [Vitis HLS Process Overview](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/vitis_hls_process.html#djn1584047476918) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+   This enables the creation of a Vitis application acceleration hardware kernel (.xo) as an output for the project. For more information on how enabling the Vitis kernel flow configures the default behavior of the tool, refer to [Vitis HLS Process Overview](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitis_hls_process.html#djn1584047476918) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 9. With your project settings now configured, click **Finish**.
     Vitis HLS opens the new project in the default view.
