@@ -64,7 +64,7 @@ In the last section, the **config_compile** command is a tool configuration comm
     With the Source Code Editor open, the right hand of the IDE also displays the Outline and Directive views for your code.
 
     * **Outline view**: Displays an outline of the displayed source code file. Select a region or function for quick navigation of the code.
-    * **Directives view**: Select operations or elements of your code to assign `HLS pragmas` to your source code, or to assign `set_directive` commands to a Tcl script that is associated with the active solution. For more information, refer to [Adding Pragmas and Directives](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=optimizinghlsproject.html;a=gip1583519972576) in the Vitis HLS FLow of the Vitis Unified Software Platform Documentation (UG1416).
+    * **Directives view**: Select operations or elements of your code to assign `HLS pragmas` to your source code, or to assign `set_directive` commands to a Tcl script that is associated with the active solution. For more information, refer to [Adding Pragmas and Directives](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=optimizinghlsproject.html;a=gip1583519972576) in the Vitis HLS FLow of the Vitis Unified Software Platform Documentation (UG1416).
 
 2. In the Directives view, right-click the `dct_2d` function, and select **Insert Directive**.
 
@@ -100,7 +100,7 @@ The `HLS PIPELINE II=4` is added to the Directive view.
 
 In some designs, a Guidance message `Unable to schedule load operation...` indicates a load/load (or read/read conflict) issue with memory transactions. In these cases rather than accepting the latency, you could try to optimize the implementation to achieve the best performance (II=1).
 
-The specific problem of reading or writing to memory can possibly be addressed by increasing the available memory ports to read from, or to write to. One approach is to use the BIND_STORAGE pragma or directive to specify the type of device resource to use in implementing the storage. BIND_STORAGE defines a specific device resource for use in implementing a storage structure associated with a variable in the RTL. For more information, refer to [BIND_STORAGE](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/hls_pragmas.html#chr1584844747152) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+The specific problem of reading or writing to memory can possibly be addressed by increasing the available memory ports to read from, or to write to. One approach is to use the BIND_STORAGE pragma or directive to specify the type of device resource to use in implementing the storage. BIND_STORAGE defines a specific device resource for use in implementing a storage structure associated with a variable in the RTL. For more information, refer to [BIND_STORAGE](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#chr1584844747152) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
  ![BIND_STORAGE](./images/bind_storage_pragma.png)
 
@@ -132,7 +132,7 @@ The specific problem of reading or writing to memory can possibly be addressed b
 
 Another approach to solve memory port conflicts is to use the ARRAY_PARTITION directive to reconfigure the structure of an array. ARRAY_PARTITION lets you partition an array into smaller arrays or into individual registers instead of one large array. This effectively either increases the amount of read and write ports for the storage and potentially improves the throughput of the design. 
 
-However, ARRAY_PARTITION also requires more memory instances or registers, and so increases area and resource consumption. For more information, refer to [ARRAY_PARTITION](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/hls_pragmas.html#gle1504034361378) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416). If partitioning large arrays, this can also increase the compile time.
+However, ARRAY_PARTITION also requires more memory instances or registers, and so increases area and resource consumption. For more information, refer to [ARRAY_PARTITION](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#gle1504034361378) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416). If partitioning large arrays, this can also increase the compile time.
 
 1. In the Directives view, select the array variables, **col_inbuf** and **buf_2d_out**  from the associated II violations.
 
