@@ -1,7 +1,7 @@
 <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Getting Started Tutorial</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Getting Started Tutorial</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -23,7 +23,7 @@
 
 There are slight differences when targeting data-center and embedded platforms. Instructions for both the ZCU102 and Alveo U200 cards are provided below. These instructions can be easily adapted to other cards. 
 
-> IMPORTANT: This tutorial requires Vitis 2020.2 or later to run.
+> IMPORTANT: This tutorial requires Vitis 2021.1 or later to run.
 
 <details>
 <summary><b>Instructions for the ZCU102 platform, click here</b></summary>
@@ -87,7 +87,7 @@ The -t option of the v++ tool specifies the build target. Here it is set to sw_e
 Notice also the --config option which is used to specify the name of a configuration file containing additional options. Here we are using this configuration file to specify, amongst others, the name of the targeted platform:
 
 ```
-platform=xilinx_zcu102_base_202020_1
+platform=xilinx_zcu102_base_202110_1
 save-temps=1
 debug=1
 
@@ -241,7 +241,7 @@ The -t option of the v++ tool specifies the build target. Here it is set to sw_e
 Notice also the --config option which is used to specify the name of a configuration file containing additional options. Here we are using this configuration file to specify, amongst others, the name of the targeted platform and the mapping of kernel arguments to DDR banks.
 
 ```
-platform=xilinx_u200_xdma_201830_2
+platform=xilinx-u200-gen3x16-xdma-1-202110-1
 debug=1
 save-temps=1
 
