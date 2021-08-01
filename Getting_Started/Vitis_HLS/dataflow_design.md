@@ -94,9 +94,7 @@ Vitis HLS also provides a Dataflow Graph viewer as one of the features in the An
 
 3. After the simulation completes, select **Solution** > **Open Dataflow Viewer** to open the viewer as shown in the following figure.
 
-   ![Open Dataflow Viewer](./images/open_dataflow_viewer.png)
-
-   >**TIP:** You can tell if the design has a Dataflow graph by the presence of the ![Dataflow Icon](./images/icon_dataflow.png) icon in the Module Hierarchy view.
+   >**TIP:** You can tell if the design has a Dataflow graph by the presence of the ![Dataflow Icon](./images/icon_dataflow.png) icon.
 
    The DataFlow Viewer displays the function and the flow through the function. After running C/RTL co-simulation, the elements of the graph are filled out with performance data, and the Process and Channel tables beneath the graph are also filled out. Without the performance data provided by co-simulation, the graph and tables will have NA values to reflect the missing values. For more information, refer to [Dataflow Viewer](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/analyzingresultssynthesis.html#twx1584322463297) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
