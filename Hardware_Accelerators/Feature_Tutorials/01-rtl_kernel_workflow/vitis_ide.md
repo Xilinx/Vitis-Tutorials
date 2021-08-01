@@ -37,7 +37,7 @@ The New Vitis Application Project window opens.
 
 4. The New Application Project wizard is displayed, with the overview page showing a brief overview of the process. Click **Next**.
 
-5. The Plaform page is displayed. Select `xilinx_u200_xdma_201830_2`, and then click **Next** to proceed.  
+5. The Plaform page is displayed. Select `xilinx_u200_gen3x16_xdma_1_202110_1`, and then click **Next** to proceed.  
 ![Platform page](images/rtl_kernel-platform_page.png)
 
 6. The Application Project Details page is displayed. Make the following selections:  
