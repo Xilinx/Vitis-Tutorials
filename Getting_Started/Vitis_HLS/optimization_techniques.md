@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.2 Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -106,7 +106,7 @@ The specific problem of reading or writing to memory can possibly be addressed b
 
 1. Select the **dct.cpp** tab to make the Code Editor active.
 
-2. In the Directives view, right-click on the `col_inbuf` variable in the `dct_2d` function, and select **Add Directive**. 
+2. In the Directives view, right-click on the `col_inbuf` variable in the `dct_2d` function, and select **Insert Directive**. 
 
     This displays the Vitis HLS Directive Editor.
 
