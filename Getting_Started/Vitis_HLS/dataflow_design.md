@@ -92,8 +92,7 @@ Vitis HLS also provides a Dataflow Graph viewer as one of the features in the An
 
    After co-simulation completes, the tool opens the Co-simulation Report, which essentially says whether the tool passed your simulation testbench or not. In the case of Dataflow analysis, your testbench needs to call the synthesized function more than once to get the performance data from multiple iterations, and to make sure the design is flushing the FIFOs. When it comes to performance, one function call gives you latency, two or more calls to the function can give you the II.
 
-3. After the simulation completes, select **Analysis** in the upper right hand corner of the screen to switch to the Analysis perspective.
-4. In the Module Hierarchy view on the upper left, right click the `dct` function and select **Open Dataflow Viewer** as shown in the following figure.
+3. After the simulation completes, select **Solution** > **Open Dataflow Viewer** to open the viewer as shown in the following figure.
 
    ![Open Dataflow Viewer](./images/open_dataflow_viewer.png)
 
