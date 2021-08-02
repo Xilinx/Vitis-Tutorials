@@ -1,7 +1,7 @@
 VPP := $(XILINX_VITIS)/bin/v++
 EMCONFIGUTIL := $(XILINX_VITIS)/bin/emconfigutil
 MODE := hw_emu
-PLATFORM := xilinx_u200_xdma_201830_2
+PLATFORM := xilinx_u200_gen3x16_xdma_1_202110_1
 
 # sources
 KERNEL_SRC := src/vadd.cpp
