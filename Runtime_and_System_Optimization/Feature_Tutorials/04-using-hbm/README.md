@@ -47,7 +47,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
     ```
 3. Run the following command to build three xclbins for module 2 (Migration from DDR to HBM). The expected time to build xclbins is about 7-8 hours or you can run these in parallel.
 
-    ``` cd 04-using-hbm/makefile;  make dr_addSeq_build  hbm_addSeq_2Banks_build hbm_addSeq_overlap_build```
+    ``` cd 04-using-hbm/makefile;  make ddr_addSeq_build  hbm_addSeq_2Banks_build hbm_addSeq_overlap_build```
 
 4. Run the following command to build ten xclbins for module 3 (HBM Bandwidth Results). The expected time to build xclbins is about 5-6 hours since the following command will run parallel jobs by default
 
