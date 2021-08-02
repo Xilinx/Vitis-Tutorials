@@ -95,7 +95,7 @@ cd ./../build/DDR_Banks_d512_txSize64 &&  ./host vadd_hw.xclbin 600 0 1 64;
 
 Found Platform
 Platform Name: Xilinx
-DEVICE xilinx_u200_xdma_201830_2
+DEVICE xilinx_u200_gen3x16_xdma_1_202110_1
 INFO: Reading vadd_hw.xclbin
 Loading: 'vadd_hw.xclbin'
 - host loop iteration #0 of 1 total iterations
