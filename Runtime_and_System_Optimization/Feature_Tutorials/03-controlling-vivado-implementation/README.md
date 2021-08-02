@@ -88,7 +88,7 @@ In this tutorial, the `-–vivado` command options are defined in the `design.cf
 
    ```bash
    v++ -t hw --config design.cfg -c -k apply_watermark -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo ../src/krnl_watermarking.cl
-   v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_xdma_201830_2.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo
+   v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo
    ```
 
 2. Open the `design.cfg` file and get familiar with different options. The following list describes some of the command options.
