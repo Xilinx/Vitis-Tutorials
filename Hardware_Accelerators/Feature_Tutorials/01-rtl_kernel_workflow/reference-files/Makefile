@@ -174,7 +174,7 @@ endif
 
 #Generates profile summary report
 ifeq ($(PROFILE), yes)
-LDCLFLAGS += --profile.data:all:all:all
+LDCLFLAGS += --profile.data all:all:all
 endif
 
 #Generates debug summary report
