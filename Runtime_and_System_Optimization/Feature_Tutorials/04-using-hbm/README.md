@@ -40,7 +40,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 2. Update the `PLATFORM` variable in the `makefile/Makefile` as shown below with the platform intended to be used.
     ```
     ifeq ($(memtype), DDR)
-    PLATFORM :=xilinx_u200_xdma_201830_2
+    PLATFORM :=xilinx_u200_gen3x16_xdma_1_202110_1
     else
     PLATFORM :=xilinx_u50_gen3x16_xdma_201920_3
     endif
