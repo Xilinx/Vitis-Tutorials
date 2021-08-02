@@ -317,7 +317,7 @@ With the RTL-based kernel added and host code updated, build the application, ta
 5. View the **Application Timeline** report in the Vitis analyzer.
 
    ```
-   vitis_analyzer krnl_vadd.hw_emu.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin.run_summary
+   vitis_analyzer xclbin.run_summary
    ```
 
 6. Under **Device**>**Binary Container**, traverse along the timeline and zoom in.  
