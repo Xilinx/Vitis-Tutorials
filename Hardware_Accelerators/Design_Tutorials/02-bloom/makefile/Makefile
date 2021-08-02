@@ -18,7 +18,7 @@ PF   := 16
 endif
 
 
-PLATFORM :=xilinx_u200_xdma_201830_2
+PLATFORM :=xilinx_u200_gen3x16_xdma_1_202110_1
 
 SRCDIR := ./../reference_files
 

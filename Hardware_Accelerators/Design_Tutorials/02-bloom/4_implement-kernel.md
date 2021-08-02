@@ -1,7 +1,7 @@
 <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -25,7 +25,7 @@ Use the following interface requirements to create kernel:
 - Compute 4 words to be computed in parallel with each word requiring two `MurmurHash2` functions 
 - Compute the hash (two `MurmurHash2` functions) functions for 4 words every cycle. 
 
-Refer to [Methodology for Accelerating Applications with the Vitis Software](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=methodologyacceleratingapplications.html) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+Refer to [Methodology for Accelerating Applications with the Vitis Software](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=methodologyacceleratingapplications.html) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ### Macro Architecture Implementation
 

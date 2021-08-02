@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -32,11 +32,11 @@ Using these reference files, the tutorial guides you from the first step of crea
 The labs in this tutorial use:
 
 * BASH Linux shell commands
-* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
+* 2020.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have the Vitis core development kit installed as described in [Installation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#vhc1571429852245).
+> * Before running any of the examples, make sure you have the Vitis core development kit installed as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
@@ -46,7 +46,7 @@ The labs in this tutorial use:
 
 ## Requirements for Using an RTL Design as an RTL Kernel
 
-To use an RTL kernel within the Vitis IDE, it must meet both the Vitis core development kit execution model and the hardware interface requirements as described in [RTL Kernels](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=devrtlkernel.html) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+To use an RTL kernel within the Vitis IDE, it must meet both the Vitis core development kit execution model and the hardware interface requirements as described in [RTL Kernels](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ### Kernel Execution Model
 
@@ -62,7 +62,7 @@ This implies that an RTL kernel has an execution model like a software function:
 - It is responsible for processing data to provide the necessary results.
 - It must send a notification when processing is complete.
 
-As described in [Supported Kernel Execution Models](https://xilinx.github.io/XRT/2020.2/html/xrt_kernel_executions.html), the Vitis core development kit execution models of `ap_ctrl_hs` and `ap_ctrl_chain` specifically rely on the following mechanics and assumptions:
+As described in [Supported Kernel Execution Models](https://xilinx.github.io/XRT/2021.1/html/xrt_kernel_executions.html), the Vitis core development kit execution models of `ap_ctrl_hs` and `ap_ctrl_chain` specifically rely on the following mechanics and assumptions:
 
 - Scalar arguments are passed to the kernel through an AXI4-Lite slave interface.
 - Pointer arguments are transferred through global memory (DDR, HBM, or PLRAM).
@@ -70,8 +70,6 @@ As described in [Supported Kernel Execution Models](https://xilinx.github.io/XRT
 - Kernels access pointer arguments in global memory through one or more AXI4 master interfaces.
 - Kernels are started by the host application through its AXI4-Lite interface.
 - Kernels must notify the host application when they complete the operation through its AXI4-Lite interface or a special interrupt signal.
-
->**TIP:** The `ap_ctrl_none` execution model does not rely on these features, and lets you establish streaming kernels that are self-starting and continuously running.  
 
 ### Hardware Interface Requirements
 

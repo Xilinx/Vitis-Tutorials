@@ -1,7 +1,7 @@
 ﻿﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -303,9 +303,9 @@ From the console output, it is clear that acceleration achieved when compared to
 
 This section will analyze the system performance using Vitis Analyzer by looking at different performance parameters and traces.
 
-When the application is run, whether in emulation mode or on actual hardware, a trace file of runtime activities can be generated. This trace file can be viewed within Vitis Analyzer. For additional details, refer to [Using Vitis Analyzer](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/jfn1567005096685.html).
+When the application is run, whether in emulation mode or on actual hardware, a trace file of runtime activities can be generated. This trace file can be viewed within Vitis Analyzer. For additional details, refer to [Using Vitis Analyzer](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/jfn1567005096685.html).
 
-The trace information generated during the application run can be controlled by specifying different options inside the `xrt.ini` file placed in the same directory as the host application. Refer to [xrt.ini File](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/obl1532064985142.html) for more information. You can examine the `xrt.ini` file used for this exercise, which is found in this tutorial's top-level folder.
+The trace information generated during the application run can be controlled by specifying different options inside the `xrt.ini` file placed in the same directory as the host application. Refer to [xrt.ini File](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/xrtini.html#tpi1504034339424) for more information. You can examine the `xrt.ini` file used for this exercise, which is found in this tutorial's top-level folder.
 
 1. After the design has been run; you can open the run time profile summary report using the following steps:
 

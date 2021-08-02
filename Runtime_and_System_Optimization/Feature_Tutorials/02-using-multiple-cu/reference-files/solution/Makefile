@@ -1,7 +1,7 @@
 VPP := $(XILINX_VITIS)/bin/v++
 EMCONFIGUTIL := $(XILINX_VITIS)/bin/emconfigutil
 MODE := hw_emu
-DSA := xilinx_u200_xdma_201830_2
+DSA := xilinx_u200_gen3x16_xdma_1_202110_1
 
 # sources
 HOST_SRC := src/host/cmdlineparser.cpp src/host/filter2d.cpp src/host/logger.cpp src/host/xclbin_helper.cpp src/host/host.cpp
@@ -17,7 +17,7 @@ EMCONFIG_FILE := emconfig.json
 
 # V++ Linker options to configure number of compute units
 VPP_LINK_OPTS := --config link.cfg
-VPP_LINK_OPTS_FINAL := --nk Filter2DKernel:3
+VPP_LINK_OPTS_FINAL := --connectivity.nk Filter2DKernel:3
 
 # V++ Compiler options
 VPP_COMMON_OPTS := -s -t $(MODE) --config compile.cfg
