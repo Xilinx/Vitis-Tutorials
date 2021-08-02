@@ -1,7 +1,19 @@
+﻿<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table>
+
 # Introduction
 This tutorial covers essential steps on migrating an existing application using DDR memory to HBM memory.  The tutorial begins by explaining the structural differences between DDR and HBM, as well as achievable theoretical bandwidth. The second section uses a simple example with necessary steps to migrate an application from DDR to HBM.
 
-# Before You Begin
+## Before You Begin
 
 >**TIP**: This tutorial takes approximately two hours to complete.
 
