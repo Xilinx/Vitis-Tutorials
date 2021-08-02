@@ -98,7 +98,7 @@ In this tutorial, the `-–vivado` command options are defined in the `design.cf
       >* `-t hw`: Build target is hardware
       >* `platform=xilinx_u200_gen3x16_xdma_1_202110_1`: Specify the xilinx_u200 platform
       >* `debug=1`: Generate debug info
-      >* `max_memory_ports=apply_watermark`: Generate a separate AXI4 interface for each port
+      >* `--hls.pre_tcl max_memory.tcl`: Specifies a Tcl script to configure the interface to generate a separate AXI4 interface for each port
       >* `-c`: Compile the kernel
       >* `-k apply_watermark`: Name the kernel
       >* `../src/krnl_watermarking.cl`: Specify source files
