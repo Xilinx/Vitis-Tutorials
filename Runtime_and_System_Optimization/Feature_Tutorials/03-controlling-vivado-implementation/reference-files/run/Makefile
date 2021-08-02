@@ -19,7 +19,7 @@ help:
 	@echo ""
 #######################################################################################
 TARGET := hw
-PLATFORM := xilinx_u200_xdma_201830_2
+PLATFORM := xilinx_u200_gen3x16_xdma_1_202110_1
 HOST_EXE := host
 XO := apply_watermark.$(TARGET).$(PLATFORM).xo
 XCLBIN := apply_watermark.$(TARGET).$(PLATFORM).xclbin
