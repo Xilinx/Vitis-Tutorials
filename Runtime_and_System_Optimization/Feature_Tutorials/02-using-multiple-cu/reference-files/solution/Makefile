@@ -17,7 +17,7 @@ EMCONFIG_FILE := emconfig.json
 
 # V++ Linker options to configure number of compute units
 VPP_LINK_OPTS := --config link.cfg
-VPP_LINK_OPTS_FINAL := --nk Filter2DKernel:3
+VPP_LINK_OPTS_FINAL := --connectivity.nk Filter2DKernel:3
 
 # V++ Compiler options
 VPP_COMMON_OPTS := -s -t $(MODE) --config compile.cfg
