@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -49,7 +49,7 @@ The labs in this tutorial use:
 
 >**IMPORTANT:**
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
@@ -63,7 +63,7 @@ The labs in this tutorial use:
 
    ```bash
      #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-     source /opt/Xilinx/Vitis/2019.2/settings64.sh
+     source /opt/Xilinx/Vitis/2021.1/settings64.sh
      #Setup runtime. XILINX_XRT will be set in this step
      source /opt/xilinx/xrt/setup.sh
    ```
@@ -78,7 +78,7 @@ The labs in this tutorial use:
    >**Makefile Options Descriptions**
    >
    >* `MODE := hw_emu`: Set the build configuration mode to HW Emulation
-   >* `PLATFORM := xilinx_u200_xdma_201830_2`: Select the target platform
+   >* `PLATFORM := xilinx_u200_gen3x16_xdma_1_202110_1`: Select the target platform
    >* `KERNEL_SRC := src/vadd.cpp`: List the kernel source files
    >* `HOST_SRC := src/host.cpp`: List the host source files
 
