@@ -100,6 +100,8 @@ With the files added to your project, you can package the IP for use as a kernel
 1. Under Packaging Steps, select **Compatibility**. This lets package the IP as a kernel object (.xo) for use in the Vitis tool flow, and also configures the specific Xilinx parts or device families compatible with your custom IP. 
 2. Enable **Package for Vitis**, and ensure that both **Package for IPI** and **Ignore Freq_Hz** are enabled as well. 
 
+   ![Package for Vitis](images/control_protocol.png)  
+
   Enabling the **Package for Vitis** checkbox lets you specify the **Control protocol** for the RTL kernel. The default is `ap_ctrl_hs`, but other protocols such as `user_managed` and `ap_ctrl_chain` are also suported as described in [Software Controllable Kernels](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/appdev.html#pto1621516421839). 
 
 3. Leave ap_ctrl_hs selected for this tutorial. The tool sets required properties for the Vitis kernel. 
