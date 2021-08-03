@@ -104,8 +104,8 @@ int main(int argc, char* argv[])
 {
 	try {
 		auto match = run(argc, argv);
-		std::cout << "TEST " << (match ? "FAILED" : "PASSED") << "\n";
-		return (match ? EXIT_FAILURE :  EXIT_SUCCESS);
+		std::cout << "TEST " << (match ? "PASSED expected by timeout" : "FAILED") << "\n";
+		return (match ?  EXIT_SUCCESS :  EXIT_FAILURE);
 	}	
 		catch (std::exception const& e) {
 		std::cout << "Exception: " << e.what() << "\n";
