@@ -1,6 +1,6 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ - Hardware Accelerators Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ - Hardware Accelerators Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -43,6 +43,14 @@ The methodology for developing optimized accelerated applications is comprised o
  <tr>
  <td align="center"><a href="./03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
  <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
+ </tr>
+<tr>
+ <td align="center"><a href="./04-traveling-salesperson/README.md">Travelling Salesman Problem - HLS Kernel Design Example</a></td>
+ <td>This tutorial demonstrates the full flow to implement a HLS kernel from algorithm model to hardware.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a></td>
+ <td>This tutorial demonstrates how to develope a complex RTL kernel from scratch via batch mode without GUI environment.</td>
  </tr>
  </table>
 
