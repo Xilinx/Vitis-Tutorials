@@ -102,7 +102,7 @@ When the XSIM GUI pops up, add `ai_engine_0` or the PL kernels' signals to the w
 
 After the PS code completes in Linux, check the input to the AI Engine `S00_AXIS` and the output from the AI Engine `M00_AXIS`:
 
-	![XSIM](./images/figure8.PNG)
+![XSIM](./images/figure8.PNG)
 
 After the PS receives 104 samples, the design hangs. `TVALID` is always High, indicating that the PL kernel `mm2s` is still trying to send data to the AI Engine, but `TREADY` from the AI Engine turns to Low, and remains Low. There are also no samples from the AI Engine to the PL in the `M00_AXIS` interface of the AI Engine.
 
