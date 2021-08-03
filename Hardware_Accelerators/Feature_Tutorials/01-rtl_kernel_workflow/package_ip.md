@@ -112,7 +112,7 @@ set_property sdx_kernel_type rtl [ipx::current_core]
 set_property vitis_drc {ctrl_protocol ap_ctrl_hs} [ipx::current_core]
 set_property ipi_drc {ignore_freq_hz true} [ipx::current_core]
 ```
- Notice that the **Ports and Interfaces** tab now shows a DRC error because of this setting. 
+ Notice that the **Ports and Interfaces** tab now shows a DRC error because of this setting. The error in this case is that the `s_axi_control` interface does not have a defined register which you will add shortly. 
 
 ## Edit Ports and Interfaces
 
@@ -175,26 +175,16 @@ B | pointer argument | 0x024 | 64
    2. Repeat the prior two steps for register `B`.
    3. In the Value field for ASSOCIATED_BUSIF enter `m00_axi` for register `A`, and `m01_axi` for register `B`.
 
+Notice that the DRC error on the Ports and Interfaces goes away as you define the registers for the RTL kernel. 
+
 ## Check Integrity, Assign Properties, and Package IP
 
 1. Under the Packaging Steps, Select **Review and Package**. 
-   This displays the Review and Package window.
-
-3. Use the following commands in the Tcl Console to add these properties.
-
-    ```
-    set core [ipx::current_core]
-    set_property sdx_kernel true $core
-    set_property sdx_kernel_type rtl $core
-    ```
-
-4. After setting these properties you can optionally run the **ipx::check_integrity** command, and your IP should pass the check. 
-
-   You are now ready to package the IP. However, first check that an archive file will be generated when packaging the IP. 
+   This displays the Review and Package window. You are now ready to package the IP. However, first check that an archive file will be generated when packaging the IP. This is the default behavior when **Package for Vitis** is enabled. 
 
 5. Look in the **After Packaging** section of the Review and Package window. If you see that an archive will not be generated, then you should enable the archive: 
 
-6. In the Review and Package window, select **Edit packaging settings**.This displays the Settings dialog box with the IP Package section displayed.
+6. In the Review and Package window, select **Edit packaging settings**. This displays the Settings dialog box with the IP Package section displayed.
 
 7. Under the After Packaging section of the dialog box, enable **Create archive of IP** as shown below, and click **OK**.
 
@@ -206,14 +196,10 @@ B | pointer argument | 0x024 | 64
 
    After packaging the IP you should see dialog box indicating that the IP packaged successfully. 
 
-## Create the Kernel with package_xo
-
-With the Vivado IP packaged, you can now run the **package_xo** command to create the Vitis kernel (`.xo`) file. The `package_xo` command also packages the IP files and the `kernel.xml` file into the generated `.xo` file. 
-
-1. In the Tcl Console, enter the following command.
+With Package for Vitis enabled, the tool automatically runs the **package_xo** command to create the Vitis kernel (`.xo`) file. The `package_xo` command also packages the IP files and the `kernel.xml` file into the generated `.xo` file. You can examine the Tcl Console window to see that the `package_xo` command has been run. 
 
    ```
-   package_xo  -force -xo_path <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/IP  -ctrl_protocol ap_ctrl_hs
+   package_xo  -force -xo_path <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/IP  -ctrl_protocol ap_ctrl_hs
    ```
 
    Where: 
