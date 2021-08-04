@@ -12,7 +12,7 @@
 
 ## Current Status:
 
-- Tested with Vitis AI 1.3
+- Tested with Vitis AI 1.4
 - Tested in hardware on ZCU102, ZCU104, VCK190, and Alveo U50.
 
 ## Introduction
@@ -46,7 +46,7 @@ Figure 1 gives an example.
 
 Various attempts at using a Deep Learning Architecture to perform modulation recognition have been attempted.
 Here we use a resnet based model simialr to whats described in **[1]**.
-This model contains 6 reset stacks. Each resenet stack (shown below) consists of 2 resent blocks followed by a max pooling layer.
+This model contains 4 reset stacks. Each resenet stack (shown below) consists of 2 resent blocks followed by a max pooling layer.
 
 
 <img src="media/image2.png" style="width:4.426in;height:4.6038in" alt="Diagram Description automatically generated" />
@@ -74,7 +74,7 @@ Evaluations of model accuracy are performed before and after quantization, and t
 ### 1.0 Prerequisites and Setup
 - Host machine with Ubuntu 16.04, 18.04 or other linux Vitis-AI supported distributions
 - Vitis-AI installed on your host machine. Follow the instructions from https://github.com/Xilinx/Vitis-AI
-- ZCU102 or ZCU104 Xilinx evaluation boards, or Alveo U50 Acceleration card.  Note: If you would like to use the VCK190 board you will need to apply for the early access lounge, contact your local sales team for more information.
+- VCK190, ZCU102 or ZCU104 Xilinx evaluation boards, or Alveo U50 Acceleration card.  
 - Setup  VART on your target board according to the instructions on https://github.com/Xilinx/Vitis-AI/tree/master/demo/VART
 
 ### 2.0 Start Vitis AI and Launch Jupyter Notebook
@@ -110,7 +110,7 @@ Copy following files from the Host machine to the ZCU104, ZCU102, or Alveo U50 b
 - rf_snrs.npy
 - rf_input.npy
 
-For the ZCU102 or ZCU104 boards, you can use a tool such as WinSCP to connect from a laptop to the board. You will need to first set the appropraite ip address on the board.
+For the VCK190, ZCU102 or ZCU104 boards, you can use a tool such as WinSCP to connect from a laptop to the board. You will need to first set the appropraite ip address on the board.
 For example: ifconfig -eth0 192.155.50.187
 
 #### Performance Test
