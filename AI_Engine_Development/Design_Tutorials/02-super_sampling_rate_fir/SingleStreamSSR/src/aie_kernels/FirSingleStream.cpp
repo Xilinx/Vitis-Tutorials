@@ -178,8 +178,7 @@ void SingleStream::FIR_MultiKernel_cin<NSamples,ShiftAcc>::filter(input_stream_c
 }
 
 
-template<int Delay>
-void SingleStream::FIRinit()
+void SingleStream::FIRinit(const int Delay)
 {
     for (int i = 0; i < Delay; ++i)
     {

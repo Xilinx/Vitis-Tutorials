@@ -1,6 +1,6 @@
 ﻿<table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/>
    <h1>Super Sampling Rate FIR Filters</h1>
    <h2>Implementation on the AI Engine</h2>
    </td>
@@ -37,8 +37,8 @@ Software requirements include:
 
 ## Accessing the Tutorial Reference Files
 
-1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/SSR-FIR-Tutorial`.
-2. Navigate to the `Utils` directory, and type `source InitPythonPath` to have this directory in your path for Python libraries and executable search path.
+1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials.git`.
+2. Navigate to the `Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/Utils/` directory, and type `source InitPythonPath` to have this directory in your path for Python libraries and executable search path.
 
 You can now start the tutorial.
 

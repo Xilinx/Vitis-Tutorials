@@ -21,6 +21,9 @@
 namespace DoubleStream {
 
 
+void FIRinit(const int Delay);
+
+
 template<int NSamples,int ShiftAcc,bool DiscardSample,bool SwapRead>
 class FIR_MultiKernel_cout {
 private:
@@ -28,10 +31,12 @@ private:
 	alignas(32) cint16 delay_line[16];
 
 public:
-	FIR_MultiKernel_cout(const cint16 (&taps)[4])
+	FIR_MultiKernel_cout(const cint16 (&taps)[4],const int Delay)
 	{
 		for(int i=0;i<4;i++) weights[i] = taps[i];
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
+
+    FIRinit(Delay);
 	};
 
 	void filter(input_stream_cint16*  restrict sin1,input_stream_cint16*  restrict sin2,output_stream_cacc48*  cout);
@@ -50,10 +55,12 @@ private:
 	alignas(32) cint16 delay_line[16];
 
 public:
-	FIR_MultiKernel_cincout(const cint16 (&taps)[4])
+	FIR_MultiKernel_cincout(const cint16 (&taps)[4],const int Delay)
 	{
 		for(int i=0;i<4;i++) weights[i] = taps[i];
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
+
+    FIRinit(Delay);
 	};
 
 	void filter(input_stream_cint16*  restrict sin1,input_stream_cint16*  restrict sin2,input_stream_cacc48*  cin,output_stream_cacc48*  cout);
@@ -72,10 +79,12 @@ private:
 	alignas(32) cint16 delay_line[16];
 
 public:
-	FIR_MultiKernel_cin(const cint16 (&taps)[4])
+	FIR_MultiKernel_cin(const cint16 (&taps)[4],const int Delay)
 	{
 		for(int i=0;i<4;i++) weights[i] = taps[i];
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
+
+    FIRinit(Delay);
 	};
 
 	void filter(input_stream_cint16*  restrict sin1,input_stream_cint16*  restrict sin2,input_stream_cacc48*  cin,output_stream_cint16*  restrict sout1, output_stream_cint16*  restrict sout2);
@@ -86,9 +95,6 @@ public:
 	};
 };
 
-
-template<int Delay>
-void FIRinit();
 
 
 

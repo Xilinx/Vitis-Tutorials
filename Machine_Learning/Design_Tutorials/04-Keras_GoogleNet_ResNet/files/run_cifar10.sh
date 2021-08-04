@@ -16,7 +16,7 @@
 ## under the License.
 
 # author daniele.bagni@xilinx.com
-# date: 26 Nov 2020
+# date: 6 May 2021
 
 
 CNN_INP_NODE="conv2d_1_input"
@@ -98,68 +98,68 @@ dos2unix_conversion() {
   echo "##########################################################################"
   echo "FREEZE GRAPH of LeNet on CIFAR10"
   echo "##########################################################################"
-  rm ./freeze/cifar10/Lenet/*
-  freeze_graph --input_meta_graph=./tf_chkpts/cifar10/LeNet/float_model.ckpt.meta \
-               --input_checkpoint=./tf_chkpts/cifar10/LeNet/float_model.ckpt \
+  rm ./build/freeze/cifar10/Lenet/*
+  freeze_graph --input_meta_graph=./build/tf_chkpts/cifar10/LeNet/float_model.ckpt.meta \
+               --input_checkpoint=./build/tf_chkpts/cifar10/LeNet/float_model.ckpt \
                --input_binary=true \
-               --output_graph=./freeze/cifar10/LeNet/frozen_graph.pb \
+               --output_graph=./build/freeze/cifar10/LeNet/frozen_graph.pb \
                --output_node_names=${LENET_OUT_NODE}
                #2>&1 | tee rpt/cifar10/3a_freeze_graph_LeNet.log
   echo " "
   echo "##########################################################################"
   echo "INSPECT FROZEN GRAPH of LeNet  on CIFAR10"
   echo "##########################################################################"
-  vai_q_tensorflow inspect --input_frozen_graph=./freeze/cifar10/LeNet/frozen_graph.pb
+  vai_q_tensorflow inspect --input_frozen_graph=./build/freeze/cifar10/LeNet/frozen_graph.pb
 
   echo " "
   echo "##########################################################################"
   echo "FREEZE GRAPH of miniVggNet  on CIFAR10"
   echo "##########################################################################"
-  rm ./freeze/cifar10/miniVggNet/*
-  freeze_graph --input_meta_graph=./tf_chkpts/cifar10/miniVggNet/float_model.ckpt.meta \
-               --input_checkpoint=./tf_chkpts/cifar10/miniVggNet/float_model.ckpt \
+  rm ./build/freeze/cifar10/miniVggNet/*
+  freeze_graph --input_meta_graph=./build/tf_chkpts/cifar10/miniVggNet/float_model.ckpt.meta \
+               --input_checkpoint=./build/tf_chkpts/cifar10/miniVggNet/float_model.ckpt \
                --input_binary=true \
-               --output_graph=./freeze/cifar10/miniVggNet/frozen_graph.pb \
+               --output_graph=./build/freeze/cifar10/miniVggNet/frozen_graph.pb \
                --output_node_names=${VGG_OUT_NODE}
                #2>&1 | tee rpt/cifar10/3a_freeze_graph_miniVggNet.log
   echo " "
   echo "##########################################################################"
   echo "INSPECT FROZEN GRAPH of miniVggNet on CIFAR10"
   echo "##########################################################################"
-  vai_q_tensorflow inspect --input_frozen_graph=./freeze/cifar10/miniVggNet/frozen_graph.pb
+  vai_q_tensorflow inspect --input_frozen_graph=./build/freeze/cifar10/miniVggNet/frozen_graph.pb
 
   # freeze trained graph
   echo "##########################################################################"
   echo "FREEZE GRAPH of miniGoogleNet  on CIFAR10"
   echo "##########################################################################"
-  rm ./freeze/cifar10/miniGoogleNet/*
-  freeze_graph --input_meta_graph=./tf_chkpts/cifar10/miniGoogleNet/float_model.ckpt.meta \
-               --input_checkpoint=./tf_chkpts/cifar10/miniGoogleNet/float_model.ckpt \
+  rm ./build/freeze/cifar10/miniGoogleNet/*
+  freeze_graph --input_meta_graph=./build/tf_chkpts/cifar10/miniGoogleNet/float_model.ckpt.meta \
+               --input_checkpoint=./build/tf_chkpts/cifar10/miniGoogleNet/float_model.ckpt \
                --input_binary=true \
-               --output_graph=./freeze/cifar10/miniGoogleNet/frozen_graph.pb \
+               --output_graph=./build/freeze/cifar10/miniGoogleNet/frozen_graph.pb \
                --output_node_names=${GOOGLE_OUT_NODE}
                #2>&1 | tee rpt/cifar10/3a_freeze_graph_miniGoogleNet.log
   echo " "
   echo "##########################################################################"
   echo "INSPECT FROZEN GRAPH of miniGoogleNet  on CIFAR10"
   echo "##########################################################################"
-  vai_q_tensorflow inspect --input_frozen_graph=./freeze/cifar10/miniGoogleNet/frozen_graph.pb
+  vai_q_tensorflow inspect --input_frozen_graph=./build/freeze/cifar10/miniGoogleNet/frozen_graph.pb
 
   echo "##########################################################################"
   echo "FREEZE GRAPH of miniResNet  on CIFAR10"
   echo "##########################################################################"
-  rm ./freeze/cifar10/miniResNet/*
-  freeze_graph --input_meta_graph=./tf_chkpts/cifar10/miniResNet/float_model.ckpt.meta \
-               --input_checkpoint=./tf_chkpts/cifar10/miniResNet/float_model.ckpt \
+  rm ./build/freeze/cifar10/miniResNet/*
+  freeze_graph --input_meta_graph=./build/tf_chkpts/cifar10/miniResNet/float_model.ckpt.meta \
+               --input_checkpoint=./build/tf_chkpts/cifar10/miniResNet/float_model.ckpt \
                --input_binary=true \
-               --output_graph=./freeze/cifar10/miniResNet/frozen_graph.pb \
+               --output_graph=./build/freeze/cifar10/miniResNet/frozen_graph.pb \
                --output_node_names=${RESNET_OUT_NODE}
                #2>&1 | tee rpt/cifar10/3a_freeze_graph_miniResNet.log
   echo " "
   echo "##########################################################################"
   echo "INSPECT FROZEN GRAPH of miniResNet"
   echo "##########################################################################"
-  vai_q_tensorflow inspect --input_frozen_graph=./freeze/cifar10/miniResNet/frozen_graph.pb
+  vai_q_tensorflow inspect --input_frozen_graph=./build/freeze/cifar10/miniResNet/frozen_graph.pb
 
   echo " "
   echo "##########################################################################"
@@ -173,22 +173,22 @@ dos2unix_conversion() {
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH of LeNet on CIFAR10"
   echo "##########################################################################"
-  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./freeze/cifar10/LeNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${LENET_OUT_NODE} --gpu 0  #2>&1 | tee rpt/cifar10/3b_evaluate_frozen_graph_LeNet.log
+  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./build/freeze/cifar10/LeNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${LENET_OUT_NODE} --gpu 0  #2>&1 | tee rpt/cifar10/3b_evaluate_frozen_graph_LeNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH of miniVggNet  on CIFAR10"
   echo "##########################################################################"
-  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./freeze/cifar10/miniVggNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${VGG_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/cifar10/3b_evaluate_frozen_graph_miniVggNet.log
+  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./build/freeze/cifar10/miniVggNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${VGG_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/cifar10/3b_evaluate_frozen_graph_miniVggNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH of GoogleNet  on CIFAR10"
   echo "##########################################################################"
-  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./freeze/cifar10/miniGoogleNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${GOOGLE_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/cifar10/3b_evaluate_frozen_graph_miniGoogleNet.log
+  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./build/freeze/cifar10/miniGoogleNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${GOOGLE_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/cifar10/3b_evaluate_frozen_graph_miniGoogleNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH of ResNet  on CIFAR10"
   echo "##########################################################################"
-  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./freeze/cifar10/miniResNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${RESNET_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/cifar10/3b_evaluate_frozen_graph_miniResNet.log
+  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./build/freeze/cifar10/miniResNet/frozen_graph.pb --input_node ${CNN_INP_NODE} --output_node ${RESNET_OUT_NODE}  --gpu 0  #2>&1 | tee rpt/cifar10/3b_evaluate_frozen_graph_miniResNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE FROZEN GRAPH COMPLETED  on CIFAR10"
@@ -203,11 +203,11 @@ dos2unix_conversion() {
   echo "QUANTIZE LeNet on CIFAR10"
   echo "##########################################################################"
   vai_q_tensorflow  quantize \
-	--input_frozen_graph ../freeze/cifar10/LeNet/frozen_graph.pb \
+	--input_frozen_graph ../build/freeze/cifar10/LeNet/frozen_graph.pb \
 	--input_nodes ${CNN_INP_NODE} \
 	--input_shapes ?,32,32,3 \
 	--output_nodes ${LENET_OUT_NODE}\
-	--output_dir ../quantized_results/cifar10/LeNet/ \
+	--output_dir ../build/quantized_results/cifar10/LeNet/ \
 	--method 1 \
 	--input_fn cifar10_graph_input_fn.calib_input \
 	--calib_iter 20 \
@@ -218,11 +218,11 @@ dos2unix_conversion() {
   echo "QUANTIZE miniVggNet  on CIFAR10"
   echo "##########################################################################"
   vai_q_tensorflow quantize \
-	--input_frozen_graph ../freeze/cifar10/miniVggNet/frozen_graph.pb \
+	--input_frozen_graph ../build/freeze/cifar10/miniVggNet/frozen_graph.pb \
 	--input_nodes ${CNN_INP_NODE} \
 	--input_shapes ?,32,32,3 \
 	--output_nodes ${VGG_OUT_NODE} \
-	--output_dir ../quantized_results/cifar10/miniVggNet/ \
+	--output_dir ../build/quantized_results/cifar10/miniVggNet/ \
 	--method 1 \
 	--input_fn cifar10_graph_input_fn.calib_input \
 	--calib_iter 20 \
@@ -233,11 +233,11 @@ dos2unix_conversion() {
   echo "QUANTIZE miniGoogleNet  on CIFAR10"
   echo "##########################################################################"
   vai_q_tensorflow quantize \
-	--input_frozen_graph ../freeze/cifar10/miniGoogleNet/frozen_graph.pb \
+	--input_frozen_graph ../build/freeze/cifar10/miniGoogleNet/frozen_graph.pb \
 	--input_nodes ${CNN_INP_NODE} \
 	--input_shapes ?,32,32,3 \
 	--output_nodes ${GOOGLE_OUT_NODE} \
-	--output_dir ../quantized_results/cifar10/miniGoogleNet/ \
+	--output_dir ../build/quantized_results/cifar10/miniGoogleNet/ \
 	--method 1 \
 	--input_fn cifar10_graph_input_fn.calib_input \
 	--calib_iter 20 \
@@ -248,11 +248,11 @@ dos2unix_conversion() {
   echo "QUANTIZE miniResNet  on CIFAR10"
   echo "##########################################################################"
   vai_q_tensorflow quantize \
-	--input_frozen_graph ../freeze/cifar10/miniResNet/frozen_graph.pb \
+	--input_frozen_graph ../build/freeze/cifar10/miniResNet/frozen_graph.pb \
 	--input_nodes ${CNN_INP_NODE} \
 	--input_shapes ?,32,32,3 \
 	--output_nodes ${RESNET_OUT_NODE} \
-	--output_dir ../quantized_results/cifar10/miniResNet/ \
+	--output_dir ../build/quantized_results/cifar10/miniResNet/ \
 	--method 1 \
 	--input_fn cifar10_graph_input_fn.calib_input \
 	--calib_iter 20 \
@@ -272,22 +272,22 @@ dos2unix_conversion() {
   echo "##########################################################################"
   echo "EVALUATE QUANTIZED GRAPH of LeNet on CIFAR10"
   echo "##########################################################################"
-  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./quantized_results/cifar10/LeNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${LENET_OUT_NODE} --gpu 0  #2>&1 | tee rpt/cifar10/4b_evaluate_quantized_graph_LeNet.log
+  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./build/quantized_results/cifar10/LeNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${LENET_OUT_NODE} --gpu 0  #2>&1 | tee rpt/cifar10/4b_evaluate_quantized_graph_LeNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE QUANTIZED GRAPH of miniVggNet  on CIFAR10"
   echo "##########################################################################"
-  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./quantized_results/cifar10/miniVggNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${VGG_OUT_NODE} --gpu 0 #2>&1 | tee rpt/cifar10/4b_evaluate_quantized_graph_miniVggNet.log
+  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./build/quantized_results/cifar10/miniVggNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${VGG_OUT_NODE} --gpu 0 #2>&1 | tee rpt/cifar10/4b_evaluate_quantized_graph_miniVggNet.log
   echo " "
   echo "##############################################################################"
   echo "EVALUATE QUANTIZED GRAPH of miniGoogleNet  on CIFAR10"
   echo "##############################################################################"
-  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./quantized_results/cifar10/miniGoogleNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${GOOGLE_OUT_NODE} --gpu 0 #2>&1 | tee rpt/cifar10/4b_evaluate_quantized_graph_miniGoogleNet.log
+  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./build/quantized_results/cifar10/miniGoogleNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${GOOGLE_OUT_NODE} --gpu 0 #2>&1 | tee rpt/cifar10/4b_evaluate_quantized_graph_miniGoogleNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE QUANTIZED GRAPH of miniResNet  on CIFAR10"
   echo "##########################################################################"
-  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./quantized_results/cifar10/miniResNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${RESNET_OUT_NODE} --gpu 0 #2>&1 | tee rpt/cifar10/4b_evaluate_quantized_graph_miniResNet.log
+  python code/cifar10_eval_graph.py --dataset cifar10 --graph ./build/quantized_results/cifar10/miniResNet/quantize_eval_model.pb --input_node ${CNN_INP_NODE} --output_node ${RESNET_OUT_NODE} --gpu 0 #2>&1 | tee rpt/cifar10/4b_evaluate_quantized_graph_miniResNet.log
   echo " "
   echo "##########################################################################"
   echo "EVALUATE QUANTIZED GRAPH COMPLETED  on CIFAR10"
@@ -301,69 +301,57 @@ dos2unix_conversion() {
     echo "COMPILE WITH Vitis AI on VCK190: LeNet on CIFAR10"
     echo "##########################################################################"
     vai_c_tensorflow \
-        --frozen_pb=./quantized_results/cifar10/LeNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/cifar10/LeNet \
+        --frozen_pb=./build/quantized_results/cifar10/LeNet/quantize_eval_model.pb \
+        --arch ./arch_vck190_dw.json \
+        --output_dir=./build/compile/cifar10/LeNet \
         --net_name=LeNet \
         --options    "{'mode':'normal'}" \
         #2>&1 | tee rpt/cifar10/5_vai_compile_LeNet.log
-    mv  ./compile/cifar10/LeNet/*.xmodel ./target_vck190/cifar10/LeNet/model/
-    rm  ./target_vck190/cifar10/LeNet/model/*_org.xmodel
+    mv  ./build/compile/cifar10/LeNet/*.xmodel ./target_vck190/cifar10/LeNet/
+    rm  ./target_vck190/cifar10/LeNet/*_org.xmodel
 
     echo " "
     echo "##########################################################################"
     echo "COMPILE WITH Vitis AI on VCK190: miniVggNet  on CIFAR10"
     echo "##########################################################################"
     vai_c_tensorflow \
-        --frozen_pb=./quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/cifar10/miniVggNet \
+        --frozen_pb=./build/quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
+        --arch ./arch_vck190_dw.json \
+        --output_dir=./build/compile/cifar10/miniVggNet \
         --net_name=miniVggNet \
         --options    "{'mode':'normal'}" \
         #2>&1 | tee rpt/cifar10/5_vai_compile_miniVggNet.log
-    mv  ./compile/cifar10/miniVggNet/*.xmodel ./target_vck190/cifar10/miniVggNet/model/
-    rm  ./target_vck190/cifar10/miniVggNet/model/*_org.xmodel
-    : '
-    vai_c_tensorflow \
-        --frozen_pb=./quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/cifar10/miniVggNet \
-        --net_name=miniVggNet \
-        --options    "{'mode':'debug'}" \
-        #2>&1 | tee rpt/cifar10/5_vai_compile_miniVggNet.log
-    mv  ./compile/cifar10/miniVggNet/*.xmodel ./target_vck190/cifar10/miniVggNet/model/dbg_dpu_miniVggNet_0.xmodel
-    rm  ./target_vck190/cifar10/miniVggNet/model/*_org.xmodel
-    '
+    mv  ./build/compile/cifar10/miniVggNet/*.xmodel ./target_vck190/cifar10/miniVggNet/
+    rm  ./target_vck190/cifar10/miniVggNet/*_org.xmodel
+
     echo " "
     echo "##########################################################################"
     echo "COMPILE WITH Vitis AI on VCK190: miniGoogleNet  on CIFAR10"
     echo "##########################################################################"
     vai_c_tensorflow \
-        --frozen_pb=./quantized_results/cifar10/miniGoogleNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/cifar10/miniGoogleNet \
+        --frozen_pb=./build/quantized_results/cifar10/miniGoogleNet/quantize_eval_model.pb \
+        --arch ./arch_vck190_dw.json \
+        --output_dir=./build/compile/cifar10/miniGoogleNet \
         --net_name=miniGoogleNet \
         --options    "{'mode':'normal'}" \
         #2>&1 | tee rpt/cifar10/5_vai_compile_miniGoogleNet.log
-    mv  ./compile/cifar10/miniGoogleNet/*.xmodel ./target_vck190/cifar10/miniGoogleNet/model/
-    rm  ./target_vck190/cifar10/miniGoogleNet/model/*_org.xmodel
+    mv  ./build/compile/cifar10/miniGoogleNet/*.xmodel ./target_vck190/cifar10/miniGoogleNet/
+    rm  ./target_vck190/cifar10/miniGoogleNet/*_org.xmodel
 
-    : '
     #This CNN is not yet supprted on XVDPU because of a missing layer
     echo " "
     echo "##########################################################################"
     echo "COMPILE WITH Vitis AI on VCK190: miniResNet  on CIFAR10"
     echo "##########################################################################"
     vai_c_tensorflow \
-        --frozen_pb=./quantized_results/cifar10/miniResNet/quantize_eval_model.pb \
-        --arch /opt/vitis_ai/compiler/arch/DPUCVDX8G/VCK190/arch.json \
-        --output_dir=compile/cifar10/miniResNet \
+        --frozen_pb=./build/quantized_results/cifar10/miniResNet/quantize_eval_model.pb \
+        --arch ./arch_vck190_dw.json \
+        --output_dir=./build/compile/cifar10/miniResNet \
         --net_name=miniResNet \
         --options    "{'mode':'normal'}" \
         #2>&1 | tee rpt/cifar10/5_vai_compile_miniResNet.log
-    mv  ./compile/cifar10/miniResNet/*.xmodel ./target_vck190/cifar10/miniResNet/model/
-    rm  ./target_vck190/cifar10/miniResNet/model/*_org.xmodel
-    '
+    mv  ./build/compile/cifar10/miniResNet/*.xmodel ./target_vck190/cifar10/miniResNet/
+    rm  ./target_vck190/cifar10/miniResNet/*_org.xmodel
 
     echo " "
     echo "##########################################################################"
@@ -378,59 +366,45 @@ echo "##########################################################################
 echo "COMPILE WITH Vitis AI on ZCU102: LeNet on CIFAR10"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/LeNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/cifar10/LeNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/cifar10/LeNet \
+       --output_dir=./build/compile/cifar10/LeNet \
        --net_name=LeNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/cifar10/5_vai_compile_LeNet.log
 
-mv  ./compile/cifar10/LeNet/*.xmodel ./target_zcu102/cifar10/LeNet/model/
-rm  ./target_zcu102/cifar10/LeNet/model/*_org.xmodel
+mv  ./build/compile/cifar10/LeNet/*.xmodel ./target_zcu102/cifar10/LeNet/
+rm  ./target_zcu102/cifar10/LeNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
 echo "COMPILE WITH Vitis AI on ZCU102: miniVggNet  on CIFAR10"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/cifar10/miniVggNet \
+       --output_dir=./build/compile/cifar10/miniVggNet \
        --net_name=miniVggNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/cifar10/5_vai_compile_miniVggNet.log
 
-mv  ./compile/cifar10/miniVggNet/*.xmodel ./target_zcu102/cifar10/miniVggNet/model/
-rm  ./target_zcu102/cifar10/miniVggNet/model/*_org.xmodel
-
-: '
-#debug mode
-vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
-       --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/cifar10/miniVggNet \
-       --net_name=miniVggNet \
-       --options    "{'mode':'debug'}"
-       #2>&1 | tee rpt/cifar10/5_vai_compile_miniVggNet.log
-
-mv  ./compile/cifar10/miniVggNet/*.xmodel ./target_zcu102/cifar10/miniVggNet/model/dbg_dpu_miniVggNet_0.elf
-rm  ./target_zcu102/cifar10/miniVggNet/model/*_org.xmodel
-'
+mv  ./build/compile/cifar10/miniVggNet/*.xmodel ./target_zcu102/cifar10/miniVggNet/
+rm  ./target_zcu102/cifar10/miniVggNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
 echo "COMPILE WITH Vitis AI on ZCU102: miniGoogleNet  on CIFAR10"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/miniGoogleNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/cifar10/miniGoogleNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/cifar10/miniGoogleNet \
+       --output_dir=./build/compile/cifar10/miniGoogleNet \
        --net_name=miniGoogleNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/cifar10/5_vai_compile_miniGoogleNet.log
 
-mv  ./compile/cifar10/miniGoogleNet/*.xmodel ./target_zcu102/cifar10/miniGoogleNet/model/
-rm  ./target_zcu102/cifar10/miniGoogleNet/model/*_org.xmodel
+mv  ./build/compile/cifar10/miniGoogleNet/*.xmodel ./target_zcu102/cifar10/miniGoogleNet/
+rm  ./target_zcu102/cifar10/miniGoogleNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
@@ -438,15 +412,15 @@ echo "COMPILE WITH Vitis AI on ZCU102: miniResNet  on CIFAR10"
 echo "##########################################################################"
 # for Vitis AI >= 1.1
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/miniResNet/quantize_model.pb \
+       --frozen_pb=./build/quantized_results/cifar10/miniResNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json \
-       --output_dir=compile/cifar10/miniResNet \
+       --output_dir=./build/compile/cifar10/miniResNet \
        --net_name=miniResNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/cifar10/5_vai_compile_miniResNet.log
 
-mv  ./compile/cifar10/miniResNet/*.xmodel ./target_zcu102/cifar10/miniResNet/model/
-rm  ./target_zcu102/cifar10/miniResNet/model/*_org.xmodel
+mv  ./build/compile/cifar10/miniResNet/*.xmodel ./target_zcu102/cifar10/miniResNet/
+rm  ./target_zcu102/cifar10/miniResNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
@@ -461,59 +435,45 @@ echo "##########################################################################
 echo "COMPILE WITH Vitis AI on ZCU104: LeNet on CIFAR10"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/LeNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/cifar10/LeNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/cifar10/LeNet \
+       --output_dir=./build/compile/cifar10/LeNet \
        --net_name=LeNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/cifar10/5_vai_compile_LeNet.log
 
-mv  ./compile/cifar10/LeNet/*.xmodel ./target_zcu104/cifar10/LeNet/model/
-rm  ./target_zcu104/cifar10/LeNet/model/*_org.xmodel
+mv  ./build/compile/cifar10/LeNet/*.xmodel ./target_zcu104/cifar10/LeNet/
+rm  ./target_zcu104/cifar10/LeNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
 echo "COMPILE WITH Vitis AI on ZCU104: miniVggNet  on CIFAR10"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/cifar10/miniVggNet \
+       --output_dir=./build/compile/cifar10/miniVggNet \
        --net_name=miniVggNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/cifar10/5_vai_compile_miniVggNet.log
 
-mv  ./compile/cifar10/miniVggNet/*.xmodel ./target_zcu104/cifar10/miniVggNet/model/
-rm  ./compile/cifar10/miniVggNet/*_org.xmodel
-
-: '
-#debug mode
-vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/miniVggNet/quantize_eval_model.pb \
-       --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/cifar10/miniVggNet \
-       --net_name=miniVggNet \
-       --options    "{'mode':'debug'}"
-       #2>&1 | tee rpt/cifar10/5_vai_compile_miniVggNet.log
-
-mv  ./compile/cifar10/miniVggNet/*.xmodel ./target_zcu104/cifar10/miniVggNet/model/dbg_dpu_miniVggNet_0.elf
-rm  ./target_zcu104/cifar10/miniVggNet/model/*_org.xmodel
-'
+mv  ./build/compile/cifar10/miniVggNet/*.xmodel ./target_zcu104/cifar10/miniVggNet/
+rm  ./target_zcu104/cifar10/miniVggNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
 echo "COMPILE WITH Vitis AI on ZCU104: miniGoogleNet  on CIFAR10"
 echo "##########################################################################"
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/miniGoogleNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/cifar10/miniGoogleNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/cifar10/miniGoogleNet \
+       --output_dir=./build/compile/cifar10/miniGoogleNet \
        --net_name=miniGoogleNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/cifar10/5_vai_compile_miniGoogleNet.log
 
-mv  ./compile/cifar10/miniGoogleNet/*.xmodel ./target_zcu104/cifar10/miniGoogleNet/model/
-rm  ./target_zcu104/cifar10/miniGoogleNet/model/*_org.xmodel
+mv  ./build/compile/cifar10/miniGoogleNet/*.xmodel ./target_zcu104/cifar10/miniGoogleNet/
+rm  ./target_zcu104/cifar10/miniGoogleNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
@@ -521,15 +481,15 @@ echo "COMPILE WITH Vitis AI on ZCU104: miniResNet  on CIFAR10"
 echo "##########################################################################"
 # for Vitis AI >= 1.1
 vai_c_tensorflow \
-       --frozen_pb=./quantized_results/cifar10/miniResNet/quantize_eval_model.pb \
+       --frozen_pb=./build/quantized_results/cifar10/miniResNet/quantize_eval_model.pb \
        --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json \
-       --output_dir=compile/cifar10/miniResNet \
+       --output_dir=./build/compile/cifar10/miniResNet \
        --net_name=miniResNet \
        --options    "{'mode':'normal'}"
        #2>&1 | tee rpt/cifar10/5_vai_compile_miniResNet.log
 
-mv  ./compile/cifar10/miniResNet/*.xmodel ./target_zcu104/cifar10/miniResNet/model/
-rm  ./target_zcu104/cifar10/miniResNet/model/*_org.xmodel
+mv  ./build/compile/cifar10/miniResNet/*.xmodel ./target_zcu104/cifar10/miniResNet/
+rm  ./target_zcu104/cifar10/miniResNet/*_org.xmodel
 
 echo " "
 echo "##########################################################################"
@@ -561,24 +521,30 @@ main() {
   # quantize the CNN from 32-bit floating-point to 8-bit fixed-point
   4a_cifar10_quant
 
+
   # make predictions with quantized frozen graph
   4b_cifar10_evaluate_quantized_graph
 
-  # compile ELF file for ZCU102 target board
+
+  # compile xmodel file for ZCU102 target board
   5_cifar10_vai_compile_zcu102
 
-  # compile ELF file for ZCU104 target board
+  ## compile xmodel file for ZCU104 target board
   5_cifar10_vai_compile_zcu104
 
-  # compile ELF file for VCK190 target board
+  # compile xmodel file for VCK190 target board
   5_cifar10_vai_compile_vck190
 
-  ## copy test images into target board
-  tar -cvf cifar10_test.tar ./dataset/cifar10/test
-  cp ./cifar10_test.tar ./target_zcu102/
-  cp ./cifar10_test.tar ./target_vck190/
-  mv ./cifar10_test.tar ./target_zcu104/
 
+  ## copy test images into target board
+  cd build/dataset/cifar10
+  cp -r ./test ./cifar10_test
+  tar -cvf cifar10_test.tar ./cifar10_test &> /dev/null
+  rm -rf cifar10_test
+  cd ../../../
+  cp ./build/dataset/cifar10/cifar10_test.tar ./target_zcu102/
+  cp ./build/dataset/cifar10/cifar10_test.tar ./target_vck190/
+  mv ./build/dataset/cifar10/cifar10_test.tar ./target_zcu104/
 
 }
 

@@ -1,6 +1,6 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - AI Engine Development Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - AI Engine Development Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -81,6 +81,11 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/09-debug-walkthrough/">Debug Walkthrough Tutorial</a></td>
  <td>
 This tutorial demonstrates how to debug a multi-processor application using the Versal ACAP AI Engines, using a beamformer example design. The tutorial illustrates functional debug and performance level debug techniques.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AI Engine DSP Library and Model Composer Tutorial</a></td>
+ <td>
+This tutorial shows how to design AI Engine applications using Model Composer. This set of blocksets for Simulink is used to demonstrate how easy it is to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.</td>
  </tr>
  </table>
 

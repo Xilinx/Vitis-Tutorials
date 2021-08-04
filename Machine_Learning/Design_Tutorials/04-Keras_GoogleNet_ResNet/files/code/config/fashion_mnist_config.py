@@ -18,7 +18,7 @@
 '''
 
 # modified by daniele.bagni@xilinx.com
-# date 24 / 11 / 2020
+# date 5 May 2021
 
 import os
 import numpy as np
@@ -35,12 +35,12 @@ def get_script_directory():
 SCRIPT_DIR = get_script_directory()
 
 # dataset top level folder
-DATASET_DIR = os.path.join(SCRIPT_DIR, "dataset/fmnist")
+DATASET_DIR = os.path.join(SCRIPT_DIR, "./build/dataset/fmnist")
 # train, validation, test and calibration folders
 TRAIN_DIR = os.path.join(DATASET_DIR, "train")
 VALID_DIR = os.path.join(DATASET_DIR, "valid")
 TEST_DIR  = os.path.join(DATASET_DIR, "test")
-CALIB_DIR = os.path.join(DATASET_DIR, "calib")
+CALIB_DIR = os.path.join(SCRIPT_DIR, "../build/dataset/fmnist/calib")
 
 # Augmented images folder
 #AUG_IMG_DIR = os.path.join(SCRIPT_DIR,'aug_img')
@@ -49,10 +49,10 @@ CALIB_DIR = os.path.join(DATASET_DIR, "calib")
 KERAS_MODEL_DIR = os.path.join(SCRIPT_DIR, "keras_model/fmnist")
 
 # TF checkpoints folder
-CHKPT_MODEL_DIR = os.path.join(SCRIPT_DIR, "tf_chkpts/fmnist")
+CHKPT_MODEL_DIR = os.path.join(SCRIPT_DIR, "./build/tf_chkpts/fmnist")
 
 # TensorBoard folder
-TB_LOG_DIR = os.path.join(SCRIPT_DIR, "tb_logs/fmnist")
+TB_LOG_DIR = os.path.join(SCRIPT_DIR, "./build/tb_logs/fmnist")
 
 ###############################################################################
 # global variables

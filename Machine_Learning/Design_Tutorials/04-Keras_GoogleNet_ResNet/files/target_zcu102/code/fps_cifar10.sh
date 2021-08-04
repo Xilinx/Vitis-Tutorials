@@ -15,22 +15,22 @@
 ## under the License.
 
 # check LeNet fps
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 1 --model ./cifar10/LeNet/model/LeNet.xmodel  --classes CIFAR10
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 5 --model ./cifar10/LeNet/model/LeNet.xmodel  --classes CIFAR10
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 6 --model ./cifar10/LeNet/model/LeNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 1 --model ./cifar10/LeNet/LeNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 5 --model ./cifar10/LeNet/LeNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 6 --model ./cifar10/LeNet/LeNet.xmodel  --classes CIFAR10
 
 # check miniVggNet fps
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 1 --model ./cifar10/miniVggNet/model/miniVggNet.xmodel  --classes CIFAR10
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 5 --model ./cifar10/miniVggNet/model/miniVggNet.xmodel  --classes CIFAR10
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 6 --model ./cifar10/miniVggNet/model/miniVggNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 1 --model ./cifar10/miniVggNet/miniVggNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 5 --model ./cifar10/miniVggNet/miniVggNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 6 --model ./cifar10/miniVggNet/miniVggNet.xmodel  --classes CIFAR10
 
 # check miniGoogleNet fps
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 1 --model ./cifar10/miniGoogleNet/model/miniGoogleNet.xmodel  --classes CIFAR10
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 5 --model ./cifar10/miniGoogleNet/model/miniGoogleNet.xmodel  --classes CIFAR10
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 6 --model ./cifar10/miniGoogleNet/model/miniGoogleNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 1 --model ./cifar10/miniGoogleNet/miniGoogleNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 5 --model ./cifar10/miniGoogleNet/miniGoogleNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 6 --model ./cifar10/miniGoogleNet/miniGoogleNet.xmodel  --classes CIFAR10
 
 
 # check miniResNet fps
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 1 --model ./cifar10/miniResNet/model/miniResNet.xmodel  --classes CIFAR10
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 5 --model ./cifar10/miniResNet/model/miniResNet.xmodel  --classes CIFAR10
-python3 ./code/src/classification.py --images ./cifar10_test/ --threads 6 --model ./cifar10/miniResNet/model/miniResNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 1 --model ./cifar10/miniResNet/miniResNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 5 --model ./cifar10/miniResNet/miniResNet.xmodel  --classes CIFAR10
+python3 ./code/src/classification.py --images ./cifar10_test/ --threads 6 --model ./cifar10/miniResNet/miniResNet.xmodel  --classes CIFAR10

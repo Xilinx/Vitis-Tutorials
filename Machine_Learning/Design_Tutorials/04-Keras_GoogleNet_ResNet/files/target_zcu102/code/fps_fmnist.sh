@@ -15,22 +15,22 @@
 ## under the License.
 
 # check LeNet fps
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 1 --model ./fmnist/LeNet/model/LeNet.xmodel  --classes "fmnist"
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 5 --model ./fmnist/LeNet/model/LeNet.xmodel  --classes "fmnist"
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 6 --model ./fmnist/LeNet/model/LeNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 1 --model ./fmnist/LeNet/LeNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 5 --model ./fmnist/LeNet/LeNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 6 --model ./fmnist/LeNet/LeNet.xmodel  --classes "fmnist"
 
 # check miniVggNet fps
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 1 --model ./fmnist/miniVggNet/model/miniVggNet.xmodel  --classes "fmnist"
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 5 --model ./fmnist/miniVggNet/model/miniVggNet.xmodel  --classes "fmnist"
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 6 --model ./fmnist/miniVggNet/model/miniVggNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 1 --model ./fmnist/miniVggNet/miniVggNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 5 --model ./fmnist/miniVggNet/miniVggNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 6 --model ./fmnist/miniVggNet/miniVggNet.xmodel  --classes "fmnist"
 
 # check miniGoogleNet fps
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 1 --model ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel  --classes "fmnist"
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 5 --model ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel  --classes "fmnist"
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 6 --model ./fmnist/miniGoogleNet/model/miniGoogleNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 1 --model ./fmnist/miniGoogleNet/miniGoogleNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 5 --model ./fmnist/miniGoogleNet/miniGoogleNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 6 --model ./fmnist/miniGoogleNet/miniGoogleNet.xmodel  --classes "fmnist"
 
 
 # check miniResNet fps
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 1 --model ./fmnist/miniResNet/model/miniResNet.xmodel  --classes "fmnist"
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 5 --model ./fmnist/miniResNet/model/miniResNet.xmodel  --classes "fmnist"
-python3 ./code/src/classification.py --images ./fmnist_test/ --threads 6 --model ./fmnist/miniResNet/model/miniResNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 1 --model ./fmnist/miniResNet/miniResNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 5 --model ./fmnist/miniResNet/miniResNet.xmodel  --classes "fmnist"
+python3 ./code/src/classification.py --images ./fmnist_test/ --threads 6 --model ./fmnist/miniResNet/miniResNet.xmodel  --classes "fmnist"

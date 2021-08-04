@@ -1,6 +1,6 @@
-<table class="sphinxhide">
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Getting Started Tutorial</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Getting Started Tutorial</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
    </td>
  </tr>
@@ -68,11 +68,11 @@ There are 4 main steps in the source code for this simple example.
 
 * **Step 1:** The OpenCL environment is initialized. In this section, the host detects the attached Xilinx device, loads the FPGA binary (.xclbin file) from file and programs it into the first Xilinx device it found. Then a command queue and the kernel object are created. All Vitis applications will have code very similar to the one in this section.
 
-* **Step 2:** The application creates the three buffers needed to share data with the kernel: one for each input and one for the output. On data-center platforms, it is more efficient to allocate memory aligned on 4k page boundaries. On embedded platforms, it is more efficient to perform contiguous memory allocation. A simple way of achieving either of these is to let the Xilinx Runtime allocate host memory when creating the buffers. This is done by using the cl::Buffer constructor to create the buffers and then mapping the allocated memory to user-space pointers.
+ * **Step 2:** The application creates the three buffers needed to share data with the kernel: one for each input and one for the output. On data-center platforms, it is more efficient to allocate memory aligned on 4k page boundaries. On embedded platforms, it is more efficient to perform contiguous memory allocation. A simple way of achieving either of these is to let the Xilinx Runtime allocate host memory when creating the buffers. This is done by using the cl::Buffer constructor to create the buffers and then mapping the allocated memory to user-space pointers.
 
 ```cpp
     // Create the buffers and allocate memory   
-    cl::Buffer in1_buf(context, CL_MEM_READ_ONLY,  sizeof(int) * DATA_SIZE, NULL, &err);
+     cl::Buffer in1_buf(context, CL_MEM_READ_ONLY,  sizeof(int) * DATA_SIZE, NULL, &err);
 
     // Map host-side buffer memory to user-space pointers
     int *in1 = (int *)q.enqueueMapBuffer(in1_buf, CL_TRUE, CL_MAP_WRITE, 0, sizeof(int) * DATA_SIZE);

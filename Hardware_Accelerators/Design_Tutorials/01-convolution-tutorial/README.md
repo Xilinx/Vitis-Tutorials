@@ -1,6 +1,6 @@
 ﻿﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
@@ -27,11 +27,29 @@ This lab demonstrates the significant performance gain that can be achieved as c
 
 ### Cloning the GitHub Repository and Setting Up the Vitis Tool
 
+To run this tutorial you will need to clone a git repo and also download and extract some compressed files, please follow the instruction given below:
+
+#### Clone Git Repo
+
 Clone the repository using the following command:
 
 ```bash
 git clone https://github.com/Xilinx/Vitis-Tutorials.git
 ```
+
+#### Copy and Extract Large Files
+
+Copy and extract large files in convolution tutorial directory as follows:
+
+```bash
+cd /VITIS_TUTORIAL_REPO_PATH/Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial
+wget https://www.xilinx.com/bin/public/openDownload?filename=conv_tutorial_files.tar.gz -O conv_tutorial_files.tar.gz
+tar -xvzf  conv_tutorial_files.tar.gz
+```
+
+**NOTE** : VITIS_TUTORIAL_REPO_PATH is the local directory path where git repo is cloned. 
+
+#### Setting Up the Vitis Tool
 
 Setup the application build and runtime environment using the following commands as per your local installation:
 
