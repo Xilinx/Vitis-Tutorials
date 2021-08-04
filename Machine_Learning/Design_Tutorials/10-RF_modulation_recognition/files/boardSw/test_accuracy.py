@@ -31,15 +31,21 @@ data: data to be calculated
 size: data size
 return: softamx result
 '''
-def CPUCalcSoftmax(data,size):
-    sum=0.0
+def CPUCalcSoftmax(data, size, scale):
+    sum = 0.0
     result = [0 for i in range(size)]
     for i in range(size):
-        result[i] = math.exp(data[i])
-        sum +=result[i]
+        result[i] = math.exp(data[i] * scale)
+        sum += result[i]
     for i in range(size):
-        result[i] /=sum
+        result[i] /= sum
+    #print("Softmax = ", result)
     return result
+
+
+def get_script_directory():
+    path = os.getcwd()
+    return path
 
 def get_script_directory():
     path = os.getcwd()
@@ -48,16 +54,18 @@ def get_script_directory():
 global threadnum
 threadnum = 0
 
-def runRfClassify(dpu,rfIn,rfClass,rfSnr,cnt):
+def runRfClassify(runner: "Runner",rfIn,rfClass,rfSnr,cnt): 
     """get tensor"""
-    inputTensors = dpu.get_input_tensors()
-    outputTensors = dpu.get_output_tensors()
-    outputHeight = outputTensors[0].dims[1]
-    outputWidth = outputTensors[0].dims[2]
-    outputChannel = outputTensors[0].dims[3]
-    outputSize = outputHeight*outputWidth*outputChannel
-    softmax = np.empty(outputSize)
+    inputTensors = runner.get_input_tensors()
+    outputTensors = runner.get_output_tensors()
+    input_ndim = tuple(inputTensors[0].dims)
+    pre_output_size = int(outputTensors[0].get_data_size() / input_ndim[0])
+    output_ndim = tuple(outputTensors[0].dims)
+    pre_output_size = int(outputTensors[0].get_data_size() / input_ndim[0])
+    softmax = np.empty(pre_output_size)
     batchSize = inputTensors[0].dims[0]
+    output_fixpos = outputTensors[0].get_attr("fix_point")
+    output_scale = 1 / (2**output_fixpos)
     n_of_samples = len(rfIn)
     count = 0;
     top1_count = 0
@@ -74,26 +82,27 @@ def runRfClassify(dpu,rfIn,rfClass,rfSnr,cnt):
         """prepare batch input/output """
         outputData = []
         inputData = []
-        outputData.append(np.empty((runSize,outputHeight,outputWidth,outputChannel), dtype = np.float32, order = 'C'))
-        inputData.append(np.empty((shapeIn), dtype = np.float32, order = 'C'))
+        inputData = [np.empty(input_ndim, dtype=np.float32, order="C")]
+        outputData = [np.empty(output_ndim, dtype=np.int8, order="C")]
 
         """init input image to input buffer """
         for j in range(runSize):
             imageRun = inputData[0]
-            imageRun[j,...] = rfIn[(count+j)% n_of_samples].reshape(inputTensors[0].dims[1],inputTensors[0].dims[2],inputTensors[0].dims[3])
+            imageRun[j, ...] = rfIn[(count + j) % n_of_samples].reshape(input_ndim[1:])
+
 
         """run with batch """
-        job_id = dpu.execute_async(inputData,outputData)
-        dpu.wait(job_id)
+        job_id = runner.execute_async(inputData,outputData)
+        runner.wait(job_id)
 
         for j in range(len(outputData)):
-            outputData[j] = outputData[j].reshape(runSize, outputSize)
+            outputData[j] = outputData[j].reshape(runSize, pre_output_size)
 
         """softmax calculate with batch """
         """Benchmark DPU FPS performance over Vitis AI APIs execute_async() and wait() """
         """Uncomment the following code snippet to include softmax calculation for model’s end-to-end FPS evaluation """
         for j in range(runSize):
-           softmax = CPUCalcSoftmax(outputData[0][j], outputSize)
+           softmax = CPUCalcSoftmax(outputData[0][j], pre_output_size, output_scale)
            top1 = mods[np.argmax(softmax)]
            maxValue = np.amax(softmax)
            groundTruth = mods[np.argmax(rfClass[count+j])]
