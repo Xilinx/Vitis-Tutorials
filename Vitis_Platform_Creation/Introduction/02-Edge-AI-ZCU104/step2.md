@@ -194,6 +194,7 @@ Vitis-AI applications will install additional software packages. If user would l
 
    ![](./images/petalinux_image_packaging_configuration.png)
 
+<!--TODO: CMA change is needed. Other changes are not.-->
 2. Let Linux use EXT4 rootfs during boot
 
    The setting of which rootfs to use during boot is controlled by **bootargs**. We would change bootargs settings to allow Linux to boot from EXT4 partition. There are various ways to update bootargs. Please take either way below.
@@ -241,7 +242,6 @@ Vitis-AI applications will install additional software packages. If user would l
 
    The generated sysroot package **sdk.sh** will be located in <PetaLinux Project>linux/image directory. We'll extract it in next step.
 
-**Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](step3.md).**
 
 ### Fast Track
 
@@ -262,5 +262,9 @@ Scripts are provided to re-create PetaLinux project and generate outputs. To use
    ```
 
 Note: The Fast Track scripts extracts the sysroot to <PetaLinux Project>/images/linux directory. It's different than the step-by-step instructions for the convenience of scripting.
+
+### Next Step
+
+Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](step3.md).
 
 <p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
