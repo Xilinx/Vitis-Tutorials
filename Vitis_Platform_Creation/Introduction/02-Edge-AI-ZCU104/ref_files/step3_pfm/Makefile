@@ -23,7 +23,10 @@ sw_comp:
 	cp ../step2_petalinux/build/petalinux/images/linux/pmufw.elf ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/bl31.elf ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/u-boot.elf ./boot/
+	# system.dtb for u-boot
+	cp ../step2_petalinux/build/petalinux/images/linux/system.dtb ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/boot.scr ./sd_dir/
+	# system.dtb for Linux
 	cp ../step2_petalinux/build/petalinux/images/linux/system.dtb ./sd_dir/
 
 pfm:
@@ -40,7 +43,7 @@ prep_sysroot: ../step2_petalinux/build/petalinux/images/linux/sdk.sh
 	rm -rf ./sysroot && ../step2_petalinux/build/petalinux/images/linux/sdk.sh -d ./sw_comp -y
 
 clean:
-	$(RM) -r vitis_* xrc.log build platform_repo fat32 boot/*.elf
+	$(RM) -r vitis_* xrc.log build platform_repo sd_dir boot/*.elf
 
 ultraclean: clean
 	$(RM) -r sw_comp

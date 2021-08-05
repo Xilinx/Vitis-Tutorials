@@ -28,7 +28,7 @@ platform create -name $platform_name -desc "A custom platform ZCU104 platform" -
 domain create -name xrt -proc psu_cortexa53 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./sd_dir}  -bootmode {sd}
 # domain active xrt
 domain config -boot {./boot}
-domain config -bif ./boot/linux.bif
+domain config -generate-bif
 domain config -pmuqemu-args ./qemu/pmu_args.txt
 domain config -qemu-args ./qemu/qemu_args.txt
 domain config -qemu-data ./boot
