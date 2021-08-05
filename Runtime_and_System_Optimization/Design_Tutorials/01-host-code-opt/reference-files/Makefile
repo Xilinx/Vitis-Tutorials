@@ -10,7 +10,7 @@ include $(COMMON_REPO)/utils.mk
 SIZE    := 14
 TARGETS := hw
 TARGET  := $(TARGETS)
-DEVICES := xilinx_u200_xdma_201830_2
+DEVICES := xilinx_u200_gen3x16_xdma_1_202110_1
 DEVICE  := $(DEVICES)
 XCLBIN  := ./xclbin
 DSA := $(call device2sandsa, $(DEVICE))
