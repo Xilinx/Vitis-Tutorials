@@ -198,7 +198,7 @@ This section provides details of other methods of detecting and analyzing AI Eng
 		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C072004 
 		0x00000200
 
-	Value `0x00001001` indicates that it is `Stream_Stall_MS0`, and value `0x00000201` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil2`. 
+	Value `0x00001000` indicates that it is `Stream_Stall_MS0`, and value `0x00000200` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil2`. 
 
 ### Conclusion
 
