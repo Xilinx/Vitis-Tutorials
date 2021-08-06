@@ -115,7 +115,7 @@ For example: ifconfig -eth0 192.155.50.187
 
 #### Performance Test
 
-To run the perforamce test with 4 threads on 1000 RFSamples, enter the following at target board serial or ssh terminal prompt:
+To run the performance test with 4 threads on 1000 RFSamples, enter the following at target board serial or ssh terminal prompt:
 
 ```python3 test_performance.py 4 rfClassification.xmodel 1000```
 
@@ -133,7 +133,7 @@ To run the accuracy test, enter the following at target board serial or shh term
 ``` python3 test_accuracy.py rfClassification_0.xmodel```
 
 The RF frames, snrs, and modulation classes are read from the files rf_input.npy, rf_snrr.npy, rf_classes.npy.
-The Top1 accuracy should be close to what was measure for the quantized or quantized fine tuned model. As we saw when evaluating the models in the Juptyer notebook, the classification is more accuate for higher SNRs. The results below show ZCU104 accuracy on quantized model w/o fine tuning.
+The Top1 accuracy should be close to what was measure for the quantized or quantized fine tuned model. As we saw when evaluating the models in the Juptyer notebook, the classification is more accuate for higher SNRs. The results below show ZCU104 accuracy on quantized model w/o QAT.
 
 <img src="media/accuracy.png">
 
