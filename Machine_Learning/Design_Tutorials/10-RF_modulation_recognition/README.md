@@ -12,7 +12,7 @@
 
 ## Current Status:
 
-- Tested with Vitis AI 1.3
+- Tested with Vitis AI 1.4
 - Tested in hardware on ZCU102, ZCU104, VCK190, and Alveo U50.
 
 ## Introduction
@@ -46,7 +46,7 @@ Figure 1 gives an example.
 
 Various attempts at using a Deep Learning Architecture to perform modulation recognition have been attempted.
 Here we use a resnet based model simialr to whats described in **[1]**.
-This model contains 6 reset stacks. Each resenet stack (shown below) consists of 2 resent blocks followed by a max pooling layer.
+This model contains 4 reset stacks. Each resenet stack (shown below) consists of 2 resent blocks followed by a max pooling layer.
 
 
 <img src="media/image2.png" style="width:4.426in;height:4.6038in" alt="Diagram Description automatically generated" />
@@ -74,7 +74,7 @@ Evaluations of model accuracy are performed before and after quantization, and t
 ### 1.0 Prerequisites and Setup
 - Host machine with Ubuntu 16.04, 18.04 or other linux Vitis-AI supported distributions
 - Vitis-AI installed on your host machine. Follow the instructions from https://github.com/Xilinx/Vitis-AI
-- ZCU102 or ZCU104 Xilinx evaluation boards, or Alveo U50 Acceleration card.  Note: If you would like to use the VCK190 board you will need to apply for the early access lounge, contact your local sales team for more information.
+- VCK190, ZCU102 or ZCU104 Xilinx evaluation boards, or Alveo U50 Acceleration card.  
 - Setup  VART on your target board according to the instructions on https://github.com/Xilinx/Vitis-AI/tree/master/demo/VART
 
 ### 2.0 Start Vitis AI and Launch Jupyter Notebook
@@ -110,12 +110,12 @@ Copy following files from the Host machine to the ZCU104, ZCU102, or Alveo U50 b
 - rf_snrs.npy
 - rf_input.npy
 
-For the ZCU102 or ZCU104 boards, you can use a tool such as WinSCP to connect from a laptop to the board. You will need to first set the appropraite ip address on the board.
+For the VCK190, ZCU102 or ZCU104 boards, you can use a tool such as WinSCP to connect from a laptop to the board. You will need to first set the appropraite ip address on the board.
 For example: ifconfig -eth0 192.155.50.187
 
 #### Performance Test
 
-To run the perforamce test with 4 threads on 1000 RFSamples, enter the following at target board serial or ssh terminal prompt:
+To run the performance test with 4 threads on 1000 RFSamples, enter the following at target board serial or ssh terminal prompt:
 
 ```python3 test_performance.py 4 rfClassification.xmodel 1000```
 
@@ -133,7 +133,7 @@ To run the accuracy test, enter the following at target board serial or shh term
 ``` python3 test_accuracy.py rfClassification_0.xmodel```
 
 The RF frames, snrs, and modulation classes are read from the files rf_input.npy, rf_snrr.npy, rf_classes.npy.
-The Top1 accuracy should be close to what was measure for the quantized or quantized fine tuned model. As we saw when evaluating the models in the Juptyer notebook, the classification is more accuate for higher SNRs. The results below show ZCU104 accuracy on quantized model w/o fine tuning.
+The Top1 accuracy should be close to what was measure for the quantized or quantized fine tuned model. As we saw when evaluating the models in the Juptyer notebook, the classification is more accuate for higher SNRs. The results below show ZCU104 accuracy on quantized model w/o QAT.
 
 <img src="media/accuracy.png">
 
