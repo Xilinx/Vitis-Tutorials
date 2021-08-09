@@ -29,8 +29,6 @@ domain create -name xrt -proc psu_cortexa53 -os linux -arch {64-bit} -runtime {o
 # domain active xrt
 domain config -boot {./boot}
 domain config -generate-bif
-domain config -pmuqemu-args ./qemu/pmu_args.txt
-domain config -qemu-args ./qemu/qemu_args.txt
 domain config -qemu-data ./boot
 # Standalone Domain
 #domain create -name {standalone} -display-name {standalone_domain} -os {standalone} -proc {psv_cortexa72_0} -runtime {cpp} -arch {64-bit} -support-app {hello_world}

@@ -47,10 +47,10 @@ A custom platform ZCU104 platform
 Hardware Platform (Shell) Information
 =====================================
 Vendor:                           xilinx
-Board:                            zcu104_custom_platform
-Name:                             zcu104_custom_platform
+Board:                            ZCU104_Custom_Platform
+Name:                             ZCU104_Custom_Platform
 Version:                          0.0
-Generated Version:                2020.2
+Generated Version:                2021.1
 Hardware:                         1
 Software Emulation:               1
 Hardware Emulation:               1
@@ -64,14 +64,13 @@ Board Part:                       xczu7ev-ffvc1156-2-e
 =================
 Clock Information
 =================
-  Default Clock Index: 1
-  Clock Index:         0
-    Frequency:         100.000000
+  Default Clock Index: 2
   Clock Index:         1
-    Frequency:         200.000000
+    Frequency:         100.000000
   Clock Index:         2
+    Frequency:         200.000000
+  Clock Index:         3
     Frequency:         400.000000
-
 
 ==================
 Memory Information
@@ -100,16 +99,16 @@ System Configurations:
     Processor Group OS Name:   linux
   System Config Boot Images:
     Boot Image Name:           standard
-    Boot Image Type:           
+    Boot Image Type:
     Boot Image BIF:            zcu104_custom_platform/boot/linux.bif
     Boot Image Data:           zcu104_custom_platform/xrt/image
     Boot Image Boot Mode:      sd
-    Boot Image RootFileSystem: 
+    Boot Image RootFileSystem:
     Boot Image Mount Path:     /mnt
     Boot Image Read Me:        zcu104_custom_platform/boot/generic.readme
     Boot Image QEMU Args:      zcu104_custom_platform/qemu/pmu_args.txt:zcu104_custom_platform/qemu/qemu_args.txt
-    Boot Image QEMU Boot:      
-    Boot Image QEMU Dev Tree:  
+    Boot Image QEMU Boot:
+    Boot Image QEMU Dev Tree:
 Supported Runtimes:
   Runtime: OpenCL
 ```

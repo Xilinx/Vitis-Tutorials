@@ -18,12 +18,15 @@ all: sw_comp pfm prep_sw_comp prep_sysroot
 main: sw_comp pfm prep_sw_comp
 
 sw_comp:
-	mkdir -p ./sd_dir
+	mkdir -p ./sd_dir && mkdir -p ./boot && \
 	cp ../step2_petalinux/build/petalinux/images/linux/zynqmp_fsbl.elf ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/pmufw.elf ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/bl31.elf ./boot/
-	cp ../step2_petalinux/build/petalinux/images/linux/u-boot.elf ./boot/
-	# system.dtb for u-boot
+	# Bug workaround: default PetaLinux generated u-boot.elf doesn't include dtb from 2021.1.
+	# U-boot.elf can read dtb from boot.bin, but the default emulation script qemu_args.txt assumes u-boot.elf contains dtb.
+	# So we use the u-boot that contains dtb here to workaround this issue.
+	cp ../step2_petalinux/build/petalinux/images/linux/u-boot-dtb.elf ./boot/u-boot.elf
+	# system.dtb for u-boot in hw
 	cp ../step2_petalinux/build/petalinux/images/linux/system.dtb ./boot/
 	cp ../step2_petalinux/build/petalinux/images/linux/boot.scr ./sd_dir/
 	# system.dtb for Linux
@@ -43,7 +46,7 @@ prep_sysroot: ../step2_petalinux/build/petalinux/images/linux/sdk.sh
 	rm -rf ./sysroot && ../step2_petalinux/build/petalinux/images/linux/sdk.sh -d ./sw_comp -y
 
 clean:
-	$(RM) -r vitis_* xrc.log build platform_repo sd_dir boot/*.elf
+	$(RM) -r vitis_* xrc.log build platform_repo sd_dir boot
 
 ultraclean: clean
 	$(RM) -r sw_comp
