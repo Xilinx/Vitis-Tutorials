@@ -28,4 +28,4 @@ The tutorials in this document will divide the chapters to follow these steps.
 
 The [next module](../02-Edge-AI-ZCU104/README.md) provides an example to create a custom platform for ZCU104 board from scratch.
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

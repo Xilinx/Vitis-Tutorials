@@ -1,6 +1,6 @@
 ﻿<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ 2020.2 - Getting Started Tutorials</h1>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ 2021.1 - Getting Started Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
@@ -17,4 +17,4 @@ This section contains two top-level getting started tutorials for Vitis
   * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within
   the Vitis High-Level Synthesis environment
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

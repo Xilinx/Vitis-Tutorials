@@ -1,7 +1,7 @@
 ﻿<table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2021.1 Vitis Application Acceleration Development Flow Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -14,7 +14,7 @@
 
 The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code on top of the loop-level parallelism where possible. The optimization is done in two parts - first, the compiler infers the parallel tasks and sets up the communication channels and the associated control; second, after the generated RTL design is simulated, you can analyze the performance of the DATAFLOW optimization. Due to this fact, the Dataflow viewer lets you see the dataflow structure inferred by the tool, inspect the channels (FIFO/PIPO), and examine the effect of channel depth on performance. Performance data is then back-annotated to the Dataflow viewer from the co-simulation results. The Dataflow viewer also displays a representation of the dataflow graph structure, showing the different processes and the underlying producer-consumer connections.
 
-**Tip:** You must apply the DATAFLOW pragma or directive to your design for the Dataflow viewer to be populated. You can apply dataflow to the top-level function, or specify regions of a function, or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rdd1585343102486.html) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
+**Tip:** You must apply the DATAFLOW pragma or directive to your design for the Dataflow viewer to be populated. You can apply dataflow to the top-level function, or specify regions of a function, or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/optdirectives.html#rdd1585343102486) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
 
 ## Taking the tour
 
@@ -90,7 +90,7 @@ It is important to understand that the dataflow optimization is a dynamic optimi
 
 ### Viewing the Dataflow Graph after RTL co-simulation
 
-After synthesis, you must run co-simulation. For more information, refer to [C/RTL Co-Simulation in Vitis HLS](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/cosimulationinvitishls.html#fwf1584724080811) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+After synthesis, you must run co-simulation. For more information, refer to [C/RTL Co-Simulation in Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/cosimulationinvitishls.html#fwf1584724080811) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 1. From the menu, select the **Solution > Run C/RTL Co-Simulation** command.
    The Co-simulation dialog box displays as shown in the figure below.
@@ -112,7 +112,7 @@ After synthesis, you must run co-simulation. For more information, refer to [C/R
 
       ![Open Dataflow Viewer](./images/dataflow_graph.png)
 
-   After running C/RTL co-simulation, the elements of the graph are filled out with performance data, and the Process and Channel tables beneath the graph are also filled out (as shown below). Without the performance data provided by RTL co-simulation, the graph and tables will have NA values to reflect the missing values. For more information, refer to [Dataflow Viewer](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/analyzingresultssynthesis.html#twx1584322463297) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+   After running C/RTL co-simulation, the elements of the graph are filled out with performance data, and the Process and Channel tables beneath the graph are also filled out (as shown below). Without the performance data provided by RTL co-simulation, the graph and tables will have NA values to reflect the missing values. For more information, refer to [Dataflow Viewer](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/analyzingresultssynthesis.html#twx1584322463297) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
    ![Process Table](./images/process_table.png)
 
@@ -182,4 +182,4 @@ To easily explain how the dataflow optimization executes the functions inside th
 <hr/>
 <p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

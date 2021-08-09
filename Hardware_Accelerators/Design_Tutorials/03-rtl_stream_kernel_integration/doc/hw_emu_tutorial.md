@@ -42,5 +42,5 @@ debug_mode=gui
 
 Besides waveform, other information delivered with run summary is also valuable for you to profile, optimize and debug your application, please check on [Profiling the Application](./profile_tutorial.md) of this tutorial for more details. If you want to understand more detailed information about hardware emulation flow, please refer to [Hardware Emulation](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/buildtargets1.html#ldh1504034328524) from Vitis online documentation.
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>
 

@@ -1,5 +1,5 @@
 <!-- 
-# Copyright 2020 Xilinx Inc.
+# Copyright 2021 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
     </td>
  </tr>
 </table>
@@ -40,60 +40,54 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
    - The created PetaLinux project name is **petalinux**. Please feel free to change the PetaLinux project name with **petalinux-create -n** option.
 
-3. Apply VCK190 device tree
 
-   - Run `petalinux-config`
-   - Go to **DTG Settings**
-   - Enter **versal-vck190-reva-x-ebm-02-reva** for **MACHINE_NAME** option (Config option name is CONFIG_SUBSYSTEM_MACHINE_NAME)
-   
-   Note: This preset device setting will add ethernet PHY info to device tree. The [device tree source code][1] will be applied to the PetaLinux project. If your VCK190 board version is different, please check the device tree source code directory whether it has a corresponding device tree version for your board and apply it in the PetaLinux project. You can clone the git repository, or use find file feature in github.
+   **Note**: PetaLinux 2021.1 requires GCC version >= 6.0. If your GCC version doesn't meet this requirement, please enable **Enable buildtools extended** from **petalinux-config → Yocto settings**, which uses the pre-compiled gcc binaries from the PetaLinux tool. For more information, please refer to UG1144.
 
-   ![Github Device Tree List](images/step2/github_find_available_device_tree.png)
 
-[1]: https://github.com/Xilinx/u-boot-xlnx/blob/master/arch/arm/dts/versal-vck190-revA-x-ebm-02-revA.dts
 
 
 ### Customize Root File System, Kernel, Device Tree and U-boot
 
-1. Add user packages by appending the CONFIG_x lines below to the **<your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig** file.
+1. Prepare a user-rootfsconfig file to define the additional rootfs package. 
+   
+   Add user packages by appending the CONFIG_xxx lines below to the **<your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig** file.
 
    **Note: This step is not a must but it makes it easier to find and select all required packages in next step.**
 
    Packages for base XRT support (required):
 
    ```
-   CONFIG_packagegroup-petalinux-xrt
+   CONFIG_xrt
    ```
 
-   - XRT package group contains all the packages for Vitis acceleration runtime.
+   - XRT package contains all the packages for Vitis acceleration runtime.
+   - Note: `CONFIG_packagegroup-petalinux-xrt` is not needed from 2021.1
    
    Packages for on-board acceleration application compiling support (optional):
 
    ```
-   CONFIG_packagegroup-petalinux-xrt-dev
+   CONFIG_xrt-dev
    ```
    
    - package names with `-dev` suffix means header files, dependency libraries and soft links required by compiling environment in Yocto.
 
-   Packages for easy system management (recommended):
+   Packages for easy system management (Optional but recommended):
 
 	```
    CONFIG_dnf
    CONFIG_e2fsprogs-resize2fs
    CONFIG_parted
-   CONFIG_auto-login
 	```
 	- **dnf** is the package management tool
-	- **auto-login** will login as root by default. It's useful for development and debugging time. Please remove it at production phase.
 	- **parted** and **e2fsprogs-resize2fs** can expand the ext4 partition to use the rest of the SD card.  
 
 
 
-2. Run ```petalinux-config -c rootfs``` and select **user packages**, select name of rootfs all the libraries listed above, save and exit. If step1 is skipped, please use search function with `/` key to find these packages and enable them.
-
-   ![petalinux rootfs settings](./images/step2/petalinux_user_packages.png)
-
+2. Add rootfs packages. 
    
+   Run ```petalinux-config -c rootfs``` and select **user packages**, select name of rootfs all the libraries listed above, save and exit. 
+   
+   If step 1 is skipped, please use search function with `/` key to find these packages and enable them.
    
 3. In rootfs config, go to **Image Features** and enable **package-management** and **debug_tweaks** option, store the change and exit. (Recommended)
 
@@ -106,62 +100,36 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
    ![](./images/step2/petalinux_package_management.png)
 
-   
-
-4. Update the system-user device tree (required).
-
-   Append the following contents to the **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi** file.
-
-   - **zyxclmm_drm** node is required by zocl driver, which is a part of XRT.
-   - **axi_intc_0** node defines 32 interrupt inputs. This can not be inferred by the hardware settings in Vivado. So we have to add it here manually.
-   - **Note**: an example file is provided in **ref_files/step2_petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi**.
-
-   ```
-   &amba {
-       zyxclmm_drm {
-           compatible = "xlnx,zocl-versal";
-           status = "okay";
-           interrupt-parent = <&axi_intc_0>;
-           interrupts = <0  4>, <1  4>, <2  4>, <3  4>,
-                    <4  4>, <5  4>, <6  4>, <7  4>,
-                    <8  4>, <9  4>, <10 4>, <11 4>,
-                    <12 4>, <13 4>, <14 4>, <15 4>,
-                    <16 4>, <17 4>, <18 4>, <19 4>,
-                    <20 4>, <21 4>, <22 4>, <23 4>,
-                    <24 4>, <25 4>, <26 4>, <27 4>,
-                    <28 4>, <29 4>, <30 4>, <31 4>;
-       };
-   };
-   
-   &axi_intc_0 {
-         xlnx,kind-of-intr = <0x0>;
-         xlnx,num-intr-inputs = <0x20>;
-   };
-   ```
-
-
-
-
-5. Add EXT4 rootfs support (Recommended)
+4. Use EXT4 as rootfs format for SD card boot (Recommended)
 
    PetaLinux uses **initrd** format for rootfs by default. This format extracts rootfs in DDR memory, which means it reduces the usable DDR memory for runtime and can't retain the rootfs changes after reboot. To enable the root file system to retain changes, we'll use EXT4 format for rootfs as the second partition on SD card while keep the first partition FAT32 to store other boot files.
 
-   - Run `petalinux-config`, go to **Image Packaging Configuration**, select **Root File System Type** as **EXT4**, and append `ext4` to **Root File System Formats**.
+   - Run `petalinux-config`
+   - Go to **Image Packaging Configuration**, select **Root File System Type** as **EXT4**.
 
    ![](./images/step2/petalinux_root_filesystem_type.png)
 
-   - Update bootargs to use ext4 partition as root file system in system-user.dtsi:
+
+### Customize Device-tree   
+
+1. Apply VCK190 device tree
+
+   - Run `petalinux-config`
+   - Go to **DTG Settings**
+   - Enter **versal-vck190-reva-x-ebm-02-reva** for **MACHINE_NAME** option (Config option name is CONFIG_SUBSYSTEM_MACHINE_NAME)
    
-     ```
-     / {
-         chosen {
-            stdout-path = "serial0:115200";
-            bootargs = "console=ttyAMA0 earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk1p2 rw rootwait rootfs=ext4";
-         };
-      };
-     ```
-   
-   Note: `root=/dev/mmcblk1p2` is the rootfs path; `rootfs=ext4` defines the rootfs type. Please refer to the full system-user.dtsi in [ref_files/step2_petalinux/system-user.dtsi](ref_files/step2_petalinux/system-user.dtsi).
+   Note: This preset device setting adds ethernet PHY info to device tree for VCK190 board. The [device tree source code][1] will be applied to the PetaLinux project. If your VCK190 board version is different, please check the device tree source code directory whether it has a corresponding device tree version for your board and apply it in the PetaLinux project. You can clone the git repository, or use find file feature in github.
+
+   ![Github Device Tree List](images/step2/github_find_available_device_tree.png)
+
+[1]: https://github.com/Xilinx/u-boot-xlnx/blob/master/arch/arm/dts/versal-vck190-revA-x-ebm-02-revA.dts
+
+2. (Optional) Update the system-user device tree.
+
+   If you have any custom peripherals on board that needs special settings, please update it in system-user.dtsi.
+
+**Note**: PetaLinux 2021.1 will detect XSA type and generate ZOCL node in device tree automatically and update interrupt input number according to your hardware settings in XSA if the XSA is an extensible XSA. This is a new feature from 2021.1.
+
 
 
 ### Build PetaLinux Image
@@ -174,7 +142,8 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
    The generated u-boot and Linux images will be located in **images/linux** directory.
 
-2. Build and install sysroot
+
+2. Build sysroot
 
    ```
    petalinux-build --sdk
@@ -206,4 +175,4 @@ Scripts are provided to re-create PetaLinux project and generate outputs. To use
 
 **Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](./step3.md).**
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>

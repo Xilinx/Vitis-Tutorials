@@ -16,7 +16,7 @@ help:
 	@echo ""
 #######################################################################################
 TARGET := sw_emu
-DEVICE := xilinx_u200_xdma_201830_2
+DEVICE := xilinx_u200_gen3x16_xdma_1_202110_1
 EXECUTABLE := host
 XO := krnl_vadd.$(TARGET).$(DEVICE).xo
 XCLBIN := krnl_vadd.$(TARGET).$(DEVICE).xclbin
@@ -28,11 +28,10 @@ CXXFLAGS2 := -lOpenCL
 # Kernel compiler & linker global settings
 CLFLAGS := -t $(TARGET) --config compile.cfg
 LDCLFLAGS := -t $(TARGET) --config link.cfg
-LDCLFLAGS += --profile_kernel data:all:all:all
-LDCLFLAGS += --profile_kernel stall:all:all:all
-LDCLFLAGS += --profile_kernel exec:all:all:all
+LDCLFLAGS += --profile.data:all:all:all
+LDCLFLAGS += --profile.stall:all:all:all
+LDCLFLAGS += --profile.exec:all:all:all
  
-
 all: $(EXECUTABLE) $(XO) $(XCLBIN) emconfig
 
 exe: $(EXECUTABLE)

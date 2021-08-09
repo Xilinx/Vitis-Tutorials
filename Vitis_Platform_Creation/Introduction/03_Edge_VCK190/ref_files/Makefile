@@ -14,8 +14,12 @@
 
 # ---------------------------------
 # Target all: Generate the Vitis platform and verify it including base bootable design
-# Target main: Generate the Vitis platform and verify it without base bootable design
 # ---------------------------------
+
+# Board: VCK190, VCK190_ES1
+export BOARD=VCK190
+
+
 .PHONY: all clean step0 step2 step3 
 all: step0 step2 step3 
 

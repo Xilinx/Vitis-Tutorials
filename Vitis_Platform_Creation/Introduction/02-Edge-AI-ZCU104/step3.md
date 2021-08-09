@@ -183,4 +183,4 @@ Scripts are provided to create the Vitis platform. To use these scripts, please 
    make clean
    ```
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

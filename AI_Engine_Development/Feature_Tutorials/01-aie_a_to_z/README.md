@@ -1,6 +1,6 @@
-﻿<table>
+<table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorial</h1>
    </td>
  </tr>
  <tr>
@@ -9,8 +9,8 @@
  </tr>
 </table>
 
-This tutorial introduces a complete end to end flow for a bare-metal host application using AI Engines and PL kernels.
-The tutorial is based on the 2020.2 Vitis™ unified software platform.
+This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels.
+The tutorial is based on the 2021.1 Vitis™ unified software platform.
 
 The flow is broken into four different steps shown in the following diagram.
 
@@ -20,7 +20,7 @@ The flow is broken into four different steps shown in the following diagram.
 <p align="center"><a href="./01-custom_base_platform_creation.md">Start from step 1</a></b></p>
 
 
-© Copyright 2020 Xilinx, Inc.
+© Copyright 2020-2021 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

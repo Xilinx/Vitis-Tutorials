@@ -1,6 +1,6 @@
 ﻿<table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
    <h1>Super Sampling Rate FIR Filters</h1>
    <h2>Implementation on the AI Engine</h2>
    </td>
@@ -216,11 +216,11 @@ Finally, all kernels must be connected together with the cascade stream in betwe
 Ensure the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
-- `compile`
+- `aie`
   - Compiles the graph and the kernels
-- `simulate`
+- `aie_sim`
   - Runs the AI Engine System C simulator
-- `visualize`
+- `aie_viz`
   - Runs `vitis_analyzer`on the output summary
 
 Take a look at the source code (kernel and graph) to familiarize yourself with C++ instantiation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
@@ -256,29 +256,30 @@ The top graph reflects the real part of the output, the bottom graph this is the
 The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`) type `StreamThroughput output_*`:
 
 ```
-output_0_0.txt -->   869.27 Msps
-output_0_1.txt -->   869.27 Msps
-output_1_0.txt -->   860.50 Msps
-output_1_1.txt -->   860.50 Msps
-output_2_0.txt -->   869.27 Msps
-output_2_1.txt -->   869.27 Msps
-output_3_0.txt -->   860.50 Msps
-output_3_1.txt -->   860.50 Msps
-output_4_0.txt -->   869.27 Msps
-output_4_1.txt -->   869.27 Msps
-output_5_0.txt -->   860.50 Msps
-output_5_1.txt -->   860.50 Msps
-output_6_0.txt -->   869.27 Msps
-output_6_1.txt -->   869.27 Msps
-output_7_0.txt -->   860.50 Msps
-output_7_1.txt -->   860.50 Msps
+output_0_0.txt -->   896.67 Msps
+output_0_1.txt -->   896.67 Msps
+output_1_0.txt -->   891.99 Msps
+output_1_1.txt -->   893.54 Msps
+output_2_0.txt -->   896.67 Msps
+output_2_1.txt -->   896.67 Msps
+output_3_0.txt -->   891.99 Msps
+output_3_1.txt -->   893.54 Msps
+output_4_0.txt -->   898.25 Msps
+output_4_1.txt -->   896.67 Msps
+output_5_0.txt -->   891.99 Msps
+output_5_1.txt -->   893.54 Msps
+output_6_0.txt -->   898.25 Msps
+output_6_1.txt -->   896.67 Msps
+output_7_0.txt -->   891.99 Msps
+output_7_1.txt -->   893.54 Msps
 
 -----------------------
 
-Total Throughput -->   13838.19 Msps
+
+Total Throughput -->   14318.64 Msps
 ```
 
-This architecture achieves very close to 14 Gsps performance. It is slightly less than the maximum expected (16 Gsps) because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased. For a 32K sample frame length the performance obtained is:
+This architecture achieves slightly over 14 Gsps performance. It is less than the maximum expected (16 Gsps) because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased. For a 32K sample frame length the performance obtained is:
 
 ```
 Total Throughput -->   15960.30 Msps

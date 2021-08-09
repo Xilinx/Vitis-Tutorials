@@ -7,7 +7,7 @@ SRCDIR := ./../reference_files
 include mem_connectivity.mk
 
 ifeq ($(memtype), DDR)
-PLATFORM :=xilinx_u200_xdma_201830_2
+PLATFORM :=xilinx_u200_gen3x16_xdma_1_202110_1
 else
 PLATFORM :=xilinx_u50_gen3x16_xdma_201920_3
 endif

@@ -65,9 +65,9 @@ int main(int argc, char **argv)
     // Step 2: Create buffers and initialize test values
     // ------------------------------------------------------------------------------------
     // Create the buffers and allocate memory
-    cl::Buffer in1_buf(context, CL_MEM_ALLOC_HOST_PTR | CL_MEM_READ_ONLY,  sizeof(int) * DATA_SIZE, NULL, &err);
-    cl::Buffer in2_buf(context, CL_MEM_ALLOC_HOST_PTR | CL_MEM_READ_ONLY,  sizeof(int) * DATA_SIZE, NULL, &err);
-    cl::Buffer out_buf(context, CL_MEM_ALLOC_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(int) * DATA_SIZE, NULL, &err);
+    cl::Buffer in1_buf(context, CL_MEM_READ_ONLY, sizeof(int) * DATA_SIZE, NULL, &err);
+    cl::Buffer in2_buf(context, CL_MEM_READ_ONLY, sizeof(int) * DATA_SIZE, NULL, &err);
+    cl::Buffer out_buf(context, CL_MEM_WRITE_ONLY, sizeof(int) * DATA_SIZE, NULL, &err);
 
     // Map buffers to kernel arguments, thereby assigning them to specific device memory banks
     krnl_vector_add.setArg(0, in1_buf);

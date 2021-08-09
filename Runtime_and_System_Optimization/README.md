@@ -1,6 +1,6 @@
-﻿<table width="100%">
+<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - Runtime and System Optimization Tutorials</h1>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ - Runtime and System Optimization Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -20,11 +20,6 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Design_Tutorials/01-host-code-opt/README.md">XRT Host Code Optimization</a></td>
  <td>This tutorial demonstrates how to optimize your CPU host code to get the most out of interaction between your
  hardware accelerators and your runtime software.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/02-ivas-ml/README.md">Streaming Video Analytics with IVAS</a></td>
- <td>This tutorial demonstrates a reference platform using the Xilinx IVAS framework for streaming video
- analytics with Vitis and Vitis AI 1.2.</td>
  </tr>
  </table>
 
@@ -51,9 +46,9 @@ The methodology for developing optimized accelerated applications is comprised o
  <td>This tutorial demonstrates how you can control the Vivado&reg; tools flow when implementing your project.</td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/04-using-hbm/">Optimizing for HBM</a></td>
+ <td align="center"><a href="./Feature_Tutorials/04-using-hbm/README.md">Optimizing for HBM</a></td>
  <td>This tutorial demonstrates how you can take best advantage of HBM on platforms that support it.</td>
  </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

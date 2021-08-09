@@ -1,6 +1,6 @@
-﻿<table>
+<table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
    </td>
  </tr>
  <tr>
@@ -13,7 +13,7 @@ This step demonstrates how runtime array parameters can be passed to kernels. Yo
 
 ![](./images/figure4.PNG)
 
-__Note: The default working directory in this step is "step3", unless specified explicitly.__  
+__Note:__ The default working directory in this step is "step3", unless specified explicitly otherwise.
 
 ### Review Graph and RTP Code
 `aie/fir24_sym_param.h`gives a forward declaration of a 24-tap symmetric FIR filter:
@@ -22,28 +22,13 @@ __Note: The default working directory in this step is "step3", unless specified 
 	
 The filter has an input and output window which consumes and produces complex samples. This filter differs from previous filters you have seen because the coefficients of the filter can be set as a kernel parameter and changed on each invocation. The implementation of the filter is in `aie/kernels/hb24.cc`.
 
-The `aie/hls` directory contains a kernel that generates samples of random noise. The noise generator is implemented as a programmable logic (PL) block inside graph, with samples consumed by the filter: 
-
-	extern "C" void random_noise(hls::stream<std::complex<short> > & out) {
-	#pragma HLS INTERFACE axis port=out
-	#pragma HLS INTERFACE ap_ctrl_none port=return
-	
-The PL kernel has two `#pragma` specified for vitis HLS. `#pragma HLS INTERFACE axis port=out` indicates that port "`out`" will be implemented with AXI4-Stream interface, while `#pragma HLS INTERFACE ap_ctrl_none port=return` indicates that the kernel has no block control signals (i.e., it is a free-running kernel). Free-running means that the kernel will keep running after the FPGA has been configured, the clock has been activated, and the reset is deactivated. The execution of a free-running kernel depends on the availability of input data, or readiness of a receiving buffer. It does not require explicit control in the host code when running aiesimulator, HW emulation and HW flows.
-
-`aie/graph.h` has constraints to place the kernel in PL:
-	
-	using namespace adf；
-	...
-	noisegen = kernel::create(random_noise);
-	fabric<pl>(noisegen);
-
 The filter coefficients are given in:
 
    * `data/narrow_filter.txt` (with a normalized bandwidth of 0.3 pi)
 
    * `data/wide_filter.txt` (with a normalized bandwidth of 0.8 pi)
 
-Examine `aie/graph.h` again. Notice the code to connect the coefficients input port of the graph to the `coeffs` parameter of the filter kernel. This should be specified as an asynchronous runtime parameter (with adf::async). 
+Examine `aie/graph.h` again. Notice the code to connect the coefficients input port of the graph to the `coeffs` parameter of the filter kernel. This should be specified as an asynchronous runtime parameter (with `adf::async`). 
 
 	// connect filter coefficients
 	connect< parameter >(coefficients, async(fir24.in[1]));
@@ -60,7 +45,7 @@ Then update the coefficients using `wide_filter` in the pong buffer for another 
 	
 In this snippet, the first graph update call initializes the coefficients parameter using the `narrow_filter` with 12 elements for the first 16 iterations. The `wait()` is blocking, and forces the execution to wait until the first 16 iterations finish. Subsequently, the next update call initializes the coefficients parameter using `wide_filter` with 12 elements for the next 16 iterations. The number of iterations are specified as a parameter to the `run()` API. Note that `update()` has a third parameter that speicfies the size of the array to be updated.
 
-### Run the AI Engine compiler and AI Engine simulator 
+### Run the AI Engine Compiler and AI Engine Simulator 
 Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 	
 	make aie
@@ -85,17 +70,23 @@ If you have MATLAB or Octave, you can use the following script to visualize the 
 	plot(wide_spectrum);
 ![](./images/figure6.PNG)	
 
-### Run Hardware Emulation and Hardware flow
-PL kernels inside graph still need to be compiled into Xilinx object (`.xo`) files. You can run a make command to compile it:
+### Run Hardware Emulation and Hardware Flow
+The `pl_kernels` directory contains a kernel that generates samples of random noise. The noise generator is implemented as a free-running programmable logic (PL) kernel, with samples consumed by the filter: 
+
+	extern "C" void random_noise(hls::stream<std::complex<short> > & out) {
+	#pragma HLS INTERFACE axis port=out
+	#pragma HLS INTERFACE ap_ctrl_none port=return
 	
-	make -C aie/hls
+The PL kernel has two `#pragma` specified for vitis HLS. `#pragma HLS INTERFACE axis port=out` indicates that port "`out`" will be implemented with an AXI4-Stream interface, while `#pragma HLS INTERFACE ap_ctrl_none port=return` indicates that the kernel has no block control signals (i.e., it is a free-running kernel). Free-running means that the kernel will keep running after the FPGA has been configured, the clock has been activated, and the reset is deactivated. The execution of a free-running kernel depends on the availability of input data, or readiness of a receiving buffer. It does not require explicit control in the host code when running aiesimulator, HW emulation, and HW flows.
+
+PL kernels need to be compiled into Xilinx object (`.xo`) files. Run the following make command to compile it:
+	
+	make -C pl_kernels
 	
 The corresponding v++ -c command is:
 	
-	v++ -c --platform xilinx_vck190_base_202010_1 -k random_noise random_noise.cpp -o random_noise.xo --verbose --save-temps
+	v++ -c --platform xilinx_vck190_base_202110_1 -k random_noise random_noise.cpp -o random_noise.xo --verbose --save-temps
 	
-Using the v++ linker (`-l`) command, you are *not* required to specify connections for PL kernels inside the graph, because the connection information is already included in the `libadf.a` file.
-
 The Makefile rule targets introduced in [Synchronous update of scalar RTP](./step1_sync_scalar.md) and [Asynchronous update of scalar RTP](./step2_async_scalar.md) still apply here. Details about tool options and host code in [Synchronous update of scalar RTP](./step1_sync_scalar.md) are similar. However, you can just choose to run following make command to launch HW emulation:
 
 	make run_hw_emu
@@ -127,10 +118,9 @@ The host code is self-checking. It will check the output data against the golden
 ### Conclusion
 In this step you learned about:
 
-   * the concepts of asynchronous update of array RTP
+   * The concepts of asynchronous update of array RTP
    * How to control the execution between different RTP updates
-   * Free-running PL kernel inside graph
+   * Free-running PL kernel
 
 Next, review [Asynchronous Update of Scalar RTL for PL inside a Graph, and Array RTP for AI Engine kernel](./step4_async_pl_scalar_aie_array.md).	
-
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD001</sup></br></p>
+<p align="center"><sup>XD001 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>

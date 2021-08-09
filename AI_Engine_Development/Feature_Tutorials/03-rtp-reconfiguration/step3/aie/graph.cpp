@@ -13,14 +13,17 @@ limitations under the License.
 #include "graph.h"
 
 using namespace adf;
+PLIO *din = new PLIO("Datain0", plio_32_bits,  "data/input.txt");
 PLIO *dout = new PLIO("Dataout0", plio_32_bits,  "data/output.txt");
-simulation::platform<0,1> plat(dout);
+simulation::platform<1,1> plat(din,dout);
 
 adaptive_graph gr;
 
-// send complex output samples to the output file
+// net connections to platform
+connect<> netin(plat.src[0],gr.in);
 connect<> netout(gr.dataout, plat.sink[0]);
 
+#if defined(__AIESIM__) || defined(__X86SIM__)
 int main(int argc, char **argv)
 {
   int narrow_filter[12] = {180, 89, -80, -391, -720, -834, -478, 505, 2063, 3896, 5535, 6504};
@@ -36,6 +39,7 @@ int main(int argc, char **argv)
 
   gr.end();
 };
+#endif
 
 
 

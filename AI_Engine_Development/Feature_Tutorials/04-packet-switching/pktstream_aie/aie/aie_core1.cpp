@@ -16,8 +16,7 @@ const uint32 pktType=0;
 void aie_core1(input_pktstream *in,output_pktstream *out){
 	readincr(in);//read header and discard
 	uint32 ID=getPacketid(out,0);//for output pktstream
-	uint32 header=generateHeader(pktType,ID); //Generate header for output
-	writeincr(out,header);
+	writeHeader(out,pktType,ID); //Generate header for output
 
 	bool tlast;
 	for(int i=0;i<8;i++){

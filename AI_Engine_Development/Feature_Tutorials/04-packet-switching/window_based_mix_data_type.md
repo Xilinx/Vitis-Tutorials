@@ -1,6 +1,6 @@
-﻿<table>
+<table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Packet Switching Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Packet Switching Tutorial</h1>
    </td>
  </tr>
  <tr>
@@ -9,18 +9,18 @@
 </table>
 
 ## Window Based AI Engine Kernels with Mixed Data Types
-This example is similar to the previous [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the differences with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. See [Prepare Data for AI Engnie Simulator](#Prepare-Data-for-AI-Engnie-Simulator). Another difference is that the PS code has to take care of the input and output data types. See [PS Application and HW Emulation Flows](#PS-Application-and-HW-Emulation-Flows).
+This example is similar to the previous [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the difference with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. See [Prepare Data for AI Engnie Simulator](#Prepare-Data-for-AI-Engnie-Simulator). Another difference is that the PS code has to take care of the input and output data types. See [PS Application and HW Emulation Flows](#PS-Application-and-HW-Emulation-Flows).
 
-Following topics are already covered in [Window Based AI Engine Kernels](./window_based_aie_kernel.md):
+The following topics are already covered in [Window Based AI Engine Kernels](./window_based_aie_kernel.md).
 * [Construct Graph with Packet Switching Capability](./window_based_aie_kernel.md/#Construct-Graph-with-Packet-Switching-Capability)
 * [Packet Format](./window_based_aie_kernel.md/#Packet-Format)
 * [Example PL Kernels for Packet Switching](./window_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
 * [Example PS code for Packet Switching](./window_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
 
 ### Prepare Data for AI Engnie Simulator
-Change the working directory to `window_aie_mix_int32_float_cint16`. The graph code of this example is same as the [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example. The AI Engine kernel `core[2]` (`aie/aie_core3.cpp`) has floating point interfaces, and the AI Engine kernel `core[3]` (`aie/aie_core4.cpp`) has `cint16` interfaces. 
+Change the working directory to `window_aie_mix_int32_float_cint16`. The graph code for this example is the same as the [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example. The AI Engine kernel `core[2]` (`aie/aie_core3.cpp`) has floating point interfaces, and the AI Engine kernel `core[3]` (`aie/aie_core4.cpp`) has `cint16` interfaces. 
 
-When preparing the data for the AI Engnine simulator, all values should be in 32-bit integer format. The conversion is similar to the `reinterpret_cast` operation in C++. It is done manually in any language. For example, when you want to feed float data `1.0f`, `2.0f`,..., into the AI Engine kernel, the integer format can be generated in C as shown:
+When preparing the data for the AI Engnine simulator, all values should be in 32-bit integer format. The conversion is similar to the `reinterpret_cast` operation in C++. It is done manually in any language. For example, when you want to feed float data `1.0f`, `2.0f`,..., into the AI Engine kernel, the integer format can be generated in C as shown in the following code.
 
     //input data for float
     for(int i=0;i<16;i++){
@@ -28,7 +28,7 @@ When preparing the data for the AI Engnine simulator, all values should be in 32
       printf("%d\n",*(int*)&tmp);
     }
 
-Then, the data in the input file (`data/input.txt`) for float `1.0f`,`2.0f`,...,`16.0f`, should be as follows:
+Then the data in the input file (`data/input.txt`) for float, `1.0f`,`2.0f`,...,`16.0f`, should be as follows.
 
     0
     1065353216
@@ -47,7 +47,7 @@ Then, the data in the input file (`data/input.txt`) for float `1.0f`,`2.0f`,...,
     1096810496
     1097859072
 
-Similarly, type `cint16` should be converted to integer type. For example, for `cint16` data {0,0},{4,4},{8,8},..., the integer format can be generated in C as shown:
+Similarly, type `cint16` should be converted to integer type. For example, for `cint16` data, {0,0},{4,4},{8,8},..., the integer format can be generated in C as shown in the following code.
 
     //input data for cint16
     for(int i=0;i<16;i++){
@@ -57,7 +57,7 @@ Similarly, type `cint16` should be converted to integer type. For example, for `
       printf("%d\n",tmp);
     }
 
-Then, the data in the input file (`data/input.txt`) for `cint16` data {0,0},{4,4},{8,8},...,{60,60}, should be as follows:
+Then the data in the input file (`data/input.txt`) for `cint16` data, {0,0},{4,4},{8,8},...,{60,60}, should be as follows.
 
     0
     262148
@@ -78,14 +78,14 @@ Then, the data in the input file (`data/input.txt`) for `cint16` data {0,0},{4,4
 
 Take a look at the input file `data/input.txt` to see how input data is organized. 
 
-Run the following make command to run the AI Engine compiler and simulator:
+Run the following make command to run the AI Engine compiler and simulator.
 
     make aiesim
     
-The output data is in `aiesimulator_output/data/output.txt`. Similarly, the output data can be converted from integer to `float` or `cint16` to be human readable.
+The output data is in `aiesimulator_output/data/output.txt`. Similarly, the output data can be converted from integer to `float` or `cint16` to be human-readable.
 
 ### PS Application and HW Emulation Flows
-The difference in the PS application from [Window Based AI Engine Kernels](./window_based_aie_kernel.md) is that the input buffers and output buffers for different data types should be modified accordingly. Take a look at the code in `sw/host.cpp`. Note how `float` and complex type (for `cint16`) is used in the code:
+The difference in the PS application from [Window Based AI Engine Kernels](./window_based_aie_kernel.md) is that the input buffers and output buffers for different data types should be modified accordingly. Take a look at the code in `sw/host.cpp`. Note how `float` and complex type (for `cint16`) is used in the code.
 
     // output memory
     xrtBufferHandle out_bo3 = xrtBOAlloc(dhdl, mem_size, 0, /*BANK=*/0);
@@ -101,13 +101,13 @@ The difference in the PS application from [Window Based AI Engine Kernels](./win
 
 Correspondingly, the pre-processing and post-processing of this data has been changed. 
 
-Run HW emulation with the following make command (it will build the HW system and host application):
+Run HW emulation with the following make command (it builds the HW system and host application).
 
     make run_hw_emu
     
 Hint: If the keyboard is accidentally hit and stops the system booting automatically, type boot at the **Versal>** prompt to resume the system booting.
 
-After Linux has booted, run the following commands at the Linux prompt (this is only for HW cosim):
+After Linux has booted, run the following commands at the Linux prompt (this is only for HW cosim).
 
     mount /dev/mmcblk0p1 /mnt
     cd /mnt
@@ -117,11 +117,11 @@ After Linux has booted, run the following commands at the Linux prompt (this is 
     
 To exit QEMU press Ctrl+A, x
 
-To run in hardware, first build the system and application using the following make command:
+To run in hardware, first build the system and application using the following make command.
 
     make package TARGET=hw
     
-After Linux has booted, run the following commands at the Linux prompt:
+After Linux has booted, run the following commands at the Linux prompt.
 
     export XILINX_XRT=/usr
     cd /mnt/sd-mmcblk0p1
@@ -132,14 +132,12 @@ The host code is self-checking. It will check the correctness of output data. If
     TEST PASSED
 
 ### Conclusion
-In this step, you learned about the following concepts:
+In this step, you learned about the following concepts.
 
-* Prepare `float` and `cint16` data types for the AI Engine simulator
-* PS application for different data types
+* Preparing `float` and `cint16` data types for the AI Engine simulator.
+* PS application for different data types.
 
-Next, review [Packet Stream Based AI Engine Kernels](./pktstream_based_aie_kernel.md)
-
-© Copyright 2020 Xilinx, Inc.
+Next, review [Packet Stream Based AI Engine Kernels](./pktstream_based_aie_kernel.md).
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -153,5 +151,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD029</sup></p>
-
+<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p>
