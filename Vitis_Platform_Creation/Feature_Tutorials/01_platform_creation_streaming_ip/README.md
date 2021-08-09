@@ -58,7 +58,7 @@ In this step, you will add a DDS compiler IP into the platform design that you c
 
 6. Now the block design should look like the following:
 
-  ![](images/ipi_fully_connection_dds.png)
+  ![](images/211_ipi_fully_connection_dds.png)
 
 7. Open up platform setup window and enable the M_AXIS_DATA port. Set the SP Tag to `AXIS` - this will be used by the Vitis™ linker to connect to the accelerator.
 
