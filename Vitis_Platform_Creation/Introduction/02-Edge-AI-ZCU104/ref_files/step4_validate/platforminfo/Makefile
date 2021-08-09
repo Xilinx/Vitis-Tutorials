@@ -11,11 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
--M
-microblaze-fdt
--device
-loader,file=<xrt/qemu/pmufw.elf>
--machine-path
-.
--display
-none
+
+PLATFOMR_PATH = ../../step3_pfm/platform_repo/zcu104_custom_platform/export/zcu104_custom_platform/zcu104_custom_platform.xpfm
+
+.PHONY: all clean
+
+all:
+	platforminfo $(PLATFOMR_PATH) > platforminfo.txt
+
+clean:
+	rm platforminfo.txt

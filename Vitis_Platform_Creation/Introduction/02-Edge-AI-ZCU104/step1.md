@@ -142,8 +142,7 @@ We will add the **Clocking Wizard** to the block diagram and enable clock signal
    **Note**:
 
 
-   - Clock ID should start from 0. If there are two clocks, ID should be 0 and 1. This requirement is from v++ linker.
-   - There should be one and only one default clock in the platform. During v++ linker will use the default clock to connect the IP blocks if there are no user assignments.
+   - There should be one and only one default clock in the platform. During v++ linker will use the default clock to connect the IP blocks if there are no user assignments for link configuration.
 
 
 ### Add Interrupt Support
@@ -163,8 +162,8 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
 
    **Note**:
    
-   - We use **AXI HPM0 LPD** mainly for controlling purpose. It only needs to read write 32 bit control registers.
-   - We reserve **AXI HPM0 FPD** and **AXI HPM1 FPD** for kernel usage. Disabling them from the block diagram can prevent auto connection to use it by accedent. We can export the unused AXI interfaces in Platform Setup, no matter it's visable or not.
+   - We use **AXI HPM0 LPD** mainly for controlling purpose. It would read and write 32 bit control registers. If the interface is more than 32, AXI Interconnect or SmartConnect will do AXI bus width conversion using PL logic. It would cost logic resource and introduce unnecessary latency.
+   - We reserve **AXI HPM0 FPD** and **AXI HPM1 FPD** for kernel usage. Disabling them from the block diagram can prevent auto connection to use it by accident. We can export the unused AXI interfaces in Platform Setup, no matter it's visible in the block diagram or not.
 
 2. Add the **AXI Interrupt Controller** and configure it
 
@@ -185,7 +184,7 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
 
 4. Connect irq of the Interrupt Controller
 
-   - Connect axi_intc_0.irq to zynq_ultra_ps_e_0.pl_ps_irq[0:0]
+   - Connect **axi_intc_0.irq** to **zynq_ultra_ps_e_0.pl_ps_irq[0:0]**
 
    Note:
 
@@ -319,7 +318,7 @@ When a component comes with multiple types of simulation models, selecting Syste
    write_hw_platform -force -file ./zcu104_custom_platform.xsa
    ```
 
-**Now we finish the Hardware platform creation flow, then we should go to the [Step2: Software platform creation](./step2.md)**
+
 
 ### Fast Track
 
@@ -339,4 +338,8 @@ Scripts are provided to re-create projects and generate outputs. To use these sc
    make clean
    ```
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+### Next Step 
+
+Now we finish the Hardware platform creation flow, then we should go to the [Step2: Software platform creation](./step2.md)
+
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
