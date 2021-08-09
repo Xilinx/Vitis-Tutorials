@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine GMIO Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine GMIO Tutorial</h1>
    </td>
  </tr>
  <tr>
@@ -12,14 +12,14 @@
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.
 
 AI Engine tools support mapping the GMIO port to the tile DMA one-to-one. It does not support mapping multiple GMIO ports to one tile DMA channel. There is a limit on the number of GMIO ports supported for a given device. For example, the XCVC1902 device on the VCK190 board
-has 16 AI Engine to NoC master unit (NMU) and 28 PL-NMU in total. For each AI Engine to NMU, it supports two MM2S and two S2MM channels. Hence there can be a maximum of 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs, and 28 PL GMIO ports supported, but note that it can be further limited by the existing hardware platform.
+has 16 AI Engine to NoC master unit (NMU) in total. For each AI Engine to NMU, it supports two MM2S and two S2MM channels. Hence there can be a maximum of 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs supported, but note that it can be further limited by the existing hardware platform.
 
-In this example, we will utilize 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs in the graph, and profile the performance from one input and one output to 32 inputs and 32 outputs with various ways. Then you will learn about the NOC bandwidth and the advantages and disadvantages of choosing GMIO for data transfer.  
+In this example, we will utilize 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs in the graph, and profile the performance from one input and one output to 32 inputs and 32 outputs through various ways. Then you will learn about the NOC bandwidth and the advantages and disadvantages of choosing GMIO for data transfer.  
 
 ### Design Introduction
-This design has a graph that has 32 AI Engine kernels. Each kernel has one input and one output. Thus, 32 AI Engine GMIO inputs and 32 AI Engine GMIO outputs are connected to the graph. 
+This design has a graph that has 32 AI Engine kernels. Each kernel has one input and one output. Thus, 32 AI Engine GMIO inputs and 32 AI Engine GMIO outputs are connected to the graph.
 
-Change the working directory to `perf_profile_aie_gmio`. Take a look at the graph code in `aie/graph.h`. 
+Change the working directory to `perf_profile_aie_gmio`. Take a look at the graph code in `aie/graph.h`.
 
     static const int col[32]={6,13,14,45,18,42,4,30,48,49,9,16,29,39,40,31,2,3,46,0,43,27,41,26,11,17,47,1,19,10,34,7};
 
@@ -36,7 +36,7 @@ Change the working directory to `perf_profile_aie_gmio`. Take a look at the grap
       {
          for(int i=0;i<32;i++){
           k[i] = adf::kernel::create(vec_incr);
-          adf::connect<adf::window<1024>>(din[i], k[i].in[0]);	
+          adf::connect<adf::window<1024>>(din[i], k[i].in[0]);
           adf::connect<adf::window<1032>>(k[i].out[0], dout[i]);
           adf::source(k[i]) = "vec_incr.cc";
           adf::runtime<adf::ratio>(k[i])= 1;
@@ -66,7 +66,7 @@ Next, examine the kernel code `aie/vec_incr.cc`. It adds each int32 input by one
 
 Next, examine the host code `aie/graph.cpp`. The concepts introduced in [AIE GMIO Programming Model](./single_aie_gmio.md) apply here. We will focus on the new concepts and how to do performance profiling. Some constants defined in the code are as follows:
 
-    #if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+    #if !defined(__AIESIM__) && !defined(__X86SIM__)
     const int ITERATION=4096;
     #else
     const int ITERATION=4;
@@ -74,9 +74,9 @@ Next, examine the host code `aie/graph.cpp`. The concepts introduced in [AIE GMI
     const int BLOCK_SIZE_in_Bytes=1024*ITERATION;
     const int BLOCK_SIZE_out_Bytes=1032*ITERATION;
 
-If it is for the hardware flow, `ITERATION` is 4096 otherwise, it is four. This is to make sure that the AI Engine simulator can finish in a short amount of time. 
+If it is for hardware flow, `ITERATION` is 4096 otherwise, it is four. This is to make sure that the AI Engine simulator can finish in a short amount of time.
 
-In the main function, the PS code is going to profile `num` GMIO inputs and outputs, and `num` is from 1, 2, 4, to 32. Non-blocking GMIO APIs (`GMIO::gm2aie_nb` and `GMIO::aie2gm_nb`) are used for GMIO transactions, and `GMIO::wait` is used for output data synchronization. Only when the input and output data are transferred for the kernel, can the kernel be finished. This is because the graph is started for all the AI Engine kernels, but only some of the kernels are profiled. After the code for profiling, the remaining kernels are flushed by transferring data to and from the remaining AI Engine kernels. 
+In the main function, the PS code is going to profile `num` GMIO inputs and outputs, and `num` is from 1, 2, 4, to 32. Non-blocking GMIO APIs (`GMIO::gm2aie_nb` and `GMIO::aie2gm_nb`) are used for GMIO transactions, and `GMIO::wait` is used for output data synchronization. Only when the input and output data are transferred for the kernel, can the kernel be finished. This is because the graph is started for all the AI Engine kernels, but only some of the kernels are profiled. After the code for profiling, the remaining kernels are flushed by transferring data to and from the remaining AI Engine kernels.
 
     for(int num=1;num<=32;num*=2){
       //Pre-processing
@@ -96,7 +96,7 @@ In the main function, the PS code is going to profile `num` GMIO inputs and outp
         gmioOut[i].wait();
        }
        //Profile ends here
-    
+
        //check output correctness
        for(int i=0;i<num;i++){
             for(int j=0;j<BLOCK_SIZE_out_Bytes/sizeof(int);j++){
@@ -129,7 +129,7 @@ In this example, we will introduce some methods for profiling the design. The co
     }
     //Profile ends here
 
-__Note:__ This tutorial assumes that the AI Engine runs at 1 GHz. 
+__Note:__ This tutorial assumes that AI Engine runs at 1 GHz.
 
 1. Profile by XRT `xrtGraphTimeStamp` API
 
@@ -139,26 +139,26 @@ XRT provides `xrtGraphTimeStamp` API to get the timestamp of a graph. The unit o
     xrtDeviceGetXclbinUUID(dhdl, uuid);
     auto ghdl=xrtGraphOpen(dhdl,uuid,"gr");
     long long t_stamp=xrtGraphTimeStamp(ghdl);
-    
-The code to end profling and calculate performance is as follows:
+
+The code to end profiling and calculate performance is as follows:
 
     t_stamp=xrtGraphTimeStamp(ghdl)-t_stamp;
     std::cout<<"Throughput (by graph timstamp) bandwidth(GMIO in num="<<num<<",out num="<<num<<"):\t"<<(double)(BLOCK_SIZE_in_Bytes+BLOCK_SIZE_out_Bytes)*num/(double)t_stamp*1000<<"M bytes/s"<<std::endl;
-    
+
 The code is guarded by macro `__TIME_STAMP__`. To use this method of profiling, define `__TIME_STAMP__` for g++ cross compiler in `sw/Makefile`:
 
     CXXFLAGS += -std=c++14 -D__TIME_STAMP__ -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
-To run it in hardware, use following make command to build hardware image:
+To run it in hardware, use the following make command to build the hardware image:
 
     make package TARGET=hw
-    
+
 After the package is done, run the following commands in the Linux prompt after booting Linux from an SD card:
 
     export XILINX_XRT=/usr
     cd /mnt/sd-mmcblk0p1
     ./host.exe a.xclbin
-    
+
 The output is as follows:
 
     GMIO::malloc completed
@@ -193,13 +193,13 @@ The code to use C++ class API is common for Linux system for various platforms. 
 The code to start profiling is as follows:
 
     Timer timer;
-    
-The code to end profling and calculate performance is as follows:
+
+The code to end profiling and calculate performance is as follows:
 
     double timer_stop=timer.stop();
     double throughput=(BLOCK_SIZE_in_Bytes+BLOCK_SIZE_out_Bytes)*num/timer_stop*1000000/1024/1024;
     std::cout<<"Throughput (by timer GMIO in num="<<num<<",out num="<<num<<"):\t"<<throughput<<"M Bytes/s"<<std::endl;
-    
+
 The code is guarded by macro `__TIMER__`. To use this method of profiling, define `__TIMER__` for g++ cross compiler in `sw/Makefile`:
 
     CXXFLAGS += -std=c++14 -D__TIMER__ -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
@@ -219,9 +219,9 @@ The commands to build and run in hardware is same as previously shown. The outpu
 
 3. Profile by AI Engine cycles got from AI Engine kernels
 
-In this design, we output the AI Engine cycles at the end of each iteration. Each iteration produces 256 int32 data, plus a long long AI Engine cycle counter number. We record the very beginning cycle and the last cycle of all the AI Engine kernels to be profiled because multiple AI Engine kernels start at different cycles though they are enabled by the same `graph::run`. Thus, we can calculate the system throughput for all the kernels. 
+In this design, we output the AI Engine cycles at the end of each iteration. Each iteration produces 256 int32 data, plus a long long AI Engine cycle counter number. We record the very beginning cycle and the last cycle of all the AI Engine kernels to be profiled because multiple AI Engine kernels start at different cycles though they are enabled by the same `graph::run`. Thus, we can calculate the system throughput for all the kernels.
 
-Note that there is some gap between the actual performance and the calculated number because there is already some data transfer before the recorded starting cycle. However, the overhead is negligible when the total iteration number is high, which is 4096 in this example. 
+Note that there is some gap between the actual performance and the calculated number because there is already some data transfer before the recorded starting cycle. However, the overhead is negligible when the total iteration number is high, which is 4096 in this example.
 
 The code to get AI Engine cycles and calculate the system throughput is as follows:
 
@@ -244,8 +244,8 @@ The code to get AI Engine cycles and calculate the system throughput is as follo
 The code is guarded by macro `__AIE_CYCLES__`. To use this method of profiling, define `__AIE_CYCLES__` for g++ cross compiler in `sw/Makefile`:
 
     CXXFLAGS += -std=c++14 -D__AIE_CYCLES__ -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
-    
-The commands to build and run in hardware is same as previously shown. The output in hardware is as follows:
+
+The commands to build and run in hardware are the same as previously shown. The output in hardware is as follows:
 
     GMIO::malloc completed
     Throughput (by AIE kernel cycles in=1,out=1) =6545.68M Bytes/s
@@ -282,14 +282,14 @@ The code to end profling and calculate performance is as follows:
       std::cout<<"Throughput (by event API) gmioOut["<<i<<"] bandwidth="<<bandwidth<<"M Bytes/s"<<std::endl;
     }
 
-In this example, `event::start_profiling is` called to configure the AI Engine to count the clock cycles from the stream start event to the event that indicates `BLOCK_SIZE_out_Bytes` bytes have been transferred, assuming that the stream stops right after the specified number of bytes are transferred. 
+In this example, `event::start_profiling is` called to configure the AI Engine to count the clock cycles from the stream start event to the event that indicates `BLOCK_SIZE_out_Bytes` bytes have been transferred, assuming that the stream stops right after the specified number of bytes are transferred.
 
 For detailed usage about event API, refer to the *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
 
 The code is guarded by macro `__USE_EVENT_PROFILE__`. To use this method of profiling, define `__USE_EVENT_PROFILE__` for g++ cross compiler in `sw/Makefile`:
 
     CXXFLAGS += -std=c++14 -D__USE_EVENT_PROFILE__ -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
-    
+
 The commands to build and run in hardware is same as previously shown. The output in hardware is as follows:
 
     GMIO::malloc completed
@@ -314,13 +314,12 @@ It is seen that when used GMIO ports number increases, the performance for the s
 ### Conclusion
 In this tutorial, you learned about:
 
-  * Programming model for AIE GMIO
-  * Programming model for PL GMIO
+  * Programming model for AI Engine GMIO
   * Ways to profile system performance and also, about the NOC and DDR bandwidth.
-  
-  
-  <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
-  
+
+
+  <p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
+
   Licensed under the Apache License, Version 2.0 (the "License");
 
 you may not use this file except in compliance with the License.

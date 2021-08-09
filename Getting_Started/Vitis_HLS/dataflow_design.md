@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.2 Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -28,13 +28,13 @@
 
 ### 4. Reviewing the DATAFLOW Optimization
 
-In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to enable task-level parallelism for functions or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rdd1585343102486.html) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
+In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to enable task-level parallelism for functions or loops. For more information, refer to [set_directive_dataflow](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/optdirectives.html#rdd1585343102486) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
 
 The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code on top of the loop-level parallelism where possible.
 
 #### Create a New Solution
 
-As described in [Creating Additional Solutions](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/optimizinghlsproject.html#wmt1584281647955) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416), you can create multiple solutions to let you pursue or explore different approaches to optimizing your design. Here you will create a new solution to explore the use of the DATAFLOW optimization.
+As described in [Creating Additional Solutions](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/optimizinghlsproject.html#wmt1584281647955) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416), you can create multiple solutions to let you pursue or explore different approaches to optimizing your design. Here you will create a new solution to explore the use of the DATAFLOW optimization.
 
 1. In the Explorer view, select the top-level project (`dct_prj`).
 2. Right-click and select **New Solution**.
@@ -80,7 +80,7 @@ As described in [Creating Additional Solutions](https://www.xilinx.com/html_docs
 
 #### View the Dataflow Graph
 
-Vitis HLS also provides a Dataflow Graph viewer as one of the features in the Analysis perspective. The DATAFLOW optimization is a dynamic optimization that can only really be understood after C/RTL co-simulation which provides needed performance data. After synthesis, you must run co-simulation. For more information, refer to [C/RTL Co-Simulation in Vitis HLS](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/cosimulationinvitishls.html) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+Vitis HLS also provides a Dataflow Graph viewer as one of the features in the Analysis perspective. The DATAFLOW optimization is a dynamic optimization that can only really be understood after C/RTL co-simulation which provides needed performance data. After synthesis, you must run co-simulation. For more information, refer to [C/RTL Co-Simulation in Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/cosimulationinvitishls.html) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 1. From the menu select **Solution > Run C/RTL Co-Simulation**.
    The Co-simulation dialog box displays.
@@ -92,14 +92,11 @@ Vitis HLS also provides a Dataflow Graph viewer as one of the features in the An
 
    After co-simulation completes, the tool opens the Co-simulation Report, which essentially says whether the tool passed your simulation testbench or not. In the case of Dataflow analysis, your testbench needs to call the synthesized function more than once to get the performance data from multiple iterations, and to make sure the design is flushing the FIFOs. When it comes to performance, one function call gives you latency, two or more calls to the function can give you the II.
 
-3. After the simulation completes, select **Analysis** in the upper right hand corner of the screen to switch to the Analysis perspective.
-4. In the Module Hierarchy view on the upper left, right click the `dct` function and select **Open Dataflow Viewer** as shown in the following figure.
+3. After the simulation completes, select **Solution** > **Open Dataflow Viewer** to open the viewer as shown in the following figure.
 
-   ![Open Dataflow Viewer](./images/open_dataflow_viewer.png)
+   >**TIP:** You can tell if the design has a Dataflow graph by the presence of the ![Dataflow Icon](./images/icon_dataflow.png) icon.
 
-   >**TIP:** You can tell if the design has a Dataflow graph by the presence of the ![Dataflow Icon](./images/icon_dataflow.png) icon in the Module Hierarchy view.
-
-   The DataFlow Viewer displays the function and the flow through the function. After running C/RTL co-simulation, the elements of the graph are filled out with performance data, and the Process and Channel tables beneath the graph are also filled out. Without the performance data provided by co-simulation, the graph and tables will have NA values to reflect the missing values. For more information, refer to [Dataflow Viewer](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=analyzingresultssynthesis.htmla=twx1584322463297) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+   The DataFlow Viewer displays the function and the flow through the function. After running C/RTL co-simulation, the elements of the graph are filled out with performance data, and the Process and Channel tables beneath the graph are also filled out. Without the performance data provided by co-simulation, the graph and tables will have NA values to reflect the missing values. For more information, refer to [Dataflow Viewer](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/analyzingresultssynthesis.html#twx1584322463297) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
    ![Dataflow Graph](./images/dataflow_graph_channels.png)
 

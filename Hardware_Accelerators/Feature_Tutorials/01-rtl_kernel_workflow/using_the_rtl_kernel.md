@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -84,7 +84,7 @@ Here are some of the important OpenCL API calls allowing the host application to
   clEnqueueReadBuffer(command_queue, dev_mem_ptr, CL_TRUE, 0, sizeof(int)*number_of_words,host_mem_output_ptr, 0, NULL, &readevent );
   ```
 
-The structure and requirements of the host application are discussed in greater detail in [Developing Applications](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=lhv1569273988420.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+The structure and requirements of the host application are discussed in greater detail in [Developing Applications](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=lhv1569273988420.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ## Add the Hardware Function
 
@@ -132,7 +132,7 @@ The Hardware Emulation target is useful for:
 
 The Vitis IDE can automatically search and include the `xclbin` file when the **Automatically update arguments** is enabled. However, in this case you will disable this checkbox because you need to add two arguments. 
 
-Disable the checkbox, and enter **.../binary_container_1.xclbin xilinx_u200_xdma_201830_2** in the `Program Arguments` field of the `Edit Program Arguments` dialog box as shown in the image below.
+Disable the checkbox, and enter **.../binary_container_1.xclbin xilinx_u200_gen3x16_xdma_1_202110_1** in the `Program Arguments` field of the `Edit Program Arguments` dialog box as shown in the image below.
 
    ![Edit Program Arguments](./images/program-arguments.png)
 

@@ -1,6 +1,6 @@
-﻿<table width="100%">
+<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - AI Engine Development Tutorials</h1>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ - AI Engine Development Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -25,10 +25,6 @@ The methodology for developing optimized accelerated applications is comprised o
  <tr>
  <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/">Super Sampling Rate FIR Filters</a></td>
  <td>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal ACAP AI Engine processor array.</td>
- </tr>
-  <tr>
- <td align="center"><a href="./Design_Tutorials/03-beamforming/">Beamforming Design</a></td>
- <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
  </tr>
   <tr>
  <td align="center"><a href="./Design_Tutorials/04-custom-platform-emulation/">AIE Emulation on Custom Platforms</a></td>
@@ -73,10 +69,6 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/07-AI-Engine-Floating-Point/">Using Floating-Point in the AI Engine</a></td>
  <td>These examples demonstrate floating-point vector computations in the AI Engine.</td>
  </tr>
-  <tr>
- <td align="center"><a href="./Feature_Tutorials/08-dsp-library/">DSP Library Tutorial</a></td>
- <td>This tutorial demonstrates how to use kernels provided by the DSP library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation.</td>
- </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/09-debug-walkthrough/">Debug Walkthrough Tutorial</a></td>
  <td>
@@ -86,6 +78,14 @@ This tutorial demonstrates how to debug a multi-processor application using the 
  <td align="center"><a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AI Engine DSP Library and Model Composer Tutorial</a></td>
  <td>
 This tutorial shows how to design AI Engine applications using Model Composer. This set of blocksets for Simulink is used to demonstrate how easy it is to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/">AI Engine Versal Emulation Waveform Analysis Tutorial</a></td>
+ <td>This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal ACAP.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/12-axis-traffic-generator/">AXIS External Traffic Generator Feature Tutorial</a></td>
+ <td>This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation. </td>
  </tr>
  </table>
 

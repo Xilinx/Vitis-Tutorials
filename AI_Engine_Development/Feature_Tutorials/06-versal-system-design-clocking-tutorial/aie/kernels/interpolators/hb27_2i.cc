@@ -38,6 +38,22 @@ offset: 3
 
 static int16_t chess_storage(%chess_alignof(v16int16)) coeffs_27_i [INTERPOLATOR27_COEFFICIENTS] = {33, -158,491, -1214, 2674, -5942, 20503, 0, 32767};
 
+
+// void fir_27t_sym_hb_2i
+// (       
+// 	input_window_cint16 * cb_input,
+// 	output_window_cint16 * cb_output)
+// {
+//   cint16 t1;
+//   for(int i =0;i<INTERPOLATOR27_OUTPUT_SAMPLES/2;i++)
+//   {
+//     t1 = window_readincr(cb_input);
+//     window_writeincr(cb_output,t1);
+//     window_writeincr(cb_output,t1);
+//   }
+
+// }
+
 void fir_27t_sym_hb_2i
 (       
 	input_window_cint16 * cb_input,
@@ -92,7 +108,7 @@ void fir_27t_sym_hb_2i
     window_writeincr(cb_output, srsI(acc0, sft));     
     window_writeincr(cb_output, srsI(acc1, sft)); 
     }
+
   //cb_incr_v8(cb_input,1); 
   window_incr_v8(cb_input,1);
 }
-

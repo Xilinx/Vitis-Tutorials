@@ -1,7 +1,7 @@
-﻿<table class="sphinxhide">
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -23,7 +23,7 @@ Alveo cards have multiple DDR banks, and you can use multiple banks in ping-pong
 * When the host is writing words to DDR bank1, the kernel is reading flags from DDR bank2. 
 * When host is writing documents to DDR bank2, the kernel is reading flags from DDR bank1. 
 
-The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/buildingdevicebinary.html#ejl1524519365386). In this case the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity. 
+The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/buildingdevicebinary.html#ejl1524519365386). In this case the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity. 
 
     ```
     [connectivity]

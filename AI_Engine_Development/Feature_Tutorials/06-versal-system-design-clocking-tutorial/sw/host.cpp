@@ -114,7 +114,7 @@ int main(int argc, char ** argv)
 	// Here the out_bohdl is the output buffer, the nullptr is the streaming interface and must be null,
 	// lastly, the size of the data. This info can be found in the kernel definition.
 	// Halve the sizeOut since capturing 64-bit and not 32-bit.
-	xrtRunHandle s2mm_rhdl = xrtKernelHandles(2mm_khdl, out_bohdl, nullptr, sizeOut);
+	xrtRunHandle s2mm_rhdl = xrtKernelRun(s2mm_khdl, out_bohdl, nullptr, sizeOut);
 	//xrtRunHandle s2mm_rhdl = xrtKernelRun(s2mm_khdl, out_bohdl, nullptr, sizeOut/2);
 	printf("run s2mm\n");
 

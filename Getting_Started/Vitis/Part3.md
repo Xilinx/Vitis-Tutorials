@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Getting Started Tutorial</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Getting Started Tutorial</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -53,7 +53,7 @@ Other than this, the functionality of the vector-add kernel is very easily recog
 
 The pragmas are used to map function parameters to distinct kernel ports. By mapping the two inputs parameters to different input ports, the kernel will be able to read both inputs in parallel. As a general rule, and without going into further details in this introductory tutorial, it is important to think about interface requirements of hardware accelerators and they will have a determining impact on maximum achievable performance.
 
-The Vitis online documentation provides comprehensive information on [C++ kernel coding considerations](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/devckernels.html#rjk1519742919747) as well as a complete [pragma reference guide](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/tfo1593136615570.html).
+The Vitis online documentation provides comprehensive information on [C++ kernel coding considerations](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devckernels.html#rjk1519742919747) as well as a complete [pragma reference guide](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hlspragmas.html#tfo1593136615570).
 
 
 
@@ -68,11 +68,11 @@ There are 4 main steps in the source code for this simple example.
 
 * **Step 1:** The OpenCL environment is initialized. In this section, the host detects the attached Xilinx device, loads the FPGA binary (.xclbin file) from file and programs it into the first Xilinx device it found. Then a command queue and the kernel object are created. All Vitis applications will have code very similar to the one in this section.
 
- * **Step 2:** The application creates the three buffers needed to share data with the kernel: one for each input and one for the output. On data-center platforms, it is more efficient to allocate memory aligned on 4k page boundaries. On embedded platforms, it is more efficient to perform contiguous memory allocation. A simple way of achieving either of these is to let the Xilinx Runtime allocate host memory when creating the buffers. This is done by using the cl::Buffer constructor to create the buffers and then mapping the allocated memory to user-space pointers.
+* **Step 2:** The application creates the three buffers needed to share data with the kernel: one for each input and one for the output. On data-center platforms, it is more efficient to allocate memory aligned on 4k page boundaries. On embedded platforms, it is more efficient to perform contiguous memory allocation. A simple way of achieving either of these is to let the Xilinx Runtime allocate host memory when creating the buffers. This is done by using the cl::Buffer constructor to create the buffers and then mapping the allocated memory to user-space pointers.
 
 ```cpp
     // Create the buffers and allocate memory   
-     cl::Buffer in1_buf(context, CL_MEM_READ_ONLY,  sizeof(int) * DATA_SIZE, NULL, &err);
+    cl::Buffer in1_buf(context, CL_MEM_READ_ONLY,  sizeof(int) * DATA_SIZE, NULL, &err);
 
     // Map host-side buffer memory to user-space pointers
     int *in1 = (int *)q.enqueueMapBuffer(in1_buf, CL_TRUE, CL_MAP_WRITE, 0, sizeof(int) * DATA_SIZE);
@@ -101,7 +101,7 @@ There are 4 main steps in the source code for this simple example.
 
 * **Step 4:** The call to `q.finish()` returns when all previously enqueued operations have completed. In this case, it implies that the output buffer containing the results of the kernel have been migrated back to host memory and can safely be used by the software application. Here the results are simply checked against expected values before the program finishes.
 
-This example shows the simplest way of using OpenCL APIs to interact with the hardware accelerator. As always, additional information can be found in the [Vitis documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/devhostapp.html#vpy1519742402284). 
+This example shows the simplest way of using OpenCL APIs to interact with the hardware accelerator. As always, additional information can be found in the [Vitis documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devhostapp.html#vpy1519742402284). 
 
 
 
@@ -111,4 +111,4 @@ Now that you understand the source code for both kernel and the host program, [*
 
  
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

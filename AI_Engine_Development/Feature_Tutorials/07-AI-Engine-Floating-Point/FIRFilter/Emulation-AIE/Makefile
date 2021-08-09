@@ -19,7 +19,7 @@ AIE_TOP_DIR = ..
 AIE_BUILD_DIR = .
 AIE_CC = aiecompiler
 
-AIE_GRAPH_FILES = ${AIE_TOP_DIR}/src/graph.cpp
+AIE_GRAPH_FILES = ${AIE_TOP_DIR}/aie/graph.cpp
 AIE_OUT_DIR = ${AIE_BUILD_DIR}/Work
 AIE_DATA_DIR = ${AIE_BUILD_DIR}/data
 AIE_HW_DIR = ${AIE_BUILD_DIR}/hw
@@ -29,37 +29,37 @@ RM = rm -f
 RMDIR = rm -rf
 SRC_LOG_FILE_PATH = ${AIE_TOP_DIR}/Module2.build.log
 DST_LOG_FILE_PATH = ${AIE_BUILD_DIR}/build.log
-PLATFORM = xilinx_vck190_es1_base_202020_1
+PLATFORM = xilinx_vck190_base_202110_1
 
 # AIE compiler settings
-AIE_FLAGS = -v -dataflow -include="${XILINX_VITIS_AIE_TOOLS}/include" -include="${XILINX_VITIS_AIE_TOOLS}/../include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/src" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=${PLATFORM_REPO_PATHS}/${PLATFORM}/${PLATFORM}.xpfm -workdir=$(AIE_OUT_DIR)
+AIE_FLAGS = -v -dataflow -include="${XILINX_VITIS_AIE_TOOLS}/include" -include="${XILINX_VITIS_AIE_TOOLS}/../include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/aie" -include="${AIE_TOP_DIR}/aie/aie_kernels" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=${PLATFORM_REPO_PATHS}/${PLATFORM}/${PLATFORM}.xpfm -workdir=$(AIE_OUT_DIR) --xlopt=0
 
 # Sources
-SRCS = ${AIE_TOP_DIR}/src/fir_float.cpp ${AIE_TOP_DIR}/src/graph.cpp  ${AIE_TOP_DIR}/src/graph.h  ${AIE_TOP_DIR}/src/system_settings.h  ${AIE_TOP_DIR}/src/aie_kernels.h
+SRCS = ${AIE_TOP_DIR}/aie/aie_kernels/fir_float.cpp ${AIE_TOP_DIR}/aie/aie_kernels/fir_cfloat.cpp ${AIE_TOP_DIR}/aie/graph.cpp  ${AIE_TOP_DIR}/aie/graph.h  ${AIE_TOP_DIR}/aie/system_settings.h  ${AIE_TOP_DIR}/aie/aie_kernels.h
 
 
 #
 # primary build targets
 #
 
-all: clean compile simulate visualize
+all: clean aie aiesim aieviz
 
-compile:   $(SRCS)
+aie:   $(SRCS)
 	-$(AIE_CC) $(AIE_FLAGS) $(AIE_GRAPH_FILES)
 	if [ -f $(SRC_LOG_FILE_PATH) ]; then cp $(SRC_LOG_FILE_PATH) $(DST_LOG_FILE_PATH) 2>/dev/null; echo; echo "INFO: Look at the log file Debug/build.log for more details."; else echo "Warning: Build log file $(SRC_LOG_FILE_PATH) doesn't exist."; fi; \
 
-simulate:
+aiesim:
 	if [ -d data ]; then echo "data exists"; else ln -s ../data data; fi;
 	aiesimulator --pkg-dir=Work --dump-vcd=foo
 
-visualize:
+aieviz:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
 
 clean:
 	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) $(AIE_TR_DATA_DIR) $(AIE_TRACE_DIR) ${AIE_BUILD_DIR}/aiesim* ${AIE_BUILD_DIR}/ess* ${AIE_BUILD_DIR}/profile* ${AIE_BUILD_DIR}/xnwOut ${AIE_BUILD_DIR}/.Xil
 	find ./ -type f | grep -v Makefile | xargs rm -Rf
 
-.PHONY: all clean compile  simulate visualize
+.PHONY: all clean aie aiesim aieviz
 
 
 

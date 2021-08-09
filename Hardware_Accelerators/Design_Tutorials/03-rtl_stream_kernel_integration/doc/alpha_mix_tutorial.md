@@ -1,4 +1,4 @@
-# ALPHA_MIX HLS C Kernel Creation
+﻿# ALPHA_MIX HLS C Kernel Creation
 
 According to the design specification, the *alpha_mix* kernel will include following functions:
 
@@ -51,4 +51,4 @@ v++ --platform xilinx_u50_gen3x16_xdma_201920_3                                 
     alpha_mix.c
 ~~~
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

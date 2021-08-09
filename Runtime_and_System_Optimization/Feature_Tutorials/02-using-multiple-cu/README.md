@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -20,7 +20,7 @@ This tutorial demonstrates a flexible kernel linking process to increase the num
 
 By default, the Vitis™ core development kit creates one CU for each kernel. A host program can use the same kernel multiple times for different sets of data. In these cases, it is useful to generate multiple CUs of the kernel to let those CUs run concurrently and improve the performance of the overall system.  
 
-For more information, see [Creating Multiple Instances of a Kernel](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=buildingdevicebinary.html;a=yzb1524519238289) in the Application Acceleration
+For more information, see [Creating Multiple Instances of a Kernel](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=buildingdevicebinary.html;a=yzb1524519238289) in the Application Acceleration
 Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 During this tutorial, you will:
@@ -37,12 +37,12 @@ This tutorial uses an image filter example to demonstrate the multiple CU featur
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform.
+* 2020.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform.
 If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
 >
->* Before to running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration
+>* Before to running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration
 Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 >* This tutorial module contains a pre-compiled OpenCV™ library compiled by gcc-6.2.0, and requires gcc/g++ version 5.5 at least, or will return an error during host code compilation. You must also set the LD_LIBRARY_PATH using the following code to pick the required runtime library related to gcc-6:

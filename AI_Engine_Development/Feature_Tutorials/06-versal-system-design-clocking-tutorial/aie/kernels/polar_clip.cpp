@@ -15,8 +15,10 @@ limitations under the License.
 **********/
 
 
-#include "adf/wrapper/wrapper.h"
-#include<iostream> 
+//#include "adf/wrapper/wrapper.h"
+//#include<iostream> 
+#include "adf.h"
+#include "../include.h"
 #define CFR_THRESHOLD (11626)
 #define SIGN(x) (x>0 ? 0.5 : -0.5)
 
@@ -113,64 +115,44 @@ void cos_sin_mag (
 
 }
 
-
 void polar_clip(input_stream_cint16* in, output_stream_cint16 * out) {
-  //std::cerr << "Waiting for a value" << "\n";
   cint16 sample;
-  sample = readincr(in);
-  //sample = in.read();
-//#pragma HLS DATA_PACK variable=sample field_level
+  cint16 ovalue;
   int16_t value_real, value_imag;
   int32_t value_real_1, value_imag_1;
-
-  value_real = sample.real;
-  value_imag = sample.imag;
-
-  value_real_1 = (int) sample.real;
-  value_imag_1 = (int) sample.imag;
- 
-  cint16 ovalue;
-
-  //std::cerr << "Received " << value.real << " + " << value.imag  << "j\n";
-  //double ph = atan2((double)value.imag,(double)value.real) ;
   int32_t value_real_sq, value_imag_sq, mag_sq;
   int32_t res_real, res_imag;
 
-  value_real_sq = value_real * value_real;
-  value_imag_sq = value_imag * value_imag;
-  mag_sq = value_real_sq + value_imag_sq;
-
-  //double mag = sqrt(double(mag_sq)) ;
-
   int32_t magout,cs_fixed_real,cs_fixed_imag;
 
-  cos_sin_mag(value_real_1,value_imag_1,&magout,&cs_fixed_real,&cs_fixed_imag);
- 
-  if(mag_sq>CFR_THRESHOLD*CFR_THRESHOLD){
-    //std::cerr << "ph is " << ph << "\n";
-    //std::cerr << "mag is " << mag << "\n";
-    //std::cerr << "mag_sq is " << mag_sq << "\n";
-    //double re = (mag-CFR_THRESHOLD)*cos(ph) ;
-    //double im = (mag-CFR_THRESHOLD)*sin(ph) ;     
+  int loopct = 0;
+  for (int i =0;i<POLAR_CLIP_INPUT_SAMPLES;i++){
+    sample = readincr(in);
+    value_real = sample.real;
+    value_imag = sample.imag;
 
-     res_real = (int32_t)cs_fixed_real*(magout-CFR_THRESHOLD);
-     res_imag = (int32_t)cs_fixed_imag*(magout-CFR_THRESHOLD);
+    value_real_1 = (int) sample.real;
+    value_imag_1 = (int) sample.imag;
+
+    value_real_sq = value_real * value_real;
+    value_imag_sq = value_imag * value_imag;
+    mag_sq = value_real_sq + value_imag_sq;
+
+    cos_sin_mag(value_real_1,value_imag_1,&magout,&cs_fixed_real,&cs_fixed_imag);
+
+    if(mag_sq>CFR_THRESHOLD*CFR_THRESHOLD){
+   
+      res_real = (int32_t)cs_fixed_real*(magout-CFR_THRESHOLD);
+      res_imag = (int32_t)cs_fixed_imag*(magout-CFR_THRESHOLD);
     
-	 ovalue.real = (short) (res_real & 0xFFFF);
-     ovalue.imag = (short) (res_imag & 0xFFFF);
+      ovalue.real = (short) (res_real & 0xFFFF);
+      ovalue.imag = (short) (res_imag & 0xFFFF);
+   
+    }else {
+        ovalue.real = 0 ;
+        ovalue.imag = 0 ;      
+    }	  
+    writeincr(out,ovalue);
+  }
   
-
-     //value.real = (short)(re+SIGN(re));
-     //value.imag = (short)(im+SIGN(im));
-     //std::cerr << "Polar clipped !" << "\n";     
-  }else {
-     ovalue.real = 0 ;
-     ovalue.imag = 0 ;      
-  }	  
-  //std::cerr << "Sending " << value.real << " + " << value.imag  << "j\n";
-  writeincr(out, ovalue);
-  //out.write(cint16(ovalue));
-
-  //std::cerr << "Sent\n";
-};
-
+}

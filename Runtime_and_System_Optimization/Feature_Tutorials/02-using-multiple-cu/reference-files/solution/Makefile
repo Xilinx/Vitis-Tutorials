@@ -1,7 +1,7 @@
 VPP := $(XILINX_VITIS)/bin/v++
 EMCONFIGUTIL := $(XILINX_VITIS)/bin/emconfigutil
 MODE := hw_emu
-DSA := xilinx_u200_xdma_201830_2
+DSA := xilinx_u200_gen3x16_xdma_1_202110_1
 
 # sources
 HOST_SRC := src/host/cmdlineparser.cpp src/host/filter2d.cpp src/host/logger.cpp src/host/xclbin_helper.cpp src/host/host.cpp
@@ -17,13 +17,14 @@ EMCONFIG_FILE := emconfig.json
 
 # V++ Linker options to configure number of compute units
 VPP_LINK_OPTS := --config link.cfg
-VPP_LINK_OPTS_FINAL := --nk Filter2DKernel:3
+VPP_LINK_OPTS_FINAL := --connectivity.nk Filter2DKernel:3
 
 # V++ Compiler options
 VPP_COMMON_OPTS := -s -t $(MODE) --config compile.cfg
 
 CFLAGS := -g -std=c++11 -I$(XILINX_XRT)/include -I${XILINX_VIVADO}/include
-LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lrt -fopenmp -Wl,--as-needed -Wl,-rpath,${XILINX_VIVADO}/lnx64/tools/opencv/opencv_clang -L${XILINX_VIVADO}/lnx64/tools/opencv/opencv_clang -lopencv_core -lopencv_highgui
+CFLAGS += -I../opencv
+LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lrt -fopenmp -Wl,--as-needed -Wl,-rpath,../opencv/opencv_gcc -L../opencv/opencv_gcc -lopencv_core -lopencv_highgui
 
 
 NUMDEVICES := 1

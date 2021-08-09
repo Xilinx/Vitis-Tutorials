@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
    </td>
  </tr>
  <tr>
@@ -14,8 +14,9 @@ This step demonstrates:
   * The Array RTP update for AI Engine kernels
   * Asynchronous read of Array RTP for AI Engine kernels
   * C++ version of XRT API to control PL kernels
+  * C++ version of XRT API to control graph execution
 
-The example design is similar to [Asynchronous Update of Scalar RTP for PL inside a Graph, and Array RTP Update for AI Engine Kernel](./step4_async_pl_scalar_aie_array.md), except that the AI Engine kernel has an asynchronous output, and the PL kernel inside the graph is pulled out of the graph. The example shows how to perform asynchronous reads of array RTP by the ADF API and the XRT API. Also, the PL kernels are controlled by the C++ version of the XRT API, which is different from the previous steps by OpenCL API or C version of XRT API.
+The example design is similar to [Asynchronous Update of Scalar RTP for PL inside a Graph, and Array RTP Update for AI Engine Kernel](./step4_async_aie_array.md), except that the AI Engine kernel has an asynchronous output, and the PL kernel inside the graph is pulled out of the graph. The example shows how to perform asynchronous reads of array RTP by the ADF API and the XRT API. The PL kernels and graph execution are controlled by the C++ version of the XRT API. This differs from the previous steps which used the OpenCL API or the C version of the XRT API.
 
 The system to be implemented is as follows:
 
@@ -37,7 +38,7 @@ In the graph definition (`aie/graph.h`), the RTP declaration and connection are 
     connect< parameter >(coefficients, async(fir24.in[1]));
     connect< parameter >(async(fir24.inout[0]),coefficients_readback);
 
-In `aie/graph.cpp` (for AI Engine simulator), the RTP update and read are: 
+In `aie/graph.cpp` (for AI Engine simulator), the RTP update and read commands are: 
 
     gr.update(gr.coefficients, narrow_filter, 12);
     gr.run(16); // start PL kernel & AIE kernel
@@ -72,7 +73,7 @@ Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 
 The corresponding AI Engine compiler command is:
 
-    aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-axi-lite=true -workdir=./Work aie/graph.cpp
+    aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-axi-lite=true -workdir=./Work aie/graph.cpp
 
 After the AI Engine graph (`libadf.a`) has been generated, verify for correctness using the AI Engine simulator:
 
@@ -81,7 +82,7 @@ After the AI Engine graph (`libadf.a`) has been generated, verify for correctnes
 ## Run Hardware Cosimulation and Hardware Flow
 The Makefile rule targets introduced in [Synchronous update of Scalar RTP](./step1_sync_scalar.md), [Asynchronous Update of Scalar RTP](./step2_async_scalar.md) and [Asynchronous Update of Array RTP](./step3_async_array.md) still apply here. 
 
-Details about tool options and host code in [Asynchronous Update of Scalar RTP for PL inside a Graph, and Array RTP Update for AI Engine Kernel](./step4_async_pl_scalar_aie_array.md) are similar. This section only focuses on the different part.
+Details about tool options and host code in [Asynchronous Update of Scalar RTP for PL inside a Graph](./step2_async_scalar.md), and [Array RTP Update for AI Engine Kernel](./step4_async_aie_array.md) are similar. This section only focuses on the different part.
 
 In `sw/host.cpp`, the C++ version of the XRT API is used to control PL kernels outside of the graph:
 
@@ -112,18 +113,24 @@ In `sw/host.cpp`, the C++ version of the XRT API is used to control PL kernels o
 
 	... //Post-processing
 
-Similar to the previous step, the `adf` API and the XRT API are used to control graph execution. They can be switched by a user-defined macro `__USE_ADF_API__`. The XRT API to update and read the array RTP is as follows:
+The `adf` API to control graph execution is similar to that used in the previous step. In this step, the C++ verion of XRT API to control graph execution is introduced. They can be switched by a user-defined macro `__USE_ADF_API__`. The C++ XRT API to update and read the array RTP is as follows:
 
-	ret=xrtGraphUpdateRTP(ghdl,"gr.fir24.in[1]",(char*)narrow_filter,12*sizeof(int));
-	xrtGraphRun(ghdl,16);
-	ret=xrtGraphReadRTP(ghdl, "gr.fir24.inout[0]", (char*)coeffs_readback, 12*sizeof(int));//Async read
+	int narrow_filter[12] = {180, 89, -80, -391, -720, -834, -478, 505, 2063, 3896, 5535, 6504};
+	int wide_filter[12] = {-21, -249, 319, -78, -511, 977, -610, -844, 2574, -2754, -1066, 18539};
+	std::cout<<"size of cofficient read back:"<<sizeof(coeffs_readback)<<std::endl;
+	std::cout<<"size of filter"<<sizeof(narrow_filter)<<std::endl;
+	auto ghdl=xrt::graph(device,uuid,"gr");
+	ghdl.update("gr.fir24.in[1]",narrow_filter);
+	ghdl.run(16);
+	ghdl.read("gr.fir24.inout[0]", coeffs_readback);//Async read
 	std::cout<<"Coefficients read back are:";
 	for(int i=0;i<12;i++){
 		std::cout<<coeffs_readback[i]<<",\t";
 	}
 	std::cout<<std::endl;
-	xrtGraphWait(ghdl,0);
-	ret=xrtGraphReadRTP(ghdl, "gr.fir24.inout[0]", (char*)coeffs_readback, 12*sizeof(int));//read after gr.wait, gr.update has been taken effective
+	ghdl.wait();
+	std::cout<<"Graph wait done"<<std::endl;
+	ghdl.read("gr.fir24.inout[0]",coeffs_readback);//read after gr.wait, gr.update has been taken effective
 	std::cout<<"Coefficients read back are:";
 	for(int i=0;i<12;i++){
 		std::cout<<coeffs_readback[i]<<",\t";
@@ -131,14 +138,14 @@ Similar to the previous step, the `adf` API and the XRT API are used to control 
 	std::cout<<std::endl;
 	
 	//second run
-	ret=xrtGraphUpdateRTP(ghdl,"gr.fir24.in[1]",(char*)wide_filter,12*sizeof(int));
-	xrtGraphRun(ghdl,16);
-	ret=xrtGraphReadRTP(ghdl, "gr.fir24.inout[0]", (char*)coeffs_readback, 12*sizeof(int));//Async read
+	ghdl.update("gr.fir24.in[1]",wide_filter);
+	ghdl.run(16);
+	ghdl.read("gr.fir24.inout[0]", coeffs_readback);//Async read
 	std::cout<<"Coefficients read back are:";
 	for(int i=0;i<12;i++){
 		std::cout<<coeffs_readback[i]<<",\t";
 	}
-	std::cout<<std::endl;	
+	std::cout<<std::endl;
 
 Run the following `make` command to build the host exectuable file.
 
@@ -186,8 +193,7 @@ The host code is self-checking. It will check the output data against the golden
 In this tutorial you learned about:
    * The concepts of synchronous and asynchronous scalar RTP
    * Asynchronous array RTP
-   * Asynchronous scalar RTP for PL kernel inside the graph
    * Asynchronous array RTP read
    * Launching AI Engine simulator, HW cosimulation, and HW
    
-   <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD001</sup></br></p>
+   <p align="center"><sup>XD001 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>

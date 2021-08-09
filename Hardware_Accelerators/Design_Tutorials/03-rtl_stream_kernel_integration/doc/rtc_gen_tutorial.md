@@ -214,4 +214,4 @@ package_xo  -xo_path ./rtc_gen/vivado_project/rtc_gen_ex/exports/rtc_gen.xo \
 
 *./rtc_gen/vivado_project/rtc_gen_ex/rtc_gen* is the folder for *rtc_gen* IP, and *./rtc_gen/vivado_project/rtc_gen_ex/imports/kernel.xml* is the kernel description file. So we could copy out these items to standlone directory and just use the command line above to package the kernel. This is also where the *./hw/rtc_gen_ip* directory and *./hw/rtc_gen_kernel.xml* file come from.
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

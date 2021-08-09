@@ -1,6 +1,6 @@
 ﻿<table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
    <h1>Super Sampling Rate FIR Filters</h1>
    <h2>Implementation on the AI Engine</h2>
    </td>
@@ -223,11 +223,11 @@ for(int row = 0;row<NPhases;row++)
 Ensure the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
-- `compile`
+- `aie`
   - Compiles the graph and the kernels
-- `simulate`
+- `aiesim`
   - Runs the AI Engine System C simulator
-- `visualize`
+- `aieviz`
   - Runs `vitis_analyzer`on the output summary
 
 Take a look at the source code (kernel and graph) to familiarize yourself with the C++ instanciation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
@@ -265,14 +265,15 @@ The top graph reflects the real part of the output. The bottom graph this is the
 The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`) type `StreamThroughput output_*`:
 
 ```
-output_0.txt -->   950.35 Msps
+output_0.txt -->   954.33 Msps
 output_1.txt -->   949.91 Msps
-output_2.txt -->   950.79 Msps
-output_3.txt -->   950.35 Msps
+output_2.txt -->   954.33 Msps
+output_3.txt -->   949.91 Msps
 
 -----------------------
 
-Total Throughput -->    3801.39 Msps
+
+Total Throughput -->    3808.48 Msps
 ```
 
 This architecture achieves very close to 4 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.
@@ -288,4 +289,4 @@ This architecture achieves very close to 4 Gsps performance. It is slightly less
 
 
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

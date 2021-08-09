@@ -1,6 +1,6 @@
 ﻿<table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Examples</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Examples</h1>
    </td>
  </tr>
  <tr>
@@ -316,9 +316,9 @@ The floating-point accumulator has a latency of two clock cycles, so two `fpmac`
 
 - Navigate to the `FIRFilter` directory.
 - Type `make all` in the console and wait for completion of the three following stages:
-  1. `Compile`
-  2. `Simulate`
-  3. `Visualize`
+  1. `aie`
+  2. `aiesim`
+  3. `aieviz`
 
 The last stage is opening `vitis_analyzer` that will allow you to visualize the graph of the design and the simulation process timeline.
 
@@ -359,9 +359,9 @@ All the parameter settings for the `fpmul/mac_conf` intrinsics are explained in 
 
 - Navigate to the `MatMult` directory.
 - Type `make all` in the console and wait for the completions of the 3 stages:
-  1. `Compile`
-  2. `Simulate`
-  3. `Visualize`
+  1. `aie`
+  2. `aiesim`
+  3. `aieviz`
 
 The last stage is opening `vitis_analyzer` that will allow you to visualize the graph of the design and the simulation process timeline.
 

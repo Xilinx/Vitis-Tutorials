@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -24,7 +24,7 @@ This tutorial concentrates on performance tuning of the host code associated wit
 ## Tutorial Overview
 
 In this tutorial, you operate on a simple, single, generic C++ kernel implementation. This allows you to eliminate any aspects of the kernel code modifications, topological optimizations, and implementation choices from the analysis of host code implementations.
->**NOTE:** The host code optimization techniques shown in this tutorial are limited to aspects for optimizing the accelerator integration. Additional common techniques, which allow for the usage of multiple CPU cores or memory management on the host code, are not part of this discussion. For more information, refer to [Profiling, Optimizing, and Debugging the Application](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=vitis+doc;d=wzc1553475252001.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>**NOTE:** The host code optimization techniques shown in this tutorial are limited to aspects for optimizing the accelerator integration. Additional common techniques, which allow for the usage of multiple CPU cores or memory management on the host code, are not part of this discussion. For more information, refer to [Profiling, Optimizing, and Debugging the Application](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=wzc1553475252001.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 The following sections focus on the following specific host code optimization concerns:
 
@@ -37,12 +37,12 @@ The following sections focus on the following specific host code optimization co
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform.  
+* 2020.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform.  
 If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+> * Before running any of the examples, make sure you have the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
@@ -69,10 +69,10 @@ Although some host code optimizations perform well with the hardware emulation, 
 Run the following makefile command to compile the kernel to the specified accelerator card.
 
 ```
-make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 kernel
+make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 kernel
 ```
 
->**NOTE:** This build process takes several hours, but the kernel compilation must be completed before you can analyze the impact of optimizations on the host code performance.
+>**NOTE:** This build process can take several hours, but the kernel compilation must be completed before you can analyze the impact of optimizations on the host code performance.
 
 ## Host Code
 
@@ -159,34 +159,33 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
 1. Compile and run the host code (`srcPipeline/host.cpp`) using the following command.
 
    ```
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 pipeline
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 pipeline
    ```
 
    Compared to the kernel compilation time, this build step takes very little time.
 
 2. You are now ready to run the application.
 
-   The runtime data is generated by the host program due to settings specified in the `xrt.ini` file, as described in [Enabling Profiling in Your Application](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/profilingapplication.html#vfc1586356138757). This file is found at `./reference-files/auxFiles/xrt.ini`, and is copied to the `runPipeline` directory by the `make pipelineRun` command. 
+   The runtime data is generated by the host program due to settings specified in the `xrt.ini` file, as described in [Enabling Profiling in Your Application](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/profilingapplication.html#vfc1586356138757). This file is found at `./reference-files/auxFiles/xrt.ini`, and is copied to the `runPipeline` directory by the `make pipelineRun` command. 
    
    The `xrt.ini` file contains the following settings:
    ```
    [Debug]
-   profile=true
-   timeline_trace=true
+   opencl_summary=true
+   opencl_trace=true
    data_transfer_trace=coarse
-   stall_trace=all
    ```
 
    Use the following command to run the application.
 
    ```
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 pipelineRun
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 pipelineRun
    ```
 
    After the run completes, open the Application Timeline using the Vitis analyzer, then select the Application Timeline located in left side panel.
 
    ```
-   vitis_analyzer runPipeline/pass.hw.xilinx_u200_xdma_201830_2.xclbin.run_summary
+   vitis_analyzer runPipeline/pass.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin.run_summary
    ```
 
    The Application Timeline view illustrates the full run of the executable. The three main sections of the timeline are:
@@ -217,9 +216,9 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
 5. Recompile the application, rerun the program, and review the run_summary in Vitis analyze: 
 
    ```
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 pipeline
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 pipelineRun
-   vitis_analyzer runPipeline/pass.hw.xilinx_u200_xdma_201830_2.xclbin.run_summary
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 pipeline
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 pipelineRun
+   vitis_analyzer runPipeline/pass.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin.run_summary
    ```
 
    If you zoom in on the Application Timeline, and click any kernel enqueue, you should see results similar to the following figure.
@@ -271,14 +270,14 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
 2. Compile and execute the `srcSync` code.
 
    ```
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 sync
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 syncRun
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 sync
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 syncRun
    ```
 
 3. After the run completes, open the Application Timeline using the Vitis analyzer, then  click the Application Timeline located at left side panel.
 
    ```
-   vitis_analyzer runSync/pass.hw.xilinx_u200_xdma_201830_2.xclbin.run_summary
+   vitis_analyzer runSync/pass.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin.run_summary
    ```
    
    If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
@@ -308,9 +307,9 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
 5. Recompile the application, rerun the program, and review the run_summary in Vitis analyze:
 
    ```
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 sync
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 syncRun
-   vitis_analyzer runSync/pass.hw.xilinx_u200_xdma_201830_2.xclbin.run_summary
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 sync
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 syncRun
+   vitis_analyzer runSync/pass.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin.run_summary
    ```
 
    If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
@@ -351,13 +350,13 @@ A second command line option (`SIZE=`) has also been added to specify the buffer
 1. Compile the host code.
 
    ```
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 buf
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 buf
    ```
 
 2. Run the executable.
 
    ```
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 SIZE=14 bufRun
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 SIZE=14 bufRun
    ```
 
    The argument `SIZE` is used as a second argument to the host executable.
@@ -368,14 +367,14 @@ A second command line option (`SIZE=`) has also been added to specify the buffer
 3. After the run completes, open the Application Timeline using the Vitis analyzer, then  click the Application Timeline located at left side panel.
 
    ```
-   vitis_analyzer runBuf/pass.hw.xilinx_u200_xdma_201830_2.xclbin.run_summary
+   vitis_analyzer runBuf/pass.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin.run_summary
    ```
     Examine the tmeline to review the operation. 
 
 4. To ease the sweeping of different buffer sizes, an additional makefile target was created, wich can be run using the following command.
 
    ```
-   make TARGET=hw DEVICE=xilinx_u200_xdma_201830_2 bufRunSweep
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_1_202110_1 bufRunSweep
    ```
    >**NOTE**: The sweeping script (`auxFiles/run.py`) requires a Python installation, which is available in most systems. 
    
@@ -403,7 +402,7 @@ In general, there are many ways to implement your host code and improve performa
 
 ## Next Steps
 
-For more information about tools and processes you can use to analyze the application performance in general, refer to the [Profiling, Optimizing, and Debugging the Application](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=wzc1553475252001.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+For more information about tools and processes you can use to analyze the application performance in general, refer to the [Profiling, Optimizing, and Debugging the Application](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=wzc1553475252001.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>

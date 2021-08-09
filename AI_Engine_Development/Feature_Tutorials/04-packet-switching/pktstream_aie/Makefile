@@ -11,14 +11,16 @@
 #limitations under the License.
 #
 TARGET   = hw_emu
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
 XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 HOST_EXE = host.exe
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
-AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-axi-lite=true -workdir=./Work ${GRAPH}
+AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
+EMU_CMD = ./launch_hw_emu.sh
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
@@ -29,6 +31,7 @@ XOS      = $(subst .cpp,.xo,$(wildcard pl_kernels/*.cpp))
 VCC      = v++
 VPP_SPEC =system.cfg
 VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}  
+LDCLFLAGS=
 
 .PHONY: clean
 
@@ -44,23 +47,25 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_2020210_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_202110_1)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2020.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2020.2/Image)
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2021.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
 ###
 
 all: ${XCLBIN} ${HOST_EXE} package
+run: all run_hw_emu
+sd_card: all
 
 aie: guard-PLATFORM_REPO_PATHS ${LIBADF}
 ${LIBADF}: ${GRAPH}
@@ -76,11 +81,11 @@ ${XCLBIN}: ${LIBADF} ${VPP_SPEC} ${XOS}
 
 kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}: 
-	make -C pl_kernels/
+	$(MAKE) -C pl_kernels/
 	
 host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
 ${HOST_EXE}: sw/*.cpp
-	make -C sw/
+	$(MAKE) -C sw/
 
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
 package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE} 
@@ -90,16 +95,17 @@ package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
 		--package.boot_mode=sd \
 		--package.image_format=ext4 \
 		--package.defer_aie_run \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_dir data \
 		--package.sd_file ${HOST_EXE} ${XCLBIN} ${LIBADF} 
 
 run_hw_emu: launch_hw_emu.sh
 launch_hw_emu.sh: package_hw_emu
-	./launch_hw_emu.sh
+	$(EMU_CMD)
 
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
 	       vck190_aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
 	       ilpProblem* sol.db drivers .Xil
-	make -C pl_kernels clean
-	make -C sw clean
+	$(MAKE) -C pl_kernels clean
+	$(MAKE) -C sw clean

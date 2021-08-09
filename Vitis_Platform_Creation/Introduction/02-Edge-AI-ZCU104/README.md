@@ -65,5 +65,5 @@ We'll introduce the platform creation steps in the following pages. Each page de
 - [Xilinx Run Time (XRT)](https://xilinx.github.io/XRT/master/html/index.html)
 - [Vitis-AI Github Repository](https://github.com/Xilinx/Vitis-AI)
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>
 

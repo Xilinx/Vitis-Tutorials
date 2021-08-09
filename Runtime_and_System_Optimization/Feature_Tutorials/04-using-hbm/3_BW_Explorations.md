@@ -200,4 +200,4 @@ In this tutorial, you learned it's relatively easy to migrate a DDR-based applic
 
 <p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

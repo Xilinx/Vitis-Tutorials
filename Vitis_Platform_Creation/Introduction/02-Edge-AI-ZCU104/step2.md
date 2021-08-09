@@ -263,7 +263,7 @@ Vitis-AI applications will install additional software packages. If user would l
    petalinux-build --sdk
    ```
 
-   The generated sysroot package **sdk.sh** will be located in <PetaLinux Project>images/linux directory. We'll extract it in next step.
+   The generated sysroot package **sdk.sh** will be located in <PetaLinux Project>linux/image directory. We'll extract it in next step.
 
 **Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](step3.md).**
 
@@ -287,4 +287,4 @@ Scripts are provided to re-create PetaLinux project and generate outputs. To use
 
 Note: The Fast Track scripts extracts the sysroot to <PetaLinux Project>/images/linux directory. It's different than the step-by-step instructions for the convenience of scripting.
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

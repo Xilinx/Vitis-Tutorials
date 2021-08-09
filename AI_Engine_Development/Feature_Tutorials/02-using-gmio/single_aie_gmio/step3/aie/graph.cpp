@@ -14,7 +14,7 @@ limitations under the License.
 #include "graph.h"
 #include <unistd.h>
 #include <fstream>
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
     #include "adf/adf_api/XRTConfig.h"
     #include "experimental/xrt_kernel.h"
 #endif
@@ -44,7 +44,7 @@ void ref_func(int32* din,int32 c[8],int32* dout,int size){
 const int ITERATION=4;
 const int BLOCK_SIZE_in_Bytes=ITERATION*1024;
 int main(int argc, char ** argv) {
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
     // Create XRT device handle for ADF API
     char* xclbinFilename = argv[1];
     auto dhdl = xrtDeviceOpen(0);//device index=0
@@ -89,11 +89,11 @@ int main(int argc, char ** argv) {
  
     gr.end();
     if(error==0){
-	std::cout<<"PASS!"<<std::endl;
+	std::cout<<"TEST PASSED!"<<std::endl;
     }else{
 	std::cout<<"ERROR!"<<std::endl;
     }
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
     xrtDeviceClose(dhdl);
 #endif
 

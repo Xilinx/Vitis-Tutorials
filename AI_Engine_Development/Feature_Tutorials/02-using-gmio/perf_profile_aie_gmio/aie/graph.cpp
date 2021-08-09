@@ -14,7 +14,7 @@ limitations under the License.
 #include "graph.h"
 #include <unistd.h>
 #include <fstream>
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
     #include "adf/adf_api/XRTConfig.h"
     #include "experimental/xrt_kernel.h"
     #include <chrono>
@@ -176,7 +176,7 @@ adf::connect<> nout29(gr.dout[29],platform.sink[29]);
 adf::connect<> nout30(gr.dout[30],platform.sink[30]);
 adf::connect<> nout31(gr.dout[31],platform.sink[31]);
 
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
 const int ITERATION=4096;
 #else
 const int ITERATION=4;
@@ -185,7 +185,7 @@ const int BLOCK_SIZE_in_Bytes=1024*ITERATION;
 const int BLOCK_SIZE_out_Bytes=1032*ITERATION;
 
 int main(int argc, char ** argv) {
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
     // Create XRT device handle for ADF API
     char* xclbinFilename = argv[1];
     auto dhdl = xrtDeviceOpen(0);//device index=0
@@ -214,7 +214,7 @@ int main(int argc, char ** argv) {
     	}
 	gr.run(ITERATION);
 	
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
 	#ifdef __TIME_STAMP__
 		xuid_t uuid;
     		xrtDeviceGetXclbinUUID(dhdl, uuid);
@@ -240,7 +240,7 @@ int main(int argc, char ** argv) {
 	for(int i=0;i<num;i++){
 		gmioOut[i].wait();
 	}
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
 	#ifdef __TIME_STAMP__
 		t_stamp=xrtGraphTimeStamp(ghdl)-t_stamp;
 		std::cout<<"Throughput (by graph timstamp) bandwidth(GMIO in num="<<num<<",out num="<<num<<"):"<<(double)(BLOCK_SIZE_in_Bytes+BLOCK_SIZE_out_Bytes)*num/(double)t_stamp*1000<<"M bytes/s"<<std::endl;
@@ -314,7 +314,7 @@ int main(int argc, char ** argv) {
   	  std::cout<<"ERROR!"<<std::endl;
     }
 
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
     xrtDeviceClose(dhdl);
 #endif
   
