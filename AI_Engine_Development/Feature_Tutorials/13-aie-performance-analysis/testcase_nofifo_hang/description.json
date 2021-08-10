@@ -8,6 +8,7 @@
 
     "testinfo": {
         "disable": false,
+        "negative": true,
         "jobs": [
             {
                 "index": 0,
