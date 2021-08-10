@@ -1,5 +1,5 @@
 /**********
-© Copyright 2020 Xilinx, Inc.
+© Copyright 2021 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 **********/
 
-
 #ifndef __KERNELS_H__
 #define __KERNELS_H__
 
@@ -22,14 +21,10 @@ limitations under the License.
 #include <adf/stream/types.h>
 
   void classifier(input_stream_cint16 * input, output_window_int32 * output) ;
-  //void classifier(input_window_cint16 * input, output_window_int32 * output) ;
 
   void fir_27t_sym_hb_2i(input_window_cint16 * inputcb,
 			 output_window_cint16 * outputcb) ;
 
   void polar_clip(input_stream_cint16* in, output_stream_cint16 *out);
-	 //void polar_clip(input_window_cint16* in, output_window_cint16 *out);
 
 #endif /**********__KERNELS_H__**********/
-
-// 67d7842dbbe25473c3c32b93c0da8047785f30d78e8a024de1b57352245f9689
