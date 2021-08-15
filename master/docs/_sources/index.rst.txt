@@ -149,5 +149,5 @@ On the back-end, learn how to control Vitis system-level topologies and low-leve
    :caption: Versions
    :hidden:
 
-   2020.2 <https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/README.html>
+   2020.2 <https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html>
    2020.1 <https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html>
