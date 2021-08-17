@@ -11,7 +11,7 @@
 # limitations under the License.
 #
 #Set the required variables
-set vitis_install "/proj/xbuilds/2020.2_released/installs/lin64/Vitis/2020.2"
+set vitis_install "/proj/xbuilds/2021.1_released/installs/lin64/Vitis/2021.1"
 set aie_work_dir "${PROJECT_PATH}/Work"
 set hw_server_host "${HOST NAME/IP}"
 set app_name "aie"

@@ -54,7 +54,7 @@ Launch PS application with xclbin (or PS application expected variables), so it 
 After PS application is running and waiting to be debugged, launch Vitis IDE debugger.
 <img src="images/hw_ta_run.png">
 
-Debugger launched, expected to see AI Engine cores, source code window that allows debug (step-into, step-through, step-return), variables view, breakpoint view, register view... Application is ready to be debugged.
+Debugger launched, expected to see AI Engine cores, source code window that allows debug (step-into, step-through, step-return), variables view, breakpoint view, register view. Application is ready to be debugged.
 <img src="images/hw_ta_run1.png">
 
 From Vitis IDE, the application is being debugged during run time.

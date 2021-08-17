@@ -7,7 +7,7 @@
  <td align="center"><h1>AI Engine/PL Kernel Debug with XRT Utilities</h1>
  </td>
  </tr>
-</table> 
+</table>
 
 
 [xbutil xbutil2](#xbutil-xbutil2)
@@ -26,7 +26,7 @@ The two utilities, `xbutil` and `xbutil2` are supported for PL/AI Engine kernels
 
 To use the tools, binary container, for example, xclbin is required to be loaded first then issue commands to obtain information from, or, configure the kernels.
 
-A few command examples:
+Command examples are as follows:
 ```bash
 xbutil program -p a.xclbin
 xbutil scan
@@ -39,172 +39,83 @@ xbutil program -p a.xclbin
 ```
 <img src="images/bc_run.png" width="600">
 
-Step 2: Get detailed status information for the device. Where ARG can be all, memory, error, compute-units, aie, and debug-ip-status.
-
+Step 2: Get detailed status information for the device. Where TYPE can be aie, aieshim, all, debug-ip-status, dynamic-regions, error, host, memory, pcie-info, platform.
 ```bash
-xbutil2 examine -r ARG
+xbutil2 examine -r TYPE
 ```
+
+A help string is provided by xbutil2.
+```bash
+root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# xbutil2 examine -help
+
+DESCRIPTION: This command will 'examine' the state of the system/device and will generate a report
+             of interest in a text or JSON format.
+
+USAGE: xbutil examine [-h] [-d arg] [-r arg] [-f arg] [-o arg]
+
+OPTIONS:
+  -d, --device       - The Bus:Device.Function (e.g., 0000:d8:00.0) device of interest.  A value of
+                       'all' (default) indicates that every found device should be examined.
+  -r, --report       - The type of report to be produced. Reports currently available are:
+                         aie             - AIE metadata in xclbin
+                         aieshim         - AIE shim tile status
+                         all             - All known reports are produced
+                         debug-ip-status - Status of Debug IPs present in xclbin loaded on device
+                         dynamic-regions - Information about the xclbin and the compute units
+                         error           - Asyncronus Error present on the device
+                         host            - Host information
+                         memory          - Memory information present on the device
+                         pcie-info       - Pcie information of the device
+                         platform        - Platforms flashed on the device
+  -f, --format       - Report output format. Valid values are:
+                         JSON        - Latest JSON schema
+                         JSON-2020.2 - JSON 2020.2 schema
+  -o, --output       - Direct the output to the given file
+  -h, --help         - Help to use this sub-command
+
+GLOBAL OPTIONS:
+  --verbose          - Turn on verbosity
+  --batch            - Enable batch mode (disables escape characters)
+  --force            - When possible, force an operation
+```
+
+The following images show a few examples:
+
 <img src="images/bc_run1.png" width="600">
 <img src="images/bc_run2.png" width="600">
 <img src="images/bc_run3.png" width="600">
+<img src="images/bc_run3_1.png" width="600">
 
-```bash
-root@versal-rootfs-common-2020_2:/mnt/sd-mmcblk0p1# xbutil2 examine -r all
-System Configuration
-  OS Name              : Linux
-  Release              : 5.4.0-xilinx-v2020.2
-  Version              : #1 SMP Thu Nov 19 05:25:16 UTC 2020
-  Machine              : aarch64
-  CPU Cores            : 2
-  Memory               : 7954 MB
-  Distribution         : N/A
-  GLIBC                : 2.30
-  Model                : Xilinx Versal vck190 Eval board revA (QSPI)
-
-XRT
-  Version              : 2.8.0
-  Branch               : 2020.2
-  Hash                 : f19a872233fbfe2eb933f25fa3d9a780ced774e5
-  Hash Date            : 2020-11-15 11:20:06
-  ZOCL                 : 2.8.0, f19a872233fbfe2eb933f25fa3d9a780ced774e5
-
-Devices present
-  [0000:00:00.0] : xilinx_vck190_es1_base_202020_1
-
------------------------------------------------------
-1/1 [0000:00:00.0] : xilinx_vck190_es1_base_202020_1
------------------------------------------------------
-Aie
-  Aie_Metadata
-  GRAPH[ 0] Name      : dut
-            Status    : idle
-    SNo.  Core [C:R]          Iteration_Memory [C:R]        Iteration_Memory_Addresses
-    [ 0]   6:0                 6:0                           6116
-    [ 1]   6:1                 6:1                           6116
-    [ 2]   6:2                 6:2                           6116
-    [ 3]   6:3                 6:3                           6116
-    [ 4]   7:0                 7:0                           6116
-    [ 5]   7:1                 7:1                           6116
-    [ 6]   7:2                 7:2                           6116
-    [ 7]   7:3                 7:3                           6116
-    [ 8]   8:0                 8:0                           6116
-    [ 9]   8:1                 8:1                           6116
-    [10]   8:2                 8:2                           6116
-    [11]   8:3                 8:3                           6116
-    [12]   9:0                 9:0                           6116
-    [13]   9:1                 9:1                           6116
-    [14]   9:2                 9:2                           6116
-    [15]   9:3                 9:3                           6116
-    [16]   10:0                10:0                          6116
-    [17]   10:1                10:1                          6116
-    [18]   10:2                10:2                          6116
-    [19]   10:3                10:3                          6116
-    [20]   11:0                11:0                          6116
-    [21]   11:1                11:1                          6116
-    [22]   11:2                11:2                          6116
-    [23]   11:3                11:3                          6116
-    [24]   12:0                12:0                          6116
-    [25]   12:1                12:1                          6116
-    [26]   12:2                12:2                          6116
-    [27]   12:3                12:3                          6116
-    [28]   13:0                13:0                          6116
-    [29]   13:1                13:1                          6116
-    [30]   13:2                13:2                          6116
-    [31]   13:3                13:3                          6116
-    [32]   14:0                14:0                          6116
-    [33]   14:1                14:1                          6116
-    [34]   14:2                14:2                          6116
-    [35]   14:3                14:3                          6116
-    [36]   15:0                15:0                          6116
-    [37]   15:1                15:1                          6116
-    [38]   15:2                15:2                          6116
-    [39]   15:3                15:3                          6116
-    [40]   16:0                16:0                          6116
-    [41]   16:1                16:1                          6116
-    [42]   16:2                16:2                          6116
-    [43]   16:3                16:3                          6116
-    [44]   17:0                17:0                          6116
-    [45]   17:1                17:1                          6116
-    [46]   17:2                17:2                          6116
-    [47]   17:3                17:3                          6116
-    [48]   18:0                18:0                          6116
-    [49]   18:1                18:1                          6116
-    [50]   18:2                18:2                          6116
-    [51]   18:3                18:3                          6116
-    [52]   19:0                19:0                          6116
-    [53]   19:1                19:1                          6116
-    [54]   19:2                19:2                          6116
-    [55]   19:3                19:3                          6116
-    [56]   20:0                20:0                          6116
-    [57]   20:1                20:1                          6116
-    [58]   20:2                20:2                          6116
-    [59]   20:3                20:3                          6116
-    [60]   21:0                21:0                          6116
-    [61]   21:1                21:1                          6116
-    [62]   21:2                21:2                          6116
-    [63]   21:3                21:3                          6116
-
-    Pl Kernel Instances in Graph:
-
-
-
-Memory Information
-
-  Memory Topology
-         Tag         Type        Temp(C)  Size      Base Address
-    [ 0] DDR         MEM_DRAM    N/A      2 GB      0x0
-    [ 1] DDR         MEM_DRAM    N/A      6144 MB   0x800000000
-    [ 2] LPDDR       MEM_DRAM    N/A      8 GB      0x50000000000
-
-Compute Units
-Index   Name                    Base_Address    Usage   Status
-0       mm2s_v4:mm2s_v4_1       0xa4010000      0       (IDLE)
-1       mm2s_v8:mm2s_v8_1       0xa4020000      0       (IDLE)
-2       mm2s_v8:mm2s_v8_2       0xa4030000      0       (IDLE)
-3       mm2s_v8:mm2s_v8_3       0xa4040000      0       (IDLE)
-4       mm2s_v8:mm2s_v8_4       0xa4050000      0       (IDLE)
-5       mm2s_v8:mm2s_v8_5       0xa4060000      0       (IDLE)
-6       mm2s_v8:mm2s_v8_6       0xa4070000      0       (IDLE)
-7       mm2s_v8:mm2s_v8_7       0xa4080000      0       (IDLE)
-8       mm2s_v8:mm2s_v8_8       0xa4090000      0       (IDLE)
-9       mm2s_v8:mm2s_v8_9       0xa40a0000      0       (IDLE)
-10      s2mm_v4:s2mm_v4_1       0xa40b0000      0       (IDLE)
-11      s2mm_v4:s2mm_v4_2       0xa40c0000      0       (IDLE)
-12      s2mm_v4:s2mm_v4_3       0xa40d0000      0       (IDLE)
-
-Debug IP Status
-Number of IPs found :: 0
-IPs found [<ipname <(element filter option)>> :<count>)]:
-
-root@versal-rootfs-common-2020_2:/mnt/sd-mmcblk0p1#
-```
+Note for `xbutil2 examine -r aie` command
+1. The "iteration memory address” is the core status register raw value of each tile.
+2. Each tile's information such as program counter values, stack pointer are provided.
+3. MM2S and S2MM states are available. 
 
 ## xbutil & xbutil2 Limitations
-1. Certain commands are under development and will be available in future releases.
-2. Commands not applicable to the VCK190 platform:
+1. Commands not applicable to the VCK190 platform:
   - validate: This command is for DFX base platform.
   - reset: Requires clearer definitions for VCK190 platforms. For example, reset command to PS/PL/AI Engine are under review.
   - top: A useful command, however, subcommands/options are being determined.
-3. Utility could show false errors that are no harm to prior-loaded xclbin.
+2. Utility could show false errors that are no harm to prior-loaded xclbin.
 
 
 # XRT Error Codes
 
 ## Asynchronous Error
-Error that happens asynchronously. It may or may not related to the XRT function call or the application which is running.
+An error that occurs asynchronously. It may or may not be related to the XRT function call or the application which is running.
 
 ### Report Mechanism with XRT APIs
 Asynchronous errors are cached in driver subsystems and can be accessed by user application through APIs.
-Asynchronous errors retrieved from the driver are encoded errors defined in `xrt_error_code.h` which is shared between user space and kernel space. 
+Asynchronous errors retrieved from the driver are encoded errors defined in `xrt_error_code.h` which is shared between user space and kernel space.
 
 ```bash
 xrt_error_code.h
 /**
  * xrtErrorCode layout
  *
- * This layout is internal to XRT (akin to a POSIX error code), 
+ * This layout is internal to XRT (akin to a POSIX error code),
  * it is populated by driver and consumed by XRT implementation where
- * it is translated into an actual error / info / warning that is propagated 
+ * it is translated into an actual error / info / warning that is propagated
  * to the end user.
  *
  * 63 - 48  47 - 40   39 - 32   31 - 24   16 - 23    15 - 0
@@ -229,7 +140,7 @@ The API header file `xrt_error.h` defines the APIs for accessing current cached 
  * @handle:       Device handle.
  * @class:        Error Class for the last error to get.
  * @error:        Returned XRT error code.
- * @timestamp:    The timestamp when the error generated
+ * @timestamp:    The timestamp when the error generated.
  *
  * Return:        0 on success or appropriate XRT error code.
  */
@@ -246,7 +157,7 @@ xrtErrorGetLast(xclDeviceHandle handle, xrtErrorClass class, xrtErrorCode *error
  * @out_len:      Optional output of length of message.
  *
  * Return:        0 on success or appropriate XRT error code.
- * 
+ *
  * Specifying out_len while passing nullptr for output buffer will return the message length,
  * which can then be used to allocate the output buffer itself.
  */
@@ -295,7 +206,7 @@ if (rval != 0)
 
 Step 1: Replace `host.cpp` with `host.cpp.error_code` that is available from this tutorial.
 
-Step 2: Compile the `host.cpp` code and package to `sd_card.img` by issue commands,
+Step 2: Compile the `host.cpp` code and package to `sd_card.img` by issuing the following commands.
 ```bash
 cp ${PROJECT_PATH}/sw/host.cpp.error_code ${PROJECT_PATH}/sw/host.cpp
 cd ${PROJECT_PATH}
@@ -305,7 +216,7 @@ make package
 
 Step 3: Burn the generated `sd_card.img` to the SD card, insert SD card into SD card slot of the VCK190 board and power up.
 
-Step 4: After VCK190 is powered up, run the binaries.
+Step 4: After VCK190 is powered up and booted up complete, run the binaries.
 ```bash
 cd /mnt/sd-mmcblk0p1
 source ./init.sh
@@ -313,7 +224,7 @@ export XILINX_XRT=/usr
 ./host.exe a.xclbin
 ```
 
-Step 5: Expected result:
+Step 5: Expected result is as follows.
 
 <img src="images/bc_err0.png" width="600">
 
@@ -325,7 +236,7 @@ Issue command `xbutil2 examine --report error` or/and with formatted output `xbu
 
 
 ## Synchronous Error
-Synchronous errors are errors that can be detected during the XRT runtime function all.
+Synchronous errors are errors that can be detected during the XRT runtime function call.
 
 ### Report Mechanism
 1. Return system error (POSIX) code from
@@ -336,7 +247,7 @@ Synchronous errors are errors that can be detected during the XRT runtime functi
 * In C++ APIs the error is propagated as an xrt::error exception embedded with a description of the error and the XRT error.
 * In C APIs an exception message is printed and the XRT error code is returned to end-user.
 3. The verbosity and target (display) of error reporting are following the message infrastructure already used.
-Example:
+For example:
 ```bash
 rval = xclSyncBO(devHandle, boHandle, XCL_BO_SYNC_BO_TO_DEVICE, size, offset);  // Syncronous error captured by xclSyncBO call
 if (rval != 0) {                                                                //    -EINVAL:     Invalid arguments, e.g. invalid sync  dir, invalid size or offset

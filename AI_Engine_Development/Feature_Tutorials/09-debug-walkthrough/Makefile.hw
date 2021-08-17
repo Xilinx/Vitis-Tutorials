@@ -12,15 +12,15 @@
 #
 
 TARGET   = hw
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202020_1/xilinx_vck190_es1_base_202020_1.xpfm
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
 XCLBIN   = bf_${TARGET}.xclbin
 HOST_EXE = host.exe
-ROOTFS   = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/rootfs.ext4 
-IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2020.2/Image 
+ROOTFS   = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 
+IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/Image 
 
 GRAPH    = aie/graph.cpp
 LIBADF   = libadf.a
-AIE_CMPL_CMD = aiecompiler -log-level=5 -v -platform=${PLATFORM} --pl-freq=500 -genArchive -include="./aie" -include="./aie/inc" -include="./aie/kernels" -include="./data" -include="./"  --num-trace-streams=8 --event-trace=functions --event-trace-port=plio --event-trace-advanced-mapping=8 --event-trace-bounding-box=6,0:21,3 -enable-ecc-scrubbing=false -workdir=./Work ${GRAPH}
+AIE_CMPL_CMD = aiecompiler -log-level=5 -v -platform=${PLATFORM} --pl-freq=500 -genArchive -include="./aie" -include="./aie/inc" -include="./aie/kernels" -include="./data" -include="./" --enable-ecc-scrubbing=true -workdir=./Work ${GRAPH}
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
 
 ##########################################################################################################################################################
@@ -71,19 +71,19 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set to location of xilinx_vck190_es1_base_202020_1 platform)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set to location of xilinx_vck190_es1_base_202110_1 platform)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to location of xilinx-versal-common-v2020.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to location of xilinx-versal-common-v2021.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to location of xilinx-versal-common-v2020.2/Image)
+	$(call check_defined, IMAGE, Set to location of xilinx-versal-common-v2021.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Ensure xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux script was run)
+	$(call check_defined, CXX, Ensure xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux script was run)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Ensure xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux script was run)
+	$(call check_defined, SDKTARGETSYSROOT, Ensure xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux script was run)
 ###
 
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
@@ -111,7 +111,7 @@ package_dbg_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
 
 run_hw_emu: launch_hw_emu.sh
 launch_hw_emu.sh: package_hw_emu
-	./launch_hw_emu.sh -noc-ddr-shared-mem qemu-memory-_ddr@0x00000000 -add-env VITIS_LAUNCH_WAVEFORM_BATCH=1
+	./launch_hw_emu.sh
 
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \

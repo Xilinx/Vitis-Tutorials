@@ -49,8 +49,8 @@ Fill in sysroot, rootfs, and image information for PS application.
 
 <img src="images/po_system_ps_sysroot.png" width="600">
 
-Select Empty Application for PS sub-project.
-After the previously listed steps are completed, we should have AI Engine, PS, PL and hardware link sub-projects under system project.
+Select "Empty Application" under "Acceleration templates with PL and AIE accelerators" for PS sub-project.
+After the previously listed steps are completed, you should have AI Engine, PS, PL and hardware link sub-projects under system project.
 
 <img src="images/po_expect_project.png" width="450">
 
@@ -72,14 +72,15 @@ Configure top level graph.
 <img src="images/po_graph.png">
 
 Configure include paths.
-<img src="images/po_aie_c_config.png">
+
+<img src="images/po_aie_c_config.png" width="450">
 <img src="images/po_aie_c_config1.png" width="450">
 
 ### Step 3.2. Configure hardware link
 Configure hardware link with `v++` option
 
 <img src="images/po_hw_config.png">
-<img src="images/po_hw_config1.png">
+<img src="images/po_hw_config1.png" width="450">
 
 Import `system.cfg` file to the proper project/location.
 
@@ -99,11 +100,7 @@ Update (comment out) `nk=kernel:1:kernel_n` line from the `system.cfg` file. Thi
 <img src="images/po_hw_config5.png">
 
 ### Step 3.4. Configure PS sub-project
-<img src="images/po_ps_c_config.png">
-
-Configure PS application to be built with C++14 standard.
-
-<img src="images/po_ps_c_config1.png" width="600">
+<img src="images/po_ps_c_config.png" width="450">
 
 Configure PS application include paths.
 

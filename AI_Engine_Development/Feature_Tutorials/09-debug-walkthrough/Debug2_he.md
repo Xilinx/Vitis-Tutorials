@@ -115,7 +115,7 @@ Expected result
 #### Step 4.5. Setup Execute Script of Newly Created Debug Type
 <img src="images/he_cl_config4.png" width="600" >
 
-**Note:** The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab –e.g. `set aie_work_dir "${PROJECT_PATH}/beamformer/Work/"` and `set vitis_install "${XILINX_VITIS_PATH}/Xilinx/Vitis/2020.2"`
+**Note:** The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab –e.g. `set aie_work_dir "${PROJECT_PATH}/beamformer/Work/"` and `set vitis_install "${XILINX_VITIS_PATH}/Xilinx/Vitis/2021.1"`
 
 #### Step 4.6. Close the debug configuration
 <img src="images/he_cl_config5.png" width="600" >
@@ -131,9 +131,9 @@ Expected result
 <img src="images/he_cl_config7.png" width="600" >
 
 **Note:**
-1. The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab. For example, `set aie_work_dir ${PROJECT_PATH}/beamformer/Work/` and `set vitis_install ${XILINX_VITIS_PATH}/Xilinx/Vitis/2020.2`
+1. The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab. For example, `set aie_work_dir ${PROJECT_PATH}/beamformer/Work/` and `set vitis_install ${XILINX_VITIS_PATH}/Xilinx/Vitis/2021.1`
 2. Step 4.7 requires to start PS application BEFORE launching debugger to debug AI Engine sub-project. Will see issues if above step sequence is not followed.
-3. It takes some time depends on number of times in design to launch AI Engine debugger completely. Beamformer design contains 64 tiles that needs several minutes to complete. 
+3. It takes some time depends on number of times in design to launch AI Engine debugger completely. Beamformer design contains 64 tiles that needs several minutes to complete.
 
 ### Step 5. Expected Vitis IDE
 <img src="images/he_cl_run.png">
@@ -161,4 +161,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 <p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
-

@@ -14,7 +14,7 @@ Software emulation supports fast emulation execution and `printf()` to help veri
 
 Hardware constraints such as heap/stack sizes and program memory size are not verified in software emulator.
 
-The following steps outline the procedure: 
+The following steps outline the procedure:
 
 [1. Launch and Verify Software Emulation in Vitis IDE](#1-Launch-and-Verify-Software-Emulation-in-Vitis-IDE)
 
@@ -24,7 +24,7 @@ The following steps outline the procedure:
 ## 1. Launch and Verify Software Emulation in Vitis IDE
 
 ### Step 1.1. Select Software Emulation Configuration
-<img src="images/se_config.png">
+<img src="images/se_config.png" width="300">
 
 ### Step 1.2. Build with Software Emulator
 <img src="images/se_build.png" width="300">
@@ -36,11 +36,9 @@ Note: Launching the software emulator run from system project is not supported. 
 
 <img src="images/se_run_err.png" width="450">
 
-<img src="images/se_run.png" width="450">
-
 ### Step 1.4: Verify Run Result
-Software emulator output files from design are located at `${PROJECT}/Emulation-SW/data`. Verify the output files `${PROJECT}/Emulation-SW/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-SW/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. IDE supports `compare with` feature to compare two files, highlight two files to be compared then right click one of highlighted file and select `compare with` then `each other`.
-Example: Compare `${PROJECT}/data/ulbf_gold3.txt` and `${PROJECT}/Emulation-SW/data/ulbf_out3.txt`
+Software emulator output files from design are located at `${PROJECT}/Emulation-SW/data`. Verify the output files `${PROJECT}/Emulation-SW/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-SW/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis IDE supports `compare with` feature to compare two files, highlight two files to be compared then right click one of highlighted file and select `compare with` then `each other`.
+For example, Compare `${PROJECT}/data/ulbf_gold3.txt` and `${PROJECT}/Emulation-SW/data/ulbf_out3.txt`
 
 <img src="images/se_compare.png" width="600">
 
@@ -50,7 +48,7 @@ The simplest form of tracing is to use a formatted `printf()` statement in the c
 
 ### Step 2.1. Add `printf()` statement
 Select `bf8x8_fst.cc` file in Vitis IDE to be edited. Add `printf("prbcnt=%d\n", prbcnt);` statement at line 32 of `bf8x8_fst.cc` file.
-`bf8x8_fst.cc` can be found from IDE's explorer, browse to `beamformer` sub-project and click on `src` then `kernel` to expand the directory and click on `bf8x8_fst.cc`. File will be displayed at center of IDE. 
+`bf8x8_fst.cc` can be found from Vitis IDE's explorer, browse to `beamformer` sub-project, click on `src` then `kernel` to expand the directory, and click on `bf8x8_fst.cc`. The file will be displayed at the center of the Vitis IDE.
 
 ### Step 2.2. Compile the Project
 Highlight the beamformer sub-project, right-click to enable pull-down menu, and select **Build Project** to build the beamformer project.
@@ -60,7 +58,7 @@ Highlight the beamformer sub-project, right-click to enable pull-down menu, sele
 
 ### Step 2.4. Expected Result
 Expect to observe the output of `printf()` statement displayed at Vitis IDE console window.
-<img src="images/aie_sw_printf.png">
+<img src="images/aie_sw_printf.png" width="600">
 Note: A predefined marco `defined(__PTHREAD_API__)` can be used to wrap around printf statements in software emulation to improve code portability.
 
 ## Limitations

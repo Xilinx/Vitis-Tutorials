@@ -66,10 +66,10 @@ public:
 		for(unsigned i=0; i<len-1; i++){
 			// from:  i   or (len-1)-i
 			// to:    i+1 or (len-1)-(i+1)
-			connect<cascade>s(core[(yoff&1)*(len-1)+(1-(yoff&1)*2)*i].out[0], core[(yoff&1)*(len-1)+(1-(yoff&1)*2)*(i+1)].in[2]); fifo_depth(s)=16;
-		}	
-			
-		
+			connect<cascade>s(core[(yoff&1)*(len-1)+(1-(yoff&1)*2)*i].out[0], core[(yoff&1)*(len-1)+(1-(yoff&1)*2)*(i+1)].in[2]);
+		}
+
+
 		// location constraints
 		for(int i=0;i<len;i++){
 			location<kernel>(core[i])        =  tile(xoff+i, yoff);
@@ -178,7 +178,7 @@ public:
 		// connect output
 		connect<>(bf0.out,out[0]); connect<>(bf1.out,out[1]);
 		connect<>(bf2.out,out[2]); connect<>(bf3.out,out[3]);
-	
+
   }; 
 
 };  // end of UL64A32L

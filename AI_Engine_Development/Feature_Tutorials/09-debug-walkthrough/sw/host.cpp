@@ -21,7 +21,7 @@ limitations under the License.
 #include <chrono>
 #include <ctime>
 
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__)
 #include "adf/adf_api/XRTConfig.h"
 #include "xrt/experimental/xrt_device.h"
 #include "xrt/experimental/xrt_kernel.h"
@@ -51,7 +51,7 @@ public:
   void reset() { mTimeStart = std::chrono::high_resolution_clock::now(); }
 };
 
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__)
 static std::vector<char>
 load_xclbin(xrtDeviceHandle device, const std::string& fnm)
 {
@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
     // Creates a vector of DATA_SIZE elements with an initial value of 10 and 32
     // using customized allocator for getting buffer alignment to 4k boundary
 
-#if !defined(__AIESIM__) && !defined(__ADF_FRONTEND__)
+#if !defined(__AIESIM__)
     // Load xclbin 
     std::cout << "Loading: '" << xclbinFilename << "'\n";
     auto dhdl = xrtDeviceOpen(0);
