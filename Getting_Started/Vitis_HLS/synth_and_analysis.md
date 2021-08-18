@@ -41,6 +41,7 @@ With the source code and testbench added to the project, you can now run the C s
     ![Add Sources](./images/run_c_simulation.png)
 
 2. Select the **Enable Pre-synthesis Control Flow Viewer** check box to produce a control flow view of your design after C simulation.
+   >**NOTE**: This option is not available on Windows.
 
 3. Click **OK**.
 
