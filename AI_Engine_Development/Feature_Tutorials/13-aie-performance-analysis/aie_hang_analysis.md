@@ -193,9 +193,12 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	Find the absolute addresses for the kernels in the design. The status of the kernels can be read by running the following command:
 
-	![core status command](./images/figure12.PNG)
+		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C872004 
+		0x00001000
+		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C072004 
+		0x00000200
 
-	Value `0x00001001` indicates that it is `Stream_Stall_MS0`, and value `0x00000201` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil2`. 
+	Value `0x00001000` indicates that it is `Stream_Stall_MS0`, and value `0x00000200` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil2`. 
 
 ### Conclusion
 

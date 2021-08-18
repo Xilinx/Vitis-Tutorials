@@ -16,7 +16,7 @@
 
 # Vitis Custom Embedded Platform Creation Example on ZCU104
 
-***Version: Vitis 2020.2 + Vitis AI 1.3***
+***Version: Vitis 2021.1 + Vitis AI 1.4***
 
 In this module, we will create a custom Vitis embedded platform for ZCU104. It will be capable to run ***Vitis acceleration applications*** including ***Vitis-AI applications***. Of course, general ***embedded software application*** can also run on this platform.
 
@@ -61,9 +61,9 @@ We'll introduce the platform creation steps in the following pages. Each page de
   - [Setting up the Vitis environment](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/settingupvitisenvironment.html)
   - [Installing Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/pjr1542153622642.html)
 - Platform Examples
-  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2020.2/Xilinx_Official_Platforms/zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2020.2/Xilinx_Official_Platforms/zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
+  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.1/Xilinx_Official_Platforms/zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.1/Xilinx_Official_Platforms/zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 - [Xilinx Run Time (XRT)](https://xilinx.github.io/XRT/master/html/index.html)
 - [Vitis-AI Github Repository](https://github.com/Xilinx/Vitis-AI)
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
 

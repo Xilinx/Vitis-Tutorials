@@ -8,6 +8,10 @@
 
     "testinfo": {
         "disable": false,
+        "user": {
+            "negative": true,
+            "error_string": ".*XRT.*ERROR:.*"
+        },
         "jobs": [
             {
                 "index": 0,
