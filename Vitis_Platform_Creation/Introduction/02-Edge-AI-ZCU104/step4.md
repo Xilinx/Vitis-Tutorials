@@ -204,8 +204,6 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    - Wait until the download of Vitis-AI repository completes
    - Click OK to close this window.
 
-   ![](images/vitis_download_lib.png)
-
    Vitis IDE will check the upstream status of each repository. If there are updates, it will allow users to download the updates if the source URL is a remote Git repository.
 
 3. Download Vitis-AI specific sysroot
