@@ -17,6 +17,7 @@
 - [Step 4: Test the Platform](#step-4-test-the-platform)
   - [Test 1: Read Platform Info](#test-1-read-platform-info)
   - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
+  - [Fast Track for Vector Addtion](#fast-track-for-vector-addtion)
   - [Test 3: Run a Vitis-AI Demo](#test-3-run-a-vitis-ai-demo)
     - [Create the design](#create-the-design)
     - [Run Application on Board](#run-application-on-board)
@@ -174,6 +175,30 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    TEST PASSED
    ```
 
+### Fast Track for Vector Addtion
+
+Scripts are provided to create the test applications on the custom platform we created. To use these scripts, please run the following steps.
+
+1. Run build
+
+   ```bash
+   # cd to the step directory, e.g.
+   cd step4_validate
+   make all
+   ```
+
+   The default verification uses hardware emulation. If you'd like to verify vadd application on hardware board, please run the following command to generate the SD card image.
+
+   ```bash
+   cd step4_validate
+   make vadd_hw
+   ```
+
+2. To clean the generated files, please run
+
+   ```bash
+   make clean
+   ```
 
 ### Test 3: Run a Vitis-AI Demo
 

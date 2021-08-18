@@ -102,7 +102,7 @@ When the XSIM GUI pops up, add `ai_engine_0` or the PL kernels' signals to the w
 
 After the PS code completes in Linux, check the input to the AI Engine `S00_AXIS` and the output from the AI Engine `M00_AXIS`:
 
-	![XSIM](./images/figure8.PNG)
+![XSIM](./images/figure8.PNG)
 
 After the PS receives 104 samples, the design hangs. `TVALID` is always High, indicating that the PL kernel `mm2s` is still trying to send data to the AI Engine, but `TREADY` from the AI Engine turns to Low, and remains Low. There are also no samples from the AI Engine to the PL in the `M00_AXIS` interface of the AI Engine.
 
@@ -193,9 +193,12 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	Find the absolute addresses for the kernels in the design. The status of the kernels can be read by running the following command:
 
-	![core status command](./images/figure12.PNG)
+		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C872004 
+		0x00001000
+		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C072004 
+		0x00000200
 
-	Value `0x00001001` indicates that it is `Stream_Stall_MS0`, and value `0x00000201` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil2`. 
+	Value `0x00001000` indicates that it is `Stream_Stall_MS0`, and value `0x00000200` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil2`. 
 
 ### Conclusion
 
