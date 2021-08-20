@@ -6,6 +6,8 @@
  </tr>
 </table>
 
+**Notice: Repository history is re-written to shrink the size on Aug. 20, 2021. If you encounter conflicts during `git pull`, please make a fresh new clone.**
+
 <div align="center">
     <a href="http://www.youtube.com/watch?v=vFPNlcXAeWI">
     <img
