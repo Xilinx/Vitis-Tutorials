@@ -40,26 +40,10 @@ help::
 	@echo  ""
 
 
-EMBEDDED_PACKAGE_OUT=./out_dir
-EMBEDDED_EXEC_SCRIPT=./run_script.sh
 
-EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
-EMBEDDED_EXEC_SCRIPT = run_script.sh
-PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)
-SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd_file))
-MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
-RESULT_VAL ?= 
-RUN_LEVEL ?= 7
 
 print-%  : ; @echo $* = $($*)
-# =========================================================
-# platform selection
-# =========================================================
-#PLATFORM := xilinx_vck190_es1_base_202020_1
-PLATFORM := xilinx_vck190_base_202110_1
 
 
 
@@ -75,22 +59,37 @@ TARGET := hw_emu
 # Versal device
 # =========================================================
 #HOST_CXX := aarch64-linux-gnu-g++
-export LD_LIBRARY_PATH := $(XILINX_VIVADO)/tps/lnx64/gcc-6.2.0/lib64:$(LD_LIBRARY_PATH)
-CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
+
+ifndef XRT_ROOT
+XRT_ROOT=${PLATFORM_REPO_PATHS}/sw/versal/xrt
+endif
+
+ifndef XLNX_VERSAL 
+XLNX_VERSAL = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1
+endif
 
 
-# =========================================================
-# Choose the XRT and XAIENGINE
-# =========================================================
-SYSROOT_PATH 	:= $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
-XRT_PATH 	:= $(SYSROOT_PATH)/usr/include/xrt
+ifndef SDKTARGETSYSROOT
+SDKTARGETSYSROOT = ${XLNX_VERSAL}/sysroots/aarch64-xilinx-linux
+endif
+
+
+ifndef CXX
+CXX="${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=${SDKTARGETSYSROOT}"
+endif
+
 
 # =========================================================
 # Profiling/Trace and Datamover type Switches...
 # =========================================================
 EN_TRACE	:= 0
 
-
+######################################
+# When TARGET=hw_emu, hw_emu launch...
+# 1 = Enabled (Default).
+# 0 = Disabled.
+######################################
+LAUNCH_HW_EMU_EXEC := 1
 
 # =========================================================
 # Source directory
@@ -107,6 +106,10 @@ MAKEFILES_REPO 	:= $(PROJECT_REPO)
 BUILD_DIR 	:= $(PROJECT_REPO)/build
 WORK_DIR	:= Work
 BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
+
+EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
+EMBEDDED_EXEC_SCRIPT = run_script.sh
+
 
 # ==========================================================
 # Below are the names for SDF graph, application executable,
@@ -138,7 +141,7 @@ AIE_CONTROL_CPP := $(BUILD_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
 # =========================================================
 # AIE Compiler Global Settings and Include Libraries
 # =========================================================
-#AIE_FLAGS := -include=$(CARDANO_ROOT)/include 
+AIE_FLAGS := --platform=$(PLATFORM)
 AIE_FLAGS += -include=$(AIE_SRC_REPO) 
 AIE_FLAGS += -include=$(AIE_SRC_REPO)/data 
 AIE_FLAGS += --verbose 
@@ -158,17 +161,15 @@ GCC_FLAGS += -c
 GCC_FLAGS += -std=c++14
 GCC_FLAGS += -D__linux__
 
-GCC_FLAGS += --sysroot=$(SYSROOT_PATH) 
 GCC_FLAGS += -DXAIE_DEBUG
-GCC_FLAGS += -I$(XRT_PATH)
+GCC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include/xrt
 
 GCC_FLAGS += -I$(XILINX_VITIS)/aietools/include/
-GCC_FLAGS += -I=$(SYSROOT_PATH)/usr/include 
-GCC_FLAGS += -I=$(SYSROOT_PATH)/usr/lib
+GCC_FLAGS += -I=$(SDKTARGETSYSROOT)/usr/include 
+GCC_FLAGS += -I=$(SDKTARGETSYSROOT)/usr/lib
 
-GCC_LIB := --sysroot=$(SYSROOT_PATH) 
 
-GCC_LIB += -L=$(SYSROOT_PATH)/usr/lib 
+GCC_LIB += -L=$(SDKTARGETSYSROOT)/usr/lib 
 GCC_LIB += -L$(XILINX_VITIS)/aietools/lib/aarch64.o 
 GCC_LIB += -L$(XILINX_VITIS)/aietools/lib/lnx64.o 
 GCC_LIB += -ladf_api_xrt 
@@ -196,6 +197,12 @@ PKG_FLAGS :=
 ifneq ($(EN_TRACE),0)
 
 	PKG_FLAGS += --package.sd_file $(MAKEFILES_REPO)/xrt.ini
+
+endif
+
+ifdef XRT_ROOT
+
+   PKG_FLAGS += --package.sd_dir $(XRT_ROOT)
 
 endif
 
@@ -289,9 +296,8 @@ package:
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p -t $(TARGET) --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x	\
 		-f $(PLATFORM) 							\
-		--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 		\
-		--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
-		--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
+		--package.rootfs $(XLNX_VERSAL)/rootfs.ext4                     \
+		--package.kernel_image $(XLNX_VERSAL)/Image                     \
 		--package.boot_mode=sd 						\
 		--package.out_dir $(BUILD_TARGET_DIR)/package 			\
 		--package.sd_dir $(AIE_SRC_REPO)/data 				\
@@ -310,16 +316,41 @@ package:
 
 sd_card: kernels graph xclbin application package
 
-run_emu: 
-ifeq ($(TARGET),hw_emu)
-	cd $(BUILD_TARGET_DIR)/package;	\
-	$(PERL) $(XF_PROJ_ROOT)/ext/make_utility/embedded_run_emulation.pl "$(EMBEDDED_PACKAGE_OUT)/launch_$(TARGET).sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
 
-	#./launch_hw_emu.sh 
+# =========================================================
+# Step 6. Run Hardware Emulation 
+# ========================================================
+# If the target is for HW_EMU, launch the emulator
+# If the target is for HW, you'll have to follow the
+# instructions in the README.md
+run_emu:
+ifeq ($(TARGET),hw_emu)
+	@echo ""
+	@echo "###########################################################################"
+
+ifeq ($(LAUNCH_HW_EMU_EXEC),0)
+	@echo "To Run Hardware Emulation Manually Goto:"
+	@echo "$(EMBEDDED_PACKAGE_OUT)"
+	@echo ""
+	@echo "and do:"
+	@echo "./launch_hw_emu.sh or ./launch_hw_emu.sh -g (for waveform viewer)..."
+	@echo ""
+
 else
-	@echo "Hardware build, no emulation executed."
+	cd $(EMBEDDED_PACKAGE_OUT); \
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) | tee embedded_run.log
+
 endif
-###########################################################################
+else
+	@echo ""
+	@echo "###########################################################################"
+	@echo "Hardware build, no emulation executed."
+	@echo ""
+	@echo "Use sd_card.img from below directory and, follow the steps in README.md for execution on board."
+	@echo "$(EMBEDDED_PACKAGE_OUT)"
+	@echo ""
+
+endif###########################################################################
 
 # =========================================================
 # Primary Build Targets

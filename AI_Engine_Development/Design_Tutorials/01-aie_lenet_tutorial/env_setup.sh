@@ -13,16 +13,30 @@
 #  limitations under the License. 
 
 #Setup environment variables 
-export XILINX_XRT=<XRT-LOCATION>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
+export XIILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2021.1
+export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.1 - Directory>
 
-#Source setup scripts
-source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh
-source $XILINX_XRT/setup.sh
+# Optionally Setup XRT_ROOT, pointing to XRT RPMs,
+# if not set it will automatically be excluded from v++ packaging...
+#export XRT_ROOT=<Path to XRT RPMs - Directory>
+
+
+# Setup SDKTARGETSYSROOT and CXX...
+source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+
+# Source XRT, VITIS, and Aietools...
+source $XIILNX_TOOLS_LOCATION/settings64.sh
+
+# =========================================================
+# Platform Selection...
+# =========================================================
+tgt_plat=xilinx_vck190_base_202110_1
+export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
+
 
 #Print env variables
 echo "XILINX_VITIS       : "$XILINX_VITIS
 echo "XILINX_VIVADO      : "$XILINX_VIVADO
-echo "XILINX_HSL         : "$XILINX_HLS
+echo "XILINX_HLS         : "$XILINX_HLS
 echo "XILINX_XRT         : "$XILINX_XRT
-echo "PLATFORM_REPO_PATHS: "$PLATFORM_REPO_PATHS
