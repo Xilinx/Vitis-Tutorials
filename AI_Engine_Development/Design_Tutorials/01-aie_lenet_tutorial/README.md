@@ -674,7 +674,7 @@ export XILINX_XRT=/usr
   <summary>LeNet Architecture and AI Engine/PL Function Partitioning</summary>
 	
 ## LeNet Architecture and AI Engine/PL Function Partitioning
-The architecture of the LeNet design is show in the following figure. The details of the individual layers and their implementation will be described in a later section. This design provides an illustration of the functional partitioning between the AI Engine and PL resources, as shown in the block diagram previously. The input rearrange, max pooling, and rearrange are scalar byte operations and interact with read/write memories to ensure sustained throughput. This set of operations are suitable to be implemented in PL rather than in the AI Engine array. With appropriate data rearrangement, the computation in the convolutional layers are presented as matrix multiplications and they are optimized to be implemented in the AI Engine array.
+The architecture of the LeNet design is shown in the following figure. The details of the individual layers and their implementation will be described in a later section. This design provides an illustration of the functional partitioning between the AI Engine and PL resources, as shown in the block diagram previously. The input rearrange, max pooling, and rearrange are scalar byte operations and interact with read/write memories to ensure sustained throughput. This set of operations are suitable to be implemented in PL rather than in the AI Engine array. With appropriate data rearrangement, the computation in the convolutional layers are presented as matrix multiplications and they are optimized to be implemented in the AI Engine array.
 
 ![Image of LeNet Architecture](images/Lenet_architecture.PNG)
 
