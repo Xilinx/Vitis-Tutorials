@@ -6,7 +6,7 @@
  </tr>
 </table>
 <div align="center"><a href="http://www.youtube.com/watch?v=vFPNlcXAeWI"><img
-    src="./Machine_Learning/Introduction/01-Workflows/images/intro_video.png"></a></div>
+    src="./Getting_Started/Vitis/images/intro_video.png"></a></div>
 
 ## </br>すべての開発者に新しい設計経験を提供
 
@@ -18,17 +18,11 @@ Vitis 統合ソフトウェア プラットフォームを使用すると、FPGA
 
 Vitis 詳細チュートリアルでは、すべてのザイリンクス プラットフォームでアクセラレーションされたアプリケーションを運用する設計手法およびプログラミング モデルを使用して説明します。
 
-<p align="center"><img src="./Machine_Learning/Introduction/01-Workflows/images/vitis-landing-graphic-boards-u50.png"></p>
+<p align="center"><img src="./Getting_Started/Vitis/images/vitis-landing-graphic-boards-u50.png"></p>
 
 ### [入門](./Getting_Started/README.md)
 
 ここから開始してください。初めてのアプリケーションをまとめて Vitis プログラミング モデルの基礎を学びます。経験は必要ありません。
-
-### [機械学習チュートリアル](../Machine_Learning/README.md) (英語版)
-
-Vitis、Vitis AI、および Vitis アクセラレーション ライブラリを使用して、純粋なソフトウェア定義フローを使用して完全なエンド ツー エンドのアクセラレーションされたアプリケーションをインプリメントする方法を学びます。ハードウェアの専門知識は必要ありません。
-
-Tensorflow フレームワークを使用してザイリンクス ハードウェアをコンフィギュレーションするには、Vitis AI を使用します。Vitis AI を使用すると、ユーザーは推論モデルを数分で量子化、コンパイル、運用できます。
 
 ### [アクセラレーション チュートリアル](./Hardware_Accelerators/README.md)
 
@@ -53,6 +47,12 @@ Versal の AI エンジン アレイと PL IP/カーネルおよびエンベデ�
 アプリケーションの CPU 側を最適化して効率的にメモリを割り当てる方法、システム レベルのイベントを順番に並べる方法などについて説明します。
 
 また、システム レベルのトポロジと下位レベルのハードウェア インプリメンテーションを制御する方法について説明します。
+
+### [機械学習チュートリアル](https://github.com/xilinx/Vitis-AI-Tutorials) (英語版)
+
+Vitis、Vitis AI、および Vitis アクセラレーション ライブラリを使用して、純粋なソフトウェア定義フローを使用して完全なエンド ツー エンドのアクセラレーションされたアプリケーションをインプリメントする方法を学びます。ハードウェアの専門知識は必要ありません。
+
+Tensorflow フレームワークを使用してザイリンクス ハードウェアをコンフィギュレーションするには、Vitis AI を使用します。Vitis AI を使用すると、ユーザーは推論モデルを数分で量子化、コンパイル、運用できます。
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
 <p align="center"><sup>この資料は 2021 年 1 月 22 日時点の表記バージョンの英語版を翻訳したもので、内容に相違が生じる場合には原文を優先します。資料によっては英語版の更新に対応していないものがあります。

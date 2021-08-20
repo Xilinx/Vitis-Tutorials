@@ -9,7 +9,7 @@
 <div align="center">
     <a href="http://www.youtube.com/watch?v=vFPNlcXAeWI">
     <img
-    src="./Machine_Learning/Introduction/01-Workflows/images/intro_video.png">
+    src="./Getting_Started/Vitis/images/intro_video.png">
     </a>
 </div>
 
@@ -23,16 +23,11 @@ Leverage integration with high-level frameworks, develop in C, C++, or Python us
 The Vitis Tutorials take users through the design methodology and programming model for deploying accelerated application on all Xilinx platforms.
 
 <p align="center">
-    <img src="./Machine_Learning/Introduction/01-Workflows/images/vitis-landing-graphic-boards-u50.png">
+    <img src="./Getting_Started/Vitis/images/vitis-landing-graphic-boards-u50.png">
 </p>
 
 ### [Introduction](./Getting_Started)
 Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!
-
-### [Machine Learning Tutorial](./Machine_Learning)
-Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
-
-Use Vitis AI to configure Xilinx hardware using the Tensorflow framework. Vitis AI allows the user to quantize, compile, and deploy an inference model in a matter of minutes.
 
 ### [Acceleration Tutorial](./Hardware_Accelerators)
 Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL.
@@ -44,8 +39,6 @@ Learn how to use the Vitis core tools to develop for Versal&trade;, the first Ad
 
 Learn how to target, develop, and deploy advance algorithms using Versal's AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
 
-### [Embedded Design Tutorials](http://xilinx.github.io/Embedded-Design-Tutorials)
-Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
 
 ### [Platform Creation Tutorial](./Vitis_Platform_Creation)
 Learn how to build custom platforms for Vitis to target your own boards, and how to modify and extend existing platforms.
@@ -58,6 +51,15 @@ Learn how to optimize the CPU side of your application for efficient memory allo
 events, and more.
 
 On the back-end, learn how to control Vitis system-level topologies and low-level hardware implementation.
+
+
+### [Machine Learning Tutorial](https://github.com/xilinx/Vitis-AI-Tutorials)
+Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
+
+Use Vitis AI to configure Xilinx hardware using the Tensorflow framework. Vitis AI allows the user to quantize, compile, and deploy an inference model in a matter of minutes.
+
+### [Embedded Design Tutorials](http://xilinx.github.io/Embedded-Design-Tutorials)
+Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
 
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
