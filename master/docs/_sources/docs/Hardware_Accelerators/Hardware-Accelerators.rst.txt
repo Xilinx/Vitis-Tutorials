@@ -1,0 +1,83 @@
+#######################################
+Vitis Hardware Accelerators
+#######################################
+
+.. sidebar:: More Information
+
+    See Vitis™ Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_
+
+
+The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the hardware kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto FPGA kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary compiler options and pragmas to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
+
+
+************************************************
+Design Tutorials
+************************************************
+
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Design Tutorials
+   :hidden:
+
+   Bloom Filter Example <./Design_Tutorials/02-bloom/README>
+   Convolution Example <./Design_Tutorials/01-convolution-tutorial/README>
+   RTL Systems Integration Example <./Design_Tutorials/03-rtl_stream_kernel_integration/README>
+   Bottom RTL Kernel Design Flow Example <./Design_Tutorials/05-bottom_up_rtl_kernel/README>
+
+
+
+.. list-table:: 
+   :widths: 20 80
+   :header-rows: 1
+   
+   * - Tutorial
+     - Description
+	 
+   * - :doc:`Bloom Filter Example <./Design_Tutorials/02-bloom/README>`
+     - This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM).
+       
+       The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory.
+
+   * - :doc:`Convolution Example <./Design_Tutorials/01-convolution-tutorial/README>`
+     - This tutorial walks through the process of analyzing and optimizing a 2D convolution used for real-time processing of a video stream.
+
+   * - :doc:`RTL Systems Integration Example <./Design_Tutorials/03-rtl_stream_kernel_integration/README>`
+     - This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.
+
+   * - :doc:`Bottom RTL Kernel Design Flow Example <./Design_Tutorials/05-bottom_up_rtl_kernel/README>`
+     - This tutorial demonstrates how to develope a complex RTL kernel from scratch via batch mode without GUI environment.
+
+
+************************************************
+Feature Tutorials
+************************************************
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Design Tutorials
+   :hidden:
+
+   Getting Started with RTL Kernels <./Feature_Tutorials/01-rtl_kernel_workflow/README>
+   Mixing C and RTL <./Feature_Tutorials/02-mixing-c-rtl-kernels/README>
+   Dataflow Debug and Optimization <./Feature_Tutorials/03-dataflow_debug_and_optimization/README>
+
+
+
+
+
+.. list-table:: 
+   :widths: 20 80
+   :header-rows: 1
+   
+   * - Tutorial
+     - Description
+	 
+   * - :doc:`Getting Started with RTL Kernels <./Feature_Tutorials/01-rtl_kernel_workflow/README>`
+     - This tutorial demonstrates how to use the Vitis core development kit to program an RTL kernel into an FPGA and build a Hardware Emulation using a common development flow.
+
+   * - :doc:`Mixing C and RTL <./Feature_Tutorials/02-mixing-c-rtl-kernels/README>`
+     - This tutorial demonstrates how to work with an application containing RTL and C kernels, along with various design analysis features.
+
+   * - :doc:`Dataflow Debug and Optimization <./Feature_Tutorials/03-dataflow_debug_and_optimization/README>`
+     - This tutorial demonstrates how to debug and optimize the dataflow optimization in Vitis HLS.
