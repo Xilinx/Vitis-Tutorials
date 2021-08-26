@@ -31,7 +31,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 ### [Introduction](./Getting_Started)
 Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!
 
-### [Acceleration Tutorial](./Hardware_Accelerators)
+### [Acceleration Tutorial](./Hardware_Acceleration)
 Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL.
 
 Learn how to use Vitis High-Level Synthesis (HLS), compiler, analyzer, and debugger to identify performance bottlenecks and make modifications to increase algorithm efficiency and performance using an Alveo&trade; Data Center acceleration card.
