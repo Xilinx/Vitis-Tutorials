@@ -32,7 +32,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 ### Accessing the Tutorial Reference files
 
 1. Enter the command in a terminal: `git clone http://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to `Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm` directory, and then access the `reference-files` directory.
+2. Navigate to `Hardware_Acceleration/Feature_Tutorials/04-using-hbm` directory, and then access the `reference-files` directory.
 
 ### Generating all the xclbins
 
