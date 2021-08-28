@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-### Introduction to Vitis Hardware Acceleration Tutorial
+### Vitis Hardware Acceleration on Cholesky Algorithm
 
 This tutorial is divided in 3 sections.
 
