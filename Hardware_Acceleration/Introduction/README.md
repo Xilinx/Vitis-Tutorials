@@ -1,44 +1,59 @@
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ - Acceleration Tutorial for Alveo U50</h1>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™Hardware Acceleration Introduction Tutorial</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
 
-### Introduction to Vitis Hardware Acceleration Tutorial
 
-This tutorial is divided in 3 sections.
+## Introduction
+Xilinx FPGAs and Versal ACAP devices are uniquely suitable for low-latency acceleration of high performance algorithms and workloads. With the demise of traditional Moore's Law scaling, design-specific architectures(DSAs) are becoming the tool of choice for developers needing the optimal balance of capability, power, latency, and flexibility. But, approaching FPGA and ACAP development from a purely software background can seem daunting.
 
-* [**Section 1**](./01-Workflows/README.md) (~10 mins):
-  + An overview of Vitis and the host/kernel paradigm
+With this set of documentation and tutorials, our goal is to provide you with an easy-to-follow, guided introduction to accelerating applications with Xilinx technology. We will begin from the first principles of acceleration: understanding the fundamental architectural approaches, identifying suitable code for acceleration, and interacting with the software APIs for managing memory and interacting with the target
+device in an optimal way.
+
+This set of documents is intended for use by software developers, it is not a low-level hardware developer's guide. The topics of RTL coding, low-level FPGA architecture, high-level synthesis optimization, and so on are covered elsewhere in other Xilinx documents. Our goal here is to get you up and running with Vitis quickly, with the confidence to approach your own acceleration goals and grow your familiarity and skill with Xilinx over time.
+
+## Provided Design Files
+
+In this directory tree you will find two a collection of documents and a directory named `design_source`.
+The `design_source` directory contains all of the design elements - hardware and software - for the
+tutorial you're currently reading. The example applications correspond to specific sections in the guide.
+Every effort has been made to keep the code samples as concise and "to the point" as possible.
+
+## Table of Contents
+
+This tutorial is divided into several discrete example desings. Note that each design builds on the last,
+so if this is youre first time here we recommend proceeding through the tutorial in order.
+
+* [**Acceleration Basics**](./acceleration_basics.md) (~10 mins):
+  + An overview of acceleration systems, Alveo, and XRT
     * See how Vitis takes care of the heavy lifting to let you focus on the application code
-* [**Section 2**](./02-System_Setup/README.md) (a couple of minutes if Alveo U50 card is already installed):
-  + Setup the Vitis development tools
-  + Detect and check the card installed on the server
-* [**Section 3**](./03-Algorithm_Acceleration/README.md) (a few hours):
-  + Understand the Cholesky algorithm and run it on the CPU first
-  + Re-organize the code to create both a host and a kernel program
-  + Review the APIs that bind the host and the kernel
-  + Apply incremental optimizations to the kernel across several modules to improve throughput. Finally program the Alveo card with the fully optimized accelerator to verify the performance
+* [**Runtime SW Design**](./runtime_sw_design.md) (~10 mins):
+  * An introduction to memory allocation, and how XRT interacts with your application
+* [**Guided SW Examples**](./guided_sw_examples.md)
+  + Initial setup for the following examples:
 
-  + [**Introduction**](./03-Algorithm_Acceleration/docs/cpu_src/README.md)
-    * Meet the Cholesky algorithm!
-    * Run a CPU version
-  + [**Vitis Module 1**](./03-Algorithm_Acceleration/docs/module1_baseline/README.md)
-    * Get a performance baseline as a reference point with a first kernel design
-    * Run Vitis in GUI mode or via <code>make</code>
-    * Run Vitis Analyzer to visualize the application timeline
-    * Run Vitis HLS to study kernel code performance and resource metrics
-  + [**Vitis Module 2**](./03-Algorithm_Acceleration/docs/module2_pipeline/README.md) (short module to focus on the impact of <code>PIPELINE</code> and <code>INTERFACE</code>)
-    * Understanding instruction parallelism with the HLS <code>PIPELINE</code> pragma
-    * Applying the <code>INTERFACE</code> pragma to manage physical ports adapters
-  + [**Vitis Module 3**](./03-Algorithm_Acceleration/docs/module3_datatype/README.md)
-    * Modify design to use the more hardware efficient C++ <code>float</code> data types (compared to <code>double</code>)
-    * Run Vitis, Vitis Analyzer and Vitis HLS
-  + [**Vitis Module 4**](./03-Algorithm_Acceleration/docs/module4_dataflow/README.md)
-    * Apply the <code>DATAFLOW</code> task parallelism optimization pragma
-    * Run Vitis, Vitis Analyzer and Vitis HLS (including viewing specific dataflow waveforms)
-    * Run on the U50 card
+  + [**Example 0: Loading an Alveo Image**](./00-loading-an-alveo-image.md)
+    + Learn how to program an FPGA or ACAP image into the device (in this case an Alveo card) using XRT
+  + [**Example 1: Simple Memory Allocation**](./01-simple-memory-allocation.md)
+    + What happens when you don't put too much thought into it?
+  + [**Example 2: Aligned Memory Allocation**](./02-aligned-memory-allocation.md)
+    + See the effects of allocating page-aligned memory vs. using standard `malloc()`
+  + [**Example 3: XRT Memory Allocation**](./03-xrt-memory-allocation.md)
+    + Compare using XRT-allocated memory to standard C++ allocators
+  + [**Example 4: Parallelizing the Data Path**](./04-parallelizing-the-data-path.md)
+    + You'll see the effect of keeping the same host software, but swapping to better hardware
+  + [**Example 5: Optimizing Compute and Transfer**](./05-optimizing-compute-and-transfer.md)
+    + In this example, we finally beat the CPU! Yay!
+  + [**Example 6: Meet the Other Shoe**](./06-meet-the-other-shoe.md)
+    + Alas, our victory was short lived! But why?
+  + [**Example 7: Image Resizing with Vitis Vision**](./07-image-resizing-with-vitis-vision.md)
+    + Let's make a less trivial application. Slightly less.
+  + [**Example 8: Building Processing Pipelines with Vitis Vision**](./08-vitis-vision-pipeline.md)
+    + And now, the true ultimate power of Vitis: pipelines!
+    + Or: How I learned to love FPGAs
+
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
