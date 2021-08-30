@@ -65,7 +65,7 @@ Use Vitis AI to configure Xilinx hardware using the Tensorflow framework. Vitis 
 
 
 **********************************************************************************************
-:doc:`Acceleration <docs/Hardware_Accelerators/Hardware-Accelerators>`
+:doc:`Acceleration <docs/Hardware_Acceleration/Hardware-Acceleration>`
 **********************************************************************************************
 
 .. toctree::
@@ -73,7 +73,7 @@ Use Vitis AI to configure Xilinx hardware using the Tensorflow framework. Vitis 
    :caption: Acceleration
    :hidden:
 
-   Hardware Accelerators <docs/Hardware_Accelerators/Hardware-Accelerators>
+   Hardware Acceleration <docs/Hardware_Acceleration/Hardware-Acceleration>
 
 Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL.
 
@@ -97,12 +97,6 @@ Learn how to target, develop, and deploy advance algorithms using Versal's AI En
 
 
 
-******************************************************************************************
-`Embedded Design <http://xilinx.github.io/Embedded-Design-Tutorials>`_
-******************************************************************************************
-
-Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
-
 
 *****************************************************************************************************
 :doc:`Platform Creation <docs/Vitis_Platform_Creation/Vitis_Platform_Creation>`
@@ -120,23 +114,28 @@ Learn how to build custom platforms for Vitis to target your own boards, and how
 Learn how to configure the platform hardware sources, construct the runtime software environment, add support for software and hardware emulation, and more.
 
 
-****************************************************************************************************************************************************
-:doc:`Xilinx Runtime (XRT) and Vitis System Optimization <docs/Runtime_and_System_Optimization/Runtime_and_System_Optimization>`
-****************************************************************************************************************************************************
-
-.. toctree::
-   :maxdepth: 1
-   :caption: XRT and System Optimization
-   :hidden:
-
-   Xilinx Runtime (XRT) and Vitis System Optimization <docs/Runtime_and_System_Optimization/Runtime_and_System_Optimization>
-
-Learn how to optimize the CPU side of your application for efficient memory allocation, how to sequence system-level
-events, and more.
-
-On the back-end, learn how to control Vitis system-level topologies and low-level hardware implementation.
 
 
+******************************************************************************************
+Other Repositories
+******************************************************************************************
+
+
+
+`Machine Learning <https://github.com/Xilinx/Vitis-AI-Tutorials>`_
+=====================================================================================================================
+
+Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
+
+Use Vitis AI to configure Xilinx hardware using the Tensorflow framework. Vitis AI allows the user to quantize, compile, and deploy an inference model in a matter of minutes.
+
+
+
+
+`Embedded Design <http://xilinx.github.io/Embedded-Design-Tutorials>`_
+=====================================================================================================================
+
+Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
 
 
 
