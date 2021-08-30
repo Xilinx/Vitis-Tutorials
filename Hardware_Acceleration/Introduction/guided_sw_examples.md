@@ -45,7 +45,7 @@ version 201830_2. You'll need to build the hardware design before you can run. T
 directory:
 
 ```
-Vitis-In-Depth-Tutorial/Runtime_and_System_Optimization/Introduction/design_src/hw_src
+Hardware_Acceleration/Introduction/design_src/hw_src
 ```
 
 If you have a different version of the target platform installed on your board, you can skip this step.  But if you are targeting a platform other than the Alveo U200, open the Makefile and change the first line to point to your platform?s .xpfm file.
