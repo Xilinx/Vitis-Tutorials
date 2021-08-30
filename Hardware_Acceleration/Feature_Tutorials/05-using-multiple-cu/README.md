@@ -53,7 +53,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, enter the following in a terminal: `git clone http://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to `Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu` directory, and then access the `reference-files` directory.
+2. Navigate to `Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu` directory, and then access the `reference-files` directory.
 
 ## Makefile Flow
 

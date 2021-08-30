@@ -48,7 +48,7 @@ If necessary, it can be easily ported to other versions and platforms.
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to the `Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt` directory, and then access the `reference-files` directory.
+2. Navigate to the `Hardware_Acceleration/Design_Tutorials/07-host-code-opt` directory, and then access the `reference-files` directory.
 
 ## Model
 

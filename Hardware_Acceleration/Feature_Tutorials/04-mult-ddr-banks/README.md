@@ -55,7 +55,7 @@ The labs in this tutorial use:
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to the `Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks` directory, and then access the `reference-files` directory.
+2. Navigate to the `Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks` directory, and then access the `reference-files` directory.
 
 ### Tutorial Setup
 
