@@ -48,7 +48,7 @@ If necessary, it can be easily ported to other versions and platforms.
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, enter the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to the `Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation` directory, and then access `reference-files/run` directory.
+2. Navigate to the `Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation` directory, and then access `reference-files/run` directory.
 
 ### Set Up the Vitis Environment
 
