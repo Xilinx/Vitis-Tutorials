@@ -531,7 +531,7 @@ Notice the system debugging and profiling IP (DPA) is added to the PL region of 
 <details>
 <summary>HLS PL Kernels</summary>
 
-##HLS PL Kernels
+## HLS PL Kernels
 In the DSP implementation of the FIR Filter design, the AI Engine is not used and therefore there are no AI Engine-related kernels and graphs. The compute and datamover functions are implemented as HLS kernels in the PL region.
 
 The PL kernel `fir_dsp` implements the FIR filter chain.  It contains a single AXI-stream input port and a single AXI-stream output port.  Since the FIR function requires no initialization, no additional control/status ports are required.

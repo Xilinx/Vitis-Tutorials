@@ -12,13 +12,13 @@
 
 [Design Implementations](#design-implementations)
 
-[AI Engine vs. DSP Implementation Comparisons](#ai-engine-vs-dsp-implementation-comparisons)
+[Choosing between AI Engine and DSP Implementations](#Choosing-between-AI-Engine-and-DSP-Implementations)
 
 [AI Engine Specific Design Considerations](#ai-engine-specific-design-considerations)
 
 [Measuring Resources, Throughput, Latency, and Power](#measuring-resources-throughput-latency-and-power)
 
-[References](#references)
+[Conclusion](#Conclusion)
 
 [Revision History](#revision-history)
 
@@ -271,6 +271,7 @@ Computational efficiency is perhaps the best metric for comparing two designs. I
 
 <details>
 <summary>Assigning Multiple AI Engines per Filter</summary>
+
 ## Assigning Multiple AI Engines per Filter
 For A DSP implementation, specifying the number of clocks per sample establishes the throughput and is the primary factor in determining how many resources are required, and the relationship is quite linear.
 
@@ -296,6 +297,7 @@ The following table provides some additional information on data on throughput f
 
 <details>
 <summary>Window Size</summary>
+
 ## Window Size
 The AI Engine processes data in bursts and these data bursts are transferred between AI Engines utilizing ping-pong buffers. The data from one engine is written into one of the two buffers and when it is filled, the buffers are swapped and the data read out by the downstream engine. The size of these data bursts is referred to as the window size, and establishing the optimum window size is a balancing act between throughput and latency. Larger window sizes provide higher throughput because there the burst overhead is less of an influence on the performance. However, latency increases proportionately to the window size.
 
