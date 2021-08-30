@@ -44,7 +44,7 @@ Vitis コア開発キットには、Vivado ツール フローを制御する 2 
 ### チュートリアル リファレンス ファイルの入手
 
 1. リファレンス ファイルを入手するには、ターミナルに `git clone https://github.com/Xilinx/Vitis-Tutorials` と入力します。
-2. `Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation` ディレクトリに移動し、`reference-files/run` ディレクトリにアクセスします。
+2. `Hardware_Acceleration/Feature_Tutorials/03-controlling-vivado-implementation` ディレクトリに移動し、`reference-files/run` ディレクトリにアクセスします。
 
 ### Vitis 環境の設定
 
