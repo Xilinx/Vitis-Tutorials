@@ -200,7 +200,7 @@ DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_T
 VPP_LINK_FLAGS := --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_0
 VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_0
 
-ifeq ($(FFT_2D_INSTS),5)
+ifeq ($(FFT_2D_INSTS),$(filter $(FFT_2D_INSTS),5 10))
 	
 	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_1
 	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_2
@@ -213,19 +213,11 @@ ifeq ($(FFT_2D_INSTS),5)
 	
 else ifeq ($(FFT_2D_INSTS),10)
 	
-	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_1
-	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_2
-	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_3
-	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_4
 	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_5
 	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_6
 	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_7
 	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_8
 	VPP_LINK_FLAGS += --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_9
-	VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_1
-	VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_2
-	VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_3
-	VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_4
 	VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_5
 	VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_6
 	VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_7
@@ -245,7 +237,6 @@ ifeq ($(EN_TRACE),1)
 	
 	else
 	
-		VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:strmInp_from_rowiseFFT
 		VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:strmInp_from_colwiseFFT
 	
 	endif
@@ -260,32 +251,81 @@ VPP_LINK_FLAGS += --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
 #VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.RETIMING}={true}
 
-ifeq ($(FFT_2D_INSTS),10)
-	
-	ifeq ($(MAT_ROWS),256)
-	
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-	
-	else ifeq ($(MAT_ROWS),1024)
-	
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={AddRemap}
-	
-	else
-	
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_low}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-	
-	endif
-	
-else
-	
-	VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_low}
-	VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-	
+ifeq ($(FFT_2D_PT),64)
+   ifeq ($(FFT_2D_INSTS),1)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+      
+   else ifeq ($(FFT_2D_INSTS),5)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_Explore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   else
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+      
+   endif
+else ifeq ($(FFT_2D_PT),128)
+   ifeq ($(FFT_2D_INSTS),1)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Power_DefaultOpt}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+
+   else ifeq ($(FFT_2D_INSTS),5)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   else
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   endif
+else ifeq ($(FFT_2D_PT),256)
+   ifeq ($(FFT_2D_INSTS),1)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+      
+   else ifeq ($(FFT_2D_INSTS),5)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
+      
+   else
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Flow_RunPhysOpt}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   endif
+else ifeq ($(FFT_2D_PT),512)
+   ifeq ($(FFT_2D_INSTS),1)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Power_DefaultOpt}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   else ifeq ($(FFT_2D_INSTS),5)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Explore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   else
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_BalanceSLRs}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   endif
+else ifeq ($(FFT_2D_PT),2048)
+   ifeq ($(FFT_2D_INSTS),1)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   else ifeq ($(FFT_2D_INSTS),5)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+      
+   else
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_WLBlockPlacement}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      
+   endif
 endif
 
 #VPP_LINK_FLAGS += --vivado.synth.jobs 32
@@ -417,7 +457,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 57600 | tee embedded_run.log
 
 endif
 else

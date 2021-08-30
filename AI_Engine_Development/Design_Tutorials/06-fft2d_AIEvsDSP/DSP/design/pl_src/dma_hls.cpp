@@ -146,10 +146,8 @@ int dma_hls(
    
 	ap_uint<128> goldenVal;
 
-   ap_uint<64> golden64 = 0x0000000100000001;
-   goldenVal.range(127, 64) = golden64.range();
-   goldenVal.range( 63,  0) = golden64.range();
-   
+   goldenVal.range(127, 64) = 0x0000000100000001;
+   goldenVal.range( 63,  0) = 0x0000000100000001;
 
    ITER_MM2S0:for(int i = 0; i < iterCnt; ++i)
    {

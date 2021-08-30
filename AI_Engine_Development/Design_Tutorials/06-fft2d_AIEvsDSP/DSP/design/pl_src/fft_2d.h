@@ -25,8 +25,8 @@
 #include "fft_config.h"
 
 // Configurable params...
-const char FFT_INPUT_WIDTH  = 16;
-const char FFT_OUTPUT_WIDTH = FFT_INPUT_WIDTH;
+#define FFT_INPUT_WIDTH  16
+#define FFT_OUTPUT_WIDTH FFT_INPUT_WIDTH
 
 using namespace std;
 using namespace hls;

@@ -37,7 +37,7 @@ void copyCol(cmpxDataOut out_fft[MAT_ROWS],
              cmpxDataOut out[MAT_ROWS]
             )
 {
-   COPY_COL:for(int i = 0; i < MAT_ROWS; ++i)
+   LOOP_COPY_COL:for(int i = 0; i < MAT_ROWS; ++i)
    {
       #pragma HLS pipeline
       
@@ -91,7 +91,7 @@ void copyRow(cmpxDataOut out_fft[MAT_COLS],
              cmpxDataOut out[MAT_COLS]
             )
 {
-   COPY_ROW:for(int i = 0; i < MAT_COLS; ++i)
+   LOOP_COPY_ROW:for(int i = 0; i < MAT_COLS; ++i)
    {
       #pragma HLS pipeline
       
@@ -127,45 +127,24 @@ void readIn_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
                )
 {
    qdma_axis<128, 0, 0, 0> qdma;
-   data_in_t rval_fix[4], ival_fix[4];
    
-   FFT_ROW_READ_INP:for(int j = 0; j < MAT_COLS; j += 4) {
+   LOOP_FFT_ROW_READ_INP:for(int j = 0; j < MAT_COLS; j += 4) {
       #pragma HLS PIPELINE II=1
-
-      cmpxDataIn tmp[4];
-      #pragma HLS ARRAY_RESHAPE variable=tmp complete dim=1
 
       qdma = strm_inp.read();
       qdma.keep_all();
 
-      rval_fix[0].range(15, 0) = qdma.data.range( 15,   0);
-      ival_fix[0].range(15, 0) = qdma.data.range( 31,  16);
+      in[j].real().range(15, 0)     = qdma.data.range( 15,   0);
+      in[j].imag().range(15, 0)     = qdma.data.range( 31,  16);
 
-      rval_fix[1].range(15, 0) = qdma.data.range( 47,  32);
-      ival_fix[1].range(15, 0) = qdma.data.range( 63,  48);
-
-      rval_fix[2].range(15, 0) = qdma.data.range( 79,  64);
-      ival_fix[2].range(15, 0) = qdma.data.range( 95,  80);
-
-      rval_fix[3].range(15, 0) = qdma.data.range(111,  96);
-      ival_fix[3].range(15, 0) = qdma.data.range(127, 112);
-
-	   tmp[0].real(rval_fix[0]);
-	   tmp[0].imag(ival_fix[0]);
-
-	   tmp[1].real(rval_fix[1]);
-	   tmp[1].imag(ival_fix[1]);
-                            
-	   tmp[2].real(rval_fix[2]);
-	   tmp[2].imag(ival_fix[2]);
-                            
-	   tmp[3].real(rval_fix[3]);
-	   tmp[3].imag(ival_fix[3]);
-
-      in[j] = tmp[0];
-      in[j + 1] = tmp[1];
-      in[j + 2] = tmp[2];
-      in[j + 3] = tmp[3];
+      in[j + 1].real().range(15, 0) = qdma.data.range( 47,  32);
+      in[j + 1].imag().range(15, 0) = qdma.data.range( 63,  48);
+                       
+      in[j + 2].real().range(15, 0) = qdma.data.range( 79,  64);
+      in[j + 2].imag().range(15, 0) = qdma.data.range( 95,  80);
+                       
+      in[j + 3].real().range(15, 0) = qdma.data.range(111,  96);
+      in[j + 3].imag().range(15, 0) = qdma.data.range(127, 112);
    }
 }
 
@@ -174,42 +153,21 @@ void writeOut_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
                  )
 {
    qdma_axis<128, 0, 0, 0> qdma;
-   data_in_t rval_fix[4], ival_fix[4];
 
-   FFT_ROW_WRITE_OUT:for(int j = 0; j < MAT_COLS; j += 4) {
+   LOOP_FFT_ROW_WRITE_OUT:for(int j = 0; j < MAT_COLS; j += 4) {
       #pragma HLS PIPELINE II=1
 
-      cmpxDataOut tmp[4];
-      #pragma HLS ARRAY_RESHAPE variable=tmp complete dim=1
+      qdma.data.range( 15,   0) = real(out[j]).range(15, 0);
+      qdma.data.range( 31,  16) = imag(out[j]).range(15, 0);
 
-      tmp[0] = out[j];
-      tmp[1] = out[j + 1];
-      tmp[2] = out[j + 2];
-      tmp[3] = out[j + 3];
+      qdma.data.range( 47,  32) = real(out[j + 1]).range(15, 0);
+      qdma.data.range( 63,  48) = imag(out[j + 1]).range(15, 0);
 
-   	rval_fix[0] = real(tmp[0]);
-   	ival_fix[0] = imag(tmp[0]);
+      qdma.data.range( 79,  64) = real(out[j + 2]).range(15, 0);
+      qdma.data.range( 95,  80) = imag(out[j + 2]).range(15, 0);
 
-   	rval_fix[1] = real(tmp[1]);
-   	ival_fix[1] = imag(tmp[1]);
-   	
-      rval_fix[2] = real(tmp[2]);
-   	ival_fix[2] = imag(tmp[2]);
-   	
-      rval_fix[3] = real(tmp[3]);
-   	ival_fix[3] = imag(tmp[3]);
-
-      qdma.data.range( 15,   0) = rval_fix[0].range(15, 0);
-      qdma.data.range( 31,  16) = ival_fix[0].range(15, 0);
-
-      qdma.data.range( 47,  32) = rval_fix[1].range(15, 0);
-      qdma.data.range( 63,  48) = ival_fix[1].range(15, 0);
-
-      qdma.data.range( 79,  64) = rval_fix[2].range(15, 0);
-      qdma.data.range( 95,  80) = ival_fix[2].range(15, 0);
-
-      qdma.data.range(111,  96) = rval_fix[3].range(15, 0);
-      qdma.data.range(127, 112) = ival_fix[3].range(15, 0);
+      qdma.data.range(111,  96) = real(out[j + 3]).range(15, 0);
+      qdma.data.range(127, 112) = imag(out[j + 3]).range(15, 0);
 
    	strm_out.write(qdma);
    }
@@ -228,7 +186,7 @@ void fft_rows(
    bool directionStub = 1;
    bool ovfloStub;
 
-   FFT_ROWS:for(int i = 0; i < MAT_ROWS; ++i) {
+   LOOP_FFT_ROWS:for(int i = 0; i < MAT_ROWS; ++i) {
 
       #pragma HLS DATAFLOW
 
@@ -245,45 +203,24 @@ void readIn_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
                )
 {
    qdma_axis<128, 0, 0, 0> qdma;
-   data_in_t rval_fix[4], ival_fix[4];
 
-   FFT_COL_READ_INP:for(int j = 0; j < MAT_ROWS; j += 4) {
+   LOOP_FFT_COL_READ_INP:for(int j = 0; j < MAT_ROWS; j += 4) {
       #pragma HLS PIPELINE II=1
-
-      cmpxDataIn tmp[4];
-      #pragma HLS ARRAY_RESHAPE variable=tmp complete dim=1
 
       qdma = strm_inp.read();
       qdma.keep_all();
 
-      rval_fix[0].range(15, 0) = qdma.data.range( 15,   0);
-      ival_fix[0].range(15, 0) = qdma.data.range( 31,  16);
+      in[j].real().range(15, 0)     = qdma.data.range( 15,   0);
+      in[j].imag().range(15, 0)     = qdma.data.range( 31,  16);
 
-      rval_fix[1].range(15, 0) = qdma.data.range( 47,  32);
-      ival_fix[1].range(15, 0) = qdma.data.range( 63,  48);
-
-      rval_fix[2].range(15, 0) = qdma.data.range( 79,  64);
-      ival_fix[2].range(15, 0) = qdma.data.range( 95,  80);
-
-      rval_fix[3].range(15, 0) = qdma.data.range(111,  96);
-      ival_fix[3].range(15, 0) = qdma.data.range(127, 112);
-
-	   tmp[0].real(rval_fix[0]);
-	   tmp[0].imag(ival_fix[0]);
-
-	   tmp[1].real(rval_fix[1]);
-	   tmp[1].imag(ival_fix[1]);
-                            
-	   tmp[2].real(rval_fix[2]);
-	   tmp[2].imag(ival_fix[2]);
-                            
-	   tmp[3].real(rval_fix[3]);
-	   tmp[3].imag(ival_fix[3]);
-
-      in[j] = tmp[0];
-      in[j + 1] = tmp[1];
-      in[j + 2] = tmp[2];
-      in[j + 3] = tmp[3];
+      in[j + 1].real().range(15, 0) = qdma.data.range( 47,  32);
+      in[j + 1].imag().range(15, 0) = qdma.data.range( 63,  48);
+                       
+      in[j + 2].real().range(15, 0) = qdma.data.range( 79,  64);
+      in[j + 2].imag().range(15, 0) = qdma.data.range( 95,  80);
+                       
+      in[j + 3].real().range(15, 0) = qdma.data.range(111,  96);
+      in[j + 3].imag().range(15, 0) = qdma.data.range(127, 112);
    }
 }
 
@@ -292,42 +229,21 @@ void writeOut_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
                  )
 {
    qdma_axis<128, 0, 0, 0> qdma;
-   data_in_t rval_fix[4], ival_fix[4];
 
-   FFT_COL_WRITE_OUT:for(int j = 0; j < MAT_ROWS; j += 4) {
+   LOOP_FFT_COL_WRITE_OUT:for(int j = 0; j < MAT_ROWS; j += 4) {
       #pragma HLS PIPELINE II=1
 
-      cmpxDataOut tmp[4];
-      #pragma HLS ARRAY_RESHAPE variable=tmp complete dim=1
+      qdma.data.range( 15,   0) = real(out[j]).range(15, 0);
+      qdma.data.range( 31,  16) = imag(out[j]).range(15, 0);
 
-      tmp[0] = out[j];
-      tmp[1] = out[j + 1];
-      tmp[2] = out[j + 2];
-      tmp[3] = out[j + 3];
+      qdma.data.range( 47,  32) = real(out[j + 1]).range(15, 0);
+      qdma.data.range( 63,  48) = imag(out[j + 1]).range(15, 0);
 
-   	rval_fix[0] = real(tmp[0]);
-   	ival_fix[0] = imag(tmp[0]);
+      qdma.data.range( 79,  64) = real(out[j + 2]).range(15, 0);
+      qdma.data.range( 95,  80) = imag(out[j + 2]).range(15, 0);
 
-   	rval_fix[1] = real(tmp[1]);
-   	ival_fix[1] = imag(tmp[1]);
-   	
-      rval_fix[2] = real(tmp[2]);
-   	ival_fix[2] = imag(tmp[2]);
-   	
-      rval_fix[3] = real(tmp[3]);
-   	ival_fix[3] = imag(tmp[3]);
-
-      qdma.data.range( 15,   0) = rval_fix[0].range(15, 0);
-      qdma.data.range( 31,  16) = ival_fix[0].range(15, 0);
-
-      qdma.data.range( 47,  32) = rval_fix[1].range(15, 0);
-      qdma.data.range( 63,  48) = ival_fix[1].range(15, 0);
-
-      qdma.data.range( 79,  64) = rval_fix[2].range(15, 0);
-      qdma.data.range( 95,  80) = ival_fix[2].range(15, 0);
-
-      qdma.data.range(111,  96) = rval_fix[3].range(15, 0);
-      qdma.data.range(127, 112) = ival_fix[3].range(15, 0);
+      qdma.data.range(111,  96) = real(out[j + 3]).range(15, 0);
+      qdma.data.range(127, 112) = imag(out[j + 3]).range(15, 0);
 
    	strm_out.write(qdma);
    }
@@ -346,7 +262,7 @@ void fft_cols(
    bool directionStub = 1;
    bool ovfloStub;
 
-   FFT_COLS:for(int i = 0; i < MAT_COLS; ++i) {
+   LOOP_FFT_COLS:for(int i = 0; i < MAT_COLS; ++i) {
 
       #pragma HLS DATAFLOW
 
@@ -373,14 +289,14 @@ void fft_2d(
 
    #pragma HLS INTERFACE s_axilite port=iterCnt bundle=control
    #pragma HLS INTERFACE s_axilite port=return bundle=control
-   
+
    #pragma HLS DATAFLOW
 
-   ITER_FFT_ROWS:for(int i = 0; i < iterCnt; ++i) {
+   ITER_LOOP_FFT_ROWS:for(int i = 0; i < iterCnt; ++i) {
       fft_rows(strmFFTrows_inp, strmFFTrows_out);
    }
 
-   ITER_FFT_COLS:for(int i = 0; i < iterCnt; ++i) {
+   ITER_LOOP_FFT_COLS:for(int i = 0; i < iterCnt; ++i) {
       fft_cols(strmFFTcols_inp, strmFFTcols_out);
    }
 }
