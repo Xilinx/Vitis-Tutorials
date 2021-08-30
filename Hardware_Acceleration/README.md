@@ -16,7 +16,7 @@
  </tr>
  <tr>
  <td align="center"><a href="./Introduction/README.md">Introduction to Vitis Hardware Acceleration</a></td>
- <td>This tutorial puts in practice the concepts of FPGA acceleration and illustrates how to gradually optimize a hardware accelerator implementing the Cholesky matrix decomposition algorithm.</td>
+ <td>This tutorial provides you with an easy-to-follow, guided introduction to accelerating applications with Xilinx technology. We will begin from the first principles of acceleration: understanding the fundamental architectural approaches, identifying suitable code for acceleration, and interacting with the software APIs for managing memory and interacting with the target device in an optimal way.</td>
  </tr>
  </table>
 
@@ -44,6 +44,20 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
  <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
  </tr>
+<tr>
+ <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Cheleskey Algorithm Acceleration </a></td>
+ <td>This tutorial puts in practice the concepts of FPGA acceleration and illustrates how to gradually optimize a hardware accelerator implementing the Cholesky matrix decomposition algorithm.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Design_Tutorials/07-host-code-opt/">XRT Host Code Optimization</a></td>
+ <td>This tutorial demonstrates how to optimize your CPU host code to get the most out of interaction between your
+ hardware accelerators and your runtime software.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/08-ivas-ml/">Streaming Video Analytics with IVAS</a></td>
+ <td>This tutorial demonstrates a reference platform using the Xilinx IVAS framework for streaming video
+ analytics with Vitis and Vitis AI.</td>
+ </tr>
  </table>
 
 
@@ -67,6 +81,22 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a></td>
  <td>This tutorial demonstrates how to debug and optimize the dataflow optimization in Vitis HLS.</td>
  </tr>
+  <td align="center"><a href="./Feature_Tutorials/04-mult-ddr-banks/README.md">Using Multiple DDR Banks</a></td>
+ <td>This tutorial demonstrates how using multiple DDRs can improve data transfer between kernels and global memory.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/05-using-multiple-cu/README.md">Using Multiple Compute Units</a></td>
+ <td>This tutorial demonstrates the flexible kernel linking process to increase the number of kernel instances on an FPGA,
+ which improves the parallelism in a combined host-kernel system.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/06-controlling-vivado-implementation/">Controlling Vivado Implementation</a></td>
+ <td>This tutorial demonstrates how you can control the Vivado&reg; tools flow when implementing your project.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/07-using-hbm/">Optimizing for HBM</a></td>
+ <td>This tutorial demonstrates how you can take best advantage of HBM on platforms that support it.</td>
+ </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>

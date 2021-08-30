@@ -24,7 +24,7 @@ design\_source ディレクトリには、`hw_src` および `sw_src` の 2 つ�
 このオンボーディング サンプルには、Alveo U200 アクセラレータ カード (シェル バージョン 201830\_2) をターゲットとするハードウェア イメージが含まれています。ハードウェア デザインを実行する前に、ビルドする必要があります。これには、次のディレクトリに移動します。
 
 ```
-Vitis-In-Depth-Tutorial/Runtime_and_System_Optimization/Introduction/design_src/hw_src
+Hardware_Acceleration/Introduction/design_src/hw_src
 ```
 
 ボードにインストールされているターゲット プラットフォームのバージョンが上記のものと異なる場合は、この手順をスキップできます。  Alveo U200 以外のプラットフォームをターゲットにしている場合は、makefile を開き、1 行目を変更してご使用のプラットフォームの .xpfm ファイルを指定します。
