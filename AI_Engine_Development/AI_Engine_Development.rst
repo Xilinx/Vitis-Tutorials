@@ -25,7 +25,6 @@ Design Tutorials
 
    LeNet Tutorial <./Design_Tutorials/01-aie_lenet_tutorial/README>
    Super Sampling Rate FIR Filters <./Design_Tutorials/02-super_sampling_rate_fir/README>
-   Beamforming Design <./Design_Tutorials/03-beamforming/README>
    AIE Emulation on Custom Platforms <./Design_Tutorials/04-custom-platform-emulation/README>
 
 
@@ -43,9 +42,6 @@ Design Tutorials
 
    * - :doc:`Super Sampling Rate FIR Filters <./Design_Tutorials/02-super_sampling_rate_fir/README>`
      - The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.
-
-   * - :doc:`Beamforming Design <./Design_Tutorials/03-beamforming/README>`
-     - This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.
 
    * - :doc:`AIE Emulation on Custom Platforms <./Design_Tutorials/04-custom-platform-emulation/README>`
      - This tutorial demonstrates the creation and emulation of an AIE design including the Adaptive DataFlow (ADF) graph, RTL kernels, and a custom VCK190 platform.
