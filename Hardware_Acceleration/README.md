@@ -45,7 +45,7 @@ The methodology for developing optimized accelerated applications is comprised o
  <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
  </tr>
 <tr>
- <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Cheleskey Algorithm Acceleration </a></td>
+ <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Choleskey Algorithm Acceleration </a></td>
  <td>This tutorial puts in practice the concepts of FPGA acceleration and illustrates how to gradually optimize a hardware accelerator implementing the Cholesky matrix decomposition algorithm.</td>
  </tr>
   <tr>
