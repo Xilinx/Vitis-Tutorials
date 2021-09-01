@@ -224,7 +224,7 @@ export PLATFORM_REPO_PATHS=<path to the U200 platform install dir>
 cd <Path to the cloned repo>/Getting_Started/Vitis/example/u200/sw_emu
 
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-emconfigutil --platform xilinx_u200_xdma_201830_2 --nd 1
+emconfigutil --platform xilinx_u200_gen3x16_xdma_1_202110_1 --nd 1
 v++ -c -t sw_emu --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
 v++ -l -t sw_emu --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
@@ -280,7 +280,7 @@ TEST PASSED
 cd ../hw_emu
 
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-emconfigutil --platform xilinx_u200_xdma_201830_2 --nd 1
+emconfigutil --platform xilinx_u200_gen3x16_xdma_1_202110_1 --nd 1
 v++ -c -t hw_emu --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
 v++ -l -t hw_emu --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
