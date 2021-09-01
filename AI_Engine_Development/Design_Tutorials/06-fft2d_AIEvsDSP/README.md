@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library (XD073)</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
    </td>
  </tr>
 </table>
@@ -13,7 +13,7 @@
 
 [Design Implementations](#Design-Implementations)
 
-[Important Observations between AIE and DSP & PL Implementations](#important-observations-between-aie-and-dsp--pl-implementations)
+[AI Engine and DSP Implementation Comparison](#ai-engine-and-dsp-implementation-comparison)
 
 [References](#references)
 
@@ -67,7 +67,7 @@ x_2fft = fft2(x);      % Reference generation, 2 dimensional FFT of matrix 'x'
 FFT2D, using 1D – FFT.
 x_row = fft(x);        % Row wise 1D-FFT
 x_row = x_row.’;       % Transpose
-x_col = fft(x_row);    % Col wise 1D-FFT
+x_col = fft(x_row);    % Row wise 1D-FFT
 x_col = x_col.’;       % Transpose
 
 x_2fft - x_col         % Calculate the error difference
@@ -240,11 +240,11 @@ The Makefile and source files for the AI Engine and DSP implementations are in t
 * [AI Engine design implementation](AIE)
 * [DSP design implementation](DSP)
 
-# Important Observations between the AI Engine and DSP & PL Implementations
+# AI Engine and DSP Implementation Comparison
 
 The following table shows a comparison between a 1024 x 2048 point 10-instance FFT-2D design implemented using the AI and DSP Engines respectively. It lists the throughput, resource utilization, power comsumption, and performance in throughput/Watt.
 
-| Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in us) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
+| Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
 | AIE           | 5835.315                           | 1770.840                | 20               | 76%             | 396 /<br/>20%                        | 56               | 11720 /<br/> 4154         | 0     | 0    | 5081                      | 1148.46                                 |
 | DSP           | 4995.440                           | 2107.723                | NA               | NA              | NA                                   | NA               | 108471 /<br/> 70475       | 335   | 180  | 7875                      | 634.34                                  |
@@ -262,6 +262,7 @@ It is important to understand that those 56 AI Engines are not all required for 
 Additionally, further increasing the number of instances in the AI Engine design is easier compared to the DSP design, which will run into timing closure issues, especially for higher FFT point size designs.
 
 **Measurement:**
+
 1. AI Engine design resource utilization is measured using Xilinx Power Estimator (XPE) and Vivado (report utilization under implementation for FFs and CLB LUTs). For the DSP design, resource utilization is measured using Vivado.
 2. AI Engine power consumption is measured using XPE. DSP power consumption is measured using Vivado (report power under implementation).
 3. Throughput is measured using viewing runtime profiling generated trace texts in Vitis Analyzer.

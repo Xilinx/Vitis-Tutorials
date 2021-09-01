@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073) 2021.1</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
    </td>
  </tr>
 </table>
@@ -15,7 +15,7 @@
 
 [Software Design Details](#Software-Design-Details)
 
-[Resource Utilization & Power, Throughput & Latency and Performance per Watt](#Resource-Utilization--Power-Throughput--Latency-and-Performance-per-Watt)
+[Performance Details](#Performance-Details)
 
 # Building the Design
 
@@ -571,7 +571,7 @@ The data mover is a PL-based data generator and checker. It generates impulse in
 
 ## Design Details
 
-The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler `-l` step (see [make XCLBIN](make-xclbin--using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
+The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler `-l` step (see [make XCLBIN](#make-xclbin-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
 
 
 * `libadf.a`
@@ -1082,14 +1082,14 @@ int main(int argc, char** argv)
 
 </details>
 
-# Resource Utilization & Power, Throughput & Latency, and Performance per Watt
+# Performance Details
 
-For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements with respect to their available resources, latency, throughput, performance and power. In this section, it is outlined how to measure those characteristics for the AI Engine implementation in this tutorial.
+For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements with respect to their available resources, latency, throughput, performance, and power. In this section, it is outlined how to measure those characteristics for the AI Engine implementation in this tutorial.
 
 <details>
-<summary>Resource Utilization & Power</summary> 
+<summary>Resource Utilization and Power</summary> 
 
-### Resource Utilization & Power
+### Resource Utilization and Power
 
 Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2020.3 version) tools.
 
@@ -1142,9 +1142,9 @@ A summary of resource utilization and power for all variations is given in the f
 </details>
 
 <details>
-<summary>Throughput & Latency</summary> 
+<summary>Throughput and Latency</summary> 
 
-### Throughput & Latency
+### Throughput and Latency
 
 Throughput is measured in megasamples transferred per second (MSPS). Latency is defined as the time between the first sample being sent by the data mover into the row-wise FFT kernel and the first sample from the col-wise FFT kernel being received by the data mover. It is measured by viewing the runtime generated trace texts using Vitis analyzer. The steps to measure throughput and latency are listed below:
 

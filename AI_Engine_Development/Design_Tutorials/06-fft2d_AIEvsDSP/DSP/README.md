@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073) 2021.1</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
    </td>
  </tr>
 </table>
@@ -15,7 +15,7 @@
 
 [Software Design Details](#Software-Design-Details)
 
-[Resource Utilization, Power, Throughput & Latency and Performance per Watt](#Resource-Utilization-Power-Throughput--Latency-and-Performance-per-Watt)
+[Performance Details](#Performance-Details)
 
 # Building the Design
 
@@ -513,7 +513,9 @@ export XILINX_XRT=/usr
 
 </details>
 
+
 # Hardware Design Details
+
 
 <details>
 <summary>2D-FFT DSP Implementation Architecture and  DSP/PL Function Partitioning</summary>
@@ -533,7 +535,7 @@ The data mover is a PL-based data generator and checker. It generates impulse in
 
 ## Design Details
 
-The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, DSP, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the DSP and HLS kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). In the design, the components are added by the Vitis compiler `-l` step (see [make XCLBIN](make-xclbin--using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
+The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, DSP, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the DSP and HLS kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). In the design, the components are added by the Vitis compiler `-l` step (see [make XCLBIN](#make-xclbin-using-the-vitis-tools-to-link-hls-kernels-with-the-platform)) and include the following:
 
 * fft_2d DSP kernel (`fft_2d.[hw|hw_emu].xo`)
 * data-mover kernel (`dma_hls.[hw|hw_emu].xo`)
@@ -574,7 +576,9 @@ The PL-based data movers consist of the `dma_hls` kernel, which generates impuls
 
 </details>
 
+
 # Software Design Details
+
 
 The software design in the DSP 2D-FFT tutorial consists of the following sections:
 
@@ -1231,7 +1235,7 @@ void golden_check(uint32_t *errCnt)
 
 </details>
 
-# Resource Utilization, Power, Throughput & Latency, and Performance per Watt
+# Performance Details
 
 For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements with respect to their available resources, latency, throughput, performance, and power. In this section, it is outlined how to measure those characteristics for the DSP implementation in this tutorial. 
 
@@ -1305,9 +1309,9 @@ A summary of power utilization for all variations is given in the following tabl
 </details>
 
 <details>
-<summary>Throughput & Latency</summary> 
+<summary>Throughput and Latency</summary> 
 
-### Throughput & Latency
+### Throughput and Latency
 
 
 Throughput is measured in megasamples transferred per second (MSPS). Latency is defined as the time between the first sample being sent by the data mover into the `fft_rows` function in the `fft_2d_0` kernel and the first sample from the `fft_cols` function in the `fft_2d_0` kernel being received by the data mover. It is measured by viewing the runtime generated trace texts using Vitis analyzer. The steps to measure throughput and latency are listed below:
@@ -1339,8 +1343,8 @@ trace_buffer_size=500M
 Execution Time:
    = Difference in execution timeline trace
    = (End Timestamp of s2mm1 - Start Timestamp of mm2s0) x (150 / 250)
-   = (659384.18us - 606924.1us) x (150 / 250)
-   = 33583.7us
+   = (659384.18us - 603411.32us) x (150 / 250)
+   = 33583.716us
 
 Latency:
    = Difference between strmInp_from_colwiseFFT beginning and execution beginning
@@ -1350,7 +1354,7 @@ Latency:
 
 Throughput = (Samples transferred x Iterations) / execution time
            = (MAT_ROWS x MAT_COLS x ITER_CNT) / execution time
-           = (1024 x 2048 x 8) / 33583.7us
+           = (1024 x 2048 x 8) / 33583.716us
            = 499.564 MSamples/s
            = 499.564 x 4 MB/s (As each sample is 4bytes)
            = 1998.256 MB/s
@@ -1359,7 +1363,7 @@ Throughput = (Samples transferred x Iterations) / execution time
 **IMPORTANT**: The timestamps are scaled by (150/250) due to a known issue in which the timeline trace does not scale the timestamps based on the changed frequency, but reports it as though the frequency is the default frequency (150 MHz). Because 250 MHz is used for the data mover and profiling, timestamps must be scaled by (150/250).
 
 Summary of Throughput & Latency for all Variations:
-| No. of Instances | FFT Configurations           | Data Transfer size | Average in MSPS | Aggregate in MSPS |Average Latency in us | Minimum Latency in us |
+| No. of Instances | FFT Configurations           | Data Transfer size | Average in MSPS | Aggregate in MSPS |Average Latency in μs | Minimum Latency in μs |
 |:----------------:|:----------------------------:|:------------------:|:---------------:|:-----------------:|:--------------------:|:---------------------:|
 | 1                | 64 point (32 x 64)           | 16384              | 477.114         | 477.114           | 2.620                | 2.620                 |
 | 1                | 128 point<br/>(64 x 128)     | 65536              | 501.362         | 501.362           | 9.100                | 9.100                 |
@@ -1422,7 +1426,7 @@ A summary of performance per Watt for all variations is shown in the following t
 
 A consolidated summary of observations for all the point sizes and all the corresponding instance variations is shown in the following table.
 
-| FFT Configuration - No. of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in us) | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
+| FFT Configuration - No. of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:---------:|:--------:|:-----:|:------------------:|:-------------------------:|:---------------------------------------:|
 | 64 point<br/>(32 x 64)<br/> - x1        | 477.114                            | 2.620                       | 6815      | 4273     | 19    | 8                  | 416                       | 1146.91                                 |
 | 128 point<br/>(64 x 128)<br/> - x1      | 501.362                            | 9.100                       | 7716      | 5122     | 19    | 10                 | 500                       | 1002.72                                 |
