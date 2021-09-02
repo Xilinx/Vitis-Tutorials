@@ -26,15 +26,29 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/">Super Sampling Rate FIR Filters</a></td>
  <td>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.</td>
  </tr>
- <!--
  <tr>
  <td align="center"><a href="./Design_Tutorials/03-beamforming/">Beamforming Design</a></td>
  <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
  </tr>
-  -->
  <tr>
  <td align="center"><a href="./Design_Tutorials/04-custom-platform-emulation/">AIE Emulation on Custom Platforms</a></td>
  <td>This tutorial demonstrates the creation and emulation of an AIE design including the Adaptive DataFlow (ADF) graph, RTL kernels, and a custom VCK190 platform.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Design_Tutorials/08-n-body-simulator">N-Body Simulator</a></td>
+ <td>It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:
+
+   <li>A Python model of an N-Body Simulator run on x86 machine
+   <li>A scalable AI Engine design that can utilize up to 400 AI Engine tiles
+   <li>AI Engine packet switching
+   <li>AI Engine single-precision floating point calculations
+   <li>AI Engine 1:400 broadcast streams
+   <li>Codeless PL HLS datamover kernels from the Vitis™ Utility Library
+   <li>PL HLS packet switching kernels
+   <li>PS Host Application that validates the data coming out of the AI Engine design
+   <li>C++ model of an N-Body Simulator
+   <li>Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators
+   <li>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
  </tr>
  </table>
 
