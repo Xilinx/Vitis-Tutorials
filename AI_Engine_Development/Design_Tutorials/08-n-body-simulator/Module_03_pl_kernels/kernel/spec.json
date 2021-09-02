@@ -1,0 +1,66 @@
+{
+    "m2s_x2": {
+        "impl": "LoadDdrToStream",
+        "map": [
+            {
+                "in_port": {
+                    "buffer": "ibuff"
+                },
+                "out": {
+                    "stream": "istrm",
+                    "width": 32
+                }
+            },
+            {
+                "in_port": {
+                    "buffer": "jbuff"
+                },
+                "out": {
+                    "stream": "jstrm",
+                    "width": 32
+                }
+            }
+        ]
+    },
+    "s2m_x4": {
+        "impl": "StoreStreamToMaster",
+        "map": [
+            {
+                "in_port": {
+                    "stream": "k0_strm",
+                    "width": 32
+                },
+                "out": {
+                    "buffer": "k0_buff"
+                }
+            },
+            {
+                "in_port": {
+                    "stream": "k1_strm",
+                    "width": 32
+                },
+                "out": {
+                    "buffer": "k1_buff"
+                }
+            },
+            {
+                "in_port": {
+                    "stream": "k2_strm",
+                    "width": 32
+                },
+                "out": {
+                    "buffer": "k2_buff"
+                }
+            },
+            {
+                "in_port": {
+                    "stream": "k3_strm",
+                    "width": 32
+                },
+                "out": {
+                    "buffer": "k3_buff"
+                }
+            }
+        ]
+    }
+}
