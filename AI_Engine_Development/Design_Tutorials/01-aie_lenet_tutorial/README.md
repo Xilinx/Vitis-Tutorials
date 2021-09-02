@@ -264,7 +264,7 @@ v++       --target hw_emu			     \
   <summary>make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow</summary> 
  
 ## make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
-An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives. 
+An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives). 
 * The AI Engine ADF C++ graph of the design contains AI Engine kernels and PL kernels. 
 * All interconnects between kernels are defined in the C++ graph.
 * All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object. All `adf::sim` platform connections from graph to PLIO map onto ports on the AI Engine subsystem graph that are connected using the Vitis compiler connectivity directives. No dangling ports or implicit connections are allowed by the Vitis compiler. 
