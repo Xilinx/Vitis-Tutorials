@@ -1,6 +1,6 @@
 <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Platform Creation Tutorials</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Platform Creation Tutorials</h1>
    </td>
  </tr>
  <tr>
@@ -12,11 +12,10 @@
 ### Introduction
 
 Xilinx provides base platforms for Xilinx Evaluation Boards to allow for quick out-of-the-box experimentation.
-For additional customization or more in-depth development on Xilinx boards, or to develop on custom board,
-you may wish to create a fully customized hardware platform.
 
-These tutorials introduce the basics of platform creation and provide step-by-step tutorials for
-creating custom Vitis&trade; and Vitis AI&trade; ready platforms.
+For additional customization or more in-depth development on Xilinx boards, or to develop on custom board, you might want to create a fully customized hardware platform.
+
+These tutorials introduce the basics of platform creation and provide step-by-step tutorials for creating custom Vitis and Vitis AI™ ready platforms.
 
 [Module 1: Platform Creation Overview](Introduction/01-Overview/README.md)
 
@@ -26,8 +25,7 @@ creating custom Vitis&trade; and Vitis AI&trade; ready platforms.
 
 ### Feature Tutorials
 
-These tutorials illustrate various platform features and how you can incorporate them into your own
-custom platforms.
+These tutorials illustrate various platform features and how you can incorporate them into your own custom platforms.
 
 <table style="width:100%">
  <tr>
@@ -40,4 +38,4 @@ custom platforms.
  </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p>
