@@ -1,0 +1,10 @@
+aie/build/
+pl_kernels/build/
+pl_kernels/_krnlgen/
+pl_kernels/kernel/.stamp
+pl_kernels/kernel/m2s_x2.cpp
+pl_kernels/kernel/s2m_x4.cpp
+xclbin/build/
+host_sw/build/
+sd_card/build/
+xf_utils_hw/
