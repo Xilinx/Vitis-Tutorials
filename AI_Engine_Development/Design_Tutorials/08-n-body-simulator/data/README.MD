@@ -1,0 +1,1 @@
+folder that contains input_i*.txt and input_j.txt files
