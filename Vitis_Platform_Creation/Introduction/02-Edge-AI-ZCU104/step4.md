@@ -477,7 +477,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
 #### Known Issues
 
 1. The default setting of PMIC (irps5401) on ZCU104 can't afford DPU running on heavy loading. You may see crash or hang on heavy loading.
-   - Please refer to [DPU TRD Known issues](https://github.com/Xilinx/Vitis-AI/blob/master/dsa/DPU-TRD/prj/Vitis/README.md#553-known-issues) for more information.
+   - Please refer to [DPU TRD Known issues](https://github.com/Xilinx/Vitis-AI/blob/master/dsa/DPU-TRD/prj/Vitis/README.md#553-known-issues) for more information. (Ref: [issue 101](https://github.com/Xilinx/Vitis-Tutorials/issues/101))
 
 ### Congratulations
 
