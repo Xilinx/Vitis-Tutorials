@@ -21,6 +21,7 @@
   - [Test 3: Run a Vitis-AI Demo](#test-3-run-a-vitis-ai-demo)
     - [Create the design](#create-the-design)
     - [Run Application on Board](#run-application-on-board)
+    - [Known Issues](#known-issues)
   - [Congratulations](#congratulations)
 
 ## Step 4: Test the Platform
@@ -472,6 +473,11 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    The XRT prints can be eliminated by running `echo 6 > /proc/sys/kernel/printk` before launching the application.
 
 </details>
+
+#### Known Issues
+
+1. The default setting of PMIC (irps5401) on ZCU104 can't afford DPU running on heavy loading. You may see crash or hang on heavy loading.
+   - Please refer to [DPU TRD Known issues](https://github.com/Xilinx/Vitis-AI/blob/master/dsa/DPU-TRD/prj/Vitis/README.md#553-known-issues) for more information. (Ref: [issue 101](https://github.com/Xilinx/Vitis-Tutorials/issues/101))
 
 ### Congratulations
 
