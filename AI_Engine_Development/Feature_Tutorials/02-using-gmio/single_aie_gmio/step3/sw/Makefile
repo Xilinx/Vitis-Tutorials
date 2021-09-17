@@ -15,6 +15,7 @@ HOST_INC   = -I../ -I../aie
 HOST_OBJ   = aie_control_xrt.o graph.o
 AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
 GRAPH_CPP = ../aie/graph.cpp
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 CXXFLAGS += -std=c++14 -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
