@@ -1,6 +1,6 @@
 {
-    "name": "AI_Engine_Development-06-fft_2d_dsp_tutorial",
-    "description": "fft_2d_dsp_tutorial",
+    "name": "AI_Engine_Development-07-firFilter_hls_tutorial",
+    "description": "fir_filter_hls_tutorial",
     "flow": "versal",
 
     "platform_whitelist": [ "vck190"],

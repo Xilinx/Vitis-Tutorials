@@ -44,27 +44,29 @@ help::
 	@echo  "        TARGET=[hw|hw_emu]     -specifies target: Hardware or Emulation. Default=hw_emu"
 	@echo  "        N_FIR_FILTERS          -specifies number of FIR Filters. Default=1"
 	@echo  "        N_FIR_TAPS             -specifies number of FIR Filter Taps. Default=15"
+	@echo  "        FIR_WINDOW_SIZE        -specifies AIE buffer window size. Default=256"
 	@echo  ""
-
+	
 # =========================================================
 # TARGET can be set as:
 #   hw_emu: Hardware Emulation
 #   hw    : Hardware Run
 # =========================================================
-TARGET        := hw_emu
+TARGET          := hw_emu
 
 # =========================================================
 # FIR Chain Parameters:
 # N_FIR_FILTERS : Number for FIR filters in chain
 # N_FIR_TAPS    : Number of taps in each filter
 # =========================================================
-N_FIR_FILTERS :=   1
-N_FIR_TAPS    :=  15
+N_FIR_FILTERS   :=    1
+N_FIR_TAPS      :=   15
+FIR_WINDOW_SIZE :=  256
 
 # =========================================================
 # Profiling and Trace Switches
 # =========================================================
-EN_TRACE       := 0
+EN_TRACE        := 0
 
 # =========================================================
 # PL Frequency in MHz:
@@ -76,43 +78,45 @@ VPP_CLOCK_FREQ := $(PL_FREQ)000000
 # =========================================================
 # FIR Impulse Response Area
 # =========================================================
-IMPULSE_AREA	:= 16383
+IMPULSE_AREA   := 16383
 
 # =========================================================
 # Source directory
 # =========================================================
 #Version Name
-BUILD_VERSION   := fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
+BUILD_VERSION   := fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
 
-#relative FIR filter directory
+#relative fir directory
 RELATIVE_PROJECT_DIR := ./
 
-#absolute FIR filter directory = <user path>/Tutorials/AI_Engine/filter_AIEvsDSP
-PROJECT_REPO	 := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+#absolute fir directory = <user path>/Tutorials/AI_Engine/fir
+PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-DESIGN_REPO 	 := $(PROJECT_REPO)/design
-PL_SRC_REPO 	 := $(PROJECT_REPO)/design/pl_src
-APP_SRC_REPO 	 := $(PROJECT_REPO)/design/app_src
-MAKEFILES_REPO   := $(PROJECT_REPO)
+DESIGN_REPO	:= $(PROJECT_REPO)/design
+AIE_SRC_REPO 	:= $(PROJECT_REPO)/design/aie_src
+APP_SRC_REPO	:= $(PROJECT_REPO)/design/app_src
+PL_SRC_REPO 	:= $(PROJECT_REPO)/design/pl_src
+MAKEFILES_REPO	:= $(PROJECT_REPO)
 
-BASE_BUILD_DIR 	 := $(PROJECT_REPO)/build
-BUILD_DIR        := $(BASE_BUILD_DIR)/$(BUILD_VERSION)
+BASE_BUILD_DIR	:= $(PROJECT_REPO)/build
+BUILD_DIR 	:= $(BASE_BUILD_DIR)/$(BUILD_VERSION)
+WORK_DIR	:= Work
 BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
 
-BASE_RUN_DIR     := $(PROJECT_REPO)/run_dir
-RUN_DIR		 := $(BASE_RUN_DIR)/$(BUILD_VERSION)
+BASE_RUN_DIR	:= $(PROJECT_REPO)/run_dir
+RUN_DIR	        := $(BASE_RUN_DIR)/$(BUILD_VERSION)
 
-REPORT_DIR     	:= $(PROJECT_REPO)/../report_dir
+REPORT_DIR      := $(PROJECT_REPO)/../report_dir
 
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
 EMBEDDED_HW_EMU_EXEC_SCRIPT := run_script.sh
 
 ######################################
 # When TARGET=hw_emu, hw_emu launch...
-# 1 = Enabled (Default).
-# 0 = Disabled.
+# 0 = Disabled (Default).
+# 1 = Enabled.
 ######################################
-LAUNCH_HW_EMU_EXEC := 1
+LAUNCH_HW_EMU_EXEC := 0
 
 # Print all options passed to Makefile
 print-%  : ; @echo $* = $($*)
@@ -120,31 +124,47 @@ print-%  : ; @echo $* = $($*)
 # =========================================================
 # Kernel Source Files repository
 # =========================================================
-S2MM_KERNEL_NAME  := s2mm
-MM2S_KERNEL_NAME  := mm2s
-FILTER_KERNEL_NAME:= fir_dsp
+S2MM_KERNEL_NAME := s2mm
+MM2S_KERNEL_NAME := mm2s
+S2MM_KERNEL_SRC	 := $(PL_SRC_REPO)/$(S2MM_KERNEL_NAME).cpp
+MM2S_KERNEL_SRC	 := $(PL_SRC_REPO)/$(MM2S_KERNEL_NAME).cpp
 
-S2MM_KERNEL_SRC	  := $(PL_SRC_REPO)/$(S2MM_KERNEL_NAME).cpp
-MM2S_KERNEL_SRC	  := $(PL_SRC_REPO)/$(MM2S_KERNEL_NAME).cpp
-
-SYSTEM_SETTINGS_H := $(PL_SRC_REPO)/system_settings.h
-FILTER_KERNEL_H   := $(PL_SRC_REPO)/$(FILTER_KERNEL_NAME).h
-FILTER_KERNEL_SRC := $(PL_SRC_REPO)/$(FILTER_KERNEL_NAME).cpp
+# =========================================================
+# Graph Source files repository
+# =========================================================
+GRAPH_SRC_CPP    := $(AIE_SRC_REPO)/fir_aie_graph.cpp
+GRAPH_SETTINGS_H := $(AIE_SRC_REPO)/system_settings.h
 
 # =========================================================
 # Application Source Files repository
 # =========================================================
-APP_SRC_CPP       := $(APP_SRC_REPO)/fir_dsp_app.cpp
+APP_SRC_CPP 	 := $(APP_SRC_REPO)/fir_aie_app.cpp
+AIE_CONTROL_CPP  := $(BUILD_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
 
 # =========================================================
-# Below are the names, application executable,
+# Below are the names for SDF graph, application executable,
 # kernel executables, and xclbin
 # =========================================================
-FILTER_KERNEL_XO  := $(BUILD_TARGET_DIR)/fir_dsp.$(TARGET).xo
-S2MM_KERNEL_XO    := $(BUILD_TARGET_DIR)/$(S2MM_KERNEL_NAME).$(TARGET).xo
-MM2S_KERNEL_XO 	  := $(BUILD_TARGET_DIR)/$(MM2S_KERNEL_NAME).$(TARGET).xo
-XCLBIN 	          := $(BUILD_TARGET_DIR)/vck190_dsp_fir_dsp.$(TARGET).xclbin
-APP_ELF           := $(BUILD_TARGET_DIR)/fir_dsp_xrt.elf
+LIBADF_A       := $(BUILD_DIR)/libadf.a
+S2MM_KERNEL_XO := $(BUILD_TARGET_DIR)/$(S2MM_KERNEL_NAME).$(TARGET).xo
+MM2S_KERNEL_XO := $(BUILD_TARGET_DIR)/$(MM2S_KERNEL_NAME).$(TARGET).xo
+XCLBIN         := $(BUILD_TARGET_DIR)/vck190_aie_fir.$(TARGET).xclbin
+APP_ELF        := $(BUILD_TARGET_DIR)/fir_aie_xrt.elf
+
+# =========================================================
+# AIE Compiler Global Settings and Include Libraries
+# =========================================================
+AIE_FLAGS += -include=$(DSPLIB_ROOT)/L1/src/aie
+AIE_FLAGS += -include=$(DSPLIB_ROOT)/L1/include/aie
+AIE_FLAGS += -include=$(DSPLIB_ROOT)/L2/include/aie
+AIE_FLAGS += -include=$(AIE_SRC_REPO)
+AIE_FLAGS += --platform=$(PLATFORM)
+AIE_FLAGS += --workdir=$(WORK_DIR)
+
+AIE_FLAGS += --log-level=5
+AIE_FLAGS += --pl-freq=$(PL_FREQ)
+AIE_FLAGS += --verbose
+AIE_FLAGS += --dataflow
 
 # =========================================================
 # Application Compiler and Linker Flags
@@ -153,6 +173,7 @@ GCC_FLAGS := -O
 GCC_FLAGS += -c
 GCC_FLAGS += -std=c++14
 GCC_FLAGS += -D__linux__
+GCC_FLAGS += -D__PS_ENABLE_AIE__
 GCC_FLAGS += -DXAIE_DEBUG
 
 ifeq ($(TARGET),hw_emu)
@@ -160,27 +181,33 @@ GCC_FLAGS += -DUSE_SMALL_DATASET
 endif
 
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt/
-GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include/
-GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/lib/
-GCC_INC_FLAGS += -I$(APP_SRC_REPO)/
-GCC_INC_FLAGS += -I$(PL_SRC_REPO)/
+GCC_INC_FLAGS += -I$(XILINX_VITIS)/aietools/include/
+GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include
+GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/lib
+GCC_INC_FLAGS += -I$(AIE_SRC_REPO)
+GCC_INC_FLAGS += -I$(AIE_SRC_REPO)/inc
+GCC_INC_FLAGS += -I$(AIE_SRC_REPO)/src
+GCC_INC_FLAGS += -I$(AIE_SRC_REPO)/xrt_inputs
+GCC_INC_FLAGS += -I$(DSPLIB_ROOT)/L1/src/aie
+GCC_INC_FLAGS += -I$(DSPLIB_ROOT)/L1/include/aie
+GCC_INC_FLAGS += -I$(DSPLIB_ROOT)/L2/include/aie
 
-GCC_LIB_INC += -L=$(SDKTARGETSYSROOT)/usr/lib
 
-GCC_LIB := -lxrt_coreutil 
+GCC_INC_LIB += -L$(SDKTARGETSYSROOT)/usr/lib
+GCC_INC_LIB += -L$(XILINX_VITIS)/aietools/lib/aarch64.o
+GCC_INC_LIB += -L$(XILINX_VITIS)/aietools/lib/lnx64.o
+
+GCC_LIB := -ladf_api_xrt
+GCC_LIB += -lxrt_coreutil
 
 # =========================================================
 # Kernel Compiler and Linker Flags
 # =========================================================
 VPP_FLAGS := --platform $(PLATFORM)
-VPP_FLAGS += --include $(PL_SRC_REPO)
 VPP_FLAGS += --save-temps
 VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
-VPP_FLAGS += --verbose 
+VPP_FLAGS += --verbose
 VPP_FLAGS += -g
-
-FIR_KERNEL_VPP_FLAGS  := --hls.pre_tcl $(MAKEFILES_REPO)/hls_pre.tcl
-FIR_KERNEL_VPP_FLAGS  += --hls.clock $(VPP_CLOCK_FREQ):$(FILTER_KERNEL_NAME)
 
 MM2S_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(MM2S_KERNEL_NAME)
 S2MM_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(S2MM_KERNEL_NAME)
@@ -188,22 +215,18 @@ S2MM_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(S2MM_KERNEL_NAME)
 VPP_LINK_FLAGS := --clock.defaultTolerance 0.001
 VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(MM2S_KERNEL_NAME)_0
 VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(S2MM_KERNEL_NAME)_0
-VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(FILTER_KERNEL_NAME)_0
 
 ifeq ($(EN_TRACE),1)
 VPP_LINK_FLAGS += --profile.trace_memory DDR
 VPP_LINK_FLAGS += --profile.data $(S2MM_KERNEL_NAME):$(S2MM_KERNEL_NAME)_0:s
 VPP_LINK_FLAGS += --profile.data $(MM2S_KERNEL_NAME):$(MM2S_KERNEL_NAME)_0:s
-VPP_LINK_FLAGS += --profile.data fir_dsp:fir_dsp_0:StreamIn
-VPP_LINK_FLAGS += --profile.data fir_dsp:fir_dsp_0:StreamOut
+VPP_LINK_FLAGS += --profile.data ai_engine_0.DataIn
+VPP_LINK_FLAGS += --profile.data ai_engine_0.DataOut
 endif
-
-#VPP_LINK_FLAGS += --vivado.synth.jobs 16
-#VPP_LINK_FLAGS += --vivado.impl.jobs  16
 
 # =========================================================
 # Packaging Flags
-# ========================================================
+# =========================================================
 PKG_FLAGS := -t $(TARGET)
 PKG_FLAGS += --save-temps
 PKG_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
@@ -211,11 +234,12 @@ PKG_FLAGS += -f $(PLATFORM)
 PKG_FLAGS += --package.rootfs $(XLNX_VERSAL)/rootfs.ext4
 PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
-PKG_FLAGS += --package.out_dir $(BUILD_TARGET_DIR)/package
+PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
-PKG_FLAGS += --package.sd_file $(APP_ELF) $(XCLBIN) $(PROJECT_REPO)/$(EMBEDDED_HW_EMU_EXEC_SCRIPT)
+PKG_FLAGS += --package.sd_file $(APP_ELF) $(XCLBIN) $(LIBADF_A)
+PKG_FLAGS += --package.sd_file $(PROJECT_REPO)/$(EMBEDDED_HW_EMU_EXEC_SCRIPT)
 
-ifneq ($(EN_TRACE),0)
+ifeq ($(EN_TRACE),1)
 
    PKG_FLAGS += --package.sd_file $(PROJECT_REPO)/xrt.ini
 
@@ -227,85 +251,111 @@ ifdef XRT_ROOT
 
 endif
 
+PKG_FLAGS += --package.defer_aie_run
+
+
 # =========================================================
 # Step 1. Kernel XO File Generation
 # =========================================================
-# This step compiles the HLS C PL kernels. 
+# This step compiles the HLS C PL kernels.
 # Outputs: in build/[hw_emu | hw]/ directory
-# 	[fir_dsp | mm2s | s2mm].[hw_emu | hw].xo  
-#	[fir_dsp | mm2s | s2mm].[hw_emu | hw].xo.compile_summary  
-#	v++_[fir_dsp | mm2s | s2mm].[hw_emu | hw].log
+# 	[mm2s | s2mm].[hw_emu | hw].xo 
+#	[mm2s | s2mm].[hw_emu | hw].xo.compile_summary 
+#	v++_[mm2s | s2mm].[hw_emu | hw].log
 #	_x
-kernels: $(FILTER_KERNEL_XO)	\
-	 $(S2MM_KERNEL_XO)	\
+kernels: $(S2MM_KERNEL_XO) 	\
 	 $(MM2S_KERNEL_XO)
-
-$(FILTER_KERNEL_XO): $(FILTER_KERNEL_SRC)   $(FILTER_KERNEL_H)
-	python create_fir_coefs.py -dsp  $(N_FIR_FILTERS)  $(N_FIR_TAPS)  $(IMPULSE_AREA)   > $(SYSTEM_SETTINGS_H)
-	mkdir -p $(BUILD_TARGET_DIR); \
-	cd $(BUILD_TARGET_DIR); \
-	v++ --target $(TARGET) $(FIR_KERNEL_VPP_FLAGS)  $(VPP_FLAGS) -c -k $(FILTER_KERNEL_NAME) $(FILTER_KERNEL_SRC) -o $@
 
 $(S2MM_KERNEL_XO): $(S2MM_KERNEL_SRC)
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
-	v++ --target $(TARGET) $(S2MM_KERNEL_VPP_FLAGS) $(VPP_FLAGS) -c -k $(S2MM_KERNEL_NAME)   $(S2MM_KERNEL_SRC) -o $@   
+	v++ --target $(TARGET) $(S2MM_KERNEL_VPP_FLAGS) $(VPP_FLAGS) -c -k $(S2MM_KERNEL_NAME) $(S2MM_KERNEL_SRC) -o $@   
 
 $(MM2S_KERNEL_XO): $(MM2S_KERNEL_SRC)
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
-	v++ --target $(TARGET) $(MM2S_KERNEL_VPP_FLAGS) $(VPP_FLAGS) -c -k $(MM2S_KERNEL_NAME)   $(MM2S_KERNEL_SRC) -o $@   
+	v++ --target $(TARGET) $(MM2S_KERNEL_VPP_FLAGS) $(VPP_FLAGS) -c -k $(MM2S_KERNEL_NAME) $(MM2S_KERNEL_SRC) -o $@   
 
 # =========================================================
-# Step 2. XCLBIN File Generation
+# Step 2. AI Engine SDF Graph File and Work/ Directory
+#         (containing the Graph Executable) Generation
 # =========================================================
-# This step links the kernels into a xclbin file. 
+# This step creates an SDF Graph and the Work/ directory.
+# The Work/ directory contains the graph executable
+# (fir.o) which is used in the make xclbin step. 
+# The aiecompiler is invoked with the -target=hw.
+# Outputs: in build/ directory
+#	libsdf.a
+#	NOC_Power.xpe
+#	Work/
+#	xnwOut/
+graph: $(LIBADF_A)
+
+$(LIBADF_A): $(GRAPH_SRC_CPP)
+	echo "$(N_FIR_FILTERS) FIR Filters in Graph; each with $(N_FIR_TAPS) Taps"
+	python create_fir_coefs.py  -aie  $(N_FIR_FILTERS)  $(N_FIR_TAPS)   $(IMPULSE_AREA)   $(FIR_WINDOW_SIZE)   > $(GRAPH_SETTINGS_H)
+	mkdir -p $(BUILD_DIR); 	\
+	cd $(BUILD_DIR); 	\
+	aiecompiler $(AIE_FLAGS) $(GRAPH_SRC_CPP)
+
+py_test:
+	echo "$(N_FIR_FILTERS) FIR Filters in Graph; each with $(N_FIR_TAPS) Taps"
+	python create_fir_coefs.py  -aie  $(N_FIR_FILTERS)  $(N_FIR_TAPS)   $(IMPULSE_AREA)   $(FIR_WINDOW_SIZE)   > $(GRAPH_SETTINGS_H)
+	more $(GRAPH_SETTINGS_H)
+
+# =========================================================
+# Step 3. XCLBIN File Generation
+# =========================================================
+# This step links the graph executable (fir_aie.o) and
+# the kernels into a xclbin file.
 # Outputs: in build/[hw_emu | hw]/ directory
-#	vck190_dsp_fir.[hw_emu | hw].xclbin
-#	vck190_dsp_fir.[hw_emu | hw].xclbin.info
-#	vck190_dsp_fir.[hw_emu | hw].xclbin.link_summary
-#	vck190_dsp_fir.[hw_emu | hw].xsa
-#	vck190_dsp_fir.[hw_emu | hw].log
+#	vck190_aie_fir.[hw_emu | hw].xclbin
+#	vck190_aie_fir.[hw_emu | hw].xclbin.info
+#	vck190_aie_fir.[hw_emu | hw].xclbin.link_summary
+#	vck190_aie_fir.[hw_emu | hw].xsa
+#	vck190_aie_fir.[hw_emu | hw].log
 xclbin: $(XCLBIN)
 
 $(XCLBIN): $(S2MM_KERNEL_XO)	\
 	   $(MM2S_KERNEL_XO)	\
-           $(FILTER_KERNEL_XO)
-	cd $(BUILD_TARGET_DIR);	\
+	   $(LIBADF_A)
+	cd $(BUILD_TARGET_DIR);		\
 	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) --config $(MAKEFILES_REPO)/system.cfg -t $(TARGET) -o $@ 	\
 		$(S2MM_KERNEL_XO)	\
 		$(MM2S_KERNEL_XO)	\
-		$(FILTER_KERNEL_XO)
+		$(LIBADF_A)
 
 # =========================================================
-# Step 3. A72 Application Executable File Generation
+# Step 4. A72 Application Executable File Generation
 # =========================================================
-# This step compiles the A72 application. This step is the  
+# This step compiles the A72 application. This step is the 
 # same for TARGET=[hw_emu | hw]. Compile the PS code.
 # Outputs: in build/ directory
-#	fir_dsp_app.o 
-# 	fir_dsp_xrt.elf
+# 	aie_control.o
+#	fir_aie_app.o
+# 	fir_aie_xrt.elf
 application:
-	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/fir_dsp_app.o $(GCC_LIB_INC) $(GCC_LIB)
-	$(CXX) $(BUILD_DIR)/fir_dsp_app.o $(GCC_LIB_INC) $(GCC_LIB) -o $(APP_ELF)
+	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_DIR)/app_control.o
+	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/fir_aie_app.o $(GCC_INC_LIB) $(GCC_LIB)
+	$(CXX) $(BUILD_DIR)/app_control.o $(BUILD_DIR)/fir_aie_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(APP_ELF)
 
 # =========================================================
-# Step 4. Package Generation  
+# Step 5. Package Generation 
 # =========================================================
-# This step generates the package folder which contains the 
-# ./launch_hw_emu.sh script to launch hardware emulation 
-# if TARGET=hw_emu and the sd_card.img file.  
-# Outputs: in build/[hw_emu | hw]/ directory 
+# This step generates the package folder which contains the
+# ./launch_hw_emu.sh script to launch hardware emulation
+# if TARGET=hw_emu and the sd_card.img file. 
+# Outputs: in build/[hw_emu | hw]/ directory
 # 	a.xclbin
 # 	package/ directory
 # 	v++.package_summary
-# 	v++_package.log 
+# 	v++_package.log
 package:
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p $(PKG_FLAGS)
 
 # =========================================================
-# Step 5. Run Hardware Emulation  
+# Step 6. Run Hardware Emulation 
 # =========================================================
 # If the target is for HW_EMU, launch the emulator
 # If the target is for HW, you'll have to follow the
@@ -324,7 +374,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -no-reboot -run-app $(EMBEDDED_HW_EMU_EXEC_SCRIPT) | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 86400 | tee embedded_run.log
 
 endif
 else
@@ -338,7 +388,7 @@ else
 endif
 
 # =========================================================
-# Step 6. Report Utilization Metrics
+# Step 7. Report Utilization Metrics
 # =========================================================
 # If the target is HW, this generates the power and resource
 # utilization metrics.
@@ -348,8 +398,8 @@ ifeq ($(TARGET),hw_emu)
 else
 	mkdir -p $(REPORT_DIR)
 	vivado -mode batch -source report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
-	mv utilization.txt $(REPORT_DIR)/$(BUILD_VERSION)_utilization.txt
-	mv power.txt       $(REPORT_DIR)/$(BUILD_VERSION)_power.txt	
+	mv utilization.txt  $(REPORT_DIR)/$(BUILD_VERSION)_utilization.txt
+	mv power.txt        $(REPORT_DIR)/$(BUILD_VERSION)_power.txt	
 endif
 
 
@@ -366,9 +416,9 @@ endif
 
 #Build the design without running the hardware emulation
 
-sd_card: kernels xclbin application package
+sd_card: kernels graph xclbin application package
 
-#Build the design and then run hardware emulation 
+#Build the design and then run hardware emulation
 run: sd_card run_emu
 
 #Same as "run" above, but include metrics generation

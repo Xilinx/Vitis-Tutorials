@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal AI Engine/DSP FIR Filter Tutorial (DSP Implementation)</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -498,10 +498,10 @@ After execution completes and the testcase passes data integrity check, 'TEST PA
 
 # Hardware Design Details
 <details>
-<summary>FIR Filter DSP Implementation Architecture</summary>
+<summary>FIR Filter HLS Implementation Architecture</summary>
 
-## FIR Filter DSP Implementation Architecture
-The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR memory to store input and output vectors. This setup is maintained in the two implementations (using DSP in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and FIR filter chain PL kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels at 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
+## FIR Filter HLS Implementation Architecture
+The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR memory to store input and output vectors. This setup is maintained in the two implementations (using HLS with DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and the FIR filter chain PL kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels is 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
 
 ![Image of FIR Filter DSP implementation architecture](images/fir_dsp_block_diagram.png)
 
@@ -522,7 +522,7 @@ To see a schematic view of the design with the extended platform as shown in the
 
 ![Image of FIR Filter DSP Platform schematic](images/fir_dsp_vivado.png)
 
-The actual FIR filter chain itself is implemented in a HLS PL kernel, which connects the specified number of filters together in a chain.  For purposes of simplicity in benchmarking, all the filters in the chain are identical, though it is unlikely such a chain would be used in a practical application.
+The actual FIR filter chain itself is implemented in a HLS PL kernel, which connects the specified number of filters together in a chain.  For purposes of simplicity in comparing the designs, all the filters in the chain are identical, though it is unlikely such a chain would be used in a practical application.
 
 Notice the system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine run-time trace data if the EN_TRACE option is enabled in the design. The mm2s/s2mm kernels and the AI Engine array interface are both operating at 300 MHz.
 
@@ -532,7 +532,7 @@ Notice the system debugging and profiling IP (DPA) is added to the PL region of 
 <summary>HLS PL Kernels</summary>
 
 ## HLS PL Kernels
-In the DSP implementation of the FIR Filter design, the AI Engine is not used and therefore there are no AI Engine-related kernels and graphs. The compute and datamover functions are implemented as HLS kernels in the PL region.
+In the HLS implementation of the FIR Filter design, the AI Engine is not used and therefore there are no AI Engine-related kernels and graphs. The compute and datamover functions are implemented as HLS kernels in the PL region.
 
 The PL kernel `fir_dsp` implements the FIR filter chain.  It contains a single AXI-stream input port and a single AXI-stream output port.  Since the FIR function requires no initialization, no additional control/status ports are required.
 
@@ -550,18 +550,18 @@ Some additional details regarding the data mover kernels include:
 </details>
 
 # Software Design Details
-The software design in the FIR Filter DSP implementation consists of the following sections:
+The software design in the FIR Filter HLS implementation consists of the following sections:
 
 <details>
 <summary>PL Kernels</summary>
 
 ## PL Kernels
-For the DSP implementation of this design, the data mover kernels and the FIR filter chain are all implmented in HLS.
+For the HLS implementation of this design, the data mover kernels and the FIR filter chain are all implmented in HLS.
 
 ### fir_dsp (fir_dsp.cpp)
 The fir_filter kernel consists of a single AXI-stream input and AXI-stream output.  The kernel makes use of the FIR Compiler IP, the same one that can be instantiated as an IP in Vivado tools. In HLS, it is instantiated as an object in the HLS code, and then cascaded together into a chain by the design.
 
-The following include allows us to utilize the FIR compiler interface provided in the HLS IP libraries from the Vitis HLS Libraries Reference:
+The following include allows us to utilize the FIR Compiler interface provided in the HLS IP libraries from the Vitis HLS Libraries Reference:
 ```
 #include <hls_fir.h>
 ```   
@@ -723,7 +723,7 @@ The s2mm kernel has a `for` loop that is a candidate for burst write because the
 <summary>PS Host Application</summary>
 
 ## PS Host Application
-The FIR filter DSP tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application. Note that unlike the AI Engine implementation, there are no AI Engine graphs and associated control code.
+The FIR filter HLS(DSP) tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application. Note that unlike the AI Engine implementation, there are no AI Engine graphs and associated control code.
 
 Within the PS host application, two classes are defined ((mm2s_class and s2mm_class), which defines methods used to control and monitor the corresponding kernels.
 
@@ -748,7 +748,7 @@ A single data file is provides data to stimulate the filter chain.  However, the
 ```
 
 ### Define Data Sizes
-For the benchmarking aspect of this design, it is desirable to have a small data set to be able to run it through simulation, and a large data set to run through hardware to minimize the effects of measurement errors on determining the performance metrics.  This has been done by providing a small 8k sample of input data (I and Q samples) in which the data repeats twice. The application code then copies the data into potentially much larger buffer, using REPEAT_OFFSET to determine where the data begins to repeat itself, and REPETITIONS to copy from this point forward to the end of the buffer the specified number of times.  Having two cycles of data and a fixed offset (REPEAT_OFFSET) is necessary to allow the filter's start-up transient to settle out and reach a steady state for subsequent cycles. Likewise, FLUSH_SAMPLES specifies the number of zero samples to add to the end of the buffer to clear out the FIR filter, so the application can be run multiple times.
+To enable comparing of the 2 implementations of this design, i.e. AIE and HLS implementation, it is desirable to have a small data set to be able to run it through simulation, and a large data set to run through hardware to minimize the effects of measurement errors on determining the performance metrics.  This has been done by providing a small 8k sample of input data (I and Q samples) in which the data repeats twice. The application code then copies the data into potentially much larger buffer, using REPEAT_OFFSET to determine where the data begins to repeat itself, and REPETITIONS to copy from this point forward to the end of the buffer the specified number of times.  Having two cycles of data and a fixed offset (REPEAT_OFFSET) is necessary to allow the filter's start-up transient to settle out and reach a steady state for subsequent cycles. Likewise, FLUSH_SAMPLES specifies the number of zero samples to add to the end of the buffer to clear out the FIR filter, so the application can be run multiple times.
 
 ```
 #define SAMPLES_PER_WORD   4

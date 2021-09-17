@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal AI Engine/DSP FIR Filter Tutorial (AI Engine Implementation)</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -588,7 +588,7 @@ After execution completes and the testcase passes data integrity check, 'TEST PA
 <summary>FIR Filter AI Engine Implementation architecture and  AI Engine/PL Function Partitioning</summary>
 
 ## FIR Filter AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
-The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR to store input and output vectors. This setup is maintained in the two implementations (using AI Engine in this section of the tutorial and DSP in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and AI Engine kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels at 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
+The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR to store input and output vectors. This setup is maintained in the two implementations (using AI Engine in this section of the tutorial and HLS & DSPs in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and AI Engine kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels are 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
 
 ![Image of FIR Filter AIE implementation architecture](images/fir_aie_block_diagram.png)
 
@@ -619,7 +619,7 @@ Notice the system debugging and profiling IP (DPA) is added to the PL region of 
 <summary>AI Engine and PL Kernels</summary>
 
 ## AI Engine and PL Kernels
-The top level AI Engine graph fir_aie_graph.h instantiates the symmetric FIR filter for the DSPLib library and uses a `for` loop to connect them all together in a chain. The file fir_aie_graph.cpp instantiates the filter chain, and connects it to the AI Engine's  128-bit PLIO interfaces.
+The top level AI Engine graph fir_aie_graph.h instantiates the symmetric FIR filter from the AI Engine DSP library, (DSPLib), and uses a `for` loop to connect them all together in a chain. The file fir_aie_graph.cpp instantiates the filter chain, and connects it to the AI Engine's  128-bit PLIO interfaces.
 
 The PL-based data movers consist of MM2S and S2MM kernels. The MM2S move data from DDR memory through the NoC to the AI Engine array and the final FIR output from the AI Engine array is moved back to DDR memory through the NoC by the S2MM kernel. In either data mover kernel, the side facing NoC uses a memory mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine array uses an AXI4-Stream interface.
 Some additional details regarding the data mover kernels include:
@@ -658,7 +658,7 @@ The following figures show the graph representation of the AI Engine kernels (N_
 
 This section describes the overall data-flow graph specification of the FIR filter design using AI Engine which is compiled by the AI Engine compiler. Refer to [AI Engine Programming Section in the AI Engine Documentation](#ai-engine-documentation) for information on ADF graphs.
 
-The overall graph definition of the design is contained in the `fir_aiegraph.cpp` file. The top level graph in turns contains the subgraph, `fir_aie_graph.h`, which is described the following subsection.
+The overall graph definition of the design is contained in the `fir_aiegraph.cpp` file. The top level graph in turns contains the subgraph, `fir_aie_graph.h`, which is described in the following subsection.
 
 ### Define the Graph Class
 Define the FIR graph class by using the objects defined in the appropriate name space. It must include the ADF library. To access ADF library elements, the following declaration is used to scope into it:
@@ -706,7 +706,7 @@ This is done by using the templated connect<> object. For our cascaded chain, th
 ```
 
 ### Top Level Application
-Define a top level application file (`fir_aie_graph.cpp` in this design) specifies the top level port connectivity (the PLIO objects, which also have file names provided for simulation purposes). It then creates a platform object, connecting up the PLIO objects to it. It also creates an instance of the `FirGraph` graph, and connects the FilterChain to the platform's IOs
+Define a top-level application file (`fir_aie_graph.cpp` in this design) specifies the top level port connectivity (the PLIO objects, which also have file names provided for simulation purposes). It then creates a platform object, connecting up the PLIO objects to it. It also creates an instance of the `FirGraph` graph, and connects the FilterChain to the platform's IOs
 that contains an instance of the graph class and connects the graph to a simulation platform to provide file input and output:
 ```
 PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"data/fir_input_128b.txt");
@@ -825,7 +825,7 @@ A single data file is provides data to stimulate the filter chain.  However, the
 ```
 
 ### Define Data Sizes
-For the benchmarking aspect of this design, it is desirable to have a small data set to be able to run it through simulation, and a large data set to run through hardware to minimize the effects of measurement errors on determining the performance metrics. This has been done by providing a small 8k sample of input data (I and Q samples) in which the data repeats twice. The application code then copies the data into potentially much larger buffer, using REPEAT_OFFSET to determine where the data begins to repeat itself, and REPETITIONS to copy from this point forward to the end of the buffer the specified number of times. Having two cycles of data and a fixed offset (REPEAT_OFFSET) is necessary to allow the filter's start-up transient to settle out and reach a steady state for subsequent cycles. Likewise, FLUSH_SAMPLES specifies the number of zero samples to add to the end of the buffer to clear out the FIR filter, so the application can be run multiple times.
+To enable comparing of the 2 implementations of this design, i.e. AIE and HLS implementation, it is desirable to have a small data set to be able to run it through simulation, and a large data set to run through hardware to minimize the effects of measurement errors on determining the performance metrics. This has been done by providing a small 8k sample of input data (I and Q samples) in which the data repeats twice. The application code then copies the data into potentially much larger buffer, using REPEAT_OFFSET to determine where the data begins to repeat itself, and REPETITIONS to copy from this point forward to the end of the buffer the specified number of times. Having two cycles of data and a fixed offset (REPEAT_OFFSET) is necessary to allow the filter's start-up transient to settle out and reach a steady state for subsequent cycles. Likewise, FLUSH_SAMPLES specifies the number of zero samples to add to the end of the buffer to clear out the FIR filter, so the application can be run multiple times.
 
 ```
 #define SAMPLES_PER_WORD   4

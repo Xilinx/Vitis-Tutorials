@@ -127,10 +127,10 @@ EMBEDDED_EXEC_SCRIPT := run_script.sh
 
 ######################################
 # When TARGET=hw_emu, hw_emu launch...
-# 1 = Enabled (Default).
-# 0 = Disabled.
+# 0 = Disabled (Default).
+# 1 = Enabled.
 ######################################
-LAUNCH_HW_EMU_EXEC := 1
+LAUNCH_HW_EMU_EXEC := 0
 
 # Print all options passed to Makefile
 print-%  : ; @echo $* = $($*)

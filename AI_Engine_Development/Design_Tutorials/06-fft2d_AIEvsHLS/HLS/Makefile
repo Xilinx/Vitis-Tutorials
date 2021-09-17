@@ -126,10 +126,10 @@ EMBEDDED_EXEC_SCRIPT := run_script.sh
 
 ######################################
 # When TARGET=hw_emu, hw_emu launch...
-# 1 = Enabled (Default).
-# 0 = Disabled.
+# 0 = Disabled (Default).
+# 1 = Enabled.
 ######################################
-LAUNCH_HW_EMU_EXEC := 1
+LAUNCH_HW_EMU_EXEC := 0
 
 # Print all options passed to Makefile
 print-%  : ; @echo $* = $($*)
@@ -460,7 +460,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 57600 | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 86400 | tee embedded_run.log
 
 endif
 else

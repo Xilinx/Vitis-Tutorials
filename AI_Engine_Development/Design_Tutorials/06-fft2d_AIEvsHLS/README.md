@@ -13,9 +13,11 @@
 
 [Design Implementations](#Design-Implementations)
 
-[AI Engine and DSP Implementation Comparison](#ai-engine-and-dsp-implementation-comparison)
+[AI Engine and HLS Implementation Comparison](#AI-Engine-and-HLS-Implementation-Comparison)
 
-[References](#references)
+[References](#References)
+
+[Known Issues](#Known-Issues)
 
 # Introduction
 
@@ -25,7 +27,7 @@ The Versal™ ACAP is a a fully software programmable, heterogeneous compute pla
 - Adaptable Engines (programmable logic (PL) and memory)
 - Intelligent Engines (including both including both AI and DSP Engines)
 
-This tutorial performs two implementations of a system-level design using AI Engine in one and the DSP Engine in the other. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.
+This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with HLS using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.
 
 A Makefile is provided for each implementation. It can be used to create the design for various point sizes (32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048), different numbers of fft_2d kernel graph instances (1, 5 and 10), and different targets (hw_emu and hw).
 
@@ -38,16 +40,16 @@ The design documentation demonstrates hardware and software design details inclu
 
 After completing the tutorial, you should be able to:
 
-* Develop a system-level 2D-FFT design by identifying an algorithm and deploying it on AI Engines or PL and DSP Engines. 
-* Build a complete system design by going through the following steps in the Vitis™ unified software platform flow:
+* Develop a system-level 2D-FFT design by identifying an algorithm and deploying it on AI Engines or PL and DSP Engines using Vitis™ HLS. 
+* Build a complete system design by going through the following steps in the Vitis flow:
   * Create the AI Engine Adaptive Data Flow API (ADF) graph.
   * Compile the A72 host application and compiling PL kernels.
   * Use the Vitis compiler (V++) to link the AI Engine and HLS kernels with the platform.
   * Package the design.
   * Run the design through the hardware emulation and hardware flow in a mixed SystemC/RTL cycle-accurate/QEMU-based simulator.
-* Develop a consistent harness to have the data mover kernels maintain a similar interface with AI Engine/DSP kernels (using AXI4-Stream).
+* Develop a consistent harness to have the data mover kernels maintain a similar interface with AI Engine or HLS/PL kernels (using AXI4-Stream).
 * Understand graph control APIs for AI Engine implementation and HLS APIs for controlling HLS/PL kernels.
-* Understand the methodological differences between a design created using AI Engines and a design created using PL and DSP Engines.
+* Understand the methodological differences between a design created using AI Engines and a design created using PL and DSP Engines via HLS.
 * Understand metrics including utilization, performance/throughput, and power across various instances of FFT arrays of different dimensions.
 
 </details>
@@ -75,13 +77,13 @@ x_2fft - x_col         % Calculate the error difference
 
 In calculating each 1D-FFT, one dimension is kept constant while the other is computed. The transpose function is applied after each 1D-FFT compute. The transpose function moves the entry along each element of the dimension to the corresponding element of the other dimension. A golden data set is generated as reference and the error difference is calculated.
 
-A similar algorithm is deployed in the two implementations using either AI Engines or PL and DSP Engines. The design compiles through Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value=1) input to the row-wise 1D-FFT and check its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).
+A similar algorithm is deployed in the two implementations using either the AI Engines or HLS targeting the PL and DSP Engines. The design compiles through Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value=1) input to the row-wise 1D-FFT and check its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).
 
 The transposed pattern of that, generated within the PL, is then streamed as input to the col-wise 1D-FFT. Its output is then checked against the expected output (all 1s). The data mover kernel returns the total error count in both stages to the host application, which is used to declare a pass or fail of the test case.
 
-To help you compare the methodology of the AI Engine and DSP Engine based implementations, the design build process can be modified to analyze how each implementation scales with different numbers of instances (x1, x5, and x10) of various matrix array dimensions (rows x cols = 32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048). 
+To help you compare the methodology of the AI Engine and HLS based implementations, the design build process can be modified to analyze how each implementation scales with different numbers of instances (x1, x5, and x10) of various matrix array dimensions (rows x cols = 32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048). 
 
-A similar set of harnesses is developed and maintained between the two implementations. This allows you to generate and check input/output vectors using the PL-based data mover kernels, and to move data to and from the AI and DSP Engine kernels. In both cases, Xilinx Runtime (XRT) running on A-72 controls data flow in compute and data mover kernels through graph control APIs. These graph control APIs control the AI Engine kernels and HLS APIs, which in turn control the HLS/PL kernels.
+A similar set of harnesses is developed and maintained between the two implementations. This allows you to generate and check input/output vectors using the PL-based data mover kernels, and to move data to and from the AI and HLS kernels. In both cases, Xilinx Runtime (XRT) running on A72 controls data flow in compute and data mover kernels through graph control APIs. These graph control APIs control the AI Engine kernels and HLS APIs, which in turn control the HLS/PL kernels.
 
 </details>
 
@@ -89,8 +91,9 @@ A similar set of harnesses is developed and maintained between the two implement
   <summary>Directory Structure</summary> 
 	
 ## Directory Structure
+
 ```
-fft2d_AIEvsDSP
+fft2d_AIEvsHLS
 |__AIE......................contains AI Engine implementation
 |    |Makefile....................with recipes for each step of the design compilation
 |    |images......................contains images used for AI Engine Design documentation
@@ -103,7 +106,7 @@ fft2d_AIEvsDSP
 |    |       |system_configs.............contains all system configuration files
 |    |       |profiling_configs..........contains xrt.ini file
 |    |       |hw_emu_files...............contains hw_emu launch script
-|__DSP......................contains DSP implementation
+|__HLS......................contains HLS implementation targeting PL and DSP Engines
 |    |Makefile....................with recipes for each step of the design compilation
 |    |images......................contains images used for DSP Design documentation
 |    |description.json............required for XOAH
@@ -124,7 +127,7 @@ fft2d_AIEvsDSP
 	
 <summary>Documentation: Explore AI Engine Architecture</summary> 
 
-## *Documentation*: Explore AI Engine Architecture
+## Documentation: Explore AI Engine Architecture
 
 * [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
 
@@ -139,13 +142,11 @@ fft2d_AIEvsDSP
 	
 ## Installing the Tools
 
-Tools Documentation: 
-
-* [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
+* [AI Engine Tools Lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
 * [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021.1/vitis_doc/yii1603912637443.html)
 
-To build and run the 2D-FFT tutorial (AI Engine and DSP implementations), perform the following steps:
+To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perform the following steps:
 
 * Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021.1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401).
 
@@ -235,37 +236,37 @@ The output of the above command should be as follows:
 
 # Design Implementations
 
-The Makefile and source files for the AI Engine and DSP implementations are in the `AIE` and `DSP` directories respectively. For the documentation of the flow to build the design and details of the hardware and software design, follow each of the links below:
+The Makefile and source files for the AI Engine and HLS implementations are in the `AIE` and `DSP` directories respectively. For the documentation of the flow to build the design and details of the hardware and software design, follow each of the links below:
 
 * [AI Engine design implementation](AIE)
-* [DSP design implementation](DSP)
+* [HLS design implementation with DSP Engines](HLS)
 
-# AI Engine and DSP Implementation Comparison
+# AI Engine and HLS Implementation Comparison
 
-The following table shows a comparison between a 1024 x 2048 point 10-instance FFT-2D design implemented using the AI and DSP Engines respectively. It lists the throughput, resource utilization, power comsumption, and performance in throughput/Watt.
+The following table shows a comparison between a 1024 x 2048 point 10-instance FFT-2D design implemented using the AI Engines and HLS with DSP Engines respectively. It lists the throughput, resource utilization, power consumption, and performance in throughput/Watt.
 
 | Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 5835.315                           | 1770.840                | 20               | 76%             | 396 /<br/>20%                        | 56               | 11720 /<br/> 4154         | 0     | 0    | 5081                      | 1148.46                                 |
-| DSP           | 4995.440                           | 2107.723                | NA               | NA              | NA                                   | NA               | 108471 /<br/> 70475       | 335   | 180  | 7875                      | 634.34                                  |
+| AIE           | 6012.822                           | 3487.8                  | 20               | 76%             | 396 /<br/>20%                        | 56               | 11720 /<br/> 4154         | 0     | 0    | 5081                      | 1183.393                                |
+| HLS           | 4985.077                           | 4206.860                | NA               | NA              | NA                                   | NA               | 108471 /<br/> 70475       | 335   | 180  | 7875                      | 633.026                                 |
 
 
 These observations give a clear indication of where the AI Engines in Versal can offer improvements:
 
 * An almost 20% improvement on the aggregate throughput.
 * Reduced latency by ~20%.
-* Performance increase of ~2x to 1148 MSPS/Watt.
+* Performance increase of ~2x to 1183 MSPS/Watt.
 * Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~108K FFs, ~70K LUTs and 335 BRAMs are reduced to just 56 AI Engines, 11k FFs, and 4K LUTs.
 
 It is important to understand that those 56 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 36 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 36 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/maproutemethod.html#mcq1622542393364) for details on the AI Engine mapper/router).
 
-Additionally, further increasing the number of instances in the AI Engine design is easier compared to the DSP design, which will run into timing closure issues, especially for higher FFT point size designs.
+Additionally, further increasing the number of instances in the AI Engine design is easier compared to the HLS design, which will run into timing closure issues, especially for higher FFT point size designs.
 
 **Measurement:**
 
-1. AI Engine design resource utilization is measured using Xilinx Power Estimator (XPE) and Vivado (report utilization under implementation for FFs and CLB LUTs). For the DSP design, resource utilization is measured using Vivado.
-2. AI Engine power consumption is measured using XPE. DSP power consumption is measured using Vivado (report power under implementation).
-3. Throughput is measured using viewing runtime profiling generated trace texts in Vitis Analyzer.
+1. AI Engine design resource utilization is measured using Xilinx Power Estimator (XPE) and Vivado (report utilization under implementation for FFs and CLB LUTs). For the HLS design, resource utilization is measured using Vivado.
+2. AI Engine power consumption is measured using XPE. HLS power consumption is measured using Vivado (report power under implementation).
+3. Throughput is measured using viewing runtime profiling generated trace texts in `vitis_analyzer`.
 
 For detailed instructions on taking measurements of the parameters, refer to the individual implementation section.
 
@@ -300,6 +301,10 @@ Below are links to Vitis related information referenced in this tutorial:
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
 * [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html)
+
+# Known Issues
+
+The timestamps represented in the hardware execution generated trace, have known a issue due to which they are scaled compared to the actual. This issue will be fixed in the subsequent tool versions. All calculations/observations in this tutorial are based on the hw_emu runs.
 
 # Support
 
