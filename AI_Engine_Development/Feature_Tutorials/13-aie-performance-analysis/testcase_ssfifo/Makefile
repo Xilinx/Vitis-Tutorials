@@ -11,7 +11,7 @@
 #limitations under the License.
 #
 TARGET   = hw_emu
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
 XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 HOST_EXE = host.exe
 
