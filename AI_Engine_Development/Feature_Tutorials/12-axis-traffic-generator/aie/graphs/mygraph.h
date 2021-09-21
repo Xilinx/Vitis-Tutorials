@@ -40,17 +40,15 @@ class mygraph : public graph {
       source(passth_i)           = "../kernels/pass_thru.cc";
       runtime<ratio>(passth_i)   = 0.9;
       
-
       /* No FFT */
       /*
       connect< stream, window<IN_SIZE*4> > net0  (in, passth_i.in[0]);
       connect< window<IN_SIZE * 4> > net1 (passth_i.out[0], out);
       */
 
-      
       connect< stream, window<IN_SIZE*4> > net0  (in, passth_i.in[0]);
-      connect< window<IN_SIZE*4> > net1 (passth_i.out[0], fwd_fft.in);
-      connect< window<IN_SIZE*4> > net2 (fwd_fft.out, out);
+      connect< window<IN_SIZE*4> > net1 (passth_i.out[0], fwd_fft.in[0]);
+      connect< window<IN_SIZE*4> > net2 (fwd_fft.out[0], out);
       
     }
 };

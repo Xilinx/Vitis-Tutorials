@@ -11,7 +11,7 @@
 #limitations under the License.
 #
 TARGET   = hw_emu
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm
 XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 HOST_EXE = host.exe
 SDKTARGETSYSROOT ?= ${SYSROOT}
@@ -47,7 +47,7 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_202110_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_202120_1)
 
 guard-ROOTFS:
 	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.1/rootfs.ext4)
