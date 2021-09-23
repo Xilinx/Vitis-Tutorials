@@ -34,7 +34,7 @@
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./README.md">Versal Custom Thin Platform Extensible System </a></td>
+ <td align="center"><a href="./01-Versal_Custom_Thin_Platform_Extensible_System/README.md">Versal Custom Thin Platform Extensible System </a></td>
  <td>Versal VCK190 System Example Design based on a thin custom platform (Minimal clocks and AXI exposed to PL) including HLS/RTL kernels and AI Engine kernel using a full Makefile build-flow.</td>
  </tr>
   </table>
