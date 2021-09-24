@@ -17,7 +17,7 @@
 
 ECHO                     = @echo
 
-REQUIRED_VERSION         = 2021.1
+REQUIRED_VERSION         = 2021.2
 VIVADO_VERSION          := $(shell vivado -version 2>/dev/null | grep "Vivado ")
 VITIS_VERSION           := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 PETALINUX_VERSION       := $(shell which petalinux-build)

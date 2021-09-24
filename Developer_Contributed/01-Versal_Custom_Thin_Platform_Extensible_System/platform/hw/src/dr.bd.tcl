@@ -35,7 +35,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2021.1
+set scripts_vivado_version 2021.2
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
@@ -154,7 +154,7 @@ xilinx.com:ip:ai_engine:2.0\
 xilinx.com:ip:axi_intc:4.1\
 xilinx.com:ip:axi_noc:1.0\
 xilinx.com:ip:smartconnect:1.0\
-xilinx.com:ip:versal_cips:3.0\
+xilinx.com:ip:versal_cips:3.1\
 xilinx.com:ip:clk_wizard:1.0\
 xilinx.com:ip:proc_sys_reset:5.0\
 "
@@ -385,7 +385,7 @@ proc create_root_design { parentCell } {
   ] $axi_smc_0
 
   # Create instance: cips_0, and set properties
-  set cips_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:versal_cips:3.0 cips_0 ]
+  set cips_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:versal_cips:3.1 cips_0 ]
   set_property -dict [ list \
     CONFIG.CLOCK_MODE {Custom} \
     CONFIG.DDR_MEMORY_MODE {Custom} \

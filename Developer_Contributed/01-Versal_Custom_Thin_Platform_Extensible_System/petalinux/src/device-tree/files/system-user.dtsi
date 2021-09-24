@@ -15,47 +15,13 @@
 */ 
 
 /include/ "system-conf.dtsi"
-/include/ "vck190.dtsi"
 / {
-	chosen {
-		stdout-path = "serial0:115200";
-	};
 };
 
-&amba_pl {
-    /delete-node/ interrupt-controller@a4000000;
-};
-
-&amba {
-    axi_intc_0: interrupt-controller@a4000000 {
-        #interrupt-cells = <2>;
-        compatible = "xlnx,axi-intc-4.1", "xlnx,xps-intc-1.00.a";
-        interrupt-controller;
-        interrupt-names = "irq";
-        reg = <0x0 0xa4000000 0x0 0x1000>;
-        interrupt-parent = <&gic>;
-        interrupts = <0 84 4>;
-        xlnx,kind-of-intr = <0x0>;
-        xlnx,num-intr-inputs = <0x20>;
-    };
- 
-    zyxclmm_drm {
-        compatible = "xlnx,zocl-versal";
-        status = "okay";
-        interrupt-parent = <&axi_intc_0>;
-        interrupts = <0  4>, <1  4>, <2  4>, <3  4>,
-                 <4  4>, <5  4>, <6  4>, <7  4>,
-                 <8  4>, <9  4>, <10 4>, <11 4>,
-                 <12 4>, <13 4>, <14 4>, <15 4>,
-                 <16 4>, <17 4>, <18 4>, <19 4>,
-                 <20 4>, <21 4>, <22 4>, <23 4>,
-                 <24 4>, <25 4>, <26 4>, <27 4>,
-                 <28 4>, <29 4>, <30 4>, <31 4>;
-    };
- 
-    memory@0 {
-     device_type = "memory";
-     reg = <0x0 0x0 0x0 0x80000000>;
-    };
+&sdhci1{
+  no-1-8-v;
+  sdhci-caps-mask = <0x00 0x200000>;
+  sdhci-caps = <0x00 0x00>;
+  max-frequency = <0x121eac0>;
 };
 

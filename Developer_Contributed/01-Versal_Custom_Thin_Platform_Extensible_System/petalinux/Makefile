@@ -36,6 +36,7 @@ ${PROJ_NAME}: ${XSA_PATH}
 	make clean
 	make create
 	make update_hw
+	make update_device_tree
 	make update_config
 	make update_build
 	make update_bootimage
@@ -54,7 +55,7 @@ update_hw:
 	cd ${PROJ_NAME} && petalinux-config --get-hw-description=${XSA_PATH} --silentconfig
 
 update_device_tree:
-	cp -r ${SRC_PATH_DEVICE_TREE} ${DEST_PATH_DEVICE_TREE}
+	cp -r ${SRC_PATH_DEVICE_TREE}/* ${DEST_PATH_DEVICE_TREE}/
 
 update_config:
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_SUBSYSTEM_RFS_FORMATS "cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"

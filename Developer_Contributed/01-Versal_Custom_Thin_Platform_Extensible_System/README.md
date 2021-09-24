@@ -6,12 +6,12 @@
 </table>
 
 # Versal Custom Thin Platform Extensible System
-This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Vitis 2021.1.
+This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Vitis 2021.2.
 
 ## Getting Started
 The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
-  1. version_check: Checks if the Vivado, Petalinux, and Vitis version is 2021.1
+  1. version_check: Checks if the Vivado, Petalinux, and Vitis version is 2021.2
   2. board_repo:    Downloads the board files for es1 and pre-production from the Xilinx GitHub 
   3. xsa:           Building the thin platform xsa (only pre-synth)
   4. petalinux:     Building Petalinux and sysroot
@@ -28,7 +28,7 @@ The following diagram explains the build-flow dependencies.
  - The diagram is for illustration only. The actual build-flow is more sequential.
 <img src="./documentation/readme_files/Design_dependencies.svg">
 
-In the [project-root] you can start the full build with `make all` after setting up the 2021.1 version of Vivado, Petalinux and Vitis:
+In the [project-root] you can start the full build with `make all` after setting up the 2021.2 version of Vivado, Petalinux and Vitis:
   - Everything is in the GitHub repository; no extra files are needed.
   - In the [project-root]/Makefile: "export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S-es1" (for es1 version); **change it to xcvc1902-vsva2197-2MP-e-S (for pre-production version)**.
   - End result: `package_output/sd_card/*` can be used for FAT-32 sd_card (partition); or `package_output/sd_card.img` can be used.
@@ -40,7 +40,7 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 <details>
  <summary> make version_check </summary>
  
- -  Checks if the Vivado, Petalinux, and Vitis versions are 2021.1.
+ -  Checks if the Vivado, Petalinux, and Vitis versions are 2021.2.
  
 </details>
 <details>
@@ -219,10 +219,10 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html)
 The following are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/kme1569523964461.html)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
@@ -245,4 +245,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 <p align="center"><sup>XD106 | © Copyright 2021 Xilinx, Inc.</sup></p>
-
