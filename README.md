@@ -52,6 +52,10 @@ Learn how to build custom platforms for Vitis to target your own boards, and how
 Learn how to configure the platform hardware sources, construct the runtime software environment, add support for software and
 hardware emulation, and more.
 
+### [Vitis Developers Contributed Tutorials](./Developer_Contributed)
+
+Vitis-Tutorials repository is not only managed by teams in Xilinx. We welcome your contribution. It can be end-to-end designs. I can also be tips and tricks explanation. They will help people no matter what. Checkout more details and take a look what other developers shared.
+
 ## Other Vitis Tutorial Repositories
 
 ### [Machine Learning Tutorial](https://github.com/xilinx/Vitis-AI-Tutorials) 
