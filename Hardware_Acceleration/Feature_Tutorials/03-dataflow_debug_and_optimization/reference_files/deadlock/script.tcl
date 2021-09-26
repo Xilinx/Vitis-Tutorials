@@ -14,6 +14,43 @@
  # limitations under the License.
 ##
 
+# ##########################################################
+# expect_error
+#
+# Takes a command to run and an expected error 
+# message string (wilcards are supported) and checks 
+# that the error was actually issued in the log file.
+#
+# ##########################################################
+proc expect_error {command errorMsgStr {projClose 1}} {
+    set ret [catch {uplevel 1 $command} err] 
+
+    set log_name vitis_hls.log
+    set report [file join [get_project -directory] .. $log_name]
+
+    if { ![file exists $report] } {
+        error "$report does not exist"
+    }
+
+    set handle [open $report r]
+    set report_buf [read -nonewline $handle]
+    close $handle
+
+    if {[regexp $errorMsgStr $report_buf]} {
+        puts "PASSED: Expected Error Message \"\[$errorMsgStr\]\" received "
+        if {$projClose} { 
+            close_project
+            exit 0
+        }
+    } else {
+        puts "FAILED: Expected Error Message \"\[$errorMsgStr\]\" not received "
+        if {$projClose} { 
+            close_project
+            exit 1
+        }              
+    }
+}
+
 # Create a project
 open_project -reset proj
 
@@ -32,4 +69,7 @@ create_clock -period "75MHz"
 
 csim_design 
 csynth_design
-cosim_design 
+
+# Cosim will fail with a deadlock
+expect_error cosim_design "HLS 200-742"
+
