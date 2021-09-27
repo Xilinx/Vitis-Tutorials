@@ -23,7 +23,10 @@ export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.1 - Directory>
 
 
 # Setup SDKTARGETSYSROOT and CXX...
-source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+#source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+export SDKTARGETSYSROOT=$XLNX_VERSAL/sysroots/cortexa72-cortexa53-xilinx-linux
+export CXX="aarch64-linux-gnu-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=$SDKTARGETSYSROOT"
+
 
 # Source XRT, VITIS, and Aietools...
 source $XIILNX_TOOLS_LOCATION/settings64.sh
@@ -31,7 +34,7 @@ source $XIILNX_TOOLS_LOCATION/settings64.sh
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202110_1
+tgt_plat=xilinx_vck190_base_202120_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 
 
