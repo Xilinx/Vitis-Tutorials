@@ -1,0 +1,86 @@
+##############################
+“ü–å
+##############################
+
+
+***************************************
+Vitis Flow 101
+***************************************
+
+An overview of the Vitis workflow including kernel development, host software creation, emulation, implementation, and analysis.
+
+See how Vitis unifies software, acceleration, and ML development under a single development platform.
+
+
+.. image:: ./Vitis/images/vitis_101.png
+   :width: 800
+   :alt: Vitis Flow
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Parts
+   :hidden:
+
+   Part 1 <./Vitis/Part1>
+   Part 2 <./Vitis/Part2>
+   Part 3 <./Vitis/Part3>
+   Part 4 <./Vitis/Part4>
+   Part 5 <./Vitis/Part5>
+
+Vitis provides a unified flow for developing FPGA accelerated application targeted to either data-center or embedded platforms. This tutorial provides instructions for building and running on both ZCU102 and Alveo U200 cards. These instructions can be easily adapted to other Xilinx cards.
+
+.. note::
+   This tutorial requires Vitis 2020.2 or later to run.
+
+
+.. list-table:: 
+   :widths: 20 80
+   :header-rows: 1
+   
+   * - Tutorial
+     - Description
+	 
+   * - :doc:`Part 1 <./Vitis/Part1>`
+     - Covers all the essential concepts of the Vitis FPGA acceleration flow in under 10 minutes.
+
+   * - :doc:`Part 2 <./Vitis/Part2>`
+     - Guides you through the process of installing the Vitis tools, platforms and runtime library.
+
+   * - :doc:`Part 3 <./Vitis/Part3>`
+     - Explains the source code of vector-add example used in the rest of the tutorial.
+
+   * - :doc:`Part 4 <./Vitis/Part4>`
+     - Describes the commands required to compile, link and run the example on your acceleration card.
+
+   * - :doc:`Part 5 <./Vitis/Part5>`
+     - Gives an overview of Vitis Analyzer and shows how to open and analyze reports.
+
+
+****************************************
+Vitis HLS
+****************************************
+
+
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Vitis HLS
+   :hidden:
+
+   Prerequisites <./Vitis_HLS/prerequisites>
+   Creating a Vitis HLS Project <./Vitis_HLS/new_project>
+   Running High-Level Synthesis and Analyzing Results <./Vitis_HLS/synth_and_analysis>
+   Using Optimization Techniques <./Vitis_HLS/optimization_techniques>
+   Reviewing the DATAFLOW Optimization <./Vitis_HLS/dataflow_design>
+
+
+Vitis High-Level Synthesis (HLS) is a key part of the Vitis application acceleration development flow. The tool is responsible for compiling C/C++ and OpenCL code into a kernel for acceleration in the programmable logic (PL) region of Xilinx devices. Thus, it is the tool that compiles the hardware kernels for the Vitis tools by performing high-level synthesis.
+
+
+.. important::
+   Start with :doc:`Prerequisites <./Vitis_HLS/prerequisites>`.
+
+
+.. sidebar:: Generating Vivado IP from C/C++ code
+
+   Vitis HLS can also be used to generate Vivado IP from C/C++ code, but that flow is not the subject of this tutorial. Although similar, there are some significant differences between producing Vitis XO kernels and Vivado RTL IP. However, you can use this tutorial as a general introduction to the Vitis HLS tool.
