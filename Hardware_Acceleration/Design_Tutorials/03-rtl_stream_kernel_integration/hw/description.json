@@ -1,0 +1,29 @@
+{
+    "name": "Hardware-Acceleration-Design-03-rtl_stream_kernel",
+    "description": "rtl_stream_kernel_integration",
+    "flow": "vitis",
+
+    "platform_whitelist": [ "u200"],
+    "platform_blacklist": [],
+     
+    "testinfo": {
+        "disable": false, 
+        "jobs": [
+            {
+                "index": 0, 
+                "dependency": [], 
+                "env": "", 
+                "cmd": "", 
+                "max_memory_MB": 76800, 
+                "max_time_min": {
+                    "all": 360
+                }
+            }
+        ], 
+        "targets": [
+            "all"
+        ], 
+        "category": "na"
+
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "name": "Hardware-Acceleration-Design-05-bottom_rtl_kernel_cbc",
+    "description": "bottom_rtl_kernel_flow_integration_cbc",
+    "flow": "vitis",
+
+    "platform_whitelist": [ "u200"],
+    "platform_blacklist": [],
+     
+    "testinfo": {
+        "disable": false, 
+        "jobs": [
+            {
+                "index": 0, 
+                "dependency": [], 
+                "env": "", 
+                "cmd": "", 
+                "max_memory_MB": 76800, 
+                "max_time_min": {
+                    "build_hw": 180
+                }
+            }
+        ], 
+        "targets": [
+            "gen_ip",
+            "pack_kernel",
+            "build_hw"
+        ], 
+        "category": "na"
+
+    }
+}
