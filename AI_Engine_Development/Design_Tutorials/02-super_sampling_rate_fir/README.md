@@ -33,6 +33,9 @@ Before beginning this tutorial you should be familiar with Versal ACAP architect
 Software requirements include:
 * [Vitis](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 * [Python 3](https://www.python.org/downloads/)
+* You also have the possibility to test these architectures on the AI Engine using MATLAB Simulink toolset.
+  - [Mathworks](https://www.mathworks.com/) to install **MATLAB** version R2020a, R2020b or R2021a.
+  - **Vitis Model Composer** that is available with the usual install of **Vitis**.
 
 
 ## Accessing the Tutorial Reference Files
@@ -63,7 +66,7 @@ You should have already read the [AI Engine Detailed Architecture](https://www.x
 
 Versal™ Adaptive Compute Acceleration Platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
 
-<img src="./Images/Versal.jpg" width=500 height=380><br>
+![Versal](./Images/Versal.jpg)
 
 Intelligent Engines are SIMD VLIW AI Engines for adaptive inference and advanced signal processing compute.
 
@@ -71,15 +74,15 @@ DSP Engines are for fixed point, floating point, and complex MAC operations.
 
 The SIMD VLIW AI Engines come as an array of interconnected processors using AXI-Stream interconnect blocks as shown in the following figure:
 
-<img src="./Images/AIEngineArray.jpg" width=500><br>
+![AIEngineArray](./Images/AIEngineArray.jpg)
 
 All arrays (processors, memory modules, AXI interconnects) are driven by a single clock. The slowest speed grade device can run @1 GHz. The highest speedgrade will allow 1.3 GHz clock rates. The AI Engine allows for numerous connection possibilities with the surrounding environment as shown in the following figure.
 
-<img src="./Images/AIEngine.jpg" width=500><br>
+![AIEngine](./Images/AIEngine.jpg)
 
 ## Memory interface
 
-<img src="./Images/AIE_MemIF.jpg" width=500><br>
+![AIE_MemIF](./Images/AIE_MemIF.jpg)
 
 Each AI Engine is surrounded by 4x 32 kB memories, each one being divided in four pairs of banks. The bandwidth is very high:
 - 2 reads / cycle on 32 bytes (256 bits) each
@@ -91,7 +94,7 @@ Each AI Engine is surrounded by 4x 32 kB memories, each one being divided in fou
 
 ## Streaming interface
 
-<img src="./Images/AIE_Streams.jpg" width=500><br>
+![AIE_Streams](./Images/AIE_Streams.jpg)
 
 The streaming interface is based on two incoming streams and two outgoing streams, each one on 32 bits per clock cycle. These four streams are handled by a stream FIFO that allows the processor to use different bitwidths to access these streams:
 
@@ -110,7 +113,7 @@ Accessing the data to/from the streams using the 128 bit interface does not incr
 
 ## Cascade Streams
 
-<img src="./Images/AIE_Cascade.jpg" width=500><br>
+![AIE_Cascade](./Images/AIE_Cascade.jpg)
 
 The cascade stream allows an AI Engine processor to transfer the value of some of its accumulator register (384 bits) to its neighbor (on the left or on the right depending on the row):
 
@@ -132,13 +135,13 @@ As a result the digital signal at the output of the ADC is simply a series of *N
 
 A filtering operation perform this using a sliding window on the signal as shown in the following figure:
 
-<img src="./Images/FIR_Filter.jpg" width=1000><br>
+![FIR_Filter](./Images/FIR_Filter.jpg)
 
 Input data samples are in general called **x** (blue squares), the coefficients **c** (green squares) and the output samples **y**:
 
-<img src="./Images/FIR_Equation.jpg" width=300><br>
+![FIR_Equation](./Images/FIR_Equation.jpg)
 
-DSP experts may say that this equation represents a _correlation_ and not a _convolution_ which is the mathematical expression of the filtering operation. The easy answer may be to say that it is simply a question of coefficients ordering (and perhaps conjugation for complex coefficients). 
+DSP experts may say that this equation represents a _correlation_ and not a _convolution_ which is the mathematical expression of the filtering operation. The easy answer may be to say that it is simply a question of coefficients ordering (and perhaps conjugation for complex coefficients).
 
 That's why you will always see at the beginning of the various _graph.h_ files the 2 lines:
 
@@ -164,9 +167,9 @@ Navigate to the `Utils` directory, and type `source InitPythonPath` to have this
 
 ## GenerateStreams
 
-This utility will use a library **_GenerationLib.py_** to generate input data suitable for the cases you want to test. It is called by typing: `GenerateStreams`. This displays a GUI in which you can select the appropriate parameters to generate the correct input data files:
+This utility will use a library **_GenerationLib.py_** to generate input data suitable for the cases you want to test. It is called by typing: `GenerateStreamsGUI`. This displays a GUI in which you can select the appropriate parameters to generate the correct input data files:
 
-<img src="./Images/GenerateStreams.jpg" width=800><br>
+![GenerateStreams](./Images/GenerateStreams.jpg)
 
 You have access to a number of parameters:
 - _Data Type_: by default `cint16`as this is what you will use throughout this tutorial
@@ -179,6 +182,31 @@ You have access to a number of parameters:
   - Single Stream, Single Phase: `PhaseIn_0.txt`
   - Single Stream, Polyphase: `PhaseIn_0.txt`, `PhaseIn_1.txt`, ...
   - Dual streams, Polyphase:  `PhaseIn_0_0.txt`, `PhaseIn_0_0.txt`, `PhaseIn_1_0.txt, `PhaseIn_1_0.txt``, ...
+
+Another possibility is to type `GenerateStreams` with the same parameters. If you type `GenerateStreams` without parameters, a usage text will be displayed:
+
+```BASH
+>>GenerateStreams
+
+Stream Content Generation
+
+================================================================================================
+
+Usage:
+GenerateStreams DataType PLIO_Width NPhases NStreams NSamples NFrames SequenceType Basename
+   Datatype: cint16, int16, int32
+   PLIO_Width: 32, 64 or 128
+   NPhases: any integer >= 1
+   NStreams: 1 or 2
+   NSamples: integer, multiple of 8
+   NFrames: Any integer >= 1
+   SequenceType: Dirac, Linear, SinCos, Random
+   Basename: file name that will prepend phase and stream index
+
+================================================================================================
+```
+
+
 
 ## ProcessAIEOutput
 
@@ -203,4 +231,4 @@ This utility has been created to view the template arguments that were used for 
 
 
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD020</sup></br></p>
