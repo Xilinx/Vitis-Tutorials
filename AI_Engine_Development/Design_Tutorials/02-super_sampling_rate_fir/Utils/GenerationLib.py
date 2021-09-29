@@ -18,24 +18,29 @@ import numpy as np
 from math import *
 import random
 
-def GenerateTestVector(dtval,pliow,NPhases_s,NStreams_s,NSamples_s,NFrames_s,SeqType_s,Basename_s):
-
-    print('DtVal : ',dtval.get())
-    print('PLIO width : ',pliow.get())
-    print('NPhases : ',NPhases_s.get())
-    print('NStreams : ',NStreams_s.get())
-    print('NSamples : ',NSamples_s.get())
-    print('NFrames : ',NFrames_s.get())
-    print('Type of Sequence : ',SeqType_s.get())
-    print('Base filename : ',Basename_s.get())
-
-
+def GenerateTestVectorGUI(dtval,pliow,NPhases_s,NStreams_s,NSamples_s,NFrames_s,SeqType_s,Basename_s):
+    dt = dtval.get()
+    pliowidth = pliow.get()
     NPhases = int(NPhases_s.get())
     NStreams = int(NStreams_s.get())
     LFrame = int(NSamples_s.get())
     NFrames = int(NFrames_s.get())
     SequenceType = SeqType_s.get()
     Basename = Basename_s.get()
+
+    GenerateTestVector(dt,pliowidth,NPhases,NStreams,LFrame,NFrames,SequenceType,Basename)
+
+def GenerateTestVector(dtval,pliow,NPhases,NStreams,LFrame,NFrames,SequenceType,Basename):
+    print('Data type : ',dtval)
+    print('PLIO width : ',pliow)
+    print('Number of Phases : ',NPhases)
+    print('Number of Streams : ',NStreams)
+    print('Frame Length : ',LFrame)
+    print('Number of Frames : ',NFrames)
+    print('Type of Sequence : ',SequenceType)
+    print('Base filename : ',Basename)
+
+
 
     #parameters that should be in the GUI
     # SequenceType ='Linear'   # 'SinCos' 'Linear'  'Random' 'Dirac'
@@ -46,12 +51,12 @@ def GenerateTestVector(dtval,pliow,NPhases_s,NStreams_s,NSamples_s,NFrames_s,Seq
 
 
     NBitsData = 32;
-    if( dtval.get() == 'int16'):
+    if( dtval == 'int16'):
         NBitsData = 16
 
 
     HasImag = 0
-    if (dtval.get() == 'cint16'):
+    if (dtval == 'cint16'):
         HasImag = 1
 
     if(SequenceType != 'SinCos' and SequenceType != 'Linear' and SequenceType != 'Random' and SequenceType != 'Dirac'):
@@ -95,7 +100,7 @@ def GenerateTestVector(dtval,pliow,NPhases_s,NStreams_s,NSamples_s,NFrames_s,Seq
                 S[p,i,1] = vi
 
 
-    PLIOwidth = int(pliow.get())
+    PLIOwidth = pliow
     NSamplesPerLine = int(PLIOwidth/NBitsData)  # Data are read in blocks of 128 bits (4 data in cint16)
 
 
@@ -132,7 +137,7 @@ def GenerateTestVector(dtval,pliow,NPhases_s,NStreams_s,NSamples_s,NFrames_s,Seq
         #Creates list of filenames
         for Phi in range(NPhases):
             for Stream in range(NStreams):
-                FileNames.append('PhaseIn_'+str(Phi)+'_'+str(Stream)+'.txt')
+                FileNames.append(Basename+'_'+str(Phi)+'_'+str(Stream)+'.txt')
 
 
         # Hash table to associate data to streams
@@ -165,3 +170,5 @@ def GenerateTestVector(dtval,pliow,NPhases_s,NStreams_s,NSamples_s,NFrames_s,Seq
 
         for fd in fds:
             fd.close()
+
+    print("\nDone\n")
