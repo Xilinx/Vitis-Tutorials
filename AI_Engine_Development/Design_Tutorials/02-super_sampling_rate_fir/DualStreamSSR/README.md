@@ -225,9 +225,12 @@ Navigate to the `MultiKernel` directory. In the `Makefile` three methods are def
 
 Take a look at the source code (kernel and graph) to familiarize yourself with C++ instantiation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
 
-To have the simulation running, input data must be generated. Change directory to `data` and type `GenerateStreams`. The following parameter should be set for this example:
+To have the simulation running, input data must be generated. There are 2 possibilities:
 
-<img src="../Images/generateDualStreamsSSR8.jpg" width=800><br>
+1. Just type `make data`
+2. Change directory to `data` and type `GenerateStreamsGUI`. The following parameters should be set for this example:
+
+![generateDualStreamsSSR8](../Images/generateDualStreamsSSR8.jpg)
 
 Click **Generate** then **Exit**. The generated files `PhaseIn_0_0.txt` ... `PhaseIn_7_7.txt` should contain mainly 0's, with a few 1's and 2's. The number of samples per stream is half of the one that is declared in the C++ code because in the C++ code this is the length of the concatenation of both input streams.
 
@@ -235,13 +238,13 @@ Type `make all` and wait for the `vitis_analyzer` GUI to Display. The Vitis anal
 
 Click **Graph** to visualize the graph of the application:
 
-<img src="../Images/Graph8Phases.jpg" width=800><br>
+![Graph8Phases](../Images/Graph8Phases.jpg)
 
 The 64 kernels and their 32 independent input streams are clearly visible. The top graph is for the output phases 0, 2, 4, and 6, the phases where the cascade stream goes from left to right on the physical device, and the bottom graph is for the phases 1, 3, 5, and 7 where the cascade stream goes from right to left.
 
 Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
 
-<img src="../Images/Array8Phases.jpg" width=500><br>
+![Array8Phases](../Images/Array8Phases.jpg)
 
 In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph. With the four location constraints that were added, the placer had only one solution for the kernel placement: this square. The router had an easy job to feed all these kernels by simply using the south-north AXI-Stream. The path back to the PL from the extremities also uses only the vertical AXI-Streams.
 
@@ -249,7 +252,7 @@ Finally click **Trace** to look at how the entire simulation went through. This 
 
 Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput output_*`.
 
-<img src="../Images/GraphOutput8Phases.jpg" width=1000><br>
+![GraphOutput8Phases](../Images/GraphOutput8Phases.jpg)
 
 The top graph reflects the real part of the output, the bottom graph this is the imaginary part. On both, the filter impulse response is recognizable.
 
@@ -288,4 +291,4 @@ Which is almost the expected maximum.
 
 
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD020</sup></br></p>

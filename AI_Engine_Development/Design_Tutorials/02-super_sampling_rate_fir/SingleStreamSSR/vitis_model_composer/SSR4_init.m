@@ -62,3 +62,29 @@ LOCATION_3_0 = [28,3];
 
 PLIO_FREQ = 500;
 
+%% For the PL design
+PLIO_WIDTH = 64; % even if not used in the PLIO block this is important for further paramerization
+
+%% Source parametrization
+
+% Data is 32-bit wide (cint16)
+DataWidth = 32;
+
+% Sample width is PLIO width
+NDataPerSample = PLIO_WIDTH/DataWidth;
+
+% N is frame size. (8 for 4 phases and 2 data per sample)
+global N
+N = NPHASES*NDataPerSample;
+T = N;
+
+% FramesPerVector is a vectorization ratio for the source
+% Number of frames generated per source function call
+FramesPerVector = 4;
+VectorSize = FramesPerVector*N;
+
+% Delay before source validation (In terms of  number of frames: 8 samples)
+ValidDelay = 2;
+
+
+
