@@ -1,5 +1,5 @@
 #
-# Copyright 2020 Xilinx, Inc.
+# Copyright 2021 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 #
 
 all:
+	make data
 	make -C Emulation-AIE all
 
 aie:
@@ -27,6 +28,11 @@ aieviz:
 	make -C Emulation-AIE aieviz
 
 clean:
+	rm data/*
+	touch data/dummy.txt
 	make -C Emulation-AIE clean
 
-.PHONY: all clean aie aiesim aieviz
+data:
+	GenerateStreams cint16 64 4 1 512 4 Dirac data/PhaseIn
+
+.PHONY: all clean aie aiesim aieviz data
