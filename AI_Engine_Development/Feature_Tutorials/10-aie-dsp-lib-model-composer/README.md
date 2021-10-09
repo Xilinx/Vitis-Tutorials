@@ -18,7 +18,7 @@ Install the tools:
 
 * Get and install [MATLAB and Simulink 2020a, 2020b or 2021a](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
   - Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [Xilinx Vitis 2021.1](https://www.xilinx.com/support/download.html).
+* Get and install [Xilinx Vitis 2021.2](https://www.xilinx.com/support/download.html).
 
 
 

@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -73,19 +73,19 @@ dsplib_tutorial_install
 
 Tools Documentation: 
 
-* [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1076-ai-engine-environment.pdf)
+* [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1076-ai-engine-environment.pdf)
 
-* [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/index.html)
+* [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/index.html)
 
 To run through this tutorial, you will need to download and install the following tools:
 
-* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
+* Install the [Vitis Software Platform 2021.2](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html) 
 
 * Obtain licenses for the AI Engine tools
 
 * Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
-* Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and setup the [VCK190 Vitis Platform for 2021.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 ## *Environment*: Setting Up Your Target Platform Environment
 When the elements of the Vitis software platform are installed, update the target platform environment script. 
@@ -103,7 +103,7 @@ source env_setup.sh
 ```  
 
 ## *Validation*: Confirming Tool Installation
-Ensure that you are using the 2021.1 version of Xilinx tools. 
+Ensure that you are using the 2021.2 version of Xilinx tools. 
 ```bash
 which vitis
 which aiecompiler
@@ -135,7 +135,7 @@ Part 1 of this tutorial will:
 
 3. We begin by creating a new application: Click **Create Application Project**. The *Create a New Application Project* window will appear, which explains the basic concepts of a Vitis project. Click **Next** when ready.
 
-4. The *Platform* window will appear. Select **xilinx_vck190_base_202110_1** and click **Next**.
+4. The *Platform* window will appear. Select **xilinx_vck190_base_202120_1** and click **Next**.
 
 5. The *Application Project Details* window appears next. Give the application the name **displib_tutorial_part_1**. For the *Target processor*, select **ai_engine**,  and click **Next**.
 
@@ -444,16 +444,16 @@ In doing so, it has hopefully provided a foundation upon which the user can begi
 # References
 The following documents provide supplemental material useful with this tutorial. 
 
-### [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1076-ai-engine-environment.pdf)
+### [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1076-ai-engine-environment.pdf)
 Contains chapters on how to develop AI Engine graphs, how to use the Ai Engine compiler, and AI Engine simulation, and performance analysis.
 
-### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/index.html)
+### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/index.html)
 Contains information regarding the DSPLib example kernels used by this tutorial.
 
-### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html)
 Following links point to Vitis software platform related documents referred in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
