@@ -290,6 +290,8 @@ In the directory _vitis_model_composer_ launch Vitis Model Composer with the com
 
 The first one is the 4 phases SSR built in the AI Engine array using the AIE blockset of Vitis Model Composer. The design is fed from pure Simulink blocks and the result is diplayed in a scope to verify that the difference with the pure floating-point Simulink implementation is not too high. At the same time the signal is sent through a spectrumscope to verify the output spectrum.
 
+![SSR4_VMC](../Images/SSR4_VMC.jpg)
+
 The second design contains the previous design but, to show what would be a real hardware implementation,the input and the output of the AI Engine array are a Programmable logic design created with the HDL blockset:
 * **Input**:
     - The 32-bit 4 Gsps input sample rate is divided into 8 branches @500MHz to feed the PL as for a standard ADC.
@@ -300,6 +302,7 @@ The second design contains the previous design but, to show what would be a real
 
 Before and after the PL we have the same source signal and sinks (scope and spectrumscope) to verify the functionality of the AI Engine+PL design.
 
+![SSR4WithPL](../Images/SSR4WithPL.jpg)
 
 
 
