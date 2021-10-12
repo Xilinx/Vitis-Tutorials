@@ -15,7 +15,7 @@
 # PROJECT and MODULE REPOS
 # =========================================================
 ifndef PATH_TO_BSP
-  PATH_TO_BSP=/proj/petalinux/2021.1/petalinux-v2021.1_daily_latest/bsp/release
+  PATH_TO_BSP=/proj/petalinux/2021.2/petalinux-v2021.2_daily_latest/bsp/release
   export PATH_TO_BSP
 endif
 
@@ -30,7 +30,7 @@ MODULE_04_DIR := $(PROJECT_DIR)/Module_04_AI_Engine_and_PL_Integration
 # =========================================================
 # BSP SELECTION
 # =========================================================
-BSP :=  xilinx-vck190-v2021.1-final.bsp
+BSP :=  xilinx-vck190-v2021.2-final.bsp
 
 # =========================================================
 # XSA SELECTION

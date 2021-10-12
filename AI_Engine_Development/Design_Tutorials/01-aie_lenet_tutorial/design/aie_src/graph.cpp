@@ -124,14 +124,14 @@ public:
   }
 };
 
-adf::PLIO *attr_i1 = new adf::PLIO("prod_in1", adf::plio_128_bits, "data/0_1/matA_in_128plio.txt");
-adf::PLIO *attr_i2 = new adf::PLIO("prod_in3", adf::plio_128_bits, "data/0_2/matA_in_128plio.txt");
-adf::PLIO *attr_i3 = new adf::PLIO("prod_in5", adf::plio_128_bits, "data/0_3/matA_in_128plio.txt");
-adf::PLIO *attr_i4 = new adf::PLIO("prod_in7", adf::plio_128_bits, "data/0_5/matA_in_128plio.txt");
+adf::PLIO *attr_i1 = new adf::PLIO("prod_in1", adf::plio_64_bits, "data/0_1/matA_in_128plio.txt");
+adf::PLIO *attr_i2 = new adf::PLIO("prod_in3", adf::plio_64_bits, "data/0_2/matA_in_128plio.txt");
+adf::PLIO *attr_i3 = new adf::PLIO("prod_in5", adf::plio_64_bits, "data/0_3/matA_in_128plio.txt");
+adf::PLIO *attr_i4 = new adf::PLIO("prod_in7", adf::plio_64_bits, "data/0_5/matA_in_128plio.txt");
 
-adf::PLIO *attr_o1 = new adf::PLIO("prod_out1", adf::plio_128_bits, "output01.txt");
-adf::PLIO *attr_o2 = new adf::PLIO("prod_out2", adf::plio_128_bits, "output02.txt");
-adf::PLIO *attr_o3 = new adf::PLIO("prod_out3", adf::plio_128_bits, "output04.txt");
+adf::PLIO *attr_o1 = new adf::PLIO("prod_out1", adf::plio_64_bits, "output01.txt");
+adf::PLIO *attr_o2 = new adf::PLIO("prod_out2", adf::plio_64_bits, "output02.txt");
+adf::PLIO *attr_o3 = new adf::PLIO("prod_out3", adf::plio_64_bits, "output04.txt");
 
 adf::simulation::platform<4,3> platform(attr_i1,attr_i2,attr_i3,attr_i4,attr_o1,attr_o2,attr_o3);
   myGraph g;

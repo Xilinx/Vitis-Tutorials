@@ -33,7 +33,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2021.1
+set scripts_vivado_version 2021.2
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
@@ -573,7 +573,7 @@ proc create_root_design { parentCell } {
  ] $pl_clkwiz
 
   # Create instance: ps_cips, and set properties
-  set ps_cips [ create_bd_cell -type ip -vlnv xilinx.com:ip:versal_cips:3.0 ps_cips ]
+  set ps_cips [ create_bd_cell -type ip -vlnv xilinx.com:ip:versal_cips:3.1 ps_cips ]
   set_property -dict [ list \
    CONFIG.CPM_CONFIG {PS_HSDP_MODE NONE GT_REFCLK_MHZ 156.25 PS_HSDP0_REFCLK 0 PS_HSDP1_REFCLK 0\
 AURORA_LINE_RATE_GPBS 10.0 PS_HSDP_INGRESS_TRAFFIC JTAG PS_HSDP_EGRESS_TRAFFIC\
