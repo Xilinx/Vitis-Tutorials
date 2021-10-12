@@ -77,7 +77,7 @@ step5:
 
 SHELL := /bin/bash
 step6:
-	unset LD_LIBRARY_PATH && source /proj/petalinux/2021.1/petalinux-v2021.1_daily_latest/tool/petalinux-v2021.1-final/settings.sh && $(MAKE) -C Module_07_Petalinux petalinux
+	unset LD_LIBRARY_PATH && source /proj/petalinux/2021.2/petalinux-v2021.2_daily_latest/tool/petalinux-v2021.2-final/settings.sh && $(MAKE) -C Module_07_Petalinux petalinux
 
 step7:
 	$(MAKE) -C Module_08_Linux_SW_Application exe

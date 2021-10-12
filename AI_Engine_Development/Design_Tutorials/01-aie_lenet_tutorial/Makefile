@@ -65,7 +65,7 @@ XRT_ROOT=${PLATFORM_REPO_PATHS}/sw/versal/xrt
 endif
 
 ifndef XLNX_VERSAL 
-XLNX_VERSAL = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1
+XLNX_VERSAL = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2
 endif
 
 
@@ -151,7 +151,10 @@ AIE_FLAGS += --test-iterations=100
 AIE_FLAGS += --dataflow 
 
 AIE_FLAGS += --heapsize=2048 
-AIE_FLAGS += --workdir=$(WORK_DIR) 
+AIE_FLAGS += --workdir=$(WORK_DIR)
+
+AIE_FLAGS += --pl-freq=500
+
 
 # =========================================================
 # Application Compiler and Linker Flags
@@ -186,7 +189,9 @@ VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 VPP_FLAGS += --verbose 
 VPP_FLAGS += -g
 
-VPP_LINK_FLAGS := --config $(MAKEFILES_REPO)/system.cfg 
+VPP_LINK_FLAGS := --config $(MAKEFILES_REPO)/system.cfg
+
+
 ifneq ($(EN_TRACE),0)
 	VPP_LINK_FLAGS += --profile.data dma_hls:all:all
 	VPP_LINK_FLAGS += --profile.trace_memory DDR
@@ -221,7 +226,7 @@ kernels: $(BUILD_TARGET_DIR)/$(DMA_KERNEL_XO).xo
 $(BUILD_TARGET_DIR)/$(DMA_KERNEL_XO).xo:
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
-	v++ --target $(TARGET) $(VPP_FLAGS) -c -k dma_hls $(DMA_KERNEL_SRC) -o $@
+	v++ --target $(TARGET) $(VPP_FLAGS) --hls.clock 250000000:dma_hls -c -k dma_hls $(DMA_KERNEL_SRC) -o $@
 
 # =========================================================
 # Step 2. AI Engine SDF Graph File and Work/ Directory 
@@ -260,7 +265,7 @@ $(BUILD_TARGET_DIR)/$(XCLBIN): 	$(BUILD_TARGET_DIR)/$(DMA_KERNEL_XO).xo \
 				$(LENET_KERNEL_XO) 			\
 				$(LIBADF_A)
 	cd $(BUILD_TARGET_DIR);	\
-	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) -t $(TARGET) -o $@ 	\
+	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) --advanced.param compiler.userPostSysLinkTcl=$(PROJECT_REPO)/noc_qos.tcl -t $(TARGET) -o $@ 	\
 		$(BUILD_TARGET_DIR)/$(DMA_KERNEL_XO).xo 		\
 		$(LENET_KERNEL_XO) 					\
 		$(LIBADF_A) 
@@ -303,18 +308,9 @@ package:
 		--package.sd_dir $(AIE_SRC_REPO)/data 				\
 		--package.image_format=ext4 					\
 		--package.sd_file $(BUILD_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XCLBIN) $(LIBADF_A) $(SD_FILES_WITH_PREFIX) \
+		--package.sd_file $(EMBEDDED_EXEC_SCRIPT) \
 		--package.defer_aie_run                                                                                     \
 		$(PKG_FLAGS)
-
-
-# =========================================================
-# Step 6. Run Hardware Emulation  
-# ========================================================
-# If the target is for HW_EMU, launch the emulator
-# If the target is for HW, you'll have to follow the 
-# instructions in the README.md 
-
-sd_card: kernels graph xclbin application package
 
 
 # =========================================================
@@ -360,10 +356,10 @@ endif###########################################################################
 # ========================================================
 
 #Build the design without running the hardware emulation
-build: kernels graph xclbin application package
+sd_card: kernels graph xclbin application package
 
 #Build the design and then run hardware emulation 
-run: build run_emu
+run: sd_card run_emu
 
 #Clean generated files
 clean:
