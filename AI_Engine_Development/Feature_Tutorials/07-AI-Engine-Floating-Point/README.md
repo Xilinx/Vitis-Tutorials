@@ -397,4 +397,4 @@ limitations under the License.
 
 
 
-<p align="center"><sup>XD021 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD021 | &copy; Copyright 2020–2021 Xilinx, Inc.</sup></p>

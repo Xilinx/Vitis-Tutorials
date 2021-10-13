@@ -92,7 +92,7 @@ Each AI Engine is surrounded by 4x 32 kB memories, each one being divided in fou
 - Be aware that you need also to feed the memories using DMAs or other AI Engines
 
 
-## Streaming interface
+## Streaming Interface
 
 ![AIE_Streams](./Images/AIE_Streams.jpg)
 
