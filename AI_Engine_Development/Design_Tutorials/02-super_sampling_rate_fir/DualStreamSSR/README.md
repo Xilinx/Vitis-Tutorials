@@ -289,12 +289,11 @@ Total Throughput -->   15960.30 Msps
 ```
 Which is almost the expected maximum.
 
-# Vitis Model Composer implementation
+# Vitis Model Composer Implementation
 
-In the directory _vitis_model_composer_ launch Vitis Model Composer with the comman **model_composer**. There is currently 1 design in this directory:
-* _DualStreamSSR.slx_
+In the `vitis_model_composer` directory, launch Vitis Model Composer with the `model_composer` command. There is currently one design in this directory, `DualStreamSSR.slx`.
 
-This is an 8 phases SSR built in the AI Engine array using the AIE blockset of Vitis Model Composer. The design is fed from pure Simulink blocks and the result is diplayed in a scope to verify that the difference with the pure floating-point Simulink implementation is not too high. At the same time the signal is sent through a spectrumscope to verify the output spectrum.
+This is an 8-phase SSR built in the AI Engine array using the AI Engine blockset of Vitis Model Composer. The design is fed from pure Simulink blocks and the result is diplayed in a scope to verify that the difference with the pure floating-point Simulink implementation is not too high. At the same time, the signal is sent through a spectrumscope to verify the output spectrum.
 
 ![SSR8_VMC](../Images/SSR8_VMC.jpg)
 
