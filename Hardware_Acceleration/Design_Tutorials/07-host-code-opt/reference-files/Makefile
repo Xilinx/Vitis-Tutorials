@@ -7,18 +7,23 @@ include $(COMMON_REPO)/utils.mk
 #   sw_emu/hw_emu - Compile for software/hardware emulation
 # FPGA Board Platform (Default ~ vcu1525)
 
-SIZE    := 14
-TARGETS := hw
-TARGET  := $(TARGETS)
-DEVICES := xilinx_u200_gen3x16_xdma_1_202110_1
-DEVICE  := $(DEVICES)
+SIZE := 14
+TARGET := hw_emu
+#TARGETS := hw_emu
+#TARGET  := $(TARGETS)
+DEVICE := xilinx_u200_gen3x16_xdma_1_202110_1
+#DEVICES := xilinx_u200_gen3x16_xdma_1_202110_1
+#DEVICE  := $(DEVICES)
+LAB	:= pipeline
+#BUILDIR	:= $(LAB)
 XCLBIN  := ./xclbin
-DSA := $(call device2sandsa, $(DEVICE))
+#DSA := $(call device2sandsa, $(DEVICE))
 
 CXX  := g++
 VPP := $(XILINX_VITIS)/bin/v++
 
-HOST_SRCS = src/host.cpp
+#HOST_SRCS = src/host.cpp
+HOST_SRCS = src/$(LAB)_host.cpp
 
 # Host compiler global settings
 CXXFLAGS = -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include/ -IsrcCommon/ -O0 -g -Wall -fmessage-length=0 -std=c++11
@@ -27,127 +32,106 @@ LDFLAGS = -lOpenCL -lpthread -lrt -lstdc++ -L$(XILINX_VITIS)/runtime/lib/x86_64
 # Kernel compiler global settings
 CLFLAGS = -t $(TARGET) --platform $(DEVICE) --save-temps
 
-# Kernel linker flags
+# Xclbin linker flags
 LDCLFLAGS = --config design.cfg
 
 EXECUTABLE = pass
 
-EMCONFIG_DIR = $(XCLBIN)/$(DSA)
+#EMCONFIG_DIR = $(XCLBIN)
 
-BINARY_CONTAINERS += $(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
-BINARY_CONTAINER_pass_OBJS += $(XCLBIN)/pass.$(TARGET).$(DSA).xo
-
-# Select Host code source based on target
-.PHONY: pipeline
-pipeline: HOST_SRCS= srcPipeline/host.cpp
-pipeline: BUILDDIR = runPipeline
-pipeline: cleanExeBuildDir
-pipeline: $(BUILDDIR)/$(EXECUTABLE)
-
-.PHONY: runPipeline
-pipelineRun:
-	cp auxFiles/xrt.ini runPipeline
-ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
-	cd runPipeline; XCL_EMULATION_MODE=${TARGET} ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
-else
-	cd runPipeline; ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
-endif
+BINARY_CONTAINERS += $(XCLBIN)/pass.$(TARGET).$(DEVICE).xclbin
+BINARY_CONTAINER_pass_OBJS += $(XCLBIN)/pass.$(TARGET).xo
 
 # Select Host code source based on target
-.PHONY: sync
-sync:	HOST_SRCS= srcSync/host.cpp
-sync:	BUILDDIR = runSync
-sync:   cleanExeBuildDir
-sync:   $(BUILDDIR)/$(EXECUTABLE)
+.PHONY: build
+build: HOST_SRCS= src/$(LAB)_host.cpp
+build: cleanExeBuildDir
+build: $(LAB)/$(EXECUTABLE)
 
-.PHONY: runSync
-syncRun:
-	cp auxFiles/xrt.ini runSync
-ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
-	cd runSync; XCL_EMULATION_MODE=${TARGET} ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
+.PHONY: run
+run: $(LAB)/$(EXECUTABLE) $(BINARY_CONTAINERS) emconfig
+	cp auxFiles/xrt.ini $(LAB)
+ifeq ($(LAB),$(filter $(LAB), pipeline sync))
+   ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+	cd $(LAB); export XCL_EMULATION_MODE=${TARGET}; ./$(EXECUTABLE) ../$(BINARY_CONTAINERS)
+   else
+	cd $(LAB); ./$(EXECUTABLE) ../$(BINARY_CONTAINERS)
+   endif
 else
-	cd runSync; ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin
+   ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+	cd $(LAB); export XCL_EMULATION_MODE=${TARGET}; ./$(EXECUTABLE) ../$(BINARY_CONTAINERS) $(SIZE)
+   else
+	cd $(LAB); ./$(EXECUTABLE) ../$(BINARY_CONTAINERS) $(SIZE)
+   endif
 endif
 
-# Select Host code source based on target
-.PHONY: buf
-buf:	HOST_SRCS= srcBuf/host.cpp
-buf:	BUILDDIR = runBuf
-buf:   cleanExeBuildDir
-buf:   $(BUILDDIR)/$(EXECUTABLE)
 
-.PHONY: runBuf
-bufRun:
-	cp auxFiles/xrt.ini runBuf
-ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
-	cd runBuf; XCL_EMULATION_MODE=${TARGET} ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin $(SIZE)
-else
-	cd runBuf; ./$(EXECUTABLE) ../$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin $(SIZE)
-endif
-
-# add code to check for gnuplot and if it exists try to pot otherwise just
-# list data
+# add code to check for gnuplot and if it exists try to pot otherwise just list data
 bufRunSweep:
-	cp auxFiles/xrt.ini runBuf
-	cp auxFiles/run.py runBuf
-	cd runBuf; ./run.py $(DSA)
-	more runBuf/results.csv
+	cp auxFiles/xrt.ini buf
+	cp auxFiles/run.py buf
+	cd buf; ./run.py $(DSA)
+	more buf/results.csv
 	if hash gnuplot 2>/dev/null; then gnuplot -p -c auxFiles/plot.txt; fi;
 
 
-CP = cp -rf
-
-.PHONY: all clean cleanall docs emconfig
-all: $(EXECUTABLE) $(BINARY_CONTAINERS) emconfig
+#.PHONY: all clean cleanall emconfig
+#all: $(EXECUTABLE) $(BINARY_CONTAINERS) emconfig
+#all: $(LAB)/$(EXECUTABLE) $(BINARY_CONTAINERS) emconfig
 
 .PHONY: exe
-exe: $(EXECUTABLE)
+exe: $(LAB)/$(EXECUTABLE)
 
-.PHONY: kernel
-kernel: $(BINARY_CONTAINERS)
+# Building Host
+#$(EXECUTABLE):
+$(LAB)/$(EXECUTABLE):
+	mkdir -p $(LAB)
+	$(CXX) $(CXXFLAGS) $(HOST_SRCS) $(HOST_HDRS) -o '$(LAB)/$(EXECUTABLE)' $(LDFLAGS)
 
-# Building kernel
-$(XCLBIN)/pass.$(TARGET).$(DSA).xo: ./srcKernel/pass.cpp
+.PHONY: xclbin
+xclbin: $(BINARY_CONTAINERS)
+
+# Building xclbin
+$(XCLBIN)/pass.$(TARGET).xo: ./src/pass.cpp
 	mkdir -p $(XCLBIN)
 	$(VPP) $(CLFLAGS) -c -k pass -I'$(<D)' -o'$@' '$<'
 
-$(XCLBIN)/pass.$(TARGET).$(DSA).xclbin: $(BINARY_CONTAINER_pass_OBJS)
+#$(XCLBIN)/pass.$(TARGET).xclbin: $(BINARY_CONTAINER_pass_OBJS)
+$(BINARY_CONTAINERS): $(BINARY_CONTAINER_pass_OBJS)
 	$(VPP) $(CLFLAGS) -l $(LDCLFLAGS) -o'$@' $(+)
 
 # Building Host
-$(BUILDDIR)/$(EXECUTABLE):
-	mkdir -p $(BUILDDIR)
-	$(CXX) $(CXXFLAGS) $(HOST_SRCS) $(HOST_HDRS) -o '$(BUILDDIR)/$(EXECUTABLE)' $(LDFLAGS)
+#$(BUILDIR)/$(EXECUTABLE):
+#	mkdir -p $(BUILDIR)
+#	$(CXX) $(CXXFLAGS) $(HOST_SRCS) $(HOST_HDRS) -o '$(BUILDIR)/$(EXECUTABLE)' $(LDFLAGS)
 
-emconfig:$(EMCONFIG_DIR)/emconfig.json
-$(EMCONFIG_DIR)/emconfig.json:
-	emconfigutil --platform $(DEVICE) --od $(EMCONFIG_DIR)
+emconfig:$(LAB)/emconfig.json
+$(LAB)/emconfig.json:
+	emconfigutil --platform $(DEVICE) --od $(LAB)
 
 
 # Cleaning stuff
 cleanExeBuildDir:
-	-$(RMDIR) $(BUILDDIR)/$(EXECUTABLE)
+	-$(RMDIR) $(LAB)
 
 clean:
 	-$(RMDIR) $(XCLBIN)/{*sw_emu*,*hw_emu*}
-	-$(RMDIR) workspace runBuf runSync runPipeline
+	-$(RMDIR) workspace buf sync pipeline
 	-$(RMDIR) $(XCLBIN)/*.xo $(XCLBIN)/*.ltx
 
 cleanall: clean
 	-$(RMDIR) $(XCLBIN)
 
-reset:	clean
-	cp auxFiles/pipelineHost.cpp srcPipeline/host.cpp
-	cp auxFiles/syncHost.cpp srcSync/host.cpp
-	cp auxFiles/bufHost.cpp srcBuf/host.cpp
+reset:  clean
+	cp auxFiles/*host.cpp src
 
 .PHONY: help
 
 help::
-	$(ECHO) "Makefile Usage:"
-	$(ECHO) "  make all TARGETS=<sw_emu/hw_emu/hw> DEVICES=<FPGA platform>"
+        $(ECHO) "Makefile Usage:"
+	$(ECHO) "  make all TARGET=<sw_emu/hw_emu/hw> DEVICE=<FPGA platform> LAB=<pipeline/sync/buf>"
 	$(ECHO) "      Command to generate the design for specified Target and Device."
-	$(ECHO) "  make kernel TARGETS=<sw_emu/hw_emu/hw> DEVICES=<FPGA platform>"
+	$(ECHO) "  make kernel TARGET=<sw_emu/hw_emu/hw> DEVICE=<FPGA platform>"
 	$(ECHO) "      Command compile just the kernel of the design for specified Target and Device."
 	$(ECHO) ""
 	$(ECHO) "  make clean "

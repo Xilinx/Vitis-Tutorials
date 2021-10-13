@@ -1,0 +1,10 @@
+{
+    "daily": {
+        "sync": {
+            "LAB": "sync"
+        },
+        "buf": {
+            "LAB": "buf"
+        }
+    }
+}

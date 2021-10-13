@@ -1,40 +1,45 @@
-VPP := $(XILINX_VITIS)/bin/v++
-EMCONFIGUTIL := $(XILINX_VITIS)/bin/emconfigutil
+VPP := v++
+EMCONFIGUTIL := emconfigutil
 MODE := hw
-PLATFORM := xilinx_u250_gen3x16_xdma_3_1_202020_1
+LAB := run1
+DEVICE := xilinx_u250_gen3x16_xdma_3_1_202020_1
 
-
-HOST_SRC := ./host.cpp
-KRNL_SRC := ./kernel.cpp
-
+KRNL_SRC := ./src/kernel.cpp
 
 # kernel targets
 XOS := vadd.$(MODE).xo
-XCLBIN := vadd.$(MODE).xclbin
+XCLBIN := vadd.$(MODE).$(LAB).xclbin
 
 # host target
 HOST_EXE := host.exe
 
-
 EMCONFIG_FILE := emconfig.json
 
 #Compiler flags
-VPP_COMMON_OPTS := -s -t $(MODE) --platform $(PLATFORM)
-VPP_LINK_OPTS := --config link.cfg
+VPP_COMMON_OPTS := -s -t $(MODE) --platform $(DEVICE)
+
+ifeq ($(LAB),$(filter $(LAB),run1))
+  HOST_SRC := ./src/host.cpp
+  VPP_LINK_OPTS := --config ./src/link.cfg
+else
+  HOST_SRC := ./src/host_hm.cpp
+  VPP_LINK_OPTS := --config ./src/link_hm.cfg
+endif
+ 
 CFLAGS := -g -std=c++14 -I$(XILINX_XRT)/include
 
 LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lpthread -lrt
 
 #Run time arguments
-EXE_OPT := vadd.$(MODE).xclbin
+EXE_OPT := vadd.$(MODE).$(LAB).xclbin
 
 # primary build targets
-.PHONY: xclbin app all clean
+.PHONY: xclbin exe all clean
 
 xclbin:  $(XCLBIN)
-app: $(HOST_EXE)
+exe: $(HOST_EXE)
 
-all: xclbin app
+all: xclbin exe
 
 clean:
 	rm -rf $(EMCONFIG_FILE) $(HOST_EXE) 
@@ -54,7 +59,7 @@ $(HOST_EXE): $(HOST_SRC)
 	@echo 'Compiled Host Executable: $(HOST_EXE)'
 
 $(EMCONFIG_FILE):
-	$(EMCONFIGUTIL) --nd 1 --od . --platform $(DSA)
+	$(EMCONFIGUTIL) --nd 1 --od . --platform $(DEVICE)
 
-check: $(XCLBIN) $(HOST_EXE) $(EMCONFIG_FILE)
+run: $(XCLBIN) $(HOST_EXE) $(EMCONFIG_FILE)
 	XCL_EMULATION_MODE=${MODE} ./$(HOST_EXE) $(EXE_OPT)
