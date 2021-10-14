@@ -207,7 +207,7 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 ## References
 The following documents provide supplemental information for this tutorial.
 
-### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
+### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
 ### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
@@ -229,6 +229,7 @@ The following are links to Vitis related information referenced in this tutorial
 * [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html)
 
 ## Revision History
+* October   2021 - Updated AI Engine Datamovers
 * September 2021 - Initial Release
 
  

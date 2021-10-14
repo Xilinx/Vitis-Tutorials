@@ -17,14 +17,18 @@
 #include <adf.h>
 #include "coeffs.h"
 
-// This example uses mul8 to copy 8 lanes of data with value 1 (represented as 32767 i.e. shift of 15)
-// This should examplify typlical delay through a mul command
-// As no decimation is used we will read 256 bits and write 256 bits each clock cycle.
-// Compared with fir11t we need use mul8 to fit the 256 bit read and write sizes (8 cint16)
+// This example uses vector register as a circular buffer to copy data.
+// 256 bit corresponds to 8 cint16 samples, so this datamover will theoretically
+// run 8 times faster than incoming data.
+// By using soft unrolling a 1024 bit vector register is divided into 4 phases,
+// each working on 256 bit data. 
+// To avoid read/write access conflicts to vector register, the update of
+// each 256 bit vector is one phase (clock cycle) ahead of the extract from
+// the vector register.
 
 // temporary block inline to allow vitis_analyzer to display data
 //void datamover
-void __attribute__ ((noinline)) datamover
+void __attribute__ ((noinline)) datamover_vector_reg
 (
  input_window_cint16 * restrict cb_input,
  output_window_cint16 * restrict cb_output
@@ -37,26 +41,15 @@ void __attribute__ ((noinline)) datamover
   // Pointer to coefficients
   const v16int16 coe =  *((const v16int16 *) one_vector) ;
 
-  // Input data temp variable
-  v32cint16 inp = undef_v32cint16();
+  // Vector register temp variable
+  v32cint16 vreg_data = undef_v32cint16();
   // Vector data
   v8cint16 vdata = undef_v8cint16();
 
-  // Set rounding and saturation methods
-  // not needed here as we multiply with 1 LSB and dont shift data
-  //set_rnd(2);
-  //set_sat();
-#if 0
-  cint16 tdata;
-  for (int i = 0; i < output_samples; i++)
-  {
-    window_readincr(cb_input, tdata);
-    window_writeincr(cb_output, tdata);
-  }
-#else
-
+  // Pre-amble
+  // Load first 256 bits before entering loop
   window_readincr(cb_input, vdata);
-  inp = upd_w(inp, 0, vdata);
+  vreg_data = upd_w(vreg_data, 0, vdata);
 
   const unsigned lc = (output_samples / 4 / 4 );
   for ( unsigned l=0; l<lc; ++l )
@@ -64,14 +57,20 @@ void __attribute__ ((noinline)) datamover
   chess_prepare_for_pipelining
   {
     window_readincr(cb_input, vdata);  // align with v8cint16 according to vdata type
-    inp = upd_w(inp, 1, vdata);
-    // Implicit accumulator v8cacc48 variable below
-    window_writeincr(cb_output, srs( mul8(inp, 0, 0x76543210, 1, coe, 0, 0x00000000, 1), shift));
+    vreg_data = upd_w(vreg_data, 1, vdata);
+    window_writeincr(cb_output, ext_w(vreg_data, 0));
 
     window_readincr(cb_input, vdata);
-    inp = upd_w(inp, 0, vdata);
-    window_writeincr(cb_output, srs( mul8(inp, 8, 0x76543210, 1, coe, 0, 0x00000000, 1), shift));
+    vreg_data = upd_w(vreg_data, 2, vdata);
+    window_writeincr(cb_output, ext_w(vreg_data, 1));
+
+    window_readincr(cb_input, vdata);
+    vreg_data = upd_w(vreg_data, 3, vdata);
+    window_writeincr(cb_output, ext_w(vreg_data, 2));
+
+    window_readincr(cb_input, vdata);
+    vreg_data = upd_w(vreg_data, 0, vdata);
+    window_writeincr(cb_output, ext_w(vreg_data, 3));
   }
-#endif
 }
 

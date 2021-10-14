@@ -29,7 +29,7 @@ for {set x 1} {$x <= 3} {incr x} {
   set id [expr $x - 1]
   set pl_rst [get_bd_cells /sys_reset_${id}]
   set d false
-  if {$x == 2} {
+  if {$x == 1} {
     set d true
   }
   set clk_settings [concat id \"$id\" is_default \"$d\" proc_sys_reset \"$pl_rst\" status \"fixed\"]
@@ -51,7 +51,7 @@ for {set x 0} {$x < 1} {incr x} {
 
 set noc_intf_tags []
 # tag the AIE configuration NSU
-lappend noc_intf_tags M01_AXI {memport "M_AXI_NOC" sptag "GP"}
+#lappend noc_intf_tags M01_AXI {memport "M_AXI_NOC" sptag "GP"}
 
 # tag the DDR slave ports
 for {set x [get_property CONFIG.NUM_SI [get_bd_cells /axi_noc_0]]} \
