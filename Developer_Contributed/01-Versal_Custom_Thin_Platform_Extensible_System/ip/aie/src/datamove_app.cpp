@@ -60,7 +60,7 @@ connect<> dataout_3(mygraph_top.out[3], platform.sink[3]);
 int main(void) 
 {
   mygraph_top.init();
-  mygraph_top.run(2);
+  mygraph_top.run();
   mygraph_top.end();
   return 0;
 }
