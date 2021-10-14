@@ -96,7 +96,10 @@ enable_beta_device xcvc*
 
    ![CED Configuration](./images/step0/vivado_ced_config.png)
 
-   - Configure the clock, interrupt and LPDDR4 configurations. In this example, we can keep everything default and click **Next**.
+   - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view. In this example, we can keep the default settings.
+   - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC and cascade them. In this example, we can keep the default setting.
+   - Configure Memory Settings. By default the example design will only enable DDR4. If you enable LPDDR4, it will enable both DDR4 and LPDDR4. In this example, we can keep the default setting.
+   - Click **Next**.
    - Review the new project summary and click **Finish**.
    - After a while, you will see the design example has been generated.
 
@@ -106,9 +109,9 @@ enable_beta_device xcvc*
 
    
 
-***Note: At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. Since it's a validated design, you can go to [step1:Hardware Settings for Vitis Platform](step1.md) to review or update platform settings and skip the validation below.***
+***At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. Since it's a validated design, you can go to [step1:Hardware Settings for Vitis Platform](step1.md) to review or update platform settings and skip the validation below.***
 
-***For a custom board, platform developers need to configure CIPS and NOC for processor settings and DDR settings. Please complete the following testings before going to next steop.***
+***For a custom board, platform developers need to configure CIPS and NOC for processor settings and DDR settings. Please complete the following testings before going to next step.***
 
 ### Custom Board Additional Steps
 
