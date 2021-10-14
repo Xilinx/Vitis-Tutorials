@@ -97,7 +97,7 @@ enable_beta_device xcvc*
    ![CED Configuration](./images/step0/vivado_ced_config.png)
 
    - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view. In this example, we can keep the default settings.
-   - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC and cascade them. In this example, we can keep the default setting.
+   - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
    - Configure Memory Settings. By default the example design will only enable DDR4. If you enable LPDDR4, it will enable both DDR4 and LPDDR4. In this example, we can keep the default setting.
    - Click **Next**.
    - Review the new project summary and click **Finish**.
