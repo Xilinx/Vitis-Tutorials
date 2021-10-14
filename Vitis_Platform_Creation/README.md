@@ -23,7 +23,7 @@ These tutorials introduce the basics of platform creation and provide step-by-st
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Introduction/01-Overview/README.md">Vitis Custom Embedded Platform Creation Tutorial on MPSoC</a></td>
+ <td align="center"><a href="./Introduction/01-Overview/README.md">Vitis Platform Overview</a></td>
  <td>This is an overview of the Vitis platform creation concepts and steps.</td>
  </tr>
 
