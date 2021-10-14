@@ -17,11 +17,27 @@ For additional customization or more in-depth development on Xilinx boards, or t
 
 These tutorials introduce the basics of platform creation and provide step-by-step tutorials for creating custom Vitis and Vitis AI™ ready platforms.
 
-[Module 1: Platform Creation Overview](Introduction/01-Overview/README.md)
+<table style="width:100%">
+ <tr>
+ <td width="35%" align="center"><b>Tutorial</b>
+ <td width="65%" align="center"><b>Description</b>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Introduction/01-Overview/README.md">Vitis Custom Embedded Platform Creation Tutorial on MPSoC</a></td>
+ <td>This is an overview of the Vitis platform creation concepts and steps.</td>
+ </tr>
 
-[Module 2: Vitis Custom Embedded Platform Creation Tutorial on MPSoC](Introduction/02-Edge-AI-ZCU104/README.md)
+ <tr>
+ <td align="center"><a href="./Introduction/02-Edge-AI-ZCU104/README.md">Vitis Custom Embedded Platform Creation Tutorial on MPSoC</a></td>
+ <td>This tutorial demonstrates how you can create a custom Vitis platform on ZCU104 demo board and validate the platform.</td>
+ </tr>
 
-[Module 3: Versal Custom Platform Creation Tutorial](Introduction/03_Edge_VCK190/README.md)
+ <tr>
+ <td align="center"><a href="./Introduction/03_Edge_VCK190/README.md">Versal Custom Platform Creation Tutorial</a></td>
+ <td>This tutorial demonstrates how you can create a custom Vitis platform on VCK190 demo board and validate the platform.</td>
+ </tr>
+
+ </table>
 
 ### Feature Tutorials
 
