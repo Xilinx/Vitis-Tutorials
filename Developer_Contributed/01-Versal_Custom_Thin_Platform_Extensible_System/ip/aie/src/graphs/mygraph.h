@@ -22,7 +22,7 @@ using namespace adf;
 /*
  * Adaptive dataflow graph to move data
  */
-template <const int IN_SIZE, const int IN_MARGIN, const int NUM>
+template <int IN_SIZE, int IN_MARGIN, int NUM>
 class mygraph : public graph {
 
   private:
@@ -40,19 +40,32 @@ class mygraph : public graph {
       // Debug prints//printf("Template Win margin = %d\n",IN_MARGIN);
       // datamover */ dmove_i[0]                   = kernel::create(datamover);
       // datamover */ source(dmove_i[0])           = "kernels/datamover.cc";
-      // datascale */ dmove_i[1]                   = kernel::create(datascale);
-      // datascale */ source(dmove_i[1])           = "kernels/datascale.cc";
-      for (int i=0; i<NUM; i++){
-        /* datamover */ dmove_i[i]                   = kernel::create(datamover);
-        /* datamover */ source(dmove_i[i])           = "kernels/datamover.cc";
-        // datascale */ dmove_i[i]                   = kernel::create(datascale);
-        // datascale */ source(dmove_i[i])           = "kernels/datascale.cc";
+       /* non-for-loop */ dmove_i[0]                   = kernel::create(datamover_scalar);
+       /* non-for-loop */ source(dmove_i[0])           = "kernels/datamover_scalar.cc";
+       /* non-for-loop */ dmove_i[1]                   = kernel::create(datamover_vector_reg);
+       /* non-for-loop */ source(dmove_i[1])           = "kernels/datamover_vector_reg.cc";
+       /* non-for-loop */ dmove_i[2]                   = kernel::create(datamover_mul_one);
+       /* non-for-loop */ source(dmove_i[2])           = "kernels/datamover_mul_one.cc";
+       /* non-for-loop */ dmove_i[3]                   = kernel::create(stream_datamover);
+       /* non-for-loop */ source(dmove_i[3])           = "kernels/stream_datamover.cc";
+      for (int i=0; i<NUM-1; i++){
+        // datamover */ dmove_i[i]                   = kernel::create(datamover);
+        // datamover */ source(dmove_i[i])           = "kernels/datamover.cc";
         runtime<ratio>(dmove_i[i])   = 0.82;
-        //location<kernel>(dmove_i[i]) = tile(20, 0);
         connect< stream, window<IN_SIZE, IN_MARGIN> > (in[i], dmove_i[i].in[0]);
         // Connect output
         connect< window<IN_SIZE> > (dmove_i[i].out[0], out[i]);
       }
+       runtime<ratio>(dmove_i[3])   = 0.82;
+       // skip, not needed in this case // initialization_function(dmove_i[3]) = "stream_datamover_init";
+       // use for loop// connect< stream, window<IN_SIZE, IN_MARGIN> > (in[0], dmove_i[0].in[0]);
+       // use for loop// connect< window<IN_SIZE> > (dmove_i[0].out[0], out[0]);
+       // use for loop// connect< stream, window<2*IN_SIZE, IN_MARGIN> > (in[1], dmove_i[1].in[0]);
+       // use for loop// connect< window<2*IN_SIZE> > (dmove_i[1].out[0], out[1]);
+       // use for loop// connect< stream, window<3*IN_SIZE, IN_MARGIN> > (in[2], dmove_i[2].in[0]);
+       // use for loop// connect< window<3*IN_SIZE> > (dmove_i[2].out[0], out[2]);
+       connect< stream > (in[3], dmove_i[3].in[0]);
+       connect< stream > (dmove_i[3].out[0], out[3]);
     }
 };
 

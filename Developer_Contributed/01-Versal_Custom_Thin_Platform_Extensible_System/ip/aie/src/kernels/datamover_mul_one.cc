@@ -24,7 +24,7 @@
 
 // temporary block inline to allow vitis_analyzer to display data
 //void datamover
-void __attribute__ ((noinline)) datamover
+void __attribute__ ((noinline)) datamover_mul_one
 (
  input_window_cint16 * restrict cb_input,
  output_window_cint16 * restrict cb_output
@@ -37,41 +37,42 @@ void __attribute__ ((noinline)) datamover
   // Pointer to coefficients
   const v16int16 coe =  *((const v16int16 *) one_vector) ;
 
-  // Input data temp variable
-  v32cint16 inp = undef_v32cint16();
-  // Vector data
+  // Vector register data variable
+  v32cint16 vreg_data = undef_v32cint16();
+  // Temporary Vector data aligned for 256 bit reads
   v8cint16 vdata = undef_v8cint16();
 
-  // Set rounding and saturation methods
-  // not needed here as we multiply with 1 LSB and dont shift data
-  //set_rnd(2);
-  //set_sat();
-#if 0
-  cint16 tdata;
-  for (int i = 0; i < output_samples; i++)
-  {
-    window_readincr(cb_input, tdata);
-    window_writeincr(cb_output, tdata);
-  }
-#else
-
+  // Pre-amble
+  // load 2x256 bits to vector reg before entering the loop
+  // align with v8cint16 according to vdata type
   window_readincr(cb_input, vdata);
-  inp = upd_w(inp, 0, vdata);
+  vreg_data = upd_w(vreg_data, 0, vdata);
+  window_readincr(cb_input, vdata);
+  vreg_data = upd_w(vreg_data, 1, vdata);
 
   const unsigned lc = (output_samples / 4 / 4 );
   for ( unsigned l=0; l<lc; ++l )
   chess_loop_range(8,)
   chess_prepare_for_pipelining
   {
-    window_readincr(cb_input, vdata);  // align with v8cint16 according to vdata type
-    inp = upd_w(inp, 1, vdata);
+    // Soft unroll loop into 4 phase scheme
+    window_readincr(cb_input, vdata);
+    vreg_data = upd_w(vreg_data, 2, vdata);
     // Implicit accumulator v8cacc48 variable below
-    window_writeincr(cb_output, srs( mul8(inp, 0, 0x76543210, 1, coe, 0, 0x00000000, 1), shift));
+    window_writeincr(cb_output, srs( mul8(vreg_data, 0, 0x76543210, 1, coe, 0, 0x00000000, 1), shift));
 
     window_readincr(cb_input, vdata);
-    inp = upd_w(inp, 0, vdata);
-    window_writeincr(cb_output, srs( mul8(inp, 8, 0x76543210, 1, coe, 0, 0x00000000, 1), shift));
+    vreg_data = upd_w(vreg_data, 3, vdata);
+    window_writeincr(cb_output, srs( mul8(vreg_data, 8, 0x76543210, 1, coe, 0, 0x00000000, 1), shift));
+
+    // Vector register wrap automatically
+    window_readincr(cb_input, vdata);
+    vreg_data = upd_w(vreg_data, 0, vdata);
+    window_writeincr(cb_output, srs( mul8(vreg_data, 16, 0x76543210, 1, coe, 0, 0x00000000, 1), shift));
+
+    window_readincr(cb_input, vdata);
+    vreg_data = upd_w(vreg_data, 1, vdata);
+    window_writeincr(cb_output, srs( mul8(vreg_data, 24, 0x76543210, 1, coe, 0, 0x00000000, 1), shift));
   }
-#endif
 }
 
