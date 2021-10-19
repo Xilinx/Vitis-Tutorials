@@ -5,53 +5,53 @@
  </tr>
 </table>
 
-# AI Engine Datamover Examples
-These AI Engine kernel examples demonstrate a few different coding techniques using data movers as case study.
+# AI Engine datamover examples
+These AI Engine kernel examples demonstrate a few different coding techniques using datamovers as case study.
 They also show how to optimize the kernel processing to allow for efficient processing of data with the inner loops.
 By modifying the graph and constraints file, the kernel examples can be put in different comparison contexts for learning purpose.
 
 ## Description of the AIE kernels
-The current graph create 4 individual data paths moving data from PL through an instance of datamover kernel back to PL.
+The current graph create 4 individual data paths each moving data from PL through an instance of a datamover kernel back to PL.
 The kernels are indexed from 0 to 3 using the following kernels:
 ```
-  0. datamover_scalar.cc      : Uses AIE Scalar processing to move 32 bit data (cint16) each clock cycle.
-  1. datamover_vector_reg.cc  : Uses AIE Vector processing to move 256 bit data (8 lanes of cint16) each clock cycle.
+  0. datamover_scalar.cc      : Uses AIE scalar processing to move 32-bit data (cint16) each clock cycle.
+  1. datamover_vector_reg.cc  : Uses AIE vector processing to move 256-bit data (8 lanes of cint16) each clock cycle.
                                 The vector registers is used for temporary storage as a circular buffer.
-  2. datamover_mul_one.cc     : Similar as vector data mover, except that the 8 lanes is passed through the DSP MUL
+  2. datamover_mul_one.cc     : Similar as vector data mover, except that the 8 lanes are passed through the DSP MUL
                                 by multiplying with 1. This mimics the pipeline delay vector MUL/MAC signal processing.
-  3. stream_datamover.cc      : Based on direct stream access of the 32 bit AXI Stream. As with the Vector data mover,
-                                the vector register is used as a circular buffer. To align with the 128 bit width of the 
-                                vector register, the 4:1 conversion from 32 to 128 bit in the stream API is used.
-                                In practice this means we can read 128 bits of data every 4th clock cycle, corresponding to
-                                4 cint16 samples. Similar argument for the output, we write 128 bit data every 4th clock cycle
-                                and the 1:4 conversion to 32 bit stream.
+  3. stream_datamover.cc      : Based on direct stream access of the 32-bit AXI Stream. As with the vector data mover,
+                                the vector register is used as a circular buffer. To align with the 128-bit width of the 
+                                vector register, the 4:1 conversion from 32 to 128-bit in the stream API is used.
+                                In practice this means we can read 128-bits of data every 4th clock cycle, corresponding to
+                                4 cint16 samples. Similar argument for the output, we write 128-bit data every 4th
+                                clock cycle and the 1:4 conversion to 32-bit stream.
 ```
 
-## Short description of Vector datamover optimizations
-To make efficient use vector read and write operations, MUL/MAC operations and scalar commands some considerations are need.
-The AI Engine core have capability of processing two 256 bit reads, one 256 bit write, one DSP MUL/MAC operation and a Scalar
-instruction in one clock cycle using Very Long Instruction Word. The core also have dedicated registers to manage counter for 
-inner loop as a Zero Overhead Loop.
-For this to be scheduled properly, first consider the inner loop in terms of data flow. As this case is bound by the 256 bit writes
-we only need to refresh 256 bits of input data. To give room for the input data to be stored on the vector register, it will have
-to use a 256 bit vector ahead of the output 256 bit vector. This also avoids read and write access on the same address of the 
-vector register.
+## Short description of vector datamover optimizations
+To make efficient use of vector read and write operations, MUL/MAC operations,  and scalar commands some considerations are needed.
+The AI Engine core has the capability of processing two 256-bit reads, one 256-bit write, one DSP MUL/MAC operation, and a scalar
+instruction in one clock cycle using Very Long Instruction Word. The core also has dedicated registers to manage the counter for
+the inner loop as a Zero Overhead Loop.
+For this to be scheduled properly, first consider the inner loop in terms of data flow. As this case is bound by the 256-bit writes
+we only need to refresh 256-bit vector of input data. To give room for the input data to be stored on the vector register,
+it will have to use a 256-bit vector ahead of the output 256-bit vector. This also avoids read and write access on the same
+address of the vector register.
 
 ### Special note on preparing the loop
 The inner loop is where the main work takes place with VLIW keeping the AI Engine busy with processing.
-Upon entering the loop, it's important that the first operation have valid data to process. For the vector reg datamover,
-this means we need to preload the first 256 bits of data before entering the loop. Similar argument for the vector multiplication
-data mover, but in this case we require 2 x 256 bits.
+Upon entering the loop, the first operation must have valid data to process. For the vector reg datamover,
+this means we need to preload the first 256-bit vector of data before entering the loop. A similar argument for the vector multiplication
+data mover, but in this case, we require two 256-bit vectors of data.
 This is because we process 8 lanes of data each clock cycle and the permutation for each lane offsets the data in the vector 
 register according to the figure below.
 
 <img src="../../documentation/readme_files/datamover_mul_one_8_lanes.png">
 
-To complete the full circle, the inner loop is unrolled manually so the for loop always start in same position.
-This is possible due to that the vector register will automatically wrap around according to it's type declaration.
+To complete the full circle, the inner loop is unrolled manually so the for loop always starts in the same position.
+This is possible due to that the vector register will automatically wrap around according to its type declaration.
 
 ## Compile and build AIE design
-For the global project settings and paths to work, always build the AIE ip from design root directory.
+For the global project settings and paths to work, always build the AIE ip from the design root directory.
 Use build instructions in step 7.
 
 ## Simulating and checking the AIE kernels
