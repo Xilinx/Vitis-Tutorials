@@ -207,8 +207,8 @@ Test PASSED: Output matches reference
 
 The input and the output images are shown below for filter type selection set to 3 which performs edge detection:
 
-![](./images/inputImage50.jpg)
-![](./images/outputImage.jpg)
+![missing image](./images/inputImage50.jpg)
+![missing image](./images/outputImage.jpg)
 
 ### Running Hardware Emulation
 
@@ -323,11 +323,11 @@ The trace information generated during the application run can be controlled by 
 
     Another important measurement is the **CU Utilization** column, which is very close to 100 percent. This means the host was able to feed data to compute units through PCIe continuously. In other words, the host PICe bandwidth was sufficient, and compute units never saturated it. This can also be observed by examining the host bandwidth utilization. To see this, select **Host Data Transfers** in the report, and a table similar to the figure below will be displayed. From this table, it is clear that the host bandwidth is not fully utilized.
 
-    ![](images/bwUtil.jpg)
+    ![missing image](images/bwUtil.jpg)
 
     Similarly, by selecting **Kernel Data Transfers** in the report, you can see how much bandwidth is utilized between the kernel and the device DDR memory. You have used a single memory bank (DDR[1]) for all the compute units, as shown below.
 
-![](images/bwKernel.jpg)
+![missing image](images/bwKernel.jpg)
 
 ### Application Timeline
 
@@ -337,13 +337,13 @@ The Application Timeline can also be used to examine performance parameters like
 
    This will display the Application Timeline in the right side window, as shown below. 
 
-    ![](images/cuTime.jpg)
+    ![missing image](images/cuTime.jpg)
 
     Zoom appropriately and go to device-side trace. For any CU, hover your mouse on any transaction in "Row 0" and a tooltip will show compute start and end times and also the latency. This should be similar to what you saw in the last section.
 
 Another important thing to observe is the host data transfer trace as shown below. From this report, it can be seen that the host read and write bandwidth is not fully utilized as there are gaps, showing times when there are no read/write transactions occurring. You can see that these gaps are significant, highlighting the fact that only a fraction of host PCIe bandwidth is utilized.
 
-![](images/hostTrace.jpg)
+![missing image](images/hostTrace.jpg)
 
 From this discussion, and knowing that the Alveo U200 accelerator card has multiple DDR banks, it should be clear that you can improve the application's overall throughput even further. You can use additional compute units that can accelerate a single video stream to increase throughput or can be used to process multiple video streams at the same time.
 

@@ -1,12 +1,15 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal ACAP AI Engine A to Z Bare-metal Flow</h1>
-   </td>
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
-
 </table>
 
-## Introduction
+# A to Z Bare-metal Flow: Introduction
+
+## Platforms
 
 A platform is the starting point of your design and will be used to build Vitis™ software platform applications.
 
@@ -33,13 +36,13 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 
 5. In the design preset page, make the following changes:
 
-      ![](images/211_design_preset_config.png)
+      ![missing image](images/211_design_preset_config.png)
 
 6. Click ***Finish*** to complete the example design creation phase and this will open up the Vivado project with the template design you just created.
 You can open the block design to view the details of the platform design.
 By using the pre-built template, you can easily get a validated hardware design of the platform to move on to the next step. In your real design development procedure, you may use this as a baseline design and make further modifications on top of it.
 
-      ![](images/211_block_design_complete.png)
+      ![missing image](images/211_block_design_complete.png)
 
 7. Click ***Generate Block Design*** from the Flow Navigator panel on the left and select ***Global*** as the synthesis option. Click ***Generate*** and wait for the process to complete.
 
@@ -47,19 +50,19 @@ By using the pre-built template, you can easily get a validated hardware design 
 
    a. On the first page, select ***Hardware*** as the platform type (this tutorial runs on hardware).
 
-      ![](images/export_xsa_pg1.png)
+      ![missing image](images/export_xsa_pg1.png)
 
    b. On the second page select ***Pre-synthesis***.
 
-      ![](images/export_xsa_pg2.png)
+      ![missing image](images/export_xsa_pg2.png)
 
    c. On the third page, add the name of the platform.
 
-      ![](images/export_xsa_pg3.png)
+      ![missing image](images/export_xsa_pg3.png)
 
    d. On the fourth page, set the name of the XSA.
 
-      ![](images/export_xsa_pg4.png)
+      ![missing image](images/export_xsa_pg4.png)
 
 9. Close the Vivado project after platform export process finishes.
 
@@ -73,15 +76,15 @@ By using the pre-built template, you can easily get a validated hardware design 
 
 3. Set the platform project name to ***base_pfm_vck190*** and click ***Next***.
 
-      ![](images/211_create_platform_pg1.png)
+      ![missing image](images/211_create_platform_pg1.png)
 
 4. Use the XSA generated in the previous step and set the Operating System to  ***aie_runtime*** and the Processor to ***ai_engine***. Click ***Finish*** to create the platform project.
 
-      ![](images/create_platform_pg2.png)
+      ![missing image](images/create_platform_pg2.png)
 
 5. Then build the platform by clicking on the hammer icon.
 
-      ![](images/build_platform.png)
+      ![missing image](images/build_platform.png)
 >**Note**: If you modify the XSA file later, first right-click the platform project and select ***Update Hardware Specification*** and then rebuild the platform project.
 
 6. The generated platform can be found in `base_pfm_vck190/export`.
@@ -92,7 +95,7 @@ In the next step, you will build an AI Engine application using this platform.
 
 <p align="center"><b><a href="./README.md">Return to Start of Tutorial</a> — <a href="./02-aie_application_creation.md">Go to Step 2</a></b></p>
 
-<p align="center">© Copyright 2020-2021 Xilinx, Inc.</p>
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -106,4 +109,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD018</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p>

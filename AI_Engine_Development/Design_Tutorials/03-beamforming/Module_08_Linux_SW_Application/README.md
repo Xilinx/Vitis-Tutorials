@@ -1,3 +1,12 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
 # Building the Design
 
 The next step is to create the Linux PS host application.
@@ -10,7 +19,7 @@ make exe
 The individual commands are explained later on in this module.
 
 
-# Introduction: Programming the PS Host Application
+## Introduction: Programming the PS Host Application
 
 A top-level PS application running on the Cortex-A72 processor controls the AI Engine graph and the PL kernels. In Module 05, you created a PS host application for a bare-metal system. In this module, you will create a PS host application that runs on a Linux operating system (built in Module 07).
 
@@ -18,7 +27,7 @@ Detailed descriptions of compiler flags, include directories, and linker flags a
 
 Linux host applications use the Xilinx Runtime (XRT) API to control the PL and AI Engine kernels. In this tutorial, XRT is used to access the AI Engine graph and generic UIO drivers to access the PL kernels.  
 
-# Execution Flow Chart
+## Execution Flow Chart
 
 The Linux PS host application is the ``beamformer.cpp`` file. The following figure shows the execution flow diagram implemented by the ``beamformer.cpp``.
 
@@ -26,7 +35,7 @@ The Linux PS host application is the ``beamformer.cpp`` file. The following figu
 
 The following sections detail the important steps in the execution flow.  
 
-# Bind UIO Drivers with PL Kernels
+## Bind UIO Drivers with PL Kernels
 
 In Module 07, you created the PetaLinux software platform with a custom DTSI file that listed out the generic UIO drivers for each PL kernel instance. Each UIO driver in the DTSI file has the same name as each PL kernel instance name specified in the ``config_2regslice.ini`` file in Module 04.
 
@@ -34,18 +43,18 @@ One of the first things the host application does is bind the UIO drivers to the
 
 These functions call the `mmap` function to bind the physical address of the PL kernels to a memory pointer. The host application uses the memory pointer to access the register maps of the PL kernels.   
 
-## Changes in 2021.1
+### Changes in 2021.1
 
 All AIE related APIs are handled through XRT APIs. XRT APIs provide this flexibility by parsing the metadata in aie.xclbin and corresponding binding code in compiled aie_control_xrt.cpp. Hence, it is no longer necessary to include graph.h or graph.cpp into host application compilation. Instead, only the PLIOs needed for performance measurements need to be included in host_app.cpp. These changes are implemented in the source code in this module. 
 
 Thus, host application is agnostic to AIE source code starting 2021.1.
 
 
-# Load AIE XCLBIN   
+## Load AIE XCLBIN   
 
 The host application resets the AI Engine array, loads the AI Engine array, and enables the AI Engine graph.
 
-## Reset AI Engine
+### Reset AI Engine
 
 The host application can reset and reload the AIE array whenever required. To do this, XRT must be built into the PetaLinux build. In the host application, you can use the following API to reset the AI Engine with the `xrtResetAIEArray` function:
 
@@ -69,7 +78,7 @@ If the `xrtResetAIEArray` function fails, the AI Engine reset has not been accom
 
 This function does not orchestrate system reset but _only_ resets the AI Engine array.
 
-## Load AI Engine with XCLBIN
+### Load AI Engine with XCLBIN
 
 The host application loads the AI Engine with the XCLBIN with the ``xclloadxclbin()`` function.
 
@@ -84,7 +93,7 @@ if (xclLoadXclBin(device, top))
 ```
 If the AI Engine load fails, the `load_xclbin()` function throws an exception. A system reboot might be required.
 
-## Reset AI Engine in the Middle of Execution
+### Reset AI Engine in the Middle of Execution
 
 Sometimes it is necessary to stop a running execution of the system and start over. To restart the system and start again, there is a flow to follow. These steps can be performed any number of times in the host application.
 
@@ -105,7 +114,7 @@ Reload the AI Engine with the XCLBIN using the `xclloadxclbin()` function. Verif
 Lastly, restart the PL kernels to send/receive PL traffic to/from the AI Engine.
 
 
-## Command-Line Arguments
+### Command-Line Arguments
 
 The ``beamformer.cpp`` file takes two command line arguments:
 

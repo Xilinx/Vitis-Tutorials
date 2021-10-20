@@ -1,15 +1,16 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
-   </td>
- </tr>
- <tr>
- <td align="center"><h1>DSP Library Tutorial</h1>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
-# Table of Contents
+# DSP Library Tutorial
+
+## Table of Contents
+
 * [Introduction](#introduction)
 
 * [Before You Begin](#before-you-begin)
@@ -23,18 +24,21 @@
 * [References](#references)
 
 
-# Introduction
+## Introduction
+
 The Xilinx® Versal™ adaptive compute acceleration platform (ACAP) is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.
 
 This tutorial demonstrates how to use kernels provided by the DSP Library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation. It does not take the design to a hardware implementation, however.
 
-## Objectives 
+### Objectives
+
 After completing the tutorial, you should be able to:
+
 * Build signal processing datapath using the Vitis™ application acceleration development flow
 * Evaluate the performance and resource utilization metrics of a design
 * Adjust filter parameters to meet system performance requirements
 
-## Tutorial Overview 
+### Tutorial Overview
 
 This tutorial shows how to construct a simple two-stage decimation filter. This filter is not targeted at a specific real-life application, but is used to show how to use the DSP Library to construct filter chains.
 
@@ -42,8 +46,7 @@ This tutorial shows how to construct a simple two-stage decimation filter. This 
 * Part 2 shows how to cascade filters together into a chain
 * Part 3 shows how to optimize performance of the filter chain by tuning individual filters
 
-
-## Directory Structure
+### Directory Structure
 
 ```
 dsplib_tutorial_install
@@ -59,19 +62,17 @@ dsplib_tutorial_install
     └───src
 ```
 
-# Before You Begin
+## Before You Begin
 
-
-## *Documentation*: Explore AI Engine Architecture
+### *Documentation*: Explore AI Engine Architecture
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
 * [AM009 AI Engine Architecture Manual](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
 
+### *Tools*: Installing the Tools
 
-## *Tools*: Installing the Tools
-
-Tools Documentation: 
+Tools Documentation:
 
 * [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1076-ai-engine-environment.pdf)
 
@@ -87,43 +88,50 @@ To run through this tutorial, you will need to download and install the followin
 
 * Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
-## *Environment*: Setting Up Your Target Platform Environment
-When the elements of the Vitis software platform are installed, update the target platform environment script. 
+### *Environment*: Setting Up Your Target Platform Environment
 
-Edit the provided template setup script `env_setup.sh` in your favourite text editor. Replace the placeholders with the appropriate paths: 
+When the elements of the Vitis software platform are installed, update the target platform environment script.
+
+Edit the provided template setup script `env_setup.sh` in your favourite text editor. Replace the placeholders with the appropriate paths:
 
 ```bash
 #Setup environment variables 
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
 export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
 ```
-Then source the environment script: 
+
+Then source the environment script:
+
 ```bash
 source env_setup.sh
-```  
+```
 
-## *Validation*: Confirming Tool Installation
-Ensure that you are using the 2021.1 version of Xilinx tools. 
+### *Validation*: Confirming Tool Installation
+
+Ensure that you are using the 2021.1 version of Xilinx tools.
+
 ```bash
 which vitis
 which aiecompiler
 ```
 
-## *Other Tutorials*: Learn Basic Vitis Compiler and AI Engine Concepts
-For novice users, following link provides tutorials to understand the basic Vitis compiler concepts and building simple AI Engine designs: 
+### *Other Tutorials*: Learn Basic Vitis Compiler and AI Engine Concepts
 
-* https://github.com/Xilinx/Vitis-Tutorials
+For novice users, following link provides tutorials to understand the basic Vitis compiler concepts and building simple AI Engine designs:
 
-# Part 1: Creating a Single Kernel Graph
+* [https://github.com/Xilinx/Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
+
+## Part 1: Creating a Single Kernel Graph
 
 Part 1 of this tutorial will:
+
 * demonstrate how to create a Vitis project
 * link in the DSPLib functions
 * create a simple graph containing a parameterized DSPLib FIR filter.
 * compile and simulate the design
 * evaluate the results.
 
-## Creating the Project
+### Creating the Project
 
 1. To begin this tutorial, create a new workspace directory, and start the Vitis environment:
 
@@ -131,6 +139,7 @@ Part 1 of this tutorial will:
     mkdir ws_dsplib_tutorial_part_1
     vitis
     ```
+
 2. You will see the *Select a directory as workspace* window. Navigate to the **ws_dsplib_tutorial_part_1** directory, select it, and click **Launch**. The Vitis application window will appear. 
 
 3. We begin by creating a new application: Click **Create Application Project**. The *Create a New Application Project* window will appear, which explains the basic concepts of a Vitis project. Click **Next** when ready.
@@ -141,18 +150,18 @@ Part 1 of this tutorial will:
 
 6. The *Domain* window will appear. The default domain, *aiengine*, is the desired domain. Click **Next**.
 
-7. The *Templates* window will appear next. Select **Empty Application** and click **Finish**. 
+7. The *Templates* window will appear next. Select **Empty Application** and click **Finish**.
 
 8. Next, we will import the source and data files: In the project tree shown in the Explorer pane, right-click on the **dsplib_tutorial_part_1** project, and select **Import Sources...**.
 
-9. Navigate to **<dsplib_tutorial_install>/part_1** and click **Open**. In the left pane, click on **part_1** to expand it, then click on the **src** and **data** folders. For the "into folder", enter **dsplib_tutorial_part_1**, and click **Finish**. 
+9. Navigate to **<dsplib_tutorial_install>/part_1** and click **Open**. In the left pane, click on **part_1** to expand it, then click on the **src** and **data** folders. For the "into folder", enter **dsplib_tutorial_part_1**, and click **Finish**.
 ![Importing Sources into a Vitis Project](images/DSPLib_tutorial_part_1_Importing_Sources.png)
 
 10. With the files imported, you now need to specify which file is the top level. In the project tree shown in the *Explorer* pane, double-click on **dsplib_tutorial_part_1.prj**.
 
 11. The *Application Project Settings* should appear in the main pane. Click on **Click to select Top-Level File**, and a *File Selection window* should appear. Expand the entries to select **dsplib_tutorial_part_1/src/test.cpp**, and click **OK**.
 
-12. For this project to make use of the DSPLib functions, you need to tell the compiler where to find them. 
+12. For this project to make use of the DSPLib functions, you need to tell the compiler where to find them.
 Right-click on **dsplib_tutorial_part_1**, and click on **C/C++ Build Settings**.
 
 13. Under the *Tools Settings* tab, **AIE C Compiler**/**Input Spec** should be highlighted (if it is not highlighted, select it). In the **Include Paths** pane, click the **+** sign, and add the directory for each of the following:
@@ -166,7 +175,7 @@ The *Properties* Window should now look as follows:
 
 14. Click **Apply and Close**, then respond **Yes** when asked if you want the index rebuilt.
 
-## Understanding the Source Files
+### Understanding the Source Files
 
 The `system_settings.h` files is a standard header file that defines the constants used in this project. It includes the header file "<adf.h>". This is the Adaptive Data Flow (ADF) header file, which provides the classes used for specifying graphs. It also includes the FIR Filter kernel's header file, `fir_sr_sym_graph.hpp`.
 
@@ -241,11 +250,12 @@ int main(void) {
 }
 ```
 
-## Build AI Engine Emulation
+### Build AI Engine Emulation
 
 After the design files are complete, the next step is to choose a target by selecting a build configuration.
 
 There are three build configurations:
+
 * **Emulation-SW** - Compiles to the x86 Simulator. Provides the quickest compiles and fastest validation cycles, but does not provide any implementation details.
 * **Emulation-AIE** - Compiles to the AI Engine Simulator. A slower compile, but targets the AI Engine hardware, and provides implementation details.
 * **Hardware** - Compiles to physical hardware. This is the most time-consuming build, and should be done once the design is verified and ready to be tested on hardware.
@@ -261,13 +271,13 @@ After the build configuration is selected, you only need to click on the hammer 
 
 Building the project invokes the AI Engine compiler, which compiles the design, and maps it to the AI Engine tiles.
 
-## Using Vitis Analyzer to look at the Compilation Results
+### Using Vitis Analyzer to look at the Compilation Results
 
 From the *Assistant* pane, expand the application (displib_tutorial_part_1), then expand the **Emulation-AIE** section, and double-click **Compile Summary**. Vitis Analyzer will now open.  After it opens, it will display the Summary page, which provides a brief summary of the project.
 
 ![Vitis Analyzer Summary](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Summary.png)
 
-Selecting **Graph** on the navigation bar shows a diagram of the filter implementation. It illustrates the data connectivity points into and out of the graph (128-bit interfaces), and the symmetrical FIR filter kernel being implemented on a single tile with ping-pong buffers on either side of it. 
+Selecting **Graph** on the navigation bar shows a diagram of the filter implementation. It illustrates the data connectivity points into and out of the graph (128-bit interfaces), and the symmetrical FIR filter kernel being implemented on a single tile with ping-pong buffers on either side of it.
 
 ![Vitis Analyzer Graph](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Graph.png)
 
@@ -279,7 +289,7 @@ You can select the other entries on the navigation bar to see additional impleme
 
 When you are done examining the design, click **File -> Exit**
 
-## Running the Design through Simulation
+### Running the Design through Simulation
 
 1. In the *Explorer* pane, right-click on the application project **dsplib_tutorial_part_1**, and select **Run As -> Run Configurations...**.
 
@@ -289,7 +299,7 @@ When you are done examining the design, click **File -> Exit**
 
 4. Select the **Main** tab, check the **Generate Trace** checkbox, and select **VCD**. Click **Run**. The simulation will begin execution and the log appears on the *Console* pane below. Wait for the simulation to complete (the status bar on the lower right corner will disappear).
 
-## Using Vitis Analyzer to look at the Simulation Results
+### Using Vitis Analyzer to look at the Simulation Results
 
 From the *Assistant* pane, expand the application **displib_tutorial_part_1**, then expand the **Emulation-AIE** section, and double-click **Run Summary**. Vitis Analyzer will now open. After it opens, it will display the *Summary* page, which provides a brief summary of the simulation.
 
@@ -298,14 +308,14 @@ Selecting **Trace** on the navigation bar shows the simulation trace. Here you c
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Trace.png)
 
 
-# Part 2: Creating a Multi Kernel Graph
+## Part 2: Creating a Multi Kernel Graph
 
 Part 2 of this tutorial will:
+
 * demonstrate how to connect together filters to create a filter chain.
 * show how to identify areas for optimization within the chain
 
-
-## Creating the Project
+### Creating the Project
 
 For this part, you can create a new workspace and import the source files for part 2 as you did for part 1, or you can save some time and import the existing ZIP of the project provided.  For Part 2, we will demonstrate the latter option.
 
@@ -317,7 +327,7 @@ For this part, you can create a new workspace and import the source files for pa
 
 4. Navigate to **<dsplib_tutorial_install>/part_2**, select **dsplib_tutorial_part_2.ide.zip**, click **Open**, and then click **Finish**. The reconstituted project should then appear in the Explorer pane.
 
-## Changes to the Filter Graph from Part 1
+### Changes to the Filter Graph from Part 1
 
 For Part 2, we have cascaded a halfband filter after the FIR filter that was in the design in part 1.
 
@@ -346,17 +356,17 @@ Also, the output of the channel FIR filter is now cascaded into the halfband fil
 
 The testbench file, `test.cpp`, is unchanged.
 
-## Build AI Engine Emulation
+### Build AI Engine Emulation
 
 Building the AI Engine emulation for part 2 is identical to part 1, as described previously.
 
 If the build was successful, you can continue straight on through to simulation.
 
-## Running the Design through Simulation
+### Running the Design through Simulation
 
 Running part 2 through simulation is identical to part 1, as described previously.
 
-## Using Vitis Analyzer to look at the Compilation and Simulation Results
+### Using Vitis Analyzer to look at the Compilation and Simulation Results
 
 From the Assistant pane, expand the application **displib_tutorial_part_2**, then expand the **Emulation-AIE** section, and double-click **Run Summary**. Vitis Analyzer will now open. After it opens, it will display the Summary page, which provides a brief summary of the simulation.
 
@@ -374,16 +384,17 @@ Selecting the **Trace** option on the navigation bar shows the tile (18,0) (the 
 
 In part 3, we are going to use filter parameters to attempt to increase the performance of the chan_FIR filter, to increase overall performance of the chain.
 
-# Part 3: Optimizing Filter Performance
+## Part 3: Optimizing Filter Performance
 
 Part 3 of this tutorial will:
+
 * demonstrate how to use the CASC_LEN parameter to increase filter performance.
 
-## Creating the Project
+### Creating the Project
 
 Creating part 3 of this project is identical to part 2, as described previously.
 
-## Changes to the Filter Graph from Part 1
+### Changes to the Filter Graph from Part 1
 
 For Part 3, we are going to increase the performance of the design by adjusting the TP_CASC_LEN parameter on the chan_FIR filter.
 
@@ -403,17 +414,17 @@ In `fir_graph.h`, the only change here is using a for loop to lock the location 
 
 The testbench file, `test.cpp`, is unchanged.
 
-## Build AI Engine Emulation
+### Build AI Engine Emulation
 
 Building the AI Engine emulation for part 3 is identical to part 1, as described previously.
 
 If the build was successful, you can continue straight on through to simulation.
 
-## Running the Design through Simulation
+### Running the Design through Simulation
 
 Running part 3 through simulation is identical to part 1, as described previously.
 
-## Using Vitis Analyzer to look at the Compilation and Simulation Results
+### Using Vitis Analyzer to look at the Compilation and Simulation Results
 
 From the Assistant pane, expand the application **displib_tutorial_part_3**, then expand the **Emulation-AIE** section, and double-click **Run Summary**. Vitis Analyzer will now open. After it opens, it will display the Summary page, which provides a brief summary of the simulation.
 
@@ -429,9 +440,10 @@ Selecting the **Trace** option on the navigation bar now shows the channel filte
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_3_Vitis_Analyzer_Trace.png)
 
-# Conclusion
+## Conclusion
 
 This tutorial has demonstrated the following:
+
 * How to create a Vitis AI Engine Project
 * How to create a graph based design description and described the basic element required
 * How to incorporate the FIR filter elements provided by the DSP Library
@@ -441,16 +453,16 @@ This tutorial has demonstrated the following:
 
 In doing so, it has hopefully provided a foundation upon which the user can begin to create their own designs in Vitis using the DSP Library.
 
-# References
-The following documents provide supplemental material useful with this tutorial. 
+## References
+The following documents provide supplemental material useful with this tutorial.
 
-### [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1076-ai-engine-environment.pdf)
+#### [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1076-ai-engine-environment.pdf)
 Contains chapters on how to develop AI Engine graphs, how to use the Ai Engine compiler, and AI Engine simulation, and performance analysis.
 
-### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/index.html)
+#### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/index.html)
 Contains information regarding the DSPLib example kernels used by this tutorial.
 
-### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
+#### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
 Following links point to Vitis software platform related documents referred in this tutorial:
 
 * [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
@@ -458,7 +470,7 @@ Following links point to Vitis software platform related documents referred in t
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

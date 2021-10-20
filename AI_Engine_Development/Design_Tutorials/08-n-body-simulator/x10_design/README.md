@@ -1,3 +1,3 @@
 # n-body-aie
 
-![](animation.gif)
+![missing image](animation.gif)

@@ -1,10 +1,10 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 AI Engine Performance Analysis Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+</table>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
@@ -174,16 +174,14 @@ This section provides details of other methods of detecting and analyzing AI Eng
 	It is seen that `core[0]` (tile_24_1, `aie_dest2`)  is in the status `east_lock_stall`, and `core[1]` (tile_25_1, `aie_dest1`) is in the status `stream_stall_ms0`. That is to say, `aie_dest1` is trying to write to the consumer `aie_dest2`, while `aie_dest2` is still trying to acquire lock to start.
 
 	**Tip:** Cross-probe between **Graph** and **Array** view in Vitis Analyzer to understand kernels, buffers, and the locations of ports. 
-`
+
 	The following command can be used to report the events that have occurred on ports:
 
-		
 		xbutil2 examine -r aieshim
-		
 
-	![xbutil2 examine -r aieshim](./images/figure10.PNG)
+    ![xbutil2 examine -r aieshim](./images/figure10.PNG)
 
-	Tile (24,0) is where the output locates, and tile (25,0) is where the input locates. It is seen that additional events numbered 75 and 76 happen in the inputs, indicating that input data is read into the AI Engine, but no output data is written. 
+	Tile (24,0) is where the output locates, and tile (25,0) is where the input locates. It is seen that additional events numbered 75 and 76 happen in the inputs, indicating that input data is read into the AI Engine, but no output data is written.
 
 - **Using `devmem` to probe AI Engine registers to see AI Engine status:** By using the `devmem` command, you can read AI Engine registers to see the AI Engine internal status. The register reference can be found in the _Versal ACAP AI Engine Register Reference_ ([AM015](https://www.xilinx.com/html_docs/registers/am015/am015-versal-aie-register-reference.html)).
 

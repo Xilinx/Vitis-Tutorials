@@ -192,7 +192,7 @@ Vitis-AI applications will install additional software packages. If user would l
    - Select **Root File System Type** as **EXT4**
    - Exit and Save.
 
-   ![](./images/petalinux_image_packaging_configuration.png)
+   ![missing image](./images/petalinux_image_packaging_configuration.png)
 
 <!--TODO: CMA change is needed. Other changes are not.-->
 2. Let Linux use EXT4 rootfs during boot

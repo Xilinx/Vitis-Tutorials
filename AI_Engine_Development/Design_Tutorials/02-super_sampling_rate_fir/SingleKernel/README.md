@@ -1,13 +1,9 @@
-﻿<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
-   <h1>Super Sampling Rate FIR Filters</h1>
-   <h2>Implementation on the AI Engine</h2>
-   </td>
- </tr>
- <tr>
- <td align="center"><h1>Single-Kernel FIR Filter</h1>
- </td>
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
@@ -31,13 +27,15 @@ Thoughout this tutorial you will use and reuse the same filter with complex coef
 {  -192,   140},{  -882,   287},{ -1079,     0},{  -755,  -245},
 {  -273,  -198},{    22,    30},{    63,   194},{     0,   266}
 ```
-<img src="../Images/ImpulseResponse.jpg" width=800><br>
+
+![missing image](../Images/ImpulseResponse.jpg)
 
 The output of this filter will have a much higher amplitude than the input. A scaling factor of `2^15` should be applied to get back to normalized data. On debugging phase, when only impulses are given to the filter, the scaling factor can be reduced to `1` so that we can verify that the output looks like the impulse response of the filter.
 
 ## Designing the Kernel
 
 Before building a kernel to implement FIR filtering, consider the following:
+
 - What kind of interface will I use?
 - How many coefficients do I have?
   - How will it influence the size of the data register and coefficient register?
@@ -60,7 +58,7 @@ The data register is limited to 1024 bits (`v32cint16`) and the coefficient regi
 
 Not all intrinics exist for the AI Engine. Only two intrinsics will handle four lanes for complex 16 bits x complex 16 bits:
 
-<img src="../Images/Mul4Intrinsics.jpg" width=800><br>
+![missing image](../Images/Mul4Intrinsics.jpg)
 
 In this tutorial finite length loops (by default 512 input/ouput samples) are assumed for ease of debugging. This number of iterations can be increased as desired up to infinite loops (`while(1) { ...}`). Between two calls of the kernel, the status of the delay-line of the filter needs to be maintained. This delay-line must be at least 31 samples for a 32-tap filter. 32 samples fit in a Y register that's why we will use a `v32cint16` variable to keep this delay-line. At the beginning of the kernel call this delay-line will be loaded from the memory, and at the end it will be stored there. For the coefficients there is no option: it will be `v8cint16`.
 
@@ -74,29 +72,29 @@ Before the first iteration the delay-line, the status is read to update the Y re
 
 where the array `c` is the array of coefficients. Use a table to organize operations scheduling (excel for example):
 
-<img src="../Images/FirstMul4Operation.jpg" width=800><br>
+![missing image](../Images/FirstMul4Operation.jpg)
 
 This image represents the following equation:
 
-<img src="../Images/FirstMul4Operation_eq.jpg" width=300><br>
+![missing image](../Images/FirstMul4Operation_eq.jpg)
 
 Following this first `mul4` operation 15 `mac4` operations should be used to finih the computation of `{y(0), y(1), y(2), y(3)}`.
 
 Use darker and darker green to represent the next three `mac4` operations
 
-<img src="../Images/FourFirstMul4Operations.jpg" width=800><br>
+![missing image](../Images/FourFirstMul4Operations.jpg)
 
 With these operations performed, the eight coefficients that were in the the `v8cint16` have been used, and it is time to update them. These operations should be followed by eight `mac4` operations:
 
-<img src="../Images/NextFourMul4Operations.jpg" width=800><br>
+![missing image](../Images/NextFourMul4Operations.jpg)
 
 The next block of four `mac4` operations will wrap around and reuse the begining of the data register. It is time to load four new samples from the stream and finish the operations:
 
-<img src="../Images/LastFourMac4Operations.jpg" width=800><br>
+![missing image](../Images/LastFourMac4Operations.jpg)
 
 Now that the computation of `{y(0), y(1), y(2), y(3)}` has been completed, the next four outputs `{y(4), y(5), y(6), y(7)}` have to be computed. As can be seen in the previous image, the next computation must start with index 5 in the data register. As in the previous set of output samples, the data register will be updated just before the group of four `mac4`:
 
-<img src="../Images/SecondSetOfOutputs.jpg" width=800><br>
+![missing image](../Images/SecondSetOfOutputs.jpg)
 
 In order to have a regular inner loop, 32 output samples (eight groups of four) will be computed in the inner loop.
 
@@ -131,6 +129,7 @@ public:
 
 }
 ```
+
 The taps will be provided during instantiation of the class. The constructor initializes the internal array and sets the delay line to zero. In the template, two arguments define the number of iterations of the inner loop and the shifting value that will be applied to the accumulator before sending the calculated y-values to the output stream.
 
 
@@ -148,6 +147,7 @@ void FIR_SingleStream<NSamples,ShiftAcc>::filter(input_stream_cint16* sin,output
 	v4cacc48 acc = undef_v4cacc48();
     ...
 ```
+
 The function `filter` has two stream arguments: `sin` and `sout` for stream-in and stream-out. The pointers to the coefficients and the data are prepared so that they can be loaded using pointer addressing.
 
 ```C++
@@ -210,6 +210,7 @@ These four blocks have to be written eight times with different parameters to co
 Ensure that the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `SingleKernel` directory. In the `Makefile`, three methods are defined:
+
 - `aie`
   - Compiles the graph and the kernels
 - `aiesim`
@@ -221,7 +222,7 @@ Have a look at the source code (kernel and graph) to familiarize yourself with t
 
 To have the simulation running, input data must be generated. Change directory to `data` and type `GenerateStreams`. The following parameter should be set for this example:
 
-<img src="../Images/GenerateSingleStream.jpg" width=800><br>
+![missing image](../Images/GenerateSingleStream.jpg)
 
 Click on **Generate** then on **Exit**. The generated file `PhaseIn_0.txt` should contain mainly 0's, with a few 1's and 10's.
 
@@ -229,19 +230,19 @@ Type `make all` and wait for `vitis_analyzer` GUI to display. The Vitis analyzer
 
 Click **Graph** to visualize the graph of the application:
 
-<img src="../Images/GraphSingleKernel.jpg" width=800><br>
+![missing image](../Images/GraphSingleKernel.jpg)
 
 Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
 
-<img src="../Images/ArraySingleKernel.jpg" width=200><br>
+![missing image](../Images/ArraySingleKernel.jpg)
 
 Finally click on **Trace** to look how the entire simulation went through. This may be useful to track where your AI Engine stalls if performance is not as expected:
 
-<img src="../Images/TimelineSingleKernel.jpg" width=1000><br>
+![missing image](../Images/TimelineSingleKernel.jpg)
 
 As explained earlier, the directory `Utils` contains a number of utilities that will help in analyzing the design output. First, the output value has to be validated. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
 
-<img src="../Images/GraphOutputSingleKernel.jpg" width=1000><br>
+![missing image](../Images/GraphOutputSingleKernel.jpg)
 
 The top graph reflects the outputs where the abscissa is at the time at which this output occurred. It is much easier to look at the bottom graph where the samples are displayed one after the other. The filter impulse can be easily recognized on this sub-graph. The file `out.txt` contains three columns: (timestamp, real part, and imaginary part) of the output samples.
 
@@ -262,8 +263,4 @@ Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum thro
 
 
 
-
-
-
-
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>

@@ -1,15 +1,16 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
-   </td>
- </tr>
- <tr>
- <td align="center"><h1>Versal System Design Clocking</h1>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
+# Versal System Design Clocking
+
 ## Introduction
+
 Developing an accelerated AI Engine design for the VCK190, can be done using the Vitis™ compiler (`v++`). This compiler can be used to compile programmable logic (PL) kernels and connect these PL kernels to the AI Engine and PS device.
 
 In this tutorial you will learn clocking concepts for the Vitis compiler and how to define clocking for ADF Graph, as well as PL kernels using clocking automation functionality. The design being used is a simple classifier design as shown in the following figure.
@@ -40,11 +41,14 @@ Run the following steps before starting this tutorial:
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
 
 ## Objectives
+
 You will learn the following:
+
 * Clocking of PL kernels
 * Introduction of datawidth converters, clock-domain crossing, and FIFOs in `v++`
 
 ## Step 1 - Building ADF Graph
+
 The ADF graph has connections to the PL through the PLIO interfaces. These interfaces can have reference clocking either from the `graph.cpp` through the `PLIO()` constructor or through the `--pl-freq`. This will help with determining what kind of clock can be set on the PL Kernels that are going to connect to the PLIO. Here you will set the reference frequency to be 200 MHz for all PLIO interfaces.
 
 **NOTE**: If you do not specify the `--pl-freq` it will be set to 1/4 the frequency of the AI Engine frequency.
@@ -67,6 +71,7 @@ make aie
 | --workdir | The location of where the work directory will be created |
 
 ## Step 2 - Clocking the PL Kernels
+
 In this design you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels is separate from the ADF Graph and these are specified when compiling the kernel, and when linking the design together.
 
 Run the following commands:
@@ -80,6 +85,7 @@ Run the following commands:
     ```
 
     Or this command:
+
     ```bash
     make kernels
     ```
@@ -100,6 +106,7 @@ For additional information, see [Vitis Compiler Command](https://www.xilinx.com/
 After completion, you will have the `mm2s.xo`, `s2mm.xo`, `polar_clip.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
 
 ## Step 3 - `v++` linker -- Building the System
+
 Now that you have a compiled graph (`libadf.a`), the PLIO kernels (`mm2s.xo`, `s2mm.xo`, and `polar_clip.xo`), you can link everything up for the VCK190 platform.
 
 A few things to remember in this step:
@@ -123,8 +130,8 @@ stream_connect=ai_engine_0.Dataout:s2mm.s
 
 Here you may notice some connectivity and clocking options.
 
- * `nk` -- This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
- * `stream_connect` -- This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces. You can also define a FIFO on this line by adding a depth value to the end.
+* `nk` -- This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
+* `stream_connect` -- This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces. You can also define a FIFO on this line by adding a depth value to the end.
 
 There are many more options available for `v++`. For a full list, see the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).
 
@@ -167,6 +174,7 @@ There are many more options available for `v++`. For a full list, see the docume
 **NOTE: Any change to the `system.cfg` file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).**
 
 ## Step 4 - Compiling Host Code
+
 When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SDKTARGETSYSROOT** or representation of the root file system, that can be used to cross-compile the host code.
 
 1. Open `./sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
@@ -187,6 +195,7 @@ When the `v++` linker is complete, you can compile the host code that will run o
 With the host application fully compiled, you can now move to packaging the entire system.
 
 ## Step 5 - Packaging Design and Running on Board
+
 To run the design on hardware using an SD card, you need to package all the files created. For a Linux application, you must make sure that the generated `.xclbin`, `libadf.a`, and all Linux info from the platform are in an easy to copy directory.
 
 1. Open the `Makefile` with your editor of choice, and familiarize yourself with the contents specific to the `package` task.
@@ -233,10 +242,13 @@ When running the VCK190 board, make sure you have the right onboard switches fli
 **IMPORTANT**: To re-run the application, you must power cycle the board.
 
 ## Challenge (Optional)
+
 ### Build the design for Hardware Emulation
+
 Modifying the target for both **Step 3** and **Step 4**, link and package a design for hardware emulation, and run the emulation with the generated script, `launch_hw_emu.sh`.
 
 ## Summary
+
 In this tutorial you learned the following:
 
 * Adjusted clocking for PL Kernels and PLIO Kernels

@@ -1,4 +1,4 @@
-<table class="sphinxhide">
+﻿<table class="sphinxhide">
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
@@ -194,7 +194,7 @@ The PCIe FPGA write bandwidth is about 9 GB/sec and the FPGA read bandwidth is a
 ### Identifying Parallelization for an FPGA Application
 
 In Software, the flow will look similar to the following figure.
-![](./images/Architect1.PNG) 
+![missing image](./images/Architect1.PNG) 
 
 - `Murmurhash2` functions are calculated for all the words up front, and output flags are set in the local memory. Each of the loops in the hash compute functions are run sequentially.
 - After all hashes have computed, only then can another loop be called for all the documents to calculate the compute score.
@@ -218,7 +218,7 @@ Based on your earlier analysis, the `Murmurhash2` function is a good candidate f
 
 The application conceptually can similar to the following figure.
 
-![](./images/Architect2.PNG) 
+![missing image](./images/Architect2.PNG) 
 
 Transferring words from the host to CPU, Compute on FPGA, transferring words from the FPGA to CPU all can be executed in parallel. The CPU starts to calculate the profile score as soon as the flags are received;essentially, the profile score on the CPU can also start calculations in parallel. With the pipelining as shown above, the latency of the Compute on FPGA will become invisible.
 

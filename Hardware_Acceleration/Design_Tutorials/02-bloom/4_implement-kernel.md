@@ -1,4 +1,4 @@
-<table class="sphinxhide">
+﻿<table class="sphinxhide">
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
@@ -61,7 +61,7 @@ The algorithm has been updated to receive 512-bits of words from the DDR with th
 
     Refer to the function `compute_hash_flags_dataflow` in the `02-bloom/cpu_src/compute_score_fpga_kernel.cpp` file. The following block diagram shows how the compute kernel connects to the device DDR memories and how it feeds the compute hash block processing unit. 
 
-    ![](./images/Kernel_block_diagram.PNG)
+    ![missing image](./images/Kernel_block_diagram.PNG)
 
     The kernel interface to the DDR memories is an AXI interface that is kept at its maximum width of 512 at the input and output. The `compute_hash_flags` function input can have a width different than 512, managed through “PARALLELIZATION”. To deal with these variations on the processing element boundaries, "Resize" blocks are inserted that adapt between the memory interface width and the processing unit interface width. Essentially, blocks named "Buffer" are memory adapters that convert between streams, and the AXI and “Resize” blocks adapt to interface widths as it depends on PARALLELIZATION factor chosen for the given configuration.
 
@@ -192,7 +192,7 @@ Now, build the kernel using the Vitis compiler. The Vitis compiler will call the
     vitis_analyzer ../build/single_buffer/kernel_4/hw_emu/runOnfpga_hw_emu.xclbin.link_summary
     ```
 
-     ![](./images/4_Kernel_4_link.PNG)
+     ![missing image](./images/4_Kernel_4_link.PNG)
 
     - The `compute_hash_flags` latency reported is 875,011 cycles. This is based on total of 35,000,000 words, computed with 4 words in parallel. This loop has 875,000 iterations and including the `MurmurHash2` latency, the total latency of 875,011 cycles is optimal.
     - The `compute_hash_flags_dataflow` function has `dataflow` enabled in the Pipeline column. This function is important to review and indicates that the task-level parallelism is enabled and expected to have overlap across the sub-functions in the `compute_hash_flags_dataflow` function.
@@ -206,7 +206,7 @@ The initial version of the accelerated application code structure follows the st
 
 The following figure shows the sequential process of the host writing data on the device, compute by the accelerator on the FPGA, and read flags back to host, implemented in this first step. The Profile score is calculated sequentially on CPU after all the flags are received by the host. 
 
-  ![](./images/overlap_single_buffer.PNG)
+  ![missing image](./images/overlap_single_buffer.PNG)
 
 The FPGA accelerator computes the hash values and flags for the provided input words.
 
@@ -286,7 +286,7 @@ vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin
 
 The HLS Synthesis Report shows the number of LUTs, REG, and BRAM utilized for the Bloom4x kernel implementation.
 
-![](./images/kernel_4_util.PNG) 
+![missing image](./images/kernel_4_util.PNG) 
 
 ### Review Profile Reports and Timeline Trace
 
@@ -302,26 +302,26 @@ The Profile Summary and Timeline Trace reports are useful tools to analyze the p
 
 * *Kernels & Compute Unit: Kernel Execution* indicates that the Total Time by kernel enqueue is about 292 ms.
 
-    ![](./images/kernel_4_profile_1.PNG) 
+    ![missing image](./images/kernel_4_profile_1.PNG) 
 
     - 4 words in parallel are computed. The accelerator is architected at 300 MHz. In total, you are computing 350,000,000 words (3,500 words/document * 100,000 documents).
     - Number of words/(Clock Freq * Parallelization factor in kernel) = 350M/(300M*4) = 291.6 ms. The actual FPGA compute time is almost same as your theoretical calculations.
 
 *  *Host Data Transfer: Host Transfer* shows that the Host Write Transfer to DDR is 145 ms and the Host Read Transfer to DDR is 36 ms.
-  ![](./images/kernel_4_profile_2.PNG) 
+  ![missing image](./images/kernel_4_profile_2.PNG) 
 
     - Host Write transfer using a theoretical PCIe bandwidth of 9GB should be 1399 MB/9GBps = 154 ms 
     - Host Read transfer using a theoretical PCIe bandwidth of 12GB should be 350 MB/12 GBps = 30 ms 
     - Reported number indicates that the PCIe transfers are occurring at the maximum bandwidth 
 
 * *Kernels & Compute Unit: Compute Unit Stalls* confirms that there are almost no "External Memory Stalls" 
-  ![](./images/Kernel_4_Guidance_Stall.PNG) 
+  ![missing image](./images/Kernel_4_Guidance_Stall.PNG) 
 
 ### Review the Timeline Trace
 
   The Timeline Trace shows the data transfer from the host to the FPGA and back to the host as they appear. The Timeline Trace can be visualized so that the transfer from the host to the FPGA and the FPGA compute and transfer from the FPGA to host occur sequentially.
 
-  ![](./images/Kernel_4_time_1.PNG) 
+  ![missing image](./images/Kernel_4_time_1.PNG) 
 
   - There is a sequential execution of operations starting from the data transferred from the host to the FPGA, followed by compute in the FPGA and transferring back the results from the FPGA to the host. 
   - At any given time, either the host or FPGA has access to the DDR. In other words, there is no memory contention between the host and kernel accessing the same DDR. 
@@ -378,7 +378,7 @@ vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin
 
 From the HLS Synthesis Report, you can see that the number of resources increased for LUTs, REG, and BRAM compared to the Bloom4x kernel implementation.
 
-![](./images/kernel_8_util.PNG) 
+![missing image](./images/kernel_8_util.PNG) 
 
 ### Review Profile Summary Report and Timeline Trace
 
@@ -394,7 +394,7 @@ Review the profile reports and compare the metrics with configuration Bloom4x
 2. *Host Data Transfer: Host Transfer* section reports the same delays.
 3. The overall gain in the application overall gain is only because that kernel now is processing 8 words in parallel compared to 4 words in parallel.
 
-   ![](./images/Kernel_8_time_1.PNG) 
+   ![missing image](./images/Kernel_8_time_1.PNG) 
 
 ### Throughput Achieved
 

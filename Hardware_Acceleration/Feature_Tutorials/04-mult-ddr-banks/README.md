@@ -26,7 +26,7 @@ In this tutorial, you implement the vector addition application using three DDR 
 
 Because the default behavior of the Vitis core development kit is to use a single DDR bank for data exchange between kernels and global memory, all data access through ports `in1`, `in2`, and `out` will be done through the default DDR bank for the platform.
 
-![](./images/mult-ddr-banks_fig_01.png)
+![missing image](./images/mult-ddr-banks_fig_01.png)
 
 Assume that in the application, you want to access:
 
@@ -34,7 +34,7 @@ Assume that in the application, you want to access:
 * `in2` through `Bank1`
 * `out` through `Bank2`
 
-![](./images/mult-ddr-banks_fig_02.png)
+![missing image](./images/mult-ddr-banks_fig_02.png)
 
 To achieve the desired mapping, instruct the Vitis core development kit to connect each kernel argument to the desired bank.
 
@@ -204,7 +204,7 @@ vadd_1:m_axi_gmem2-DDR[2]          RD = 0.000 KB               WR = 0.391 KB
    ```
 You will see the DDR banks assigned to each of the kernel arguments along with the traffic on each of the interfaces during HW-Emulation.
 
-  ![](./images/mult-ddr-banks_img_vitis.png)
+  ![missing image](./images/mult-ddr-banks_img_vitis.png)
 
 ### Conclusion
 

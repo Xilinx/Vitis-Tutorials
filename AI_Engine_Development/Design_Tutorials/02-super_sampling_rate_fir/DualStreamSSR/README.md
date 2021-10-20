@@ -1,14 +1,9 @@
-﻿<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
-   <h1>Super Sampling Rate FIR Filters</h1>
-   <h2>Implementation on the AI Engine</h2>
-   </td>
- </tr>
- <tr>
- <td align="center"><h1>Dual-Stream Interface</h1>
- <h2></h2>
- </td>
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
@@ -32,6 +27,7 @@ This means that in the case of a single-stream implementation, the filter length
 A major impact is the way the data are provided to the AI Engine. The AI Engine will alternatively read four samples on both the streams (or eight samples at the same time). The resulting stream should be equivalent to a 2 Gsps data stream. Suppose we have the following 2 Gsps data stream: `d0, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19, ...`
 
 The AI Engine read sequence should be:
+
 - Read Stream 0 : `d0, d1, d2, d3`
 - Read Stream 1 : `d4, d5, d6, d7`
 - Read Stream 0 : `d8, d9, d10, d11`
@@ -40,6 +36,7 @@ The AI Engine read sequence should be:
 - ...
 
 So the content of each stream should be:
+
 - Stream 0: `d0, d1, d2, d3, d8,d9, d10, d11, d16, d17, d18, d19, ...`
 - Stream 1: `d4, d5, d6, d7, d12, d13, d14, d15, ...`
 
@@ -216,6 +213,7 @@ Finally, all kernels must be connected together with the cascade stream in betwe
 Ensure the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
+
 - `aie`
   - Compiles the graph and the kernels
 - `aie_sim`
@@ -227,7 +225,7 @@ Take a look at the source code (kernel and graph) to familiarize yourself with C
 
 To have the simulation running, input data must be generated. Change directory to `data` and type `GenerateStreams`. The following parameter should be set for this example:
 
-<img src="../Images/generateDualStreamsSSR8.jpg" width=800><br>
+![missing image](../Images/generateDualStreamsSSR8.jpg)
 
 Click **Generate** then **Exit**. The generated files `PhaseIn_0_0.txt` ... `PhaseIn_7_7.txt` should contain mainly 0's, with a few 1's and 2's. The number of samples per stream is half of the one that is declared in the C++ code because in the C++ code this is the length of the concatenation of both input streams.
 
@@ -235,13 +233,13 @@ Type `make all` and wait for the `vitis_analyzer` GUI to Display. The Vitis anal
 
 Click **Graph** to visualize the graph of the application:
 
-<img src="../Images/Graph8Phases.jpg" width=800><br>
+![missing image](../Images/Graph8Phases.jpg)
 
 The 64 kernels and their 32 independent input streams are clearly visible. The top graph is for the output phases 0, 2, 4, and 6, the phases where the cascade stream goes from left to right on the physical device, and the bottom graph is for the phases 1, 3, 5, and 7 where the cascade stream goes from right to left.
 
 Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
 
-<img src="../Images/Array8Phases.jpg" width=500><br>
+![missing image](../Images/Array8Phases.jpg)
 
 In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph. With the four location constraints that were added, the placer had only one solution for the kernel placement: this square. The router had an easy job to feed all these kernels by simply using the south-north AXI-Stream. The path back to the PL from the extremities also uses only the vertical AXI-Streams.
 
@@ -249,7 +247,7 @@ Finally click **Trace** to look at how the entire simulation went through. This 
 
 Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput output_*`.
 
-<img src="../Images/GraphOutput8Phases.jpg" width=1000><br>
+![missing image](../Images/GraphOutput8Phases.jpg)
 
 The top graph reflects the real part of the output, the bottom graph this is the imaginary part. On both, the filter impulse response is recognizable.
 
@@ -284,8 +282,9 @@ This architecture achieves slightly over 14 Gsps performance. It is less than th
 ```
 Total Throughput -->   15960.30 Msps
 ```
+
 Which is almost the expected maximum.
 
 
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>

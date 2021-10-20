@@ -1,10 +1,19 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
 # Introduction: Packaging and Running the System  
 
 After the AI Engine graph is compiled and linked with the PL kernels, the PS application is compiled, and all the required outputs are generated, the next step in the build process is to package the required files to configure and boot the Versal™ device. This requires the use of the Vitis™ compiler ``--package`` command. For Versal ACAPs, the programmable device image (PDI) file is used to boot and program the hardware device.
 
 In this module, you will package the bare-metal system to generate the final bootable image (PDI) for running hardware emulation and for running it on the VCK190 board. Refer to [AI Engine Documentation: Packaging](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#ariaid-title8) for more details on this packaging process.
 
-# Building the Design: Hardware Emulation
+## Building the Design: Hardware Emulation
 
 For hardware emulation, the ``–-package`` command adds the PDI and EMULATION_DATA sections to the XCLBIN file and outputs a new XCLBIN file (``a.xclbin``):
 
@@ -33,7 +42,7 @@ v++ -p                                                                          
 
 Notice the absence of the ``-D__PS_ENABLE_AIE__`` (Module 05) and ``–package.defer_aie_run`` options (Module 06). This bare-metal application is loaded and launched at boot time and these options are not required. In Modules 08 and 09, you will compile the Linux host application and package; these options will be required at this point because the Linux host application launches and controls the graph.
 
-## Dependencies
+### Dependencies
 
 |Filename|Description|
 |  ---  |  ---  |
@@ -42,12 +51,12 @@ Notice the absence of the ``-D__PS_ENABLE_AIE__`` (Module 05) and ``–package.d
 |beamforming.rev1.hw_emu.xclbin|The XCLBIN file created in Module 04. |
 |libadf.a|The AI Engine application created in Module 02.|
 
-## Build Products
+### Build Products
 |Filename|Description|
 |  ---  |  ---  |
 |build/hw_emu_main_partial/hw_emu_main_partial.package/|Package directory containing the files needed to run hardware emulation.|
 
-# Running the System: Hardware Emulation
+## Running the System: Hardware Emulation
 
 Running the system depends on the build target. The process of running the hardware emulation build is different from that of running the hardware build. For hardware emulation, the ``--package`` command generates the ``launch_hw_emu.sh`` script. This script is used to launch the emulation environment. Hardware emulation runs the AI Engine simulator for the graph application, the Vivado® logic simulator (XSIM) for the PL kernels, and QEMU for the PS host application.  
 
@@ -66,7 +75,7 @@ This step takes several hours to complete. You can open a new shell and continue
 
 To exit QEMU simulation, press **Ctrl+A**, let go of the keyboard, and then press **x**.
 
-# Building the Design: Hardware
+## Building the Design: Hardware
 
 For hardware builds, the package process creates an XCLBIN file containing the ELF files and graph configuration data objects (CDOs) for the AI Engine application. Because you already ran the ``main_partial.elf`` host application during hardware emulation, use the ``main_full.elf`` for the hardware package:
 
@@ -87,7 +96,7 @@ v++ -p                                                                          
     ../Module_04_AI_Engine_and_PL_Integration/build/rev1/hw_emu/beamforming.rev1.hw_emu.xclbin   \
     ../Module_02_AI_Engine_Design/build/libadf.a                                                     
 ```
-## Dependencies
+### Dependencies
 
 |Filename|Description|
 |  ---  |  ---  |
@@ -96,12 +105,12 @@ v++ -p                                                                          
 |beamforming.rev1.hw.xclbin|The XCLBIN file created in Module 04. |
 |libadf.a|The AI Engine application created in Module 02.|
 
-## Build Products
+### Build Products
 |Filename|Description|
 |  ---  |  ---  |
 |build/hw_main_full/hw_main_full.package/|Package directory containing files needed to run hardware (VCK190 board).|
 
-# Running the System: Hardware
+## Running the System: Hardware
 
 For the hardware build, the ``–-package`` command creates an ``sd_card.img`` file which contains the contents of the ``sd_card/`` folder.  The next step is to copy the ``sd_card.img`` file onto an SD card, which will become the boot device of your system.
 
@@ -133,7 +142,7 @@ Transmit delay: 0 msec/char 0 msec/line
  ***** END TEST *****
 ```
 
-# References
+## References
 
 * [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Packaging](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#ariaid-title8)
 * [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Running the System](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#ariaid-title11)

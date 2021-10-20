@@ -159,7 +159,7 @@ B | pointer argument | 0x024 | 64
 
    After adding the registers to the Addressing and Memory window (as shown in the following figure), you will need to add the descriptions, offset, and size to the registers. 
 
-    ![](images/address-memory-win.png)
+    ![missing image](images/address-memory-win.png)
 
 4. For each register, click in the **Description** field of the register and enter the description from the table above. 
 5. Click in the **Address Offset** field and enter the offset. 

@@ -187,7 +187,7 @@ nk = Filter2DKernel:3
 2. View the new `timeline_trace.csv` in the Vitis analyzer.
 
   You can now see that the application takes advantage of the three CUs, and that the kernel executions overlaps and executes in parallel, speeding up the overall application.
-![](./images/overlapping_kernels_vitis_2.JPG)
+![missing image](./images/overlapping_kernels_vitis_2.JPG)
 
 ## Conclusion
 
