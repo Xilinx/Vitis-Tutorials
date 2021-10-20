@@ -1,13 +1,13 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
-   </td>
- </tr>
- <tr>
- <td align="center"><h1>AI Engine/PL Kernel Debug with XRT Utilities</h1>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
+
+# AI Engine/PL Kernel Debug with XRT Utilities
 
 
 [xbutil xbutil2](#xbutil-xbutil2)
@@ -21,12 +21,14 @@
 * [Synchronous error](#Synchronous-error)
 
 
-# xbutil & xbutil2
+## xbutil & xbutil2
+
 The two utilities, `xbutil` and `xbutil2` are supported for PL/AI Engine kernels debug. It provides information for PL/AI Engine kernels.
 
 To use the tools, binary container, for example, xclbin is required to be loaded first then issue commands to obtain information from, or, configure the kernels.
 
 Command examples are as follows:
+
 ```bash
 xbutil program -p a.xclbin
 xbutil scan
@@ -34,19 +36,23 @@ xbutil2 examine -r aie
 ```
 
 Step 1: Load binary container
+
 ```bash
 xbutil program -p a.xclbin
 ```
-<img src="images/bc_run.png" width="600">
+
+![missing image](./images/bc_run.png)
 
 Step 2: Get detailed status information for the device. Where TYPE can be aie, aieshim, all, debug-ip-status, dynamic-regions, error, host, memory, pcie-info, platform.
+
 ```bash
 xbutil2 examine -r TYPE
 ```
 
 A help string is provided by xbutil2.
+
 ```bash
-root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# xbutil2 examine -help
+root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1## xbutil2 examine -help
 
 DESCRIPTION: This command will 'examine' the state of the system/device and will generate a report
              of interest in a text or JSON format.
@@ -81,17 +87,22 @@ GLOBAL OPTIONS:
 
 The following images show a few examples:
 
-<img src="images/bc_run1.png" width="600">
-<img src="images/bc_run2.png" width="600">
-<img src="images/bc_run3.png" width="600">
-<img src="images/bc_run3_1.png" width="600">
+![missing image](./images/bc_run1.png)
+
+![missing image](./images/bc_run2.png)
+
+![missing image](./images/bc_run3.png)
+
+![missing image](./images/bc_run3_1.png)
 
 Note for `xbutil2 examine -r aie` command
+
 1. The "iteration memory address” is the core status register raw value of each tile.
 2. Each tile's information such as program counter values, stack pointer are provided.
-3. MM2S and S2MM states are available. 
+3. MM2S and S2MM states are available.
 
-## xbutil & xbutil2 Limitations
+### xbutil & xbutil2 Limitations
+
 1. Commands not applicable to the VCK190 platform:
   - validate: This command is for DFX base platform.
   - reset: Requires clearer definitions for VCK190 platforms. For example, reset command to PS/PL/AI Engine are under review.
@@ -99,12 +110,14 @@ Note for `xbutil2 examine -r aie` command
 2. Utility could show false errors that are no harm to prior-loaded xclbin.
 
 
-# XRT Error Codes
+## XRT Error Codes
 
-## Asynchronous Error
+### Asynchronous Error
+
 An error that occurs asynchronously. It may or may not be related to the XRT function call or the application which is running.
 
-### Report Mechanism with XRT APIs
+#### Report Mechanism with XRT APIs
+
 Asynchronous errors are cached in driver subsystems and can be accessed by user application through APIs.
 Asynchronous errors retrieved from the driver are encoded errors defined in `xrt_error_code.h` which is shared between user space and kernel space.
 
@@ -132,6 +145,7 @@ typedef uint64_t xrtErrorCode;
 
 Error Code APIs:
 The API header file `xrt_error.h` defines the APIs for accessing current cached errors.
+
 ```bash
 ///// C APIs, will have simplified C++ equivalents.
 /**
@@ -166,6 +180,7 @@ xrtErrorGetString(xclDeviceHandle handle, xrtErrorCode error, char* out, size_t 
 ```
 
 Example using XRT APIs:
+
 ```bash
 xrtGraphHandle ghdl;
 ghdl = xrtGraphOpen(dhdl, top->m_header.uuid, "dut");
@@ -207,6 +222,7 @@ if (rval != 0)
 Step 1: Replace `host.cpp` with `host.cpp.error_code` that is available from this tutorial.
 
 Step 2: Compile the `host.cpp` code and package to `sd_card.img` by issuing the following commands.
+
 ```bash
 cp ${PROJECT_PATH}/sw/host.cpp.error_code ${PROJECT_PATH}/sw/host.cpp
 cd ${PROJECT_PATH}
@@ -217,6 +233,7 @@ make package
 Step 3: Burn the generated `sd_card.img` to the SD card, insert SD card into SD card slot of the VCK190 board and power up.
 
 Step 4: After VCK190 is powered up and booted up complete, run the binaries.
+
 ```bash
 cd /mnt/sd-mmcblk0p1
 source ./init.sh
@@ -226,19 +243,22 @@ export XILINX_XRT=/usr
 
 Step 5: Expected result is as follows.
 
-<img src="images/bc_err0.png" width="600">
+![missing image](./images/bc_err0.png)
 
 
-### Report Mechanism with xbutil
+#### Report Mechanism with xbutil
+
 Issue command `xbutil2 examine --report error` or/and with formatted output `xbutil2 examine --report error --format JSON-2020.2` to VCK190 console to get output from console.
 
-<img src="images/bc_err.png" width="600">
+![missing image](./images/bc_err.png)
 
 
-## Synchronous Error
+### Synchronous Error
+
 Synchronous errors are errors that can be detected during the XRT runtime function call.
 
-### Report Mechanism
+#### Report Mechanism
+
 1. Return system error (POSIX) code from
 * Kernel driver IOCTL call.
 * System libraries including shim level library, for example, xrt_core, AI Engine driver, FPGA manager, etc.
@@ -262,7 +282,7 @@ if (rval != 0) {                                                                
 Note: Supported error codes are listed in [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/member/versal_ai_core_docs_ea.html).
 
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

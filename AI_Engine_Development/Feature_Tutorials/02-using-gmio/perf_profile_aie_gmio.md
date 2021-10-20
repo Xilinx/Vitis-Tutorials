@@ -1,20 +1,27 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine GMIO Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
+<<<<<<< HEAD
 ## AI Engine GMIO Performance Profile
+=======
+# AI Engine GMIO Performance Profile
+
+> **Note**: This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.
+
+>>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 AI Engine tools support mapping the GMIO port to the tile DMA one-to-one. It does not support mapping multiple GMIO ports to one tile DMA channel. There is a limit on the number of GMIO ports supported for a given device. For example, the XCVC1902 device on the VCK190 board
 has 16 AI Engine to NoC master unit (NMU) in total. For each AI Engine to NMU, it supports two MM2S and two S2MM channels. Hence there can be a maximum of 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs supported, but note that it can be further limited by the existing hardware platform.
 
 In this example, 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs are utilized in the graph and the performance from one input and one output to 32 inputs and 32 outputs through various ways is profiled. Then you will learn about the NOC bandwidth and the advantages and disadvantages of choosing GMIO for data transfer.  
 
-### Design Introduction
+## Design Introduction
+
 This design has a graph that has 32 AI Engine kernels. Each kernel has one input and one output. Thus, 32 AI Engine GMIO inputs and 32 AI Engine GMIO outputs are connected to the graph.
 
 Change the working directory to `perf_profile_aie_gmio`. Take a look at the graph code in `aie/graph.h`.
@@ -120,8 +127,14 @@ In the main function, the PS code is going to profile `num` GMIO inputs and outp
       gr.wait();
     }
 
+<<<<<<< HEAD
 ### Performance Profiling Methods
 In this example, some methods for profiling the design are introduced. The code to be profiled is in `aie/graph.cpp`:
+=======
+## Performance Profiling Methods
+
+In this example, we will introduce some methods for profiling the design. The code to be profiled is in `aie/graph.cpp`:
+>>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 
     //Profile starts here
     for(int i=0;i<num;i++){
@@ -285,15 +298,16 @@ The commands to build and run in hardware are the same as previously shown. The 
 It is seen that when the used GMIO ports number increases, the performance for the specific GMIO port drops, indicating that the total system throughput is limited by NOC and DDR bandwidth.
 
 ### Conclusion
+
 In this tutorial, you learned about:
 
-  * Programming model for AI Engine GMIO
-  * Ways to profile system performance and also, about the NOC and DDR bandwidth.
+* Programming model for AI Engine GMIO
+* Ways to profile system performance and also, about the NOC and DDR bandwidth.
 
 
-  <p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
+<br></br>
 
-  Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License");
 
 you may not use this file except in compliance with the License.
 
@@ -315,4 +329,6 @@ See the License for the specific language governing permissions and
 
 limitations under the License.
 
-<p align="center"><sup>XD007</sup></p>
+
+
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD007</sup></br></p>

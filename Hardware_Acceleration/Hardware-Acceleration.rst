@@ -52,6 +52,8 @@ Design Tutorials
    Bloom Filter Example <./Design_Tutorials/02-bloom/README>
    Convolution Example <./Design_Tutorials/01-convolution-tutorial/README>
    RTL Systems Integration Example <./Design_Tutorials/03-rtl_stream_kernel_integration/README>
+   Traveling Salesperson Problem <./Design_Tutorials/04-traveling-salesperson/README>
+   Bottom RTL Kernel Design Flow Example <./Design_Tutorials/05-bottom_up_rtl_kernel/README>
    Cheleskey Algorithm Acceleration <./Design_Tutorials/06-cholesky-accel/README>
    XRT Host Code Optimization <./Design_Tutorials/07-host-code-opt/README>
    Streaming Video Analytics with IVAS <./Design_Tutorials/08-ivas-ml/README>
@@ -73,6 +75,12 @@ Design Tutorials
 
    * - :doc:`RTL Systems Integration Example <./Design_Tutorials/03-rtl_stream_kernel_integration/README>`
      - This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.
+
+   * - :doc:`Traveling Salesperson Problem <./Design_Tutorials/04-traveling-salesperson/README>`
+     - This tutorial demonstrates the full flow to implement a HLS kernel from algorithm model to hardware.
+
+   * - :doc:`Bottom RTL Kernel Design Flow Example <./Design_Tutorials/05-bottom_up_rtl_kernel/README>`
+     - This tutorial demonstrates how to develope a complex RTL kernel from scratch via batch mode without GUI environment.
 
    * - :doc:`Cheleskey Algorithm Acceleration <./Design_Tutorials/06-cholesky-accel/README>`
      - This tutorial puts in practice the concepts of FPGA acceleration and illustrates how to gradually optimize a hardware accelerator implementing the Cholesky matrix decomposition algorithm.
@@ -101,6 +109,7 @@ Feature Tutorials
    Using Multiple Compute Units <./Feature_Tutorials/05-using-multiple-cu/README>
    Controlling Vivado Implementation <./Feature_Tutorials/06-controlling-vivado-implementation/README>
    Optimizing for HBM <./Feature_Tutorials/07-using-hbm/README>
+   Host Memory Access <./Feature_Tutorials/08-using-hostmem/README>
 
 
 
@@ -133,3 +142,7 @@ Feature Tutorials
 
    * - :doc:`Optimizing for HBM <./Feature_Tutorials/07-using-hbm/README>`
      - This tutorial demonstrates how you can take best advantage of HBM on platforms that support it.
+
+   * - :doc:`Host Memory Access <./Feature_Tutorials/08-using-hostmem/README>`
+     - This tutorial demonstrates how kernels can directly access buffers host memory directly. This capability requires a compatible platform.
+

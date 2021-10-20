@@ -1,12 +1,13 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal ACAP AI Engine A to Z Bare-metal Flow</h1>
-   </td>
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
-
 </table>
 
-## Introduction
+# Introduction
 
 In this section of the tutorial, you will learn how to build a PS bare-metal application using the XSA created in the previous step and then build, as well as run the complete system.
 
@@ -42,7 +43,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 * `platform.h`
 * `platform_config.h`
 
-    ![](images/ps_app_import.png)
+    ![missing image](images/ps_app_import.png)
 
 Go through the `main.cpp` file. You can see that the code is initializing the input data and the memory space for the output data. One thing to note is the use of the `.init()` and `.run()` APIs to control the AI Engine.
 
@@ -63,7 +64,7 @@ There are two options to enable an AI Engine graph from a system:
 
 9. Right-click on A72 PS application (`A-to-Z_app)` and select ***C/C++ Build Settings***.
 
-  ![](images/ps_app_cfg1.png)
+  ![missing image](images/ps_app_cfg1.png)
 
 10. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
 
@@ -71,7 +72,7 @@ There are two options to enable an AI Engine graph from a system:
 
   b. The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
 
-  ![](images/ps_app_cfg2.png)
+  ![missing image](images/ps_app_cfg2.png)
 
 11. Build the A72 PS application (`A-to-Z_app`) .     
 
@@ -83,7 +84,7 @@ There are two options to enable an AI Engine graph from a system:
 --package.ps_elf ../../A-to-Z_app/Debug/A-to-Z_app.elf,a72-0 --package.defer_aie_run
 ```
 
-  ![](images/package_option.png)
+  ![missing image](images/package_option.png)
 
 >**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2020.2;d=yii1603912637443.html)).
 
@@ -96,11 +97,11 @@ There are two options to enable an AI Engine graph from a system:
 
 2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
 
-      ![](images/run-on-hw.png)
+      ![missing image](images/run-on-hw.png)
 
 3. You should see the application running successfully with no error.
 
-      ![](images/hw_output.png)
+      ![missing image](images/hw_output.png)
 
 
 ## Summary
@@ -111,7 +112,7 @@ In this tutorial, you have performed an end-to-end flow to create a platform bas
 <p align="center"><b><a href="./03-pl_application_creation.md">Return to Step 3</a> — <a href="./README.md">Go back to main page</a> — <a href="./05-RPU version[optional].md">Check out the RPU version design (optional)</a></b></p>
 
 
-<p align="center">© Copyright 2020-2021 Xilinx, Inc.</p>
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -125,4 +126,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD018</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p>

@@ -1,4 +1,4 @@
-<table class="sphinxhide">
+﻿<table class="sphinxhide">
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
@@ -138,7 +138,7 @@ The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port 
 
 2. Zoom in to display the Timeline Trace report.
 
-    ![](./images/multiDDR_timeline_trace_1.PNG)
+    ![missing image](./images/multiDDR_timeline_trace_1.PNG)
 
     - The Timeline Trace confirms that the host is writing to the DDR in a ping-pong fashion. You can hover your mouse over Data Transfer-> Write transactions and observe that the host is writing to bank1, bank2, bank1, bank2, alternatively.
     The kernel is always writing to same DDR bank1 as flags size is relatively small.
@@ -152,15 +152,15 @@ The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port 
         - Host to Global Memory WRITE Transfer takes about 145.7 ms which is less than 207 ms.
         - Host to Global Memory READ Transfer takes about 37.9 ms.
 
-          ![](./images/multiDDR_profile_host.PNG)
+          ![missing image](./images/multiDDR_profile_host.PNG)
 
    * *Kernels & Compute Unit: Compute Unit Utilization* section shows that the CU Utilization has also increased to 89.5% from 71% in previous lab.
 
-      ![](./images/multiDDR_profile_CU_util.PNG)
+      ![missing image](./images/multiDDR_profile_CU_util.PNG)
 
     * The *Kernels & Compute Unit: Compute Unit Utilization* shows that contention has been reduced from 21 ms in previous lab to about 5 ms in this lab.
 
-      ![](./images/multiDDR_stalls.PNG)
+      ![missing image](./images/multiDDR_stalls.PNG)
 
 Compared to the previous step using only one DDR, there is no overall application gain. The FPGA compute performance improves, but the bottleneck is processing the "Compute Score", which is limited by CPU Performance. If the CPU can process faster, you can get the better performance.  
 

@@ -1,16 +1,15 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
-## Synchronous Update of Scalar RTP
+# Synchronous Update of Scalar RTP
 
-Kernel execution depends on the availability of windows of data on their inputs, and the space to write windows of data on their outputs. This example illustrates a complementary method, whereby a kernel will only get triggered to run after a write of data from another processor. This can be an Arm® processor or another AI Engine.
+Kernel execution depends on the availability of windows of data on their inputs, and the space to write windows of data on their outputs. This example illustrates a complementary method, whereby a kernel will only get triggered to run after a write of data from another processor. This can be an ARM® processor or another AI Engine.
 
 In this example, a write from an Arm processor causes a partial sine wave to be generated using the direct digital synthesis (DDS) kernel on the AI Engine. The Arm processor can control the frequency of the sine wave by writing different values to the `runtime` parameter. In the HW and HW cosim flow, the AI Engine output is streamed to the PL kernels, and the PS controls the running AI Engine and PL. The following figure shows this example. 
 
@@ -57,7 +56,7 @@ __Note:__ The default working directory in this step is "step1", unless specifie
 
    The graph `run()` has been called with the parameter `4` to specify the iteration number of the graph. Otherwise, it will run forever.
 
-### Review RTP Update Code
+## Review RTP Update Code
 
 1. Examine `aie/graph.h` again. The following line is to connect the trigger input port of the graph to the first input port of the dds kernel (i.e., the `phase_increment` parameter of the `sine` function).
 
@@ -103,7 +102,8 @@ __Note:__ The default working directory in this step is "step1", unless specifie
 
    Because the `runtime` parameter in this example is synchronous, the graph execution on the AI Engine will start after the first update call for one iteration, then wait for the next trigger by the next update call. Four consecutive update calls will run the graph for four iterations, where the first two iterations use 10 as the value for the `phase_increment` parameter and the last two iterations use 100.
 
-### Run AI Engine Compiler and AI Engine Simulator 
+## Run AI Engine Compiler and AI Engine Simulator 
+
 1. Run the AI Engine compiler and the AI Engine simulator to verify the functional correctness of the design. Note that `graph.cpp` is only used for the AI Engine simulator, which is a SystemC simulation. 
 
    The `make` command to run the AI Engine compiler to generate the AI Engine design graph (`libadf.a`) is:
@@ -181,7 +181,7 @@ In the previous step, you generated the AI Engine design graph (`libadf.a`) usin
 	 out = adf::output_plio::create("Dataout", adf::plio_32_bits, "data/output.txt");
 	 ```
 
-Here, `plio_32_bits` indicates the interface to the PL side is 32 bits wide. In the PL side, an HLS kernel `s2mm` will be instantiated. It will receive stream data from the AI Engine graph, and output data to global memory, which will be read by the host code in the PS. 
+Here, `plio_32_bits` indicates the interface to the PL side is 32 bits wide. In the PL side, an HLS kernel `s2mm` will be instantiated. It will receive stream data from the AI Engine graph, and output data to global memory, which will be read by the host code in the PS.
 
 __Note__: In this section, the make commands apply to `hw_emu` mode by default. Taking the `hw_emu` mode as an example, to target `hw` mode, add `TARGET=hw` to the make commands. For detailed commands, change the `-t hw_emu` option to `-t hw`.
 
@@ -243,15 +243,15 @@ The host code for HW emulation and HW (`sw/host.cpp`) includes OpenCL APIs to co
 
 1. Get the OpenCL platform and device:
 
-   a. Prepare OpenCL context and command queue. 
+   a. Prepare OpenCL context and command queue.
 
    b. Program `xclbin`.
 
    c. Get kernel objects from the program.
 
-2. Prepare the device buffers for kernels. Transfer data from the host memory to the global memory in the device. 
+2. Prepare the device buffers for kernels. Transfer data from the host memory to the global memory in the device.
 3. The host program sets up the kernel with its input parameters and triggers the execution of the kernel on the FPGA.
-4. Wait for kernel completion. 
+4. Wait for kernel completion.
 5. Transfer data from the device global memory to host memory.
 6. Host code performs post-processing on the host memory.
 
@@ -333,13 +333,13 @@ The corresponding v++ command is:
 
 Here `--package.defer_aie_run` specifies that the Versal AI Engine cores will be enabled by the PS. When not specified, the tool will generate CDO commands to enable the AI Engine cores during PDI load instead. 
 
-`--package.sd_dir <arg>` specifies a directory path to package into the *`sd_card* directory/image`, which is helpful for including some golden data into the package. 
+`--package.sd_dir <arg>` specifies a directory path to package into the *`sd_card* directory/image`, which is helpful for including some golden data into the package.
 
 "`--package.sd_file <arg>`" is used to specify files to package into the *`sd_card* directory/image`.
-	
+
 For more details about `v++ -p (--package)` options, refer to *Application Acceleration Development* (UG1393).
 
-### Deploy for Hardware Emulation and Hardware Flow
+## Deploy for Hardware Emulation and Hardware Flow
 
 The final step is to run HW emulation using the following make command:
 
@@ -383,7 +383,8 @@ The host code is self-checking. It will check the output data against the golden
 	TEST PASSED
 	```
 
-### Conclusion
+## Conclusion
+
 In this step, you learned about the following core concepts:
 
   * Synchronous update of scalar RTP

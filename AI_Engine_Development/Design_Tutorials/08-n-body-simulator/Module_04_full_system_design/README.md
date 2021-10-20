@@ -1,4 +1,13 @@
-# Building the Design 
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
+# Building the Design
 
 *Estimated time: 4 hours*
 
@@ -29,25 +38,29 @@ v++ -l                                     \
     ../Module_02_aie/build/libadf.a
 ```
 
-# Full System Design
-The Vitis Linker (`v++ -l`) is used to link multiple kernel objects (XO), together with the hardware platform XSA file, to produce the device binary XCLBIN file. 
-Review the `conn.cfg` file. It creates an instance of each PL kernel described previously and provides the connection scheme between them and the AI Engine graph. At the end of the file, there are vivado options specified to close timing and run the design at 300 MHz. 
+## Full System Design
 
-# Design Implementation 
-The following image was taken from the Vivado project for the entire design. It depicts the hardware implementation determined by the place-and-route on the ACAP device. 
+The Vitis Linker (`v++ -l`) is used to link multiple kernel objects (XO), together with the hardware platform XSA file, to produce the device binary XCLBIN file.
 
-![alt text](images/Design%20Implementation.png) 
+Review the `conn.cfg` file. It creates an instance of each PL kernel described previously and provides the connection scheme between them and the AI Engine graph. At the end of the file, there are vivado options specified to close timing and run the design at 300 MHz.
 
-# References 
+## Design Implementation
+
+The following image was taken from the Vivado project for the entire design. It depicts the hardware implementation determined by the place-and-route on the ACAP device.
+
+![alt text](images/Design%20Implementation.png)
+
+## References
 
 * [Beamforming Tutorial - Module_04 - AI Engine and PL Integration](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Design_Tutorials/03-beamforming)
 
-* [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html) 
+* [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html)
 
-# Next Steps 
+## Next Steps
+
 After linking the AI Engine design with the PL datamovers, you are ready to create the host software in the next module, [Module 05 - Host Software](../Module_05_host_sw).
 
-© Copyright 2021 Xilinx, Inc.
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -62,4 +75,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD068 | © Copyright 2021 Xilinx, Inc.</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p>

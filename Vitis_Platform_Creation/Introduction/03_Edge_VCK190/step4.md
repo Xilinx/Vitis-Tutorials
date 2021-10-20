@@ -153,11 +153,11 @@ To verify the platform functionality, we will create an acceleation project with
 
    - Set **Application project name** to **vadd**, target processor **psv_cortexa72_SMP**. Click **Next**.
    
-     ![](./images/step4/vitis_create_vadd.png)
+     ![missing image](./images/step4/vitis_create_vadd.png)
 
    - Input **Sysroot** path (step3_pfm/sw_comp/sysroots/aarch64-xilinx-linux), **RootFS** path (step3_pfm/sw_comp/rootfs.ext4) and **Kernel Image** path (step3_pfm/sw_comp/Image). These components were prepared in [step 3](./step3.md). Click **Next**. 
 
-      ![](./images/step4/vitis_create_vadd_swcomp.png)
+      ![missing image](./images/step4/vitis_create_vadd_swcomp.png)
 
    - Select template **Vector Addition**. Click **Finish**.
 

@@ -157,7 +157,7 @@ To run this step, please make sure the project is a normal project. **This proje
 
    - Click ***Yes*** if it pops up a message to say *No Implementation Results Available*.
 
-   ![](./images/step0/vivado_no_imp_avail.png)
+   ![missing image](./images/step0/vivado_no_imp_avail.png)
 
    - Click ***OK*** for default options for Launch Runs dialouge.
 

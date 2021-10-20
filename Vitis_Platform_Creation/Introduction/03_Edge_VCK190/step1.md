@@ -91,7 +91,7 @@ Some blocks in the block design has multiple types of simulation models. Vitis e
    - Check the ***Block Properties*** window
    - In ***Properties*** tab, it shows **ALLOWED_SIM_MODELS** is `tlm,rtl`, **SELECTED_SIM_MODEL** is `tlm`. It means this block supports two simulation models. We selected to use `tlm` model.
 
-   ![](./images/step1/vivado_cips_tlm.png)
+   ![missing image](./images/step1/vivado_cips_tlm.png)
 
 2. Review the simulation model property for NOC and AI Engine in the block diagram.
 
@@ -104,11 +104,11 @@ Some blocks in the block design has multiple types of simulation models. Vitis e
 
    - Click **Generate Block Diagram** from Flow Navigator window
 
-   ![](images/step1/vivado_generate_bd.png)
+   ![missing image](images/step1/vivado_generate_bd.png)
 
    - Select **Synthesis Options** to **Global** to save generation time. 
 
-   ![](images/step1/vivado_generate_bd_global.png)
+   ![missing image](images/step1/vivado_generate_bd_global.png)
 
    - Click **Generate** button
 

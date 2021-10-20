@@ -1,16 +1,18 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 AI Engine Performance Analysis Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+</table>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
 # AI Engine Graph Execution and Measurement
 
-AI Engine graph execution uses locks for memory synchronization. The stream interfaces have inherent data synchronization through backward or forward pressure. 
+***Version: Vitis 2021.2***
+
+AI Engine graph execution uses locks for memory synchronization. The stream interfaces have inherent data synchronization through backward or forward pressure.
 
 This example introduces the Trace view to show how kernels with buffers and streams are executed and synchronized. Performance measurement methods are also introduced to help you identify the performance bottlenecks in the design. An optimized version of the design is then introduced. 
 
@@ -29,8 +31,8 @@ This example introduces the Trace view to show how kernels with buffers and stre
     ```
     vitis_analyzer Work/graph.aiecompile_summary
     ```
-    
-3. Examine the graph view in Vitis Analyzer. 
+
+3. Examine the graph view in Vitis Analyzer.
 
     ![Graph View](./images/figure1.PNG)
 
@@ -188,7 +190,7 @@ There are multiple ways to measure performance:
 
     ![Profile View](./images/figure3.PNG)
 
-    Kernel `aie_dest1` takes an average of 102 cycles for one iteration. The `main` function takes 5303 cycles for 100 iterations of the graph. This is around 53 cycles of overhead for each iteration of the graph. This overhead includes the lock acquires of the window buffers and the overhead of API calls. 
+    Kernel `aie_dest1` takes an average of 102 cycles for one iteration. The `main` function takes 5303 cycles for 100 iterations of the graph. This is around 53 cycles of overhead for each iteration of the graph. This overhead includes the lock acquires of the window buffers and the overhead of API calls.
 
     The performance of `aie_dest1` is bounded by the stream interface throughput. The theoretical limit is up to 4 bytes a cycle (4 GB/s), and there are 128 bytes of input for one run. This means that it at least has 32 cycles for the main loop, although in actuality it takes 102 cycles. This indicates that the loop is not well pipelined.
 
@@ -200,12 +202,12 @@ There are multiple ways to measure performance:
 
     From a best performance and best resource perspective, you might select a 64-bit interface at 500 MHz if timing allows. If not, it is possible to have the PL running at 250 MHz with a 128-bit width interface. 
     
-    **Note:** The interface takes two channels in the AI Engine-PL interface tiles. 
+    **Note:** The interface takes two channels in the AI Engine-PL interface tiles.
 
 5. The following methods are introduced in [AI Engine Performance Profile](https://github.com/Xilinx/Vitis-Tutorials/blob/master/AI_Engine_Development/Feature_Tutorials/02-using-gmio/perf_profile_aie_gmio.md): 
 
     * Profiling by C++ class API
-    * Profiling by AI Engine cycles from AI Engine kernels 
+    * Profiling by AI Engine cycles from AI Engine kernels
     * Profiling by event API
 
 ## Design Optimization Considerations

@@ -195,7 +195,7 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
    * Kernel Enqueues
 
 3. Zoom in on the section illustrating the actual accelerator execution, and select one of the kernel enqueue blocks on `Row 0` to see an image similar to the following figure.
-![](images/OrderedQueue_vitis.PNG)
+![missing image](images/OrderedQueue_vitis.PNG)
 
    The blue arrows identify dependencies, and you can see that every Write/Execute/Read task execution has a dependency on the previous Write/Execute/Read operation set. This effectively serializes the execution. In this case, the dependency is created by using an ordered queue. 
    
@@ -222,7 +222,7 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
    ```
 
    If you zoom in on the Application Timeline, and click any kernel enqueue, you should see results similar to the following figure.
-![](images/OutOfOrderQueue_vitis.PNG)
+![missing image](images/OutOfOrderQueue_vitis.PNG)
 
    If you select other pass kernel enqueues, you will see that all 10 are now showing dependencies only within the Write/Execute/Read group. This allows the read and write operations to overlap with the execution, and you are effectively pipelining the software write, execute, and read. This can considerably improve the overall performance because the communication overhead is occurring concurrently with the execution of the accelerator.
 
@@ -281,7 +281,7 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
    ```
    
    If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
-![](images/clFinish_vitis.PNG)
+![missing image](images/clFinish_vitis.PNG)
 
    In the figure, the key elements are the red box named `clFinish` and the large gap between the kernel that enqueues every three invocations of the accelerator.
 
@@ -313,7 +313,7 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
    ```
 
    If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
-![](images/clEventSync_vitis.PNG)
+![missing image](images/clEventSync_vitis.PNG)
 
    In the later part of the timeline, there are five executions of pass executed without any unnecessary gaps. However, even more telling are the data transfers at the point of the marker. At this point, three packages were sent over to be processed by the accelerator, and one was already received back. Because you have synchronized the next scheduling of Write/Execute/Read on the completion of the first accelerator invocation, you now observe another write operation before the third pass has even completed. This clearly identifies an overlapping execution.
 
@@ -381,7 +381,7 @@ A second command line option (`SIZE=`) has also been added to specify the buffer
    Executing the sweep will run and record the FPGA throughput for buffer SIZE arguments from 8 to 19. The measured throughput values are recorded together with the actual number of bytes per transfer in the `runBuf/results.csv` file, which is printed at the end of the makefile execution.
 
    When analyzing these numbers, a step function similar to the following image should be displayed.  
-![](images/stepFunc.PNG)
+![missing image](images/stepFunc.PNG)
 
    This image shows that the buffer size (x-axis, bytes per transfer) clearly impacts performance (y-axis, FPGA Throughput in MB/s), and starts to level out around 2 MB.
    >**NOTE**: This image is created through gnuplot from the `results.csv` file, and if found on your system, it will be displayed automatically after you run the sweep.
