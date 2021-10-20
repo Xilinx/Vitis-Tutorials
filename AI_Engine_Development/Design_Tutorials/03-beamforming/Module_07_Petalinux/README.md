@@ -1,15 +1,23 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
 
 # Introduction
 
 In Module 05, you created a standalone software platform and compiled a bare-metal PS host application. In this module, you will build a PetaLinux software platform. In Module 08, you will compile the Linux PS host application. PetaLinux is an embedded Linux software development kit (SDK) targeting FPGA-based system on-a-chip (SoC) designs. PetaLinux tools offer everything necessary to customize, build, and deploy embedded Linux solutions on Xilinx processing systems. The PetaLinux tool offers a full Linux distribution building system which includes the Linux OS as well as a complete configuration, build, and deploy environment for Xilinx silicon.
 
-## Differences between Bare Metal and PetaLinux
+### Differences between Bare Metal and PetaLinux
 
 In the bare-metal application, you had to access the registers of your PL kernels by computing the physical memory addresses. These memory addresses can change between builds and software releases. With the PetaLinux software platform, it is possible to bind general UIO drivers for each PL kernel instance. Instead of accessing specific physical addresses as you did in bare metal, you can use these UIO drivers which access the physical addresses for you.
 
 Creating a PetaLinux application allows you to take advantage of a variety of other features such as security, multi-threading, and multi-processing.
 
-# Building the Design
+## Building the Design
 
 To create, configure, and build the PetaLinux project in one step, run the following command:
 
@@ -19,11 +27,11 @@ make petalinux
 
 The rest of this module explains the individual commands in the Makefile that were used to create the Petalinux project.
 
-# Building the PetaLinux Software Platform
+## Building the PetaLinux Software Platform
 
 Creation of the PetaLinux software platform can be broken down into the following phases: create PetaLinux, config PetaLinux, build PetaLinux, and build a Versal custom PetaLinux platform. The `make petalinux` step performs all these steps with one command.
 
-## Create PetaLinux: Creating the PetaLinux Project with a BSP
+### Create PetaLinux: Creating the PetaLinux Project with a BSP
 
 First, create the PetaLinux project from a board support package (BSP) with the `petalinux-create` command. A BSP is a collection of software drivers and an operating system on which your Linux applications are built. It is the support code for a given hardware platform or board that helps in basic initialization at power-up and helps software applications to be run on top of it. Because you are using a VCK190 board, you will need the ``xilinx-vck190-v2021.2-final.bsp`` package.
 
@@ -35,7 +43,7 @@ petalinux-create -t project -s <PATH-TO-BSP>/xilinx-vck190-v2021.2-final.bsp -n 
 
 These commands create a new PetaLinux project directory structure under `build/vck190_linux`.
 
-## Config PetaLinux: Updating the PetaLinux Project with an XSA
+### Config PetaLinux: Updating the PetaLinux Project with an XSA
 
 Next, update the PetaLinux project with the XSA created in Module 04. The XSA contains the configured PS and the PL kernels you want to control from your Linux applications. This step enables you to make the PetaLinux tools software platform ready for building a Linux system, customized to your hardware platform. Import the hardware description with the `petalinux-config` command by giving the path of the directory containing the XSA file as follows:
 
@@ -45,7 +53,7 @@ petalinux-config -p build/vck190_linux --get-hw-description ../Module04_AI_Engin
 
 The ``--silentconfig`` option allows you to reuse a prior configuration used during the ``petalinux_create`` command.
 
-## Config PetaLinux: Customizing the Root File System
+### Config PetaLinux: Customizing the Root File System
 
 Edit the `build/vck190_linux/project-spec/configs/config` file. In this configuration file, ensure that the root file system type is EXT4 by setting the following config options:
 
@@ -108,7 +116,7 @@ CONFIG_YOCTO_ENABLE_DEBUG_TWEAKS=y
 CONFIG_auto-login=y
 ```
 
-## Config Petalinux: Updating the Device Tree
+### Config Petalinux: Updating the Device Tree
 
 The DTSI file is provided for you. Copy the ``uio-system-user.dtsi`` file to the PetaLinux project.
 
@@ -118,7 +126,7 @@ cp uio-system-user.dtsi build/vck190_petalinux/project-spec/meta-user/recipes-bs
 
 This is a user-modifiable PetaLinux device tree configuration file. Open the ``uio-system-user.dtsi``. You will see that this file creates a ``generic-uio`` driver for each PL kernel instance (``dlbf_data_00``, ``dlbf_data_01``, ``dblf_coeff_00``, ... etc). With this device tree configuration, you can communicate to the memory addresses of the PL kernels through these UIO drivers without actually knowing the physical addresses.  
 
-## Config Petalinux: Customizing Kernel Configuration
+### Config Petalinux: Customizing Kernel Configuration
 
 Create the ``vck190_linux/project-spec/meta-user/recipes-kernel/linux/linux-xlnx/bsp.cfg`` file. This is a Linux kernel config fragment file with the following config options:
 
@@ -131,7 +139,7 @@ CONFIG_XILINX_INTC=y
 ```
 These configuration settings enable device drivers for general purpose GPIO IP, I2C IP, FPGA Manager, and Xilinx Interrupt Controller. These drivers are _not_ used in the Linux PS host application.
 
-## Config Petalinux: Clean-Up
+### Config Petalinux: Clean-Up
 
 Run the following command to clean up the configuration files you edited:
 
@@ -139,7 +147,7 @@ Run the following command to clean up the configuration files you edited:
 petalinux-config -p build/vck190_linux --silentconfig
 ```
 
-## Build PetaLinux: Building the PetaLinux Image
+### Build PetaLinux: Building the PetaLinux Image
 
 Build the PetaLinux system image with the following command:
 
@@ -151,7 +159,7 @@ This step generates a device tree DTB file, platform loader and manager firmware
 
 When the build finishes, the generated U-Boot and Linux images are stored in the ``build/vck190_petalinux/images/linux`` directory.
 
-## Build Petalinux: Building the SDK (Target Sysroot Generation)
+### Build Petalinux: Building the SDK (Target Sysroot Generation)
 
 The OpenEmbedded build system uses BitBake to generate the software development kit (SDK) installer script standard SDKs. PetaLinux builds Yocto SDK and installs it. The installed SDK can be used as a ``sysroot`` for the application development. Build the SDK with the following command:
 
@@ -161,7 +169,7 @@ petalinux-build -p build/vck190_petalinux –sdk
 
 This command builds the SDK and copies it at ``build/vck190_petalinx/images/linux/sdk.sh``.
 
-## Build PetaLinux: Installing the SDK (Target Sysroot Generation)
+### Build PetaLinux: Installing the SDK (Target Sysroot Generation)
 
 The generated SDK must be installed/extracted to a directory. The following command extracts the SDK to the default installation directory ``build/vck190_petalinux/images/linux/sdk/``.
 
@@ -170,7 +178,7 @@ cd build/vck190_petalinux
 petalinux-package –sysroot
 ```
 
-## Build PetaLinux: Generating the Boot Image
+### Build PetaLinux: Generating the Boot Image
 
 Lastly, generate the boot image (``BOOT.BIN``). A boot image usually contains a PDI file (imported from the hardware design), PLM, PSM firmware, Arm® trusted firmware, U-Boot, and DTB.
 
@@ -180,7 +188,7 @@ petalinux-package --boot --u-boot
 ```
 This generates ``BOOT.BIN``, ``BOOT_bh.bin``, and ``qemu_boot.img`` in the ``build/vck190_linux/images/linux`` directory. The default DTB load address is 0x1000. For more information, see the Bootgen User Guide ([UG1283](https://www.xilinx.com/search/support-keyword-search.html#q=ug1283)).
 
-# Build the Versal Custom PetaLinux Platform
+## Build the Versal Custom PetaLinux Platform
 
 Now that we have our customized PetaLinux image, the next step is to create a Versal custom platform with that Linux image. Packaging a platform requires the following software components for EXT4 rootfs:
 
@@ -215,7 +223,7 @@ xsct xsct_create_pfm.tcl vck190_custom ../Module_04/build/rev1/hw/beamforming.re
 
 This script uses the XSA from Module 04 and the custom Petalinux image to generate a new Versal custom platform (.xpfm) in the `build/vck190_custom/` directory. The new XPFM platform is used in the ``v++ --package`` step in Module 09 to generate the SD card image.
 
-# References
+## References
 
 * [PetaLinux Tools Website](https://www.xilinx.com/products/design-tools/embedded-software/petalinux-sdk.html#tools)
 * PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/search/support-keyword-search.html#q=ug1144))

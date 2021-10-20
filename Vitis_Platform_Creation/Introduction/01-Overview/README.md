@@ -10,7 +10,7 @@ User can create custom embedded acceleration platforms by building from scratch,
 
 There are generally three steps to create a Vitis embedded platform: Setup hardware interface, setup software components and package the platform. The whole flow would require some preparation and final testing.
 
-![](./images/steps_overview.png)
+![missing image](./images/steps_overview.png)
 
 Here's a brief description of what are covered in each step.
 

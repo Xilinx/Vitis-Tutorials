@@ -6,8 +6,9 @@
  </tr>
 </table>
 
+# Hardware Acceleration Tutorials
 
-### Introduction to Vitis Hardware Acceleration
+## Introduction to Vitis Hardware Acceleration
 
  <table style="width:100%">
  <tr>
@@ -21,13 +22,13 @@
  </table>
 
 
-### Design Tutorials
+## Design Tutorials
 
 The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the hardware kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto FPGA kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary compiler options and pragmas to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
 
 
 
- <table style="width:100%">
+<table style="width:100%">
  <tr>
  <td width="35%" align="center"><b>Tutorial</b>
  <td width="65%" align="center"><b>Description</b>
@@ -45,6 +46,14 @@ The methodology for developing optimized accelerated applications is comprised o
  <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
  </tr>
 <tr>
+ <td align="center"><a href="./Design_Tutorials/04-traveling-salesperson/README.md">Traveling Salesperson Problem</a></td>
+ <td>This tutorial demonstrates the full flow to implement a HLS kernel from algorithm model to hardware.</td>
+</tr>
+<tr>
+ <td align="center"><a href="./Design_Tutorials/05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a></td>
+ <td>This tutorial demonstrates how to develope a complex RTL kernel from scratch via batch mode without GUI environment.</td>
+ </tr>
+ <tr>
  <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Choleskey Algorithm Acceleration </a></td>
  <td>This tutorial puts in practice the concepts of FPGA acceleration and illustrates how to gradually optimize a hardware accelerator implementing the Cholesky matrix decomposition algorithm.</td>
  </tr>
@@ -56,11 +65,11 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Design_Tutorials/08-ivas-ml/">Streaming Video Analytics with IVAS</a></td>
  <td>This tutorial demonstrates a reference platform using the Xilinx IVAS framework for streaming video analytics with Vitis and Vitis AI.</td>
  </tr>
- </table>
+</table>
 
 
 
-### Feature Tutorials
+## Feature Tutorials
 
  <table style="width:100%">
  <tr>
@@ -94,6 +103,10 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Feature_Tutorials/07-using-hbm/">Optimizing for HBM</a></td>
  <td>This tutorial demonstrates how you can take best advantage of HBM on platforms that support it.</td>
  </tr>
+ <tr>
+<td align="center"><a href="./Feature_Tutorials/08-using-hostmem/">Host Memory Access</a></td>
+<td>This tutorial demonstrates how kernels can directly access buffers host memory directly. This capability requires a compatible platform.</td>
+</tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>

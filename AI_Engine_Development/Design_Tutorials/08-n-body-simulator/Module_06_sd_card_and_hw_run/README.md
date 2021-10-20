@@ -1,11 +1,22 @@
-# Building the Design 
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
+# Building the Design
 
 *Estimated time: 6 minutes*
 
 ```
 make all
 ```
-or 
+
+or
+
 ```
 v++ -p                                                                            \
     -t hw                                                                         \
@@ -26,23 +37,27 @@ v++ -p                                                                          
     --package.sd_file ../data/s2m_golden_i_k2.txt                                 \
     --package.sd_file ../data/s2m_golden_i_k3.txt                           
 ```
-# SD Card Image Generation
-After compiling and linking your kernel code to build the XCLBIN, you need to package the device binary, along with the host applications, to build a package that can be booted and run on the hardware device. The `v++ -p` step, packages the final product into an `sd_card.img` file at the end of the `v++` compile and link process. 
 
-# Booting the VCK190 Board 
-Flash the sd_card.img to an sd card and boot your VCK190 production board. 
+## SD Card Image Generation
 
-**Step 1.** Ensure your board is powered off. 
+After compiling and linking your kernel code to build the XCLBIN, you need to package the device binary, along with the host applications, to build a package that can be booted and run on the hardware device. The `v++ -p` step, packages the final product into an `sd_card.img` file at the end of the `v++` compile and link process.
 
-**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `build/packet_hw/sd_card.img` file an SD card. 
+## Booting the VCK190 Board
 
-**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board. 
+Flash the sd_card.img to an sd card and boot your VCK190 production board.
+
+**Step 1.** Ensure your board is powered off.
+
+**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `build/packet_hw/sd_card.img` file an SD card.
+
+**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board.
 
 **Step 4.** Set the switch SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON.
 
-**Step 5.** Connect your computer to the VCK190 board using the included USB cable. 
+**Step 5.** Connect your computer to the VCK190 board using the included USB cable.
 
-**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following: 
+**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following:
+
 ```
 Port: <COMMXX>
 Speed: 115200
@@ -55,23 +70,26 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-<tools-version>` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-<tools-version>` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
-**Step 9.** Run the following commands into the TeraTerm terminal: 
+**Step 9.** Run the following commands into the TeraTerm terminal:
+
 ```
 cd /mnt/sd-mmcblk0p1
 export XILINX_XRT=/usr
 ```
 
-# Running the Design on Hardware 
-Once the Linux command line displays, go to the `/mnt/sd-mmcblk0p1` partition and you should see the files you packaged into the `sd_card.img`. From here run the functional test: 
+## Running the Design on Hardware
+
+Once the Linux command line displays, go to the `/mnt/sd-mmcblk0p1` partition and you should see the files you packaged into the `sd_card.img`. From here run the functional test:
 
 ```
 ./ps_app.exe --timesteps 1
 ```
-You can also review the `run.log` for the messages written by the host application. 
 
-Next profile and compare the execution times for the C++ N-Body Simulator running on the A72 processor vs. the AI Engine N-Body Simulator design. 
+You can also review the `run.log` for the messages written by the host application.
+
+Next profile and compare the execution times for the C++ N-Body Simulator running on the A72 processor vs. the AI Engine N-Body Simulator design.
 
 *Estimated Time: 2 minutes* 
 
@@ -79,7 +97,8 @@ Next profile and compare the execution times for the C++ N-Body Simulator runnin
 ./ps_app.exe --timesteps 1 --profile
 ```
 
-The output on the console should be something like this: 
+The output on the console should be something like this:
+
 ```
 Initializing ADF API...
 [INFO]: Cout Level set to [INFO]:
@@ -101,24 +120,27 @@ NUM TIMESTEPS: 1
 [INFO]: TEST PASSED
 ```
 
-Now run the executable to generate data to create the particle animation in the next module: 
+Now run the executable to generate data to create the particle animation in the next module:
+
 ```
 ./ps_app_animate.exe --timesteps 300
 ```
 
-Copy the `animation_data.txt` from the board to the `Module_07_results/data/` folder if you want to create an animation out of it. 
+Copy the `animation_data.txt` from the board to the `Module_07_results/data/` folder if you want to create an animation out of it.
+
 ```
 scp animation_data.txt <user>@<ip-address>:/<project-dir>/Module_07_results/data/. 
 ```
 
-# References
+## References
 
 * [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html#wrj1504034328013)
 
-# Next Steps 
+## Next Steps
+
 After running the design on hardware, you can compare the performance between the Python, C++, and AI Engine NBody Simulators in the next module, [Module 07 - Results](../Module_07_results).
 
-© Copyright 2021 Xilinx, Inc.
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -133,4 +155,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD068 | © Copyright 2021 Xilinx, Inc.</sup></p>
+
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p>

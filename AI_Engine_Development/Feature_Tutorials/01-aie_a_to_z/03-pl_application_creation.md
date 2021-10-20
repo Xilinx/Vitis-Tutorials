@@ -1,12 +1,13 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal ACAP AI Engine A to Z Bare-metal Flow</h1>
-   </td>
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
-
 </table>
 
-## Introduction
+# Introduction
 
 In this section of the tutorial, you will learn how to add PL kernels in HLS into the system project and build the whole system.
 
@@ -56,7 +57,7 @@ In this example, HLS kernels are used which bridge between memory and the AXI4-S
 
 4. In the ***hw-kernels.prj*** page, click on the lightning icon (***Add HW function***) icon and select both functions (`mm2s` and `s2mm`) as hardware functions.
 
-![](images/hw_kernels.png)
+![missing image](images/hw_kernels.png)
 
 
 ### Step 3. Configure Hardware Linking Project
@@ -65,7 +66,7 @@ Now that you have imported the kernels, you need to tell the Vitis linker how to
 
 1. In the ***simple_application_system_hw_link.prj*** page, enable ***Export hardware (XSA)***.
 
-![](images/hw_link_cfg1.png)
+![missing image](images/hw_link_cfg1.png)
 
 2. Now you need to tell the Vitis compiler about the connectivity of the system. This step is done using a configuration file.
 Create a `system.cfg` file with a text editor and add the following lines.
@@ -81,31 +82,31 @@ For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit 
 
 3. Right-click the ***simple_application_system_hw_link*** and click ***import sources***. Select the ```system.cfg``` file created and add it to the ***simple_application_system_hw_link*** folder.
 
-      ![](images/hw_link_cfg2.png)
+      ![missing image](images/hw_link_cfg2.png)
 
 4. In the ***simple_application_system_hw_link.prj*** page, right-click the binary container and click ***Edit v++ options***.
 
-      ![](images/hw_link_cfg3.png)
+      ![missing image](images/hw_link_cfg3.png)
 
 Add the following option to link your configuration file:
 ```
 --config ../system.cfg
 ```
 
-  ![](images/hw_link_cfg4.png)
+  ![missing image](images/hw_link_cfg4.png)
 
 
 ### Step 4. Build the System
 
 1. Select the ***simple_application_system*** project and click on the hammer icon to build it. The compilation process takes some time to finish. The underlying AI Engine application project, hardware kernel project, and hardware linking project are compiled one after another. The system should build successfully with no error.
 
-      ![](images/system_build.png)
+      ![missing image](images/system_build.png)
 
 2. You can open the generated Vivado project in `<workspace>/simple_system_hw_link/Hardware/binary_container_1.build/link/vivado/vpl/prj` to take a look at the compilation result.
 You can see that the Vitis compiler added the two HLS IP (`mm2s` and `s2mm`) and connected them to the memory (NoC) and AI Engine IP.
 
-      ![](images/211_vivado_prj.png)
-      ![](images/211_vivado_prj2.png)
+      ![missing image](images/211_vivado_prj.png)
+      ![missing image](images/211_vivado_prj2.png)
 
 
 In the next step, you will create a PS bare-metal application and run the system with it.
@@ -114,7 +115,6 @@ In the next step, you will create a PS bare-metal application and run the system
 <p align="center"><b><a href="./02-aie_application_creation.md">Return to Step 2</a> — <a href="./04-ps_application_creation_run_all.md">Go to Step 4</a></b></p>
 
 
-<p align="center">© Copyright 2020-2021 Xilinx, Inc.</p>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -128,4 +128,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD018</sup></p>
+
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p>
+

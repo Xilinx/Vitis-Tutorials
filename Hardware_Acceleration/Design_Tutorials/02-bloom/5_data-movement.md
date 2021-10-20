@@ -1,4 +1,4 @@
-<table class="sphinxhide">
+﻿<table class="sphinxhide">
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
@@ -30,7 +30,7 @@ In this lab, you will work with an:
 
 The following figure illustrates the use case where the input data is split into two sub-buffers.
 
-   ![](./images/overlap_split_buffer.PNG)
+   ![missing image](./images/overlap_split_buffer.PNG)
 
 ### Host Code Modifications
 
@@ -178,7 +178,7 @@ Verification: PASS
 
 2. Zoom in to display the following Timeline Trace report.
 
-   ![](./images/double_buffer_timeline_trace.PNG)
+   ![missing image](./images/double_buffer_timeline_trace.PNG)
 
     - The Timeline Trace confirms that you achieved the execution schedule you expected.
       * There is an overlap of the read and compute with write operations between the first and second iterations. 
@@ -355,7 +355,7 @@ In this step, you will explore the Bloom8x kernel with 100,000 documents split i
 
     The following figure shows the plotted graph with the execution times of different `ITER` values varying with `ITER`.
 
-      ![](./images/iter_generic.PNG)
+      ![missing image](./images/iter_generic.PNG)
 
       From the graph, you can see that `ITER=8` gives the best performance. Your results might differ based on your CPU performance, load on the server, etc.
 
@@ -382,7 +382,7 @@ In this step, you will explore the Bloom8x kernel with 100,000 documents split i
 
 1. Zoom in to display the Timeline Trace report.
 
-    ![](./images/generic_buffer_timeline_trace.PNG)
+    ![missing image](./images/generic_buffer_timeline_trace.PNG)
 
 - As you can see from the report, the input buffer is split into eight sub buffers, and there are overlaps between read, compute, and write for all iterations. The total computation is divided in eight iterations, but seven of them are occur simultaneously with data transfers; therefore, only the last compute counts towards the total FPGA execution time. This is indicated by the two arrows on timeline trace
 
@@ -484,7 +484,7 @@ The following output displays.
 
 2. Zoom in to display the Timeline Trace report.
 
-   ![](./images/sw_overlap_timeline_trace.PNG)
+   ![missing image](./images/sw_overlap_timeline_trace.PNG)
 
     - As shown in *OpenCL API Calls* of the *Host* section, the red segments are shorter (indicated by red squares) in width which indicates that the processing time of the host CPU is now overlapping with the FPGA processing, which improved the overall application execution time. In the previous steps, the host remained completely idle until the FPGA finished all its processing.
     - *Data Transfer -> Write* of the Host section seems to have no gap. Kernel compute time of each invocation is smaller than the Host transfer. 
@@ -496,15 +496,15 @@ The following output displays.
 1. *Kernels & Compute Unit:Kernel Execution* reports 168ms. This should be same as when Bloom8x kernel run with ITER=8.
 2. *Kernels & Compute Unit: Compute Unit Stalls* section also confirms that "External Memory" stalls are about 20.045 ms compared to no "External Memory" stalls when single buffer was used. This will result in slower data transfer and kernel compute compared to single buffer run.
 
-    ![](./images/sw_overlap_stalls.PNG)
+    ![missing image](./images/sw_overlap_stalls.PNG)
 
 3. *Host Data Transfer: Host Transfer* Host to Global Memory WRITE Transfer takes about 207.5 ms and Host to Global Memory READ Transfer takes about 36.4 ms
 
-   ![](./images/sw_overlap_profile_host.PNG)
+   ![missing image](./images/sw_overlap_profile_host.PNG)
 
  * *Kernels & Compute Unit: Compute Unit Utilization* section shows that CU Utilization is about 71%. This is an important measure representing how much time CU was active over the Device execution time. 
 
-    ![](./images/sw_overlap_profile_CU_util.PNG)
+    ![missing image](./images/sw_overlap_profile_CU_util.PNG)
 
 In the next lab, you will compare the results for "Host Data Transfer Rates" and "CU Utilization".
 

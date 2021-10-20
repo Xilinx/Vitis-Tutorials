@@ -1,7 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
    </td>
  </tr>
  <tr>
@@ -11,6 +10,8 @@
 </table>
 
 # Package IP/Package XO Flow
+
+***Version: Vitis 2021.2***
 
 The process described in this lab follows the Package IP flow as described in the [RTL Kernel Development Flow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html;a=rzv1504034325561) in the Vitis Application Acceleration Development Flow documentation (UG1393).
 
@@ -150,7 +151,9 @@ B | pointer argument | 0x024 | 64
       ipx::add_register B [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
       ```
 
-   After adding the registers to the Addressing and Memory window you will need to add the descriptions, offset, and size to the registers. 
+   After adding the registers to the Addressing and Memory window (as shown in the following figure), you will need to add the descriptions, offset, and size to the registers. 
+
+    ![missing image](images/address-memory-win.png)
 
 4. For each register, click in the **Description** field of the register and enter the description from the table above. 
 5. Click in the **Address Offset** field and enter the offset. 

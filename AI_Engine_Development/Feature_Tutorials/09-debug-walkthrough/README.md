@@ -1,10 +1,15 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
-   </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
- </table>
+</table>
 
+# Debug Walkthrough Tutorial - From Simulation to Hardware
+
+***Version: Vitis 2021.2***
 
 <table style="width:100%">
     <tr>
@@ -16,10 +21,13 @@
   </tr>
 </table>
 
-# Introduction
+
+## Introduction
+
 System level debug of AI Engine designs that could use up to 400 tiles in the AI Engine domain, PL interfaces and kernels, and PS application can be done at several stages in the design flow. System level debug of AI Engine designs can be categorized as follows:
-1.	Functional debug that involves techniques to uncover bugs in the AI Engine kernel source code.
-2.	Performance level debug that involves debug techniques to uncover reasons for throughput drop or reasons for larger latencies when the AI Engine graph is run either in simulation or in hardware.
+
+1. Functional debug that involves techniques to uncover bugs in the AI Engine kernel source code.
+2. Performance level debug that involves debug techniques to uncover reasons for throughput drop or reasons for larger latencies when the AI Engine graph is run either in simulation or in hardware.
 
 Techniques to uncover both functional and performance level bugs are described in the following sections.  
 
@@ -30,8 +38,8 @@ Source level debug includes visibility into register contents view, variable val
 Before starting this tutorial run the following steps:
 
 1. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
-2.	Set up your ROOTFS to point to the xilinx-versal-common-v2021.1/rootfs.ext4.
-3.	Set up your IMAGE to point to xilinx-versal-common-v2021.1/Image.
+2. Set up your ROOTFS to point to the xilinx-versal-common-v2021.1/rootfs.ext4.
+3. Set up your IMAGE to point to xilinx-versal-common-v2021.1/Image.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you download the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.
@@ -39,7 +47,8 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 To target the VCK190 production board, modify PLATFORM variable in the Makefile(s) to:
 PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
 
-# Example Design: Beamformer
+## Example Design: Beamformer
+
 The architecture of the beamformer design consists of three kernels with slight differences which are scalable to various matrix sizes and throughput requirements. The design methodology is applicable to matrix multiplication including, but not limited to, 5G wireless communication.
 
 One feature of the beamforming architecture is that only a small number of kernels are required by various system configurations. Depending on the location of the kernels in the cascading chain, they are named first, middle, and last. All the kernels implement (8x8) times (8x12) matrix multiplication and only differ in the input and output interfaces.
@@ -53,13 +62,13 @@ This design has 64 tiles and 88 programmable logic input/output (PLIO) streams t
 The complete beamformer design is shown in the Vitis™ analyzer.
 ![VA_beamformer.png"](./images/VA_beamformer.png)
 
-# Methods
+## Methods
 
 There are several ways to debug a system design that include PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. For projects that are command-line based and would like to port to Vitis™ IDE, reference [Port command-line based projects to Vitis IDE](./Debug0_po.md) for detail steps.
 
-For ease of use, a Vitis IDE exported project, `beamformer.ide.zip` can be donwloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer.ide.zip. Then import this zip file into the Vitis IDE.
+For ease of use, a Vitis IDE exported project, `beamformer.ide.zip` can be donwloaded from [https://www.xilinx.com/bin/public/openDownload?filename=beamformer.ide.zip](https://www.xilinx.com/bin/public/openDownload?filename=beamformer.ide.zip). Then import this zip file into the Vitis IDE.
 
-Step 0. Download data files, `beamformer_data.zip` from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level as this tutorial's Makefile.
+Step 0. Download data files, `beamformer_data.zip` from [https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip](https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip). Unzip this file and save it at the same level as this tutorial's Makefile.
 
 Step 1. Source the Vitis IDE script or install the Vitis™ IDE.
 
@@ -80,7 +89,7 @@ Note: The imported project specifies a hardware platform path that must be adjus
 * <a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a>
 
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

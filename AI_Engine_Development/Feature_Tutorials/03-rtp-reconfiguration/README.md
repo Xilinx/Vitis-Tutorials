@@ -1,12 +1,15 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
+
+# Runtime Parameter Reconfiguration
+
+***Version: Vitis 2021.2***
 
 ## Introduction
 
@@ -21,7 +24,7 @@ Before starting this tutorial run the steps below:
 3. Set up your IMAGE to point to `xilinx-versal-common-v2021.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+> **Note**: This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.
 
 To target the VCK190 production board, modify the `PLATFORM` variable in the `Makefile`(s) to:
 
@@ -30,7 +33,9 @@ To target the VCK190 production board, modify the `PLATFORM` variable in the `Ma
   ```
 
 ## Objectives
+
 After completing this tutorial, you will be able to:
+
 * Specify a scalar or array parameter as part of a kernel function signature.
 * Connect a parameterized kernel into a graph, exposing the parameter for runtime updates.
 * Simulate a graph containing runtime parameters with AI Engine simulator (aiesimulator).
@@ -40,6 +45,7 @@ After completing this tutorial, you will be able to:
 * Verify the system by HW co-simulation and running in hardware.
 
 ## Steps
+
 **Step 1**: Integrate a kernel with a scalar runtime parameter into a graph. Demonstrate how to use OpenCL API to control PL kernels execution. See details in [Synchronous Update of Scalar RTP](./step1_sync_scalar.md).
 
 **Step 2**: Mark the runtime parameter for asynchronous updates and observe the effect this has on a simulation. See details in [Asynchronous Update of Scalar RTP](./step2_async_scalar.md).

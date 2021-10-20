@@ -1,4 +1,4 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal Platform Creation with Custom IP Tutorial</h1>
     </td>
@@ -32,17 +32,17 @@ In this step, you will add a DDS compiler IP into the platform design that you c
 
 2. Click the **Add IP** (plus icon) button and search for **dds**. Double click the DDS compiler IP to add it to the canvas.
 
-   ![](images/addip.png)
+   ![missing image](images/addip.png)
 
 3. Configure the DDS IP as follows. Be aware that some of the settings are not a hard requirement and are just for the purpose of this design. The only hard requirement is that there is only a single AXI4-Stream interface for this IP and therefore the phase output port is disabled.
 
     a. Configuration Tab Settings:
 
-    ![](images/dds_config.png)
+    ![missing image](images/dds_config.png)
 
     b. Implementation Tab Settings:
 
-    ![](images/dds_impl.png)
+    ![missing image](images/dds_impl.png)
 
     c. Detailed Implementation Tab Settings:
 
@@ -52,17 +52,17 @@ In this step, you will add a DDS compiler IP into the platform design that you c
 
     You can adjust the frequency value but keep the sample rate in mind. The clocking rate is 300 MHz. If there are too few samples within one cycle, the sine wave cannot be sampled correctly.
 
-    ![](images/dds_freq.png)   
+    ![missing image](images/dds_freq.png)   
 
 5. Exit the configuration page and connect the `aclk` port to the `clk_out3` signal of clocking wizard.
 
 6. Now the block design should look like the following:
 
-  ![](images/211_ipi_fully_connection_dds.png)
+  ![missing image](images/211_ipi_fully_connection_dds.png)
 
 7. Open up platform setup window and enable the M_AXIS_DATA port. Set the SP Tag to `AXIS` - this will be used by the Vitis™ linker to connect to the accelerator.
 
-  ![](images/dds_if.png)  
+  ![missing image](images/dds_if.png)  
 
 8. Regenerate the block design output products.
 
@@ -138,7 +138,7 @@ The `system_cfg` file is put under the `vadd_system_hw_link` project. You can ch
 
 Specify the config file in binary container settings:
 
-  ![](images/config_file.png)
+  ![missing image](images/config_file.png)
 
 6. Now modify the host code to read back the data from the DDR. Open up the `vadd.cpp` file under the `src` folder of the `vadd` project and modify the following items.
 
@@ -212,7 +212,7 @@ tfile copy -to-host /mnt/sd-mmcblk1p1/wave_out.txt YOUR_DIR/wave_out.txt
 
 Choose a tool to print out the data. A possible option is MATLAB®. If you do not have MATLAB installed, other third-party tools, such as Excel, also provide a similar feature. Use your preferred method to print out a sine wave.
 
-  ![](images/sinewave.png)
+  ![missing image](images/sinewave.png)
 
 # Support
 

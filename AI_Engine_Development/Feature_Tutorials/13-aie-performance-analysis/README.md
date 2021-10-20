@@ -1,18 +1,22 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 AI Engine Performance and Deadlock Analysis Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+</table>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
-# Introduction
+# AI Engine Performance and Deadlock Analysis Tutorial
 
-This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example. 
+***Version: Vitis 2021.2***
 
-# Before You Begin
+## Introduction
+
+This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example.
+
+## Before You Begin
 
 **IMPORTANT**: First, set up the Vitis™ unified software platform and install the VCK190 base platform. Follow the instructions in the *Vitis Software Platform Release Notes* (v2021.2).
 
@@ -23,7 +27,7 @@ Before you begin this tutorial, run the following steps:
 3. Set up your IMAGE to point to `xilinx-versal-common-v2021.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
-## Objectives
+### Objectives
 
 After completing this tutorial, you will understand how to:
 
@@ -32,7 +36,7 @@ After completing this tutorial, you will understand how to:
 - Identify a performance bottleneck.
 - Analyze a deadlock (hang issue) in the design.
 
-# Steps
+## Steps
 
 **Step 1**: Learn about the execution model of an AI Engine graph, including how memory with lock and FIFO works. Learn performance measurement methods. Identify performance bottlenecks and practise optimization. Go to [AI Engine Graph Execution and Measurement](./aie_execution_measurement.md).
 
@@ -40,11 +44,11 @@ After completing this tutorial, you will understand how to:
 
 **Tip:** In this tutorial, the designs are self-contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is recommended to start from the beginning and progress through to completion.
 
-# Revision History
+## Revision History
 
 - July 2021: Initial release.
 
-# Support
+## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 

@@ -1,21 +1,22 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
-## Asynchronous Update of Array RTP
+# Asynchronous Update of Array RTP
+
 This step demonstrates how runtime array parameters can be passed to kernels. You will change the filter coefficient at runtime and observe the result. The system to be implemented is as follows.
 
-![](./images/figure4.PNG)
+![missing image](./images/figure4.PNG)
 
 __Note:__ The default working directory in this step is "step3", unless specified explicitly otherwise.
 
-### Review Graph and RTP Code
+## Review Graph and RTP Code
+
 `aie/fir24_sym_param.h`gives a forward declaration of a 24-tap symmetric FIR filter:
 
 	void fir24_sym(input_window<cint16> * iwin, output_window<cint16> * owin,  const int32(&coeffs)[12]);
@@ -45,7 +46,8 @@ Then update the coefficients using `wide_filter` in the pong buffer for another 
 	
 In this snippet, the first graph update call initializes the coefficients parameter using the `narrow_filter` with 12 elements for the first 16 iterations. The `wait()` is blocking, and forces the execution to wait until the first 16 iterations finish. Subsequently, the next update call initializes the coefficients parameter using `wide_filter` with 12 elements for the next 16 iterations. The number of iterations are specified as a parameter to the `run()` API. Note that `update()` has a third parameter that speicfies the size of the array to be updated.
 
-### Run the AI Engine Compiler and AI Engine Simulator 
+## Run the AI Engine Compiler and AI Engine Simulator
+
 Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 	
 	make aie
@@ -66,11 +68,15 @@ If you have MATLAB or Octave, you can use the following script to visualize the 
 	narrow_spectrum = 20*log10(abs(fftshift(fft(cxdata(1:1024)))));
 	wide_spectrum = 20*log10(abs(fftshift(fft(cxdata(1025:2048)))));
 	plot(narrow_spectrum);
-![](./images/figure5.PNG)
-	plot(wide_spectrum);
-![](./images/figure6.PNG)	
 
-### Run Hardware Emulation and Hardware Flow
+![missing image](./images/figure5.PNG)
+
+	plot(wide_spectrum);
+
+![missing image](./images/figure6.PNG)
+
+## Run Hardware Emulation and Hardware Flow
+
 The `pl_kernels` directory contains a kernel that generates samples of random noise. The noise generator is implemented as a free-running programmable logic (PL) kernel, with samples consumed by the filter: 
 
 	extern "C" void random_noise(hls::stream<std::complex<short> > & out) {
@@ -115,7 +121,7 @@ The host code is self-checking. It will check the output data against the golden
 
 	TEST PASSED
 	
-### Conclusion
+## Conclusion
 In this step you learned about:
 
    * The concepts of asynchronous update of array RTP

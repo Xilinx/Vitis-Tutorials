@@ -1,13 +1,13 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
-   </td>
- </tr>
- <tr>
- <td align="center"><h2>AI Engine Source Code Debug on Hardware</h2>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
+
+# AI Engine Source Code Debug on Hardware
 
 The following showcase the features:
 
@@ -21,47 +21,59 @@ The following showcase the features:
 ## Source Code Debug on Hardware
 
 ### Step 1. Setup Connection to the Hardware Board
+
 #### Step 1.1. Target Connection Setup
+
 ##### Run hardware server from computer that connects to target board
+
 Launch hw_server from the computer that has JTAG connection to the VCK190 board.
-<img src="images/hw_ta_hw.png" width="600">
+
+![missing image](./images/hw_ta_hw.png)
 
 #### Step 1.2. Vitis IDE Setup
+
 Create debug target connection from Vitis™ IDE.
 
-<img src="images/hw_ta_con.png" width="450">
-<img src="images/hw_ta_con1.png" width="450">
+![missing image](./images/hw_ta_con.png)
+
+![missing image](./images/hw_ta_con1.png)
 
 #### Step 1.3. Target Connection Verification
-<img src="images/hw_ta_test.png" width="450">
-<img src="images/hw_ta_test1.png" width="450">
-<img src="images/hw_ta_test2.png" width="450">
+
+![missing image](./images/hw_ta_test.png)
+
+![missing image](./images/hw_ta_test1.png)
+
+![missing image](./images/hw_ta_test2.png)
 
 ### Step 2. Debug Project in Vitis IDE
+
 #### Step 2.1. Target Preparation
+
 * Make sure that sd_card is burn with expected binaries.
 * Plug-in sd_card into SD card slot and power up the board.
 * After board boots up, click on **Debug** to launch debugger.
 
-<img src="images/hw_ta_sd.png">
+![missing image](./images/hw_ta_sd.png)
 
 **Note:** The `sd_card.img` at `Hardware/package/sd_card.img` is the file to use for debug. `sd_card.img` at `Hardware/package_no_aie_debug` is for regular run on board without debug.
 
 #### Step 2.2. Launch debugger
+
 Launch PS application with xclbin (or PS application expected variables), so it is ready to be debugged.
-<img src="images/hw_ta_run2.png" width="450">
+![missing image](./images/hw_ta_run2.png)
 
 After PS application is running and waiting to be debugged, launch Vitis IDE debugger.
-<img src="images/hw_ta_run.png">
+![missing image](./images/hw_ta_run.png)
 
 Debugger launched, expected to see AI Engine cores, source code window that allows debug (step-into, step-through, step-return), variables view, breakpoint view, register view. Application is ready to be debugged.
-<img src="images/hw_ta_run1.png">
+![missing image](./images/hw_ta_run1.png)
 
 From Vitis IDE, the application is being debugged during run time.
-<img src="images/hw_ta_run3.png">
+![missing image](./images/hw_ta_run3.png)
 
 From Vitis IDE, click on **resume** for all AI Engine cores, and final “TEST PASSED” is displayed.
-<img src="images/hw_ta_run4.png" width="450">
+![missing image](./images/hw_ta_run4.png)
 
 <!--
 ## Command-line project debug with Vitis IDE
@@ -112,10 +124,11 @@ vitis -debug -h
 ```
 
 ### Step 3. Expected result
-<img src="images/aie_cl_run.png">
+![missing image](./images/aie_cl_run.png)
 -->
 
 ## Limitations of Source Code Debug on Hardware
+
 1. There are maximum four breakpoints available for each tile. One of these four breakpoints is assigned to first line of main() by default and can be cleared and then assigned to other lines during debug.
 2. Due to compiler, `-O0` option is not supported, non-sequential execution when stepping through source code is expected.
 3. If an individual kernel is highlighted, select resume button to continue execution until next breakpoint or blocked to wait for I/O. If the beamformer design is highlighted, select resume button to resume all kernels execution until meet each kernel's breakpoint or blocked  waiting for each kernel's I/O operation.

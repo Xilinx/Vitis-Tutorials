@@ -1,20 +1,22 @@
-﻿<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Examples</h1>
-   </td>
- </tr>
- <tr>
- <td align="center"><h1>Using Floating-Point in the AI Engine</h1>
- </td>
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
-# Introduction
+# Using Floating-Point in the AI Engine
+
+***Version: Vitis 2021.2***
+
+## Introduction
 
 The purpose of this set of examples is to understand floating-point vector computations within the AI Engine.
 
 
-# Before You Begin
+## Before You Begin
 
 Before starting to explore these examples, refer to the following documents:
 
@@ -32,24 +34,24 @@ Before starting to explore these examples, refer to the following documents:
 
 
 
-# AI Engine Architecture Details
+## AI Engine Architecture Details
 
 Versal adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
 Intelligent Engines are SIMD VLIW AI Engines for adaptive inference and advanced signal processing compute, and DSP Engines for fixed point, floating point, and complex MAC operations.
 
-![Versal](./images/Versal.png)
+![missing image](./images/Versal.png")
 
 The Intelligent Engine comes as an array of AI Engines connected together using AXI-Stream interconnect blocks:
 
-
 **AI Engine array**
 
-![AIEngineArray](./images/AIEngineArray.png)
+![missing image](./images/AIEngineArray.png")
 
 As seen in the image above, each AI Engine is connected to four memory modules on the four cardinal directions.
 The AI Engine and memory modules are both connected to the AXI-Stream interconnect.
 
 The AI Engine is  a VLIW (7-way) processor that contains:
+
 - Instruction Fetch and Decode Unit
 - A Scalar Unit
 - A Vector Unit (SIMD)
@@ -58,27 +60,28 @@ The AI Engine is  a VLIW (7-way) processor that contains:
 
 **AI Engine Module**
 
-![AIEngine](./images/AIEngine.png)
+![missing image](./images/AIEngine.png")
 
 Have a look at the fixed-point unit pipeline, as well as floating-point unit pipeline within the vector unit.
 
-## Fixed-Point Pipeline
+### Fixed-Point Pipeline
 
-![FixedPointPipeline](./images/FixedPointPipeline.png)
+![missing image](./images/FixedPointPipeline.jpg")
 
 In this pipeline one can see the data selection and shuffling units; PMXL, PMXR, and PMC. The pre-add (PRA) is just before the multiply block and then two lane reduction blocks (PSA, PSB) allows to perform up to 128 multiplies and get an output on 16 lanes down to two lanes. The accumulator block is fed either by its own output (AM) or by the upshift output. The feedback on the ACC block is only one clock cycle.
 
-## Floating-point Pipeline
+### Floating-point Pipeline
 
-![FloatingPointPipeline](./images/FloatingPointPipeline.png)
+![missing image](./images/FloatingPointPipeline.jpg")
 
 In this pipeline one can see that the selection and shuffling units (PMXL, PMC) are the same as in the fixed-point unit. Unlike the fixed-point pipeline there is no lane reduction unit, so the lanes that you have at the input will also be there at the output. Another difference is that the post-accumulator is on two clock cycles. If the goal is to reuse the same accumulator over and over, only one `fpmac` per two clock cycles can be issued.
 
-# Floating-point intrinsics
+## Floating-point intrinsics
 
 There is a limited set of intrinsics with which a multitude of operations can be performed. All of them return either a `v8float` or  `v4cfloat`, 256-bit vectors.
 
 The basic addition, subtraction, and negation functions are as follows:
+
 - fpadd
 - fpadd_abs
 - fpsub
@@ -88,22 +91,26 @@ The basic addition, subtraction, and negation functions are as follows:
 - fpabs
 
 The simple multiplier function is available with the following options:
+
 - fpmul
 - fpabs_mul
 - fpneg_mul
 - fpneg_abs_mul
 
 The multiplication accumulation/subtraction function has the following options:
+
 - fpmac
 - fpmac_abs
 - fpmsc
 - fpmsc_abs
 
 On top of these various intrinsics you have a fully configurable version multiplier and multiply-accumulate:
+
 - fpmul_conf
 - fpmac_conf
 
-### Start, offset
+#### Start, offset
+
 In all the subsequent intrinsics, the input vector(s) go through a data shuffling function that is controlled by two parameters:
 
 - Start
@@ -142,9 +149,9 @@ All values in hexadecimal:
 | 7   | | 2  | 2  | 4   | | 7 | 7 | E |
 
 
-### fpneg, fpabs, fpadd, fpsub
+#### fpneg, fpabs, fpadd, fpsub
 
-#### fpneg
+##### fpneg
 
 Output is the opposite of its input. Input can be either `float` or `cfloat` forming a 512-bit or a 1024-bit buffer (`v32float, v16float, v16cfloat, v8cfloat`). The output is a 256-bit buffer as all the floating-point operators (`v8float, v4cfloat`).
 
@@ -155,17 +162,17 @@ for (i = 0 ; i < 8 ; i++)
   ret[i] = - xbuf[xstart + xoffs[i]]
 ```
 
-#### fpabs
+##### fpabs
 
 Output is the absolute value of the input.
 It takes only real floating-point input vectors.
 
-#### fpneg_abs
+##### fpneg_abs
 
 Output is the negation of the absolute value of the input.
 It takes only real floating-point input vectors.
 
-#### fpadd, fpsub
+##### fpadd, fpsub
 
 Output is the sum (the subtraction) of the input buffers.
 
@@ -189,7 +196,7 @@ Allowed datatypes:
 - **acc**: `v8float, v4cfloat`
 - **xbuf**: `v32float, v16float, v16cfloat, v8cfloat`
 
-#### fpadd_abs, fpsub_abs
+##### fpadd_abs, fpsub_abs
 
 Adds or subtracts the absolute value of the second buffer to the first one.
 
@@ -203,7 +210,7 @@ for (i = 0 ; i < 8 ; i++)
 
 
 
-### fpmul
+#### fpmul
 
 The simple floating-point multiplier comes in many different flavors mixing or not `float` and `cfloat` vector data types. When two `cfloat` are involved, the intrinsic results in two microcode instructions that must be scheduled. The first buffer can be either 512 or 1024-bit long (`v32float, v16float, v16cfloat, v8cfloat`), the second buffer is always 256-bit long (`v8float, v4cfloat`). Any combination is allowed.
 
@@ -227,7 +234,7 @@ for (i = 0 ; i < 8 ; i++)
 ```
 
 
-### fpabs_mul
+#### fpabs_mul
 
 Only for real arguments. Signature is identical to `fpmul`:
 
@@ -239,7 +246,7 @@ _v8float_ **fpabs_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **
    ret[i] =  abs(xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]])
  ```
 
- ### fpneg_mul
+ #### fpneg_mul
 
  Signature is identical to `fpmul`:
 
@@ -251,7 +258,7 @@ _v8float_ **fpabs_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **
     ret[i] =  - xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]]
   ```
 
-  ### fpneg_abs_mul
+  #### fpneg_abs_mul
 
   Only for real arguments. Signature is identical to `fpmul`:
 
@@ -264,7 +271,7 @@ _v8float_ **fpabs_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **
    ```
 
 
-### fpmac, fpmsc, fpmac_abs, fpmsc_abs
+#### fpmac, fpmsc, fpmac_abs, fpmsc_abs
 
 For all these functions there is one more argument compared to the `fpmul` function. This is the previous value of the accumulator.
 
@@ -277,7 +284,7 @@ _v8float_ **fpmac**(_v8float_ **acc**, _v32float_ **xbuf**, _int_ **xstart**, _u
 
  The two "abs" variants are available only for real arguments.
 
-### fpmul_conf, fpmac_conf
+#### fpmul_conf, fpmac_conf
 
 These functions are fully configurable `fpmul` and `fpmac`  functions. The output can be considered to always have eight values because each part of the complex float is treated differently A `v4cfloat` will have the loop interating over real0 - complex0 - real1 - complex1 ... This capability is introduced to allow flexibility and implement operations on conjugates.
 
@@ -302,13 +309,14 @@ Returns the multiplication result.
 | **cmp**   |  **Optional** 8 x 1 LSB bits: When using fpcmp_ge or fpcmp_lt in "cmpmode", it sets a bit if accumulator was chosen (per lane). |
 
 
-# Floating-Point Examples
+## Floating-Point Examples
 
 The purpose of this set of examples is to show how to use floating-point computations within the AI Engines in different schemes:
+
 - FIR filter
 - Matrix Multiply
 
-## FIR Filter
+### FIR Filter
 
 As there is no post-add lane reduction hardware in the floating-point pipeline of the AI Engine, all outputs will always be on eight lanes (`float`) or four lanes (`cfloat`). This means that we can compute eight (four) lanes in parallel, each time with a single coefficient, using `fpmul` and then `fpmac` for all the coefficients, one by one.
 
@@ -323,17 +331,19 @@ The floating-point accumulator has a latency of two clock cycles, so two `fpmac`
 The last stage is opening `vitis_analyzer` that will allow you to visualize the graph of the design and the simulation process timeline.
 
 In this design you learned:
+
 - How to use real floating-point data and coefficients in FIR filters.
 - How to handle complex floating-point data and complex floating-points coefficients in FIR filters.
 - How to organize the compute sequence.
 - How to use: `fpmul`, `fpmac`, and `fpadd` in the real and complex case.
 
 
-### Real Floating-Point Filter
+#### Real Floating-Point Filter
 
 In the example, the filter has 16 coefficients which do not fit within a 256-bit register. The register must be updated in the middle of the computation.
 
 For data storage a small 512-bit register is used. It is decomposed in two 256-bit parts: W0, W1.
+
 - First iteration
   - Part W0 is loaded with first 8 samples  (0...7)
   - Part W1 with the next 8 samples (8...15)
@@ -343,13 +353,13 @@ For data storage a small 512-bit register is used. It is decomposed in two 256-b
   - Part W1 : 16...23
   - Part W0 : 24...31
 
-### Complex Floating-Point Filter
+#### Complex Floating-Point Filter
 
 `cfloat x cfloat` multiplications take two cycles to perform due to the abscence of the post add. These two parts can be interleaved with the two cycle latency of the accumulator.
 
 There are still 16 coefficients but now they are complex, hence double the size. The coefficients have to be updated four times for a complete iteration. The data transfer is also slightly more complex.
 
-## Matrix Multiply
+### Matrix Multiply
 
 In this example, a matrix multiply (A*B) example is shown with the simple fpmul and fpmac intrinsics in the real and complex case. In the complex case there are also two other examples using the fpmul_conf and fpmac_conf intrinsics to compute A*B and A*conj(B).
 
@@ -366,12 +376,13 @@ All the parameter settings for the `fpmul/mac_conf` intrinsics are explained in 
 The last stage is opening `vitis_analyzer` that will allow you to visualize the graph of the design and the simulation process timeline.
 
 In this design you learned:
+
 - How to organize matrix multiply compute sequence when using real or complex floating-point numbers.
 - How to handle complex floating-point data and complex floating-points coefficients in FIR filters.
 - How to use `fpmul_conf` and `fpmac_conf` intrinsics.
 
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 

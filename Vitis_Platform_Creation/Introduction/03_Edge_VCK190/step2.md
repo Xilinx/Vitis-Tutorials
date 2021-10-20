@@ -1,4 +1,4 @@
-<!-- 
+﻿<!-- 
 # Copyright 2021 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -98,7 +98,7 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    - Exit
    - Save
 
-   ![](./images/step2/petalinux_package_management.png)
+   ![missing image](./images/step2/petalinux_package_management.png)
 
 4. Use EXT4 as rootfs format for SD card boot (Recommended)
 
@@ -107,7 +107,7 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    - Run `petalinux-config`
    - Go to **Image Packaging Configuration**, select **Root File System Type** as **EXT4**.
 
-   ![](./images/step2/petalinux_root_filesystem_type.png)
+   ![missing image](./images/step2/petalinux_root_filesystem_type.png)
 
 
 ### Customize Device-tree   

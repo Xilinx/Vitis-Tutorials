@@ -35,14 +35,14 @@ In this step, we will create the hardware design for the ZCU104 Vitis acceleatio
    - In Project Name dialog set Project name to **zcu104_custom_platform**. Click **Next**.
    - Enable **Project is an extensible Vitis platform**. Click **Next**.
 
-   ![](images/vivado_project_type.png)
+   ![missing image](images/vivado_project_type.png)
 
    - Select **Boards** tab and then select **Zynq UltraScale+ ZCU104 Evaluation Board**. Click **Next**.
    - Review project summary and click **Finish**
 
    Note: If you need to change an existing Vivado project to an extensible platform project, you can go to **Settings** in **Flow Navigator** in an opened Vivado design, go to **General** and enable **project is an extensible Vitis platform**
 
-   ![](images/vitis_settings_extensible.png)
+   ![missing image](images/vitis_settings_extensible.png)
 
 3. Create a block design.
 

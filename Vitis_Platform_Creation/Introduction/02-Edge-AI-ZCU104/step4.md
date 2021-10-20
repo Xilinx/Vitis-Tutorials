@@ -220,7 +220,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
      - Git URL: `https://github.com/Xilinx/Vitis-AI.git`
      - Branch: The branch you'd like to verify with your platform. Use `master` for the latest version.
 
-   ![](./images/vitis_repo_add_vai.png)
+   ![missing image](./images/vitis_repo_add_vai.png)
 
 
 2. Download the Vitis-AI library
@@ -251,7 +251,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to sysroot installation path in previous step, e.g. `~/petalinux_sdk_2021.1/sysroots/cortexa72-cortexa53-xilinx-linux/`. 
    - Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click **next**.
    - Select **dsa -> DPU Kernel (RTL Kernel)** and click **Finish** to generate the application.
-   ![](images/vitis_add_dpu.png)
+   ![missing image](images/vitis_add_dpu.png)
 
 5. Update Build Target
 
@@ -284,7 +284,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    - Double click **dpu_trd_system [System]**
    - Expand the left tree panel and find dpu_trd_system -> dpu_trd_system_hw_link -> Hardware -> dpu
 
-   ![](./images/hw_link_dpu.png)
+   ![missing image](./images/hw_link_dpu.png)
 
    - Click `...` button on the line of V++ Configuration Settings, it shows the configuration like this:
 

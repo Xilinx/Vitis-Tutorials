@@ -9,6 +9,8 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 1a
 
+***Version: Vitis 2021.1***
+
 ## Preliminaries
 
 We use the [transposed direct form II](https://www.dsprelated.com/freebooks/filters/Transposed_Direct_Forms.html) (TDF2) of an IIR filter for [numerical robustness](https://www.dsprelated.com/freebooks/filters/Numerical_Robustness_TDF_II.html) and focus on implementing a [biquad](https://en.wikipedia.org/wiki/Digital_biquad_filter) section to allow cascading multiple sections to form higher order IIR filters.

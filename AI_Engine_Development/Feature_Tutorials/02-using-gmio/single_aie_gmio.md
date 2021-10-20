@@ -1,19 +1,26 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine GMIO Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
-## AI Engine GMIO Programming Model
+# AI Engine GMIO Programming Model
+
+***Version: Vitis 2021.2***
+
 This example introduces the AI Engine GMIO programming model. It includes three steps:
 
-* [Step 1 - Synchronous GMIO Transfer](#Step-1---Synchronous-GMIO-Transfer)
-* [Step 2 - Asynchronous GMIO transfer for Input and Synchronous GMIO transfer for Output](#Step-2---Asynchronous-GMIO-transfer-for-Input-and-Synchronous-GMIO-transfer-for-Output)
-* [Step 3 - Asynchronous GMIO Transfer and Hardware flow](#Step-3---Asynchronous-GMIO-Transfer-and-Hardware-flow)
+- [AI Engine GMIO Programming Model](#ai-engine-gmio-programming-model)
+		- [Step 1 - Synchronous GMIO Transfer](#step-1---synchronous-gmio-transfer)
+			- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator)
+		- [Step 2 - Asynchronous GMIO Transfer for Input and Synchronous GMIO Transfer for Output](#step-2---asynchronous-gmio-transfer-for-input-and-synchronous-gmio-transfer-for-output)
+			- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator-1)
+		- [Step 3 - Asynchronous GMIO Transfer and Hardware Flow](#step-3---asynchronous-gmio-transfer-and-hardware-flow)
+			- [Run AI Engine simulator and hardware flow](#run-ai-engine-simulator-and-hardware-flow)
+		- [Conclusion](#conclusion)
 
 The AI Engine simulator event trace is used to see how performance can be improved step by step. The last step introduces code to make GMIO work in hardware.
 
@@ -102,6 +109,7 @@ When PS has completed processing, the memory space allocated by `GMIO::malloc` c
     GMIO::free(doutArray);
 
 #### Run AI Engine compiler and AI Engine simulator
+
 Run the following make command to compile the design graph `libadf.a` and launch the AI Engine simulator:
 
 	make aiesim
@@ -117,6 +125,7 @@ Click the `Trace` tab in the Vitis™ analyzer. The events are shown as follows:
 The red arrow denotes the dependency between data transfer and kernel execution. It can be seen that the data transfer and kernel execution are performed in a sequential manner. The time required for kernel execution is much longer than that for data transfer. Next, let us overlay data transfer and kernel execution with a vectorized kernel.
 
 ### Step 2 - Asynchronous GMIO Transfer for Input and Synchronous GMIO Transfer for Output
+
 In the previous step, it was identified that the sequential manner of data transfer and kernel execution is the main bottleneck of the design performance. In this step, the AI Engine kernel is replaced with a vectorized version to reduce kernel execution time. Change the working directory to `single_aie_gmio/step2`. The vectorized kernel code is in `aie/weighted_sum.cc`.
 
 Besides the kernel update, we try to do asynchronous GMIO transfers for inputs, but leave synchronous GMIO transfers for outputs in this step. The purpose of mixing synchronous and asynchronous GMIO transfers is to overlap data transfer and kernel execution. Thus, the performance is further improved.
@@ -134,6 +143,7 @@ Examine the code in main function `aie/graph.cpp`. This time `ITERATION` is four
 Although a non-blocking GMIO API is used to transfer the input data, there is no need for explicit synchronization between data transfer and kernel execution. The synchronization between input data transfer and kernel execution is guaranteed by the window buffer, meaning that every iteration of kernel execution will wait for the block of input data to be ready. The output data is synchronized using a blocking GMIO API. After the blocking API returns, the data is guaranteed to be available in DDR memory and the post-processing sequence can be safely started.
 
 #### Run AI Engine compiler and AI Engine simulator
+
 Run the following make command to compile the design graph `libadf.a` and launch the AI Engine simulator:
 
 	make aiesim
@@ -213,15 +223,16 @@ The host code is self-checking. It will check the output data against the golden
 	PASS!
 
 ### Conclusion
+
 In this example, you learned about the following core concepts:
 
-  * Programming model for blocking and non-blocking GMIO transactions
-  * Improve design performance by using guidance from the AI Engine simulator event trace
-  * Hardware flow for AI Engine GMIO
+* Programming model for blocking and non-blocking GMIO transactions
+* Improve design performance by using guidance from the AI Engine simulator event trace
+* Hardware flow for AI Engine GMIO
 
 Next, review [AIE GMIO Performance Profile](./perf_profile_aie_gmio.md).
 
-<p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
+<br></br>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 
@@ -246,4 +257,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-<p align="center"><sup>XD007</sup></p>
+
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD007</sup></br></p>
