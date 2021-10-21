@@ -10,7 +10,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-#include <adf.h>
+#include <aie_api/aie.hpp>
+#include <aie_api/aie_adf.hpp>
 const uint32 pktType=0;
 
 void aie_core2(input_pktstream *in,output_pktstream *out){

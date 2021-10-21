@@ -13,6 +13,7 @@ limitations under the License.
 #include <adf.h>
 #include "kernels.h"
 
+using namespace adf;
 class mygraph: public adf::graph {
 private:
   adf:: kernel core[4];
@@ -20,8 +21,8 @@ private:
   adf:: pktsplit<4> sp;
   adf:: pktmerge<4> mg;
 public:
-  adf::port<input>  in;
-  adf::port<output>  out;
+  adf::input_plio  in;
+  adf::output_plio  out;
   mygraph() {
     core[0] = adf::kernel::create(aie_core1);
     core[1] = adf::kernel::create(aie_core2);
@@ -32,6 +33,9 @@ public:
     adf::source(core[2]) = "aie_core3.cpp";
     adf::source(core[3]) = "aie_core4.cpp";
 
+	in=input_plio::create("Datain0", plio_32_bits,  "data/input.txt");
+	out=output_plio::create("Dataout0", plio_32_bits,  "data/output.txt");
+
     sp = adf::pktsplit<4>::create();
     mg = adf::pktmerge<4>::create();
     for(int i=0;i<4;i++){
@@ -40,7 +44,7 @@ public:
         adf::connect<adf::pktstream > (core[i].out[0], mg.in[i]);
     }
 
-    adf::connect<adf::pktstream> (in, sp.in[0]);
-    adf::connect<adf::pktstream> (mg.out[0], out);
+    adf::connect<adf::pktstream> (in.out[0], sp.in[0]);
+    adf::connect<adf::pktstream> (mg.out[0], out.in[0]);
   }
 };

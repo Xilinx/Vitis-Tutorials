@@ -12,8 +12,8 @@ limitations under the License.
 **********/
 #ifndef __KERNELS_H__
 #define __KERNELS_H__
-void aie_core1(input_window_int32 *in,output_window_int32 *out);
-void aie_core2(input_window_int32 *in,output_window_int32 *out);
-void aie_core3(input_window_float *in,output_window_float *out);
-void aie_core4(input_window_cint16 *in,output_window_cint16 *out);
+void aie_core1(input_window<int32> *in,output_window<int32> *out);
+void aie_core2(input_window<int32> *in,output_window<int32> *out);
+void aie_core3(input_window<float> *in,output_window<float> *out);
+void aie_core4(input_window<cint16> *in,output_window<cint16> *out);
 #endif
