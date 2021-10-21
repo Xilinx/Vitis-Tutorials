@@ -10,8 +10,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-#include <adf.h>
-void aie_core4(input_window_int32 *in,output_window_int32 *out){
+#include <aie_api/aie.hpp>
+#include <aie_api/aie_adf.hpp>
+void aie_core4(input_window<int32> *in,output_window<int32> *out){
 	for(int i=0;i<8;i++){
 		window_writeincr(out,window_readincr(in)+4);
 	}

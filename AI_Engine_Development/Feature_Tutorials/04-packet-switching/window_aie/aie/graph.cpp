@@ -14,14 +14,7 @@ limitations under the License.
 
 using namespace adf;
 
-PLIO *din = new PLIO("Datain0", plio_32_bits,  "data/input.txt");
-PLIO *dout = new PLIO("Dataout0", plio_32_bits,  "data/output.txt");
-adf::simulation::platform<1,1> platform(din,dout);
-
 mygraph gr;
-
-adf::connect<> net0(platform.src[0], gr.in);
-adf::connect<> net1(gr.out, platform.sink[0]);
 
 #if defined(__AIESIM__) || defined(__ADF_FRONTEND__)
 int main(int argc, char ** argv) {

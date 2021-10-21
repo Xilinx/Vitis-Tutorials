@@ -10,8 +10,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-#include <adf.h>
-void aie_core3(input_window_float *in,output_window_float *out){
+#include <aie_api/aie.hpp>
+#include <aie_api/aie_adf.hpp>
+void aie_core3(input_window<float> *in,output_window<float> *out){
 	for(int i=0;i<8;i++){
 		window_writeincr(out,window_readincr(in)+3.0f);
 	}
