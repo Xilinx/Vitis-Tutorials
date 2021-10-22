@@ -73,7 +73,8 @@ int run(int argc, char* argv[]){
 	}
 
 	gr.run(iterations);
-	gr.wait();
+	gr.end();
+	s2mm_run.wait();
 	// Wait graph for some cycles
 	long long cycle_count = event::read_profiling(handle);
 	std::cout<<"cycle count:"<<cycle_count<<std::endl;
