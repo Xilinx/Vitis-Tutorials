@@ -16,13 +16,9 @@ limitations under the License.
 #include <fstream>
 
 using namespace adf;
-GMIO gmioIn("gmioIn",64,1000);
-GMIO gmioOut("gmioOut",64,1000);
-adf::simulation::platform<1,1> platform(&gmioIn,&gmioOut);
 
 mygraph gr;
-adf::connect<> net0(gr.out, platform.sink[0]);
-adf::connect<> net1(platform.src[0], gr.din);
+
 void ref_func(int32* din,int32 c[8],int32* dout,int size){
 	static int32 d[8]={0,0,0,0,0,0,0,0};
 	for(int i=0;i<size;i++){
@@ -51,12 +47,12 @@ int main(int argc, char ** argv) {
     int32 coeff[8]={1,2,3,4,5,6,7,8};
 
     for(int j=0;j<ITERATION*1024/4;j++){
-	dinArray[j]=j;
+		dinArray[j]=j;
     }
 
-    gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks input data at a time
+    gr.gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks input data at a time
     gr.run(ITERATION);
-    gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks output data at a time
+    gr.gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks output data at a time
 
     ref_func(dinArray,coeff,doutRef,ITERATION*1024/4);
     for(int j=0;j<ITERATION*1024/4;j++){

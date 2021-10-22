@@ -23,58 +23,64 @@ Change the working directory to `perf_profile_aie_gmio`. Take a look at the grap
 
     static const int col[32]={6,13,14,45,18,42,4,30,48,49,9,16,29,39,40,31,2,3,46,0,43,27,41,26,11,17,47,1,19,10,34,7};
 
-    class mygraph: public adf::graph
-    {
-    private:
-      adf::kernel k[32];
-
-    public:
-      adf::port<adf::direction::out> dout[32];
-      adf::port<adf::direction::in> din[32];
-
-      mygraph()
-      {
-         for(int i=0;i<32;i++){
-          k[i] = adf::kernel::create(vec_incr);
-          adf::connect<adf::window<1024>>(din[i], k[i].in[0]);
-          adf::connect<adf::window<1032>>(k[i].out[0], dout[i]);
-          adf::source(k[i]) = "vec_incr.cc";
-          adf::runtime<adf::ratio>(k[i])= 1;
-          adf::location<adf::kernel>(k[i])=adf::tile(col[i],0);
-         }
-      };
-    };
+	class mygraph: public adf::graph
+	{
+	private:
+	  adf::kernel k[32];
+	
+	public:
+	  adf::input_gmio gmioIn[32];
+	  adf::output_gmio gmioOut[32];
+	
+	  mygraph()
+	  {
+		for(int i=0;i<32;i++){
+			gmioIn[i]=adf::input_gmio::create("gmioIn"+std::to_string(i),/*size_t burst_length*/256,/*size_t bandwidth*/100);
+			gmioOut[i]=adf::output_gmio::create("gmioOut"+std::to_string(i),/*size_t burst_length*/256,/*size_t bandwidth*/100);
+			k[i] = adf::kernel::create(vec_incr);
+			adf::connect<adf::window<1024>>(gmioIn[i].out[0], k[i].in[0]);	
+			adf::connect<adf::window<1032>>(k[i].out[0], gmioOut[i].in[0]);
+			adf::source(k[i]) = "vec_incr.cc";
+			adf::runtime<adf::ratio>(k[i])= 1;
+			adf::location<adf::kernel>(k[i])=adf::tile(col[i],0);
+		}
+	  };
+	};
 
 In the code above, there are location constraints `adf::location` for each kernel. This is to save time for `aiecompiler`. Note that each kernel has an input window size of 1024 bytes and output window size of 1032 bytes.
 
 Next, examine the kernel code `aie/vec_incr.cc`. It adds each int32 input by one and additionally outputs the cycle counter of the AI Engine tile. Due to the later introduction, this counter can be used to calculate the system throughput.
 
-    void vec_incr(input_window_int32* data,output_window_int32* out){
-      alignas(32) int32 const1[16]={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-      v16int32 vec1=*(v16int32*)const1;
-      for(int i=0;i<16;i++)
-      chess_prepare_for_pipelining
-      chess_loop_range(4,)
-      {
-        v16int32 vdata=window_readincr_v16(data);
-        v16int32 vresult=add16(vdata,vec1);
-        window_writeincr(out,vresult);
-      }
-      unsigned long long time=get_cycles(); //cycle counter of the AI Engine tile
-      window_writeincr(out,time);
-    }
+	#include <aie_api/aie.hpp>
+	#include <aie_api/aie_adf.hpp>
+	#include <aie_api/utils.hpp>
+	
+	void vec_incr(input_window<int32>* data,output_window<int32>* out){
+		aie::vector<int32,16> vec1=aie::broadcast<int32>(1);
+		for(int i=0;i<16;i++)
+		chess_prepare_for_pipelining
+		chess_loop_range(4,)
+		{
+			aie::vector<int32,16> vdata=window_readincr_v<16>(data);
+			aie::vector<int32,16> vresult=aie::add(vdata,vec1);
+			window_writeincr(out,vresult);
+		}
+		aie::tile tile=aie::tile::current();
+		unsigned long long time=tile.cycles();//cycle counter of the AI Engine tile
+		window_writeincr(out,time);
+	}
 
 Next, examine the host code `aie/graph.cpp`. The concepts introduced in [AIE GMIO Programming Model](./single_aie_gmio.md) apply here. We will focus on the new concepts and how to do performance profiling. Some constants defined in the code are as follows:
 
-    #if !defined(__AIESIM__) && !defined(__X86SIM__)
-    const int ITERATION=4096;
+    #if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
+    const int ITERATION=512;
     #else
     const int ITERATION=4;
     #endif
     const int BLOCK_SIZE_in_Bytes=1024*ITERATION;
     const int BLOCK_SIZE_out_Bytes=1032*ITERATION;
 
-If it is for hardware flow, `ITERATION` is 4096 otherwise, it is four. This is to make sure that the AI Engine simulator can finish in a short amount of time.
+If it is for hardware flow, `ITERATION` is 512 otherwise, it is 4. This is to make sure that the AI Engine simulator can finish in a short amount of time.
 
 In the main function, the PS code is going to profile `num` GMIO inputs and outputs, and `num` is from 1, 2, 4, to 32. Non-blocking GMIO APIs (`GMIO::gm2aie_nb` and `GMIO::aie2gm_nb`) are used for GMIO transactions, and `GMIO::wait` is used for output data synchronization. Only when the input and output data are transferred for the kernel, can the kernel be finished. This is because the graph is started for all the AI Engine kernels, but only some of the kernels are profiled. After the code for profiling, the remaining kernels are flushed by transferring data to and from the remaining AI Engine kernels.
 
@@ -89,11 +95,11 @@ In the main function, the PS code is going to profile `num` GMIO inputs and outp
 
        //Profile starts here
        for(int i=0;i<num;i++){
-        gmioIn[i].gm2aie_nb(dinArray[i], BLOCK_SIZE_in_Bytes);
-        gmioOut[i].aie2gm_nb(doutArray[i], BLOCK_SIZE_out_Bytes);
+       	gr.gmioIn[i].gm2aie_nb(dinArray[i], BLOCK_SIZE_in_Bytes);
+        gr.gmioOut[i].aie2gm_nb(doutArray[i], BLOCK_SIZE_out_Bytes);
        }
        for(int i=0;i<num;i++){
-        gmioOut[i].wait();
+        gr.gmioOut[i].wait();
        }
        //Profile ends here
 
@@ -110,8 +116,8 @@ In the main function, the PS code is going to profile `num` GMIO inputs and outp
 
       //flush remain stalling kernels
       for(int i=num;i<32;i++){
-       gmioIn[i].gm2aie_nb(dinArray[i], BLOCK_SIZE_in_Bytes);
-       gmioOut[i].aie2gm_nb(doutArray[i], BLOCK_SIZE_out_Bytes);
+       gr.gmioIn[i].gm2aie_nb(dinArray[i], BLOCK_SIZE_in_Bytes);
+       gr.gmioOut[i].aie2gm_nb(doutArray[i], BLOCK_SIZE_out_Bytes);
       }
       gr.wait();
     }
@@ -121,58 +127,17 @@ In this example, we will introduce some methods for profiling the design. The co
 
     //Profile starts here
     for(int i=0;i<num;i++){
-      gmioIn[i].gm2aie_nb(dinArray[i], BLOCK_SIZE_in_Bytes);
-      gmioOut[i].aie2gm_nb(doutArray[i], BLOCK_SIZE_out_Bytes);
+      gr.gmioIn[i].gm2aie_nb(dinArray[i], BLOCK_SIZE_in_Bytes);
+      gr.gmioOut[i].aie2gm_nb(doutArray[i], BLOCK_SIZE_out_Bytes);
     }
     for(int i=0;i<num;i++){
-      gmioOut[i].wait();
+      gr.gmioOut[i].wait();
     }
     //Profile ends here
 
 __Note:__ This tutorial assumes that AI Engine runs at 1 GHz.
 
-1. Profile by XRT `xrtGraphTimeStamp` API
-
-XRT provides `xrtGraphTimeStamp` API to get the timestamp of a graph. The unit of timestamp is AI Engine Cycle. An XRT API is required to open graph to get the graph handle. The code to start profiling is as follows:
-
-    xuid_t uuid;
-    xrtDeviceGetXclbinUUID(dhdl, uuid);
-    auto ghdl=xrtGraphOpen(dhdl,uuid,"gr");
-    long long t_stamp=xrtGraphTimeStamp(ghdl);
-
-The code to end profiling and calculate performance is as follows:
-
-    t_stamp=xrtGraphTimeStamp(ghdl)-t_stamp;
-    std::cout<<"Throughput (by graph timstamp) bandwidth(GMIO in num="<<num<<",out num="<<num<<"):\t"<<(double)(BLOCK_SIZE_in_Bytes+BLOCK_SIZE_out_Bytes)*num/(double)t_stamp*1000<<"M bytes/s"<<std::endl;
-
-The code is guarded by macro `__TIME_STAMP__`. To use this method of profiling, define `__TIME_STAMP__` for g++ cross compiler in `sw/Makefile`:
-
-    CXXFLAGS += -std=c++14 -D__TIME_STAMP__ -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
-
-To run it in hardware, use the following make command to build the hardware image:
-
-    make package TARGET=hw
-
-After the package is done, run the following commands in the Linux prompt after booting Linux from an SD card:
-
-    export XILINX_XRT=/usr
-    cd /mnt/sd-mmcblk0p1
-    ./host.exe a.xclbin
-
-The output is as follows:
-
-    GMIO::malloc completed
-    Throughput (by graph timstamp) bandwidth(GMIO in num=1,out num=1):5331.96M bytes/s
-    Throughput (by graph timstamp) bandwidth(GMIO in num=2,out num=2):8575.5M bytes/s
-    Throughput (by graph timstamp) bandwidth(GMIO in num=4,out num=4):9833.88M bytes/s
-    Throughput (by graph timstamp) bandwidth(GMIO in num=8,out num=8):10426.6M bytes/s
-    Throughput (by graph timstamp) bandwidth(GMIO in num=16,out num=16):10498.1M bytes/s
-    Throughput (by graph timstamp) bandwidth(GMIO in num=32,out num=32):10750.4M bytes/s
-    AIE GMIO PASSED!
-    GMIO::free completed
-    PASS!
-
-2. Profile by C++ class API
+1. Profile by C++ class API
 
 The code to use C++ class API is common for Linux system for various platforms. The `Timer` is defined as follows:
 
@@ -204,7 +169,17 @@ The code is guarded by macro `__TIMER__`. To use this method of profiling, defin
 
     CXXFLAGS += -std=c++14 -D__TIMER__ -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
-The commands to build and run in hardware is same as previously shown. The output in hardware is as follows:
+To run it in hardware, use the following make command to build the hardware image:
+
+    make package TARGET=hw
+
+After the package is done, run the following commands in the Linux prompt after booting Linux from an SD card:
+
+    export XILINX_XRT=/usr
+    cd /mnt/sd-mmcblk0p1
+    ./host.exe a.xclbin
+
+The output in hardware is as follows:
 
     GMIO::malloc completed
     Throughput (by timer GMIO in num=1,out num=1):5076.64M Bytes/s
@@ -217,11 +192,11 @@ The commands to build and run in hardware is same as previously shown. The outpu
     GMIO::free completed
     PASS!
 
-3. Profile by AI Engine cycles got from AI Engine kernels
+2. Profile by AI Engine cycles got from AI Engine kernels
 
 In this design, we output the AI Engine cycles at the end of each iteration. Each iteration produces 256 int32 data, plus a long long AI Engine cycle counter number. We record the very beginning cycle and the last cycle of all the AI Engine kernels to be profiled because multiple AI Engine kernels start at different cycles though they are enabled by the same `graph::run`. Thus, we can calculate the system throughput for all the kernels.
 
-Note that there is some gap between the actual performance and the calculated number because there is already some data transfer before the recorded starting cycle. However, the overhead is negligible when the total iteration number is high, which is 4096 in this example.
+Note that there is some gap between the actual performance and the calculated number because there is already some data transfer before the recorded starting cycle. However, the overhead is negligible when the total iteration number is high, which is 512 in this example.
 
 The code to get AI Engine cycles and calculate the system throughput is as follows:
 
@@ -258,7 +233,7 @@ The commands to build and run in hardware are the same as previously shown. The 
     GMIO::free completed
     PASS!
 
-4. Profile by event API
+3. Profile by event API
 
 The AI Engine has hardware performance counters and can be configured to count hardware events for measuring performance metrics. The API used in this example is to profile graph throughput regarding the specific GMIO port. There may be confliction when multiple GMIO ports are used for event API because of the restriction that performance counter is shared between GMIO ports that access the same AI Engine-PL interface column. Thus, we only profile one GMIO output to show this methodology.
 
@@ -267,7 +242,7 @@ The code to start profiling is as follows:
     std::cout<<"total input/output num="<<num<<std::endl;
     event::handle handle[32];
     for(int i=0;i<1;i++){
-      handle[i] = event::start_profiling(gmioOut[i], event::io_stream_start_to_bytes_transferred_cycles, BLOCK_SIZE_out_Bytes);
+      handle[i] = event::start_profiling(gr.gmioOut[i], event::io_stream_start_to_bytes_transferred_cycles, BLOCK_SIZE_out_Bytes);
     }
 
 The code to end profling and calculate performance is as follows:

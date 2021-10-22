@@ -19,37 +19,31 @@ __Note:__ The default working directory in this step is "step1", unless specifie
 
 ### Review Graph Programming Code
 1. Examine the header file, (`aie/dds.h`), of the sine kernel (DDS):
-	
-	   void sine(const int32 phase_increment, output_window_cint16 * owin);
-  
-   Now examine `aie/kernels/dds.cc`, notice how `phase_increment` is used in the sine function:
 
-	   phase_in += (phase_increment << 6);
-	   cint16 scvalues = sincos(phase_in << 14); //sincos is an instrinsic (see readme)
+		void sine(const int32 phase_increment,output_window<cint16> * owin);
+  
+ 	Now examine `aie/kernels/dds.cc`, notice how `phase_increment` is used in the sine function:
+		
+		phase_in += (phase_increment << 6);
+		auto [sin_,cos_] = aie::sincos(phase_in << 14) ; // phase_in + (7i + j + 1) * phase_increment
+		cint16 scvalues={cos_,sin_};
 
   
 2. Examine `aie/graph.h` and `aie/graph.cpp`. These are provided as a starting point to specify the data flow graph of this example.
 
-   In `graph.h`, the kernel object `dds`, the graph input port `trigger`, and the graph output port `out` are declared in the `ddsgraph class`. The dds kernel object is bound to the `sine` function declared in the included `dds.h` header. The dds kernel output is connected to the graph output. It tells the compiler that the source for the function is in `kernels/dds.cc`.
+   In `graph.h`, the kernel object `dds`, the graph input port `trigger`, and the graph output port `out` are declared in the `ddsgraph class`. The dds kernel object is bound to the `sine` function declared in the included `dds.h` header. The dds kernel output is connected to the graph output. It tells the compiler that the source for the function is in `kernels/dds.cc`. The kernel output is connected to `out.in[0]`, which will be directed to `data/output.txt`.
 
-   In `graph.cpp`, an instance of the `ddsgraph`, `gr`, is instantiated. The graph output is connected to `platform.sink[0]`, which will be directed to `data/output.txt`:
+		out = adf::output_plio::create("Dataout", adf::plio_32_bits, "data/output.txt");
+		adf::connect< adf::window<512> >(dds.out[0], out.in[0]);
 
-       using namespace adf;
-	
-       PLIO *dout = new PLIO("Dataout", plio_32_bits,  "data/output.txt");
-	
-       adf::simulation::platform<0,1> platform(dout);
-	
-       ddsgraph gr;
-	
-       adf::connect<> net0(gr.out, platform.sink[0]);
+   In `graph.cpp`, an instance of the `ddsgraph`, `gr`, is instantiated. 
 
    In the `main()` function, graph `init()`, `run()`, and `end()` are called to initialize, run, and wait to be ended.
 
-	   gr.init();
-	   gr.run(4);
-	   …
-	   gr.end();
+		gr.init();
+		gr.run(4);
+		…
+		gr.end();
 
    The graph `run()` has been called with the parameter `4` to specify the iteration number of the graph. Otherwise, it will run forever.
 
@@ -100,7 +94,7 @@ __Note:__ The default working directory in this step is "step1", unless specifie
 	
    The corresponding command for aiecompiler is:
 
-       aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
+       aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
   
    Switches for the AI Engine are as follows:
 
@@ -110,7 +104,7 @@ __Note:__ The default working directory in this step is "step1", unless specifie
 
    * `-workdir`: specifies the output directory. By default, the compiler generates all its output into a subdirectory called `Work`.
 
-   * `-aie/graph.cpp`: specifies the graph source file
+   * `aie/graph.cpp`: specifies the graph source file
 
    For more information about AI Engine programming and tools, refer to the *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
 
@@ -149,9 +143,9 @@ __Note:__ The default working directory in this step is "step1", unless specifie
 ![sine waveform - imaginary](./images/figure3.PNG)
 
 ### Build for Hardware Emulation and Hardware Flow
-In the previous step, you generated the AI Engine design graph (`libadf.a`) using the AI Engine compiler. Note that the graph has instantiated a PLIO (in `aie/graph.cpp`), which will be connected to the PL side. 
+In the previous step, you generated the AI Engine design graph (`libadf.a`) using the AI Engine compiler. Note that the graph has instantiated a PLIO (`adf::output_plio` in `aie/graph.h`), which will be connected to the PL side. 
 
- 	PLIO *dout = new PLIO("Dataout", plio_32_bits,  "data/output.txt");
+ 	out = adf::output_plio::create("Dataout", adf::plio_32_bits, "data/output.txt");
 
 Here, `plio_32_bits` indicates the interface to the PL side is 32 bits wide. In the PL side, an HLS kernel `s2mm` will be instantiated. It will receive stream data from the AI Engine graph, and output data to global memory, which will be read by the host code in the PS. 
 
@@ -163,7 +157,7 @@ To compile the HLS PL kernel, run the following make command:
 
 The corresponding v++ compiler command is as follows:
 
-	v++ -c --platform xilinx_vck190_es1_base_202110_1 -k s2mm s2mm.cpp -o s2mm.xo --verbose --save-temps
+	v++ -c --platform xilinx_vck190_es1_base_202120_1 -k s2mm s2mm.cpp -o s2mm.xo --verbose --save-temps
 
 Switches for the v++ compiler are as follows:
 
@@ -179,7 +173,7 @@ The next step is to link the AI Engine graph and PL kernels to generate the hard
 	
 This make takes 10 minutes or more to complete. The corresponding v++ linker command is as follows:
 
-	v++ -g -l --platform xilinx_vck190_es1_base_202110_1 pl_kernels/s2mm.xo libadf.a -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
+	v++ -g -l --platform xilinx_vck190_es1_base_202120_1 pl_kernels/s2mm.xo libadf.a -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
 
 Switches for the v++ linker are as follows:
 
@@ -195,9 +189,9 @@ After generating the hardware platform, compile the host code (`sw/host.cpp`) us
 	
 The detailed commands for compiling the host code are as follows:
 
-	${CXX} -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o aie_control_xrt.o aie_control_xrt.cpp
-	${CXX} -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o host.o host.cpp
-	${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux//usr/lib/ --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/ -L$XILINX_VITIS/aietools/lib/aarch64.o
+	${CXX} -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o aie_control_xrt.o aie_control_xrt.cpp
+	${CXX} -std=c++14 -I$XILINX_HLS/include/ -I$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux//usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/ -I$XILINX_VITIS/aietools/include -I../ -I../aie -o host.o host.cpp
+	${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux//usr/lib/ --sysroot=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/ -L$XILINX_VITIS/aietools/lib/aarch64.o
 	
 Here, the cross compiler pointed by `CXX` is used to compile the linux host code. `aie_control_xrt.cpp` is copied from the directory `Work/ps/c_rts`.
 
@@ -280,9 +274,9 @@ The next step is to use v++ with `-p` to generate the package file. The make com
 	
 The corresponding v++ command is:
 
-	v++ -p -t hw_emu -f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm \
-	--package.rootfs $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4  \
-	--package.kernel_image $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/Image  \
+	v++ -p -t hw_emu -f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm \
+	--package.rootfs $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4  \
+	--package.kernel_image $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/Image  \
 	--package.boot_mode=sd \
 	--package.image_format=ext4 \
 	--package.defer_aie_run \

@@ -12,35 +12,37 @@ limitations under the License.
 **********/
 #include "stdlib.h"
 #include <stdio.h>
-#include <adf.h>
+#include <aie_api/aie.hpp>
+#include <aie_api/aie_adf.hpp>
+#include "aie_api/utils.hpp"
 
 static int32 phase_in;
 
-static int16 chess_storage(%chess_alignof(v8cint16)) dds_stored [16] = {32767, 0, 32767, 0, 32767, 0,  32767, 0, 32767, 0, 32767, 0, 32767, 0, 32767, 0};
+alignas(aie::vector_decl_align) static int16 dds_stored [16] = {32767, 0, 32767, 0, 32767, 0,  32767, 0, 32767, 0, 32767, 0, 32767, 0, 32767, 0};
 
 void init_dds() {
-  v8cint16 dds =  *(( v8cint16 *) dds_stored) ;
+  aie::vector<cint16,8> dds =  aie::load_v<8>((cint16*)dds_stored);
   phase_in = 0;
   
-  cint16 scvalues = sincos(phase_in ); // phase_in + 0
-  //sincos() is an intrinsic that returns sin and cos int16 values
-
-  dds = shft_elem(dds,scvalues);
-
-  *(( v8cint16 *) dds_stored) = dds;
+  auto [sin_,cos_] = aie::sincos(phase_in ); // phase_in + 0
+  cint16 scvalues={cos_,sin_};
+  
+  dds.push(scvalues);
+  aie::store_v((cint16*)dds_stored, dds);
 }
 
-void sine(const int32 phase_increment,output_window_cint16 * owin) {
+void sine(const int32 phase_increment,output_window<cint16> * owin) {
   //Initialize vector from memory
-  v8cint16 dds =  *(( v8cint16 *) dds_stored) ;
+  aie::vector<cint16,8> dds=aie::load_v<8>((cint16*)dds_stored);
 
   for (unsigned k = 0; k<128; k++){
     phase_in += (phase_increment << 6);
-    cint16 scvalues = sincos(phase_in << 14) ; // phase_in + (7i + j + 1) * phase_increment
-    dds = shft_elem(dds,scvalues);
+    auto [sin_,cos_] = aie::sincos(phase_in << 14) ; // phase_in + (7i + j + 1) * phase_increment
+    cint16 scvalues={cos_,sin_};
+    dds.push(scvalues);
 
-    window_writeincr(owin, *((cint16*)&scvalues));
-    *(( v8cint16 *) dds_stored) = dds;
+    window_writeincr(owin, scvalues);
+    aie::store_v((cint16*)dds_stored, dds);
   };
 };
 

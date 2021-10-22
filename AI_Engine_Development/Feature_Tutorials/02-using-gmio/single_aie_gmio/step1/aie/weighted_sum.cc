@@ -14,7 +14,7 @@ limitations under the License.
 
 int32_t weights[8]={1,2,3,4,5,6,7,8};
 
-void weighted_sum_with_margin(input_window_int32 * in, output_window_int32 * out) 
+void weighted_sum_with_margin(input_window<int32> * in, output_window<int32> * out) 
 {
   window_incr(in, 8);
 

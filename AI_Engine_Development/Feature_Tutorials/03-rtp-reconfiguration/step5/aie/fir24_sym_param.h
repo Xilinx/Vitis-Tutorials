@@ -15,7 +15,7 @@ limitations under the License.
 
 #include <adf.h>
 
-  void fir24_sym(input_window_cint16 * iwin, output_window_cint16 * owin,  const int32(&coeffs)[12], int32(&coeffs_readback)[12]);
+  void fir24_sym(input_window<cint16> * iwin, output_window<cint16> * owin,  const int32(&coeffs)[12], int32(&coeffs_readback)[12]);
 
 #endif
 

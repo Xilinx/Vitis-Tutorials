@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
     gr.wait();
     gr.update(gr.coefficients, wide_filter, 12);
     gr.run(16);
-    gr.wait();
+    gr.end();
 
     q.finish();//Wait for s2mm to complete    
     q.enqueueMigrateMemObjects({buffer_out},CL_MIGRATE_MEM_OBJECT_HOST);

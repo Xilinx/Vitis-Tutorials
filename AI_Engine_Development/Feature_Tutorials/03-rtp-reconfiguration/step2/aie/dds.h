@@ -18,7 +18,7 @@ limitations under the License.
 #include <adf.h>
 
   void init_dds();
-  void sine(const int32 phase_increment,output_window_cint16 * owin);
+  void sine(const int32 phase_increment,output_window<cint16> * owin);
 
 #endif /* __DDS_H__ */
 

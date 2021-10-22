@@ -13,5 +13,5 @@ limitations under the License.
 #ifndef __KERNEL_H__
 #define __KERNEL_H__
 #include <adf.h>
-void weighted_sum_with_margin(input_window_int32 * restrict in, output_window_int32 * restrict out);
+void weighted_sum_with_margin(input_window<int32> * restrict in, output_window<int32> * restrict out);
 #endif

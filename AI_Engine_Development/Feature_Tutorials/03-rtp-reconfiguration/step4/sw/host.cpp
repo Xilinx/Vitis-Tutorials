@@ -121,7 +121,7 @@ int main(int argc, char* argv[]) {
     xrtBOSync(out_bohdl, XCL_BO_SYNC_BO_FROM_DEVICE , output_size_in_bytes,/*OFFSET=*/ 0);
 
     std::ofstream out("out.txt",std::ofstream::out);
-    std::ifstream golden("data/filtered.txt",std::ifstream::in);
+    std::ifstream golden("data/golden.txt",std::ifstream::in);
     short g_real=0,g_imag=0;
     int match = 0;
     for (int i = 0; i < OUTPUT_SIZE; i++) {

@@ -15,11 +15,8 @@ limitations under the License.
 #include <unistd.h>
 
 using namespace adf;
-PLIO *dout = new PLIO("Dataout", plio_32_bits,  "data/output.txt");
-adf::simulation::platform<0,1> platform(dout);
 
 ddsgraph gr;
-adf::connect<> net0(gr.out, platform.sink[0]);
 
 #ifdef __AIESIM__
 int main(int argc, char ** argv) { 

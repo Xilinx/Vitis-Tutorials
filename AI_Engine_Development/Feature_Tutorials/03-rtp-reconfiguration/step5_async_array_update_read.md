@@ -27,7 +27,7 @@ __Note__: The default working directory in this step is "step5", unless explicit
 ### Review Graph and RTP Code
 In the AI Engine kernel code (`aie/kernels/hb24.cc`), the interface is declared as:
 
-    void fir24_sym(input_window_cint16 *iwin, output_window_cint16 *owin,  const  int32  (&coeffs)[12], int32 (&coeffs_readback)[12]);
+    void fir24_sym(input_window<cint16> * iwin, output_window<cint16> * owin,  const int32(&coeffs)[12], int32(&coeffs_readback)[12]);
 
 For the RTP array input, `const` is used for the array reference. From the graph, the RTP port can only be `input` or `inout`. The `inout` port in the graph can only be read by the PS program, it cannot be written by the PS program. Therefore, another port `coeffs_readback` is defined to read back the coefficient. 
 
@@ -45,14 +45,14 @@ In `aie/graph.cpp` (for AI Engine simulator), the RTP update and read commands a
     gr.read(gr.coefficients_readback,coeffs_readback,12);
     std::cout<<"Coefficients read back are:";
     for(int i=0;i<12;i++)std::cout<<coeffs_readback[i]<<",\t";
-  	std::cout<<coeffs_readback[i]<<",\t";
+  		std::cout<<coeffs_readback[i]<<",\t";
     }
     std::cout<<std::endl;
     gr.wait(); // wait PL kernel & AIE kernel to complete
     gr.read(gr.coefficients_readback,coeffs_readback,12);
     std::cout<<"Coefficients read back are:";
     for(int i=0;i<12;i++){
-  	std::cout<<coeffs_readback[i]<<",\t";
+  		std::cout<<coeffs_readback[i]<<",\t";
     }
     std::cout<<std::endl;
     gr.update(gr.coefficients, wide_filter, 12);
@@ -60,7 +60,7 @@ In `aie/graph.cpp` (for AI Engine simulator), the RTP update and read commands a
     gr.read(gr.coefficients_readback,coeffs_readback,12);
     std::cout<<"Coefficients read back are:";
     for(int i=0;i<12;i++){
-  	std::cout<<coeffs_readback[i]<<",\t";
+  		std::cout<<coeffs_readback[i]<<",\t";
     }
     std::cout<<std::endl;
 
@@ -73,7 +73,7 @@ Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 
 The corresponding AI Engine compiler command is:
 
-    aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-axi-lite=true -workdir=./Work aie/graph.cpp
+    aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
 
 After the AI Engine graph (`libadf.a`) has been generated, verify for correctness using the AI Engine simulator:
 

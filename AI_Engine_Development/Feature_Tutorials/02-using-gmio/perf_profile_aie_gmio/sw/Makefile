@@ -17,7 +17,7 @@ AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
 GRAPH_CPP = ../aie/graph.cpp
 SDKTARGETSYSROOT ?= ${SYSROOT}
 
-CXXFLAGS += -std=c++14 -D__TIME_STAMP__ -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+CXXFLAGS += -std=c++14 -D__USE_EVENT_PROFILE__ -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
 LDFLAGS += -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
 LDCLFLAGS=
