@@ -28,14 +28,17 @@ The following diagram explains the build-flow dependencies.
  - The diagram is for illustration only. The actual build-flow is more sequential.
 <img src="./documentation/readme_files/Design_dependencies.svg">
 
-In the [project-root] you can start the full build with `make all` after setting up the 2021.2 version of Vivado, Petalinux and Vitis:
+In the `[project-root]` you can start the full build with `make all` after setting up the 2021.2 version of Vivado, Petalinux and Vitis:
   - Everything is in the GitHub repository; no extra files are needed.
-  - In the [project-root]/Makefile: "export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S-es1" (for es1 version); **change it to xcvc1902-vsva2197-2MP-e-S (for pre-production version)**.
-  - End result: `package_output/sd_card/*` can be used for FAT-32 sd_card (partition); or `package_output/sd_card.img` can be used.
+  - In the `[project-root]/Makefile`: "export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S-es1" (for es1 version); **change it to xcvc1902-vsva2197-2MP-e-S (for pre-production version)**.
+  - `[project-root]/petalinux/Makefile`: the generated tmp-dir ends up in `/tmp`. 
+    - If you want to place it somewhere else you need to add `--tmpdir [your_tmp_dir]` at the end of the `petalinux-create` line in the `[project-root]/petalinux/Makefile`. 
+      - Be aware that this may not be located on an NFS-drive! 
+  - End result: `[project-root]/package_output/sd_card/*` can be used for FAT-32 sd_card (partition); or `[project-root]/package_output/sd_card.img` can be used.
 
 ## More In-Depth
 The following explains the different sub-build steps. Click on each item for more detailed information.  
-Each step is sequential (in the order listed - by the [project-root]/Makefile): 
+Each step is sequential (in the order listed - by the `[project-root]/Makefile`): 
 
 <details>
  <summary> make version_check </summary>
@@ -44,7 +47,7 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
  
 </details>
 <details>
- <summary> make board_repo </summary>
+ <summary> make platform/hw/board_repo </summary>
  
  - Retrieves all es1 and pre-production board files from the Xilinx GitHub.
  
@@ -52,19 +55,20 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 <details>
  <summary> make xsa -C platform </summary>
  
-`platform` Directory/file structure:
+`[project-root]/platform` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
 | Makefile            | The platform xsa/xpfm Makefile                                  
 | hw/*                | The hardware platform Makefile and sources
 
- - Builds the output file needed for Petalinux and Vitis software platform creation -> `platform/hw/build/vck190_thin.xsa`.
+ - Builds the output file needed for Petalinux and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
+ - After this step you could open the platform blockdesign in Vivado for review
  
 </details>
 <details>
   <summary> make all -C petalinux </summary>
 
-`petalinux` Directory/file structure:
+`[project-root]/petalinux` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
 | Makefile            | The Petalinux Makefile                                  
@@ -72,20 +76,20 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 | src/device-tree/*   | Some device-tree changes needed for VCK190              
 | src/boot_custom.bif | bif file needed to have a correct BOOT.BIN in the Vitis packager   
 
- - Builds all required Petalinux images which end up in `petalinux/linux/images/linux`.
- - It also builds a `sysroot` which ends up in `petalinux/sysroot` (needed for `ps_apps`).
+ - Builds all required Petalinux images which end up in `[project-root]/petalinux/linux/images/linux`.
+ - It also builds a `sysroot` which ends up in `[project-root]/petalinux/sysroot` (needed for `[project-root]/ps_apps` build).
  
 </details>
 <details>
   <summary> make xpfm -C platform </summary>
 
-`platform` Directory/file structure:
+`[project-root]/platform` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
 | Makefile            | The platform xsa/xpfm Makefile                                  
 | sw/*                | The Vitis platform Makefile and sources
 
- - Builds the output files needed for ip and Vitis -> `platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` and some generated subfolders.
+ - Builds the output files needed for ip and Vitis -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` and some generated subfolders.
  
 </details>
 <details>
@@ -97,7 +101,7 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 <details>
   <summary> make all -C ip </summary>
  
-`ip` Directory/file structure:
+`[project-root]/ip` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
 | Makefile            | The ip generic Makefile; it automatically searches for sub-projects to build                             
@@ -106,7 +110,7 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 | subtractor/*        | Managed RTL "subtractor" kernel Makefile and sources that measures the delay between the counter-input and the aie-output
 | vadd/*              | XRT-controlled HLS "vadd" kernel Makefile and sources
 
- - Builds the output files needed for Vitis linker -> `ip/aie/libadf.a and ip/*.xo`
+ - Builds the output files needed for Vitis linker -> `[project-root]/ip/aie/libadf.a` and `[project-root]/ip/*.xo`
  - Kernel structure/flow:
     - vadd is a separate kernel
     - counter -> aie "datamover" -> subtractor
@@ -115,21 +119,21 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 <details>
   <summary> make all -C ps_apps </summary>
 
-`ps_apps` Directory/file structure:
+`[project-root]/ps_apps` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|---------------------------------------------------------
 | Makefile            | The ps_apps generic Makefile; it automatically searches for sub-projects to build
-| aie_dly_test/*      | PS XRT CPP Application Makefile and sources that measures the delay between counter-input and aie-output
-| vadd_cpp/*          | PS XRT CPP Application Makefile and sources that checks out the vadd kernel
-| vadd_ocl/*          | PS XRT OpenCL Application Makefile and sources that checks out the vadd kernel
+| aie_dly_test/*      | PS XRT Application - using the native XRT API - Makefile and sources that measures the delay between counter-input and aie-output
+| vadd_cpp/*          | PS XRT Application - using the native XRT API - Makefile and sources that checks out the vadd kernel
+| vadd_ocl/*          | PS XRT Application - using the opencl XRT API - Makefile and sources that checks out the vadd kernel
 
- - Builds the output files needed for vitis packager -> `ps_apps/*.exe`
+ - Builds the output files needed for vitis packager -> `[project-root]/ps_apps/*.exe`
  
 </details>
 <details>
   <summary> make all -C vitis </summary>
 
-`vitis` Directory/file structure:
+`[project-root]/vitis` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|---------------------------------------------------------
 | Makefile            | The Vitis generic Makefile for linker and packager
@@ -137,8 +141,9 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 
  - Runs the Vitis linker and packager
  - The output of the Vitis packager ends up in `[project-root]/package_output`
-   - [project-root]/package_output/sd_card.img or you find all FAT-32 files in [project-root]/package_output/sd_card/*
+   - `[project-root]/package_output/sd_card.img` or you find all FAT-32 files in `[project-root]/package_output/sd_card/*`
  - All other files can be ignored; they are an output from the Vitis packager and are unused
+ - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review
  
 </details>
 
@@ -148,8 +153,6 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
  3. Execute the following after boot-up (it also includes the results):
  ```
     root@linux:~# cd /media/sd-mmcblk0p1/
-    root@linux:/media/sd-mmcblk0p1# source ./init.sh
-    .
     root@linux:/media/sd-mmcblk0p1# ./vadd_cpp.exe a.xclbin
     Passed: auto my_device = xrt::device(0)
     Passed: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
@@ -193,16 +196,22 @@ Each step is sequential (in the order listed - by the [project-root]/Makefile):
 
 ## Notes
   - xsa: CIPS settings are added manually; configured in the bd-files.
-  - The example design is fully FAT-32 (ext4 is not used, but can easily be enabled).
+  - The example design is fully FAT-32 
+    - if you like to use ext4 rootfs instead: 
+      - petalinux already generates it.
+      - You will need to copy it to the Vitis platform in the `[project-root]/Makefile` in the `bif` section.
+      - The `v++ -p` command line in `[project-root]\vitis\Makefile` will need adaptations to be able to use ext4 rootfs instead of FAT-32.
+  - Simulations and Emulations are **NOT** included in this Tutorial!
 
 ## Design Considerations
-  - **ps_apps**: PS applications can easily be added by adding a sub-project for each in `ps_apps`.
+  Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a Xilinx tools requirement!
+  - `[project-root]/ps_apps`: PS applications can easily be added by adding a sub-project for each in `[project-root]/ps_apps`.
     - Vitis will automatically package them and they will end up on the sd_card.
-    - The `[PS Application].exe` (extension **MUST** be .exe) MUST end up in the `ps_apps` dir.
-  - **ip**: Kernels can be added by just adding a sub-project in `ip`.
-    - You will need to update the `vitis/src/system.cfg` file to setup the correct connections/clocks.
-    - A `[kernel].xo` file **MUST** end up in the `ip` dir
-    - An extra aie graph **MUST** be added in the `ip/aie` dir, the `ip/aie/Makefile` will need adaptations.
+    - The `[PS Application].exe` (extension **MUST** be .exe) **MUST** end up in the `[project-root]/ps_apps` dir.
+  - `[project-root]/ip`: Kernels can be added by just adding a sub-project in `[project-root]/ip`.
+    - You will need to update the `[project-root]/vitis/src/system.cfg` file to setup the correct connections/clocks.
+    - A `[kernel].xo` file **MUST** end up in the `[project-root]/ip` dir
+    - An extra aie graph **MUST** be added in the `[project-root]/ip/aie` dir, the `[project-root]/ip/aie/Makefile` will need adaptations.
 
 ## References
 The following documents provide supplemental information for this tutorial.
@@ -219,17 +228,17 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
 The following are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
 * [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html)
 
 ## Revision History
-* October   2021 - Updated AI Engine Datamovers
+* October 2021 - Optimized AI Engine Datamovers + Added more clarifications in this README.md + Improved petalinux version check
 * September 2021 - Initial Release
 
  
