@@ -168,11 +168,11 @@ GCC_FLAGS += -DXAIE_DEBUG
 GCC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include/xrt
 
 GCC_FLAGS += -I$(XILINX_VITIS)/aietools/include/
-GCC_FLAGS += -I=$(SDKTARGETSYSROOT)/usr/include 
-GCC_FLAGS += -I=$(SDKTARGETSYSROOT)/usr/lib
+GCC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include 
+GCC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/lib
 
 
-GCC_LIB += -L=$(SDKTARGETSYSROOT)/usr/lib 
+GCC_LIB += -L$(SDKTARGETSYSROOT)/usr/lib 
 GCC_LIB += -L$(XILINX_VITIS)/aietools/lib/aarch64.o 
 GCC_LIB += -L$(XILINX_VITIS)/aietools/lib/lnx64.o 
 GCC_LIB += -ladf_api_xrt 
