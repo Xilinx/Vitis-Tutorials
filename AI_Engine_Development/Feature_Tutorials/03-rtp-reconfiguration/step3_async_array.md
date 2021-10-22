@@ -18,7 +18,7 @@ __Note:__ The default working directory in this step is "step3", unless specifie
 ### Review Graph and RTP Code
 `aie/fir24_sym_param.h`gives a forward declaration of a 24-tap symmetric FIR filter:
 
-	void fir24_sym (input_window_cint16 * iwin, output_window_cint16 * owin, const int32(&coeffs)[12]);
+	void fir24_sym(input_window<cint16> * iwin, output_window<cint16> * owin,  const int32(&coeffs)[12]);
 	
 The filter has an input and output window which consumes and produces complex samples. This filter differs from previous filters you have seen because the coefficients of the filter can be set as a kernel parameter and changed on each invocation. The implementation of the filter is in `aie/kernels/hb24.cc`.
 
@@ -85,7 +85,7 @@ PL kernels need to be compiled into Xilinx object (`.xo`) files. Run the followi
 	
 The corresponding v++ -c command is:
 	
-	v++ -c --platform xilinx_vck190_base_202110_1 -k random_noise random_noise.cpp -o random_noise.xo --verbose --save-temps
+	v++ -c --platform xilinx_vck190_base_202120_1 -k random_noise random_noise.cpp -o random_noise.xo --verbose --save-temps
 	
 The Makefile rule targets introduced in [Synchronous update of scalar RTP](./step1_sync_scalar.md) and [Asynchronous update of scalar RTP](./step2_async_scalar.md) still apply here. Details about tool options and host code in [Synchronous update of scalar RTP](./step1_sync_scalar.md) are similar. However, you can just choose to run following make command to launch HW emulation:
 
@@ -122,5 +122,5 @@ In this step you learned about:
    * How to control the execution between different RTP updates
    * Free-running PL kernel
 
-Next, review [Asynchronous Update of Scalar RTL for PL inside a Graph, and Array RTP for AI Engine kernel](./step4_async_pl_scalar_aie_array.md).	
+Next, review [Asynchronous Update of Array RTP Update for AI Engine Kernel](./step4_async_aie_array.md).	
 <p align="center"><sup>XD001 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>

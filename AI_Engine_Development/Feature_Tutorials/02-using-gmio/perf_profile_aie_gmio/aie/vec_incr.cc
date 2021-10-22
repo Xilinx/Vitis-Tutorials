@@ -10,18 +10,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-#include <adf.h>
-void vec_incr(input_window_int32* data,output_window_int32* out){
-	alignas(32) int32 const1[16]={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-	v16int32 vec1=*(v16int32*)const1;
+#include <aie_api/aie.hpp>
+#include <aie_api/aie_adf.hpp>
+#include <aie_api/utils.hpp>
+
+void vec_incr(input_window<int32>* data,output_window<int32>* out){
+	aie::vector<int32,16> vec1=aie::broadcast<int32>(1);
 	for(int i=0;i<16;i++)
 	chess_prepare_for_pipelining
 	chess_loop_range(4,)
 	{
-		v16int32 vdata=window_readincr_v16(data);
-		v16int32 vresult=add16(vdata,vec1);
+		aie::vector<int32,16> vdata=window_readincr_v<16>(data);
+		aie::vector<int32,16> vresult=aie::add(vdata,vec1);
 		window_writeincr(out,vresult);
 	}
-	unsigned long long time=get_cycles();//cycle counter of the AI Engine tile
+	aie::tile tile=aie::tile::current();
+	unsigned long long time=tile.cycles();//cycle counter of the AI Engine tile
 	window_writeincr(out,time);
 }

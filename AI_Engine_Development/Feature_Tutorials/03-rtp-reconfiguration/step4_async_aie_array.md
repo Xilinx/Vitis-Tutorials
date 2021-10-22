@@ -44,7 +44,7 @@ Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 
 The corresponding AI Engine compiler command is:
 
-    aiecompiler -platform=<PATH by PLATFORM_REPO_PATHS>/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-axi-lite=true -workdir=./Work aie/graph.cpp
+    aiecompiler -platform=xilinx_vck190_es1_base_202120_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
     
 After the AI Engine graph (`libadf.a`) has been generated, verify for correctness using the AI Engine simulator:
 
@@ -130,11 +130,11 @@ After post-processing the data, release the allocated objects:
 
 	gr.end();
 	xrtRunClose(s2mm_rhdl);
-    	xrtKernelClose(s2mm_khdl);
+    xrtKernelClose(s2mm_khdl);
 	xrtRunClose(random_noise_rhdl);
-    	xrtKernelClose(random_noise_khdl);
-    	xrtBOFree(out_bohdl);
-    	xrtDeviceClose(dhdl);
+    xrtKernelClose(random_noise_khdl);
+    xrtBOFree(out_bohdl);
+    xrtDeviceClose(dhdl);
 
 The XRT API version to control graph exectuion is as follows:
 

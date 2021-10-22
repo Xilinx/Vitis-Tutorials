@@ -10,42 +10,37 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-#include "adf.h"
+#include "aie_api/aie.hpp"
+#include "aie_api/aie_adf.hpp"
+#include "aie_api/utils.hpp"
 
-int32_t chess_storage(%chess_alignof(v8int32)) weights[8] = {1,2,3,4,5,6,7,8};
+alignas(aie::vector_decl_align) int32 weights[8] = {1,2,3,4,5,6,7,8};
 
-void vectorized_weighted_sum_with_margin(input_window_int32 * restrict in, output_window_int32 * restrict out)
+void vectorized_weighted_sum_with_margin(input_window<int32> * restrict in, output_window<int32> * restrict out)
 {
-	v8int32 coeffs = *(v8int32*) weights;
+	aie::vector<int32,8> coeffs = aie::load_v<8>(weights);
 
-	v16int32 data = undef_v16int32();
-	v4acc80 acc;
-	v8int32 dataout = undef_v8int32();
-	data = upd_w(data,0,window_readincr_v8(in));
+	aie::vector<int32,16> data;
+	aie::accum<acc80,4> acc;
+	aie::vector<int32,8> dataout;
+	data.insert(0,window_readincr_v<8>(in));
 
-	for(unsigned i=0; i<256/8; i++)
+	for(unsigned i=0; i<256/16; i++)
 		chess_prepare_for_pipelining
 		chess_loop_range(4,32)
 	{
-
-		acc = lmul4(    data, 1,0x3210,1,coeffs,0,0x0000,1);
-		data = upd_w(data,1,window_read_v8(in));
-		acc = lmac4(acc,data, 3,0x3210,1,coeffs,2,0x0000,1);
-		acc = lmac4(acc,data, 5,0x3210,1,coeffs,4,0x0000,1);
-		acc = lmac4(acc,data, 7,0x3210,1,coeffs,6,0x0000,1);
-
-		dataout = upd_v(dataout,0,srs(acc,0));
-
-		acc = lmul4(    data, 5,0x3210,1,coeffs,0,0x0000,1);
-		acc = lmac4(acc,data, 7,0x3210,1,coeffs,2,0x0000,1);
-		data = upd_w(data,0,window_readincr_v8(in));
-		acc = lmac4(acc,data, 9,0x3210,1,coeffs,4,0x0000,1);
-		acc = lmac4(acc,data,11,0x3210,1,coeffs,6,0x0000,1);
-
-		dataout = upd_v(dataout,1,srs(acc,0));
-
+		data.insert(1,window_readincr_v<8>(in));
+		acc=aie::sliding_mul<4,8>(coeffs,0,data,1);
+		dataout.insert(0,acc.to_vector<int32>());
+		acc=aie::sliding_mul<4,8>(coeffs,0,data,5);
+		dataout.insert(1,acc.to_vector<int32>());
 		window_writeincr(out,dataout);
 
+		data.insert(0,window_readincr_v<8>(in));
+		acc=aie::sliding_mul<4,8>(coeffs,0,data,9);
+		dataout.insert(0,acc.to_vector<int32>());
+		acc=aie::sliding_mul<4,8>(coeffs,0,data,13);
+		dataout.insert(1,acc.to_vector<int32>());
+		window_writeincr(out,dataout);
 	}
-
 }

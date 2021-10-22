@@ -24,15 +24,17 @@ private:
   adf::kernel k[32];
 
 public:
-  adf::port<adf::direction::out> dout[32];
-  adf::port<adf::direction::in> din[32];
+  adf::input_gmio gmioIn[32];
+  adf::output_gmio gmioOut[32];
 
   mygraph()
   {
 	for(int i=0;i<32;i++){
+		gmioIn[i]=adf::input_gmio::create("gmioIn"+std::to_string(i),/*size_t burst_length*/256,/*size_t bandwidth*/100);
+		gmioOut[i]=adf::output_gmio::create("gmioOut"+std::to_string(i),/*size_t burst_length*/256,/*size_t bandwidth*/100);
 		k[i] = adf::kernel::create(vec_incr);
-		adf::connect<adf::window<1024>>(din[i], k[i].in[0]);	
-		adf::connect<adf::window<1032>>(k[i].out[0], dout[i]);
+		adf::connect<adf::window<1024>>(gmioIn[i].out[0], k[i].in[0]);	
+		adf::connect<adf::window<1032>>(k[i].out[0], gmioOut[i].in[0]);
 		adf::source(k[i]) = "vec_incr.cc";
 		adf::runtime<adf::ratio>(k[i])= 1;
 		adf::location<adf::kernel>(k[i])=adf::tile(col[i],0);

@@ -14,15 +14,8 @@ limitations under the License.
 #include <iostream>
 
 using namespace adf;
-PLIO *din = new PLIO("Datain0", plio_32_bits,  "data/input.txt");
-PLIO *dout = new PLIO("Dataout0", plio_32_bits,  "data/output.txt");
-simulation::platform<1,1> plat(din,dout);
 
 adaptive_graph gr;
-
-// send complex output samples to the output file
-connect<> netin(plat.src[0],gr.in);
-connect<> netout(gr.dataout, plat.sink[0]);
 
 #ifdef __AIESIM__
 int main(int argc, char **argv)

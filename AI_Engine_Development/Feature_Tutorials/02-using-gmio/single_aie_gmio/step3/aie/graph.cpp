@@ -20,13 +20,8 @@ limitations under the License.
 #endif
 
 using namespace adf;
-GMIO gmioIn("gmioIn",64,1000);
-GMIO gmioOut("gmioOut",64,1000);
-adf::simulation::platform<1,1> platform(&gmioIn,&gmioOut);
 
 mygraph gr;
-adf::connect<> net0(gr.out, platform.sink[0]);
-adf::connect<> net1(platform.src[0], gr.din);
 void ref_func(int32* din,int32 c[8],int32* dout,int size){
 	static int32 d[8]={0,0,0,0,0,0,0,0};
 	for(int i=0;i<size;i++){
@@ -68,11 +63,11 @@ int main(int argc, char ** argv) {
 	dinArray[i]=i;
     }
 
-    gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);
+    gr.gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);
     gr.run(ITERATION);
-    gmioOut.aie2gm_nb(doutArray,BLOCK_SIZE_in_Bytes);
+    gr.gmioOut.aie2gm_nb(doutArray,BLOCK_SIZE_in_Bytes);
     //PS can do other tasks here when data is transferring
-    gmioOut.wait();
+    gr.gmioOut.wait();
 
     ref_func(dinArray,coeff,doutRef,ITERATION*1024/4);
     for(int i=0;i<ITERATION*1024/4;i++){

@@ -22,16 +22,17 @@ private:
   adf::kernel dds;
 
 public:
-  adf::port<adf::direction::out> out;
+  adf::output_plio out;
   adf::port<adf::direction::in> trigger;
 
   ddsgraph()
   {
     dds = adf::kernel::create(sine);
+    out = adf::output_plio::create("Dataout", adf::plio_32_bits, "data/output.txt");
     //connect runtime parameter
     adf::connect<adf::parameter>(trigger, dds.in[0]);
 
-    adf::connect< adf::window<512> >(dds.out[0], out);
+    adf::connect< adf::window<512> >(dds.out[0], out.in[0]);
     adf::source(dds) = "kernels/dds.cc";
     adf::runtime<adf::ratio>(dds)= 0.9;
   };

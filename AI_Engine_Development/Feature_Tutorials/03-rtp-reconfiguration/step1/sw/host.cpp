@@ -23,12 +23,8 @@ limitations under the License.
 #define OUTPUT_SIZE 512
 
 using namespace adf;
-PLIO *dout = new PLIO("Dataout0", plio_32_bits,  "data/output.txt");
-adf::simulation::platform<0,1> platform(dout);
 
 ddsgraph gr;
-
-adf::connect<> net0(gr.out, platform.sink[0]);
 
 int main(int argc, char* argv[]) {
     size_t output_size_in_bytes = OUTPUT_SIZE * sizeof(int);
@@ -116,7 +112,7 @@ int main(int argc, char* argv[]) {
     gr.update(gr.trigger,10);
     gr.update(gr.trigger,100);
     gr.update(gr.trigger,100);
-    gr.wait();
+    gr.end();
     
     q.finish();//Wait for s2mm to complete    
 

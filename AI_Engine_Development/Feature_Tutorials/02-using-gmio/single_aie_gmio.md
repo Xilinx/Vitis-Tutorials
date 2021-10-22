@@ -18,39 +18,42 @@ This example introduces the AI Engine GMIO programming model. It includes three 
 We will use AI Engine simulator event trace in each step to see how performance can be improved step by step. The last step introduces code to make GMIO work in hardware.
 
 ### Step 1 - Synchronous GMIO Transfer
-In this step, we introduce the synchronous GMIO transfer mode. Change the working directory to `single_aie_gmio/step1`. Looking at the graph code `aie/graph.h`, it can be seen that the design has one output `out` and one input `din`, with an AI Engine kernel `weighted_sum_with_margin`.
+In this step, we introduce the synchronous GMIO transfer mode. Change the working directory to `single_aie_gmio/step1`. Looking at the graph code `aie/graph.h`, it can be seen that the design has one output `gmioOut` with type `output_gmio`, one input `gmioIn` with type `input_gmio`, and an AI Engine kernel `weighted_sum_with_margin`.
 
-    class mygraph: public adf::graph
-    {
-    private:
-      adf::kernel k_m;
-    public:
-      adf::port<adf::direction::out> out;
-      adf::port<adf::direction::in> din;
-      mygraph()
-      {
-      k_m = adf::kernel::create(weighted_sum_with_margin);
-      adf::connect<adf::window<1024,32>>(din, k_m.in[0]);
-      adf::connect<adf::window<1024>>(k_m.out[0], out);
-      adf::source(k_m) = "weighted_sum.cc";
-      adf::runtime<adf::ratio>(k_m)= 0.9;
-      };
-    };
+	class mygraph: public adf::graph
+	{
+	private:
+	  adf::kernel k_m;
+	
+	public:
+	  adf::output_gmio gmioOut;
+	  adf::input_gmio gmioIn;
+	
+	  mygraph()
+	  {
+		k_m = adf::kernel::create(weighted_sum_with_margin);
+		gmioOut = adf::output_gmio::create("gmioOut",64,1000);
+		gmioIn = adf::input_gmio::create("gmioIn",64,1000);
+	
+		adf::connect<adf::window<1024,32>>(gmioIn.out[0], k_m.in[0]);
+		adf::connect<adf::window<1024>>(k_m.out[0], gmioOut.in[0]);
+		adf::source(k_m) = "weighted_sum.cc";
+		adf::runtime<adf::ratio>(k_m)= 0.9;
+	  };
+	};
 
-Examine the host code in `aie/graph.cpp`. It is seen that two `GMIO` ports, `gmioIn` and `gmioOut`, are instantiated and they are connected to the platform input and output. Then the graph is instantiated and connected to the platform.
+The GMIO ports `gmioIn` and `gmioOut`, are created and connected as follows:
 
-    using namespace adf;
-    GMIO gmioIn("gmioIn",64,1000);
-    GMIO gmioOut("gmioOut",64,1000);
-    adf::simulation::platform<1,1> platform(&gmioIn,&gmioOut);
-    mygraph gr;
-    adf::connect<> net0(gr.out, platform.sink[0]);
-    adf::connect<> net1(platform.src[0], gr.din);
+	gmioOut = adf::output_gmio::create("gmioOut",64,1000);
+	gmioIn = adf::input_gmio::create("gmioIn",64,1000);
 
-The GMIO instantiation `gmioIn` represents the DDR memory space to be read by the AI Engine and `gmioOut` represents the DDR memory space to be written by the AI Engine. The constructor specifies the logical name of the GMIO, burst length (that can be 64,
+	adf::connect<adf::window<1024,32>>(gmioIn.out[0], k_m.in[0]);
+	adf::connect<adf::window<1024>>(k_m.out[0], gmioOut.in[0]);
+
+The GMIO instantiation `gmioIn` represents the DDR memory space to be read by the AI Engine and `gmioOut` represents the DDR memory space to be written by the AI Engine. The creator specifies the logical name of the GMIO, burst length (that can be 64,
 128, or 256 bytes) of the memory-mapped AXI4 transaction, and the required bandwidth in MB/s (here 1000 MB/s).
 
-Inside the main function, two 256-element int32 arrays (1024 bytes) are allocated by `GMIO::malloc`. The `dinArray` points to the memory space to be read by the AI Engine and the `doutArray` points to the memory space to be written by the AI Engine. In Linux, the vitual address passed to `GMIO::gm2aie_nb`, `GMIO::aie2gm_nb`, `GMIO::gm2aie`, and `GMIO::aie2gm` must be allocated by `GMIO::malloc`. After the input data is allocated, it can be initialized.
+Inside the main function of `aie/graph.cpp`, two 256-element int32 arrays (1024 bytes) are allocated by `GMIO::malloc`. The `dinArray` points to the memory space to be read by the AI Engine and the `doutArray` points to the memory space to be written by the AI Engine. In Linux, the vitual address passed to `GMIO::gm2aie_nb`, `GMIO::aie2gm_nb`, `GMIO::gm2aie`, and `GMIO::aie2gm` must be allocated by `GMIO::malloc`. After the input data is allocated, it can be initialized.
 
     int32* dinArray=(int32*)GMIO::malloc(BLOCK_SIZE_in_Bytes);
     int32* doutArray=(int32*)GMIO::malloc(BLOCK_SIZE_in_Bytes);
@@ -61,9 +64,9 @@ Inside the main function, two 256-element int32 arrays (1024 bytes) are allocate
 
 `GMIO::gm2aie` and `GMIO::gm2aie_nb` are used to initiate read transfers from the AI Engine to DDR memory using memory-mapped AXI transactions. The first argument in `GMIO::gm2aie` and `GMIO::gm2aie_nb` is the pointer to the start address of the memory space for the transaction (here `dinArray`). The second argument is the transaction size in bytes. The memory space for the transaction must be within the memory space allocated by `GMIO::malloc`. Similarly, `GMIO::aie2gm` and `GMIO::aie2gm_nb` are used to initiate write transfers from the AI Engine to DDR memory. `GMIO::gm2aie_nb` and `GMIO::aie2gm_nb` are non-blocking functions that return immediately when the transaction is issued - they do not wait for the transaction to complete. In contrast, the functions, `GMIO::gm2aie` and `GMIO::aie2gm` behave in a blocking manner.
 
-    gmioIn.gm2aie(dinArray,BLOCK_SIZE_in_Bytes);
+    gr.gmioIn.gm2aie(dinArray,BLOCK_SIZE_in_Bytes);
     gr.run(ITERATION);
-    gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);
+    gr.gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);
 
 The blocking transfer (`gmioIn.gm2aie`) has to be completed before `gr.run()` because the GMIO transfer is in synchronous mode here. But the window input of the graph (in PING-PONG manner by default) has only two buffers to store the received data. This means that at the maximum, two blocks of window input data can be transferred by GMIO blocking transfer. Otherwise, the `GMIO::gm2aie` will block the design. In this example program, `ITERATION` is set to one.
 
@@ -79,9 +82,9 @@ In the example program, the design runs four iterations in a loop. In the loop, 
         dinArray[j]=j+i;
       }
 
-      gmioIn.gm2aie(dinArray,BLOCK_SIZE_in_Bytes);
+      gr.gmioIn.gm2aie(dinArray,BLOCK_SIZE_in_Bytes);
       gr.run(ITERATION);
-      gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);
+      gr.gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);
 
       //post-processing
       ref_func(dinArray,coeff,doutRef,ITERATION*1024/4);
@@ -118,13 +121,13 @@ In the previous step, it was identified that the sequential manner of data trans
 
 Besides the kernel update, we try to do asynchronous GMIO transfers for inputs, but leave synchronous GMIO transfers for outputs in this step. The purpose of mixing synchronous and asynchronous GMIO transfers is to overlap data transfer and kernel execution. Thus, the performance is further improved.
 
-Examine the code in main function `aie/graph.cpp`. This time `ITERATION` is four, and graph is executed by four iterations with `gr.run(ITERATION)` and the GMIO transaction from memory to AI Engine is through non-blocking GMIO API `gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);`. It does not block the following executions. However, we will keep using blocking GMIO API for output data.
+Examine the code in main function `aie/graph.cpp`. This time `ITERATION` is four, and graph is executed by four iterations with `gr.run(ITERATION)` and the GMIO transaction from memory to AI Engine is through non-blocking GMIO API `gr.gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);`. It does not block the following executions. However, we will keep using blocking GMIO API for output data.
 
 	//pre-processing
 	...
-	gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks input data at a time
+	gr.gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks input data at a time
 	gr.run(ITERATION); //ITERATION=4
-	gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks output data at a time
+	gr.gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks output data at a time
 	...
 	//post-processing
 
@@ -150,13 +153,13 @@ In this step, we will see how to asynchronously transfer output data with non-bl
 
 Change the working directory to `single_aie_gmio/step3`. Examine `aie/graph.cpp`. The main difference in code is as follows:
 
-	gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks input data at a time
+	gr.gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks input data at a time
 	gr.run(ITERATION);
-	gmioOut.aie2gm_nb(doutArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks output data at a time
+	gr.gmioOut.aie2gm_nb(doutArray,BLOCK_SIZE_in_Bytes);//Transfer all blocks output data at a time
 	//PS can do other tasks here when data is transferring
-	gmioOut.wait();
+	gr.gmioOut.wait();
 
-__Note:__ `gmioOut.aie2gm_nb()` will return immediately after it has been called without waiting for the data transfer to be completed. PS can do other tasks after non-blocking API call when data is transferring. Then, it needs `gmioOut.wait();` to do the data synchronization. After `GMIO::wait`, the output data is in memory and can be processed by the host application.
+__Note:__ `gr.gmioOut.aie2gm_nb()` will return immediately after it has been called without waiting for the data transfer to be completed. PS can do other tasks after non-blocking API call when data is transferring. Then, it needs `gr.gmioOut.wait();` to do the data synchronization. After `GMIO::wait`, the output data is in memory and can be processed by the host application.
 
 To make GMIO work in hardware flow, the following code needs to be added to the main function before graph execution and GMIO data transfer:
 

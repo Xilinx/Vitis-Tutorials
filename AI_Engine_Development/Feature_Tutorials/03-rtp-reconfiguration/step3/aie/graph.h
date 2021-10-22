@@ -20,29 +20,32 @@ class adaptive_graph : public graph
 {
 public:
     port<direction::in> coefficients;
-    port<direction::in> in;
+    input_plio in;
 
     // This is the hierachical port used to send output samples to the platform
-    port<direction::out> dataout;
+    output_plio dataout;
 
     // Declare the filter kernel
     kernel fir24;
 
     adaptive_graph()
     {
-      // Initialize the kernels
-      fir24 = kernel::create(fir24_sym);
+		// Initialize the kernels
+		fir24 = kernel::create(fir24_sym);
 
-      // Set a runtime ratio for the filter
-      runtime<ratio>(fir24) = 0.5;
+		in=input_plio::create("Datain0", plio_32_bits,  "data/input.txt");
+		dataout=output_plio::create("Dataout0", plio_32_bits,  "data/output.txt");
 
-      // Declare the sources for the two kernels
-      source(fir24) = "kernels/hb24.cc";
+		// Set a runtime ratio for the filter
+		runtime<ratio>(fir24) = 0.5;
 
-      // connect filter coefficients
-      connect< parameter >(coefficients, async(fir24.in[1]));
-      connect< stream, window<256, 96> >(in, fir24.in[0]);
-      connect< window<256> >(fir24.out[0], dataout);
+		// Declare the sources for the two kernels
+		source(fir24) = "kernels/hb24.cc";
+
+		// connect filter coefficients
+		connect< parameter >(coefficients, async(fir24.in[1]));
+		connect< stream, window<256, 96> >(in.out[0], fir24.in[0]);
+		connect< window<256> >(fir24.out[0], dataout.in[0]);
     }
 };
 

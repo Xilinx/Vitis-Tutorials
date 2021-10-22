@@ -13,7 +13,5 @@ limitations under the License.
 #ifndef __KERNEL_H__
 #define __KERNEL_H__
 #include <adf.h>
-#include <ap_int.h>
-#include <hls_stream.h>
-void vec_incr(input_window_int32* data,output_window_int32* out);
+void vec_incr(input_window<int32>* data,output_window<int32>* out);
 #endif
