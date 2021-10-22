@@ -20,7 +20,6 @@ ECHO                     = @echo
 REQUIRED_VERSION         = 2021.1
 VIVADO_VERSION          := $(shell vivado -version 2>/dev/null | grep "Vivado ")
 VITIS_VERSION           := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
-PETALINUX_VERSION       := $(shell which petalinux-build)
 
 export PLATFORM_CUSTOM  := vck190_thin
 export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S-es1
@@ -89,10 +88,10 @@ endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VIVADO_VERSION)))
 	$(ECHO) "Vivado: $(REQUIRED_VERSION) not found"; exit 1
 endif
-ifndef PETALINUX_VERSION
+ifndef PETALINUX_VER
 	$(ECHO) "Petalinux: not found"; exit 1
 endif
-ifeq (,$(findstring $(REQUIRED_VERSION),$(PETALINUX_VERSION)))
+ifeq (,$(findstring $(REQUIRED_VERSION),$(PETALINUX_VER)))
 	$(ECHO) "Petalinux: $(REQUIRED_VERSION) not found"; exit 1
 endif
 ifndef VITIS_VERSION
