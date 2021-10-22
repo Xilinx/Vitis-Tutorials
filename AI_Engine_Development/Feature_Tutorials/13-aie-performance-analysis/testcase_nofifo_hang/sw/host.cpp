@@ -89,7 +89,7 @@ int run(int argc, char* argv[]){
 	int match = 0;
 	for (int i = 0; i < OUTPUT_SIZE; i++) {
 		if(host_in[i]*2!=host_out[i]){
-			std::cout<<"ERROR: i="<<i<<" gold="<<host_in[i]*2<<" out="<<host_out[i]<<std::endl;
+			std::cout<<"Expected mis-match: i="<<i<<" gold="<<host_in[i]*2<<" out="<<host_out[i]<<std::endl;
 			match=1;
 			break;
 		}
