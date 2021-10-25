@@ -24,7 +24,7 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 
 To target the VCK190 production board, modify `PLATFORM` variable in the `Makefile`(s) to:
 
-    PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
+    PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
     
 ## Objectives
 After completing this tutorial, you will be able to:
