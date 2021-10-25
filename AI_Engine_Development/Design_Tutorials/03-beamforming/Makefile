@@ -19,16 +19,14 @@
 # ---------------------------------
 .PHONY: all clean step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8
 
-EMBEDDED_PACKAGE_OUT=./out_dir
-EMBEDDED_EXEC_SCRIPT=./run_script_beamforming.sh
 
 RELATIVE_PROJECT_DIR := ./
-
+TARGET := hw
 #absolute beamforming directory = <user path>/Tutorials/AI_Engine/beamforming
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 BUILD_DIR 	:= $(PROJECT_DIR)/build
 
-EMBEDDED_PACKAGE_OUT = $(BUILD_DIR)/$(TARGET)/package
+EMBEDDED_PACKAGE_OUT = $(PROJECT_DIR)/Module_09_Running_the_Linux_System/build/package_$(TARGET)
 EMBEDDED_EXEC_SCRIPT = run_script_beamforming.sh
 PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)
 SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd_file))
@@ -44,9 +42,9 @@ sd_card: all
 
 
 ifeq (${TEST}, SPRITE)
-all: step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8
+all: step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8 step8b
 else
-all: step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8
+all: step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8 step8b
 endif
 
 
@@ -64,7 +62,7 @@ step3:
 
 SHELL := /bin/bash
 step3b:
-	source /proj/xbuilds/2021.1_daily_latest/xbb/xrt/packages/setenv.sh && $(MAKE) -C Module_04_AI_Engine_and_PL_Integration xclbin TARGET=hw_emu REV=rev1
+	source /proj/xbuilds/2021.2_daily_latest/xbb/xrt/packages/setenv.sh && $(MAKE) -C Module_04_AI_Engine_and_PL_Integration xclbin TARGET=hw_emu REV=rev1
 
 step4:
 	$(MAKE) -C Module_05_Baremetal_Host_Application application MAIN=main_partial
@@ -83,7 +81,11 @@ step7:
 	$(MAKE) -C Module_08_Linux_SW_Application exe
 
 step8:
-	$(MAKE) -C Module_09_Running_the_Linux_System package
+	$(MAKE) -C Module_09_Running_the_Linux_System package TARGET=hw 
+
+step8b:
+	$(MAKE) -C Module_09_Running_the_Linux_System package TARGET=hw_emu
+
 
 run_emu:
 	$(MAKE) -C Module_09_Running_the_Linux_System run_emu
