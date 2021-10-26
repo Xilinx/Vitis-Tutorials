@@ -19,7 +19,6 @@ ECHO=@echo
 TARGET            := hw
 PLATFORM_CUSTOM   ?= vck190_thin
 BASE_PFM          ?= ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
-SYSTEM_CFG        := ./src/system.cfg
 XPFM              := ../${BASE_PFM}
 PETALINUX_IMAGES  := ../petalinux/linux/images/linux
 KERNEL            := vadd
@@ -31,6 +30,12 @@ PS_APPS_DIR       := ../ps_apps
 PS_EXE            := $(wildcard ${PS_APPS_DIR}/*.exe)
 PS_APPS           := $(addprefix --package.sd_file=, ${PS_EXE})
 SD_CARD           := ../package_output
+
+ifeq (${ILA_EN}, 1)  
+    SYSTEM_CFG := $(notdir $(wildcard ./src/*.cfg) )
+else 
+    SYSTEM_CFG := system.cfg
+endif
 
 .PHONY: clean all
 
@@ -45,10 +50,11 @@ help::
 all: ${XCLBIN} ${SD_CARD}
 
 ${XCLBIN}: ${XO}
-	v++ -l -t ${TARGET} --save-temps --platform ${XPFM} --config ${SYSTEM_CFG} ${XO} ${GRAPH_O} -o ${XCLBIN} |& tee ${VPP}_link.log
+	v++ -l -t ${TARGET} -g --save-temps --platform ${XPFM} $(SYSTEM_CFG:%=--config ./src/%)   ${XO} ${GRAPH_O} -o ${XCLBIN} |& tee vpp_link.log
 
 ${SD_CARD}: ${XCLBIN} ${PS_EXE} ${GRAPH_O}
-	v++ -p --package.out_dir ${SD_CARD} -t ${TARGET} --save-temps -f ${XPFM} --package.image_format=fat32 --package.boot_mode=sd --package.rootfs=${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  --package.kernel_image=${PETALINUX_IMAGES}/Image ${XCLBIN} ${GRAPH_O} ${PS_APPS}
+	v++ -p --package.out_dir ${SD_CARD} -t ${TARGET} -g --save-temps -f ${XPFM} --package.image_format=fat32 --package.boot_mode=sd --package.rootfs=${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  --package.kernel_image=${PETALINUX_IMAGES}/Image ${XCLBIN} ${GRAPH_O} ${PS_APPS} |& tee vpp_pack.log
+	if [ -e my.ltx ] ; then cp -f my.ltx $(SD_CARD)/probe_0.ltx ; else echo "no probe_0 ltx file" ; fi 
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
 
 clean:
