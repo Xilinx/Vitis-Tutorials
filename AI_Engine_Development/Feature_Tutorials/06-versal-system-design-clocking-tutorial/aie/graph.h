@@ -28,17 +28,17 @@ class clipped : public graph {
   private:
     kernel interpolator;
     kernel classify;
-    kernel clip;
+    //kernel clip;
    
   public:
     port<input> in;
-    //port<output> clip_in;
+    port<output> clip_in;
     port<output> out;
-    //port<input> clip_out;
+    port<input> clip_out;
 
     clipped() {
       interpolator = kernel::create(fir_27t_sym_hb_2i);
-      clip         = kernel::create(polar_clip);
+      //clip         = kernel::create(polar_clip);
       classify     = kernel::create(classifier);
 
       //fabric<pl>(clip);
@@ -46,21 +46,21 @@ class clipped : public graph {
       connect< window<INTERPOLATOR27_INPUT_BLOCK_SIZE, INTERPOLATOR27_INPUT_MARGIN> >(in, interpolator.in[0]);
       
       //Win 2 STREAM
-      connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip.in[0]);
+      //connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip.in[0]);
       
 
       //Win 2 Win
       //connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE> >(interpolator.out[0], clip.in[0]);
       
-      //connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip_in);
+      connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip_in);
 
       //connect<window<POLAR_CLIP_INPUT_BLOCK_SIZE>>(clip.out[0], classify.in[0]);
       
       
-      connect< stream>(clip.out[0], classify.in[0]);
+      //connect< stream>(clip.out[0], classify.in[0]);
       
       
-      //connect< stream >(clip_out, classify.in[0]);
+      connect< stream >(clip_out, classify.in[0]);
       connect< window<CLASSIFIER_OUTPUT_BLOCK_SIZE> >(classify.out[0], out);
 
       std::vector<std::string> myheaders;
@@ -70,11 +70,11 @@ class clipped : public graph {
       adf::headers(classify) = myheaders;
 
       source(interpolator) = "kernels/interpolators/hb27_2i.cc";
-      source(clip)         = "kernels/polar_clip.cpp";
+      //source(clip)         = "kernels/polar_clip.cpp";
       source(classify)    = "kernels/classifiers/classify.cc";
 
       runtime<ratio>(interpolator) = 0.8;
-      runtime<ratio>(clip) = 0.8;
+      //runtime<ratio>(clip) = 0.8;
       runtime<ratio>(classify) = 0.8;
     };
 };

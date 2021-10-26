@@ -14,8 +14,8 @@ EMU_CMD := ./launch_hw_emu.sh
 GRAPH := aie/graph.cpp
 GRAPH_O := libadf.a
 
-KERNEL := s2mm.cpp mm2s.cpp
-KERNEL_XO := s2mm.xo mm2s.xo
+KERNEL := s2mm.cpp mm2s.cpp polar_clip.cpp
+KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
 # Command-line options
@@ -81,6 +81,8 @@ all: kernels aie aiesim xclbin host package
 
 run: all
 sd_card: all
+
+CXX = $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 
 ######################################################
 # This step compiles the HLS C kernels and creates an ADF Graph

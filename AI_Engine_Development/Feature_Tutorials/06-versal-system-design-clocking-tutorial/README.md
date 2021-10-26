@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -27,14 +27,14 @@ In the design the following clocking steps are used:
 | --- | --- |
 | Interpolator, Polar Clip, & Classifier | AI Engine Frequency (1 GHz) |
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
-For detailed information, see the Clocking the PL Kernels section [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html?hl=default%2Ckernel%2Cclocks).
+For detailed information, see the Clocking the PL Kernels section [here](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/integrate_ai_engine_application.html?hl=default%2Ckernel%2Cclocks).
 
-**IMPORTANT**: Before beginning the tutorial, make sure to read and follow the *Vitis Software Platform Release Notes* (v2021.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure to read and follow the *Vitis Software Platform Release Notes* (v2021.2) for setting up software and installing the VCK190 base platform.
 
 Run the following steps before starting this tutorial:
 
-1. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
-2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2021.1` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
+2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2021.2` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
@@ -95,7 +95,7 @@ A brief explanation of the `v++` options:
 | `-o` | (required) The output, which will always be `.xo`.|
 | `--save-temps` | (optional) Will create a folder structure and save the compilation of the kernel.|
 
-For additional information, see [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).
+For additional information, see [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html).
 
 After completion, you will have the `mm2s.xo`, `s2mm.xo`, `polar_clip.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
 
@@ -126,7 +126,7 @@ Here you may notice some connectivity and clocking options.
  * `nk` -- This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
  * `stream_connect` -- This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces. You can also define a FIFO on this line by adding a depth value to the end.
 
-There are many more options available for `v++`. For a full list, see the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).
+There are many more options available for `v++`. For a full list, see the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html).
 
 1. Modify the `system.cfg` file so that the second `stream_connect` has a stream depth of `1024`. Replace the line with `ai_engine_0.Dataout` line with this: `stream_connect=ai_engine_0.Dataout:s2mm.s:1024`
    * Keep this file open for now.
@@ -164,14 +164,14 @@ There are many more options available for `v++`. For a full list, see the docume
    * From the changes made in the previous steps, you will notice a new clock, Datawidth Converter, Clock Converter, and a new FIFO on the `s2mm` kernel.
       * Do note that if you change a kernel or connectivity you have to re-run the `v++` linker.
 
-**NOTE: Any change to the `system.cfg` file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html).**
+**NOTE: Any change to the `system.cfg` file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html).**
 
 ## Step 4 - Compiling Host Code
 When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SDKTARGETSYSROOT** or representation of the root file system, that can be used to cross-compile the host code.
 
 1. Open `./sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
 
-    Do take note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application see [Programming the PS Host Application](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/program_ps_host_application.html#ykt1590616160037).
+    Do take note that [XRT](https://xilinx.github.io/XRT/2021.2/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application see [Programming the PS Host Application](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/program_ps_host_application.html#ykt1590616160037).
 
     The output size of the kernel run is half of what was allocated earlier. This is something to keep in mind. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call will be adjusted. If this is not changed, it will hang because XRT is waiting for the full length to be processed when in reality half the count was done (even though all the data will be present). In the `host.cpp` look at line 117 and 118 and comment them out. You should have uncommented the following line:
 
@@ -179,9 +179,9 @@ When the `v++` linker is complete, you can compile the host code that will run o
    xrtRunHandle s2mm_rhdl = xrtKernelRun(s2mm_khdl, out_bohdl, nullptr, sizeOut/2);
    ```
 
-2. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS` and `GCC_LLIBS`.
+2. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS` and `GCC_LIB`.
    * `GCC_FLAGS` -- Should be self-explanatory that you will be compiling this code with C++.
-   * `GCC_LLIBS` -- Has the list of all the specific libraries you will be compiling and linking with. This is the minimum list of libraries needed to compile an AI Engine application for Linux.
+   * `GCC_LIB`   -- Has the list of all the specific libraries you will be compiling and linking with. This is the minimum list of libraries needed to compile an AI Engine application for Linux.
 3. Close the makefile and run the command: `make host`.
 
 With the host application fully compiled, you can now move to packaging the entire system.
@@ -192,7 +192,7 @@ To run the design on hardware using an SD card, you need to package all the file
 1. Open the `Makefile` with your editor of choice, and familiarize yourself with the contents specific to the `package` task.
 2. In an easier to read command-line view, here is the command:
     ```bash
-    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm \
+    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm \
         --package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
 		--package.boot_mode=sd \
@@ -234,7 +234,7 @@ When running the VCK190 board, make sure you have the right onboard switches fli
 
 ## Challenge (Optional)
 ### Build the design for Hardware Emulation
-Modifying the target for both **Step 3** and **Step 4**, link and package a design for hardware emulation, and run the emulation with the generated script, `launch_hw_emu.sh`.
+Modifying the target for both **Step 3** and **Step 5**, link and package a design for hardware emulation, and run the emulation with the generated script, `launch_hw_emu.sh`.
 
 ## Summary
 In this tutorial you learned the following:
