@@ -605,7 +605,7 @@ The error can be ignored. Press <enter> to return to the root prompt.
 After the root prompt displays, run the following commands to run the design:  
 ```
 cd /mnt/sd-mmcblk0p1
-export XLC_EMULATION_MODE=hw_emu
+export XCL_EMULATION_MODE=hw_emu
 export XILINX_XRT=/usr
 ./lenet_xrt.elf a.xclbin
 ```
