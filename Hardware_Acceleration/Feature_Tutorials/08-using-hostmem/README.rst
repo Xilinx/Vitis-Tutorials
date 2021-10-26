@@ -65,9 +65,9 @@ This tutorial needs two kernel XCLBINs with different connectivities.
 - XCLBIN 1: All the AXI master ports are connected to DDR banks 
 - XCLBIN 2: All the AXI master ports are connected to the host memory 
          
-Note and compare the kernel link configuration files for the above two cases.  The kernel link configuration file is the only difference between the two kernel compilation flows. The top portion of the .cfg files (``link.cfg`` and ``link_hm.cfg``) is the same where 15 CUs are named and placed in different SLRs. However, the bottom half of the .cfg files are different as shown below
+Note and compare the kernel link configuration files for the above two cases.  The kernel link configuration file is the only difference between the two kernel compilation flows. The top portion of the .cfg files (``./src/link.cfg`` and ``./src/link_hm.cfg``) is the same where 15 CUs are named and placed in different SLRs. However, the bottom half of the .cfg files are different as shown below
 
-The bottom half of the v++ link file ``link.cfg`` for DDR connected CUs
+The bottom half of the v++ link file ``./src/link.cfg`` for DDR connected CUs
 
 .. code:: 
 
@@ -90,7 +90,7 @@ The bottom half of the v++ link file ``link.cfg`` for DDR connected CUs
    sp=vadd_15.m_axi_gmem:DDR[3]
 
 
-The bottom half of the v++ link file ``link_hm.cfg`` for host memory connected CUs
+The bottom half of the v++ link file ``./src/link_hm.cfg`` for host memory connected CUs
 
 
 .. code:: 
@@ -114,23 +114,23 @@ The bottom half of the v++ link file ``link_hm.cfg`` for host memory connected C
    sp=vadd_15.m_axi_gmem:HOST[0]
 
 
-The Makefile is picking the ``link.cfg`` file by default. To build the DDR connected kernel XCLBIN simply do
+The Makefile is using ``./src/link.cfg`` file by default. To build the DDR connected kernel XCLBIN simply do
 
 .. code:: 
 
     make xclbin
     
-Upon completion, you will get the XCLBIN file ``vadd.hw.xclbin``. 
+Upon completion, you will get the XCLBIN file ``vadd.hw.run1.xclbin``. The Makefile specifies LAB=run1 as the default flow.
 
-Next, open the Makefile and change line 23 as below to change v++ configuration file
+Next, to change v++ configuration file simply run LAB=run2 as shown below:
 
 .. code::
 
-    VPP_LINK_OPTS := --config link_hm.cfg
+    make xclbin LAB=run2
+    
+Upon completion, you will get the XCLBIN file ``vadd.hw.run2.xclbin``. 
 
-You can also change the XCLBIN name (Makefile line 13) to provide a new name for this host memory connected XCLBIN. Generate new XCLBIN by the same makefile command as before. 
-
-Once we have two XCLBINs ready we can simply focus on running the application for the rest of this tutorial. 
+Once you have two XCLBINs ready you can simply focus on running the application for the rest of this tutorial. 
 
 
 Running the application 
@@ -139,14 +139,14 @@ Running the application
 
 **DDR Based Run**
 
-We will start with the DDR-based application to see the result. 
+You will start with the DDR-based application to see the result. 
 
 Compile and run the host code
 
 .. code:: 
 
-      make app
-      ./host.exe vadd.hw.xclbin
+      make exe
+      ./host.exe vadd.hw.run1.xclbin
 
 The run will take around 20+ seconds as this application is running for 20 seconds and counting the total number of CU executions during this time interval.  You will see an output similar below
 
@@ -177,18 +177,18 @@ The run will take around 20+ seconds as this application is running for 20 secon
 
 
     
-Please note that the number of exact kernel executions can be varied depending on the host server capability and you may see different numbers from the above. In our sample run above it shows that each CUs are executed almost same number of times (~2700) during the 20 second time interval. The total number of CU executions is around 40K. 
+Please note that the number of exact kernel executions can be varied depending on the host server capability and you may see different numbers from the above. In the sample run above it shows that each CUs are executed almost same number of times (~2700) during the 20 second time interval. The total number of CU executions is around 40K. 
 
 The host code also calculates the application throughput that depends on the number of total CU executions. As each CU processed 4MB of data the throughput of the application as calculated above is approximately 8GBPs
 
 
-We will invoke the ``vitis_analyzer`` by using the .run_summary file. 
+You will invoke the ``vitis_analyzer`` by using the .run_summary file. 
 
 .. code::
     
-    vitis_analyzer vadd.hw.xclbin.run_summary
+    vitis_analyzer vadd.hw.run1.xclbin.run_summary
     
-In the Profile Report tab, select **Profile Summary** from the left panel followed by **Kernel and Compute Units** section. You can see all the CU and their execution numbers that you have already seen from the stdout from the host application run. The below snapshot also shows every CU's average execution time close to 1ms. 
+In the Profile Report tab, select **Profile Summary** from the left panel followed by **Kernel and Compute Units** section. You can see all the CU and their execution numbers that you have already seen from the stdout from the host application run. The following snapshot also shows every CU's average execution time close to 1ms. 
 
 
 .. image:: images/ddr_profile.JPG
@@ -234,9 +234,14 @@ Before running the host memory-based application ensure that you have preconfigu
    
      sudo /opt/xilinx/xrt/bin/xbutil host_mem --enable --size 1G
      
-Change host code file in Makefile line 7, compile the host code by ``make app`` command. 
+Compile and run the host code
 
-A sample output from our run as below
+.. code:: 
+
+      make exe LAB=run2
+      ./host.exe vadd.hw.run2.xclbin
+
+A sample output from the run as below
 
 
 .. code::
@@ -265,12 +270,15 @@ A sample output from our run as below
       TEST SUCCESS
      
 
-As we can see from a sample run above the number of kernel executions has been increased in host memory setup thus increasing the throughput of the application to 10.7 GBPs
+As you can see from a sample run above the number of kernel executions has been increased in host memory setup thus increasing the throughput of the application to 10.7 GBPs
    
 Open the vitis_analyzer using the newly generated .run_summary file. 
 
+.. code::
+    
+    vitis_analyzer vadd.hw.run2.xclbin.run_summary
+    
 In the **Kernel and Compute Units** section you can see average CU execution times are now increased compared to the DDR-based run. Now CU takes more time as accessing the remote memory on the host machine is always slower than accessing on-chip memory on the FPGA card.  However, increasing CU time is not appearing as an overall negative result as the number of CU executions is increased for each CU. In a host memory-based application, the host CPU is not performing any data transfer operation. This can free up CPU cycles which can then otherwise used to increase the overall application performance. In this example, the free CPU cycles helped in processing more CU execution requests resulting in more accomplished data processing within the same period. 
-
 
 
 .. image:: images/hm_profile.JPG
@@ -278,7 +286,7 @@ In the **Kernel and Compute Units** section you can see average CU execution tim
 
 Unlike DDR-based applications, you cannot see the **Host Transfer** section inside the Profile report. As there are no data transfers initiated by the host machine, this report is not populated.  
  
-We can review Application timeline as below
+You can review Application timeline as below
 
 
 .. image:: images/at_hm.jpg
@@ -291,7 +299,7 @@ Hovering the mouse on one of the data transfers shows the type of Data transfer 
 Summary 
 =======
 
-In summary, we have reviewed the following takeaways in this tutorial
+In summary, you have reviewed the following takeaways in this tutorial
 
 - Easy migration from a DDR based application to a host memory-based application  
      

@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
@@ -124,17 +124,17 @@ For complete details on host code programming, refer to [Developing Applications
 
 ### Build the Application
 
-1. To build the application targeting software emulation, run the following makefile command from the `./reference-files/run1` directory.
+1. To build the application targeting software emulation, run the following makefile command from the `./reference-files` directory.
 
    ```bash
-   make all TARGET=sw_emu
+   make all TARGET=sw_emu LAB=run1
    ```
 
    This builds both the host software and hardware binary targeted to software emulation. The makefile will also generate the platform JSON emulation file to use during emulation.
 
 ### Run Emulation
 
-During emulation, you gather application timeline data, consisting of host and device events, which can be reviewed after emulation has completed on a common timeline. The Application Timeline data collection must be enabled before running the emulation by setting *opencl_trace=true* option in an `xrt.ini` file.  
+During emulation, you gather application timeline data, consisting of host and device events, which can be reviewed after emulation has completed on a common timeline. The Application Timeline data collection must be enabled before running the emulation by setting *opencl_trace=true* option in an `xrt.ini` file found in the `./reference-files` directory.  
 
   ```
   [Debug]
@@ -142,19 +142,12 @@ During emulation, you gather application timeline data, consisting of host and d
   opencl_trace=true
   ```
 
-This file has already been created and is in the `run1` and `run2` directories.
-
-1. To run software emulation on the design, set the XCL_EMULATION_MODE environment variable to run the following command.
+To run software emulation on the design, set the XCL_EMULATION_MODE environment variable and run the host application with the device binary:
 
    ```bash
    export XCL_EMULATION_MODE=sw_emu
-   ```
-
-2. From within the `run1` directory, to run software emulation, use the following command.
-
-   ```bash
    ./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin
-   ```  
+   ```
 
    When the application successfully completes, the following message is displayed in the Console window.
 
@@ -178,11 +171,11 @@ Review the Application Timeline generated during software emulation to visualize
 
 #### Putting it All Together
 
-For step 1, the following steps were performed. All commands are run in the `./reference-files/run1` directory:
+For step 1, the following steps were performed. All commands are run in the `./reference-files` directory:
 
 ```bash
 # Build the application
-make all TARGET=sw_emu
+make all TARGET=sw_emu LAB=run1
 
 # Set XCL_EMULATION_MODE environment variable for software emulation
 export XCL_EMULATION_MODE=sw_emu
@@ -198,7 +191,7 @@ vitis_analyzer xclbin.run_summary
 
 Now that you have successfully built and run an application with a C++ based kernel, update the application to include an RTL-based kernel.  
 
-Similar to the previous section, you will build, emulate, and review the generated Application Timeline. Regardless of how the kernels were designed, after the kernel has been built, the host code accesses the kernels through similar function calls.  
+Similar to the previous section, you will build, emulate, and review the generated Application Timeline. Regardless of how the kernels were designed, as HLS C/C++ kernels or as RTL kernels, after the kernel has been built the host application accesses the accelerated kernels through the same function calls.
 
 ### RTL-Based Kernel
 
@@ -293,24 +286,19 @@ q.enqueueTask(krnl_const_add);
 
 With the RTL-based kernel added and host code updated, build the application, targeting hardware emulation through the updated makefile in the `run2` directory. The makefile has been updated to add both the CPP and RTL-based kernels to the hardware platform file (`xclbin`).
 
-1. Navigate to the `./02-mixing-c-rtl-kernels/reference-files/run2` directory.
-2. To build the application targeting hardware emulation, run the following makefile from the `./reference-files/run2` directory.  
+1. Navigate to the `./02-mixing-c-rtl-kernels/reference-files` directory.
+2. To build the application targeting hardware emulation, run the following makefile from the `./reference-files` directory.  
 
    ```bash
-   make all TARGET=hw_emu
+   make all TARGET=hw_emu LAB=run2
    ```
 
-   As before, run emulation, and generate and review the Application Timeline by running the following commands from within the `run2` directory.
+   As before, run emulation, and generate and review the Application Timeline by running the following commands from within the `./reference-files` directory.
 
-3. Set XCL_EMULATION_MODE environment variable for hardware emulation.
+3. Set XCL_EMULATION_MODE environment variable for hardware emulation, and run the application.
 
    ```bash
    export XCL_EMULATION_MODE=hw_emu
-   ```
-
-4. Run hardware emulation.
-
-   ```
    ./host krnl_vadd.hw_emu.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin
    ```
 
@@ -351,4 +339,4 @@ With the understanding that Vitis compiler can use kernels from a variety of bui
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>

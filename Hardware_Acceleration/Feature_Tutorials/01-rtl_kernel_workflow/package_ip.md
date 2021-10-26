@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
@@ -12,9 +12,9 @@
 
 # Package IP/Package XO Flow
 
-The process described in this lab follows the Package IP/Package XO flow as described in the [RTL Kernel Development Flow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html;a=rzv1504034325561) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+The process described in this lab follows the Package IP flow as described in the [RTL Kernel Development Flow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html;a=rzv1504034325561) in the Vitis Application Acceleration Development Flow documentation (UG1393).
 
->**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/settingupvitisenvironment.html#zks1565446519267) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/settingupvitisenvironment.html#zks1565446519267).
 >
 >   ```bash
 >    #setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.
@@ -84,7 +84,7 @@ With the files added to your project, you can package the IP for use as a kernel
 1. To start this process, select **Tools** > **Create and Package New IP**.
 2. Click **Next**.
 3. Select **Package your current project**, and click **Next**.
-4. For IP location, take a look at the default location so you can see where your IP will be packaged. The specified location will be needed when running the `package_xo` command in a later step.
+4. For IP location, take a look at the default location so you can see where your IP will be packaged. 
 5. Click **Next**. 
    The Create and Package IP summary page is displayed. 
    ![Create and Package IP](./images/create_and_package_ip.png)  
@@ -97,22 +97,23 @@ With the files added to your project, you can package the IP for use as a kernel
 
 ## Specify the Control Protocol
 
-1. Under Packaging Steps, select **Compatibility**. This lets package the IP as a kernel object (.xo) for use in the Vitis tool flow, and also configures the specific Xilinx parts or device families compatible with your custom IP. 
-2. Enable **Package for Vitis**, and ensure that both **Package for IPI** and **Ignore Freq_Hz** are enabled as well. 
+1. Under Packaging Steps, select **Compatibility**.  
+2. Enable **Package for Vitis**, and ensure that both **Package for IPI** and **Ignore Freq_Hz** are enabled as well. This lets you package the IP as a kernel object (.xo) for use in the Vitis tool flow, and also configures the specific Xilinx parts or device families compatible with your custom IP.
 
    ![Package for Vitis](images/control_protocol.png)  
 
   Enabling the **Package for Vitis** checkbox lets you specify the **Control protocol** for the RTL kernel. The default is `ap_ctrl_hs`, but other protocols such as `user_managed` and `ap_ctrl_chain` are also suported as described in [Software Controllable Kernels](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/appdev.html#pto1621516421839). 
 
-3. Leave ap_ctrl_hs selected for this tutorial. The tool sets required properties for the Vitis kernel. 
+3. Select `user_managed` for this tutorial. The tool sets required properties for the Vitis kernel. 
 
 ```
 set_property sdx_kernel true [ipx::current_core]
 set_property sdx_kernel_type rtl [ipx::current_core]
-set_property vitis_drc {ctrl_protocol ap_ctrl_hs} [ipx::current_core]
 set_property ipi_drc {ignore_freq_hz true} [ipx::current_core]
+set_property vitis_drc {ctrl_protocol user_managed} [ipx::current_core]
 ```
- Notice that the **Ports and Interfaces** tab now shows a DRC error because of this setting. The error in this case is that the `s_axi_control` interface does not have a defined register which you will add shortly. 
+
+>**TIP**: Notice that the **Ports and Interfaces** tab now shows a DRC error because you have enabled the **Package for Vitis** checkbox. The error indicates that the Vitis compatible IP must have at least one AXIS (AXI-streaming) interface, or at least one defined register on the AXI slave interface. In this case the `s_axi_control` interface does not have a defined register which you will add shortly. 
 
 ## Edit Ports and Interfaces
 
@@ -122,20 +123,15 @@ set_property ipi_drc {ignore_freq_hz true} [ipx::current_core]
    The Associate Clocks dialog box displays the list of available clocks. In this case there is just the `ap_clk` interface to associate with the AXI interface. 
 
 3. Select `ap_clk` and click **OK**.
-4. Repeat the process to associate `ap_clk` with the `m01_axi` interface, the `s_axi_control` interface.
-
-5. Click **OK** to close the Edit Interface dialog box.
+4. Repeat the process to associate `ap_clk` with the `m01_axi` interface, and the `s_axi_control` interface.
 
 ## Add Control Registers and Address Offsets 
 
-You must also add the control registers and address offsets for the interfaces in the design. This can be done through the Addressing and Memory section of the Package IP window.  This requires a number of control registers to be added with the following attributes.
+To fix the error in the Ports and Interfaces window, you must add at least one register to the `s_axilite` interface. This can be done through the **Addressing and Memory** section of the Package IP window.  The user-managed kernel requires a number of registers to be added with the following attributes.
 
 Name | Description | Offset | Size (bits)
 -----|-------------|--------|-----
-CTRL | Control Signals | 0x000 | 32
-GIER | Global Interrupt Enable Register | 0x004 | 32
-IP_IER | IP Interrupt Enable Register | 0x008 | 32
-IP_ISR | IP Interrupt Status Register | 0x00C | 32
+USER_CTRL | Control Signals | 0x000 | 32
 scalar00 | Scalar values | 0x010 | 32
 A | pointer argument | 0x018 | 64
 B | pointer argument | 0x024 | 64
@@ -143,9 +139,9 @@ B | pointer argument | 0x024 | 64
 1. Under Packaging Steps, select **Addressing and Memory**. 
    This displays the Addressing and Memory window. 
 2. Under Address Blocks, right-click **reg0** and select **Add Reg**.
-3. Enter the name of the register in the Add Register dialog box, and click **OK**.
+3. Enter the name of the register in the Add Register dialog box, and click **OK**. Notice that the error on the Ports and Interfaces section goes away as you define the registers for the RTL kernel. 
 
-   >**TIP:** You will need to add registers for CTRL, GIER, and all the registers listed in the table above. You can also use the following Tcl commands in the Vivado Tcl Console to add the needed registers:
+   >**TIP:** You will need to add the registers listed in the table above. You can also use the following Tcl commands in the Vivado Tcl Console to add the needed registers:
    >
    ```
       ipx::add_register CTRL [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
@@ -157,70 +153,70 @@ B | pointer argument | 0x024 | 64
       ipx::add_register B [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
       ```
 
-   After adding the registers to the Addressing and Memory window (as shown in the following figure), you will need to add the descriptions, offset, and size to the registers. 
-
-    ![](images/address-memory-win.png)
+   After adding the registers to the Addressing and Memory window you will need to add the descriptions, offset, and size to the registers. 
 
 4. For each register, click in the **Description** field of the register and enter the description from the table above. 
 5. Click in the **Address Offset** field and enter the offset. 
 6. Click in the **Size** field and enter the field.
 
-   >**TIP:** Description is optional, but Offset and Size are required.
+   >**IMPORTANT:** Description is optional, but Offset and Size are required.
 
-   After completing the addition of the various registers and their attributes in accordance with the table above, you must also assign an M_AXI interface to each of the pointer arguments. 
+   After completing the addition of the various registers and their attributes in accordance with the table above, you must also associate an M_AXI interface with each of the pointer arguments. 
 
 7. Select register `A` in the Registers table, and right-click and select **Add Register Parameter**. 
    1. In the Add Register Parameter dialog box, add the ASSOCIATED_BUSIF parameter, and click **OK**.  
       This parameter associates the bus interface with the register.
    2. Repeat the prior two steps for register `B`.
    3. In the Value field for ASSOCIATED_BUSIF enter `m00_axi` for register `A`, and `m01_axi` for register `B`.
+   
+   Your finished results should appear similar to the image below: 
 
-Notice that the DRC error on the Ports and Interfaces goes away as you define the registers for the RTL kernel. 
+![](images/address-memory-win.png)
 
 ## Check Integrity, Assign Properties, and Package IP
 
 1. Under the Packaging Steps, Select **Review and Package**. 
    This displays the Review and Package window. You are now ready to package the IP. However, first check that an archive file will be generated when packaging the IP. This is the default behavior when **Package for Vitis** is enabled. 
 
-5. Look in the **After Packaging** section of the Review and Package window. If you see that an archive will not be generated, then you should enable the archive: 
+2. Look in the **After Packaging** section of the Review and Package window. If you see that an archive will not be generated, then you should enable the archive by selecting **Edit packaging settings**. This displays the Settings dialog box with the IP Package section displayed.
 
-6. In the Review and Package window, select **Edit packaging settings**. This displays the Settings dialog box with the IP Package section displayed.
-
-7. Under the After Packaging section of the dialog box, enable **Create archive of IP** as shown below, and click **OK**.
+  - Under the After Packaging section of the dialog box, enable **Create archive of IP** as shown below, and click **OK**.  You should see the **Review and Package** window change to reflect that an archive will now be created.
 
    ![Enable Archive](./images/enable_archive_settings.png)  
 
-   You should see the Review and Package window change to reflect that an archive will now be created.
-
-7. Click **Package IP**. 
+3. Click **Package IP**. 
 
    After packaging the IP you should see dialog box indicating that the IP packaged successfully. 
 
 With Package for Vitis enabled, the tool automatically runs the **package_xo** command to create the Vitis kernel (`.xo`) file. The `package_xo` command also packages the IP files and the `kernel.xml` file into the generated `.xo` file. You can examine the Tcl Console window to see that the `package_xo` command has been run. 
 
    ```
-   package_xo  -force -xo_path <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/IP  -ctrl_protocol ap_ctrl_hs
+   package_xo -xo_path <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/src/xo/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/src/IP -ctrl_protocol user_managed
    ```
 
    Where: 
    * **package_xo**: Command name to create a compiled object file (.xo) from the Vivado IP. 
-   * -**force**: overwrites existing kernel file if one exists. 
    * -**xo_path**: Path and name of the xo file
    * -**kernel_name**: Name of the kernel to create, and should match the RTL module name. 
    * -**ip_directory**: Path to look for the packaged Vivado IP. 
-   * -**ctrl_protocol**: Specifies the control protocol the kernel implements. This can be one of the supported control protocols, but in this tutorial it must be ap_ctrl_hs.
+   * -**ctrl_protocol**: Specifies the control protocol the kernel implements.
 
+4. However, for this RTL kernel you will be adding a C-model to enable software emulation as described in [Adding C-Models to RTL Kernels](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devrtlkernel.html#nuy1588349382079). This will require you to manually rerun the `package_xo` command, specifying the C-model using the `-kernel_files` option as shown below: 
 
->**TIP:** The `package_xo` command also has a -`kernel_xml` option to specify an existing `kernel.xml` file if desired. 
+   ```
+   package_xo -force -xo_path <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/src/xo/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/src/IP -ctrl_protocol user_managed -kernel_files ./reference-files/src/c-model/Vadd_A_B.cpp
+   ```
 
-2. After the `package_xo` command returns, navigate to the `reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports` folder and look at the `Vadd_A_B.xo` file. You can use this file in Vitis application acceleration flow as explained later in this tutorial.
+>**TIP:** You must use the `-force` option to overwrite an existing `.xo` file. 
+
+After the `package_xo` command returns, navigate to the `reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports` folder and look at the `Vadd_A_B.xo` file. You can use this file in the Vitis application acceleration flow as explained later in this tutorial.
 
 ## Next Steps
 
-Next, you will work through the [RTL Kernel Wizard Flow](./vitis_ide.md) flow. This recreates the Vitis kernel (`.xo`) file you just created, but you will use an alternative approach.
+Next, you will examine the [Host Application Coding](./host_code.md) required to integrate the user-managed RTL kernel into your accelerated application.
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
 

@@ -62,4 +62,9 @@ $(EMCONFIG_FILE):
 	$(EMCONFIGUTIL) --nd 1 --od . --platform $(DEVICE)
 
 run: $(XCLBIN) $(HOST_EXE) $(EMCONFIG_FILE)
-	XCL_EMULATION_MODE=${MODE} ./$(HOST_EXE) $(EXE_OPT)
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+	XCL_EMULATION_MODE=${TARGET} ./$(HOST_EXE) $(EXE_OPT)
+else
+	./$(HOST_EXE) $(EXE_OPT)
+endif
+

@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
@@ -97,7 +97,7 @@ The labs in this tutorial use:
 3. Run HW-Emulation by executing the makefile with the `check` option.
 
    ```bash
-   make check
+   make run
    ```
 
    After the simulation is complete, the following memory connections for the kernel data transfer are reported.
@@ -162,7 +162,7 @@ You will instruct the `v++` Kernel Linker to connect the kernel arguments to the
 
    ```bash
     make clean
-    make all
+    make all LAB=run2
     ```
 
    Again, observe the messages in the Console view during the link step; a message similar to the following displays.
@@ -184,7 +184,7 @@ You will instruct the `v++` Kernel Linker to connect the kernel arguments to the
 4. Run HW-Emulation, and verify the correctness of the design.
 
    ```bash
-   make check
+   make run LAB=run2
    ```
 
  After the simulation is complete, you can see the memory connections for the kernel data transfer reported as follows.
@@ -216,4 +216,4 @@ This tutorial showed you how to change the default mapping of ports `in1`, `in2`
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
