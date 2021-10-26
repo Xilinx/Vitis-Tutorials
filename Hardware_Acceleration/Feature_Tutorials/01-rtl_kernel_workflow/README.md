@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
@@ -14,18 +14,17 @@
 
 ## Tutorial Overview
 
-RTL designs that fit certain software and hardware interface requirements can be packaged into a Xilinx Object (`.xo`) file. This file can be linked into a binary container to create an `xclbin` file that the host code application uses to program the kernel into the FPGA.
+In the Vitis application acceleration development flow, as explained in [Kernel Properties](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/appdev.html#fiv1568160307462), RTL kernels can be user-managed kernels that do not adhere to XRT requirements for execution control, but rather implement any number of user-defined control schemes specified in the RTL design. RTL kernels can also adhere to the requirements of the `ap_ctrl_chain` or `ap_ctrl_hs` control protocols needed for XRT-managed kernels. That is, you can use an existing user-defined control scheme, or design your RTL to support the XRT control scheme. In this tutorial you will examine the process of packaging an existing RTL design with a user-managed control scheme into an RTL kernel, and review the host application requirements to integrate that kernel into your accelerated application. 
 
-This tutorial provides the following reference files:
+This tutorial includes an RTL design containing a simple vector accumulation example that performs a `B[i] = A[i]+B[i]` operation, which you will build into a Xilinx compiled object file (.xo) for use in the Vitis flow. It also contains a host application using the [XRT native API](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html) which interacts with the kernel. The host application:
 
-- A simple vector accumulation example that performs a `B[i] = A[i]+B[i]` operation.
-- A host application, which interacts with the kernel using OpenCL APIs:
+1. loads the device executable (`.xclbin`) into the Xilinx device on the accelerator platform
+2. identifies the kernel and implements the user-designed control structure
+3. creates read/write buffers to transfer data between global memory and the Xilinx device
+4. starts the RTL kernel on the accelerator target by writing to a register, and waits for the kernel to signal its completion by reading a register
+5. reads back the data to examine the results
 
-  - The host creates ready/write buffers to transfer the data between the host and the FPGA.
-  - The host enqueues the RTL kernel (executed on the FPGA), which reads the buffer of the DDR, performs `B[i] = A[i]+B[i]`, and then writes the result back to the DDR.
-  - The host reads back the data to compare the results.
-
-Using these reference files, the tutorial guides you from the first step of creating a Vitis™ IDE project to the final step of building and running your project.
+Using these reference files, the tutorial guides you through the process of building and running your project.
 
 ## Before You Begin
 
@@ -41,75 +40,42 @@ The labs in this tutorial use:
 
 ### Accessing the Tutorial Reference Files
 
-1. To access the reference files, type the following into a terminal: `git clone https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial.git`.
-2. Navigate to `Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/` directory, and then access the `reference-files` directory.
+1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`
+2. Navigate to `Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files` directory.
 
 ## Requirements for Using an RTL Design as an RTL Kernel
 
-To use an RTL kernel within the Vitis IDE, it must meet both the Vitis core development kit execution model and the hardware interface requirements as described in [RTL Kernels](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+To use an RTL kernel within the Vitis IDE, it must meet both the Vitis core development kit execution model and the hardware interface requirements as described in [RTL Kernels](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html) in the Vitis Application Acceleration Development Flow documentation (UG1393).
 
-### Kernel Execution Model
-
-RTL kernels uses the same software interface and execution model as C/C++ kernels. They are seen by the host application as functions with a void return value, scalar arguments, and pointer arguments. For instance:
-
-```
-void vadd_A_B(int *a, int *b, int scalar)
-```
-
-This implies that an RTL kernel has an execution model like a software function:
+RTL kernels can use the same software interface and execution model as C/C++ software functions. They are seen by the host application as functions with a void return value, scalar and pointer arguments.
 
 - It must start when called.
 - It is responsible for processing data to provide the necessary results.
 - It must send a notification when processing is complete.
 
-As described in [Supported Kernel Execution Models](https://xilinx.github.io/XRT/2021.1/html/xrt_kernel_executions.html), the Vitis core development kit execution models of `ap_ctrl_hs` and `ap_ctrl_chain` specifically rely on the following mechanics and assumptions:
+For instance, the function signature for the RTL kernel in this tutorial:
 
-- Scalar arguments are passed to the kernel through an AXI4-Lite slave interface.
-- Pointer arguments are transferred through global memory (DDR, HBM, or PLRAM).
-- Base addresses of pointer arguments are passed to the kernel through its AXI4-Lite slave interface.
-- Kernels access pointer arguments in global memory through one or more AXI4 master interfaces.
-- Kernels are started by the host application through its AXI4-Lite interface.
-- Kernels must notify the host application when they complete the operation through its AXI4-Lite interface or a special interrupt signal.
-
-### Hardware Interface Requirements
-
-To comply with the `ap_ctrl_hs` execution model, the RTL design in this tutorial satisfies the following specific hardware interface requirements:
-
-- One and only one AXI4-Lite slave interface used to access programmable registers (control registers, scalar arguments, and pointer base addresses).
-  - Offset `0x00` - Control Register: Controls and provides kernel status
-    - Bit `0`: **start signal**: Asserted by the host application when kernel can start processing data. Must be cleared when the **done** signal is asserted.
-    - Bit `1`: **done signal**: Asserted by the kernel when it has completed operation. Cleared on read.
-    - Bit `2`: **idle signal**: Asserted by this signal when it is not processing any data. The transition from Low to High should occur synchronously with the assertion of the **done** signal.
-  - Offset `0x04`- Global Interrupt Enable Register: Used to enable interrupt to the host.
-  - Offset `0x08`- IP Interrupt Enable Register: Used to control which IP generated signal is used to generate an interrupt.
-  - Offset `0x0C`- IP Interrupt Status Register: Provides interrupt status
-  - Offset `0x10` and above - Kernel Argument Register(s): Register for scalar parameters and base addresses for pointers.
-
-- One or more of the following interfaces:
-  - AXI4 master interface to communicate with global memory.
-    - All AXI4 master interfaces must have 64-bit addresses.
-    - The kernel developer is responsible for partitioning global memory spaces. Each partition in the global memory becomes a kernel argument. The base address (memory offset) for each partition must be set by a control register programmable through the AXI4-Lite slave interface.
-    - AXI4 masters must not use Wrap or Fixed burst types, and they must not use narrow (sub-size) bursts. This means that AxSIZE should match the width of the AXI data bus.
-    - Any user logic or RTL code that does not conform to the requirements above must be wrapped or bridged.
-  - AXI4-Stream interface to communicate with other kernels.
-
-If the original RTL design uses a different execution model or hardware interface, you must add logic to ensure that the design behaves in the expected manner and complies with interface requirements.
+```
+void vadd_A_B(int *a, int *b, int scalar)
+```
 
 ### Vector-Accumulate RTL IP
 
 For this tutorial, the Vector-Accumulate RTL IP performing `B[i]=A[i]+B[i]` meets all the requirements described above and has the following characteristics:
 
-- Two AXI4 memory mapped interfaces:
-  - One interface is used to read A
-  - One interface is used to read and write B
-  - The AXI4 masters used in this design do not use wrap, fixed, or narrow burst types.
-- An AXI4-Lite slave control interface:
-  - Control register at offset `0x00`
-  - Kernel argument register at offset `0x10` allowing the host to pass a scalar value to the kernel
-  - Kernel argument register at offset `0x18` allowing the host to pass the base address of A in global memory to the kernel
-  - Kernel argument register at offset `0x24` allowing the host to pass the base address of B in global memory to the kernel
+- An AXI4-Lite slave interface (`s_axilite`) used to access programmable registers (control registers, scalar arguments, and pointer base addresses).
+  - Offset `0x00` - Control Register: Controls and provides kernel status
+    - Bit `0`: **start signal**: Asserted by the host application when kernel can start processing data. Must be cleared when the **done** signal is asserted.
+    - Bit `1`: **done signal**: Asserted by the kernel when it has completed operation. Cleared on read.
+    - Bit `2`: **idle signal**: Asserted by this signal when it is not processing any data. The transition from Low to High should occur synchronously with the assertion of the **done** signal.
+  - Offset `0x10` Register for the scalar `size` argument
+  - Offset `0x18` Register specifying the base address for pointer argument `A`
+  - Offset `0x24` Register specifying the base address for pointer argument `B`
+- Two AXI4 memory mapped interfaces for the pointer arguments, `A` and `B`, used to communicate with global memory.
+    - All AXI4 master interfaces must have 64-bit addresses.
+    - The RTL designer is responsible for partitioning global memory spaces to specify the kernel arguments. The base address (memory offset) for each partition must be set by a control register programmable through the `s_axilite` interface as described above.
 
-These specifications serve as the basis for building your own RTL Kernel from an existing RTL module, or serve as inputs to the RTL Kernel Wizard.
+>**TIP:** If your original RTL design uses a different execution model or hardware interfaces, you must customize your host application to address the kernel as required or add logic to the kernel to ensure that the design behaves in an expected manner.
 
 ## Next Steps
 
@@ -122,4 +88,4 @@ This tutorial demonstrates how to package RTL IPs as Vitis kernels (`.xo`), and 
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>

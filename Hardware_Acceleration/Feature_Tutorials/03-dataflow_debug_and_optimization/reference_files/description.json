@@ -1,7 +1,7 @@
  {
     "name": "03-dataflow_debug_and_optimization",
     "description": "Vitis HLS Dataflow Deadlock Detection",
-    "flow": "vitis_hls",
+    "flow": "hls",
  
     "platform_whitelist": ["u200"],
     "platform_blacklist": ["u280"],

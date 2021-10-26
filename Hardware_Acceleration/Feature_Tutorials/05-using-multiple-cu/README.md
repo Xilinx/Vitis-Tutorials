@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
@@ -61,7 +61,7 @@ You can observe the Makefile used for this tutorial in `reference-files/Makefile
 
 * **VPP**: Vitis compiler path to compile the kernel code.
 * **EMCONFIGUTIL**: The path of the utility that creates emulation configuration file, `emconfig.json`.
-* **DSA**: The target platform.
+* **DEVICE**: The target platform.
 * **LFLAGS**: The linker option using the OpenCV library for the host code linker.  
 
    ```
@@ -75,7 +75,7 @@ You can observe the Makefile used for this tutorial in `reference-files/Makefile
 Run hardware emulation with the following command.
 
    ```
-   make check MODE=hw_emu
+   make run TARGET=hw_emu
    ```
 
 For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware model, which is run in a hardware simulator, while the rest of the system uses a C simulator. Building and running takes longer but provides a detailed, cycle-aware, view of kernel activity. This target is useful for testing the functionality of the logic that will run in the FPGA and for getting initial performance estimates.
@@ -129,7 +129,7 @@ For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware m
 
 ### Emulation Result
 
-Review the generated Timeline Trace report (`timeline_trace.csv`).
+Review the generated Timeline Trace report (`opencl_trace.csv`).
 
    ```
    vitis_analyzer filter2d.hw_emu.xclbin.run_summary
@@ -137,7 +137,7 @@ Review the generated Timeline Trace report (`timeline_trace.csv`).
 
    >**NOTE:** The run directory contains a file named `xrt.ini`. This file contains runtime options that generate additional reports such as the Profile Summary report and Timeline Trace.
 
-   After the Vitis analyzer loads, click **Application Timeline** located on the left side panel. The Application Timeline report collects and displays host and device events on a common timeline to help you understand and visualize the overall health and performance of your systems.
+   After the Vitis analyzer loads, click **Timeline Trace** located on the left side panel. The Application Timeline report collects and displays host and device events on a common timeline to help you understand and visualize the overall health and performance of your systems.
 
    * At the bottom of the timeline, you can see three blue bars, one for each kernel enqueing from the host. The host enqueues the kernel execution sequentially (in order) because it uses a single, in-order command queue.
    * After the blue bars, you can see three green bars, one for each kernel execution. They are working on the FPGA sequentially.
@@ -181,10 +181,10 @@ nk = Filter2DKernel:3
 
    ```
    make clean
-   make check MODE=hw_emu
+   make run MODE=hw_emu
    ```
 
-2. View the new `timeline_trace.csv` in the Vitis analyzer.
+2. View the new `xclbin.run_summary` in the Vitis analyzer.
 
   You can now see that the application takes advantage of the three CUs, and that the kernel executions overlaps and executes in parallel, speeding up the overall application.
 ![](./images/overlapping_kernels_vitis_2.JPG)
@@ -195,4 +195,4 @@ You have learned how to alter the kernel linking process to execute same kernel 
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
