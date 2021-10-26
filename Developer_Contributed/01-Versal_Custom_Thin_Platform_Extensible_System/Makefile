@@ -28,6 +28,7 @@ export XSA_PATH         := $(shell pwd)/platform/hw/build/
 export TARGET           := hw
 export PFM_EXPORT       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
 export BASE_PFM         := ${PFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+export ILA_EN           := 1
 
 BOARD_REPO              := platform/hw/board_repo
 

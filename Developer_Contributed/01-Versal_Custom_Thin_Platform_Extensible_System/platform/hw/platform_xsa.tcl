@@ -29,7 +29,7 @@ namespace eval _tcl {
 variable script_folder
 set script_folder [_tcl::get_script_folder]
 
-set_param board.repoPaths ../board_repo/boards/Xilinx/vck190
+set_param board.repoPaths ./board_repo/boards/Xilinx/vck190
 
 ## WORKAROUND - Hardcode platform and device name as tcl arguments is not passed properly to Vitis
 #set DEVICE_NAME [lindex $argv 0]
