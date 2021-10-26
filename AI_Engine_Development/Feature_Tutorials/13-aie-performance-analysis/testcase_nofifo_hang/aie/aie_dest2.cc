@@ -10,17 +10,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-#include <adf.h>
-__attribute__ ((noinline)) void aie_dest2(input_stream_int32 *in, input_window_int32 *inm, 
-        output_stream_int32 *outm){
-	v4int32 tmp;
-	v4int32 tmp2;
+#include <aie_api/aie.hpp>
+#include <aie_api/aie_adf.hpp>
+
+__attribute__ ((noinline)) void aie_dest2(input_stream<int32> *in, input_window<int32> *inm, 
+        output_stream<int32> *outm){
+	aie::vector<int32,4> tmp;
+	aie::vector<int32,4> tmp2;
 	for(int i=0;i<8;i++)
 	chess_prepare_for_pipelining
 	{
-		tmp=readincr_v4(in);
-		tmp2=window_readincr_v4(inm);
-		writeincr_v4(outm,tmp+tmp2);
+		tmp=readincr_v<4>(in);
+		tmp2=window_readincr_v<4>(inm);
+		writeincr(outm,tmp+tmp2);
 	}
 }
 

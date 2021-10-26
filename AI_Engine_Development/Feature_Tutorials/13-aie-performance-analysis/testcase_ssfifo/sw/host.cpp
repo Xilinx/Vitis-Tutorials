@@ -66,13 +66,14 @@ int run(int argc, char* argv[]){
 	adf::registerXRT(dhdl, uuid.get());
 	std::cout<<"Register XRT"<<std::endl;
 
-	event::handle handle = event::start_profiling(*dout, event::io_stream_start_to_bytes_transferred_cycles, output_size_in_bytes);
+	event::handle handle = event::start_profiling(gr.dataout, event::io_stream_start_to_bytes_transferred_cycles, output_size_in_bytes);
 	if(handle==event::invalid_handle){
 		printf("ERROR:Invalid handle. Only two performance counter in a AIE-PL interface tile\n");
 		return 1;
 	}
 
 	gr.run(iterations);
+	gr.end();
 	s2mm_run.wait();
 	// Wait graph for some cycles
 	long long cycle_count = event::read_profiling(handle);

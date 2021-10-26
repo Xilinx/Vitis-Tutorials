@@ -18,7 +18,7 @@ HOST_EXE = host.exe
 GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
 AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -v -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH} --pl-freq=250
-AIE_SIM_CMD = aiesimulator --pkg-dir=./Work --dump-vcd=foo --profile
+AIE_SIM_CMD = aiesimulator --pkg-dir=./Work --online -wdb -ctf --profile
 EMU_CMD = ./launch_hw_emu.sh
 
 ##########################################################################################################################################################
