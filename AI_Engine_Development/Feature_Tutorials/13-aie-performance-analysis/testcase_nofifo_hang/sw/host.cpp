@@ -25,7 +25,6 @@ limitations under the License.
 using namespace adf;
 
 int run(int argc, char* argv[]){
-
 	size_t output_size_in_bytes = OUTPUT_SIZE * sizeof(int);
 
 	//TARGET_DEVICE macro needs to be passed from gcc command line
@@ -62,8 +61,8 @@ int run(int argc, char* argv[]){
 	adf::registerXRT(dhdl, uuid.get());
 	std::cout<<"Register XRT"<<std::endl;
 
-	event::handle handle = event::start_profiling(*dout, event::io_stream_running_event_count);
-	event::handle handle2 = event::start_profiling(*din, event::io_stream_running_event_count);
+	event::handle handle = event::start_profiling(gr.dataout, event::io_stream_running_event_count);
+	event::handle handle2 = event::start_profiling(gr.in, event::io_stream_running_event_count);
 	if(handle==event::invalid_handle || handle2==event::invalid_handle){
 		printf("ERROR:Invalid handle. Only two performance counter in a AIE-PL interface tile\n");
 		return 1;
@@ -74,7 +73,7 @@ int run(int argc, char* argv[]){
 	auto mm2s_run = mm2s(in_bo, nullptr, OUTPUT_SIZE);
 	gr.run(4);
 	// Wait graph for some cycles
-	gr.wait(50000); // wait for AIE kernel to complete or at most 50000 cycles
+	gr.end(50000); // wait for AIE kernel to complete or at most 50000 cycles
 
 	long long data_out_count = event::read_profiling(handle);
 	long long data_in_count = event::read_profiling(handle2);

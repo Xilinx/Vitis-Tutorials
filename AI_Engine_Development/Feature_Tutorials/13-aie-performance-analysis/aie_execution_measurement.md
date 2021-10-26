@@ -39,39 +39,35 @@ There are two kernels, `aie_dest1` and `aie_dest2`, in the design. These two ker
 The input from the PL is connected to the ping-pong buffers `buf0` and `buf0d`, which are read by kernel `aie_dest1`. The output of kernel `aie_dest2` is connected to the PL through a stream connection.
 
 The code for `aie_dest1` is as follows:
-
     
-    __attribute__ ((noinline)) void aie_dest1(input_window_int32 *in, 
-            output_stream_int32 *out, output_window_int32 *outm){
-     v4int32 tmp;
-     for(int i=0;i<8;i++)
-     chess_prepare_for_pipelining
-     {
-      tmp=window_readincr_v4(in);
-      writeincr_v4(out,tmp);
-      window_writeincr(outm,tmp);
-     }
-    }
-    
+    __attribute__ ((noinline)) void aie_dest1(input_window<int32> *in, 
+        output_stream<int32> *out, output_window<int32> *outm){
+		aie::vector<int32,4> tmp;
+		for(int i=0;i<8;i++)
+		chess_prepare_for_pipelining
+		{
+			tmp=window_readincr_v<4>(in);
+			writeincr(out,tmp);
+			window_writeincr(outm,tmp);
+		}
+	}
 
 It reads 32 `int` values from the input window and writes them to the stream and window output. The `__attribute__ ((noinline))` command instructs the tool the keep the hierarchy of the kernel function.
 
 The code for `aie_dest2` is as follows:
 
-    
-    __attribute__ ((noinline)) void aie_dest2(input_stream_int32 *in, input_window_int32 *inm, 
-            output_stream_int32 *outm){
-     v4int32 tmp;
-     v4int32 tmp2;
-     for(int i=0;i<8;i++)
-     chess_prepare_for_pipelining
-     {
-      tmp=readincr_v4(in);
-      tmp2=window_readincr_v4(inm);
-      writeincr_v4(outm,tmp+tmp2);
-     }
-    }
-    
+    __attribute__ ((noinline)) void aie_dest2(input_stream<int32> *in, input_window<int32> *inm, 
+        output_stream<int32> *outm){
+		aie::vector<int32,4> tmp;
+		aie::vector<int32,4> tmp2;
+		for(int i=0;i<8;i++)
+		chess_prepare_for_pipelining
+		{
+			tmp=readincr_v<4>(in);
+			tmp2=window_readincr_v<4>(inm);
+			writeincr(outm,tmp+tmp2);
+		}
+	}
 
 It reads from the stream input and the window buffer, and writes to the stream output.
 
@@ -204,7 +200,6 @@ There are multiple ways to measure performance:
 
 5. The following methods are introduced in [AI Engine Performance Profile](https://github.com/Xilinx/Vitis-Tutorials/blob/master/AI_Engine_Development/Feature_Tutorials/02-using-gmio/perf_profile_aie_gmio.md): 
 
-    * Profiling by XRT `xrtGraphTimeStamp` API
     * Profiling by C++ class API
     * Profiling by AI Engine cycles from AI Engine kernels 
     * Profiling by event API
@@ -213,12 +208,11 @@ There are multiple ways to measure performance:
 
 In this section, the reference design is in `testcase_dmafifo_opt`. From performing the above analysis, it can be seen that the bottleneck of this design contains the following issues:
 
-- The interface bandwidth is not optimal. The design uses a PLIO width of 32 bits running at 250 MHz. Change it to 128 bits running at 250 MHz. The relevant code is in `aie/graph.cpp`:
+- The interface bandwidth is not optimal. The design uses a PLIO width of 32 bits running at 250 MHz. Change it to 128 bits running at 250 MHz. The relevant code is in `aie/graph.h`:
  
     ```
-    PLIO *din = new PLIO("Datain0", plio_128_bits,  "data/input.txt");
-    PLIO *dout = new PLIO("Dataout0", plio_128_bits,  "data/output.txt");
-    simulation::platform<1,1> plat(din, dout);
+	in=input_plio::create("Datain0", plio_128_bits,  "data/input.txt");
+	dataout=output_plio::create("Dataout0", plio_128_bits,  "data/output.txt");
     ```
  
 - The overhead of the graph iterations is too large. The hierarchy of the design should not be touched. Increase the window buffer size from 128 bits to 4096 bits. To avoid deadlock, the FIFO size also needs to be increased. The relevant code is in `aie/graph.h`:
@@ -236,20 +230,20 @@ In this section, the reference design is in `testcase_dmafifo_opt`. From perform
 - The kernel is not well pipelined. As well as increasing the loop count to deal with more data, more instructions should be added in the loop body and a `__restrict` keyword should be added to the ports to make the tool schedule instructions more freely. The optimized code for `aie_dest1` is as follows:
 
     ```
-    __attribute__ ((noinline)) void aie_dest1(input_window_int32 * __restrict in, 
-            output_stream_int32 * __restrict out, output_window_int32 * __restrict outm){
-     v4int32 tmp;
-     for(int i=0;i<128;i++)
-     chess_prepare_for_pipelining
-     {
-      tmp=window_readincr_v4(in);
-      writeincr_v4(out,tmp);
-      window_writeincr(outm,tmp);
-      tmp=window_readincr_v4(in);
-      writeincr_v4(out,tmp);
-      window_writeincr(outm,tmp);
-     }
-    }
+	__attribute__ ((noinline)) void aie_dest1(input_window<int32> * __restrict in, 
+	        output_stream<int32> * __restrict out, output_window<int32> * __restrict outm){
+		aie::vector<int32,4> tmp;
+		for(int i=0;i<128;i++)
+		chess_prepare_for_pipelining
+		{
+			tmp=window_readincr_v<4>(in);
+			writeincr(out,tmp);
+			window_writeincr(outm,tmp);
+			tmp=window_readincr_v<4>(in);
+			writeincr(out,tmp);
+			window_writeincr(outm,tmp);
+		}
+	}
     ```
 
     Similar optimization is done for `aie_dest2`. For more information about loop analysis and optimization, refer to the _AI Engine Kernel Coding Best Practices Guide_ ([UG1079](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1079-ai-engine-kernel-coding.pdf)).

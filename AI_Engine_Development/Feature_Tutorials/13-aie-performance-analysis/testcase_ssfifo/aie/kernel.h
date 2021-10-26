@@ -13,6 +13,6 @@ limitations under the License.
 #ifndef __KERNEL_H__
 #define __KERNEL_H__
 #include <adf.h>
-void aie_dest1(input_window_int32 *in, output_stream_int32 *out, output_window_int32 *outm);
-void aie_dest2(input_stream_int32 *in, input_window_int32 *inm, output_stream_int32 *outm);
+void aie_dest1(input_window<int32> *in, output_stream<int32> *out, output_window<int32> *outm);
+void aie_dest2(input_stream<int32> *in, input_window<int32> *inm, output_stream<int32> *outm);
 #endif

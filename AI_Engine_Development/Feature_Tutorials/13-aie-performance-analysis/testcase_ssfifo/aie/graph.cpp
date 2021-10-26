@@ -12,15 +12,8 @@ limitations under the License.
 **********/
 #include "graph.h"
 using namespace adf;
-PLIO *din = new PLIO("Datain0", plio_32_bits,  "data/input.txt");
-PLIO *dout = new PLIO("Dataout0", plio_32_bits,  "data/output.txt");
-simulation::platform<1,1> plat(din, dout);
 
 adaptive_graph gr;
-
-connect<> netin(plat.src[0],gr.in);
-connect<> netout(gr.dataout,plat.sink[0]);
-
 
 #if defined(__AIESIM__) || defined(__X86SIM__)
 int main(int argc, char **argv)
@@ -29,7 +22,7 @@ int main(int argc, char **argv)
 	int iterations=100;
 	int bytes_per_iteration=128;
 	int total_bytes=bytes_per_iteration * iterations;
-	event::handle handle = event::start_profiling(*dout, event::io_stream_start_to_bytes_transferred_cycles, total_bytes);
+	event::handle handle = event::start_profiling(gr.dataout, event::io_stream_start_to_bytes_transferred_cycles, total_bytes);
 	if(handle==event::invalid_handle){
 		printf("ERROR:Invalid handle. Only two performance counter in a AIE-PL interface tile\n");
 		return 1;

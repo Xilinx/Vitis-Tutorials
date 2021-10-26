@@ -18,7 +18,7 @@ This tutorial introduces you to some common deadlock scenarios and shows you how
 
 3. Using event APIs to analyze data activities for AI Engine input and output in hardware flows.
 
-4. Using `xbutil2` to report AI Engine and AI Engine shim status.
+4. Using `xbutil` to report AI Engine and AI Engine shim status.
 
 5. Using the `devmem` Linux command to probe AI Engine registers. 
 
@@ -82,6 +82,35 @@ The `CYCLE_NUMBER` should be large enough for AI Engine simulator to record all 
 
 	**4:** S2mm is waiting for kernel `aie_dest1` to release buffer `buf0`. 
 
+### AI Engine Stall Analysis with Vitis Analyzer
+
+Vitis Analyzer can utilize the event trace from AI Engine simulation to do stall analysis that shows an overview of the stall status in metrics. It also helps user detect where the stall happens and the possible causes.
+
+For Vitis Analyzer to do stall analysis, it’s advised to run AI Engine simulator with `--online -wdb -ctf` options to generate event trace information at the background:
+
+	aiesimulator --pkg-dir=./Work --online -wdb -ctf
+
+**Note:** For how to use AI Engine Stall Analysis with Vitis Analyzer feature in Hardware Emulation flow, please refer to *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
+
+In Vitis Analyzer, the `Performance Metrics` view give an overview of the stalls in the design:
+
+![Performance Metrics View](./images/a.PNG)
+
+It shows different stalls percentage in each tile. From the metrics table, it can see that tile (24,0) has large percentage of lock stall (99.161%) and tile (25,0) has large percentage of stream stall (98.627%). Those super large percentage of stalls usually means design hanging, which need to be analyzed.
+
+In `Graph` view of Vitis Analzyer, you can visualize the stalled path in the graph. It give indiations where the stall happens in the design. By knowing the design behavior, it can estimate what might be the cause of the hang. 
+
+For example, as following picture shows, in this design, kernel `k[0]` hangs in stream stall. The full destination port is `gr.k[1]/in`, which means that the destination kernel `k[1]` is not receiving data from the stream. 
+
+![Stream stall in Graph View](./images/b.PNG)
+
+Switch to `Lock Stalls` in `Stalls` view, and select the stall. The red path to kernel `k[1]` shows that it tries to acquire the lock of the input buffer, but without success. The blue path shows that kernel `k[0]` is holding the lock of the buffer.
+
+![Lock stall in Graph View](./images/c.PNG)
+
+From above analysis, it gives the cause of the hang. And the direct resolution without modifying kernel code should be increasing the fifo size between two kernels.
+
+For more information about AI Engine Stall Analysis feature, please refer to *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
 
 ## AI Engine Deadlock Detection in the Hardware Emulation Flow
 
@@ -158,16 +187,143 @@ If necessary, an Integrated Logic Analyzer (ILA) can be inserted to probe the in
 
 This section provides details of other methods of detecting and analyzing AI Engine running status.
 
-- **Using `xbutil2` to report graph running status:** The following command can be used to report graph running status：
+- **Using `xbutil` to report graph running status:** The following command can be used to report graph running status:
 
 	```
-	xbutil2 examine -r aie
+	xbutil examine -r aie -d 0000:00.0
 	```
-	`
-	![xbutil2 examine -r aie](./images/figure9a.PNG)
-	![xbutil2 examine -r aie](./images/figure9b.PNG)
-	![xbutil2 examine -r aie](./images/figure9c.PNG)
-	![xbutil2 examine -r aie](./images/figure9d.PNG)
+	
+	The output of above command is like:
+
+		--------------------------
+		1/1 [0000:00:00.0] : edge
+		--------------------------
+		Aie
+		  Aie_Metadata
+		  GRAPH[ 0] Name      : gr
+		            Status    : idle
+		    SNo.  Core [C:R]          Iteration_Memory [C:R]        Iteration_Memory_Addresses    
+		    [ 0]   24:1                24:0                          8324                          
+		    [ 1]   25:1                24:0                          7012                          
+		
+		Core [ 0]
+		    Column                : 24
+		    Row                   : 1
+		    Core:
+		        Status                : east_lock_stall
+		        Program Counter       : 0x000001f0
+		        Link Register         : 0x000000b0
+		        Stack Pointer         : 0x0003a100
+		    DMA:
+		        MM2S:
+		            Channel:
+		                Id                    : 0
+		                Channel Status        : idle
+		                Queue Size            : 0
+		                Queue Status          : okay
+		                Current BD            : 0
+		
+		                Id                    : 1
+		                Channel Status        : idle
+		                Queue Size            : 0
+		                Queue Status          : okay
+		                Current BD            : 0
+		
+		        S2MM:
+		            Channel:
+		                Id                    : 0
+		                Channel Status        : stalled_on_requesting_lock
+		                Queue Size            : 0
+		                Queue Status          : okay
+		                Current BD            : 0
+		
+		                Id                    : 1
+		                Channel Status        : idle
+		                Queue Size            : 0
+		                Queue Status          : okay
+		                Current BD            : 0
+		
+		    Locks:
+		        0                     : acquired_for_read
+		        1                     : released_for_read
+		        2                     : acquired_for_write
+		        3                     : released_for_write
+		        4                     : released_for_write
+		        5                     : released_for_write
+		        6                     : released_for_write
+		        7                     : released_for_write
+		        8                     : released_for_write
+		        9                     : released_for_write
+		        10                    : released_for_write
+		        11                    : released_for_write
+		        12                    : released_for_write
+		        13                    : released_for_write
+		        14                    : released_for_write
+		        15                    : released_for_write
+		
+		    Events:
+		        core                  : 1, 2, 5, 22, 26, 28, 29, 31, 32, 35, 38, 39, 44, 73, 74, 78, 82, 86, 90, 94, 98, 102, 106, 114
+		        memory                : 1, 20, 21, 25, 33, 43, 44, 45, 46, 47, 48, 106, 113
+		
+		Core [ 1]
+		    Column                : 25
+		    Row                   : 1
+		    Core:
+		        Status                : stream_stall_ms0
+		        Program Counter       : 0x000003f0
+		        Link Register         : 0x00000260
+		        Stack Pointer         : 0x00029c20
+		    DMA:
+		        MM2S:
+		            Channel:
+		                Id                    : 0
+		                Channel Status        : idle
+		                Queue Size            : 0
+		                Queue Status          : okay
+		                Current BD            : 0
+		
+		                Id                    : 1
+		                Channel Status        : idle
+		                Queue Size            : 0
+		                Queue Status          : okay
+		                Current BD            : 0
+		
+		        S2MM:
+		            Channel:
+		                Id                    : 0
+		                Channel Status        : idle
+		                Queue Size            : 0
+		                Queue Status          : okay
+		                Current BD            : 0
+		
+		                Id                    : 1
+		                Channel Status        : idle
+		                Queue Size            : 0
+		                Queue Status          : okay
+		                Current BD            : 0
+		
+		    Locks:
+		        0                     : released_for_write
+		        1                     : released_for_write
+		        2                     : released_for_write
+		        3                     : released_for_write
+		        4                     : released_for_write
+		        5                     : released_for_write
+		        6                     : released_for_write
+		        7                     : released_for_write
+		        8                     : released_for_write
+		        9                     : released_for_write
+		        10                    : released_for_write
+		        11                    : released_for_write
+		        12                    : released_for_write
+		        13                    : released_for_write
+		        14                    : released_for_write
+		        15                    : released_for_write
+		
+		    Events:
+		        core                  : 1, 2, 5, 22, 24, 28, 29, 31, 32, 35, 38, 39, 41, 44, 73, 74, 75, 76, 78, 79, 80, 82, 83, 84, 86, 87, 88, 90, 91, 92, 94, 95, 96, 98, 99, 100, 102, 103, 104, 106, 114
+		        memory                : 1
+
 		
 	**Tip:** If a design hangs in Linux, press **Ctrl+Z** to suspend the design and run command.
 
@@ -175,16 +331,6 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	**Tip:** Cross-probe between **Graph** and **Array** view in Vitis Analyzer to understand kernels, buffers, and the locations of ports. 
 `
-	The following command can be used to report the events that have occurred on ports:
-
-		
-		xbutil2 examine -r aieshim
-		
-
-	![xbutil2 examine -r aieshim](./images/figure10.PNG)
-
-	Tile (24,0) is where the output locates, and tile (25,0) is where the input locates. It is seen that additional events numbered 75 and 76 happen in the inputs, indicating that input data is read into the AI Engine, but no output data is written. 
-
 - **Using `devmem` to probe AI Engine registers to see AI Engine status:** By using the `devmem` command, you can read AI Engine registers to see the AI Engine internal status. The register reference can be found in the _Versal ACAP AI Engine Register Reference_ ([AM015](https://www.xilinx.com/html_docs/registers/am015/am015-versal-aie-register-reference.html)).
 
 	For example, the core status registers can be found here:
@@ -193,12 +339,13 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	Find the absolute addresses for the kernels in the design. The status of the kernels can be read by running the following command:
 
-		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C872004 
+		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C872004
 		0x00001000
 		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C072004 
 		0x00000200
 
-	Value `0x00001000` indicates that it is `Stream_Stall_MS0`, and value `0x00000200` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil2`. 
+
+	Value `0x00001000` indicates that it is `Stream_Stall_MS0`, and value `0x00000200` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil`. 
 
 ### Conclusion
 
