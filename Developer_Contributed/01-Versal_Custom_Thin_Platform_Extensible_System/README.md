@@ -170,32 +170,43 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
     Passed: my_graph.reset()
     Passed: my_graph.run()
     Poll subtractor register
-      Value Reg0:  fcc4
-      Value Reg1:  fd16
-      Value Reg2:  fd54
-      Value Reg3:  fd42
+      Value Reg0:  530
+      Value Reg1:  142
+      Value Reg2:  141
+      Value Reg3:  32
     Poll subtractor register
-      Value Reg0:  fcb0
-      Value Reg1:  fd4e
-      Value Reg2:  fcae
-      Value Reg3:  fcc6
+      Value Reg0:  530
+      Value Reg1:  142
+      Value Reg2:  141
+      Value Reg3:  32
+    Poll subtractor register
+      Value Reg0:  5da
+      Value Reg1:  142
+      Value Reg2:  141
+      Value Reg3:  32
     ...
     Poll subtractor register
-      Value Reg0:  fd56
-      Value Reg1:  fd4e
-      Value Reg2:  fcec
-      Value Reg3:  fd04
+      Value Reg0:  5f2
+      Value Reg1:  142
+      Value Reg2:  141
+      Value Reg3:  32
     Poll subtractor register
-      Value Reg0:  fcd8
-      Value Reg1:  fd4e
-      Value Reg2:  fccc
-      Value Reg3:  fce6
+      Value Reg0:  556
+      Value Reg1:  142
+      Value Reg2:  141
+      Value Reg3:  32
+    Poll subtractor register
+      Value Reg0:  6ac
+      Value Reg1:  142
+      Value Reg2:  140
+      Value Reg3:  32
     Passed: my_graph.end()
     root@linux:/media/sd-mmcblk0p1#
-  ```
+```
 
 ## Notes
   - xsa: CIPS settings are added manually; configured in the bd-files.
+  - **ALL** kernels use 250MHz clock as default.
   - The example design is fully FAT-32 
     - if you like to use ext4 rootfs instead: 
       - petalinux already generates it.
