@@ -44,7 +44,7 @@ CREATE_XSA_TCL := platform_xsa.tcl
 # =========================================================
 ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S)
   BOARD_LABEL:=vck190
-  BOARD_VER:=2.3
+  BOARD_VER:=2.2
 else ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S-es1)
   BOARD_LABEL:=vck190_es
   BOARD_VER:=1.3
