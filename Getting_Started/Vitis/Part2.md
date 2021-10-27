@@ -29,7 +29,7 @@ Download the latest version of the Vitis from the [Xilinx download website](http
 
 ## Step 3 – Install Downloaded Packages
 
-After downloading the Vitis, XRT and platform packages, installing them in the following order and according to the provided instructions:
+After downloading the Vitis, XRT and platform packages, install them in the following order and according to the provided instructions:
 
 1. [Install the Vitis Software Platform](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045)
 

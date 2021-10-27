@@ -106,7 +106,7 @@ OpenCL Initialization : 262.374 ms
 Some things to try to build on this experiment:
 
 1. Use the **xbutil** utility to query the board.  Can you see which .xclbin file is loaded?
-2. Again using **xbutil**, which kernel(s) are present in the FPGA?  Do you see a difference before and after t
+2. Again using **xbutil**, which kernel(s) are present in the FPGA?  Do you see a difference before and after
    the FPGA is programmed?
 
 ## Key Takeaways

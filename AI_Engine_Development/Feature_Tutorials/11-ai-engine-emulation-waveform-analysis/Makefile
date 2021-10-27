@@ -9,7 +9,7 @@ BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck19
 # Makefile input options
 TARGET := hw_emu
 PFM := tutorial
-EMU_CMD := 	./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt
+EMU_CMD := ./launch_hw_emu.sh -g -aie-sim-options ../aiesimulator_output/aiesim_options.txt
 
 # File names and locations
 GRAPH := aie/graph.cpp

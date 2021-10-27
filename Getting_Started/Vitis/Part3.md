@@ -18,7 +18,7 @@
 
 ## The Source Code for the Vector-Add Kernel 
 
-In this tutorial the hardware accelerator (also referred to as kernel) is modeled in C++. The Vitis flow also supports kernels coded in Verilog or VHDL. A example using an Verilog RTL version of the vector-add kernel can be found [here](https://github.com/Xilinx/Vitis_Accel_Examples/tree/master/rtl_kernels/rtl_vadd).
+In this tutorial the hardware accelerator (also referred to as kernel) is modeled in C++. The Vitis flow also supports kernels coded in Verilog or VHDL. An example using a Verilog RTL version of the vector-add kernel can be found [here](https://github.com/Xilinx/Vitis_Accel_Examples/tree/master/rtl_kernels/rtl_vadd).
 
 Using C++, the description of the hardware accelerator fits in less than 20 lines of code and can be easily and efficiently implemented in FPGA using the Vitis compiler.
 

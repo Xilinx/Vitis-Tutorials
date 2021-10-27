@@ -28,10 +28,10 @@ You will also likely wind up with a pointer to a block of addresses in memory th
 modern OS (again including Linux) divides the address range into pages, typically with each page having a size
 of 4 KiB (although this can vary system to system).  Each page is then mapped to a corresponding page in the
 physical memory.  And before someone points out that this is an inaccurately simplified generalization, I
-would like to respectfully remind you that this isn?t a computer architecture course!
+would like to respectfully remind you that this isn't a computer architecture course!
 
 There are two important things to note, though.  The first is that when you allocate a buffer from the heap
-with standard C APIs, you?re not getting a physical memory address back.  And second, you're not getting a
+with standard C APIs, you're not getting a physical memory address back.  And second, you're not getting a
 single buffer - you're getting a collection of N memory pages, each 4 KiB long.  To put that in context, say
 we allocate a buffer of 6 MiB.  That would give us:
 
@@ -81,7 +81,7 @@ You might be wondering what happens if your buffer doesn't begin on an aligned 4
 question!   DMA engines generally require some degree of alignment, and the Alveo DMA is no different.  If
 your allocated memory is not aligned to a page boundary the runtime will align it for you.  Although you will
 incur a memcpy() operation, which is expensive computationally.  You will also see a warning from the runtime
-(assuming you haven?t suppressed them) because this is a problem you'll want to resolve as quickly as
+(assuming you haven't suppressed them) because this is a problem you'll want to resolve as quickly as
 possible. Identifying and fixing this issue is addressed later on.
 
 Finally, we must understand whether our memory is **cacheable** or **non-cacheable**.  Because external memory
@@ -89,10 +89,10 @@ access is expensive, nearly all modern processors maintain an internal cache of 
 Depending on the processor architecture, the size of the cache may vary from tens of kilobytes to many
 megabytes.  This internal cache memory is synchronized with the external physical memory as needed.  Generally
 this cache management is invisible to the software running on the processor - you would see the benefit of
-using a cache in your improved execution times, but you don?t have to interact with it from a general
+using a cache in your improved execution times, but you don't have to interact with it from a general
 development perspective.
 
-However, when using DMA it?s important to recognize that, absent cache coherency sharing technologies such as
+However, when using DMA it iss important to recognize absent cache coherency sharing technologies such as
 CCIX, you must ensure that any data the processor wants to share with the accelerator is synchronized with the
 external memory before it's transferred.  Before starting a DMA transfer you need to ensure that data resident
 in the cache is **flushed** to external memory.  Similarly, once data is transferred back you must ensure that
@@ -105,14 +105,14 @@ management operations in the first place.  This is usually used for models where
 
 ## Alveo Guided Software Introduction
 
-Whew, that?s a lot of background! Let?s quickly recap the important points before we jump into the guided software example:
+Whew, that's a lot of background! Let's quickly recap the important points before we jump into the guided software example:
 
 - Acceleration is generally done on some intersection of two axes: trying to do the same task **faster**
   (Amdahl's Law), or trying to do more tasks in the **same time** (Gustafson's Law).  Each axis has different
   implications on how to optimize, and how impactful that optimization will be.
-- Acceleration inherently comes with an ?acceleration tax.?  To achieve acceleration in a real system, the
+- Acceleration inherently comes with an **acceleration tax**.  To achieve acceleration in a real system, the
   benefits achieved by acceleration must dominate the extra latency of the data transfers.  You should pick
-  your battles; focus on the biggest ?bang for the buck? pieces of your algorithms.
+  your battles; focus on the **biggest bang for the buck** pieces of your algorithms.
 - Interaction with the Alveo cards is done through XRT and higher-level API abstractions like OpenCL or the
   XRT Native API.  Software-side optimization is done via the library, independent of the optimization of the
   hardware kernels.

@@ -42,7 +42,7 @@ Vitis accelerated applications can execute on either data-center or embedded acc
 
 * On data-center platforms, the software program runs on an x86 server and the kernels run in the FPGA on a PCIe-attached acceleration card.
 
-* On embedded platforms, the software program runs on an ARM processor of an Xilinx MPSoC device and the kernels run within the same device. 
+* On embedded platforms, the software program runs on an ARM processor of a Xilinx MPSoC device and the kernels run within the same device. 
 
 Because the software and hardware components of a Vitis application use standardized interfaces (XRT APIs and AXI protocols) to interact with each other, the user’s source code remains mostly agnostic of platform-specific details and can be easily ported across different acceleration platforms.
 

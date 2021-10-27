@@ -48,20 +48,20 @@ directory:
 Hardware_Acceleration/Introduction/design_src/hw_src
 ```
 
-If you have a different version of the target platform installed on your board, you can skip this step.  But if you are targeting a platform other than the Alveo U200, open the Makefile and change the first line to point to your platform?s .xpfm file.
+If you have a different version of the target platform installed on your board, you can skip this step.  But if you are targeting a platform other than the Alveo U200, open the Makefile and change the first line to point to your platform's .xpfm file.
 
 _**Note:** Line breaks may have been added to the example below for formatting, depending on your resolution.
 Do not add line breaks to the path in your Makefile._
 
 ```make
-PLATFORM := /opt/xilinx/platforms/xilinx_u200_xdma_201830_1/xilinx_u200_xdma_201830_1.xpfm
+PLATFORM := /opt/xilinx/platforms/xilinx_u200_gen3x16_xdma_1_202110_1/xilinx_u200_gen3x16_xdma_1_202110_1.xpfm
 ```
 
 Once you edit the Makefile, ensure that your Vitis and XRT environments are set up properly.  If you have not
 done so already, run the commands:
 
 ```bash
-source /opt/Xilinx/Vitis/2020.1/settings.sh
+source /opt/Xilinx/Vitis/2021.2/settings.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 

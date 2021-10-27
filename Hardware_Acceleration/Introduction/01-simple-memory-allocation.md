@@ -39,7 +39,7 @@ advantage of the acceleration we can get from the Alveo Data Center accelerator 
 
 This example is the first time we're going to actually run something on the FPGA, modest though it may be.  In order to run something on the card there are four things that we must do:
 
-1. Allocate and populate the buffers we?ll use to send and receive data from the card.
+1. Allocate and populate the buffers we will use to send and receive data from the card.
 2. Transfer those buffers between the host memory space and the Alveo global memory.
 3. Run the kernel to act on those buffers.
 4. Transfer the results of the kernel operation back to the host memory space so that they can be accessed via the processor.
@@ -166,7 +166,7 @@ Excluding the FPGA configuration from example 0, the new additions in order to r
 5.  Run the kernel.
 6.  Read the results of the kernel back into CPU host memory, synchronizing on the completion of the read.
 
-Only one synchronization is needed were this a real application.  As previously, mentioned we're using several
+Only one synchronization is needed were this a real application.  As previousl mentioned, we're using several
 to better report on the timing of various operations in the workflow.
 
 ## Running the Application

@@ -17,15 +17,15 @@ This set of documents is intended for use by software developers, it is not a lo
 
 ## Provided Design Files
 
-In this directory tree you will find two a collection of documents and a directory named `design_source`.
+In this directory tree you will find a collection of documents and a directory named `design_source`.
 The `design_source` directory contains all of the design elements - hardware and software - for the
 tutorial you're currently reading. The example applications correspond to specific sections in the guide.
 Every effort has been made to keep the code samples as concise and "to the point" as possible.
 
 ## Table of Contents
 
-This tutorial is divided into several discrete example desings. Note that each design builds on the last,
-so if this is youre first time here we recommend proceeding through the tutorial in order.
+This tutorial is divided into several discrete example desings. Note that each design builds on the last one,
+so if this is your first time here we recommend proceeding through the tutorial in order.
 
 * [**Acceleration Basics**](./acceleration_basics.md) (~10 mins):
   + An overview of acceleration systems, Alveo, and XRT
