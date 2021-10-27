@@ -93,7 +93,7 @@ improvement.  That's really down to the memory copy that's needed for alignment;
 microseconds to ensure the buffers are aligned when we allocate them, we can save orders of magnitude more
 time later when those buffers are consumed.
 
-Also note that as expected in this use case, the software runtime is the same.  We're changing the alignment
+Also note that as expected in this use-case, the software runtime is the same.  We're changing the alignment
 of the allocated memory, but otherwise it's normal userspace memory allocation.
 
 ## Extra Exercises

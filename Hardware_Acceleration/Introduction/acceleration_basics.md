@@ -8,8 +8,8 @@
 
 ## Acceleration Concepts
 
-Rather than dive immediately into the API, especially if you don't have much experience with acceleration,
-let's start with a simplified metaphor to help explain what must happen in an acceleration system.
+Rather than diving immediately into the API, especially if you don't have much experience with acceleration,
+let's start with a simplified analogy to help explain what must happen in an acceleration system.
 
 Imagine that you have been given the job of giving tours of your city.  Your city may be large or small, dense
 or sparse, and may have specific traffic rules that you must follow.  This is your **application space**.
@@ -34,7 +34,7 @@ change the route as needed). For the tour guide in our increasingly tortured met
 for you, this is the model for **Vitis acceleration**.  FPGAs and ACAPs combine the parallelism of a GPU with
 the low-latency streaming of a domain-specific architecture for unparalleled performance.
 
-But, as the joke goes, even a Ferrari isn?t fast enough if you never learn to change gears.  So, let's abandon
+But, as the joke goes, even a Ferrari isn't fast enough if you never learn to change gears.  So, let's abandon
 metaphor and roll up our sleeves.
 
 ## Identifying Acceleration
@@ -56,7 +56,7 @@ Amdahl's Law demonstrates a clear limit to the benefit of acceleration in a give
 of the task that cannot be accelerated (generally involving decision making, I/O, or other system overhead
 tasks) will always become the system bottleneck.
 
-![Amdahl's Law Limit](/./images/basics_amdahl_limit.jpg)
+![Amdahl's Law Limit](./images/basics_amdahl_limit.jpg)
 
 If Amdahl's Law is correct, however, then why do so many modern systems use either general-purpose or
 domain-specific acceleration?  The crux lies here: modern systems are processing an ever-increasing amount of
@@ -97,7 +97,7 @@ With that in mind, we want to look for areas of code that satisfy several condit
 
 ## Alveo Overview
 
-Before diving into the software, let?s familiarize ourselves with the capabilities of the Alveo Data Center
+Before diving into the software, let us familiarize ourselves with the capabilities of the Alveo Data Center
 accelerator card itself.  Each Alveo card combines three essential things: a powerful FPGA or ACAP for
 acceleration, high-bandwidth DDR4 memory banks, and connectivity to a host server via a high-bandwidth PCIe
 link.  This link is capable of transferring approximately 16 GiB of data per second between the Alveo
