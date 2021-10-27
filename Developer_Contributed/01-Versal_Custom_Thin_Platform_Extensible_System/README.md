@@ -170,26 +170,26 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
     Passed: my_graph.reset()
     Passed: my_graph.run()
     Poll subtractor register
-      Value Reg0:  fcc4
-      Value Reg1:  fd16
-      Value Reg2:  fd54
-      Value Reg3:  fd42
+      Value Reg0:  210
+      Value Reg1:  11c
+      Value Reg2:  172
+      Value Reg3:  3a
     Poll subtractor register
-      Value Reg0:  fcb0
-      Value Reg1:  fd4e
-      Value Reg2:  fcae
-      Value Reg3:  fcc6
+      Value Reg0:  23e
+      Value Reg1:  11a
+      Value Reg2:  175
+      Value Reg3:  3a
     ...
     Poll subtractor register
-      Value Reg0:  fd56
-      Value Reg1:  fd4e
-      Value Reg2:  fcec
-      Value Reg3:  fd04
+      Value Reg0:  1ec
+      Value Reg1:  118
+      Value Reg2:  173
+      Value Reg3:  38
     Poll subtractor register
-      Value Reg0:  fcd8
-      Value Reg1:  fd4e
-      Value Reg2:  fccc
-      Value Reg3:  fce6
+      Value Reg0:  246
+      Value Reg1:  11a
+      Value Reg2:  182
+      Value Reg3:  36
     Passed: my_graph.end()
     root@linux:/media/sd-mmcblk0p1#
   ```
@@ -201,7 +201,10 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
       - petalinux already generates it.
       - You will need to copy it to the Vitis platform in the `[project-root]/Makefile` in the `bif` section.
       - The `v++ -p` command line in `[project-root]\vitis\Makefile` will need adaptations to be able to use ext4 rootfs instead of FAT-32.
-  - Simulations and Emulations are **NOT** included in this Tutorial!
+  - Simulations and Emulations are **NOT** included in this Tutorial! 
+  - As an optional feature you can enable an ILA core 
+    by toggling the `ILA_EN` switch placed in top Makefile. Once build is complete and petalinux boots on your board, you will need to 
+    manually load the probe file `probe_0.ltx` in the Vivado Hardware Manager.
 
 ## Design Considerations
   Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a Xilinx tools requirement!

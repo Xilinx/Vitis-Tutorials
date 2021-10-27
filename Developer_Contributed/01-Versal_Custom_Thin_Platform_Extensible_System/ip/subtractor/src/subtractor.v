@@ -145,8 +145,8 @@ module subtractor
   ) diff_i0 (
     .resetn     (aresetn),
     .clk        (aclk),
-    .a          (s01_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
-    .b          (s00_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
+    .a          (s00_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
+    .b          (s01_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
     .res        (diff0_i)
   );
 
@@ -155,8 +155,8 @@ module subtractor
   ) diff_q0 (
     .resetn     (aresetn),
     .clk        (aclk),
-    .a          (s01_axis_tdata[DWIDTH/4-1:0]),
-    .b          (s00_axis_tdata[DWIDTH/4-1:0]),
+    .a          (s00_axis_tdata[DWIDTH/4-1:0]),
+    .b          (s01_axis_tdata[DWIDTH/4-1:0]),
     .res        (diff0_q)
   );
 
@@ -165,8 +165,8 @@ module subtractor
   ) diff_i1 (
     .resetn     (aresetn),
     .clk        (aclk),
-    .a          (s02_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
-    .b          (s00_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
+    .a          (s00_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
+    .b          (s02_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
     .res        (diff1_i)
   );
 
@@ -175,8 +175,8 @@ module subtractor
   ) diff_q1 (
     .resetn     (aresetn),
     .clk        (aclk),
-    .a          (s02_axis_tdata[DWIDTH/4-1:0]),
-    .b          (s00_axis_tdata[DWIDTH/4-1:0]),
+    .a          (s00_axis_tdata[DWIDTH/4-1:0]),
+    .b          (s02_axis_tdata[DWIDTH/4-1:0]),
     .res        (diff1_q)
   );
 
@@ -185,8 +185,8 @@ module subtractor
   ) diff_i2 (
     .resetn     (aresetn),
     .clk        (aclk),
-    .a          (s03_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
-    .b          (s00_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
+    .a          (s00_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
+    .b          (s03_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
     .res        (diff2_i)
   );
 
@@ -195,8 +195,8 @@ module subtractor
   ) diff_q2 (
     .resetn     (aresetn),
     .clk        (aclk),
-    .a          (s03_axis_tdata[DWIDTH/4-1:0]),
-    .b          (s00_axis_tdata[DWIDTH/4-1:0]),
+    .a          (s00_axis_tdata[DWIDTH/4-1:0]),
+    .b          (s03_axis_tdata[DWIDTH/4-1:0]),
     .res        (diff2_q)
   );
 
@@ -205,8 +205,8 @@ module subtractor
   ) diff_i3 (
     .resetn     (aresetn),
     .clk        (aclk),
-    .a          (s04_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
-    .b          (s00_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
+    .a          (s00_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
+    .b          (s04_axis_tdata[DWIDTH/2-1:DWIDTH/4]),
     .res        (diff3_i)
   );
 
@@ -215,8 +215,8 @@ module subtractor
   ) diff_q3 (
     .resetn     (aresetn),
     .clk        (aclk),
-    .a          (s04_axis_tdata[DWIDTH/4-1:0]),
-    .b          (s00_axis_tdata[DWIDTH/4-1:0]),
+    .a          (s00_axis_tdata[DWIDTH/4-1:0]),
+    .b          (s04_axis_tdata[DWIDTH/4-1:0]),
     .res        (diff3_q)
   );
   // Instantiation of Axi Bus Interface S00_AXI
