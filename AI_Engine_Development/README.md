@@ -132,7 +132,11 @@ This tutorial shows how to use AXI Traffic Generators to provide input and captu
  <td>
 This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example. </td>
  </tr>
-
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/14-implementing-iir-filter/">Implementing an IIR Filter on the AI Engine</a></td>
+ <td>
+This multi-part tutorial describes how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>

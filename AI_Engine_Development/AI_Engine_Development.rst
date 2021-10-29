@@ -71,8 +71,12 @@ Feature Tutorials
    Versal Emulation Waveform Analysis <./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/README>
    AXIS External Traffic Generator <./Feature_Tutorials/12-axis-traffic-generator/README>
    AI Engine Performance and Deadlock Analysis Tutorial <./Feature_Tutorials/13-aie-performance-analysis/README>
+   Implementing an IIR Filter on the AI Engine <./Feature_Tutorials/14-implementing-iir-filter/README>
 
-
+ <td align="center"><a href="./Feature_Tutorials/implementing-iir-filter/">Implementing an IIR Filter on the AI Engine</a></td>
+ <td>
+This multi-part tutorial describes how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.</td>
+ </tr>
 
 .. list-table:: 
    :widths: 20 80
@@ -119,3 +123,6 @@ Feature Tutorials
 
    * - :doc:`AI Engine Performance and Deadlock Analysis Tutorial <./Feature_Tutorials/13-aie-performance-analysis/README>`
      - This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example.
+
+   * - :doc:`Implementing an IIR Filter on the AI Engine <./Feature_Tutorials/14-implementing-iir-filter/README>`
+     - This multi-part tutorial describes how to implement an `infinite impulse response (IIR) filter <https://en.wikipedia.org/wiki/Infinite_impulse_response>`_ on the AI Engine.
