@@ -19,6 +19,7 @@ ECHO=@echo
 TARGET            := hw
 PLATFORM_CUSTOM   ?= vck190_thin
 BASE_PFM          ?= ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
+ILA_EN            ?= 0
 XPFM              := ../${BASE_PFM}
 PETALINUX_IMAGES  := ../petalinux/linux/images/linux
 KERNEL            := vadd
