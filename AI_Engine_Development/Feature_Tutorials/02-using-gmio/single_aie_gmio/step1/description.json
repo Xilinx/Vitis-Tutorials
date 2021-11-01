@@ -39,7 +39,7 @@
         ],
         "custom_build_target":
         {
-            "all": "run"
+            "all": "aiesim"
         },
         "custom_board_target": "run_test",
         "tasks": {

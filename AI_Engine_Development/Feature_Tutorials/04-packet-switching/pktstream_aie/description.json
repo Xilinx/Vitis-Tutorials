@@ -35,6 +35,7 @@
             "HOST_ARCH=aarch64",
             "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
             "SYSROOT=${SYSROOT}",
+            "SDKTARGETSYSROOT=${SYSROOT}",
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh\\\"",
             "EMBEDDED_PACKAGE_OUT=./", 
             "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"

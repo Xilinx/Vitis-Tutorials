@@ -10,6 +10,8 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 #
+SDKTARGETSYSROOT ?= ${SYSROOT}
+
 HOST_EXE     = ../host.exe
 HOST_INC   = -I../ -I../aie
 HOST_OBJ   = aie_control_xrt.o graph.o
