@@ -41,11 +41,5 @@
         {
             "all": "aiesim"
         },
-        "custom_board_target": "run_test",
-        "tasks": {
-            "build": {
-                "pre_exec": "./env_setup.sh"
-            }
-        }
     }
 }
