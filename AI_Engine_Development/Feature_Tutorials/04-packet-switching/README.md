@@ -15,13 +15,13 @@ This tutorial walks you through the steps to create window interface AI Engine k
 
 There is a limitation in the current version of the AI Engine tools that only integer format values are supported in data files for the AI Engine simulator. Details on the data format and how to convert data from other types to integer format are covered in steps 1 and 2.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.1)](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/zeq1569273658063.html) for setting up software and installing the VCK190 base platform. 
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for setting up software and installing the VCK190 base platform. 
 
 Before starting this tutorial run the following steps.
 
-1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.2/sdk.sh`.
-2. Set up your ROOTFS to point to the xilinx-versal-common-v2021.2/rootfs.ext4 
-3.	Set up your IMAGE to point to xilinx-versal-common-v2021.2/Image.
+1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2021.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2021.2/rootfs.ext4`. 
+3. Set up your IMAGE to point to `xilinx-versal-common-v2021.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
@@ -46,7 +46,7 @@ After completing this tutorial, you will be able to:
 
 **Step 3**: Introduce the packet stream interface and built-in functions for AI Engine kernels, which allows you to fine control how packets are decoded and constructed. See details in [Packet Stream-Based AI Engine Kernels](./pktstream_based_aie_kernel.md).
 
-__Note:__ In this tutorial, a Makefile and instructions are provided. For detailed information about AI Engine tools commands, see the [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html).
+__Note:__ In this tutorial, a Makefile and instructions are provided. For detailed information about AI Engine tools commands, see the [AI Engine Documentation]([AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US).
 
 __Hint:__ In this tutorial, the designs are self-contained in each step, but the steps refer to previous steps. Therefore, it is highly recommended to start from the beginning and progress to completion.
 

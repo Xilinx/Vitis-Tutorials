@@ -22,11 +22,11 @@ This tutorial details all the steps to perform hardware emulation (**hw_emu**), 
 
 This tutorial requires a number of tools and files to be installed:
 
-* Download and install the Vitis™ software platform from [here](https://www.xilinx.com/support/download.html). See the installation instructions [here](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html).
+* Download and install the Vitis™ software platform from [here](https://www.xilinx.com/support/download.html). See the installation instructions [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration).
 * Download and install the Vitis Embedded Base Platform [VCK190](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 * Download and install the [common image](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) for embedded Vitis platforms for Versal™ ACAP.
 
-The AI Engine development documentation is also available [here](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc).
+The AI Engine development documentation is also available [here](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US).
 
 
 ## Accessing the Tutorial Reference Files

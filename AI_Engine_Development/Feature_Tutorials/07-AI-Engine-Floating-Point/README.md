@@ -24,7 +24,7 @@ Before starting to explore these examples, refer to the following documents:
   - **[Architecture Details Summary](Details.md)**
 - Tools and documentation lounge
   - **[AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)**
-  - **[UG1076: Versal ACAP AI Engine Programming Environment User Guide](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc)**
+  - **[UG1076: Versal ACAP AI Engine Programming Environment User Guide](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)**
 - Also, download and install:
   - Vitis 2021.2 **[Download Vitis](https://www.xilinx.com/support/download.html)**
   - Licenses for AI Engine tools.

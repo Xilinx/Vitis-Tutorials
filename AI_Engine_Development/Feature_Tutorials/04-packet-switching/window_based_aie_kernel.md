@@ -141,7 +141,7 @@ When the input PLIO is not 32 bits wide, it can include multiple 32-bit integers
     TLAST
     7
 
-Run the AI Engine simulator with following make command. The detailed information for the AI Engine compiler and AI Engine simulator commands can be found in [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html). 
+Run the AI Engine simulator with following make command. The detailed information for the AI Engine compiler and AI Engine simulator commands can be found in the [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US). 
 
     make aiesim
     

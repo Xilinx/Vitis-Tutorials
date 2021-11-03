@@ -84,33 +84,35 @@ The `CYCLE_NUMBER` should be large enough for AI Engine simulator to record all 
 
 ### AI Engine Stall Analysis with Vitis Analyzer
 
-Vitis Analyzer can utilize the event trace from AI Engine simulation to do stall analysis that shows an overview of the stall status in metrics. It also helps user detect where the stall happens and the possible causes.
+Vitis Analyzer can use the event trace from the AI Engine simulation to do stall analysis that shows an overview of the stall status in metrics. It also helps you determine where the stall has happened, and the possible causes.
 
-For Vitis Analyzer to do stall analysis, it’s advised to run AI Engine simulator with `--online -wdb -ctf` options to generate event trace information at the background:
+If you are using Vitis Analyzer to do stall analysis, run the AI Engine simulator with `--online -wdb -ctf` options to generate event trace information in the background:
 
+	```
 	aiesimulator --pkg-dir=./Work --online -wdb -ctf
+	```
 
-**Note:** For how to use AI Engine Stall Analysis with Vitis Analyzer feature in Hardware Emulation flow, please refer to *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
+**Note:** For more information about AI Engine stall analysis using Vitis Analyzer in the hardware emulation flow, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)).
 
-In Vitis Analyzer, the `Performance Metrics` view give an overview of the stalls in the design:
+In Vitis Analyzer, the Performance Metrics view gives an overview of the stalls in the design:
 
 ![Performance Metrics View](./images/a.PNG)
 
-It shows different stalls percentage in each tile. From the metrics table, it can see that tile (24,0) has large percentage of lock stall (99.161%) and tile (25,0) has large percentage of stream stall (98.627%). Those super large percentage of stalls usually means design hanging, which need to be analyzed.
+Each tile shows percentages for each type of stall. From the metrics table, it can be seen that tile (24,0) has a large percentage of lock stall (99.161%), and tile (25,0) has a large percentage of stream stall (98.627%). These metrics indicate that the design is hanging, and that analysis is required.
 
-In `Graph` view of Vitis Analzyer, you can visualize the stalled path in the graph. It give indiations where the stall happens in the design. By knowing the design behavior, it can estimate what might be the cause of the hang. 
+In the Graph view of Vitis Analzyer, you can visualize the stalled path in the graph, which can give an indication of where the stall has happened in the design. By understanding the design behavior, it is also possible to estimate what the cause of the hang might be. 
 
-For example, as following picture shows, in this design, kernel `k[0]` hangs in stream stall. The full destination port is `gr.k[1]/in`, which means that the destination kernel `k[1]` is not receiving data from the stream. 
+For example, as the following figure shows, in this design, kernel `k[0]` hangs in stream stall. The full destination port is `gr.k[1]/in`, which means that the destination kernel `k[1]` is not receiving data from the stream. 
 
 ![Stream stall in Graph View](./images/b.PNG)
 
-Switch to `Lock Stalls` in `Stalls` view, and select the stall. The red path to kernel `k[1]` shows that it tries to acquire the lock of the input buffer, but without success. The blue path shows that kernel `k[0]` is holding the lock of the buffer.
+Switch to **Lock Stalls** in the Stalls view, and select the stall. The red path to kernel `k[1]` shows that it is trying to acquire the lock of the input buffer, but without success. The blue path shows that kernel `k[0]` is holding the lock of the buffer.
 
 ![Lock stall in Graph View](./images/c.PNG)
 
-From above analysis, it gives the cause of the hang. And the direct resolution without modifying kernel code should be increasing the fifo size between two kernels.
+From the above analysis, the cause of the hang is given. The direct resolution, without modifying kernel code, is to increase the FIFO size between the two kernels.
 
-For more information about AI Engine Stall Analysis feature, please refer to *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
+For more information about AI Engine stall analysis feature, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)).
 
 ## AI Engine Deadlock Detection in the Hardware Emulation Flow
 
@@ -119,14 +121,18 @@ Like AI Engine simulator, the hardware emulation flow can also dump VCD for AI E
 It is usually helpful to view the input and output of AI Engine in the waveform. The `-g` option can be added to `launch_hw_emu.sh` to launch the XSIM waveform. The command looks like the following:
 
 	
-    ./launch_hw_emu.sh -g -aie-sim-options ./sim_options.txt
+    ```
+	./launch_hw_emu.sh -g -aie-sim-options ./sim_options.txt
+	```
 	
     
 When the XSIM GUI pops up, add `ai_engine_0` or the PL kernels' signals to the waveform. Click **Start** in XSIM. In the Linux prompt, run the following command:
 
 	
+	```
 	cd /mnt/sd-mmcblk0p1
 	./host.exe a.xclbin
+	```
 	
 
 After the PS code completes in Linux, check the input to the AI Engine `S00_AXIS` and the output from the AI Engine `M00_AXIS`:
@@ -138,7 +144,9 @@ After the PS receives 104 samples, the design hangs. `TVALID` is always High, in
 Analysis of the VDC file in Vitis Analyzer is similar to analysis in AI Engine simulator. A workaround is to move the VCD file generated by the hardware emulation flow to the working directory and open it:
 
 	
+	```
 	vitis_analyzer aiesimulator_output/default.aierun_summary
+	```
 	
 
 ## AI Engine Deadlock Detection in the Hardware Flow
@@ -147,7 +155,7 @@ If a deadlock does not show in the AI Engine simulator or hardware emulation flo
 
 The PS code to profile how much data has been transferred for the input and output is shown below:
 
-	
+	```
 	event::handle handle = event::start_profiling(*dout, event::io_stream_running_event_count);
 	event::handle handle2 = event::start_profiling(*din, event::io_stream_running_event_count);
 	if(handle==event::invalid_handle || handle2==event::invalid_handle){
@@ -168,6 +176,7 @@ The PS code to profile how much data has been transferred for the input and outp
 	event::stop_profiling(handle2);
 	std::cout<<"Output data received:"<<data_out_count<<std::endl;
 	std::cout<<"Input data sent:"<<data_in_count<<std::endl;
+	```
 	
 	
   **Note:** `mm2s` needs to be started after `event::start_profiling`. Otherwise, the data transfer begins after `mm2s` starts, and that happens before `event::start_profiling` and `gr.run(4)`.
@@ -175,8 +184,10 @@ The PS code to profile how much data has been transferred for the input and outp
 The output is similar:
 
 	
+	```
 	Output data received:0
 	Input data sent:104
+	```
 	
 	
 From how much data has been transferred for the input and output, the status of the design can be estimated. The `graph.wait(50000)` in the above code can be replaced with `sleep` or `usleep` APIs to wait a certain amount of time depending on the scale of the design.
@@ -193,8 +204,9 @@ This section provides details of other methods of detecting and analyzing AI Eng
 	xbutil examine -r aie -d 0000:00.0
 	```
 	
-	The output of above command is like:
+	The output of above command is as follows:
 
+		```
 		--------------------------
 		1/1 [0000:00:00.0] : edge
 		--------------------------
@@ -323,6 +335,7 @@ This section provides details of other methods of detecting and analyzing AI Eng
 		    Events:
 		        core                  : 1, 2, 5, 22, 24, 28, 29, 31, 32, 35, 38, 39, 41, 44, 73, 74, 75, 76, 78, 79, 80, 82, 83, 84, 86, 87, 88, 90, 91, 92, 94, 95, 96, 98, 99, 100, 102, 103, 104, 106, 114
 		        memory                : 1
+				```
 
 		
 	**Tip:** If a design hangs in Linux, press **Ctrl+Z** to suspend the design and run command.
@@ -339,10 +352,12 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	Find the absolute addresses for the kernels in the design. The status of the kernels can be read by running the following command:
 
+		```
 		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C872004
 		0x00001000
 		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C072004 
 		0x00000200
+		```
 
 
 	Value `0x00001000` indicates that it is `Stream_Stall_MS0`, and value `0x00000200` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil`. 
