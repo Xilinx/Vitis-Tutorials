@@ -35,6 +35,8 @@
             "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
             "SYSROOT=${SYSROOT}",
 			"SDKTARGETSYSROOT=${SYSROOT}",
+			"ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
+			"IMAGE=${EDGE_COMMON_SW}/Image",
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh\\\"",
             "EMBEDDED_PACKAGE_OUT=./", 
             "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"

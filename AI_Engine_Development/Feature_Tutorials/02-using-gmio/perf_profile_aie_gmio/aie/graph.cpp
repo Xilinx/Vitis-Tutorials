@@ -164,11 +164,12 @@ int main(int argc, char ** argv) {
     std::cout<<"GMIO::free completed"<<std::endl;
 
     if(error==0){
-  	  std::cout<<"PASS!"<<std::endl;
+  	  std::cout<<"TEST PASSED!"<<std::endl;
     }else{
-  	  std::cout<<"ERROR!"<<std::endl;
+  	  std::cout<<"TEST FAILED!"<<std::endl;
     }
 
+	gr.end();
 #if !defined(__AIESIM__) && !defined(__X86SIM__) && !defined(__ADF_FRONTEND__)
     xrtDeviceClose(dhdl);
 #endif

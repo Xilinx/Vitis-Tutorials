@@ -11,21 +11,15 @@
 ## Introduction
 A GMIO port attribute is used to make external memory-mapped connections to or from the global memory. These connections are made between AI Engine kernels or programmable logic kernels and the logical global memory ports of a hardware platform design. This tutorial is designed to demonstrate how to work with the GMIO interface in AI Engine simulator and hardware flows.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.2) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial, run the following steps:
 
 1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.2/sdk.sh`.
-2. Set up your ROOTFS to point to the xilinx-versal-common-v2021.2/rootfs.ext4 
+2. Set up your ROOTFS to point to the xilinx-versal-common-v2021.2/rootfs.ext4
 3.	Set up your IMAGE to point to xilinx-versal-common-v2021.2/Image.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
-
-To target the VCK190 production board, modify `PLATFORM` variable in the `Makefile`(s) to:
-
-    PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
-    
 ## Objectives
 After completing this tutorial, you will be able to:
 * Understand the programming model and software programmability of the AI Engine GMIO.
@@ -34,7 +28,7 @@ After completing this tutorial, you will be able to:
 * Measure the NOC bandwidth and make trade offs between GMIO and PLIO.
 
 ## Steps
-__Note:__ This tutorial assumes that the user has basic understanding of Adaptive Data Flow (ADF) API and Xilinx® Runtime (XRT) API usage. For more information about ADF API and XRT usage, refer to AI Engine Runtime Parameter Reconfiguration Tutorial and Versal ACAP AI Engine Programming Environment User Guide (UG1076).
+__Note:__ This tutorial assumes that the user has basic understanding of Adaptive Data Flow (ADF) API and Xilinx® Runtime (XRT) API usage. For more information about ADF API and XRT usage, refer to AI Engine Runtime Parameter Reconfiguration Tutorial and Versal ACAP AI Engine Programming Environment User Guide ([UG1076](./https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2021.2%20English&amp;url=ug1076-ai-engine-environment)).
 
 **Step 1 - AI Engine GMIO**: Introduces the programming model of AI Engine GMIO, including blocking and non-blocking GMIO transactions. See details in [AIE GMIO Programming Model](./single_aie_gmio.md).
 
