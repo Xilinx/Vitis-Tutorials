@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+export PLATFORM=$(DEVICE)
+
 all:
 	make data
 	make -C Emulation-AIE all

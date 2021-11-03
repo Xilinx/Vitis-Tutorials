@@ -133,7 +133,7 @@ A digital signal is an analog signal (audio, radio frequencies, ...) that has be
 
 As a result the digital signal at the output of the ADC is simply a series of *N*-bits values (called samples) that can be processed to extract some useful information. The most basic operation is to multiply some samples by some specific coefficients and accumulate these values to create a "summary" of this part of the signal.
 
-A filtering operation perform this using a sliding window on the signal as shown in the following figure:
+A filtering operation performs this using a sliding window on the signal as shown in the following figure:
 
 ![FIR_Filter](./Images/FIR_Filter.jpg)
 
