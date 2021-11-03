@@ -90,11 +90,14 @@ In the code example above, taken from the user-host.cpp file in this tutorial, t
     }
 ```
 
+For user-managed RTL kernels, the host application uses the `xrt::ip` object to identify the kernel in the `xclbin`, as shown in the code snippet above. In ddition, the host application identifies any compute units (CUs) of the kernel in the `xclbin`. The CU is an instance of the kernel, and enables the host to run muliple instances of the kernel at the same time when available in the `xclbin`. 
 
-
+Also, the host application needs to identify the memory used by the CUs to connect to the global memory. The mem_used variable in the code example above indicates which memories the IP is connected to. 
 
 
 ## Defining Buffers and Transferring Data
+
+Just as with the XRT managed kernels, the `xrt::bo` object is used to create buffers for the function arguments, or ports of the RTL kernel. However, unlike XRT managed kernels, the memory that the kernel argument is mapped to must be manually specified as shown in the code example above. You can see the original command for the XRT managed kernel shown next to the updated command required for the user-managed kernel: 
 
 ```
     std::cout << "Allocate Buffer in Global Memory\n";
@@ -102,28 +105,17 @@ In the code example above, taken from the user-host.cpp file in this tutorial, t
     //auto boB = xrt::bo(device, vector_size_bytes, krnl.group_id(2));
     auto boA = xrt::bo(device, vector_size_bytes, mem_used.get_index());
     auto boB = xrt::bo(device, vector_size_bytes, mem_used.get_index());
+```
 
-    // Map the contents of the buffer object into host memory
-    auto bo0_map = boA.map<int*>();
-    auto bo1_map = boB.map<int*>();
- 
-    std::fill(bo0_map, bo0_map + DATA_SIZE, 0);
-    std::fill(bo1_map, bo1_map + DATA_SIZE, 0);
+While the XRT managed kernel has an API to extract the kernel argument (`krnl.grp_id()`), the user-managed kernel must manually identify the memory index, or hard code it as shown in the following example. Note the last argument of `xrt::bo` is the enumerated index of the memory bank as specified by the `v++ --conectivity.sp` option as described at [Mapping Kernel Ports to Memory](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory). The bank index can be obtained by xbutil examine --report memory command.
 
-    // Create the test data
-    int bufReference[DATA_SIZE];
-    for (int i = 0; i < DATA_SIZE; ++i) {
-        bo0_map[i] = i;
-        bo1_map[i] = i;
-        bufReference[i] = bo0_map[i] + bo1_map[i]; //Generate check data for validation
-    }
+```
+   auto buf_in_a = xrt::bo(device, DATA_SIZE, xrt::bo::flags::host_only, 8);
+```
 
-    std::cout << "loaded the data" << std::endl;
-    uint64_t buf_addr[2];
-    // Get the buffer physical address
-    buf_addr[0] = boA.address();
-    buf_addr[1] = boB.address();
+After creatng and filling the buffers with data from the host application, you must then sync the buffer to the Xilinx device to make the data accessible to the device binary (`xclbin`): 
 
+```
     // Synchronize buffer content with device side
     std::cout << "synchronize input buffer data to device global memory\n";
     boA.sync(XCL_BO_SYNC_BO_TO_DEVICE);
@@ -131,12 +123,10 @@ In the code example above, taken from the user-host.cpp file in this tutorial, t
 ```
 
 
-
-
-
-
-
 ## Running the kernel and returning results
+
+
+
 
 ```
     //std::cout << "Execution of the kernel\n";
@@ -183,12 +173,6 @@ In the code example above, taken from the user-host.cpp file in this tutorial, t
 ```
 
 
-
-
-## Scrap text...
-The Vivado IDE opens with the new project.
-
-   ![New Project Summary](images/new_project_open.png)  
 
 
 ## Next Steps
