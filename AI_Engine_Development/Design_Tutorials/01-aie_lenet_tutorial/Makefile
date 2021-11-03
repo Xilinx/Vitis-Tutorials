@@ -70,7 +70,7 @@ endif
 
 
 ifndef SDKTARGETSYSROOT
-SDKTARGETSYSROOT = ${XLNX_VERSAL}/sysroots/aarch64-xilinx-linux
+SDKTARGETSYSROOT = ${XLNX_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
 endif
 
 
