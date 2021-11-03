@@ -104,5 +104,5 @@ clean:
 
 cleanall: clean
 	-$(RMDIR) $(XCLBIN) *.xo *.xclbin* *.wcfg *.wdb *.csv *.compile_summary *.run_summary
-	-$(RMDIR) _x*
+	-$(RMDIR) _x* .run/
 

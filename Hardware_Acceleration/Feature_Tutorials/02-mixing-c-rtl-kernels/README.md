@@ -38,7 +38,7 @@ This tutorial uses:
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1393).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 Before running any of the examples, ensure you have set up the Vitis core development kit by running the following commands.
@@ -120,7 +120,7 @@ It sets up the platform and defines global memory buffers and connections to the
    q.enqueueTask(krnl_vector_add);
    ```
 
-For complete details on host code programming, refer to [Developing Applications](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=lhv1569273988420.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+For complete details on host code programming, refer to [Developing Applications](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Developing-Applications) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1393).
 
 ### Build the Application
 
@@ -140,6 +140,7 @@ During emulation, you gather application timeline data, consisting of host and d
   [Debug]
   opencl_summary=true
   opencl_trace=true
+  data_transfer_trace=fine
   ```
 
 To run software emulation on the design, set the XCL_EMULATION_MODE environment variable and run the host application with the device binary:
@@ -164,7 +165,7 @@ Review the Application Timeline generated during software emulation to visualize
    ```
 
 2. Click on the **Application Timeline** option on the left to bring up the Application Timeline.
-![Missing Image:Application Timeline 1](images/mixing-c-rtl-kernels_timeline_one_kernel_vitis.PNG)  
+![Image:Application Timeline 1](images/mixing-c-rtl-kernels_timeline_one_kernel_vitis.PNG)  
 
 3. After reviewing, close the Application Timeline window.  
    >**NOTE:** A CU is an instantiation of the kernel on the FPGA.
@@ -197,7 +198,7 @@ Similar to the previous section, you will build, emulate, and review the generat
 
 First, you will create and package an RTL-based kernel using the RTL Kernel Wizard. By default, the wizard creates a kernel to increment by one. This kernel will be used in this tutorial. Additionally, the wizard automates the steps needed to package the RTL design into a kernel object file (XO).
 
-You will generate the RTL-based kernel by quickly going through the RTL Kernel Wizard steps (at a high-level). Review the [Getting Started with RTL Kernels](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow) tutorial for more information. For complete details refer to [RTL Kernels](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devrtlkernel.html#qnk1504034323350) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+You will generate the RTL-based kernel by quickly going through the RTL Kernel Wizard steps (at a high-level). Review the [Getting Started with RTL Kernels](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow) tutorial for more information. For complete details refer to [RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1393).
 
 #### Create the Vitis Project
 
