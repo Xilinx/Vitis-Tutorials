@@ -19,7 +19,7 @@ Navigate to the `SingleKernel` directory to continue.
 
 ## Filter Description
 
-Thoughout this tutorial you will use and reuse the same filter with complex coefficients. This filter has 32 coefficients (or taps) and has no symmetry characteristics.
+Throughout this tutorial you will use and reuse the same filter with complex coefficients. This filter has 32 coefficients (or taps) and has no symmetry characteristics.
 
 ```
 {   -82,  -253},{     0,  -204},{    11,   -35},{  -198,   273},

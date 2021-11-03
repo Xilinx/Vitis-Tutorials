@@ -14,13 +14,16 @@ TARGET   = hw_emu
 PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm
 XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
 HOST_EXE = host.exe
-SDKTARGETSYSROOT ?= ${SYSROOT}
 
 GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
 AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
 EMU_CMD = ./launch_hw_emu.sh
+
+ROOTFS:=${EDGE_COMMON_SW}/rootfs.ext4
+IMAGE:=${EDGE_COMMON_SW}/Image
+
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
@@ -58,8 +61,8 @@ guard-IMAGE:
 guard-CXX:
 	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
-guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
+guard-SYSROOT:
+	$(call check_defined, SYSROOT, Run: xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
 ###
 
@@ -83,7 +86,7 @@ kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}: 
 	$(MAKE) -C pl_kernels/
 	
-host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
+host: guard-CXX guard-SYSROOT ${HOST_EXE}
 ${HOST_EXE}: sw/*.cpp
 	$(MAKE) -C sw/
 
