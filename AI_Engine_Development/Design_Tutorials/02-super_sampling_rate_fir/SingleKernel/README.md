@@ -217,7 +217,7 @@ Navigate to the `SingleKernel` directory. In the `Makefile`, three methods are d
 - `aiesim`
   - Runs the AI Engine System C simulator
 - `aieviz`
-  - Runs `vitis_analyzer`on the output summary
+  - Runs `vitis_analyzer` on the output summary
 
 Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instanciation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
 

@@ -80,7 +80,7 @@ Tools Documentation:
 
 To run through this tutorial, you will need to download and install the following tools:
 
-* Install the [Vitis Software Platform 2021.2](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html) 
+* Install the [Vitis Software Platform 2021.2](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) 
 
 * Obtain licenses for the AI Engine tools
 
@@ -451,10 +451,10 @@ Contains chapters on how to develop AI Engine graphs, how to use the Ai Engine c
 ### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/index.html)
 Contains information regarding the DSPLib example kernels used by this tutorial.
 
-### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2021.2 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 Following links point to Vitis software platform related documents referred in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
