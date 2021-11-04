@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2021.2">See 2021.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
@@ -34,7 +34,7 @@ The host code and C++ kernel code are supplied. The RTL code will be generated u
 This tutorial uses:
 
 - BASH Linux shell commands.
-- 2020.1 Vitis core development release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
+- 2021.2 Vitis core development release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
@@ -45,7 +45,7 @@ Before running any of the examples, ensure you have set up the Vitis core develo
 
   ```bash
     #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-    source /opt/Xilinx/Vitis/2021.1/settings64.sh
+    source /opt/Xilinx/Vitis/2021.2/settings64.sh
     #Setup runtime. XILINX_XRT will be set in this step
     source /opt/xilinx/xrt/setup.sh
   ```
