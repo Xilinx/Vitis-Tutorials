@@ -12,7 +12,7 @@
 
 This tutorial is designed to demonstrate how the runtime parameters (RTP) can be changed during execution to modify the behavior of AI Engine kernels. Both scalar and array parameters are supported.
 
-**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.2) for setting up software and installing the VCK190 base platform. 
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.2) for setting up software and installing the VCK190 base platform. 
 
 Before starting this tutorial run the steps below:
 

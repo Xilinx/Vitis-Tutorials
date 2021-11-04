@@ -13,7 +13,11 @@
 #limitations under the License.
 #
 
-XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
+### SPRITE PYTHON SECTION
+DEST_DIR ?= $(CURDIR)
+MK_PATH := $(abspath $(lastword Makefile))
+MK_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
+DSPLIB_ROOT ?= ${MK_DIR}/Vitis_Libraries/dsp
 ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4
 IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/Image
 SDKTARGETSYSROOT ?= ${SYSROOT}
@@ -111,10 +115,6 @@ guard-SDKTARGETSYSROOT:
 guard-DSPLIBROOT:
 	$(call check_defined, DSPLIB_ROOT, Please define DSPLIB ROOT)
 
-### SPRITE PYTHON SECTION
-DEST_DIR ?= $(CURDIR)
-MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-MK_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
 
 all: kernels aie xclbin host package
 sd_card: all

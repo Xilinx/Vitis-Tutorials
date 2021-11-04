@@ -31,6 +31,7 @@ limitations under the License.
 // Using the ADF API that call XRT API
 #include "adf/adf_api/XRTConfig.h"
 #include "fft_twiddle_lut_dit.h"
+#include "fft_kernel_bufs.h"
 //mygraph_float<WIN_SAMPS>  mygraph_top;
 mygraph<WIN_SAMPS>  mygraph_top;
 
