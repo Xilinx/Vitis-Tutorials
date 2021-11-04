@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 AI Engine Performance and Deadlock Analysis Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 AI Engine Performance and Deadlock Analysis Tutorial</h1>
    </td>
  </tr>
  <tr>
@@ -14,7 +14,7 @@ This tutorial introduces you to performance analysis and optimization methods, a
 
 # Before You Begin
 
-**IMPORTANT**: First, set up the Vitis™ unified software platform and install the VCK190 base platform. Follow the instructions in the [Vitis Software Platform Release Notes and Installation Guide](https://docs.xilinx.com/r/ug1393-vitis-application-acceleration/Installation).
+**IMPORTANT**: First, set up the Vitis™ unified software platform and install the VCK190 base platform. Follow the instructions in the *Vitis Software Platform Release Notes* (v2021.2).
 
 Before you begin this tutorial, run the following steps:
 

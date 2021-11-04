@@ -20,6 +20,12 @@ Before starting this tutorial, run the following steps:
 3.	Set up your IMAGE to point to xilinx-versal-common-v2021.2/Image.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
+This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+
+To target the VCK190 production board, modify `PLATFORM` variable in the `Makefile`(s) to:
+
+    PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
+
 ## Objectives
 After completing this tutorial, you will be able to:
 * Understand the programming model and software programmability of the AI Engine GMIO.

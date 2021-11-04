@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 AI Engine Performance Analysis Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 AI Engine Performance Analysis Tutorial</h1>
    </td>
  </tr>
  <tr>
@@ -250,7 +250,7 @@ In this section, the reference design is in `testcase_dmafifo_opt`. From perform
 	}
     ```
 
-    Similar optimization is done for `aie_dest2`. For more information about loop analysis and optimization, refer to the _AI Engine Kernel Coding Best Practices Guide_ ([UG1079](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1079-ai-engine-kernel-coding.pdf)).
+    Similar optimization is done for `aie_dest2`. For more information about loop analysis and optimization, refer to the _AI Engine Kernel Coding Best Practices Guide_.
 
 After making these optimizations, run the following command:
 

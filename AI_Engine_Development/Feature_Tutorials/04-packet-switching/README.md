@@ -15,7 +15,7 @@ This tutorial walks you through the steps to create window interface AI Engine k
 
 There is a limitation in the current version of the AI Engine tools that only integer format values are supported in data files for the AI Engine simulator. Details on the data format and how to convert data from other types to integer format are covered in steps 1 and 2.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for setting up software and installing the VCK190 base platform. 
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.2) for setting up software and installing the VCK190 base platform. 
 
 Before starting this tutorial run the following steps.
 
@@ -28,7 +28,7 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 
 To target the VCK190 production board, modify `PLATFORM` variable in the `Makefile`(s) to:
 
-    PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
+    PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
 
 ## Objectives
 After completing this tutorial, you will be able to:

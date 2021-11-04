@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 AI Engine Performance Analysis Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 AI Engine Performance Analysis Tutorial</h1>
    </td>
  </tr>
  <tr>
@@ -352,10 +352,9 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	Find the absolute addresses for the kernels in the design. The status of the kernels can be read by running the following command:
 
-		```
-		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C872004
+		root@versal-rootfs-common-2021_2:/mnt/sd-mmcblk0p1# devmem 0x2000C872004
 		0x00001000
-		root@versal-rootfs-common-2021_1:/mnt/sd-mmcblk0p1# devmem 0x2000C072004 
+		root@versal-rootfs-common-2021_2:/mnt/sd-mmcblk0p1# devmem 0x2000C072004 
 		0x00000200
 		```
 
