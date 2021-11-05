@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
@@ -12,107 +12,74 @@
 
 # Using the RTL Kernel in a Vitis IDE Project
 
->**TIP**: You can also use the RTL kernel you created in the Package IP lab in the Vitis IDE.
+1. Change directory to the tutorial folder: `cd ./01-rtl_kernel_workflow/reference_files`.
 
-## Delete and Import Host Code
+1. Create a new workspace folder called `work1`. 
 
-After exiting the Vivado tool, the following files are added to the HW kernel project (`rtl_ke_t2_kernels`) displayed in the Project Explorer in the Vitis IDE:
+2. Launch the Vitis IDE, by entering the following command: 
 
-- `Vadd_A_B.xo`: Compiled kernel object file.
-- `host_example.cpp`: Example host application file.  
+```
+vitis -workspace work1
+```
 
-1. In the Project Explorer view, expand the `rtl_ke_t2_kernels/src` folder as shown in the following figure.  
-   
-![Project Explorer](./images/192_vitis_project_explorer.PNG)
-   > **NOTE**: `Vadd_A_B.xo` is displayed with a lightning bolt icon. In the Vitis IDE, this indicates a hardware function. The IDE recognizes the RTL kernel and marks it as an accelerated function.
+3. The Vitis IDE opens. Select **File** > **New** > **Application Project**.  
+The New Vitis Application Project window opens.  
 
-2. Select and delete `host_example.cpp`. 
+![New Application Project](images/rtl_kernel-new_application_project.png)
 
-   At this point, import the host application provided for this tutorial.  
+4. The New Application Project wizard is displayed, with the overview page showing a brief overview of the process. Click **Next**.
 
-2. In the Project Explorer view, right-click the Processor project (`rtl_ke_t2`) and click **Import Sources** to add the host code.
+5. The Plaform page is displayed. Select `xilinx_u200_gen3x16_xdma_1_202110_1`, and then click **Next** to proceed.
 
-3. In the From directory field, click **Browse...**, navigate to `01=rtl_kernel_workflow/reference-files/src`, select the `host` folder, and click **Open**.
+![Platform page](images/rtl_kernel-platform_page.png)
 
-4. Select `host.cpp` to add the host application code to your project.
+6. The Application Project Details page is displayed. Make the following selections:  
+   1. Enter a project name, such as `kernelTest`.  
+   2. Create New System Project is enabled, and the System project name is generated from the project name. You can edit it if needed.
+   3. The Processor is selected automatically from the platform you selected. 
+   4. Click **Next** to proceed.  
 
-![Import Host Code](./images/import-host-code.png)
+![New Application Project](images/rtl_kernel-details_page.png)
 
-5. Check that the `Into folder` field displays `rtl_ke_t2/src`, and click **Finish**.
 
-   The `host.cpp` file is added to the host project.
+7.  The Templates page opens, showing application templates you can use to start your project. Select the **Empty Application (XRT Native API)** and click **Finish** to create your Vitis application project.  
 
-6. In the Project Explorer view, right-click and select `Open` (or double-click `host.cpp`), which opens it in the Code Editor window.
+The new project wizard closes and opens the Vitis IDE with your new project loaded.
 
-## Host Code Structure
+![Default Perspective](images/rtl_kernel-default_perspective.png)
 
-Examine the host application in the Code Editor window. The structure of the host code is divided into three sections:
+## Add the Hardware Kernel (`.xo`)
 
-1. Setting up the OpenCL runtime environment
-2. Execution of kernels
-3. Post-processing and release of FPGA device
+You must add the recently generated user-managed RTL kernel (`Vadd_A_B.xo`) and host code (`user-host.cpp`) into the project. 
 
-Here are some of the important OpenCL API calls allowing the host application to interact with the FPGA:
+1. Select the `kernelTest_kernels` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo` folder and select the `Vadd_A_B.xo` kernel file to add to the project as shown below. Click **Finish** to close the dialog box and add the kernel. 
 
-- A handle to the kernel is created (line 239).
+![Add RTL Kernel](images/add_rtl_kernel.png)
 
-   ```C
-    clCreateKernel(program, "Vadd_A_B", &err);
-    ```
+2. Select and open the `kernelTest_kernels.prj` project file in the **Hardware Kernel Project Settings** view, and select the **Add Hardware Function** command. Select the  `Vadd_A_B.xo` folder and select the `Vadd_A_B` kernel as shown in the image below. Click **OK** to close the dialog box and add the hardware function to the project. 
 
-- Buffers are created to transfer data back and forth between the host and the FPGA (line 256).
+![Add RTL Kernel](images/add_rtl_kernel-hw-function.png) 
 
-  ```C
-  clCreateBuffer(context, CL_MEM_READ_WRITE,sizeof(int) * number_of_words, NULL, NULL);
-  ```
+2. Select the `kernelTest` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `src/host` folder and select the `user-managed.cpp` file to add to the project as shown below. Click **Finish** to close the dialog box and add the host code. 
 
-- Values (A and B) are written into the buffers, and the buffers transferred to the FPGA (lines 266 and 274).
+>**TIP:** There is also an xrt-host file tha can be used to connect to an ap_ctrl_hs version of the RTL kernel. 
 
-  ```C
-  clEnqueueWriteBuffer(commands, dev_mem_ptr, CL_TRUE, 0,sizeof(int) * number_of_words, host_mem_ptr, 0, NULL, NULL);
-  ```
+![Add RTL Kernel](images/add_rtl_kernel-host.png) 
 
-- After A and B have been transferred to the device, the kernel can be executed (line 299).
-
-  ```C
-  clEnqueueTask(command_queue, kernel, 0, NULL, NULL);
-  ```
-
-- After the kernel completes, the host application reads back the buffer with the new value of B (line 312).
-
-  ```C
-  clEnqueueReadBuffer(command_queue, dev_mem_ptr, CL_TRUE, 0, sizeof(int)*number_of_words,host_mem_output_ptr, 0, NULL, &readevent );
-  ```
-
-The structure and requirements of the host application are discussed in greater detail in [Developing Applications](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=lhv1569273988420.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
-
-## Add the Hardware Function
-
-With the host application code (`host.cpp`) added to the host project, and the RTL kernel code (`Vadd_A_B.xo`) added to the kernel project, you need to specify the hardware function in order to generate the device binary or `.xclbin` file.
-
-1. Right-click the HW Kernel project, `rtl_ke_t2_kernels/rtl_ke_t2_kernels.prj`, and use the **Open** command to open the project. 
-
-2. In the Project Editor, in the **Hardware Functions** window, click ![Hardware Function](./images/lightning_icon.PNG) to add hardware functions into the project.
-3. Select the `Vadd_A_B` function.
-
-   ![Add Hardware Function](./images/add-hw-function.png)
-
-4. Click **OK**.
 
 ## Build the Project
 
 With the host application code (`host.cpp`) and the RTL kernel code (`Vadd_A_B.xo`) added to the project, you are ready to build and run the project.
 
->**TIP**: You can also use the RTL kernel you created in the Package IP/Package XO lab in the Vitis IDE. Import the kernel `.xo` file into the `rtl_ke_t2_kernels/src` folder, and specify it as the hardware function. 
-
-1. In the Hardware Kernel Project Settings, change **Active build configuration** to **Emulation-HW**.  
-The Hardware Emulation target is useful for:
+1. In the **Hardware Kernel Project Settings** view select the **Active build Configuration:** and set it to **Hardware Emulation**. The Hardware Emulation target is useful for:
    - Verifying the functionality of the logic that will go into the FPGA.
    - Retrieving the initial performance estimates of the accelerator and host application.
 
-    >**TIP**: For Software Emulation, the RTL kernel flow requires a C/C++ software model of the kernel. In this tutorial, you have not been provided such a model, so you will not be able to run the Software Emulation build.
+  Note that the RTL kernel does not support software emulation. 
 
-1. In the Assistant view, select the top-level system project 'rtl_ke_t2_system` and click the Build command ![Build Command](./images/icon_build.png) to build the active Emulation-HW build configuration. 
+>**IMPORTANT:** You can add a C-model for software emulation to XRT-managed kernels as explained at [Adding C-Models to RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Adding-C-Models-to-RTL-Kernels). However, this is not supported for user-managed kernels. 
+
+1. In the Assistant view, select the top-level system project `kernelTest_system` and click the **Build** command ![Build Command](./images/icon_build.png) to build the active Emulation-HW build configuration. 
 
    The different elements of the Vitis application project are built: the processor code (`host.cpp`), the HW link project to link the RTL kernel (.xo) to the target platform, and the top-level system project to package the design.
 
@@ -120,21 +87,15 @@ The Hardware Emulation target is useful for:
 
 2. In the Assistant view, select the **Run** button, and select **Run Configurations**.
 
-
 3. Select the `System Project Debug` configuration and click the **New launch configuration** command ![Launch Config](./images/icon-new-launch-config.png) to create a new configuration for the run. 
 
-   The `SystemDebugger_rtl_ke_t2_system` configuration is created. 
+   The `SystemDebugger_kernelTest_system` configuration is created. 
    
-   The host program takes the `xclbin` file and the target platform as input arguments, which you must provide in the Program Arguments list.
-   ![XCLBIN](./images/xclbin.PNG)
-
+   The host program takes the `xclbin` file as an input argument, which you must provide in the Program Arguments list.
+   
 4. Select **Edit** next to `Program Arguments`. 
 
-The Vitis IDE can automatically search and include the `xclbin` file when the **Automatically update arguments** is enabled. However, in this case you will disable this checkbox because you need to add two arguments. 
-
-Disable the checkbox, and enter **.../binary_container_1.xclbin xilinx_u200_gen3x16_xdma_1_202110_1** in the `Program Arguments` field of the `Edit Program Arguments` dialog box as shown in the image below.
-
-   ![Edit Program Arguments](./images/program-arguments.png)
+   The Vitis IDE can automatically search and include the `xclbin` file when the **Automatically update arguments** is enabled. 
 
 5. Click **OK** to add the arguments. 
 
@@ -151,7 +112,7 @@ In the system configuration, the kernel code is implemented onto the FPGA, resul
 
 # Summary
 
-In this tutorial you have used the **Package IP/Package_XO** flow to create an RTL kernel, and you have also used the **RTL Kernel wizard**. You packaged the RTL IP project into the compiled XO file needed by the Vitis tool. You then added the RTL kernel to an application project, coupled with the host code, and built and run the Hardware Emulation configuration.  In the Vitis IDE, a binary container was created using the XO file, and a `xclbin` file was compiled.
+In this tutorial you have used the **Package IP/Package_XO** flow to create a user-managed RTL kernel. You packaged the RTL IP project into the compiled XO file needed by the Vitis tool. You then added the RTL kernel to an application project, coupled with the host code, and built and run the Hardware Emulation configuration.  In the Vitis IDE, a binary container was created using the XO file, and a `xclbin` file was compiled.
 
 </br>
 <hr/>

@@ -40,7 +40,8 @@ int main(int argc, char** argv) {
 	}
 
     // Read settings
-    std::string binaryFile = "./vadd.xclbin";
+    std::string binaryFile = argv[1];
+    //std::string binaryFile = "./vadd.xclbin";
     auto xclbin = xrt::xclbin(binaryFile);
     int device_index = 0;
 
