@@ -37,7 +37,8 @@ PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 TARGET := hw_emu
 PFM := tutorial
 PLIO_WIDTH := 64
-EMU_CMD := python3 pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & ./launch_hw_emu.sh 
+#EMU_CMD := python3 pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & ./launch_hw_emu.sh 
+EMU_CMD := ./launch_hw_emu.sh 
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -185,6 +186,7 @@ run: all run_emu
 run_emu: 
 # $(PYTHON) sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 1 &
 	cd ./sw
+	python3 pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & 
 	$(EMU_CMD)
 
 ###########################################################################
