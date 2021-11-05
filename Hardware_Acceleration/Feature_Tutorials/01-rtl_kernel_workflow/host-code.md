@@ -90,14 +90,14 @@ In the code example above, taken from the user-host.cpp file in this tutorial, t
     }
 ```
 
-For user-managed RTL kernels, the host application uses the `xrt::ip` object to identify the kernel in the `xclbin`, as shown in the code snippet above. In ddition, the host application identifies any compute units (CUs) of the kernel in the `xclbin`. The CU is an instance of the kernel, and enables the host to run muliple instances of the kernel at the same time when available in the `xclbin`. 
+For user-managed RTL kernels, the host application uses the `xrt::ip` object to identify the kernel in the `xclbin`, as shown in the code snippet above. In addition, the host application identifies any compute units (CUs) of the kernel in the `xclbin`. The CU is an instance of the kernel, and enables the host to run multiple instances of the kernel at the same time when available in the `xclbin`. 
 
-Also, the host application needs to identify the memory used by the CUs to connect to the global memory. The mem_used variable in the code example above indicates which memories the IP is connected to. 
+Also, the host application needs to identify the memory used by the CUs to connect to the global memory. The `mem_used` variable in the code example above indicates which memories the IP is connected to. 
 
 
 ## Defining Buffers and Transferring Data
 
-Just as with the XRT managed kernels, the `xrt::bo` object is used to create buffers for the function arguments, or ports of the RTL kernel. However, unlike XRT managed kernels, the memory that the kernel argument is mapped to must be manually specified as shown in the code example above. You can see the original command for the XRT managed kernel shown next to the updated command required for the user-managed kernel: 
+Just as with the XRT managed kernels, the `xrt::bo` object is used to create buffers for the function arguments, or ports of the RTL kernel. However, unlike XRT managed kernels, the memory that the kernel argument is mapped to must be manually specified as shown in the code example below. You can see the original command for the XRT managed kernel shown next to the updated command required for the user-managed kernel: 
 
 ```
     std::cout << "Allocate Buffer in Global Memory\n";
@@ -113,7 +113,7 @@ While the XRT managed kernel has an API to extract the kernel argument (`krnl.gr
    auto buf_in_a = xrt::bo(device, DATA_SIZE, xrt::bo::flags::host_only, 8);
 ```
 
-After creatng and filling the buffers with data from the host application, you must then sync the buffer to the Xilinx device to make the data accessible to the device binary (`xclbin`): 
+After creatng and filling the buffers with data from the host application, you must then sync the buffer to the Xilinx device to make the data accessible to the device binary (`xclbin`). The data is transferred from the host computer to the Xilinx device and accelerator card, where it is available for the kernel to use: 
 
 ```
     // Synchronize buffer content with device side
@@ -125,8 +125,7 @@ After creatng and filling the buffers with data from the host application, you m
 
 ## Running the kernel and returning results
 
-
-
+After transferring the data, you simply write to registers in the kernel to trigger the memory read by passing the address offsets for the `m_axi` or `s_axilite` interfaces as shown below. Keep in mind that `args[0]` refers to the scalar DATA_SIZE argument, `args[1]` and `args[2]` are the `m_axi` interfaces that manages the bulk of data needed by the kernel. 
 
 ```
     //std::cout << "Execution of the kernel\n";
@@ -171,9 +170,6 @@ After creatng and filling the buffers with data from the host application, you m
     std::cout << "Get the output data from the device" << std::endl;
     boB.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 ```
-
-
-
 
 ## Next Steps
 

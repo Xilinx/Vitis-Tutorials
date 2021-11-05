@@ -145,9 +145,6 @@ B | pointer argument | 0x024 | 64
    >
    ```
       ipx::add_register CTRL [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
-      ipx::add_register GIER [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
-      ipx::add_register IP_IER [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
-      ipx::add_register IP_ISR [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
       ipx::add_register scalar00 [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
       ipx::add_register A [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
       ipx::add_register B [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
@@ -188,7 +185,7 @@ B | pointer argument | 0x024 | 64
 
    After packaging the IP you should see dialog box indicating that the IP packaged successfully. 
 
-With Package for Vitis enabled, the tool automatically runs the **package_xo** command to create the Vitis kernel (`.xo`) file. The `package_xo` command also packages the IP files and the `kernel.xml` file into the generated `.xo` file. You can examine the Tcl Console window to see that the `package_xo` command has been run. 
+With **Package for Vitis** enabled, the tool automatically runs the `package_xo` command to create the Vitis kernel (`.xo`) file. The `package_xo` command also packages the IP files and the `kernel.xml` file into the generated `.xo` file. You can examine the Tcl Console window to see that the `package_xo` command has been run. 
 
    ```
    package_xo -xo_path <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/src/xo/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/src/IP -ctrl_protocol user_managed
@@ -201,19 +198,13 @@ With Package for Vitis enabled, the tool automatically runs the **package_xo** c
    * -**ip_directory**: Path to look for the packaged Vivado IP. 
    * -**ctrl_protocol**: Specifies the control protocol the kernel implements.
 
-4. However, for this RTL kernel you will be adding a C-model to enable software emulation as described in [Adding C-Models to RTL Kernels](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devrtlkernel.html#nuy1588349382079). This will require you to manually rerun the `package_xo` command, specifying the C-model using the `-kernel_files` option as shown below: 
+After the `package_xo` command returns, navigate to the `reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports` folder where you can see the `IP` folder and the `xo` folder. Look at the `Vadd_A_B.xo` file in the `xo` folder. The `.xo` file contains the IP representation of the kernel, as well as the kernel.xml file used by the Vitis compiler to link the kernel into the device binary (`.xclbin`). 
 
-   ```
-   package_xo -force -xo_path <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/src/xo/Vadd_A_B.xo -kernel_name Vadd_A_B -ip_directory <tutorial_path>/rtl_kernel/rtl_kernel.srcs/sources_1/imports/src/IP -ctrl_protocol user_managed -kernel_files ./reference-files/src/c-model/Vadd_A_B.cpp
-   ```
-
->**TIP:** You must use the `-force` option to overwrite an existing `.xo` file. 
-
-After the `package_xo` command returns, navigate to the `reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports` folder and look at the `Vadd_A_B.xo` file. You can use this file in the Vitis application acceleration flow as explained later in this tutorial.
+You will use the `.xo` file in the Vitis application acceleration flow as explained later in this tutorial.
 
 ## Next Steps
 
-Next, you will examine the [Host Application Coding](./host_code.md) required to integrate the user-managed RTL kernel into your accelerated application.
+Next, you will examine the [Host Application Coding](./host-code.md) required to integrate the user-managed RTL kernel into your accelerated application.
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p>
