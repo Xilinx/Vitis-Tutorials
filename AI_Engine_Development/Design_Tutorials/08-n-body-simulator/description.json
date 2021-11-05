@@ -29,6 +29,11 @@
             "vitis_hw_build",
             "vitis_hw_run"
         ],
-        "category": "canary"
+        "category": "canary",
+	"custom_build_target":
+        {
+            "all": "build",
+            "hw" : "run"
+        }
     }
 }
