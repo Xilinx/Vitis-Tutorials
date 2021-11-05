@@ -41,7 +41,7 @@ The labs in this tutorial use:
 
 ### Accessing the Tutorial Reference Files
 
-1. To access the reference files, type the following into a terminal: `git clone https://gitenterprise.xilinx.com/swm/Vitis-In-Depth-Tutorial.git`.
+1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials.git`.
 2. Navigate to `Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/` directory, and then access the `reference-files` directory.
 
 ## Requirements for Using an RTL Design as an RTL Kernel
