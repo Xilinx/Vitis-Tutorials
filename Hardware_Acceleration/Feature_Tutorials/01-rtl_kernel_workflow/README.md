@@ -14,7 +14,9 @@
 
 ## Tutorial Overview
 
-In the Vitis application acceleration development flow, as explained in [Kernel Properties](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/appdev.html#fiv1568160307462), RTL kernels can be user-managed kernels that do not adhere to XRT requirements for execution control, but rather implement any number of user-defined control schemes specified in the RTL design. RTL kernels can also adhere to the requirements of the `ap_ctrl_chain` or `ap_ctrl_hs` control protocols needed for XRT-managed kernels. That is, you can use an existing user-defined control scheme, or design your RTL to support the XRT control scheme. In this tutorial you will examine the process of packaging an existing RTL design with a user-managed control scheme into an RTL kernel, and review the host application requirements to integrate that kernel into your accelerated application. 
+In the Vitis application acceleration development flow, as explained in [Kernel Properties](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/appdev.html#fiv1568160307462), RTL kernels can be either XRT-managed kernels adhering to XRT requirements of the `ap_ctrl_chain` or `ap_ctrl_hs` control protocols for execution control, or can be user-managed kernels that do not meet this standard but rather implement any number of user-defined control schemes specified in the RTL design. You can use an existing execution mechanism in an existing RTL design, or design your RTL to support the XRT control scheme. 
+
+In this tutorial you will examine the process of packaging an existing RTL design with a user-managed control scheme into an RTL kernel, and review the host application requirements to integrate that kernel into your accelerated application. 
 
 This tutorial includes an RTL design containing a simple vector accumulation example that performs a `B[i] = A[i]+B[i]` operation, which you will build into a Xilinx compiled object file (.xo) for use in the Vitis flow. It also contains a host application using the [XRT native API](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html) which interacts with the kernel. The host application:
 
@@ -31,7 +33,8 @@ Using these reference files, the tutorial guides you through the process of buil
 The labs in this tutorial use:
 
 * BASH Linux shell commands
-* 2020.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
+* 2021.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. 
+* If necessary, the tutorial can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
@@ -79,10 +82,7 @@ For this tutorial, the Vector-Accumulate RTL IP performing `B[i]=A[i]+B[i]` meet
 
 ## Next Steps
 
-This tutorial demonstrates how to package RTL IPs as Vitis kernels (`.xo`), and use them in the Vitis core development kit. The tutorial offers two different approaches to accomplish this goal:
-
-* [Package IP/Package XO](./package_ip.md): Start by packaging an existing RTL module as Vivado IP, and package that IP as a Vitis kernel (`.xo`). 
-* [RTL Kernel Wizard](./vitis_ide.md): Use the RTL Kernel wizard to create the elements of an RTL kernel, and fit an existing RTL module into that framework. 
+This tutorial demonstrates how to package RTL IPs as Vitis kernels (`.xo`), and use them in the Vitis core development kit. The tutorial uses the [Package IP/Package XO](./package_ip.md) flow to package an existing RTL module as a Vivado IP, and package that IP as a Vitis kernel (`.xo`). 
 
 </br>
 <hr/>
