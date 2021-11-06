@@ -22,7 +22,7 @@ APP_SRC      := ./src/${APP_NAME}.cpp
 
 SYSROOT      := ../../petalinux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
 
-GCC          := aarch64-linux-gnu-g++
+GCC          ?= aarch64-linux-gnu-g++
 
 GCC_INCLUDES := -I${SYSROOT}/usr/include/xrt \
                 -I${SYSROOT}/usr/include \

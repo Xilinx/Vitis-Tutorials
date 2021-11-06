@@ -23,7 +23,7 @@ APP_EXE         := ../${APP_NAME}.exe
 APP_SRC         := ./src/${APP_NAME}.cpp
 APP_CTRL_SRC    := ./../../ip/aie/Work/ps/c_rts/aie_control_xrt.cpp
 
-GCC             := aarch64-linux-gnu-g++
+GCC             ?= aarch64-linux-gnu-g++
 
 GCC_INCLUDES = -I${SYSROOT}/usr/include \
                -I${SYSROOT}/usr/include/xrt \

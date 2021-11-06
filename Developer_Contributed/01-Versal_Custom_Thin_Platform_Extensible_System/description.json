@@ -1,0 +1,35 @@
+{
+    "name": "Developer_Contributed-01-Versal_Custom_Thin_Platform_Extensible_System",
+    "description": "01-Versal_Custom_Thin_Platform_Extensible_System",
+    "gui": "false",
+    "flow": "versal",
+    "platform_whitelist": [ "vck190"],
+    "platform_blacklist": [],
+    "testinfo": {
+        "disable": false,
+        "jobs": [
+            {
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 180
+                }
+            }
+        ],        
+        "targets": [
+            "vitis_hw_build"
+        ],
+        "custom_build_target": {
+            "all" : "all"
+        },        
+        "category": "canary",
+        "make_options": [
+            "GCC=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++"
+        ],
+        "tasks": {
+            "build": {
+                "pre_exec": "/proj/petalinux/2021.2/petalinux-v2021.2_daily_latest/tool/petalinux-v2021.2-final/settings.sh"
+            }
+        }
+    }
+}
+
