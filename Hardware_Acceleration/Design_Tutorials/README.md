@@ -18,36 +18,32 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/02-bloom/README.md">Bloom Filter Example</a></td>
- <td>This tutorial shows how to achieve a 10x speed-up on a data analytics application using a combination of kernel and host code optimization techniques.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/01-convolution-tutorial/README.md">Convolution Example</a></td>
+ <td align="center"><a href="./01-convolution-tutorial/README.md">Convolution Example</a></td>
  <td>This tutorial walks through the process of analyzing and optimizing a 2D convolution used for real-time processing of a video stream.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
+ <td align="center"><a href="./02-bloom/README.md">Bloom Filter Example</a></td>
+ <td>This tutorial shows how to achieve a 10x speed-up on a data analytics application using a combination of kernel and host code optimization techniques.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
  <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
  </tr>
 <tr>
- <td align="center"><a href="./Design_Tutorials/04-traveling-salesperson/README.md">Traveling Salesperson Problem</a></td>
+ <td align="center"><a href="./04-traveling-salesperson/README.md">Traveling Salesperson Problem</a></td>
  <td>This tutorial demonstrates the full flow to implement a HLS kernel from algorithm model to hardware.</td>
 </tr>
 <tr>
- <td align="center"><a href="./Design_Tutorials/05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a></td>
+ <td align="center"><a href="./05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a></td>
  <td>This tutorial demonstrates how to develope a complex RTL kernel from scratch via batch mode without GUI environment.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Choleskey Algorithm Acceleration </a></td>
+ <td align="center"><a href="./06-cholesky-accel/">Choleskey Algorithm Acceleration </a></td>
  <td>This tutorial puts in practice the concepts of FPGA acceleration and illustrates how to gradually optimize a hardware accelerator implementing the Cholesky matrix decomposition algorithm.</td>
  </tr>
   <tr>
- <td align="center"><a href="./Design_Tutorials/07-host-code-opt/">XRT Host Code Optimization</a></td>
+ <td align="center"><a href="./07-host-code-opt/">XRT Host Code Optimization</a></td>
  <td>This tutorial demonstrates how to optimize your CPU host code to get the most out of interaction between your hardware accelerators and your runtime software.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/08-ivas-ml/">Streaming Video Analytics with IVAS</a></td>
- <td>This tutorial demonstrates a reference platform using the Xilinx IVAS framework for streaming video analytics with Vitis and Vitis AI.</td>
  </tr>
 </table>
 
