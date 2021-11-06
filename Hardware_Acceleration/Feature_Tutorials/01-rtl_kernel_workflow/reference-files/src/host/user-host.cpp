@@ -1,5 +1,5 @@
 /**
-* Copyright (C) 2020 Xilinx, Inc
+* Copyright (C) 2021 Xilinx, Inc
 *
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -14,7 +14,6 @@
 * under the License.
 */
 
-//#include "cmdlineparser.h"
 #include <iostream>
 #include <cstring>
 
@@ -25,11 +24,11 @@
 #include <experimental/xrt_ip.h>
 
 #define DATA_SIZE 4096
-//#define DATA_SIZE 32
-//Define Control Protocol
 #define IP_START 0x1
 #define IP_IDLE 0x4
 #define USER_OFFSET 0x0
+#define A_OFFSET 0x18
+#define B_OFFSET 0x24
 
 
 int main(int argc, char** argv) {
@@ -40,49 +39,34 @@ int main(int argc, char** argv) {
 	}
 
     // Read settings
-    std::string binaryFile = argv[1];
-    //std::string binaryFile = "./vadd.xclbin";
+	  std::string binaryFile = argv[1];
     auto xclbin = xrt::xclbin(binaryFile);
     int device_index = 0;
 
-    std::cout << "Open the device" << device_index << std::endl;
+    std::cout << "Open the device " << device_index << std::endl;
     auto device = xrt::device(device_index);
     std::cout << "Load the xclbin " << binaryFile << std::endl;
     auto uuid = device.load_xclbin(binaryFile);
  
     size_t vector_size_bytes = sizeof(int) * DATA_SIZE;
 
-    xrt::xclbin::mem mem_used;
-    auto ip = xrt::ip(device, uuid, "Vadd_A_B");
-
-    std::cout << "Fetch compute Units" << std::endl;
-    std::vector<xrt::xclbin::ip> cu;
-    for (auto& kernel : xclbin.get_kernels()) {
-        if (kernel.get_name() == "Vadd_A_B") {
-            cu = kernel.get_cus();
-        }
-    }
-
-    if (cu.empty()) throw std::runtime_error("IP krnl_vadd_rtl not found in the provided xclbin");
-
-    std::cout << "Determine memory index\n";
-    for (auto& mem : xclbin.get_mems()) {
-        if (mem.get_used()) {
-            mem_used = mem;
-            std::cout << "Mem  Used Index: " << mem_used.get_index() << std::endl;
-            break;
-        }
-    }
+    auto ip1 = xrt::ip(device, uuid, "Vadd_A_B:{Vadd_A_B_1}");
+    auto ip2 = xrt::ip(device, uuid, "Vadd_A_B:{Vadd_A_B_2}");
+    auto ip3 = xrt::ip(device, uuid, "Vadd_A_B:{Vadd_A_B_3}");
 
     std::cout << "Allocate Buffer in Global Memory\n";
     //auto boA = xrt::bo(device, vector_size_bytes, krnl.group_id(1)); //Match kernel arguments to RTL kernel
     //auto boB = xrt::bo(device, vector_size_bytes, krnl.group_id(2));
-    auto boA = xrt::bo(device, vector_size_bytes, mem_used.get_index());
-    auto boB = xrt::bo(device, vector_size_bytes, mem_used.get_index());
+    auto ip1_boA = xrt::bo(device, vector_size_bytes, 0);
+    auto ip1_boB = xrt::bo(device, vector_size_bytes, 1);
+    //auto ip2_boA = xrt::bo(device, vector_size_bytes, 0);
+    //auto ip2_boB = xrt::bo(device, vector_size_bytes, 1);
+    //auto ip3_boA = xrt::bo(device, vector_size_bytes, 0);
+    //auto ip3_boB = xrt::bo(device, vector_size_bytes, 1);
 
     // Map the contents of the buffer object into host memory
-    auto bo0_map = boA.map<int*>();
-    auto bo1_map = boB.map<int*>();
+    auto bo0_map = ip1_boA.map<int*>();
+    auto bo1_map = ip1_boB.map<int*>();
  
     std::fill(bo0_map, bo0_map + DATA_SIZE, 0);
     std::fill(bo1_map, bo1_map + DATA_SIZE, 0);
@@ -98,55 +82,50 @@ int main(int argc, char** argv) {
     std::cout << "loaded the data" << std::endl;
     uint64_t buf_addr[2];
     // Get the buffer physical address
-    buf_addr[0] = boA.address();
-    buf_addr[1] = boB.address();
+    buf_addr[0] = ip1_boA.address();
+    buf_addr[1] = ip1_boB.address();
 
     // Synchronize buffer content with device side
     std::cout << "synchronize input buffer data to device global memory\n";
-    boA.sync(XCL_BO_SYNC_BO_TO_DEVICE);
-    boB.sync(XCL_BO_SYNC_BO_TO_DEVICE);
+    ip1_boA.sync(XCL_BO_SYNC_BO_TO_DEVICE);
+    ip1_boB.sync(XCL_BO_SYNC_BO_TO_DEVICE);
 
     //std::cout << "Execution of the kernel\n";
     //auto run = krnl(DATA_SIZE, boA, boB); //DATA_SIZE=size
     //run.wait();
 
     std::cout << "INFO: Setting IP Data" << std::endl;
-    auto args = cu[0].get_args();
+    std::cout << "Setting Register \"A\" (Input Address)" << std::endl;
+    ip1.write_register(A_OFFSET, buf_addr[0]);
+    ip1.write_register(A_OFFSET + 4, buf_addr[0] >> 32);
 
-    std::cout << "Setting the Scalar Register \"size\"" << std::endl;
-    ip.write_register(args[0].get_offset(), DATA_SIZE);
-
-    std::cout << "Setting the Register \"A\" (Input Address)" << std::endl;
-    ip.write_register(args[1].get_offset(), buf_addr[0]);
-    ip.write_register(args[1].get_offset() + 4, buf_addr[0] >> 32);
-
-    std::cout << "Setting the Register \"B\" (Input Address)" << std::endl;
-    ip.write_register(args[2].get_offset(), buf_addr[1]);
-    ip.write_register(args[2].get_offset() + 4, buf_addr[1] >> 32);
+    std::cout << "Setting Register \"B\" (Input Address)" << std::endl;
+    ip1.write_register(B_OFFSET, buf_addr[1]);
+    ip1.write_register(B_OFFSET + 4, buf_addr[1] >> 32);
 
     uint32_t axi_ctrl = IP_START;
     std::cout << "INFO: IP Start" << std::endl;
     //axi_ctrl = IP_START;
-    ip.write_register(USER_OFFSET, axi_ctrl);
+    ip1.write_register(USER_OFFSET, axi_ctrl);
 
     // Wait until the IP is DONE
     int i = 0;
     //axi_ctrl = 0;
     while (axi_ctrl != IP_IDLE) {
     //while ((axi_ctrl & IP_IDLE) != IP_IDLE) {
-        axi_ctrl = ip.read_register(USER_OFFSET);
+        axi_ctrl = ip1.read_register(USER_OFFSET);
         i = i + 1;
         std::cout << "Read Loop iteration: " << i << " and Axi Control = " << axi_ctrl << "\n";
         if (i > 100000) {
 	  axi_ctrl = IP_IDLE;
-          ip.write_register(USER_OFFSET, axi_ctrl);
+          ip1.write_register(USER_OFFSET, axi_ctrl);
         }
     }
 
     std::cout << "INFO: IP Done" << std::endl;
     // Get the output;
     std::cout << "Get the output data from the device" << std::endl;
-    boB.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
+    ip1_boB.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 
     // Validate results
     if (std::memcmp(bo1_map, bufReference, DATA_SIZE))
