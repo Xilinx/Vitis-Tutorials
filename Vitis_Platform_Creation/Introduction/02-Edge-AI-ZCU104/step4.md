@@ -343,12 +343,13 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    # Host app
    root@petalinux:~# cp /mnt/sd-mmcblk0p1/dpu_trd .
    # Image to test
-   root@petalinux:~# wget https://github.com/Xilinx/Vitis-AI/raw/v1.1/DPU-TRD/app/img/bellpeppe-994958.JPEG
+   root@petalinux:~# wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/v1.2.1/DPU-TRD/app/img/bellpeppe-994958.JPEG
    ```
 
 5. Run the application
 
    ```bash
+   echo 6 > /proc/sys/kernel/printk #Reduce XRT debugging messages
    env LD_LIBRARY_PATH=samples/lib XLNX_VART_FIRMWARE=/mnt/sd-mmcblk0p1/dpu.xclbin ./dpu_trd bellpeppe-994958.JPEG
    ```
 
@@ -364,7 +365,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
   
 
 <details>
-<summary><strong>Here's the detailed prints</strong></summary>  
+<summary><strong>Here's the detailed prints with XRT debugging message</strong></summary>  
 
    ```bash
    [  196.247066] [drm] Pid 948 opened device
@@ -416,10 +417,6 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    [  198.241059] [drm] Pid 948 closed device
    [  198.252434] [drm] Pid 948 closed device
    ```
-
-
-
-   The XRT prints can be eliminated by running `echo 6 > /proc/sys/kernel/printk` before launching the application.
 
 </details>
 
