@@ -25,12 +25,12 @@ Creation of the PetaLinux software platform can be broken down into the followin
 
 ## Create PetaLinux: Creating the PetaLinux Project with a BSP
 
-First, create the PetaLinux project from a board support package (BSP) with the `petalinux-create` command. A BSP is a collection of software drivers and an operating system on which your Linux applications are built. It is the support code for a given hardware platform or board that helps in basic initialization at power-up and helps software applications to be run on top of it. Because you are using a VCK190 board, you will need the ``xilinx-vck190-v2021.1-final.bsp`` package.
+First, create the PetaLinux project from a board support package (BSP) with the `petalinux-create` command. A BSP is a collection of software drivers and an operating system on which your Linux applications are built. It is the support code for a given hardware platform or board that helps in basic initialization at power-up and helps software applications to be run on top of it. Because you are using a VCK190 board, you will need the ``xilinx-vck190-v2021.2-final.bsp`` package.
 
 ```
 mkdir -p build;
 cd build;
-petalinux-create -t project -s <PATH-TO-BSP>/xilinx-vck190-v2021.1-final.bsp -n vck190_linux
+petalinux-create -t project -s <PATH-TO-BSP>/xilinx-vck190-v2021.2-final.bsp -n vck190_linux
 ```
 
 These commands create a new PetaLinux project directory structure under `build/vck190_linux`.
@@ -223,17 +223,18 @@ This script uses the XSA from Module 04 and the custom Petalinux image to genera
 * Libmetal and OpenAMP ([UG1186](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1186-zynq-openamp-gsg.pdf))
 * [Versal Platform Creation Tutorial](https://gitenterprise.xilinx.com/swm/Versal_Platform_Creation/tree/master/Tutorial-VCK190_Custom)
 
-© Copyright 2021 Xilinx, Inc.
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p>

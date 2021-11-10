@@ -10,7 +10,7 @@ In this module, you stitch together the custom platform (``.xpfm``), the AI Engi
 
 # Building the Design
 
-The Vitis compiler linker step for this large design takes ~16 hours to complete. 
+The Vitis compiler linker step for this large design takes ~16 hours to complete.
 
 ## Build XCLBIN from Scratch
 
@@ -291,24 +291,25 @@ If you built from scratch, you can open the block design in the Vivado project t
 
 # References
 
-* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Linking the System](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/integrate_ai_engine_application.html#mft1572281447069)  
-* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Building the Device Binary, Linking the Kernels](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/buildingdevicebinary.html#ariaid-title7)
-* [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/vitiscommandcompiler.html#wrj1504034328013)
-* [Vitis Compiler Configuration File](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/vitiscommandcompiler.html#ariaid-title12)
-* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Build Targets](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/buildtargets1.html#rst1525720251890) - HW vs HW_EMU
+* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Linking the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)  
+* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Building the Device Binary, Linking the Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-Kernels)
+* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command)
+* [Vitis Compiler Configuration File](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File)
+* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Build Targets](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-and-Running-the-Application) - HW vs HW_EMU
 * Vivado Design Suite User Guide Implementation Chapter 2: Implementing the Design ([UG904](https://www.xilinx.com/search/support-keyword-search.html#q=ug904))
 
-© Copyright 2021 Xilinx, Inc.
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p>
