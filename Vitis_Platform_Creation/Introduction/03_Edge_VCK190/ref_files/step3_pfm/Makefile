@@ -13,7 +13,8 @@
 # limitations under the License.
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-
+PETALINUX_PROJ_NAME=petalinux
+XSA_NAME=vck190_custom
 
 .PHONY: all pfm prep_sd_dir prep_sw_comp prep_sysroot ultraclean clean
 
@@ -24,25 +25,25 @@ main: prep_sd_dir prep_sw_comp pfm
 # Target: sw_comp
 # Copy PetaLinux genreated software components to platform preparation directory
 prep_sd_dir:
-	mkdir -p sd_dir && cp ../step2_petalinux/build/petalinux/images/linux/boot.scr ./sd_dir/
+	mkdir -p sd_dir && cp ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/boot.scr ./sd_dir/
 
 # Target: prep_sw_comp
 # Copy rootfs and kernel image to sw_comp directory
 prep_sw_comp:
 	mkdir -p sw_comp && \
-	cp ../step2_petalinux/build/petalinux/images/linux/rootfs.ext4 ./sw_comp && \
-	cp ../step2_petalinux/build/petalinux/images/linux/Image ./sw_comp
+	cp ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/rootfs.ext4 ./sw_comp && \
+	cp ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/Image ./sw_comp
 
 # Target: prep_sysroot
 # Install sysroot to sw_comp directory
-prep_sysroot: ../step2_petalinux/build/petalinux/images/linux/sdk.sh
-	rm -rf ./sysroot && ../step2_petalinux/build/petalinux/images/linux/sdk.sh -d ./sw_comp -y
+prep_sysroot: ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/sdk.sh
+	rm -rf ./sysroot && ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/sdk.sh -d ./sw_comp -y
 
 # Target: pfm
 # Generate the Vitis platform with XSCT
 # Input: vck190_custom.xsa in ../step1_vivado/build/vivado directory
 pfm:
-	xsct xsct_create_pfm.tcl vck190_custom ../step0_bootable_design/build/vivado && \
+	xsct xsct_create_pfm.tcl $(XSA_NAME) ../step0_bootable_design/build/vivado && \
 	echo "Platform created:" && \
 	find . -name "*.xpfm"
 

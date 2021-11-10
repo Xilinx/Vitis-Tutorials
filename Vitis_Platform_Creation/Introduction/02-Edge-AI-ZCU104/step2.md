@@ -240,7 +240,7 @@ Vitis-AI applications will install additional software packages. If user would l
    petalinux-build --sdk
    ```
 
-   The generated sysroot package **sdk.sh** will be located in <PetaLinux Project>linux/image directory. We'll extract it in next step.
+   The generated sysroot package **sdk.sh** will be located in <PetaLinux Project>/images/linux directory. We'll extract it in next step.
 
 
 ### Fast Track
