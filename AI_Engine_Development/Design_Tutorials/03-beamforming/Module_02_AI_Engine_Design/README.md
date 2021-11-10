@@ -186,28 +186,29 @@ ULBF Output0: Throughput 8.6297e+08 Samples/s, i.e. 3.45188e+09 Bytes/s
 
 # References
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
-* [AI Engine Documentation: AI Engine Programming](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/ai_engine_programming.html#mes1509388302139) (to learn more about AI Engine graph and kernels)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation: AI Engine Programming](https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2021.2%20English&amp;url=ug1076-ai-engine-environment) (to learn more about AI Engine graph and kernels)
 * Versal ACAP AI Engine Intrinsics Documentation ([UG1078](https://www.xilinx.com/cgi-bin/docs/rdoc?v=latest;t=aiengine+intrinsics;d=index.html;)) (lists of all the intrinsic APIs and data types supported in the current release)
-* [AI Engine Documentation: Window and Streaming Data API](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/window_streaming_api.html#efv1509388613160)
-* [AI Engine Documentation: Run Time Graph Control API](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/runtime_graph_api.html#pfy1512589515876)
-* [AI Engine Documentation: Using A Virtual Platform](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/use_virtual_program.html#oul1512606721147)
-* [AI Engine Documentation: Adaptive Data Flow Graph Specification](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/data_flow_graph_reference.html#yba1512615886407)
+* [AI Engine Documentation: Window and Streaming Data API](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Window-and-Streaming-Data-API)
+* [AI Engine Documentation: Run Time Graph Control API](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Run-Time-Graph-Control-API)
+* [AI Engine Documentation: Using A Virtual Platform](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Using-a-Virtual-Platform)
+* [AI Engine Documentation: Adaptive Data Flow Graph Specification](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Adaptive-Data-Flow-Graph-Specification-Reference)
 * [XAPP1352 Beamforming Implementation on AI Engine](https://www.xilinx.com/search/support-keyword-search.html#q=xapp1352)
-* [AI Engine System C Simulator](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/simulate_graph_application.html#ariaid-title2)
-* [AI Engine Profiling Graph Throughput](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/graph_app_performance_analysis.html#gfd1542670593931)
+* [AI Engine System C Simulator](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-SystemC-Simulator)
+* [AI Engine Profiling Graph Throughput](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Profiling-Graph-Throughput)
 
-© Copyright 2021 Xilinx, Inc.
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p>

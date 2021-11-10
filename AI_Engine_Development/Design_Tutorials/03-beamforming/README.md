@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal™ AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -60,14 +60,14 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 1. Obtain a license to enable beta devices in Xilinx tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
 3. Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT).
-4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/search/support-keyword-search.html#q=ug1144)).
-5. Download the VCK190 PetaLinux 2021.1 BSP from the [Versal AI Core Series VCK190 HeadStart Early Access Site
+4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2021_2/ug1144-petalinux-tools-reference-guide.pdf)).
+5. Download the VCK190 PetaLinux 2021.2 BSP from the [Versal AI Core Series VCK190 HeadStart Early Access Site
 ](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
 To build and run the Beamforming tutorial, you will also need to have downloaded and installed the following tools:
 
-* [Vitis™ Unified Software Development Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#juk1557377661419)
-* [The Xilinx RunTime (XRT)](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#pjr1542153622642)
+* [Vitis™ Unified Software Development Platform 2021.2](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html#juk1557377661419)
+* [The Xilinx RunTime (XRT)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
 * [PetaLinux Tools](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
 
 ## *Environment*: Setting Up Your Shell Environment
@@ -78,9 +78,9 @@ When the elements of the Vitis software platform are installed, update the shell
 
 ```bash
 export XILINX_XRT=/opt/xilinx/xrt
-export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2021.1-final.bsp)
+export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2021.2-final.bsp)
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2021.1/settings64.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2021.2/settings64.sh
 source $XILINX_XRT/setup.sh
 source <path-to-installed-PetaLinux>/settings.sh
 ```
@@ -92,7 +92,7 @@ source env_setup.sh
 
 ## *Validation*: Confirming Tool Installation
 
-Make sure you are using the 2021.1 version of the Xilinx tools.
+Make sure you are using the 2021.2 version of the Xilinx tools.
 
 ```bash
 which vitis
@@ -149,7 +149,7 @@ This module shows RTL designers how to:
 This module shows developers how to:
 
  * Combine an AI Engine graph (``libadf.a``) and ``*.xo`` PL kernels into an XCLBIN.
- * Guide the Vivado tool to close timing on a high utilization design. 
+ * Guide the Vivado tool to close timing on a high utilization design.
 
 [Read more...](Module_04_AI_Engine_and_PL_Integration)
 
@@ -223,17 +223,18 @@ At the receiving end, the antenna data (Y<sub>0,0</sub>-Y<sub>0,5</sub>) can be 
 
 ![Uplink Generalized Formulas](images/uplink_generalized_formulas.PNG)
 
-© Copyright 2021 Xilinx, Inc.
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p>

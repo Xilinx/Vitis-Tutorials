@@ -36,9 +36,9 @@ These functions call the `mmap` function to bind the physical address of the PL 
 
 ## Changes in 2021.1
 
-All AIE related APIs are handled through XRT APIs. XRT APIs provide this flexibility by parsing the metadata in aie.xclbin and corresponding binding code in compiled aie_control_xrt.cpp. Hence, it is no longer necessary to include graph.h or graph.cpp into host application compilation. Instead, only the PLIOs needed for performance measurements need to be included in host_app.cpp. These changes are implemented in the source code in this module. 
+All AI Engine related APIs are handled through XRT APIs. XRT APIs provide this flexibility by parsing the metadata in aie.xclbin and corresponding binding code in compiled aie_control_xrt.cpp. Hence, it is no longer necessary to include graph.h or graph.cpp into host application compilation. Instead, only the PLIOs needed for performance measurements need to be included in host_app.cpp. These changes are implemented in the source code in this module.
 
-Thus, host application is agnostic to AIE source code starting 2021.1.
+Thus, host application is agnostic to AI Engine source code starting 2021.1.
 
 
 # Load AIE XCLBIN   
@@ -121,17 +121,18 @@ The `a.xclbin` is the AI Engine PDI. You can specify the ``<argv[1]>`` variable 
 | 1      | <ul><li>Reset/ Load AIE</li><li>Functional test for 100k iterations with data integrity test every N iterations</li><li>Reset/ Load AIE</li><li>PERF test for all PLIOs  </li></ul>|
 |2|Continuously run the functional test for an infinite number of iterations. To exit, hit **Ctrl+C**. This does not guarantee graceful exit. System reboot is required. This mode helps measure the power of the system while it runs continuously. |
 
-© Copyright 2021 Xilinx, Inc.
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p>
