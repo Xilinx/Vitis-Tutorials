@@ -12,13 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-XSA_NAME=zcu104_custom_platform
-PLATFOMR_PATH = ../../step3_pfm/platform_repo/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
+ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
+ABS_BUILD_PATH=$(ROOT_DIR)/build
+ABS_HW_PATH=$(ABS_BUILD_PATH)/vivado
+BD_TCL=system_step1.tcl
+ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
 
-.PHONY: all clean
+all: hw
 
-all:
-	platforminfo $(PLATFOMR_PATH) > platforminfo.txt
+hw:
+	mkdir -p $(ABS_HW_PATH)
+	cd $(ABS_HW_PATH); vivado -mode batch -notrace -source $(ABS_BD_TCL) -source ../../export_xsa.tcl
+
 
 clean:
-	rm platforminfo.txt
+	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 

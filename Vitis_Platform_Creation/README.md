@@ -39,6 +39,20 @@ These tutorials introduce the basics of platform creation and provide step-by-st
 
  </table>
 
+### Design Tutorials
+
+<table style="width:100%">
+ <tr>
+ <td width="35%" align="center"><b>Tutorial</b>
+ <td width="65%" align="center"><b>Description</b>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.md">Custom Embedded Platform Creation Example on KV260</a></td>
+ <td>Extend the <a href="./Introduction/02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board: Kria KV260.
+</td>
+ </tr>
+</table>
+
 ### Feature Tutorials
 
 These tutorials illustrate various platform features and how you can incorporate them into your own custom platforms.

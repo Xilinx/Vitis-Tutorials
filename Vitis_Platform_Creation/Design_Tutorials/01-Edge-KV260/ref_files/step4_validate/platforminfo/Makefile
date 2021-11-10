@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-XSA_NAME=zcu104_custom_platform
+XSA_NAME=kv260_custom_platform
 PLATFOMR_PATH = ../../step3_pfm/platform_repo/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
 
 .PHONY: all clean
