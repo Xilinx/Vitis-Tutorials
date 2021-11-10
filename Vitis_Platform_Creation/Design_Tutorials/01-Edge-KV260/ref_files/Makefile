@@ -12,13 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-XSA_NAME=zcu104_custom_platform
-PLATFOMR_PATH = ../../step3_pfm/platform_repo/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
-
 .PHONY: all clean
+all: step1 step2 step3 step4
 
-all:
-	platforminfo $(PLATFOMR_PATH) > platforminfo.txt
+step1:
+	$(MAKE) -C step1_vivado all
+
+step2:
+	$(MAKE) -C step2_petalinux all
+
+step3:
+	$(MAKE) -C step3_pfm all
+
+step4:
+	$(MAKE) -C step4_validate all
 
 clean:
-	rm platforminfo.txt
+	$(MAKE) -C step1_vivado clean
+	$(MAKE) -C step2_petalinux clean
+	$(MAKE) -C step3_pfm clean
+	$(MAKE) -C step4_validate clean
