@@ -40,6 +40,6 @@
         "custom_build_target":
         {
             "all": "run"
-        },
+        }
     }
 }
