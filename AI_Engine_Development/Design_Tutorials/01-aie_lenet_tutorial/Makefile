@@ -54,29 +54,6 @@ print-%  : ; @echo $* = $($*)
 # =========================================================
 TARGET := hw_emu
 
-# =========================================================
-# Choose the compiler based on the A72 Processor in the 
-# Versal device
-# =========================================================
-#HOST_CXX := aarch64-linux-gnu-g++
-
-ifndef XRT_ROOT
-XRT_ROOT=${PLATFORM_REPO_PATHS}/sw/versal/xrt
-endif
-
-ifndef XLNX_VERSAL 
-XLNX_VERSAL = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2
-endif
-
-
-ifndef SDKTARGETSYSROOT
-SDKTARGETSYSROOT = ${XLNX_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
-endif
-
-
-ifndef CXX
-CXX="${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=${SDKTARGETSYSROOT}"
-endif
 
 
 # =========================================================
@@ -172,6 +149,8 @@ GCC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include
 GCC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/lib
 
 
+
+
 GCC_LIB += -L$(SDKTARGETSYSROOT)/usr/lib 
 GCC_LIB += -L$(XILINX_VITIS)/aietools/lib/aarch64.o 
 GCC_LIB += -L$(XILINX_VITIS)/aietools/lib/lnx64.o 
@@ -179,6 +158,16 @@ GCC_LIB += -ladf_api_xrt
 GCC_LIB += -lxrt_coreutil 
 
 GCC_LIB += -std=c++14
+
+
+CXX_FLAGS :=-mcpu=cortex-a72.cortex-a53
+CXX_FLAGS +=-march=armv8-a+crc
+CXX_FLAGS +=-fstack-protector-strong
+CXX_FLAGS +=-D_FORTIFY_SOURCE=2
+CXX_FLAGS +=-Wformat
+CXX_FLAGS +=-Wformat-security
+CXX_FLAGS +=-Werror=format-security
+CXX_FLAGS +=--sysroot=${SDKTARGETSYSROOT}
 
 # =========================================================
 # Kernel Compiler and Linker Flags
@@ -205,11 +194,7 @@ ifneq ($(EN_TRACE),0)
 
 endif
 
-ifdef XRT_ROOT
 
-   PKG_FLAGS += --package.sd_dir $(XRT_ROOT)
-
-endif
 
 
 # =========================================================
@@ -280,9 +265,9 @@ $(BUILD_TARGET_DIR)/$(XCLBIN): 	$(BUILD_TARGET_DIR)/$(DMA_KERNEL_XO).xo \
 #	lenet_app.o 
 # 	lenet_xrt.elf
 application:
-	$(CXX) $(GCC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_DIR)/app_control.o
-	$(CXX) $(GCC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/lenet_app.o $(GCC_LIB)
-	$(CXX) $(BUILD_DIR)/app_control.o $(BUILD_DIR)/lenet_app.o $(GCC_LIB) -o $(BUILD_DIR)/$(APP_ELF) 
+	$(CXX) $(CXX_FLAGS) $(GCC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_DIR)/app_control.o
+	$(CXX) $(CXX_FLAGS) $(GCC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/lenet_app.o $(GCC_LIB)
+	$(CXX) $(CXX_FLAGS) $(BUILD_DIR)/app_control.o $(BUILD_DIR)/lenet_app.o $(GCC_LIB) -o $(BUILD_DIR)/$(APP_ELF) 
 
 
 # =========================================================
@@ -301,8 +286,8 @@ package:
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p -t $(TARGET) --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x	\
 		-f $(PLATFORM) 							\
-		--package.rootfs $(XLNX_VERSAL)/rootfs.ext4                     \
-		--package.kernel_image $(XLNX_VERSAL)/Image                     \
+		--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4                  \
+		--package.kernel_image $(EDGE_COMMON_SW)/Image                  \
 		--package.boot_mode=sd 						\
 		--package.out_dir $(BUILD_TARGET_DIR)/package 			\
 		--package.sd_dir $(AIE_SRC_REPO)/data 				\

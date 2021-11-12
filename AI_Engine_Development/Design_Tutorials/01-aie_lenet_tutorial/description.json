@@ -30,6 +30,12 @@
             "vitis_hw_run"
         ], 
         "category": "canary",
+	"make_options": [
+            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+	    "SYSROOT=${SYSROOT}",
+	    "SDKTARGETSYSROOT=${SYSROOT}",
+	    "EDGE_COMMON_SW=${EDGE_COMMON_SW}"
+	],
 	"custom_build_target":
         {
             "all": "run",
