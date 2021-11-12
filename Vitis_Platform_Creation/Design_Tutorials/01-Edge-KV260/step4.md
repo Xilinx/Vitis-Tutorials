@@ -28,6 +28,7 @@
   - [Test 1: Read Platform Info](#test-1-read-platform-info)
     - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
     - [Congratulations](#congratulations)
+    - [Fast Track](#fast-track)
 
 ## Test 1: Read Platform Info
 
@@ -143,19 +144,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
 
    **Note**: If you would like to test this application in emulation mode, please change  **Active Build configuration** from **Emulation-SW** to **Emulation-HW** on Step 8.
 
-2. Test Vector Addition Application in Emulation Mode (Optional)
-
-   - Use **Vitis menu -> Xilinx -> Start/Stop Emulator** to launch QEMU. Project is vadd, configuration is Emulation-HW. Click Start. Wait for Linux to boot. Log in with root/root.
-   - Right click **vadd** project (not the vadd_system system project), select **Run as -> Launch on Emulator**
-
-   The result will show on Console tab.
-
-   ```bash
-   Loading: './binary_container_1.xclbin'
-   TEST PASSED
-   ```
-
-3. Prepare the files to transfer to the board
+2. Prepare the files to transfer to the board
 
    Kria SOM uses `xmutil` to load applications dynamically. The load process includes downloading PL bit stream and loading device tree overlay. `xmutil` requires the application files to be stored in `/lib/firmware/xilinx` directory.
 
@@ -169,7 +158,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    shell.json
    ```
 
-   The bitstream needs to be in bin format so that fpgamanager can load it. Convert bit filt to bit.bin file with the following commands.
+   The bitstream needs to be in bin format so that fpgamanager can load it. Convert `.bit` file to `.bit.bin` file with the following commands.
 
    ```bash
    cd vadd_system/Package
@@ -193,7 +182,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     }
     ```
 
-4. Transferring the files to the board
+3. Transferring the files to the board
 
     Make sure the Ethernet cable of SOM Starter Kit is connected. Use SCP or SFTP to upload the files from host to target board.
 
@@ -201,7 +190,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     # Running on host machine
     scp vadd.dtbo vadd.bit.bin shell.json vadd binary_container_1.xclbin petalinux@<SOM Starter Kit IP>:/home/petalinux
     ```
-5. Load the hardware
+4. Load the hardware
 
     ```bash
     # Running on target board
@@ -214,7 +203,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     ```
 
 
-6. Running Vector Addition Application on the Board
+5. Running Vector Addition Application on the Board
 
    - Run vadd application
 
@@ -236,5 +225,12 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
 We have completed creating a custom platform from scratch and verifying it with a simple vadd application.
 
 Please feel free to check more tutorials in this repository.
+
+### Fast Track
+
+If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run `make all` in ref_files directory to generate the reference design and compare with your design.
+
+The command line flow has slight differences comparing to Vitis IDE flow.
+- The vector addition application is called `vadd` and `binary_container_1.xclbin` in Vitis IDE flow. The generated files in command line flow are called `simple_vadd` and `krnl_vadd.xclbin`.
 
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>

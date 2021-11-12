@@ -33,6 +33,7 @@ ifneq (,$(wildcard $(BSP)))
 	@echo "INFO: BSP found. Start buliding software components."
 else
 	@echo "ERROR: Please download KV260 Starter Kit BSP from https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM to step2_petalinux directory."
+	exit
 endif
 
 get_xsa:
@@ -51,7 +52,7 @@ dt_output/pl.dtsi: dtg
 
 # Compile dt overlay for PL
 dtbo: dt_output/pl.dtsi
-	sed -i 's/firmware-name = ".bin"/firmware-name = "vadd.bit.bin"/g' dt_output/pl.dtsi
+	sed -i 's/firmware-name = "kv260_custom_platform.bit.bin"/firmware-name = "vadd.bit.bin"/g' dt_output/pl.dtsi
 	dtc -@ -O dtb -o dt_output/pl.dtbo dt_output/pl.dtsi
 	@echo	
 	@echo "INFO: Device tree generated in dt_output directory"
