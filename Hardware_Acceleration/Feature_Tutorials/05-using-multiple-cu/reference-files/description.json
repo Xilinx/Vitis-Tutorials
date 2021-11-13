@@ -1,10 +1,10 @@
  {
     "name": "05-using-multiple-cu",
-    "description": "Optimizing by adding CU",
+    "description": "05-using-multiple-cu",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "jobs": [

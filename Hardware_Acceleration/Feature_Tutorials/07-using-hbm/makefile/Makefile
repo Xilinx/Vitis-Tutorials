@@ -58,14 +58,7 @@ SDCARD := sd_card
 
 include common.mk
 
-#####################################################################################################
-### Build the host executable. This step is always executed
-#####################################################################################################
-compile_host:  host
-	@echo $(FPGA_SRC_CPP) is being used as source for Generating Kernel; \
-	mkdir -p $(builddir)
-
-build: display_time makeramacfg compile_host mem_config xo xclbin $(builddir)/$(EMCONFIG_FILE)
+build: display_time makeramacfg host mem_config xo xclbin $(builddir)/$(EMCONFIG_FILE)
 
 display_time:
 	@echo "# make command started $(shell date) #"

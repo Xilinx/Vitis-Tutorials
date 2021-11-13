@@ -60,9 +60,9 @@ host: $(SRCDIR)/*.cpp $(SRCDIR)/*.c $(SRCDIR)/*.h
 emconfig.json:
 	cp $(SRCDIR)/emconfig.json .
 
-xclbin: runOnfpga_$(TARGET).xclbin
+xclbin: ./$(BUILDDIR)/runOnfpga_$(TARGET).xclbin
 
-xo: runOnfpga_$(TARGET).xo
+xo: ./$(BUILDDIR)/runOnfpga_$(TARGET).xo
 
 clean:
 	rm -rf temp_dir log_dir ../build report_dir *log host runOnfpga* *.csv *summary .run .Xil vitis* *jou xilinx*

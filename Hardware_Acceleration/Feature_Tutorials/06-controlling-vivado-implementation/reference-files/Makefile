@@ -29,7 +29,7 @@ CXXFLAGS := -I$(XILINX_XRT)/include/ -I$(XILINX_VIVADO)/include/ -Wall -O0 -g -s
 CXXFLAGS2 := -lOpenCL 
 
 # Kernel compiler & linker global settings
-KRNL_COMPILE_OPTS := -t $(TARGET) --config design.cfg
+KRNL_COMPILE_OPTS := -t $(TARGET) --platform $(PLATFORM) --config design.cfg
 KRNL_LINK_OPTS := -s -R2
 
 #build: $(HOST_EXE) $(XO) $(XCLBIN) emconfig

@@ -1,13 +1,21 @@
  {
     "name": "01-convolution-tutorial",
-    "description": "Convolution Tutorial",
+    "description": "01-convolution-tutorial",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
-        "jobs": [
+        "tasks": {
+        "build": {
+                   "pre_exec": "/proj/xtools/dsv/projects/sdx_libs/cpp_libs/opencv/set_opencv_os.sh"
+        },
+        "board": {
+                   "pre_exec": "/proj/xtools/dsv/projects/sdx_libs/cpp_libs/opencv/set_opencv_os.sh"
+         }
+     }
+     "jobs": [
             {
                 "max_memory_MB": 32768,
                 "max_time_min": {

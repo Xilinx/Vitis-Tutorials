@@ -1,10 +1,10 @@
  {
     "name": "02-bloom",
-    "description": "Bloom Filter Tutorial",
+    "description": "02-bloom",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "jobs": [
@@ -20,7 +20,9 @@
         ],
         "targets": [
             "vitis_sw_emu",
-            "vitis_hw_emu"
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
         ],
         "make_options" : [ "TARGET='$user_test_mode'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}/techdocs_repo'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'" ],
         "category": "canary",
