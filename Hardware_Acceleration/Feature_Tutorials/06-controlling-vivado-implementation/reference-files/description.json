@@ -1,10 +1,10 @@
  {
     "name": "06-controlling-vivado-implementation",
-    "description": "Interactive use of Vivado in the Vitis Flow",
+    "description": "06-controlling-vivado-implementation",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "jobs": [

@@ -1,10 +1,10 @@
  {
-    "name": "Multiple DDR Banks",
+    "name": "01-mult-ddr-banks",
     "description": "01-mult-ddr-banks",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "jobs": [

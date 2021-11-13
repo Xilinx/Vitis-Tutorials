@@ -1,10 +1,10 @@
  {
-    "name": "Host-Code-Optimization",
+    "name": "01-host-code-opt",
     "description": "01-host-code-opt",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "jobs": [

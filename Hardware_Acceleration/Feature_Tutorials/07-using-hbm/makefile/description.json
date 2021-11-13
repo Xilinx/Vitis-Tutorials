@@ -1,10 +1,10 @@
  {
     "name": "07-using-hbm",
-    "description": "Using HBM memory",
+    "description": "07-using-hbm",
     "flow": "vitis",
  
-    "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_whitelist": ["u200", "U50"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "disable": 1,
@@ -29,6 +29,8 @@
         "custom_build_target": {
             "all": "run",
             "hw": "xclbin"
-        }
+        },
+        "custom_board_target": "run",
+        "customized_params": "multi_params.json"
     }
 }

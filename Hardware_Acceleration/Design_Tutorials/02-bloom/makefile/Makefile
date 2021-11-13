@@ -10,6 +10,7 @@ ITER   :=
 ## PF sets how many words to process in parallel 
 #####################################################################################################
 PF     := 8
+STEP   := single_buffer
 ifeq ($(STEP), kernel_4)
 PF   := 4
 endif
@@ -67,20 +68,12 @@ setup:
 	fi;
 
 
-
-#####################################################################################################
-### Build the host executable. This step is always executed
-#####################################################################################################
-compile_host:  host
-	@echo $(HOST_SRC_FPGA) is being used as source for Generating Kernel; \
-	mkdir -p $(BUILDDIR)
-
 #####################################################################################################
 ### if SOLUTION=1, Copy the necessary xclbin to $(BUILDDIR)
 ### if STEP != single_buffer, NOXCLBIN=1 . Copy the xclbin from single_buffer to $(BUILDDIR)
 #####################################################################################################
 ifeq ($(SOLUTION),1)
-build: compile_host $(BUILDDIR)/$(EMCONFIG_FILE)
+build: host
 		@echo "Copying the xclbin saved from xclbin_save to $(BUILDDIR) "; 
 ifeq ($(STEP),multiDDR)
 		cp ../xclbin_save/multiDDR/runOnfpga_$(TARGET).xclbin $(BUILDDIR); 
@@ -89,7 +82,7 @@ else
 endif
 else
 ifeq ($(NOXCLBIN),1)
-build: compile_host $(BUILDDIR)/$(EMCONFIG_FILE)
+build: host
 	if [ -f ../build/single_buffer/kernel_$(PF)/$(TARGET)/runOnfpga_$(TARGET).xclbin ]; \
   	then \
 		echo "Copying the xclbin created from single_bufer to $(BUILDDIR) "; \
@@ -107,7 +100,7 @@ else
 ###  Required if using other than U200 platform
 ###  For multiDDR optional step, this is always executed
 #####################################################################################################
-build: compile_host ./$(BUILDDIR)/runOnfpga_$(TARGET).xclbin $(BUILDDIR)/$(EMCONFIG_FILE)
+build: host xclbin
 endif
 endif
 
@@ -116,7 +109,7 @@ endif
 ###   For Emulation run, use 100 words for computation 
 #####################################################################################################
 
-run:   build host
+run:   build 
 	cp xrt.ini $(BUILDDIR)
 ifeq ($(TARGET), hw)
 	@echo "************  Use Command Line to run application!  ************"

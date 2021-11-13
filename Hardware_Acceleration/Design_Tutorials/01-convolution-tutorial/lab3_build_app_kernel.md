@@ -138,7 +138,7 @@ To build the host application with randomized data please follow these steps:
 4. After setting the appropriate paths, build the host application using the makefile command as follows:
 
   ```bash
-  make compile_host
+  make host
   ```
 
 It will build `host.exe` inside a `build` folder. By building the host application separate from the kernel code, you can make sure the host code compiles correctly and all library paths have been set.
@@ -228,37 +228,25 @@ It will build the hardware kernel in emulation mode and then launch the host app
 
 In this section, you will run the host application using FPGA hardware and analyze the overall system's performance using Vitis Analyzer and host application console output.
 
-### Building the Kernel Xclbin
+### Building the Hardware xclbin
 
-**NOTE**: This section describes an optional step required when the user wants to build its own `xclbin` for the system run instead of using the pre-built `xclbin` provided as part of this tutorial. 
+Once the kernel functionality is verified, and its resource usage is satisfactory, the hardware kernel build process can be started. The kernel build process will create an xclbin file targetting the actual accelerator card. It is an FPGA executable file that can be read and loaded by the host onto the FPGA card. Building xclbin takes a few hours, and is built as shown below:
 
-Once the kernel functionality is verified, and its resource usage is satisfactory (as a single module as synthesized in the previous lab) kernel build process can be started. The kernel build process will create an xclbin file. It is an FPGA executable file that can be read and loaded by the host to the FPGA card. Building xclbin takes few hours, and to avoid this delay during the lab, a built-in xclbin file is provided. It is present in the folder called "xclbin". During hardware run by default, a pre-built xclbin file will be used. But if it is required to build a new xclbin, please set the following options in the make_options.mk file as shown below:
-
-1. To build the `xclbin` file, set the following options in `make_options.mk` file as shown below:
+1. You can enable the performance profiling by setting "ENABLE_PROF?=yes" in `make_options.mk` file as shown below:
 
   ```bash
-  USE_PRE_BUILT_XCLBIN := 0
-  ```
+   ENABLE_PROF?=yes
+ ```
 
-2. Launch the build follows:
+2. Launch the hardware run using the following comand: 
 
-  ```bash
-  make build TARGET=hw
-  ```
-
+   ```bash
+     make build TARGET=hw
+   ```
+  
+  >**TIP**: You can use a prebuilt xclbin file if one is available by setting **USE_PRE_BUILT_XCLBIN := 1**  in the  `make_options.mk` file.
 
 ### Application Run Using FPGA Kernel
-
-If you are using a pre-built `xclbin` file, make sure **USE_PRE_BUILT_XCLBIN := 1** is set to "1", otherwise build the xclbin as described in the last step and keep **USE_PRE_BUILT_XCLBIN := 0**. You can also enable the performance comparison with CPU by setting "ENABLE_PROF?=yes".
-
-  ```bash
-  .
-  .
-  ENABLE_PROF?=yes
-  .
-  .
-  USE_PRE_BUILT_XCLBIN :=0 
-  ```
 
 1. To run the application, please proceed as follows:
 

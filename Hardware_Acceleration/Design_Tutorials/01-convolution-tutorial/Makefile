@@ -31,7 +31,7 @@ ifeq ($(ENABLE_PROF),yes)
 PROFILE_OPTIONS:=-c
 ifneq ($(PROFILE_ALL_IMAGES),yes)
 	NUM_IMAGES:=60
- 		$(warning [WARNING]: --------------60 Images will be for software profiling larger value will take long time --------------)
+                $(warning [WARNING]: --------------60 Images will be for software profiling larger value will take long time --------------)
 	else
 		PROFILE_OPTIONS:=
 	endif
@@ -113,14 +113,12 @@ VPPFLAGS := -t $(TARGET)
 VPPFLAGS += --platform $(PLATFORM) -R1 --save-temps
 VPPFLAGS += --temp_dir $(BUILD_DIR)/$(VPP_TEMP_DIRS)
 VPPFLAGS += --log_dir $(BUILD_DIR)/$(VPP_LOG_DIRS)
-VPPFLAGS += --profile_kernel data:all:all:all:all
-VPPFLAGS += --trace_memory $(TRACE_DDR)
+VPPFLAGS += --profile.data all:all:all:all
+VPPFLAGS += --profile.trace_memory $(TRACE_DDR)
 ifeq ($(ENABLE_STALL_TRACE),yes)
-	VPPFLAGS += --profile_kernel stall:all:all:all
+	VPPFLAGS += --profile.stall all:all:all
 endif
 VPPFLAGS += --config $(KERNEL_CONFIG_FILE)
-
-
 
 create_dirs: 
 	mkdir -p $(BUILD_DIR)
@@ -134,7 +132,7 @@ compile_host: $(BUILD_DIR)/$(HOST_EXE)
 $(BUILD_DIR)/$(HOST_EXE): $(HOST_SRC_CPP) $(HOST_SRC_HEADERS)
 	mkdir -p $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -o $@ $(HOST_SRC_CPP) $(CXXLDFLAGS)
-	#cp ./xrt.ini $(BUILD_DIR)/xrt.ini
+        #cp ./xrt.ini $(BUILD_DIR)/xrt.ini
 
 ############## Kernel XO and Xclbin File Generation
 #Compile Kernel 
@@ -146,8 +144,6 @@ $(BUILD_DIR)/$(XO_NAME).xo: $(KERNEL_SRC_CPP) $(KERNEL_SRC_HEADERS)
 # Link Kernel
 $(BUILD_DIR)/$(XCLBIN): $(BUILD_DIR)/$(XO_NAME).xo
 	v++ $(VPPFLAGS) -l -o $@ $(BUILD_DIR)/$(XO_NAME).xo
-	
-
 
 ############## Emulation Files Generation
 EMCONFIG_FILE = emconfig.json
@@ -160,8 +156,11 @@ $(BUILD_DIR)/$(EMCONFIG_FILE):
 .PHONY: all clean  create_dirs
 
 ############## build the design without running host application
-build: $(BUILD_DIR)/$(HOST_EXE) $(BUILD_DIR)/$(XCLBIN) $(BUILD_DIR)/$(EMCONFIG_FILE)
-pre_build: $(BUILD_DIR)/$(HOST_EXE) $(BUILD_DIR)/$(EMCONFIG_FILE)
+build: host xclbin emconfig
+pre_build: host emconfig
+host: $(BUILD_DIR)/$(HOST_EXE)
+xclbin: $(BUILD_DIR)/$(XCLBIN)
+emconfig: $(BUILD_DIR)/$(EMCONFIG_FILE)
 ############## build the design and then run host application
 ifneq  ($(TARGET),hw)
 run: build
@@ -178,8 +177,8 @@ run: build
 	cd $(BUILD_DIR) && unset XCL_EMULATION_MODE && ./host.exe  -x ./$(XCLBIN) $(PROFILE_OPTIONS) -f $(FILTER_TYPE) -r $(PARALLEL_ENQ_REQS) -n $(NUM_IMAGES)  $(INPUT_IMAGE_OPTION)
 endif
 endif
-	
-	
+
+
 ## Clean generated files
 clean:
 	rm -rf $(BUILD_DIR) host*.exe
@@ -192,5 +191,5 @@ cleanall:
 	rm -rf ./build host*.exe
 	rm -rf ./.Xil
 	rm  -rf xcd.log
-	
+
 

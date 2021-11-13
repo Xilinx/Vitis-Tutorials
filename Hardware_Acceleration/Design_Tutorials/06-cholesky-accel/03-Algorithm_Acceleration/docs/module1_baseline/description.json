@@ -1,10 +1,10 @@
  {
     "name": "06-cholesky-accel-baseline",
-    "description": "Cholesky Tutorial - Module 1",
+    "description": "06-cholesky-accel-module1",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "jobs": [

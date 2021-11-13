@@ -1,10 +1,10 @@
  {
     "name": "02-mixing-c-rtl-kernels",
-    "description": "Mixing C and RTL Kernels",
+    "description": "02-mixing-c-rtl-kernels",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "jobs": [

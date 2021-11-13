@@ -51,13 +51,13 @@ int main(int argc, char** argv) {
     size_t vector_size_bytes = sizeof(int) * DATA_SIZE;
 
     auto ip1 = xrt::ip(device, uuid, "Vadd_A_B:{Vadd_A_B_1}");
-    auto ip2 = xrt::ip(device, uuid, "Vadd_A_B:{Vadd_A_B_2}");
-    auto ip3 = xrt::ip(device, uuid, "Vadd_A_B:{Vadd_A_B_3}");
+    //auto ip2 = xrt::ip(device, uuid, "Vadd_A_B:{Vadd_A_B_2}");
+    //auto ip3 = xrt::ip(device, uuid, "Vadd_A_B:{Vadd_A_B_3}");
 
     std::cout << "Allocate Buffer in Global Memory\n";
     //auto boA = xrt::bo(device, vector_size_bytes, krnl.group_id(1)); //Match kernel arguments to RTL kernel
     //auto boB = xrt::bo(device, vector_size_bytes, krnl.group_id(2));
-    auto ip1_boA = xrt::bo(device, vector_size_bytes, 0);
+    auto ip1_boA = xrt::bo(device, vector_size_bytes, 1);
     auto ip1_boB = xrt::bo(device, vector_size_bytes, 1);
     //auto ip2_boA = xrt::bo(device, vector_size_bytes, 0);
     //auto ip2_boB = xrt::bo(device, vector_size_bytes, 1);

@@ -51,4 +51,5 @@ if {[file exists "${xoname}"]} {
     file delete -force "${xoname}"
 }
 
-package_xo -xo_path ${xoname} -kernel_name Vadd_A_B -ip_directory ./packaged_kernel_${suffix} -kernel_xml ./src/xml/kernel.xml -kernel_files ./src/c-model/Vadd_A_B.cpp
+#package_xo -xo_path ${xoname} -kernel_name Vadd_A_B -ip_directory ./packaged_kernel_${suffix} -kernel_xml ./src/xml/kernel.xml -kernel_files ./src/c-model/Vadd_A_B.cpp
+package_xo -xo_path ${xoname} -kernel_name Vadd_A_B -ip_directory ./packaged_kernel_${suffix} -kernel_xml ./src/xml/user.xml -kernel_files ./src/c-model/Vadd_A_B.cpp

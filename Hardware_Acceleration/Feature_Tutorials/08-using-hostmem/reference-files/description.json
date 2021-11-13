@@ -1,10 +1,10 @@
  {
     "name": "08-using-hostmem",
-    "description": "Using HostMem to read global memory directly from the Kernel",
+    "description": "08-using-hostmem",
     "flow": "vitis",
  
     "platform_whitelist": ["u250"],
-    "platform_blacklist": ["u280"],
+    "platform_blacklist": [""],
  
     "testinfo": {
         "jobs": [
