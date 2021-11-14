@@ -9,11 +9,13 @@
 **Notice: Repository history is re-written to shrink the size on Aug. 20, 2021. If you encounter conflicts during `git pull`, please make a fresh new clone.**
 
 <div align="center">
-    <a href="http://www.youtube.com/watch?v=vFPNlcXAeWI">
+    <a href="http://www.youtube.com/watch?v=4JijWoV6lH4">
     <img
-    src="./Getting_Started/Vitis/images/intro_video.png">
+    src="./Getting_Started/Vitis/images/intro_video_new.png">
     </a>
 </div>
+
+ <p align="center"> <a>Visit more Vitis Developer Videos on </a><a href="https://www.youtube.com/channel/UCkzIS3hJplxSbVRxRQJW4Ow">Xilinx YouTube Channel</a> </p>
 
 ## </br>Unlocking a new design experience for all developers
 The Vitis&trade; unified software platform enables the development of embedded software and accelerated applications on heterogeneous Xilinx&reg; platforms including FPGAs, SoCs, and Versal ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications.
