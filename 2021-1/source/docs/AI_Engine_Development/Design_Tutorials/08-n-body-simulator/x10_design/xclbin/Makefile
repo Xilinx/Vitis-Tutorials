@@ -1,0 +1,103 @@
+# Copyright 2021 Xilinx Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+help::
+	@echo "Makefile Usage:"
+	@echo "  make all "
+	@echo "       Command runs make xclbin"
+	@echo ""
+	@echo "  make xclbin TARGET=<hw_emu|hw>"
+	@echo "       Command to create the XCLBIN from libadf.a and HLS kernels *.xo"
+	@echo "       Default TARGET=hw_emu"
+	@echo ""
+	@echo "  make clean "
+	@echo "      Command to remove the generated files."
+	@echo ""
+
+# =========================================================
+# PROJECT DIRECTORIES
+# =========================================================
+#relative project directory
+RELATIVE_PROJECT_DIR := ../
+
+#absolute project directory
+PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
+XFLIB_DIR_REL_PATH :=../../Module_03_pl_kernels/Vitis_Libraries/utils/
+XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
+
+PL_KERNELS_DIR := $(PROJECT_DIR)/pl_kernels
+AIE_DIR :=  $(PROJECT_DIR)/aie
+XCLBIN_DIR := $(PROJECT_DIR)/xclbin
+
+# =========================================================
+# PLATFORM SELECTION
+# =========================================================
+PLATFORM :=xilinx_vck190_base_202110_1
+
+# =========================================================
+# TARGET SELECTION
+# TARGET=hw_emu (default)
+# TARGET=hw
+# =========================================================
+TARGET :=hw_emu
+
+# =========================================================
+# PL KERNELS DIR
+# =========================================================
+TEMP_DIR := $(PL_KERNELS_DIR)/build/_x_temp.$(TARGET).$(PLATFORM)
+
+# =========================================================
+# V++ COMPILER FLAGS
+# =========================================================
+VPP_FLAGS += -t $(TARGET) --platform $(PLATFORM) --save-temps -g --optimize 2
+VPP_FLAGS += --hls.jobs 8
+VPP_FLAGS += --config $(CUR_DIR)/conn.cfg
+VPP_FLAGS += -I$(XFLIB_DIR)/L1/include
+VPP_FLAGS += -I$(XFLIB_DIR)/L1/include/hw
+
+# =========================================================
+# V++ LINKER FLAGS
+# =========================================================
+VPP_LDFLAGS := --vivado.synth.jobs 8 --vivado.impl.jobs 8
+
+# =========================================================
+# BUILD DIRECTORIES
+# =========================================================
+BUILD_DIR := $(XCLBIN_DIR)/build
+XCLBIN_OUTPUT_DIR := $(BUILD_DIR)/build_dir.$(TARGET).$(PLATFORM)
+BUILD_REPORT_DIR := $(BUILD_DIR)/reports/_build.$(TARGET).$(PLATFORM)
+
+all: xclbin
+
+# ################ TARGET: make pl_kernels ################
+pl_kernels: 
+	$(MAKE) pl_kernels -C $(PL_KERNELS_DIR)
+
+# ################ TARGET: make xclbin ################
+xclbin: pl_kernels $(XCLBIN_OUTPUT_DIR)/hpc.xclbin
+$(XCLBIN_OUTPUT_DIR)/hpc.xclbin: $(TEMP_DIR)/packet_sender.xo $(TEMP_DIR)/m2s_x2.xo $(TEMP_DIR)/packet_receiver.xo $(TEMP_DIR)/s2m_x4.xo $(AIE_DIR)/build/libadf.a
+	echo "Compiling XCLBIN..." 
+	mkdir -p $(BUILD_DIR) && cd $(BUILD_DIR); \
+	v++ -l $(VPP_FLAGS) \
+	--temp_dir $(TEMP_DIR) \
+	--report_dir $(BUILD_REPORT_DIR)/hpc \
+	$(VPP_LDFLAGS) \
+	-o '$@' $(+)
+
+# ################ TARGET: make clean ################
+clean:
+	rm -rf $(BUILD_DIR)
