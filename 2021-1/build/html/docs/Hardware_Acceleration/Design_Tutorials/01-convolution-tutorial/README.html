@@ -1,0 +1,754 @@
+﻿
+
+
+<!DOCTYPE HTML>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description"/>
+		<meta name="keywords"/>
+		<meta property="og:title" content=""/>
+		<meta property="og:description"/>
+		<!-- favicon -->
+		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
+		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
+		<!-- Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
+
+  
+  
+  
+  
+
+  
+      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
+	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
+	<script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Mixed Kernels Design Tutorial with AXI Stream and Vitis" href="../03-rtl_stream_kernel_integration/README.html" />
+    <link rel="prev" title="Optimizing Accelerated FPGA Applications: Bloom Filter Example" href="../02-bloom/README.html" /> 
+	</head>
+	<body>
+		<div class="xilinx-bs3"/>
+		<div class="root responsivegrid">
+			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
+				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+					<div class="xf-content-height">
+						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
+							<div class="header parbase aem-GridColumn aem-GridColumn--default--12">
+								<noindex>
+									<header data-component="header">
+										<nav class="navbar navbar-default aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid main-nav">
+													<div class="row">
+														<div class="col-xs-12">
+															<div class="logo-column">
+																<div class="logo">
+																	<a href="https://www.xilinx.com/">
+																	<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
+																	</a>
+																</div>
+															</div>
+															<div class="navbar-column">
+																<div class="navbar navbar-collapse collapse" id="xilinx-main-menu">
+																	<div class="mobile-search-container">
+																		<div id="headerSearchBox" class="headerSearch"
+																			data-component="header-search"
+																			data-redirect-if-empty="false"
+																			data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
+																			data-coveo-organization-id="xilinxcomprode2rjoqok">
+																			<div class='coveo-search-section'>
+																				<div class="CoveoAnalytics" data-search-hub="Site"></div>
+																				<ul class="dropdown-menu options">
+																					<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site">
+																						<a href="#">
+																						All</a>
+																					</li>
+																					<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com//products/silicon-devices/si-keyword-search.html" data-search-hub="Product">
+																						<a href="#">
+																						Silicon Devices</a>
+																					</li>
+																					<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com//products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product">
+																						<a href="#">
+																						Boards and Kits</a>
+																					</li>
+																					<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com//products/intellectual-property/ip-keyword-search.html" data-search-hub="Product">
+																						<a href="#">
+																						Intellectual Property</a>
+																					</li>
+																					<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support">
+																						<a href="#">
+																						Support</a>
+																						<ul>
+																							<li data-label="Documentation" data-action-link="https://www.xilinx.com//support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document">
+																								<a href="#">
+																								Documentation</a>
+																							</li>
+																							<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com//support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord">
+																								<a href="#">
+																								Knowledge Base</a>
+																							</li>
+																							<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums">
+																								<a href="#">
+																								Community Forums</a>
+																							</li>
+																						</ul>
+																					</li>
+																					<li data-label="Partners" data-action-link="https://www.xilinx.com//alliance/member-keyword-search.html" data-search-hub="Partner">
+																						<a href="#">
+																						Partners</a>
+																					</li>
+																					<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video">
+																						<a href="#">
+																						Videos</a>
+																					</li>
+																					<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press">
+																						<a href="#">
+																						Press</a>
+																					</li>
+																				</ul>
+																				<a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a>
+																				<div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
+																			</div>
+																		</div>
+																	</div>
+																	<ul class="nav navbar-nav nav-justified">
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://www.xilinx.com/applications.html">
+																			Applications</a>
+																		</li>
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://www.xilinx.com/products/silicon-devices.html">
+																			Products</a>
+																		</li>
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://developer.xilinx.com/">
+																			Developers</a>
+																		</li>
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://www.xilinx.com/support.html">
+																			Support</a>
+																		</li>
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://www.xilinx.com/about/company-overview.html">
+																			About</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
+															<!--<div class="mini-nav">
+																<button type="button" data-function="xilinx-mobile-menu" id="nav-toggle" class="navbar-toggle collapsed visible-xs-block" aria-expanded="false">
+																<span></span>
+																<span></span>
+																<span></span>
+																<span></span>
+																</button>
+																<ul class="list-inline">
+																	<li class="dropdown user-menu">
+																		<button data-toggle="dropdown">
+																		<span class="sr-only">Account</span>
+																		<span class="fas fa-user"></span>
+																		</button>
+																		<ul class="dropdown-menu">
+																			<li>
+																				<a href="https://www.xilinx.com/myprofile/subscriptions.html">
+																				My Account</a>
+																			</li>
+																			<li>
+																				<a href="https://www.xilinx.com/registration/create-account.html">
+																				Create Account</a>
+																			</li>
+																			<li>
+																				<a href="https://www.xilinx.com/bin/protected/en/signout">
+																				Sign Out</a>
+																			</li>
+																		</ul>
+																	</li>
+																	<li class="hidden-xs">
+																		<button data-function="search-toggle">
+																		<span class="sr-only">Search</span>
+																		<span class="far fa-search"></span>
+																		</button>
+																	</li>
+																</ul>
+															</div>
+															-->
+															<div class="search-container">
+																<div id="headerSearchBox" class="headerSearch"
+																	data-component="header-search"
+																	data-redirect-if-empty="false"
+																	data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
+																	data-coveo-organization-id="xilinxcomprode2rjoqok">
+																	<div class='coveo-search-section'>
+																		<div class="CoveoAnalytics" data-search-hub="Site"></div>
+																		<ul class="dropdown-menu options">
+																			<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site">
+																				<a href="#">
+																				All</a>
+																			</li>
+																			<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com/products/silicon-devices/si-keyword-search.html" data-search-hub="Product">
+																				<a href="#">
+																				Silicon Devices</a>
+																			</li>
+																			<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com/products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product">
+																				<a href="#">
+																				Boards and Kits</a>
+																			</li>
+																			<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com/products/intellectual-property/ip-keyword-search.html" data-search-hub="Product">
+																				<a href="#">
+																				Intellectual Property</a>
+																			</li>
+																			<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support">
+																				<a href="#">
+																				Support</a>
+																				<ul>
+																					<li data-label="Documentation" data-action-link="https://www.xilinx.com/support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document">
+																						<a href="#">
+																						Documentation</a>
+																					</li>
+																					<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com/support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord">
+																						<a href="#">
+																						Knowledge Base</a>
+																					</li>
+																					<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums">
+																						<a href="#">
+																						Community Forums</a>
+																					</li>
+																				</ul>
+																			</li>
+																			<li data-label="Partners" data-action-link="https://www.xilinx.com/alliance/member-keyword-search.html" data-search-hub="Partner">
+																				<a href="#">
+																				Partners</a>
+																			</li>
+																			<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video">
+																				<a href="#">
+																				Videos</a>
+																			</li>
+																			<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press">
+																				<a href="#">
+																				Press</a>
+																			</li>
+																		</ul>
+																		<a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a>
+																		<div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
+																	</div>
+																</div>
+																<button data-function="search-toggle">
+																<span class="sr-only">Search</span>
+																<span class="far fa-times"></span>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</nav>
+									</header>
+								</noindex>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+						<div class="container-fluid">
+							<div class="row">
+							<div class="col-xs-12">
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+      
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+            
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Acceleration</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">Bloom Filter Example</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Convolution Example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction-to-acceleration">Introduction to Acceleration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-fpga-accelerated-application">Running FPGA Accelerated Application</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">Cheleskey Algorithm Acceleration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT Host Code Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+            
+			
+			<p class="caption"><span class="caption-text">This Page</span></p>
+				<ul class="current">
+				  <li class="toctree-l1"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial/README.md.txt"
+						rel="nofollow">Show Source</a></li>
+				</ul>
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
+        
+      <li>Accelerating Video Convolution Filtering Application</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial/README.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p>﻿<table class="sphinxhide"></p>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="accelerating-video-convolution-filtering-application">
+<h1>Accelerating Video Convolution Filtering Application<a class="headerlink" href="#accelerating-video-convolution-filtering-application" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial introduces you to a compute-intensive application that is accelerated using the Xilinx Alveo Data Center accelerator card. It goes through the design of a specific kernel that runs on the FPGA and briefly discusses optimization of the host-side application for performance. The kernel is designed to maximize throughput, and the host application is optimized to transfer data in an effective manner that moves in-between the host and FPGA card. The host application essentially eliminates the data movement latency by overlapping data transfers for multiple kernel calls. Another essential purpose of this tutorial is to show <strong><em>how one can easily estimate the performance of hardware kernels that can be built using Vitis HLS and how accurate and close these estimates are to actual hardware performance</em></strong></p>
+<div class="section" id="introduction-to-acceleration">
+<h2>Introduction to Acceleration<a class="headerlink" href="#introduction-to-acceleration" title="Permalink to this headline">¶</a></h2>
+<p>The first lab is designed to let you quickly experience the acceleration performance that can be achieved by porting the video filter to Xilinx’s Alveo accelerator card. The Alveo series cards are designed for accelerating data center applications. However, this tutorial can be adapted to other accelerator cards with some simple changes.</p>
+<p>The steps to be carried out for this first lab include:</p>
+<ul class="simple">
+<li><p>Setting up the Vitis application acceleration development flow</p></li>
+<li><p>Running the hardware optimized accelerator and comparing its performance with a baseline of the application</p></li>
+</ul>
+<p>This lab demonstrates the significant performance gain that can be achieved as compared to CPU performance. Whereas the next labs in this tutorial will illustrate and guide how such performance can be achieved using different optimizations and design techniques for 2D convolution kernels and the host side application.</p>
+<div class="section" id="cloning-the-github-repository-and-setting-up-the-vitis-tool">
+<h3>Cloning the GitHub Repository and Setting Up the Vitis Tool<a class="headerlink" href="#cloning-the-github-repository-and-setting-up-the-vitis-tool" title="Permalink to this headline">¶</a></h3>
+<p>To run this tutorial you will need to clone a git repo and also download and extract some compressed files, please follow the instruction given below:</p>
+<div class="section" id="clone-git-repo">
+<h4>Clone Git Repo<a class="headerlink" href="#clone-git-repo" title="Permalink to this headline">¶</a></h4>
+<p>Clone the repository using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/Xilinx/Vitis-Tutorials.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="copy-and-extract-large-files">
+<h4>Copy and Extract Large Files<a class="headerlink" href="#copy-and-extract-large-files" title="Permalink to this headline">¶</a></h4>
+<p>Copy and extract large files in convolution tutorial directory as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /VITIS_TUTORIAL_REPO_PATH/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial
+wget https://www.xilinx.com/bin/public/openDownload?filename<span class="o">=</span>conv_tutorial_files.tar.gz -O conv_tutorial_files.tar.gz
+tar -xvzf  conv_tutorial_files.tar.gz
+</pre></div>
+</div>
+<p><strong>NOTE</strong> : VITIS_TUTORIAL_REPO_PATH is the local directory path where git repo is cloned.</p>
+</div>
+<div class="section" id="setting-up-the-vitis-tool">
+<h4>Setting Up the Vitis Tool<a class="headerlink" href="#setting-up-the-vitis-tool" title="Permalink to this headline">¶</a></h4>
+<p>Setup the application build and runtime environment using the following commands as per your local installation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;XILINX_VITIS_INSTALL_PATH&gt;/settings64.sh
+<span class="nb">source</span> &lt;XRT_INSTALL_PATH&gt;/setup.sh
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="baseline-the-application-performance">
+<h3>Baseline the Application Performance<a class="headerlink" href="#baseline-the-application-performance" title="Permalink to this headline">¶</a></h3>
+<p>The software application processes High Definition(HD) video frames/images with 1920x1080 resolution. It performs convolution on a set of images and prints the summary of performance results. It is used for measuring baseline software performance. Please the set the environment variable that points to tutorial direction relative to repo path as follow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CONV_TUTORIAL_DIR</span><span class="o">=</span>/VITIS_TUTORIAL_REPO_PATH/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial
+</pre></div>
+</div>
+<p>where <strong>VITIS_TUTORIAL_REPO_PATH</strong> is the local path where git repo is placed by the user after cloning.</p>
+<p><strong>NOTE</strong>: Make sure during all of the labs in this tutorial you have set <code class="docutils literal notranslate"><span class="pre">CONV_TUTORIAL_DIR</span></code> variable appropriately</p>
+<p>Run the application to measure performance as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>/sw_run
+./run.sh 
+</pre></div>
+</div>
+<p>Results similar to the ones shown below will be printed. Note down the CPU throughput.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------------
+Number of runs    : <span class="m">60</span>
+Image width       : <span class="m">1920</span>
+Image height      : <span class="m">1080</span>
+Filter <span class="nb">type</span>       : <span class="m">6</span>
+
+Generating a random 1920x1080 input image
+Running Software version on <span class="m">60</span> images
+
+CPU  Time         :    <span class="m">28</span>.0035 s
+CPU  Throughput   :    <span class="m">12</span>.7112 MB/s
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="running-fpga-accelerated-application">
+<h2>Running FPGA Accelerated Application<a class="headerlink" href="#running-fpga-accelerated-application" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="launching-the-host-application">
+<h3>Launching the Host Application<a class="headerlink" href="#launching-the-host-application" title="Permalink to this headline">¶</a></h3>
+<p>Now launch the application, which uses FPGA accelerated video convolution filter. The application will be run on an actual FPGA card, also called System Run.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>
+make run
+</pre></div>
+</div>
+<p>The result summary will be similar to the one given below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------------
+Xilinx 2D Filter Example Application <span class="o">(</span>Randomized Input Version<span class="o">)</span>
+
+FPGA binary       : ../xclbin/fpgabinary.hw.xclbin
+Number of runs    : <span class="m">60</span>
+Image width       : <span class="m">1920</span>
+Image height      : <span class="m">1080</span>
+Filter <span class="nb">type</span>       : <span class="m">3</span>
+Max requests      : <span class="m">12</span>
+Compare perf.     : <span class="m">1</span>
+
+Programming FPGA device
+Generating a random 1920x1080 input image
+Running FPGA accelerator on <span class="m">60</span> images
+Running Software version
+Comparing results
+
+Test PASSED: Output matches reference
+
+FPGA Time         :     <span class="m">0</span>.4240 s
+FPGA Throughput   :   <span class="m">839</span>.4765 MB/s
+CPU  Time         :    <span class="m">28</span>.9083 s
+CPU  Throughput   :    <span class="m">12</span>.3133 MB/s
+FPGA Speedup      :    <span class="m">68</span>.1764 x
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+<div class="section" id="results">
+<h3>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h3>
+<p>From the host application console output, it is clear that the FPGA accelerated kernel can outperform CPU-only implementation by a factor of 68x. It is a large gain in terms of performance over CPU. The following labs will illustrate how this performance allows processing more than 3 HD video channels with 1080p resolution in parallel. The tutorial describes how to achieve such performance gains by building a kernel and host application written in C++.  The host application uses OpenCL APIs and Xilinx Runtime (XRT) underneath it, demonstrating how to unleash this custom-built hardware kernel’s computing power effectively.</p>
+<hr class="docutils" />
+<p align="center"><b>
+Next Lab Module: <a href="./lab1_app_introduction_performance_estimation.html">Video Convolution Filter : Introduction and Performance Estimation</a>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
+</b></p></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
+</footer>
+
+        </div>
+      </div>
+
+
+	  <!-- Sphinx Page Footer block -->
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../03-rtl_stream_kernel_integration/README.html" class="btn btn-neutral float-right" title="Mixed Kernels Design Tutorial with AXI Stream and Vitis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../02-bloom/README.html" class="btn btn-neutral float-left" title="Optimizing Accelerated FPGA Applications: Bloom Filter Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo" class="copyright">
+    <p class="footerinfo">
+      <span class="lastupdated">
+        Last updated on November 15, 2021.
+      </span>
+
+    </p>
+	<br>
+  </div>
+      </div>
+    </section>
+
+
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+   <script type="text/javascript">
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+
+  <script type="text/javascript" id="searchindexloader"></script>
+
+
+  
+  
+    
+  
+
+
+
+  <!--  Xilinx template footer block -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+					<div class="xf-content-height">
+						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
+							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+								<noindex>
+                  <!-- make footer fixed - NileshP -->
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+                  <!-- make footer fixed NileshP-->
+									<footer>
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+													<div class="row">
+														<div class="footerSocial parbase">
+															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
+																<ul class="list-inline pull-right social-menu">
+																	<li>
+																		<a href="https://www.linkedin.com/company/xilinx">
+																		<span class="linkedin icon"></span>
+																		<span class="sr-only">Connect on LinkedIn</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a href="https://www.twitter.com/XilinxInc">
+																		<span class="twitter icon"></span>
+																		<span class="sr-only">Follow us on Twitter</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a href="https://www.facebook.com/XilinxInc">
+																		<span class="facebook icon"></span>
+																		<span class="sr-only">Connect on Facebook</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a href="https://www.youtube.com/XilinxInc">
+																		<span class="youtube icon"></span>
+																		<span class="sr-only">Watch us on YouTube</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a href="https://www.xilinx.com/registration/subscriber-signup.html">
+																		<span class="newsletter icon"></span>
+																		<span class="sr-only">Subscribe to Newsletter</span>
+																		</a>
+																	</li>
+																</ul>
+															</div>
+														</div>
+														<div class="col-md-pull-6 col-lg-pull-6 col-md-6 col-lg-6">
+															<span class="copyright">
+                                  
+                                  &copy; 2021, Xilinx, Inc.
+                              </span>
+															<ul class="list-inline sub-menu">
+																<li>
+																	<a href="https://www.xilinx.com/about/privacy-policy.html">Privacy</a>
+																</li>
+																<li>
+																	<a href="https://www.xilinx.com/about/legal.html">Legal</a>
+																</li>
+																<li>
+																	<a href="https://www.xilinx.com/about/contact.html">Contact</a>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</footer>
+								</noindex>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="quicklinks parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+					<noindex>
+						<span class="quickLinks">
+							<ul>
+								<li>
+									<a href="#top" class="btn backToTop">
+									<span class="fas fa-angle-up" aria-hidden="true"></span>
+									</a>
+								</li>
+							</ul>
+						</span>
+					</noindex>
+				</div>
+			</div>
+		</div>
+		<script>window.CQ = window.CQ || {}</script>
+		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
+		<script>
+			var underscoreSetup = function () {
+			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
+			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
+			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
+			}
+
+			underscoreSetup();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,3 @@
+[submodule "Hardware_Acceleration/Introduction/design_source/hw_src/Vitis_Libraries"]
+	path = Hardware_Acceleration/Introduction/design_source/hw_src/Vitis_Libraries
+	url = https://github.com/Xilinx/Vitis_Libraries
