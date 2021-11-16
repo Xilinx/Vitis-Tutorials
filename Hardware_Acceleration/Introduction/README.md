@@ -8,6 +8,9 @@
 
 
 ## Introduction
+
+***Version: Vitis 2021.2***
+
 Xilinx FPGAs and Versal ACAP devices are uniquely suitable for low-latency acceleration of high performance algorithms and workloads. With the demise of traditional Moore's Law scaling, design-specific architectures(DSAs) are becoming the tool of choice for developers needing the optimal balance of capability, power, latency, and flexibility. But, approaching FPGA and ACAP development from a purely software background can seem daunting.
 
 With this set of documentation and tutorials, our goal is to provide you with an easy-to-follow, guided introduction to accelerating applications with Xilinx technology. We will begin from the first principles of acceleration: understanding the fundamental architectural approaches, identifying suitable code for acceleration, and interacting with the software APIs for managing memory and interacting with the target

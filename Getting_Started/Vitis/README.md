@@ -1,6 +1,6 @@
 <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Getting Started Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Getting Started Tutorial</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
    </td>
  </tr>
@@ -11,6 +11,8 @@
 </table>
 
 # Vitis Flow 101 Tutorial
+
+***Version: Vitis 2021.1***
 
 Welcome to the Vitis 101 tutorial. If you are looking to learn more about Vitis in order to get started with FPGA acceleration, you've come to the right place.
 

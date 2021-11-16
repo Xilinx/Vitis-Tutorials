@@ -1,3 +1,14 @@
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table>
+
 # HBM Overview
 
 There are some algorithms that are memory bound, limited by the 77GB/s bandwidth available on DDR based Alveo cards. For those applications there are  HBM (High Bandwidth Memory) based  Alveo cards, providing up to 460 GB/s memory bandwidth.  This module will walk you through some of the structural differences between DDR and HBM and introduce how you can take advantage of the higher bandwidth.

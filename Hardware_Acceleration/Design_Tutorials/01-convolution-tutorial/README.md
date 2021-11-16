@@ -1,7 +1,6 @@
 ﻿﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
    </td>
  </tr>
  <tr>
@@ -11,6 +10,8 @@
 </table>
 
 # Accelerating Video Convolution Filtering Application
+
+***Version: Vitis 2021.1***
 
 This tutorial introduces you to a compute-intensive application that is accelerated using the Xilinx Alveo Data Center accelerator card. It goes through the design of a specific kernel that runs on the FPGA and briefly discusses optimization of the host-side application for performance. The kernel is designed to maximize throughput, and the host application is optimized to transfer data in an effective manner that moves in-between the host and FPGA card. The host application essentially eliminates the data movement latency by overlapping data transfers for multiple kernel calls. Another essential purpose of this tutorial is to show **_how one can easily estimate the performance of hardware kernels that can be built using Vitis HLS and how accurate and close these estimates are to actual hardware performance_**
 

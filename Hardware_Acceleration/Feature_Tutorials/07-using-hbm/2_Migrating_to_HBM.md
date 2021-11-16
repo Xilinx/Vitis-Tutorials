@@ -1,3 +1,14 @@
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table>
+
 ## Application Overview
 
 This tutorial uses a simple example of vector addition with DDR based implementation. Ports `in1` and `in2` are reading from DDR banks 0 and 1, respectively, and port `out` is writing the results in DDR bank 2. The tutorial will walk through the necessary changes to the existing application to migrate to HBM.

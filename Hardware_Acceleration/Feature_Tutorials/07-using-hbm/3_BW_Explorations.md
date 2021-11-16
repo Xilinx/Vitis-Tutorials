@@ -1,3 +1,14 @@
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table>
+
 ## HBM Bandwidth Explorations
 
 In this section, you will observe achievable bandwidth using one HBM master port. You will also explore access to single or multiple Pseudo channels as various transaction sizes are initiated by the kernel master port.
