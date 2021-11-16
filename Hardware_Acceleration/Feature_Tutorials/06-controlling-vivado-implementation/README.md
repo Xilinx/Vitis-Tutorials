@@ -11,6 +11,8 @@
 
 # Controlling Vivado Implementation
 
+***Version: Vitis 2021.2***
+
 ## Introduction
 
 The Vitis™ compiler creates kernel objects from the source code, links the kernels with the targeted shell, and runs the assembled design through the Vivado® tool implementation flows. It generates the platform file (`xclbin`) needed to program the FPGA-based acceleration cards. Sometimes, it is essential to use the advanced Vivado synthesis and implementation options to achieve your desired results, including timing closure. The topics discussed here are documented in [Managing Vivado Synthesis and Implementation Results](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=buildingdevicebinary.html;a=hnw1523048617934) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).

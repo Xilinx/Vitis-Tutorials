@@ -11,7 +11,7 @@
 
 # Vitis HLS Analysis and Optimization
 
-***Version: Vitis 2021.1***
+***Version: Vitis 2021.2***
 
 ## Introduction
 

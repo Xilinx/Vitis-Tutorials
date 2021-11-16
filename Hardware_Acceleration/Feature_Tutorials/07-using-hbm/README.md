@@ -9,7 +9,14 @@
  </tr>
 </table>
 
-# Introduction
+# Using HBM
+
+***Version: Vitis 2021.1***
+
+## Introduction
+
+
+
 This tutorial covers essential steps on migrating an existing application using DDR memory to HBM memory.  The tutorial begins by explaining the structural differences between DDR and HBM, as well as achievable theoretical bandwidth. The second section uses a simple example with necessary steps to migrate an application from DDR to HBM.
 
 ## Before You Begin

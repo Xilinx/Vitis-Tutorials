@@ -11,6 +11,8 @@
 
 # Mixing C++ and RTL Kernels
 
+***Version: Vitis 2021.2***
+
 ## Introduction
 
 In the Vitis™ core development kit, an application program is split between a host application and hardware accelerated kernels. The host application is developed in C/C++ with OpenCL™ API calls. The hardware kernels, on the other hand, can be developed in C/C++, OpenCL C, or RTL. In fact, the Vitis core development kit applications can use any combination of kernels developed in the different languages. The host code is indifferent to how the kernel was developed; it uses the same function call.

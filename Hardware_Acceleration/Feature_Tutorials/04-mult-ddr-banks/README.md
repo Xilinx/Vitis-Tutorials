@@ -11,6 +11,8 @@
 
 # Using Multiple DDR Banks
 
+***Version: Vitis 2021.2***
+
 ## Introduction
 
 By default, in the Vitis™ core development kit, the data transfer between the kernel and the DDR is achieved using a single DDR bank. In some applications, data movement is a performance bottleneck. In cases where the kernels need to move large amounts of data between the global memory (DDR) and the FPGA, you can use multiple DDR banks. This enables the kernels to access multiple memory banks simultaneously. As a result, the application performance increases.
