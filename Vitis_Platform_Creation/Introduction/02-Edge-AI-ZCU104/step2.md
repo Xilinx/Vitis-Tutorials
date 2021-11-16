@@ -33,7 +33,7 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    ```bash
    petalinux-create --type project --template zynqMP --name zcu104_custom_plnx
    cd zcu104_custom_plnx
-   petalinux-config --get-hw-description=<vivado_design_dir>(The directory where your *.xsa file locates. if you do as step1 says here, the "vivado_design_dir" is "zcu104_custom_platform")
+   petalinux-config --get-hw-description=<vivado_design_dir>  # The directory where your *.xsa file locates. if you do as step1 says strictly here, the <vivado_design_dir> is the absolute path of <zcu104_custom_platform>
    ```
 
    After this step, your directory hierarchy looks like this.
