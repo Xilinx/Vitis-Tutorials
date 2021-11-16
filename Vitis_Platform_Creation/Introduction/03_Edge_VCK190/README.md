@@ -58,8 +58,8 @@ This design requires a Linux host machine with Internet access. The Linux OS nee
 
 ## Reference
 
-- [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/index.html)
-   - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/create_embedded_platforms.html#rjs1596051748503)
+- [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
+   - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/create_embedded_platforms.html)
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 
 
