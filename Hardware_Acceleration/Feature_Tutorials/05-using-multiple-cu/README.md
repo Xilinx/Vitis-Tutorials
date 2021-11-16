@@ -11,6 +11,8 @@
 
 # Using Multiple Compute Units
 
+***Version: Vitis 2021.2***
+
 ## Introduction
 
 This tutorial demonstrates a flexible kernel linking process to increase the number of kernel instances on an FPGA. Each specified instance of a kernel is also known as a compute unit (CU). This process of increasing number of CU improves the parallelism in a combined host-kernel system.
