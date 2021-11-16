@@ -1,16 +1,19 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2021.1 Vitis Application Acceleration Development Flow Tutorials</a>
-  </td>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
  </tr>
  <tr>
- <td align="center"><h1>Vitis HLS Analysis and Optimization</h1>
+ <td>
  </td>
  </tr>
 </table>
 
-# Introduction
+# Vitis HLS Analysis and Optimization
+
+***Version: Vitis 2021.1***
+
+## Introduction
 
 Vitis High-Level Synthesis (HLS) is a key part of the Vitis application acceleration development flow. The tool is responsible for compiling C/C++ and OpenCL code into a kernel for acceleration in the programmable logic (PL) region of Xilinx devices. Thus, it is the tool that compiles the hardware kernels for the Vitis tools by performing high-level synthesis.
 
@@ -33,7 +36,7 @@ The labs in this tutorial use:
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
 2. Navigate to the `Hardware_accelerators/Feature_Tutorials/03-dataflow_debug_and_optimization` directory, and then access the `reference-files` directory.
 
-# Next Steps
+## Next Steps
 
 Complete the labs in the following order:
 

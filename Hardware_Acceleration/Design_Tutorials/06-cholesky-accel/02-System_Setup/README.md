@@ -1,10 +1,15 @@
-<table width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ - Section 2 - System Setup</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
-    </td>
+<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
  </tr>
 </table>
+
+# Section 2 - System Setup
 
 In order to proceed to the Vitis optimization part of the tutorial, we'll need to setup the environment and the tools. Please follow the below steps to install and setup Vitis and Alveo U50 accelerator card.
 

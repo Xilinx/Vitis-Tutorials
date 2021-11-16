@@ -1,8 +1,11 @@
-﻿<table width=100%>
- <tr width=50%>
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h2>2021.1 Vitis™ - The Traveling Salesperson Problem - Tutorial</h2>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
-    </td>
+﻿<table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
  </tr>
 </table>
 
@@ -23,6 +26,8 @@
  */ -->
  
 # The Traveling Salesperson Problem
+
+***Version: Vitis 2021.1***
 
 ## Introduction
 
