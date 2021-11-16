@@ -57,9 +57,9 @@ We'll introduce the platform creation steps in the following pages. Each page de
 ## References
 
 - [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/index.html)
-  - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/vcm1596051749044.html)
-  - [Setting up the Vitis environment](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/settingupvitisenvironment.html)
-  - [Installing Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/pjr1542153622642.html)
+  - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/create_embedded_platforms.html)
+  - [Setting up the Vitis environment](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/settingupvitisenvironment.html)
+  - [Installing Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/pjr1542153622642.html)
 - Platform Examples
   - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.1/Xilinx_Official_Platforms/zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.1/Xilinx_Official_Platforms/zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 - [Xilinx Run Time (XRT)](https://xilinx.github.io/XRT/master/html/index.html)
