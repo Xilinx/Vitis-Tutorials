@@ -86,6 +86,7 @@ strm_dump.xo: ./hls/strm_dump.cpp
 strm_issue.xo: ./hls/strm_issue.cpp
 	v++ $(XOCCFLAGS) --kernel strm_issue -c -o $@ $<
 
+all: gen_ip pack_kernel build_hw
 
 ################## software build 
 CXXFLAGS := -std=c++14 -Wno-deprecated-declarations

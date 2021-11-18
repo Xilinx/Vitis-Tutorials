@@ -11,7 +11,7 @@
 
 # Mixed Kernels Design Tutorial with AXI Stream and Vitis
 
-***Version: Vitis 2021.1***
+***Version: Vitis 2021.2***
 
 This tutorial demonstrate the design flow for an example mixed kernels hardware design, which includes both RTL kernel and HLS C kernel, as well as Vitis Vision Library. The design generates a real-time clock image, resizes it, then alpha-mix it with an input image in global memory, finally output the result image to global memory. AXI stream interface is used for the kernel-to-kernel connection.
 
@@ -32,8 +32,8 @@ The designs have been verified with following software/hardware environment and 
   * Redhat/CentOS 7.4 - 7.9
   * Ubuntu 16.04/18.04
   * OpenCV & OpenCL libraries required
-* Vitis: 2021.1
-* XRT: 2.11.634
+* Vitis: 2021.2
+* XRT: 2.12.427
 * Hardware and Platform (need both the deployment and development platforms)
   * Alveo U200 - xilinx_u200_xdma_201830_2
   * Alveo U250 - xilinx_u250_xdma_201830_2, xilinx_u250_gen3x16_xdma_3_1_202020_1

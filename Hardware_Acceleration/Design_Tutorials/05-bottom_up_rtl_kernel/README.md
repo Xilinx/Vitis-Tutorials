@@ -11,12 +11,12 @@
 
 # Bottom-up RTL Kernel Flow with Vitis for Acceleration
 
-***Version: Vitis 2021.1***
+***Version: Vitis 2021.2***
 
 RTL design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a timing consuming and error-prone process. The Xilinx&reg; Vitis&trade; unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included Vivado&reg; Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-FPGA communication, DMA, and other supporting tasks.
 
 ## About This Tutorial
-
+ 
 This tutorial introduces a bottom-up Vitis-based RTL kernel construct and wrap-up process, as well as the host-kernel interaction with [Xilinx Runtime library (XRT)](https://xilinx.github.io/XRT/). All the steps in this tutorial use the command-line interface, except those needed to view waveform or system diagram.
 
 This tutorial uses an example design to illustrate the relevant concept and steps. The following image shows the block diagram of this design. It is a simple AES accelerator design and comprises two kernels, ```krnl_aes``` and ```krnl_cbc```. The ```krnl_aes``` kernel is the core AES computation core with AXI streams slave and master ports. The ```krnl_cbc``` kernel handles the host-kernel data exchange, and the implementation of AES-ECB and AES-CBD modes along with the krnl_aes module.
@@ -46,8 +46,8 @@ The designs have been verified with the following software/hardware environment 
   * Perl package installed for Verilog simulation (**required**)
   * OpenSSL library installed for hardware output validate (**required**)
   * GCC 7
-* Vitis: 2021.1
-* XRT: 2.11.634
+* Vitis: 2021.2
+* XRT: 2.12.427
 * Hardware and Platform for your Alveo card (you need both the deployment and development platforms):
   * Alveo U200: xilinx_u200_xdma_201830_2
   * Alveo U250: xilinx_u250_xdma_201830_2
