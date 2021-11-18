@@ -80,6 +80,7 @@ XOCCLFLAGS := --link --optimize 3 --vivado.synth.jobs $(JOBS) --vivado.impl.jobs
 build_hw:
 	v++ $(XOCCLFLAGS) $(XOCCFLAGS) $(DEBUG_OPT) --config krnl_cbc_test.cfg -o krnl_cbc_test_$(TARGET).xclbin krnl_cbc.xo ../krnl_aes/krnl_aes.xo
 
+all: gen_ip pack_kernel build_hw
 
 ################## software build for XRT Native API code
 CXXFLAGS := -std=c++14 -Wno-deprecated-declarations
