@@ -24,7 +24,7 @@
             "vitis_hw_build",
             "vitis_hw_run"
         ],
-        "make_options" : [ "TARGET='$user_test_mode'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}/techdocs_repo'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'" ],
+        "make_options" : [ "TARGET='$user_test_mode'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}/techdocs_repo/Hardware_Acceleration/Design_Tutorials/02-bloom'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'", "SpriteEn=1" ],
         "category": "canary",
         "custom_build_target": {
             "all": "run",

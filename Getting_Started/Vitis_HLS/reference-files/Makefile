@@ -40,9 +40,9 @@ xclbin: $(XO) $(XCLBIN)
 
 # Building kernel
 $(XO): ./src/dct.cpp
-	v++ $(KRNL_COMPILE_OPTS) -c -k dct -I'$(<D)' -o'$@' '$<'
+	v++ $(KRNL_COMPILE_OPTS) -c --platform $(PLATFORM) -k dct -I'$(<D)' -o'$@' '$<'
 $(XCLBIN): $(XO)
-	v++ $(KRNL_LINK_OPTS) -l -o'$@' $(+)
+	v++ $(KRNL_LINK_OPTS) -l --platform $(PLATFORM) -o'$@' $(+)
 
 # Building Host
 $(HOST_EXE): ./src/dct_top.cpp
