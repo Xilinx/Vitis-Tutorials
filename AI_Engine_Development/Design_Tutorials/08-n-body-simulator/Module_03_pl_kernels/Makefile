@@ -15,10 +15,9 @@
 
 help::
 	@echo "Makefile Usage:"
-	@echo "  make all TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make all TARGET=<hw_emu|hw> "
 	@echo "       Command runs make vitis_lib, make pre_build and make pl_kernels"
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
 	@echo "  make vitis_lib "
 	@echo "       Command to download the Vitis Utilty Library from Github"
@@ -26,10 +25,9 @@ help::
 	@echo "  make pre_build "
 	@echo "       Command to create the HLS *.cpp files from kernel/spec.json file"
 	@echo ""
-	@echo "  make pl_kernels TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make pl_kernels TARGET=<hw_emu|hw>"
 	@echo "       Command runs make vitis_lib and make pre_build and runs v++ compiler and create the *.xo HLS kernels"
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
 	@echo "  make clean "
 	@echo "      Command to remove the generated files."
@@ -44,21 +42,17 @@ RELATIVE_PROJECT_DIR := ../
 #absolute project directory
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-PL_KERNELS_DIR := $(PROJECT_DIR)/Module_03_pl_kernels
-AIE_DIR := $(PROJECT_DIR)/Module_02_aie
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)
+
+PL_KERNELS_DIR := $(DESIGN_DIR)/Module_03_pl_kernels
+AIE_DIR := $(DESIGN_DIR)/Module_02_aie
 
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
 
 XFLIB_DIR_REL_PATH :=./Vitis_Libraries/utils
 XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
-
-# =========================================================
-# PLATFORM SELECTION
-# PLATFORM=xilinx_vck190_base_202110_1 (default)
-# PLATFORM=xilinx_vck190_es1_base_202110_1
-# =========================================================
-PLATFORM ?=xilinx_vck190_base_202110_1
 
 # =========================================================
 # TARGET SELECTION
@@ -89,10 +83,10 @@ VPP_FLAGS += -I$(XFLIB_DIR)/L1/include
 VPP_FLAGS += -I$(XFLIB_DIR)/L1/include/hw
 VPP_FLAGS += -I$(CUR_DIR)/kernel
 
-m2s_x2_VPP_FLAGS := --hls.clock 300000000:m2s_x2
-packet_sender_VPP_FLAGS := --hls.clock 300000000:packet_sender
-packet_receiver_VPP_FLAGS := --hls.clock 300000000:packet_receiver
-s2m_x4_VPP_FLAGS := --hls.clock 300000000:s2m_x4
+m2s_x2_VPP_FLAGS := --hls.clock 150000000:m2s_x2
+packet_sender_VPP_FLAGS := --hls.clock 150000000:packet_sender
+packet_receiver_VPP_FLAGS := --hls.clock 150000000:packet_receiver
+s2m_x4_VPP_FLAGS := --hls.clock 150000000:s2m_x4
 
 # =========================================================
 # OUTPUT PRODUCTS

@@ -14,15 +14,13 @@
 
 help::
 	@echo "Makefile Usage:"
-	@echo "  make all TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make all TARGET=<hw_emu|hw>"
 	@echo "       Command runs make xclbin"
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
-	@echo "  make xclbin TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make xclbin TARGET=<hw_emu|hw>"
 	@echo "       Command to create the XCLBIN from libadf.a and HLS kernels *.xo"
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
 	@echo "  make clean "
 	@echo "      Command to remove the generated files."
@@ -37,16 +35,12 @@ RELATIVE_PROJECT_DIR := ../
 #absolute project directory
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-AIE_DIR :=  $(PROJECT_DIR)/Module_02_aie
-PL_KERNELS_DIR := $(PROJECT_DIR)/Module_03_pl_kernels
-XCLBIN_DIR := $(PROJECT_DIR)/Module_04_full_system_design
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)
 
-# =========================================================
-# PLATFORM SELECTION
-# PLATFORM=xilinx_vck190_base_202110_1 (default)
-# PLATFORM=xilinx_vck190_es1_base_202110_1
-# =========================================================
-PLATFORM ?=xilinx_vck190_base_202110_1
+AIE_DIR :=  $(DESIGN_DIR)/Module_02_aie
+PL_KERNELS_DIR := $(DESIGN_DIR)/Module_03_pl_kernels
+XCLBIN_DIR := $(DESIGN_DIR)/Module_04_full_system_design
 
 # =========================================================
 # TARGET SELECTION
@@ -66,7 +60,7 @@ TEMP_DIR := $(PL_KERNELS_DIR)/build.$(TARGET).$(PLATFORM)/_x_temp
 VPP_FLAGS += -t $(TARGET) --platform $(PLATFORM) --save-temps -g --optimize 2
 VPP_FLAGS += --hls.jobs 8
 VPP_FLAGS += --config $(XCLBIN_DIR)/conn.cfg
-VPP_FLAGS += --clock.defaultFreqHz 300000000
+VPP_FLAGS += --clock.defaultFreqHz 150000000
 
 # =========================================================
 # V++ LINKER FLAGS

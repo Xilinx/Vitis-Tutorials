@@ -60,6 +60,7 @@ export PLATFORM_REPO_PATHS=<user-path>
 export ROOTFS=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v<ver>/rootfs.ext4
 export IMAGE=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v<ver>/Image
 export EDGE_COMMON_SW=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v<ver>
+export PLATFORM=xilinx_vck190_base_<ver> #or xilinx_vck190_es1_base_<ver> is using an ES1 board
 
 source <XILINX-INSTALL-LOCATION>/Vitis/<ver>/settings64.sh
 source $XILINX_XRT/setup.sh
@@ -74,7 +75,7 @@ source env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Ensure you are using the 2021.1 version of the Xilinx tools.
+Ensure you are using the 2021.2 version of the Xilinx tools.
 
 ```bash
 which vitis
@@ -266,10 +267,7 @@ This design is built with the help of Makefiles. Each module can be run from the
 
 ### Building for VCK190 ES1 Board
 
-By default, the Makefiles build the design for the VCK190 Production board (i.e. using the xilinx_vck190_base_202110_1 embedded platform). In order to build the design for the VCK190 ES1 board, ensure you've downloaded the xilinx_vck190_es1_base_202110_1 embedded platform from the lounge, so its available for this design build. Then specify the command-line input `PLATFORM=xilinx_vck190_es1_base_202110_1` with your make commands. For example,  
-```
-make all PLATFORM=xilinx_vck190_es1_base_202110_1
-```
+By default, the Makefiles build the design for the VCK190 Production board (i.e. using the xilinx_vck190_base_<ver> embedded platform). In order to build the design for the VCK190 ES1 board, ensure you've downloaded the xilinx_vck190_es1_base_<ver> embedded platform from the lounge, so its available for this design build. Then specify the environment variable `export PLATFORM=xilinx_vck190_es1_base_<ver>` with your `env_setup.sh` script.  
 
 ## References
 

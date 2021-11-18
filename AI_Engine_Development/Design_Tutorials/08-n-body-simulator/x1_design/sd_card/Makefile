@@ -14,12 +14,13 @@
 
 help::
 	@echo "Makefile Usage:"
-	@echo "  make all "
+	@echo "  make all TARGET=<hw_emu|hw>"
 	@echo "       Command runs make sd_card"
+	@echo "       Default TARGET=hw" 
 	@echo ""
 	@echo "  make sd_card TARGET=<hw_emu|hw>"
 	@echo "       Command runs v++ compiler -p to create the sd_card.img"
-	@echo "       Default TARGET=hw_emu"
+	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make run"
 	@echo "       Command launches hardware emulation"
@@ -29,47 +30,52 @@ help::
 	@echo ""
 
 # =========================================================
+# NUMBER OF COMPUTE UNITS INSTANCES 
+# x1   = 1   AIE TILE
+# x10  = 10  AIE TILES
+# X100 = 100 AIE TILES
+# =========================================================
+INST		= x1
+
+# =========================================================
 # PROJECT DIRECTORIES
 # =========================================================
-RELATIVE_PROJECT_DIR := ../
+RELATIVE_PROJECT_DIR := ../../
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)/$(INST)_design
 
-XFLIB_DIR_REL_PATH :=../../Module_03_pl_kernels/Vitis_Libraries/utils/
-XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
-
-AIE_APP_DIR := $(PROJECT_DIR)/aie
-XCLBIN_DIR := $(PROJECT_DIR)/xclbin
-HOST_SW_DIR := $(PROJECT_DIR)/host_sw
-SD_CARD_DIR := $(PROJECT_DIR)/sd_card
-DATA_DIR := $(PROJECT_DIR)/data
-
-# =========================================================
-# PLATFORM SELECTION
-# =========================================================
-PLATFORM :=xilinx_vck190_base_202110_1
+AIE_APP_DIR := $(DESIGN_DIR)/aie
+XCLBIN_DIR := $(DESIGN_DIR)/xclbin
+HOST_SW_DIR := $(DESIGN_DIR)/host_sw
+SD_CARD_DIR := $(DESIGN_DIR)/sd_card
+DATA_DIR := $(DESIGN_DIR)/data
 
 # =========================================================
 # TARGET SELECTION
-# TARGET=hw_emu (default)
-# TARGET=hw
+# TARGET=hw (default)
+# TARGET=hw_emu 
 # =========================================================
-TARGET :=hw_emu
+TARGET ?=hw
+
+# =========================================================
+# HW_EMU COMMAND
+# =========================================================
+EMU_CMD := ./launch_hw_emu.sh
 
 # =========================================================
 # BUILD DIRECTORIES
 # =========================================================
-BUILD_DIR := $(SD_CARD_DIR)/build
-XCLBIN_OUTPUT_DIR := $(XCLBIN_DIR)/build/build_dir.$(TARGET).$(PLATFORM)
-EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)/package_$(TARGET)
+BUILD_DIR := $(SD_CARD_DIR)/build.$(TARGET).$(PLATFORM)
+XCLBIN_OUTPUT_DIR := $(XCLBIN_DIR)/build.$(TARGET).$(PLATFORM)
+EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)
 
 # =========================================================
 # V++ PACKAGE FLAGS
 # =========================================================
-PACKAGE_FILES := $(HOST_SW_DIR)/build/ps_app.exe
-PACKAGE_FILES += $(HOST_SW_DIR)/build/ps_app_animate.exe
+PACKAGE_FILES := $(HOST_SW_DIR)/build.$(TARGET)/ps_app_animate.exe
+PACKAGE_FILES += $(HOST_SW_DIR)/build.$(TARGET)/ps_app.exe
 PACKAGE_FILES += $(DATA_DIR)/m2s_i.txt
 PACKAGE_FILES += $(DATA_DIR)/input_j.txt
 PACKAGE_FILES += $(DATA_DIR)/s2m_golden_i_k0.txt
@@ -83,11 +89,15 @@ SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd
 host: 
 	$(MAKE) host -C $(HOST_SW_DIR)
 
-# ################ TARGET: make host ################
+# ################ TARGET: make xclbin ################
+xclbin: 
+	$(MAKE) xclbin -C $(XCLBIN_DIR)
+
+# ################ TARGET: make all ################
 all: sd_card
 
 # ################ TARGET: make sd_card ################
-sd_card: host $(EMBEDDED_PACKAGE_OUT)/sd_card.img
+sd_card: host xclbin $(EMBEDDED_PACKAGE_OUT)/sd_card.img
 
 $(EMBEDDED_PACKAGE_OUT)/sd_card.img: $(PACKAGE_FILES) $(XCLBIN_OUTPUT_DIR)/hpc.xclbin $(AIE_APP_DIR)/build/libadf.a
 	mkdir -p $(BUILD_DIR); \
@@ -111,10 +121,11 @@ ifeq ($(findstring vck190, $(PLATFORM)), vck190)
 	export XCL_EMULATION_MODE=$(TARGET)
 	xterm & 
 	cd $(EMBEDDED_PACKAGE_OUT) ;\
-	./launch_$(TARGET).sh | tee embedded_run.log
+	$(EMU_CMD)
 endif
 endif
 
 # ################ TARGET: make clean ################
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -rf *~

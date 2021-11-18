@@ -14,67 +14,86 @@
 
 help::
 	@echo "Makefile Usage:"
-	@echo "  make all "
-	@echo "       Command runs make aie, make kernels, make xclbin, make host, make sd_card"
+	@echo "  make all TARGET=<hw_emu|hw>"
+	@echo "       Command runs make aie, make pl_kernels, make xclbin, make host, make sd_card for x100_design"
+	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make aie"
 	@echo "       Command to create the AIE graph"
 	@echo ""
-	@echo "  make pl_kernels TARGET=<hw_emu|hw>"
+	@echo "  make pl_kernels TARGET=<hw_emu|hw> "
 	@echo "       Command to create PL HLS kernels *.xo"
-	@echo "       Default TARGET=hw_emu"
+	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make xclbin TARGET=<hw_emu|hw>"
 	@echo "       Command to create XCLBIN" 
-	@echo "       Default TARGET=hw_emu"
+	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make host <hw_emu|hw>"
 	@echo "       Command to create host application" 
-	@echo "       Default TARGET=hw_emu"
+	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make sd_card <hw_emu|hw>"
 	@echo "       Command to create sd_card.img" 
-	@echo "       Default TARGET=hw_emu"
+	@echo "       Default TARGET=hw"
 	@echo ""
-	@echo "  make run"
-	@echo "       Command to launch QEMU hardware emulation" 
+	@echo "  make x1_design"
+	@echo "       Command to create the x1 AIE tile design" 
 	@echo ""
-	@echo "  make clean "
+	@echo "  make x10_design"
+	@echo "       Command to create the x10 AIE tile design" 
+	@echo ""
+	@echo "  make all_designs"
+	@echo "       Command to create the x100, x1, and x10 AIE tile designs" 
+	@echo ""
+	@echo "  make clean"
 	@echo "      Command to remove all generated files."
 	@echo ""
 
+# =========================================================
+# TARGET SELECTION
+# TARGET=hw (default)
+# TARGET=hw_emu
+# =========================================================
+export TARGET :=hw
+
+# ################ TARGET: make all ################
 all: aie pl_kernels xclbin host sd_card
 
-# ################ TARGET: make graph ################
+# ################ TARGET: make aie ################
 .PHONY: aie
 aie: 
-	$(MAKE) aie -C aie
+	$(MAKE) all -C aie
 
-# ################ TARGET: make kernels ################
+# ################ TARGET: make pl_kernels ################
 .PHONY: pl_kernels
 pl_kernels: 
-	$(MAKE) pl_kernels -C pl_kernels
+	$(MAKE) all -C pl_kernels
 
 # ################ TARGET: make xclbin ################
 .PHONY: xclbin
 xclbin: 
-	$(MAKE) xclbin -C xclbin
+	$(MAKE) all -C xclbin
 
 # ################ TARGET: make host ################
 host: 
-	$(MAKE) host -C host_sw
+	$(MAKE) all -C host_sw
 
 # ################ TARGET: make sd_card ################
 .PHONY: sd_card
 sd_card:
-	$(MAKE) sd_card -C sd_card
+	$(MAKE) all -C sd_card
+
+# ################ TARGET: make build ################
+build: all
 
 # ################ TARGET: make run ################
-run:
+run: build
 	$(MAKE) run -C sd_card
 
 # ################ TARGET: make clean ################
 clean: 
+	$(MAKE) clean -C results
 	$(MAKE) clean -C sd_card
 	$(MAKE) clean -C host_sw
 	$(MAKE) clean -C xclbin

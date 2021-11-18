@@ -35,9 +35,12 @@ RELATIVE_PROJECT_DIR := ../
 #absolute project directory
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-AIE_DIR := $(PROJECT_DIR)/Module_02_aie
-PL_KERNELS_DIR := $(PROJECT_DIR)/Module_03_pl_kernels
-HOST_SW_DIR := $(PROJECT_DIR)/Module_05_host_sw
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)
+
+AIE_DIR := $(DESIGN_DIR)/Module_02_aie
+PL_KERNELS_DIR := $(DESIGN_DIR)/Module_03_pl_kernels
+HOST_SW_DIR := $(DESIGN_DIR)/Module_05_host_sw
 
 XFLIB_DIR_REL_PATH :=$(PL_KERNELS_DIR)/Vitis_Libraries/utils
 XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
@@ -61,7 +64,7 @@ TARGET ?=hw
 # GCC COMPILER FLAGS
 # =========================================================
 CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
-SYSROOT := $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+SYSROOT := $(EDGE_COMMON_SW)/sysroots/aarch64-xilinx-linux
 
 GCC_FLAGS := -Wall -c -g -fmessage-length=0
 GCC_FLAGS += -std=c++14 -Wno-unknown-pragmas -Wno-unused-label

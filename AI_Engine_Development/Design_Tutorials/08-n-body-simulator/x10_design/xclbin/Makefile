@@ -14,60 +14,61 @@
 
 help::
 	@echo "Makefile Usage:"
-	@echo "  make all "
+	@echo "  make all TARGET=<hw_emu|hw>"
 	@echo "       Command runs make xclbin"
+	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make xclbin TARGET=<hw_emu|hw>"
 	@echo "       Command to create the XCLBIN from libadf.a and HLS kernels *.xo"
-	@echo "       Default TARGET=hw_emu"
+	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make clean "
 	@echo "      Command to remove the generated files."
 	@echo ""
 
 # =========================================================
+# NUMBER OF COMPUTE UNITS INSTANCES 
+# x1   = 1   AIE TILE
+# x10  = 10  AIE TILES
+# X100 = 100 AIE TILES
+# =========================================================
+INST		= x10
+
+# =========================================================
 # PROJECT DIRECTORIES
 # =========================================================
 #relative project directory
-RELATIVE_PROJECT_DIR := ../
+RELATIVE_PROJECT_DIR := ../../
 
 #absolute project directory
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
-XFLIB_DIR_REL_PATH :=../../Module_03_pl_kernels/Vitis_Libraries/utils/
-XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)/$(INST)_design
 
-PL_KERNELS_DIR := $(PROJECT_DIR)/pl_kernels
-AIE_DIR :=  $(PROJECT_DIR)/aie
-XCLBIN_DIR := $(PROJECT_DIR)/xclbin
-
-# =========================================================
-# PLATFORM SELECTION
-# =========================================================
-PLATFORM :=xilinx_vck190_base_202110_1
+AIE_DIR :=  $(DESIGN_DIR)/aie
+PL_KERNELS_DIR := $(DESIGN_DIR)/pl_kernels
+XCLBIN_DIR := $(DESIGN_DIR)/xclbin
 
 # =========================================================
 # TARGET SELECTION
-# TARGET=hw_emu (default)
-# TARGET=hw
+# TARGET=hw (default)
+# TARGET=hw_emu 
 # =========================================================
-TARGET :=hw_emu
+TARGET ?=hw
 
 # =========================================================
 # PL KERNELS DIR
 # =========================================================
-TEMP_DIR := $(PL_KERNELS_DIR)/build/_x_temp.$(TARGET).$(PLATFORM)
+TEMP_DIR := $(PL_KERNELS_DIR)/build.$(TARGET).$(PLATFORM)/_x_temp
 
 # =========================================================
 # V++ COMPILER FLAGS
 # =========================================================
 VPP_FLAGS += -t $(TARGET) --platform $(PLATFORM) --save-temps -g --optimize 2
 VPP_FLAGS += --hls.jobs 8
-VPP_FLAGS += --config $(CUR_DIR)/conn.cfg
-VPP_FLAGS += -I$(XFLIB_DIR)/L1/include
-VPP_FLAGS += -I$(XFLIB_DIR)/L1/include/hw
+VPP_FLAGS += --config $(XCLBIN_DIR)/conn.cfg
+VPP_FLAGS += --clock.defaultFreqHz 150000000
 
 # =========================================================
 # V++ LINKER FLAGS
@@ -77,27 +78,30 @@ VPP_LDFLAGS := --vivado.synth.jobs 8 --vivado.impl.jobs 8
 # =========================================================
 # BUILD DIRECTORIES
 # =========================================================
-BUILD_DIR := $(XCLBIN_DIR)/build
-XCLBIN_OUTPUT_DIR := $(BUILD_DIR)/build_dir.$(TARGET).$(PLATFORM)
-BUILD_REPORT_DIR := $(BUILD_DIR)/reports/_build.$(TARGET).$(PLATFORM)
-
-all: xclbin
+BUILD_DIR := $(XCLBIN_DIR)/build.$(TARGET).$(PLATFORM)
+BUILD_REPORT_DIR := $(BUILD_DIR)/reports/_x
 
 # ################ TARGET: make pl_kernels ################
 pl_kernels: 
 	$(MAKE) pl_kernels -C $(PL_KERNELS_DIR)
 
+# ################ TARGET: make all ################
+all: pl_kernels xclbin
+
 # ################ TARGET: make xclbin ################
-xclbin: pl_kernels $(XCLBIN_OUTPUT_DIR)/hpc.xclbin
-$(XCLBIN_OUTPUT_DIR)/hpc.xclbin: $(TEMP_DIR)/packet_sender.xo $(TEMP_DIR)/m2s_x2.xo $(TEMP_DIR)/packet_receiver.xo $(TEMP_DIR)/s2m_x4.xo $(AIE_DIR)/build/libadf.a
-	echo "Compiling XCLBIN..." 
+xclbin: pl_kernels $(BUILD_DIR)/hpc.xclbin
+$(BUILD_DIR)/hpc.xclbin: $(TEMP_DIR)/packet_sender.xo $(TEMP_DIR)/m2s_x2.xo $(TEMP_DIR)/packet_receiver.xo $(TEMP_DIR)/s2m_x4.xo $(AIE_DIR)/build/libadf.a
+	@echo "### ***** linking pl kernels into hpc.xclbin ... *****"
 	mkdir -p $(BUILD_DIR) && cd $(BUILD_DIR); \
 	v++ -l $(VPP_FLAGS) \
-	--temp_dir $(TEMP_DIR) \
+	--temp_dir $(BUILD_DIR)/_x_temp \
 	--report_dir $(BUILD_REPORT_DIR)/hpc \
 	$(VPP_LDFLAGS) \
-	-o '$@' $(+)
+	-o '$@' $(+) | tee $(BUILD_DIR)/hpc_xclbin.log
+	@echo "### ***** hpc.xclbin linking done! *****"
 
 # ################ TARGET: make clean ################
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -rf *~
+	rm -rf $(TEMP_DIR)/link

@@ -43,7 +43,10 @@ RELATIVE_PROJECT_DIR := ../
 #absolute directory
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-AIE_DIR := $(PROJECT_DIR)/Module_02_aie
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)
+
+AIE_DIR := $(DESIGN_DIR)/Module_02_aie
 
 # =========================================================
 # NUMBER OF COMPUTE UNITS INSTANCES 
@@ -91,7 +94,7 @@ $(BUILD_DIR)/libadf.a: $(DEPS)
 	-include="$(XILINX_VITIS)/aietools/include" 	\
 	-include="$(AIE_DIR)" 				\
 	-include="$(AIE_DIR)/src"			\
-	-include="$(PROJECT_DIR)/data" 			\
+	-include="$(DESIGN_DIR)/data" 			\
 	$(GRAPH_CPP)					\
 	-workdir=$(WORK_DIR) | tee  $(BUILD_DIR)/aiecompiler_$(INST).log
 	@echo "### ***** AI Engine Graph Compilation done! ***** ###"

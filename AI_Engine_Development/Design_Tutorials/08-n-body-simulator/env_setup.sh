@@ -21,6 +21,14 @@ export ROOTFS=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/rootfs
 export IMAGE=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/Image
 export EDGE_COMMON_SW=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1
 
+# =========================================================
+# PLATFORM SELECTION
+# PLATFORM=xilinx_vck190_base_<ver> (default)
+# PLATFORM=xilinx_vck190_es1_base_<ver>
+# =========================================================
+export PLATFORM=xilinx_vck190_base_202120_1
+
+
 #Source setup scripts
 source /<user-path>/Vitis/2021.1/settings64.sh
 source /<user-path>/petalinux-v2021.1-final/settings.sh
