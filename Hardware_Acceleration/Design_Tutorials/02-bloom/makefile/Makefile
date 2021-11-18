@@ -35,9 +35,12 @@ HOST_SRC_CPP += $(SRCDIR)/MurmurHash2.c
 HOST_SRC_CPP += $(SRCDIR)/xcl2.cpp
 HOST_SRC_CPP += $(SRCDIR)/main.cpp 
 
+#### Disable the following for Regressions Runs ###
+ifndef SpriteEnable
 #### For the following steps, don't rebuild the kernels as only Host is changing
 ifeq ($(STEP), $(filter $(STEP), split_buffer , generic_buffer , sw_overlap ))
 NOXCLBIN=1
+endif
 endif
 
 #####################################################################################################
