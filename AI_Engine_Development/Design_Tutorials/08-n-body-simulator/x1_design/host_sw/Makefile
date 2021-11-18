@@ -14,33 +14,17 @@
 
 help::
 	@echo "Makefile Usage:"
-	@echo "  make all "
+	@echo "  make all TARGET=<hw_emu|hw>"
 	@echo "       Command runs make host"
+	@echo "       Default TARGET=hw"
 	@echo ""
-	@echo "  make host "
+	@echo "  make host TARGET=<hw|hw_emu>"
 	@echo "       Command to compile the host application"
+	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make clean "
 	@echo "      Command to remove the generated files."
 	@echo ""
-
-# =========================================================
-# PROJECT DIRECTORIES
-# =========================================================
-#relative project directory
-RELATIVE_PROJECT_DIR := ../
-
-#absolute project directory
-PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
-
-AIE_DIR := $(PROJECT_DIR)/aie
-HOST_SW_DIR := $(PROJECT_DIR)/host_sw
-
-MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
-
-XFLIB_DIR_REL_PATH :=../../Module_03_pl_kernels/Vitis_Libraries/utils/
-XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
 
 # =========================================================
 # NUMBER OF COMPUTE UNITS INSTANCES 
@@ -51,35 +35,57 @@ XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
 INST := x1
 
 # =========================================================
-# PLATFORM SELECTION
+# PROJECT DIRECTORIES
 # =========================================================
-PLATFORM :=xilinx_vck190_base_202110_1
+#relative project directory
+RELATIVE_PROJECT_DIR := ../../
+
+#absolute project directory
+PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)/$(INST)_design
+
+AIE_DIR := $(DESIGN_DIR)/aie
+PL_KERNELS_DIR := $(DESIGN_DIR)/pl_kernels
+HOST_SW_DIR := $(DESIGN_DIR)/host_sw
+
+XFLIB_DIR_REL_PATH :=$(PL_KERNELS_DIR)/Vitis_Libraries/utils
+XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
 
 # =========================================================
 # TARGET SELECTION
-# TARGET=hw_emu (default)
-# TARGET=hw
+# TARGET=hw (default)
+# TARGET=hw_emu 
 # =========================================================
-TARGET :=hw_emu
+TARGET ?=hw
 
 # =========================================================
 # GCC COMPILER FLAGS
 # =========================================================
 CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
-SYSROOT := $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux
+SYSROOT := $(EDGE_COMMON_SW)/sysroots/aarch64-xilinx-linux
 
-GCC_FLAGS := -Wall -c
-GCC_FLAGS += -std=c++14
+GCC_FLAGS := -Wall -c -g -fmessage-length=0
+GCC_FLAGS += -std=c++14 -Wno-unknown-pragmas -Wno-unused-label
 GCC_FLAGS += -Wno-int-to-pointer-cast
 GCC_FLAGS += --sysroot=$(SYSROOT)
+
+ifeq ($(TARGET),hw_emu)
+GCCFLAGS += -D HW_EMU_TEST
+endif
 
 GCC_INCLUDES := -I$(SYSROOT)/usr/include/xrt
 GCC_INCLUDES +=	-I$(SYSROOT)/usr/include
 GCC_INCLUDES +=	-I$(HOST_SW_DIR) -I$(AIE_DIR) -I$(AIE_DIR)/src
 GCC_INCLUDES +=	-I$(XILINX_VITIS)/aietools/include
 GCC_INCLUDES +=	-I$(XILINX_VITIS)/include
+GCC_INCLUDES += -I$(XFLIB_DIR)/ext/xcl2
+GCC_INCLUDES += -I$(XFLIB_DIR)/L1/include
 
-GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil
+GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil -lgcc -lc
+GCC_LIB += -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -lOpenCL
+GCC_LIB += -Wno-unused-label -Wno-narrowing -DVERBOSE
 GCC_LIB += -L$(SYSROOT)/usr/lib
 GCC_LIB += --sysroot=$(SYSROOT)
 GCC_LIB += -L$(XILINX_VITIS)/aietools/lib/aarch64.o
@@ -87,7 +93,7 @@ GCC_LIB += -L$(XILINX_VITIS)/aietools/lib/aarch64.o
 # =========================================================
 # BUILD PRODUCTS
 # =========================================================
-BUILD_DIR := $(HOST_SW_DIR)/build
+BUILD_DIR := $(HOST_SW_DIR)/build.$(TARGET)
 
 # ################ TARGET: make aie ################
 aie: 
@@ -100,6 +106,9 @@ all: host
 .PHONY: host
 host: aie $(BUILD_DIR) $(BUILD_DIR)/ps_app.exe $(BUILD_DIR)/ps_app_animate.exe
 
+$(BUILD_DIR): 
+	mkdir -p $(BUILD_DIR);
+
 $(BUILD_DIR)/ps_app.exe: $(BUILD_DIR)/aie_control_xrt.o $(BUILD_DIR)/ps_app.o $(BUILD_DIR)/log.o $(BUILD_DIR)/nbody.o   
 	$(CXX) $^ $(GCC_LIB) -std=c++14 -o $(BUILD_DIR)/ps_app.exe
 	@echo "COMPLETE: Host application ps_app.exe created."
@@ -107,9 +116,6 @@ $(BUILD_DIR)/ps_app.exe: $(BUILD_DIR)/aie_control_xrt.o $(BUILD_DIR)/ps_app.o $(
 $(BUILD_DIR)/ps_app_animate.exe: $(BUILD_DIR)/aie_control_xrt.o $(BUILD_DIR)/ps_app_animate.o $(BUILD_DIR)/log.o $(BUILD_DIR)/nbody.o   
 	$(CXX) $^ $(GCC_LIB) -std=c++14 -o $(BUILD_DIR)/ps_app_animate.exe
 	@echo "COMPLETE: Host application ps_app_animate.exe created."
-
-$(BUILD_DIR): 
-	mkdir -p $(BUILD_DIR);
 
 $(BUILD_DIR)/aie_control_xrt.o: $(AIE_DIR)/build/Work_x4_$(INST)/ps/c_rts/aie_control_xrt.cpp
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o $(BUILD_DIR)/aie_control_xrt.o $(AIE_DIR)/build/Work_x4_$(INST)/ps/c_rts/aie_control_xrt.cpp
@@ -130,3 +136,4 @@ $(BUILD_DIR)/nbody.o: $(HOST_SW_DIR)/host/nbody.cpp $(HOST_SW_DIR)/host/nbody.hp
 # ################ TARGET: make clean ################
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -rf *~

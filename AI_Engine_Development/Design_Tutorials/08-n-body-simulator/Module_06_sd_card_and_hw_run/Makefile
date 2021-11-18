@@ -14,15 +14,13 @@
 
 help::
 	@echo "Makefile Usage:"
-	@echo "  make all TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make all TARGET=<hw_emu|hw>"
 	@echo "       Command runs make sd_card"
 	@echo "       Default TARGET=hw" 
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
-	@echo "  make sd_card TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1>"
+	@echo "  make sd_card TARGET=<hw_emu|hw>"
 	@echo "       Command runs v++ compiler -p to create the sd_card.img"
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
 	@echo "  make run"
 	@echo "       Command launches hardware emulation"
@@ -37,18 +35,14 @@ help::
 RELATIVE_PROJECT_DIR := ../
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-AIE_APP_DIR := $(PROJECT_DIR)/Module_02_aie
-XCLBIN_DIR := $(PROJECT_DIR)/Module_04_full_system_design
-HOST_SW_DIR := $(PROJECT_DIR)/Module_05_host_sw
-SD_CARD_DIR := $(PROJECT_DIR)/Module_06_sd_card_and_hw_run
-DATA_DIR := $(PROJECT_DIR)/data
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)
 
-# =========================================================
-# PLATFORM SELECTION
-# PLATFORM=xilinx_vck190_base_202110_1 (default)
-# PLATFORM=xilinx_vck190_es1_base_202110_1
-# =========================================================
-PLATFORM ?=xilinx_vck190_base_202110_1
+AIE_APP_DIR := $(DESIGN_DIR)/Module_02_aie
+XCLBIN_DIR := $(DESIGN_DIR)/Module_04_full_system_design
+HOST_SW_DIR := $(DESIGN_DIR)/Module_05_host_sw
+SD_CARD_DIR := $(DESIGN_DIR)/Module_06_sd_card_and_hw_run
+DATA_DIR := $(DESIGN_DIR)/data
 
 # =========================================================
 # TARGET SELECTION

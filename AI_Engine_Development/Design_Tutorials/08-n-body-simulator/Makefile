@@ -14,32 +14,28 @@
 
 help::
 	@echo "Makefile Usage:"
-	@echo "  make all TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make all TARGET=<hw_emu|hw>"
 	@echo "       Command runs make aie, make pl_kernels, make xclbin, make host, make sd_card for x100_design"
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
 	@echo "  make aie"
 	@echo "       Command to create the AIE graph"
 	@echo ""
-	@echo "  make pl_kernels TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make pl_kernels TARGET=<hw_emu|hw> "
 	@echo "       Command to create PL HLS kernels *.xo"
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
-	@echo "  make xclbin TARGET=<hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make xclbin TARGET=<hw_emu|hw>"
 	@echo "       Command to create XCLBIN" 
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
 	@echo "  make host <hw_emu|hw>"
 	@echo "       Command to create host application" 
 	@echo "       Default TARGET=hw"
 	@echo ""
-	@echo "  make sd_card <hw_emu|hw> PLATFORM=<xilinx_vck190_base_202110_1|xilinx_vck190_es1_base_202110_1> "
+	@echo "  make sd_card <hw_emu|hw>"
 	@echo "       Command to create sd_card.img" 
 	@echo "       Default TARGET=hw"
-	@echo "       Default PLATFORM=xilinx_vck190_base_202110_1"
 	@echo ""
 	@echo "  make x1_design"
 	@echo "       Command to create the x1 AIE tile design" 
@@ -55,18 +51,11 @@ help::
 	@echo ""
 
 # =========================================================
-# PLATFORM SELECTION
-# PLATFORM=xilinx_vck190_base_202110_1 (default)
-# PLATFORM=xilinx_vck190_es1_base_202110_1
-# =========================================================
-PLATFORM :=xilinx_vck190_base_202110_1
-
-# =========================================================
 # TARGET SELECTION
 # TARGET=hw (default)
 # TARGET=hw_emu
 # =========================================================
-TARGET :=hw
+export TARGET :=hw
 
 # ################ TARGET: make all ################
 all: aie pl_kernels xclbin host sd_card

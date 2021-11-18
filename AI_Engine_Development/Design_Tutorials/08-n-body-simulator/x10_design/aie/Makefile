@@ -35,23 +35,26 @@ help::
 # #########################################################################
 
 # =========================================================
-# PROJECT and MODULE REPOS
-# =========================================================
-#relative project directory
-RELATIVE_PROJECT_DIR := ../
-
-#absolute project directory
-PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
-
-AIE_DIR := $(PROJECT_DIR)/aie
-
-# =========================================================
 # NUMBER OF COMPUTE UNITS INSTANCES 
 # x1   = 1   AIE TILE
 # x10  = 10  AIE TILES
 # X100 = 100 AIE TILES
 # =========================================================
 INST		= x10
+
+# =========================================================
+# PROJECT and MODULE REPOS
+# =========================================================
+#relative directory
+RELATIVE_PROJECT_DIR := ../../
+
+#absolute directory
+PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+#Design Directory 
+DESIGN_DIR := $(PROJECT_DIR)/$(INST)_design
+
+AIE_DIR := $(DESIGN_DIR)/aie
 
 # =========================================================
 # AIE GRAPH
@@ -83,23 +86,27 @@ all: aie
 aie: $(BUILD_DIR)/libadf.a
 
 $(BUILD_DIR)/libadf.a: $(DEPS)
-	mkdir -p $(BUILD_DIR); 				\
+	@echo "### ***** Compiling AI Engine Graph... ***** ###"
+	@mkdir -p $(BUILD_DIR);				\
 	cd $(BUILD_DIR);				\
 	aiecompiler -v  --target=hw			\
 	--stacksize=2000				\
 	-include="$(XILINX_VITIS)/aietools/include" 	\
 	-include="$(AIE_DIR)" 				\
 	-include="$(AIE_DIR)/src"			\
-	-include="$(PROJECT_DIR)/data" 			\
+	-include="$(DESIGN_DIR)/data" 			\
 	$(GRAPH_CPP)					\
-	-workdir=$(WORK_DIR)  | tee  $(BUILD_DIR)/aiecompiler_$(INST).log
+	-workdir=$(WORK_DIR) | tee  $(BUILD_DIR)/aiecompiler_$(INST).log
+	@echo "### ***** AI Engine Graph Compilation done! ***** ###"
 
 # ################ TARGET: make sim ################
 sim: $(BUILD_DIR)/aiesimulator_$(INST).log
 
 $(BUILD_DIR)/aiesimulator_$(INST).log: aie
+	@echo "### ***** Simulating AI Engine Graph... ***** ###"
 	cd $(BUILD_DIR);\
 	aiesimulator --pkg-dir=$(WORK_DIR) | tee aiesimulator_$(INST).log
+	@echo "### ***** AI Engine Graph Simulation done! ***** ###"
 
 # ################ TARGET: make clean_sim ################
 clean_sim: 
@@ -109,3 +116,5 @@ clean_sim:
 # ################ TARGET: make clean ################
 clean: 
 	rm -rf $(BUILD_DIR)
+	rm -rf *~
+	rm -rf *#
