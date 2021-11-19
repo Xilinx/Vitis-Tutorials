@@ -4,7 +4,6 @@
     "flow": "vitis",
  
     "platform_whitelist": ["u200", "U50"],
-    "platform_blacklist": [""],
  
     "testinfo": {
         "disable": 1,

@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide">
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.2 Tutorials</a>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
   </td>
  </tr>
  <tr>
@@ -64,11 +64,11 @@ As described in [Creating Additional Solutions](https://docs.xilinx.com/r/en-US/
    1. In the the Directive Field, select **DATAFLOW**.
    2. In the Destination field, select **Directive File**.
    3. Click **OK** to close the form, and apply the directive.
-4. Select **Solution > Run C Synthesis > All Solutions** to rerun synthesis. This runs synthesis for all solutions, letting you compare the results.
+4. From the main menu select **Solution > Run C Synthesis > All Solutions** to rerun synthesis. This runs synthesis for all solutions, letting you compare the results.
 
    ![All Solutions](./images/synthesis-all_solutions.png)
 
-   After synthesis completes, the Synthesis Summary report is displayed for the active solution; in this case,  the DATAFLOW solution. A Vitis HLS Report Comparison is also displayed for the synthesis results of all solutions that were synthesized as shown in the following figure.  
+   After synthesis completes, the Synthesis Summary report is displayed for the active solution; in this case, the DATAFLOW solution. A Vitis HLS Report Comparison is also displayed for the synthesis results of all solutions that were synthesized as shown in the following figure.  
 
     ![Synthesis Report](./images/synthesis-compare_results.png)
 
