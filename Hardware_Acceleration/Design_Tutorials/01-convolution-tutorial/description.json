@@ -14,7 +14,7 @@
         "board": {
                    "pre_exec": "/proj/xtools/dsv/projects/sdx_libs/cpp_libs/opencv/set_opencv_os.sh"
          }
-     }
+     },
      "jobs": [
             {
                 "max_memory_MB": 32768,
