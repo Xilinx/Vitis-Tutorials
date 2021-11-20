@@ -283,7 +283,7 @@ When a component comes with multiple types of simulation models, selecting Syste
    - Click menu **File -> Export -> Export Platform** to launch the **Export Hardware Platform** wizard. This wizard can also be launched by **Export Platform** button in **Flow Navigator** or **Platform Setup** window.
    - Click Next in the first information page.
    - Select Platform Type: **Hardware and Hardware Emulation**, click Next. If you skipped the emulation setup previously, select **Hardware** here.
-   - Select Platform State: **Pre-synthesis**, click Next
+   - Select Platform State: **Pre-synthesis**, enable **Include Bitstream**, click Next
    - Input Platform Properties and click **Next**. For example,
      - Name: kv260_custom_platform
      - Vendor: xilinx
@@ -293,6 +293,8 @@ When a component comes with multiple types of simulation models, selecting Syste
    - Fill in XSA file name: **kv260_custom_platform** and keep the export directory as default. 
    - Click **Finish**. 
    - **kv260_custom_platform.xsa** will be generated. The export path is reported in the Tcl console. 
+
+   >Note: We enable Include Bitstream to fulfill the requirement of the fpga-manager-util package in PetaLinux.
 
    Alternatively, the above export can be done in Tcl scripts
 
@@ -304,7 +306,7 @@ When a component comes with multiple types of simulation models, selecting Syste
    set_property platform.design_intent.external_host "false" [current_project]
    set_property platform.design_intent.datacenter "false" [current_project]
    # Write pre-synthesis expandable XSA
-   write_hw_platform -force -file ./kv260_custom_platform.xsa
+   write_hw_platform -include_bit -force -file ./kv260_custom_platform.xsa
    ```
 
 ### Next Step
