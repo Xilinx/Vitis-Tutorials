@@ -272,11 +272,13 @@ When a component comes with multiple types of simulation models, selecting Syste
    - Select **Let Vivado manage wrapper and auto-update**.
    - Click **OK** to generate wrapper for block design.
 
-3. Generate pre-synth design
+3. Generate the design
 
    - Select **Generate Block Design** from Flow Navigator
    - Select **Synthesis Options** to **Global**. It will skip IP synthesis during generation.
-   - Click **Generate**. .
+   - Click **Generate**.
+   - Click **Generate Bitstream** in Flow Navigator window.
+   - Click **Yes**.
 
 4. Export the platform
 
