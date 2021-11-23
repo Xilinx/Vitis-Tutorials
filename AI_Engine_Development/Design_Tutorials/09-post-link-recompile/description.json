@@ -1,0 +1,25 @@
+{
+    "name": "AI_Engine_Development--09-Post-Link-Recompile",
+    "description": "09-post-link-recompile",
+    "gui": "false",
+    "flow": "versal",
+    "platform_whitelist": [ "vck190"],
+    "platform_blacklist": [],
+    "testinfo": {
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_emu": 200
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+        ],
+        "custom_build_target":
+        {
+            "all": "hw_emu"
+        },
+    }
+}
