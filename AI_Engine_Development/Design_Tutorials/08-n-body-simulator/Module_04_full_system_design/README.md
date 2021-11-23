@@ -14,7 +14,7 @@
 ```
 make all
 ```
-or 
+or
 ```
 v++ -l                                     \
     -t hw                                  \
@@ -25,7 +25,7 @@ v++ -l                                     \
     --hls.jobs 8                           \
     --config ./conn.cfg                    \
     --clock.defaultFreqHz 300000000        \
-    -I../Module_03_pl_kernels/Vitis_Libraries/utils/L1/include              \ 
+    -I../Module_03_pl_kernels/Vitis_Libraries/utils/L1/include              \
     -I../Module_03_pl_kernels/Vitis_Libraries/utils/L1/include/hw           \
     --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202110_1               \
     --report_dir ./build/reports/_build.hw.xilinx_vck190_base_202110_1/hpc  \
@@ -54,25 +54,25 @@ The following image was taken from the Vivado project for the entire design. It 
 
 * [Beamforming Tutorial - Module_04 - AI Engine and PL Integration](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Design_Tutorials/03-beamforming)
 
-* [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html)
+* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command)
 
 ## Next Steps
 
 After linking the AI Engine design with the PL datamovers, you are ready to create the host software in the next module, [Module 05 - Host Software](../Module_05_host_sw).
 
 
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p>
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>

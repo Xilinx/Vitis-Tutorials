@@ -46,7 +46,7 @@ After compiling and linking your kernel code to build the XCLBIN, you need to pa
 
 Flash the sd_card.img to an sd card and boot your VCK190 production board.
 
-**Step 1.** Ensure your board is powered off.
+**Step 1.** Ensure your board is powered OFF.
 
 **Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `build/packet_hw/sd_card.img` file an SD card.
 
@@ -68,7 +68,7 @@ Flow control: none
 Transmit delay: 0 msec/char 0 msec/line
 ```
 
-**Step 7.** Power on the board.
+**Step 7.** Power ON the board.
 
 **Step 8.** Wait until you see the `root@versal-rootfs-common-<tools-version>` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
@@ -91,7 +91,7 @@ You can also review the `run.log` for the messages written by the host applicati
 
 Next profile and compare the execution times for the C++ N-Body Simulator running on the A72 processor vs. the AI Engine N-Body Simulator design.
 
-*Estimated Time: 2 minutes* 
+*Estimated Time: 2 minutes*
 
 ```
 ./ps_app.exe --timesteps 1 --profile
@@ -102,7 +102,7 @@ The output on the console should be something like this:
 ```
 Initializing ADF API...
 [INFO]: Cout Level set to [INFO]:
-[INFO]: Log Level set to [MESSAGE]: 
+[INFO]: Log Level set to [MESSAGE]:
 [INFO]: argv[0]=./ps_app.exe
 [INFO]: argv[1]=--timesteps
 [INFO]: argv[2]=1
@@ -129,31 +129,29 @@ Now run the executable to generate data to create the particle animation in the 
 Copy the `animation_data.txt` from the board to the `Module_07_results/data/` folder if you want to create an animation out of it.
 
 ```
-scp animation_data.txt <user>@<ip-address>:/<project-dir>/Module_07_results/data/. 
+scp animation_data.txt <user>@<ip-address>:/<project-dir>/Module_07_results/data/.
 ```
 
 ## References
 
-* [Vitis Compiler Command](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html#wrj1504034328013)
+* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command)
 
 ## Next Steps
 
 After running the design on hardware, you can compare the performance between the Python, C++, and AI Engine NBody Simulators in the next module, [Module 07 - Results](../Module_07_results).
 
 
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
 
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p>
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>

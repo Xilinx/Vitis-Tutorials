@@ -59,7 +59,7 @@ Next, review the `src/nbody_subsystem.h` graph. This graph creates four N-Body k
 
 ![alt text](images/nbody_subsystem%20(1).PNG)
 
-The `nbody_subsystem` graph has two inputs: `input_i` and `input_j`. The `input_i` port is a packet stream that connects to the packet splitter. The packet splitter redirects packets of data to the `w_input_i` port of each `nbody()` kernel. Each `input_i` packet contains a packet header, 224 32-bit data values, and TLAST asserted with the `m31` data value. The `input_j ` port is a data stream that is broadcast to all the `nbody()` kernels (i.e., all `nbody()` kernels receive the same `input_j` data). The `nbody()` kernels perform their computations and generate the new `w_output_i` data which is merged into a single stream of packets, resulting in the output of the `nbody_subsystem` graph `output_i`. 
+The `nbody_subsystem` graph has two inputs: `input_i` and `input_j`. The `input_i` port is a packet stream that connects to the packet splitter. The packet splitter redirects packets of data to the `w_input_i` port of each `nbody()` kernel. Each `input_i` packet contains a packet header, 224 32-bit data values, and TLAST asserted with the `m31` data value. The `input_j ` port is a data stream that is broadcast to all the `nbody()` kernels (i.e., all `nbody()` kernels receive the same `input_j` data). The `nbody()` kernels perform their computations and generate the new `w_output_i` data which is merged into a single stream of packets, resulting in the output of the `nbody_subsystem` graph `output_i`.
 
 |Name|Number of 32-bit Data Values|Window Size (bytes)|
 | -------------|-----------|-----------|
@@ -67,52 +67,52 @@ The `nbody_subsystem` graph has two inputs: `input_i` and `input_j`. The `input_
 |input_j|128| 128 * 4 = 512 bytes|
 |output_i|224 * 4 = 896| 896 * 4 = 3584 bytes|
 
-A single instance of the `nbody_subsystem` graph can simulate 128 particles using four AI Engine tiles. 
+A single instance of the `nbody_subsystem` graph can simulate 128 particles using four AI Engine tiles.
 
 ### Workload Distribution and input_j
-To calculate the N-Body gravity equations for 128 particles, each `nbody()` kernel calculates the N-Body gravity equations for 32 particles. However, in order to calculate acceleration and the new velocities, an `nbody()` kernel needs to know the data in the other kernels. For example, if particle 0 is mapped to `nbody_kernel[0]` and particle 32 is mapped to `nbody_kernel[1]`,  then `nbody_kernel[0]` needs to know the data in `nbody_kernel[1]` to accurately calculate the summation equation for acceleration and then calculate the new velocity of particle 0. 
+To calculate the N-Body gravity equations for 128 particles, each `nbody()` kernel calculates the N-Body gravity equations for 32 particles. However, in order to calculate acceleration and the new velocities, an `nbody()` kernel needs to know the data in the other kernels. For example, if particle 0 is mapped to `nbody_kernel[0]` and particle 32 is mapped to `nbody_kernel[1]`,  then `nbody_kernel[0]` needs to know the data in `nbody_kernel[1]` to accurately calculate the summation equation for acceleration and then calculate the new velocity of particle 0.
 
-This is where the `input_j` stream plays a vital role in data sharing. Even though the `input_j` data stream has a window size for 32 particles worth of data, the `LOOP_COUNT_J` value can be set to allow the `nbody()` kernels to take in any number of 32 particles worth of data at a time. For a single instance of the `nbody_subsystem` graph, the `LOOP_COUNT_J` should be set to 4 to stream in data for all four kernels. For the final AI Engine graph, which contains 100 instances of the `nbody_subsystem` graph, the `LOOP_COUNT_J` value is set to 400 to stream in data for all 400 kernels to each `nbody()` kernel. 
+This is where the `input_j` stream plays a vital role in data sharing. Even though the `input_j` data stream has a window size for 32 particles worth of data, the `LOOP_COUNT_J` value can be set to allow the `nbody()` kernels to take in any number of 32 particles worth of data at a time. For a single instance of the `nbody_subsystem` graph, the `LOOP_COUNT_J` should be set to 4 to stream in data for all four kernels. For the final AI Engine graph, which contains 100 instances of the `nbody_subsystem` graph, the `LOOP_COUNT_J` value is set to 400 to stream in data for all 400 kernels to each `nbody()` kernel.
 
 ![alt text](images/input_j_description.png)
 
 For example, to calculate the new velocity of particle 0 mapped in `nbody_kernel[0]`, the `nbody_kernel[0]` can retrieve the data value of particle 32 from the `input_j` stream. This way, all `nbody()` kernels will have the data values for all other particles mapped in the other `nbody()` kernels through data streaming from `input_j`.  
 
-## 100 N-Body Subsystems 
+## 100 N-Body Subsystems
 Review the `nbody_x4_x100.h`. It contains the definition of the `nbodySystem` graph which contains 100 instances of the `nbody_subsystem` graph. Each `nbody_subsystem` is mapped to four AI Engine tiles which each contain an `nbody()` kernel. Therefore, the `nbodySystem` graph contains 400 `nbody()` kernels using up all of the 400 available AI Engine tiles. Since each `nbody()` kernel simulates 32 particles, the `nbodySystem` simulates 12,800 particles (32 particles * 400 kernels). There are 100 `input_i` ports (`input_i0-99`) and a single `input_j` port. For 1 iteration, the `input_i` ports receive 4 packetized `w_input_i` data which are distributed to 4 `nbody()` kernels in each `nbody_subsystem` graph. The `input_j` is a 1:400 broadcast stream to the 400 `w_input_j` ports in the 400 `nbody()` kernels.  
 
-Review the `nbody_x4_100.cpp` file. It contains an instance of the `nbodySystem` graph and simulates it for one iteration. Also, review the data files in the data folder where you will find the input data files for the `nbodySystem` (`input_i0-99.txt` and `input_j.txt`) used by the `nbodySystem` graph. 
+Review the `nbody_x4_100.cpp` file. It contains an instance of the `nbodySystem` graph and simulates it for one iteration. Also, review the data files in the data folder where you will find the input data files for the `nbodySystem` (`input_i0-99.txt` and `input_j.txt`) used by the `nbodySystem` graph.
 
 ![alt text](images/x100_design.png)
 
 Below is the implementation of the 100 compute unit on all 400 AI Engine tiles viewed on the Vitis Analyzer tool.
 ![alt text](images/aie_impl_1_cu_highlighted.PNG)
 
-The red highlighted region encompasses four AI Engine tiles which contain a single compute unit. 
+The red highlighted region encompasses four AI Engine tiles which contain a single compute unit.
 
-Following is the graph visualization of a single compute unit on the Vitis Analyzer tool. 
+Following is the graph visualization of a single compute unit on the Vitis Analyzer tool.
 ![alt text](images/aie_single_cu.PNG)
 
-## Why Packet Switching? 
-You might be curious about the need to implement the packet switching scheme 1:4/4:1. This was done to circumvent an AI Engine architecture limitation on the number of simultaneous input and output AXI-Streams allowed per AI Engine column. There are 50 AI Engine columns in the AI Engine array. Each column contains 8 AI Engine tiles. Each AI Engine column is allowed a maximum of 6 32-bit AXI-Stream inputs and 4 32-bit AXI-Stream outputs. 
+## Why Packet Switching?
+You might be curious about the need to implement the packet switching scheme 1:4/4:1. This was done to circumvent an AI Engine architecture limitation on the number of simultaneous input and output AXI-Streams allowed per AI Engine column. There are 50 AI Engine columns in the AI Engine array. Each column contains 8 AI Engine tiles. Each AI Engine column is allowed a maximum of 6 32-bit AXI-Stream inputs and 4 32-bit AXI-Stream outputs.
 
 In the design, each `nbody()` kernel is mapped to an AI Engine tile. Meaning each column of 8 AI Engine tiles has 9 inputs streams and 8 output streams, violating these constraints.
 
-* 8 `w_input_i` input streams 
-* 1 `w_intput_j` input stream 
+* 8 `w_input_i` input streams
+* 1 `w_intput_j` input stream
 * 8 `w_output_i` output streams
 
-With the 1:4/4:1 packet switching scheme, you can combine 4 streams into 1. Because packet switching is applied on the `w_input_i` ports, the number of input streams into a single AI Engine column is reduced to three: 
+With the 1:4/4:1 packet switching scheme, you can combine 4 streams into 1. Because packet switching is applied on the `w_input_i` ports, the number of input streams into a single AI Engine column is reduced to three:
 
-* 1 `input_i` stream that goes to tiles 0-3 in a column 
-* 1 `input_i` stream that goes to tiles 4-7 in a column 
+* 1 `input_i` stream that goes to tiles 0-3 in a column
+* 1 `input_i` stream that goes to tiles 4-7 in a column
 * 1 `input_j` stream that is broadcasted to all the columns
- 
-On the output side, the number of output streams is reduced to two: 
-* 1 `output_i` stream coming from tiles 0-3 in a column 
+
+On the output side, the number of output streams is reduced to two:
+* 1 `output_i` stream coming from tiles 0-3 in a column
 * 1 `output_i` stream coming from tiles 4-7 in a column
 
-## (Optional) Simulate the AI Engine Design 
+## (Optional) Simulate the AI Engine Design
 
 *Estimated time: a few days*
 
@@ -126,29 +126,28 @@ make sim
 
 * [Packet Switching AI Engine Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/04-packet-switching)
 
-* [AI Engine Documentation - Explicit Packet Switching](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/special_graph_constructs.html#ghs1532131881597)
+* [AI Engine Documentation - Explicit Packet Switching](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Explicit-Packet-Switching)
 
-* [Compiling an AI Engine Graph Application](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/compile_graph_application.html#rsb1512607764188)
+* [Compiling an AI Engine Graph Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Compiling-an-AI-Engine-Graph-Application)
 
-* [Simulating an AI Engien Graph Application](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/simulate_graph_application.html#yql1512608436352)
+* [Simulating an AI Engine Graph Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Simulating-an-AI-Engine-Graph-Application)
 
 ## Next Steps
 
 After compiling the 100 compute unit N-Body Simulator design, you are ready to create the PL datamover kernels in the next module, [Module 03 - PL Design](../Module_03_pl_kernels).
 
+# Support
+
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
+
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p>
+<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>
