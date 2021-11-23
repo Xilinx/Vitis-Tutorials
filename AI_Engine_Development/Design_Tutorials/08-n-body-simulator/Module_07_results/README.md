@@ -19,7 +19,7 @@ make animation
 
 ## Results
 
-The following is a GIF created from the `data/animation_data_golden.txt` file. You should get a similar GIF from your own data. 
+The following is a GIF created from the `data/animation_data_golden.txt` file. You should get a similar GIF from your own data.
 
 ### 12,800 Particles Simulated on a 400 tile AI Engine Accelerator for 300 Timesteps
 
@@ -48,13 +48,13 @@ The following table describes the total number of floating-point operations (FLO
 |Step 2|96|0|0|0|0|192|
 |Step 3|2,470,400|1,228,800|51,200|1,228,800|3,276,800|10,726,400|
 
-**Note: Each section is clearly commented in the `nbody.cc` source file.** 
+**Note: Each section is clearly commented in the `nbody.cc` source file.**
 
 **Note: To calculate the total, each `mac` is considered 2 operations (`mul` and `add`).**
 
 Thus, each `nbody()` kernel executes ~10.7 million FLOP/iteration. Since we have 400 AI Engine tiles (i.e. 400 `nbody()` kernels) that execute simulatenously, the total number for the entire AI Engine array becomes ~4.2 billion FLOP/iteration. We calculated each iteration of the entire design (including data movement from DDR to AI Engine) takes an average of 0.004657468 seconds. **Therefore the effective throughput of the entire design is ~921.2 GFLOP/s**.  
 
-The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s, and we're only using 1/10th of its potential! 
+The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s, and we're only using 1/10th of its potential!
 
 |Effective Throughput|Theoretical Peak Throughput|
 |--|--|
@@ -97,18 +97,17 @@ make all TARGET=<hw|hw_emu>
 ![alt text](../x10_design/results/images/animation.gif)
 
 
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p>
+<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>

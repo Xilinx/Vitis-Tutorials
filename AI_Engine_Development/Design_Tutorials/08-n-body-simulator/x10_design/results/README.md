@@ -1,1 +1,1 @@
-![alt text](animation.gif)
+![alt text](images/animation.gif)

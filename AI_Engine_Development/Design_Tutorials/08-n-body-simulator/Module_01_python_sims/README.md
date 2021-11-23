@@ -20,7 +20,7 @@ make all
 or
 
 ```
-python3 test.py -v 
+python3 test.py -v
 ```
 
 The python scripts assume you have installed the following packages:
@@ -33,7 +33,7 @@ The python scripts assume you have installed the following packages:
 ## Python Simulations on x86 Machine
 
 Review the `test.py` file. Notice that it runs three unit tests: `test_random_x1`, `test_random_x10`, and `test_random_x100`. Each unit test creates two instances of the `Particles` class: `particles_i` and `particles_j`. Each `Particles` object contains arrays of floating point values for the particle positions, particle velocities, and mass (`x y z vx vy vz m`). These arrays are initalized with random values with the `setSphereInitialConditions()` function in `pylib/particles.py` file. The `x` and `y` positions are constrained to be in a sphere by invoking `cos()` and `sin()` functions. The remaining constrains are as follows:
- 
+
 * minimum z initial position = -1000
 * maximum z initial position = 1000
 * minimum mass = 10
@@ -53,7 +53,7 @@ Each unit test simulates a different number of particles for 1 timestep.
 |test_random_x10|1280|
 |test_random_x100|12800|
 
-The 100 tile AI Engine design simulates 12,800 particles. The single tile AI Engine design (x1_design) simulates 128 particles, and the 10 tile AI Engine design (x10_design) simulates 1280 particles. 
+The 100 tile AI Engine design simulates 12,800 particles. The single tile AI Engine design (x1_design) simulates 128 particles, and the 10 tile AI Engine design (x10_design) simulates 1280 particles.
 
 ## Results
 
@@ -92,25 +92,22 @@ You can create these .gifs with the following command:
 make animations
 ```
 
-## References
-
 ## Next Steps
 
 After running the Python NBody Simulator, you are ready to move to the next module, [Module 02-AI Engine Design](../Module_02_aie).
 
-© Copyright 2021 Xilinx, Inc.
+# Support
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p>
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>
