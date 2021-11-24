@@ -70,5 +70,8 @@ Use Vitis AI to configure Xilinx hardware using the Tensorflow framework. Vitis 
 
 Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
 
+### [Vitis Model Composer Tutorials](https://github.com/Xilinx/Vitis_Model_Composer)
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+Learn rapid design exploration using Vitis Model Composer. Vitis Model Composer provides a library of performance-optimized blocks for design and implementation of DSP algorithms on Xilinx devices. The Vitis Model Composer AI Engine, HLS and HDL libraries within the Simulink environment, enable the rapid design exploration of an algorithm and accelerates the path to production.
+
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
