@@ -8,11 +8,11 @@
 
 # Versal Platform Creation with Custom IP
 
-***Version: Vitis 2021.1***
+***Version: Vitis 2021.2***
 
 In this tutorial, you will learn how to add custom IPs into a Versal™ ACAP platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Introduction/03_Edge_VCK190). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html).  
 
 # Overview
 The tutorial is structured as follows:
@@ -67,7 +67,7 @@ In this step, you will add a DDS compiler IP into the platform design that you c
 
 6. Now the block design should look like the following:
 
-  ![missing image](images/211_ipi_fully_connection_dds.png)
+  ![missing image](images/212_ipi_fully_connection_dds.png)
 
 7. Open up platform setup window and enable the M_AXIS_DATA port. Set the SP Tag to `AXIS` - this will be used by the Vitis™ linker to connect to the accelerator.
 
@@ -110,12 +110,7 @@ typedef ap_axis<15, 0, 0, 0> pkt;
 3. Add two ports into the top level function. The `dds_in` port is an AXI4-Stream type and the `wave_out` port is an AXI-MM type.
 
 ```
-void krnl_vadd(const unsigned int *in1, // Read-Only Vector 1
-               const unsigned int *in2, // Read-Only Vector 2
-               unsigned int *out_r,     // Output Result
-               int size,                 // Size in integer
-               int *wave_out,  // Output DDS wave data
-               hls::stream<pkt> &dds_in  // Input DDS wave data from platform IP
+void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size, int *wave_out, hls::stream<pkt> &dds_in) {
 ```
 
 4. In this design, the data from the DDS IP is not processed. It is just passed to the DDR. To do that, add a few lines to the function body, similar to the following:
@@ -141,13 +136,13 @@ Now the kernel code modification is complete. Save your work and close the file.
 stream_connect = AXIS:krnl_vadd_1.dds_in
 ```
 
-This command indicates the connections between two AXI4-Stream ports. The name before the colon must be the master interface while the latter is the name of the slave interface. In this design, the AXIS port of the platform is the AXI master and therefore you put it at the front. Here you just need to specify the `sptag` that was defined during platform creation and the Vitis linker detects it automatically.
+This command indicates the connections between two AXI4-Stream ports. The name before the colon must be the master interface while the latter is the name of the slave interface. In this design, the AXIS sptag from platform represents the AXI master side therefore we put it at the front. Here you just need to specify the `sptag` that was defined during platform creation and the Vitis linker detects it automatically.
 
 The `system_cfg` file is put under the `vadd_system_hw_link` project. You can choose other locations but just make sure that you point to it correctly in the binary container settings.
 
 Specify the config file in binary container settings:
 
-  ![missing image](images/config_file.png)
+  ![missing image](images/212_config_file.png)
 
 6. Now modify the host code to read back the data from the DDR. Open up the `vadd.cpp` file under the `src` folder of the `vadd` project and modify the following items.
 
@@ -185,14 +180,14 @@ Specify the config file in binary container settings:
     f. Save the data into a file. The data is left shifted by 17 bits because the DDS compiler IP output is 16-bit signed data and the host buffer 32-bit integer data. This is to remove the extra signed bits and keep the actual payload data.
 
     ```
-     FILE *fp;
-     fp=fopen("wave_out.txt","w");
+     FILE *fp_dout;
+     fp_dout=fopen("wave_out.txt","w");
 
      for (int i = 0; i < 1024; i++) {
-       fprintf(fp,"%d\n",ptr_waveout[i]<<17);
+       fprintf(fp_dout,"%d\n",ptr_waveout[i]<<17);
      }
 
-     fclose(fp);
+     fclose(fp_dout);
     ```
 
     g. Unmap the buffer.
@@ -216,16 +211,15 @@ connect -host 127.0.0.1 -port 1440
 Copy the `wave_out.txt` file from the `tcf` target to the host machine using the following command:
 
 ```
-tfile copy -to-host /mnt/sd-mmcblk1p1/wave_out.txt YOUR_DIR/wave_out.txt
+tfile copy -to-host /mnt/sd-mmcblk0p1/wave_out.txt $(YOUR_DIR)/wave_out.txt
 ````
-
-Choose a tool to print out the data. A possible option is MATLAB®. If you do not have MATLAB installed, other third-party tools, such as Excel, also provide a similar feature. Use your preferred method to print out a sine wave.
+The wave_out.txt file will be copied over to $(YOUR_DIR). Choose a tool to plot the data. A possible option is MATLAB®. If you do not have MATLAB installed, other third-party tools, such as Excel, also provide a similar feature. Use your preferred method to print out a sine wave.
 
   ![missing image](images/sinewave.png)
 
 # Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](https://support.xilinx.com).
 
 # License
 
