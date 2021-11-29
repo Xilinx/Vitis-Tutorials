@@ -29,16 +29,17 @@ Create a new buffer to communicate with the data from the newly added port of ke
 
 ***OLD***
 ```
-cl::Buffer buffer_a(context, CL_MEM_READ_ONLY, size_in_bytes);
-cl::Buffer buffer_b(context, CL_MEM_READ_ONLY, size_in_bytes);
-cl::Buffer buffer_result(context, CL_MEM_WRITE_ONLY, size_in_bytes);
+OCL_CHECK(err, cl::Buffer buffer_a(context, CL_MEM_READ_ONLY, size_in_bytes, NULL, &err));
+OCL_CHECK(err, cl::Buffer buffer_b(context, CL_MEM_READ_ONLY, size_in_bytes, NULL, &err));
+OCL_CHECK(err, cl::Buffer buffer_result(context, CL_MEM_WRITE_ONLY, size_in_bytes, NULL, &err));
 ```
 
 ***NEW***
 ```
-cl::Buffer buffer_a(context, CL_MEM_READ_ONLY, size_in_bytes);
-cl::Buffer buffer_b(context, CL_MEM_READ_ONLY, size_in_bytes);
-cl::Buffer buffer_result(context, CL_MEM_WRITE_ONLY, size_in_bytes);
+OCL_CHECK(err, cl::Buffer buffer_a(context, CL_MEM_READ_ONLY, size_in_bytes, NULL, &err));
+OCL_CHECK(err, cl::Buffer buffer_b(context, CL_MEM_READ_ONLY, size_in_bytes, NULL, &err));
+OCL_CHECK(err, cl::Buffer buffer_result(context, CL_MEM_WRITE_ONLY, size_in_bytes, NULL, &err));
+
 cl::Buffer buffer_waveout(context, CL_MEM_WRITE_ONLY, 1024*sizeof(int));
 ```
 
@@ -46,18 +47,19 @@ cl::Buffer buffer_waveout(context, CL_MEM_WRITE_ONLY, 1024*sizeof(int));
 
 ***OLD***
 ```
-krnl_vector_add.setArg(narg++,buffer_a);
-krnl_vector_add.setArg(narg++,buffer_b);
-krnl_vector_add.setArg(narg++,buffer_result);
-krnl_vector_add.setArg(narg++,DATA_SIZE);
+OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_a));
+OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_b));
+OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_result));
+OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, DATA_SIZE));
 ```
 
 ***NEW***
 ```
-krnl_vector_add.setArg(narg++,buffer_a);
-krnl_vector_add.setArg(narg++,buffer_b);
-krnl_vector_add.setArg(narg++,buffer_result);
-krnl_vector_add.setArg(narg++,DATA_SIZE);
+OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_a));
+OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_b));
+OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_result));
+OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, DATA_SIZE));
+
 krnl_vector_add.setArg(narg++,buffer_waveout);
 ```
 
@@ -65,16 +67,23 @@ krnl_vector_add.setArg(narg++,buffer_waveout);
 
 ***OLD***
 ```
-int *ptr_a = (int *) q.enqueueMapBuffer (buffer_a , CL_TRUE , CL_MAP_WRITE , 0, size_in_bytes);
-int *ptr_b = (int *) q.enqueueMapBuffer (buffer_b , CL_TRUE , CL_MAP_WRITE , 0, size_in_bytes);
-int *ptr_result = (int *) q.enqueueMapBuffer (buffer_result , CL_TRUE , CL_MAP_READ , 0, size_in_bytes);
+OCL_CHECK(err,
+          ptr_a = (int*)q.enqueueMapBuffer(buffer_a, CL_TRUE, CL_MAP_WRITE, 0, size_in_bytes, NULL, NULL, &err));
+OCL_CHECK(err,
+          ptr_b = (int*)q.enqueueMapBuffer(buffer_b, CL_TRUE, CL_MAP_WRITE, 0, size_in_bytes, NULL, NULL, &err));
+OCL_CHECK(err, ptr_result = (int*)q.enqueueMapBuffer(buffer_result, CL_TRUE, CL_MAP_READ, 0, size_in_bytes, NULL,
+                                                     NULL, &err));
 ```
 
 ***NEW***
 ```
-int *ptr_a = (int *) q.enqueueMapBuffer (buffer_a , CL_TRUE , CL_MAP_WRITE , 0, size_in_bytes);
-int *ptr_b = (int *) q.enqueueMapBuffer (buffer_b , CL_TRUE , CL_MAP_WRITE , 0, size_in_bytes);
-int *ptr_result = (int *) q.enqueueMapBuffer (buffer_result , CL_TRUE , CL_MAP_READ , 0, size_in_bytes);
+OCL_CHECK(err,
+          ptr_a = (int*)q.enqueueMapBuffer(buffer_a, CL_TRUE, CL_MAP_WRITE, 0, size_in_bytes, NULL, NULL, &err));
+OCL_CHECK(err,
+          ptr_b = (int*)q.enqueueMapBuffer(buffer_b, CL_TRUE, CL_MAP_WRITE, 0, size_in_bytes, NULL, NULL, &err));
+OCL_CHECK(err, ptr_result = (int*)q.enqueueMapBuffer(buffer_result, CL_TRUE, CL_MAP_READ, 0, size_in_bytes, NULL,
+                                                     NULL, &err));
+
 int *ptr_waveout = (int *) q.enqueueMapBuffer (buffer_waveout , CL_TRUE , CL_MAP_READ , 0, 1024*sizeof(int));
 ```
 
@@ -82,12 +91,12 @@ int *ptr_waveout = (int *) q.enqueueMapBuffer (buffer_waveout , CL_TRUE , CL_MAP
 
 ***OLD***
 ```
-q.enqueueMigrateMemObjects({buffer_result},CL_MIGRATE_MEM_OBJECT_HOST);
+OCL_CHECK(err, q.enqueueMigrateMemObjects({buffer_result}, CL_MIGRATE_MEM_OBJECT_HOST));
 ```
 
 ***NEW***
 ```
-q.enqueueMigrateMemObjects({buffer_result},CL_MIGRATE_MEM_OBJECT_HOST);
+OCL_CHECK(err, q.enqueueMigrateMemObjects({buffer_result}, CL_MIGRATE_MEM_OBJECT_HOST));
 q.enqueueMigrateMemObjects({buffer_waveout},CL_MIGRATE_MEM_OBJECT_HOST);
 ```
 
@@ -97,6 +106,7 @@ This can be added right after the piece of result verification that already exis
 
 ***OLD***
 ```
+int match = 0;
 for (int i = 0; i < DATA_SIZE; i++) {
     int host_result = ptr_a[i] + ptr_b[i];
     if (ptr_result[i] != host_result) {
@@ -109,39 +119,41 @@ for (int i = 0; i < DATA_SIZE; i++) {
 
 ***NEW***
 ```
-for (int i = 0; i < DATA_SIZE; i++) {
-    int host_result = ptr_a[i] + ptr_b[i];
-    if (ptr_result[i] != host_result) {
-        printf(error_message.c_str(), i, host_result, ptr_result[i]);
-        match = 1;
-        break;
-    }
-}
+int match = 0;
+ for (int i = 0; i < DATA_SIZE; i++) {
+     int host_result = ptr_a[i] + ptr_b[i];
+     if (ptr_result[i] != host_result) {
+         printf(error_message.c_str(), i, host_result, ptr_result[i]);
+         match = 1;
+         break;
+     }
+ }
 
-FILE *fp;
-fp=fopen("wave_out.txt","w");
+ FILE *fp_dout;
+ fp_dout=fopen("wave_out.txt","w");
 
-for (int i = 0; i < 1024; i++) {
-  fprintf(fp,"%d\n",ptr_waveout[i]<<17);
-}
+ for (int i = 0; i < 1024; i++) {
+   fprintf(fp_dout,"%d\n",ptr_waveout[i]<<17);
+ }
 
-fclose(fp);
+ fclose(fp_dout);
 ```
 
 #### 7. Unmap the buffer object
 
 ***OLD***
 ```
-q.enqueueUnmapMemObject(buffer_a , ptr_a);
-q.enqueueUnmapMemObject(buffer_b , ptr_b);
-q.enqueueUnmapMemObject(buffer_result , ptr_result);
+OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_a, ptr_a));
+OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_b, ptr_b));
+OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_result, ptr_result));
 ```
 
 ***NEW***
 ```
-q.enqueueUnmapMemObject(buffer_a , ptr_a);
-q.enqueueUnmapMemObject(buffer_b , ptr_b);
-q.enqueueUnmapMemObject(buffer_result , ptr_result);
+OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_a, ptr_a));
+OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_b, ptr_b));
+OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_result, ptr_result));
+
 q.enqueueUnmapMemObject(buffer_waveout , ptr_waveout);
 ```
 

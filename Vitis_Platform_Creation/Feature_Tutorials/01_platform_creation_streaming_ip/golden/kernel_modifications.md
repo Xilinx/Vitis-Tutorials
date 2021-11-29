@@ -6,7 +6,6 @@ Add following 'include' commands at the beginning of the file, just before the '
 
 ***OLD***:
 ```
-#define BUFFER_SIZE 256
 #define DATA_SIZE 4096
 ```
 
@@ -16,7 +15,6 @@ Add following 'include' commands at the beginning of the file, just before the '
 #include "ap_axi_sdata.h"
 #include "hls_stream.h"
 
-#define BUFFER_SIZE 256
 #define DATA_SIZE 4096
 ```
 
@@ -48,23 +46,12 @@ Modify the kernel function to include more ports for interacting with the IP ins
 ***OLD***
 ```
 extern "C" {
-void krnl_vadd(const unsigned int *in1, // Read-Only Vector 1
-          const unsigned int *in2, // Read-Only Vector 2
-          unsigned int *out_r,     // Output Result
-          int size                 // Size in integer
-)
+void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size) {
 ```
 
 ***NEW***
 ```
-extern "C" {
-void krnl_vadd(const unsigned int *in1, // Read-Only Vector 1
-          const unsigned int *in2, // Read-Only Vector 2
-          unsigned int *out_r,     // Output Result
-          int size,                // Size in integer
-		  int *wave_out,  // Output DDS wave data
-		  hls::stream<pkt> &dds_in  // Input DDS wave data from platform IP
-)
+void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size, int *wave_out, hls::stream<pkt> &dds_in) {
 ```
 
 #### 4. Add a piece of logic in the kernel function body
@@ -73,31 +60,18 @@ This logic simply read the data into the kernel and then send it out through ano
 
 ***OLD***
 ```
-vadd_writeC: for (int j = 0; j < chunk_size; j++) {
-#pragma HLS LOOP_TRIPCOUNT min=c_size max=c_size
-  //perform vector addition
-  out_r[i+j] = v1_buffer[j] + in2[i+j];
-}
-}
-}
-}
+store_result(out, out_stream, size);
 ```
 
 ***NEW***
 ```
-vadd_writeC: for (int j = 0; j < chunk_size; j++) {
-#pragma HLS LOOP_TRIPCOUNT min=c_size max=c_size
-  //perform vector addition
-  out_r[i+j] = v1_buffer[j] + in2[i+j];
-}
-}
+store_result(out, out_stream, size);
 
 for (int i = 0; i < 1024; i++) {
-  #pragma HLS PIPELINE II = 1
-  pkt value = dds_in.read();
-  wave_out[i] = value.data;
-}
-}
+#pragma HLS PIPELINE II = 1
+   pkt value = dds_in.read();
+   wave_out[i] = value.data;
+
 }
 ```
 # License
