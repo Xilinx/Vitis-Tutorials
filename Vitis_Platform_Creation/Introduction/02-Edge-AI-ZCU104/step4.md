@@ -218,7 +218,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
      - Name: Vitis AI
      - Location: assign a target download directory or keep empty. Vitis will use default path `~/.Xilinx` if this field is empty.
      - Git URL: `https://github.com/Xilinx/Vitis-AI.git`
-     - Branch: The branch you'd like to verify with your platform. Use `master` for the latest version.
+     - Branch: The branch you'd like to verify with your platform. Use `1.4` for the Vitis-AI version that matches Vitis 2021.1. You can use `master` for the latest patched version. Please note that once the next major release of Vitis-AI is released, `master` branch will point to it and it may not be compatible with Vitis 2021.1.
 
    ![missing image](./images/vitis_repo_add_vai.png)
 
