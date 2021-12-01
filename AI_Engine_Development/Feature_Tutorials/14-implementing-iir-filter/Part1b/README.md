@@ -9,6 +9,8 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 1b
 
+***Version: Vitis 2021.2***
+
 ## Recap
 
 In Part 1a, we showed the process of calculating 8 outputs of a second order section of an IIR filter *in parallel* using the AI engine.
@@ -22,14 +24,22 @@ In this section, we will show how to modify the ADF graph and the testbench for 
 In its pristine state, the user parameters are as shown below:
 
 ```Julia
-fp = 10.0e6             # passband frequency
+first_set = true;	# true: 1st set; false: 2nd set
+
+if first_set
+    fp = 10.0e6         	# passband frequency
+    coeff_file_suffix = "a"	# file suffix to distinguish different coefficient sets
+                        	# with the same architecture
+else
+    fp = 20.0e6         	# passband frequency
+    coeff_file_suffix = "b" 	# 2nd set of coefficients
+end # if first_set
+    
 fs = 100.0e6            # sampling frequency
 p = 6                   # no. of poles
 rp = 0.1                # passband ripple (dB)
 rs = 80.0               # stopband attenuation (dB)
 N = 256                 # no. of samples for impulse response
-coeff_file_suffix = "a" # file suffix to distinguish different coefficient sets
-                        # with the same architecture
 show_plots = true       # display plots?
 write_cmatrix = true    # write C matrix to files?
 write_impulse = true    # write impulse response?
@@ -47,6 +57,8 @@ This will plot the filter characteristics and generate three coefficient files (
 ![Fig. 1](./images/filt10.PNG "6<sup>th</sup> order elliptical LPF, BW=10MHz")
 
 The kernel code will remain the same, but the ADF graph and testbench must be slightly modified to accommodate the additional sections.
+
+Move the generated `*.dat` files into the `data` directory and the generated `*.h` files (coefficient files) into the `src` directory.
 
 ## Adaptive Dataflow (ADF) Graph
 
@@ -214,19 +226,16 @@ Notes:
 
 ## Building and Running the Design
 
-We will use `Emulation-SW` to verify the functionality of the design. Similar to Part1a, we may use Julia to calculate the maximum value of the absolute error between the reference and the generated impulse response. The impulse response error for this 3 stage design is shown below.
+We will use `Emulation-SW` to verify the functionality of the design. Similar to Part1a, we may use Julia to calculate the maximum value of the absolute error between the reference and the generated impulse response (run `check1.jl`). The impulse response error for this 3 stage design is shown below.
 
 ![Fig. 2](./images/impresp_error.PNG "Impulse Response Error")
 
 ## Changing Coefficients During Runtime
 
-We modify the `fp` and `coeff_file_suffix` parameters in `aie_iir_1b.jl` as shown below to generate another set of coefficients for an LPF with a passband of 20MHz.
+We set `first_set` to `false` in `aie_iir_1b.jl` as shown below to generate another set of coefficients for an LPF with a passband of 20MHz.
 
 ```Julia
-fp = 20.0e6             # passband frequency
-...
-coeff_file_suffix = "b" # file suffix to distinguish different coefficient sets
-                        # with the same architecture
+first_set = false;	# true: 1st set; false: 2nd set
 ...
 ```
 
@@ -234,15 +243,19 @@ The frequency response with a 20MHz passband is shown below.
 
 ![Fig. 3](./images/filt20.PNG "6th order elliptical LPF, BW=20MHz")
 
+Move the generated `*.h` (coefficient files) to `src` and `impresponse_b.dat` to `data`.
+
 We will use `two_freqs.jl` to generate an input signal (`two_freqs.dat`) with two frequencies (f1 = 2MHz, f2 = 18MHz) to test the functionality of coefficient switching. The time and frequency domain plots of the signal are shown below.
 
 ![Fig. 4](./images/two_freqs.PNG "Input Signal with Two Frequency Components")
+
+Move the generated `two_freqs.dat` to `data`.
 
 In the testbench (`tb.cpp`), we *uncomment* `#define RTP_SWITCH` to include the second set of coefficients.
 
 Note that a `wait()` statement is *required* to allow the specified number of iterations to complete before loading the new set of coefficients.
 
-The output of the AI engines is shown below.
+The output of the AI engines is shown below (use `check2.jl`).
 
 ![Fig. 5](./images/switched_output.PNG "AI Engine Output with Coefficient Switching")
 

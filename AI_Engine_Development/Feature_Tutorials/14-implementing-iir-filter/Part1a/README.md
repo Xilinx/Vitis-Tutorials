@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 1a
 
-***Version: Vitis 2021.1***
+***Version: Vitis 2021.2***
 
 ## Preliminaries
 
@@ -123,9 +123,9 @@ Note that the matrix of constants **C** in (4) has 8 rows and 12 columns.
 
 * defines the filter characteristics
 * breaks down the filter into second order sections
-* generates the SIMD coefficients for each stage
+* generates the SIMD coefficients for each stage using the [Double64](https://juliamath.github.io/DoubleFloats.jl/stable/) datatype
 
-The vector processor on the AI engine can perform 8 multiply-accumulate operations on [binary32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) variables in *one cycle*. If there were 8 independent inputs to be processed simultaneously by 8 independent IIR biquad filters, then the kernel code would be straightforward, and from (1), those signals would be processed with an *ideal* latency of 5 cycles:
+The vector processor on the AI engine can perform 8 multiply-accumulate operations on [binary32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) variables in *one cycle*. If there were 8 *independent* inputs to be processed simultaneously by 8 *independent* IIR biquad filters, then the kernel code would be straightforward, and from (1), those signals would be processed with an *ideal* latency of 5 cycles:
 
 * cycle 1: y<sub>i</sub>[n]  = *K* * *b*<sub>0</sub> * *x*<sub>i</sub>[*n*]
 * cycle 2: y<sub>i</sub>[n] += *K* * *b*<sub>1</sub> * *x*<sub>i</sub>[*n*-1]
@@ -189,7 +189,8 @@ void SecondOrderSection(
 
 	for (auto i = 1; i < 12; i++) {
 		coeff = aie::load_v<8>(&C[8 * i]);
-		acc = aie::mac(acc, coeff, xreg[i + 4]);
+        float xval = xreg[i + 4];
+		acc = aie::mac(acc, coeff, xval);
 	}
 
 	Vector8f yout = acc;
@@ -213,7 +214,7 @@ Notes:
 * The function will accept a "window" (i.e., a predetermined number of elements defined in `graph.hpp`) of input values and generate another "window" of output values.
 * The filter coefficients will be passed as a 1-D array via the `C` argument.
 * The filter states (`state_reg`) need to kept between function calls and thus are declared `static`.
-* Instead of doing a regular matrix-vector multiplication as indicated by (4), each iteration of the `for` loop takes the *n<sup>th</sup>* row of the the **C** matrix, and multiplies all the elements of that row with the *n<sup>th</sup> element* of the **x** vector, i.e., a vector-scalar multiplication.
+* Instead of doing a regular matrix-vector multiplication as indicated by (4), each iteration of the `for` loop takes the *n<sup>th</sup>* column of the the **C** matrix, and multiplies all the elements of that column with the *n<sup>th</sup> element* of the **x** vector, i.e., a vector scaling operation.
 
 ## Julia Script Notes
 
@@ -256,9 +257,9 @@ Notes:
   * SOS impulse response
   * impulse response error
 * The following files will also be generated:
-  * `C1.h` - array of coefficients to be passed to kernel
+  * `C1.h` - array of coefficients to be passed to the kernel
   * `input.dat` - unit sample function to be used as an input signal for the kernel
-  * `impresponse.dat` - calculated impulse response for comparison with kernel result
+  * `impresponse.dat` - calculated impulse response for comparison with AI engine result
 * Copy `C1.h` to the `src` directory, and `input.dat` to the `data` directory of the AI engine project (note: this has already been done in the attached project archive)
 
 ## Adaptive Dataflow Graph
@@ -373,9 +374,9 @@ Notes:
 
 ## Build and Run the Program
 
+* Copy the files in `src` and `dat` to your project. Set the `Top-Level File` to `src/tb.cpp`.
 * Since we are only interested in functional verification at this time, we use `Emulation-SW` to build and run the program.
-* You may try building the program from scratch, or using the attached project archive.
-* If the program builds and runs without errors, the output should be under `Emulation-SW/x86simulator_output/output.dat`
+* If the program builds and runs without errors, the output should be in `Emulation-SW/x86simulator_output/output.dat`
 * Copy the generated `impresponse.dat` file to the `data` directory (note: this has already been done in the project archive)
 * We can use Julia to verify the kernel output
 
@@ -398,6 +399,8 @@ julia> maximum(abs.(err))
 
 The resulting Julia plot of the impulse response error is shown below.
 ![Fig. 2](./images/impresp_error.PNG "Impulse Response Error")
+
+You may also try modifying and running `check.jl`.
 
 Since the maximum of the absolute error is less than the [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon) for [binary32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) (`Float32` in Julia), we can conclude that the kernel code is working as expected.
 
