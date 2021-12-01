@@ -236,7 +236,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    
    Since Vitis-AI has a different release cycle with PetaLinux, Vitis-AI related PetaLinux recipes are released later than PetaLinux release. At the time that this tutorial releases, Vitis-AI related recipes are not released yet. We cannot build PetaLinux sysroot/sdk with Vitis-AI dependencies. We need to use pre-built Vitis-AI sdk.
 
-   - Download the Vitis-AI cross compile environment setup script: `wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/master/setup/mpsoc/VART/host_cross_compiler_setup.sh`
+   - Download the Vitis-AI cross compile environment setup script: `wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/1.4/setup/mpsoc/VART/host_cross_compiler_setup.sh`
    - Update the script for installation area if necessary. The default install path is `install_path=~/petalinux_sdk_2021.1`
    - Run the script to setup cross compile environment: `./host_cross_compiler_setup.sh`
 
