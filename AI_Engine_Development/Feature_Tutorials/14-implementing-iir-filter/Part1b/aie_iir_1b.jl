@@ -22,16 +22,22 @@ using Printf
 
 # --- begin user parameters
 
-fp = 10.0e6             # passband frequency
-#fp = 20.0e6             # passband frequency
+first_set = false;	# true: 1st set; false: 2nd set
+
+if first_set
+    fp = 10.0e6         	# passband frequency
+    coeff_file_suffix = "a"	# file suffix to distinguish different coefficient sets
+                        	# with the same architecture
+else
+    fp = 20.0e6         # passband frequency
+    coeff_file_suffix = "b" # 2nd set of coefficients
+end # if first_set
+    
 fs = 100.0e6            # sampling frequency
 p = 6                   # no. of poles
 rp = 0.1                # passband ripple (dB)
 rs = 80.0               # stopband attenuation (dB)
 N = 256                 # no. of samples for impulse response
-coeff_file_suffix = "a" # file suffix to distinguish different coefficient sets
-                        # with the same architecture
-#coeff_file_suffix = "b" # 2nd set of coefficients
 show_plots = true       # display plots?
 write_cmatrix = true    # write C matrix to files?
 write_impulse = true    # write impulse response?
@@ -355,4 +361,5 @@ if write_impulse
     close(fid1)
     close(fid2)
 end # if write_impulse
+
 

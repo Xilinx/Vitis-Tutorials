@@ -44,7 +44,8 @@ void SecondOrderSection(
 
 	for (auto i = 1; i < 12; i++) {
 		coeff = aie::load_v<8>(&C[8 * i]);
-		acc = aie::mac(acc, coeff, xreg[i + 4]);
+		float xval = xreg[i + 4];
+		acc = aie::mac(acc, coeff, xval);
 		#ifdef KERNEL_DEBUG
 			printf("  i = %d:\n", i);
 			printf("    xreg[%d] = %f\n", (i + 4), xval);
