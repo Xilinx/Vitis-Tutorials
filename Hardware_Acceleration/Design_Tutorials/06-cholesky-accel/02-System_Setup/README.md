@@ -28,7 +28,7 @@ The [Vitis Unified Software Development Platform](https://www.xilinx.com/product
 <p>
     For this tutorial, you need to set below environment variable to your Terminal of Nimbix Desktop before start to launch Vitis or run Makefile command we provided with source code.
     </p>
-<pre><code> export PATH=/opt/xilinx/Vivado/2020.1/tps/lnx64/gcc-6.2.0/bin:$PATH </code></pre>
+<pre><code> export PATH=/opt/xilinx/Vivado/2021.2/tps/lnx64/gcc-6.2.0/bin:$PATH </code></pre>
 </details>
 
 
@@ -47,7 +47,7 @@ To install Alveo U50 accelerator card on your server, follow the instructions in
     <p>
         For this tutorial, you need to set below environment variable to your Terminal of Nimbix Desktop before start to launch Vitis or run Makefile command we provided with source code.
     </p>
-    <pre><code>export PATH=/opt/xilinx/Vivado/2020.1/tps/lnx64/gcc-6.2.0/bin:$PATH  </code></pre>
+    <pre><code>export PATH=/opt/xilinx/Vivado/2021.2/tps/lnx64/gcc-6.2.0/bin:$PATH  </code></pre>
 </details>
 
 
@@ -55,7 +55,7 @@ To install Alveo U50 accelerator card on your server, follow the instructions in
 To configure the environment to run the Vitis software platform, run the following scripts, which set up the environment to run in a specific command shell.
 ~~~
 #setup XILINX_VITIS and XILINX_VIVADO variables
-source <Vitis_install_path>/Vitis/2020.1/settings64.sh
+source <Vitis_install_path>/Vitis/2021.2/settings64.sh
 #setup XILINX_XRT
 source /opt/xilinx/xrt/setup.sh
 ~~~

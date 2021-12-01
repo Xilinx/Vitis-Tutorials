@@ -1,14 +1,14 @@
 VPP := v++
 EMCONFIGUTIL := emconfigutil
-MODE := hw
+TARGET := hw
 LAB := run1
 DEVICE := xilinx_u250_gen3x16_xdma_3_1_202020_1
 
 KRNL_SRC := ./src/kernel.cpp
 
 # kernel targets
-XOS := vadd.$(MODE).xo
-XCLBIN := vadd.$(MODE).$(LAB).xclbin
+XOS := vadd.$(TARGET).xo
+XCLBIN := vadd.$(TARGET).$(LAB).xclbin
 
 # host target
 HOST_EXE := host.exe
@@ -16,7 +16,7 @@ HOST_EXE := host.exe
 EMCONFIG_FILE := emconfig.json
 
 #Compiler flags
-VPP_COMMON_OPTS := -s -t $(MODE) --platform $(DEVICE)
+VPP_COMMON_OPTS := -s -t $(TARGET) --platform $(DEVICE)
 
 ifeq ($(LAB),$(filter $(LAB),run1))
   HOST_SRC := ./src/host.cpp
@@ -31,7 +31,7 @@ CFLAGS := -g -std=c++14 -I$(XILINX_XRT)/include
 LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lpthread -lrt
 
 #Run time arguments
-EXE_OPT := vadd.$(MODE).$(LAB).xclbin
+EXE_OPT := vadd.$(TARGET).$(LAB).xclbin
 
 # primary build targets
 .PHONY: xclbin exe all clean
