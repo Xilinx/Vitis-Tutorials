@@ -14,7 +14,7 @@ This algorithm has a serial complexity O(n<sup>3</sup>).
 
 [_More information on wikipedia..._](https://en.wikipedia.org/wiki/Cholesky_decomposition)
 Note that this solver is included as part the official Vitis accelerated libraries, here is a link to its documentation:
-https://xilinx.github.io/Vitis_Libraries/solver/2020.1/guide_L2/L2_api.html#potrf
+https://xilinx.github.io/Vitis_Libraries/solver/2021.2/guide_L2/L2_api.html#potrf
 
 For our purpose, we will start with a simple description implemented in C++ and explain how to adapt it for acceleration with an Alveo U50 card.
 

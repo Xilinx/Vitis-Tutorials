@@ -1,6 +1,6 @@
  {
     "name": "03-dataflow_debug_and_optimization",
-    "description": "02-mixing-c-rtl-kernels",
+    "description": "03-dataflow_debug_and_optimization",
     "flow": "hls",
  
     "platform_whitelist": ["u200"],
