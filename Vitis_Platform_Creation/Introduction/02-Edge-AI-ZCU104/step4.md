@@ -218,7 +218,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
      - Name: Vitis AI
      - Location: assign a target download directory or keep empty. Vitis will use default path `~/.Xilinx` if this field is empty.
      - Git URL: `https://github.com/Xilinx/Vitis-AI.git`
-     - Branch: The branch you'd like to verify with your platform. Use `master` for the latest version.
+     - Branch: The branch you'd like to verify with your platform. Use `1.4` for the Vitis-AI version that matches Vitis 2021.1. You can use `master` for the latest patched version. Please note that once the next major release of Vitis-AI is released, `master` branch will point to it and it may not be compatible with Vitis 2021.1.
 
    ![missing image](./images/vitis_repo_add_vai.png)
 
@@ -236,7 +236,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    
    Since Vitis-AI has a different release cycle with PetaLinux, Vitis-AI related PetaLinux recipes are released later than PetaLinux release. At the time that this tutorial releases, Vitis-AI related recipes are not released yet. We cannot build PetaLinux sysroot/sdk with Vitis-AI dependencies. We need to use pre-built Vitis-AI sdk.
 
-   - Download the Vitis-AI cross compile environment setup script: `wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/master/setup/mpsoc/VART/host_cross_compiler_setup.sh`
+   - Download the Vitis-AI cross compile environment setup script: `wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/1.4/setup/mpsoc/VART/host_cross_compiler_setup.sh`
    - Update the script for installation area if necessary. The default install path is `install_path=~/petalinux_sdk_2021.1`
    - Run the script to setup cross compile environment: `./host_cross_compiler_setup.sh`
 
