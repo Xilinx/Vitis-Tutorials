@@ -30,7 +30,7 @@ In the design the following clocking steps are used:
 | --- | --- |
 | Interpolator, Polar Clip, & Classifier | AI Engine Frequency (1 GHz) |
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
-For detailed information, see the Clocking the PL Kernels section [here](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/integrate_ai_engine_application.html?hl=default%2Ckernel%2Cclocks).
+For detailed information, see the Clocking the PL Kernels section [here](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
 
 **IMPORTANT**: Before beginning the tutorial, make sure to read and follow the *Vitis Software Platform Release Notes* (v2021.2) for setting up software and installing the VCK190 base platform.
 
@@ -124,10 +124,10 @@ To link kernels up to the platform and AI Engine, you will need to look at the `
 nk=mm2s:1:mm2s
 nk=s2mm:1:s2mm
 nk=polar_clip:1:polar_clip
-stream_connect=mm2s.s:ai_engine_0.Datain
+stream_connect=mm2s.s:ai_engine_0.DataIn1
 stream_connect=ai_engine_0.clip_in:polar_clip.in_sample
 stream_connect=polar_clip.out_sample:ai_engine_0.clip_out
-stream_connect=ai_engine_0.Dataout:s2mm.s
+stream_connect=ai_engine_0.DataOut1:s2mm.s
 ```
 
 Here you may notice some connectivity and clocking options.

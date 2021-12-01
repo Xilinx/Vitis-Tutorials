@@ -20,7 +20,7 @@ PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");
 
 // RTL Kernel PLIO
 PLIO *ai_to_pl = new PLIO("clip_in",adf::plio_32_bits, "data/output.txt"); 
-PLIO *pl_to_ai = new PLIO("clip_out", adf::plio_32_bits,"data/input2.txt"); 
+PLIO *pl_to_ai = new PLIO("clip_out", adf::plio_32_bits,"data/input.txt"); 
 
 PLIO *out0 = new PLIO("DataOut1",adf::plio_32_bits, "data/output.txt");
 
