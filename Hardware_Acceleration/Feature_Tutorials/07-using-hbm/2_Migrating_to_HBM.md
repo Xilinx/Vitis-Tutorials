@@ -38,7 +38,7 @@ For more information on the kernel source code, refer to  `<Project>/reference_f
 
 The ports to DDR banks connectivity is established with the system port mapping option using the `--sp` switch. This switch allows the developer to map the kernel ports to specific global memory banks.
 
-For more information refer to Mapping Kernel Ports to Memory, refer to    <a href="https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/buildingdevicebinary.html#ejl1524519365386"> Vitis User Guide.</a>
+For more information refer to Mapping Kernel Ports to Memory, refer to    <a href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration"> Vitis User Guide.</a>
 
 The contents of the example connectivity file, DDR_connectivity.cfg are shown below. Makefile target will create this file automatically.
 
@@ -288,7 +288,7 @@ Start the next step: <a href="3_BW_Explorations.md"> HBM Bandwidth Results</a>
 <hr/>
 <p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
 
 
 

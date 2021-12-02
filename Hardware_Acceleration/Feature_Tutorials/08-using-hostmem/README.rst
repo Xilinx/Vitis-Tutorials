@@ -1,5 +1,9 @@
+
 Host Memory Access
-~~~~~~~~~~~~~~~~~~
+========================
+
+**Version:** Vitis 2021.2
+
 
 Some of the recent Xilinx Platforms have an XDMA feature to bypass the DMA operation and allow the kernels to directly access the host memory. The direct host memory access provides an alternate data transfer mechanism compared to XDMA based data transfer and can be useful in some of the scenarios. 
 
@@ -14,7 +18,7 @@ XRT and Platform version
 
 The following XRT and U250 platform versions are used for this tutorial design.
 
-**XRT Version**:    2.9.317 (2020.2_PU1)
+**XRT Version**:    2021.2
 
 **Platform**: xilinx_u250_gen3x16_xdma_shell_3_1   
 
@@ -309,4 +313,16 @@ In summary, you have reviewed the following takeaways in this tutorial
 - Comparing and understanding Profile and Application timeline
 - A host memory-based paradigm can help to eliminate the data transfer burden from the host. In some usecases this might help to boost overall application performance. 
    
-Thank you! 
+---------------------------------
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Copyright 2020–2021 Xilinx
