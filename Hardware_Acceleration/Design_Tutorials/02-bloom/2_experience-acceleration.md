@@ -1,14 +1,11 @@
-﻿<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Vitis Application Acceleration Development Flow Tutorials</a>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    </td>
  </tr>
 </table>
+
 
 # Experiencing Acceleration Performance
 
@@ -79,6 +76,6 @@ In this lab, you will experience the acceleration potential by running the appli
 In this step, you observed the acceleration that can be achieved using an FPGA. Next, you will [architect the application for the application](./3_architect-the-application.md) and dive into what functions can be accelerated by profiling the original applications. You will also define the interface boundaries and performance constraints to achieve the desired acceleration.
 
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="docs/README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center" class="sphnixhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center" class="sphnixhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>

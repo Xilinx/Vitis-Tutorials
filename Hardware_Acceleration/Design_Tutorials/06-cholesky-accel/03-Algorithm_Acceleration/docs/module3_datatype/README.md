@@ -1,3 +1,11 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    </td>
+ </tr>
+</table>
+
 Code, files and instructions for **module 3** (same flow as in [module1](../module1_baseline) to setup the GUI or run make)
 
 In this module both the kernel and host code are modified to use 32-bit floating point data types (float) instead of the 64-bit floating point (double) to show the performance and Xilinx utilization beneficial impact of downsizing data types.

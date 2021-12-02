@@ -14,17 +14,19 @@
  * limitations under the License.
  */ -->
  
+ <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    </td>
+ </tr>
+</table>
+
+
 > **In this section...**   
 We look at the export phase of the flow to packages the RTL either the Vivado or the Vitis flow.
 In addition,  we run the Vivado tool directly from the Vitis HLS GUI to get more accurate timing and resource estimates.
 
-<table width=100%>
- <tr width=50%>
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h2>2021.1 Vitis™ - The Traveling Salesperson Problem - Tutorial</h2>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
-    </td>
- </tr>
-</table>
 
 ## Export the accelerated function and evaluate in Vivado
 

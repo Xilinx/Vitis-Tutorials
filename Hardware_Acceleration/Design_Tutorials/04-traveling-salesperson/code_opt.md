@@ -14,16 +14,17 @@
  * limitations under the License.
  */ -->
 
-> **NOTE:**   
-In this section, the **traveling salesperson problem** (TSP) design is implemented with 4 parallel memory lookups to fetch distances.
-
-<table width=100%>
- <tr width=50%>
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h2>2021.1 Vitis™ - The Traveling Salesperson Problem - Tutorial</h2>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
+
+
+> **NOTE:**   
+In this section, the **traveling salesperson problem** (TSP) design is implemented with 4 parallel memory lookups to fetch distances.
 
 ## Load the project into Vitis HLS
 Open a terminal and navigate to the `build` directory. Launch the following command which will open the graphical interface of Vitis HLS and configure the project based on the settings included in the hls_opt.tcl Tcl file:
