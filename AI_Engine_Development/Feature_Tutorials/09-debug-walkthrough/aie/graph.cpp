@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Xilinx, Inc.
+ * Copyright 2021 Xilinx, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,28 +118,28 @@ PLIO *attr_o_ulbfo3  = new PLIO("ulbfo3",  plio_64_bits, "data/ulbf_out3.txt");
 
 
 simulation::platform<4+32+8+32, 8+4> platform(
-	attr_i_dlbfid0,   attr_i_dlbfid1,  attr_i_dlbfid2,   attr_i_dlbfid3, 
-	attr_i_dlbfic00,  attr_i_dlbfic01, attr_i_dlbfic02,  attr_i_dlbfic03,
-	attr_i_dlbfic10,  attr_i_dlbfic11, attr_i_dlbfic12,  attr_i_dlbfic13,
-	attr_i_dlbfic20,  attr_i_dlbfic21, attr_i_dlbfic22,  attr_i_dlbfic23,
-	attr_i_dlbfic30,  attr_i_dlbfic31, attr_i_dlbfic32,  attr_i_dlbfic33,
-	attr_i_dlbfic40,  attr_i_dlbfic41, attr_i_dlbfic42,  attr_i_dlbfic43,
-	attr_i_dlbfic50,  attr_i_dlbfic51, attr_i_dlbfic52,  attr_i_dlbfic53,
-	attr_i_dlbfic60,  attr_i_dlbfic61, attr_i_dlbfic62,  attr_i_dlbfic63,
-	attr_i_dlbfic70,  attr_i_dlbfic71, attr_i_dlbfic72,  attr_i_dlbfic73,
+    attr_i_dlbfid0,   attr_i_dlbfid1,  attr_i_dlbfid2,   attr_i_dlbfid3, 
+    attr_i_dlbfic00,  attr_i_dlbfic01, attr_i_dlbfic02,  attr_i_dlbfic03,
+    attr_i_dlbfic10,  attr_i_dlbfic11, attr_i_dlbfic12,  attr_i_dlbfic13,
+    attr_i_dlbfic20,  attr_i_dlbfic21, attr_i_dlbfic22,  attr_i_dlbfic23,
+    attr_i_dlbfic30,  attr_i_dlbfic31, attr_i_dlbfic32,  attr_i_dlbfic33,
+    attr_i_dlbfic40,  attr_i_dlbfic41, attr_i_dlbfic42,  attr_i_dlbfic43,
+    attr_i_dlbfic50,  attr_i_dlbfic51, attr_i_dlbfic52,  attr_i_dlbfic53,
+    attr_i_dlbfic60,  attr_i_dlbfic61, attr_i_dlbfic62,  attr_i_dlbfic63,
+    attr_i_dlbfic70,  attr_i_dlbfic71, attr_i_dlbfic72,  attr_i_dlbfic73,
     attr_i_ulbfid0,   attr_i_ulbfid1,  attr_i_ulbfid2,   attr_i_ulbfid3, 
-	attr_i_ulbfid4,   attr_i_ulbfid5,  attr_i_ulbfid6,   attr_i_ulbfid7, 
-	attr_i_ulbfic00,  attr_i_ulbfic01, attr_i_ulbfic02,  attr_i_ulbfic03,
-	attr_i_ulbfic04,  attr_i_ulbfic05, attr_i_ulbfic06,  attr_i_ulbfic07,
-	attr_i_ulbfic10,  attr_i_ulbfic11, attr_i_ulbfic12,  attr_i_ulbfic13,
-	attr_i_ulbfic14,  attr_i_ulbfic15, attr_i_ulbfic16,  attr_i_ulbfic17,
-	attr_i_ulbfic20,  attr_i_ulbfic21, attr_i_ulbfic22,  attr_i_ulbfic23,
-	attr_i_ulbfic24,  attr_i_ulbfic25, attr_i_ulbfic26,  attr_i_ulbfic27,
-	attr_i_ulbfic30,  attr_i_ulbfic31, attr_i_ulbfic32,  attr_i_ulbfic33,
-	attr_i_ulbfic34,  attr_i_ulbfic35, attr_i_ulbfic36,  attr_i_ulbfic37,
-	attr_o_dlbfo0,    attr_o_dlbfo1,   attr_o_dlbfo2,    attr_o_dlbfo3,
-	attr_o_dlbfo4,    attr_o_dlbfo5,   attr_o_dlbfo6,    attr_o_dlbfo7,
-	attr_o_ulbfo0,    attr_o_ulbfo1,   attr_o_ulbfo2,    attr_o_ulbfo3
+    attr_i_ulbfid4,   attr_i_ulbfid5,  attr_i_ulbfid6,   attr_i_ulbfid7, 
+    attr_i_ulbfic00,  attr_i_ulbfic01, attr_i_ulbfic02,  attr_i_ulbfic03,
+    attr_i_ulbfic04,  attr_i_ulbfic05, attr_i_ulbfic06,  attr_i_ulbfic07,
+    attr_i_ulbfic10,  attr_i_ulbfic11, attr_i_ulbfic12,  attr_i_ulbfic13,
+    attr_i_ulbfic14,  attr_i_ulbfic15, attr_i_ulbfic16,  attr_i_ulbfic17,
+    attr_i_ulbfic20,  attr_i_ulbfic21, attr_i_ulbfic22,  attr_i_ulbfic23,
+    attr_i_ulbfic24,  attr_i_ulbfic25, attr_i_ulbfic26,  attr_i_ulbfic27,
+    attr_i_ulbfic30,  attr_i_ulbfic31, attr_i_ulbfic32,  attr_i_ulbfic33,
+    attr_i_ulbfic34,  attr_i_ulbfic35, attr_i_ulbfic36,  attr_i_ulbfic37,
+    attr_o_dlbfo0,    attr_o_dlbfo1,   attr_o_dlbfo2,    attr_o_dlbfo3,
+    attr_o_dlbfo4,    attr_o_dlbfo5,   attr_o_dlbfo6,    attr_o_dlbfo7,
+    attr_o_ulbfo0,    attr_o_ulbfo1,   attr_o_ulbfo2,    attr_o_ulbfo3
 );
 
 TEST_BF<COL_OFFSET> dut;
@@ -243,7 +243,7 @@ connect<> unet1(dut.ulout[1],  platform.sink[UL_OUTPUT_BA+1]);
 connect<> unet2(dut.ulout[2],  platform.sink[UL_OUTPUT_BA+2]);
 connect<> unet3(dut.ulout[3],  platform.sink[UL_OUTPUT_BA+3]);
 
-#if defined  (__AIESIM__) || defined(__NEW_X86Sim__)
+#if defined  (__AIESIM__) || defined(__X86SIM__)
 int main(void) {
     dut.init();
     dut.run(100) ;

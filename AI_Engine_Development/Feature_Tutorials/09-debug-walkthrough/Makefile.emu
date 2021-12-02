@@ -12,11 +12,11 @@
 #
 
 TARGET   = hw_emu
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm
 XCLBIN   = bf_${TARGET}.xclbin
 HOST_EXE = host.exe
-ROOTFS   = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 
-IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.1/Image 
+ROOTFS   = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4 
+IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/Image 
 
 GRAPH    = aie/graph.cpp
 LIBADF   = libadf.a
@@ -70,19 +70,19 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set to location of xilinx_vck190_es1_base_202110_1 platform)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set to location of xilinx_vck190_es1_base_202120_1 platform)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to location of xilinx-versal-common-v2021.1/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to location of xilinx-versal-common-v2021.2/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to location of xilinx-versal-common-v2021.1/Image)
+	$(call check_defined, IMAGE, Set to location of xilinx-versal-common-v2021.2/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Ensure xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux script was run)
+	$(call check_defined, CXX, Ensure xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux script was run)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Ensure xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux script was run)
+	$(call check_defined, SDKTARGETSYSROOT, Ensure xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux script was run)
 ###
 
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}

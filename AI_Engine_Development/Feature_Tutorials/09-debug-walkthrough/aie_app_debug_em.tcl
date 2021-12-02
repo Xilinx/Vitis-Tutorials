@@ -11,7 +11,7 @@
 # limitations under the License.
 #
 #Set the required variables
-set vitis_install "/proj/xbuilds/2021.1_released/installs/lin64/Vitis/2021.1"
+set vitis_install "/proj/xbuilds/2021.2_released/installs/lin64/Vitis/2021.2"
 set aie_work_dir "${PROJECT_DIR}/Work"
 set aie_mem_sock_port "10100"
 set xrt_server_port "4352"
