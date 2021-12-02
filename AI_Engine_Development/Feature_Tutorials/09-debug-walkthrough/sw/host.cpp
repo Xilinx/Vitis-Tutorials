@@ -21,7 +21,7 @@ limitations under the License.
 #include <chrono>
 #include <ctime>
 
-#if !defined(__AIESIM__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__)
 #include "adf/adf_api/XRTConfig.h"
 #include "xrt/experimental/xrt_device.h"
 #include "xrt/experimental/xrt_kernel.h"
@@ -51,7 +51,7 @@ public:
   void reset() { mTimeStart = std::chrono::high_resolution_clock::now(); }
 };
 
-#if !defined(__AIESIM__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__)
 static std::vector<char>
 load_xclbin(xrtDeviceHandle device, const std::string& fnm)
 {

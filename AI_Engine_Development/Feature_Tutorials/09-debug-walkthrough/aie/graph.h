@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Xilinx, Inc.
+ * Copyright 2021 Xilinx, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,32 +24,31 @@ class TEST_BF: public graph{
   
 public:
 
-	port<input>  dldin[4];
-	port<input>  dlcin[32];
-	port<output> dlout[8];	
+    port<input>  dldin[4];
+    port<input>  dlcin[32];
+    port<output> dlout[8];	
 
-	port<input>  uldin[8];
-	port<input>  ulcin[32];
-	port<output> ulout[4];	
+    port<input>  uldin[8];
+    port<input>  ulcin[32];
+    port<output> ulout[4];	
 
-	// beamforming, 64 antenna, 32 layers
-	DL64A32L<COL0+0, 0>  dlbf;
-	UL64A32L<COL0+8, 0>  ulbf;
+    // beamforming, 64 antenna, 32 layers
+    DL64A32L<COL0+0, 0>  dlbf;
+    UL64A32L<COL0+8, 0>  ulbf;
 
-	
+
     TEST_BF(){
-		
-		// DLBF
-		for(unsigned k=0;k<4; k++) connect<>(dldin[k], dlbf.din[k]);
-		for(unsigned k=0;k<32;k++) connect<>(dlcin[k], dlbf.cin[k]);
-		for(unsigned k=0;k<8; k++) connect<>(dlbf.out[k], dlout[k]);
-		
-		// ULBF
-		for(unsigned k=0;k<8; k++) connect<>(uldin[k], ulbf.din[k]);
-		for(unsigned k=0;k<32;k++) connect<>(ulcin[k], ulbf.cin[k]);
-		for(unsigned k=0;k<4; k++) connect<>(ulbf.out[k], ulout[k]);
+
+        // DLBF
+        for(unsigned k=0;k<4; k++) connect<>(dldin[k], dlbf.din[k]);
+        for(unsigned k=0;k<32;k++) connect<>(dlcin[k], dlbf.cin[k]);
+        for(unsigned k=0;k<8; k++) connect<>(dlbf.out[k], dlout[k]);
+
+        // ULBF
+        for(unsigned k=0;k<8; k++) connect<>(uldin[k], ulbf.din[k]);
+        for(unsigned k=0;k<32;k++) connect<>(ulcin[k], ulbf.cin[k]);
+        for(unsigned k=0;k<4; k++) connect<>(ulbf.out[k], ulout[k]);
     };
-	
-	
+
 }; // end of class
 
