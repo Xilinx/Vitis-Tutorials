@@ -34,6 +34,12 @@ In the `[project-root]` you can start the full build with `make all` after setti
   - `[project-root]/petalinux/Makefile`: the generated tmp-dir ends up in `/tmp`. 
     - If you want to place it somewhere else you need to add `--tmpdir [your_tmp_dir]` at the end of the `petalinux-create` line in the `[project-root]/petalinux/Makefile`. 
       - Be aware that this may not be located on an NFS-drive! 
+  - As an optional feature, an ILA core can be enabled by toggling the `ILA_EN` switch placed in `[project-root]/Makefile`. 
+    The ILA core connectivity is set up during v++ linking process loading the cfg file `[project-root]/vitis/src/ila_0_bd.cfg` and 
+    further configuration of ILA properties is managed in tcl file `[project-root]/vitis/src/ila_0_def.tcl`.
+    Using the configuration file `[project-root]/vitis/src/ila_0_bd.cfg` allows the designer to mark AXI port for debug nets to and from the AIE engine for analysis. 
+    After completing the linking process, the designer can verify conectivity and configuration of the ILA core in the generated block design
+    in project `[project-root]/vitis/_x/link/vivado/vpl/prj/prj.xpr`.
   - End result: `[project-root]/package_output/sd_card/*` can be used for FAT-32 sd_card (partition); or `[project-root]/package_output/sd_card.img` can be used.
 
 ## More In-Depth
@@ -202,9 +208,10 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
       - You will need to copy it to the Vitis platform in the `[project-root]/Makefile` in the `bif` section.
       - The `v++ -p` command line in `[project-root]\vitis\Makefile` will need adaptations to be able to use ext4 rootfs instead of FAT-32.
   - Simulations and Emulations are **NOT** included in this Tutorial! 
-  - As an optional feature you can enable an ILA core 
-    by toggling the `ILA_EN` switch placed in top Makefile. Once build is complete and petalinux boots on your board, you will need to 
-    manually load the probe file `probe_0.ltx` in the Vivado Hardware Manager.
+  - Once the build process is completed and petalinux boots on your board, it is required to manually set the path for probe file 
+    `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
+    A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, 
+    re-running `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
 
 ## Design Considerations
   Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a Xilinx tools requirement!
