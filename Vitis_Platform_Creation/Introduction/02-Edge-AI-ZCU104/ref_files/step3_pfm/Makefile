@@ -21,6 +21,7 @@ all: sw_comp pfm prep_sw_comp prep_sysroot
 main: sw_comp pfm prep_sw_comp
 
 sw_comp:
+	@echo "INFO: Copying software components to local directory ./boot and ./sd_dir"
 	mkdir -p ./sd_dir && mkdir -p ./boot && \
 	cp ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/zynqmp_fsbl.elf ./boot/
 	cp ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/pmufw.elf ./boot/
@@ -36,9 +37,9 @@ sw_comp:
 	cp ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/system.dtb ./sd_dir/
 
 pfm:
-	xsct xsct_create_pfm.tcl $(XSA_NAME) ../step1_vivado/build/vivado && \
-	echo "Platform created:" && \
-	find . -name "*.xpfm"
+	@echo "INFO: Creating Platform $(XSA_NAME)"
+	xsct xsct_create_pfm.tcl $(XSA_NAME) ../step1_vivado/build/vivado
+	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
 
 prep_sw_comp:
 	mkdir -p sw_comp && \

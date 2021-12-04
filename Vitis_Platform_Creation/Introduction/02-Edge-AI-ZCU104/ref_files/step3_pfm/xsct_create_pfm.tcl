@@ -22,7 +22,11 @@ puts "The xsa path is \"$xsa_path\""
 set OUTPUT platform_repo
 # set SW_COMP platform_repo/tmp/sw_components/
 
-platform create -name $platform_name -desc "A custom platform ZCU104 platform" -hw $xsa_path/$platform_name.xsa -out ./$OUTPUT -no-boot-bsp 
+platform create -name $platform_name \
+    -desc "A custom platform ZCU104 platform" \
+    -hw ${xsa_path}/${platform_name}_hw.xsa \
+    -hw_emu ${xsa_path}/${platform_name}_hwemu.xsa \
+    -out ./${OUTPUT} -no-boot-bsp 
 
 # Linux domain
 domain create -name xrt -proc psu_cortexa53 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./sd_dir}  -bootmode {sd}

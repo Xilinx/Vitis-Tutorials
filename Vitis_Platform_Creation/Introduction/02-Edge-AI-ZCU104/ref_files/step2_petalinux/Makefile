@@ -28,7 +28,7 @@ all: get_xsa petalinux_proj petalinux_build petalinux_build_sdk
 main: get_xsa petalinux_proj petalinux_build
 
 get_xsa:
-	cd $(ROOT_DIR); cp ../step1_vivado/build/vivado/*.xsa .
+	cd $(ROOT_DIR); cp ../step1_vivado/build/vivado/*hw.xsa .
 
 
 update_dtsi:

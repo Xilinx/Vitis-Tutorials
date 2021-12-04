@@ -1,0 +1,32 @@
+
+{
+    "name": "Vitis_Platform_Creation-Introduction-02-Edge-AI-ZCU104",
+    "description": "Creating a custom ZCU104 platform from scratch",
+    "gui": "false",
+    "flow": "vitis",
+    "platform_whitelist": [],
+    "platform_blacklist": [],
+    "testinfo": {
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_emu": 200
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu"
+        ],
+        "custom_build_target":
+        {
+            "all": "all"
+        },
+        "tasks": {
+            "build": {
+                "pre_exec": "/proj/petalinux/2021.2/petalinux-v2021.2_1014_1/tool/petalinux-v2021.2-final/settings.sh"
+            }
+        }
+    },
+    "OS_JSON":"/proj/dsv/xbot/Jenkins/configuration/vitis_tutorial_edge_os.json"
+}
