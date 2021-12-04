@@ -12,19 +12,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: all clean
-all: step1 step2 step3 
+.PHONY: all clean step1 step2 step3 step4
+all: step1 step2 step3 step4
 
-step1:
+XSA=step1_vivado/build/vivado/zcu104_custom_platform_hw.xsa
+IMG=step2_petalinux/build/petalinux/images/image.ub
+XPFM=step3_pfm/platform_repo/zcu104_custom_platform/export/zcu104_custom_platform/zcu104_custom_platform.xpfm
+
+# Step 1: Generate XSA with Vivado
+step1: $(XSA)
+
+$(XSA):
 	$(MAKE) -C step1_vivado all
 
-step2:
+# Step 2: Use PetaLinux to generate Software Components
+step2: $(IMG)
+
+$(IMG): $(XSA) 
 	$(MAKE) -C step2_petalinux all
 
-step3:
+# Step 3: Generate Platform
+step3: $(XPFM)
+
+$(XPFM): $(XSA) $(IMG)
 	$(MAKE) -C step3_pfm all
+
+# Step 4: Validate Design
+step4: $(XPFM)
+	$(MAKE) -C step4_validate all
 
 clean:
 	$(MAKE) -C step1_vivado clean
 	$(MAKE) -C step2_petalinux clean
 	$(MAKE) -C step3_pfm clean
+	$(MAKE) -C step4_validate clean

@@ -35,15 +35,16 @@ With Vitis environment setup, **platforminfo** tool can report XPFM platform inf
 <summary><strong>Click for detailed logs</strong></summary>  
 
 ```bash
-# in zcu104_custom_pkg directory
+# Run in zcu104_custom_pkg directory
 platforminfo ./zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 ==========================
 Basic Platform Information
 ==========================
 Platform:           zcu104_custom_platform
-File:               <your path to>/zcu104_custom_platform.xpfm
+File:               /group/bcapps/rickys/cases/pfm_zcu104_2021.2/Vitis-Tutorials/Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/ref_files/step3_pfm/platform_repo/zcu104_custom_platform/export/zcu104_custom_platform/zcu104_custom_platform.xpfm
 Description:        
 A custom platform ZCU104 platform
+    
 
 =====================================
 Hardware Platform (Shell) Information
@@ -52,7 +53,7 @@ Vendor:                           xilinx
 Board:                            ZCU104_Custom_Platform
 Name:                             ZCU104_Custom_Platform
 Version:                          0.0
-Generated Version:                2021.1
+Generated Version:                2021.2
 Hardware:                         1
 Software Emulation:               1
 Hardware Emulation:               1
@@ -101,18 +102,20 @@ System Configurations:
     Processor Group OS Name:   linux
   System Config Boot Images:
     Boot Image Name:           standard
-    Boot Image Type:
+    Boot Image Type:           
     Boot Image BIF:            zcu104_custom_platform/boot/linux.bif
     Boot Image Data:           zcu104_custom_platform/xrt/image
     Boot Image Boot Mode:      sd
-    Boot Image RootFileSystem:
+    Boot Image RootFileSystem: 
     Boot Image Mount Path:     /mnt
     Boot Image Read Me:        zcu104_custom_platform/boot/generic.readme
     Boot Image QEMU Args:      zcu104_custom_platform/qemu/pmu_args.txt:zcu104_custom_platform/qemu/qemu_args.txt
-    Boot Image QEMU Boot:
-    Boot Image QEMU Dev Tree:
+    Boot Image QEMU Boot:      
+    Boot Image QEMU Dev Tree:  
 Supported Runtimes:
   Runtime: OpenCL
+
+
 ```
 
 </details>
@@ -218,7 +221,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
      - Name: Vitis AI
      - Location: assign a target download directory or keep empty. Vitis will use default path `~/.Xilinx` if this field is empty.
      - Git URL: `https://github.com/Xilinx/Vitis-AI.git`
-     - Branch: The branch you'd like to verify with your platform. Use `master` for the latest version.
+     - Branch: The branch you'd like to verify with your platform. Use `1.4` for the Vitis-AI version that matches Vitis 2021.1. You can use `master` for the latest patched version. Please note that the master branch will move forward. At some point `master` branch will point to a new release that not be compatible with Vitis 2021.2.
 
    ![missing image](./images/vitis_repo_add_vai.png)
 
@@ -236,8 +239,8 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    
    Since Vitis-AI has a different release cycle with PetaLinux, Vitis-AI related PetaLinux recipes are released later than PetaLinux release. At the time that this tutorial releases, Vitis-AI related recipes are not released yet. We cannot build PetaLinux sysroot/sdk with Vitis-AI dependencies. We need to use pre-built Vitis-AI sdk.
 
-   - Download the Vitis-AI cross compile environment setup script: `wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/master/setup/mpsoc/VART/host_cross_compiler_setup.sh`
-   - Update the script for installation area if necessary. The default install path is `install_path=~/petalinux_sdk_2021.1`
+   - Download the Vitis-AI cross compile environment setup script: `wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/1.4/setup/mpsoc/VART/host_cross_compiler_setup.sh`
+   - Update the script for installation area. The default install path is `install_path=~/petalinux_sdk_2021.1`. Since we are using PetaLinux 2021.2, it's better to change `install_path=~/petalinux_sdk_2021.2`.
    - Run the script to setup cross compile environment: `./host_cross_compiler_setup.sh`
 
    Once Vitis-AI recipes are released, this tutorial will update the steps for building Vitis-AI dependencies to the sysroot using PetaLinux.
@@ -248,7 +251,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    - Click **Next** in Welcome page
    - Select platform **zcu104_custom_platform**. Click Next.
    - Name the project **dpu_trd**, click **next**.
-   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to sysroot installation path in previous step, e.g. `~/petalinux_sdk_2021.1/sysroots/cortexa72-cortexa53-xilinx-linux/`. 
+   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to sysroot installation path in previous step, e.g. `~/petalinux_sdk_2021.2/sysroots/cortexa72-cortexa53-xilinx-linux/`. 
    - Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click **next**.
    - Select **dsa -> DPU Kernel (RTL Kernel)** and click **Finish** to generate the application.
    ![missing image](images/vitis_add_dpu.png)

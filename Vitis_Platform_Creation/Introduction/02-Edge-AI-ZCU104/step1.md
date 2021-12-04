@@ -289,9 +289,14 @@ When a component comes with multiple types of simulation models, selecting Syste
    - Select **Synthesis Options** to **Global**. It will skip IP synthesis during generation.
    - Click **Generate**. .
 
-4. Generate Bitstream
+4. Generate Bitstream (Optional)
 
-   This step is only required for KV260 PetaLinux BSP, which we will build in next step. In most cases a flat (non-DFX) Vitis platform doesn't need to generate bitstream before exporting the platform. It's required here because the PetaLinux package `fpga-manager-util` requires a bit file in the XSA file.
+   This step is optional for Vitis platforms. In most cases a flat (non-DFX) Vitis platform doesn't need to generate bitstream before exporting the platform. You can execute this step after you understand its benefits and your requirements.
+   
+   - Generating bitstream will run through hardware design implemtation for the platform. It can report errors in the early stage if your platform hardware design has potential errors that cannot be reported by the Validated Design DRC.
+   - If you are going to import the design to the KV260 Start Kit PetaLinux BSP like in [this tutorial](../../Design_Tutorials/01-Edge-KV260), it's required to generate bitstream because the PetaLinux package `fpga-manager-util` in the BSP requires a bit file in the XSA file.
+
+   Here are the steps to generate bitstream.
 
    - Click **Generate Bitstream** in the navigation window.
    - Select a proper **number of jobs** for **Launch runs on local host**
@@ -299,19 +304,43 @@ When a component comes with multiple types of simulation models, selecting Syste
 
 5. Export the platform
 
+   In this step, we will export XSA for hardware design and hardware emulation seperatedly. We will use these XSA files in step 2 and step 3.
+
+   > Note: Vivado 2021.2 can still export XSA with both hardware and hardware emulation info. This feature will be deprecated in the future. In most real designs, due to the complexity of the design, some peripherals cannot be emulated, or doesn't need to emulate at a cycle accuate level. It's a common practice to provide a simplified hardware design for hardware emulation to recude the emulation run time.
+
    - Click menu **File -> Export -> Export Platform** to launch the **Export Hardware Platform** wizard. This wizard can also be launched by **Export Platform** button in **Flow Navigator** or **Platform Setup** window.
    - Click Next in the first information page.
-   - Select Platform Type: **Hardware and Hardware Emulation**, click Next. If you skipped the emulation setup previously, select **Hardware** here.
-   - Select Platform State: **Pre-synthesis**, enable **Include bitstream**, click Next
+   - Select Platform Type: **Hardware**, click Next. If you skipped the emulation setup previously, select **Hardware** here.
+   - Select Platform State: **Pre-synthesis**
+   - If you have generated bitstream in step4, enable **Include bitstream**, click Next
    - Input Platform Properties and click **Next**. For example,
      - Name: zcu104_custom_platform
      - Vendor: xilinx
      - Board: zcu104
      - Version: 0.0
      - Description: This platform provides high PS DDR bandwidth and three clocks: 100MHz, 200MHz and 400MHz.
-   - Fill in XSA file name: **zcu104_custom_platform** and keep the export directory as default. 
+   - Fill in XSA file name: **zcu104_custom_platform_hw** and keep the export directory as default. 
    - Click **Finish**. 
-   - **zcu104_custom_platform.xsa** will be generated. The export path is reported in the Tcl console. 
+   - **zcu104_custom_platform_hw.xsa** will be generated. The export path is reported in the Tcl console. 
+
+   (Optional: Only for Hardware Emulation. If you skipped the emulation setup previously, please skip the following step.)
+   
+   Rerun the Export Platform wizard again and export the XSA for hardware emulation. 
+
+   > Note: We used the same hardware and hardware emulation design for this simple project. You can use different Vivado designs for hardware and hardware emulation. Platform developers should keep the two designs logically identical. Otherwise your emulation result cannot represent your hardware design. 
+
+   - Click menu **File -> Export -> Export Platform** to launch the **Export Hardware Platform** wizard. This wizard can also be launched by **Export Platform** button in **Flow Navigator** or **Platform Setup** window.
+   - Click Next in the first information page.
+   - Select Platform Type: **Hardware Emulation**, click Next.
+   - Select Platform State: **Pre-synthesis**, click Next
+   - Input Platform Properties and click **Next**. For example,
+     - Name: zcu104_custom_platform
+     - Vendor: xilinx
+     - Board: zcu104
+     - Version: 0.0
+     - Description: This platform provides high PS DDR bandwidth and three clocks: 100MHz, 200MHz and 400MHz.
+   - Fill in XSA file name: **zcu104_custom_platform_hwemu** and keep the export directory as default. 
+   - Click **Finish**. 
 
    Alternatively, the above export can be done in Tcl scripts
 
@@ -323,7 +352,8 @@ When a component comes with multiple types of simulation models, selecting Syste
    set_property platform.design_intent.external_host "false" [current_project]
    set_property platform.design_intent.datacenter "false" [current_project]
    # Write pre-synthesis expandable XSA
-   write_hw_platform -force -file ./zcu104_custom_platform.xsa
+   write_hw_platform -hw -force -file ./zcu104_custom_platform_hw.xsa
+   write_hw_platform -hw_emu -force -file ./zcu104_custom_platform_hwemu.xsa
    ```
 
 

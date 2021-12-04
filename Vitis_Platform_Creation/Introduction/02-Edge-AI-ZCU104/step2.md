@@ -36,6 +36,8 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    petalinux-config --get-hw-description=<vivado_design_dir>  # The directory where your *.xsa file locates. if you do as step1 says strictly here, the <vivado_design_dir> is the path of <zcu104_custom_platform>
    ```
 
+   > Note: PetaLinux will use XSA to generate the device tree. Since our hardware XSA and hardware emulation XSA have identical peripherals, giving either of them to PetaLinux makes no difference. When simplifying the hardware design for hardware emulation, it's recommended to keep all the peripherals that need device tree and drivers so that the auto-generated device tree can be reused. If the two design has different address-able peripherals, you will need to create two sets of device trees for hardware running and hardware emulation seperatedly.
+
    After this step, your directory hierarchy looks like this.
 
    ```
