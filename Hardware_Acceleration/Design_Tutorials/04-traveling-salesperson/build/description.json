@@ -21,7 +21,7 @@
         "targets": [
              "vitis_sw_emu"
         ],
-        "make_options" : [ "TARGET='$user_test_mode'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}/techdocs_repo'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'" ],
+        "make_options" : [ "TARGET='$user_test_mode'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}/Vitis-Tutorials'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'" ],
         "category": "canary",
         "custom_build_target": {
             "all": "run"

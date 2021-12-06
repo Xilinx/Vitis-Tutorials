@@ -1,3 +1,5 @@
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Hardware_Acceleration/Design_Tutorials/*}')
+
 CURRENT_DIR = $(PWD)
 TARGET := hw
 
@@ -18,14 +20,14 @@ ifeq ($(STEP), kernel_16)
 PF   := 16
 endif
 
-
 PLATFORM :=xilinx_u200_gen3x16_xdma_1_202110_1
 
-SRCDIR := ./../reference_files
+#SRCDIR := ./../reference_files
+SRCDIR := $(XF_PROJ_ROOT)/Hardware_Acceleration/Design_Tutorials/02-bloom/reference_files
 
 # Default Settings here ..
 HOST_SRC_CPP := $(SRCDIR)/compute_score_host.cpp
-BUILDDIR := ./../build/$(STEP)/kernel_$(PF)/$(TARGET)
+BUILDDIR := ./build/$(STEP)/kernel_$(PF)/$(TARGET)
 
 
 # Common Source Code for FPGA and Host
@@ -86,12 +88,12 @@ endif
 else
 ifeq ($(NOXCLBIN),1)
 build: host
-	if [ -f ../build/single_buffer/kernel_$(PF)/$(TARGET)/runOnfpga_$(TARGET).xclbin ]; \
+	if [ -f $(BUILDDIR)/build/single_buffer/kernel_$(PF)/$(TARGET)/runOnfpga_$(TARGET).xclbin ]; \
   	then \
 		echo "Copying the xclbin created from single_bufer to $(BUILDDIR) "; \
-		cp ../build/single_buffer/kernel_$(PF)/$(TARGET)/runOnfpga_$(TARGET).xclbin $(BUILDDIR);  \
+		cp $(BUILDDIR)/build/single_buffer/kernel_$(PF)/$(TARGET)/runOnfpga_$(TARGET).xclbin $(BUILDDIR);  \
 	fi;
-	if ! [ -f ../build/single_buffer/kernel_$(PF)/$(TARGET)/runOnfpga_$(TARGET).xclbin ]; \
+	if ! [ -f $(BUILDDIR)/build/single_buffer/kernel_$(PF)/$(TARGET)/runOnfpga_$(TARGET).xclbin ]; \
   	then \
 		echo ""; \
 		echo "***   Please run STEP=single_buffer first! *** "; \

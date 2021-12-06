@@ -1,9 +1,11 @@
+XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Hardware_Acceleration/*}')
+
 CURRENT_DIR = $(PWD)
 TARGET := hw
 memtype := DDR
 banks :=
 
-SRCDIR := ./../reference_files
+SRCDIR := $(XF_PROJ_ROOT)/Hardware_Acceleration/Feature_Tutorials/07-using-hbm/reference_files
 include mem_connectivity.mk
 
 ifeq ($(memtype), DDR)
@@ -39,7 +41,7 @@ endif
 
 # Default Settings here ..
 HOST_SRC_CPP := $(SRCDIR)/host.cpp
-builddir := ./../build/$(memtype)_$(_banks)Banks_d$(dwidth)_txSize$(txSize)$(_rama)
+builddir := ./build/$(memtype)_$(_banks)Banks_d$(dwidth)_txSize$(txSize)$(_rama)
 
 
 # Common Source Code for FPGA and Host
