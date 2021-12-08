@@ -24,7 +24,7 @@
 
 # Vitis Custom Embedded Platform Creation Example on ZCU104
 
-***Version: Vitis 2021.2 + Vitis AI 1.4)***
+***Version: Vitis 2021.2 + Vitis AI 1.4***
 
 In this module, we will create a custom Vitis embedded platform for ZCU104. It will be capable to run ***Vitis acceleration applications*** including ***Vitis-AI applications***. Of course, general ***embedded software application*** can also run on this platform.
 
