@@ -1,6 +1,6 @@
  {
-    "name": "01-mult-ddr-banks",
-    "description": "01-mult-ddr-banks",
+    "name": "04-mult-ddr-banks",
+    "description": "04-mult-ddr-banks",
     "flow": "vitis",
  
     "platform_whitelist": ["u200"],
