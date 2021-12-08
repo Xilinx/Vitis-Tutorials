@@ -6,7 +6,7 @@
     "platform_whitelist": ["u200", "U50"],
  
     "testinfo": {
-        "disable": 1,
+        "disable": 0,
         "jobs": [
             {
                 "max_memory_MB": 32768,
