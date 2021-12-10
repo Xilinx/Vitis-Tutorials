@@ -27,7 +27,7 @@ HOST_SRCS = src/$(LAB)_host.cpp
 
 # Host compiler global settings
 CXXFLAGS = -I$(XILINX_XRT)/include -I$(XILINX_HLS)/include/ -IsrcCommon/ -O0 -g -Wall -fmessage-length=0 -std=c++11
-LDFLAGS = -lOpenCL -lpthread -lrt -lstdc++ -L$(XILINX_VITIS)/runtime/lib/x86_64
+LDFLAGS = -lOpenCL -pthread -lrt -lstdc++ -L$(XILINX_VITIS)/runtime/lib/x86_64
 
 # Kernel compiler global settings
 CLFLAGS = -t $(TARGET) --platform $(DEVICE) --save-temps
