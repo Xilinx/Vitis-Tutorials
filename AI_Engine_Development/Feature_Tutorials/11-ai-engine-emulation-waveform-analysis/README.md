@@ -9,6 +9,8 @@
 
 # Versal Emulation Waveform Analysis
 
+***Version: Vitis 2021.2***
+
 ## Introduction
 
 Simulating a complete system in the Vitis™ unified software platform allows for a near-hardware run of a design without the hardware, and has the added benefit of detailed waveform analysis during hardware emulation to identify issues in the programmable logic (PL), AI Engine interfaces, and memory read/writes that might be harder to debug on hardware.
@@ -17,14 +19,14 @@ This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) wav
 
 It is strongly recommended to go through the **Versal Integration tutorial** and the **Versal System Design Clocking tutorial** before running this tutorial.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.1)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=acceleration_release_notes.html;a=wlk1553469789555) for setting up software and installing the VCK190 base platform. 
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform. 
 
 Before starting this tutorial run the following steps.
 
 1. Source VITIS and XRT.
 2. Set the AIE License.
-3. Set up your platform by running the `xilinx-versal-common-v2021.1/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run `xilinx-versal-common-v2021.1/sdk.sh`.
-4. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2021.1` directory.
+3. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run `xilinx-versal-common-v2021.2/sdk.sh`.
+4. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2021.2` directory.
 5. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
 ## Objectives
@@ -56,7 +58,7 @@ In the following diagram, the CIPS, NoC, and AI Engine are modeled in SystemC.
 
 **Step 2**: Launching Emulation with the XSIM Waveform GUI
 
-**Step 3**: Using XSIM Waveform GUI and [QEMU](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=runemulation1.html;a=goq1602614131386)
+**Step 3**: Using XSIM Waveform GUI and [QEMU](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/QEMU)
 
 **Step 4**: Using Vitis Analyzer
 
@@ -88,7 +90,7 @@ In the following diagram, the CIPS, NoC, and AI Engine are modeled in SystemC.
 
 4. Close the text file.
 
-    **NOTE**: To view all the `aiesim_option.txt` values, see [Simulator Options for Hardware Emulation](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=simulate_graph_application.html;a=ilk1591226013297).
+    **NOTE**: To view all the `aiesim_option.txt` values, see [Reusing AI Engine Simulator Options](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Reusing-AI-Engine-Simulator-Options).
 
 5. Run the rest of the build process using the following commands.
 
@@ -202,7 +204,7 @@ After the building and packaging of the design is complete you can run hardware 
 
     **TIP**: The scale can be adjusted when emulation is running to fit your needs.
 
-**NOTE**: For more information about this simulator view and how to use it, see the [UG900 Vivado Design Suite User Guide: Logic Simulation](https://www.xilinx.com/cgi-bin/docs/rdoc?d=xilinx2021_1/ug900-vivado-logic-simulation.pdf).
+**NOTE**: For more information about this simulator view and how to use it, see the [UG900 Vivado Design Suite User Guide: Logic Simulation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug900-vivado-logic-simulation.pdf).
 
 ### Step 3: Using XSIM Waveform GUI and QEMU
 
@@ -239,7 +241,7 @@ A great benefit of having a waveform viewer showing live data is so you can see 
 
     **NOTE**: This might take some time to complete because hardware emulation is collecting profiling data as well as Value Change Dump (VCD) data.
 
-5. Navigate back to the XSIM Waveform GUI and notice thata signals are toggling. Scroll up and down to see all the signals that are starting to display data.
+5. Navigate back to the XSIM Waveform GUI and notice that signals are toggling. Scroll up and down to see all the signals that are starting to display data.
 
 6. Pause the execution of the design when you see all signals in the view stop toggling.
 
@@ -299,7 +301,7 @@ After bootup and the device is configured, the application can begin to run. In 
 
 3. Expand the **xilinx_vck190_base_CIPS_0_0_M_AXI_FPD_tlm** interface and the **Outstanding Reads** and you will see a **Row 0**. If you move the mouse over the **#3** or **#4** a context help menu shows you some signal information on where data is being transfered. Notice the `ARADDR` value of `0xa4060000` for **#3** and `0xa4050000` for **#4**, and understand that this is the address to the PL kernels that the Vitis linker auto-assigns it during linking. From the host code, you can determine that these kernels are activated before the AI Engine, soon after the application starts, so it is safe to say these signals are used to start them. Do remember that these kernels are simpler than others; more complex kernels will result in different transactions.
 
-4. Zoom to fit by clicking the **Zoom Fit** button (![zoom fit](./images/zoom_to_fit.png)). Expand the ***NOISE*** group and expand ***Out_V***.
+4. Zoom to fit by clicking the **Zoom Fit** button (![zoom fit](./images/zoom_to_fit.png)). Expand the ***NOISE*** group and expand ***Out_r***.
 
     ![Random Noise](./images/pl_noise.png)
 
@@ -357,10 +359,14 @@ After the RTP update has been sent, you can start to see output data being writt
 
     After the data is stored into DDR memory, the host application can then access it.
 
-2. Expand the **CIPS_NOC** group. Notice that the last transactions on the **cips_noc_0_M00_AXI_tlm** and the **cips_noc_0_S00_AXI_tlm** interfaces and zoom in. This is the host application reading the data that was stored by the `s2mm` kernel.
+2. Expand the **CIPS_NOC** group. Notice that the last transactions on the **cips_noc_0_M00_AXI_tlm** and the **cips_noc_0_S00_AXI_tlm** interfaces as following. This is the host application reading the data that was stored by the `s2mm` kernel.
 
     ![DDR to PS](./images/ddr_to_ps.png)
+    
+    Zoom in and you should see the following. 
 
+    ![DDR to PS zoom in](./images/ddr_to_ps_zoom_in.png)
+    
 3. When emulation is finished, close the XSIM GUI, which closes the QEMU and the emulation. Discard the waveform at the pop-up prompt.
 4. Navigate back to the terminal that launched emulation.
 
