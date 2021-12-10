@@ -4,10 +4,10 @@
     "flow": "hls",
  
     "platform_whitelist": ["u200"],
-    "platform_blacklist": ["u280"],
  
     "testinfo": {
-        "jobs": [
+       "disable": 1,
+       "jobs": [
             {
                 "max_memory_MB": 32768,
                 "max_time_min": {
