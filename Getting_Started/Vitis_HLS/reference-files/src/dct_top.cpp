@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) {
     short *arr_out = (short *) q.enqueueMapBuffer (buffer_out , CL_TRUE , CL_MAP_READ , 0, size_in_bytes);
 
     // Read input file into arr_in[], close file
-    fp=fopen("/home/randyh/hls_lab_host_code/in.dat","r");
+    fp=fopen("./src/in.dat","r");
     if (fp == NULL) {
     	printf("Could not find in.dat. \n");
         retval = 1;
@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
 
 
     // Generate Output file
-    fp=fopen("/home/randyh/hls_lab_host_code/out.dat","w");
+    fp=fopen("./out.dat","w");
     if (fp == NULL) {
     	printf("Could not create out.dat. \n");
         retval = 1;
@@ -157,8 +157,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Compare the results file with the golden results
-    retval = system("diff --brief -w /home/randyh/hls_lab_host_code/out.dat /home/randyh/hls_lab_host_code/out.golden.dat");
-    //retval = system("diff --brief -w /home/randyh/hls_lab_host_code/out.dat /home/randyh/hls_lab_host_code/in.dat");
+    retval = system("diff --brief -w ./out.dat ./src/out.golden.dat");
     if (retval != 0) {
 	 printf("Test failed  !!!\n");
 	 retval=1;
