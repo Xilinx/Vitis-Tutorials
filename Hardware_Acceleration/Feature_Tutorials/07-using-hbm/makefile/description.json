@@ -27,7 +27,7 @@
         "category": "canary",
         "custom_build_target": {
             "all": "run",
-            "hw": "xclbin"
+            "hw": "build"
         },
         "custom_board_target": "run",
         "customized_params": "multi_params.json"
