@@ -1,6 +1,6 @@
  {
     "name": "04-traveling-salesperson",
-    "description": "Vitis HLS Co-Simulation and Optimzation",
+    "description": "04-traveling-salesperson",
     "flow": "hls",
  
     "platform_whitelist": ["u200"],
