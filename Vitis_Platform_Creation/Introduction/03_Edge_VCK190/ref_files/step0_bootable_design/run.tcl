@@ -81,6 +81,7 @@ generate_target all [get_files ext_platform.bd]
 
 update_compile_order -fileset sources_1
 
-write_hw_platform -force ./vck190_custom.xsa
+write_hw_platform -force ./vck190_custom_hw.xsa
+write_hw_platform -hw_emu -force ./vck190_custom_hwemu.xsa
 
 

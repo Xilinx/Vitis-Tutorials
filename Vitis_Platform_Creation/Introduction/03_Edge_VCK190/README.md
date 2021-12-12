@@ -25,7 +25,7 @@
 
 # Versal Custom Platform Creation Tutorial
 
-***Version: 2021.1***
+***Version: 2021.2***
 
 In this module, we will create a custom platform to run acceleration applications for VCK190 evaluation board. 
 
@@ -54,8 +54,8 @@ Please navigate through these steps with the following table of contents links.
 
 This tutorial design supports VCK190 production board and VCK190 ES1 board.
 
-- Vitis 2021.1 supports VCK190 production board. No additional licenses and settings are needed to use this board.
-- Vitis 2021.1 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
+- Vitis 2021.2 supports VCK190 production board. No additional licenses and settings are needed to use this board.
+- Vitis 2021.2 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
 
 This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux. 
 
@@ -67,6 +67,9 @@ This design requires a Linux host machine with Internet access. The Linux OS nee
 
 
 ## Changelog
+
+### 2021.2
+- In Step 1, the Vivado project exports XSA for hardware and hardware emulation seperatedly. When creating the platform in [step3](./step3.md), it's recommended to provide seperate XSA for hardware and hardware emulation.
 
 ### 2021.1
 - Step 0: Vivado example design has more customizable options for clocks and interrupts.
