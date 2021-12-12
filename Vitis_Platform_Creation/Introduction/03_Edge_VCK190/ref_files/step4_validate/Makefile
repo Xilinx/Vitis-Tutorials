@@ -20,8 +20,8 @@ SW_COMP = $(ROOT_DIR)/../step3_pfm/sw_comp/
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 AIE_EXAMPLE_PATH = Vitis_Accel_Examples/aie_kernels/aie_adder/
 
-.PHONY: all vadd vadd_test platforminfo clean ultraclean
-all: platforminfo vadd_test 
+.PHONY: all vadd aie_adder platforminfo clean ultraclean
+all: platforminfo vadd aie_adder 
 
 
 Vitis_Accel_Examples:
@@ -32,7 +32,10 @@ $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples
 
 vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin
 	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SW_COMP)/sysroots/cortexa72-cortexa53-xilinx-linux
-	
+
+# vadd_hw is a place-holder for manual build and test on hardware
+vadd_hw: 
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SW_COMP)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 aie_adder: 
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SW_COMP)/sysroots/cortexa72-cortexa53-xilinx-linux

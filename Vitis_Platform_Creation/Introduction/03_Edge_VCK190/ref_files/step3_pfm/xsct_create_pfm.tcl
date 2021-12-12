@@ -12,19 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Varoables
-set OUTPUT platform_repo
-
+# Variables
 set platform_name [lindex $argv 0]
 puts "The platform name is \"$platform_name\"" 
 
 set xsa_path [lindex $argv 1]
 puts "The xsa path is \"$xsa_path\"" 
 
+set OUTPUT platform_repo
+
 # XSCT commands
 setws ./build
 
-platform create -name $platform_name -desc "A custom platform VCK190 platform" -hw $xsa_path/$platform_name.xsa -out ./$OUTPUT -no-boot-bsp 
+platform create -name $platform_name \
+    -desc "A custom platform VCK190 platform" \
+    -hw ${xsa_path}/${platform_name}_hw.xsa \
+    -hw_emu ${xsa_path}/${platform_name}_hwemu.xsa \
+    -out ./$OUTPUT \
+    -no-boot-bsp 
 
 # AIE domain
 domain create -name aiengine -os aie_runtime -proc ai_engine

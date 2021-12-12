@@ -83,7 +83,7 @@ For a custom board platform, you will need to setup these properties manually. T
 
 The Versal Extensible Platform Example has setup the simulation model of each IP properly. We will review the settings in this session. If you created the block design by yourself, please make sure these settings are applied before running emulation on your platform.
 
-Some blocks in the block design has multiple types of simulation models. Vitis emulation requires these blocks to use SystemC TLM (Transaction-level Modeling) model when available. TLM is the default simulation model for CIPS, NOC and AI Engine in Vivado 2021.1. We can review them to make sure they are correct before exporting the hardware.
+Some blocks in the block design has multiple types of simulation models. Vitis emulation requires these blocks to use SystemC TLM (Transaction-level Modeling) model when available. TLM is the default simulation model for CIPS, NOC and AI Engine. We can review them to make sure they are correct before exporting the hardware.
 
 1. Review CIPS simulation model settings
 
@@ -120,14 +120,31 @@ Some blocks in the block design has multiple types of simulation models. Vitis e
 
 
 
-2. Export platform with the following scripts
+2. Export hardware platform with the following scripts
 
    - Click **File -> Export -> Export Platform**. Alternative ways are: **Flow Navigator** window: **IP Integrator -> Export Platform**, or the **Export Platform** button on the bottom of **Platform Setup** tab.
    - Click **Next** on Export Hardware Platform page
-   - Select **Hardware and Hardware Emulation**. If there are any IP that doesn't support simulation, we need to generate Hardware XSA and Hardware Emulation XSA separately. Click **Next**
+   - Select **Hardware**. If there are any IP that doesn't support simulation, we need to generate Hardware XSA and Hardware Emulation XSA separately. Click **Next**
    - Select **Pre-synthesis**, because we're not making an DFX platform. Click **Next**
    - Input Name: **VCK190_Custom_Platform**, click Next
-   - Update file name to **vck190_custom**, click Next.
+   - Update file name to **vck190_custom_hw**, click Next.
+   - Review the summary. Click **Finish**
+
+
+### Export Hardware Emulation XSA
+
+A change in Vitis 2021.2 requires hardware and hardware emulation provide their own XSA files during platform creation step in XSCT. One XSA with both hardware and hardware emulation content is still supported in 2021.2. It will be deprecated in the future.
+
+> Note: We used the same hardware and hardware emulation design for this simple project. You can use different Vivado designs for hardware and hardware emulation. Platform developers should keep the two designs logically identical. Otherwise your emulation result cannot represent your hardware design. 
+
+1. Export hardware emulation platform with the following scripts
+
+   - Click **File -> Export -> Export Platform**. Alternative ways are: **Flow Navigator** window: **IP Integrator -> Export Platform**, or the **Export Platform** button on the bottom of **Platform Setup** tab.
+   - Click **Next** on Export Hardware Platform page
+   - Select **Hardware Emulation**. If there are any IP that doesn't support simulation, we need to generate Hardware XSA and Hardware Emulation XSA separately. Click **Next**
+   - Select **Pre-synthesis**, because we're not making an DFX platform. Click **Next**
+   - Input Name: **VCK190_Custom_Platform**, click Next
+   - Update file name to **vck190_custom_hwemu**, click Next.
    - Review the summary. Click **Finish**
 
 

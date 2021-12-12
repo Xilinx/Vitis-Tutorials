@@ -19,21 +19,33 @@
 # Board: VCK190, VCK190_ES1
 export BOARD=VCK190
 
+XSA=step0_bootable_design/build/vivado/vck190_custom_hw.xsa
+IMG=step2_petalinux/build/petalinux/images/linux/image.ub
+XPFM=step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
 
 .PHONY: all clean step0 step2 step3 
-all: step0 step2 step3 
+all: step0 step2 step3 step4
 
-step0:
+step0: $(XSA)
+
+$(XSA):
 	$(MAKE) -C step0_bootable_design all
 
-step2:
+step2: $(IMG)
+
+$(IMG): $(XSA) 
 	$(MAKE) -C step2_petalinux all
 
-step3:
+step3: $(XPFM)
+
+$(XPFM): $(XSA) $(IMG)
 	$(MAKE) -C step3_pfm all
+
+step4: $(XPFM) $(IMG)
+	$(MAKE) -C step4_validate all
 
 clean:
 	$(MAKE) -C step0_bootable_design clean
-	$(MAKE) -C step1_vivado clean
 	$(MAKE) -C step2_petalinux clean
 	$(MAKE) -C step3_pfm clean
+	$(MAKE) -C step4_validate clean

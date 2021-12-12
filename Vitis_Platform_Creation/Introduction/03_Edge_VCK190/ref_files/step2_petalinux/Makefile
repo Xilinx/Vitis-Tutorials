@@ -38,7 +38,7 @@ main: get_xsa petalinux_proj petalinux_build
 
 
 get_xsa:
-	cd $(ROOT_DIR); cp ../step0_bootable_design/build/vivado/*.xsa .
+	cd $(ROOT_DIR); cp ../step0_bootable_design/build/vivado/*hw.xsa .
 
 # update dtsi:
 # - update bootargs for ext4 rootfs

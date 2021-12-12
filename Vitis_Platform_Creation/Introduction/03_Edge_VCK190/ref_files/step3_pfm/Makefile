@@ -29,10 +29,10 @@ prep_sd_dir:
 
 # Target: prep_sw_comp
 # Copy rootfs and kernel image to sw_comp directory
-prep_sw_comp:
+prep_sw_comp: ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/rootfs.ext4 ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/Image
 	mkdir -p sw_comp && \
-	cp ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/rootfs.ext4 ./sw_comp && \
-	cp ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/Image ./sw_comp
+	cp -f ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/rootfs.ext4 ./sw_comp && \
+	cp -f ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/Image ./sw_comp
 
 # Target: prep_sysroot
 # Install sysroot to sw_comp directory
@@ -43,6 +43,7 @@ prep_sysroot: ../step2_petalinux/build/$(PETALINUX_PROJ_NAME)/images/linux/sdk.s
 # Generate the Vitis platform with XSCT
 # Input: vck190_custom.xsa in ../step1_vivado/build/vivado directory
 pfm:
+	@echo "INFO: Creating Platform $(XSA_NAME)"
 	xsct xsct_create_pfm.tcl $(XSA_NAME) ../step0_bootable_design/build/vivado && \
 	echo "Platform created:" && \
 	find . -name "*.xpfm"

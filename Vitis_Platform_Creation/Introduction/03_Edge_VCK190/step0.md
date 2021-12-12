@@ -92,7 +92,7 @@ enable_beta_device xcvc*
    - Click **File -> Project -> Open Example**
    - Select **Versal Extensible Embedded Platform** in Select Project Template window.
    - Input **project name** and **project location**. Keep **Create project subdirectory** checked. Click **Next**.
-   - Select target board in Default Part window. In this example, we use **Versal VCK190 ES1 Evaluation Platform**. Click **Next**.
+   - Select target board in Default Part window. In this example, we use **Versal VCK190 Evaluation Platform** or **Versal VCK190 ES1 Evaluation Platform**. Click **Next**.
 
    ![CED Configuration](./images/step0/vivado_ced_config.png)
 
@@ -109,7 +109,7 @@ enable_beta_device xcvc*
 
    
 
-***At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. Since it's a validated design, you can go to [step1:Hardware Settings for Vitis Platform](step1.md) to review or update platform settings and skip the validation below.***
+At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. Since it's a validated design, you can go to [step1:Hardware Settings for Vitis Platform](step1.md) to review or update platform settings and skip the validation below.
 
 ***For a custom board, platform developers need to configure CIPS and NOC for processor settings and DDR settings. Please complete the following testings before going to next step.***
 
@@ -208,7 +208,7 @@ To run this step, please make sure **This project is a Vitis Platform project** 
 
    Here's the sample prints on UART console of VCK190 board
 
-<!--TODO: update for 2021.1 log -->
+<!--TODO: update for 2021.2 log -->
 <details>
   <summary><b>Show Log</b></summary>
 
@@ -322,7 +322,7 @@ This script downloads the VCK190 ES1 board support and the Versal Extensible Des
 
    
 
-A top level all in one build script is also provided. To build everything (step 0 to step 3) with one command, please go to ***ref_files*** directory and run
+A top level all in one build script is also provided. To build everything (step 0 to step 4) with one command, please go to ***ref_files*** directory and run
 
 ```bash
 make all

@@ -56,7 +56,7 @@ We can verify hardware configuration (clocks, memory) and software configuration
    Board:                            name
    Name:                             name
    Version:                          0.0
-   Generated Version:                2021.1
+   Generated Version:                2021.2
    Hardware:                         1
    Software Emulation:               1
    Hardware Emulation:               1
@@ -378,6 +378,8 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
    - Click menu **Xilinx -> Start/Stop Emulator**
    - Click **Stop** button
+
+> Note: The fast track script runs a different AI Engine test application to simplify the script. But it should also pass.
 
 Congratulations now you've created a custom platform that PL acceleration kernel and AIE applications can work on it.
 
