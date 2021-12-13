@@ -18,7 +18,6 @@ limitations under the License. */
 #include "core02.h"
 #include "core02lut.h"
 
-//int8_t C_3[ROW_A_3 * COL_B_3];
 
 #ifndef INLINE
 INLINE_DECL void core02(
@@ -26,130 +25,77 @@ INLINE_DECL void core02(
         const int ColA_tile,
         const int ColB_tile,
         int8_t* A_in,
-        //int8_t* B_in,
         int8_t* C_out,
         int shift
 ) {      
-	v32int8 chess_storage(DM_bankA)* restrict vA1 = (v32int8 chess_storage(DM_bankA)*) A_in;
-	v32int8 chess_storage(DM_bankA)* restrict vA2 = vA1 + ColA_tile;
+	//********** Matrix dimensions********/
+	constexpr size_t sizeTileA = 4 * 8;
+	constexpr size_t sizeTileB = 8 * 4;
+	constexpr size_t sizeTileC = 4 * 4;	
 
-	v32int8 chess_storage(DM_bankA)* restrict vB = (v32int8 chess_storage(DM_bankA)*) B02;
-	
-	v16int8* restrict vC1 = (v16int8*) C_out;
-	v16int8* restrict vC2 = vC1 + 2*ColB_tile;
-	
-	
+    	int i,j,z;
 
-	v32int8  chess_storage(wc1) Abuff1;
-	v32int8  chess_storage(wc0) Abuff0;
-	
-	
-	v128int8 chess_storage(ya) Bbuff = undef_v128int8();
-	
-	v16acc48 acc0; 
-	v16acc48 acc1;
-	v16acc48 acc2; 
-	v16acc48 acc3;
+	//********** Mul Intrinsic********/
 
+	using MMUL = aie::mmul<4, 8, 4, int8_t, int8_t>;	
 	
-
-    int i,j,z;
-	
-	for (z=0; z<RowA_tile; z++)
-	chess_loop_range(2,)
-
+	for (z=0; z<RowA_tile; z++) chess_loop_range(2,)
 	{
 
-		for (j=0; j<ColB_tile; j++)
-        chess_loop_range(2,)
+		//********** Output vector ********/
+		int8_t * __restrict pC1 = C_out + (      z * ColB_tile +       0) * sizeTileC;
+		int8_t * __restrict pC2 = C_out + ((z + 1) * ColB_tile +       0) * sizeTileC;
 
+
+		for (j=0; j<ColB_tile; j+=2) chess_loop_range(2,)
 		{		   	  	
-		   	Abuff0 = *vA1++;                                        //[00:31]
-		   	Bbuff = upd_w(Bbuff, 0, *vB++);	                        //[00:31|XX:XX|XX:XX|XX:XX]	   		   			   	
-			//     mul16(xbuff,xstart,xoffset,xstep,xsquare,zbuff,zstart,zoffsets,zstep,zsquare)
-		  	acc0 = mul16(Bbuff, 0,  0x00000000, 8, 0x3120, Abuff0, 0, 0xCC884400, 2, 0x3210);
-		  	
-            Bbuff = upd_w(Bbuff, 1, *vB); vB += 2*ColB_tile-1;      //[00:31|32:63|XX:XX|XX:XX]		   	
-		  	acc1 = mul16(Bbuff, 32, 0x00000000, 8, 0x3120, Abuff0, 0, 0xCC884400, 2, 0x3210);
-		  	
-		   	Abuff1 = *vA2++;                                        //[32:63]	   			   	
-		  	acc2 = mul16(Bbuff, 0,  0x00000000, 8, 0x3120, Abuff1, 0, 0xCC884400, 2, 0x3210); 	
-		  	acc3 = mul16(Bbuff, 32, 0x00000000, 8, 0x3120, Abuff1, 0, 0xCC884400, 2, 0x3210);
-		  	
-		  	
-            for (i=0; i<ColA_tile-1; i++)
-            chess_prepare_for_pipelining
-			chess_loop_range(3,)
-		
-			{
-              vB = chess_copy(vB);        // See CRVO-1587  	 
-              
-              Abuff0 = *vA1++;                                        //[00:31]
-              Bbuff = upd_w(Bbuff, 0, *vB++);	                    //[00:31|XX:XX|XX:XX|XX:XX]	   		   			   	
-              acc0 = mac16(acc0, Bbuff, 0,  0x00000000, 8, 0x3120, Abuff0, 0, 0xCC884400, 2, 0x3210);
-              
-              Bbuff = upd_w(Bbuff, 1, *vB); vB += 2*ColB_tile-1;      //[00:31|32:63|XX:XX|XX:XX]		   	
-              acc1 = mac16(acc1, Bbuff, 32, 0x00000000, 8, 0x3120, Abuff0, 0, 0xCC884400, 2, 0x3210);
-                            
-              Abuff1 = *vA2++;                                        //[32:63]	   			   	
-              acc2 = mac16(acc2, Bbuff, 0,  0x00000000, 8, 0x3120, Abuff1, 0, 0xCC884400, 2, 0x3210); 	
-              acc3 = mac16(acc3, Bbuff, 32, 0x00000000, 8, 0x3120, Abuff1, 0, 0xCC884400, 2, 0x3210);
-			}
-			
-            //will require rearrangement of output                        
-            *vC1++ = bsrs(acc0,shift);
-            *vC1++ = bsrs(acc1,shift);
-            *vC2++ = bsrs(acc2,shift);
-            *vC2++ = bsrs(acc3,shift);
+			 const int8_t * __restrict pA1 = A_in + (      z * ColA_tile +       0) * sizeTileA;
+          		 const int8_t * __restrict pA2 = A_in + ((z + 1) * ColA_tile +       0) * sizeTileA;
+          		 const int8_t * __restrict pB1 = B02 + (      0 * ColB_tile +       j) * sizeTileB;
+          		 const int8_t * __restrict pB2 = B02 + (      0 * ColB_tile + (j + 1)) * sizeTileB;
 
-                        			
-            vB  += 2 - 2*ColB_tile*ColA_tile;
-			vA1 += -ColA_tile;
-			vA2 += -ColA_tile;
+ 
+
+          		 aie::vector<int8_t, sizeTileA> A0 = aie::load_v<sizeTileA>(pA1); pA1 += sizeTileA;
+          		 aie::vector<int8_t, sizeTileA> A1 = aie::load_v<sizeTileA>(pA2); pA2 += sizeTileA;
+          		 aie::vector<int8_t, sizeTileB> B0 = aie::load_v<sizeTileB>(pB1); pB1 += sizeTileB * ColB_tile;
+          		 aie::vector<int8_t, sizeTileB> B1 = aie::load_v<sizeTileB>(pB2); pB2 += sizeTileB * ColB_tile;
 
 
-			
+
+
+          		 MMUL C00; C00.mul(A0, B0);
+          		 MMUL C01; C01.mul(A0, B1);
+          		 MMUL C10; C10.mul(A1, B0);
+          		 MMUL C11; C11.mul(A1, B1);
+
+          		for (i = 1; i < ColA_tile; ++i) chess_prepare_for_pipelining chess_loop_range(3,) {
+          		     A0 = aie::load_v<sizeTileA>(pA1); pA1 += sizeTileA;
+          		     A1 = aie::load_v<sizeTileA>(pA2); pA2 += sizeTileA;
+          		     B0 = aie::load_v<sizeTileB>(pB1); pB1 += sizeTileB * ColB_tile;
+          		     B1 = aie::load_v<sizeTileB>(pB2); pB2 += sizeTileB * ColB_tile;
+          		     C00.mac(A0, B0);
+          		     C01.mac(A0, B1);
+          		     C10.mac(A1, B0);
+          		     C11.mac(A1, B1);
+          		 }
+			 //**********will require rearrangement of output*******************//
+			 //********************bsrs and shift*******************************//
+
+          		 aie::store_v(pC1, C00.template to_vector<int8_t>(shift)); pC1 += sizeTileC;
+          		 aie::store_v(pC1, C01.template to_vector<int8_t>(shift)); pC1 += sizeTileC;
+          		 aie::store_v(pC2, C10.template to_vector<int8_t>(shift)); pC2 += sizeTileC;
+          		 aie::store_v(pC2, C11.template to_vector<int8_t>(shift)); pC2 += sizeTileC;
+
 		}
-		
-		
-		vA1 += 2*ColA_tile;
-   		vA2 += 2*ColA_tile;
-		vB = (v32int8 chess_storage(DM_bankA)*) B02;
-		vC1 += 2*ColB_tile;
-		vC2 += 2*ColB_tile;
+	
 	}
-    /*
-    int tileX = 4;
-    int tileY = 4;
-    int maxpool_size = 4;
-    int8_t* ptrC = C_3;
-    int8_t* ptrC_maxpool = C_out;
-    int a,b,c,d;
 
-    for(a=0;a<ROW_A_3/tileY;a++) {
-      if ((a % tileY == 0) && (a > 0)) {
-        ptrC_maxpool += tileX*tileY*((COL_B_3/tileX)-1);
-      }
-
-      for(b=0;b<COL_B_3/tileX;b++) {
-        for (c=0;c<tileX;c++) {
-          int8_t max = *(ptrC + c);
-          for (d=0;d<tileY;d++) {
-            int8_t curr_val = *(ptrC + c + tileX*d);
-            max = (curr_val >  max) ? curr_val : max;
-          }
-          *(ptrC_maxpool+c) = max;
-        }
-        ptrC += tileX*tileY;
-        ptrC_maxpool += tileX*tileY;
-      }
-      ptrC_maxpool += -tileX*tileY*(COL_B_3/tileX) + tileX;
-      }*/
 }
 #endif
 void core02_top(input_window_int32 *inA, output_window_int32 *out){
     int shift = 8;
     set_sat();
     set_rnd(rnd_sym_inf);
-	core02(ROW_A_2 >> 3, COL_A_2 >> 3, COL_B_2 >> 3, (int8_t *) inA -> ptr, (int8_t *) out -> ptr, shift);
+	core02(ROW_A_2 >> 2, COL_A_2 >> 3, COL_B_2 >> 2, (int8_t *) inA -> ptr, (int8_t *) out -> ptr, shift);
 }
