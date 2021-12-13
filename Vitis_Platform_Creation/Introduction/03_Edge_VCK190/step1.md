@@ -147,10 +147,9 @@ A change in Vitis 2021.2 requires hardware and hardware emulation provide their 
    - Update file name to **vck190_custom_hwemu**, click Next.
    - Review the summary. Click **Finish**
 
+### Next Step
 
-***Now we finish the Hardware platform creation flow, then we should go to the [Step2: Software platform creation](./step2.md)***
-
-
+Now we finish the Hardware platform creation flow. Next we would go to [step 2](./step2.md) to create platform software.
    
 
 ## References

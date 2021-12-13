@@ -342,8 +342,9 @@ From next step, we will begin to setup the platform properties. It needs the Viv
 - Click **Settings** in **Project Manager**
 - Go to **Project Settings -> General**, enable **Project is an extensible Vitis platform**
 
+### Next Step
 
-***Now we have a base bootable design. Next we'll go to [step 1 to update the Vivado design for hardware platform requirements](./step1.md).***
+Now we have a base bootable design. Next we'll go to [step 1 to update the Vivado design for hardware platform requirements](./step1.md).
 
 
 

@@ -155,24 +155,52 @@ To verify the platform functionality, we will create an acceleation project with
    
      ![missing image](./images/step4/vitis_create_vadd.png)
 
-   - Input **Sysroot** path (step3_pfm/sw_comp/sysroots/aarch64-xilinx-linux), **RootFS** path (step3_pfm/sw_comp/rootfs.ext4) and **Kernel Image** path (step3_pfm/sw_comp/Image). These components were prepared in [step 3](./step3.md). Click **Next**. 
-
-      ![missing image](./images/step4/vitis_create_vadd_swcomp.png)
+   - Input **Sysroot** path (step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux)
+   - Input **RootFS** path (step3_pfm/sw_comp/rootfs.ext4)
+   - Input **Kernel Image** path (step3_pfm/sw_comp/Image). These components were prepared in [step 3](./step3.md). Click **Next**. 
 
    - Select template **Vector Addition**. Click **Finish**.
 
-4. Build the vector addition application for hardware
+4. (Optional) Build the vector addition application for hardware emulation
+
+   - Select **vadd_system** project
+   - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click the build icon.
+   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
+
+5. Build the vector addition application for hardware
 
    - Select **vadd_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click the build icon.
    - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in vadd_system/Hardware/package directory.
 
 
-5. (Optional) Build the vector addition application for hardware emulation
+#### (Optional) Test the Application on Hardware Emulation
+1. Launch Emulator for PS
 
-   - Select **vadd_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click the build icon.
-   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
+   - Click menu **Xilinx -> Start/Stop Emulator**
+   - Select Project: **vadd_system**, Configuration: **Emulation-HW**
+
+   ![Launch Emulator for Vadd Project](images/step4/vitis_emulation_vadd.png)
+ 
+   - Click **Start**
+   - There will be prints on Emulation Console. 
+   - Wait for it to boot Linux. The wait window will disappear after it detects Linux boot successfully.
+
+2. Launch PL emulation
+
+   - Right click **vadd_system**, select **Run as -> Run Configurations**
+   - Select **vadd_system-Default**
+   - Change **Build Configuration** to **Emulation-HW**
+   - Click Run
+   - Check run result
+
+   ![Vitis Emulation Vadd Result](images/step4/vitis_emulation_vadd_result.png)
+
+3. Stop the Emulator
+
+   - Click menu **Xilinx -> Start/Stop Emulator**
+   - Click **Stop** button
+
 
 
 #### Test the Application on Hardware
@@ -240,32 +268,6 @@ To verify the platform functionality, we will create an acceleation project with
    echo "4" > /proc/sys/kernel/printk
    ```
 
-#### (Optional) Test the Application on Hardware Emulation
-1. Launch Emulator for PS
-
-   - Click menu **Xilinx -> Start/Stop Emulator**
-   - Select Project: **vadd_system**, Configuration: **Emulation-HW**
-
-   ![Launch Emulator for Vadd Project](images/step4/vitis_emulation_vadd.png)
- 
-   - Click **Start**
-   - There will be prints on Emulation Console. 
-   - Wait for it to boot Linux. The wait window will disappear after it detects Linux boot successfully.
-
-2. Launch PL emulation
-
-   - Right click **vadd_system**, select **Run as -> Run Configurations**
-   - Select **vadd_system-Default**
-   - Change **Build Configuration** to **Emulation-HW**
-   - Click Run
-   - Check run result
-
-   ![Vitis Emulation Vadd Result](images/step4/vitis_emulation_vadd_result.png)
-
-3. Stop the Emulator
-
-   - Click menu **Xilinx -> Start/Stop Emulator**
-   - Click **Stop** button
 
 **What Just Happened?**
 
