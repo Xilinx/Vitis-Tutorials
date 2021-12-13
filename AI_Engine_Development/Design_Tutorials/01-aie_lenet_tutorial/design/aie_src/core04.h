@@ -18,6 +18,11 @@ limitations under the License. */
 #include <stdint.h>
 #include<adf.h>
 
+#include "aie_api/aie.hpp"
+#include "aie_api/aie_adf.hpp"
+#include <aie_api/utils.hpp>
+
+
 #ifndef ROW_A_4
 #define ROW_A_4 8
 #endif
@@ -42,7 +47,6 @@ void core04(
         const int ColB_tile,
         int8_t* A1_in,
         int8_t* A2_in,
-        //int8_t* B_in,
         int8_t* C_out,
         int shift
 );

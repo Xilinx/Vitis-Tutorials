@@ -18,6 +18,11 @@ limitations under the License. */
 #include <stdint.h>
 #include <adf.h>
 
+#include "aie_api/aie.hpp"
+#include "aie_api/aie_adf.hpp"
+#include <aie_api/utils.hpp>
+
+
 #ifndef ROW_A_5 
 #define ROW_A_5 8
 #endif
@@ -50,13 +55,11 @@ void core05(
         const int tileX_C,
         const int tileY_C,
         int8_t* A_in,
-        //int8_t* B_in,
         int8_t* C_out,
         int shift
 );
 
 void core05_top(input_window_int32 *in1, 
-                //input_window_int32 *in2,
                 output_window_int32 *out);
 
 #else
