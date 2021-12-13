@@ -48,48 +48,22 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
 ### Customize Root File System, Kernel, Device Tree and U-boot
 
-1. Prepare a user-rootfsconfig file to define the additional rootfs package. 
+1. Add XRT to rootfs packages
    
-   Add user packages by appending the CONFIG_xxx lines below to the **<your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig** file.
+   - Run `petalinux-config -c rootfs`. 
+   - In the configuration window, use `/` key to open search function. 
+   - Type in `xrt` and press Enter. 
+   - In the search result page, press the number of `Symbol: xrt` result, for example **1**. 
+   - In the page of XRT configuration page, go to the line of `xrt` and press space to enable it.
+   - Select Exit twice to return to the main configuration page.
 
-   **Note: This step is not a must but it makes it easier to find and select all required packages in next step.**
+   ![missing image](./images/step2/petalinux_enable_xrt.png)
 
-   Packages for base XRT support (required):
+2. In rootfs config, go to **Image Features** and enable **package-management**, **debug_tweaks** and **auto-login** option, store the change and exit rootfs configuration.
 
-   ```
-   CONFIG_xrt
-   ```
+   The package-management feature allows you to install packages during run time. It's optional but recommended.
 
-   - XRT package contains all the packages for Vitis acceleration runtime.
-   - Note: `CONFIG_packagegroup-petalinux-xrt` is not needed from 2021.1
-   
-   Packages for on-board acceleration application compiling support (optional):
-
-   ```
-   CONFIG_xrt-dev
-   ```
-   
-   - package names with `-dev` suffix means header files, dependency libraries and soft links required by compiling environment in Yocto.
-
-   Packages for easy system management (Optional but recommended):
-
-	```
-   CONFIG_dnf
-   CONFIG_e2fsprogs-resize2fs
-   CONFIG_parted
-	```
-	- **dnf** is the package management tool
-	- **parted** and **e2fsprogs-resize2fs** can expand the ext4 partition to use the rest of the SD card.  
-
-
-
-2. Add rootfs packages. 
-   
-   Run ```petalinux-config -c rootfs``` and select **user packages**, select name of rootfs all the libraries listed above, save and exit. 
-   
-   If step 1 is skipped, please use search function with `/` key to find these packages and enable them.
-   
-3. In rootfs config, go to **Image Features** and enable **package-management** and **debug_tweaks** option, store the change and exit. (Recommended)
+   The debug_tweaks package removes security requirements. It makes debugging easier. You should remove this package when you release your design for production.
 
    - Exit from **user packages** to root configuration window by select **Exit** and press **Enter**.
    - Select **Image Features** and enter. 
@@ -98,9 +72,7 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    - Exit
    - Save
 
-   ![missing image](./images/step2/petalinux_package_management.png)
-
-4. Use EXT4 as rootfs format for SD card boot (Recommended)
+3. Use EXT4 as rootfs format for SD card boot (Recommended)
 
    PetaLinux uses **initrd** format for rootfs by default. This format extracts rootfs in DDR memory, which means it reduces the usable DDR memory for runtime and can't retain the rootfs changes after reboot. To enable the root file system to retain changes, we'll use EXT4 format for rootfs as the second partition on SD card while keep the first partition FAT32 to store other boot files.
 
@@ -128,7 +100,7 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
 
    If you have any custom peripherals on board that needs special settings, please update it in system-user.dtsi.
 
-**Note**: PetaLinux 2021.1 will detect XSA type and generate ZOCL node in device tree automatically and update interrupt input number according to your hardware settings in XSA if the XSA is an extensible XSA. This is a new feature from 2021.1.
+**Note**: From 2021.1, PetaLinux will detect XSA type and generate ZOCL node in device tree automatically and update interrupt input number according to your hardware settings in XSA if the XSA is an extensible XSA. User doesn't need to make device tree modification for Vitis acceletaion manually.
 
 
 
@@ -140,6 +112,8 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    petalinux-build
    ```
 
+   The PetaLinux build will make use of multiple CPU cores on your machine and do parallel compiling to increase the build speed. The build time can vary from 30 minutes to more than one hour depends on your build machine hardware setup.
+
    The generated u-boot and Linux images will be located in **images/linux** directory.
 
 
@@ -150,6 +124,10 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    ```
 
    Sysroot **sdk.sh** will be generated in **images/linux** directory. We will extract it in next step.
+
+### Next Step
+
+Now we have generated platform hardware and software. Next we would go to [step 3](./step3.md) to package the Vitis Platform.
 
 ### Fast Track
 
@@ -169,10 +147,7 @@ Scripts are provided to re-create PetaLinux project and generate outputs. To use
    make clean
    ```
 
-   
 
 
-
-**Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](./step3.md).**
 
 <p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
