@@ -23,7 +23,11 @@ endif
 PLATFORM :=xilinx_u200_gen3x16_xdma_1_202110_1
 
 #SRCDIR := ./../reference_files
-SRCDIR := $(XF_PROJ_ROOT)/Hardware_Acceleration/Design_Tutorials/02-bloom/reference_files
+ifeq ($(SPRITE),true)
+	SRCDIR := $(XF_PROJ_ROOT)/Hardware_Acceleration/Design_Tutorials/02-bloom/reference_files
+else
+	SRCDIR := ../reference_files
+endif
 
 # Default Settings here ..
 HOST_SRC_CPP := $(SRCDIR)/compute_score_host.cpp

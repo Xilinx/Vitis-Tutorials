@@ -5,13 +5,19 @@ TARGET := hw
 memtype := DDR
 banks :=
 
-SRCDIR := $(XF_PROJ_ROOT)/Hardware_Acceleration/Feature_Tutorials/07-using-hbm/reference_files
+
+ifeq ($(SPRITE),true)
+	SRCDIR := $(XF_PROJ_ROOT)/Hardware_Acceleration/Feature_Tutorials/07-using-hbm/reference_files
+else
+	SRCDIR := ../reference_files
+endif
+	
 include mem_connectivity.mk
 
 ifeq ($(memtype), DDR)
-PLATFORM :=xilinx_u200_gen3x16_xdma_1_202110_1
+	PLATFORM :=xilinx_u200_gen3x16_xdma_1_202110_1
 else
-PLATFORM :=xilinx_u50_gen3x16_xdma_201920_3
+	PLATFORM :=xilinx_u50_gen3x16_xdma_201920_3
 endif
 
 addrndm := 0
