@@ -21,10 +21,10 @@ Now that you successfully built and ran the vector-add example, let's look at th
 ```
 opencl_summary.csv
 opencl_trace.csv
-vadd.xclbin.run_summary
+xclbin.run_summary
 ```
 
-*NOTE: If you targeted the ZCU102 hardware, these files are stored on the SD card and you need to copy them back to your workstation to continue this lab.*
+*NOTE: If you targeted the ZCU102 hardware, these files are stored on the SD card and you need to copy them back to your workstation to continue this lab, as described in [Running Emulation on an Embedded Processor Platform](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/runemulation1.html#ariaid-title6).*
 
 * The generation of these files and reports is controlled by runtime options located in the xrt.ini file.  This tutorial contains a pre-existing xrt.ini file which enables the generation of profile data and a timeline of execution with the following content:
 
@@ -41,7 +41,7 @@ This example is configured to generate run summaries for all three build targets
 * Run the following command from the run directory containing the results you want to analyze:
 
 ```bash
-vitis_analyzer ./vadd.xclbin.run_summary
+vitis_analyzer ./xclbin.run_summary
 ```
 
 * This opens the Vitis Analyzer tool and loads the various reports and displays the run summary. You can navigate to the various reports using the left pane of the Vitis Analyzer or by clicking on the links provided in the run summary.
