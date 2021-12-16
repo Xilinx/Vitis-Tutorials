@@ -138,20 +138,22 @@ For PetaLinux design, please
 
 If the custom platform is created from scratch, it's recommended to run through implementation and device image generation to find errors in early stage for the base bootable design. The platform doesn't need the implementation results, the implementation is used for design validation only.
 
-To run this step, please make sure the project is a normal project. **This project is a Vitis Platform project** should **NOT**  be selected during Vivado project creation.
-
 <details>
-  <summary><b>Show Detailed Steps</b></summary>
+  <summary><b>Show Detailed Steps of Implementation and Device Image Generation</b></summary>
 
-1. Validate the Block Design
+1. To run this step, please make sure the project is a normal project. **This project is a Vitis Platform project** should **NOT**  be selected during Vivado project creation. Go to **Flow Navigator -> Project Manager -> Settings**. Uncheck **This project is a Vitis Platform project** if it's enabled.
+
+   ![Missing Images](./images/step0/vivado_project_property.png)
+
+2. Validate the Block Design
 
    - Click ***Validate Design (F6)*** button in block diagram toolbar.
 
-2. Create HDL Wrapper
+3. Create HDL Wrapper
 
    - In Sources tab, right click system.bd and select ***Create HDL Wrapper***. In the pop-up window, select ***Let Vivado Manage***.
 
-3. Generate Device Image
+4. Generate Device Image
 
    - Click ***Generate Device Image*** in Flow Navigator
 
@@ -165,9 +167,9 @@ To run this step, please make sure the project is a normal project. **This proje
 
    PDI is generated in `vck190_custom_platform.runs/impl_1/`
 
-4. Export fixed XSA for PetaLinux project Creation
+5. Export fixed XSA for PetaLinux project Creation
 
-   a) Click Menu ***File -> Export -> Hardware***, click Next
+   a) Click Menu ***File -> Export -> Export Hardware***. Click Next.
 
    b) Select Output to ***Include Device Image***. Click Next.
 
