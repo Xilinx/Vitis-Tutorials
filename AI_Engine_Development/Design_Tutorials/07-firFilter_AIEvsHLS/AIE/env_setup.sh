@@ -15,8 +15,8 @@
 # limitations under the License.
 
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2021.1
-export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.1 - Directory>
+export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2021.2
+export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.2 - Directory>
 
 # Set the path to the DSP LIBs...
 export DSPLIB_ROOT=<Path to Vitis DSP Libs - Directory>

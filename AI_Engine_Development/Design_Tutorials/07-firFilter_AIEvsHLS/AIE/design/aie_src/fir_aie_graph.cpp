@@ -18,20 +18,23 @@
 
 using namespace adf;
 
-PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"data/fir_input_128b.txt");
+//PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"data/fir_input_128b.txt");
+//PLIO *pldata_in  = new PLIO("DataIn",  plio_32_bits,"../../design/aie_src/aiesim_data/input_128b.txt");
+//PLIO *pldata_in  = new PLIO("DataIn",  plio_32_bits,"../../design/aie_src/aiesim_data/input_new.txt");
+PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"../../../design/aie_src/aiesim_data/input_const.txt");
 PLIO *pldata_out = new PLIO("DataOut", plio_128_bits,"data/fir_output_128b.txt");
 
-simulation::platform<1,1>  platform(pldata_in, pldata_out);
+simulation::platform<1,1>  plat(pldata_in, pldata_out);
 FirGraph FilterChain;
 
-connect<> net0(platform.src[0], FilterChain.in);
-connect<> net1(FilterChain.out, platform.sink[0]);
+connect<> net0(plat.src[0], FilterChain.in);
+connect<> net1(FilterChain.out, plat.sink[0]);
 
 #if defined(__AIESIM__) || defined(__NEW_X86Sim__)
 
 int main(void) {
 	FilterChain.init() ;
-	FilterChain.run(N_ITERATIONS);
+	FilterChain.run(8);  //N_ITERATIONS);
 	FilterChain.end() ;
     return 0 ;
 }

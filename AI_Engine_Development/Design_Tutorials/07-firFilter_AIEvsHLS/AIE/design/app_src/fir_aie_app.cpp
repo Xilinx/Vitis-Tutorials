@@ -22,21 +22,21 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <complex>
-
-#include "input_data.h"
-
-#if (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 15)
-#include "golden_data_1f_15t.h"
-#elif (N_FIR_FILTERS == 10) && (N_FIR_TAPS == 15)
-#include "golden_data_10f_15t.h"
-#elif (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 240)
-#include "golden_data_1f_240t.h"
-#elif (N_FIR_FILTERS == 10) && (N_FIR_TAPS == 240)
-#include "golden_data_10f_240t.h"
-#else
-#include "golden_data_1f_15t.h"
-#endif
+//#include <complex>
+//
+//#include "input_data.h"
+//
+//#if (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 15)
+//#include "golden_data_1f_15t.h"
+//#elif (N_FIR_FILTERS == 10) && (N_FIR_TAPS == 15)
+//#include "golden_data_10f_15t.h"
+//#elif (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 240)
+//#include "golden_data_1f_240t.h"
+//#elif (N_FIR_FILTERS == 10) && (N_FIR_TAPS == 240)
+//#include "golden_data_10f_240t.h"
+//#else
+//#include "golden_data_1f_15t.h"
+//#endif
 
 #include "adf/adf_api/XRTConfig.h"
 
@@ -49,22 +49,8 @@
 
 #define SAMPLES_PER_WORD   4
 
-#define REPEAT_OFFSET   4096
-#define FLUSH_SAMPLES   4096
-
-#ifdef USE_SMALL_DATASET
-#define REPETITIONS        3
-#else
-#define REPETITIONS      509
-#endif
-
-
-#define MAX_ERRS_REPORTED 10
-
-
-const char *mm2s_obj[1] = {"mm2s"};
-const char *s2mm_obj[1] = {"s2mm"};
-const char *fir_chain_obj[1] = {"FilterChain"};
+#define INP_SIZE 512
+#define INP_SIZE_128b (INP_SIZE / 4)
 
 using namespace std;
 
@@ -98,177 +84,67 @@ static std::vector<char>  load_xclbin(xrtDeviceHandle device, const std::string&
     return header;
 }
 
-
 /*******************************************************************************
- ** mm2s Class
+ ** datamover Class
  *******************************************************************************/
 
-class mm2s_class  {
-    public: 
-        xrtBufferHandle  in_bo_hdl;
-        int              *in_bo_mapped;
-        xrtKernelHandle  mm2s_k_hdl;
-        xrtRunHandle     mm2s_r_hdl;
-
-        void init(xrtDeviceHandle dhdl, const axlf *top, const char *mm2s_obj)  {
-            int rval;
-
-            size_t total_samples = REPEAT_OFFSET + (REPETITIONS + 1) * (INPUT_SAMPLES - REPEAT_OFFSET) + FLUSH_SAMPLES;
-            size_t data_size_in_bytes = total_samples * sizeof(cint16);
-
-            in_bo_hdl = xrtBOAlloc(dhdl, data_size_in_bytes, 0, 0);
-            in_bo_mapped = reinterpret_cast<int *>(xrtBOMap(in_bo_hdl));
-
-
-            mm2s_k_hdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, mm2s_obj);
-            mm2s_r_hdl = xrtRunOpen(mm2s_k_hdl);
-
-            rval = xrtRunSetArg(mm2s_r_hdl, 0, in_bo_hdl);
-            rval = xrtRunSetArg(mm2s_r_hdl, 2, total_samples / SAMPLES_PER_WORD);
-
-            cout << "A72-Info: Initialized mm2s kernel" << endl;
-        }
-
-        void run(void)  {
-            xrtRunStart(mm2s_r_hdl);
-            cout << "A72-Info: Started mm2s kernel" << endl;
-        }
-
-        void run_wait(void)  {
-            auto state_mm2s = xrtRunWait(mm2s_r_hdl);
-            cout << "A72-Info: mm2s kernel completed with status(" << state_mm2s << ")" <<  endl;
-        }
-
-	void close(void)  {
-            xrtBOFree(in_bo_hdl);
-            xrtRunClose(mm2s_r_hdl);
-            xrtKernelClose(mm2s_k_hdl);
-            cout << "A72-Info: Freed input buffer and closed kernel and run handles" << endl;
-        }
-
-        void load(void)  {
-            cint16 *input_array;
-            input_array = reinterpret_cast<cint16 *>(in_bo_mapped);
-
-            for (int ix = 0; ix < REPEAT_OFFSET; ix++)  {
-                *input_array++ = input_data[ix];
-            }
-
-            for (int reps = 0; reps < (REPETITIONS + 1); reps++)  {
-                for (int ix = REPEAT_OFFSET; ix < INPUT_SAMPLES; ix++)  {
-                    *input_array++ = input_data[ix];
-                }
-            }
-
-            for (int ix = 0; ix < FLUSH_SAMPLES; ix++)  {
-                *input_array++ = {0, 0};
-            }
-
-            size_t total_samples = REPEAT_OFFSET + (REPETITIONS + 1) * (INPUT_SAMPLES - REPEAT_OFFSET)+ FLUSH_SAMPLES;
-            cout << "A72-Info: Loaded " << total_samples << " input samples into mm2s kernel input buffer" << endl;
-            cout << "A72-Info:        " << total_samples - FLUSH_SAMPLES << " data samples + " << FLUSH_SAMPLES <<
-                " zero samples to flush FIR filter" << endl;
-        }
-};
-
-
-/*******************************************************************************
- ** s2mm Class
- *******************************************************************************/
-
-class s2mm_class  {
-    public: 
-        xrtBufferHandle  out_bo_hdl;
-        int              *out_bo_mapped;
-        xrtKernelHandle  s2mm_k_hdl;
-        xrtRunHandle     s2mm_r_hdl;
-
-        void init(xrtDeviceHandle dhdl, const axlf *top, const char *s2mm_obj)  {
-            int rval;
-
-            size_t total_samples = REPEAT_OFFSET + (REPETITIONS + 1) * (OUTPUT_SAMPLES - REPEAT_OFFSET) + FLUSH_SAMPLES;
-            size_t data_size_in_bytes = total_samples * sizeof(cint16);
-
-            out_bo_hdl = xrtBOAlloc(dhdl, data_size_in_bytes, 0, 0);
-            out_bo_mapped = reinterpret_cast<int *>(xrtBOMap(out_bo_hdl));
-
-
-            s2mm_k_hdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, s2mm_obj);
-            s2mm_r_hdl = xrtRunOpen(s2mm_k_hdl);
-
-            rval = xrtRunSetArg(s2mm_r_hdl, 0, out_bo_hdl);
-            rval = xrtRunSetArg(s2mm_r_hdl, 2, total_samples / SAMPLES_PER_WORD);
-
-            cout << "A72-Info: Initialized s2mm kernel" << endl;
-        }
-
-        void run(void)  {
-            xrtRunStart(s2mm_r_hdl);
-            cout << "A72-Info: Started s2mm kernel" << endl;
-        }
- 
-       void run_wait(void)  {
-            auto state_s2mm = xrtRunWait(s2mm_r_hdl);
-            cout << "A72-Info: s2mm kernel completed with status(" << state_s2mm << ")" <<  endl;
-        }
-
-	void close(void)  {
-            xrtBOFree(out_bo_hdl);
-            xrtRunClose(s2mm_r_hdl);
-            xrtKernelClose(s2mm_k_hdl);
-        }
-
-	int golden_check(void)  {
-            cint16 *output_data;
-            int errCnt = 0;
-            int gix =0;
+class datamover_class {
+   public: 
+      xrtKernelHandle  datamover_khdl;
+      xrtRunHandle     datamover_rhdl;
+      uint32_t instance_errCnt;
+      
+      void init(xrtDeviceHandle dhdl, const axlf *top) { //, char insts) {
+         
+         //std::string datamover_obj_str = "datamover:{datamover_" + to_string(insts) + "}";
+         std::string datamover_obj_str = "datamover:{datamover_0}";
+         const char *datamover_obj = datamover_obj_str.c_str();
+         
+         //////////////////////////////////////////
+         // Data Mover IP Init
+         //////////////////////////////////////////
+         
+         // Open kernel handle exclusively to read the ap_return register later for reporting error...
+         datamover_khdl = xrtPLKernelOpenExclusive(dhdl, top->m_header.uuid, datamover_obj);
+         datamover_rhdl = xrtRunOpen(datamover_khdl);
+         
+         int rval = xrtRunSetArg(datamover_rhdl, 2, INP_SIZE_128b);
+             rval = xrtRunSetArg(datamover_rhdl, 3, ITER_CNT);
             
-            output_data = reinterpret_cast<cint16 *>(out_bo_mapped);
+         cout << "A72-Info: Initialized datamover kernel" << endl;
+      }
 
+      void run(void) {
+         xrtRunStart(datamover_rhdl);
+         cout << "A72-Info: Started datamover kernel" << endl;
+      }
 
-            if ((GOLDEN_N_FIR_FILTERS == N_FIR_FILTERS) && (GOLDEN_N_FIR_TAPS == N_FIR_TAPS))  {
+      void waitTo_complete(void) {
+         auto state_datamover = xrtRunWait(datamover_rhdl);
+         cout << "A72-Info: datamover kernel completed with status(" << state_datamover << ")" <<  endl;
+      }
 
-                cout << "A72-Info: Comparing filter output data to golden reference...." << endl;
+      void golden_check(uint32_t *errCnt) //, char insts)
+      {
+         //////////////////////////////////////////
+         // Compare results
+         //////////////////////////////////////////
 
-                size_t total_samples = REPEAT_OFFSET + (REPETITIONS + 1) * (OUTPUT_SAMPLES - REPEAT_OFFSET);
-       
-	        for (int ix = 0; ix < total_samples; ix++)  {
-                    if ((output_data[ix].real != golden_data[gix].real) || (output_data[ix].imag != golden_data[gix].imag) )  {
-                        errCnt += 1;
-                        if (errCnt == MAX_ERRS_REPORTED)  {
-                            cout << "A72-Error: Maximum Error Report Count Reached; no more compare errors will be reported" << endl;
-                        } 
-                        else if (errCnt < MAX_ERRS_REPORTED)  {
-                            cout << "A72-Error: Filter Output Data word " << ix << " data value: (" << 
-                                     output_data[ix].real << " + " << output_data[ix].imag << "i)"  <<
-                                     " does not match golden/reference value : ("                   <<
-                                     golden_data[gix].real << " + " << golden_data[gix].imag << "i)"  << endl;
-                        }
-                    }
-                    gix++;
-                    if (gix == OUTPUT_SAMPLES)  {
-                        gix = REPEAT_OFFSET;
-                    }
-                }
-                if (errCnt)  {
-                    cout << "A72-Info: COMPARE FAILED: " << errCnt << " mismatches found" << endl;
-                }
-                else  {
-                    cout << "A72-Info: COMPARE PASSED: " << total_samples << " samples compared; all data matched" << endl;
-                }
-                return(errCnt);
-            }
-            else  {
-                cout << "A72-Info: **** GOLDEN DATA FILE does not match latest FIR parameters - data compare skipped" << endl;
-                cout << "               GOLDEN_N_FIR_FILTERS: " << GOLDEN_N_FIR_FILTERS <<
-                        " N_FIR_FILTERS: "     << N_FIR_FILTERS <<
-                        " GOLDEN_N_FIR_TAPS: " << GOLDEN_N_FIR_TAPS <<
-                        " N_FIR_TAPS: "        << N_FIR_TAPS << endl;
-                return(0);
-            }
-        }
+         // Reading the error count for the ap_return reg of the hls kernel...
+         xrtKernelReadRegister(datamover_khdl, 0x10, &instance_errCnt);
+         
+         std::cout << "FIR execution " << (instance_errCnt ? "Failed! " : "Passed! ") << "With error count " << instance_errCnt << ".\n" << std::endl;
+
+         // Adding instance error to the total error count...
+         *errCnt += instance_errCnt;
+      }
+
+	   void close(void) {
+         xrtRunClose(datamover_rhdl);
+         xrtKernelClose(datamover_khdl);
+         cout << "A72-Info: Closed kernel and run handles" << endl;
+      }
 };
-
 
 /*******************************************************************************
  ** FIR chain class
@@ -278,9 +154,9 @@ class fir_chain_class  {
     public:
         xrtGraphHandle fir_g_hdl;
 
-        int init(xrtDeviceHandle dhdl, const axlf *top, const char *fir_chain_obj)  {
+        int init(xrtDeviceHandle dhdl, const axlf *top)  {
       
-            fir_g_hdl = xrtGraphOpen(dhdl, top->m_header.uuid, fir_chain_obj);
+            fir_g_hdl = xrtGraphOpen(dhdl, top->m_header.uuid, "FilterChain");
             if (fir_g_hdl == NULL)  {
                 throw std::runtime_error("A72-Error: Unable to open AIE FIR chain graph");
 	        return EXIT_FAILURE;
@@ -299,8 +175,9 @@ class fir_chain_class  {
                 return EXIT_FAILURE;
             }
             else  {
-                size_t total_windows = (REPEAT_OFFSET + (REPETITIONS + 1) * (OUTPUT_SAMPLES - REPEAT_OFFSET) + FLUSH_SAMPLES) / FIR_WINDOW_SIZE;
-                errCode = xrtGraphRun(fir_g_hdl, total_windows);
+                //size_t total_windows = (REPEAT_OFFSET + (REPETITIONS + 1) * (OUTPUT_SAMPLES - REPEAT_OFFSET) + FLUSH_SAMPLES) / FIR_WINDOW_SIZE;
+                //errCode = xrtGraphRun(fir_g_hdl, total_windows);
+                errCode = xrtGraphRun(fir_g_hdl, -1);
             }
             if (errCode != XRT_SUCCESS) {
                 throw std::runtime_error("A72-Error: Unable to run AIE FIR chain graph");
@@ -316,13 +193,12 @@ class fir_chain_class  {
         }
 };
 
-
 /*******************************************************************************
  ** Main Function
  *******************************************************************************/
 
 int main(int argc, char** argv)  {
-    int errCnt = 0;
+    uint32_t errCnt = 0;
     int errCode;
 
     cout << endl << "A72-Info: FIR Filter Benchmark Test - AIE Version" << endl << endl;
@@ -374,9 +250,9 @@ int main(int argc, char** argv)  {
     // ============================================================================
     // Step 3: Create and Initialize Data Mover Kernels and FIR Chain Graph
     // ============================================================================
-    //   o) Create Data Mover Kernel Handles (mm2s, s2mm) and Initialize them
+    //   o) Create Data Mover Kernel Handles (datamover, s2mm) and Initialize them
     //   o) Create FIR Filter Graph Handle and Initialize it
-    //   o) Load input data into the mm2s buffer
+    //   o) Load input data into the datamover buffer
     // ============================================================================
 #ifdef ALL_MESSAGES
     cout << "A72-Info: ============================================================= " << endl;
@@ -386,18 +262,12 @@ int main(int argc, char** argv)  {
     cout << endl; 
 #endif
 
-    mm2s_class  mm2s_krnl;
-    s2mm_class  s2mm_krnl;
+    datamover_class  datamover_krnl;
+    datamover_krnl.init(dhdl, top);
 
-    mm2s_krnl.init(dhdl, top, mm2s_obj[0]);
-    s2mm_krnl.init(dhdl, top, s2mm_obj[0]);
+    fir_chain_class fir_graph;
 
-    fir_chain_class    fir_graph;
-
-    fir_graph.init(dhdl, top, fir_chain_obj[0]);
-
-    mm2s_krnl.load();
-
+    fir_graph.init(dhdl, top);
 
     // ============================================================================
     // Step 4: Run Data Mover Kernels and FIR Chain Graph
@@ -417,14 +287,13 @@ int main(int argc, char** argv)  {
         return EXIT_FAILURE;
     }
 
-    s2mm_krnl.run();
-    mm2s_krnl.run();
+    datamover_krnl.run();
 
 
     // ============================================================================
     // Step 5: Wait for Data Mover Kernels to Complete
     // ============================================================================
-    //   o) Invoke run_wait for Data Mover Kernels
+    //   o) Invoke waitTo_complete for Data Mover Kernels
     // ============================================================================
 #ifdef ALL_MESSAGES
     cout << "A72-Info: ============================================================= " << endl;
@@ -433,8 +302,7 @@ int main(int argc, char** argv)  {
     cout << endl; 
 #endif
 
-    mm2s_krnl.run_wait();
-    s2mm_krnl.run_wait();
+    datamover_krnl.waitTo_complete();
 
 
     // ============================================================================
@@ -449,7 +317,7 @@ int main(int argc, char** argv)  {
     cout << endl; 
 #endif
 
-    errCnt = s2mm_krnl.golden_check();
+    datamover_krnl.golden_check(&errCnt);
 
 
     // ============================================================================
@@ -464,8 +332,7 @@ int main(int argc, char** argv)  {
 #endif
 
     //Closing PL-Handles
-    mm2s_krnl.close();
-    s2mm_krnl.close();
+    datamover_krnl.close();
 
     //Closing Graph
     fir_graph.close();
@@ -475,7 +342,7 @@ int main(int argc, char** argv)  {
     xrtDeviceClose(dhdl);
 
     //Report Final Result
-    cout << endl << "A72-Info: AIE FIR [" << N_FIR_FILTERS << " Filters; " << N_FIR_TAPS << 
+    cout << endl << "A72-Info: DSP FIR TEST [" << N_FIR_FILTERS << " Filters; " << N_FIR_TAPS << 
         " Taps] TEST " << (errCnt ? "FAILED" : "PASSED") << endl << endl;
 
     //Exit with result

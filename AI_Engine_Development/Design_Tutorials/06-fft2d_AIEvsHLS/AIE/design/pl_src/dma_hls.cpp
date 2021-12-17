@@ -15,6 +15,31 @@
 #include "dma_hls.h"
 
 ////////////////////////////////////////////////////////////
+// FFT_2D_DT=0(cint16)
+// INP_DATA is Impulse input
+// GOLDEN_DATA is all 1's (both real and imaginary)
+// MIN_TRIPCOUNT =32x64/4 MAX_TRIPCOUNT=1024X2048/4 for cint16 
+// since 4 samples are passed through 128 bit
+////////////////////////////////////////////////////////////
+#if FFT_2D_DT == 0
+   #define INP_DATA 0X00010001
+   #define GOLDEN_DATA 0X0001000100010001
+
+////////////////////////////////////////////////////////////
+// FFT_2D_DT=1(cfloat)
+// INP_DATA is 1.5(real) and 1.5(imaginary)
+// GOLDEN_DATA is all 1.5's (both real and imaginary)
+// The INP_DATA and GOLDEN_DATA are provided under IEEE 754 format
+// MIN_TRIPCOUNT =32x64/2 MAX_TRIPCOUNT=1024X2048/2 for cfloat 
+// since 2 samples are passed through 128 bits
+////////////////////////////////////////////////////////////
+#elif FFT_2D_DT == 1
+   #define INP_DATA 0x3fc000003fc00000
+   #define GOLDEN_DATA 0x3fc000003fc00000
+
+#endif
+
+////////////////////////////////////////////////////////////
 // Input to Rowise FFT...
 ////////////////////////////////////////////////////////////
 void mm2s0(
@@ -24,13 +49,20 @@ void mm2s0(
 {
    MM2S0:for(int i = 0; i < matSz; ++i) {
       #pragma HLS PIPELINE II=1
-      #pragma HLS loop_tripcount min=512 max=524288 //32x64/4 to 1024x2048/4
+      
+      #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
+         #pragma HLS loop_tripcount min=512 max=524288
+      
+      #else   //cfloat - 32x64/2 to 1024x2048/2
+         #pragma HLS loop_tripcount min=1024 max=1048576
+      
+      #endif
       
       qdma_axis<128, 0, 0, 0> fftRow_inp;
       
       if(i == 0)
       {
-         fftRow_inp.data = 1;
+         fftRow_inp.data = INP_DATA;
       }
       else
       {
@@ -54,13 +86,20 @@ void dmaHls_rowsToCols(
 {
    S2MM0:for(int i = 0; i < matSz; ++i) {
       #pragma HLS PIPELINE II=1
-      #pragma HLS loop_tripcount min=512 max=524288 //32x64/4 to 1024x2048/4
+
+      #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
+         #pragma HLS loop_tripcount min=512 max=524288
+      
+      #else   //cfloat - 32x64/2 to 1024x2048/2
+         #pragma HLS loop_tripcount min=1024 max=1048576
+      
+      #endif
       
       qdma_axis<128, 0, 0, 0> fftRow_out = strmInp_from_rowiseFFT.read();
       
       // First row in the matrix should be all 1s and remaining 0s...
       if(i < cols)
-	   {
+      {
          if(fftRow_out.data != goldenVal)
          {
             ++stg0_errCnt;
@@ -74,13 +113,21 @@ void dmaHls_rowsToCols(
    
    MM2S1:for(int i = 0, idx = 0; i < matSz; ++i) {
       #pragma HLS PIPELINE II=1
-      #pragma HLS loop_tripcount min=512 max=524288 //32x64/4 to 1024x2048/4
+
+      #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
+         #pragma HLS loop_tripcount min=512 max=524288
+      
+      #else   //cfloat - 32x64/2 to 1024x2048/2
+         #pragma HLS loop_tripcount min=1024 max=1048576
+      
+      #endif
+
       
       qdma_axis<128, 0, 0, 0> fftCol_inp;
 
       if(i == idx)
       {
-         fftCol_inp.data = 1;
+         fftCol_inp.data = INP_DATA;
          idx += rows;
       }
       else
@@ -103,13 +150,20 @@ void s2mm1(
 {
    S2MM1:for(int i = 0; i < matSz; ++i) {
       #pragma HLS PIPELINE II=1
-      #pragma HLS loop_tripcount min=512 max=524288 //32x64/4 to 1024x2048/4
+
+      #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
+         #pragma HLS loop_tripcount min=512 max=524288
+      
+      #else   //cfloat - 32x64/2 to 1024x2048/2
+         #pragma HLS loop_tripcount min=1024 max=1048576
+      
+      #endif
 
       qdma_axis<128, 0, 0, 0> fftCol_out = strmInp_from_colwiseFFT.read();
       
       // All Values should 1...
-	   if(fftCol_out.data != goldenVal)
-	   {
+      if(fftCol_out.data != goldenVal)
+      {
          ++stg1_errCnt;
       }
    }
@@ -144,10 +198,10 @@ int dma_hls(
    
    int stg0_errCnt = 0, stg1_errCnt = 0;
    
-	ap_uint<128> goldenVal;
+   ap_uint<128> goldenVal;
 
-   goldenVal.range(127, 64) = 0x0000000100000001;
-   goldenVal.range( 63,  0) = 0x0000000100000001;
+   goldenVal.range(127, 64) = GOLDEN_DATA;
+   goldenVal.range( 63,  0) = GOLDEN_DATA;
 
    ITER_MM2S0:for(int i = 0; i < iterCnt; ++i)
    {

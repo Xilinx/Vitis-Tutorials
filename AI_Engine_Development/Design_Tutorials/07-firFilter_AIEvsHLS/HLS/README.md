@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -22,9 +22,9 @@
 <summary>Design Build</summary>
 
 ## Design Build
-In this section, you will build and run the FIR filter design using the DSP implementation. The difference between this implementation and the AI Engine implementation, where users compile the AI Engine design and integrate it into a larger system design (including the programmable logic (PL) kernels and processing system (PS) host application), is that the FIR filter is now implemented in PL using DSP Engines.  
+In this section, you will build and run the FIR filter design using the HLS/DSP implementation. The difference between this implementation and the AI Engine implementation, where users compile the AI Engine design and integrate it into a larger system design (including the programmable logic (PL) kernels and processing system (PS) host application), is that the FIR filter is now implemented in PL using DSP Engines.  
 
-At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps` (for example, fir_dsp_1firs_15taps) depending on value of `N_FIR_FILTERS` and `N_FIR_TAPS` chosen in the build. Each sub-directory contains the `hw_emu/` and `hw/` subfolders. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for the hardware run on a VCK190 board.   
+At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps` (for example, fir_hls_1firs_15taps) depending on value of `N_FIR_FILTERS` and `N_FIR_TAPS` chosen in the build. Each sub-directory contains the `hw_emu/` and `hw/` subfolders. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for the hardware run on a VCK190 board.   
 
 </details>
 
@@ -65,18 +65,9 @@ make run TARGET=hw N_FIR_FILTERS=5 N_FIR_TAPS=15 EN_TRACE=1   (hardware, 5 FIR f
 
 This command will run the `make kernels`,`make xclbin`,`make application`,`make package` and `make run_emu` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The default `TARGET` without specification is hw_emu. The settings also apply to the following individual make steps.
 
-Note: Simulation takes considerably longer to execute the application than when running on actual hardware, so it is recommended to simulate with a smaller data set to have it complete in a reasonable time. The hardware implementation uses a much larger data set to reduce measurement effects.
-In the file `\<project>/DSP/design/app_src/fir_dsp_app.c`, un-comment the following, as appropriate:
-```
-#define REPEAT_OFFSET   4096
-#define REPETITIONS      509     <-- use this for TARGET=hw;     will produce a 2M sample data set
-//#define REPETITIONS        3   <-- use this for TARGET=hw_emu; will produce an 8K sample data set
-#define FLUSH_SAMPLES   4096
-```
-
 **Note**
 
-1) The generated files for a particular build are placed under individual directory: build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
+1) The generated files for a particular build are placed under individual directory: build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
 2) See the specification in each make step for options used and location of input and output files.
 
 </details>
@@ -87,7 +78,7 @@ The individual make steps to build the design with the options that applied to t
 <summary>make kernels: Compile PL Kernels</summary>
 
 ## make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202110_1`) and compiles them into their respective XO files.
+In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202120_1`) and compiles them into their respective XO files.
 
 The following commands compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):
 
@@ -97,44 +88,33 @@ make kernels
 
 The expanded command is as follows:
 ```
-mkdir -p ../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
+mkdir -p ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
-cd ../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
+cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
-v++ 	--target hw_emu					\
-        --hls.pre_tcl ./directives/hls_pre.tcl		\
-	--hls.clock 300000000:s2mm 			\
-	--platform xilinx_vck190_base_202110_1		\
+v++ --target hw_emu					\
+   --hls.pre_tcl ./directives/hls_pre.tcl		\
+	--hls.clock 500000000:fir_hls 			\
+	--platform xilinx_vck190_base_202120_1		\
 	--include ../../../design/pl_src 		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
 	-g -c 						\
-	-k fir_dsp 					\
-	../../../design/pl_src/fir_dsp.cpp 		\
-	-o fir_dsp.hw_emu.xo   
+	-k fir_hls 					\
+	../../../design/pl_src/fir_hls.cpp 		\
+	-o fir_hls.hw_emu.xo   
 
-v++ 	--target hw_emu					\
-	--hls.clock 300000000:s2mm 			\
-	--platform xilinx_vck190_base_202110_1		\
+v++ --target hw_emu					\
+	--hls.clock 250000000:datamover 			\
+	--platform xilinx_vck190_base_202120_1		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
 	-g -c 						\
-	-k s2mm 					\
-	../../../design/pl_src/s2mm.cpp 		\
-	-o s2mm.hw_emu.xo   
-
-v++ 	--target hw_emu					\
-	--hls.clock 300000000:mm2s 			\
-	--platform xilinx_vck190_base_202110_1		\
-	--save-temps 					\
-	--temp_dir _x 					\
-	--verbose 					\
-	-g -c 						\
-	-k mm2s 					\
-	../../../design/pl_src/mm2s.cpp 		\
-	-o mm2s.hw_emu.xo   
+	-k datamover 					\
+	../../../design/pl_src/datamover.cpp 		\
+	-o datamover.hw_emu.xo   
 
  ```
 Summary of the switches used:
@@ -155,15 +135,13 @@ Summary of the switches used:
 
 |Input|Description|
 |  ---  |  ---  |
-|fir_dsp.cpp|The FIR filter chain PL kernel source code.|
-|s2mm.cpp|The stream-to-memory-mapped data-mover PL kernel source code.|
-|mm2s.cpp|The memory-mapped-to-stream data-mover PL kernel source code.|
+|fir_hls.cpp|The FIR filter chain PL kernel source code.|
+|datamover.cpp|The data-mover PL kernel source code.|
 
 |Output|Description|
 |  ---  |  ---  |
-|fir_dsp.hw_emu.xo|The FIR filter chain PL kernel object file.|
-|s2mm.hw_emu.xo|The stream-to-memory-mapped data-mover kernel object file.|
-|mm2s.hw_emu.xo|The memory-mapped-to-stream data-mover kernel object file.|
+|fir_hls.hw/hw_emu.xo|The FIR filter chain PL kernel object file.|
+|datamover.hw/hw_emu.xo|The stream-to-memory-mapped data-mover kernel object file.|
 
 </details>
 
@@ -184,37 +162,33 @@ make xclbin
 
 The expanded command is as follows:
 ```
-cd ../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
+cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
-v++ 	-l 						\
-	--platform xilinx_vck190_base_202110_1 		\
+v++ -l 						\
+	--platform xilinx_vck190_base_202120_1 		\
 	--include ../../../design/pl_src 		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
 	-g 						\
 	--clock.defaultTolerance 0.001 			\
-	--clock.freqHz 300000000:mm2s_0 		\
-	--clock.freqHz 300000000:s2mm_0 		\
-	--clock.freqHz 300000000:fir_dsp_0 		\
+	--clock.freqHz 250000000:datamover_0 		\
+	--clock.freqHz 500000000:fir_hls_0 		\
 	--vivado.synth.jobs 16				\
 	--vivado.impl.jobs 16				\
-	--config ../../../Makefiles/system.cfg 		\
+	--config $(DESIGN_REPO)/system.cfg 		\
 	-t hw_emu 					\
-	-o vck190_dsp_fir.hw_emu.xclbin  		\
-	s2mm.hw_emu.xo					\
-	mm2s.hw_emu.xo					\
-        fir_dsp.hw_emu.xo
+	-o vck190_hls_fir.hw_emu.xclbin  		\
+	datamover.hw_emu.xo					\
+   fir_hls.hw_emu.xo
 
 ```
 
 If EN_TRACE is enabled, the following `v++` flags are also set:
 ```
 	--profile.trace_memory DDR			\
-	--profile.data s2mm:s2mm_0:s			\
-	--profile.data mm2s:mm2s_0:s			\
-	--profile.data fir_dsp:dir_dsp_0.StreamIn	\
-	--profile.data fir_dsp:dir_dsp_0.StreamOut
+	--profile.data datamover:datamover_0:all \
+	--profile.data fir_hls:dir_hls_0:all
 
 ```
 This will capture trace data for the ports specified.
@@ -235,19 +209,17 @@ Summary of the Switches used:
 |--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IPs. This option needs to be specified during linking. [Detailed Profiling Options](https://docs.xilinx.com/search/all?query=--profile+Options&content-lang=en-US) |
 |--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. [Detailed Profiling Options](https://docs.xilinx.com/search/all?query=--profile+Options&content-lang=en-US) |
 
-
 [Detailed Description of All Vitis Compiler Switches](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command)
 [Linking the Kernels in Vitis](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-Kernels)
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
-|s2mm.hw_emu.xo|The stream-to-memory-mapped data-mover kernel object file.|
-|mm2s.hw_emu.xo|The memory-mapped-to-stream data-mover kernel object file.|
-|fir_dsp.hw_emu.xo|The FIR filter chain PL kernel object file.|
+|datamover.hw/hw_emu.xo|The data-mover kernel object file.|
+|fir_hls.hw/hw_emu.xo|The FIR filter chain PL kernel object file.|
 
 |Output Objects|Description|
 |  ---  |  ---  |
-|vck190_dsp_fir.hw_emu.xclbin|Compiled Platform Binary Container|
+|vck190_hls_fir.hw_emu.xclbin|Compiled Platform Binary Container|
 
 </details>
 
@@ -266,6 +238,9 @@ aarch64-linux-gnu-g++ 	-O 					\
 			-c -std=c++14 				\
 			-D__linux__ 				\
 			-DXAIE_DEBUG				\
+         -DITER_CNT=8 \
+         -DN_FIR_FILTERS=1 \
+         -DN_FIR_TAPS=15 \
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/include/xrt 		\
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/include		\
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/lib			\
@@ -277,11 +252,11 @@ aarch64-linux-gnu-g++ 	-O 					\
 			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/lib 			\
 			-lxrt_coreutil
 
-aarch64-linux-gnu-g++ 	../fir_dsp_app.o			\
+aarch64-linux-gnu-g++ 	../fir_hls_app.o			\
 			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux			\
 			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/lib 			\
 			-lxrt_coreutil 				\
-			-o fir_dsp_xrt.elf
+			-o fir_hls_xrt.elf
 ```
 Summary of the Switches used:
 |Switch|Description|
@@ -298,21 +273,21 @@ Summary of the Switches used:
 |-l\<library\>|Search the library named `library` when linking. The 2D-FFT tutorial requires `adf_api_xrt` and `xrt_coreutil` libraries.|
 |-L \<dir\>|Add directory `<dir>` to the list of directories to be searched for -l.|
 
-[XRT Documentation](https://xilinx.github.io/XRT/2021.1/html/index.html)
+[XRT Documentation](https://xilinx.github.io/XRT/2021.2/html/index.html)
 [Details of Host Application Programming](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-for-Bare-metal-Systems)
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
-|fir_dsp_app.cpp|Host processor application source code file that will run on an A72 processor.|
+|fir_hls_app.cpp|Host processor application source code file that will run on an A72 processor.|
 
 |Intermediate Objects|Description|
 |  ---  |  ---  |
-|fir_dsp_app.o|Compiled host processor application object.|
+|fir_hls_app.o|Compiled host processor application object.|
 
 
 |Output Objects|Description|
 |  ---  |  ---  |
-|fir_dsp_xrt.elf|The executable that will run on an A72 processor.|
+|fir_hls_xrt.elf|The executable that will run on an A72 processor.|
 
 </details>
 
@@ -329,21 +304,21 @@ make package
 
 or
 ```
-cd ../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
+cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
 v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
-	--temp_dir ../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/_x						\
-	-f xilinx_vck190_base_202110_1												\
+	--temp_dir ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/_x						\
+	-f xilinx_vck190_base_202120_1												\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 									\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/rootfs.ext4 						\
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/Image 						\
 	--package.boot_mode=sd													\
-	--package.out_dir ../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package	        		\
+	--package.out_dir ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package	        		\
 	--package.image_format=ext4												\
-	--package.sd_file	../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/fir_dsp_xrt.elf     		\
-				../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/vck190_dsp_fir.hw_emu.xclbin 	\
+	--package.sd_file	../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/fir_hls_xrt.elf     		\
+				../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/vck190_hls_fir.hw_emu.xclbin 	\
 ```
 If EN_TRACE is enabled, the following `v++` flags are also set:
 ```
@@ -374,8 +349,8 @@ This will include the XRT ini file which includes tracing parameters.
 |$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS Host Application needs the XRT headers in this folder to execute.|
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/rootfs.ext4|The Root Filesystem file for Petalinux.|
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/Image|The pre-built Petalinux Image the processor boots from.|
-|$(BUILD_TARGET_DIR)/fir_dsp_xrt.elf|The PS Host Application executables created in the `make application` step.|
-|$(BUILD_TARGET_DIR)/vck190_dsp_fir.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
+|$(BUILD_TARGET_DIR)/fir_hls_xrt.elf|The PS Host Application executables created in the `make application` step.|
+|$(BUILD_TARGET_DIR)/vck190_hls_fir.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
 
 The output of the V++ Package step is the package directory that contains the contents to run hardware emulation.
 
@@ -396,17 +371,17 @@ make run_emu
 ```
 or
 ```
-cd ../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package
+cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package
 ./launch_hw_emu.sh
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up:
 ```bash
-root@versal-rootfs-common-2021_1:~#
+root@versal-rootfs-common-2021_2:~#
 ```
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2021_1:~# xinit: giving up
+root@versal-rootfs-common-2021_2:~# xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -422,9 +397,9 @@ mount /dev/mmcblk0p1 /mnt
 cd /mnt
 export XLC_EMULATION_MODE=hw_emu
 export XILINX_XRT=/usr
-./fir_dsp_xrt.elf a.xclbin
+./fir_hls_xrt.elf a.xclbin
 ```
-The `fir_dsp_xrt.elf` should execute, and after a few minutes, you should see the output with *TEST PASSED* on the console. When this is shown, run the following keyboard command to exit the QEMU instance:
+The `fir_hls_xrt.elf` should execute, and after a few minutes, you should see the output with *TEST PASSED* on the console. When this is shown, run the following keyboard command to exit the QEMU instance:
 
 ```
 #To exit QEMU Simulation
@@ -433,7 +408,7 @@ Press Ctrl-A, let go of the keyboard, and then press x
 
 To run with waveform do the following:
 ```
-cd ../build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package
+cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package
 ./launch_hw_emu.sh -graphic -xsim
 ```
 The XSIM Waveform Viewer is launched. Drag and drop the signals into the Viewer and click Play to start the emulation. Go back to the terminal and wait for the Linux prompt to show up.
@@ -459,7 +434,7 @@ this can also be done is a single step as follows:
 make build TARGET=hw
 ```
 
-Now follow **Steps 1-9** to run the `lenet_xrt.elf` executable on your VCK190 board.
+Now follow **Steps 1-9** to run the `fir_hls_xrt.elf` executable on your VCK190 board.
 
 **Step 1.** Ensure your board is powered OFF.
 
@@ -484,14 +459,14 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power ON the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 ```
 cd /mnt/sd-mmcblk0p1
 export XILINX_XRT=/usr
 ./init.sh
-./fir_dsp_xrt.elf a.xclbin
+./fir_hls_xrt.elf a.xclbin
 ```
 
 After execution completes and the testcase passes data integrity check, 'TEST PASSED' should appear on the terminal.
@@ -503,9 +478,9 @@ After execution completes and the testcase passes data integrity check, 'TEST PA
 <summary>FIR Filter HLS Implementation Architecture</summary>
 
 ## FIR Filter HLS Implementation Architecture
-The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR memory to store input and output vectors. This setup is maintained in the two implementations (using HLS with DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and the FIR filter chain PL kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels is 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
+The following figure shows a high level block diagram of the design. The test harness consists of the compute kernel and data mover kernel. This setup is maintained in the two implementations (using HLS/DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernel and FIR filter kernel it is AXI4-stream. The data widths of both the kernels is 128 bits wide, and they run at 250 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
 
-![Image of FIR Filter DSP implementation architecture](images/fir_dsp_block_diagram.png)
+![Image of FIR Filter HLS implementation architecture](images/fir_hls_block_diagram.png)
 
 </details>
 
@@ -514,19 +489,19 @@ The following figure shows a high level block diagram of the design. The test ha
 
 ## Design Details
 The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, and AI Engine and the interfaces among them. The v++ linker step builds on top of the base platform by adding the PL kernels. To add the various functions in a system level design, PL kernels are added to the base platform depending on the application, that is, the PL kernels present in each design may vary. In the design, the components are added by v++ -l step (make XCLBIN in the tool flow section above) and include the following:
-* FIR Filter Chain kernel (`fir_dsp.[hw|hw_emu].xo`)
-* data mover kernel (`mm2s.[hw|hw_emu].xo` and `s2mm.[hw|hw_emu].xo`)
+* FIR Filter Chain kernel (`fir_hls.[hw|hw_emu].xo`)
+* data mover kernel (`datamover.[hw|hw_emu].xo`)
 * connections interfaces defined in system configuration file (system.cfg)
 
 To see a schematic view of the design with the extended platform as shown in the following figure, open in Vivado tools:
 
-`build/fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
+`build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
 
-![Image of FIR Filter DSP Platform schematic](images/fir_dsp_vivado.png)
+![Image of FIR Filter HLS Platform schematic](images/fir_hls_vivado.png)
 
-The actual FIR filter chain itself is implemented in a HLS PL kernel, which connects the specified number of filters together in a chain.  For purposes of simplicity in comparing the designs, all the filters in the chain are identical, though it is unlikely such a chain would be used in a practical application.
+The actual FIR filter chain itself is implemented in a HLS PL kernel, which connects the specified number of filters together in a chain. For purposes of simplicity in comparing the designs, all the filters in the chain are identical, though it is unlikely such a chain would be used in a practical application.
 
-Notice the system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine run-time trace data if the EN_TRACE option is enabled in the design. The mm2s/s2mm kernels and the AI Engine array interface are both operating at 300 MHz.
+Notice the system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine run-time trace data if the EN_TRACE option is enabled in the design. The datamover kernel and the AI Engine array interface are both operating at 250 MHz.
 
 </details>
 
@@ -536,18 +511,14 @@ Notice the system debugging and profiling IP (DPA) is added to the PL region of 
 ## HLS PL Kernels
 In the HLS implementation of the FIR Filter design, the AI Engine is not used and therefore there are no AI Engine-related kernels and graphs. The compute and datamover functions are implemented as HLS kernels in the PL region.
 
-The PL kernel `fir_dsp` implements the FIR filter chain.  It contains a single AXI-stream input port and a single AXI-stream output port.  Since the FIR function requires no initialization, no additional control/status ports are required.
+The PL kernel `fir_hls` implements the FIR filter chain.  It contains a single AXI-stream input port and a single AXI-stream output port.  Since the FIR function requires no initialization, no additional control/status ports are required.
 
-The PL-based data movers consist of MM2S and S2MM kernels. The MM2S move data from DDR memory through the NoC to the FIR Filter kernel and the final FIR output is moved back to DDR memory through the NoC by the S2MM kernel. In either data mover kernel, the side facing NoC uses a memory mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine array uses an AXI4-Stream interface.
+The PL-based data mover consists of DATAMOVER kernels. It moves a data-pattern into the AIE Engine array via streaming interface the AI Engine array and the final FIR output from the AI Engine array is moved back into DATAMOVER kernel via streaming interface and checks for errors. The AI Engine array interface with the Datamover Kernel uses an AXI4-Stream interface.
 Some additional details regarding the data mover kernels include:
 
-**MM2S**
-* The data width is 128 bits
-* To avoid bandwidth limitation resulting in back pressure which causes performance degradation, the HLS pragma `max_read_burst_length` is set higher than the default to 256 bits.
-
-**S2MM**
-* The data width is 128 bits
-* To avoid bandwidth limitation resulting in back pressure which causes performance degradation, the HLS pragma `max_write_burst_length` is set higher than the default to 256 bits.
+**DATAMOVER**
+* The data width is 128 bits.
+* Frequency 250MHz.
 
 </details>
 
@@ -558,9 +529,9 @@ The software design in the FIR Filter HLS implementation consists of the followi
 <summary>PL Kernels</summary>
 
 ## PL Kernels
-For the HLS implementation of this design, the data mover kernels and the FIR filter chain are all implmented in HLS.
+For the HLS implementation of this design, the data mover kernel and the FIR filter chain are all implmented in HLS.
 
-### fir_dsp (fir_dsp.cpp)
+### fir_hls (fir_hls.cpp)
 The fir_filter kernel consists of a single AXI-stream input and AXI-stream output.  The kernel makes use of the FIR Compiler IP, the same one that can be instantiated as an IP in Vivado tools. In HLS, it is instantiated as an object in the HLS code, and then cascaded together into a chain by the design.
 
 The following include allows us to utilize the FIR Compiler interface provided in the HLS IP libraries from the Vitis HLS Libraries Reference:
@@ -674,50 +645,34 @@ void fir_wrap (hls::stream<ap_axiu<32, 0, 0, 0> >& StreamIn,
 ...etc
 ```
 
-Finally, the `fir_dsp` function it a top-level module / kernel available to be linked together to the other HLS kernels.
+Finally, the `fir_hls` function it a top-level module / kernel available to be linked together to the other HLS kernels.
 
 #### Arguments
 The FIR kernel takes the following arguments:
 * `hls::stream<ap_axiu<32, 0, 0, 0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 32. The remaining three parameters should be set to 0.
 
-The fir_dsp kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
+The fir_hls kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
 #### pragma HLS interface ap_ctrl_none port=return
 This kernel requires no additional control/status interfaces.
 
+### datamover (datamover.cpp)
+The datamover kernel reads and write data from and to the AI Engine Array, via the AXI4-Stream Interface.
 
-### mm2s (mm2s.cpp)
-The mm2s kernel reads data from a Memory Mapped AXI4 (MM-AXI4) interface and writes it to an AXI4-Stream Interface
 #### Arguments
-The mm2s kernel takes the following arguments:
+The datamover kernel takes the following arguments:
 * `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. In this design, the bit-size is set to 128.
 * `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 128. The remaining three parameters should be set to 0.
 
-The mm2s kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols
-#### pragma HLS INTERFACE s_axilite
-The mm2s kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`.
-##### pragma HLS INTERFACE m_axi
-The mm2s kernel has one `m_axi` interface (specifying a AXI4 master I/O protocol) with `offset=slave bundle=gmem`. This interface also has `max_read_burst_length=256`. Part of this AXI4 interface is the Read Address Channel containing the signals `ARBURST` and `ARLEN`. This interface has a burst type `ARBURST=INCR` and can support burst length `ARLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_read_burst_length=256` sets the burst length `ARLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of 16 bytes (128-bits from the `mem` argument) is the previous address plus 16.
-#### pragma HLS INTERFACE axis
-The mm2s kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol)
-#### pragma HLS PIPELINE II=1
-The mm2s kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
+The datamover kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
 
-### s2mm (s2mm.cpp)
-The s2mm kernel reads 128 bits of data from an AXI4-Stream interface and writes it to an AXI Memory mapped interface.
-#### Arguments
-The s2mm kernel takes the following arguments:
-* `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 128.
-* `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface and is set to 128 (same as the `mem` argument). The remaining three parameters should be set to 0.
-
-The s2mm kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols
 #### pragma HLS INTERFACE s_axilite
-The s2mm kernel has one `s_axilite` interface  (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`.
-#### pragma HLS INTERFACE m_axi
-The s2mm kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem`. This interface also has `max_write_burst_length=256`. Part of this AXI4 interface is the Write Address channel containing the signals `AWBURST` and `AWLEN`. This interface has a burst type `AWBURST=INCR` and can support burst length `AWLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_write_burst_length=256` sets the burst length `AWLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of 16 bytes (128-bits from the mem argument) is the previous address plus 16.
+The datamover kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`size` and iterCnt). This interface is also associated with `return`.
+
 #### pragma HLS INTERFACE axis
-The s2mm kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol)
+The datamover kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol)
+
 #### pragma HLS PIPELINE II=1
-The s2mm kernel has a `for` loop that is a candidate for burst write because the memory addresses (mem\[i]) are contiguous (memory accesses across loop iterations are consecutive). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.  
+The datamover kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
 
 </details>
 
@@ -725,61 +680,21 @@ The s2mm kernel has a `for` loop that is a candidate for burst write because the
 <summary>PS Host Application</summary>
 
 ## PS Host Application
-The FIR filter HLS(DSP) tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application. Note that unlike the AI Engine implementation, there are no AI Engine graphs and associated control code.
+The FIR filter HLS(DSP) tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernel. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application. Note that unlike the AI Engine implementation, there are no AI Engine graphs and associated control code.
 
-Within the PS host application, two classes are defined ((mm2s_class and s2mm_class), which defines methods used to control and monitor the corresponding kernels.
+Within the PS host application, two classes are defined ((datamover_class), which defines methods used to control and monitor the corresponding kernels.
 
 The main sections of the PS host application code is described in the following subsections:
-
-### Define Input and Output Files
-A single data file is provides data to stimulate the filter chain.  However, the output data will depend on the value of the makefile parameters N_FIR_FILTERS and N_FIR_TAPS. Data files have been generated for the four corner cases (1 FILTERS / 15 TAPS, 10 FILTERS / 15 TAPS, 1 FILTERS / 240 TAPS, 10 FILTERS / 240 TAPS).  For other configurations, the data is not checked.
-```
-#include "input_data.h"
-
-#if (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 15)
-#include "golden_data_1f_15t.h"
-#elif (N_FIR_FILTERS == 10) && (N_FIR_TAPS == 15)
-#include "golden_data_10f_15t.h"
-#elif (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 240)
-#include "golden_data_1f_240t.h"
-#elif (N_FIR_FILTERS == 10) && (N_FIR_TAPS == 240)
-#include "golden_data_10f_240t.h"
-#else
-#include "golden_data_1f_15t.h"
-#endif
-```
-
-### Define Data Sizes
-To enable comparing of the 2 implementations of this design, i.e. AIE and HLS implementation, it is desirable to have a small data set to be able to run it through simulation, and a large data set to run through hardware to minimize the effects of measurement errors on determining the performance metrics.  This has been done by providing a small 8k sample of input data (I and Q samples) in which the data repeats twice. The application code then copies the data into potentially much larger buffer, using REPEAT_OFFSET to determine where the data begins to repeat itself, and REPETITIONS to copy from this point forward to the end of the buffer the specified number of times.  Having two cycles of data and a fixed offset (REPEAT_OFFSET) is necessary to allow the filter's start-up transient to settle out and reach a steady state for subsequent cycles. Likewise, FLUSH_SAMPLES specifies the number of zero samples to add to the end of the buffer to clear out the FIR filter, so the application can be run multiple times.
-
-```
-#define SAMPLES_PER_WORD   4
-
-#define REPEAT_OFFSET   4096
-#define REPETITIONS      509
-//#define REPETITIONS        3
-#define FLUSH_SAMPLES   4096
-```
 
 ### load_xclbin Function
 This function is responsible for loading the XCLBIN file into the device.
 
-### mm2s Class
-This class provides the following methods for controlling / monitoring this kernel:
-* init(): allocates the input data buffer object (BO), opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
-* run(): starts execution of the mm2s kernel
-* run_wait(): waits for the mm2s kernel to finish
+### Datamover Class
+This class provides the following methods for controlling/monitoring this kernel:
+* init(): Opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
+* run(): starts execution of the datamover kernel
+* waitTo_complete(): waits for the datamover kernel to finish
 * close(): closes the input data buffer object and kernel
-* load(): loads data from the input file into the data buffer, using REPEAT_OFFSET, REPETITIONS and FLUSH_SAMPLES to potentially generate a much larger data set than the input file (see #define-data-sizes).
-
-### s2mm Class
-This class provides the following methods for controlling / monitoring this kernel:
-* init(): allocates the output data buffer object (BO), opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
-* run(): starts execution the s2mm kernel
-* run_wait(): waits for the s2mm kernel to finish
-  Note: This call will only return once it receives the number of samples specified computed in the init function. If the application code hangs at this point, it is waiting from data from the filter chain.
-* close(): closes the output data buffer object and kernel
-* golden_check():  Compare data in the output data buffer object with the data from the output file, using REPEAT_OFFSET and REPETITIONS to compare the data correctly(see #define-data-sizes).
 
 ### Main Function
 This is the main PS application code that controls the kernels and runs data through the design. The various steps this code goes through is described in the following subsections.
@@ -791,19 +706,19 @@ The beginning of the A72 application is represented by the main function. It tak
 The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device.
 
 #### 3. Create and Initialize Data Mover Kernels
-Create the kernel objects, initialize them, and load the input data from the constant array into the input buffer.
+Create the kernel objects, initialize them.
 
 #### 4. Run Data Mover Kernels
-Start execution of the mm2s/s2mm kernels.
+Start execution of the datamover kernel.
 
 #### 5. Wait for Data Mover Kernels to Complete
-Wait for the mm2s and s2mm kernels to complete.
+Wait for the datamover kernel to complete.
 
 #### 6. Verify Output Results
-Compare data in `output buffer` object with the reference golden data.
+Compare data in output with the reference golden data and get the error count from the kernel.
 
 #### 7. Release Allocated Resources
-Close the mm2s and s2mm kernel objects.
+Close the datamover kernel objects.
 
 </details>
 

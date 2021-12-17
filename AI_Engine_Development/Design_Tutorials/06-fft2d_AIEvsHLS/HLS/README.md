@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
    </td>
  </tr>
 </table>
@@ -26,7 +26,7 @@
 
 In this section, you will build and run the 2D-FFT design using the HLS/DSP implementation. You will compile the HLS/DSP design and integrate it into a larger system design (including the PL kernels and PS host application).
 
-At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/` (`fft2d_1024x2048/x1/`, for example) depending on the value of the matrix dimensions (`${MAT_ROWS}`, `${MAT_COLS}`) and the number of instances (`$(FFT_2D_INSTS)`) chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. These sub-folders contain a host app executable and the builds targeted to `hw` or `hw_emu` respectively. The `hw_emu/` sub-folder contains the build for hardware emulation. The `hw/` sub-folder contains the build for a hardware run on a VCK190 board.
+At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `(cint16_dsns-cfloat_dsns)/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/` (`fft2d_1024x2048/x1/`, for example) depending on the value of the datatype `${FFT_2D_DT}`, value of matrix dimensions (`${MAT_ROWS}`, `${MAT_COLS}`) and the number of instances (`$(FFT_2D_INSTS)`) chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. These sub-folders contain a host app executable and the builds targeted to `hw` or `hw_emu` respectively. The `hw_emu/` sub-folder contains the build for hardware emulation. The `hw/` sub-folder contains the build for a hardware run on a VCK190 board.
 
 </details>
 
@@ -44,6 +44,8 @@ To run the following `make` steps (for example, `make kernels`, `make xclbin`, a
 `ITER_CNT:` The number of iterations the design is run. The default is `8`.
 
 `FFT_2D_PT:` FFT 2D point. Permissible values are `64`, `128`, `256`, `512`, and `2048`.
+
+`FFT_2D_DT`: FFT 2D Datatype. Permissible values are `0` and `1`, for cint16 and cfloat datatypes.
 
 `MAT_ROWS x MAT_COLS:` Dimensions of the matrix (number of rows in the input matrix x number of cols in the input matrix). Automatically configured as `FFT_2D_PT/2, FFT_2D_PT`. Permissible values are `32x64`, `64x128`, `128x256`, `256x512`, and `1024x2048`. The default is `1024x2048`.
 
@@ -64,8 +66,18 @@ PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
 DIRECTIVES_REPO        := $(DESIGN_REPO)/directives
 SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
-BASE_BLD_DIR     := $(PROJECT_REPO)/build
-FFTPT_BLD_DIR    := $(BASE_BLD_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
+HW_EMU_RUN_FILES_REPO  := $(DESIGN_REPO)/hw_emu_files
+BASE_BLD_DIR := $(PROJECT_REPO)/build
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR := $(BASE_BLD_DIR)/cint16_dsns
+   
+else
+   FFT_2D_DT_DIR := $(BASE_BLD_DIR)/cfloat_dsns
+   
+endif
+
+FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 ```
@@ -74,19 +86,19 @@ BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
-	
+
 ## Build the Entire Design with a Single Command
 
 If you are already familiar with the HLS and Vitis kernel compilation flows, you can build the entire design for each case of `FFT_2D_INSTS` with one command: 
 
 ```bash
-make run (default hardware emulation, 1 instance, iterations=8, matrix dimentions rows=1024 and columns=2048, no trace-profiling )
+make run ( default hardware emulation, cint16 datatype, 1 instance, iterations=8, matrix dimentions rows=1024 and columns=2048, no trace-profiling )
 ```
 
 or 
 
 ```bash
-make run TARGET=hw FFT_2D_INSTS=5 ITER_CNT=16 EN_TRACE=1 FFT_2D_PT=64 (hardware, 5 instances, 16 iterations, enable trace profiling, matrix dimentions rows=32 and columns=64 )
+make run TARGET=hw FFT_2D_DT=0 FFT_2D_INSTS=5 ITER_CNT=16 EN_TRACE=1 FFT_2D_PT=64 (hardware, 5 instances, 16 iterations, enable trace profiling, matrix dimentions rows=32 and columns=64 )
 ```
 
 This command runs the `make kernels`, `make xclbin`, `make application`, `make package`, and `make run_emu` steps for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The settings also apply to individual make steps listed below.
@@ -100,7 +112,7 @@ The generated files for each `FFT_2D_INSTS` are placed under an individual direc
  
 ## make kernels: Compile PL Kernels
 
-In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202110_1`) and the HLS kernels and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, and `FFT_2D_PT=2048`). 
+In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202120_1`) and the HLS kernels and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `FFT_2D_DT=0`, and `FFT_2D_PT=2048`). 
 
 ```
 make kernels
@@ -114,8 +126,8 @@ mkdir -p $(BUILD_TARGET_DIR); \
 cd $(BUILD_TARGET_DIR); \
 
 v++ --target hw_emu --hls.pre_tcl $$(DIRECTIVES_REPO)/hls_pre.tcl \
-   --hls.clock 500000000:fft_2d -D MAT_ROWS=1024 -D MAT_COLS=2048 \
-   --platform xilinx_vck190_base_202110_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
+   --hls.clock 500000000:fft_2d -D MAT_ROWS=1024 -D MAT_COLS=2048 -D FFT_2D_DT=0 \
+   --platform xilinx_vck190_base_202120_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
    --verbose -g -c -k fft_2d $(DESIGN_REPO)/pl_src/fft_2d.cpp -o $(BUILD_TARGET_DIR)/fft_2d.hw_emu.xo
 ```
 
@@ -126,18 +138,18 @@ mkdir -p $(BUILD_TARGET_DIR); \
 
 cd $(BUILD_TARGET_DIR); \
 
-v++ --target hw_emu --hls.clock 250000000:dma_hls --platform xilinx_vck190_base_202110_1 \
-   --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x --verbose -g -c -k dma_hls \
+v++ --target hw_emu --hls.clock 250000000:dma_hls --platform xilinx_vck190_base_202120_1 \
+   --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x --verbose -g -c -k dma_hls -D FFT_2D_DT=0 \
    $(DESIGN_REPO)/pl_src/dma_hls.cpp -o $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html#wrj1504034328013) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
+See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html#wrj1504034328013) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
 
 
 |Switch|Description|
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
-|--hls.pre_tcl \<arg\>|Specifies a Tcl file containing Tcl commands for `vitis_hls` to source before running `csynth_design`. See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html?hl=hls.pre_tcl#mcj1568640526180) for details about HLS options.|
+|--hls.pre_tcl \<arg\>|Specifies a Tcl file containing Tcl commands for `vitis_hls` to source before running `csynth_design`. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html?hl=hls.pre_tcl#mcj1568640526180) for details about HLS options.|
 |--platform \| -f|Specifies the name of a supported acceleration platform as specified by the $PLATFORM_REPO_PATHS environment variable or the full path to the platform XPFM file.|
 |--save-temps \| -s|Directs the Vitis compiler command to save intermediate files/directories created during the compilation and link process. Use the `--temp_dir` option to specify a location to write the intermediate files to.|
 |--temp_dir <string>|This allows you to manage the location where the tool writes temporary files created during the build process. The temporary results are written by the Vitis compiler, and then removed, unless the `--save-temps` option is also specified.|
@@ -169,7 +181,7 @@ The Vitis tools allow you to integrate the HLS kernels into an existing extensib
  
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
  
-The command to run this step is shown as follows (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `EN_TRACE=0`, `FFT_2D_PT=2048`):
+The command to run this step is shown as follows (default `FFT_2D_DT=0`, `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `EN_TRACE=0`, `FFT_2D_PT=2048`):
 
 ```
 make xclbin
@@ -180,14 +192,14 @@ The expanded command is as follows:
 ```
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -l --platform xilinx_vck190_base_202110_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
+v++ -l --platform xilinx_vck190_base_202120_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
    --verbose -g --clock.freqHz 500000000:fft_2d_0 --clock.freqHz 250000000:dma_hls_0 --clock.defaultTolerance 0.001 \
    --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/cdc_async.tcl \
    --config $(SYSTEM_CONFIGS_REPO)/x1.cfg --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true \
    --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16} \
    --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_low} \
    --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore} \
-   -t hw_emu -o $(BUILD_TARGET_DIR)/vck190_dsp_fft_2d.hw_emu.xclbin $(BUILD_TARGET_DIR)/fft_2d.hw_emu.xo \
+   -t hw_emu -o $(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xclbin $(BUILD_TARGET_DIR)/fft_2d.hw_emu.xo \
    $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
 
@@ -219,7 +231,7 @@ If `EN_TRACE` is enabled, the following Vitis compiler flags are also set:
 ```
 For higher values of `FFT_2D_INSTS`, only the `strmInp_from_colwiseFFT` port is profiled to avoid too much data.
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/buildingdevicebinary.html#mjs1528399150499) for a detailed description of Vitis linking options. The following table provides a summary of the switches used. 
+See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/buildingdevicebinary.html#mjs1528399150499) for a detailed description of Vitis linking options. The following table provides a summary of the switches used. 
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -228,9 +240,9 @@ See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/building
 |--temp_dir <string>|This allows you to manage the location where the tool writes temporary files created during the build process. The temporary results are written by the Vitis compiler, and then removed, unless the `--save-temps` option is also specified.|
 |--verbose|Display verbose/debug information.|
 |--output \| -o|Specifies the name of the output file generated by the V++ command. In this design the outputs of the HLS/DSP kernels with their interfacing with the PL kernels are in XO files.|
-|--vivado.prop \<arg\>|Specifies properties for the Vivado Design Suite to be used during synthesis and implementation of the FPGA binary (xclbin). See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html#pbx1568640588680) for detailed Vivado options.|
-|--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IPs. This option needs to be specified during linking. See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html#lpy1600804966354) for detailed profiling options.|
-|--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html#lpy1600804966354) for detailed profiling options.|
+|--vivado.prop \<arg\>|Specifies properties for the Vivado Design Suite to be used during synthesis and implementation of the FPGA binary (xclbin). See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html#pbx1568640588680) for detailed Vivado options.|
+|--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IPs. This option needs to be specified during linking. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html#lpy1600804966354) for detailed profiling options.|
+|--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html#lpy1600804966354) for detailed profiling options.|
 |--config <config_file>|Specifies a configuration file containing V++ switches.|
 
 The information to tell the linker how to connect the HLS/DSP and PL kernels together is described in a configuration file, `system_configs/x$(FFT_2D_INSTS).cfg`. The file describes the overall connection scheme of the system.
@@ -254,7 +266,7 @@ param=hw_emu.enableProfiling=false
 param=compiler.addOutputTypes=hw_export
 ```
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html?hl=--config#pni1524163195211) for a detailed description of the Vitis compiler configuration file. A summary of the configuration options used is provided in the following table. 
+See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html?hl=--config#pni1524163195211) for a detailed description of the Vitis compiler configuration file. A summary of the configuration options used is provided in the following table. 
 
 
 |Switch|Comment|
@@ -265,7 +277,7 @@ See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscom
 
 The Vitis compiler calls the Vivado® IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
 
-You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now have generated the XCLBIN file, `$(BUILD_TARGET_DIR)/vck190_dsp_fft_2d.hw_emu.xclbin`, that will be used to execute your design on the platform.
+You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now have generated the XCLBIN file, `$(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xclbin`, that will be used to execute your design on the platform.
 
 
 </details>
@@ -275,7 +287,7 @@ You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR
 
 ## make application: Compile the Host Application
 
-You can compile the host application by following the typical cross-compilation flow for the Cortex A72 processor. To build the application, run the following command (default `FFT_2D_INSTS=1`, `ITER_CNT=8`, `FFT_2D_PT=2048`):
+You can compile the host application by following the typical cross-compilation flow for the Cortex A72 processor. To build the application, run the following command (default `FFT_2D_INSTS=1`, `ITER_CNT=8`, `FFT_2D_DT=0` and `FFT_2D_PT=2048`):
 
 ```
 make application
@@ -287,19 +299,19 @@ cd $(BUILD_TARGET_DIR);	\
 
 aarch64-xilinx-linux-g++ -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong \
    -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=$(SDKTARGETSYSROOT) -O -c \
-   -std=c++14 -D__linux__ -DFFT2D_INSTS=10 -DITER_CNT=8 -DMAT_ROWS=1024 -DMAT_COLS=2048 \
+   -std=c++14 -D__linux__ -DFFT2D_INSTS=10 -DITER_CNT=8 -DMAT_ROWS=1024 -DMAT_COLS=2048 -DFFT_2D_DT=0 \
    -I$(SDKTARGETSYSROOT)/usr/include/xrt -I$(SDKTARGETSYSROOT)/usr/include -I$(SDKTARGETSYSROOT)/usr/lib \
-   -I$(HOST_APP_SRC) $(HOT_APP_SRC)/fft_2d_dsp_app.cpp -o $(BUILD_TARGET_DIR)/fft_2d_dsp_app.o \
+   -I$(HOST_APP_SRC) $(HOT_APP_SRC)/fft_2d_hls_app.cpp -o $(BUILD_TARGET_DIR)/fft_2d_hls_app.o \
    -L$(SDKTARGETSYSROOT)/lib -lxrt_coreutil
 
 aarch64-xilinx-linux-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong \
    -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=$(SDKTARGETSYSROOT) \
-   $(BUILD_TARGET_DIR)/fft_2d_dsp_app.o -L$(SDKTARGETSYSROOT)/usr/lib -lxrt_coreutil \
-   -o $(BUILD_TARGET_DIR)/fft_2d_dsp_xrt.elf
+   $(BUILD_TARGET_DIR)/fft_2d_hls_app.o -L$(SDKTARGETSYSROOT)/usr/lib -lxrt_coreutil \
+   -o $(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf
 ```
 
 
-See [this page](https://xilinx.github.io/XRT/2021.1/html/index.html) for XRT documentation. See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devhostapp.html#vpy1519742402284) for details of host application programming.
+See [this page](https://xilinx.github.io/XRT/2021.2/html/index.html) for XRT documentation. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/devhostapp.html#vpy1519742402284) for details of host application programming.
 
 
 |Switch|Description|
@@ -318,13 +330,13 @@ The following is a description of the input sources compiled by the cross-compil
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
-|$(HOST_APP_SRC)/fft_2d_dsp_app.cpp|Source application file for the `fft_2d_dsp_xrt.elf` that will run on an A72 processor.|
+|$(HOST_APP_SRC)/fft_2d_hls_app.cpp|Source application file for the `fft_2d_hls_xrt.elf` that will run on an A72 processor.|
 
 The following is a description of the output objects that results from executing the cross-compiler command with the above inputs and options. 
 
 |Output Objects|Description|
 |  ---  |  ---  |
-|$(BUILD_TARGET_DIR)/fft_2d_dsp_xrt.elf|The executable that will run on an A72 processor.|
+|$(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf|The executable that will run on an A72 processor.|
 
 </details>
 
@@ -335,7 +347,7 @@ The following is a description of the output objects that results from executing
 
 With the HLS/DSP outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all the executables, bitstreams, and configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.
 
-The command to run this step is as follows (default `TARGET=hw_emu`, `EN_TRACE=0`, `FFT_2D_INSTS=1`, `FFT_2D_PT=2048`):
+The command to run this step is as follows (default `TARGET=hw_emu`, `EN_TRACE=0`, `FFT_2D_INSTS=1`, `FFT_2D_DT=0` and  `FFT_2D_PT=2048`):
 
 ```
 make package
@@ -347,10 +359,10 @@ or
 cp $(PROJECT_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202110_1 \
+v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202120_1 \
    --package.rootfs $(XLNX_VERSAL)/rootfs.ext4 --package.kernel_image $(XLNX_VERSAL)/Image --package.boot_mode=sd \
-   --package.out_dir $(BUILD_TARGET_DIR)/package --package.image_format=ext4 --package.sd_file $(BUILD_TARGET_DIR)/fft_2d_dsp_xrt.elf \
-   $(BUILD_TARGET_DIR)/vck190_dsp_fft_2d.hw.xclbin
+   --package.out_dir $(BUILD_TARGET_DIR)/package --package.image_format=ext4 --package.sd_file $(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf \
+   $(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw.xclbin
 ```
 
 If `EN_TRACE` is enabled, the following Vitis compiler flags are also set:
@@ -365,15 +377,15 @@ If the `XRT_ROOT` is set, the following Vitis compiler flags are also set:
    --package.sd_dir $(XRT_ROOT)
 ```
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/packagesystem1.html#cwq1586366344968) for more details about packaging the system.
+See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/packagesystem1.html#cwq1586366344968) for more details about packaging the system.
 
 
 |Switch|Description|
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd> Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies \<ext4\|fat32\> output image file format. `ext4` is the Linux file system and `fat32` is the Windows file system.|
 |--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card`.|
@@ -383,8 +395,8 @@ See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/packages
 |$(XRT_ROOT)|The PS host application needs the XRT headers in this folder to execute. Set in the `env_setup.sh`.|
 |$(XLNX_VERSAL)/rootfs.ext4|The root filesystem file for PetaLinux.|
 $(XLNX_VERSAL)/Image|The pre-built PetaLinux image the processor boots from.|
-|$(BUILD_TARGET_DIR)/fft_2d_dsp_xrt.elf|The PS host application executable created in the `make application` step.|
-|$(BUILD_TARGET_DIR)/vck190_dsp_fft_2d.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
+|$(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf|The PS host application executable created in the `make application` step.|
+|$(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
 
 The output of the V++ Package step is the package directory that contains the contents to run hardware emulation. 
 
@@ -419,7 +431,7 @@ and do:
 When hardware emulation is launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
 
 ```bash
-root@versal-rootfs-common-2021.1:~#
+root@versal-rootfs-common-2021.2:~#
 ```
 
 After the root prompt comes up, run the following commands to run the design:  
@@ -428,7 +440,7 @@ After the root prompt comes up, run the following commands to run the design:
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
 export XILINX_XRT=/usr
-./fft_2d_dsp_xrt.elf a.xclbin
+./fft_2d_hls_xrt.elf a.xclbin
 ```
 
 The `fft_2d_aie_xrt.elf` executes. After a few minutes, you should see the output with `TEST PASSED` on the console. When this is shown, run the following keyboard command to exit the QEMU instance: 
@@ -448,7 +460,7 @@ The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer 
 
 The following figure shows a waveform view of the 32x64 - 1x design.
 
-![Image of 2D-FFT DSP HW_EMU run Waveform View For 32x64-1x Design](images/fft_2d_dsp_hw_emu_waveform_view_32x64_x1.PNG)
+![Image of 2D-FFT HLS HW_EMU run Waveform View For 32x64-1x Design](images/fft_2d_hls_hw_emu_waveform_view_32x64_x1.PNG)
 
 </details>
 
@@ -473,7 +485,7 @@ Run the following step to set up the execution file, generated images, and base 
 make run_emu TARGET=hw 
 ```
 
-These commands create a `build/hw` folder with the kernels, XCLBIN, and `package` for a hardware run. Follow steps 1-9 to run the `fft_2d_dsp_xrt.elf` executable on your VCK190 board. 
+These commands create a `build/hw` folder with the kernels, XCLBIN, and `package` for a hardware run. Follow steps 1-9 to run the `fft_2d_hls_xrt.elf` executable on your VCK190 board. 
 
 **Step 1.** Ensure your board is powered off. 
 
@@ -499,7 +511,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_2` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands in the TeraTerm terminal: 
 
@@ -508,7 +520,7 @@ cd /mnt/sd-mmcblk0p1
 export XILINX_XRT=/usr
 ./init.sh
 
-./fft_2d_dsp_xrt.elf a.xclbin
+./fft_2d_hls_xrt.elf a.xclbin
 ```
 
 </details>
@@ -526,7 +538,7 @@ The following figure shows a high-level block diagram of the design. The test ha
 
 The data mover is a PL-based data generator and checker. It generates impulse input and checks the output of the row-wise FFT core for its response. It then generates the transposed pattern of the row-wise FFT output and feeds that to the col-wise FFT core and checks its output.
 
-![Image of 2D-FFT DSP Implementation Architecture](images/fft_2d_dsp_block_diagram.PNG)
+![Image of 2D-FFT HLS Implementation Architecture](images/fft_2d_hls_block_diagram.PNG)
 
 </details>
 
@@ -545,7 +557,7 @@ To see a schematic view of the design with the extended platform as shown in the
 
 `build/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
 
-![Image of 2D-FFT DSP 1x Vivado BD](images/fft_2d_dsp_1x_vivado_bd.PNG)
+![Image of 2D-FFT HLS 1x Vivado BD](images/fft_2d_hls_1x_vivado_bd.PNG)
 
 In this design, the 2D FFT computation happens in two stages: the first compute is across the row vectors (the `fft_rows` function in the `fft_2d` kernel) and the second stage is performed across the column vectors(`fft_cols` function in the `fft_2d` kernel). The input data is accessed linearly and streamed to the HLS/DSP kernels which perform `MAT_COLS( default 2048 )` point FFT. The data coming out of the HLS/DSP kernels is streamed to a PL kernel where it is checked against the expected pattern (the first row should be 1 and the remaining should be 0). If there is a mismatch, it is recorded in the variable `stage0_errCnt`. The transposed pattern of the output of the row vectors is then linearly streamed into another HLS/DSP kernel which performs `MAT_ROWS( default 1024 )` point FFT. The output is streamed into the data mover kernel again and is checked against the expected pattern (all values should be 1). If there is a mismatch, it is stored in the variable `stage1_errCnt`. Finally, the sum of `stage0_errCnt` and `stage1_errCnt` is returned from the kernel, which is read in the host app to determine whether the test has passed or failed.
 
@@ -589,13 +601,13 @@ The software design in the HLS/DSP 2D-FFT tutorial consists of the following sec
 
 The following figure elaborates on the HLS implementation using DSP Engines methodology.
 
-![Image of 2D-FFT DSP Implementation Methodology](images/fft_2d_dsp_block_diagram_methodology.PNG)
+![Image of 2D-FFT HLS Implementation Methodology](images/fft_2d_hls_block_diagram_methodology.PNG)
 
 ### DSP
 
 #### Concurrent Scheduling
 
-Concurrent scheduling is required so that each function runs independently and the execution of one function does not block the other. Both DSP HLS sub-functions, `fft_rows` and `fft_cols`, are configured independently of one other, with concurrent scheduling achieved using `#pragma HLS DATAFLOW`.
+Concurrent scheduling is required so that each function runs independently and the execution of one function does not block the other. Both DSP/HLS sub-functions, `fft_rows` and `fft_cols`, are configured independently of one other, with concurrent scheduling achieved using `#pragma HLS DATAFLOW`.
 
 ```
 ...
@@ -613,9 +625,9 @@ ITER_LOOP_FFT_COLS:for(int i = 0; i < iterCnt; ++i) {
 
 #### Sub-Functions are Pipelined and Set Up in DATAFLOW
 
-Pipelining reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the [PIPELINE pragma](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#fde1504034360078) or directive.
+Pipelining reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the [PIPELINE pragma](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#fde1504034360078) or directive.
 
-The [DATAFLOW pragma](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#sxx1504034358866) enables task-level pipelining as described in [Exploiting Task Level Parallelism: Dataflow Optimization](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitis_hls_optimization_techniques.html#bmx1539734225930), allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design.
+The [DATAFLOW pragma](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#sxx1504034358866) enables task-level pipelining as described in [Exploiting Task Level Parallelism: Dataflow Optimization](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitis_hls_optimization_techniques.html#bmx1539734225930), allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design.
 
 All operations are performed sequentially in a C description. In the absence of any directives that limit resources (such as pragma HLS allocation), the Vitis HLS tool seeks to minimize latency and improve concurrency. However, data dependencies can limit this. For example, functions or loops that access arrays must finish all read/write accesses to the arrays before they complete. This prevents the next function or loop that consumes the data from starting operation. The DATAFLOW optimization enables the operations in a function or loop to start operation before the previous function or loop completes all its operations.
 
@@ -638,17 +650,17 @@ LOOP_FFT_ROWS:for(int i = 0; i < MAT_ROWS; ++i) {
 
 Pipelining reduces the execution latency. Moreover, establishing dataflow within the sub-functions reduces all overhead latency in terms of reading/writing input and output respectively; see the following figure.
 
-![Image of FFT_2D Synthesis Report](images/fft_2d_dsp_synth_rpt_view.PNG)
+![Image of FFT_2D Synthesis Report](images/fft_2d_hls_synth_rpt_view.PNG)
 
 #### Vitis HLS Scheduling and Dataflow View For FFT_2D
 
 The following figure shows the scheduler view.
 
-![Image of FFT_2D Scheduler View](images/fft_2d_dsp_scheduler_view.PNG)
+![Image of FFT_2D Scheduler View](images/fft_2d_hls_scheduler_view.PNG)
 
 The following figure shows the dataflow view.
 
-![Image of FFT_2D Dataflow View](images/fft_2d_dsp_dataflow_view.PNG)
+![Image of FFT_2D Dataflow View](images/fft_2d_hls_dataflow_view.PNG)
 
 ### Data Mover
 
@@ -711,7 +723,7 @@ For timing closure of the whole design, different implementation properties are 
 
 For the purposes of achieving timing closure for the 256 x 512 point x10 and 1024 x 2048 point x10 designs, over 200 implementation strategies were used, out of which three met timing. Out of that, those with the least power were chosen as the implementation strategy in the `v++ -l / make xclbin` step.
 
-For more information about implementation strategies, see the _Vivado Implementation User Guide_ [UG904](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug904-vivado-implementation.pdf)
+For more information about implementation strategies, see the _Vivado Implementation User Guide_ [UG904](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug904-vivado-implementation.pdf)
 
 </details>
 
@@ -720,9 +732,9 @@ For more information about implementation strategies, see the _Vivado Implementa
 	
 ## HLS/DSP Kernel Representation
 
-An HLS/DSP kernel comprises the [Fast Fourier Transform LogiCORE IP](https://www.xilinx.com/products/intellectual-property/fft.html#overview) instantiated in the HLS kernel using the [HLS FFT library](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_ip_libraries.html#pmv1539734237197). Additionally, the kernel has the input and output wrappers for reading and writing data into and out of the FFT core. You can view the function call graph in the Vitis HLS GUI, as shown in the following figure.
+An HLS/DSP kernel comprises the [Fast Fourier Transform LogiCORE IP](https://www.xilinx.com/products/intellectual-property/fft.html#overview) instantiated in the HLS kernel using the [HLS FFT library](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_ip_libraries.html#pmv1539734237197). Additionally, the kernel has the input and output wrappers for reading and writing data into and out of the FFT core. You can view the function call graph in the Vitis HLS GUI, as shown in the following figure.
 
-![Image of 2D-FFT DSP Function Call Graph](images/fft_2d_dsp_function_call_graph.PNG)
+![Image of 2D-FFT HLS Function Call Graph](images/fft_2d_hls_function_call_graph.PNG)
 
 </details>
 
@@ -731,7 +743,7 @@ An HLS/DSP kernel comprises the [Fast Fourier Transform LogiCORE IP](https://www
 	
 ## Data Flow
 
-This section describes the overall data flow of the 2D-FFT design using the HLS FFT library, which is compiled using the Vitis compiler. Refer to [Compiling HLS Kernels](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html#wrj1504034328013) and [Writing HLS Kernels](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devckernels.html#rjk1519742919747) for information.
+This section describes the overall data flow of the 2D-FFT design using the HLS FFT library, which is compiled using the Vitis compiler. Refer to [Compiling HLS Kernels](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html#wrj1504034328013) and [Writing HLS Kernels](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/devckernels.html#rjk1519742919747) for information.
 
 The overall definition of the FFT-2D kernel is defined in `$(PL_SRC_REPO)/fft_2d.cpp`.
 
@@ -759,30 +771,37 @@ FFT core inputs must be defined in `$(PL_SRC_REPO)/fft_config.h`. Based on the m
 Include the required headers and function declarations. Declare input and output types.
 
 ```
-#pragma once
+   #if FFT_2D_DT == 0 // cint16 datatype
+   
+   // Configurable params...
+   #define FFT_INPUT_WIDTH  16
+   #define FFT_OUTPUT_WIDTH FFT_INPUT_WIDTH
+   
+   using namespace std;
+   using namespace hls;
+   
+   typedef ap_fixed<FFT_INPUT_WIDTH,  1> data_in_t;
+   typedef ap_fixed<FFT_OUTPUT_WIDTH, 1> data_out_t;
+   
+   typedef complex<data_in_t>  cmpxDataIn;
+   typedef complex<data_out_t> cmpxDataOut;
+   ...
 
-#include <ap_int.h>
-#include <ap_fixed.h>
-#include <hls_stream.h>
-#include <hls_fft.h>
-#include <stdbool.h>
-#include <complex>
-#include <stdint.h>
-#include <ap_axi_sdata.h>
-#include "fft_config.h"
-
-// Configurable params...
-const char FFT_INPUT_WIDTH  = 16;
-const char FFT_OUTPUT_WIDTH = FFT_INPUT_WIDTH;
-
-using namespace std;
-using namespace hls;
-
-typedef ap_fixed<FFT_INPUT_WIDTH,  1> data_in_t;
-typedef ap_fixed<FFT_OUTPUT_WIDTH, 1> data_out_t;
-
-typedef complex<data_in_t>  cmpxDataIn;
-typedef complex<data_out_t> cmpxDataOut;
+#else //cfloat datatype
+   
+   // Configurable params...
+   #define FFT_INPUT_WIDTH  32
+   #define FFT_OUTPUT_WIDTH FFT_INPUT_WIDTH
+   
+   using namespace std;
+   using namespace hls;
+   
+   typedef float data_in_t;
+   typedef float data_out_t;
+   
+   typedef complex<data_in_t>  cmpxDataIn;
+   typedef complex<data_out_t> cmpxDataOut;
+   
 ```
 
 
@@ -792,17 +811,32 @@ Define the FFT config structure used to instantiate the FFT LogiCORE IP in `$(PL
 
 ```
 ...
-struct configRow : hls::ip_fft::params_t {
-   static const unsigned ordering_opt = hls::ip_fft::natural_order;
-   static const unsigned config_width = FFT_ROWS_CONFIG_WIDTH;
-   static const unsigned max_nfft = FFT_ROWS_NFFT_MAX;
-   static const unsigned stages_block_ram = FFT_ROWS_STAGES_BLK_RAM;
-   static const unsigned input_width = FFT_INPUT_WIDTH;
-   static const unsigned output_width = FFT_OUTPUT_WIDTH;
-};
+   struct configRow : hls::ip_fft::params_t {
+      static const unsigned ordering_opt = hls::ip_fft::natural_order;
+      static const unsigned config_width = FFT_ROWS_CONFIG_WIDTH;
+      static const unsigned max_nfft = FFT_ROWS_NFFT_MAX;
+      static const unsigned stages_block_ram = FFT_ROWS_STAGES_BLK_RAM;
+      static const unsigned input_width = FFT_INPUT_WIDTH;
+      static const unsigned output_width = FFT_OUTPUT_WIDTH;
+   };
 
-typedef hls::ip_fft::config_t<configRow> configRow_t;
-typedef hls::ip_fft::status_t<configRow> statusRow_t;
+   typedef hls::ip_fft::config_t<configRow> configRow_t;
+   typedef hls::ip_fft::status_t<configRow> statusRow_t;
+   ...
+   
+   struct configRow : hls::ip_fft::params_t {
+      static const unsigned ordering_opt = hls::ip_fft::natural_order;
+      static const unsigned config_width = FFT_ROWS_CONFIG_WIDTH;
+      static const unsigned max_nfft = FFT_ROWS_NFFT_MAX;
+      static const unsigned stages_block_ram = FFT_ROWS_STAGES_BLK_RAM;
+      static const unsigned input_width = FFT_INPUT_WIDTH;
+      static const unsigned output_width = FFT_OUTPUT_WIDTH;
+      static const unsigned scaling_opt = hls::ip_fft::block_floating_point;
+      static const unsigned phase_factor_width = 24;
+   };
+
+   typedef hls::ip_fft::config_t<configRow> configRow_t;
+   typedef hls::ip_fft::status_t<configRow> statusRow_t;
 ...
 ```
 ### Top Function
@@ -822,17 +856,23 @@ void fft_2d(
    #pragma HLS interface axis port=strmFFTrows_out
    #pragma HLS interface axis port=strmFFTcols_inp
    #pragma HLS interface axis port=strmFFTcols_out
-
+   
    #pragma HLS INTERFACE s_axilite port=iterCnt bundle=control
    #pragma HLS INTERFACE s_axilite port=return bundle=control
    
    #pragma HLS DATAFLOW
-
+   
    ITER_LOOP_FFT_ROWS:for(int i = 0; i < iterCnt; ++i) {
+      #pragma HLS loop_tripcount min=1 max=8
+      //#pragma HLS DATAFLOW
+      
       fft_rows(strmFFTrows_inp, strmFFTrows_out);
    }
-
+   
    ITER_LOOP_FFT_COLS:for(int i = 0; i < iterCnt; ++i) {
+      #pragma HLS loop_tripcount min=1 max=8
+      //#pragma HLS DATAFLOW
+      
       fft_cols(strmFFTcols_inp, strmFFTcols_out);
    }
 }
@@ -848,25 +888,48 @@ void fft_rows(
       hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out
      )
 {
-   cmpxDataIn   in[MAT_COLS]; // Partially reshaped (factor=4) below for simultaneous access while reading...
-   cmpxDataOut out[MAT_COLS]; // Partially reshaped (factor=4) below for simultaneous access while writing...
-   #pragma HLS ARRAY_RESHAPE variable=in cyclic factor=4 dim=1
-   #pragma HLS ARRAY_RESHAPE variable=out cyclic factor=4 dim=1
-   
-   bool directionStub = 1;
-   bool ovfloStub;
-
    LOOP_FFT_ROWS:for(int i = 0; i < MAT_ROWS; ++i) {
-
-      #pragma HLS DATAFLOW // Read Input-followed by FFT-followed by Write Output Called under Dataflow...
-
+      #pragma HLS DATAFLOW
+      #pragma HLS loop_tripcount min=32 max=1024
+      
+      #if FFT_2D_DT == 0 // cint16 datatype
+         cmpxDataIn in[MAT_COLS];
+         #pragma HLS STREAM variable=in depth=1024
+         //#pragma HLS ARRAY_RESHAPE variable=in cyclic factor=4 dim=1
+         
+         cmpxDataOut out[MAT_COLS];
+         #pragma HLS STREAM variable=out depth=1024
+         //#pragma HLS ARRAY_RESHAPE variable=out cyclic factor=4 dim=1
+      
+      #else // cfloat datatype
+         cmpxDataIn in[MAT_COLS] __attribute__((no_ctor));
+         #pragma HLS STREAM variable=in depth=512
+         //#pragma HLS ARRAY_RESHAPE variable=in cyclic factor=2 dim=1
+         
+         cmpxDataOut out[MAT_COLS] __attribute__((no_ctor));
+         #pragma HLS STREAM variable=out depth=512
+         //#pragma HLS ARRAY_RESHAPE variable=out cyclic factor=2 dim=1
+      
+      #endif
+      
+      bool directionStub = 1;
+      
+      #if FFT_2D_DT == 0 // cint16 datatype
+         bool ovfloStub;
+      #endif
+      
       readIn_row(strm_inp, in);
       
-      fftRow(directionStub, in, out, &ovfloStub);
-
+      #if FFT_2D_DT == 0 // cint16 datatype
+         fftRow(directionStub, in, out, &ovfloStub);
+      
+      #else // cfloat datatype
+         fftRow(directionStub, in, out);
+      
+      #endif
+      
       writeOut_row(strm_out, out);
    }
-}
 ```
 #### Reading Data
 
@@ -877,50 +940,57 @@ void readIn_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
                 cmpxDataIn in[MAT_COLS]
                )
 {
-   qdma_axis<128, 0, 0, 0> qdma;
-   data_in_t rval_fix[4], ival_fix[4];
+   #if FFT_2D_DT == 0 // cint16 datatype
+      LOOP_FFT_ROW_READ_INP:for(int j = 0; j < MAT_COLS; j += 4) {
+         #pragma HLS PIPELINE II=1
+         #pragma HLS loop_tripcount min=16 max=512
+         
+         qdma_axis<128, 0, 0, 0> qdma = strm_inp.read();
+         qdma.keep_all();
+         
+         cmpxDataIn tmp_in;
+         
+         tmp_in.real().range(15, 0) = qdma.data.range( 15,   0);
+         tmp_in.imag().range(15, 0) = qdma.data.range( 31,  16);
+         in[j] = tmp_in;
+         
+         tmp_in.real().range(15, 0) = qdma.data.range( 47,  32);
+         tmp_in.imag().range(15, 0) = qdma.data.range( 63,  48);
+         in[j + 1] = tmp_in;
+         
+         tmp_in.real().range(15, 0) = qdma.data.range( 79,  64);
+         tmp_in.imag().range(15, 0) = qdma.data.range( 95,  80);
+         in[j + 2] = tmp_in;
+         
+         tmp_in.real().range(15, 0) = qdma.data.range(111,  96);
+         tmp_in.imag().range(15, 0) = qdma.data.range(127, 112);
+         in[j + 3] = tmp_in;
+      }
    
-   LOOP_FFT_ROW_READ_INP:for(int j = 0; j < MAT_COLS; j += 4) {
-      #pragma HLS PIPELINE II=1 // Initialization interval set to 1...
-
-      cmpxDataIn tmp[4];
-      #pragma HLS ARRAY_RESHAPE variable=tmp complete dim=1
-
-      qdma = strm_inp.read(); // Reads 128bits (4 words)
-      qdma.keep_all();
-
-      // Assigning bits...
-      rval_fix[0].range(15, 0) = qdma.data.range( 15,   0);
-      ival_fix[0].range(15, 0) = qdma.data.range( 31,  16);
-
-      rval_fix[1].range(15, 0) = qdma.data.range( 47,  32);
-      ival_fix[1].range(15, 0) = qdma.data.range( 63,  48);
-
-      rval_fix[2].range(15, 0) = qdma.data.range( 79,  64);
-      ival_fix[2].range(15, 0) = qdma.data.range( 95,  80);
-
-      rval_fix[3].range(15, 0) = qdma.data.range(111,  96);
-      ival_fix[3].range(15, 0) = qdma.data.range(127, 112);
-
-      // Assigning Corresponding Real and Imaginary Values...
-      tmp[0].real(rval_fix[0]);
-      tmp[0].imag(ival_fix[0]);
-
-      tmp[1].real(rval_fix[1]);
-      tmp[1].imag(ival_fix[1]);
-                            
-      tmp[2].real(rval_fix[2]);
-      tmp[2].imag(ival_fix[2]);
-                            
-      tmp[3].real(rval_fix[3]);
-      tmp[3].imag(ival_fix[3]);
-
-      // Filling the input array...
-      in[j] = tmp[0];
-      in[j + 1] = tmp[1];
-      in[j + 2] = tmp[2];
-      in[j + 3] = tmp[3];
-   }
+   #else // cfloat datatype
+      LOOP_FFT_ROW_READ_INP:for(int j = 0; j < MAT_COLS; j += 2) {
+         #pragma HLS PIPELINE II=1
+         #pragma HLS loop_tripcount min=32 max=1024
+         
+         qdma_axis<128, 0, 0, 0> qdma = strm_inp.read();
+         qdma.keep_all();
+         
+         cmpxDataIn tmp_in;
+         AXI_DATA rowInp;
+         
+         rowInp.data[0] = qdma.data.range( 63,  0);
+         rowInp.data[1] = qdma.data.range(127, 64);
+         
+         tmp_in.real(rowInp.fl_data[0]);
+         tmp_in.imag(rowInp.fl_data[1]);
+         in[j] = tmp_in;
+         
+         tmp_in.real(rowInp.fl_data[2]);
+         tmp_in.imag(rowInp.fl_data[3]);
+         in[j + 1] = tmp_in;
+      }
+   
+   #endif
 }
 ```
 
@@ -929,40 +999,46 @@ void readIn_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
 The `fftRow` function is defined in the following example:
 
 ```
-//Workaround to make write out side II=1...
-void copyRow(cmpxDataOut out_fft[MAT_COLS],
-             cmpxDataOut out[MAT_COLS]
-            )
-{
-   LOOP_COPY_ROW:for(int i = 0; i < MAT_COLS; ++i)
-   {
-      #pragma HLS pipeline
-      
-      out[i]=out_fft[i];
-   }
-}
+#if FFT_2D_DT == 0 // cint16 datatype
 
-void fftRow(
-      bool direction,
-      cmpxDataIn   in[MAT_COLS],
-      cmpxDataOut out[MAT_COLS],
-      bool* ovflo)
+   void fftRow(
+         bool direction,
+         cmpxDataIn   in[MAT_COLS],
+         cmpxDataOut out[MAT_COLS],
+         bool* ovflo)
+
+#else // cfloat datatype
+
+   void fftRow(
+         bool direction,
+         cmpxDataIn   in[MAT_COLS],
+         cmpxDataOut out[MAT_COLS])
+
+#endif
 {
    #pragma HLS dataflow
-
+   
    configRow_t fft_config;
    statusRow_t fft_status;
    
+   cmpxDataOut inp_fft[MAT_COLS];
+   #pragma HLS STREAM variable=inp_fft depth=2
+   
    cmpxDataOut out_fft[MAT_COLS];
-   #pragma HLS STREAM depth=2 variable=out_fft
-
+   #pragma HLS STREAM variable=out_fft depth=2
+   
    fftRow_init(direction, &fft_config);
-
+   
    // FFT IP
-   hls::fft<configRow>(in, out_fft, &fft_status, &fft_config);
-   copyRow(out_fft, out);
-
-   fftRow_status(&fft_status, ovflo);
+   //copyRow_inp(in, inp_fft);
+   //hls::fft<configRow>(inp_fft, out_fft, &fft_status, &fft_config);
+   //copyRow_out(out_fft, out);
+   
+   hls::fft<configRow>(in, out, &fft_status, &fft_config);
+   
+   #if FFT_2D_DT == 0 // cint16 datatype
+      fftRow_status(&fft_status, ovflo);
+   #endif
 }
 ```
 
@@ -975,57 +1051,71 @@ void writeOut_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
                   cmpxDataOut out[MAT_COLS]
                  )
 {
-   qdma_axis<128, 0, 0, 0> qdma;
-   data_in_t rval_fix[4], ival_fix[4];
+   #if FFT_2D_DT == 0 // cint16 datatype
+      LOOP_FFT_ROW_WRITE_OUT:for(int j = 0; j < MAT_COLS; j += 4) {
+         #pragma HLS PIPELINE II=1
+         #pragma HLS loop_tripcount min=16 max=512
+         qdma_axis<128, 0, 0, 0> qdma;
+         
+         cmpxDataOut tmp;
+         tmp = out[j];
 
-   LOOP_FFT_ROW_WRITE_OUT:for(int j = 0; j < MAT_COLS; j += 4) {
-      #pragma HLS PIPELINE II=1
+         qdma.data.range( 15,   0) = real(tmp).range(15, 0);
+         qdma.data.range( 31,  16) = imag(tmp).range(15, 0);
 
-      cmpxDataOut tmp[4];
-      #pragma HLS ARRAY_RESHAPE variable=tmp complete dim=1
+         tmp = out[j+1];
 
-      tmp[0] = out[j];
-      tmp[1] = out[j + 1];
-      tmp[2] = out[j + 2];
-      tmp[3] = out[j + 3];
+         qdma.data.range( 47,  32) = real(tmp).range(15, 0);
+         qdma.data.range( 63,  48) = imag(tmp).range(15, 0);
 
-      rval_fix[0] = real(tmp[0]);
-      ival_fix[0] = imag(tmp[0]);
+         tmp = out[j+2];
 
-      rval_fix[1] = real(tmp[1]);
-      ival_fix[1] = imag(tmp[1]);
-      
-      rval_fix[2] = real(tmp[2]);
-      ival_fix[2] = imag(tmp[2]);
-      
-      rval_fix[3] = real(tmp[3]);
-      ival_fix[3] = imag(tmp[3]);
+         qdma.data.range( 79,  64) = real(tmp).range(15, 0);
+         qdma.data.range( 95,  80) = imag(tmp).range(15, 0);
 
-      qdma.data.range( 15,   0) = rval_fix[0].range(15, 0);
-      qdma.data.range( 31,  16) = ival_fix[0].range(15, 0);
+         tmp = out[j+3];
 
-      qdma.data.range( 47,  32) = rval_fix[1].range(15, 0);
-      qdma.data.range( 63,  48) = ival_fix[1].range(15, 0);
-
-      qdma.data.range( 79,  64) = rval_fix[2].range(15, 0);
-      qdma.data.range( 95,  80) = ival_fix[2].range(15, 0);
-
-      qdma.data.range(111,  96) = rval_fix[3].range(15, 0);
-      qdma.data.range(127, 112) = ival_fix[3].range(15, 0);
-
-      strm_out.write(qdma);
-   }
+         qdma.data.range(111,  96) = real(tmp).range(15, 0);
+         qdma.data.range(127, 112) = imag(tmp).range(15, 0);
+         
+         strm_out.write(qdma);
+      }
+   
+   #else // cfloat datatype
+      LOOP_FFT_ROW_WRITE_OUT:for(int j = 0; j < MAT_COLS; j += 2) {
+         #pragma HLS PIPELINE II=1
+         #pragma HLS loop_tripcount min=32 max=1024
+         
+         qdma_axis<128, 0, 0, 0> qdma;
+         
+         AXI_DATA rowOut;
+         cmpxDataOut tmp;
+         
+         tmp = out[j];
+         rowOut.fl_data[0] = real(tmp);
+         rowOut.fl_data[1] = imag(tmp);
+         
+         tmp = out[j+1];
+         rowOut.fl_data[2] = real(tmp);
+         rowOut.fl_data[3] = imag(tmp);
+         
+         qdma.data.range( 63,  0) = rowOut.data[0];
+         qdma.data.range(127, 64) = rowOut.data[1];
+         
+         strm_out.write(qdma);
+      }
+   #endif
 }
 ```
 
-The `fft_2d` kernel specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html?hl=hls%2Cpragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in this kernel is given in the following table.
+The `fft_2d` kernel specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html?hl=hls%2Cpragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in this kernel is given in the following table.
 
 |Switch|Description|
 |  ---  |  ---  |
-|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#jit1504034365862).|
-|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the `PIPELINE` pragma or directive. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#fde1504034360078).|
-|#pragma HLS dataflow|The `DATAFLOW` pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#sxx1504034358866).|
-|#pragma HLS array_reshape|The `ARRAY_RESHAPE` pragma reforms the array with vertical remapping and concatenating elements of arrays by increasing bit widths. This reduces the amount of block RAM consumed while providing parallel access to the data. This pragma creates a new array with fewer elements but with greater bit width, allowing more data to be accessed in a single clock cycle. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#mrl1504034361747).|
+|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#jit1504034365862).|
+|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the `PIPELINE` pragma or directive. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#fde1504034360078).|
+|#pragma HLS dataflow|The `DATAFLOW` pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#sxx1504034358866).|
+|#pragma HLS array_reshape|The `ARRAY_RESHAPE` pragma reforms the array with vertical remapping and concatenating elements of arrays by increasing bit widths. This reduces the amount of block RAM consumed while providing parallel access to the data. This pragma creates a new array with fewer elements but with greater bit width, allowing more data to be accessed in a single clock cycle. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#mrl1504034361747).|
 
 </details>
 
@@ -1117,16 +1207,15 @@ int dma_hls(
 }
 ```
 
-The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html?hl=hls%2Cpragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in this kernel is given in the following table.
+The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html?hl=hls%2Cpragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in this kernel is given in the following table.
 
 |Switch|Description|
 |  ---  |  ---  |
-|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#jit1504034365862).|
-|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the `PIPELINE` pragma or directive. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#fde1504034360078).|
-|#pragma HLS dataflow|The `DATAFLOW` pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#sxx1504034358866).|
-|#pragma HLS loop_tripcount|When manually applied to a loop, this pragma specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only, and does not impact the results of synthesis. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/hls_pragmas.html#sty1504034367099).|
+|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#jit1504034365862).|
+|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the `PIPELINE` pragma or directive. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#fde1504034360078).|
+|#pragma HLS dataflow|The `DATAFLOW` pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#sxx1504034358866).|
+|#pragma HLS loop_tripcount|When manually applied to a loop, this pragma specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only, and does not impact the results of synthesis. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#sty1504034367099).|
 
- 
 </details>
 
 <details>
@@ -1134,14 +1223,13 @@ The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code
 	
 ## PS Host Application
 
-The 2D-FFT HLS/DSP tutorial uses the embedded processing system (PS) as an external controller to control the 2D-FFT and data mover PL kernels. Review the [Programming the PS Host Application](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devhostapp.html#vpy1519742402284) section in the documentation to understand the process to create a host application.
+The 2D-FFT HLS/DSP tutorial uses the embedded processing system (PS) as an external controller to control the 2D-FFT and data mover PL kernels. Review the [Programming the PS Host Application](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/devhostapp.html#vpy1519742402284) section in the documentation to understand the process to create a host application.
 
-The PS host application (`fft_2d_dsp_app.cpp`) is cross-compiled to get the executable. The steps in the tutorial to run the A72 application are as follows.
+The PS host application (`fft_2d_hls_app.cpp`) is cross-compiled to get the executable. The steps in the tutorial to run the A72 application are as follows.
 
 1. Include the required headers and define the required macros:
 
 ```
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -1157,11 +1245,25 @@ The PS host application (`fft_2d_dsp_app.cpp`) is cross-compiled to get the exec
 
 /////////////////////////////////////////////////
 // Due to 128bit Data Transfer all dimensions,
-// to be given as by 4.. 
+// to be given as by 4 for cint16
+// since 4 samples of cint16 are passed 
 /////////////////////////////////////////////////
-#define MAT_SIZE_128b (MAT_SIZE / 4)
-#define MAT_ROWS_128b (MAT_ROWS / 4)
-#define MAT_COLS_128b (MAT_COLS / 4)
+#if FFT_2D_DT == 0
+   #define MAT_SIZE_128b (MAT_SIZE / 4)
+   #define MAT_ROWS_128b (MAT_ROWS / 4)
+   #define MAT_COLS_128b (MAT_COLS / 4)
+/////////////////////////////////////////////////
+// Due to 128bit Data Transfer all dimensions,
+// to be given as by 2 for cfloat
+// since 2 samples of cfloat are passed 
+/////////////////////////////////////////////////
+
+#elif FFT_2D_DT == 1
+   #define MAT_SIZE_128b (MAT_SIZE / 2)
+   #define MAT_ROWS_128b (MAT_ROWS / 2)
+   #define MAT_COLS_128b (MAT_COLS / 2)
+
+#endif
 ...
 ```
 
@@ -1248,29 +1350,49 @@ Resource utilization is measured using the Vivado tool. The registers, CLB LUTs,
 
 1. Open the Vivado project: `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr`.
 2. Open **Implemented Design** and click **Report Utilization**.
-3. In the Utilization tab (shown inthe following figure), select **fft_2d_0** and view the registers, CLB LUTs, BRAMs, and DSPs for the 1024 x 2048 point 1-instance design:
+3. In the Utilization tab (shown inthe following figure), select **fft_2d_0** and view the registers, CLB LUTs, BRAMs, and DSPs for the 1024 x 2048 point - 1 instance - cint16 design:
 
-![Image of 2D-FFT DSP Utilization](images/fft_2d_dsp_vivado_resources.PNG)
+![Image of 2D-FFT HLS Utilization](images/fft_2d_hls_vivado_resources.PNG)
 
 Summary of Resource Utilization for all Variations:
 
+#### cint16 Designs
 | No. of Instances | FFT Configurations       | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines |
 |:----------------:|:------------------------:|:---------:|:--------:|:-----:|:------------------:|
-| 1                | 64 point (32 x 64)       | 6815      | 4273     | 19    | 8                  |
-| 1                | 128 point (64 x 128)     | 7716      | 5122     | 19    | 10                 |
-| 1                | 256 point (128 x 256)    | 8454      | 5637     | 21    | 12                 |
-| 1                | 512 point (256 x 512)    | 9200      | 5928     | 24    | 14                 |
-| 1                | 2048 point (1024 x 2048) | 10836     | 7116     | 33.5  | 18                 |
-| 5                | 64 point (32 x 64)       | 33831     | 21447    | 95    | 40                 |
-| 5                | 128 point (64 x 128)     | 38255     | 25350    | 95    | 50                 |
-| 5                | 256 point (128 x 256)    | 42173     | 27992    | 105   | 60                 |
-| 5                | 512 point (256 x 512)    | 45805     | 29199    | 120   | 70                 |
-| 5                | 2048 point (1024 x 2048) | 54338     | 35116    | 167.5 | 90                 |
-| 10               | 64 point (32 x 64)       | 67634     | 42804    | 190   | 80                 |
-| 10               | 128 point (64 x 128)     | 76557     | 51233    | 190   | 100                |
-| 10               | 256 point (128 x 256)    | 84334     | 56307    | 210   | 120                |
-| 10               | 512 point (256 x 512)    | 91736     | 58501    | 240   | 140                |
-| 10               | 2048 point (1024 x 2048) | 108471    | 70475    | 335   | 180                |
+| 1                | 64 point (32 x 64)       | 5970      | 3440     | 5     | 8                  |
+| 1                | 128 point (64 x 128)     | 6691      | 4395     | 5     | 10                 |
+| 1                | 256 point (128 x 256)    | 7502      | 4574     | 6     | 12                 |
+| 1                | 512 point (256 x 512)    | 8222      | 5419     | 8     | 14                 |
+| 1                | 2048 point (1024 x 2048) | 9871      | 6114     | 15.5  | 18                 |
+| 5                | 64 point (32 x 64)       | 29854     | 17296    | 25    | 40                 |
+| 5                | 128 point (64 x 128)     | 33589     | 20457    | 25    | 50                 |
+| 5                | 256 point (128 x 256)    | 37551     | 22994    | 30    | 60                 |
+| 5                | 512 point (256 x 512)    | 41250     | 25195    | 40    | 70                 |
+| 5                | 2048 point (1024 x 2048) | 49319     | 30577    | 77.5  | 90                 |
+| 10               | 64 point (32 x 64)       | 59702     | 34529    | 50    | 80                 |
+| 10               | 128 point (64 x 128)     | 67195     | 40615    | 50    | 100                |
+| 10               | 256 point (128 x 256)    | 75022     | 45981    | 60    | 120                |
+| 10               | 512 point (256 x 512)    | 82357     | 50361    | 80    | 140                |
+| 10               | 2048 point (1024 x 2048) | 98665     | 61125    | 155   | 180                |
+
+#### cfloat Designs
+| No. of Instances | FFT Configurations       | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines |
+|:----------------:|:------------------------:|:---------:|:--------:|:-----:|:------------------:|
+| 1                | 64 point (32 x 64)       | 12738     | 7195     | 6     | 24                 |
+| 1                | 128 point (64 x 128)     | 14391     | 8666     | 6     | 30                 |
+| 1                | 256 point (128 x 256)    | 16063     | 8949     | 10    | 36                 |
+| 1                | 512 point (256 x 512)    | 17737     | 9832     | 14.5  | 45                 |
+| 1                | 2048 point (1024 x 2048) | 21480     | 11920    | 30    | 63                 |
+| 5                | 64 point (32 x 64)       | 52722     | 36227    | 30    | 120                |
+| 5                | 128 point (64 x 128)     | 71950     | 43316    | 30    | 150                |
+| 5                | 256 point (128 x 256)    | 80326     | 44879    | 50    | 180                |
+| 5                | 512 point (256 x 512)    | 78771     | 49195    | 72.5  | 225                |
+| 5                | 2048 point (1024 x 2048) | 107290    | 59620    | 150   | 315                |
+| 10               | 64 point (32 x 64)       | 127507    | 65782    | 60    | 240                |
+| 10               | 128 point (64 x 128)     | 143848    | 86624    | 60    | 300                |
+| 10               | 256 point (128 x 256)    | 160879    | 89730    | 100   | 360                |
+| 10               | 512 point (256 x 512)    | 177463    | 98560    | 145   | 450                |
+| 10               | 2048 point (1024 x 2048) | 214621    | 119232   | 300   | 630                |
 
 </details>
 
@@ -1282,29 +1404,49 @@ Summary of Resource Utilization for all Variations:
 Power is measured using the Vivado tool. The steps for retrieving this information from the Vivado project are as follows.
 
 1. Open the Vivado project `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr`.
-2. Click **Open Implemented Design** and click **Report Power**. In the Power tab shown below, select **fft_2d_0** and view the power consumed for the 1024 x 2048 point 1-instance design:
+2. Click **Open Implemented Design** and click **Report Power**. In the Power tab shown below, select **fft_2d_0** and view the power consumed for the 1024 x 2048 point - 1 instance - cint16 design:
 
-![Image of 2D-FFT DSP Utilization](images/fft_2d_dsp_vivado_power.PNG)
+![Image of 2D-FFT HLS Utilization](images/fft_2d_hls_vivado_power.PNG)
 
 A summary of power utilization for all variations is given in the following table.
 
+#### cint16 Designs
 | No. of Instances | FFT Configurations       | Dynamic Power (in mW) |
 |:----------------:|:------------------------:|:---------------------:|
-| 1                | 64 point (32 x 64)       | 416                   |
-| 1                | 128 point (64 x 128)     | 500                   |
-| 1                | 256 point (128 x 256)    | 579                   |
-| 1                | 512 point (256 x 512)    | 609                   |
-| 1                | 2048 point (1024 x 2048) | 772                   |
-| 5                | 64 point (32 x 64)       | 1994                  |
-| 5                | 128 point (64 x 128)     | 2314                  |
-| 5                | 256 point (128 x 256)    | 2503                  |
-| 5                | 512 point (256 x 512)    | 3115                  |
-| 5                | 2048 point (1024 x 2048) | 4013                  |
-| 10               | 64 point (32 x 64)       | 3809                  |
-| 10               | 128 point (64 x 128)     | 4614                  |
-| 10               | 256 point (128 x 256)    | 5277                  |
-| 10               | 512 point (256 x 512)    | 6040                  |
-| 10               | 2048 point (1024 x 2048) | 7875                  |
+| 1                | 64 point (32 x 64)       | 272                   |
+| 1                | 128 point (64 x 128)     | 262                   |
+| 1                | 256 point (128 x 256)    | 449                   |
+| 1                | 512 point (256 x 512)    | 347                   |
+| 1                | 2048 point (1024 x 2048) | 615                   |
+| 5                | 64 point (32 x 64)       | 1399                  |
+| 5                | 128 point (64 x 128)     | 1620                  |
+| 5                | 256 point (128 x 256)    | 1779                  |
+| 5                | 512 point (256 x 512)    | 2193                  |
+| 5                | 2048 point (1024 x 2048) | 3134                  |
+| 10               | 64 point (32 x 64)       | 2658                  |
+| 10               | 128 point (64 x 128)     | 3279                  |
+| 10               | 256 point (128 x 256)    | 3802                  |
+| 10               | 512 point (256 x 512)    | 4379                  |
+| 10               | 2048 point (1024 x 2048) | 6127                  |
+
+#### cfloat Designs
+| No. of Instances | FFT Configurations       | Dynamic Power (in mW) |
+|:----------------:|:------------------------:|:---------------------:|
+| 1                | 64 point (32 x 64)       | 537                   |
+| 1                | 128 point (64 x 128)     | 707                   |
+| 1                | 256 point (128 x 256)    | 890                   |
+| 1                | 512 point (256 x 512)    | 1046                  |
+| 1                | 2048 point (1024 x 2048) | 1178                  |
+| 5                | 64 point (32 x 64)       | 2396                  |
+| 5                | 128 point (64 x 128)     | 3278                  |
+| 5                | 256 point (128 x 256)    | 4663                  |
+| 5                | 512 point (256 x 512)    | 5559                  |
+| 5                | 2048 point (1024 x 2048) | 6547                  |
+| 10               | 64 point (32 x 64)       | 5195                  |
+| 10               | 128 point (64 x 128)     | 7106                  |
+| 10               | 256 point (128 x 256)    | 10019                 |
+| 10               | 512 point (256 x 512)    | 12051                 |
+| 10               | 2048 point (1024 x 2048) | 12799                 |
 
 </details>
 
@@ -1326,7 +1468,7 @@ data_transfer_trace=fine
 trace_buffer_size=500M
 ```
 
- Refer to the [xrt.ini](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/xrtini.html#tpi1504034339424) documentation for more information.
+ Refer to the [xrt.ini](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/xrtini.html#tpi1504034339424) documentation for more information.
 
 
 2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xclbin.run_summary` files back to your system.
@@ -1335,7 +1477,7 @@ trace_buffer_size=500M
 
 4. The snapshot of the timeline trace for the AI Engine 1024 x 2048 point 1-instance design run with `ITER_CNT=8` is shown in the following figure:
 
-![Image of 2D-FFT DSP Engine implementation 1x Timeline Trace](images/fft_2d_dsp_trace_1kx2k_1x_iter8.PNG)
+![Image of 2D-FFT HLS Engine implementation 1x Timeline Trace](images/fft_2d_hls_trace_1kx2k_1x_iter8.PNG)
 
 5. The profiling setup in the Makefile measures the execution time and all the interfaces. For higher instance designs only, `strmInp_from_colwiseFFT` is profiled.
 
@@ -1363,23 +1505,44 @@ Throughput = (Samples transferred) / execution time
 ```
 
 Summary of Throughput & Latency for all Variations:
+
+#### cint16 Designs
 | No. of Instances | FFT Configurations           | Data Transfer size | Average Throughput<br/>(in MSPS) | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:--------------------------------:|:----------------------------------:|:---------------------------:|:---------------------------:|
-| 1                | 64 point (32 x 64)           | 16384              | 393.846                          | 393.846                            | 5.2                         | 5.2                         |
-| 1                | 128 point<br/>(64 x 128)     | 65536              | 462.825                          | 462.825                            | 17.7                        | 17.7                        |
-| 1                | 256 point<br/>(128 x 256)    | 262144             | 477.668                          | 477.668                            | 68.6                        | 68.6                        |
-| 1                | 512 point<br/>(256 x 512)    | 1048576            | 489.374                          | 489.374                            | 267.836                     | 267.836                     |
-| 1                | 2048 point<br/>(1024 x 2048) | 16777216           | 498.508                          | 498.508                            | 4206.860                    | 4206.860                    |
-| 5                | 64 point (32 x 64)           | 16384              | 417.959                          | 2089.796                           | 4.9                         | 4.9                         |
-| 5                | 128 point<br/>(64 x 128)     | 65536              | 462.825                          | 2314.124                           | 17.7                        | 17.7                        |
-| 5                | 256 point<br/>(128 x 256)    | 262144             | 482.592                          | 2412.960                           | 67.9                        | 67.9                        |
-| 5                | 512 point<br/>(256 x 512)    | 1048576            | 491.827                          | 2459.137                           | 266.5                       | 266.5                       |
-| 5                | 2048 point<br/>(1024 x 2048) | 16777216           | 498.508                          | 2492.538                           | 4206.860                    | 4206.860                    |
-| 10               | 64 point (32 x 64)           | 16384              | 417.959                          | 4179.592                           | 4.9                         | 4.9                         |
-| 10               | 128 point<br/>(64 x 128)     | 65536              | 462.825                          | 4628.249                           | 17.7                        | 17.7                        |
-| 10               | 256 point<br/>(128 x 256)    | 262144             | 487.619                          | 4876.190                           | 67.2                        | 67.2                        |
-| 10               | 512 point<br/>(256 x 512)    | 1048576            | 492.752                          | 4927.519                           | 266.0                       | 266.0                       |
-| 10               | 2048 point<br/>(1024 x 2048) | 16777216           | 498.508                          | 4985.077                           | 4206.860                    | 4206.860                    |
+| 1                | 64 point (32 x 64)           | 16384              | 417.50                           |  417.50                            |  4.94                       | 4.94                        |
+| 1                | 128 point<br/>(64 x 128)     | 65536              | 459.00                           |  459.00                            |  17.89                      | 17.89                       |
+| 1                | 256 point<br/>(128 x 256)    | 262144             | 479.80                           |  479.80                            |  68.34                      | 68.34                       |
+| 1                | 512 point<br/>(256 x 512)    | 1048576            | 490.03                           |  490.03                            |  267.52                     | 267.52                      |
+| 1                | 2048 point<br/>(1024 x 2048) | 16777216           | 498.18                           |  498.18                            |  4215.06                    | 4215.06                     |
+| 5                | 64 point (32 x 64)           | 16384              | 417.49                           |  2087.46                           |  4.94                       | 4.94                        |
+| 5                | 128 point<br/>(64 x 128)     | 65536              | 458.99                           |  2294.94                           |  17.89                      | 17.89                       |
+| 5                | 256 point<br/>(128 x 256)    | 262144             | 479.80                           |  2398.99                           |  68.34                      | 68.34                       |
+| 5                | 512 point<br/>(256 x 512)    | 1048576            | 488.52                           |  2442.58                           |  267.52                     | 267.52                      |
+| 5                | 2048 point<br/>(1024 x 2048) | 16777216           | 496.54                           |  2482.69                           |  4200.20                    | 4200.20                     |
+| 10               | 64 point (32 x 64)           | 16384              | 417.47                           |  4174.69                           |  4.95                       | 4.94                        |
+| 10               | 128 point<br/>(64 x 128)     | 65536              | 459.00                           |  4590.00                           |  17.89                      | 17.89                       |
+| 10               | 256 point<br/>(128 x 256)    | 262144             | 479.80                           |  4797.98                           |  68.34                      | 68.33                       |
+| 10               | 512 point<br/>(256 x 512)    | 1048576            | 490.03                           |  4900.34                           |  267.52                     | 267.52                      |
+| 10               | 2048 point<br/>(1024 x 2048) | 16777216           | 496.82                           |  4968.15                           |  4200.20                    | 4200.20                    |
+
+#### cfloat Designs
+| No. of Instances | FFT Configurations           | Data Transfer size | Average Throughput<br/>(in MSPS) | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
+|:----------------:|:----------------------------:|:------------------:|:--------------------------------:|:----------------------------------:|:---------------------------:|:---------------------------:|
+| 1                | 64 point (32 x 64)           | 16384              |  406.87                          |  406.87                            | 5.07                        | 5.07                        |
+| 1                | 128 point<br/>(64 x 128)     | 65536              |  454.16                          |  454.16                            | 18.08                       | 18.08                       |
+| 1                | 256 point<br/>(128 x 256)    | 262144             |  477.52                          |  477.52                            | 68.66                       | 68.66                       |
+| 1                | 512 point<br/>(256 x 512)    | 1048576            |  488.97                          |  488.97                            | 268.10                      | 268.10                      |
+| 1                | 2048 point<br/>(1024 x 2048) | 16777216           |  495.56                          |  495.56                            | 4201.37                     | 4201.37                     |
+| 5                | 64 point (32 x 64)           | 16384              |  406.88                          |  2034.40                           | 5.07                        | 5.07                        |
+| 5                | 128 point<br/>(64 x 128)     | 65536              |  454.16                          |  2270.82                           | 18.08                       | 18.08                       |
+| 5                | 256 point<br/>(128 x 256)    | 262144             |  477.52                          |  2387.59                           | 68.66                       | 68.66                       |
+| 5                | 512 point<br/>(256 x 512)    | 1048576            |  488.97                          |  2444.85                           | 268.10                      | 268.10                      |
+| 5                | 2048 point<br/>(1024 x 2048) | 16777216           |  495.83                          |  2479.17                           | 4201.37                     | 4201.37                     |
+| 10               | 64 point (32 x 64)           | 16384              |  406.86                          |  4068.56                           | 5.07                        | 5.07                        |
+| 10               | 128 point<br/>(64 x 128)     | 65536              |  454.16                          |  4541.65                           | 18.06                       | 17.95                       |
+| 10               | 256 point<br/>(128 x 256)    | 262144             |  477.52                          |  4775.18                           | 68.66                       | 68.66                       |
+| 10               | 512 point<br/>(256 x 512)    | 1048576            |  488.97                          |  4889.97                           | 268.18                      | 268.10                      |
+| 10               | 2048 point<br/>(1024 x 2048) | 16777216           |  495.56                          |  4955.56                           | 4201.38                     | 4201.37                     |
 
 
 </details>
@@ -1399,23 +1562,43 @@ Performance per Watt = Throughput(MSPS) / Power(Watt)
 
 A summary of performance per Watt for all variations is shown in the following table.
 
+#### cint16 Designs
 | No. of Instances | FFT Configurations           | Performance per Watt (in MSPS/Watt) |
 |:----------------:|:----------------------------:|:-----------------------------------:|
-| 1                | 64 point<br/>(32 x 64)       | 946.746                             |
-| 1                | 128 point<br/>(64 x 128)     | 925.650                             |
-| 1                | 256 point<br/>(128 x 256)    | 824.987                             |
-| 1                | 512 point<br/>(256 x 512)    | 803.570                             |
-| 1                | 2048 point<br/>(1024 x 2048) | 645.735                             |
-| 5                | 64 point<br/>(32 x 64)       | 1048.042                            |
-| 5                | 128 point<br/>(64 x 128)     | 1000.054                            |
-| 5                | 256 point<br/>(128 x 256)    | 964.027                             |
-| 5                | 512 point<br/>(256 x 512)    | 789.450                             |
-| 5                | 2048 point<br/>(1024 x 2048) | 621.116                             |
-| 10               | 64 point<br/>(32 x 64)       | 1097.294                            |
-| 10               | 128 point<br/>(64 x 128)     | 1003.088                            |
-| 10               | 256 point<br/>(128 x 256)    | 924.046                             |
-| 10               | 512 point<br/>(256 x 512)    | 815.814                             |
-| 10               | 2048 point<br/>(1024 x 2048) | 633.026                             |
+| 1                | 64 point<br/>(32 x 64)       |  1534.93                            |
+| 1                | 128 point<br/>(64 x 128)     |  1751.91                            |
+| 1                | 256 point<br/>(128 x 256)    |  1068.60                            |
+| 1                | 512 point<br/>(256 x 512)    |  1412.19                            |
+| 1                | 2048 point<br/>(1024 x 2048) |  810.05                             |
+| 5                | 64 point<br/>(32 x 64)       |  1492.11                            |
+| 5                | 128 point<br/>(64 x 128)     |  1416.63                            |
+| 5                | 256 point<br/>(128 x 256)    |  1348.50                            |
+| 5                | 512 point<br/>(256 x 512)    |  1113.81                            |
+| 5                | 2048 point<br/>(1024 x 2048) |  792.18                             |
+| 10               | 64 point<br/>(32 x 64)       |  1570.61                            |
+| 10               | 128 point<br/>(64 x 128)     |  1399.82                            |
+| 10               | 256 point<br/>(128 x 256)    |  1261.96                            |
+| 10               | 512 point<br/>(256 x 512)    |  1119.05                            |
+| 10               | 2048 point<br/>(1024 x 2048) |  810.86                             |
+
+#### cfloat Designs
+| No. of Instances | FFT Configurations           | Performance per Watt (in MSPS/Watt) |
+|:----------------:|:----------------------------:|:-----------------------------------:|
+| 1                | 64 point<br/>(32 x 64)       |  757.67                             |
+| 1                | 128 point<br/>(64 x 128)     |  642.38                             |
+| 1                | 256 point<br/>(128 x 256)    |  536.54                             |
+| 1                | 512 point<br/>(256 x 512)    |  467.47                             |
+| 1                | 2048 point<br/>(1024 x 2048) |  420.68                             |
+| 5                | 64 point<br/>(32 x 64)       |  849.08                             |
+| 5                | 128 point<br/>(64 x 128)     |  692.75                             |
+| 5                | 256 point<br/>(128 x 256)    |  512.03                             |
+| 5                | 512 point<br/>(256 x 512)    |  439.80                             |
+| 5                | 2048 point<br/>(1024 x 2048) |  383.95                             |
+| 10               | 64 point<br/>(32 x 64)       |  783.17                             |
+| 10               | 128 point<br/>(64 x 128)     |  639.13                             |
+| 10               | 256 point<br/>(128 x 256)    |  476.61                             |
+| 10               | 512 point<br/>(256 x 512)    |  405.75                             |
+| 10               | 2048 point<br/>(1024 x 2048) |  387.18                             |
 
 </details>
 
@@ -1426,23 +1609,43 @@ A summary of performance per Watt for all variations is shown in the following t
 
 A consolidated summary of observations for all the point sizes and all the corresponding instance variations is shown in the following table.
 
+#### cint16 Designs
 | FFT Configuration - No. of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:---------:|:--------:|:-----:|:------------------:|:-------------------------:|:---------------------------------------:|
-| 64 point<br/>(32 x 64)<br/> - x1        | 393.846                            | 5.2                         | 6815      | 4273     | 19    | 8                  | 416                       | 946.746                                 |
-| 128 point<br/>(64 x 128)<br/> - x1      | 462.825                            | 17.7                        | 7716      | 5122     | 19    | 10                 | 500                       | 925.650                                 |
-| 256 point<br/>(128 x 256)<br/> - x1     | 477.668                            | 68.6                        | 8454      | 5637     | 21    | 12                 | 579                       | 824.987                                 |
-| 512 point<br/>(256 x 512)<br/> - x1     | 489.374                            | 267.836                     | 9200      | 5928     | 24    | 14                 | 609                       | 803.570                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x1  | 498.508                            | 4206.860                    | 10836     | 7116     | 33.5  | 18                 | 772                       | 645.735                                 |
-| 64 point<br/>(32 x 64)<br/> - x5        | 2089.796                           | 4.9                         | 33831     | 21447    | 95    | 40                 | 1994                      | 1048.042                                |
-| 128 point<br/>(64 x 128)<br/> - x5      | 2314.124                           | 17.7                        | 38255     | 25350    | 95    | 50                 | 2314                      | 1000.054                                |
-| 256 point<br/>(128 x 256)<br/> - x5     | 2412.960                           | 67.9                        | 42173     | 27992    | 105   | 60                 | 2503                      | 964.027                                 |
-| 512 point<br/>(256 x 512)<br/> - x5     | 2459.137                           | 266.5                       | 45805     | 29199    | 120   | 70                 | 3115                      | 789.450                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x5  | 2492.538                           | 4206.860                    | 54338     | 35116    | 167.5 | 90                 | 4013                      | 621.116                                 |
-| 64 point<br/>(32 x 64)<br/> - x10       | 4179.592                           | 4.9                         | 67634     | 42804    | 190   | 80                 | 3809                      | 1097.294                                |
-| 128 point<br/>(64 x 128)<br/> - x10     | 4628.249                           | 17.7                        | 76557     | 51233    | 190   | 100                | 4614                      | 1003.088                                |
-| 256 point<br/>(128 x 256)<br/> - x10    | 4876.190                           | 67.2                        | 84334     | 56307    | 210   | 120                | 5277                      | 924.046                                 |
-| 512 point<br/>(256 x 512)<br/> - x10    | 4927.519                           | 266.0                       | 91736     | 58501    | 240   | 140                | 6040                      | 815.814                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x10 | 4985.077                           | 4206.860                    | 108471    | 70475    | 335   | 180                | 7875                      | 633.026                                 |
+| 64 point<br/>(32 x 64)<br/> - x1        | 417.50                            | 4.94                         | 5970      | 3440     | 5    | 8                  | 272                        | 1534.93                                 |
+| 128 point<br/>(64 x 128)<br/> - x1      | 459.00                            | 17.89                        | 6691      | 4395     | 5    | 10                 | 262                        | 1751.91                                 |
+| 256 point<br/>(128 x 256)<br/> - x1     | 479.80                            | 68.34                        | 7502      | 4574     | 6    | 12                 | 449                        | 1068.60                                 |
+| 512 point<br/>(256 x 512)<br/> - x1     | 490.03                            | 267.52                       | 8222      | 5419     | 8    | 14                 | 347                        | 1412.19                                 |
+| 2048 point<br/>(1024 x 2048)<br/> - x1  | 498.18                            | 4215.06                      | 9871      | 6114     | 15.5 | 18                 | 615                        | 810.05                                  |
+| 64 point<br/>(32 x 64)<br/> - x5        | 2087.46                           | 4.94                         | 29854     | 17296    | 25   | 40                 | 1399                       | 1492.11                                 |
+| 128 point<br/>(64 x 128)<br/> - x5      | 2294.94                           | 17.89                        | 33589     | 20457    | 25   | 50                 | 1620                       | 1416.63                                 |
+| 256 point<br/>(128 x 256)<br/> - x5     | 2398.99                           | 68.34                        | 37551     | 22994    | 30   | 60                 | 1779                       | 1348.50                                 |
+| 512 point<br/>(256 x 512)<br/> - x5     | 2442.58                           | 267.52                       | 41250     | 25195    | 40   | 70                 | 2193                       | 1113.81                                 |
+| 2048 point<br/>(1024 x 2048)<br/> - x5  | 2482.69                           | 4200.20                      | 49319     | 30577    | 77.5 | 90                 | 3134                       | 792.18                                  |
+| 64 point<br/>(32 x 64)<br/> - x10       | 4174.69                           | 4.95                         | 59702     | 34529    | 50   | 80                 | 2658                       | 1570.61                                 |
+| 128 point<br/>(64 x 128)<br/> - x10     | 4590.00                           | 17.89                        | 67195     | 40615    | 50   | 100                | 3279                       | 1399.82                                 |
+| 256 point<br/>(128 x 256)<br/> - x10    | 4797.98                           | 68.34                        | 75022     | 45981    | 60   | 120                | 3802                       | 1261.96                                 |
+| 512 point<br/>(256 x 512)<br/> - x10    | 4900.34                           | 267.52                       | 82357     | 50361    | 80   | 140                | 4379                       | 1119.05                                 |
+| 2048 point<br/>(1024 x 2048)<br/> - x10 | 4968.15                           | 4200.20                      | 98665     | 61125    | 155  | 180                | 6127                       | 810.86                                  |
+
+#### cfloat Designs
+| FFT Configuration - No. of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
+|:---------------------------------------:|:----------------------------------:|:---------------------------:|:---------:|:--------:|:-----:|:------------------:|:-------------------------:|:---------------------------------------:|
+| 64 point<br/>(32 x 64)<br/> - x1        | 406.87                             | 5.07                        | 12738     | 7195     | 6     | 24                 | 537                       | 757.67                                  |
+| 128 point<br/>(64 x 128)<br/> - x1      | 454.16                             | 18.08                       | 14391     | 8666     | 6     | 30                 | 707                       | 642.38                                  |
+| 256 point<br/>(128 x 256)<br/> - x1     | 477.52                             | 68.66                       | 16063     | 8949     | 10    | 36                 | 890                       | 536.54                                  |
+| 512 point<br/>(256 x 512)<br/> - x1     | 488.97                             | 268.10                      | 17737     | 9832     | 14.5  | 45                 | 1046                      | 467.47                                  |
+| 2048 point<br/>(1024 x 2048)<br/> - x1  | 495.56                             | 4201.37                     | 21480     | 11920    | 30    | 63                 | 1178                      | 420.68                                  |
+| 64 point<br/>(32 x 64)<br/> - x5        | 2034.40                            | 5.07                        | 52722     | 36227    | 30    | 120                | 2396                      | 849.08                                  |
+| 128 point<br/>(64 x 128)<br/> - x5      | 2270.82                            | 18.08                       | 71950     | 43316    | 30    | 150                | 3278                      | 692.75                                  |
+| 256 point<br/>(128 x 256)<br/> - x5     | 2387.59                            | 68.66                       | 80326     | 44879    | 50    | 180                | 4663                      | 512.03                                  |
+| 512 point<br/>(256 x 512)<br/> - x5     | 2444.85                            | 268.10                      | 78771     | 49195    | 72.5  | 225                | 5559                      | 439.80                                  |
+| 2048 point<br/>(1024 x 2048)<br/> - x5  | 2479.17                            | 4201.37                     | 107290    | 59620    | 150   | 315                | 6547                      | 383.95                                  |
+| 64 point<br/>(32 x 64)<br/> - x10       | 4068.56                            | 5.07                        | 127507    | 65782    | 60    | 240                | 5195                      | 783.17                                  |
+| 128 point<br/>(64 x 128)<br/> - x10     | 4541.65                            | 18.06                       | 143848    | 86624    | 60    | 300                | 7106                      | 639.13                                  |
+| 256 point<br/>(128 x 256)<br/> - x10    | 4775.18                            | 68.66                       | 160879    | 89730    | 100   | 360                | 10019                     | 476.61                                  |
+| 512 point<br/>(256 x 512)<br/> - x10    | 4889.97                            | 268.18                      | 177463    | 98560    | 145   | 450                | 12051                     | 405.75                                  |
+| 2048 point<br/>(1024 x 2048)<br/> - x10 | 4955.56                            | 4201.38                     | 214621    | 119232   | 300   | 630                | 12799                     | 387.18                                  |
 
 From these observations, it can be seen that with an increase in the FFT point size, the throughput does _not_ increase appreciably and eventually saturates. The power, however, increases in proportion to the resources used. Consequently, the performance per Watt maintains a decreasing trend with the increase in the FFT point size and the number of FFT-2D Instances.
 
