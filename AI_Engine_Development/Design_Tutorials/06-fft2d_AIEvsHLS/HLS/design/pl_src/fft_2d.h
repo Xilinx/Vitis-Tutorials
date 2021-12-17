@@ -24,51 +24,134 @@
 #include <ap_axi_sdata.h>
 #include "fft_config.h"
 
-// Configurable params...
-#define FFT_INPUT_WIDTH  16
-#define FFT_OUTPUT_WIDTH FFT_INPUT_WIDTH
+#if FFT_2D_DT == 0 // cint16 datatype
+   
+   // Configurable params...
+   #define FFT_INPUT_WIDTH  16
+   #define FFT_OUTPUT_WIDTH FFT_INPUT_WIDTH
+   
+   using namespace std;
+   using namespace hls;
+   
+   typedef ap_fixed<FFT_INPUT_WIDTH,  1> data_in_t;
+   typedef ap_fixed<FFT_OUTPUT_WIDTH, 1> data_out_t;
+   
+   typedef complex<data_in_t>  cmpxDataIn;
+   typedef complex<data_out_t> cmpxDataOut;
+   
+   struct configRow : hls::ip_fft::params_t {
+      static const unsigned ordering_opt = hls::ip_fft::natural_order;
+      static const unsigned config_width = FFT_ROWS_CONFIG_WIDTH;
+      static const unsigned max_nfft = FFT_ROWS_NFFT_MAX;
+      static const unsigned stages_block_ram = FFT_ROWS_STAGES_BLK_RAM;
+      static const unsigned input_width = FFT_INPUT_WIDTH;
+      static const unsigned output_width = FFT_OUTPUT_WIDTH;
+   };
+   
+   typedef hls::ip_fft::config_t<configRow> configRow_t;
+   typedef hls::ip_fft::status_t<configRow> statusRow_t;
+   
+   void fftRow_status(
+      statusRow_t* status_in,
+      bool* ovflo
+      );
+   
+   struct configCol : hls::ip_fft::params_t {
+      static const unsigned ordering_opt = hls::ip_fft::natural_order;
+      static const unsigned config_width = FFT_COLS_CONFIG_WIDTH;
+      static const unsigned max_nfft = FFT_COLS_NFFT_MAX;
+      static const unsigned stages_block_ram = FFT_COLS_STAGES_BLK_RAM;
+      static const unsigned input_width = FFT_INPUT_WIDTH;
+      static const unsigned output_width = FFT_OUTPUT_WIDTH;
+   };
+   
+   typedef hls::ip_fft::config_t<configCol> configCol_t;
+   typedef hls::ip_fft::status_t<configCol> statusCol_t;
+   
+   void fftCol_status(
+      statusCol_t* status_in,
+      bool* ovflo
+      );
 
-using namespace std;
-using namespace hls;
+#else //cfloat datatype
+   
+   // Configurable params...
+   #define FFT_INPUT_WIDTH  32
+   #define FFT_OUTPUT_WIDTH FFT_INPUT_WIDTH
+   
+   using namespace std;
+   using namespace hls;
+   
+   typedef float data_in_t;
+   typedef float data_out_t;
+   
+   typedef complex<data_in_t>  cmpxDataIn;
+   typedef complex<data_out_t> cmpxDataOut;
+   
+   struct configRow : hls::ip_fft::params_t {
+      static const unsigned ordering_opt = hls::ip_fft::natural_order;
+      static const unsigned config_width = FFT_ROWS_CONFIG_WIDTH;
+      static const unsigned max_nfft = FFT_ROWS_NFFT_MAX;
+      static const unsigned stages_block_ram = FFT_ROWS_STAGES_BLK_RAM;
+      static const unsigned input_width = FFT_INPUT_WIDTH;
+      static const unsigned output_width = FFT_OUTPUT_WIDTH;
+      static const unsigned scaling_opt = hls::ip_fft::block_floating_point;
+      static const unsigned phase_factor_width = 24;
+   };
+   
+   typedef hls::ip_fft::config_t<configRow> configRow_t;
+   typedef hls::ip_fft::status_t<configRow> statusRow_t;
+   
+   struct configCol : hls::ip_fft::params_t {
+      static const unsigned ordering_opt = hls::ip_fft::natural_order;
+      static const unsigned config_width = FFT_COLS_CONFIG_WIDTH;
+      static const unsigned max_nfft = FFT_COLS_NFFT_MAX;
+      static const unsigned stages_block_ram = FFT_COLS_STAGES_BLK_RAM;
+      static const unsigned input_width = FFT_INPUT_WIDTH;
+      static const unsigned output_width = FFT_OUTPUT_WIDTH;
+      static const unsigned scaling_opt = hls::ip_fft::block_floating_point;
+      static const unsigned phase_factor_width = 24;
+   };
+   
+   typedef hls::ip_fft::config_t<configCol> configCol_t;
+   typedef hls::ip_fft::status_t<configCol> statusCol_t;
+   
+   typedef union axi_data {
+      uint64_t data[2];
+      float fl_data[4];
+   } AXI_DATA;
 
-typedef ap_fixed<FFT_INPUT_WIDTH,  1> data_in_t;
-typedef ap_fixed<FFT_OUTPUT_WIDTH, 1> data_out_t;
-
-typedef complex<data_in_t>  cmpxDataIn;
-typedef complex<data_out_t> cmpxDataOut;
-
-struct configRow : hls::ip_fft::params_t {
-   static const unsigned ordering_opt = hls::ip_fft::natural_order;
-   static const unsigned config_width = FFT_ROWS_CONFIG_WIDTH;
-   static const unsigned max_nfft = FFT_ROWS_NFFT_MAX;
-   static const unsigned stages_block_ram = FFT_ROWS_STAGES_BLK_RAM;
-   static const unsigned input_width = FFT_INPUT_WIDTH;
-   static const unsigned output_width = FFT_OUTPUT_WIDTH;
-};
-
-typedef hls::ip_fft::config_t<configRow> configRow_t;
-typedef hls::ip_fft::status_t<configRow> statusRow_t;
+#endif
 
 void fftRow_init(
    bool direction,
    configRow_t* config
    );
 
-void fftRow_status(
-   statusRow_t* status_in,
-   bool* ovflo
-   );
+void copyCol_inp(cmpxDataOut inp_fft[MAT_ROWS],
+                 cmpxDataOut inp[MAT_ROWS]
+                );
 
-void copyRow(cmpxDataOut out_fft[MAT_COLS],
-             cmpxDataOut out[MAT_COLS]
-            );
+void copyCol_out(cmpxDataOut out_fft[MAT_ROWS],
+                 cmpxDataOut out[MAT_ROWS]
+                );
 
-void fftRow(
-   bool direction,
-   cmpxDataIn in[MAT_COLS],
-   cmpxDataIn out[MAT_COLS],
-	bool* ovflo
-   );
+#if FFT_2D_DT == 0 // cint16 datatype
+
+   void fftRow(
+         bool direction,
+         cmpxDataIn   in[MAT_COLS],
+         cmpxDataOut out[MAT_COLS],
+         bool* ovflo);
+
+#else // cfloat datatype
+
+   void fftRow(
+         bool direction,
+         cmpxDataIn   in[MAT_COLS],
+         cmpxDataOut out[MAT_COLS]);
+
+#endif
 
 void readIn_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
                 cmpxDataIn in[MAT_COLS]
@@ -83,38 +166,35 @@ void fft_rows(
    hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out
    );
 
-struct configCol : hls::ip_fft::params_t {
-   static const unsigned ordering_opt = hls::ip_fft::natural_order;
-   static const unsigned config_width = FFT_COLS_CONFIG_WIDTH;
-   static const unsigned max_nfft = FFT_COLS_NFFT_MAX;
-   static const unsigned stages_block_ram = FFT_COLS_STAGES_BLK_RAM;
-   static const unsigned input_width = FFT_INPUT_WIDTH;
-   static const unsigned output_width = FFT_OUTPUT_WIDTH;
-};
-
-typedef hls::ip_fft::config_t<configCol> configCol_t;
-typedef hls::ip_fft::status_t<configCol> statusCol_t;
-
 void fftCol_init(
    bool direction,
    configCol_t* config
    );
 
-void fftCol_status(
-   statusCol_t* status_in,
-   bool* ovflo
-   );
+void copyCol_inp(cmpxDataOut inp_fft[MAT_ROWS],
+                 cmpxDataOut inp[MAT_ROWS]
+                );
 
-void copyCol(cmpxDataOut out_fft[MAT_ROWS],
-             cmpxDataOut out[MAT_ROWS]
-            );
+void copyCol_out(cmpxDataOut out_fft[MAT_ROWS],
+                 cmpxDataOut out[MAT_ROWS]
+                );
 
-void fftCol(
-   bool direction,
-   cmpxDataIn in[MAT_ROWS],
-   cmpxDataIn out[MAT_ROWS],
-	bool* ovflo
-   );
+#if FFT_2D_DT == 0 // cint16 datatype
+
+   void fftCol(
+         bool direction,
+         cmpxDataIn   in[MAT_ROWS],
+         cmpxDataOut out[MAT_ROWS],
+         bool* ovflo);
+
+#else // cfloat datatype
+
+   void fftCol(
+         bool direction,
+         cmpxDataIn   in[MAT_ROWS],
+         cmpxDataOut out[MAT_ROWS]);
+
+#endif
 
 void readIn_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
                 cmpxDataIn in[MAT_ROWS]

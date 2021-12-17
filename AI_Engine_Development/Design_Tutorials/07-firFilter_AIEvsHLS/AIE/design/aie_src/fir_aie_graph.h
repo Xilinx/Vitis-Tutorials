@@ -17,7 +17,8 @@
 #pragma once
 
 #include "fir_aie_defines.h"
-#include "system_settings.h"
+//#include "system_settings.h"
+#include "system_settings_comm.h"
 
 using namespace adf;
 namespace dsplib = xf::dsp::aie;

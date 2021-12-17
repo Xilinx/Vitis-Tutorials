@@ -9,7 +9,7 @@
 
 # Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
 
-***Version: Vitis 2021.1***
+***Version: Vitis 2021.2***
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ The Versal™ ACAP is a a fully software programmable, heterogeneous compute pla
 
 This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with HLS using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.
 
-A Makefile is provided for each implementation. It can be used to create the design for various point sizes (32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048), different numbers of fft_2d kernel graph instances (1, 5 and 10), and different targets (hw_emu and hw).
+A Makefile is provided for each implementation. It can be used to create the design for `cint16` and `cfloat` datatypes, for various point sizes (32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048), different numbers of fft_2d HLS-kernel/AIE-graph instances (1, 5 and 10), and lastly for different targets (hw_emu and hw).
 
 The design documentation demonstrates hardware and software design details including the methodology for each implementation, elaborating on the functional partitioning. The compilation, execution, and measurement steps as well as observations are given.
 
@@ -83,7 +83,7 @@ x_2fft - x_col         % Calculate the error difference
 
 In calculating each 1D-FFT, one dimension is kept constant while the other is computed. The transpose function is applied after each 1D-FFT compute. The transpose function moves the entry along each element of the dimension to the corresponding element of the other dimension. A golden data set is generated as reference and the error difference is calculated.
 
-A similar algorithm is deployed in the two implementations using either the AI Engines or HLS targeting the PL and DSP Engines. The design compiles through Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value=1) input to the row-wise 1D-FFT and check its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).
+A similar algorithm is deployed in the two implementations using either the AI Engines or HLS targeting the PL and DSP Engines. The design compiles through Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value=1 or 1.5, depending on cint16 or cfloat datatype ) input to the row-wise 1D-FFT and check its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).
 
 The transposed pattern of that, generated within the PL, is then streamed as input to the col-wise 1D-FFT. Its output is then checked against the expected output (all 1s). The data mover kernel returns the total error count in both stages to the host application, which is used to declare a pass or fail of the test case.
 
@@ -150,17 +150,17 @@ fft2d_AIEvsHLS
 
 * [AI Engine Tools Lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021.1/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html)
 
 To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perform the following steps:
 
-* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021.1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401).
+* Install the [Vitis Software Platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html).
 
 * Obtain licenses for AI Engine tools.
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021.1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT).
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021.2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT).
 
-* Download and set up the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs).
+* Download and set up the [VCK190 Vitis Platform](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
 </details>
 
@@ -169,7 +169,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 ## Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.1)](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_release_notes.html) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.2)](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_release_notes.html) for setting up software and installing the VCK190 base platform.
 
 This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.
 
@@ -198,8 +198,8 @@ The script sets up the environment variables and sources scripts explained below
 
 1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
 2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2021.1` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2021.1/sdk.sh` script.
+3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2021.2` directory is used in the step below.
+4. The platform is set up by running the `xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2021.2/sdk.sh` script.
 5. `DSPLIB_ROOT` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
 6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically be excluded from packaging.
 7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
@@ -227,7 +227,7 @@ platforminfo --list | grep -m 1 -A 9 vck190
 The output of the above command should be as follows:
 
 ```bash
- "baseName": "xilinx_vck190_base_202110_1",
+ "baseName": "xilinx_vck190_base_202120_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -249,13 +249,12 @@ The Makefile and source files for the AI Engine and HLS implementations are in t
 
 # AI Engine and HLS Implementation Comparison
 
-The following table shows a comparison between a 1024 x 2048 point 10-instance FFT-2D design implemented using the AI Engines and HLS with DSP Engines respectively. It lists the throughput, resource utilization, power consumption, and performance in throughput/Watt.
+The following table shows a comparison between a 1024 x 2048 point 10-instance FFT-2D design implemented using the AI Engines and HLS with DSP Engines respectively. It lists the throughput, resource utilization, power consumption, and performance in throughput/Watt for `cint16` implementations.
 
 | Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 6012.822                           | 3487.8                  | 20               | 76%             | 396 /<br/>20%                        | 56               | 11720 /<br/> 4154         | 0     | 0    | 5081                      | 1183.393                                |
-| HLS           | 4985.077                           | 4206.860                | NA               | NA              | NA                                   | NA               | 108471 /<br/> 70475       | 335   | 180  | 7875                      | 633.026                                 |
-
+| AIE           | 6004.71                            | 3480.89                 | 20               | 76%             | 396 /<br/>20%                        | 56               | 11720 /<br/> 4156         | 0     | 0    | 4461                      | 1345.89                                |
+| HLS           | 4968.15                            | 4200.20                 | NA               | NA              | NA                                   | NA               | 98665 /<br/> 61125        | 155   | 180  | 6127                      | 810.86                                 |
 
 These observations give a clear indication of where the AI Engines in Versal can offer improvements:
 
@@ -264,7 +263,7 @@ These observations give a clear indication of where the AI Engines in Versal can
 * Performance increase of ~2x to 1183 MSPS/Watt.
 * Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~108K FFs, ~70K LUTs and 335 BRAMs are reduced to just 56 AI Engines, 11k FFs, and 4K LUTs.
 
-It is important to understand that those 56 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 36 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 36 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/maproutemethod.html#mcq1622542393364) for details on the AI Engine mapper/router).
+It is important to understand that those 56 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 36 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 36 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/maproutemethod.html#mcq1622542393364) for details on the AI Engine mapper/router).
 
 Additionally, further increasing the number of instances in the AI Engine design is easier compared to the HLS design, which will run into timing closure issues, especially for higher FFT point size designs.
 
@@ -278,13 +277,13 @@ For detailed instructions on taking measurements of the parameters, refer to the
 
 # References
 
-### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
+### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html)
 
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
 
 ### [Vitis DSP Libraries](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
-* [Vitis DSP Libraries Comprehensive Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/) 
+* [Vitis DSP Libraries Comprehensive Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/) 
 
 ### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
 
@@ -296,17 +295,17 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1451-xrt-release-notes-pu1.pdf)
+* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1451-xrt-release-notes-pu1.pdf)
 
-### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html)
 
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/kme1569523964461.html)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html)
+* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/irn1582730075765.html)
 
 # Known Issues
 

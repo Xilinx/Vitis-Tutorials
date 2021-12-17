@@ -54,6 +54,12 @@ help::
 TARGET        := hw_emu
 
 # =========================================================
+# Iteration Count:
+# 8(default)
+# =========================================================
+ITER_CNT := 8
+
+# =========================================================
 # FIR Chain Parameters:
 # N_FIR_FILTERS : Number for FIR filters in chain
 # N_FIR_TAPS    : Number of taps in each filter
@@ -70,8 +76,11 @@ EN_TRACE       := 0
 # PL Frequency in MHz:
 # 300 MHz(default)
 # =========================================================
-PL_FREQ        := 300
+PL_FREQ        := 250
 VPP_CLOCK_FREQ := $(PL_FREQ)000000
+
+FIR_PL_FREQ        := 500
+FIR_VPP_CLOCK_FREQ := $(FIR_PL_FREQ)000000
 
 # =========================================================
 # FIR Impulse Response Area
@@ -82,7 +91,7 @@ IMPULSE_AREA	:= 16383
 # Source directory
 # =========================================================
 #Version Name
-BUILD_VERSION   := fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
+BUILD_VERSION   := fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
 
 #relative FIR filter directory
 RELATIVE_PROJECT_DIR := ./
@@ -90,22 +99,22 @@ RELATIVE_PROJECT_DIR := ./
 #absolute FIR filter directory = <user path>/Tutorials/AI_Engine/filter_AIEvsDSP
 PROJECT_REPO	 := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
-DESIGN_REPO 	 := $(PROJECT_REPO)/design
-PL_SRC_REPO 	 := $(PROJECT_REPO)/design/pl_src
-APP_SRC_REPO 	 := $(PROJECT_REPO)/design/app_src
-MAKEFILES_REPO   := $(PROJECT_REPO)
+DESIGN_REPO 	:= $(PROJECT_REPO)/design
+PL_SRC_REPO 	:= $(PROJECT_REPO)/design/pl_src
+APP_SRC_REPO 	:= $(PROJECT_REPO)/design/app_src
+MAKEFILES_REPO := $(PROJECT_REPO)
 
-BASE_BUILD_DIR 	 := $(PROJECT_REPO)/build
+BASE_BUILD_DIR   := $(PROJECT_REPO)/build
 BUILD_DIR        := $(BASE_BUILD_DIR)/$(BUILD_VERSION)
 BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
 
-BASE_RUN_DIR     := $(PROJECT_REPO)/run_dir
+BASE_RUN_DIR := $(PROJECT_REPO)/run_dir
 RUN_DIR		 := $(BASE_RUN_DIR)/$(BUILD_VERSION)
 
-REPORT_DIR     	:= $(PROJECT_REPO)/../report_dir
+REPORT_DIR   := $(PROJECT_REPO)/../report_dir
 
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
-EMBEDDED_HW_EMU_EXEC_SCRIPT := run_script.sh
+EMBEDDED_EXEC_SCRIPT := run_script.sh
 
 ######################################
 # When TARGET=hw_emu, hw_emu launch...
@@ -120,31 +129,30 @@ print-%  : ; @echo $* = $($*)
 # =========================================================
 # Kernel Source Files repository
 # =========================================================
-S2MM_KERNEL_NAME  := s2mm
-MM2S_KERNEL_NAME  := mm2s
-FILTER_KERNEL_NAME:= fir_dsp
+DATAMOVER_KERNEL_NAME := datamover
+FILTER_KERNEL_NAME    := fir_hls
 
-S2MM_KERNEL_SRC	  := $(PL_SRC_REPO)/$(S2MM_KERNEL_NAME).cpp
-MM2S_KERNEL_SRC	  := $(PL_SRC_REPO)/$(MM2S_KERNEL_NAME).cpp
+DATAMOVER_KERNEL_SRC := $(PL_SRC_REPO)/$(DATAMOVER_KERNEL_NAME).cpp
 
 SYSTEM_SETTINGS_H := $(PL_SRC_REPO)/system_settings.h
 FILTER_KERNEL_H   := $(PL_SRC_REPO)/$(FILTER_KERNEL_NAME).h
 FILTER_KERNEL_SRC := $(PL_SRC_REPO)/$(FILTER_KERNEL_NAME).cpp
 
+DATAMOVER_KERNEL_NAME := datamover
+DATAMOVER_KERNEL_SRC := $(PL_SRC_REPO)/$(DATAMOVER_KERNEL_NAME).cpp
 # =========================================================
 # Application Source Files repository
 # =========================================================
-APP_SRC_CPP       := $(APP_SRC_REPO)/fir_dsp_app.cpp
+APP_SRC_CPP       := $(APP_SRC_REPO)/fir_hls_app.cpp
 
 # =========================================================
 # Below are the names, application executable,
 # kernel executables, and xclbin
 # =========================================================
-FILTER_KERNEL_XO  := $(BUILD_TARGET_DIR)/fir_dsp.$(TARGET).xo
-S2MM_KERNEL_XO    := $(BUILD_TARGET_DIR)/$(S2MM_KERNEL_NAME).$(TARGET).xo
-MM2S_KERNEL_XO 	  := $(BUILD_TARGET_DIR)/$(MM2S_KERNEL_NAME).$(TARGET).xo
-XCLBIN 	          := $(BUILD_TARGET_DIR)/vck190_dsp_fir_dsp.$(TARGET).xclbin
-APP_ELF           := $(BUILD_TARGET_DIR)/fir_dsp_xrt.elf
+FILTER_KERNEL_XO    := $(BUILD_TARGET_DIR)/fir_hls.$(TARGET).xo
+DATAMOVER_KERNEL_XO := $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_NAME).$(TARGET).xo
+XCLBIN              := $(BUILD_TARGET_DIR)/vck190_hls_fir.$(TARGET).xclbin
+APP_ELF             := fir_hls_xrt.elf
 
 # =========================================================
 # Application Compiler and Linker Flags
@@ -154,10 +162,14 @@ GCC_FLAGS += -c
 GCC_FLAGS += -std=c++14
 GCC_FLAGS += -D__linux__
 GCC_FLAGS += -DXAIE_DEBUG
+GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+GCC_FLAGS += -DN_FIR_FILTERS=$(N_FIR_FILTERS)
+GCC_FLAGS += -DN_FIR_TAPS=$(N_FIR_TAPS)
 
-ifeq ($(TARGET),hw_emu)
-GCC_FLAGS += -DUSE_SMALL_DATASET
-endif
+#ifeq ($(TARGET),hw_emu)
+#   GCC_FLAGS += -DUSE_SMALL_DATASET
+#
+#endif
 
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt/
 GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include/
@@ -179,23 +191,25 @@ VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 VPP_FLAGS += --verbose 
 VPP_FLAGS += -g
 
-FIR_KERNEL_VPP_FLAGS  := --hls.pre_tcl $(MAKEFILES_REPO)/hls_pre.tcl
-FIR_KERNEL_VPP_FLAGS  += --hls.clock $(VPP_CLOCK_FREQ):$(FILTER_KERNEL_NAME)
+FIR_KERNEL_VPP_FLAGS  := --hls.pre_tcl $(DESIGN_REPO)/hls_pre.tcl
+FIR_KERNEL_VPP_FLAGS  += --hls.clock $(FIR_VPP_CLOCK_FREQ):$(FILTER_KERNEL_NAME)
+FIR_KERNEL_VPP_FLAGS  += -D N_FIR_FILTERS=$(N_FIR_FILTERS)
+FIR_KERNEL_VPP_FLAGS  += -D N_FIR_TAPS=$(N_FIR_TAPS)
 
-MM2S_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(MM2S_KERNEL_NAME)
-S2MM_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(S2MM_KERNEL_NAME)
+DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_NAME)
+DATAMOVER_KERNEL_VPP_FLAGS += -D N_FIR_TAPS=$(N_FIR_TAPS)
 
 VPP_LINK_FLAGS := --clock.defaultTolerance 0.001
-VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(MM2S_KERNEL_NAME)_0
-VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(S2MM_KERNEL_NAME)_0
-VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(FILTER_KERNEL_NAME)_0
+VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_NAME)_0
+VPP_LINK_FLAGS += --clock.freqHz $(FIR_VPP_CLOCK_FREQ):$(FILTER_KERNEL_NAME)_0
+VPP_LINK_FLAGS += --config $(DESIGN_REPO)/system.cfg
+VPP_LINK_FLAGS += -t $(TARGET)
 
 ifeq ($(EN_TRACE),1)
-VPP_LINK_FLAGS += --profile.trace_memory DDR
-VPP_LINK_FLAGS += --profile.data $(S2MM_KERNEL_NAME):$(S2MM_KERNEL_NAME)_0:s
-VPP_LINK_FLAGS += --profile.data $(MM2S_KERNEL_NAME):$(MM2S_KERNEL_NAME)_0:s
-VPP_LINK_FLAGS += --profile.data fir_dsp:fir_dsp_0:StreamIn
-VPP_LINK_FLAGS += --profile.data fir_dsp:fir_dsp_0:StreamOut
+   VPP_LINK_FLAGS += --profile.trace_memory DDR
+   VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_NAME):$(DATAMOVER_KERNEL_NAME)_0:all
+   VPP_LINK_FLAGS += --profile.data fir_hls:fir_hls_0:all
+
 endif
 
 #VPP_LINK_FLAGS += --vivado.synth.jobs 16
@@ -211,14 +225,14 @@ PKG_FLAGS += -f $(PLATFORM)
 PKG_FLAGS += --package.rootfs $(XLNX_VERSAL)/rootfs.ext4
 PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
-PKG_FLAGS += --package.out_dir $(BUILD_TARGET_DIR)/package
+PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
 PKG_FLAGS += --package.sd_file $(APP_ELF) $(XCLBIN)
-PKG_FLAGS += --package.sd_file $(PROJECT_REPO)/$(EMBEDDED_HW_EMU_EXEC_SCRIPT)
+PKG_FLAGS += --package.sd_file $(DESIGN_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
 ifneq ($(EN_TRACE),0)
 
-   PKG_FLAGS += --package.sd_file $(PROJECT_REPO)/xrt.ini
+   PKG_FLAGS += --package.sd_file $(DESIGN_REPO)/xrt.ini
 
 endif
 
@@ -233,49 +247,44 @@ endif
 # =========================================================
 # This step compiles the HLS C PL kernels. 
 # Outputs: in build/[hw_emu | hw]/ directory
-# 	[fir_dsp | mm2s | s2mm].[hw_emu | hw].xo  
-#	[fir_dsp | mm2s | s2mm].[hw_emu | hw].xo.compile_summary  
-#	v++_[fir_dsp | mm2s | s2mm].[hw_emu | hw].log
+# 	[fir_hls | datamover].[hw_emu | hw].xo 
+#	[fir_hls | datamover].[hw_emu | hw].xo.compile_summary 
+#	v++_[fir_hls | datamover].[hw_emu | hw].log
 #	_x
-kernels: $(FILTER_KERNEL_XO)	\
-	 $(S2MM_KERNEL_XO)	\
-	 $(MM2S_KERNEL_XO)
+kernels: $(FILTER_KERNEL_XO) \
+         $(DATAMOVER_KERNEL_XO)
 
-$(FILTER_KERNEL_XO): $(FILTER_KERNEL_SRC)   $(FILTER_KERNEL_H)
-	python create_fir_coefs.py -dsp  $(N_FIR_FILTERS)  $(N_FIR_TAPS)  $(IMPULSE_AREA)   > $(SYSTEM_SETTINGS_H)
+$(FILTER_KERNEL_XO): $(FILTER_KERNEL_SRC) $(FILTER_KERNEL_H)
+	python $(DESIGN_REPO)/create_fir_coefs.py -hls $(N_FIR_FILTERS) $(N_FIR_TAPS) $(IMPULSE_AREA) > $(SYSTEM_SETTINGS_H)
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
-	v++ --target $(TARGET) $(FIR_KERNEL_VPP_FLAGS)  $(VPP_FLAGS) -c -k $(FILTER_KERNEL_NAME) $(FILTER_KERNEL_SRC) -o $@
+	v++ --target $(TARGET) $(FIR_KERNEL_VPP_FLAGS) $(VPP_FLAGS) -c -k $(FILTER_KERNEL_NAME) $(FILTER_KERNEL_SRC) -o $@
 
-$(S2MM_KERNEL_XO): $(S2MM_KERNEL_SRC)
+$(DATAMOVER_KERNEL_XO):
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
-	v++ --target $(TARGET) $(S2MM_KERNEL_VPP_FLAGS) $(VPP_FLAGS) -c -k $(S2MM_KERNEL_NAME)   $(S2MM_KERNEL_SRC) -o $@   
-
-$(MM2S_KERNEL_XO): $(MM2S_KERNEL_SRC)
-	mkdir -p $(BUILD_TARGET_DIR); \
-	cd $(BUILD_TARGET_DIR); \
-	v++ --target $(TARGET) $(MM2S_KERNEL_VPP_FLAGS) $(VPP_FLAGS) -c -k $(MM2S_KERNEL_NAME)   $(MM2S_KERNEL_SRC) -o $@   
+	v++ --target $(TARGET) $(DATAMOVER_KERNEL_VPP_FLAGS) \
+		$(VPP_FLAGS) -c -k $(DATAMOVER_KERNEL_NAME) \
+		$(DATAMOVER_KERNEL_SRC) -o $@
 
 # =========================================================
 # Step 2. XCLBIN File Generation
 # =========================================================
 # This step links the kernels into a xclbin file. 
 # Outputs: in build/[hw_emu | hw]/ directory
-#	vck190_dsp_fir.[hw_emu | hw].xclbin
-#	vck190_dsp_fir.[hw_emu | hw].xclbin.info
-#	vck190_dsp_fir.[hw_emu | hw].xclbin.link_summary
-#	vck190_dsp_fir.[hw_emu | hw].xsa
-#	vck190_dsp_fir.[hw_emu | hw].log
+#	vck190_hls_fir.[hw_emu | hw].xclbin
+#	vck190_hls_fir.[hw_emu | hw].xclbin.info
+#	vck190_hls_fir.[hw_emu | hw].xclbin.link_summary
+#	vck190_hls_fir.[hw_emu | hw].xsa
+#	vck190_hls_fir.[hw_emu | hw].log
 xclbin: $(XCLBIN)
 
 $(XCLBIN): $(S2MM_KERNEL_XO)	\
 	   $(MM2S_KERNEL_XO)	\
-           $(FILTER_KERNEL_XO)
+      $(FILTER_KERNEL_XO)
 	cd $(BUILD_TARGET_DIR);	\
-	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) --config $(MAKEFILES_REPO)/system.cfg -t $(TARGET) -o $@ 	\
-		$(S2MM_KERNEL_XO)	\
-		$(MM2S_KERNEL_XO)	\
+	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) -o $@ \
+		$(DATAMOVER_KERNEL_XO)	\
 		$(FILTER_KERNEL_XO)
 
 # =========================================================
@@ -284,11 +293,13 @@ $(XCLBIN): $(S2MM_KERNEL_XO)	\
 # This step compiles the A72 application. This step is the  
 # same for TARGET=[hw_emu | hw]. Compile the PS code.
 # Outputs: in build/ directory
-#	fir_dsp_app.o 
-# 	fir_dsp_xrt.elf
+#	fir_hls_app.o 
+# 	fir_hls_xrt.elf
 application:
-	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_DIR)/fir_dsp_app.o $(GCC_LIB_INC) $(GCC_LIB)
-	$(CXX) $(BUILD_DIR)/fir_dsp_app.o $(GCC_LIB_INC) $(GCC_LIB) -o $(APP_ELF)
+	mkdir -p $(BUILD_TARGET_DIR); \
+	cd $(BUILD_TARGET_DIR); \
+	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o fir_hls_app.o $(GCC_LIB_INC) $(GCC_LIB); \
+	$(CXX) fir_hls_app.o $(GCC_LIB_INC) $(GCC_LIB) -o $(APP_ELF)
 
 # =========================================================
 # Step 4. Package Generation  

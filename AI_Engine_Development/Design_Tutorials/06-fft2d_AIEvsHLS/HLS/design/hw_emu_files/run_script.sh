@@ -18,4 +18,4 @@ cd /mnt/sd-mmcblk0p1
 export XILINX_XRT=/usr
 ./init.sh
 
-./fft_2d_dsp_xrt.elf a.xclbin
+./fft_2d_hls_xrt.elf a.xclbin

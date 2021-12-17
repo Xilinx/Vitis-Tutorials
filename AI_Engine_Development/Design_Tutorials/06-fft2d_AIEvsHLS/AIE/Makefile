@@ -100,6 +100,15 @@ ITER_CNT := 8
 # =========================================================
 EN_TRACE := 0
 
+######################################
+# FFT 2D Datatype can be,
+# cint16 (Default) or cfloat...
+# 0=cint16(Default)
+# 1=cfloat
+######################################
+
+FFT_2D_DT := 0
+
 # =========================================================
 # Source directory
 # =========================================================
@@ -117,7 +126,16 @@ SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
 HW_EMU_RUN_FILES_REPO  := $(DESIGN_REPO)/hw_emu_files
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-FFTPT_BLD_DIR    := $(BASE_BLD_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cint16_dsns
+
+else
+   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cfloat_dsns
+
+endif
+
+FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 WORK_DIR         := Work
@@ -127,10 +145,10 @@ EMBEDDED_EXEC_SCRIPT := run_script.sh
 
 ######################################
 # When TARGET=hw_emu, hw_emu launch...
-# 0 = Disabled (Default).
-# 1 = Enabled.
+# 1 = Enabled (Default).
+# 0 = Disabled.
 ######################################
-LAUNCH_HW_EMU_EXEC := 0
+LAUNCH_HW_EMU_EXEC := 1
 
 # Print all options passed to Makefile
 print-%  : ; @echo $* = $($*)
@@ -179,7 +197,17 @@ AIE_FLAGS += --verbose
 AIE_FLAGS += --Xpreproc="-DFFT2D_INSTS=$(FFT_2D_INSTS)"
 AIE_FLAGS += --Xpreproc="-DMAT_ROWS=$(MAT_ROWS)"
 AIE_FLAGS += --Xpreproc="-DMAT_COLS=$(MAT_COLS)"
+AIE_FLAGS += --Xpreproc="-DFFT_2D_DT=$(FFT_2D_DT)"
 AIE_FLAGS += --platform=$(PLATFORM)
+
+ifeq ($(FFT_2D_DT),1)
+   ifeq ($(FFT_2D_PT),2048)
+      ifeq ($(FFT_2D_INSTS),$(filter $(FFT_2D_INSTS),5 10))
+         AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+      
+      endif
+   endif
+endif
 
 AIE_FLAGS += --log-level=5
 AIE_FLAGS += --test-iterations=2
@@ -203,6 +231,7 @@ GCC_FLAGS += -DFFT2D_INSTS=$(FFT_2D_INSTS)
 GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
 GCC_FLAGS += -DMAT_ROWS=$(MAT_ROWS)
 GCC_FLAGS += -DMAT_COLS=$(MAT_COLS)
+GCC_FLAGS += -DFFT_2D_DT=$(FFT_2D_DT)
 
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt
 GCC_INC_FLAGS += -I$(XILINX_VITIS)/aietools/include/
@@ -234,6 +263,7 @@ VPP_FLAGS += --verbose
 VPP_FLAGS += -g
 
 DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)
+DATAMOVER_KERNEL_VPP_FLAGS += -D FFT_2D_DT=$(FFT_2D_DT)
 #DATAMOVER_KERNEL_VPP_FLAGS += --hls.jobs 32
 
 VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_0
@@ -277,6 +307,9 @@ endif
 
 VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/x$(FFT_2D_INSTS).cfg
 VPP_LINK_FLAGS += --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true
+
+VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
+#VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.RETIMING}={true}
 
 #VPP_LINK_FLAGS += --vivado.synth.jobs 32
 #VPP_LINK_FLAGS += --vivado.impl.jobs 32
@@ -410,9 +443,10 @@ application: $(LIBADF_A)
 # 	v++.package_summary
 # 	v++_package.log
 package:
-	@rm -rf $(EMBEDDED_PACKAGE_OUT)
+	rm -rf $(EMBEDDED_PACKAGE_OUT)
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p $(PKG_FLAGS)
+	cp -rf $(BUILD_TARGET_DIR)/package $(BUILD_TARGET_DIR)/package_backup
 
 # =========================================================
 # Step 6. Run Hardware Emulation 
@@ -458,6 +492,7 @@ endif
 # ==> clean_target
 # ==> clean_insts
 # ==> clean_fftpt
+# ==> clean_fft2d_dt
 # ==> cleanall
 # ========================================================
 
@@ -469,16 +504,20 @@ run: sd_card run_emu
 
 #Clean generated files
 clean_target:
-	@echo "Cleaning Target Build Dir..."
+	@echo "Cleaning $(TARGET) Target Build Dir..."
 	rm -rf $(BUILD_TARGET_DIR)
 
 clean_insts:
-	@echo "Cleaning $(FFT_2D_INSTS)x Build Dir..."
+	@echo "Cleaning $(FFT_2D_INSTS)x Builds..."
 	rm -rf $(INSTS_BLD_DIR)
 
 clean_fftpt:
-	@echo "Cleaning $(MAT_ROWS)x$(MAT_COLS) FFT Build Dir..."
+	@echo "Cleaning $(MAT_ROWS)x$(MAT_COLS) FFT Builds..."
 	rm -rf $(FFTPT_BLD_DIR)
+
+clean_fft2d_dt:
+	@echo "Cleaning $(FFT_2D_DT)_impl Builds..."
+	rm -rf $(FFT_2D_DT_DIR)
 
 cleanall:
 	rm -rf $(BASE_BLD_DIR)

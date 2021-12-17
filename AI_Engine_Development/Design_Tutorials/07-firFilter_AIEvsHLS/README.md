@@ -9,7 +9,7 @@
 
 # Versal AI Engine/HLS FIR Filter Tutorial
 
-***Version: Vitis 2021.1***
+***Version: Vitis 2021.2***
 
 ## Table of Contents
 [Introduction](#introduction)
@@ -129,9 +129,9 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and setup the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and setup the [VCK190 Vitis Platform for 2021.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
-* [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/index.html)
+* [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/index.html)
 
 * Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
@@ -174,7 +174,7 @@ platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the previous command should be as follows:
 ```bash
-"baseName": "xilinx_vck190_base_202110_1",
+"baseName": "xilinx_vck190_base_202120_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -211,16 +211,16 @@ Typically, one of the first steps of a design is deciding on an architecture/imp
 
 For DSP based design, the designer begins with an estimate of the system clock rate that the PL is capable of, and divides that by the desired filter throughput to determine how many clock cycles can be used to process a sample. By feeding this number into the FIR Compiler, the FIR is constructed with the minimum resources required to implement the design; the higher the clock cycles per sample, the fewer resources used.
 
-For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/ QoR page](https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/user_guide/L2/5-benchmark.html).
+For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/ QoR page](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/user_guide/L2/5-benchmark.html).
 
 For the filter sizes selected in this tutorial, the following AI Engine throughputs were obtained:
 
-| Taps | Throughput   |
-|------|--------------|
-|   15 | 986.1 MSPS(*)|
-|   64 | 266.3 MSPS   |
-|  129 | 171.4 MSPS   |
-|  240 | 105.9 MSPS   |
+| Taps | Throughput    |
+|------|---------------|
+|   15 | 867.81 MSPS(*)|
+|   64 | 252.90 MSPS   |
+|  129 | 157.63 MSPS   |
+|  240 | 92.011 MSPS   |
 
 (*)Note: This result is I/O bound.
 
@@ -237,14 +237,10 @@ The AI Engine can reduce the overall requirement on the PL and DSPs in a design 
 
 | Impl | Filters | Taps | Param        | Throughput | LUTS  | Flops | BRAM  | DSP   | AIE   |
 |------|---------|------|--------------|------------|-------|-------|-------|-------|-------|
-| AIE  |     1   |   64 | win=256      | 266.3 MSPS |   213 |   586 |     0 |     0 |     1 |
-| HLS  |     1   |   64 | ck_per_sam=1 | 299.8 MSPS |  1025 |  4912 |     0 |    64 |     0 |
-| AIE  |    10   |   64 | win=256      | 266.3 MSPS |   211 |   586 |     0 |     0 |    10 |
-| HLS  |    10   |   64 | ck_per_sam=1 | 299.8 MSPS |  8787 | 46995 |     0 |   640 |     0 |
-| AIE  |     1   |  240 | win=256      | 112.6 MSPS |   217 |   586 |     0 |     0 |     1 |
-| HLS  |     1   |  240 | ck_per_sam=4 |  75.0 MSPS |  1616 |  6243 |     0 |    64 |     0 |
-| AIE  |    10   |  240 | win=256      | 112.6 MSPS |   213 |   586 |     0 |     0 |    10 |
-| HLS  |    10   |  240 | ck_per_sam=4 |  74.9 MSPS | 14760 | 60209 |     0 |   640 |     0 |
+| AIE  |     1   |   64 | win=256      | 252.9 MSPS |   213 |   586 |     0 |     0 |     1 |
+| HLS  |     1   |   64 | ck_per_sam=1 | 494.0 MSPS |  1172 |  4333 |     0 |    64 |     0 |
+| AIE  |     1   |  240 | win=256      | 92.01 MSPS |   217 |   586 |     0 |     0 |     1 |
+| HLS  |     1   |  240 | ck_per_sam=1 | 483.7 MSPS |  1616 |  6243 |     0 |    64 |     0 |
 
 It is clear that the AI Engine implementation offers significant savings of PL resources, especially as the design size increases.
 
@@ -296,10 +292,10 @@ The following table provides some additional information on data on throughput f
 
 | Taps | Throughput (CASC_LEN=1) | Throughput (CASC_LEN=2) | Throughput (CASC_LEN=4) |
 |------|-------------------------|-------------------------|-------------------------|
-|   15 | 986.1 MSPS(*)           | Too small to cascade    | Too small to cascade    |
-|   64 | 266.3 MSPS              | 352.6 MSPS              | 450.0 MSPS              |
-|  129 | 171.4 MSPS              | 254.8 MSPS              | 324.1 MSPS              |
-|  240 | 105.9 MSPS              | 179.8 MSPS              | 234.4 MSPS              |
+|   15 | 867.8 MSPS(*)           | Too small to cascade    | Too small to cascade    |
+|   64 | 252.9 MSPS              | 352.6 MSPS              | 450.0 MSPS              |
+|  129 | 157.6 MSPS              | 254.8 MSPS              | 324.1 MSPS              |
+|  240 |  92.0 MSPS              | 179.8 MSPS              | 234.4 MSPS              |
 
 (*)Note: this result is I/O bound.
 
@@ -318,7 +314,7 @@ The following is data for the AI Engine with one 64-tap FIR filter example for v
 | Impl | Filters | Taps | Window Size | Throughput | Latency  |
 |------|---------|------|-------------|------------|----------|
 | AIE  |     1   |   64 |       64    | 200.0 MSPS | 0.453 us |
-| AIE  |     1   |   64 |      256    | 266.3 MSPS | 1.287 us |
+| AIE  |     1   |   64 |      256    | 252.9 MSPS | 1.264 us |
 | AIE  |     1   |   64 |     1024    | 297.8 MSPS | 4.533 us |
 
 If, for example, our throughput requirements were 250 MSPS, a window size of 256 would satisfy that performance requirement with the least amount of latency.
@@ -330,14 +326,22 @@ If, for example, our throughput requirements were 250 MSPS, a window size of 256
 <details>
 <summary>Measuring Resources, Throughput, Latency, and Power</summary>
 
-## Resource Utilization
-The resource utilization information can be found in the report_dir directory, with the file name: fir_[aie|dsp]_<number_of_fir_filters>firs_<number_of_filter_taps>taps_utilization.txt
+## Resource and Power Utilization
+The power and resource utilization information can be found in the report_dir directory, with the file name: fir_[aie|dsp]_<number_of_fir_filters>firs_<number_of_filter_taps>taps_utilization.txt
 
 Or, if you wish to extract this information from the design yourself, open the project in Vivado tools:
 
 `build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
 
-Then open the implemented design and select **Report Utilization**.
+Then open the implemented design and select **Report Utilization**. For AIE Utilisation and Power use Xilinx Power Estimator (XPE).
+Following is the utilisation and power observations:
+| Impl | Filters | Taps | AIE Cores | Vector Load | No. Of Active Memory Banks | Memory R/W Rate | AIE Tiles | Interconnect Load | Power  | Performance (MSPS/Watt) |
+|------|---------|------|-----------|-------------|----------------------------|-----------------|-----------|-------------------|--------|-------------------------|
+| AIE  |     1   |   15 |       1   |  6%         | 10                         | 1%              | 3         | 4%                | 580 mW | 1496.23                 |
+| AIE  |     1   |   64 |       1   | 22%         | 10                         | 7%              | 3         | 4%                | 606 mW | 417.33                  |
+| AIE  |     1   |  129 |       1   | 35%         | 10                         | 10%             | 3         | 4%                | 625 mW | 252.22                  |
+| AIE  |     1   |  240 |       1   | 46%         | 10                         | 13%             | 3         | 4%                | 642 mW | 143.32                  |
+
 </details>
 
 <details>
@@ -362,31 +366,18 @@ A trace of the AI Engine implementation with N_FIR_FILTERS=5 and N_FIR_TAPS=64 i
 
 To measure throughput, the cursors are lined up with the start and end of the read (S2MM) stream (cursor times with ns resolution can be obtained by zooming in further):
 ```
-Data Transfer Interval = 560,429.557 - 551,981.333 = 8,448.224 us
+Data Transfer Interval = 16.196 us
 
 Throughput = Samples /(Data Transfer Interval)
-          = (512 x 4096 bytes) / 8448.224 us
-          = 248.2 Msamples / sec
+          = (512 x 8 Samples) / 16.196 us
+          = 252.901 Msamples / sec
 ```
 
 To measure latency, the measurement is made from the start of the write (MM2S) stream to the start of the read (S2MM) stream:
 ```
-Latency = 551,981.333 - 551,976.147 = 5.186 us
+Latency = 1.264 us
 ```
 
-</details>
-
-<details>
-<summary>Power Utilization</summary>
-
-### Power Utilization
-The power utilization information can be found in the report_dir directory, with the file name: fir_[aie|dsp]_<number_of_fir_filters>firs_<number_of_filter_taps>taps_power.txt
-
-Or, if you wish to extract this information from the design yourself, open the project in Vivado:
-
-`build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
-
-Then open the implemented design and select **Report Power**.
 </details>
 
 # Conclusion
@@ -396,7 +387,7 @@ In this tutorial, we have demonstrated how to implement FIR filter chains in bot
 Also, we explored the AI Engine implementation and how design decisions can affect the overall performance for a FIR filter chain with respect to throughput, resources and performance. Part of this exercise was to show that small FIRs taken in isolation may not be that efficient an implementation when targeting AI Engine but as the FIRs increase in size and the number of instances increase, it becomes apparent that AI Engine becomes the most efficient solution. It can also be seen from the results, how even more compute, beyond this example, and a larger data path will enable greater efficiency of implementation and performance than the traditional FPGA programmable logic and DSP engines, if that is what your application needs.
 
 # Revision History
-* Jul 2021 - Initial Release
+* Dec 2021 Release
 
 # Support
 
@@ -407,8 +398,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
 You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 

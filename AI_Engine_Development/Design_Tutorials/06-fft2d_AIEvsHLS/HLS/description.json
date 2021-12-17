@@ -1,7 +1,7 @@
 {
     "name": "AI_Engine_Development-06-fft_2d_hls_tutorial",
     "description": "fft_2d_hls_tutorial",
-    "flow": "versal",
+    "flow": "vitis",
 
     "platform_whitelist": [ "vck190"],
     "platform_blacklist": [],
@@ -24,12 +24,17 @@
                 }
             }
         ], 
-        "targets": [
-            "vitis_hw_emu", 
+        "targets": [ 
             "vitis_hw_build", 
             "vitis_hw"
         ], 
+        "make_options" : [ "TARGET='hw'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'" ], 
         "category": "canary"
-
+        "custom_build_target": {
+            "all": "run",
+            "hw": "xclbin"
+        },
+        "custom_board_target": "run",
+        "customized_params": "multi_params.json"
     }
 }

@@ -100,6 +100,15 @@ ITER_CNT := 8
 # =========================================================
 EN_TRACE	:= 0
 
+######################################
+# FFT 2D Datatype can be,
+# cint16 (Default) or cfloat...
+# 0=cint16(Default)
+# 1=cfloat
+######################################
+
+FFT_2D_DT := 0
+
 # =========================================================
 # Source directory
 # =========================================================
@@ -117,7 +126,16 @@ SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
 HW_EMU_RUN_FILES_REPO  := $(DESIGN_REPO)/hw_emu_files
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-FFTPT_BLD_DIR    := $(BASE_BLD_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cint16_dsns
+
+else
+   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cfloat_dsns
+
+endif
+
+FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 
@@ -143,8 +161,8 @@ DATAMOVER_KERNEL_XO  := $(DATAMOVER_KERNEL_TOP).$(TARGET)
 
 FFT_2D_KERNEL_XO := fft_2d.$(TARGET)
 
-APP_ELF := fft_2d_dsp_xrt.elf
-XCLBIN  := vck190_dsp_fft_2d.$(TARGET).xclbin
+APP_ELF := fft_2d_hls_xrt.elf
+XCLBIN  := vck190_hls_fft_2d.$(TARGET).xclbin
 
 # =========================================================
 # Kernel Source Files repository
@@ -156,7 +174,7 @@ FFT_2D_KERNEL_SRC := $(PL_SRC_REPO)/fft_2d.cpp
 # =========================================================
 # Application Source Files repository
 # =========================================================
-APP_SRC_CPP := $(HOST_APP_SRC)/fft_2d_dsp_app.cpp
+APP_SRC_CPP := $(HOST_APP_SRC)/fft_2d_hls_app.cpp
 
 # =========================================================
 # Application Compiler and Linker Flags
@@ -169,6 +187,7 @@ GCC_FLAGS += -DFFT2D_INSTS=$(FFT_2D_INSTS)
 GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
 GCC_FLAGS += -DMAT_ROWS=$(MAT_ROWS)
 GCC_FLAGS += -DMAT_COLS=$(MAT_COLS)
+GCC_FLAGS += -DFFT_2D_DT=$(FFT_2D_DT)
 
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt
 GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include
@@ -192,9 +211,11 @@ FFT_2D_KERNEL_VPP_FLAGS := --hls.pre_tcl $(DIRECTIVES_REPO)/hls_pre.tcl
 FFT_2D_KERNEL_VPP_FLAGS += --hls.clock $(FFT_2D_VPP_CLOCK_FREQ):fft_2d
 FFT_2D_KERNEL_VPP_FLAGS += -D MAT_ROWS=$(MAT_ROWS)
 FFT_2D_KERNEL_VPP_FLAGS += -D MAT_COLS=$(MAT_COLS)
+FFT_2D_KERNEL_VPP_FLAGS += -D FFT_2D_DT=$(FFT_2D_DT)
 #FFT_2D_KERNEL_VPP_FLAGS += --hls.jobs 32
 
 DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)
+DATAMOVER_KERNEL_VPP_FLAGS += -D FFT_2D_DT=$(FFT_2D_DT)
 #DATAMOVER_KERNEL_VPP_FLAGS += --hls.jobs 32
 
 VPP_LINK_FLAGS := --clock.freqHz $(FFT_2D_VPP_CLOCK_FREQ):fft_2d_0
@@ -253,81 +274,162 @@ VPP_LINK_FLAGS += --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
 #VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.RETIMING}={true}
 
-ifeq ($(FFT_2D_PT),64)
-   ifeq ($(FFT_2D_INSTS),1)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
-      
-   else ifeq ($(FFT_2D_INSTS),5)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_Explore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
-   else
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
+ifeq ($(FFT_2D_DT),0)
+   ifeq ($(FFT_2D_PT),64)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_3}
+         
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+               
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      endif
+   else ifeq ($(FFT_2D_PT),128)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Power_DefaultOpt}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+   
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      endif
+   else ifeq ($(FFT_2D_PT),256)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_low}
+         
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      endif
+   else ifeq ($(FFT_2D_PT),512)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Power_DefaultOpt}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_low}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      endif
+   else ifeq ($(FFT_2D_PT),2048)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_2}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}      
+         
+      endif
    endif
-else ifeq ($(FFT_2D_PT),128)
-   ifeq ($(FFT_2D_INSTS),1)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Power_DefaultOpt}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-
-   else ifeq ($(FFT_2D_INSTS),5)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
-   else
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
-   endif
-else ifeq ($(FFT_2D_PT),256)
-   ifeq ($(FFT_2D_INSTS),1)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
-      
-   else ifeq ($(FFT_2D_INSTS),5)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
-      
-   else
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
-   endif
-else ifeq ($(FFT_2D_PT),512)
-   ifeq ($(FFT_2D_INSTS),1)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Power_DefaultOpt}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
-   else ifeq ($(FFT_2D_INSTS),5)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Explore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
-   else
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Retiming}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
-   endif
-else ifeq ($(FFT_2D_PT),2048)
-   ifeq ($(FFT_2D_INSTS),1)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
-   else ifeq ($(FFT_2D_INSTS),5)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
-      
-   else
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      
+else
+   ifeq ($(FFT_2D_PT),64)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_WLBlockPlacement}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      endif
+   else ifeq ($(FFT_2D_PT),128)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_WLBlockPlacement}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+   
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Flow_RunPhysOpt}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_2}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+               
+      endif
+   else ifeq ($(FFT_2D_PT),256)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_WLBlockPlacement}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+   
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      endif
+   else ifeq ($(FFT_2D_PT),512)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      endif
+   else ifeq ($(FFT_2D_PT),2048)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         
+      else ifeq ($(FFT_2D_INSTS),5)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_1}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         
+      endif
    endif
 endif
 
@@ -398,11 +500,11 @@ $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo:
 # This step links the graph executable and
 # the kernels into a xclbin file.
 # Outputs: in build/[hw_emu | hw]/ directory
-#	vck190_dsp_fft_2d.[hw_emu | hw].xclbin
-#	vck190_dsp_fft_2d.[hw_emu | hw].xclbin.info
-#	vck190_dsp_fft_2d.[hw_emu | hw].xclbin.link_summary
-#	vck190_dsp_fft_2d.[hw_emu | hw].xsa
-#	vck190_dsp_fft_2d.[hw_emu | hw].log
+#	vck190_hls_fft_2d.[hw_emu | hw].xclbin
+#	vck190_hls_fft_2d.[hw_emu | hw].xclbin.info
+#	vck190_hls_fft_2d.[hw_emu | hw].xclbin.link_summary
+#	vck190_hls_fft_2d.[hw_emu | hw].xsa
+#	vck190_hls_fft_2d.[hw_emu | hw].log
 xclbin: $(BUILD_TARGET_DIR)/$(XCLBIN)
 
 $(BUILD_TARGET_DIR)/$(XCLBIN): kernels
@@ -416,13 +518,13 @@ $(BUILD_TARGET_DIR)/$(XCLBIN): kernels
 # This step compiles the A72 application. This step is the 
 # same for TARGET=[hw_emu | hw]. Compile the PS code.
 # Outputs: in build/ directory
-#	fft_2d_dsp_app.o
-# 	fft_2d_dsp_xrt.elf
+#	fft_2d_hls_app.o
+# 	fft_2d_hls_xrt.elf
 application:
 	mkdir -p $(BUILD_TARGET_DIR)
-	@rm -rf $(BUILD_TARGET_DIR)/fft_2d_dsp_app.o $(BUILD_TARGET_DIR)/$(APP_ELF)
-	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/fft_2d_dsp_app.o $(GCC_INC_LIB) $(GCC_LIB)
-	$(CXX) $(BUILD_TARGET_DIR)/fft_2d_dsp_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
+	@rm -rf $(BUILD_TARGET_DIR)/fft_2d_hls_app.o $(BUILD_TARGET_DIR)/$(APP_ELF)
+	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/fft_2d_hls_app.o $(GCC_INC_LIB) $(GCC_LIB)
+	$(CXX) $(BUILD_TARGET_DIR)/fft_2d_hls_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
 
 # =========================================================
 # Step 4. Package Generation 
@@ -436,9 +538,10 @@ application:
 # 	v++.package_summary
 # 	v++_package.log
 package:
-	@rm -rf $(EMBEDDED_PACKAGE_OUT)
+	rm -rf $(EMBEDDED_PACKAGE_OUT)
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p $(PKG_FLAGS)
+	cp -rf $(BUILD_TARGET_DIR)/package $(BUILD_TARGET_DIR)/package_backup
 
 # =========================================================
 # Step 5. Run Hardware Emulation 
@@ -503,6 +606,10 @@ clean_insts:
 clean_fftpt:
 	@echo "Cleaning $(MAT_ROWS)x$(MAT_COLS) FFT Build Dir..."
 	rm -rf $(FFTPT_BLD_DIR)
+
+clean_fft2d_dt:
+	@echo "Cleaning $(FFT_2D_DT)_impl Builds..."
+	rm -rf $(FFT_2D_DT_DIR)
 
 cleanall:
 	rm -rf $(BASE_BLD_DIR)

@@ -12,4 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-config_dataflow -default_channel fifo -fifo_depth 1024 -start_fifo_depth 8
+#config_dataflow -default_channel fifo -fifo_depth 1024 -start_fifo_depth 8
+#set_param hls.enable_reflow_partition_reshape 0
+config_dataflow -start_fifo_depth 16

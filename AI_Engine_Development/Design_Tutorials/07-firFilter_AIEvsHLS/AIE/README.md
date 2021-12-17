@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -67,16 +67,6 @@ make run TARGET=hw N_FIR_FILTERS=5 N_FIR_TAPS=15 EN_TRACE=1   (hardware, 5 FIR f
 
 This command will run the `make kernels`,`make graph`,`make xclbin`,`make application`,`make package` and `make run_emu` for hardware emulation or to run on hardware (VCK190 board), depending on the `TARGET` you specify. The default `TARGET` without specification is hw_emu. The settings also apply to the following individual make steps.
 
-Note: Simulation takes considerably longer to execute the application than when running on actual hardware, so it is recommended to simulate with a smaller data set to have it complete in a reasonable time. The hardware implementation uses a much larger data set to reduce measurement effects.
-In the file `\<project>/AIE/design/app_src/fir_aie_app.c`, un-comment the following, as appropriate:
-```
-#define REPEAT_OFFSET   4096
-#define REPETITIONS      509     <-- use this for TARGET=hw;     will produce a 2M sample data set
-//#define REPETITIONS        3   <-- use this for TARGET=hw_emu; will produce an 8K sample data set
-#define FLUSH_SAMPLES   4096
-
-```
-
 **Note**
 
 1) The generated files for a particular build are placed under individual directory: build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
@@ -90,7 +80,7 @@ The individual make steps to build the design with the options applied to them a
 <summary>make kernels: Compile PL Kernels</summary>
 
 ## make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202110_1`) and compiles them into their respective XO files.
+In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202120_1`) and compiles them into their respective XO files.
 
 The following command compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):
 
@@ -105,8 +95,9 @@ mkdir -p ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 cd ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
 v++ 	--target hw_emu					\
-	--hls.clock 300000000:s2mm 			\
-	--platform xilinx_vck190_base_202110_1		\
+	--hls.clock 250000000:datamover 			\
+    -D N_FIR_TAPS=15
+	--platform xilinx_vck190_base_202120_1		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
@@ -114,19 +105,7 @@ v++ 	--target hw_emu					\
 	-k s2mm 					\
 	../../../design/pl_src/s2mm.cpp 		\
 	-o s2mm.hw_emu.xo   
-
-v++ 	--target hw_emu					\
-	--hls.clock 300000000:mm2s 			\
-	--platform xilinx_vck190_base_202110_1		\
-	--save-temps 					\
-	--temp_dir _x 					\
-	--verbose 					\
-	-g -c 						\
-	-k mm2s 					\
-	../../../design/pl_src/mm2s.cpp 		\
-	-o mm2s.hw_emu.xo   
-
- ```
+```
 Summary of the switches used:
 |Switch|Description|
 |  ---  |  ---  |
@@ -145,13 +124,11 @@ Summary of the switches used:
 
 |Input|Description|
 |  ---  |  ---  |
-|s2mm.cpp|The stream-to-memory-mapped data-mover PL kernel source code.|
-|mm2s.cpp|The memory-mapped-to-stream data-mover PL kernel source code.|
+|datamover.cpp|The data-mover PL kernel source code.|
 
 |Output|Description|
 |  ---  |  ---  |
-|s2mm.hw_emu.xo|The stream-to-memory-mapped data-mover kernel object file.|
-|mm2s.hw_emu.xo|The memory-mapped-to-stream data-mover kernel object file.|
+|datamover.hw/hw_emu.xo|The data-mover kernel object file.|
 
 </details>
 
@@ -174,11 +151,13 @@ The expanded command is as follows:
 ```
 cd ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
-aiecompiler 	-include=$(DSPLIB_ROOT)/L1/src/aie 		\
+aiecompiler -include=$(DSPLIB_ROOT)/L1/src/aie 		\
+      --Xpreproc="-N_FIR_FILTERS=1" \
+      --Xpreproc="-N_FIR_TAPS=15" \
 		-include=$(DSPLIB_ROOT)/L1/include/aie 		\
 		-include=$(DSPLIB_ROOT)/L2/include/aie 		\
 		-include=../../../design/aie_src 		\
-		--platform=$(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm 	\
+		--platform=$(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm 	\
 		--workdir=Work 					\
 		--log-level=5 					\
 		--pl-freq=300 					\
@@ -232,19 +211,17 @@ The expanded command is as follows:
 cd ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
 v++ 	-l 						\
-	--platform xilinx_vck190_base_202110_1		\
+	--platform xilinx_vck190_base_202120_1		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
 	-g 						\
 	--clock.defaultTolerance 0.001 			\
-	--clock.freqHz 300000000:mm2s_0 		\
-	--clock.freqHz 300000000:s2mm_0 		\
-	--config ../../../Makefiles/system.cfg 		\
+	--clock.freqHz 250000000:datamover_0 		\
+	--config $(DESIGN_REPO)/system.cfg 		\
 	-t hw_emu 					\
 	-o vck190_aie_fir.hw_emu.xclbin  		\
-	s2mm.hw_emu.xo					\
-	mm2s.hw_emu.xo					\
+	datamover.hw_emu.xo					\
         ../libadf.a
 
 ```
@@ -252,8 +229,7 @@ v++ 	-l 						\
 If EN_TRACE is enabled, the following `v++` flags are also set
 ```
 	--profile.trace_memory DDR			\
-	--profile.data s2mm:s2mm_0:s			\
-	--profile.data mm2s:mm2s_0:s			\
+   --profile.data datamover:datamover_0:all \
 	--profile.data ai_engine_0.DataIn		\
 	--profile.data ai_engine_0.DataOut
 
@@ -281,8 +257,7 @@ Summary of the switches used:
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
-|s2mm.hw_emu.xo|The stream-to-memory-mapped data-mover kernel object file.|
-|mm2s.hw_emu.xo|The memory-mapped-to-stream data-mover kernel object file.|
+|datamover.hw/hw_emu.xo|The data-mover kernel object file.|
 |libadf.a|Compiled AI Engine design graph|
 
 |Output Objects|Description|
@@ -307,6 +282,9 @@ aarch64-linux-gnu-g++ 	-O 					\
 			-D__linux__ 				\
 			-D__PS_ENABLE_AIE__			\
 			-DXAIE_DEBUG 				\
+         -DITER_CNT=8 \
+         -DN_FIR_FILTERS=1 \
+         -DN_FIR_TAPS=15 \
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/include/xrt 		\
 			-I$(XILINX_VITIS)/aietools/include/ 									\
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/include		\
@@ -325,6 +303,9 @@ aarch64-linux-gnu-g++ 	-O 					\
 			-D__linux__ 				\
 			-D__PS_ENABLE_AIE__ 			\
 			-DXAIE_DEBUG				\
+         -DITER_CNT=8 \
+         -DN_FIR_FILTERS=1 \
+         -DN_FIR_TAPS=15 \
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/include/xrt 		\
 			-I$(XILINX_VITIS)/aietools/include/ 									\			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/include		\
 			-I$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/sysroots/aarch64-xilinx-linux/usr/lib			\
@@ -370,7 +351,7 @@ Summary of the switches used:
 |-l\<library\>|Search the library named `library` when linking. The 2D-FFT tutorial requires `adf_api_xrt` and `xrt_coreutil` libraries.|
 |-L \<dir\>|Add directory `<dir>` to the list of directories to be searched for -l.|
 
-[XRT Documentation](https://xilinx.github.io/XRT/2021.1/html/index.html)
+[XRT Documentation](https://xilinx.github.io/XRT/2021.2/html/index.html)
 [Details of Host Application Programming](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-for-Bare-metal-Systems)
 
 |Inputs Sources|Description|
@@ -409,7 +390,7 @@ v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
 	--temp_dir ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/_x						\
-	-f xilinx_vck190_base_202110_1												\
+	-f xilinx_vck190_base_202120_1												\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 									\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/rootfs.ext4 						\
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/Image 						\
@@ -478,12 +459,12 @@ cd ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up:
 ```bash
-root@versal-rootfs-common-2021_1:~#
+root@versal-rootfs-common-2021_2:~#
 ```
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2021_1:~# xinit: giving up
+root@versal-rootfs-common-2021_2:~# xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -544,7 +525,7 @@ Running the following command will copy the boot image (`fir_aie_$(N_FIR_FILTERS
 make run_emu TARGET=hw
 ```
 
-Now follow **Steps 1-9** to run the `lenet_xrt.elf` executable on your VCK190 board.
+Now follow **Steps 1-9** to run the `fir_aie_xrt.elf` executable on your VCK190 board.
 
 **Step 1.** Ensure your board is powered OFF.
 
@@ -569,7 +550,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power ON the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 ```
@@ -621,16 +602,12 @@ Notice the system debugging and profiling IP (DPA) is added to the PL region of 
 ## AI Engine and PL Kernels
 The top level AI Engine graph fir_aie_graph.h instantiates the symmetric FIR filter from the AI Engine DSP library, (DSPLib), and uses a `for` loop to connect them all together in a chain. The file fir_aie_graph.cpp instantiates the filter chain, and connects it to the AI Engine's  128-bit PLIO interfaces.
 
-The PL-based data movers consist of MM2S and S2MM kernels. The MM2S move data from DDR memory through the NoC to the AI Engine array and the final FIR output from the AI Engine array is moved back to DDR memory through the NoC by the S2MM kernel. In either data mover kernel, the side facing NoC uses a memory mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine array uses an AXI4-Stream interface.
+The PL-based data mover consists of DATAMOVER kernels. It moves a data-pattern into the AIE Engine array via streaming interface the AI Engine array and the final FIR output from the AI Engine array is moved back into DATAMOVER kernel via streaming interface and checks for errors. The AI Engine array interface with the Datamover Kernel uses an AXI4-Stream interface.
 Some additional details regarding the data mover kernels include:
 
-**MM2S**
-* The data width is 128 bits
-* To avoid bandwidth limitation resulting in back pressure which causes performance degradation, the HLS pragma `max_read_burst_length` is set higher than the default to 256 bits.
-
-**S2MM**
-* The data width is 128 bits
-* To avoid bandwidth limitation resulting in back pressure which causes performance degradation, the HLS pragma `max_write_burst_length` is set higher than the default to 256 bits.
+**DATAMOVER**
+* The data width is 128 bits.
+* Frequency 250MHz.
 
 </details>
 
@@ -748,39 +725,24 @@ Note that for running on hardware (hw) or hardware emulation (hw_emu), the main(
 
 In addition to the kernels operating in the AI Engine array, this design specifies kernels to run in the PL region of the device (written in HLS C++). The software design of the data mover kernels are described below:
 
-### mm2s (mm2s.cpp)
-The mm2s kernel reads data from a Memory Mapped AXI4 (MM-AXI4) interface and writes it to an AXI4-Stream Interface
+### datamover (datamover.cpp)
+The datamover kernel reads and write data from and to the AI Engine Array, via the AXI4-Stream Interface
+
 #### Arguments
-The mm2s kernel takes the following arguments:
+The datamover kernel takes the following arguments:
 * `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. In this design, the bit-size is set to 128.
 * `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 128. The remaining three parameters should be set to 0.
 
-The mm2s kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
-#### pragma HLS INTERFACE s_axilite
-The mm2s kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`.
-##### pragma HLS INTERFACE m_axi
-The mm2s kernel has one `m_axi` interface (specifying a AXI4 master I/O protocol) with `offset=slave bundle=gmem`. This interface also has `max_read_burst_length=256`. Part of this AXI4 interface is the Read Address Channel containing the signals `ARBURST` and `ARLEN`. This interface has a burst type `ARBURST=INCR` and can support burst length `ARLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_read_burst_length=256` sets the burst length `ARLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of 16 bytes (128-bits from the `mem` argument) is the previous address plus 16.
-#### pragma HLS INTERFACE axis
-The mm2s kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol)
-#### pragma HLS PIPELINE II=1
-The mm2s kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
+The datamover kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
 
-### s2mm (s2mm.cpp)
-The s2mm kernel reads 128 bits of data from an AXI4-Stream interface and writes it to an AXI Memory mapped interface.
-#### Arguments
-The s2mm kernel takes the following arguments:
-* `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. For the `mem` argument, the bit-size is set to 128.
-* `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface and is set to 128 (same as the `mem` argument). The remaining three parameters should be set to 0.
-
-The s2mm kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
 #### pragma HLS INTERFACE s_axilite
-The s2mm kernel has one `s_axilite` interface  (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`mem`,`s`, and `size`). This interface is also associated with `return`.
-#### pragma HLS INTERFACE m_axi
-The s2mm kernel has one `m_axi` interface (specifying an AXI4 master I/O protocol) with `offset=slave bundle=gmem`. This interface also has `max_write_burst_length=256`. Part of this AXI4 interface is the Write Address channel containing the signals `AWBURST` and `AWLEN`. This interface has a burst type `AWBURST=INCR` and can support burst length `AWLEN` of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The `max_write_burst_length=256` sets the burst length `AWLEN=256` transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of 16 bytes (128-bits from the mem argument) is the previous address plus 16.
+The datamover kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`size` and iterCnt). This interface is also associated with `return`.
+
 #### pragma HLS INTERFACE axis
-The s2mm kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol)
+The datamover kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol)
+
 #### pragma HLS PIPELINE II=1
-The s2mm kernel has a `for` loop that is a candidate for burst write because the memory addresses (mem\[i]) are contiguous (memory accesses across loop iterations are consecutive). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.  
+The datamover kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
 
 </details>
 
@@ -788,7 +750,7 @@ The s2mm kernel has a `for` loop that is a candidate for burst write because the
 <summary>PS Host Application</summary>
 
 ## PS Host Application
-The FIR filter AI Engine tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application.
+The FIR filter AI Engine tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernel. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application.
 
 In addition to the PS host application (`design/app_src/fir_aie_app.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control_xrt.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code.
 
@@ -796,7 +758,7 @@ The AI Engine control code is used by the PS host application for the following 
 * Control the initial loading of the AI Engine kernels
 * Run the graph for several iterations, exit, and reset the AI Engine tiles.
 
-Within the PS host application, three classes are defined (two for the PL kernels (mm2s and s2mm) and one for the FilterChain graph), which defines methods used to control and monitor the corresponding kernels.
+Within the PS host application, three classes are defined (two for the PL kernels (datamover) and one for the FilterChain graph), which defines methods used to control and monitor the corresponding kernels.
 
 The main sections of the PS host application code is described in the following subsections:
 
@@ -806,55 +768,15 @@ Include the `fir_aie_graph.cpp` AI Engine application file. This file contains t
 #include fir_aie_graph.cpp
 ```
 
-### Define Input and Output Files
-A single data file is provides data to stimulate the filter chain.  However, the output data will depend on the value of the makefile parameters N_FIR_FILTERS and N_FIR_TAPS. Data files have been generated for the four corner cases (1 FILTERS / 15 TAPS, 10 FILTERS / 15 TAPS, 1 FILTERS / 240 TAPS, 10 FILTERS / 240 TAPS). For other configurations, the data is not checked.
-```
-#include "input_data.h"
-
-#if (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 15)
-#include "golden_data_1f_15t.h"
-#elif (N_FIR_FILTERS == 10) && (N_FIR_TAPS == 15)
-#include "golden_data_10f_15t.h"
-#elif (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 240)
-#include "golden_data_1f_240t.h"
-#elif (N_FIR_FILTERS == 10) && (N_FIR_TAPS == 240)
-#include "golden_data_10f_240t.h"
-#else
-#include "golden_data_1f_15t.h"
-#endif
-```
-
-### Define Data Sizes
-To enable comparing of the 2 implementations of this design, i.e. AIE and HLS implementation, it is desirable to have a small data set to be able to run it through simulation, and a large data set to run through hardware to minimize the effects of measurement errors on determining the performance metrics. This has been done by providing a small 8k sample of input data (I and Q samples) in which the data repeats twice. The application code then copies the data into potentially much larger buffer, using REPEAT_OFFSET to determine where the data begins to repeat itself, and REPETITIONS to copy from this point forward to the end of the buffer the specified number of times. Having two cycles of data and a fixed offset (REPEAT_OFFSET) is necessary to allow the filter's start-up transient to settle out and reach a steady state for subsequent cycles. Likewise, FLUSH_SAMPLES specifies the number of zero samples to add to the end of the buffer to clear out the FIR filter, so the application can be run multiple times.
-
-```
-#define SAMPLES_PER_WORD   4
-
-#define REPEAT_OFFSET   4096
-#define REPETITIONS      509
-//#define REPETITIONS        3
-#define FLUSH_SAMPLES   4096
-```
-
 ### load_xclbin Function
 This function is responsible for loading the XCLBIN file into the device.
 
-### mm2s Class
+### Datamover Class
 This class provides the following methods for controlling/monitoring this kernel:
-* init(): allocates the input data buffer object (BO), opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
-* run(): starts execution of the mm2s kernel
-* run_wait(): waits for the mm2s kernel to finish
+* init(): Opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
+* run(): starts execution of the datamover kernel
+* waitTo_complete(): waits for the datamover kernel to finish
 * close(): closes the input data buffer object and kernel
-* load(): loads data from the input file into the data buffer, using REPEAT_OFFSET, REPETITIONS and FLUSH_SAMPLES to potentially generate a much larger data set than the input file (see #define-data-sizes).
-
-### s2mm Class
-This class provides the following methods for controlling / monitoring this kernel:
-* init(): allocates the output data buffer object (BO), opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
-* run(): starts execution the s2mm kernel
-* run_wait(): waits for the s2mm kernel to finish
-  Note: This call will only return once it receives the number of samples specified computed in the init function. If the application code hangs at this point, it is waiting from data from the Filter Chain.
-* close(): closes the output data buffer object and kernel
-* golden_check(): Compare data in the output data buffer object with the data from the output file, using REPEAT_OFFSET and REPETITIONS to compare the data correctly(see #define-data-sizes).
 
 ### FIR Chain Class
 This class provides the following methods for controlling the graph:
@@ -872,19 +794,19 @@ The beginning of the A72 application is represented by the main function. It tak
 The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device.
 
 #### 3. Create and Initialize Data Mover Kernels and FIR Chain Graph
-Create the kernel objects, initialize them, and load the input data from the constant array into the input buffer.
+Create the kernel objects and initialize them.
 
-#### 4. Run the Data Mover Kernels and FIR Chain Graph
-Start execution of the FIR Filter Graph and the mm2s/s2mm kernels.
+#### 4. Run the Data Mover Kernel and FIR Chain Graph
+Start execution of the FIR Filter Graph and the datamover kernel.
 
 #### 5. Wait for Data Mover Kernels to Complete
-Wait for the mm2s and s2mm kernels to complete.
+Wait for the datamover kernel to complete.
 
 #### 6. Verify Output Results
-Compare data in `output buffer` object with the reference golden data.
+Compare data in output with the reference golden data and get the error count from the kernel.
 
 #### 7. Release Allocated Resources
-Close the mm2s/s2mm kernels and FIR chain graph.
+Close the datamover kernel and FIR chain graph.
 
 </details>
 
@@ -895,7 +817,7 @@ The following documents provide supplemental information for this tutorial.
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
 
 # Revision History
-* Jul 2021 - Initial Release
+* Dec 2021 Release
 
 # Support
 
@@ -906,8 +828,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
 You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
