@@ -1,7 +1,7 @@
 {
     "name": "AI_Engine_Development-07-firFilter_aie_tutorial",
     "description": "fir_filter_aie_tutorial",
-    "flow": "vitis",
+    "flow": "versal",
 
     "platform_whitelist": [ "vck190"],
     "platform_blacklist": [],
@@ -24,15 +24,18 @@
                 }
             }
         ], 
-        "targets": [
+        "targets": [ 
             "vitis_hw_build", 
-            "vitis_hw"
-        ], 
-        "make_options" : [ "TARGET='hw'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'" ], 
-        "category": "canary"
+            "vitis_hw_run"
+        ],
+        "category": "canary",
+        "make_options" : [
+           "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+           "SDKTARGETSYSROOT=${SYSROOT}"
+           ],
         "custom_build_target": {
             "all": "run",
-            "hw": "xclbin"
+            "hw": "sd_card"
         },
         "custom_board_target": "run",
         "customized_params": "multi_params.json"
