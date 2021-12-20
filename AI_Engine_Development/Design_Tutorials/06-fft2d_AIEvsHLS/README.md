@@ -35,7 +35,7 @@ The Versal™ ACAP is a a fully software programmable, heterogeneous compute pla
 
 This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with HLS using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.
 
-A Makefile is provided for each implementation. It can be used to create the design for `cint16` and `cfloat` datatypes, for various point sizes (32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048), different numbers of fft_2d HLS-kernel/AIE-graph instances (1, 5 and 10), and lastly for different targets (hw_emu and hw).
+A Makefile is provided for each implementation. It can be used to create the design for `cint16` and `cfloat` datatypes, for various point sizes (32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048), different numbers of fft_2d HLS kernel/AI Engine graph instances (1, 5, and 10), and lastly for different targets (hw_emu and hw).
 
 The design documentation demonstrates hardware and software design details including the methodology for each implementation, elaborating on the functional partitioning. The compilation, execution, and measurement steps as well as observations are given.
 
@@ -83,7 +83,7 @@ x_2fft - x_col         % Calculate the error difference
 
 In calculating each 1D-FFT, one dimension is kept constant while the other is computed. The transpose function is applied after each 1D-FFT compute. The transpose function moves the entry along each element of the dimension to the corresponding element of the other dimension. A golden data set is generated as reference and the error difference is calculated.
 
-A similar algorithm is deployed in the two implementations using either the AI Engines or HLS targeting the PL and DSP Engines. The design compiles through Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value=1 or 1.5, depending on cint16 or cfloat datatype ) input to the row-wise 1D-FFT and check its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).
+A similar algorithm is deployed in the two implementations using either the AI Engines or HLS targeting the PL and DSP Engines. The design compiles through Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value = 1 or 1.5, depending on the cint16 or cfloat datatype) input to the row-wise 1D-FFT and check its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).
 
 The transposed pattern of that, generated within the PL, is then streamed as input to the col-wise 1D-FFT. Its output is then checked against the expected output (all 1s). The data mover kernel returns the total error count in both stages to the host application, which is used to declare a pass or fail of the test case.
 
@@ -158,7 +158,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 * Obtain licenses for AI Engine tools.
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021.2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT).
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
 
 * Download and set up the [VCK190 Vitis Platform](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
@@ -169,7 +169,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 ## Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.2)](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_release_notes.html) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.
 
@@ -277,7 +277,7 @@ For detailed instructions on taking measurements of the parameters, refer to the
 
 # References
 
-### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html)
+### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
 
@@ -295,7 +295,7 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1451-xrt-release-notes-pu1.pdf)
+* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1451-xrt-release-notes.pdf)
 
 ### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html)
 
@@ -305,7 +305,7 @@ Below are links to Vitis related information referenced in this tutorial:
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/irn1582730075765.html)
+* [Vitis HLS](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
 
 # Known Issues
 

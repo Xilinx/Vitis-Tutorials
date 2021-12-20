@@ -24,7 +24,7 @@
 
 ## Design Build
 
-In this section, you will build and run the 2D-FFT design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). Review [Integrating the Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html) for the general flow. 
+In this section, you will build and run the 2D-FFT design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). Review the [Integrating the Application section in the AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow) for the general flow. 
 
 At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `(cint16_dsns-cfloat_dsns)/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/` (for example, `cint16_dsns/fft2d_1024x2048/x1/`) depending on the datatype `${FFT_2D_DT}`, value of matrix dimensions `${MAT_ROWS}`, `${MAT_COLS}` and the number of instances `$(FFT_2D_INSTS)` chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. The respective subfolders contain `Work/` and `libadf.a`, outputs from the AI Engine compiler, the host app executable and the builds, targeted to `hw` or `hw_emu` respectively. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.
 
@@ -131,7 +131,7 @@ v++ --target hw_emu --hls.clock 250000000:dma_hls --platform xilinx_vck190_base_
    $(DESIGN_REPO)/pl_src/dma_hls.cpp -o $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html#wrj1504034328013) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
+See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -189,7 +189,7 @@ aiecompiler -include=$(AIE_SRC_REPO) -include=<DSPLIB_ROOT>/L1/include/aie \
 
  ```
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vjv1611769393894.html) for full AI Engine programming environment documentation.
+See [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) for full AI Engine programming environment documentation.
 
 The following table provides a summary of the switches used. 
 
@@ -254,7 +254,7 @@ If `EN_TRACE` is enabled, the following Vitis compiler flags are also set:
 ```
 For higher values of `FFT_2D_INSTS`, only the `strmInp_from_colwiseFFT` port is profiled to avoid too much data.
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/buildingdevicebinary.html#mjs1528399150499) for a detailed description of Vitis linking options.
+See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Device-Binary) for a detailed description of Vitis linking options.
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -288,7 +288,7 @@ param=compiler.addOutputTypes=hw_export
 
 ```
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/vitiscommandcompiler.html?hl=--config#pni1524163195211) for a detailed description of the Vitis compiler configuration file.
+See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File) for a detailed description of the Vitis compiler configuration file.
 
 
 |Switch|Comment|
@@ -344,7 +344,7 @@ aarch64-xilinx-linux-g++ -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-
    -ladf_api_xrt -lxrt_coreutil -o $(BUILD_TARGET_DIR)/fft_2d_aie_xrt.elf
 ```
 
-See [this page](https://xilinx.github.io/XRT/2021.2/html/index.html) for XRT documentation. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/devhostapp.html#vpy1519742402284) for details of host application programming.
+See [this page](https://xilinx.github.io/XRT/2021.2/html/index.html) for XRT documentation. See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming) for details of host application programming.
 
 
 |Switch|Description|
@@ -759,7 +759,7 @@ AI Engine kernels are configured for `cint16 / 4bytes` and the streaming interfa
 
 ## AI Engine Kernels and Graph Representation
 
-An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review the [AI Engine Kernel Programming](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html) section in the AI Engine documentation for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results. You can view the graph by running the following command:
+An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review the [AI Engine Kernel Programming](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding) section in the AI Engine documentation for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results. You can view the graph by running the following command:
 
 `vitis_analyzer $(BUILD_TARGET_DIR)/Work/graph.aiecompile_summary`
 
@@ -775,7 +775,7 @@ The following figures show the graph representation of the AI Engine kernels (de
 
 ## Adaptive Data Flow (ADF) Graph
 
-This section describes the overall data flow graph specification of the 2D-FFT design using AI Engine which is compiled by the AI Engine compiler. Refer to [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html) in the AI Engine documentation for information on ADF graphs.
+This section describes the overall data flow graph specification of the 2D-FFT design using AI Engine which is compiled by the AI Engine compiler.
 
 The overall graph definition of the design is contained in the `graph.cpp` file. The top-level graph contains two sub-graphs, `FFTrows_graph` and `FFTcols_graph`, each with a `FFT_2D_INSTS` number of objects. The following describes the definition of the sub-graphs (the `FFTrows_graph` is used as illustration).
 
@@ -1027,14 +1027,14 @@ int dma_hls(
 }
 ```
 
-The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html?hl=hls%2Cpragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in the kernel is provided in the following table.
+The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/HLS-Pragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in the kernel is provided in the following table.
 
 |Switch|Description|
 |  ---  |  ---  |
-|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#jit1504034365862).|
-|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the config_compile -pipeline_style command, but can be overridden in the PIPELINE pragma or directive. For more information, see [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#fde1504034360078).|
-|#pragma HLS dataflow|The DATAFLOW pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#sxx1504034358866) for more information.|
-|#pragma HLS loop_tripcount|When manually applied to a loop, specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only, and does not impact the results of synthesis. See [this page](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/hls_pragmas.html#sty1504034367099) for more information.|
+|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
+|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the config_compile -pipeline_style command, but can be overridden in the PIPELINE pragma or directive. For more information, see [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline).|
+|#pragma HLS dataflow|The DATAFLOW pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow) for more information.|
+|#pragma HLS loop_tripcount|When manually applied to a loop, specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only, and does not impact the results of synthesis. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-loop_tripcount) for more information.|
  
 </details>
 
@@ -1043,7 +1043,7 @@ The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code
 
 ## PS Host Application
 
-The 2D-FFT AI Engine tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html) section in the AI Engine documentation to understand the process to create a host application.
+The 2D-FFT AI Engine tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) section in the AI Engine documentation to understand the process to create a host application.
 
 In addition to the PS host application (`fft_2d_aie_app.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control_xrt.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code. The AI Engine control code is used by the PS host application for the following purposes:
 
@@ -1169,7 +1169,7 @@ The registers and CLB LUT utilization information can be found in the Vivado pro
 
 1. Open the Vivado project: ``$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr``.
 
-2. Go to **Open Implemented Design** then click **Report Utilization**. In the Utilization tab shown in the following figure, select **ai_engine_0** and view the **Registers** and **CLB LUTs** for the 1024 x 2048 point, 1-instance and cint16 design:
+2. Go to **Open Implemented Design** then click **Report Utilization**. In the Utilization tab shown in the following figure, select **ai_engine_0** and view the **Registers** and **CLB LUTs** for the 1024 x 2048 point, 1-instance, and cint16 design:
 
 ![Image of 2D-FFT AIE Utilization](images/fft_2d_aie_vivado_resources.PNG)
 
@@ -1194,7 +1194,7 @@ vcdanalyze --vcd x$(FFT_2D_INSTS).vcd --xpe
 A summary of resource utilization and power for all variations is given in the following table.
 
 #### cint16 Design
-| No. of Instances | FFT Configuration            | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) | 
+| Number of Instances | FFT Configuration            | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) | 
 |:----------------:|:----------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
 | 1                | 64 point<br/>(32 x 64)       | 2                       | 9%           | 28                            | 4%           | 6                | 4%                | 1172      | 418       | 693                       |
 | 1                | 128 point<br/>(64 x 128)     | 2                       | 18%          | 28                            | 7%           | 6                | 4%                | 1172      | 418       | 730                       |
@@ -1213,7 +1213,7 @@ A summary of resource utilization and power for all variations is given in the f
 | 10               | 2048 point<br/>(1024 x 2048) | 20                      | 76%         | 396                            | 20%          | 56               | 5%                | 11720     | 4156      | 4461                      |
 
 #### cfloat Design
-| No. of Instances | FFT Configuration            | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) | 
+| Number of Instances | FFT Configuration            | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) | 
 |:----------------:|:----------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
 | 1                | 64 point<br/>(32 x 64)       | 2                       | 29%         | 24                            | 7%           | 6                | 4%                | 1172      | 411       | 747                       |
 | 1                | 128 point<br/>(64 x 128)     | 2                       | 49%         | 24                            | 11%          | 6                | 4%                | 1172      | 411       | 808                       |
@@ -1287,7 +1287,7 @@ Throughput = (Samples transferred) / execution time
 A summary of throughput and latency for all variations is shown in the following table.
 
 #### cint16 Design
-| No. of Instances | FFT Configuration            | Data Transfer Size | Aggregate Throughput<br/>(in MSPS) | Average Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
+| Number of Instances | FFT Configuration            | Data Transfer Size | Aggregate Throughput<br/>(in MSPS) | Average Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:----------------------------------:|:--------------------------------:|:---------------------------:|:---------------------------:|
 | 1                | 64 point<br/>(32 x 64)       | 16384              | 240.730                            |  240.730                         | 8.11                        |  8.11                        |
 | 1                | 128 point<br/>(64 x 128)     | 65536              | 373.000                            |  373.000                         | 21.55                       |  21.55                       |
@@ -1306,7 +1306,7 @@ A summary of throughput and latency for all variations is shown in the following
 | 10               | 2048 point<br/>(1024 x 2048) | 16777216           | 6004.710                           | 600.470                          | 3480.89                     |  3480.89                     |
 
 #### cfloat Design
-| No. of Instances | FFT Configuration            | Data Transfer Size | Aggregate Throughput<br/>(in MSPS) | Average Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
+| Number of Instances | FFT Configuration            | Data Transfer Size | Aggregate Throughput<br/>(in MSPS) | Average Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:----------------------------------:|:--------------------------------:|:---------------------------:|:---------------------------:|
 | 1                | 64 point<br/>(32 x 64)       | 16384              | 152.910                            | 152.910                          | 12.85                       |  12.85                      |
 | 1                | 128 point<br/>(64 x 128)     | 65536              | 176.050                            | 176.050                          | 45.67                       |  45.67                      |
@@ -1332,7 +1332,7 @@ A summary of throughput and latency for all variations is shown in the following
 
 ### Performance per Watt
 
-Performance per Watt is represented as throughput in MSPS/power in Watts. The following example shows the calculation for the 1024 x 2048 point, 1-instance and cint16 design:
+Performance per Watt is represented as throughput in MSPS/power in Watts. The following example shows the calculation for the 1024 x 2048 point, 1-instance, and cint16 design:
 
 ```
 Performance per Watt = Throughput(MSPS) / Power(Watt)
@@ -1344,7 +1344,7 @@ Performance per Watt = Throughput(MSPS) / Power(Watt)
 A summary of performance per Watt for all variations is shown in the following table.
 
 #### cint16 Design
-| No. of Instances | FFT Configuration        | Performance per Watt (in MSPS/Watt) |
+| Number of Instances | FFT Configuration        | Performance per Watt (in MSPS/Watt) |
 |:----------------:|:------------------------:|:-----------------------------------:|
 | 1                | 64 point (32 x 64)       | 347.37                              |
 | 1                | 128 point (64 x 128)     | 510.96                              |
@@ -1363,7 +1363,7 @@ A summary of performance per Watt for all variations is shown in the following t
 | 10               | 2048 point (1024 x 2048) | 1345.89                             |
 
 #### cfloat Design
-| No. of Instances | FFT Configuration        | Performance per Watt (in MSPS/Watt) |
+| Number of Instances | FFT Configuration        | Performance per Watt (in MSPS/Watt) |
 |:----------------:|:------------------------:|:-----------------------------------:|
 | 1                | 64 point (32 x 64)       | 204.70                              |
 | 1                | 128 point (64 x 128)     | 217.88                              |
@@ -1391,7 +1391,8 @@ A summary of performance per Watt for all variations is shown in the following t
 A consolidated summary of observations for all the point sizes and all the corresponding instance variations is shown in the following table.
 
 #### cint16 Design
-| FFT Configuration - No. of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | No. of Compute Cores | Vector Load | No. of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
+
+| FFT Configuration - Number of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:--------------------:|:-----------:|:--------------------------:|:------------:|:--------:|:--------:|:-------------------------:|:---------------------------------------:|
 | 64 point<br/>(32 x 64)<br/> - x1        | 240.73                             | 8.11                         | 2                   | 9%          | 28                         | 4%           | 1172     | 418      | 693                       | 347.37                                 |
 | 128 point<br/>(64 x 128)<br/> - x1      | 373.00                             | 21.55                        | 2                   | 18%         | 28                         | 7%           | 1172     | 418      | 730                       | 510.96                                 |
@@ -1410,7 +1411,7 @@ A consolidated summary of observations for all the point sizes and all the corre
 | 2048 point<br/>(1024 x 2048)<br/> - x10 | 6004.71                            | 3480.89                      | 20                  | 76%         | 396                        | 20%          | 11720    | 4156     | 4461                      | 1345.89                                |
 
 #### cfloat Design
-| FFT Configuration - No. of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | No. of Compute Cores | Vector Load | No. of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
+| FFT Configuration - Number of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:--------------------:|:-----------:|:--------------------------:|:------------:|:--------:|:--------:|:-------------------------:|:---------------------------------------:|
 | 64 point<br/>(32 x 64)<br/> - x1        | 152.91                             | 12.85                       | 2                    | 29%         | 24                         | 7%           | 1172     | 411      | 747                       | 204.70                                  |
 | 128 point<br/>(64 x 128)<br/> - x1      | 176.05                             | 45.67                       | 2                    | 49%         | 24                         | 11%          | 1172     | 411      | 808                       | 217.88                                  |
