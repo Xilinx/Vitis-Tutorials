@@ -602,12 +602,12 @@ Notice the system debugging and profiling IP (DPA) is added to the PL region of 
 ## AI Engine and PL Kernels
 The top level AI Engine graph fir_aie_graph.h instantiates the symmetric FIR filter from the AI Engine DSP library, (DSPLib), and uses a `for` loop to connect them all together in a chain. The file fir_aie_graph.cpp instantiates the filter chain, and connects it to the AI Engine's  128-bit PLIO interfaces.
 
-The PL-based data mover consists of DATAMOVER kernels. It moves a data-pattern into the AIE Engine array via streaming interface the AI Engine array and the final FIR output from the AI Engine array is moved back into DATAMOVER kernel via streaming interface and checks for errors. The AI Engine array interface with the Datamover Kernel uses an AXI4-Stream interface.
+The PL-based data mover consists of DATAMOVER kernels. It moves a data pattern into the AI Engine array through a streaming interface. The final FIR output from the AI Engine array is moved back into the DATAMOVER kernel through a streaming interface and is checked for errors. The AI Engine array interface with the DATAMOVER kernel uses an AXI4-Stream interface.
 Some additional details regarding the data mover kernels include:
 
 **DATAMOVER**
 * The data width is 128 bits.
-* Frequency 250MHz.
+* The frequency is 250 MHz.
 
 </details>
 
@@ -726,7 +726,8 @@ Note that for running on hardware (hw) or hardware emulation (hw_emu), the main(
 In addition to the kernels operating in the AI Engine array, this design specifies kernels to run in the PL region of the device (written in HLS C++). The software design of the data mover kernels are described below:
 
 ### datamover (datamover.cpp)
-The datamover kernel reads and write data from and to the AI Engine Array, via the AXI4-Stream Interface
+
+The datamover kernel reads and writes data from and to the AI Engine array using the AXI4-Stream interface.
 
 #### Arguments
 The datamover kernel takes the following arguments:
@@ -736,13 +737,13 @@ The datamover kernel takes the following arguments:
 The datamover kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
 
 #### pragma HLS INTERFACE s_axilite
-The datamover kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`size` and iterCnt). This interface is also associated with `return`.
+The datamover kernels has one `s_axilite` interface (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`size` and iterCnt). This interface is also associated with `return`.
 
 #### pragma HLS INTERFACE axis
-The datamover kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol)
+The datamover kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol).
 
 #### pragma HLS PIPELINE II=1
-The datamover kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
+The datamover kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration are consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
 
 </details>
 
@@ -773,7 +774,7 @@ This function is responsible for loading the XCLBIN file into the device.
 
 ### Datamover Class
 This class provides the following methods for controlling/monitoring this kernel:
-* init(): Opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
+* init(): opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
 * run(): starts execution of the datamover kernel
 * waitTo_complete(): waits for the datamover kernel to finish
 * close(): closes the input data buffer object and kernel

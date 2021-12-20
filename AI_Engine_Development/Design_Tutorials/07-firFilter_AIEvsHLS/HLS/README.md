@@ -24,7 +24,7 @@
 ## Design Build
 In this section, you will build and run the FIR filter design using the HLS/DSP implementation. The difference between this implementation and the AI Engine implementation, where users compile the AI Engine design and integrate it into a larger system design (including the programmable logic (PL) kernels and processing system (PS) host application), is that the FIR filter is now implemented in PL using DSP Engines.  
 
-At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps` (for example, fir_hls_1firs_15taps) depending on value of `N_FIR_FILTERS` and `N_FIR_TAPS` chosen in the build. Each sub-directory contains the `hw_emu/` and `hw/` subfolders. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for the hardware run on a VCK190 board.   
+At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are subdirectories named `fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps` (for example, `fir_hls_1firs_15taps`) depending on the value of `N_FIR_FILTERS` and `N_FIR_TAPS` chosen in the build. Each subdirectory contains the `hw_emu/` and `hw/` subfolders. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for the hardware run on a VCK190 board.   
 
 </details>
 
@@ -478,7 +478,8 @@ After execution completes and the testcase passes data integrity check, 'TEST PA
 <summary>FIR Filter HLS Implementation Architecture</summary>
 
 ## FIR Filter HLS Implementation Architecture
-The following figure shows a high level block diagram of the design. The test harness consists of the compute kernel and data mover kernel. This setup is maintained in the two implementations (using HLS/DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernel and FIR filter kernel it is AXI4-stream. The data widths of both the kernels is 128 bits wide, and they run at 250 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
+
+The following figure shows a high level block diagram of the design. The test harness consists of the compute kernel and the data mover kernel. This setup is maintained in the two implementations (using HLS/DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernel and FIR filter kernel is AXI4-Stream. The data width of both the kernels is 128 bits, and they run at 250 MHz, providing a transfer rate of up to 1.2 GSPS.
 
 ![Image of FIR Filter HLS implementation architecture](images/fir_hls_block_diagram.png)
 
@@ -513,12 +514,12 @@ In the HLS implementation of the FIR Filter design, the AI Engine is not used an
 
 The PL kernel `fir_hls` implements the FIR filter chain.  It contains a single AXI-stream input port and a single AXI-stream output port.  Since the FIR function requires no initialization, no additional control/status ports are required.
 
-The PL-based data mover consists of DATAMOVER kernels. It moves a data-pattern into the AIE Engine array via streaming interface the AI Engine array and the final FIR output from the AI Engine array is moved back into DATAMOVER kernel via streaming interface and checks for errors. The AI Engine array interface with the Datamover Kernel uses an AXI4-Stream interface.
+The PL-based data mover consists of DATAMOVER kernels. It moves a data pattern into the AI Engine array using a streaming interface. The final FIR output from the AI Engine array is moved back into the datamover kernel by way of a streaming interface and is checked for errors. The AI Engine array interface with the datamover kernel uses an AXI4-Stream interface.
 Some additional details regarding the data mover kernels include:
 
 **DATAMOVER**
 * The data width is 128 bits.
-* Frequency 250MHz.
+* The frequency is 250 MHz.
 
 </details>
 
@@ -656,7 +657,8 @@ The fir_hls kernel also specifies the following pragmas to help optimize the ker
 This kernel requires no additional control/status interfaces.
 
 ### datamover (datamover.cpp)
-The datamover kernel reads and write data from and to the AI Engine Array, via the AXI4-Stream Interface.
+
+The datamover kernel reads and writes data from and to the AI Engine array, through the AXI4-Stream interface.
 
 #### Arguments
 The datamover kernel takes the following arguments:
@@ -666,13 +668,13 @@ The datamover kernel takes the following arguments:
 The datamover kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
 
 #### pragma HLS INTERFACE s_axilite
-The datamover kernels has one `s_axilite` interface (specifying a AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`size` and iterCnt). This interface is also associated with `return`.
+The datamover kernels has one `s_axilite` interface (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`size` and `iterCnt`). This interface is also associated with `return`.
 
 #### pragma HLS INTERFACE axis
-The datamover kernel has one `axis` interface (specifying a AXI4-Stream I/O protocol)
+The datamover kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol).
 
 #### pragma HLS PIPELINE II=1
-The datamover kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
+The datamover kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration are consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
 
 </details>
 
@@ -682,7 +684,7 @@ The datamover kernel has a `for` loop that is a candidate for burst read because
 ## PS Host Application
 The FIR filter HLS(DSP) tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernel. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application. Note that unlike the AI Engine implementation, there are no AI Engine graphs and associated control code.
 
-Within the PS host application, two classes are defined ((datamover_class), which defines methods used to control and monitor the corresponding kernels.
+Within the PS host application, two classes are defined (datamover_class), which defines methods used to control and monitor the corresponding kernels.
 
 The main sections of the PS host application code is described in the following subsections:
 
@@ -691,7 +693,7 @@ This function is responsible for loading the XCLBIN file into the device.
 
 ### Datamover Class
 This class provides the following methods for controlling/monitoring this kernel:
-* init(): Opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
+* init(): opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
 * run(): starts execution of the datamover kernel
 * waitTo_complete(): waits for the datamover kernel to finish
 * close(): closes the input data buffer object and kernel
@@ -706,7 +708,7 @@ The beginning of the A72 application is represented by the main function. It tak
 The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device.
 
 #### 3. Create and Initialize Data Mover Kernels
-Create the kernel objects, initialize them.
+Create the kernel objects and initialize them.
 
 #### 4. Run Data Mover Kernels
 Start execution of the datamover kernel.
