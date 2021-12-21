@@ -10,7 +10,7 @@
 
 ***Version: Vitis 2021.2***
 
-In this tutorial, you will learn how to add custom IPs into a Versal™ ACAP platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Introduction/03_Edge_VCK190). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
+In this tutorial, you will learn how to add custom IPs into a Versal® ACAP platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Introduction/03_Edge_VCK190). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
 
 This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html).  
 

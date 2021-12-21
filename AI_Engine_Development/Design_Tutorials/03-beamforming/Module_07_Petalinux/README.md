@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -155,7 +155,7 @@ Build the PetaLinux system image with the following command:
 petalinux-build -p build/vck190_linux
 ```
 
-This step generates a device tree DTB file, platform loader and manager firmware (PLM), processing system management firmware (PSM), Arm™ trusted firmware (ATF), U-Boot, the Linux kernel, a root file system image, and the boot script for a Versal™ ACAP. Finally, it generates the necessary boot images. The compilation progress shows on the console when executing this command.  
+This step generates a device tree DTB file, platform loader and manager firmware (PLM), processing system management firmware (PSM), Arm™ trusted firmware (ATF), U-Boot, the Linux kernel, a root file system image, and the boot script for a Versal® ACAP. Finally, it generates the necessary boot images. The compilation progress shows on the console when executing this command.  
 
 When the build finishes, the generated U-Boot and Linux images are stored in the ``build/vck190_petalinux/images/linux`` directory.
 

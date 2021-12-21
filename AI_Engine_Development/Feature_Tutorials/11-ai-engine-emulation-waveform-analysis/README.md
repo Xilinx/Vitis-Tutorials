@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -15,7 +15,7 @@
 
 Simulating a complete system in the Vitis™ unified software platform allows for a near-hardware run of a design without the hardware, and has the added benefit of detailed waveform analysis during hardware emulation to identify issues in the programmable logic (PL), AI Engine interfaces, and memory read/writes that might be harder to debug on hardware.
 
-This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal™  ACAP. It steps through the process of building a design for hardware emulation, launching emulation with waveform viewing, and detailed information on how to read the waveforms, as well as using the Vitis analyzer to continue the analysis with generated trace output waveforms and data. 
+This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal®  ACAP. It steps through the process of building a design for hardware emulation, launching emulation with waveform viewing, and detailed information on how to read the waveforms, as well as using the Vitis analyzer to continue the analysis with generated trace output waveforms and data. 
 
 It is strongly recommended to go through the **Versal Integration tutorial** and the **Versal System Design Clocking tutorial** before running this tutorial.
 

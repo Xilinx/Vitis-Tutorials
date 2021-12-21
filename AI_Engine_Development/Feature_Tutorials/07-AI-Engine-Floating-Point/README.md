@@ -20,7 +20,7 @@ The purpose of this set of examples is to understand floating-point vector compu
 
 Before starting to explore these examples, refer to the following documents:
 
-- Versal™ ACAP AI Engine architecture documentation
+- Versal® ACAP AI Engine architecture documentation
   - **[AI Engine Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)**
   - **[Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)**
   - **[Architecture Details Summary](Details.md)**
