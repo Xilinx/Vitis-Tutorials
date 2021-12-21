@@ -1,6 +1,6 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal® ACAP AI Engine Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
@@ -27,7 +27,7 @@
 
 # Introduction
 
-The Versal™ ACAP is a a fully software programmable, heterogeneous compute platform that combines the following:
+The Versal® ACAP is a a fully software programmable, heterogeneous compute platform that combines the following:
 
 - Scalar Engines (a processor subsystem (PS) that includes Arm® processors)
 - Adaptable Engines (programmable logic (PL) and memory)

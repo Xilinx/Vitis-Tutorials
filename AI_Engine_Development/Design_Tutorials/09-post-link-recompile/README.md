@@ -1,4 +1,4 @@
-<table>
+﻿<table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Post-Link Recompile of an AI Engine Application</h1>
    </td>
@@ -24,7 +24,7 @@ This tutorial requires a number of tools and files to be installed:
 
 * Download and install the Vitis™ software platform from [here](https://www.xilinx.com/support/download.html). See the installation instructions [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration).
 * Download and install the Vitis Embedded Base Platform [VCK190](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
-* Download and install the [common image](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) for embedded Vitis platforms for Versal™ ACAP.
+* Download and install the [common image](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) for embedded Vitis platforms for Versal® ACAP.
 
 The AI Engine development documentation is also available [here](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US).
 

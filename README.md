@@ -18,7 +18,7 @@
  <p align="center"> <a>Visit more Vitis Developer Videos on </a><a href="https://www.youtube.com/channel/UCkzIS3hJplxSbVRxRQJW4Ow">Xilinx YouTube Channel</a> </p>
 
 ## </br>Unlocking a new design experience for all developers
-The Vitis&trade; unified software platform enables the development of embedded software and accelerated applications on heterogeneous Xilinx&reg; platforms including FPGAs, SoCs, and Versal ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications.
+The Vitis&trade; unified software platform enables the development of embedded software and accelerated applications on heterogeneous Xilinx&reg; platforms including FPGAs, SoCs, and Versal&trade; ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications.
 
 Leverage integration with high-level frameworks, develop in C, C++, or Python using accelerated libraries or use RTL-based accelerators & low-level runtime APIs for more fine-grained control over implementation — Choose the level of abstraction you need.
 
@@ -42,9 +42,9 @@ Learn how to use Vitis High-Level Synthesis (HLS), compiler, analyzer, and debug
 
 ### [AI Engine Development](./AI_Engine_Development)
 
-Learn how to use the Vitis core tools to develop for Versal&trade;, the first Adaptive Compute Acceleration Platform (ACAP) device from Xilinx.
+Learn how to use the Vitis core tools to develop for Versal&reg;, the first Adaptive Compute Acceleration Platform (ACAP) device from Xilinx.
 
-Learn how to target, develop, and deploy advance algorithms using Versal's AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
+Learn how to target, develop, and deploy advance algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
 
 
 ### [Platform Creation Tutorial](./Vitis_Platform_Creation)
@@ -60,7 +60,7 @@ Vitis-Tutorials repository is not only managed by teams in Xilinx. We welcome yo
 
 ## Other Vitis Tutorial Repositories
 
-### [Machine Learning Tutorial](https://github.com/xilinx/Vitis-AI-Tutorials) 
+### [Machine Learning Tutorial](https://github.com/xilinx/Vitis-AI-Tutorials)
 
 Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
 
@@ -72,6 +72,6 @@ Learn how to build and use embedded operating systems and drivers on Xilinx Adap
 
 ### [Vitis Model Composer Tutorials](https://github.com/Xilinx/Vitis_Model_Composer)
 
-Learn rapid design exploration using Vitis Model Composer. Vitis Model Composer provides a library of performance-optimized blocks for design and implementation of DSP algorithms on Xilinx devices. The Vitis Model Composer AI Engine, HLS and HDL libraries within the Simulink environment, enable the rapid design exploration of an algorithm and accelerates the path to production.
+Learn rapid design exploration using Vitis Model Composer. Vitis Model Composer provides a library of performance-optimized blocks for design and implementation of DSP algorithms on Xilinx devices. The Vitis Model Composer AI Engine, HLS and HDL libraries within the Simulink&trade; environment, enable the rapid design exploration of an algorithm and accelerates the path to production.
 
 <p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>

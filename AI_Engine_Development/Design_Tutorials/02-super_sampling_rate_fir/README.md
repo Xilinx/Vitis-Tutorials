@@ -14,7 +14,7 @@
 
 ## Introduction
 
-Versal™ ACAP AI Core Series are heterogeneous devices containing many domains with compute capabilities. With respect to Digital Signal Processing (DSP), and particularly Finite Impulse Response (FIR) filters, the two domains of interest are:
+Versal® ACAP AI Core Series are heterogeneous devices containing many domains with compute capabilities. With respect to Digital Signal Processing (DSP), and particularly Finite Impulse Response (FIR) filters, the two domains of interest are:
 
 - The Programmable Logic (PL) which is the "classical" domain of Xilinx devices
 - The AI Engine Processor Array which is a new domain within Versal ACAP Xilinx devices
@@ -69,7 +69,7 @@ This tutorial is decomposed into multiple steps:
 
 You should have already read the [AI Engine Detailed Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf), so the purpose of this chapter is simply to highlight the features of the AI Engine that will be useful for this tutorial.
 
-Versal™ Adaptive Compute Acceleration Platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
+Versal® Adaptive Compute Acceleration Platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
 
 ![missing image](./Images/Versal.jpg)
 

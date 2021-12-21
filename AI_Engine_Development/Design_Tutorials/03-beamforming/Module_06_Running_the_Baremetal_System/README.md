@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -9,7 +9,7 @@
 
 # Introduction: Packaging and Running the System  
 
-After the AI Engine graph is compiled and linked with the PL kernels, the PS application is compiled, and all the required outputs are generated, the next step in the build process is to package the required files to configure and boot the Versal™ device. This requires the use of the Vitis™ compiler ``--package`` command. For Versal ACAPs, the programmable device image (PDI) file is used to boot and program the hardware device.
+After the AI Engine graph is compiled and linked with the PL kernels, the PS application is compiled, and all the required outputs are generated, the next step in the build process is to package the required files to configure and boot the Versal® device. This requires the use of the Vitis™ compiler ``--package`` command. For Versal ACAPs, the programmable device image (PDI) file is used to boot and program the hardware device.
 
 In this module, you will package the bare-metal system to generate the final bootable image (PDI) for running hardware emulation and for running it on the VCK190 board. Refer to [AI Engine Documentation: Packaging](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#ariaid-title8) for more details on this packaging process.
 
