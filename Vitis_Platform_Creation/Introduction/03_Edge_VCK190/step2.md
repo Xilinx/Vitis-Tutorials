@@ -35,13 +35,15 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    ```bash
    petalinux-create -t project --template versal --force -n petalinux
    cd petalinux
-   petalinux-config --get-hw-description=<path to xsa directory> --silentconfig
+   cp <hw xsa> .
+   petalinux-config --get-hw-description=. --silentconfig
    ```
 
+   Note:
+
    - The created PetaLinux project name is **petalinux**. Please feel free to change the PetaLinux project name with **petalinux-create -n** option.
-
-
-   **Note**: PetaLinux 2021.2 requires GCC version >= 6.0. If your GCC version doesn't meet this requirement, please enable **Enable buildtools extended** from **petalinux-config → Yocto settings**, which uses the pre-compiled gcc binaries from the PetaLinux tool. For more information, please refer to UG1144.
+   - `petalinux-config --get-hw-description` requires a directory with only one XSA inside. So we copy one Vivado exported XSA to local directory and update hardware description for the PetaLinux project. This XSA will be used to generate device tree files. Usually we use hardware XSA. But hardware emulation XSA would also work. Please decide which XSA to use depends on your running target. If you need to run both hardware and hardware emulation, and XSA for them are different, you need to generate device tree for them seperatedly. Next release of PetaLinux would support hardware and hardware emulation XSA simultanoulsly.
+   - PetaLinux 2021.2 requires GCC version >= 6.0. If your GCC version doesn't meet this requirement, please enable **Enable buildtools extended** from **petalinux-config → Yocto settings**, which uses the pre-compiled gcc binaries from the PetaLinux tool. For more information, please refer to UG1144.
 
 
 
