@@ -2,7 +2,7 @@
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal® ACAP AI Engine Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -41,20 +41,20 @@ After creating the custom platform from the previous tutorial, the next step is 
 
     * The script creates a Vivado Design Suite project; this is required to create any IP because all source and constraint files need to be local to the IP.
     * Lines 40 and 41 are used to associate the correct clock pins to the interfaces. This is required for the Vitis compiler which links those interfaces to the platform clocking.
-    
+
         ```tcl
         ipx::associate_bus_interfaces -busif in_sample -clock ap_clk [ipx::current_core]
         ipx::associate_bus_interfaces -busif out_sample -clock ap_clk [ipx::current_core]
         ```
     * On lines 44 and 45 the `FREQ_HZ` bus parameter is removed. This parameter is used in IP integrator, and is to make sure the associated clock of the interface is used correctly. However, the Vitis compiler sets this during the compilation process, and having it set in the IP will cause the compiler to incorrectly link the clocks.
-    
+
         ```tcl
         ipx::remove_bus_parameter FREQ_HZ [ipx::get_bus_interfaces in_sample -of_objects [ipx::current_core]]
         ipx::remove_bus_parameter FREQ_HZ [ipx::get_bus_interfaces out_sample -of_objects [ipx::current_core]]
         ```
 
     * At the end of the script there is the `package_xo` command. This command analyzes the IP that was created to make sure proper AXI interfaces are used and other rule checks are followed. It then creates the XO file in the same location as the IP repository. A key function used in this command is the `-output_kernel_xml`. The `kernel.xml` file is key to the RTL kernel as it describes to the Vitis tool how the kernel should be controlled. You can find more information on RTL kernels and their requirements [here](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=devrtlkernel.html).
-    
+
         ```tcl
         package_xo -kernel_name $kernelName \
             -ctrl_protocol ap_ctrl_none \
@@ -239,7 +239,7 @@ After packaging, everything is ready to run emulation or to run on hardware.
 
     ```bash
     cd ./sw
-    ./launch_hw_emu.sh 
+    ./launch_hw_emu.sh
     cd ..
     ```
 
