@@ -33,6 +33,7 @@ KERNEL := s2mm.cpp mm2s.cpp
 KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
+SDKTARGETSYSROOT ?= $(SYSROOT)
 SYSROOT ?= $(XF_PROJ_ROOT)/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux
 BASE_PLATFORM=$(XF_PROJ_ROOT)/vck190_xpfm/vck190_custom.xpfm
 ROOTFS=$(XF_PROJ_ROOT)/vck190_xpfm/rootfs.ext4

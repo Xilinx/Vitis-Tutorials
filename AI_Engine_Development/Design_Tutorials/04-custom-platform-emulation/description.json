@@ -34,7 +34,7 @@
             "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
             "SYSROOT=${SYSROOT}",
             "XF_PROJ_ROOT=${ARTIFACTS}",
-            "EMU_CMD=\"./launch_hw_emu.sh -run-app embedded_exec.sh\"",
+            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh\\\"",
             "EMBEDDED_PACKAGE_OUT=./sw", 
             "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
         ],
