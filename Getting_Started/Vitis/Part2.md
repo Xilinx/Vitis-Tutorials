@@ -99,7 +99,7 @@ For more information see [Xilinx AR 73698](https://www.xilinx.com/support/answer
 
 ## Next Step
 
-  **Click here to [Review the Host and Kernel Code](./Part2.md)**
+  **Click here to [Review the Host and Kernel Code](./Part3.md)**
 
 *************************************
 License statement
