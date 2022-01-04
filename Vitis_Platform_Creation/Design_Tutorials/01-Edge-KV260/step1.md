@@ -48,6 +48,8 @@ In this step, we will create the hardware design for the KV260 Vitis acceleratio
    - Select **Boards** tab
    - Click **Refresh** button to load the latest list of boards.
    - Select **Kria KV260 Vision AI Starter Kit**.
+   - Click **Connections**, select **Vision AI Starter Kit carrier card**, click OK.
+      ![Missing Image](./images/kv260_cc.png)
    - Click **Next**.
    - Review project summary and click **Finish**
 
@@ -188,20 +190,17 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
 
    - Connect **axi_intc_0.irq** to **zynq_ultra_ps_e_0.pl_ps_irq[0:0]**
 
-   Note:
+   The IPI design connection would like below till now:
 
-   - If you have more than one irq signals to connect to pl_ps_irq of PS, use a **concat** IP to concatenate them to a bus and then connect the bus to pl_ps_irq.
+   ![ipi_fully_connection.png](./images/ipi_fully_connection.png)
+
+   > Note: If you have more than one irq signals to connect to pl_ps_irq of PS, use a **concat** IP to concatenate them to a bus and then connect the bus to pl_ps_irq.
 
 5. Enable interrupt signals for the platform.
 
    - Go to Platform Setup tab
    - Go to Interrupt tab
    - Enable intr under axi_intc_0
-   - Tcl console shows the corresponding tcl command for this setup:
-
-The IPI design connection would like below till now:
-
-![ipi_fully_connection.png](./images/ipi_fully_connection.png)
 
 ### Enable AXI Interfaces for the Platform
 
@@ -238,18 +237,6 @@ The IPI design connection would like below till now:
 
    ![Platform Setup - AXI Ports](images/platform_setup_interfaces.png)
 
-### Emulation Setup (Optional)
-
-This step is only needed when creating an emulation-capable platform.
-
-When a component comes with multiple types of simulation models, selecting SystemC TLM (Transaction-level Modeling) model would run much faster than RTL model. For Processing System component, it is mandatory to use TLM for Hardware Emulation.
-
-1. Change PS simulation model to tlm
-
-   - Select the PS instance **zynq_ultra_ps_e_0** in the block diagram
-   - check the **Block Properties** window.
-   - In **Properties** tab, it shows `ALLOWED_SIM_MODELS=tlm,rtl`. It means this component supports two types of simulation models.
-   - Scroll down to `SELECTED_SIM_MODEL` property. Change it from **rtl** to **tlm** to select to use TLM model.
 
 ### Export Hardware XSA
 
