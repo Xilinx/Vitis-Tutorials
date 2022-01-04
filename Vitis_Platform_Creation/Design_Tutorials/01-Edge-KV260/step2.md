@@ -57,7 +57,7 @@ KV260 provides an off-the-shelf boot image and has its enhanced boot sequence. S
     ```bash
     petalinux-create --type project -s xilinx-k26-starterkit-v2021.1-final.bsp
     cd xilinx-k26-starterkit-v2021.1
-    petalinux-config --get-hw-description=<vivado_design_dir>
+    petalinux-config --get-hw-description=<vivado_design_dir> --silent
     ```
 
 5. Add XRT to rootfs
@@ -123,11 +123,17 @@ Run the following steps to generate DTBO from XSA
     hsi close_hw_design [hsi current_hw_design]
     ```
 
+    You can save the hsi commands in a gen_dt.tcl file and use `xsct gen_dt.tcl` to execute it. If you type these commands in XSCT console directly, you can close XSCT console after the generation completes.
+
 3. Compile the dtsi to dtbo.
+
+    Run the following command in the shell with PetaLinux environment.
 
     ```bash
     dtc -@ -O dtb -o pl.dtbo pl.dtsi
     ```
+
+    > Note: `dtc` is device tree compiler. For more info about dtc, please check its [man page](http://manpages.ubuntu.com/manpages/trusty/man1/dtc.1.html) and [source code](https://git.kernel.org/pub/scm/utils/dtc/dtc.git/tree/README?h=main).
 
 
 

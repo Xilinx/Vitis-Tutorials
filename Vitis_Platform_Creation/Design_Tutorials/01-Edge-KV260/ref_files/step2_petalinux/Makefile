@@ -62,7 +62,6 @@ petalinux_proj: $(BSP)
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project -s ../$(BSP)
 	echo "CONFIG_YOCTO_BUILDTOOLS_EXTENDED=y" >> $(PETALINUX_CONFIG)
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_rootfs_config
-	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(ROOT_DIR) --silentconfig
 
 update_rootfs_config:
 	# PetaLinux Rootfs: Enable XRT
@@ -74,7 +73,6 @@ petalinux_build:
 
 petalinux_build_sdk:
 	petalinux-build -p $(PETALINUX_DIR) --sdk
-	cd $(PETALINUX_DIR) && petalinux-package --sysroot
 
 
 clean:
