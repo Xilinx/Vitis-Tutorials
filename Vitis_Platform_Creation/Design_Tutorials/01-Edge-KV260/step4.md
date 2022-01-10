@@ -152,7 +152,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
 
   > Note: KV260 Platform doesn't support emulation.
 
-  > Note: Sysroot for application project is required. Linux kernel image and rootfs are optional in this tutorial because we will use the pre-installed Linux kernel and rootfs of KV260 Starter Kit. It's still beneficial adding Kernel Image and rootfs information when creating the application project because the v++ package step can complete with these files when building the system project. If you skip adding Image and rootfs, you can build host application and hw_link component seperatedly. The required files will still be generated.
+  > Note: Sysroot for application project is required for host application cross-compilation. Linux kernel image and rootfs are optional in this tutorial because we will use the pre-installed Linux kernel and rootfs of KV260 Starter Kit. It's still beneficial adding Kernel Image and rootfs information when creating the application project because the v++ package step can complete with these files when building the system project. If you skip adding Image and rootfs, you can build host application and hw_link component seperatedly. The required files will still be generated.
    
 
 2. Prepare the files to transfer to the board
