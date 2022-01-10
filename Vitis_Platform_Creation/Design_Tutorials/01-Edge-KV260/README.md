@@ -61,10 +61,12 @@ Since Kria SOM Starter Kit provides an off-the-shelf boot image and has its enha
 | Procedure              | Required Actions                                                     | Output                                                  | Skipped Actions   |
 | ---------------------- | -------------------------------------------------------------------- | ------------------------------------------------------- | ----------------- |
 | Platform Hardware      | Same as step 1                                                       | XSA                                                     | N/A               |
-| Platform Software      | Same as step 2; Generate device tree overlay for platform PL of XSA; | pl.dtsi, Linux kernel, rootfs, sysroot, boot components | N/A               |
+| Platform Software      | Same as step 2; Generate device tree overlay for platform PL of XSA; | pl.dtsi, sysroot | N/A               |
 | Platform Creation      | Same as step 3                                                       | Platform (XPFM)                                         | N/A               |
 | Application Creation   | Same as step 4; convert system.bit to bit.bin; Genreate dtbo         | Host App, XCLBIN, bit.bin, dtbo                         | N/A               |
 | Transfer files and run | Use scp to copy generated files to Linux partition on SD card       |                                                         | Write sd_card.img |
+
+> Note: In step 2, though PetaLinux can generate a lot of output components, the only valuable output product is this case is sysroot. It's used for host application cross-compilation. Since the boot images of KV260 Starter Kit is fixed, user doesn't need to generate any boot components, e.g., FSBL, etc. If you need to update the kernel configuration or rootfs configuration, you can do it but it's usually not necessary for most users.
 
 The following chapters will explain the details about these steps.
 
