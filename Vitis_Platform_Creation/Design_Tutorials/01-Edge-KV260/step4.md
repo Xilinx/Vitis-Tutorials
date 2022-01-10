@@ -148,9 +148,12 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
   - system.bit: PL bitstream including vadd kernel and platform components.
   - binary_container_1.xclbin: Acceleration binary container for XRT configuration. It includes system.bit and metadata that describes the kernels.
 
-   **Note**: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_custom_pkg/kv260_custom** directory.
+  > Note: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_custom_pkg/kv260_custom** directory.
 
-   **Note**: KV260 Platform doesn't support emulation.
+  > Note: KV260 Platform doesn't support emulation.
+
+  > Note: Sysroot for application project is required. Linux kernel image and rootfs are optional in this tutorial because we will use the pre-installed Linux kernel and rootfs of KV260 Starter Kit. It's still beneficial adding Kernel Image and rootfs information when creating the application project because the v++ package step can complete with these files when building the system project. If you skip adding Image and rootfs, you can build host application and hw_link component seperatedly. The required files will still be generated.
+   
 
 2. Prepare the files to transfer to the board
 
