@@ -76,11 +76,11 @@
 
    Copy the generated Linux software boot components from **<your_petalinux_dir>/images/linux directory** to the **<full_pathname_to_kv260_custom_pkg>/pfm/boot** directory to prepare for running the Vitis platform packaging flow:
 
-   - zynqmp_fsbl.elf
-   - pmufw.elf
-   - bl31.elf
-   - u-boot-dtb.elf: rename to **u-boot.elf**
-   - system.dtb
+   - zynqmp_fsbl.elf: MPSoC first stage boot loader
+   - pmufw.elf: MPSoC PMU Firmware
+   - bl31.elf: MPSoC Arm Trusted Firmware
+   - u-boot-dtb.elf: U-boot with device tree in the elf. Please rename it to **u-boot.elf**
+   - system.dtb: Device tree for Linux
 
    > Note: These files are the sources of creating BOOT.BIN and will be used during emulation.
 
