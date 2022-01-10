@@ -30,7 +30,7 @@
 
 To highlight the differences between KV260 and ZCU104, this example will simplify the descriptions of general steps that are shared between all MPSoC platforms, but add more KV260 specific contents. If you have question in some steps, please cross reference [ZCU104 custom embedded platform creation example](../../Introduction/02-Edge-AI-ZCU104/) or ask questions in Github Issues page.
 
-
+> Note: Since KV260 BSP only releases 2021.1 version, this tutorial will skip 2021.2. The next release for this tutorial would be 2022.1.
 
 ## Custom Platform Planning
 
