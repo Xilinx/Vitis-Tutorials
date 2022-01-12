@@ -66,7 +66,15 @@ There are two options to enable an AI Engine graph from a system:
 
   ![missing image](images/ps_app_cfg1.png)
   
-10.Modify the Linker Script
+10. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
+
+  a. `${env_var:XILINX_VITIS}/aietools/include`
+
+  b. The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
+
+  ![missing image](images/ps_app_cfg2.png)
+
+11.Modify the Linker Script
 
   a.In the Project Explorer, expand the A-to-z_app.
   
@@ -76,14 +84,6 @@ There are two options to enable an AI Engine graph from a system:
   
    ![missing image](images/heapsize.PNG)
   
-11. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
-
-  a. `${env_var:XILINX_VITIS}/aietools/include`
-
-  b. The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
-
-  ![missing image](images/ps_app_cfg2.png)
-
 12. Build the A72 PS application (`A-to-Z_app`) .     
 
 ### Step 3. Build the Full System
