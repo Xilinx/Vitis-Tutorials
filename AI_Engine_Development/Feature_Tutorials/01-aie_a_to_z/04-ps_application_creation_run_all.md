@@ -105,11 +105,15 @@ There are two options to enable an AI Engine graph from a system:
 
 1. Make sure your VCK190 board is connected to your PC.
 
-2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
+2. Right-click on the ***simple_application_system*** and expand Hardware.In this package directory you would find BOOT.BIN file.
 
-      ![missing image](images/run-on-hw.png)
+3. Copy BOOT.BIN to your SD card which is FAT or FAT32 file system type.(If you do not know BOOT.BIN location. You can click BOOT.BIN with your mouse right button and select properities. Then you can see the location directory.)
 
-3. You should see the application running successfully with no error.
+      ![missing image](images/bootbinlocation.PNG)
+
+4. Insert your SD card into your board and power on your board.
+
+5. You should see the application running successfully with no error.
 
       ![missing image](images/hw_output.png)
 
