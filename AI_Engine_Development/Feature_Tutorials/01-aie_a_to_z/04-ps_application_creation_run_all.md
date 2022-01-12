@@ -65,12 +65,14 @@ There are two options to enable an AI Engine graph from a system:
 9. Right-click on A72 PS application (`A-to-Z_app)` and select ***C/C++ Build Settings***.
 
   ![missing image](images/ps_app_cfg1.png)
+  
 10.Modify the Linker Script
   a.In the Project Explorer, expand the A-to-z_app.
   b.In the src directory, double-click lscript.ld to open the linker script for this project.
   c.In the linker script modify the heap size to 1M.
   
   ![missing image](images/heapsize.png)
+  
 11. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
 
   a. `${env_var:XILINX_VITIS}/aietools/include`
