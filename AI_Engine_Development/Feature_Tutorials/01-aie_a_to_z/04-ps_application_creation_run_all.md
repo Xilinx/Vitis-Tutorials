@@ -74,7 +74,7 @@ There are two options to enable an AI Engine graph from a system:
   
   c.In the linker script modify the heap size to 1M.
   
-   ![missing image](images/heapsize.png)
+   ![missing image](images/heapsize.PNG)
   
 11. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
 
