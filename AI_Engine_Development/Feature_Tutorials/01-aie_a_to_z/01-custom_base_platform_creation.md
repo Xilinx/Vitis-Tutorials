@@ -50,8 +50,7 @@ By using the pre-built template, you can easily get a validated hardware design 
 
    a. On the first page, select ***Hardware*** as the platform type (this tutorial runs on hardware).
 
-      ![missing image](images/export_xsa_updated.png)
-      Here we should name board as xd because of software limitation.
+      ![missing image](images/export_xsa_pg1.png)
 
    b. On the second page select ***Pre-synthesis***.
 
