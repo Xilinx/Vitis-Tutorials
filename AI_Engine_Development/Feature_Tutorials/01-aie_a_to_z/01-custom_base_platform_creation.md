@@ -60,6 +60,7 @@ By using the pre-built template, you can easily get a validated hardware design 
 
       ![missing image](images/export_xsa_updated.PNG)
       Here we name the board as "xd" because of software limitation.
+
    d. On the fourth page, set the name of the XSA.
 
       ![missing image](images/export_xsa_pg4.png)
