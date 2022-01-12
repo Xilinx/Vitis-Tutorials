@@ -67,8 +67,11 @@ There are two options to enable an AI Engine graph from a system:
   ![missing image](images/ps_app_cfg1.png)
   
 10.Modify the Linker Script
+
   a.In the Project Explorer, expand the A-to-z_app.
+  
   b.In the src directory, double-click lscript.ld to open the linker script for this project.
+  
   c.In the linker script modify the heap size to 1M.
   
   ![missing image](images/heapsize.png)
