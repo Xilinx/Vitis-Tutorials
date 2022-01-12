@@ -103,11 +103,11 @@ There are two options to enable an AI Engine graph from a system:
 
 ### Step 4. Run the System
 
-1. Make sure your VCK190 board is connected to your PC.
+1. Connect the prower of your board and prepare the terminal for your UART output.
 
 2. Right-click on the ***simple_application_system*** and expand Hardware.In this package directory you would find BOOT.BIN file.
 
-3. Copy BOOT.BIN to your SD card which is FAT or FAT32 file system type.(If you do not know BOOT.BIN location. You can click BOOT.BIN with your mouse right button and select properities. Then you can see the location directory.)
+3. Copy BOOT.BIN to your SD card which is FAT or FAT32 file system type. (If you do not know BOOT.BIN location. You can click BOOT.BIN with your mouse right button and select properties. Then you can see the location directory.)
 
       ![missing image](images/bootbinlocation.PNG)
 
