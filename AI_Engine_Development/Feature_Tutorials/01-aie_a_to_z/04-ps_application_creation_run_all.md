@@ -72,7 +72,7 @@ There are two options to enable an AI Engine graph from a system:
   
   b.In the src directory, double-click lscript.ld to open the linker script for this project.
   
-  c.In the linker script modify the heap size to 1M.
+  c.In the linker script modify the Heap size to 1M.
   
    ![missing image](images/heapsize.PNG)
   
