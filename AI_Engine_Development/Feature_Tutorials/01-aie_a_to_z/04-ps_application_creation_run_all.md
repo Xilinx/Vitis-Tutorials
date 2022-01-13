@@ -108,7 +108,7 @@ We have two ways to run the application.
 
 A: Use Jtag to launch the application.
    
-   1. Make sure your VCK190 board is connected to your PC.
+   1. Set up your board: power,Jtag,UART and BOOT MODE.
 
    2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
 
@@ -120,7 +120,7 @@ A: Use Jtag to launch the application.
 
 B: Use SD card to run the application.
 
-   1. Connect the prower of your board and prepare the terminal for your UART output.
+   1. Set up your board: power,Jtag,UART and BOOT MODE.
 
    2. Right-click on the ***simple_application_system*** and expand Hardware.In the package_no_aie_debug directory you would find BOOT.BIN file.                                   # ## Here we can find BOOT.BIN in package and package_no_aie_debug directory. Meanwhile the BOOT.BIN in package directory is for hardware debug purpose and the other one is for regular execution. So we choose BOOT.BIN in package_no_aie_debug directory.
 
