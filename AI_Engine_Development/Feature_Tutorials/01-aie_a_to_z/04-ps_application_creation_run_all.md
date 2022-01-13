@@ -38,10 +38,11 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 7. Import the `aie_control.cpp` file from the AI Engine application project (`simple_application/Hardware/Work/ps/c_rts/aie_control.cpp`).
 
 8. Import the following source files from the `src` folder
-* `main.cpp`
-* `platform.cpp`
-* `platform.h`
-* `platform_config.h`
+
+   * `main.cpp`
+   * `platform.cpp`
+   * `platform.h`
+   * `platform_config.h`
 
     ![missing image](images/ps_app_import.png)
 
@@ -68,21 +69,21 @@ There are two options to enable an AI Engine graph from a system:
   
 10. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
 
-  a. `${env_var:XILINX_VITIS}/aietools/include`
+  - `${env_var:XILINX_VITIS}/aietools/include`
 
-  b. The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
+  -  The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
 
-  ![missing image](images/ps_app_cfg2.png)
+     ![missing image](images/ps_app_cfg2.png)
 
-11.Modify the Linker Script
+11.Modify the Linker Script to increase the heap size for AIE library
 
-  a.In the Project Explorer, expand the A-to-z_app.
+  - In the Project Explorer, expand the A-to-z_app.
   
-  b.In the src directory, double-click lscript.ld to open the linker script for this project.
+  - In the src directory, double-click `lscript.ld` to open the linker script for this project.
   
-  c.In the linker script modify the Heap size to 1M.
+  - In the linker script modify the Heap size to `0x100000` (1MB).
   
-   ![missing image](images/heapsize.PNG)
+    ![missing image](images/heapsize.PNG)
   
 12. Build the A72 PS application (`A-to-Z_app`) .     
 
