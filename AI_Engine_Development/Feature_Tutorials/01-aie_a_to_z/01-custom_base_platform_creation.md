@@ -2,7 +2,7 @@
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -58,7 +58,8 @@ By using the pre-built template, you can easily get a validated hardware design 
 
    c. On the third page, add the name of the platform.
 
-      ![missing image](images/export_xsa_pg3.png)
+      ![missing image](images/export_xsa_updated.PNG)
+      Here we name the board as "xd" because of software limitation.
 
    d. On the fourth page, set the name of the XSA.
 

@@ -2,7 +2,7 @@
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -38,10 +38,11 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 7. Import the `aie_control.cpp` file from the AI Engine application project (`simple_application/Hardware/Work/ps/c_rts/aie_control.cpp`).
 
 8. Import the following source files from the `src` folder
-* `main.cpp`
-* `platform.cpp`
-* `platform.h`
-* `platform_config.h`
+
+   * `main.cpp`
+   * `platform.cpp`
+   * `platform.h`
+   * `platform_config.h`
 
     ![missing image](images/ps_app_import.png)
 
@@ -65,16 +66,26 @@ There are two options to enable an AI Engine graph from a system:
 9. Right-click on A72 PS application (`A-to-Z_app)` and select ***C/C++ Build Settings***.
 
   ![missing image](images/ps_app_cfg1.png)
-
+  
 10. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
 
-  a. `${env_var:XILINX_VITIS}/aietools/include`
+  - `${env_var:XILINX_VITIS}/aietools/include`
 
-  b. The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
+  -  The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
 
-  ![missing image](images/ps_app_cfg2.png)
+     ![missing image](images/ps_app_cfg2.png)
 
-11. Build the A72 PS application (`A-to-Z_app`) .     
+11.Modify the Linker Script to increase the heap size for AIE library
+
+  - In the Project Explorer, expand the A-to-z_app.
+  
+  - In the src directory, double-click `lscript.ld` to open the linker script for this project.
+  
+  - In the linker script modify the Heap size to `0x100000` (1MB).
+  
+    ![missing image](images/heapsize.PNG)
+  
+12. Build the A72 PS application (`A-to-Z_app`) .     
 
 ### Step 3. Build the Full System
 
@@ -93,15 +104,35 @@ There are two options to enable an AI Engine graph from a system:
 
 ### Step 4. Run the System
 
-1. Make sure your VCK190 board is connected to your PC.
+We have two ways to run the application. 
 
-2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
+A: Use Jtag to launch the application.
+   
+   1. Set up your board: power,Jtag,UART and BOOT MODE.
 
-      ![missing image](images/run-on-hw.png)
+   2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
 
-3. You should see the application running successfully with no error.
+         ![](images/run-on-hw.png)
 
-      ![missing image](images/hw_output.png)
+   3. You should see the application running successfully with no error.
+
+         ![](images/hw_output.png)
+
+B: Use SD card to run the application.
+
+   1. Set up your board: power,Jtag,UART and BOOT MODE.
+
+   2. Right-click on the ***simple_application_system*** and expand Hardware.In the package_no_aie_debug directory you would find BOOT.BIN file.                                                                                       #### Here we can find BOOT.BIN in package and package_no_aie_debug directory. Meanwhile the BOOT.BIN in package directory is for hardware debug purpose and the other one is for regular execution. So we choose BOOT.BIN in package_no_aie_debug directory.
+
+   3. Copy BOOT.BIN to your SD card which is FAT or FAT32 file system type. (If you do not know BOOT.BIN location. You can click BOOT.BIN with your mouse right button and select properties. Then you can see the location directory.)
+
+         ![missing image](images/package_no_aie_build.PNG)
+
+   4. Insert your SD card into your board and power on your board.
+
+   5. You should see the application running successfully with no error.
+
+         ![missing image](images/hw_output.png)
 
 
 ## Summary
