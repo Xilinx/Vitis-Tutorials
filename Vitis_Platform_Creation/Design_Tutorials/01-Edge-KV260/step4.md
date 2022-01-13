@@ -143,10 +143,10 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    - In the Explorer window double click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
    - Select **vadd_system** in Explorer window and Click **Build** icon in toolbar.
 
-  The build task would take 10-30 minutes. When build completes, the build result is located in `vadd_system/Hardware/package/sd_card/` directory.
+  The build task would take 10-30 minutes. When build completes, the build result is located in `vadd_system/Hardware/` directory.
 
-  - system.bit: PL bitstream including vadd kernel and platform components.
-  - binary_container_1.xclbin: Acceleration binary container for XRT configuration. It includes system.bit and metadata that describes the kernels.
+  - package.build/package/system.bit: PL bitstream including vadd kernel and platform components.
+  - package/sd_card/binary_container_1.xclbin: Acceleration binary container for XRT configuration. It includes system.bit and metadata that describes the kernels.
 
   > Note: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_custom_pkg/kv260_custom** directory.
 
