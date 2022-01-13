@@ -104,20 +104,35 @@ There are two options to enable an AI Engine graph from a system:
 
 ### Step 4. Run the System
 
-1. Connect the prower of your board and prepare the terminal for your UART output.
+We have two ways to run the application.
 
-2. Right-click on the ***simple_application_system*** and expand Hardware.In this package directory you would find BOOT.BIN file.
+A: Use Jtag to launch the application.
 
-3. Copy BOOT.BIN to your SD card which is FAT or FAT32 file system type. (If you do not know BOOT.BIN location. You can click BOOT.BIN with your mouse right button and select properties. Then you can see the location directory.)
+   1. Set up your board: power,Jtag,UART and BOOT MODE.
 
-      ![missing image](images/bootbinlocation.PNG)
+   2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
 
-4. Insert your SD card into your board and power on your board.
+         ![](images/run-on-hw.png)
 
-5. You should see the application running successfully with no error.
+   3. You should see the application running successfully with no error.
 
-      ![missing image](images/hw_output.png)
+         ![](images/hw_output.png)
 
+B: Use SD card to run the application.
+
+   1. Set up your board: power,Jtag,UART and BOOT MODE.
+
+   2. Right-click on the ***simple_application_system*** and expand Hardware.In the package_no_aie_debug directory you would find BOOT.BIN file.                                                                                       #### Here we can find BOOT.BIN in package and package_no_aie_debug directory. Meanwhile the BOOT.BIN in package directory is for hardware debug purpose and the other one is for regular execution. So we choose BOOT.BIN in package_no_aie_debug directory.
+
+   3. Copy BOOT.BIN to your SD card which is FAT or FAT32 file system type. (If you do not know BOOT.BIN location. You can click BOOT.BIN with your mouse right button and select properties. Then you can see the location directory.)
+
+         ![missing image](images/package_no_aie_build.PNG)
+
+   4. Insert your SD card into your board and power on your board.
+
+   5. You should see the application running successfully with no error.
+
+         ![missing image](images/hw_output.png)
 
 ## Summary
 
