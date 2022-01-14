@@ -294,7 +294,6 @@ When a component comes with multiple types of simulation models, selecting Syste
    This step is optional for Vitis platforms. In most cases a flat (non-DFX) Vitis platform doesn't need to generate bitstream before exporting the platform. You can execute this step after you understand its benefits and your requirements.
    
    - Generating bitstream will run through hardware design implemtation for the platform. It can report errors in the early stage if your platform hardware design has potential errors that cannot be reported by the Validated Design DRC.
-   - If you are going to import the design to the KV260 Start Kit PetaLinux BSP like in [this tutorial](../../Design_Tutorials/01-Edge-KV260), it's required to generate bitstream because the PetaLinux package `fpga-manager-util` in the BSP requires a bit file in the XSA file.
 
    Here are the steps to generate bitstream.
 
@@ -312,7 +311,7 @@ When a component comes with multiple types of simulation models, selecting Syste
    - Click Next in the first information page.
    - Select Platform Type: **Hardware**, click Next. If you skipped the emulation setup previously, select **Hardware** here.
    - Select Platform State: **Pre-synthesis**
-   - If you have generated bitstream in step4, enable **Include bitstream**, click Next
+   - (Optional) If you have generated bitstream in step4, enable **Include bitstream**, click Next
    - Input Platform Properties and click **Next**. For example,
      - Name: zcu104_custom_platform
      - Vendor: xilinx
