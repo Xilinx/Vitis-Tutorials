@@ -147,6 +147,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
 
   - package.build/package/system.bit: PL bitstream including vadd kernel and platform components.
   - package/sd_card/binary_container_1.xclbin: Acceleration binary container for XRT configuration. It includes system.bit and metadata that describes the kernels.
+  - package/sd_card/vadd: Compiled host application
 
   > Note: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_custom_pkg/kv260_custom** directory.
 
