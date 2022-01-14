@@ -26,7 +26,7 @@
 
 ## Prepare Files for Platform Packaging
 
-1. We would store all the necessary files for Vitis platform creation flow. Here we name it ```kv260_custom_pkg ```. Then we create a `pfm` folder inside to hold platform creation source components. 
+1. We would store all the necessary files for Vitis platform creation flow. Here we name it `kv260_custom_pkg `. Then we create a `pfm` folder inside to hold platform creation source components. 
 
    ```bash
    mkdir kv260_custom_pkg
@@ -45,7 +45,7 @@
 
 2. Install sysroot:
 
-   - Go to <PetaLinux Project>/images/linux directory.
+   - Go to `<PetaLinux Project>/images/linux` directory.
    - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. use the `-d` option to provide a full pathname to the output directory **kv260_custom_pkg** (This is an example ) and confirm.
    - Note: The environment variable **LD_LIBRARY_PATH** must not be set when running this command
 
