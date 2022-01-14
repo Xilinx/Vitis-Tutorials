@@ -289,20 +289,12 @@ When a component comes with multiple types of simulation models, selecting Syste
    - Select **Synthesis Options** to **Global**. It will skip IP synthesis during generation.
    - Click **Generate**. .
 
-4. Generate Bitstream
-
-   This step is only required for KV260 PetaLinux BSP, which we will build in next step. In most cases a flat (non-DFX) Vitis platform doesn't need to generate bitstream before exporting the platform. It's required here because the PetaLinux package `fpga-manager-util` requires a bit file in the XSA file.
-
-   - Click **Generate Bitstream** in the navigation window.
-   - Select a proper **number of jobs** for **Launch runs on local host**
-   - Click **OK** to start building.
-
-5. Export the platform
+4. Export the platform
 
    - Click menu **File -> Export -> Export Platform** to launch the **Export Hardware Platform** wizard. This wizard can also be launched by **Export Platform** button in **Flow Navigator** or **Platform Setup** window.
    - Click Next in the first information page.
    - Select Platform Type: **Hardware and Hardware Emulation**, click Next. If you skipped the emulation setup previously, select **Hardware** here.
-   - Select Platform State: **Pre-synthesis**, enable **Include bitstream**, click Next
+   - Select Platform State: **Pre-synthesis**, click Next
    - Input Platform Properties and click **Next**. For example,
      - Name: zcu104_custom_platform
      - Vendor: xilinx
