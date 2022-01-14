@@ -1,4 +1,3 @@
-﻿<<<<<<< HEAD
 <table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal® AI Engine</h1>
@@ -7,7 +6,6 @@
  <tr>
  <td align="center"><h1>AXIS External Traffic Generator Feature Tutorial</h1>
  </td>
-=======
 </table>
 <table class="sphinxhide" width="100%">
  <tr width="100%">
@@ -15,7 +13,6 @@
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
     </td>
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
  </tr>
 </table>
 
@@ -40,9 +37,9 @@ The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully s
 
 This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2020.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.2) for setting up software and installing the VCK190 base platform.
 
-Before starting this tutorial Complete the following steps:
+Before starting this tutorial, complete the following steps:
 
 1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.2/sdk.sh`.
 2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2021.2` directory.
@@ -54,16 +51,16 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 
 After completing the tutorial, you should be able to:
 
-* Connect two simulation-only traffic master/slave IP cores to the AI Engine array via Vitis
-* Build and Run HW emulation (QEMU + SystemC model of AI Engine)
-* Pass data from python to the AI Engine via the simulation traffic generators
-* Configure the design for different PLIO widths
-* Capture the AI Engine output in python
-* Plot/Graph the data in python and compare against a golden reference model
+* Connect two simulation-only traffic master/slave IP cores to the AI Engine array via Vitis&trade;.
+* Build and run HW emulation (QEMU + SystemC model of AI Engine).
+* Pass data from python to the AI Engine via the simulation traffic generators.
+* Configure the design for different PLIO widths.
+* Capture the AI Engine output in python.
+* Plot/Graph the data in python and compare against a golden reference model.
 
 ### Prerequisites
 
-To demonstrate this feature in a meaningful way you'll also make use of a DSPLibrary function - the "Fast Fourier Transform" or FFT. The DSP Library Tutorial provides detailed instructions on how to setup your environment to compile DSPLIB. Please complete that tutorial before continuing.
+To demonstrate this feature in a meaningful way you'll also make use of a DSPLibrary function - the "Fast Fourier Transform" or FFT. The DSP Library tutorial provides detailed instructions on how to setup your environment to compile DSPLIB. Please complete that tutorial before continuing.
 
 * https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/08-dsp-library
 
@@ -75,7 +72,7 @@ The following figure gives an overview of how the data will flow through this ex
 
 One way this flow enhances simulation coverage is by emulating the PLIO interface and the XRT Host interactions.
 
-Additionally, this allows the same input data to be run through hardware emulation and a Python (or other language) model of your computation. This can be helpful for verifying correctness, understanding numerical precision, and regression testing mathematical algorithms. This tutorial will demonstrate an FFT running in the AI Engine array and compare its output to a Numpy FFT.  
+Additionally, this allows the same input data to be run through hardware emulation and python (or other language) model of your computation. This can be helpful for verifying correctness, understanding numerical precision, and regression testing mathematical algorithms. This tutorial will demonstrate an FFT running in the AI Engine array and compare its output to a Numpy FFT.  
 
 ### Directory Structure
 
@@ -85,7 +82,7 @@ traffic_generator_install
 ├───aie           graph definition
 │   └───kernels   individual kernels
 └───sw            host XRT code
-    └───pysrc     python traffic generator 
+    └───pysrc     python traffic generator
 ```
 
 ## Before You Begin
@@ -108,11 +105,9 @@ Tools Documentation:
 
 To run through this tutorial, you will need to download and install the following tools:
 
-<<<<<<< HEAD
-* Install the [Vitis Software Platform 2021.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) 
-=======
+* Install the [Vitis Software Platform 2021.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+
 * Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 
 * Obtain licenses for the AI Engine tools
 
@@ -122,13 +117,13 @@ To run through this tutorial, you will need to download and install the followin
 
 ### *Environment*: Setting Up Your Target Platform Environment
 
-When the elements of the Vitis software platform are installed, update the target platform environment script.
+When the elements of the Vitis&trade; software platform are installed, update the target platform environment script.
 
 Create a script file named `env_setup_2021.sh` in your favorite text editor. Replace the placeholders with the appropriate paths:
 
 ```bash
 export DSPLIB_ROOT=<YOUR-DSPLIB-DIRECTORY>
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY> 
+export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
 
 source <XILINX-INSTALL-LOCATION>/Vitis/2021.2/settings64.sh
 ```
@@ -139,15 +134,14 @@ Then source the environment script:
 source env_setup_2021.sh
 ```  
 
-<<<<<<< HEAD
 ## *Validation*: Confirming Tool Installation
-Ensure that you are using the 2021.2 version of Xilinx tools. 
-=======
+
+Ensure that you are using the 2021.2 version of Xilinx&reg; tools.
+
 ### *Validation*: Confirming Tool Installation
 
-Ensure that you are using the 2021.1 version of Xilinx tools.
+Ensure that you are using the 2021.1 version of Xilinx&reg; tools.
 
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 ```bash
 which vitis
 which aiecompiler
@@ -156,7 +150,7 @@ echo $DSPLIB_ROOT
 
 ### *Validation*: Python Environment
 
-A python 3.6 or newer environment is required for this tutorial. Struct, numpy, and matplotlib packages are also required. To confirm they are installed open a terminal and type this command.
+A python 3.6 or newer environment is required for this tutorial. Struct, numpy, and matplotlib packages are also required. To confirm the installation, open a terminal and type this command:
 
 ```bash
 python3 -c 'import numpy, matplotlib, struct'
@@ -166,7 +160,7 @@ If this returns without error, you have the libraries required to proceed.
 
 ### *Other Tutorials*: Learn Basic Vitis Compiler and AI Engine Concepts
 
-For novice users, following link provides tutorials to understand the basic Vitis compiler concepts and building simple AI Engine designs:
+For novice users, following link provides tutorials to understand the basic Vitis&trade; compiler concepts and building simple AI Engine designs:
 
 * https://github.com/Xilinx/Vitis-Tutorials
 
@@ -174,7 +168,7 @@ For novice users, following link provides tutorials to understand the basic Viti
 
 ![Alt Text](images/v777_sysOverview.png)
 
-In the previous figure the AXIS traffic generator provides a path to the AI Engine input via a sim_ipc IP core. You will see this IP core on the BD in a later step. The AI Engine array has multiple AXI streaming inputs but for this tutorial you will use just one. Different application requirements such as precision and throughput will use different data types and PLIO widths. For example the cint16 datatype often maximizes AI Engine compute capabilities while floating point datatypes provide the most dynamic range. The traffic generator XO files see all data as byte arrays of different widths based on the PLIO width and the corresponding XO file linked with `v++`. For this tutorial you will send an array of complex 16-bit integers into the AI Engine array and perform a Fast Fourier Transform (FFT) using the DSP Library for AI Engine.
+In the previous figure the AXIS traffic generator provides a path to the AI Engine input via a sim_ipc IP core. You will see this IP core on the BD in a later step. The AI Engine array has multiple AXI streaming inputs but for this tutorial you will use just one. Different application requirements such as precision and throughput will use different data types and PLIO widths. For example, the cint16 datatype often maximizes AI Engine compute capabilities while floating point datatypes provide the most dynamic range. The traffic generator XO files see all data as byte arrays of different widths based on the PLIO width and the corresponding XO file linked with `v++`. For this tutorial, you will send an array of complex 16-bit integers into the AI Engine array and perform a Fast Fourier Transform (FFT) using the DSP Library for AI Engine.
 
 ### Connecting the AXI Traffic XOs
 
@@ -199,20 +193,20 @@ In the previous figure the AXIS traffic generator provides a path to the AI Engi
     VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
     ```
 
-### Understanding the Python
+### Understanding Python
 
 The following diagram illustrates the connections between the several steps required to interact with the traffic generators.
 
-1. For this tutorial the user data generator will be a complex sine wave.
-2. You will convert it to a byte array
-3. Handle the AXI transactions
+1. For this tutorial, the user data generator will be a complex sine wave.
+2. You will convert it to a byte array.
+3. Handle the AXI transactions.
 4. Pass the data to the XTLM python
     1. XTLM will pass data to the AIE array
     2. XTLM AXIS Slave will capture the output data
     3. Capture the data in the rx_from_aie thread()
     4. Pass the data to the parent thread via a pipe
-5. Convert to byte to array numpy
-6. Plot the data
+5. Convert to byte to array numpy.
+6. Plot the data.
 
 ![Alt Text](images/v777_python_threading.png)
 
@@ -239,17 +233,17 @@ return cscaled
 Following is an example of python code showing the axis_master side for cint16 data types.
 
 ```python
-#Convert numpy complex vector into two columns of int16s 
-rVec = np.real(data).astype(np.int16) 
+#Convert numpy complex vector into two columns of int16s
+rVec = np.real(data).astype(np.int16)
 iVec = np.imag(data).astype(np.int16)
 
-out2column = np.zeros((L,2)).astype(np.int16) 
+out2column = np.zeros((L,2)).astype(np.int16)
 out2column[:,0] = rVec
 out2column[:,1] = iVec
 
 #Convert numpy 2d array into bytes
 payload = out2column.tobytes()
-#Send the bytes to the AXI Traffic Generator 
+#Send the bytes to the AXI Traffic Generator
 b_transport(payload)
 ```
 
@@ -275,15 +269,15 @@ On line 5 you see that by dividing the PLIO width in bytes by the total number o
     7 for i in range(NumTrans):
     8     
     9     payload = xtlm_ipc.axi_stream_packet()    
-    10 
+    10
     11     data2send = iq_data_as_bytes[(i*NumBytesPerBeat):(i*NumBytesPerBeat)+NumBytesPerBeat]
     12     #Grab a "chunk" of the byte array of size PLIO
-    13 
+    13
     14     payload.data_length = NumBytesPerBeat
     15     payload.data  =data2send
 ```
 
-Here you see lines 7-15 containing a for loop construction. Each iteration of the loop creates an axi_stream packet object and populates all of its elements. The data is broken into appropriately sized chunks of NumBytesPerBeat. 
+Here you see lines 7-15 containing a for loop construction. Each iteration of the loop creates an axi_stream packet object and populates all of its elements. The data is broken into appropriately sized chunks of NumBytesPerBeat.
 
 ```
     19     if(i == NumTrans-1):
@@ -291,13 +285,13 @@ Here you see lines 7-15 containing a for loop construction. Each iteration of th
     21     else:
     22         payload.tlast = False
     23         
-    24 
+    24
     25     self.in0_util.b_transport(payload)
 ```
 
-Finally, lines 19-25 contain the handling of the TLast as well as the actual transmission of the full payload object using the `b_transport()` method. 
+Finally, lines 19-25 contain the handling of the TLast as well as the actual transmission of the full payload object using the `b_transport()` method.
 
-<!-- 
+<!--
 [//]: #Lines 17-22
 [//]: #For each transaction of PLIOWIDTH a single bit representing a byte-enable flag must be set. For PLIO32, which is 4 bytes, those 4 enable flags can be encoded as 0b1111 or 0xF. Similarly, PLIO64 is 0xFF and PLIO128 is 0xFFFF.
  -->
@@ -352,7 +346,7 @@ cVec = np.array(rvec) + 1j*np.array(ivec)
 
 Matplotlib is a helpful python library that mimics other plotting tools. In this tutorial the traffic generator output data will be plotted or saved as a PNG image. A visual inspection can be helpful for iterative debugging prior to developing self-checking test benches or golden data vectors.
 
-The python function "plot results" displays several graphs of the output data with different colors defined in a legend. 
+The python function "plot results" displays several graphs of the output data with different colors defined in a legend.
 
 See www.matplotlib.org for more information on Matplotlib's features.
 
@@ -389,7 +383,7 @@ This won't take for long for this tutorial.
 
 #### Compiling an AI Engine ADF Graph for V++ Flow
 
-An ADF Graph can be connected to an extensible Vitis platform. That is, the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through the `v++` connectivity directives. Note the following:
+An ADF Graph can be connected to an extensible Vitis&trade; platform. That is, the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through the `v++` connectivity directives. Note the following:
 
 * An AI Engine ADF C++ graph contains AI Engine kernels only.
 * All interconnections between AI Engine kernels are defined in the C++ graph (`graph.h`).
@@ -403,7 +397,7 @@ To compile the graph type to be used in hardware emulation, use:
 make aie
 ```
 
-This may take a few minutes. 
+This may take a few minutes.
 
 #### Connecting the traffic generators with V++
 
@@ -419,16 +413,13 @@ stream_connect=tx_iqdata.M00_AXIS:ai_engine_0.DataIn
 stream_connect=ai_engine_0.DataOut:rx_iqdata.S00_AXIS
 ```
 
-If additional master and slave traffic generator interfaces are required, change the "1" (between the sim_ipc_axis and the instance name) instead of instantiating more new kernels with the `nk` command. 
+If additional master and slave traffic generator interfaces are required, change the "1" (between the sim_ipc_axis and the instance name) instead of instantiating more new kernels with the `nk` command.
 
 For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a `PLIO` object. For this design, as an example, this line `PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
 
-<<<<<<< HEAD
-
 You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021.2/ug1393-vitis-application-acceleration.pdf).
-=======
+
 You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1393-vitis-application-acceleration.pdf).
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 
 To build the design, run the following command:
 
@@ -440,7 +431,7 @@ This will likely take more than 5 or 10 minutes.
 
 ### Section 3: Compile the A72 Host Application
 
-After all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code is using [XRT](http://www.github.com/Xilinx/XRT) (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker that it is using the the libraries: `-ladf_api_xrt -lxrt_coreutil`.
+After all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code is using [XRT](http://www.github.com/Xilinx/XRT) (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker that it is using the libraries: `-ladf_api_xrt -lxrt_coreutil`.
 
 1. Open `sw/main.cpp` and familiarize yourself with the contents. A benefit of the AXI Traffic Generators is the host code required is quite simple.
 
@@ -450,15 +441,11 @@ After all the new AI Engine outputs are created, you can compile your host appli
     graph_top.run(1);
     graph_top.end();
     ```
-   
-<<<<<<< HEAD
-   Note that [XRT](https://xilinx.github.io/XRT/2021.2/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application". 
-=======
-   Note that [XRT](https://xilinx.github.io/XRT/2021.1/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application".
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
+
+   **Note:** [XRT](https://xilinx.github.io/XRT/2021.2/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application".
 
 2. Close the main.cpp, and run the command.
-		
+
 	```bash
 	make host
 	```
@@ -537,14 +524,14 @@ After packaging, everything is set to run emulation or hardware.
 
 In this tutorial you learned how to:
 
-* Connect two simulation-only traffic master/slave IP cores to the AI Engine array via Vitis
-* Build and Run HW emulation (QEMU + SystemC model of AI Engine)
+* Connect two simulation-only traffic master/slave IP cores to the AI Engine array via Vitis&trade;.
+* Build and run HW emulation (QEMU + SystemC model of AI Engine).
 * Pass data from python to the AI Engine via the simulation traffic generators.
-* Configure the design for different PLIO widths
-* Capture the AI Engine output in python
-* Plot/Graph the data in python and compare against a golden reference model
+* Configure the design for different PLIO widths.
+* Capture the AI Engine output in python.
+* Plot/Graph the data in python and compare against a golden reference model.
 
-To read more about the use of Vitis in the AI Engine flow see: *UG1076: Versal ACAP AI Engine Programming Environment Chapter 13: Running Hardware Emulation & Traffic Generators*. 
+To read more about the use of Vitis in the AI Engine flow see: *UG1076: Versal ACAP AI Engine Programming Environment Chapter 13: Running Hardware Emulation & Traffic Generators*.
 
 ## Support
 
@@ -559,5 +546,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD066 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
-
+<p align="center"><sup>XD066 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>
