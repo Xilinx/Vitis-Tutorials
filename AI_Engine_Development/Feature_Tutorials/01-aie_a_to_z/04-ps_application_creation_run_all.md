@@ -97,27 +97,44 @@ There are two options to enable an AI Engine graph from a system:
 
   ![missing image](images/package_option.png)
 
->**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2020.2;d=yii1603912637443.html)).
+>**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html)).
 
 2. Build the ***simple_application_system*** project.
 
 
 ### Step 4. Run the System
 
-1. Connect the prower of your board and prepare the terminal for your UART output.
+We have two ways to run the application.
 
-2. Right-click on the ***simple_application_system*** and expand Hardware.In this package directory you would find BOOT.BIN file.
+A: Use Jtag to launch the application.
 
-3. Copy BOOT.BIN to your SD card which is FAT or FAT32 file system type. (If you do not know BOOT.BIN location. You can click BOOT.BIN with your mouse right button and select properties. Then you can see the location directory.)
+   1. Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable and set BOOT MODE to JTAG.
 
-      ![missing image](images/bootbinlocation.PNG)
+   2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
 
-4. Insert your SD card into your board and power on your board.
+         ![missing image](images/run-on-hw.png)
 
-5. You should see the application running successfully with no error.
+   3. You should see the application running successfully with no error.
 
-      ![missing image](images/hw_output.png)
+         ![missing image](images/hw_output.png)
 
+B: Use SD card to run the application.
+
+   1. Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable and set BOOT MODE to SD Boot.
+
+   2. Right-click on the ***simple_application_system*** and expand Hardware.In the `package_no_aie_debug` directory you would find BOOT.BIN file.
+
+        > We can find BOOT.BIN in **package** and **package_no_aie_debug** directory. The BOOT.BIN in **package** directory is for hardware debug purpose. It stops AI Engine after loading and waits for the run instruction from the debugger. The one in the **package_no_aie_debug** directory is for free running. So we choose BOOT.BIN in **package_no_aie_debug** directory for SD Card free running.
+
+   3. Copy BOOT.BIN to your SD card FAT32 partition. (If you do not know BOOT.BIN location, you can right click BOOT.BIN and select properties. It will show the file location directory.)
+
+         ![missing image](images/package_no_aie_build.PNG)
+
+   4. Insert your SD card into your board and power on your board.
+
+   5. You should see the application running successfully with no error.
+
+         ![missing image](images/hw_output.png)
 
 ## Summary
 
