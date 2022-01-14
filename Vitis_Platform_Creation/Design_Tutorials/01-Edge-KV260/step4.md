@@ -132,17 +132,29 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
 
    - Open Vitis workspace you were using before.
    - Select **File -> New -> Application Project**.
-   - Click **next**
-   - Select **kv260_custom** as platform, click **next**.
-   - Name the project **vadd**, click **next**.
-   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```<full_pathname_to_kv260_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running **sdk.sh**). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are in `kv260_custom_plnx/images` directory, which are generated in Step 2. click **next**.
-   - Select **System Optimization Examples -> Vector Addition** and click **finish** to generate the application.
+   - Click **Next**
+   - Select **kv260_custom** as platform, click **Next**.
+   - Name the project **vadd**, click **Next**.
+   - Set Domain to **linux on psu_cortexa53**, 
+   - Set **Sys_root path** to ```<full_pathname_to_kv260_custom_pkg>/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh**).
+   - Set **Root FS** to rootfs.ext4 in `kv260_custom_plnx/images/linux` directory, which was generated in Step 2.
+   - Set **Kernel Image** to Image in `kv260_custom_plnx/images/linux` directory. Click **Next**.
+   - Select **Acceleration templates with PL and AIE accelerators -> Vector Addition** and click **Finish** to generate the application.
    - In the Explorer window double click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
    - Select **vadd_system** in Explorer window and Click **Build** icon in toolbar.
 
-   **Note**: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_custom_pkg/kv260_custom** directory.
+  The build task would take 10-30 minutes. When build completes, the build result is located in `vadd_system/Hardware/` directory.
 
-   **Note**: If you would like to test this application in emulation mode, please change  **Active Build configuration** from **Emulation-SW** to **Emulation-HW** on Step 8.
+  - package.build/package/system.bit: PL bitstream including vadd kernel and platform components.
+  - package/sd_card/binary_container_1.xclbin: Acceleration binary container for XRT configuration. It includes system.bit and metadata that describes the kernels.
+  - package/sd_card/vadd: Compiled host application
+
+  > Note: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_custom_pkg/kv260_custom** directory.
+
+  > Note: KV260 Platform doesn't support emulation.
+
+  > Note: Sysroot for application project is required for host application cross-compilation. Linux kernel image and rootfs are optional in this tutorial because we will use the pre-installed Linux kernel and rootfs of KV260 Starter Kit. It's still beneficial adding Kernel Image and rootfs information when creating the application project because the v++ package step can complete with these files when building the system project. If you skip adding Image and rootfs, you can build host application and hw_link component seperatedly. The required files will still be generated.
+   
 
 2. Prepare the files to transfer to the board
 
@@ -194,7 +206,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
 
     ```bash
     # Running on target board
-    mkdir /lib/firmware/xilinx/vadd
+    sudo mkdir /lib/firmware/xilinx/vadd
     cd /home/petalinux
     mv vadd.dtbo vadd.bit.bin shell.json /lib/firmware/xilinx/vadd
     sudo xmutil listapps
@@ -208,6 +220,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    - Run vadd application
 
    ```bash
+   chmod +x ./vadd
    ./vadd binary_container_1.xclbin
    ```
 
@@ -220,6 +233,10 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     TEST PASSED
    ```
 
+> Note: If you get errors like "error while loading shared libraries: libxilinxopencl.so.2: cannot open shared object file: No such file
+or directory", it's because XRT is not installed in KV260 default rootfs. Please run `sudo dnf install xrt` to install XRT.
+
+
 ### Congratulations
 
 We have completed creating a custom platform from scratch and verifying it with a simple vadd application.
@@ -228,7 +245,9 @@ Please feel free to check more tutorials in this repository.
 
 ### Fast Track
 
-If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run `make all` in ref_files directory to generate the reference design and compare with your design.
+If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run `make all` in [ref_files](./ref_files) directory to generate the reference design and compare with your design.
+
+Since the PetaLinux project requires KV260 BSP, please download KV260 [Starter Kit BSP](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM) and save it to `ref_files/step2_petalinux` directory before running make.
 
 The command line flow has slight differences comparing to Vitis IDE flow.
 - The vector addition application is called `vadd` and `binary_container_1.xclbin` in Vitis IDE flow. The generated files in command line flow are called `simple_vadd` and `krnl_vadd.xclbin`.
