@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -30,28 +30,18 @@ The methodology for developing optimized accelerated applications is comprised o
  <tr>
  <td align="center"><a href="./Design_Tutorials/03-beamforming/README.md">Beamforming Design</a></td>
  <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
- </tr>
-
- <tr>
+ </tr> <tr>
  <td align="center"><a href="./Design_Tutorials/04-custom-platform-emulation/README.md">AIE Emulation on Custom Platforms</a></td>
  <td>This tutorial demonstrates the creation and emulation of an AIE design including the Adaptive DataFlow (ADF) graph, RTL kernels, and a custom VCK190 platform.</td>
- </tr>
-
- <tr>
+ </tr><tr>
  <td align="center"><a href="./Design_Tutorials/06-fft2d_AIEvsHLS/README.md">2D-FFT</a></td>
  <td>This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines. </td>
- </tr>
-
-  <tr>
+ </tr><tr>
  <td align="center"><a href="./Design_Tutorials/07-firFilter_AIEvsHLS/README.md">FIR Filter</a></td>
  <td>This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.</td>
- </tr>
-
-  <tr>
+ </tr> <tr>
  <td align="center"><a href="./Design_Tutorials/08-n-body-simulator/README.md">N-Body Simulator</a></td>
- <td>It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:
-
-   <li>A Python model of an N-Body Simulator run on x86 machine
+ <td>It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:<li>A Python model of an N-Body Simulator run on x86 machine
    <li>A scalable AI Engine design that can utilize up to 400 AI Engine tiles
    <li>AI Engine packet switching
    <li>AI Engine single-precision floating point calculations
@@ -63,9 +53,11 @@ The methodology for developing optimized accelerated applications is comprised o
    <li>Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators
    <li>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
  </tr>
-
-
- </table>
+   <tr>
+ <td align="center"><a href="./Design_Tutorials/09-post-link-recompile/README.md">Post-Link Recompile of an AIE Application </a></td>
+ <td>This tutorial shows you how to modify an AI Engine application after the platform has been frozen, this is to avoid a complete Vivado® tool run, which can take a long time if timing closure requires specific attention. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed. The tutorial demonstrates a Vitis IDE flow and a Makefile flow.</td>
+ </tr>
+</table>
 
 
 
