@@ -155,24 +155,29 @@ To verify the platform functionality, we will create an acceleation project with
    
      ![missing image](./images/step4/vitis_create_vadd.png)
 
-   - Input **Sysroot** path (step3_pfm/sw_comp/sysroots/aarch64-xilinx-linux), **RootFS** path (step3_pfm/sw_comp/rootfs.ext4) and **Kernel Image** path (step3_pfm/sw_comp/Image). These components were prepared in [step 3](./step3.md). Click **Next**. 
+   - Input **Sysroot** path (step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux)
+   - Input **RootFS** path (step3_pfm/sw_comp/rootfs.ext4)
+   - Input **Kernel Image** path (step3_pfm/sw_comp/Image). These components were prepared in [step 3](./step3.md). Click **Next**. 
 
       ![missing image](./images/step4/vitis_create_vadd_swcomp.png)
 
    - Select template **Vector Addition**. Click **Finish**.
 
-4. Build the vector addition application for hardware
-
-   - Select **vadd_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click the build icon.
-   - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in vadd_system/Hardware/package directory.
-
-
-5. (Optional) Build the vector addition application for hardware emulation
+4. (Optional) Build the vector addition application for hardware emulation
 
    - Select **vadd_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click the build icon.
    - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
+
+
+5. Build the vector addition application for hardware
+
+   - Select **vadd_system** project
+   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click the build icon.
+   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
+   - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in vadd_system/Hardware/package directory.
+
+
 
 
 #### Test the Application on Hardware
@@ -275,7 +280,7 @@ Vitis runs PS emulation in QEMU, PL and AIE emulation in XSIM. They can communic
 
 To verify the platform functionality, we will create a project with AIE + PL kernel and PS application and run it on VCK190 board.
 
-1. Create vector addition application on the custom platform
+1. Create AI Engine, PL and PS System Design on the custom platform
 
    - Select menu **File -> New -> Application Project**.
    - Go through the welcome page and click **Next**.
@@ -284,18 +289,21 @@ To verify the platform functionality, we will create a project with AIE + PL ker
    - Input Sysroot path, RootFS path and Kernel Image. Click **Next**.
    - Select template **AI Engine System Design Examples -> AI Engine, PL and PS System Design**. Click **Finish**.
 
-2. Build the vector addition application for hardware
-
-   - Select **plaie_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
-
-3. (Optional) Build the vector addition application for hardware emulation
+2. (Optional) Build the system design for hardware emulation
 
    - Select **plaie_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click build icon.
    - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
 
-4. After a successful build, **sd_card.img** is generated in `plaie_system/Hardware/package` and `plaie_system/Hardware/package_no_aie_debug` directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the **sd_card.img** in **package** directory has a package parameter `enable_aie_debug=1`. It's used for debugging. The one in **package_no_aie_debug** can work for free running.
+
+3. Build the system design for hardware
+
+   - Select **plaie_system** project
+   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
+   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
+
+
+4. After a successful build, **sd_card.img** for hardware running is generated in `plaie_system/Hardware/package` and `plaie_system/Hardware/package_no_aie_debug` directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the **sd_card.img** in **package** directory has a package parameter `enable_aie_debug=1`. It's used for debugging. AI Engine stops after being loaded and waits for the instruction from debugger. The one in **package_no_aie_debug** can work for free running.
 
 
 
