@@ -21,7 +21,7 @@ The [Vitis&trade; unified software platform](https://www.xilinx.com/products/des
 
 ## Tutorials
 
-The Vitis Tutorials take users through the design methodology and programming model for deploying accelerated application on all Xilinx platforms. Tutorials are divided into different topics by function and application. 
+The Vitis Tutorials take users through the design methodology and programming model for deploying accelerated applications on all Xilinx platforms. Tutorials are divided into different topics by function and application. 
 
 <table border="0"  >
 	<tbody>
@@ -132,7 +132,6 @@ The Vitis Tutorials take users through the design methodology and programming mo
   </tbody>
 </table>
 
-
 <table border="0"  >
 	<tbody>
 		<tr>
@@ -142,7 +141,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 		</tr>
 		<tr>
 			<td colspan="3" height="48"   >
-				Learn how to target, develop, and deploy advance algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
+				Learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
 			</td>
 		</tr>
 		<tr>
@@ -243,6 +242,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
   </tbody>
 </table>
 
+
 <table border="0"  >
 	<tbody>
 		<tr>
@@ -338,7 +338,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="https://github.com/Xilinx/Vitis_Accel_Examples">Vitis Acceleration Examples</a>
 			</td>
 			<td >
-				The examples in this repository illustrates specific scenarios related to host code and kernel programming through small working examples. They can get you started with Vitis acceleration application coding and optimization.
+				The example designs in this repository illustrate specific scenarios related to host code and kernel programming through small working examples. They can get you started with Vitis acceleration application coding and optimization.
 			</td>
 		</tr>
 		<tr>
@@ -346,7 +346,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="https://github.com/xilinx/Vitis-AI-Tutorials">Machine Learning Tutorials</a>
 			</td>
 			<td >
-				The repository helps to get you the lay of the land working with machine learning and the Vitis AI toolchain on Xilinx devices. It illustrates specific workflows or stages within Vitis AI and give examples of common use cases.
+				The repository helps to get you the lay of the land working with machine learning and the Vitis AI toolchain on Xilinx devices. It illustrates specific workflows or stages within Vitis AI and gives examples of common use cases.
 			</td>
 		</tr>
 		<tr>
@@ -354,7 +354,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="http://xilinx.github.io/Embedded-Design-Tutorials">Embedded Design Tutorials</a>
 			</td>
 			<td >
-				Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
+				Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare-metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
 			</td>
 		</tr>
 		<tr>
@@ -362,10 +362,10 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="https://github.com/Xilinx/Vitis_Model_Composer">Vitis Model Composer Tutorials</a>
 			</td>
 			<td >
-				Learn rapid design exploration using Vitis Model Composer. Vitis Model Composer provides a library of performance-optimized blocks for design and implementation of DSP algorithms on Xilinx devices. The Vitis Model Composer AI Engine, HLS and HDL libraries within the Simulink™ environment, enable the rapid design exploration of an algorithm and accelerates the path to production.
+				Learn rapid design exploration using Vitis Model Composer. Vitis Model Composer provides a library of performance-optimized blocks for design and implementation of DSP algorithms on Xilinx devices. The Vitis Model Composer AI Engine, HLS and HDL libraries within the Simulink™ environment, enable the rapid design exploration of an algorithm and accelerate the path to production.
 			</td>
 		</tr>
-	</tbody>
+	</tbody
 </table>
 
 
