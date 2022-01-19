@@ -1,0 +1,5 @@
+build
+*.xsa
+dt_output
+dtg
+.Xil

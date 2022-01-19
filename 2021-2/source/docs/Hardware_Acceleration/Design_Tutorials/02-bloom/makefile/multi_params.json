@@ -1,0 +1,22 @@
+{
+    "daily": {
+        "split_buffer": {
+            "STEP": "split_buffer",
+            "ITER": "2",
+            "PF": "8",
+	    "SpriteEn": "1"
+        },
+        "sw_overlap": {
+            "STEP": "sw_overlap",
+            "ITER": "8",
+            "PF": "8",
+	    "SpriteEn": "1"
+        },
+        "multiDDR": {
+            "STEP": "multiDDR",
+            "ITER": "8",
+            "PF": "8",
+	    "SpriteEn": "1"
+        }
+    }
+}

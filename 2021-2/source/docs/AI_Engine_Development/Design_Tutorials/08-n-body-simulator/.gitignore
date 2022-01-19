@@ -1,0 +1,9 @@
+Module_01_python_sims/pylib/__pycache__/
+Module_03_pl_kernels/Vitis_Libraries/
+Module_03_pl_kernels/_krnlgen/
+Module_03_pl_kernels/kernel/.stamp
+Module_03_pl_kernels/kernel/m2s_x2.cpp
+Module_03_pl_kernels/kernel/s2m_x4.cpp
+build*/
+*.jou
+*.log
