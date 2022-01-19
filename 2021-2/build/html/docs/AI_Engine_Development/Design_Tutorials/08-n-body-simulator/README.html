@@ -1,0 +1,956 @@
+
+
+
+<!DOCTYPE HTML>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description"/>
+		<meta name="keywords"/>
+		<meta property="og:title" content=""/>
+		<meta property="og:description"/>
+		<!-- favicon -->
+		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
+		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
+		<!-- Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
+
+  
+  
+  
+  
+
+  
+      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
+	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
+	<script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="A to Z Bare-metal Flow" href="../../Feature_Tutorials/01-aie_a_to_z/README.html" />
+    <link rel="prev" title="Versal AI Engine/HLS FIR Filter Tutorial" href="../07-firFilter_AIEvsHLS/README.html" /> 
+	</head>
+	<body>
+		<div class="xilinx-bs3"/>
+		<div class="root responsivegrid">
+			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
+				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+					<div class="xf-content-height">
+						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
+							<div class="header parbase aem-GridColumn aem-GridColumn--default--12">
+								<noindex>
+									<header data-component="header">
+										<nav class="navbar navbar-default aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid main-nav">
+													<div class="row">
+														<div class="col-xs-12">
+															<div class="logo-column">
+																<div class="logo">
+																	<a href="https://www.xilinx.com/">
+																	<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
+																	</a>
+																</div>
+															</div>
+															<div class="navbar-column">
+																<div class="navbar navbar-collapse collapse" id="xilinx-main-menu">
+																	<div class="mobile-search-container">
+																		<div id="headerSearchBox" class="headerSearch"
+																			data-component="header-search"
+																			data-redirect-if-empty="false"
+																			data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
+																			data-coveo-organization-id="xilinxcomprode2rjoqok">
+																			<div class='coveo-search-section'>
+																				<div class="CoveoAnalytics" data-search-hub="Site"></div>
+																				<ul class="dropdown-menu options">
+																					<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site">
+																						<a href="#">
+																						All</a>
+																					</li>
+																					<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com//products/silicon-devices/si-keyword-search.html" data-search-hub="Product">
+																						<a href="#">
+																						Silicon Devices</a>
+																					</li>
+																					<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com//products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product">
+																						<a href="#">
+																						Boards and Kits</a>
+																					</li>
+																					<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com//products/intellectual-property/ip-keyword-search.html" data-search-hub="Product">
+																						<a href="#">
+																						Intellectual Property</a>
+																					</li>
+																					<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support">
+																						<a href="#">
+																						Support</a>
+																						<ul>
+																							<li data-label="Documentation" data-action-link="https://www.xilinx.com//support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document">
+																								<a href="#">
+																								Documentation</a>
+																							</li>
+																							<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com//support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord">
+																								<a href="#">
+																								Knowledge Base</a>
+																							</li>
+																							<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums">
+																								<a href="#">
+																								Community Forums</a>
+																							</li>
+																						</ul>
+																					</li>
+																					<li data-label="Partners" data-action-link="https://www.xilinx.com//alliance/member-keyword-search.html" data-search-hub="Partner">
+																						<a href="#">
+																						Partners</a>
+																					</li>
+																					<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video">
+																						<a href="#">
+																						Videos</a>
+																					</li>
+																					<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press">
+																						<a href="#">
+																						Press</a>
+																					</li>
+																				</ul>
+																				<a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a>
+																				<div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
+																			</div>
+																		</div>
+																	</div>
+																	<ul class="nav navbar-nav nav-justified">
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://www.xilinx.com/applications.html">
+																			Applications</a>
+																		</li>
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://www.xilinx.com/products/silicon-devices.html">
+																			Products</a>
+																		</li>
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://developer.xilinx.com/">
+																			Developers</a>
+																		</li>
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://www.xilinx.com/support.html">
+																			Support</a>
+																		</li>
+																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
+																			<a href="https://www.xilinx.com/about/company-overview.html">
+																			About</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
+															<!--<div class="mini-nav">
+																<button type="button" data-function="xilinx-mobile-menu" id="nav-toggle" class="navbar-toggle collapsed visible-xs-block" aria-expanded="false">
+																<span></span>
+																<span></span>
+																<span></span>
+																<span></span>
+																</button>
+																<ul class="list-inline">
+																	<li class="dropdown user-menu">
+																		<button data-toggle="dropdown">
+																		<span class="sr-only">Account</span>
+																		<span class="fas fa-user"></span>
+																		</button>
+																		<ul class="dropdown-menu">
+																			<li>
+																				<a href="https://www.xilinx.com/myprofile/subscriptions.html">
+																				My Account</a>
+																			</li>
+																			<li>
+																				<a href="https://www.xilinx.com/registration/create-account.html">
+																				Create Account</a>
+																			</li>
+																			<li>
+																				<a href="https://www.xilinx.com/bin/protected/en/signout">
+																				Sign Out</a>
+																			</li>
+																		</ul>
+																	</li>
+																	<li class="hidden-xs">
+																		<button data-function="search-toggle">
+																		<span class="sr-only">Search</span>
+																		<span class="far fa-search"></span>
+																		</button>
+																	</li>
+																</ul>
+															</div>
+															-->
+															<div class="search-container">
+																<div id="headerSearchBox" class="headerSearch"
+																	data-component="header-search"
+																	data-redirect-if-empty="false"
+																	data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
+																	data-coveo-organization-id="xilinxcomprode2rjoqok">
+																	<div class='coveo-search-section'>
+																		<div class="CoveoAnalytics" data-search-hub="Site"></div>
+																		<ul class="dropdown-menu options">
+																			<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site">
+																				<a href="#">
+																				All</a>
+																			</li>
+																			<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com/products/silicon-devices/si-keyword-search.html" data-search-hub="Product">
+																				<a href="#">
+																				Silicon Devices</a>
+																			</li>
+																			<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com/products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product">
+																				<a href="#">
+																				Boards and Kits</a>
+																			</li>
+																			<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com/products/intellectual-property/ip-keyword-search.html" data-search-hub="Product">
+																				<a href="#">
+																				Intellectual Property</a>
+																			</li>
+																			<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support">
+																				<a href="#">
+																				Support</a>
+																				<ul>
+																					<li data-label="Documentation" data-action-link="https://www.xilinx.com/support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document">
+																						<a href="#">
+																						Documentation</a>
+																					</li>
+																					<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com/support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord">
+																						<a href="#">
+																						Knowledge Base</a>
+																					</li>
+																					<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums">
+																						<a href="#">
+																						Community Forums</a>
+																					</li>
+																				</ul>
+																			</li>
+																			<li data-label="Partners" data-action-link="https://www.xilinx.com/alliance/member-keyword-search.html" data-search-hub="Partner">
+																				<a href="#">
+																				Partners</a>
+																			</li>
+																			<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video">
+																				<a href="#">
+																				Videos</a>
+																			</li>
+																			<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press">
+																				<a href="#">
+																				Press</a>
+																			</li>
+																		</ul>
+																		<a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a>
+																		<div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
+																	</div>
+																</div>
+																<button data-function="search-toggle">
+																<span class="sr-only">Search</span>
+																<span class="far fa-times"></span>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</nav>
+									</header>
+								</noindex>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+						<div class="container-fluid">
+							<div class="row">
+							<div class="col-xs-12">
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+      
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+            
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption"><span class="caption-text">AI Engine</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../01-aie_lenet_tutorial/README.html">LeNet Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02-super_sampling_rate_fir/README.html">Super Sampling Rate FIR Filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03-beamforming/README.html">Beamforming Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04-custom-platform-emulation/README.html">AIE Emulation on Custom Platforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06-fft2d_AIEvsHLS/README.html">2D-FFT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html">FIR Filter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">N-Body Simulator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#before-you-begin">Before You Begin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#goals-of-this-tutorial">Goals of this Tutorial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-n-body-problem">The N-Body Problem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#where-we-re-headed">Where We’re Headed …</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-flows">Build Flows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#feature-tutorials">Feature Tutorials</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+            
+			
+			<p class="caption"><span class="caption-text">This Page</span></p>
+				<ul class="current">
+				  <li class="toctree-l1"><a href="../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/08-n-body-simulator/README.md.txt"
+						rel="nofollow">Show Source</a></li>
+				</ul>
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../AI_Engine_Development.html">AI Engine Development</a> &raquo;</li>
+        
+      <li>N-Body Simulator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/08-n-body-simulator/README.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="n-body-simulator">
+<h1>N-Body Simulator<a class="headerlink" href="#n-body-simulator" title="Permalink to this headline">¶</a></h1>
+<p><em><strong>Version: Vitis 2021.2</strong></em></p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial is an implementation of an N-Body Simulator in the AI Engine. It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:</p>
+<ul class="simple">
+<li><p>A Python model of an N-Body Simulator run on x86 machine</p></li>
+<li><p>A scalable AI Engine design that can utilize up to 400 AI Engine tiles</p></li>
+<li><p>AI Engine packet switching</p></li>
+<li><p>AI Engine single-precision floating point calculations</p></li>
+<li><p>AI Engine 1:400 broadcast streams</p></li>
+<li><p>Codeless PL HLS datamover kernels from the Vitis™ Utility Library</p></li>
+<li><p>PL HLS packet switching kernels</p></li>
+<li><p>PS Host Application that validates the data coming out of the AI Engine design</p></li>
+<li><p>C++ model of an N-Body Simulator</p></li>
+<li><p>Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators</p></li>
+<li><p>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine</p></li>
+</ul>
+</div>
+<div class="section" id="before-you-begin">
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial can be run on the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/vck190.html">VCK190 Board</a> (Production or ES). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board, get in touch with your Xilinx sales contact.</p>
+<div class="section" id="documentation-explore-ai-engine-architecture">
+<h3><em>Documentation</em>: Explore AI Engine Architecture<a class="headerlink" href="#documentation-explore-ai-engine-architecture" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf">AM009 AI Engine Architecture Manual</a></p></li>
+<li><p><a class="reference external" href="https://support.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493">Versal ACAP AI Engines for Dummies</a></p></li>
+<li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html">AI Engine Documentation</a></p></li>
+</ul>
+</div>
+<div class="section" id="tools-installing-the-tools">
+<h3><em>Tools</em>: Installing the Tools<a class="headerlink" href="#tools-installing-the-tools" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>Obtain a license to enable beta devices in Xilinx tools (to use the VCK190 platform).</p></li>
+<li><p>Obtain licenses for AI Engine tools.</p></li>
+<li><p>Follow the instructions for the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation">Vitis Software Platform Installation</a> and ensure you have the following tools:</p>
+<ul class="simple">
+<li><p>Vitis Software Platform</p></li>
+<li><p>Xilinx Runtime and Platforms (XRT)</p></li>
+<li><p>Embedded Platform VCK190 Base or VCK190 ES1 Base (from lounge, ask your Xilinx sales contact)</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="environment-setting-up-your-shell-environment">
+<h3><em>Environment</em>: Setting Up Your Shell Environment<a class="headerlink" href="#environment-setting-up-your-shell-environment" title="Permalink to this headline">¶</a></h3>
+<p>When the elements of the Vitis software platform are installed, update the shell environment script. Set the necessary environment variables to your system specific paths for xrt, platform location, and Xilinx tools.</p>
+<ol class="simple">
+<li><p>Edit the <code class="docutils literal notranslate"><span class="pre">env_setup.sh</span></code> script with your file paths:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">XILINX_XRT</span><span class="o">=</span>/opt/xilinx/xrt
+<span class="nb">export</span> <span class="nv">PLATFORM_REPO_PATHS</span><span class="o">=</span>&lt;user-path&gt;
+<span class="nb">export</span> <span class="nv">ROOTFS</span><span class="o">=</span><span class="nv">$PLATFORM_REPO_PATHS</span>/sw/versal/xilinx-versal-common-v&lt;ver&gt;/rootfs.ext4
+<span class="nb">export</span> <span class="nv">IMAGE</span><span class="o">=</span><span class="nv">$PLATFORM_REPO_PATHS</span>/sw/versal/xilinx-versal-common-v&lt;ver&gt;/Image
+<span class="nb">export</span> <span class="nv">EDGE_COMMON_SW</span><span class="o">=</span><span class="nv">$PLATFORM_REPO_PATHS</span>/sw/versal/xilinx-versal-common-v&lt;ver&gt;
+<span class="nb">export</span> <span class="nv">PLATFORM</span><span class="o">=</span>xilinx_vck190_base_&lt;ver&gt; <span class="c1">#or xilinx_vck190_es1_base_&lt;ver&gt; is using an ES1 board</span>
+
+<span class="nb">source</span> &lt;XILINX-INSTALL-LOCATION&gt;/Vitis/&lt;ver&gt;/settings64.sh
+<span class="nb">source</span> <span class="nv">$XILINX_XRT</span>/setup.sh
+<span class="nb">source</span> <span class="nv">$PLATFORM_REPO_PATHS</span>/sw/versal/xilinx-versal-common-v&lt;ver&gt;/environment-setup-cortexa72-cortexa53-xilinx-linux
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Source the environment script:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> env_setup.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="validation-confirming-tool-installation">
+<h3><em>Validation</em>: Confirming Tool Installation<a class="headerlink" href="#validation-confirming-tool-installation" title="Permalink to this headline">¶</a></h3>
+<p>Ensure you are using the 2021.2 version of the Xilinx tools.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which vitis
+which aiecompiler
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="goals-of-this-tutorial">
+<h2>Goals of this Tutorial<a class="headerlink" href="#goals-of-this-tutorial" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hpc-applications">
+<h3>HPC Applications<a class="headerlink" href="#hpc-applications" title="Permalink to this headline">¶</a></h3>
+<p>The goal of this tutorial is to create a general-purpose floating point accelerator for HPC applications. This tutorial demonstrates a x24,800 performance improvement using the AI Engine accelerator over the naive C++ implementation on the A72 embedded Arm® processor.</p>
+<div class="section" id="a-similar-accelerator-example-was-implemented-on-the-ultrascale-based-ultra96-device-using-only-pl-resources-here">
+<h4>A similar accelerator example was implemented on the UltraScale+™-based Ultra96 device using only PL resources <a class="reference external" href="https://www.hackster.io/rajeev-patwari-ultra96-2019/ultra96-fpga-accelerated-parallel-n-particle-gravity-sim-87f45e">here</a>.<a class="headerlink" href="#a-similar-accelerator-example-was-implemented-on-the-ultrascale-based-ultra96-device-using-only-pl-resources-here" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Hardware</th>
+<th>Algorithm Complexity</th>
+<th>Average Execution Time to Simulate 12,800 Particles for 1 Timestep (seconds)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python N-Body Simulator</td>
+<td>x86 Linux Machine</td>
+<td>O(N)</td>
+<td>14.96</td>
+</tr>
+<tr>
+<td>C++ N-Body Simulator</td>
+<td>A72 Embedded Arm Processor</td>
+<td>O(N<sup>2</sup>)</td>
+<td>124.79</td>
+</tr>
+<tr>
+<td>AI Engine N-Body SImulator</td>
+<td>Versal AI Engine IP</td>
+<td>O(N)</td>
+<td>0.004657468</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section" id="pl-data-mover-kernels">
+<h3>PL Data-Mover Kernels<a class="headerlink" href="#pl-data-mover-kernels" title="Permalink to this headline">¶</a></h3>
+<p>Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the <a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/utils/2021.1/datamover/kernel_gen_guide.html">Vitis Utility Library</a>. These kernels moves any amount of data from DDR buffers to AXI-Streams.</p>
+</div>
+</div>
+<div class="section" id="the-n-body-problem">
+<h2>The N-Body Problem<a class="headerlink" href="#the-n-body-problem" title="Permalink to this headline">¶</a></h2>
+<p>The N-Body problem is the problem of predicting the motions of a group of N objects which each have a gravitational force on each other. For any particle <code class="docutils literal notranslate"><span class="pre">i</span></code> in the system, the summation of the gravitational forces from all the other particles results in the acceleration of particle <code class="docutils literal notranslate"><span class="pre">i</span></code>. From this acceleration, we can calculate a particle’s velocity and position (<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span></code>) will be in the next timestep. Newtonian physics describes the behavior of very large bodies/particles within our universe. With certain assumptions, the laws can be applied to bodies/particles ranging from astronomical size to a golf ball (and even smaller).</p>
+<div class="section" id="particles-simulated-on-a-400-tile-ai-engine-accelerator-for-300-timesteps">
+<h3>12,800 Particles simulated on a 400 tile AI Engine accelerator for 300 timesteps<a class="headerlink" href="#particles-simulated-on-a-400-tile-ai-engine-accelerator-for-300-timesteps" title="Permalink to this headline">¶</a></h3>
+<p><img alt="alt text" src="../../../../_images/animation.gif" /></p>
+<p>The colormap simulates the Red Shift effect in astronomy. When the particles are red, they are farther away in space (<code class="docutils literal notranslate"><span class="pre">-z</span></code> direction). When the particles are blue, they are closer to you in space (<code class="docutils literal notranslate"><span class="pre">+z</span></code> direction).</p>
+</div>
+<div class="section" id="newton-s-second-law-of-motion">
+<h3>Newton’s Second Law of Motion<a class="headerlink" href="#newton-s-second-law-of-motion" title="Permalink to this headline">¶</a></h3>
+<p>Newton’s Second Law motion in mathmatical form states the force on body i equals its mass times acceleration.</p>
+<p><img alt="alt text" src="../../../../_images/newtons_second_law_eq.PNG" /></p>
+</div>
+<div class="section" id="gravity-equations-two-bodies">
+<h3>Gravity Equations - Two Bodies<a class="headerlink" href="#gravity-equations-two-bodies" title="Permalink to this headline">¶</a></h3>
+<p>When the force on body i is caused by its gravitational attraction to body j, that force is calculated by the following gravity equation:</p>
+<p><img alt="alt text" src="../../../../_images/bodys_equation.PNG" /></p>
+<p>Where G is the gravitational constant, and r is the distance between body i and body j. Combining Newton’s second law motion with the gravity equation gives the following equation for calculating the acceleration of body i due to body j.</p>
+<p><img alt="alt text" src="../../../../_images/acc_equation_2_bodies.PNG" /></p>
+<p>We multiply by the unit vector of r to maintain the direction of the force.</p>
+<p>If given an initial velocity (v<sub>t</sub>) and position (x<sub>t</sub>), we can calculate our particle’s new position, acceleration, and velocity in the next timestep (t+1).</p>
+<ul class="simple">
+<li><p>Position Equation: x<sub>t+1</sub>=x<sub>t</sub>+v*ts</p></li>
+<li><p>Aceleration Equation: (from above)</p></li>
+<li><p>Velocity Equation: v<sub>t+1</sub>=v<sub>t</sub>+a*ts</p></li>
+</ul>
+</div>
+<div class="section" id="gravity-equations-n-bodies">
+<h3>Gravity Equations - N Bodies<a class="headerlink" href="#gravity-equations-n-bodies" title="Permalink to this headline">¶</a></h3>
+<p>Our NBody simulator will extends the above gravity equation to calcuate positions, accelerations, and velocities in the x, y, and z directions of N bodies in a system.
+For the sake of simplicity in implementation, the following assumptions were made:</p>
+<ol class="simple">
+<li><p>All particles are point masses</p></li>
+<li><p>Gravitational constant G=1</p></li>
+<li><p>We use a softening factor (sf<sup>2</sup>=1000) in gravity equations to avoid errors when two point masses are at exactly same co-ordinates.</p></li>
+<li><p>The timestep constant ts=1</p></li>
+</ol>
+<p>The N-Body Simulator will implement the following gravity equations.</p>
+<p>Given inital positions and velocities <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span></code> at timestep <code class="docutils literal notranslate"><span class="pre">t</span></code>, we can calculate the new positions <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span></code> of the next timestep <code class="docutils literal notranslate"><span class="pre">t+1</span></code>:
+<img alt="alt text" src="../../../../_images/position_equations.PNG" /></p>
+<p>To calculate the acceleration in the x, y, and z directions of any particle <code class="docutils literal notranslate"><span class="pre">i</span></code> (<code class="docutils literal notranslate"><span class="pre">accxi</span> <span class="pre">accyi</span> <span class="pre">acczi</span></code>), you must sum the acceleration caused by all other particles in the system (particles <code class="docutils literal notranslate"><span class="pre">j</span></code>):
+<img alt="alt text" src="../../../../_images/gravity_acc_equations.PNG" /></p>
+<p>When you have your accelerations, calculate the new velocities in the x, y, and z directions:
+<img alt="alt text" src="../../../../_images/velocity_equations_2.PNG" /></p>
+<p>Using these gravity equations, you can calculate your particles’ new positions and velocities <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span></code> at timestep <code class="docutils literal notranslate"><span class="pre">t+1</span></code> and repeat the calculations for the next timestep after. If there are a large number of particles in the system and/or you are simulating for a large number of timesteps, you will quickly see the compute intensive nature of this problem. This algorithm has a computational complexity of <em>O(N<sup>2</sup>)</em> due to the iterative nature of the process. This is a great opportunity for implementing an accelerator in hardware.</p>
+<p>In Module_01-Python Simulations on x86, you can try the <code class="docutils literal notranslate"><span class="pre">nbody.py</span></code> to see how slow the particle simulation runs in software only. The particle simulation will run much faster with accelerators implemented in hardware (AI Engine).</p>
+<p>This algorithm can be vectorized, hence reducing the complexity to O(N). In our AI Engine design, we will breakdown our workload to parallelize the computation on 100 AI Engine compute units.</p>
+<p>Source: <a class="reference external" href="https://academic.oup.com/pasj/article/55/6/1163/2056223">GRAPE-6: Massively-Parallel Special-Purpose Computer for Astrophysical Particle Simulations</a></p>
+</div>
+<div class="section" id="system-design-overview">
+<h3>System Design Overview<a class="headerlink" href="#system-design-overview" title="Permalink to this headline">¶</a></h3>
+<p>The N-Body Simulator is implemented on an <code class="docutils literal notranslate"><span class="pre">XCVC1902</span> <span class="pre">Versal</span> <span class="pre">ACAP</span></code> device on the VCK190 board. It consists of PL HLS datamover kernels from the Vitis Utility Library (<code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code> and <code class="docutils literal notranslate"><span class="pre">s2m_x4</span></code>), custom HLS kernels that enable packet switching (<code class="docutils literal notranslate"><span class="pre">packet_sender</span></code> and <code class="docutils literal notranslate"><span class="pre">packet_receiver</span></code>), and a 400 tile AI Engine design. Additionaly, the design consists of host applications that enable the entire design, verify the data coming out of the AI Engine, and run the design for multiple timesteps.</p>
+<p><img alt="alt text" src="../../../../_images/System_diagram.PNG" /></p>
+<div class="section" id="dataflow">
+<h4>Dataflow<a class="headerlink" href="#dataflow" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>The host applications store input data (<code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code>) in global memory (DDR) and turn on the PL HLS kernels (running at 300 MHz) and the AI Engine graph (running at 1GHz).</p></li>
+<li><p>Data moves from DDR to the dual-channel HLS datamover kernel <code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code>. The <code class="docutils literal notranslate"><span class="pre">i</span></code> data goes into one channel and the <code class="docutils literal notranslate"><span class="pre">j</span></code> data goes into the other channel. Here, data movement switches from AXI-MM to AXI-Stream. The read/write bandwith of DDR is set to the default 0.04 Gbps.</p></li>
+<li><p>The AI Engine graph performs packet switching on the <code class="docutils literal notranslate"><span class="pre">input_i</span></code> data, so the <code class="docutils literal notranslate"><span class="pre">i</span></code> data needs to be packaged appropriately before being sent to the AI Engine. So from the <code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code> kernel, it is streamed to the HLS <code class="docutils literal notranslate"><span class="pre">packet_sender</span></code> kernel. The <code class="docutils literal notranslate"><span class="pre">packet_sender</span></code> kernel sends a packet header and appropriately asserts <code class="docutils literal notranslate"><span class="pre">TLAST</span></code> before sending packets of <code class="docutils literal notranslate"><span class="pre">i</span></code> data to the 100 <code class="docutils literal notranslate"><span class="pre">input_i</span></code> ports in the AI Engine.</p></li>
+<li><p>The AI Engine graph expects the <code class="docutils literal notranslate"><span class="pre">j</span></code> data to be streamed directly into the AI Engine kernels, so no additional packaging is needed. The <code class="docutils literal notranslate"><span class="pre">j</span></code> data is directly streamed from the <code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code> kernel into the AI Engine.</p></li>
+<li><p>The AI Engine distributes the gravity equation computations onto 100 accelerators (each using 4 AI Engine tiles). The AI Engine graph outputs new <code class="docutils literal notranslate"><span class="pre">i</span></code> data through the 100 <code class="docutils literal notranslate"><span class="pre">output_i</span></code> ports. The <code class="docutils literal notranslate"><span class="pre">output_i</span></code> data is also packet switched and needs to be appropriately managed by the <code class="docutils literal notranslate"><span class="pre">packet_receiver</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">packet_receiever</span></code> kernel receives a packet and evaluates the header as 0, 1, 2, or 3 and appropriately sends the <code class="docutils literal notranslate"><span class="pre">output_i</span></code> data to the <code class="docutils literal notranslate"><span class="pre">k0</span></code>, <code class="docutils literal notranslate"><span class="pre">k1</span></code>, <code class="docutils literal notranslate"><span class="pre">k2</span></code>, or <code class="docutils literal notranslate"><span class="pre">k3</span></code> streams.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">s2m_x4</span></code> quad-channel HLS datamover kernel receives the <code class="docutils literal notranslate"><span class="pre">output_i</span></code> data and writes it to global memory (DDR). Here, data movement switches from AXI-Stream to AXI-MM.</p></li>
+<li><p>Then, depending on the host application, the new output data is read and compared against the golden expected data or saved as the next iteration of <code class="docutils literal notranslate"><span class="pre">i</span></code> data and the AI Engine N-Body Simulator runs for another timestep.</p></li>
+</ul>
+<p><em>Note:</em> The entire design is a compute-bound problem, meaning we are limited to how fast the AI Engine tiles compute the floating-point gravity equations. This is not a memory-bound design.</p>
+</div>
+</div>
+</div>
+<div class="section" id="where-we-re-headed">
+<h2>Where We’re Headed …<a class="headerlink" href="#where-we-re-headed" title="Permalink to this headline">¶</a></h2>
+<p>Complete modules 01-07 in the following order:</p>
+<div class="section" id="module-01-python-simulations-on-x86">
+<h3>Module 01 - Python Simulations on x86<a class="headerlink" href="#module-01-python-simulations-on-x86" title="Permalink to this headline">¶</a></h3>
+<p>The module shows a python implementation of the N-Body Simulator and execution times to run the N-Body Simulator on an x86 machine.</p>
+<p><a class="reference external" href="Module_01_python_sims">Read more …</a></p>
+</div>
+<div class="section" id="module-02-ai-engine-design">
+<h3>Module 02 - AI Engine Design<a class="headerlink" href="#module-02-ai-engine-design" title="Permalink to this headline">¶</a></h3>
+<p>This module presents the final 400 tile AI Engine design:</p>
+<ul class="simple">
+<li><p>A single AI Engine kernel (<code class="docutils literal notranslate"><span class="pre">nbody()</span></code>)</p></li>
+<li><p>An N-Body Subsystem with 4 <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels which are packet switched (<code class="docutils literal notranslate"><span class="pre">nbody_subsystem</span></code> graph)</p></li>
+<li><p>An N-Body System with 100 <code class="docutils literal notranslate"><span class="pre">nbody_subsystem</span></code> graphs (i.e., 400 <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels) which use all 400 AI Engine tile resources</p></li>
+<li><p>Invoke the AI Engine compiler</p></li>
+</ul>
+<p><a class="reference external" href="Module_02_aie">Read more…</a></p>
+</div>
+<div class="section" id="module-03-pl-kernels">
+<h3>Module 03 - PL Kernels<a class="headerlink" href="#module-03-pl-kernels" title="Permalink to this headline">¶</a></h3>
+<p>This modules presents the PL HLS kernels:</p>
+<ul class="simple">
+<li><p>Create datamover PL HLS kernels from Vitis Utility Library</p></li>
+<li><p>Create and simulate packet switching PL HLS kernels</p></li>
+</ul>
+<p><a class="reference external" href="Module_03_pl_kernels">Read more…</a></p>
+</div>
+<div class="section" id="module-04-full-system-design">
+<h3>Module 04 - Full System Design<a class="headerlink" href="#module-04-full-system-design" title="Permalink to this headline">¶</a></h3>
+<p>This module shows how to link the AI Engine design and PL kernels together into a single XCLBIN and view the actual hardware implementation Vivado solution.</p>
+<p><a class="reference external" href="Module_04_xclbin">Read more…</a></p>
+</div>
+<div class="section" id="module-05-host-software">
+<h3>Module 05 - Host Software<a class="headerlink" href="#module-05-host-software" title="Permalink to this headline">¶</a></h3>
+<p>This module presents the host software that enables the entire design:</p>
+<ul class="simple">
+<li><p>Create a functional host application that compares AI Engine output data to golden data</p></li>
+<li><p>Create a C++ N-Body Simulator to profile and compare performance between the A72 processor and AI Engine</p></li>
+<li><p>Create a host application that runs the system design for multiple timesteps and create animation data for post-processing</p></li>
+</ul>
+<p><a class="reference external" href="Module_05_host_sw">Read more…</a></p>
+</div>
+<div class="section" id="module-06-sd-card-and-hardware-run">
+<h3>Module 06 - SD Card and Hardware Run<a class="headerlink" href="#module-06-sd-card-and-hardware-run" title="Permalink to this headline">¶</a></h3>
+<p>This module conducts the hardware run:</p>
+<ul class="simple">
+<li><p>Create the <code class="docutils literal notranslate"><span class="pre">sd_card.img</span></code></p></li>
+<li><p>Execute the host applications and runs the system design on hardware</p></li>
+<li><p>Save animation data from hardware run</p></li>
+</ul>
+<p><a class="reference external" href="Module_06_sd_card_and_hw_run">Read more…</a></p>
+</div>
+<div class="section" id="module-07-results">
+<h3>Module 07 - Results<a class="headerlink" href="#module-07-results" title="Permalink to this headline">¶</a></h3>
+<p>This module review the results of the hardware run:</p>
+<ul class="simple">
+<li><p>Create an animation for 12,800 particle for 300 timesteps</p></li>
+<li><p>Compare latency results between Python x86, C++ Arm A72, and AI Engine N-Body Simulator designs</p></li>
+<li><p>Estimate the number of GFLOPS of the design</p></li>
+<li><p>Explore ways to increase design bandwidth</p></li>
+</ul>
+<p><a class="reference external" href="Module_07_results">Read more…</a></p>
+</div>
+<div class="section" id="optional-x1-design-and-x10-design">
+<h3>(Optional) x1_design and x10_design<a class="headerlink" href="#optional-x1-design-and-x10-design" title="Permalink to this headline">¶</a></h3>
+<p>This tutorial contains 3 AI Engine designs:</p>
+<ul class="simple">
+<li><p>x100_design (100 Compute Units using all 400 AI Engine tiles)</p></li>
+<li><p>x10_design (10 Compute Units using 40 AI Engine tiles)</p></li>
+<li><p>x1_design (1 Compute Unit using 4 AI Engine tiles)</p></li>
+</ul>
+<p>Modules_01-07 builds walks through building the final 100 Compute Unit design. The intermediate designs (x1_design and x10_design) are also provided if you want to build an N-Body Simulator with shorter build times or run hardware emulation within a reasonable amount of time.</p>
+</div>
+</div>
+<div class="section" id="build-flows">
+<h2>Build Flows<a class="headerlink" href="#build-flows" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial has two build flows you can choose from depending on your comfort level with Xilinx design processes.</p>
+<div class="section" id="for-more-advanced-users">
+<h3>For more advanced users<a class="headerlink" href="#for-more-advanced-users" title="Permalink to this headline">¶</a></h3>
+<p>For those who are already familiar with the creating AI Engine designs and Vitis projects, you may just want to build the entire design with a single command. You can do this by running the following command from the top-level folder:</p>
+<p><em>Estimated Time: 6 hours</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="nb">all</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="for-more-novice-users">
+<h3>For more novice users<a class="headerlink" href="#for-more-novice-users" title="Permalink to this headline">¶</a></h3>
+<p>For those who are just starting out, you may want to build each module one at time, view the output on the terminal, and learn as you work your way through the tutorial. In this case, cd into each Module folder and run the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> command to build just that component of the design. The specific commands <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> runs under the hood is specificed in each Module’s README.md.</p>
+<p><em>Estimated Time: depends on the Module you’re building</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">Module_0</span><span class="o">*</span>
+<span class="n">make</span> <span class="nb">all</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-word-about-makefiles">
+<h3>A Word about Makefiles<a class="headerlink" href="#a-word-about-makefiles" title="Permalink to this headline">¶</a></h3>
+<p>This design is built with the help of Makefiles. Each module can be run from the top-level Makefile or from the Makefile inside each module. You can quickly see which make commands are available by running the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span></code> command. You can also use the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> command to remove the generated files.</p>
+</div>
+<div class="section" id="building-for-vck190-es1-board">
+<h3>Building for VCK190 ES1 Board<a class="headerlink" href="#building-for-vck190-es1-board" title="Permalink to this headline">¶</a></h3>
+<p>By default, the Makefiles build the design for the VCK190 Production board (i.e. using the xilinx_vck190_base_<ver> embedded platform). In order to build the design for the VCK190 ES1 board, ensure you’ve downloaded the xilinx_vck190_es1_base_<ver> embedded platform from the lounge, so its available for this design build. Then specify the environment variable <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PLATFORM=xilinx_vck190_es1_base_&lt;ver&gt;</span></code> with your <code class="docutils literal notranslate"><span class="pre">env_setup.sh</span></code> script.</p>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://academic.oup.com/pasj/article/55/6/1163/2056223">GRAPE-6: Massively-Parallel Special-Purpose Computer for Astrophysical Particle Simulations</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/N-body_problem">N-body problem wiki page</a></p></li>
+<li><p><a class="reference external" href="https://www.hackster.io/rajeev-patwari-ultra96-2019/ultra96-fpga-accelerated-parallel-n-particle-gravity-sim-87f45e">Ultra96 FPGA-Accelerated Parallel N-Particle Gravity Sim</a></p></li>
+</ul>
+</div>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>Let’s get started with running the python model of the N-Body simulator on an x86 machine in <a class="reference external" href="Module_01_python_sims">Module 01 - Python Simulations on x86</a>.</p>
+<div class="section" id="support">
+<h3>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h3>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://support.xilinx.com/">support.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
+</footer>
+
+        </div>
+      </div>
+
+
+	  <!-- Sphinx Page Footer block -->
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../Feature_Tutorials/01-aie_a_to_z/README.html" class="btn btn-neutral float-right" title="A to Z Bare-metal Flow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../07-firFilter_AIEvsHLS/README.html" class="btn btn-neutral float-left" title="Versal AI Engine/HLS FIR Filter Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo" class="copyright">
+    <p class="footerinfo">
+      <span class="lastupdated">
+        Last updated on January 18, 2022.
+      </span>
+
+    </p>
+	<br>
+  </div>
+      </div>
+    </section>
+
+
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+   <script type="text/javascript">
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+
+  <script type="text/javascript" id="searchindexloader"></script>
+
+
+  
+  
+    
+  
+
+
+
+  <!--  Xilinx template footer block -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+					<div class="xf-content-height">
+						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
+							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+								<noindex>
+                  <!-- make footer fixed - NileshP -->
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+                  <!-- make footer fixed NileshP-->
+									<footer>
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+													<div class="row">
+														<div class="footerSocial parbase">
+															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
+																<ul class="list-inline pull-right social-menu">
+																	<li>
+																		<a href="https://www.linkedin.com/company/xilinx">
+																		<span class="linkedin icon"></span>
+																		<span class="sr-only">Connect on LinkedIn</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a href="https://www.twitter.com/XilinxInc">
+																		<span class="twitter icon"></span>
+																		<span class="sr-only">Follow us on Twitter</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a href="https://www.facebook.com/XilinxInc">
+																		<span class="facebook icon"></span>
+																		<span class="sr-only">Connect on Facebook</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a href="https://www.youtube.com/XilinxInc">
+																		<span class="youtube icon"></span>
+																		<span class="sr-only">Watch us on YouTube</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a href="https://www.xilinx.com/registration/subscriber-signup.html">
+																		<span class="newsletter icon"></span>
+																		<span class="sr-only">Subscribe to Newsletter</span>
+																		</a>
+																	</li>
+																</ul>
+															</div>
+														</div>
+														<div class="col-md-pull-6 col-lg-pull-6 col-md-6 col-lg-6">
+															<span class="copyright">
+                                  
+                                  &copy; 2019-2022, Xilinx, Inc.
+                              </span>
+															<ul class="list-inline sub-menu">
+																<li>
+																	<a href="https://www.xilinx.com/about/privacy-policy.html">Privacy</a>
+																</li>
+																<li>
+																	<a href="https://www.xilinx.com/about/legal.html">Legal</a>
+																</li>
+																<li>
+																	<a href="https://www.xilinx.com/about/contact.html">Contact</a>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</footer>
+								</noindex>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="quicklinks parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+					<noindex>
+						<span class="quickLinks">
+							<ul>
+								<li>
+									<a href="#top" class="btn backToTop">
+									<span class="fas fa-angle-up" aria-hidden="true"></span>
+									</a>
+								</li>
+							</ul>
+						</span>
+					</noindex>
+				</div>
+			</div>
+		</div>
+		<script>window.CQ = window.CQ || {}</script>
+		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
+		<script>
+			var underscoreSetup = function () {
+			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
+			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
+			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
+			}
+
+			underscoreSetup();
+		</script>
+	</body>
+</html>

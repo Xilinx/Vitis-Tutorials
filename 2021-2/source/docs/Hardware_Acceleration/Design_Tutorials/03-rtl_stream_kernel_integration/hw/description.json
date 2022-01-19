@@ -1,0 +1,29 @@
+{
+    "name": "Hardware-Acceleration-Design-03-rtl_stream_kernel",
+    "description": "rtl_stream_kernel_integration",
+    "gui": "false",
+    "flow": "vitis",
+
+    "platform_whitelist": [ "xilinx_u200_xdma_201830_2"],
+    "platform_blacklist": [],
+     
+    "testinfo": {
+        "disable": false, 
+        "jobs": [
+            {
+                "max_memory_MB": 76800, 
+                "max_time_min": {
+                    "vitis_hw": 360
+                }
+            }
+        ], 
+        "targets": [
+            "vitis_hw"
+        ],
+        "custom_build_target":
+        {
+            "hw": "all"
+        }
+
+    }
+}
