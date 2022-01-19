@@ -23,7 +23,7 @@ The [Vitis&trade; unified software platform](https://www.xilinx.com/products/des
 
 The Vitis Tutorials take users through the design methodology and programming model for deploying accelerated applications on all Xilinx platforms. Tutorials are divided into different topics by function and application. 
 
-<table border="0"  >
+<table border="0"  width="100%" >
 	<tbody>
 		<tr>
 			<td colspan="2" height="24" align="center">
@@ -45,7 +45,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
       </tr>	
       </tbody>
 </table>
-<table border="0"  >
+<table border="0"  width="100%">
 	<tbody>
 		<tr>
 			<td colspan="2" height="24" align="center">
@@ -132,7 +132,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
   </tbody>
 </table>
 
-<table border="0"  >
+<table border="0" width="100%"  >
 	<tbody>
 		<tr>
 			<td colspan="3" height="24" align="center">
@@ -243,7 +243,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 </table>
 
 
-<table border="0"  >
+<table border="0"  width="100%" >
 	<tbody>
 		<tr>
 			<td colspan="3" height="24" align="center">
@@ -252,7 +252,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 		</tr>
 		<tr>
 			<td colspan="3" height="48"   >
-			Learn how to build custom platforms for Vitis to target your own boards, and how to modify and extend existing platforms.
+			Learn how to build custom platforms for Vitis to target your own boards built with Xilinx devices, and how to modify and extend existing platforms.
 			</td>
 		</tr>
 		<tr>
@@ -300,7 +300,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
       </tr>
   </tbody>
 </table>
-<table border="0"  >
+<table border="0" width="100%" >
 	<tbody>
 		<tr>
 			<td colspan="2" height="24" align="center">
@@ -323,7 +323,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 
 ## Other Vitis Tutorial Repositories
 
-<table border="0"  width="981" >
+<table border="0"  width="100%" >
 	<tbody>
 		<tr>
 			<td  width="257" >
