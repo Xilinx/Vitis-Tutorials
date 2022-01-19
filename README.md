@@ -338,7 +338,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="https://github.com/Xilinx/Vitis_Accel_Examples">Vitis Acceleration Examples</a>
 			</td>
 			<td >
-				The example designs in this repository illustrate specific scenarios related to host code and kernel programming through small working examples. They can get you started with Vitis acceleration application coding and optimization.
+				This repository illustrates specific scenarios related to host code and kernel programming through small working examples. They can get you started with Vitis acceleration application coding and optimization.
 			</td>
 		</tr>
 		<tr>
@@ -367,6 +367,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 		</tr>
 	</tbody
 </table>
+
 
 
 <p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
