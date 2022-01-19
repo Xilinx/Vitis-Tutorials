@@ -1,4 +1,4 @@
-﻿<table width="100%">
+<table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -10,7 +10,6 @@
 # Design Tutorials
 
 The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the hardware kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto FPGA kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary compiler options and pragmas to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
-
 
 <table style="width:100%">
  <tr>
@@ -45,11 +44,8 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Design_Tutorials/07-host-code-opt/">XRT Host Code Optimization</a></td>
  <td>This tutorial demonstrates how to optimize your CPU host code to get the most out of interaction between your hardware accelerators and your runtime software.</td>
  </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/08-ivas-ml/">Streaming Video Analytics with IVAS</a></td>
- <td>This tutorial demonstrates a reference platform using the Xilinx IVAS framework for streaming video analytics with Vitis and Vitis AI.</td>
- </tr>
 </table>
+
 
 
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
