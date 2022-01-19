@@ -303,7 +303,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
    - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
 
 
-4. After a successful build, **sd_card.img** for hardware running is generated in `plaie_system/Hardware/package` and `plaie_system/Hardware/package_no_aie_debug` directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the **sd_card.img** in **package** directory has a package parameter `enable_aie_debug=1`. It's used for debugging. The one in **package_no_aie_debug** can work for free running.
+4. After a successful build, **sd_card.img** for hardware running is generated in `plaie_system/Hardware/package` and `plaie_system/Hardware/package_no_aie_debug` directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the **sd_card.img** in **package** directory has a package parameter `enable_aie_debug=1`. It's used for debugging. AI Engine stops after being loaded and waits for the instruction from debugger. The one in **package_no_aie_debug** can work for free running.
 
 
 
