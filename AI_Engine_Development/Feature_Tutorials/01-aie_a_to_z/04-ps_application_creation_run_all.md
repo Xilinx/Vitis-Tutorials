@@ -13,7 +13,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 ### Step 1. Create a New Platform in the Bare-metal Domain
 
-1. Open the Vitis software platform 2021.1 in the same workspace directory as the previous step. Click ***File → New →  Platform Project***.
+1. Open the Vitis software platform 2021.2 in the same workspace directory as the previous step. Click ***File → New →  Platform Project***.
 
 2. Set the Platform Project Name to ***AIE_A-to-Z_pfm_vck190*** and click ***Next***.
 
@@ -66,25 +66,25 @@ There are two options to enable an AI Engine graph from a system:
 9. Right-click on A72 PS application (`A-to-Z_app)` and select ***C/C++ Build Settings***.
 
   ![missing image](images/ps_app_cfg1.png)
-  
-10. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
 
-  - `${env_var:XILINX_VITIS}/aietools/include`
+10. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
 
   -  The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
 
-     ![missing image](images/ps_app_cfg2.png)
+     ![missing image](images/212_ps_app_cfg2.png)
+
+And make sure the `${env_var:XILINX_VITIS}/aietools/include` is already added in the directory settings.
 
 11.Modify the Linker Script to increase the heap size for AIE library
 
   - In the Project Explorer, expand the A-to-z_app.
-  
+
   - In the src directory, double-click `lscript.ld` to open the linker script for this project.
-  
+
   - In the linker script modify the Heap size to `0x100000` (1MB).
-  
+
     ![missing image](images/heapsize.PNG)
-  
+
 12. Build the A72 PS application (`A-to-Z_app`) .     
 
 ### Step 3. Build the Full System
@@ -97,7 +97,7 @@ There are two options to enable an AI Engine graph from a system:
 
   ![missing image](images/package_option.png)
 
->**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html)).
+>**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/integrate_ai_engine_application.html)).
 
 2. Build the ***simple_application_system*** project.
 

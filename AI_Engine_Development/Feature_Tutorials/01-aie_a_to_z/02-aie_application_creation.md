@@ -13,7 +13,7 @@ In this section of the tutorial, you will learn how to create a new AI Engine ap
 
 ### Step 1. Create a new AI Engine Application Project
 
-1. Open the Vitis 2021.1 IDE if you have closed it. You can use the same workspace as the previous stage or create a new one.
+1. Open the Vitis 2021.2 IDE if you have closed it. You can use the same workspace as the previous stage or create a new one.
 
 2. On the Welcome Page, click on ***Create Application Project*** or click ***File → New →  Application Project***.
 
