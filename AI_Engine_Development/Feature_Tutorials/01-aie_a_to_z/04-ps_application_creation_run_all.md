@@ -97,7 +97,7 @@ And make sure the `${env_var:XILINX_VITIS}/aietools/include` is already added in
 
   ![missing image](images/package_option.png)
 
->**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/integrate_ai_engine_application.html)).
+>**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)).
 
 2. Build the ***simple_application_system*** project.
 
