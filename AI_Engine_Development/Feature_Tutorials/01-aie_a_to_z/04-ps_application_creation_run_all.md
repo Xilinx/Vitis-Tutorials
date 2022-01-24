@@ -13,7 +13,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 ### Step 1. Create a New Platform in the Bare-metal Domain
 
-1. Open the Vitis software platform 2021.2 in the same workspace directory as the previous step. Click ***File → New →  Platform Project***.
+1. Open the Vitis IDE with the same workspace directory as the previous step. Click ***File → New →  Platform Project***.
 
 2. Set the Platform Project Name to ***AIE_A-to-Z_pfm_vck190*** and click ***Next***.
 
