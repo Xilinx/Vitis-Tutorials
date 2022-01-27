@@ -49,7 +49,7 @@ In this example, HLS kernels are used which bridge between memory and the AXI4-S
 * The `mm2s` kernel reads data from memory and inputs it to the AI Engine array.
 * The `s2mm` kernel receives output data from the AI Engine array and writes it to memory.
 
-1. Open the Vitis 2021.1 IDE and select the same workspace as the AI Engine application project. Right-click the ***simple_application_system*** project and select ***Add Hw Kernel Project***.
+1. Open the Vitis IDE and select the same workspace as the AI Engine application project. Right-click the ***simple_application_system*** project and select ***Add Hw Kernel Project***.
 
 2. Name the project ***hw-kernels*** and click ***Finish*** to create the project.
 
@@ -93,7 +93,7 @@ Add the following option to link your configuration file:
 --config ../system.cfg
 ```
 
-  ![missing image](images/hw_link_cfg4.png)
+  ![missing image](images/212_hw_link_cfg4.png)
 
 
 ### Step 4. Build the System
@@ -130,4 +130,3 @@ limitations under the License.
 
 
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p>
-
