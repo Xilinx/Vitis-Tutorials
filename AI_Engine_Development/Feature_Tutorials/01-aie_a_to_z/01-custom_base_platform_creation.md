@@ -26,7 +26,7 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 
 ### Step 1. Build Versal Extensible Embedded Platform Example Design in Vivado
 
-1. Launch Vivado 2021.1 IDE and select ***Open Example Project*** from the Welcome window. You can also do it by clicking ***File*** from the menu and select ***Project*** and then ***Open Example***.
+1. Launch Vivado IDE and select ***Open Example Project*** from the Welcome window. You can also do it by clicking ***File*** from the menu and select ***Project*** and then ***Open Example***.
 
 2. Click ***Next*** to skip the first page of the wizard. In the template selection page, select the ***Versal Extensible Embedded Platform*** template. Click ***Next***.
 
@@ -50,7 +50,7 @@ By using the pre-built template, you can easily get a validated hardware design 
 
    a. On the first page, select ***Hardware*** as the platform type (this tutorial runs on hardware).
 
-      ![missing image](images/export_xsa_pg1.png)
+      ![missing image](images/212_export_xsa_pg1.png)
 
    b. On the second page select ***Pre-synthesis***.
 
@@ -71,7 +71,7 @@ By using the pre-built template, you can easily get a validated hardware design 
 
 ### Step 2. Build the Platform in the Vitis Software Platform
 
-1. Open the Vitis 2021.1 IDE and select a workspace.
+1. Open the Vitis IDE and select a workspace.
 
 2. On the Welcome Page, select ***Create Platform Project*** or select ***File → New →  Platform Project ...***.
 
