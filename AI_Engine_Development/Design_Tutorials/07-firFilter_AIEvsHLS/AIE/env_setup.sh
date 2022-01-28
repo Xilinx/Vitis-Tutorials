@@ -30,7 +30,7 @@ source $XILNX_TOOLS_LOCATION/settings64.sh
 # =========================================================
 # Platform Selection...
 # =========================================================
-plat=xilinx_vck190_base_202110_1
+plat=xilinx_vck190_base_202120_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$plat/$plat\.xpfm
 
 echo ""

@@ -17,9 +17,9 @@
 
 export XILINX_XRT=/<user-path>/opt/xilinx/xrt
 export PLATFORM_REPO_PATHS=<user-path>
-export ROOTFS=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4
-export IMAGE=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/Image
-export EDGE_COMMON_SW=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1
+export ROOTFS=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4
+export IMAGE=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/Image
+export EDGE_COMMON_SW=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2
 
 # =========================================================
 # PLATFORM SELECTION
@@ -30,9 +30,9 @@ export PLATFORM=xilinx_vck190_base_202120_1
 
 
 #Source setup scripts
-source /<user-path>/Vitis/2021.1/settings64.sh
-source /<user-path>/petalinux-v2021.1-final/settings.sh
-source $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.1/environment-setup-cortexa72-cortexa53-xilinx-linux
+source /<user-path>/Vitis/2021.2/settings64.sh
+source /<user-path>/petalinux-v2021.2-final/settings.sh
+source $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux
 source $XILINX_XRT/setup.sh
 
 #Print env variables
