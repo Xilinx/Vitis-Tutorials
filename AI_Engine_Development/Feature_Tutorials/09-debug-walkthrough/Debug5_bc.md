@@ -22,7 +22,7 @@
 
 
 # xbutil
-The two utilities, `xbutil` is supported for PL/AI Engine kernels debug. It provides information for PL/AI Engine kernels.
+The utility, `xbutil` is supported for PL/AI Engine kernels debug. It provides information for PL/AI Engine kernels.
 
 To use the tools, binary container, for example, xclbin is required to be loaded first then issue commands to obtain information from, or, configure the kernels.
 
@@ -86,7 +86,7 @@ The following images show a few examples:
 Note for `xbutil examine -d 0000:00:00.0 -r aie` command
 1. The "iteration memory address” is the core status register raw value of each tile.
 2. Each tile's information such as program counter values, stack pointer are provided.
-3. MM2S and S2MM states are available. 
+3. MM2S and S2MM states are available.
 
 ## xbutil Limitations
 1. Commands not applicable to the VCK190 platform:
@@ -256,6 +256,9 @@ if (rval != 0) {                                                                
 
 Note: Supported error codes are listed in [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/member/versal_ai_core_docs_ea.html).
 
+# Support
+
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
 # License
 

@@ -123,6 +123,9 @@ vitis -debug -h
 4. Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in variables view for those optimized variables' values. Limitations from <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> applies.
 5. `printf()` is not supported in hardware debug.
 
+# Support
+
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
 # License
 
