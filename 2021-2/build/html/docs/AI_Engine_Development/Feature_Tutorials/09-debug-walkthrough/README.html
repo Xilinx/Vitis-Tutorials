@@ -359,6 +359,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example-design-beamformer">Example Design: Beamformer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#support">Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#license">License</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../10-aie-dsp-lib-model-composer/README.html">AI Engine DSP Library and Model Composer Tutorial</a></li>
@@ -434,7 +436,7 @@
         
           <li><a href="../../AI_Engine_Development.html">AI Engine Development</a> &raquo;</li>
         
-      <li>Debug Walkthrough</li>
+      <li>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -453,21 +455,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
-   </td>
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
  </tr>
- </table><div class="section" id="debug-walkthrough">
-<h1>Debug Walkthrough<a class="headerlink" href="#debug-walkthrough" title="Permalink to this headline">¶</a></h1>
+</table><div class="section" id="ai-engine-debug-walkthrough-tutorial-from-simulation-to-hardware">
+<h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware<a class="headerlink" href="#ai-engine-debug-walkthrough-tutorial-from-simulation-to-hardware" title="Permalink to this headline">¶</a></h1>
 <table style="width:100%">
-    <tr>
-    <td width="17%" align="center"><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></td>
-    <td width="17%" align="center"><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></td>
-    <td width="17%" align="center"><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></td>
-    <td width="17%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
-    <td width="17%" align="center"><a href="Debug4_et.md">AI Engine Debug with Hardware event trace</a></td>
-    <td width="17%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
+  <tr>
+    <td width="20%" align="center"><a href="Debug0_po.md">Migrate AI Engine Command-Line Based Projects to Vitis IDE</a></td>
+    <td width="20%" align="center"><a href="Debug1_86.md">AI Engine Debug with x86simulator</a></td>
+    <td width="20%" align="center"><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></td>
+    <td width="20%" align="center"><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></td>
+    <td width="20%" align="center"><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></td>
+  </tr>
+  <tr>
+    <td width="20%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
+    <td width="20%" align="center"><a href="Debug4_et.md">AI Engine Debug with Hardware event trace</a></td>
+    <td width="20%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
+    <td width="20%" align="center"><a href="Debug6_pr.md">Profiling Graph Inputs and Outputs with Profiling APIs</a></td>
+    <td width="20%" align="center"><a href="Debug7_il.md">AI Engine Debug with Integrated Logic Analyzer (ILA)</a></td>
   </tr>
 </table><p><em><strong>Version: Vitis 2021.2</strong></em></p>
 <div class="section" id="introduction">
@@ -514,14 +524,19 @@ At the end of computation, the partial summations are sent to the next AI Engine
 <p>After the project is ready in the Vitis IDE, you can move on to the next steps to try out the various debug features in software and hardware emulation and also in hardware.</p>
 <p><strong>Note</strong>: The imported project specifies a hardware platform path that must be adjusted to your specific installed path to work correctly. Click on <strong><code class="docutils literal notranslate"><span class="pre">beamformer_system.sprj</span></code></strong> to update the hardware platform path in the Vitis™ IDE.</p>
 <ul class="simple">
-<li><p><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></p></li>
-<li><p><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></p></li>
-<li><p><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></p></li>
-<li><p><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></p></li>
-<li><p><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></p></li>
+<li><p><a class="reference internal" href="Debug1_se.html"><span class="doc">AI Engine Debug with Software Emulator</span></a></p></li>
+<li><p><a class="reference internal" href="Debug2_ai.html"><span class="doc">AI Engine Debug with AI Engine Emulator</span></a></p></li>
+<li><p><a class="reference internal" href="Debug2_he.html"><span class="doc">AI Engine Source Code Debug with Hardware Emulator</span></a></p></li>
+<li><p><a class="reference internal" href="Debug3_hw.html"><span class="doc">AI Engine Source Code Debug on Hardware</span></a></p></li>
+<li><p><a class="reference internal" href="Debug5_bc.html"><span class="doc">AI Engine/PL Kernel Debug with XRT Utilities</span></a></p></li>
 </ul>
+</div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
+</div>
 <div class="section" id="license">
-<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -533,8 +548,7 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
-</div>
+<p align="center" class="sphinxhide"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 </div>
 
 

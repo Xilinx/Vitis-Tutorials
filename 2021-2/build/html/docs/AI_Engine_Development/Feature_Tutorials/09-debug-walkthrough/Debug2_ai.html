@@ -466,7 +466,7 @@
 <div class="section" id="step-3-debug-with-ai-engine-emulator">
 <h2>Step 3. Debug with AI Engine Emulator<a class="headerlink" href="#step-3-debug-with-ai-engine-emulator" title="Permalink to this headline">¶</a></h2>
 <p>Right-click on AI Engine project, select <strong>Debug As</strong> and <strong>Launch AIE Emulator</strong> to debug AI Engine project.</p>
-<img src="images/he_run_aie0.png" width="450"></div>
+<img src="images/he_debug_aie0.png" width="450"></div>
 <div class="section" id="step-4-source-code-debug-with-ai-engine-emulator">
 <h2>Step 4. Source Code Debug with AI Engine Emulator<a class="headerlink" href="#step-4-source-code-debug-with-ai-engine-emulator" title="Permalink to this headline">¶</a></h2>
 <p>After debugger is launched, the resume, disconnect, step into, step over, and step return buttons can be used to examine source code execution flow. Placing the cursor on each available button pops up information about that button’s functionality.
@@ -474,7 +474,7 @@
 <p>From the source code view, double-click on line number to setup breakpoint. Breakpoint view will show the newly added breakpoint.</p>
 <img src="images/he_debug_breakpoint.png" width="800"><p>During debug, highlighted areas indicate changes in values since the last step.
 <img src="images/he_run_aie.png"></p>
-<img src="images/he_run_aie2.png"></div>
+</div>
 <div class="section" id="step-5-verify-result">
 <h2>Step 5. Verify Result<a class="headerlink" href="#step-5-verify-result" title="Permalink to this headline">¶</a></h2>
 <p>AI Engine emulator output files from the design are located at <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-AIE/aiesimulator_output/data</span></code>. Verify the output files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-AIE/aiesimulation_output/data/dlbf_out[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-AIE/aiesimulation_output/data/ulbf_out[0-3].txt</span></code> against golden files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/dlbf_gold[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold[0-3].txt</span></code> to ensure that the design’s I/O functionalities are correct. Vitis IDE supports the compare with feature to compare two files, highlight the files to be compared, then right-click one of highlighted files, and select <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">each</span> <span class="pre">other</span> <span class="pre">with</span> <span class="pre">transformation</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Predefined</span> <span class="pre">filters</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Remove</span> <span class="pre">timestamp</span></code>.
@@ -517,7 +517,7 @@ Vitis™ IDE console displays <code class="docutils literal notranslate"><span c
 <p>The simplest form of tracing is to use a formatted <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. No additional include files are necessary for using <code class="docutils literal notranslate"><span class="pre">printf()</span></code> other than standard C/C++ includes (<code class="docutils literal notranslate"><span class="pre">stdio.h</span></code>). You can add <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements to your code to be processed during simulation, or hardware emulation, and remove them or comment them out for hardware builds.</p>
 <div class="section" id="step-1-add-printf-statement-in-source-code">
 <h2>Step 1. Add <code class="docutils literal notranslate"><span class="pre">printf</span></code> statement in source code<a class="headerlink" href="#step-1-add-printf-statement-in-source-code" title="Permalink to this headline">¶</a></h2>
-<p>Select <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code> file in Vitis IDE to be edited. Add <code class="docutils literal notranslate"><span class="pre">printf(&quot;prbcnt=%d\n&quot;,</span> <span class="pre">prbcnt);</span></code> statement at line 32 of <code class="docutils literal notranslate"><span class="pre">fb8x8_fst.cc</span></code> file.</p>
+<p>Select <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code> file in Vitis IDE to be edited. Add <code class="docutils literal notranslate"><span class="pre">printf(&quot;prbcnt=%d\n&quot;,</span> <span class="pre">prbcnt);</span></code> statement at line 42 of <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code> file.</p>
 <p><strong>Note:</strong> Adding <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements to your AI Engine kernel code will increase the compiled size of the AI Engine program. Be careful that the compiled size of your kernel code does not exceed the per-AI Engine processor memory limit of 16 KB.</p>
 </div>
 <div class="section" id="step-2-build-the-project">
@@ -534,7 +534,7 @@ Vitis™ IDE console displays <code class="docutils literal notranslate"><span c
 </div>
 <div class="section" id="step-5-expected-result">
 <h2>Step 5. Expected result<a class="headerlink" href="#step-5-expected-result" title="Permalink to this headline">¶</a></h2>
-<p>Output of <code class="docutils literal notranslate"><span class="pre">printf</span></code> statements displays on console window.
+<p>Output of <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements displays on console window.
 <img src="images/aie_sim_printf.png"></p>
 </div>
 <div class="section" id="printf-limitations">
@@ -559,13 +559,13 @@ readelf -S 6_0
 <img src="images/aie_sim_mem-check1.png" width="450"></div>
 <div class="section" id="step-2-add-access-to-an-invalid-memory-address">
 <h2>Step 2. Add access to an invalid memory address<a class="headerlink" href="#step-2-add-access-to-an-invalid-memory-address" title="Permalink to this headline">¶</a></h2>
-<p>Add these 7 lines at line 27 of <strong>fb8x8_fst.cc</strong> file to access invalid memory address access, for example 0x00039900.</p>
-<div class="highlight-base notranslate"><div class="highlight"><pre><span></span>#if 1
+<p>Add these 7 lines at line 35 of <strong>bf8x8_fst_api.cpp</strong> file to access invalid memory address access, for example 0x00039900.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#if 1</span>
     // demo
-//  volatile int *loc = (volatile int *)0xdeadbeef;
-    volatile int *loc = (volatile int *)0x00039900;
-    int test = *loc;
-#endif
+//  volatile int *loc <span class="o">=</span> <span class="o">(</span>volatile int *<span class="o">)</span>0xdeadbeef<span class="p">;</span>
+    volatile int *loc <span class="o">=</span> <span class="o">(</span>volatile int *<span class="o">)</span>0x00039900<span class="p">;</span>
+    int <span class="nb">test</span> <span class="o">=</span> *loc<span class="p">;</span>
+<span class="c1">#endif</span>
 </pre></div>
 </div>
 </div>
@@ -589,13 +589,13 @@ Note: The error messages may be rolled out of visible area, scroll up from conso
 <div class="section" id="step-7-additional-test">
 <h2>Step 7. Additional test<a class="headerlink" href="#step-7-additional-test" title="Permalink to this headline">¶</a></h2>
 <p>For invalid memory access that is out of kernel program memory range, for example 0xdeadbeef, a segfault error will be thrown regardless of whether the <code class="docutils literal notranslate"><span class="pre">--enable-memory-check</span></code> option is enabled/disabled.
-Comment out line 30 and uncomment line 29 from the previous source code update. Repeat step 3 and 4 to build and run the updated code.
+Comment out line 38 and uncomment line 37 from the previous source code update. Repeat step 3 and 4 to build and run the updated code.
 Expect to see the segfault error from Vitis IDE console.
 <img src="images/aie_sim_mem-check4.png"></p>
 </div>
 <div class="section" id="step-8-clean-up">
 <h2>Step 8. Clean up<a class="headerlink" href="#step-8-clean-up" title="Permalink to this headline">¶</a></h2>
-<p>Remove those added 7 lines of <strong>bf8x8_fst.cc</strong> file from step 2 to maintain source code sanity.</p>
+<p>Remove those added 7 lines of <strong>bf8x8_fst_api.cpp</strong> file from step 2 to maintain source code sanity.</p>
 </div>
 </div>
 <div class="section" id="command-line-project-source-code-debug-with-ai-engine-emulator">
@@ -678,6 +678,10 @@ xrt_server -I30000 -S -s tcp::4352
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>

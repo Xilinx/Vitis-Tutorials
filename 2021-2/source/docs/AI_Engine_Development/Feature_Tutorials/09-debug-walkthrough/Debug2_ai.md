@@ -45,7 +45,7 @@ Right-click on AI Engine project and select **Build Project** to build.
 ### Step 3. Debug with AI Engine Emulator
 Right-click on AI Engine project, select **Debug As** and **Launch AIE Emulator** to debug AI Engine project.
 
-<img src="images/he_run_aie0.png" width="450">
+<img src="images/he_debug_aie0.png" width="450">
 
 ### Step 4. Source Code Debug with AI Engine Emulator
 After debugger is launched, the resume, disconnect, step into, step over, and step return buttons can be used to examine source code execution flow. Placing the cursor on each available button pops up information about that button's functionality.
@@ -57,8 +57,6 @@ From the source code view, double-click on line number to setup breakpoint. Brea
 
 During debug, highlighted areas indicate changes in values since the last step.
 <img src="images/he_run_aie.png">
-
-<img src="images/he_run_aie2.png">
 
 ### Step 5. Verify Result
 AI Engine emulator output files from the design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data`. Verify the output files `${PROJECT}/Emulation-AIE/aiesimulation_output/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-AIE/aiesimulation_output/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis IDE supports the compare with feature to compare two files, highlight the files to be compared, then right-click one of highlighted files, and select `compare with` > `each other with transformation` > `Predefined filters` > `Remove timestamp`.
@@ -104,7 +102,7 @@ The simplest form of tracing is to use a formatted `printf()` statement in the c
 
 
 ### Step 1. Add `printf` statement in source code
-Select `bf8x8_fst.cc` file in Vitis IDE to be edited. Add `printf("prbcnt=%d\n", prbcnt);` statement at line 32 of `fb8x8_fst.cc` file.
+Select `bf8x8_fst_api.cpp` file in Vitis IDE to be edited. Add `printf("prbcnt=%d\n", prbcnt);` statement at line 42 of `bf8x8_fst_api.cpp` file.
 
 **Note:** Adding `printf()` statements to your AI Engine kernel code will increase the compiled size of the AI Engine program. Be careful that the compiled size of your kernel code does not exceed the per-AI Engine processor memory limit of 16 KB.
 
@@ -120,7 +118,7 @@ To enable `printf()` function, it is required to specify `--profile` in run conf
 Highlight the beamformer sub-project, right-click to enable pull-down menu, and select **Run As** and **Launch AIE Emulator** to run the project in Vitis IDE.
 
 ### Step 5. Expected result
-Output of `printf` statements displays on console window.
+Output of `printf()` statements displays on console window.
 <img src="images/aie_sim_printf.png">
 
 ### `printf` Limitations
@@ -144,8 +142,8 @@ readelf -S 6_0
 <img src="images/aie_sim_mem-check1.png" width="450">
 
 ### Step 2. Add access to an invalid memory address
-Add these 7 lines at line 27 of **fb8x8_fst.cc** file to access invalid memory address access, for example 0x00039900.
-```base
+Add these 7 lines at line 35 of **bf8x8_fst_api.cpp** file to access invalid memory address access, for example 0x00039900.
+```bash
 #if 1
     // demo
 //  volatile int *loc = (volatile int *)0xdeadbeef;
@@ -172,12 +170,12 @@ Note: The error messages may be rolled out of visible area, scroll up from conso
 
 ### Step 7. Additional test
 For invalid memory access that is out of kernel program memory range, for example 0xdeadbeef, a segfault error will be thrown regardless of whether the `--enable-memory-check` option is enabled/disabled.
-Comment out line 30 and uncomment line 29 from the previous source code update. Repeat step 3 and 4 to build and run the updated code.
+Comment out line 38 and uncomment line 37 from the previous source code update. Repeat step 3 and 4 to build and run the updated code.
 Expect to see the segfault error from Vitis IDE console.
 <img src="images/aie_sim_mem-check4.png">
 
 ### Step 8. Clean up
-Remove those added 7 lines of **bf8x8_fst.cc** file from step 2 to maintain source code sanity.
+Remove those added 7 lines of **bf8x8_fst_api.cpp** file from step 2 to maintain source code sanity.
 
 
 ## 5. Command line project source code debug with AI Engine emulator
@@ -249,7 +247,9 @@ Command options:
 ```bash
 killall -9 pllauncher; killall -9 qemu-system-aarch64; killall -9 xrt_server
 ```
+# Support
 
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
 # License
 
