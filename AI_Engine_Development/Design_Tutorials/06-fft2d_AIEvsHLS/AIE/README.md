@@ -1184,7 +1184,7 @@ cd $(BUILD_TARGET_DIR); \
 vcdanalyze --vcd x$(FFT_2D_INSTS).vcd --xpe
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2020.3](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
+2. If you do not already have it installed, download and install [XPE for Versal](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
 
 3. Follow the steps below to load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization (step 5 and 6 in the below images) for the 1024 x 2048 point 1-instance design:
 
