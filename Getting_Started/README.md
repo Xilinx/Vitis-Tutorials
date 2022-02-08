@@ -6,15 +6,17 @@
     </td>
  </tr>
 </table>
-
-This section contains two top-level getting started tutorials for Vitis
+This section contains top-level getting started tutorials for Vitis
 .
+
 * [**Vitis Introduction and Getting Started**](./Vitis) :
   + An overview of the Vitis workflow including kernel development, host software creation, emulation,
-  implementation, and analysis.
+    implementation, and analysis.
     * See how Vitis unifies software, acceleration, and ML development under a single development platform.
 * [**Vitis HLS**](./Vitis_HLS) :
-  * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within
-  the Vitis High-Level Synthesis environment
+  * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within the Vitis High-Level Synthesis environment
+* [**Vitis Libraries**](./Vitis_Libraries) :
+  * Learn how to leverage a L1 Vitis library element to build your own design. The FFT example is selected for explanation, and you may follow similar flow to use other library elements.
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
