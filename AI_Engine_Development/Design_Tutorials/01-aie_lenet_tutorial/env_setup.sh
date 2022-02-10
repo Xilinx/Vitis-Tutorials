@@ -14,8 +14,8 @@
 
 #Setup environment variables 
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XIILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2021.1
-export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.1 - Directory>
+export XIILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2021.2
+export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.2 - Directory>
 
 # Optionally Setup XRT_ROOT, pointing to XRT RPMs,
 # if not set it will automatically be excluded from v++ packaging...
