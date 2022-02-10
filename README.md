@@ -23,28 +23,33 @@ The [Vitis&trade; unified software platform](https://www.xilinx.com/products/des
 
 The Vitis Tutorials take users through the design methodology and programming model for deploying accelerated applications on all Xilinx platforms. Tutorials are divided into different topics by function and application. 
 
-<table border="0"  width="100%" >
+<table border="0" width="100%" >
 	<tbody>
 		<tr>
-			<td colspan="2" height="24" align="center">
+			<td colspan="3" height="24" align="center">
 			<strong> 	<a href="./Getting_Started">Getting Started</a> </strong> 
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" height="48"   >
+			<td colspan="3" height="48"   >
 				Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!
 			</td>
 		</tr>
 		<tr>
     <td height="24" >
-				<a href="./Vitis">Vitis Introduction</a> 
+				<a href="./Getting_Started/Vitis">Vitis Introduction</a> 
 			</td>
     		<td >
-			<a href="./Vitis_HLS">Vitis HLS Introduction</a> 
+			<a href="./Getting_Started/Vitis_HLS">Vitis HLS Introduction</a> 
+		</td>
+        <td >
+			<a href="./Getting_Started/Vitis_Libraries">Vitis Libraries Introduction  :new: </a> 
 		</td>
       </tr>	
       </tbody>
 </table>
+
+
 <table border="0"  width="100%">
 	<tbody>
 		<tr>
@@ -131,6 +136,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
   </tr>	
   </tbody>
 </table>
+
 
 <table border="0" width="100%"  >
 	<tbody>
@@ -369,5 +375,5 @@ The Vitis Tutorials take users through the design methodology and programming mo
 </table>
 
 
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
