@@ -20,7 +20,7 @@ The following showcase features of the hardware emulator:
 
 
 ## Hardware Emulation Source Code Debug
-### Step 1. Build
+### Step 1 Build
 Select the build configuration to be **Emulation-HW**.
 
 <img src="images/he_run_cfg.png" width="200">
@@ -28,18 +28,17 @@ Select the build configuration to be **Emulation-HW**.
 Highlight beamformer system project and right-click to select **build project**.
 It takes over 60 minutes to complete the build.
 
-### Step 2. Launch Hardware Emulator
+### Step 2 Launch Hardware Emulator
 <img src="images/he_run_init.png" width="450">
 
 **Note:** It takes a couple of minutes to launch the emulator and boot up Petalinux.
 
-### Step 3. During Debug
-#### Step 3.1. Debug - PS
+### Step 3 During Debug
+#### Step 3.1 Debug - PS
 <img src="images/he_run_ps.png">
 
-#### Step 3.2. Debug - AI Engine
+#### Step 3.2 Debug - AI Engine
 <img src="images/he_run_aie.png">
-<img src="images/he_run_aie_1.png">
 
 AI Engine only debugs within system project via hardware emulator, AI Engine emulator debug still applies. <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> are applicable at this condition.
 
@@ -51,7 +50,7 @@ AI Engine only debugs within system project via hardware emulator, AI Engine emu
 ## Command-Line Project Source Code Debug with Hardware Emulator
 Use cases that involve using Vitis IDE functionalities without migrating to Vitis IDE are permitted.
 
-### Step 1. Build Project to be Debugged
+### Step 1 Build Project to be Debugged
 If the project is not built already, use this tutorial's `Makefile.emu` that has `--package.enable_aie_debug` option in the packaging step. This option inserts configuration data object (CDO) that generates stop requests for the AI Engine cores, so that they stop at the reset vector. This option is required to add debug capabilities. Issue command `make package_dbg` with this tutorial's `Makefile.emu` to package binaries that can be debugged.
 Note: The packaged binaries that have debug capabilities require to run with debugger. Run without debugger will see execution hang due to wait for debugger invocation. Run command `make package` to package back regular binaries.
 ```bash
@@ -60,7 +59,7 @@ make
 make package_dbg
 ```
 
-### Step 2. Launch Hardware Emulator and Boot Petalinux
+### Step 2 Launch Hardware Emulator and Boot Petalinux
 From terminal 1, setup tool path properly and issue this command to launch hardware emulator and boot up Petalinux.
 ```bash
 ./launch_hw_emu.sh -add-env ENABLE_RDWR_DEBUG=true -add-env RDWR_DEBUG_PORT=10100 -pid-file emulation.pid -no-reboot -forward-port 1440 1534
@@ -76,7 +75,7 @@ Note:
 2. Previous command takes a few minutes to complete due to both hardware emulator and Petalinux are required to boot up properly.
 3. Wait until both hardware server and Petalinux boot up BEFORE moving to next steps.
 
-### Step 3. Launch Vitis IDE and XRT server
+### Step 3 Launch Vitis IDE and XRT server
 From terminal 2, setup tool path properly and issue this command to launch XRT server and Vitis IDE.
 ```bash
 vitis -debug -flow embedded_accel -target hw_emu -exe ./host.exe -program-args ./a.xclbin -port 1440
@@ -98,35 +97,35 @@ Expected result
 
 **Note:** The previously listed step takes a couple of minutes to complete.
 
-### Step 4. Setup Vitis AI Engine Debug Configuration
+### Step 4 Setup Vitis AI Engine Debug Configuration
 
-#### Step 4.1. Configure Debug using Click-on Debug Icon
+#### Step 4.1 Configure Debug using Click-on Debug Icon
 <img src="images/he_cl_config0.png" width="300" >
 
-#### Step 4.2. Under "Single Application Debug" to Create a New Debug Configuration
+#### Step 4.2 Under "Single Application Debug" to Create a New Debug Configuration
 <img src="images/he_cl_config1.png" width="600" >
 
-#### Step 4.3. Setup New Debug Type Name and Connection
+#### Step 4.3 Setup New Debug Type Name and Connection
 <img src="images/he_cl_config2.png" width="600" >
 
-#### Step 4.4. Setup New Connection Name, Host, and Port
+#### Step 4.4 Setup New Connection Name, Host, and Port
 <img src="images/he_cl_config3.png" width="600" >
 
-#### Step 4.5. Setup Execute Script of Newly Created Debug Type
+#### Step 4.5 Setup Execute Script of Newly Created Debug Type
 <img src="images/he_cl_config4.png" width="600" >
 
 **Note:** The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab –e.g. `set aie_work_dir "${PROJECT_PATH}/beamformer/Work/"` and `set vitis_install "${XILINX_VITIS_PATH}/Xilinx/Vitis/2021.2"`
 
-#### Step 4.6. Close the debug configuration
+#### Step 4.6 Close the debug configuration
 <img src="images/he_cl_config5.png" width="600" >
 
-#### Step 4.7. Run PS (by resume) Application so AI Engine can be Initialized and Debugged
+#### Step 4.7 Run PS (by resume) Application so AI Engine can be Initialized and Debugged
 <img src="images/he_cl_config6.png" width="450" >
 
-#### Step 4.8. Wait until PS has Initialized AI Engine and Observe "Starting graph run" from Console
+#### Step 4.8 Wait until PS has Initialized AI Engine and Observe "Starting graph run" from Console
 <img src="images/he_cl_config6_1.png" width="600" >
 
-#### Step 4.9. Launch AI Engine Debugger to Debug the AI Engine Sub-project
+#### Step 4.9 Launch AI Engine Debugger to Debug the AI Engine Sub-project
 <img src="images/he_cl_config0.png" width="300" >
 <img src="images/he_cl_config7.png" width="600" >
 
@@ -135,15 +134,18 @@ Expected result
 2. Step 4.7 requires to start PS application BEFORE launching debugger to debug AI Engine sub-project. Will see issues if above step sequence is not followed.
 3. It takes some time depends on number of times in design to launch AI Engine debugger completely. Beamformer design contains 64 tiles that needs several minutes to complete.
 
-### Step 5. Expected Vitis IDE
+### Step 5 Expected Vitis IDE
 <img src="images/he_cl_run.png">
 
-### Step 6. Clean up Launched Processes
+### Step 6 Clean up Launched Processes
 ```bash
 killall -9 pllauncher; killall -9 qemu-system-aarch64; killall -9 xrt_server
 ```
 These commands kill leftover processes for this debug run.
 
+# Support
+
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
 # License
 

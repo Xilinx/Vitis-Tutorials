@@ -1,0 +1,133 @@
+#include <iostream>
+#include "adf/new_frontend/adf.h"
+#include "adf/adf_api/X86SimConfig.h"
+
+
+/************************** Graph Configurations  *****************************/
+
+  adf::X86SimGraphConfig GraphConfigurations[] = {
+  // {id, name, runForIter, x86SimPtr}
+    {0, "dut", -1, nullptr},
+  };
+  const int NUM_GRAPH = 1;
+
+/************************** PLIO Configurations  *****************************/
+
+  adf::X86SimPLIOConfig PLIOConfigurations[] = {
+  //{id, name, loginal_name}
+    {0, "attr_i_dlbfid0", "dlbfid0"},
+    {1, "attr_i_dlbfid1", "dlbfid1"},
+    {2, "attr_i_dlbfid2", "dlbfid2"},
+    {3, "attr_i_dlbfid3", "dlbfid3"},
+    {4, "attr_i_dlbfic00", "dlbfic00"},
+    {5, "attr_i_dlbfic01", "dlbfic01"},
+    {6, "attr_i_dlbfic02", "dlbfic02"},
+    {7, "attr_i_dlbfic03", "dlbfic03"},
+    {8, "attr_i_dlbfic10", "dlbfic10"},
+    {9, "attr_i_dlbfic11", "dlbfic11"},
+    {10, "attr_i_dlbfic12", "dlbfic12"},
+    {11, "attr_i_dlbfic13", "dlbfic13"},
+    {12, "attr_i_dlbfic20", "dlbfic20"},
+    {13, "attr_i_dlbfic21", "dlbfic21"},
+    {14, "attr_i_dlbfic22", "dlbfic22"},
+    {15, "attr_i_dlbfic23", "dlbfic23"},
+    {16, "attr_i_dlbfic30", "dlbfic30"},
+    {17, "attr_i_dlbfic31", "dlbfic31"},
+    {18, "attr_i_dlbfic32", "dlbfic32"},
+    {19, "attr_i_dlbfic33", "dlbfic33"},
+    {20, "attr_i_dlbfic40", "dlbfic40"},
+    {21, "attr_i_dlbfic41", "dlbfic41"},
+    {22, "attr_i_dlbfic42", "dlbfic42"},
+    {23, "attr_i_dlbfic43", "dlbfic43"},
+    {24, "attr_i_dlbfic50", "dlbfic50"},
+    {25, "attr_i_dlbfic51", "dlbfic51"},
+    {26, "attr_i_dlbfic52", "dlbfic52"},
+    {27, "attr_i_dlbfic53", "dlbfic53"},
+    {28, "attr_i_dlbfic60", "dlbfic60"},
+    {29, "attr_i_dlbfic61", "dlbfic61"},
+    {30, "attr_i_dlbfic62", "dlbfic62"},
+    {31, "attr_i_dlbfic63", "dlbfic63"},
+    {32, "attr_i_dlbfic70", "dlbfic70"},
+    {33, "attr_i_dlbfic71", "dlbfic71"},
+    {34, "attr_i_dlbfic72", "dlbfic72"},
+    {35, "attr_i_dlbfic73", "dlbfic73"},
+    {36, "attr_o_dlbfo0", "dlbfo0"},
+    {37, "attr_o_dlbfo1", "dlbfo1"},
+    {38, "attr_o_dlbfo2", "dlbfo2"},
+    {39, "attr_o_dlbfo3", "dlbfo3"},
+    {40, "attr_o_dlbfo4", "dlbfo4"},
+    {41, "attr_o_dlbfo5", "dlbfo5"},
+    {42, "attr_o_dlbfo6", "dlbfo6"},
+    {43, "attr_o_dlbfo7", "dlbfo7"},
+    {44, "attr_i_ulbfid0", "ulbfid0"},
+    {45, "attr_i_ulbfid1", "ulbfid1"},
+    {46, "attr_i_ulbfid2", "ulbfid2"},
+    {47, "attr_i_ulbfid3", "ulbfid3"},
+    {48, "attr_i_ulbfid4", "ulbfid4"},
+    {49, "attr_i_ulbfid5", "ulbfid5"},
+    {50, "attr_i_ulbfid6", "ulbfid6"},
+    {51, "attr_i_ulbfid7", "ulbfid7"},
+    {52, "attr_i_ulbfic00", "ulbfic00"},
+    {53, "attr_i_ulbfic01", "ulbfic01"},
+    {54, "attr_i_ulbfic02", "ulbfic02"},
+    {55, "attr_i_ulbfic03", "ulbfic03"},
+    {56, "attr_i_ulbfic04", "ulbfic04"},
+    {57, "attr_i_ulbfic05", "ulbfic05"},
+    {58, "attr_i_ulbfic06", "ulbfic06"},
+    {59, "attr_i_ulbfic07", "ulbfic07"},
+    {60, "attr_i_ulbfic10", "ulbfic10"},
+    {61, "attr_i_ulbfic11", "ulbfic11"},
+    {62, "attr_i_ulbfic12", "ulbfic12"},
+    {63, "attr_i_ulbfic13", "ulbfic13"},
+    {64, "attr_i_ulbfic14", "ulbfic14"},
+    {65, "attr_i_ulbfic15", "ulbfic15"},
+    {66, "attr_i_ulbfic16", "ulbfic16"},
+    {67, "attr_i_ulbfic17", "ulbfic17"},
+    {68, "attr_i_ulbfic20", "ulbfic20"},
+    {69, "attr_i_ulbfic21", "ulbfic21"},
+    {70, "attr_i_ulbfic22", "ulbfic22"},
+    {71, "attr_i_ulbfic23", "ulbfic23"},
+    {72, "attr_i_ulbfic24", "ulbfic24"},
+    {73, "attr_i_ulbfic25", "ulbfic25"},
+    {74, "attr_i_ulbfic26", "ulbfic26"},
+    {75, "attr_i_ulbfic27", "ulbfic27"},
+    {76, "attr_i_ulbfic30", "ulbfic30"},
+    {77, "attr_i_ulbfic31", "ulbfic31"},
+    {78, "attr_i_ulbfic32", "ulbfic32"},
+    {79, "attr_i_ulbfic33", "ulbfic33"},
+    {80, "attr_i_ulbfic34", "ulbfic34"},
+    {81, "attr_i_ulbfic35", "ulbfic35"},
+    {82, "attr_i_ulbfic36", "ulbfic36"},
+    {83, "attr_i_ulbfic37", "ulbfic37"},
+    {84, "attr_o_ulbfo0", "ulbfo0"},
+    {85, "attr_o_ulbfo1", "ulbfo1"},
+    {86, "attr_o_ulbfo2", "ulbfo2"},
+    {87, "attr_o_ulbfo3", "ulbfo3"},
+  };
+  const int NUM_PLIO = 88;
+
+
+/************************** ADF API initializer *****************************/
+
+  class InitializeAIEControlXRT
+  {
+  public:
+    InitializeAIEControlXRT()
+    {
+      std::cout<<"Initializing ADF API..."<<std::endl;
+      adf::initializeX86SimConfigurations(GraphConfigurations, NUM_GRAPH,
+                                    nullptr, 0,
+                                    nullptr, 0,
+                                    PLIOConfigurations, NUM_PLIO);
+    }
+  } initAIEControlXRT;
+
+
+
+#if !defined(__CDO__)
+
+// Kernel Stub Definition
+  void bf8x8_fst_api(input_window<cint16> *,input_window<cint16> *,output_stream<cacc48_t> *) { /* Stub */ } 
+  void bf8x8_lst_api(input_window<cint16> *,input_window<cint16> *,input_stream<cacc48_t> *,output_window<cint16> *) { /* Stub */ } 
+  void bf8x8_mid_api(input_window<cint16> *,input_window<cint16> *,input_stream<cacc48_t> *,output_stream<cacc48_t> *) { /* Stub */ } 
+#endif

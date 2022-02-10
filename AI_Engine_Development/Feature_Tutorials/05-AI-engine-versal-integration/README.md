@@ -210,7 +210,7 @@ You can then open up the generated `default.aierun_summary` from the `aiesimulat
 3. To do this you run the command:
 
 	```bash
-	vitis_analyzer ./default.aierun_summary
+	vitis_analyzer ./Work/graph.aiecompile_summary
 	```
 
 With this tool you can look at a variety of views to debug, and potentially, optimize your graph.
@@ -413,9 +413,9 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
 	cd ..
 	```
 
-When launched, use the Linux prompt presented to run the design.
+When launched, use the Linux prompt presented to run the design.  Note that the emulation process is slow, so do not touch the keyboard of your terminal or you might stop the emulation of the Versal booth (as it happens in the real HW board)
 
-2. Execute the following command when the emulated Linux prompt displays:
+2. Execute the following command when the emulated Linux prompt finally appears:
 
 	```bash
 	cd /mnt/sd-mmcblk0p1
