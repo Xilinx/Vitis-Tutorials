@@ -29,14 +29,13 @@ endif
 # v++ Compiler options
 VPP_COMMON_OPTS := -s -g -t $(TARGET) --platform $(DEVICE) 
 
-CFLAGS := -g -std=c++11 -I$(XILINX_XRT)/include -I${XILINX_VIVADO}/include
-CFLAGS += -I./opencv
-LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lrt -fopenmp -Wl,--as-needed -Wl,-rpath,./opencv/opencv_gcc -L./opencv/opencv_gcc -lopencv_core -lopencv_highgui
+CFLAGS := -g -std=c++11 -I$(XILINX_XRT)/include 
+LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lrt -fopenmp -Wl,--as-needed 
 
 NUMDEVICES := 1
 
 # run time args
-EXE_OPT := -x filter2d.${TARGET}.xclbin -i ./img/test.bmp -n 1
+EXE_OPT := -x filter2d.${TARGET}.xclbin -n 1
 
 # primary build targets
 .PHONY: xclbin host all
@@ -47,7 +46,7 @@ host: $(HOST_EXE)
 all: xclbin host
 
 clean:
-	-$(RM) $(EMCONFIG_FILE) $(HOST_EXE) $(XCLBIN) $(KERNEL_XO)
+	-$(RM) $(EMCONFIG_FILE) $(HOST_EXE) *.xclbin *.xo
 
 $(XCLBIN): $(KERNEL_XO)
 	$(VPP) $(VPP_COMMON_OPTS) -l -o $@ $+ $(VPP_LINK_OPTS)
