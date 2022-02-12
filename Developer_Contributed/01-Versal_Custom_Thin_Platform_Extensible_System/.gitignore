@@ -53,13 +53,9 @@ ip/vadd/_x
 ip/aie/Work
 ip/aie/*.a
 ip/*/*.xml
-vitis/.ipcache
-vitis/*.BIN
-vitis/*.bif
-vitis/*.img
-vitis/_x
-vitis/vadd*
+ip/xo_*
+vitis/build_*
 ps_apps/*.o
 ps_apps/*.exe
-package_output
+package_output_*
 

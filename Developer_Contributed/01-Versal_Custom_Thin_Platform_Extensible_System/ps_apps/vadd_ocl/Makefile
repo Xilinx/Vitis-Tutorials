@@ -17,7 +17,7 @@
 ECHO := @echo
 
 APP_NAME     := ./vadd_ocl
-APP_EXE      := ../${APP_NAME}.exe
+APP_EXE      := ../exe/${APP_NAME}.exe
 APP_SRC      := ./src/${APP_NAME}.cpp
 
 SYSROOT      := ../../petalinux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux

@@ -19,7 +19,7 @@ ECHO=@echo
 SYSROOT         := ../../petalinux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
 
 APP_NAME        := ./aie_dly_test
-APP_EXE         := ../${APP_NAME}.exe
+APP_EXE         := ../exe/${APP_NAME}.exe
 APP_SRC         := ./src/${APP_NAME}.cpp
 APP_CTRL_SRC    := ./../../ip/aie/Work/ps/c_rts/aie_control_xrt.cpp
 

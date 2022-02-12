@@ -16,21 +16,20 @@
 
 ECHO=@echo
 
-TARGET            := hw
+TARGET            ?= hw
 PLATFORM_CUSTOM   ?= vck190_thin
 BASE_PFM          ?= ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 ILA_EN            ?= 0
 XPFM              := ../${BASE_PFM}
 PETALINUX_IMAGES  := ../petalinux/linux/images/linux
-KERNEL            := vadd
 IP_DIR            := ../ip
-XO                := $(wildcard ${IP_DIR}/*.xo)
+XO                := $(wildcard ${IP_DIR}/xo_${TARGET}/*.xo)
 GRAPH_O           := ${IP_DIR}/aie/libadf.a
 XCLBIN            := my.xclbin
 PS_APPS_DIR       := ../ps_apps
-PS_EXE            := $(wildcard ${PS_APPS_DIR}/*.exe)
-PS_APPS           := $(addprefix --package.sd_file=, ${PS_EXE})
-SD_CARD           := ../package_output
+PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
+SD_CARD           := ../package_output_${TARGET}
+BUILD_DIR         := build_${TARGET}
 
 ifeq (${ILA_EN}, 1)  
     SYSTEM_CFG := $(notdir $(wildcard ./src/*.cfg) )
@@ -48,17 +47,19 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: ${XCLBIN} ${SD_CARD}
+all: ${BUILD_DIR} ${BUILD_DIR}/${XCLBIN} ${SD_CARD}
 
-${XCLBIN}: ${XO}
-	v++ -l -t ${TARGET} -g --save-temps --platform ${XPFM} $(SYSTEM_CFG:%=--config ./src/%)   ${XO} ${GRAPH_O} -o ${XCLBIN} |& tee vpp_link.log
+${BUILD_DIR}:
+	mkdir ${BUILD_DIR}
 
-${SD_CARD}: ${XCLBIN} ${PS_EXE} ${GRAPH_O}
-	v++ -p --package.out_dir ${SD_CARD} -t ${TARGET} -g --save-temps -f ${XPFM} --package.image_format=fat32 --package.boot_mode=sd --package.rootfs=${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  --package.kernel_image=${PETALINUX_IMAGES}/Image ${XCLBIN} ${GRAPH_O} ${PS_APPS} |& tee vpp_pack.log
+${BUILD_DIR}/${XCLBIN}: ${XO}
+	cd ${BUILD_DIR} && v++ -l -t ${TARGET} -g --save-temps --platform ../${XPFM} $(SYSTEM_CFG:%=--config ./../src/%) $(addprefix ../, ${XO}) ../${GRAPH_O} -o ${XCLBIN} |& tee vpp_link.log
+
+${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
+	cd ${BUILD_DIR} && v++ -p --package.out_dir ../${SD_CARD} -t ${TARGET} -g --save-temps -f ../${XPFM} --package.image_format=fat32 --package.boot_mode=sd --package.rootfs=../${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  --package.kernel_image=../${PETALINUX_IMAGES}/Image ${XCLBIN} ../${GRAPH_O} $(addprefix --package.sd_file=../, ${PS_EXE}) |& tee vpp_pack.log
 	if [ -e my.ltx ] ; then cp -f my.ltx $(SD_CARD)/probe_0.ltx ; else echo "no probe_0 ltx file" ; fi 
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
 
 clean:
-	rm -f *.log *.xclbin *summary *info 
-	rm -rf .Xil _x/ ${SD_CARD} .ipcache
+	rm -rf ${SD_CARD} ${BUILD_DIR}
 

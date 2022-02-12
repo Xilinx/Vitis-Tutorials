@@ -16,7 +16,11 @@
 
 ECHO=@echo
 
-KERNEL_NAME := $(patsubst %/,%,$(dir $(wildcard */)))
+TARGET            ?= hw
+XO_DIR            := xo_${TARGET}
+XO_DIRS_EXCLUDE   := $(patsubst %/,%,$(dir $(wildcard xo_*/)))
+KERNEL_DIRS       := $(patsubst %/,%,$(dir $(wildcard */)))
+KERNEL_NAME       := $(filter-out ${XO_DIRS_EXCLUDE},$(KERNEL_DIRS))
 KERNEL_NAME_CLEAN := $(addsuffix .clean,$(KERNEL_NAME))
 
 .PHONY: help clean all $(KERNEL_NAME)
@@ -29,12 +33,16 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: $(KERNEL_NAME)
+all: ${XO_DIR} $(KERNEL_NAME)
+
+$(XO_DIR):
+	mkdir    ${XO_DIR}
 
 $(KERNEL_NAME):
 	make all -C $@
 
 clean: $(KERNEL_NAME_CLEAN)
+	rm -rf $(XO_DIR)
 
 $(KERNEL_NAME_CLEAN):
 	make clean -C $(basename $@)

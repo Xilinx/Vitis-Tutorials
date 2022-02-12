@@ -9,18 +9,20 @@
 This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Vitis 2021.2.
 
 ## Getting Started
+### Build-flow
 The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
-  1. version_check: Checks if the Vivado, Petalinux, and Vitis version is 2021.2
-  2. board_repo:    Downloads the board files for es1 and pre-production from the Xilinx GitHub 
+  1. version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2021.2
+  2. board_repo:    Downloads the board files for pre-production and es1 from the Xilinx GitHub 
   3. xsa:           Building the thin platform xsa (only pre-synth)
   4. petalinux:     Building Petalinux and sysroot
   5. xpfm:          Building the Vitis Platform
   6. bif:           Copy over necessary petalinux files to the generated software platform (required by the Vitis packager)
   7. ip:            Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
   8. ps_apps:       Building all XRT-based PS applications
-  9. vitis:         Linking all kernels in the thin platform and packaging all necessary sd_card files
+  9. vitis:         Linking all kernels in the thin platform and packaging all necessary boot/run files
 ```
+### Build-flow Dependencies
 The following diagram explains the build-flow dependencies.
 
 **Notes:**
@@ -28,19 +30,24 @@ The following diagram explains the build-flow dependencies.
  - The diagram is for illustration only. The actual build-flow is more sequential.
 <img src="./documentation/readme_files/Design_dependencies.svg">
 
-In the `[project-root]` you can start the full build with `make all` after setting up the 2021.2 version of Vivado, Petalinux and Vitis:
-  - Everything is in the GitHub repository; no extra files are needed.
-  - In the `[project-root]/Makefile`: "export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S-es1" (for es1 version); **change it to xcvc1902-vsva2197-2MP-e-S (for pre-production version)**.
+### Build & Prerequisites
+In the `[project-root]` you can start the full build with `make all` **after** taking following prerequisites into account:
+  - **Before starting the build, please correctly setup the 2021.2 version of Vivado, Petalinux and Vitis**
+    - If the tools are not setup correctly the build will stop with an ERROR message telling you what is not correctly setup!
+    - Be sure that the 2021.2 Y2K22 patch is installed (This is not verified)! 
+      - More info can be found here: https://support.xilinx.com/s/article/76960?language=en_US
+  - Everything is in the GitHub repository; no extra files are needed. Although some are downloaded from GitHub.
+  - `[project-root]/Makefile`: `export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S` for pre-production board version (default); **change it to `export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S-es1` for es1 board version**.
+  - `[project-root]/Makefile`: `export TARGET := hw` for targetting a VCK190 (default); **change it to `export TARGET := hw_emu` to target hardware emulation**.
+    - The build flow supports both TARGET's in the same `[project-root]`; but you need to execute them yourself the one after the other if you need both results!
+    - Some generated directories are depending on the TARGET and are further shown as `[dir]_${TARGET}`.
+  - `[project-root]/Makefile`: `export ILA_EN := 0` for disabling the ILA (default); **change it to `export ILA_EN := 1` to enable the ILA**.
   - `[project-root]/petalinux/Makefile`: the generated tmp-dir ends up in `/tmp`. 
     - If you want to place it somewhere else you need to add `--tmpdir [your_tmp_dir]` at the end of the `petalinux-create` line in the `[project-root]/petalinux/Makefile`. 
-      - Be aware that this may not be located on an NFS-drive! 
-  - As an optional feature, an ILA core can be enabled by toggling the `ILA_EN` switch placed in `[project-root]/Makefile`. 
-    The ILA core connectivity is set up during v++ linking process loading the cfg file `[project-root]/vitis/src/ila_0_bd.cfg` and 
-    further configuration of ILA properties is managed in tcl file `[project-root]/vitis/src/ila_0_def.tcl`.
-    Using the configuration file `[project-root]/vitis/src/ila_0_bd.cfg` allows the designer to mark AXI port for debug nets to and from the AIE engine for analysis. 
-    After completing the linking process, the designer can verify conectivity and configuration of the ILA core in the generated block design
-    in project `[project-root]/vitis/_x/link/vivado/vpl/prj/prj.xpr`.
-  - End result: `[project-root]/package_output/sd_card/*` can be used for FAT-32 sd_card (partition); or `[project-root]/package_output/sd_card.img` can be used.
+      - Be aware that `[your_tmp_dir]` may **NOT** be located on an NFS-drive!
+  - End result: 
+    - `export TARGET := hw`: `[project-root]/package_output_hw/sd_card/*` can be used for FAT-32 SD-card (partition); or `[project-root]/package_output_hw/sd_card.img` can be used.
+    - `export TARGET := hw_emu`: `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
 
 ## More In-Depth
 The following explains the different sub-build steps. Click on each item for more detailed information.  
@@ -49,13 +56,13 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 <details>
  <summary> make version_check </summary>
  
- -  Checks if the Vivado, Petalinux, and Vitis versions are 2021.2.
+ -  Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2021.2.
  
 </details>
 <details>
  <summary> make platform/hw/board_repo </summary>
  
- - Retrieves all es1 and pre-production board files from the Xilinx GitHub.
+ - Downloads all pre-production and es1 board files from the Xilinx GitHub.
  
 </details>
 <details>
@@ -116,7 +123,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | subtractor/*        | Managed RTL "subtractor" kernel Makefile and sources that measures the delay between the counter-input and the aie-output
 | vadd/*              | XRT-controlled HLS "vadd" kernel Makefile and sources
 
- - Builds the output files needed for Vitis linker -> `[project-root]/ip/aie/libadf.a` and `[project-root]/ip/*.xo`
+ - Builds the output files needed for Vitis linker -> `[project-root]/ip/aie/libadf.a` and `[project-root]/ip/xo_${TARGET}/*.xo`
  - Kernel structure/flow:
     - vadd is a separate kernel
     - counter -> aie "datamover" -> subtractor
@@ -133,7 +140,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | vadd_cpp/*          | PS XRT Application - using the native XRT API - Makefile and sources that checks out the vadd kernel
 | vadd_ocl/*          | PS XRT Application - using the opencl XRT API - Makefile and sources that checks out the vadd kernel
 
- - Builds the output files needed for vitis packager -> `[project-root]/ps_apps/*.exe`
+ - Builds the output files needed for vitis packager -> `[project-root]/ps_apps/exe/*.exe`
  
 </details>
 <details>
@@ -146,17 +153,46 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | src/system.cfg      | Vitis connection and clock configuration needed for Vitis linker
 
  - Runs the Vitis linker and packager
- - The output of the Vitis packager ends up in `[project-root]/package_output`
-   - `[project-root]/package_output/sd_card.img` or you find all FAT-32 files in `[project-root]/package_output/sd_card/*`
- - All other files can be ignored; they are an output from the Vitis packager and are unused
+ - The output of the Vitis packager ends up in `[project-root]/package_output_${TARGET}`
  - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review
  
 </details>
 
 ## Testing
- 1. Copy over the `[project-root]/package_output/sd_card/*` to an sd card or put the `[project-root]/package_output/sd_card.img` on an sd card.
- 2. Start-up and boot-up (no password is needed for linux login).
- 3. Execute the following after boot-up (it also includes the results):
+### Running on a VCK190
+  1. Prerequisite: Build was executed with `export TARGET := hw` and for your correct VCK190 version (pre-production or es1)
+  2. Copy over the `[project-root]/package_output_hw/sd_card/*` to an SD-card or put the `[project-root]/package_output_hw/sd_card.img` on an SD-card.
+  3. Put the SD-card in the VCK190 Versal SD-card slot (VCK190 top SD-card slot closest to the bracket).
+  4. Connect the included USB-cable between the VCK190 (Middle bottom of the bracket) and a computer:
+     - Usually you will see 3 serial ports in your device manager:
+       - One for the ZU04 system controller device.
+       - Two for Versal; however only one of the Versal serial ports are in use.
+       - To see the serial ports, the VCK190 does not need to be powered-ON, the physical USB connection should be enough!
+     - Connect to the serial port(s) by using a terminal emulator like Putty (Windows) with the following settings:
+       - 115200 baud
+       - 8 data bits
+       - 1 stop bit
+       - Parity none
+       - Flow control XON/XOFF
+     - Maybe for the first time open all 3 serial ports to see which one is the correct Versal serial port where you can follow the Versal-boot and interact later on.
+  5. Power-UP:
+     - It will first boot-up up the ZU04, next it will start the Versal boot. 
+     - Only one of the Versal serial ports will give you the Linux command line prompt after booting.
+     - No Password is needed for linux login.
+  6. Continue to "Execution & Results"
+
+### Running Hardware Emulation
+  1. Prerequisite: Build was executed with `export TARGET := hw_emu`
+  2. Execute `source ./launch_hw_emu.sh` in `[project-root]/package_output_hw_emu/`.
+  3. The hardware emulation will start and boot-up the whole system and should give you the Linux command line prompt.
+     - This can take some time!
+     - No password is needed for linux login.
+  4. Continue to "Execution & Results"
+
+### Execution & Results
+  - Execute the following after boot-up when you reached the Linux command line prompt:
+    - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
+  
  ```
     root@linux:~# cd /media/sd-mmcblk0p1/
     root@linux:/media/sd-mmcblk0p1# ./vadd_cpp.exe a.xclbin
@@ -207,20 +243,22 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
       - petalinux already generates it.
       - You will need to copy it to the Vitis platform in the `[project-root]/Makefile` in the `bif` section.
       - The `v++ -p` command line in `[project-root]\vitis\Makefile` will need adaptations to be able to use ext4 rootfs instead of FAT-32.
-  - Simulations and Emulations are **NOT** included in this Tutorial! 
-  - Once the build process is completed and petalinux boots on your board, it is required to manually set the path for probe file 
-    `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
-    A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, 
-    re-running `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
-
+  - `export ILA_EN := 1`
+    - The ILA core connectivity is set up during v++ linking process loading the cfg file `[project-root]/vitis/src/ila_0_bd.cfg` and further configuration of ILA properties is managed in tcl file `[project-root]/vitis/src/ila_0_def.tcl`.
+    - Using the configuration file `[project-root]/vitis/src/ila_0_bd.cfg` allows the designer to mark AXI port for debug nets to and from the AIE engine for analysis. 
+    - After completing the linking process, the designer can verify conectivity and configuration of the ILA core in the generated block design in project `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj/prj.xpr`.
+    - Once the build process is completed and petalinux boots on your board, it is required to manually set the path for probe file `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
+    - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, re-running `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
+  - Simulation is **NOT** part and **NOT** demonstrated in this Tutorial!
+  
 ## Design Considerations
   Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a Xilinx tools requirement!
-  - `[project-root]/ps_apps`: PS applications can easily be added by adding a sub-project for each in `[project-root]/ps_apps`.
-    - Vitis will automatically package them and they will end up on the sd_card.
-    - The `[PS Application].exe` (extension **MUST** be .exe) **MUST** end up in the `[project-root]/ps_apps` dir.
+  - `[project-root]/ps_apps`: PS applications can easily be added by adding a sub-project for each in `[project-root]/ps_apps/`.
+    - Vitis will automatically package them and they will end up in `[project-root]/package_output_${TARGET}`.
+    - The `[PS Application].exe` (extension **MUST** be .exe) **MUST** end up in the `[project-root]/ps_apps/exe` dir.
   - `[project-root]/ip`: Kernels can be added by just adding a sub-project in `[project-root]/ip`.
-    - You will need to update the `[project-root]/vitis/src/system.cfg` file to setup the correct connections/clocks.
-    - A `[kernel].xo` file **MUST** end up in the `[project-root]/ip` dir
+    - **You will need to update the `[project-root]/vitis/src/system.cfg` file to setup the correct connections/clocks.**
+    - A `[kernel].xo` file **MUST** end up in the `[project-root]/ip/xo_${TARGET}` dir
     - An extra aie graph **MUST** be added in the `[project-root]/ip/aie` dir, the `[project-root]/ip/aie/Makefile` will need adaptations.
 
 ## References

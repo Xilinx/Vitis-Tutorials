@@ -62,12 +62,10 @@ set design_name ${PLATFORM_NAME}
 ### WORKAROUND - Hardcode platform and device name as tcl arguments is not passed properly to Vitis
 #set design_name vck190_thin
 ##set device_name [lindex $argv 1]
-#set device_name xcvc1902-vsva2197-1LP-e-S-es1
 #puts "Creating HW Block Design for : \"$design_name\" using : \"$device_name\""
 ##variable design_name
 ##set design_name vck190_dummy
 ##variable device_name
-##set device_name xcvc1902-vsva2197-2MP-e-S-es1
 #
 #set list_projs [get_projects -quiet]
 #if { $list_projs eq "" } {

@@ -17,7 +17,8 @@
 ECHO := @echo
 
 AIE_WS            := .
-TARGET            := hw
+TARGET            ?= hw
+TARGET_HW         := hw
 AIE_SRC           := ${AIE_WS}/src
 AIE_GRAPHS        := ${AIE_SRC}/graphs
 AIE_KERNELS       := ${AIE_SRC}/kernels
@@ -61,9 +62,7 @@ allx86       : clean x86compile x86sim
 
 ${AIE_OUTPUT}: ${AIE_SRC}/* ${AIE_GRAPHS}/* ${AIE_KERNELS}/*
 	$(MAKE) clean
-	aiecompiler -target=${TARGET} --dataflow -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} -include=${AIE_SRC} -include=${AIE_GRAPHS} -include=${AIE_KERNELS}  ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --device=${DEVICE_FILE} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
-#	aiecompiler -target=${TARGET} --dataflow -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} -include=${AIE_SRC} -include=${AIE_GRAPHS} -include=${AIE_KERNELS}  ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --device=${DEVICE_FILE} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
-
+	aiecompiler -target=${TARGET_HW} --dataflow -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} -include=${AIE_SRC} -include=${AIE_GRAPHS} -include=${AIE_KERNELS}  ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --device=${DEVICE_FILE} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
 
 x86compile:
 	aiecompiler --dataflow -v -include=$(COMM_INC) -include=$(COMM_SRC) -include=$(FILTERS_INC) -include=$(FILTERS_SRC) -include=$(RADIO_INC) -include=$(RADIO_SRC)  $(TEST_BENCH) $(OTHER_OPTS) --device=$(DEVICE_FILE) -Xchess="gain:cpp.define=USER_PARAMS" -workdir=$(WORK_DIR) --x86Sim |& tee $(LOG_FILE)

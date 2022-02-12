@@ -17,21 +17,40 @@
 
 ECHO                     = @echo
 
+###############################################
+# Variables that may be changed to your needs #
+###############################################
+
+# DEVICE_NAME = xcvc1902-vsva2197-2MP-e-S or xcvc1902-vsva2197-2MP-e-S-es1
+export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S
+
+# TARGET = hw or hw_emu
+export TARGET           := hw
+
+# ILA_EN = 0 (NOT Enabled) or 1 (Enabled)
+export ILA_EN           := 0
+
+################################################################
+# Variables needed for the build process, PLEASE DO NOT MODIFY #
+################################################################
+export PLATFORM_CUSTOM  := vck190_thin
+export XSA              := ${PLATFORM_CUSTOM}.xsa
+export XSA_PATH         := $(shell pwd)/platform/hw/build/
+export PFM_EXPORT       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
+export BASE_PFM         := ${PFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+
+BOARD_REPO              := platform/hw/board_repo
+
+############################################################################
+# Variables needed for Xilinx tools version checking, PLEASE DO NOT MODIFY #
+############################################################################
 REQUIRED_VERSION         = 2021.2
 VIVADO_VERSION          := $(shell vivado -version 2>/dev/null | grep "Vivado ")
 VITIS_VERSION           := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 
-export PLATFORM_CUSTOM  := vck190_thin
-export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S-es1
-export XSA              := ${PLATFORM_CUSTOM}.xsa
-export XSA_PATH         := $(shell pwd)/platform/hw/build/
-export TARGET           := hw
-export PFM_EXPORT       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
-export BASE_PFM         := ${PFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
-export ILA_EN           := 0
-
-BOARD_REPO              := platform/hw/board_repo
-
+##############
+# Build Flow #
+##############
 .PHONY: clean help all version_check xsa petalinux xpfm bif ip ps_apps vitis
 
 help::
@@ -84,24 +103,24 @@ all: version_check ${BOARD_REPO} xsa petalinux xpfm bif ip ps_apps vitis
 
 version_check:
 ifndef VIVADO_VERSION
-	$(ECHO) "Vivado: not found"; exit 1
+	$(ECHO) "[ERROR] Vivado NOT found, please setup Vivado correctly!"; exit 1
 endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VIVADO_VERSION)))
-	$(ECHO) "Vivado: $(REQUIRED_VERSION) not found"; exit 1
+	$(ECHO) "[ERROR] Vivado $(REQUIRED_VERSION) NOT found, please setup Vivado correctly!"; exit 1
 endif
 ifndef PETALINUX_VER
-	$(ECHO) "Petalinux: not found"; exit 1
+	$(ECHO) "[ERROR] Petalinux NOT found, please setup Petalinux correctly!"; exit 1
 endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(PETALINUX_VER)))
-	$(ECHO) "Petalinux: $(REQUIRED_VERSION) not found"; exit 1
+	$(ECHO) "[ERROR] Petalinux $(REQUIRED_VERSION) NOT found, please setup Petalinux correctly!"; exit 1
 endif
 ifndef VITIS_VERSION
-	$(ECHO) "Vitis: not found"; exit 1
+	$(ECHO) "[ERROR] Vitis NOT found, please setup Vitis correctly!"; exit 1
 endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VITIS_VERSION)))
-	$(ECHO) "Vitis: $(REQUIRED_VERSION) not found"; exit 1
+	$(ECHO) "[ERROR] Vitis $(REQUIRED_VERSION) NOT found, please setup Vitis correctly!"; exit 1
 endif
-	$(ECHO) "VERSION CHECK SUCCESSFUL"
+	$(ECHO) "XILINX TOOLS & VERSION CHECK SUCCESSFUL"
 
 ${BOARD_REPO}:
 	git clone https://github.com/Xilinx/XilinxBoardStore.git ${BOARD_REPO}

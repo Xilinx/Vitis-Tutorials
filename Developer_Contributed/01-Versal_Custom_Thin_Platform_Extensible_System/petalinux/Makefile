@@ -14,13 +14,14 @@
 # limitations under the License.
 #
 
-CPU_ARCH  :=a72
-PROJ_NAME ?=linux
-SYSROOT   :=../sysroot
+CPU_ARCH  := a72
+TARGET    ?= hw
+PROJ_NAME ?= linux
+SYSROOT   := ../sysroot
 
-XSA_PATH  ?=$(shell pwd)/../platform/hw/build
+XSA_PATH  ?= $(shell pwd)/../platform/hw/build_${TARGET}
 
-CFG       :=./src/config
+CFG       := ./src/config
 
 SRC_PATH_DEVICE_TREE  :=./src/device-tree
 DEST_PATH_DEVICE_TREE :=${PROJ_NAME}/project-spec/meta-user/recipes-bsp/device-tree
