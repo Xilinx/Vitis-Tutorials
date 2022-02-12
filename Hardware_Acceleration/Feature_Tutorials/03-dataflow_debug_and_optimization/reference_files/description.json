@@ -6,6 +6,11 @@
     "platform_whitelist": ["u200"],
  
     "testinfo": {
+        "disable": false,
+        "user": {
+            "negative": 1,
+            "error_string": "PASSED: Expected Error Message"
+        },
         "jobs": [
             {
                 "max_memory_MB": 32768,
