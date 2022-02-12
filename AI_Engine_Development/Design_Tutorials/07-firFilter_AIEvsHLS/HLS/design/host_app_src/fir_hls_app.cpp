@@ -14,16 +14,17 @@
 // limitations under the License.
 //------------------------------------------------------------------------------
 
-#include "fir_aie_graph.cpp"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <fstream>
 #include <iostream>
-#include <string>
+#include <cstring>
 //#include <complex>
 //
+//typedef std::complex<int16_t>  cint16;
+//
+//#include "system_settings.h"
 //#include "input_data.h"
 //
 //#if (N_FIR_FILTERS == 1) && (N_FIR_TAPS == 15)
@@ -37,19 +38,17 @@
 //#else
 //#include "golden_data_1f_15t.h"
 //#endif
+//
+//#include "adf/adf_api/XRTConfig.h"
 
-#include "adf/adf_api/XRTConfig.h"
-
-#include "experimental/xrt_aie.h"
+//#include "experimental/xrt_aie.h"
 #include "experimental/xrt_kernel.h"
 #include "experimental/xrt_bo.h"
 
 #define XRT_SUCCESS 0
 #define ALL_MESSAGES
 
-#define SAMPLES_PER_WORD   4
-
-#define INP_SIZE 512
+#define INP_SIZE 8192
 #define INP_SIZE_128b (INP_SIZE / 4)
 
 using namespace std;
@@ -57,7 +56,6 @@ using namespace std;
 /*******************************************************************************
  ** load_xclbin Function
  *******************************************************************************/
-
 static std::vector<char>  load_xclbin(xrtDeviceHandle device, const std::string& fnm)  {
     if (fnm.empty())  {
         cout << "A72-Error: <XCLBIN_FILE> is not specified" << endl;
@@ -147,50 +145,48 @@ class datamover_class {
 };
 
 /*******************************************************************************
- ** FIR chain class
+ ** fir Class
  *******************************************************************************/
 
-class fir_chain_class  {
-    public:
-        xrtGraphHandle fir_g_hdl;
-
-        int init(xrtDeviceHandle dhdl, const axlf *top)  {
+class fir_class {
+   public: 
+      xrtKernelHandle  fir_khdl;
+      xrtRunHandle     fir_rhdl;
+      uint32_t instance_errCnt;
       
-            fir_g_hdl = xrtGraphOpen(dhdl, top->m_header.uuid, "FilterChain");
-            if (fir_g_hdl == NULL)  {
-                throw std::runtime_error("A72-Error: Unable to open AIE FIR chain graph");
-	        return EXIT_FAILURE;
-            }
-            else  {
-                cout << "A72-Info: Initialized AIE FIR chain graph" << endl;
-                return EXIT_SUCCESS;
-            }
-        }
+      void init(xrtDeviceHandle dhdl, const axlf *top) { //, char insts) {
+         
+         //std::string fir_obj_str = "fir_hls:{fir_hls_" + to_string(insts) + "}";
+         std::string fir_obj_str = "fir_hls:{fir_hls_0}";
+         const char *fir_obj = fir_obj_str.c_str();
+         
+         //////////////////////////////////////////
+         // FIR IP Init
+         //////////////////////////////////////////
+         
+         fir_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, fir_obj);
+         fir_rhdl = xrtRunOpen(fir_khdl);
+         
+         int rval = xrtRunSetArg(fir_rhdl, 2, ITER_CNT);
+         
+         cout << "A72-Info: Initialized fir kernel" << endl;
+      }
 
-        int run(void)  {
-            int errCode;
-            errCode = xrtGraphReset(fir_g_hdl);
-            if (errCode != XRT_SUCCESS) {
-                throw std::runtime_error("A72-Error: Unable to reset AIE FIR chain graph");
-                return EXIT_FAILURE;
-            }
-            else  {
-                //size_t total_windows = (REPEAT_OFFSET + (REPETITIONS + 1) * (OUTPUT_SAMPLES - REPEAT_OFFSET) + FLUSH_SAMPLES) / FIR_WINDOW_SIZE;
-                //errCode = xrtGraphRun(fir_g_hdl, total_windows);
-                errCode = xrtGraphRun(fir_g_hdl, -1);
-            }
-            if (errCode != XRT_SUCCESS) {
-                throw std::runtime_error("A72-Error: Unable to run AIE FIR chain graph");
-                return EXIT_FAILURE;
-            }
-            cout << "A72-Info: Started AIE FIR chain graph" << endl;
-            return EXIT_SUCCESS;
-        }
-       
-        void close(void)  {
-            xrtGraphClose(fir_g_hdl);
-            cout << "A72-Info: Closed AIE FIR chain graph" << endl;
-        }
+      void run(void) {
+         xrtRunStart(fir_rhdl);
+         cout << "A72-Info: Started fir kernel" << endl;
+      }
+
+      void waitTo_complete(void) {
+         auto state_fir = xrtRunWait(fir_rhdl);
+         cout << "A72-Info: fir kernel completed with status(" << state_fir << ")" <<  endl;
+      }
+
+	   void close(void) {
+         xrtRunClose(fir_rhdl);
+         xrtKernelClose(fir_khdl);
+         cout << "A72-Info: Closed kernel and run handles" << endl;
+      }
 };
 
 /*******************************************************************************
@@ -198,10 +194,8 @@ class fir_chain_class  {
  *******************************************************************************/
 
 int main(int argc, char** argv)  {
-    uint32_t errCnt = 0;
-    int errCode;
 
-    cout << endl << "A72-Info: FIR Filter Benchmark Test - AIE Version" << endl << endl;
+    cout << endl << "A72-Info: FIR Filter Benchmark Test - DSP58 Version" << endl << endl;
 
     // ============================================================================
     // Step 1: Check Command Line Argument
@@ -244,15 +238,13 @@ int main(int argc, char** argv)  {
     //point to top of xclbin data  
     auto top = reinterpret_cast<const axlf*>(xclbin.data());
 
-    adf::registerXRT(dhdl, top->m_header.uuid);
-
 
     // ============================================================================
-    // Step 3: Create and Initialize Data Mover Kernels and FIR Chain Graph
+    // Step 3: Create and Initialize Data Mover Kernels
     // ============================================================================
-    //   o) Create Data Mover Kernel Handles (datamover, s2mm) and Initialize them
-    //   o) Create FIR Filter Graph Handle and Initialize it
-    //   o) Load input data into the datamover buffer
+    //   o) Create Data Mover Kernel Handles (mm2s, s2mm) and Initialize them
+    //   o) Allocate their buffers
+    //   o) Load input data into the mm2s buffer
     // ============================================================================
 #ifdef ALL_MESSAGES
     cout << "A72-Info: ============================================================= " << endl;
@@ -263,37 +255,31 @@ int main(int argc, char** argv)  {
 #endif
 
     datamover_class  datamover_krnl;
+    fir_class fir_krnl;
+
     datamover_krnl.init(dhdl, top);
-
-    fir_chain_class fir_graph;
-
-    fir_graph.init(dhdl, top);
+    fir_krnl.init(dhdl, top);
 
     // ============================================================================
-    // Step 4: Run Data Mover Kernels and FIR Chain Graph
+    // Step 4: Run Data Mover Kernels
     // ============================================================================
     //   o) Invoke Run Methods
     // ============================================================================
 #ifdef ALL_MESSAGES
     cout << "A72-Info: ============================================================= " << endl;
-    cout << "A72-Info: (Step 4) Run Data Mover Kernels and FIR Chain Graph           " << endl;
+    cout << "A72-Info: (Step 4) Run Data Mover Kernels                               " << endl;
     cout << "A72-Info: ============================================================= " << endl;
     cout << endl; 
 #endif
 
-    errCode = fir_graph.run();
-    if (errCode != 0)  {
-        throw std::runtime_error("A72-Error: Error encountered running AIE FIR Chain graph");
-        return EXIT_FAILURE;
-    }
-
     datamover_krnl.run();
+    fir_krnl.run();
 
 
     // ============================================================================
     // Step 5: Wait for Data Mover Kernels to Complete
     // ============================================================================
-    //   o) Invoke waitTo_complete for Data Mover Kernels
+    //   o) Invoke run_wait for Data Mover Kernels
     // ============================================================================
 #ifdef ALL_MESSAGES
     cout << "A72-Info: ============================================================= " << endl;
@@ -302,8 +288,8 @@ int main(int argc, char** argv)  {
     cout << endl; 
 #endif
 
+    fir_krnl.waitTo_complete();
     datamover_krnl.waitTo_complete();
-
 
     // ============================================================================
     // Step 6: Verify Output Results
@@ -317,8 +303,8 @@ int main(int argc, char** argv)  {
     cout << endl; 
 #endif
 
+    uint32_t errCnt = 0;
     datamover_krnl.golden_check(&errCnt);
-
 
     // ============================================================================
     // Step 7: Release Allocated Resources
@@ -333,9 +319,7 @@ int main(int argc, char** argv)  {
 
     //Closing PL-Handles
     datamover_krnl.close();
-
-    //Closing Graph
-    fir_graph.close();
+    fir_krnl.close();
 
     //Closing Device
     cout << "A72-Info: Closing Device...\n";

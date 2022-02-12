@@ -21,8 +21,8 @@ using namespace adf;
 //PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"data/fir_input_128b.txt");
 //PLIO *pldata_in  = new PLIO("DataIn",  plio_32_bits,"../../design/aie_src/aiesim_data/input_128b.txt");
 //PLIO *pldata_in  = new PLIO("DataIn",  plio_32_bits,"../../design/aie_src/aiesim_data/input_new.txt");
-PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"../../../design/aie_src/aiesim_data/input_const.txt");
-PLIO *pldata_out = new PLIO("DataOut", plio_128_bits,"data/fir_output_128b.txt");
+PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"../../../../../../design/aie_src/aiesim_data/input_impulse.txt");
+PLIO *pldata_out = new PLIO("DataOut", plio_128_bits,"data/fir_output_impulse.txt");
 
 simulation::platform<1,1>  plat(pldata_in, pldata_out);
 FirGraph FilterChain;

@@ -55,15 +55,31 @@ void s2mm(
       #pragma HLS loop_tripcount min=64
 
       ap_axiu<128, 0, 0, 0> firOut = strmInpFromFIR.read();
-      
-      // All Values should 1...
-      if(i < CHK_CTR)
-      {
-         if(firOut.data != golden_128b[i])
+
+      #if N_FIR_FILTERS == 1
+         // All Values should 1...
+         if(i < CHK_CTR)
+         {
+            if(firOut.data != golden_128b[i])
+               ++errCnt;
+         }
+         else if(firOut.data != 0x0)
             ++errCnt;
-      }
-      else if(firOut.data != 0x0)
-         ++errCnt;
+
+      #elif N_FIR_FILTERS == 10
+         if(i< CHK_ZERO)
+         {
+            if(firOut.data != 0x0)
+               ++errCnt;
+         }
+         else if(i < CHK_CTR)
+         {
+            if(firOut.data != golden_128b[i])
+               ++errCnt;
+         }
+         else if(firOut.data != 0x0)
+            ++errCnt;   
+      #endif
    }
 }
 

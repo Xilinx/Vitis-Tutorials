@@ -55,7 +55,6 @@ The Makefile uses the following directory references:
 
 ```
 # Relative fft_2d directory
-# Relative fft_2d directory
 RELATIVE_PROJECT_DIR := ./
 
 # Absolute fft_2d directory = <user path>/Tutorials/AI_Engine/fft_2d
@@ -65,22 +64,24 @@ DESIGN_REPO  := $(PROJECT_REPO)/design
 AIE_SRC_REPO := $(DESIGN_REPO)/aie_src
 HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
 PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+
 SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
-HW_EMU_RUN_FILES_REPO  := $(DESIGN_REPO)/hw_emu_files
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-
-ifeq ($(FFT_2D_DT),0)
-   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cint16_dsns
-
-else
-   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cfloat_dsns
-
-endif
-
+FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cint16_dsns
 FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
+
+REPORTS_REPO := $(PROJECT_REPO)/reports_dir
+BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT_DIR_VAL)/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+
+EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
+EMBEDDED_EXEC_SCRIPT := run_script.sh
+
 WORK_DIR         := Work
 ```
 
@@ -1172,6 +1173,24 @@ The registers and CLB LUT utilization information can be found in the Vivado pro
 2. Go to **Open Implemented Design** then click **Report Utilization**. In the Utilization tab shown in the following figure, select **ai_engine_0** and view the **Registers** and **CLB LUTs** for the 1024 x 2048 point, 1-instance, and cint16 design:
 
 ![Image of 2D-FFT AIE Utilization](images/fft_2d_aie_vivado_resources.PNG)
+
+** Or **
+
+1. Do `make report_metrics TARGET=hw`, (recipe expanded below), alongwith relevant options, to generate `utilization_hierarchical.txt` under `$(BLD_REPORTS_DIR)/` directory:
+
+```
+report_metrics:
+ifeq ($(TARGET),hw_emu)
+	@echo "This build target (report-metrics) not valid when design target is hw_emu"
+
+else
+	rm -rf $(BLD_REPORTS_DIR)
+	mkdir -p $(BLD_REPORTS_DIR)
+	cd $(BLD_REPORTS_DIR); \
+	vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+
+endif
+```
 
 The vcdanalyze tool is used to generate a `graph.xpe` file which can be input to XPE for viewing the AI Engine resource utilization and power. The steps are as follows:
 

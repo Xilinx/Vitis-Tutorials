@@ -14,13 +14,20 @@
 
 %.PHONY: help
 help::
-	@echo  " Use the make recipes with required values for TARGET, FFT_2D_PT, FFT_2D_INSTS, ITER_CNT and EN_TRACE"
-	@echo  " TARGET=<hw_emu(default)/hw>"
-	@echo  " FFT_2D_PT=<64,128,256,512,2048(default)>"
-	@echo  " ITER_CNT=<No. of Iterations>"
-	@echo  " EN_TRACE=<0(default),1>"
 	@echo  ""
 	@echo  " Makefile Usage:"
+	@echo  ""
+	@echo  "  make sd_card"
+	@echo  "  Command calls rules: kernels xclbin application package, in sequence"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make run"
+	@echo  "  Command calls rules: sd_card run_emu, in sequence"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make all"
+	@echo  "  Command calls rules: sd_card report_metrics run_emu, in sequence"
+	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
 	@echo  "  make kernels"
 	@echo  "  Command to generate the PL kernels"
@@ -37,18 +44,49 @@ help::
 	@echo  "  Command to package design into an sd_card for specified target"
 	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
+	@echo  "  make run_emu"
+	@echo  "  Command to run the hw emulator if LAUNCH_HW_EMU_EXEC variable is set to 1"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make report_metrics"
+	@echo  "  Command to run and get vivado utilisation and power reports."
+	@echo  "  Works only for TARGET=hw"
+	@echo  ""
 	@echo  "  make clean_target"
 	@echo  "  Command to remove the generated files for a specific target"
 	@echo  ""
 	@echo  "  make clean_insts"
-	@echo  "  Command to remove the generated files for a specific instance design 1x,5x or 10x"
+	@echo  "  Command to remove the generated files for a specific instance of the design."
 	@echo  ""
 	@echo  "  make clean_fftpt"
 	@echo  "  Command to remove the generated files for a specific fft point size"
 	@echo  ""
-	@echo  "  make cleanall"
-	@echo  "  Command to remove the generated files for all instances and point sizes"
+	@echo  "  make clean_fft2d_dt"
+	@echo  "  Command to remove the generated files for a specific fft datatype"
 	@echo  ""
+	@echo  "  make cleanall"
+	@echo  "  Command to remove the generated files for all variations"
+	@echo  ""
+	@echo  "  make clean_vivado_reports"
+	@echo  "  Command to remove the generated vivado reports files for all variations"
+	@echo  ""
+	@echo  "  make cleanall_reports"
+	@echo  "  Command to remove all the generated reports for all variations"
+	@echo  ""
+	@echo  " OPTIONS:"
+	@echo  " Use the make recipes with required values for options mentioned below-"
+	@echo  "    TARGET             -specifies target: Hardware or Emulation. Values: hw_emu(default), hw"
+	@echo  "    FFT_2D_DT          -specifies FFT Datatype. Values: 0(cint16, default), 1(cfloat)"
+	@echo  "    FFT_2D_PT          -specifies FFT Point. Values: 64, 128, 256, 512, 2048(default)"
+	@echo  "    FFT_2D_INSTS       -specifies number of FFT instances. Values: 1(default), 5 and 10"
+	@echo  "    PL_FREQ        	 -specifies HLS kernel frequencies. Values: 250Mhz and 2 times that(500Mhz) for the FFT_2D kernel(default)"
+	@echo  "    ITER_CNT           -specifies design iteration count: Values: 8(default)"
+	@echo  "    EN_TRACE           -specifies whether to enable profiling for the design. Values: 0(disabled, default) and 1(enabled)"
+	@echo  "    LAUNCH_HW_EMU_EXEC -specifies whether to launch hw emulator when running make run_emu rule. Values: 0(disabled, default) and 1(enabled)"
+	@echo  ""
+
+# Print all options passed to Makefile
+print-%  : ; @echo $* = $($*)
 
 # =========================================================
 # TARGET can be set as:
@@ -56,6 +94,23 @@ help::
 #   hw    : Hardware Run
 # =========================================================
 TARGET := hw_emu
+
+######################################
+# FFT 2D Datatype can be,
+# cint16 (Default) or cfloat...
+# 0=cint16(Default)
+# 1=cfloat
+######################################
+
+FFT_2D_DT := 0
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR_VAL := cint16
+
+else
+   FFT_2D_DT_DIR_VAL := cfloat
+
+endif
 
 # =========================================================
 # 2 Dimentional FFT Point: MAT_ROWS x MAT_COLS(Mat Dims):
@@ -101,13 +156,11 @@ ITER_CNT := 8
 EN_TRACE	:= 0
 
 ######################################
-# FFT 2D Datatype can be,
-# cint16 (Default) or cfloat...
-# 0=cint16(Default)
-# 1=cfloat
+# When TARGET=hw_emu, hw_emu launch...
+# 1 = Enabled (Default).
+# 0 = Disabled.
 ######################################
-
-FFT_2D_DT := 0
+LAUNCH_HW_EMU_EXEC := 0
 
 # =========================================================
 # Source directory
@@ -121,37 +174,28 @@ PROJECT_REPO := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 DESIGN_REPO  := $(PROJECT_REPO)/design
 HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
 PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+
 DIRECTIVES_REPO        := $(DESIGN_REPO)/directives
 SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
-HW_EMU_RUN_FILES_REPO  := $(DESIGN_REPO)/hw_emu_files
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-
-ifeq ($(FFT_2D_DT),0)
-   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cint16_dsns
-
-else
-   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cfloat_dsns
-
-endif
-
+FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT_DIR_VAL)_dsns
 FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 
+VIVADO_REPORTS_REPO := $(PROJECT_REPO)/vivado_reports_dir
+VIVADO_BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_script.sh
 
-######################################
-# When TARGET=hw_emu, hw_emu launch...
-# 0 = Disabled (Default).
-# 1 = Enabled.
-######################################
-LAUNCH_HW_EMU_EXEC := 0
-
-# Print all options passed to Makefile
-print-%  : ; @echo $* = $($*)
-
+###########################################################
+# Variable Definitions...
+#
 # ==========================================================
 # Below are the names for Application executable,
 # kernel executables, and xclbin
@@ -253,13 +297,10 @@ VPP_LINK_FLAGS += --clock.defaultTolerance 0.001
 VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/cdc_async.tcl
 
 ifeq ($(EN_TRACE),1)
-   
    ifeq ($(FFT_2D_INSTS),1)
-      
       VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
    
    else
-   
       VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:strmInp_from_colwiseFFT
    
    endif
@@ -283,9 +324,7 @@ ifeq ($(FFT_2D_DT),0)
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
                
       else
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_RefinePlacement}
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          
       endif
@@ -314,25 +353,25 @@ ifeq ($(FFT_2D_DT),0)
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
          
       else
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          
       endif
    else ifeq ($(FFT_2D_PT),512)
       ifeq ($(FFT_2D_INSTS),1)
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Power_DefaultOpt}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          
       else ifeq ($(FFT_2D_INSTS),5)
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_low}
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          
       else
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          
       endif
@@ -345,11 +384,9 @@ ifeq ($(FFT_2D_DT),0)
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
          
       else
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}      
          
       endif
    endif
@@ -360,13 +397,12 @@ else
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          
       else ifeq ($(FFT_2D_INSTS),5)
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_Explore}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
          
       else
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_WLBlockPlacement}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          
       endif
    else ifeq ($(FFT_2D_PT),128)
@@ -385,15 +421,18 @@ else
       endif
    else ifeq ($(FFT_2D_PT),256)
       ifeq ($(FFT_2D_INSTS),1)
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_WLBlockPlacement}
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_2}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
    
       else ifeq ($(FFT_2D_INSTS),5)
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
          
       else
-         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_WLBlockPlacement}
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
          
       endif
    else ifeq ($(FFT_2D_PT),512)
@@ -449,7 +488,7 @@ PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
 PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XCLBIN)
-PKG_FLAGS += --package.sd_file $(HW_EMU_RUN_FILES_REPO)/$(EMBEDDED_EXEC_SCRIPT)
+PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
 ifneq ($(EN_TRACE),0)
 
@@ -463,6 +502,9 @@ ifdef XRT_ROOT
 
 endif
 
+###########################################################
+# Make rules...
+#
 # =========================================================
 # Step 1. Kernel XO File Generation
 # ========================================================
@@ -563,7 +605,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 86400 | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 10800 | tee embedded_run.log
 
 endif
 else
@@ -576,6 +618,23 @@ else
 	@echo ""
 endif
 
+# =========================================================
+# Step 6. Report Utilization Metrics
+# =========================================================
+# If the target is HW, this generates the power and resource
+# utilization metrics from vivado.
+report_metrics:
+ifeq ($(TARGET),hw_emu)
+	@echo "This build target (report-metrics) not valid when design target is hw_emu"
+
+else
+	rm -rf $(BLD_VIVADO_REPORTS_DIR)
+	mkdir -p $(BLD_VIVADO_REPORTS_DIR)
+	cd $(BLD_VIVADO_REPORTS_DIR); \
+	vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+
+endif
+
 ###########################################################################
 
 # =========================================================
@@ -585,7 +644,9 @@ endif
 # ==> clean_target
 # ==> clean_insts
 # ==> clean_fftpt
-# ==> cleanall
+# ==> clean_fft2d_dt
+# ==> clean_vivado_reports
+# ==> cleanall_reports
 # ========================================================
 
 #Build the design without running the hardware emulation
@@ -594,23 +655,37 @@ sd_card: kernels xclbin application package
 #Build the design and then run hardware emulation
 run: sd_card run_emu
 
+#Same as "run" above, but include metrics generation
+all: sd_card report_metrics run_emu
+
 #Clean generated files
 clean_target:
-	@echo "Cleaning Target Build Dir..."
+	@echo "Cleaning $(TARGET) Target Build Dir..."
 	rm -rf $(BUILD_TARGET_DIR)
 
+#Clean fft2d instances dir files...
 clean_insts:
-	@echo "Cleaning $(FFT_2D_INSTS)x Build Dir..."
+	@echo "Cleaning $(FFT_2D_INSTS)x Builds..."
 	rm -rf $(INSTS_BLD_DIR)
 
+#Clean fft2d point dir files...
 clean_fftpt:
-	@echo "Cleaning $(MAT_ROWS)x$(MAT_COLS) FFT Build Dir..."
+	@echo "Cleaning $(MAT_ROWS)x$(MAT_COLS) FFT Builds..."
 	rm -rf $(FFTPT_BLD_DIR)
 
+#Clean fft2d datatype dir files...
 clean_fft2d_dt:
 	@echo "Cleaning $(FFT_2D_DT)_impl Builds..."
 	rm -rf $(FFT_2D_DT_DIR)
 
+#Clean all builds...
 cleanall:
 	rm -rf $(BASE_BLD_DIR)
-	rm -rf vivado* .Xil ../vivado* ../.Xil *.log vitis* ../vitis* ../*.log core*
+	rm -rf vivado* .Xil *.log vitis* core.*
+
+#Clean_all vivado reports...
+clean_vivado_reports:
+	rm -rf $(VIVADO_REPORTS_REPO)
+
+#Clean_all reports...
+cleanall_reports: clean_vivado_reports

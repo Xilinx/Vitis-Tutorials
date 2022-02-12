@@ -1,4 +1,4 @@
-#!/bin/bash
+#-------------------------------------------------------------------------------
 # © Copyright 2021 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +12,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#-------------------------------------------------------------------------------
 
-cd /mnt/sd-mmcblk0p1
+open_run impl_1
+#Utilisation
+report_utilization -file utilization_hierarchical.txt -hierarchical_depth 2 -hierarchical
+report_utilization -file utilization_report.txt
 
-export XILINX_XRT=/usr
-./init.sh
-
-./fft_2d_aie_xrt.elf a.xclbin
+#Power
+report_power -file power_hierarchical.txt -hierarchical_depth 3 
+report_power -file {power.txt} -xpe {power.xpe} -rpx {power.rpx}

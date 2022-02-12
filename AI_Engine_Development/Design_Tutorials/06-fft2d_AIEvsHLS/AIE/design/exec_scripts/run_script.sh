@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#!/bin/bash
 # © Copyright 2021 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +12,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#-------------------------------------------------------------------------------
 
-open_run impl_1
-report_utilization -file utilization.txt -hierarchical_depth 2 -hierarchical
-report_power       -file power.txt       -hierarchical_depth 3 
+date
 
+export XILINX_XRT=/usr
+
+./fft_2d_aie_xrt.elf a.xclbin
+
+date

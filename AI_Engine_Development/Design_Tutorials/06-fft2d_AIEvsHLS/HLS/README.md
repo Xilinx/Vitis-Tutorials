@@ -66,20 +66,21 @@ PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
 DIRECTIVES_REPO        := $(DESIGN_REPO)/directives
 SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
-HW_EMU_RUN_FILES_REPO  := $(DESIGN_REPO)/hw_emu_files
-BASE_BLD_DIR := $(PROJECT_REPO)/build
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
 
-ifeq ($(FFT_2D_DT),0)
-   FFT_2D_DT_DIR := $(BASE_BLD_DIR)/cint16_dsns
-   
-else
-   FFT_2D_DT_DIR := $(BASE_BLD_DIR)/cfloat_dsns
-   
-endif
-
+BASE_BLD_DIR     := $(PROJECT_REPO)/build
+FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cint16_dsns
 FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
+WORK_DIR         := Work
+
+REPORTS_REPO := $(PROJECT_REPO)/reports_dir
+BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT_DIR_VAL)/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+
+EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
+EMBEDDED_EXEC_SCRIPT := run_script.sh
 ```
 
 </details>
@@ -1353,6 +1354,24 @@ Resource utilization is measured using the Vivado tool. The registers, CLB LUTs,
 3. In the Utilization tab (shown inthe following figure), select **fft_2d_0** and view the registers, CLB LUTs, BRAMs, and DSPs for the 1024 x 2048 point - 1 instance - cint16 design:
 
 ![Image of 2D-FFT HLS Utilization](images/fft_2d_hls_vivado_resources.PNG)
+
+** Or **
+
+1. Do `make report_metrics TARGET=hw`, (recipe expanded below), alongwith relevant options, to generate `utilization_hierarchical.txt` under `$(BLD_REPORTS_DIR)/` directory:
+
+```
+report_metrics:
+ifeq ($(TARGET),hw_emu)
+	@echo "This build target (report-metrics) not valid when design target is hw_emu"
+
+else
+	rm -rf $(BLD_REPORTS_DIR)
+	mkdir -p $(BLD_REPORTS_DIR)
+	cd $(BLD_REPORTS_DIR); \
+	vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+
+endif
+```
 
 Summary of Resource Utilization for all Variations:
 

@@ -15,8 +15,8 @@
 # limitations under the License.
 
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2021.2
-export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.2 - Directory>
+export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2021.1
+export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.1 - Directory>
 
 # Optionally Setup XRT_ROOT, pointing to XRT RPMs,
 # if not set it will automatically be excluded from v++ packaging...
@@ -26,7 +26,7 @@ export XLNX_VERSAL=<Path to xilinx-versal-common-v2021.2 - Directory>
 export DSPLIB_ROOT=<Path to Vitis DSP Libs - Directory>
 
 # Setup SDKTARGETSYSROOT and CXX...
-source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $XILINX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
 
 # Source XRT, VITIS, and Aietools...
 source $XILNX_TOOLS_LOCATION/settings64.sh
@@ -34,7 +34,7 @@ source $XILNX_TOOLS_LOCATION/settings64.sh
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202120_1
+tgt_plat=xilinx_vck190_base_202110_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 
 echo ""

@@ -13,9 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cd /mnt/sd-mmcblk0p1
+date
 
 export XILINX_XRT=/usr
-./init.sh
 
-./fft_2d_hls_xrt.elf a.xclbin
+./fir_hls_xrt.elf a.xclbin
+
+date

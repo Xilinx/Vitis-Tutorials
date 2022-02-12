@@ -49,6 +49,50 @@ The following options can be specified in the make steps. See the make steps for
 
 * EN_TRACE: Flag to enable trace data to be captured. 0 is disabled and 1 is enabled. Default is 0.
 
+The Makefile uses the following directory references:
+
+```
+#Relative fir directory
+RELATIVE_PROJECT_DIR := ./
+
+#Absolute fir directory = <user path>/Tutorials/AI_Engine/fir
+PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+DESIGN_REPO  := $(PROJECT_REPO)/design
+AIE_SRC_REPO := $(DESIGN_REPO)/aie_src
+PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
+SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
+PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+PYTHON_SCRIPTS_REPO    := $(DESIGN_REPO)/python_scripts
+
+BASE_BLD_DIR := $(PROJECT_REPO)/build
+FIR_TAPS_BLD_DIR    := $(BASE_BLD_DIR)/fir_$(N_FIR_TAPS)_taps
+FIR_FILTERS_DIR     := $(FIR_TAPS_BLD_DIR)/x$(N_FIR_FILTERS)_firs
+FIR_WINDOW_SIZE_DIR := $(FIR_FILTERS_DIR)/winSz_$(FIR_WINDOW_SIZE)
+AIES_PER_FIR_DIR    := $(FIR_WINDOW_SIZE_DIR)/x$(N_AIES_PER_FIR)_aie_per_fir
+BUILD_TARGET_DIR    := $(AIES_PER_FIR_DIR)/$(TARGET)
+
+VIVADO_REPORTS_REPO := $(PROJECT_REPO)/vivado_reports_dir
+VIVADO_BLD_REPORTS_DIR := $(REPORTS_REPO)/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIES_PER_FIR)_aie_per_fir
+
+VCD_XPE_REPO := $(PROJECT_REPO)/vcd_xpe_dir
+BLD_VCD_XPE_DIR := $(VCD_XPE_REPO)/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIES_PER_FIR)_aie_per_fir
+VCD_FILE_NAME := fir_$(N_FIR_TAPS)_taps_x$(N_FIR_FILTERS)_firs_winSz_$(FIR_WINDOW_SIZE)_x$(N_AIES_PER_FIR)_aie_per_fir
+BLD_TGT_VCD_FILE := $(BUILD_TARGET_DIR)/$(VCD_FILE_NAME).vcd
+XPE_FILE := $(BLD_VCD_XPE_DIR)/graph_$(VCD_FILE_NAME).xpe
+
+EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
+EMBEDDED_EXEC_SCRIPT := run_script.sh
+
+WORK_DIR := Work
+AIESIM_DATA_DIR := $(AIE_SRC_REPO)/aiesim_data
+AIESIM_INPUT_FILE := $(AIESIM_DATA_DIR)/input_impulse.txt
+```
+
 </details>
 
 <details>

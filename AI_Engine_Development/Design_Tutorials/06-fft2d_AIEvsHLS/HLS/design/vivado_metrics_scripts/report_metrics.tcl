@@ -14,13 +14,11 @@
 # limitations under the License.
 #-------------------------------------------------------------------------------
 
-[connectivity]
-nk=datamover:1:datamover_0
-nk=fir_hls:1:fir_hls_0
+open_run impl_1
+#Utilisation
+report_utilization -file utilization_hierarchical.txt -hierarchical_depth 2 -hierarchical
+report_utilization -file utilization_report.txt
 
-stream_connect=datamover_0.strmOutToFIR:fir_hls_0.StreamIn
-stream_connect=fir_hls_0.StreamOut:datamover_0.strmInpFromFIR
-
-[advanced]
-param=hw_emu.enableProfiling=true
-param=compiler.addOutputTypes=hw_export
+#Power
+report_power -file power_hierarchical.txt -hierarchical_depth 3 
+report_power -file {power.txt} -xpe {power.xpe} -rpx {power.rpx}

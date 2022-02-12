@@ -47,6 +47,38 @@ The following options can be specified in the make steps. See the make steps for
 
 * EN_TRACE: Flag to enable trace data to be captured. 0 is disabled and 1 is enabled. Default is 0.
 
+The Makefile uses the following directory references:
+
+```
+#Relative FIR filter directory
+RELATIVE_PROJECT_DIR := ./
+
+#Absolute FIR filter directory = <user path>/Tutorials/AI_Engine/filter_AIEvsDSP
+PROJECT_REPO := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+DESIGN_REPO  := $(PROJECT_REPO)/design
+PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
+DIRECTIVES_REPO        := $(DESIGN_REPO)/directives
+SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
+PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+PYTHON_SCRIPTS_REPO    := $(DESIGN_REPO)/python_scripts
+
+BASE_BLD_DIR := $(PROJECT_REPO)/build
+FIR_TAPS_BLD_DIR := $(BASE_BLD_DIR)/fir_$(N_FIR_TAPS)_taps
+FIR_FILTERS_DIR  := $(FIR_TAPS_BLD_DIR)/x$(N_FIR_FILTERS)_firs
+BUILD_TARGET_DIR := $(FIR_FILTERS_DIR)/$(TARGET)
+
+VIVADO_REPORTS_REPO := $(PROJECT_REPO)/reports_dir
+VIVADO_BLD_REPORTS_DIR := $(REPORTS_REPO)/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs
+
+EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
+EMBEDDED_EXEC_SCRIPT := run_script.sh
+```
+
 </details>
 
 <details>
