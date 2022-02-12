@@ -72,7 +72,7 @@ The complete beamformer design is shown in the Vitis™ analyzer.
 
 There are several ways to debug a system design that include PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. For projects that are command-line based and would like to port to Vitis™ IDE, reference [Port command-line based projects to Vitis IDE](./Debug0_po.md) for detail steps.
 
-For ease of use, a Vitis IDE exported project, `beamformer.ide.zip` can be donwloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer.ide.zip. Then import this zip file into the Vitis IDE.
+For ease of use, a Vitis IDE exported project, `beamformer_2021_2.ide.zip` can be donwloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_2021_2.ide.zip. Then import this zip file into the Vitis IDE.
 
 Step 0. Download data files, `beamformer_data.zip` from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level as this tutorial's Makefile.
 
