@@ -300,7 +300,7 @@ big,small{
 }
 .fa-ul{
   padding-left:0;
-  margin-left:2.14286em
+  margin-left:2.14286em;
 }
 .fa-ul>li{
   position:relative
@@ -3520,7 +3520,7 @@ hr{
 .rst-content .section ul,.rst-content .toctree-wrapper ul,.wy-plain-list-disc,article ul{
   list-style:disc;
   line-height:24px;
-  margin-bottom:12px
+  margin-bottom:24px
 }
 .rst-content .section ul li,.rst-content .toctree-wrapper ul li,.wy-plain-list-disc li,article ul li{
   list-style:disc;
