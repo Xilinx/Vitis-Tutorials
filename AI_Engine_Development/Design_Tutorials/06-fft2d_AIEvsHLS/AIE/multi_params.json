@@ -33,7 +33,7 @@
         "cint16_64x128pt_5x": {
             "FFT_2D_DT": "0",
             "FFT_2D_PT": "128",
-            "FFT_2D_INSTS": "5",
+            "FFT_2D_INSTS": "5"
         },
         "cint16_128x256pt_5x": {
             "FFT_2D_DT": "0",
