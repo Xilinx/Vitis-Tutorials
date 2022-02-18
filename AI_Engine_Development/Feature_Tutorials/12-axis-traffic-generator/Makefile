@@ -18,10 +18,10 @@ DEST_DIR ?= $(CURDIR)
 MK_PATH := $(abspath $(lastword Makefile))
 MK_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
 DSPLIB_ROOT ?= ${MK_DIR}/Vitis_Libraries/dsp
-ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4
-IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/Image
+ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4
+IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image
 SDKTARGETSYSROOT ?= ${SYSROOT}
-BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
+BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
 PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
 
 #DSP LIB Includes
@@ -57,7 +57,7 @@ AIE_INCLUDE_FLAGS := $(AIE_DSPLIB_INCLUDE) -include="$(XILINX_VITIS)/aietools/in
 AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --xlopt=0 -workdir=./Work 
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
-VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
+VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
 VPP_FLAGS := $(VPP_LINK_FLAGS)
 LDCLFLAGS :=
 
@@ -101,16 +101,16 @@ guard-PLATFORM_REPO_PATHS:
 	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202120_1)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2022.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2021.2/Image)
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2022.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux)
 
 guard-DSPLIBROOT:
 	$(call check_defined, DSPLIB_ROOT, Please define DSPLIB ROOT)
@@ -170,7 +170,7 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_file embedded_exec.sh \
-		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
+		--package.sd_file host.exe ../tutorial.xsa ../libadf.a
 	@echo "COMPLETE: hw_emu package created."
 
 ###################################################################################################
