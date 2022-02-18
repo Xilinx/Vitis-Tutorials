@@ -11,8 +11,8 @@
 #limitations under the License.
 #
 TARGET   = hw_emu
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm
-XCLBIN   = vck190_aie_base_graph_${TARGET}.xclbin
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+XSA   = vck190_aie_base_graph_${TARGET}.xsa
 HOST_EXE = host.exe
 SDKTARGETSYSROOT ?= ${SYSROOT}
 
@@ -51,20 +51,20 @@ guard-PLATFORM_REPO_PATHS:
 	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_202120_1)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2022.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2021.2/Image)
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2022.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
 ###
 
-all: ${XCLBIN} ${HOST_EXE} package
+all: ${XSA} ${HOST_EXE} package
 run: all run_hw_emu
 sd_card: all
 
@@ -75,8 +75,8 @@ ${LIBADF}: ${GRAPH}
 aiesim: ${LIBADF}
 	${AIE_SIM_CMD}
 
-xclbin: guard-PLATFORM_REPO_PATHS ${XCLBIN}
-${XCLBIN}: ${LIBADF} ${VPP_SPEC} ${XOS}
+xsa: guard-PLATFORM_REPO_PATHS ${XSA}
+${XSA}: ${LIBADF} ${VPP_SPEC} ${XOS}
 	${VCC} -g -l --platform ${PLATFORM} ${XOS} ${LIBADF}  \
 	       -t ${TARGET} ${VPP_FLAGS} -o $@
 
@@ -89,7 +89,7 @@ ${HOST_EXE}: sw/*.cpp
 	$(MAKE) -C sw/
 
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
-package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE} 
+package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} 
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} \
 		--package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
@@ -99,7 +99,7 @@ package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
 		--package.sd_file embedded_exec.sh \
 		--package.sd_dir data \
 		--package.sd_file ${PACKET_JSON_REPORT} \
-		--package.sd_file ${HOST_EXE} ${XCLBIN} ${LIBADF} 
+		--package.sd_file ${HOST_EXE} ${XSA} ${LIBADF} 
 
 run_hw_emu: launch_hw_emu.sh
 launch_hw_emu.sh: package_hw_emu

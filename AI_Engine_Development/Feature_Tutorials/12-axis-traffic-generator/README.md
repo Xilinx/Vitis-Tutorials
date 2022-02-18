@@ -37,12 +37,12 @@ The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully s
 
 This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2021.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.1) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial, complete the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.2/sdk.sh`.
-2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2021.2` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
+2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2022.1` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
