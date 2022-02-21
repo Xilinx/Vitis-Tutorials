@@ -103,8 +103,6 @@ help::
 # Print all options passed to Makefile
 print-%  : ; @echo $* = $($*)
 
-# For SPRITE
-DSPLIB_ROOT=$(DSPLIB_VITIS)/dsp
 
 # =========================================================
 # TARGET can be set as:
