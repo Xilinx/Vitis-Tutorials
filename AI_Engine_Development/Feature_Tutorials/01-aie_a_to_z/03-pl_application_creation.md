@@ -41,7 +41,9 @@ int main(void) {
 #endif
 ```
 
-3. Change the ***Active build configuration*** to ***Hardware*** and rebuild the project.
+3. Change the ***Active build configuration*** to ***Hardware*** and rebuild the aie application (simple application) project.
+
+>**Note**: Make sure you only build the AI Engine application project as this point as building the full system will fail due to missing components which will be added later in this tutorial.
 
 ### Step 2. Add PL Kernels
 
