@@ -14,20 +14,24 @@
 # limitations under the License.
 #
 
-CPU_ARCH  := a72
-TARGET    ?= hw
-PROJ_NAME ?= linux
-SYSROOT   := ../sysroot
+CPU_ARCH   := a72
+TARGET     ?= hw
+PROJ_NAME  ?= linux
+SYSROOT    := ../sysroot
+ETH_STATIC ?= 0
 
-XSA_PATH  ?= $(shell pwd)/../platform/hw/build_${TARGET}
+XSA_PATH   ?= $(shell pwd)/../platform/hw/build_${TARGET}
 
-CFG       := ./src/config
+CFG        := ./src/config
 
-SRC_PATH_DEVICE_TREE  :=./src/device-tree
-DEST_PATH_DEVICE_TREE :=${PROJ_NAME}/project-spec/meta-user/recipes-bsp/device-tree
+SRC_PATH_DEVICE_TREE  := ./src/device-tree
+DEST_PATH_DEVICE_TREE := ${PROJ_NAME}/project-spec/meta-user/recipes-bsp/device-tree
 
-FILE_MAIN_CFG    :=${PROJ_NAME}/project-spec/configs/config
-FILE_ROOT_FS_CFG :=${PROJ_NAME}/project-spec/configs/rootfs_config
+SRC_PATH_ETH_STATIC   := ./src/init-ifupdown
+DEST_PATH_ETH_STATIC  := ${PROJ_NAME}/project-spec/configs/init-ifupdown
+
+FILE_MAIN_CFG         := ${PROJ_NAME}/project-spec/configs/config
+FILE_ROOT_FS_CFG      := ${PROJ_NAME}/project-spec/configs/rootfs_config
 
 .PHONY: 
 
@@ -70,8 +74,11 @@ update_config:
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable ai-engine-driver-dev 
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable sysfsutils-dev 
 	cd ${PROJ_NAME} && petalinux-config --silentconfig
-	cd ${PROJ_NAME} && petalinux-config -c rootfs --silentconfig 
-#	cd ${PROJ_NAME}/build/conf && sed -i 's/ATF_CONSOLE_versal-generic = "dcc"/ATF_CONSOLE_versal-generic = "pl011"/g' plnxtool.conf
+	cd ${PROJ_NAME} && petalinux-config -c rootfs --silentconfig
+ifeq (${ETH_STATIC}, 1)
+	cp -r ${SRC_PATH_ETH_STATIC}/* ${DEST_PATH_ETH_STATIC}/
+endif
+      
 
 update_build:
 	cd ${PROJ_NAME} && petalinux-build

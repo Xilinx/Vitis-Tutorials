@@ -55,7 +55,6 @@ ip/aie/*.a
 ip/*/*.xml
 ip/xo_*
 vitis/build_*
-ps_apps/*.o
-ps_apps/*.exe
+ps_apps/exe/
 package_output_*
 

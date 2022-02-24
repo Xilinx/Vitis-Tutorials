@@ -42,6 +42,9 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - The build flow supports both TARGET's in the same `[project-root]`; but you need to execute them yourself the one after the other if you need both results!
     - Some generated directories are depending on the TARGET and are further shown as `[dir]_${TARGET}`.
   - `[project-root]/Makefile`: `export ILA_EN := 0` for disabling the ILA (default); **change it to `export ILA_EN := 1` to enable the ILA**.
+  - `[project-root]/Makefile`: `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default); **change it to `export ETH_STATIC := 1` for Ethernet Static Configuration**.
+    - `export ETH_STATIC := 0`; **NO** extra configuration needed.
+    - `export ETH_STATIC := 1`; please setup your required Ethernet Static Configuration in `[project-root]/petalinux/src/init-ifupdown/interfaces`.
   - `[project-root]/petalinux/Makefile`: the generated tmp-dir ends up in `/tmp`. 
     - If you want to place it somewhere else you need to add `--tmpdir [your_tmp_dir]` at the end of the `petalinux-create` line in the `[project-root]/petalinux/Makefile`. 
       - Be aware that `[your_tmp_dir]` may **NOT** be located on an NFS-drive!

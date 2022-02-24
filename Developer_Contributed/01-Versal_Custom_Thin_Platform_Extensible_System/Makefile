@@ -30,6 +30,9 @@ export TARGET           := hw
 # ILA_EN = 0 (NOT Enabled) or 1 (Enabled)
 export ILA_EN           := 0
 
+# ETH_STATIC = 0 (ETH DHCP Enabled) or 1 (ETH Static Enabled)
+export ETH_STATIC       := 0
+
 ################################################################
 # Variables needed for the build process, PLEASE DO NOT MODIFY #
 ################################################################
