@@ -32,6 +32,8 @@ To highlight the differences between KV260 and ZCU104, this example will simplif
 
 > Note: Since KV260 BSP only releases 2021.1 version, this tutorial will skip 2021.2. The next release for this tutorial would be 2022.1.
 
+> Note: It's validated in [Pull Request #174](https://github.com/Xilinx/Vitis-Tutorials/pull/174) by Victor that if you update system_step1.tcl line 36 from 2021.1 to 2021.2, the design would work well with Vitis 2021.2.
+
 ## Custom Platform Planning
 
 The platform we create should be able to run these applications finally
