@@ -23,9 +23,9 @@ endif
 addrndm := 0
 krnl_loop := 1
 txSize   := 64
-dwidth   := 512
-dwords   := $(dwidth)/32
-bl       := $(txSize)*8/$(dwidth)
+dsize    := 512
+dwords   := $(dsize)/32
+bl       := $(txSize)*8/$(dsize)
 buildxclbin := 0
 
 default_make_goal: help
@@ -47,7 +47,7 @@ endif
 
 # Default Settings here ..
 HOST_SRC_CPP := $(SRCDIR)/host.cpp
-builddir := ./build/$(memtype)_$(_banks)Banks_d$(dwidth)_txSize$(txSize)$(_rama)
+builddir := ./build/$(memtype)_$(_banks)Banks_d$(dsize)_txSize$(txSize)$(_rama)
 
 
 # Common Source Code for FPGA and Host
@@ -225,4 +225,3 @@ help:
 	@echo  "   > Run lab using HBM with Sequential Address Access -- make all_hbm_rnd_rama_run"
 	@echo  " "
 	@echo  " "
-
