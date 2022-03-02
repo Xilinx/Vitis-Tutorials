@@ -26,7 +26,6 @@
         ], 
         "targets": [
             "vitis_hw_emu", 
-            "vitis_hw_build", 
             "vitis_hw_run"
         ], 
         "category": "canary",
@@ -41,6 +40,5 @@
             "all": "run",
             "hw" : "sd_card"
         }
-
     }
 }
