@@ -377,7 +377,7 @@ proc create_root_design { parentCell } {
   # Create instance: axi_smc_0, and set properties
   set axi_smc_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 axi_smc_0 ]
   set_property -dict [ list \
-    CONFIG.NUM_CLKS {2} \
+    CONFIG.NUM_CLKS {1} \
     CONFIG.NUM_MI {1} \
     CONFIG.NUM_SI {1} \
   ] $axi_smc_0
@@ -496,12 +496,6 @@ PCIE_APERTURES_SINGLE_ENABLE 0 PCIE_APERTURES_DUAL_ENABLE 0}\
    CONFIG.USE_RESET {true} \
   ] $clk_wizard_0
 
-  # Create instance: sys_reset_2, and set properties
-  set sys_reset_2 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 sys_reset_2 ]
-
-  # Create instance: sys_reset_1, and set properties
-  set sys_reset_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 sys_reset_1 ]
-
   # Create instance: sys_reset_0, and set properties
   set sys_reset_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 sys_reset_0 ]
 
@@ -523,10 +517,9 @@ PCIE_APERTURES_SINGLE_ENABLE 0 PCIE_APERTURES_DUAL_ENABLE 0}\
   # Create port connections
   connect_bd_net -net ai_engine_0_s00_axi_aclk [get_bd_pins ai_engine_0/s00_axi_aclk] [get_bd_pins axi_noc_0/aclk8]
   connect_bd_net -net axi_intc_0_irq [get_bd_pins axi_intc_0/irq] [get_bd_pins cips_0/pl_ps_irq0]
-  connect_bd_net -net clk_wizard_0_clk_out1_o1 [get_bd_pins clk_wizard_0/clk_out1_o1] [get_bd_pins sys_reset_0/slowest_sync_clk] [get_bd_pins axi_smc_0/aclk1]
-  connect_bd_net -net clk_wizard_0_clk_out1_o2 [get_bd_pins clk_wizard_0/clk_out1_o2] [get_bd_pins sys_reset_1/slowest_sync_clk]
-  connect_bd_net -net clk_wizard_0_clk_out1_o3 [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins sys_reset_2/slowest_sync_clk] [get_bd_pins axi_smc_0/aclk] [get_bd_pins cips_0/m_axi_fpd_aclk] [get_bd_pins axi_intc_0/s_axi_aclk]
-  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins sys_reset_0/dcm_locked] [get_bd_pins sys_reset_0/dcm_locked] [get_bd_pins sys_reset_1/dcm_locked]
+#  connect_bd_net -net clk_wizard_0_clk_out1_o1 [get_bd_pins clk_wizard_0/clk_out1_o1] [get_bd_pins axi_smc_0/aclk1]
+  connect_bd_net -net clk_wizard_0_clk_out1_o3 [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins sys_reset_0/slowest_sync_clk] [get_bd_pins axi_smc_0/aclk] [get_bd_pins cips_0/m_axi_fpd_aclk] [get_bd_pins axi_intc_0/s_axi_aclk]
+  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins sys_reset_0/dcm_locked]
   connect_bd_net -net sys_reset_0_peripheral_aresetn [get_bd_pins sys_reset_0/peripheral_aresetn] [get_bd_pins axi_intc_0/s_axi_aresetn] [get_bd_pins axi_smc_0/aresetn]
   connect_bd_net -net cips_0_fpd_axi_noc_axi0_clk [get_bd_pins axi_noc_0/aclk6] [get_bd_pins cips_0/fpd_axi_noc_axi0_clk]
   connect_bd_net -net cips_0_fpd_axi_noc_axi1_clk [get_bd_pins axi_noc_0/aclk7] [get_bd_pins cips_0/fpd_axi_noc_axi1_clk]
@@ -536,7 +529,7 @@ PCIE_APERTURES_SINGLE_ENABLE 0 PCIE_APERTURES_DUAL_ENABLE 0}\
   connect_bd_net -net cips_0_fpd_cci_noc_axi3_clk [get_bd_pins axi_noc_0/aclk3] [get_bd_pins cips_0/fpd_cci_noc_axi3_clk]
   connect_bd_net -net cips_0_lpd_axi_noc_clk [get_bd_pins axi_noc_0/aclk4] [get_bd_pins cips_0/lpd_axi_noc_clk]
   connect_bd_net -net cips_0_pl0_ref_clk [get_bd_pins cips_0/pl0_ref_clk] [get_bd_pins clk_wizard_0/clk_in1]
-  connect_bd_net -net cips_0_pl0_resetn [get_bd_pins cips_0/pl0_resetn] [get_bd_pins sys_reset_2/ext_reset_in] [get_bd_pins sys_reset_1/ext_reset_in] [get_bd_pins sys_reset_0/ext_reset_in] [get_bd_pins clk_wizard_0/resetn] [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n] [get_bd_pins clk_wizard_0/clk_out2_ce] [get_bd_pins clk_wizard_0/clk_out2_clr_n] [get_bd_pins clk_wizard_0/clk_out3_ce] [get_bd_pins clk_wizard_0/clk_out3_clr_n] [get_bd_pins clk_wizard_0/clk_out4_ce] [get_bd_pins clk_wizard_0/clk_out4_clr_n]
+  connect_bd_net -net cips_0_pl0_resetn [get_bd_pins cips_0/pl0_resetn] [get_bd_pins sys_reset_0/ext_reset_in] [get_bd_pins clk_wizard_0/resetn] [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n] [get_bd_pins clk_wizard_0/clk_out2_ce] [get_bd_pins clk_wizard_0/clk_out2_clr_n] [get_bd_pins clk_wizard_0/clk_out3_ce] [get_bd_pins clk_wizard_0/clk_out3_clr_n] [get_bd_pins clk_wizard_0/clk_out4_ce] [get_bd_pins clk_wizard_0/clk_out4_clr_n]
   connect_bd_net -net cips_0_pmc_axi_noc_axi0_clk [get_bd_pins axi_noc_0/aclk5] [get_bd_pins cips_0/pmc_axi_noc_axi0_clk]
 
   # Create address segments
