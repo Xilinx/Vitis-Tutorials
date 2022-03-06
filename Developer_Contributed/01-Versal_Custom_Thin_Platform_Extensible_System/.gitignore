@@ -48,13 +48,13 @@ release_build
 platform/hw/board_repo
 petalinux/linux
 petalinux/sysroot
-ip/vadd/.ipcache
-ip/vadd/_x
+ip/*/.ipcache
+ip/*/_x
+ip/*/*.xml
 ip/aie/Work
 ip/aie/*.a
-ip/*/*.xml
 ip/xo_*
+ps_apps/exe
 vitis/build_*
-ps_apps/exe/
 package_output_*
 

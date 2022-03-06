@@ -24,16 +24,20 @@ set pl_clks [get_bd_cells /clk_wizard_0]
 
 # tag the dynamic region clock ports
 set clk_props [dict create]
-for {set x 1} {$x <= 3} {incr x} {
-  set pl_clk_pin [get_bd_pins $pl_clks/clk_out1_o${x}]
-  set id [expr $x - 1]
-  set pl_rst [get_bd_cells /sys_reset_${id}]
-  set d false
-  if {$x == 1} {
-    set d true
+for {set x 1} {$x <= 4} {incr x} {
+  for {set y 1} {$y <= 4} {incr y} {
+    set pl_clk_pin [get_bd_pins $pl_clks/clk_out${y}_o${x}]
+    set id [expr (($y - 1) * 4) + $x - 1]
+    set pl_rst [get_bd_cells /sys_reset_0]
+    set d false
+    if {$y == 1} {
+      if {$x == 1} {
+        set d true
+      }
+    }
+    set clk_settings [concat id \"$id\" is_default \"$d\" proc_sys_reset \"$pl_rst\" status \"fixed\"]
+    dict set clk_props clk_out${y}_o${x} $clk_settings
   }
-  set clk_settings [concat id \"$id\" is_default \"$d\" proc_sys_reset \"$pl_rst\" status \"fixed\"]
-  dict set clk_props clk_out1_o$x $clk_settings
 }
 puts "PFM.CLOCK String : "
 puts $clk_props
