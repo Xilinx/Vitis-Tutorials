@@ -16,7 +16,7 @@
 
 ECHO := @echo
 
-APP_NAME     := ./vadd_ocl
+APP_NAME     := ./vadd_s
 APP_EXE      := ../exe/${APP_NAME}.exe
 APP_SRC      := ./src/${APP_NAME}.cpp
 
@@ -31,7 +31,7 @@ GCC_INCLUDES := -I${SYSROOT}/usr/include/xrt \
 GCC_C_FLAGS  := -O -Wall -std=c++14 \
                 --sysroot=${SYSROOT}
 
-GCC_L_FLAGS  := -lxilinxopencl -lxrt_core -lxrt_coreutil \
+GCC_L_FLAGS  := -lxrt_core -lxrt_coreutil \
                 -L${SYSROOT}/usr/lib \
                 --sysroot=${SYSROOT}
 
@@ -40,7 +40,7 @@ GCC_L_FLAGS  := -lxilinxopencl -lxrt_core -lxrt_coreutil \
 help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make all"
-	$(ECHO) "      Command to generate the vadd_ocl ps_app used in this design"
+	$(ECHO) "      Command to generate the vadd_cpp ps_app used in this design"
 	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."

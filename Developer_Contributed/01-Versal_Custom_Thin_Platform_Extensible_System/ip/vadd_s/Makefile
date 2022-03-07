@@ -14,11 +14,11 @@
 # limitations under the License.
 #
 
-PLATFORM_CUSTOM ?= vck190_thin
-BASE_PFM        ?=./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 TARGET          ?= hw
+PLATFORM_CUSTOM ?= vck190_thin_${TARGET}
+BASE_PFM        ?=./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}_${TARGET}.xpfm
 XPFM            := ../../${BASE_PFM}
-KERNEL          := mm2s_vadd_mm
+KERNEL          := vadd_s
 KERNEL_SRC      := ./src/${KERNEL}.cpp
 XO              := ../xo_${TARGET}/${KERNEL}.xo
 
@@ -27,7 +27,7 @@ XO              := ../xo_${TARGET}/${KERNEL}.xo
 help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make all"
-	$(ECHO) "      Command to generate the hls-mm2s-kernel used in this design"
+	$(ECHO) "      Command to generate the hls-vadd-kernel used in this design"
 	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
@@ -35,7 +35,7 @@ help::
 all: ${XO}
 
 ${XO}: ${KERNEL_SRC} ${XPFM}
-	v++ -c -g -t ${TARGET} --save-temps --platform ${XPFM} -k ${KERNEL} -o ${XO} ${KERNEL_SRC}
+	v++ -c -t ${TARGET} --save-temps --platform ${XPFM} -k ${KERNEL} -o ${XO} ${KERNEL_SRC}
 
 clean:
 	rm -f $(XO)* *.log

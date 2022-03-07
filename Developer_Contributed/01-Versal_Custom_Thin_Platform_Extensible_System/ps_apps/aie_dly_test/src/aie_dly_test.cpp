@@ -42,8 +42,8 @@ int main(int argc, char* argv[]) {
   auto xclbin_uuid = my_device.load_xclbin(xclbinFilename);
   std::cout << "Passed: auto xclbin_uuid = my_device.load_xclbin(" << xclbinFilename << ")" << std::endl;
 
-  auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor:{subtractor_1}");
-  std::cout << "Passed: auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, \"subtractor:{subtractor_1}\")" << std::endl;
+  auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor:{subtractor_0}");
+  std::cout << "Passed: auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, \"subtractor:{subtractor_0}\")" << std::endl;
 
   auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top");
   std::cout << "Passed: auto my_graph  = xrt::graph(my_device, xclbin_uuid, \"mygraph_top\")" << std::endl;

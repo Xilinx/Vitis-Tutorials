@@ -18,7 +18,7 @@ PLATFORM_CUSTOM ?= vck190_thin
 BASE_PFM        ?=./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 TARGET          ?= hw
 XPFM            := ../../${BASE_PFM}
-KERNEL          := s2mm_vadd_mm
+KERNEL          := mm2s_vadd_s
 KERNEL_SRC      := ./src/${KERNEL}.cpp
 XO              := ../xo_${TARGET}/${KERNEL}.xo
 
@@ -27,7 +27,7 @@ XO              := ../xo_${TARGET}/${KERNEL}.xo
 help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make all"
-	$(ECHO) "      Command to generate the hls-s2mm-kernel used in this design"
+	$(ECHO) "      Command to generate the hls-mm2s-kernel used in this design"
 	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."

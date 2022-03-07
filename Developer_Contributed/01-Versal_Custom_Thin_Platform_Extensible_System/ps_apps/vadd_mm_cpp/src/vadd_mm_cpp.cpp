@@ -42,8 +42,8 @@ int main(int argc, char* argv[]) {
   auto xclbin_uuid = my_device.load_xclbin(xclbinFilename);
   std::cout << "Passed: auto xclbin_uuid = my_device.load_xclbin(" << xclbinFilename << ")" << std::endl;
 
-  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd:{vadd_1}");
-  std::cout << "Passed: auto my_vadd = xrt::kernel(my_device, xclbin_uuid, \"vadd:{vadd_1}\")" << std::endl;
+  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}");
+  std::cout << "Passed: auto my_vadd = xrt::kernel(my_device, xclbin_uuid, \"vadd_mm:{vadd_mm_1}\")" << std::endl;
 
   auto my_vadd_arg0 = my_vadd.group_id(0);
   auto my_vadd_arg1 = my_vadd.group_id(1);
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  std::cout << "VADD TEST " << (match ? "PASSED" : "FAILED") << std::endl;
+  std::cout << (match ? "PASSED " : "FAILED ") << argv[0] << std::endl;
 
   return (match ? EXIT_FAILURE : EXIT_SUCCESS);
 }

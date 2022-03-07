@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
-#include "vadd_ocl.h"
+#include "vadd_mm_ocl.h"
 
 static const int DATA_SIZE = 4096;
 
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
     
     // This call will get the kernel object from program. A kernel is an 
     // OpenCL function that is executed on the FPGA. 
-    cl::Kernel krnl_vector_add(program,"vadd:{vadd_1}");
+    cl::Kernel krnl_vector_add(program,"vadd_mm:{vadd_mm_1}");
     
     // These commands will allocate memory on the Device. The cl::Buffer objects can
     // be used to reference the memory locations on the device. 
@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
     q.enqueueUnmapMemObject(buffer_result , ptr_result);
     q.finish();
 
-    std::cout << "VADD TEST " << (match ? "PASSED" : "FAILED") << std::endl; 
+    std::cout << (match ? "PASSED " : "FAILED ") << argv[0] << std::endl; 
     return (match ? EXIT_FAILURE :  EXIT_SUCCESS);
 
 }

@@ -19,7 +19,7 @@ PLATFORM_CUSTOM ?= vck190_thin_${TARGET}
 BASE_PFM        ?=./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}_${TARGET}.xpfm
 XPFM            := ../../${BASE_PFM}
 KERNEL          := vadd_mm
-KERNEL_SRC      := ./src/${KERNEL}.cpp
+KERNEL_SRC      := ./src/${KERNEL}.cl
 XO              := ../xo_${TARGET}/${KERNEL}.xo
 
 .PHONY: clean all help

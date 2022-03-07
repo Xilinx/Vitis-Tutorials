@@ -27,7 +27,7 @@ typedef unsigned long long  uint64;
 
 const int MAX_SAMPLES = 1024;
 
-void vadd_mm(
+void vadd_s(
   uint32  samples,
   IO_TYPE *in0,
   IO_TYPE *in1,

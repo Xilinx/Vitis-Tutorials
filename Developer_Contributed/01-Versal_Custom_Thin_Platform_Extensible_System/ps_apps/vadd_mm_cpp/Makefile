@@ -16,7 +16,7 @@
 
 ECHO := @echo
 
-APP_NAME     := ./vadd_cpp
+APP_NAME     := ./vadd_mm_cpp
 APP_EXE      := ../exe/${APP_NAME}.exe
 APP_SRC      := ./src/${APP_NAME}.cpp
 

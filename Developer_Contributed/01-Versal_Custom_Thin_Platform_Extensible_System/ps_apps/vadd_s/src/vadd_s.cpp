@@ -57,11 +57,11 @@ int main(int argc, char* argv[]) {
   std::cout << "PASSED: auto xclbin_uuid = my_device.load_xclbin(" << xclbinFilename << ")" << std::endl;
 
   // Starting the input mm2s kernels
-  auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_mm:{mm2s_vadd_mm_1}");
-  std::cout << "PASSED: auto in_0 = xrt::kernel(my_device, xclbin_uuid, \"mm2s_vadd_mm:{mm2s_vadd_mm_1}\")" << std::endl;
+  auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_1}");
+  std::cout << "PASSED: auto in_0 = xrt::kernel(my_device, xclbin_uuid, \"mm2s_vadd_s:{mm2s_vadd_s_1}\")" << std::endl;
 
-  auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_mm:{mm2s_vadd_mm_2}");
-  std::cout << "PASSED: auto in_1 = xrt::kernel(my_device, xclbin_uuid, \"mm2s_vadd_mm:{mm2s_vadd_mm_2}\")" << std::endl;
+  auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_2}");
+  std::cout << "PASSED: auto in_1 = xrt::kernel(my_device, xclbin_uuid, \"mm2s_vadd_s:{mm2s_vadd_s_2}\")" << std::endl;
 
   auto in_0_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_0.group_id(0));
   auto in_1_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_1.group_id(0));  
@@ -86,8 +86,8 @@ int main(int argc, char* argv[]) {
   std::cout << "PASSED: auto in_01_run = in_01(in_01_bo, nullptr, " << samples << ")" << std::endl;
 
   // Starting the output s2mm kernels
-  auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_mm:{s2mm_vadd_mm_1}");
-  std::cout << "PASSED: auto out = xrt::kernel(my_device, xclbin_uuid, \"s2mm_vadd_mm:{s2mm_vadd_mm_1}\")" << std::endl;
+  auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_s:{s2mm_vadd_s_1}");
+  std::cout << "PASSED: auto out = xrt::kernel(my_device, xclbin_uuid, \"s2mm_vadd_s:{s2mm_vadd_s_1}\")" << std::endl;
 
   auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0));
   std::cout << "PASSED: auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0))" << std::endl;
@@ -99,8 +99,8 @@ int main(int argc, char* argv[]) {
   std::cout << "PASSED: auto out_run = out(out_bo, nullptr, " << samples << ")" << std::endl;
 
   // Starting the DUT kernel
-  auto dut = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}");
-  std::cout << "PASSED: dut = xrt::kernel(my_device, xclbin_uuid, \"vadd_mm:{vadd_mm_1}\")" << std::endl;
+  auto dut = xrt::kernel(my_device, xclbin_uuid, "vadd_s:{vadd_s_1}");
+  std::cout << "PASSED: dut = xrt::kernel(my_device, xclbin_uuid, \"vadd_s:{vadd_s_1}\")" << std::endl;
 
   auto dut_run = dut(samples, nullptr, nullptr, nullptr);
   std::cout << "PASSED: dut_run = dut(" << samples << ", nullptr, nullptr, nullptr)" << std::endl;
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  std::cout << std::endl << "vadd_mm " << (error_cnt ? "FAILED" : "PASSED") << std::endl << std::endl;
+  std::cout << std::endl << (error_cnt ? "FAILED " : "PASSED ") << argv[0] << std::endl << std::endl;
 
   return (error_cnt ? EXIT_SUCCESS : EXIT_FAILURE);
 }
