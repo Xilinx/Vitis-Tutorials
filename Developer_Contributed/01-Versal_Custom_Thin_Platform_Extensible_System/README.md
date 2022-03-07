@@ -124,15 +124,15 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | aie/*               | aie "datamover" kernel Makefile and sources
 | counter/*           | free-running RTL "counter" kernel Makefile and sources that feeds the aie "datamover" kernel
 | subtractor/*        | Managed RTL "subtractor" kernel Makefile and sources that measures the delay between the counter-input and the aie-output
-| vadd/*              | XRT-controlled HLS "vadd" kernel Makefile and sources
-| vadd_mm/*           | XRT-controlled HLS "vadd_mm" (vadd streaming) kernel Makefile and sources
-| mm2s_vadd_mm/*      | XRT-controlled HLS "mm2s_vadd_mm" (memory-to-streaming) kernel Makefile and sources
-| s2mm_vadd_mm/*      | XRT-controlled HLS "s2mm_vadd_mm" (streaming-to-memory) kernel Makefile and sources
+| vadd_mm/*           | XRT-controlled HLS vadd memory mapped kernel Makefile and sources
+| vadd_s/*            | XRT-controlled HLS vadd streaming kernel Makefile and sources
+| mm2s_vadd_s/*       | XRT-controlled HLS memory-to-streaming kernel used with vadd_s Makefile and sources
+| s2mm_vadd_s/*       | XRT-controlled HLS streaming-to-memory kernel used with vadd_s Makefile and sources
 
  - Builds the output files needed for Vitis linker -> `[project-root]/ip/aie/libadf.a` and `[project-root]/ip/xo_${TARGET}/*.xo`
  - Kernel structure/flow:
-    - vadd is a separate kernel
-    - mm2s_vadd_mm -> vadd_mm -> s2mm_vadd_mm
+    - vadd_mm is a memory mapped kernel
+    - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - counter -> aie "datamover" -> subtractor
     
 </details>
@@ -144,9 +144,9 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | --------------------|---------------------------------------------------------
 | Makefile            | The ps_apps generic Makefile; it automatically searches for sub-projects to build
 | aie_dly_test/*      | PS XRT Application - using the native XRT API - Makefile and sources that measures the delay between counter-input and aie-output
-| vadd_cpp/*          | PS XRT Application - using the native XRT API - Makefile and sources that checks out the vadd kernel
-| vadd_ocl/*          | PS XRT Application - using the opencl XRT API - Makefile and sources that checks out the vadd kernel
-| vadd_mm/*           | PS XRT Application - using the native XRT API - Makefile and sources that checks out the mm2s_vadd_mm -> vadd_mm -> s2mm_vadd_mm kernels
+| vadd_mm_cpp/*       | PS XRT Application - using the native XRT API - Makefile and sources that checks out the vadd_mm kernel
+| vadd_mm_ocl/*       | PS XRT Application - using the opencl XRT API - Makefile and sources that checks out the vadd_mm kernel
+| vadd_s/*            | PS XRT Application - using the native XRT API - Makefile and sources that checks out the mm2s_vadd_s -> vadd_s -> s2mm_vadd_s kernels
 
  - Builds the output files needed for vitis packager -> `[project-root]/ps_apps/exe/*.exe`
  
@@ -203,7 +203,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
   
  ```
     root@linux:~# cd /media/sd-mmcblk0p1/
-    root@linux:/media/sd-mmcblk0p1# ./vadd_mm.exe a.xclbin
+    root@linux:/media/sd-mmcblk0p1# ./vadd_s.exe a.xclbin
     INFO: samples = 256
     INFO: bsize   = 512
     PASSED: auto my_device = xrt::device(0)
@@ -211,17 +211,17 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
     XAIEFAL: INFO: Resource group Static is created.
     XAIEFAL: INFO: Resource group Generic is created.
     PASSED: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-    PASSED: auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_mm:{mm2s_vadd_mm_1}")
-    PASSED: auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_mm:{mm2s_vadd_mm_2}")
+    PASSED: auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_1}")
+    PASSED: auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_2}")
     PASSED: auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0))
     PASSED: auto in_01_bo_mapped = = in_01_bo.map<TYPE_DATA*>()
     PASSED: in_01_bo.sync(XCL_BO_SYNC_BO_TO_DEVICE)
     PASSED: auto in_01_run = in_01(in_01_bo, nullptr, 256)
-    PASSED: auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_mm:{s2mm_vadd_mm_1}")
+    PASSED: auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_s:{s2mm_vadd_s_1}")
     PASSED: auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0))
     PASSED: auto out_bo_mapped = out_bo.map<TYPE_DATA*>()
     PASSED: auto out_run = out(out_bo, nullptr, 256)
-    PASSED: dut = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
+    PASSED: dut = xrt::kernel(my_device, xclbin_uuid, "vadd_s:{vadd_s_1}")
     PASSED: dut_run = dut(256, nullptr, nullptr, nullptr)
 
     INFO: Waiting for kernels to end...
@@ -232,21 +232,23 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
     PASSED: out_run.wait()
     PASSED: out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
 
-    vadd_mm PASSED
+    PASSED ./vadd_s.exe
 
-    root@linux:/media/sd-mmcblk0p1# ./vadd_cpp.exe a.xclbin
+    root@linux:/media/sd-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin
     Passed: auto my_device = xrt::device(0)
     Passed: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-    Passed: auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd")
-    VADD TEST PASSED
-    root@linux:/media/sd-mmcblk0p1# ./vadd_ocl.exe a.xclbin
+    Passed: auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
+    PASSED ./vadd_mm_cpp.exe
+    
+    root@linux:/media/sd-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin
     Loading: 'a.xclbin'
-    VADD TEST PASSED
+    PASSED ./vadd_mm_ocl.exe
+    
     root@linux:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin
     Initializing ADF API...
     Passed: auto my_device = xrt::device(0)
     Passed: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-    Passed: auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor")
+    Passed: auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor:{subtractor_0}")
     Passed: auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top")
     Passed: my_graph.reset()
     Passed: my_graph.run()
