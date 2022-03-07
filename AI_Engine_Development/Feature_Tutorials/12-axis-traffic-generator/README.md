@@ -365,12 +365,10 @@ The first step is to take any v++ kernels (HLS C) and your AI Engine kernels and
 
 #### Compiling the XO Files Using v++
 
-To compile the `sim_ipc_axis_master` and `sim_ipc_axis_slave` files, use the `v++` compiler command - which takes in an HLS kernel source and produces an `.xo` file.
-
-To compile the kernels, run the following command:
+To compile any HLS C kernels, place them in the pl_kernels folder and create the xos individually by running the following command:
 
 ```bash
-make kernels
+make <name of the .cpp file>.xo
 ```
 
 This won't take for long for this tutorial.
