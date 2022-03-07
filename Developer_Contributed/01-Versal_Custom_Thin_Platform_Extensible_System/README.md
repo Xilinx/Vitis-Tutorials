@@ -202,79 +202,172 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
     - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
  ```
-    root@linux:~# cd /media/sd-mmcblk0p1/
-    root@linux:/media/sd-mmcblk0p1# ./vadd_s.exe a.xclbin
-    INFO: samples = 256
-    INFO: bsize   = 512
-    PASSED: auto my_device = xrt::device(0)
-    XAIEFAL: INFO: Resource group Avail is created.
-    XAIEFAL: INFO: Resource group Static is created.
-    XAIEFAL: INFO: Resource group Generic is created.
-    PASSED: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-    PASSED: auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_1}")
-    PASSED: auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_2}")
-    PASSED: auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0))
-    PASSED: auto in_01_bo_mapped = = in_01_bo.map<TYPE_DATA*>()
-    PASSED: in_01_bo.sync(XCL_BO_SYNC_BO_TO_DEVICE)
-    PASSED: auto in_01_run = in_01(in_01_bo, nullptr, 256)
-    PASSED: auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_s:{s2mm_vadd_s_1}")
-    PASSED: auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0))
-    PASSED: auto out_bo_mapped = out_bo.map<TYPE_DATA*>()
-    PASSED: auto out_run = out(out_bo, nullptr, 256)
-    PASSED: dut = xrt::kernel(my_device, xclbin_uuid, "vadd_s:{vadd_s_1}")
-    PASSED: dut_run = dut(256, nullptr, nullptr, nullptr)
+root@linux:~# cd /media/sd-mmcblk0p1/
+root@linux:/media/sd-mmcblk0p1# ./vadd_s.exe a.xclbin
+INFO:    samples = 256
+INFO:    bsize   = 512
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
+PASSED:  auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_1}")
+PASSED:  auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_2}")
+PASSED:  auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0))
+PASSED:  auto in_01_bo_mapped = = in_01_bo.map<TYPE_DATA*>()
+PASSED:  in_01_bo.sync(XCL_BO_SYNC_BO_TO_DEVICE)
+PASSED:  auto in_01_run = in_01(in_01_bo, nullptr, 256)
+PASSED:  auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_s:{s2mm_vadd_s_1}")
+PASSED:  auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0))
+PASSED:  auto out_bo_mapped = out_bo.map<TYPE_DATA*>()
+PASSED:  auto out_run = out(out_bo, nullptr, 256)
+PASSED:  dut = xrt::kernel(my_device, xclbin_uuid, "vadd_s:{vadd_s_1}")
+PASSED:  dut_run = dut(256, nullptr, nullptr, nullptr)
 
-    INFO: Waiting for kernels to end...
+INFO:    Waiting for kernels to end...
 
-    PASSED: in_0_run.wait()
-    PASSED: in_1_run.wait()
-    PASSED: dut_run.wait()
-    PASSED: out_run.wait()
-    PASSED: out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
+PASSED:  in_0_run.wait()
+PASSED:  in_1_run.wait()
+PASSED:  dut_run.wait()
+PASSED:  out_run.wait()
+PASSED:  out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
 
-    PASSED ./vadd_s.exe
+PASSED:  ./vadd_s.exe
 
-    root@linux:/media/sd-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin
-    Passed: auto my_device = xrt::device(0)
-    Passed: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-    Passed: auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
-    PASSED ./vadd_mm_cpp.exe
-    
-    root@linux:/media/sd-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin
-    Loading: 'a.xclbin'
-    PASSED ./vadd_mm_ocl.exe
-    
-    root@linux:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin
-    Initializing ADF API...
-    Passed: auto my_device = xrt::device(0)
-    Passed: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-    Passed: auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor:{subtractor_0}")
-    Passed: auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top")
-    Passed: my_graph.reset()
-    Passed: my_graph.run()
-    Poll subtractor register
-      Value Reg0:  210
-      Value Reg1:  11c
-      Value Reg2:  172
-      Value Reg3:  3a
-    Poll subtractor register
-      Value Reg0:  23e
-      Value Reg1:  11a
-      Value Reg2:  175
-      Value Reg3:  3a
-    ...
-    Poll subtractor register
-      Value Reg0:  1ec
-      Value Reg1:  118
-      Value Reg2:  173
-      Value Reg3:  38
-    Poll subtractor register
-      Value Reg0:  246
-      Value Reg1:  11a
-      Value Reg2:  182
-      Value Reg3:  36
-    Passed: my_graph.end()
-    root@linux:/media/sd-mmcblk0p1#
+root@linux:/media/sd-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
+PASSED:  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
+
+PASSED:  ./vadd_mm_cpp.exe
+
+root@linux:/media/sd-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin
+Loading: 'a.xclbin'
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+
+PASSED:  ./vadd_mm_ocl.exe
+
+root@linux:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin
+Initializing ADF API...
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
+PASSED:  auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor:{subtractor_0}")
+PASSED:  auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top")
+PASSED:  my_graph.reset()
+PASSED:  my_graph.run()
+Poll subtractor register
+  Value Reg0:  220
+  Value Reg1:  11c
+  Value Reg2:  175
+  Value Reg3:  36
+Poll subtractor register
+  Value Reg0:  1ee
+  Value Reg1:  11c
+  Value Reg2:  173
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  1f0
+  Value Reg1:  118
+  Value Reg2:  174
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  22c
+  Value Reg1:  11a
+  Value Reg2:  173
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  1ee
+  Value Reg1:  11a
+  Value Reg2:  174
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  23e
+  Value Reg1:  118
+  Value Reg2:  172
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  212
+  Value Reg1:  118
+  Value Reg2:  185
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  118
+  Value Reg2:  170
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  23e
+  Value Reg1:  116
+  Value Reg2:  175
+  Value Reg3:  36
+Poll subtractor register
+  Value Reg0:  1ec
+  Value Reg1:  11a
+  Value Reg2:  175
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  24a
+  Value Reg1:  118
+  Value Reg2:  170
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  21a
+  Value Reg1:  11c
+  Value Reg2:  171
+  Value Reg3:  36
+Poll subtractor register
+  Value Reg0:  1ee
+  Value Reg1:  116
+  Value Reg2:  173
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  1ea
+  Value Reg1:  11a
+  Value Reg2:  172
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  23e
+  Value Reg1:  116
+  Value Reg2:  173
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  1ee
+  Value Reg1:  11a
+  Value Reg2:  170
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  214
+  Value Reg1:  11c
+  Value Reg2:  170
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  204
+  Value Reg1:  11c
+  Value Reg2:  177
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  214
+  Value Reg1:  118
+  Value Reg2:  172
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  24c
+  Value Reg1:  118
+  Value Reg2:  173
+  Value Reg3:  34
+PASSED:  my_graph.end()
+
+PASSED:  ./aie_dly_test.exe
+
+root@linux:/media/sd-mmcblk0p1#
   ```
 
 ## Notes
