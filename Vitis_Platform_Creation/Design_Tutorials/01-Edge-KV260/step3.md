@@ -88,7 +88,7 @@
 
 5. Prepare **sd_dir** directory. 
 
-   KV260 platform creation can skip this step because with KV260 Starter Kit, we use the pre-built SD card image.
+   KV260 platform creation can skip this step because KV260 Starter Kit workflow uses the pre-built SD card image.
 
    Contents in this directory can be packaged to FAT32 partition of sd_card.img by v++ package tool. Usually we will store boot.scr and system.dtb in this directory. Since KV260 workflow uses the pre-built SD card, rather than the v++ package generated sd_card.img, we can skip adding contents to this directory. 
 
