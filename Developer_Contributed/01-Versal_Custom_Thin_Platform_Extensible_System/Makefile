@@ -153,12 +153,15 @@ ps_apps:
 vitis:
 	$(MAKE) all -C vitis
 
-clean:
-	$(MAKE) clean -C platform
-	$(MAKE) clean -C petalinux
+clean_vitis:
 	$(MAKE) clean -C ip
 	$(MAKE) clean -C ps_apps
 	$(MAKE) clean -C vitis
+
+clean:
+	$(MAKE) clean -C platform
+	$(MAKE) clean -C petalinux
+	$(MAKE) clean_vitis
 	rm -rf ${BOARD_REPO}
   
 

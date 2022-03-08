@@ -377,7 +377,7 @@ proc create_root_design { parentCell } {
   # Create instance: axi_smc_0, and set properties
   set axi_smc_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 axi_smc_0 ]
   set_property -dict [ list \
-    CONFIG.NUM_CLKS {2} \
+    CONFIG.NUM_CLKS {1} \
     CONFIG.NUM_MI {1} \
     CONFIG.NUM_SI {1} \
   ] $axi_smc_0
@@ -474,12 +474,11 @@ PCIE_APERTURES_SINGLE_ENABLE 0 PCIE_APERTURES_DUAL_ENABLE 0}\
   set clk_wizard_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wizard:1.0 clk_wizard_0 ]
   set_property -dict [ list \
    CONFIG.JITTER_SEL {No_Jitter} \
-   CONFIG.OVERRIDE_PRIMITIVE {true} \
+   CONFIG.OVERRIDE_PRIMITIVE {false} \
    CONFIG.BANDWIDTH {HIGH} \
-   CONFIG.CLKFBOUT_MULT {40.000000} \
-   CONFIG.CLKOUT1_DIVIDE {8.000000} \
-   CONFIG.CLKOUT2_DIVIDE {12.000000} \
-   CONFIG.CLKOUT3_DIVIDE {30.000000} \
+   CONFIG.CLKFBOUT_MULT {30.000000} \
+   CONFIG.CLKOUT1_DIVIDE {6.000000} \
+   CONFIG.CLKOUT2_DIVIDE {9.000000} \
    CONFIG.CLKOUT_DRIVES {MBUFGCE,BUFG,BUFG,BUFG,BUFG,BUFG,BUFG} \
    CONFIG.CLKOUT_DYN_PS {None,None,None,None,None,None,None} \
    CONFIG.CLKOUT_GROUPING {Auto,Auto,Auto,Auto,Auto,Auto,Auto} \
@@ -487,19 +486,13 @@ PCIE_APERTURES_SINGLE_ENABLE 0 PCIE_APERTURES_DUAL_ENABLE 0}\
    CONFIG.CLKOUT_MBUFGCE_MODE {PERFORMANCE,PERFORMANCE,PERFORMANCE,PERFORMANCE,PERFORMANCE,PERFORMANCE,PERFORMANCE} \
    CONFIG.CLKOUT_PORT {clk_out1,clk_out2,clk_out3,clk_out4,clk_out5,clk_out6,clk_out7} \
    CONFIG.CLKOUT_REQUESTED_DUTY_CYCLE {50.000,50.000,50.000,50.000,50.000,50.000,50.000} \
-   CONFIG.CLKOUT_REQUESTED_OUT_FREQUENCY {500.000,250.000,100.000,100.000,100.000,100.000,100.000} \
+   CONFIG.CLKOUT_REQUESTED_OUT_FREQUENCY {500.00000,333.33333,100.00000,100.00000,100.00000,100.00000,100.00000} \
    CONFIG.CLKOUT_REQUESTED_PHASE {0.000,0.000,0.000,0.000,0.000,0.000,0.000} \
-   CONFIG.CLKOUT_USED {true,false,false,false,false,false,false} \
+   CONFIG.CLKOUT_USED {true,true,false,false,false,false,false} \
    CONFIG.RESET_TYPE {ACTIVE_LOW} \
    CONFIG.USE_LOCKED {true} \
    CONFIG.USE_RESET {true} \
   ] $clk_wizard_0
-
-  # Create instance: sys_reset_2, and set properties
-  set sys_reset_2 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 sys_reset_2 ]
-
-  # Create instance: sys_reset_1, and set properties
-  set sys_reset_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 sys_reset_1 ]
 
   # Create instance: sys_reset_0, and set properties
   set sys_reset_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 sys_reset_0 ]
@@ -522,10 +515,8 @@ PCIE_APERTURES_SINGLE_ENABLE 0 PCIE_APERTURES_DUAL_ENABLE 0}\
   # Create port connections
   connect_bd_net -net ai_engine_0_s00_axi_aclk [get_bd_pins ai_engine_0/s00_axi_aclk] [get_bd_pins axi_noc_0/aclk8]
   connect_bd_net -net axi_intc_0_irq [get_bd_pins axi_intc_0/irq] [get_bd_pins cips_0/pl_ps_irq0]
-  connect_bd_net -net clk_wizard_0_clk_out1 [get_bd_pins clk_wizard_0/clk_out1_o1] [get_bd_pins sys_reset_0/slowest_sync_clk] [get_bd_pins axi_smc_0/aclk1]
-  connect_bd_net -net clk_wizard_0_clk_out2 [get_bd_pins clk_wizard_0/clk_out1_o2] [get_bd_pins sys_reset_1/slowest_sync_clk]
-  connect_bd_net -net clk_wizard_0_clk_out3 [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins sys_reset_2/slowest_sync_clk] [get_bd_pins axi_smc_0/aclk] [get_bd_pins cips_0/m_axi_fpd_aclk] [get_bd_pins axi_intc_0/s_axi_aclk]
-  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins sys_reset_0/dcm_locked] [get_bd_pins sys_reset_0/dcm_locked] [get_bd_pins sys_reset_1/dcm_locked]
+  connect_bd_net -net clk_wizard_0_clk_out1_o3 [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins sys_reset_0/slowest_sync_clk] [get_bd_pins axi_smc_0/aclk] [get_bd_pins cips_0/m_axi_fpd_aclk] [get_bd_pins axi_intc_0/s_axi_aclk]
+  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins sys_reset_0/dcm_locked]
   connect_bd_net -net sys_reset_0_peripheral_aresetn [get_bd_pins sys_reset_0/peripheral_aresetn] [get_bd_pins axi_intc_0/s_axi_aresetn] [get_bd_pins axi_smc_0/aresetn]
   connect_bd_net -net cips_0_fpd_axi_noc_axi0_clk [get_bd_pins axi_noc_0/aclk6] [get_bd_pins cips_0/fpd_axi_noc_axi0_clk]
   connect_bd_net -net cips_0_fpd_axi_noc_axi1_clk [get_bd_pins axi_noc_0/aclk7] [get_bd_pins cips_0/fpd_axi_noc_axi1_clk]
@@ -535,7 +526,7 @@ PCIE_APERTURES_SINGLE_ENABLE 0 PCIE_APERTURES_DUAL_ENABLE 0}\
   connect_bd_net -net cips_0_fpd_cci_noc_axi3_clk [get_bd_pins axi_noc_0/aclk3] [get_bd_pins cips_0/fpd_cci_noc_axi3_clk]
   connect_bd_net -net cips_0_lpd_axi_noc_clk [get_bd_pins axi_noc_0/aclk4] [get_bd_pins cips_0/lpd_axi_noc_clk]
   connect_bd_net -net cips_0_pl0_ref_clk [get_bd_pins cips_0/pl0_ref_clk] [get_bd_pins clk_wizard_0/clk_in1]
-  connect_bd_net -net cips_0_pl0_resetn [get_bd_pins cips_0/pl0_resetn] [get_bd_pins clk_wizard_0/resetn] [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n] [get_bd_pins sys_reset_2/ext_reset_in] [get_bd_pins sys_reset_1/ext_reset_in] [get_bd_pins sys_reset_0/ext_reset_in]
+  connect_bd_net -net cips_0_pl0_resetn [get_bd_pins cips_0/pl0_resetn] [get_bd_pins sys_reset_0/ext_reset_in] [get_bd_pins clk_wizard_0/resetn] [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n] [get_bd_pins clk_wizard_0/clk_out2_ce] [get_bd_pins clk_wizard_0/clk_out2_clr_n]
   connect_bd_net -net cips_0_pmc_axi_noc_axi0_clk [get_bd_pins axi_noc_0/aclk5] [get_bd_pins cips_0/pmc_axi_noc_axi0_clk]
 
   # Create address segments

@@ -23,18 +23,34 @@ set_property PFM_NAME \
 set pl_clks [get_bd_cells /clk_wizard_0]
 
 # tag the dynamic region clock ports
+set NUM_CLOCKS_TOTAL   2
+set NUM_CLOCKS_MBUFGCE 1
+
 set clk_props [dict create]
-for {set x 1} {$x <= 3} {incr x} {
-  set pl_clk_pin [get_bd_pins $pl_clks/clk_out1_o${x}]
-  set id [expr $x - 1]
-  set pl_rst [get_bd_cells /sys_reset_${id}]
-  set d false
-  if {$x == 1} {
-    set d true
+for {set x 1} {$x <= $NUM_CLOCKS_TOTAL} {incr x} {
+  for {set y 1} {$y <= 4} {incr y} {
+    if {$x <= $NUM_CLOCKS_MBUFGCE || $y == 1} {
+      if {$x <= $NUM_CLOCKS_MBUFGCE} {
+        set clk_id [expr (($x - 1) * 4) + $y - 1]
+      } else {
+        set clk_id [expr ($NUM_CLOCKS_MBUFGCE * 4) + $x - $NUM_CLOCKS_MBUFGCE - 1]
+      }
+      if {$x == 1 && $y == 1} {
+        set clk_default true
+      } else {
+        set clk_default false
+      }
+      set pl_rst [get_bd_cells /sys_reset_0]
+      set clk_settings [concat id \"$clk_id\" is_default \"$clk_default\" proc_sys_reset \"$pl_rst\" status \"fixed\"]
+      if {$x <= $NUM_CLOCKS_MBUFGCE} {
+        dict set clk_props clk_out${x}_o${y} $clk_settings
+      } else {
+        dict set clk_props clk_out${x} $clk_settings
+      }
+    }
   }
-  set clk_settings [concat id \"$id\" is_default \"$d\" proc_sys_reset \"$pl_rst\" status \"fixed\"]
-  dict set clk_props clk_out1_o$x $clk_settings
 }
+
 puts "PFM.CLOCK String : "
 puts $clk_props
 puts "********"

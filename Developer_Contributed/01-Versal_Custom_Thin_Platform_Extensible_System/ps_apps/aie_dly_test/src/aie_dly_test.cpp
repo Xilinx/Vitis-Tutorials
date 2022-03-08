@@ -25,11 +25,14 @@
 #include <experimental/xrt_graph.h>
 #include <experimental/xrt_ip.h>
 
+static const char*    STR_PASSED = "PASSED:  ";
+static const char*    STR_USAGE  = "USAGE:   ";
+
 int main(int argc, char* argv[]) {
 
   //TARGET_DEVICE macro needs to be passed from gcc command line
   if(argc != 2) {
-    std::cout << "Usage: " << argv[0] <<" <xclbin>" << std::endl;
+    std::cout << STR_USAGE << argv[0] <<" <xclbin>" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -37,22 +40,22 @@ int main(int argc, char* argv[]) {
 
   unsigned int dev_index = 0;
   auto my_device = xrt::device(dev_index);
-  std::cout << "Passed: auto my_device = xrt::device(" << dev_index << ")" << std::endl;
+  std::cout << STR_PASSED << "auto my_device = xrt::device(" << dev_index << ")" << std::endl;
 
   auto xclbin_uuid = my_device.load_xclbin(xclbinFilename);
-  std::cout << "Passed: auto xclbin_uuid = my_device.load_xclbin(" << xclbinFilename << ")" << std::endl;
+  std::cout << STR_PASSED << "auto xclbin_uuid = my_device.load_xclbin(" << xclbinFilename << ")" << std::endl;
 
-  auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor");
-  std::cout << "Passed: auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, \"subtractor\")" << std::endl;
+  auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor:{subtractor_0}");
+  std::cout << STR_PASSED << "auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, \"subtractor:{subtractor_0}\")" << std::endl;
 
   auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top");
-  std::cout << "Passed: auto my_graph  = xrt::graph(my_device, xclbin_uuid, \"mygraph_top\")" << std::endl;
+  std::cout << STR_PASSED << "auto my_graph  = xrt::graph(my_device, xclbin_uuid, \"mygraph_top\")" << std::endl;
 
   my_graph.reset();
-  std::cout << "Passed: my_graph.reset()" << std::endl;
+  std::cout << STR_PASSED << "my_graph.reset()" << std::endl;
 
   my_graph.run(0);
-  std::cout << "Passed: my_graph.run()" << std::endl;
+  std::cout << STR_PASSED << "my_graph.run()" << std::endl;
 
   for (int i = 0; i < 20; i++) {
     sleep(1);
@@ -64,5 +67,6 @@ int main(int argc, char* argv[]) {
   }
 
   my_graph.end(1000);
-  std::cout << "Passed: my_graph.end()" << std::endl;
+  std::cout << STR_PASSED << "my_graph.end()" << std::endl;
+  std::cout << std::endl << STR_PASSED << argv[0] << std::endl << std::endl;
 }

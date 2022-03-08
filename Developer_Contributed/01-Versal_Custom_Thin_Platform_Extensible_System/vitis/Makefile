@@ -19,7 +19,6 @@ ECHO=@echo
 TARGET            ?= hw
 PLATFORM_CUSTOM   ?= vck190_thin
 BASE_PFM          ?= ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
-ILA_EN            ?= 0
 XPFM              := ../${BASE_PFM}
 PETALINUX_IMAGES  := ../petalinux/linux/images/linux
 IP_DIR            := ../ip
@@ -31,10 +30,17 @@ PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
 SD_CARD           := ../package_output_${TARGET}
 BUILD_DIR         := build_${TARGET}
 
+#Force ILA_EN to 0 for hw_emu
+ifeq (${TARGET}, hw_emu)
+    ILA_EN  = 0
+else
+    ILA_EN ?= 0
+endif
+
 ifeq (${ILA_EN}, 1)  
-    SYSTEM_CFG := $(notdir $(wildcard ./src/*.cfg) )
+    SYSTEM_CFG := $(wildcard ./src/*.cfg)
 else 
-    SYSTEM_CFG := system.cfg
+    SYSTEM_CFG := ./src/system.cfg
 endif
 
 .PHONY: clean all
@@ -52,8 +58,8 @@ all: ${BUILD_DIR} ${BUILD_DIR}/${XCLBIN} ${SD_CARD}
 ${BUILD_DIR}:
 	mkdir ${BUILD_DIR}
 
-${BUILD_DIR}/${XCLBIN}: ${XO}
-	cd ${BUILD_DIR} && v++ -l -t ${TARGET} -g --save-temps --platform ../${XPFM} $(SYSTEM_CFG:%=--config ./../src/%) $(addprefix ../, ${XO}) ../${GRAPH_O} -o ${XCLBIN} |& tee vpp_link.log
+${BUILD_DIR}/${XCLBIN}: ${XO} ${SYSTEM_CFG}
+	cd ${BUILD_DIR} && v++ -l -t ${TARGET} -g --save-temps --platform ../${XPFM} $(addprefix --config ../, ${SYSTEM_CFG}) $(addprefix ../, ${XO}) ../${GRAPH_O} -o ${XCLBIN} |& tee vpp_link.log
 
 ${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
 	cd ${BUILD_DIR} && v++ -p --package.out_dir ../${SD_CARD} -t ${TARGET} -g --save-temps -f ../${XPFM} --package.image_format=fat32 --package.boot_mode=sd --package.rootfs=../${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  --package.kernel_image=../${PETALINUX_IMAGES}/Image ${XCLBIN} ../${GRAPH_O} $(addprefix --package.sd_file=../, ${PS_EXE}) |& tee vpp_pack.log

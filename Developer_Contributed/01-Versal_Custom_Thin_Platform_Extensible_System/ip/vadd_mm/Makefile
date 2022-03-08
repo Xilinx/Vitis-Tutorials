@@ -18,7 +18,7 @@ TARGET          ?= hw
 PLATFORM_CUSTOM ?= vck190_thin_${TARGET}
 BASE_PFM        ?=./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}_${TARGET}.xpfm
 XPFM            := ../../${BASE_PFM}
-KERNEL          := vadd
+KERNEL          := vadd_mm
 KERNEL_SRC      := ./src/${KERNEL}.cl
 XO              := ../xo_${TARGET}/${KERNEL}.xo
 

@@ -29,7 +29,7 @@ The following diagram explains the build-flow dependencies.
  - The diagram should be read from right to left.
  - The diagram is for illustration only. The actual build-flow is more sequential.
 <img src="./documentation/readme_files/Design_dependencies.svg">
-
+ 
 ### Build & Prerequisites
 In the `[project-root]` you can start the full build with `make all` **after** taking following prerequisites into account:
   - **Before starting the build, please correctly setup the 2021.2 version of Vivado, Petalinux and Vitis**
@@ -42,6 +42,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - The build flow supports both TARGET's in the same `[project-root]`; but you need to execute them yourself the one after the other if you need both results!
     - Some generated directories are depending on the TARGET and are further shown as `[dir]_${TARGET}`.
   - `[project-root]/Makefile`: `export ILA_EN := 0` for disabling the ILA (default); **change it to `export ILA_EN := 1` to enable the ILA**.
+    - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY (re-)build vitis with `export TARGET := hw_emu`! **NO** need for a full (re-)build in that respect! 
   - `[project-root]/Makefile`: `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default); **change it to `export ETH_STATIC := 1` for Ethernet Static Configuration**.
     - `export ETH_STATIC := 0`; **NO** extra configuration needed.
     - `export ETH_STATIC := 1`; please setup your required Ethernet Static Configuration in `[project-root]/petalinux/src/init-ifupdown/interfaces`.
@@ -52,6 +53,28 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - `export TARGET := hw`: `[project-root]/package_output_hw/sd_card/*` can be used for FAT-32 SD-card (partition); or `[project-root]/package_output_hw/sd_card.img` can be used.
     - `export TARGET := hw_emu`: `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
 
+### Custom Thin Base Platform
+The GENERATED Custom Thin Base Platform BD:
+<img src="./documentation/readme_files/base_platform_bd.png">
+It exposes 5 clocks in the `[project-root]/vitis/src/system.cfg`:
+  ```
+  [clock]
+  #id=0 -> clk_out1_o1 -> 500.00MHz
+  id=0:subtractor_0,counter_0
+
+  #id=1 -> clk_out1_o2 -> 250.00MHz
+  id=1:vadd_mm_1
+
+  #id=2 -> clk_out1_o3 -> 125.00MHz
+
+  #id=3 -> clk_out1_o4 -> 62.50MHz
+
+  #id=4 -> clk_out2 -> 333.33MHz
+  id=4:vadd_s_1,mm2s_vadd_s_1,mm2s_vadd_s_2,s2mm_vadd_s_1
+  ``` 
+
+Vitis will nicely add all required ip and connections depending on the added kernels and their needed clocks/resets onto this Custom Thin Base Platform.
+ 
 ## More In-Depth
 The following explains the different sub-build steps. Click on each item for more detailed information.  
 Each step is sequential (in the order listed - by the `[project-root]/Makefile`): 
@@ -124,11 +147,15 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | aie/*               | aie "datamover" kernel Makefile and sources
 | counter/*           | free-running RTL "counter" kernel Makefile and sources that feeds the aie "datamover" kernel
 | subtractor/*        | Managed RTL "subtractor" kernel Makefile and sources that measures the delay between the counter-input and the aie-output
-| vadd/*              | XRT-controlled HLS "vadd" kernel Makefile and sources
+| vadd_mm/*           | XRT-controlled HLS vadd memory mapped kernel Makefile and sources
+| vadd_s/*            | XRT-controlled HLS vadd streaming kernel Makefile and sources
+| mm2s_vadd_s/*       | XRT-controlled HLS memory-to-streaming kernel used with vadd_s Makefile and sources
+| s2mm_vadd_s/*       | XRT-controlled HLS streaming-to-memory kernel used with vadd_s Makefile and sources
 
  - Builds the output files needed for Vitis linker -> `[project-root]/ip/aie/libadf.a` and `[project-root]/ip/xo_${TARGET}/*.xo`
  - Kernel structure/flow:
-    - vadd is a separate kernel
+    - vadd_mm is a memory mapped kernel
+    - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - counter -> aie "datamover" -> subtractor
     
 </details>
@@ -140,8 +167,9 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | --------------------|---------------------------------------------------------
 | Makefile            | The ps_apps generic Makefile; it automatically searches for sub-projects to build
 | aie_dly_test/*      | PS XRT Application - using the native XRT API - Makefile and sources that measures the delay between counter-input and aie-output
-| vadd_cpp/*          | PS XRT Application - using the native XRT API - Makefile and sources that checks out the vadd kernel
-| vadd_ocl/*          | PS XRT Application - using the opencl XRT API - Makefile and sources that checks out the vadd kernel
+| vadd_mm_cpp/*       | PS XRT Application - using the native XRT API - Makefile and sources that checks out the vadd_mm kernel
+| vadd_mm_ocl/*       | PS XRT Application - using the opencl XRT API - Makefile and sources that checks out the vadd_mm kernel
+| vadd_s/*            | PS XRT Application - using the native XRT API - Makefile and sources that checks out the mm2s_vadd_s -> vadd_s -> s2mm_vadd_s kernels
 
  - Builds the output files needed for vitis packager -> `[project-root]/ps_apps/exe/*.exe`
  
@@ -197,46 +225,172 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
     - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
  ```
-    root@linux:~# cd /media/sd-mmcblk0p1/
-    root@linux:/media/sd-mmcblk0p1# ./vadd_cpp.exe a.xclbin
-    Passed: auto my_device = xrt::device(0)
-    Passed: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-    Passed: auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd")
-    VADD TEST PASSED
-    root@linux:/media/sd-mmcblk0p1# ./vadd_ocl.exe a.xclbin
-    Loading: 'a.xclbin'
-    VADD TEST PASSED
-    root@linux:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin
-    Initializing ADF API...
-    Passed: auto my_device = xrt::device(0)
-    Passed: auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-    Passed: auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor")
-    Passed: auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top")
-    Passed: my_graph.reset()
-    Passed: my_graph.run()
-    Poll subtractor register
-      Value Reg0:  210
-      Value Reg1:  11c
-      Value Reg2:  172
-      Value Reg3:  3a
-    Poll subtractor register
-      Value Reg0:  23e
-      Value Reg1:  11a
-      Value Reg2:  175
-      Value Reg3:  3a
-    ...
-    Poll subtractor register
-      Value Reg0:  1ec
-      Value Reg1:  118
-      Value Reg2:  173
-      Value Reg3:  38
-    Poll subtractor register
-      Value Reg0:  246
-      Value Reg1:  11a
-      Value Reg2:  182
-      Value Reg3:  36
-    Passed: my_graph.end()
-    root@linux:/media/sd-mmcblk0p1#
+root@linux:~# cd /media/sd-mmcblk0p1/
+root@linux:/media/sd-mmcblk0p1# ./vadd_s.exe a.xclbin
+INFO:    samples = 256
+INFO:    bsize   = 512
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
+PASSED:  auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_1}")
+PASSED:  auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_2}")
+PASSED:  auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0))
+PASSED:  auto in_01_bo_mapped = = in_01_bo.map<TYPE_DATA*>()
+PASSED:  in_01_bo.sync(XCL_BO_SYNC_BO_TO_DEVICE)
+PASSED:  auto in_01_run = in_01(in_01_bo, nullptr, 256)
+PASSED:  auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_s:{s2mm_vadd_s_1}")
+PASSED:  auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0))
+PASSED:  auto out_bo_mapped = out_bo.map<TYPE_DATA*>()
+PASSED:  auto out_run = out(out_bo, nullptr, 256)
+PASSED:  dut = xrt::kernel(my_device, xclbin_uuid, "vadd_s:{vadd_s_1}")
+PASSED:  dut_run = dut(256, nullptr, nullptr, nullptr)
+
+INFO:    Waiting for kernels to end...
+
+PASSED:  in_0_run.wait()
+PASSED:  in_1_run.wait()
+PASSED:  dut_run.wait()
+PASSED:  out_run.wait()
+PASSED:  out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
+
+PASSED:  ./vadd_s.exe
+
+root@linux:/media/sd-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
+PASSED:  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
+
+PASSED:  ./vadd_mm_cpp.exe
+
+root@linux:/media/sd-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin
+Loading: 'a.xclbin'
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+
+PASSED:  ./vadd_mm_ocl.exe
+
+root@linux:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin
+Initializing ADF API...
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
+PASSED:  auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor:{subtractor_0}")
+PASSED:  auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top")
+PASSED:  my_graph.reset()
+PASSED:  my_graph.run()
+Poll subtractor register
+  Value Reg0:  220
+  Value Reg1:  11c
+  Value Reg2:  175
+  Value Reg3:  36
+Poll subtractor register
+  Value Reg0:  1ee
+  Value Reg1:  11c
+  Value Reg2:  173
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  1f0
+  Value Reg1:  118
+  Value Reg2:  174
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  22c
+  Value Reg1:  11a
+  Value Reg2:  173
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  1ee
+  Value Reg1:  11a
+  Value Reg2:  174
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  23e
+  Value Reg1:  118
+  Value Reg2:  172
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  212
+  Value Reg1:  118
+  Value Reg2:  185
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  118
+  Value Reg2:  170
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  23e
+  Value Reg1:  116
+  Value Reg2:  175
+  Value Reg3:  36
+Poll subtractor register
+  Value Reg0:  1ec
+  Value Reg1:  11a
+  Value Reg2:  175
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  24a
+  Value Reg1:  118
+  Value Reg2:  170
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  21a
+  Value Reg1:  11c
+  Value Reg2:  171
+  Value Reg3:  36
+Poll subtractor register
+  Value Reg0:  1ee
+  Value Reg1:  116
+  Value Reg2:  173
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  1ea
+  Value Reg1:  11a
+  Value Reg2:  172
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  23e
+  Value Reg1:  116
+  Value Reg2:  173
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  1ee
+  Value Reg1:  11a
+  Value Reg2:  170
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  214
+  Value Reg1:  11c
+  Value Reg2:  170
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  204
+  Value Reg1:  11c
+  Value Reg2:  177
+  Value Reg3:  38
+Poll subtractor register
+  Value Reg0:  214
+  Value Reg1:  118
+  Value Reg2:  172
+  Value Reg3:  3a
+Poll subtractor register
+  Value Reg0:  24c
+  Value Reg1:  118
+  Value Reg2:  173
+  Value Reg3:  34
+PASSED:  my_graph.end()
+
+PASSED:  ./aie_dly_test.exe
+
+root@linux:/media/sd-mmcblk0p1#
   ```
 
 ## Notes
