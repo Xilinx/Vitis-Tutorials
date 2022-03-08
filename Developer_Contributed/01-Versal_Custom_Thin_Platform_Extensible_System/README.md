@@ -29,7 +29,7 @@ The following diagram explains the build-flow dependencies.
  - The diagram should be read from right to left.
  - The diagram is for illustration only. The actual build-flow is more sequential.
 <img src="./documentation/readme_files/Design_dependencies.svg">
-
+ 
 ### Build & Prerequisites
 In the `[project-root]` you can start the full build with `make all` **after** taking following prerequisites into account:
   - **Before starting the build, please correctly setup the 2021.2 version of Vivado, Petalinux and Vitis**
@@ -52,6 +52,19 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - `export TARGET := hw`: `[project-root]/package_output_hw/sd_card/*` can be used for FAT-32 SD-card (partition); or `[project-root]/package_output_hw/sd_card.img` can be used.
     - `export TARGET := hw_emu`: `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
 
+### Custom Thin Base Platform
+The GENERATED custom thin base platform BD:
+<img src="./documentation/readme_files/base_platform_bd.png">
+It exposes 5 clocks in the `[project-root]/vitis/src/system.cfg`:
+  ```
+  [clock] 
+  #id=0 -> clk_out1_o1 -> 500MHz
+  #id=1 -> clk_out1_o2 -> 250MHz
+  #id=2 -> clk_out1_o3 -> 125MHz
+  #id=3 -> clk_out1_o4 -> 62.5MHz
+  #id=4 -> clk_out2    -> 333.33MHz
+  ``` 
+ 
 ## More In-Depth
 The following explains the different sub-build steps. Click on each item for more detailed information.  
 Each step is sequential (in the order listed - by the `[project-root]/Makefile`): 
