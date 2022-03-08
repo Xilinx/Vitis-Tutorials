@@ -56,7 +56,9 @@ In the `[project-root]` you can start the full build with `make all` **after** t
 ### Custom Thin Base Platform
 The GENERATED Custom Thin Base Platform BD:
 <img src="./documentation/readme_files/base_platform_bd.png">
-It exposes 5 clocks in the `[project-root]/vitis/src/system.cfg`:
+
+It exposes 5 clocks that can be used in the `[project-root]/vitis/src/system.cfg`:
+
   ```
   [clock]
   #id=0 -> clk_out1_o1 -> 500.00MHz
@@ -73,7 +75,7 @@ It exposes 5 clocks in the `[project-root]/vitis/src/system.cfg`:
   id=4:vadd_s_1,mm2s_vadd_s_1,mm2s_vadd_s_2,s2mm_vadd_s_1
   ``` 
 
-Vitis will nicely add all required ip and connections depending on the added kernels and their needed clocks/resets onto this Custom Thin Base Platform.
+Vitis will nicely add all required ip and connections depending on the added kernels and their needed clocks/resets onto this GENERATED Custom Thin Base Platform.
  
 ## More In-Depth
 The following explains the different sub-build steps. Click on each item for more detailed information.  
@@ -101,7 +103,9 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | hw/*                | The hardware platform Makefile and sources
 
  - Builds the output file needed for Petalinux and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
- - After this step you could open the platform blockdesign in Vivado for review
+ - After this step you could open the platform blockdesign in Vivado for review:
+   - cd `[project-root]/platform/hw/build/vck190_thin_vivado`
+   - vivado `vck190_thin.xpr`
  
 </details>
 <details>
@@ -182,10 +186,14 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | --------------------|---------------------------------------------------------
 | Makefile            | The Vitis generic Makefile for linker and packager
 | src/system.cfg      | Vitis connection and clock configuration needed for Vitis linker
+| src/ila_0_bd.cfg    | ILA Vitis connection needed for Vitis linker when `ILA_EN = 1`
+| src/ila_0_def.tcl   | ILA Vitis tcl needed for Vitis linker when `ILA_EN = 1`
 
  - Runs the Vitis linker and packager
  - The output of the Vitis packager ends up in `[project-root]/package_output_${TARGET}`
- - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review
+ - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review:
+   - cd `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj`
+   - vivado `prj.xpr`
  
 </details>
 
