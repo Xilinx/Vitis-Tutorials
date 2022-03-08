@@ -451,7 +451,45 @@ The following are links to Vitis related information referenced in this tutorial
 * [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/irn1582730075765.html)
 
 ## Revision History
-* October 2021 - Optimized AI Engine Datamovers + Added more clarifications in this README.md + Improved petalinux version check
+* March 2022
+  - platform:
+    - Removed some ip and connections to end-up with the bare minimum base platform needed
+      - Vitis nicely adds and changes IP and connections as required
+    - Exposed 1 extra clock via BUFG (clk_out2) next to the 4 exisiting clocks via MBUFGCE (clk_out1_o1-4)
+      - id=0 -> clk_out1_o1 -> 500MHz
+      - id=1 -> clk_out1_o2 -> 250MHz
+      - id=2 -> clk_out1_o3 -> 125MHz
+      - id=3 -> clk_out1_o4 -> 62.5MHz
+      - id=4 -> clk_out2    -> 333MHz
+  - ip:
+    - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
+    - Renamed vadd to vadd_mm (vadd memory mapped kernel)
+  - ps_apps:
+    - Added vadd_s to check the vadd_s streaming kernels
+    - Renamed vadd_cpp and vadd_ocl to vadd_mm_cpp and vadd_mm_ocl to check the vadd memory mapped kernel
+    - Using explicit "kernel:{kernel_id}" for kernel selection
+    - Streamline print out messages
+  - vitis:
+    - Added vitis/src/system.cfg as dependency for the Vitis Linker
+    - Added vitis/src/ila_0_bd.cfg as dependency for the Vitis Linker when build with 'ILA_EN=1'
+    - Disable ILA when building vitis with 'TARGET=hw_emu'
+    - counter and subtractor kernels running @ 500MHz (id=0 -> clk_out1_o1) 
+    - vadd_mm (vadd memory mapped kernel) running @ 250MHz (id=1 -> clk_out1_o2)
+    - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s (vadd_s streaming kernels) running @ 333MHz (id=4 -> clk_out2)
+  - general:
+    - Added "make clean_vitis" to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
+* February 2022
+  - petalinux:
+    - Added the option ETH_STATIC to setup static Ethernet Configuration
+  - ip:
+    - Bugfix for the v++ linker to fail in TARGET=hw_emu when other HLS-kernels (like mm2s) are added later on to the design 
+* October 2021 
+  - petalinux:
+    - Improved petalinux version check
+  - ip/aie: 
+    - Optimized AI Engine Datamovers
+  - general: 
+    - Added more clarifications in the README.md
 * September 2021 - Initial Release
 
  
