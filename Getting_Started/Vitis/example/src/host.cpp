@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     // Create the buffers and allocate memory
     cl::Buffer in1_buf(context, CL_MEM_READ_ONLY, sizeof(int) * DATA_SIZE, NULL, &err);
     cl::Buffer in2_buf(context, CL_MEM_READ_ONLY, sizeof(int) * DATA_SIZE, NULL, &err);
-    cl::Buffer out_buf(context, CL_MEM_WRITE_ONLY, sizeof(int) * DATA_SIZE, NULL, &err);
+    cl::Buffer out_buf(context, CL_MEM_READ_WRITE, sizeof(int) * DATA_SIZE, NULL, &err);
 
     // Map buffers to kernel arguments, thereby assigning them to specific device memory banks
     krnl_vector_add.setArg(0, in1_buf);

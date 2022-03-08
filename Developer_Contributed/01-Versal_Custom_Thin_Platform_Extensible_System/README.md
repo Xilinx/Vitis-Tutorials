@@ -56,7 +56,9 @@ In the `[project-root]` you can start the full build with `make all` **after** t
 ### Custom Thin Base Platform
 The GENERATED Custom Thin Base Platform BD:
 <img src="./documentation/readme_files/base_platform_bd.png">
+
 It exposes 5 clocks that can be used in the `[project-root]/vitis/src/system.cfg`:
+
   ```
   [clock]
   #id=0 -> clk_out1_o1 -> 500.00MHz
