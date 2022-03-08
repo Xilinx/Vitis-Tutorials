@@ -482,7 +482,9 @@ The following are links to Vitis related information referenced in this tutorial
   - petalinux:
     - Added the option ETH_STATIC to setup static Ethernet Configuration
   - ip:
-    - Bugfix for the v++ linker to fail in TARGET=hw_emu when other HLS-kernels (like mm2s) are added later on to the design 
+    - Bugfix for the v++ linker to fail in TARGET=hw_emu when other HLS-kernels (like mm2s) are added later on to the design
+  - general:
+    - Adding the option to build for TARGET=hw_emu
 * October 2021 
   - petalinux:
     - Improved petalinux version check
