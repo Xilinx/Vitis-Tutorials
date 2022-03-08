@@ -74,19 +74,23 @@
 
 4. Prepare for the boot components
 
+   Note: This step is to fulfill the requirements of Vitis IDE 2021.1 workflow. KV260 doesn't use the generated files because KV260 Starter Kit boot components are fixed in the QSPI Flash. The files can be dummy files.
+
    Copy the generated Linux software boot components from **<your_petalinux_dir>/images/linux directory** to the **<full_pathname_to_kv260_custom_pkg>/pfm/boot** directory to prepare for running the Vitis platform packaging flow:
 
-   - zynqmp_fsbl.elf: MPSoC first stage boot loader
-   - pmufw.elf: MPSoC PMU Firmware
-   - bl31.elf: MPSoC Arm Trusted Firmware
-   - u-boot-dtb.elf: U-boot with device tree in the elf. Please rename it to **u-boot.elf**
-   - system.dtb: Device tree for Linux
+   - `zynqmp_fsbl.elf`: MPSoC first stage boot loader
+   - `pmufw.elf`: MPSoC PMU Firmware
+   - `bl31.elf`: MPSoC Arm Trusted Firmware
+   - `u-boot-dtb.elf`: U-boot with device tree in the elf. Please rename it to **u-boot.elf**
+   - `system.dtb`: Device tree for Linux
 
-   > Note: These files are the sources of creating BOOT.BIN. They are required for the Vitis workflow but since KV260 Starter Kit boot components are fixed in the QSPI Flash, these files will not be used in our flow.
+   
 
 5. Prepare **sd_dir** directory. 
 
-   Contents in this directory will be packaged to FAT32 partition of sd_card.img by v++ package tool. Usually we will store boot.scr and system.dtb in this directory. Since KV260 workflow doesn't program SD Card, we can skip adding contents to this directory. Please just leave it empty.
+   KV260 platform creation can skip this step because with KV260 Starter Kit, we use the pre-built SD card image.
+
+   Contents in this directory can be packaged to FAT32 partition of sd_card.img by v++ package tool. Usually we will store boot.scr and system.dtb in this directory. Since KV260 workflow uses the pre-built SD card, rather than the v++ package generated sd_card.img, we can skip adding contents to this directory. 
 
 ### Create a Vitis Platform
 
