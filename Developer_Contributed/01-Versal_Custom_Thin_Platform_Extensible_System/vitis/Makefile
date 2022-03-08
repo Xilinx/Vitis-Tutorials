@@ -19,7 +19,6 @@ ECHO=@echo
 TARGET            ?= hw
 PLATFORM_CUSTOM   ?= vck190_thin
 BASE_PFM          ?= ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
-ILA_EN            ?= 0
 XPFM              := ../${BASE_PFM}
 PETALINUX_IMAGES  := ../petalinux/linux/images/linux
 IP_DIR            := ../ip
@@ -30,6 +29,13 @@ PS_APPS_DIR       := ../ps_apps
 PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
 SD_CARD           := ../package_output_${TARGET}
 BUILD_DIR         := build_${TARGET}
+
+#Force ILA_EN to 0 for hw_emu
+ifeq (${TARGET}, hw_emu)
+    ILA_EN  = 0
+else
+    ILA_EN ?= 0
+endif
 
 ifeq (${ILA_EN}, 1)  
     SYSTEM_CFG := $(wildcard ./src/*.cfg)
