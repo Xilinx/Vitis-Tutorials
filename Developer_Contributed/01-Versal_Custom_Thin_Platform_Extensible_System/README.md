@@ -53,17 +53,26 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - `export TARGET := hw_emu`: `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
 
 ### Custom Thin Base Platform
-The GENERATED custom thin base platform BD:
+The GENERATED Custom Thin Base Platform BD:
 <img src="./documentation/readme_files/base_platform_bd.png">
 It exposes 5 clocks in the `[project-root]/vitis/src/system.cfg`:
   ```
-  [clock] 
-  #id=0 -> clk_out1_o1 -> 500MHz
-  #id=1 -> clk_out1_o2 -> 250MHz
-  #id=2 -> clk_out1_o3 -> 125MHz
-  #id=3 -> clk_out1_o4 -> 62.5MHz
-  #id=4 -> clk_out2    -> 333.33MHz
+  [clock]
+  #id=0 -> clk_out1_o1 -> 500.00MHz
+  id=0:subtractor_0,counter_0
+
+  #id=1 -> clk_out1_o2 -> 250.00MHz
+  id=1:vadd_mm_1
+
+  #id=2 -> clk_out1_o3 -> 125.00MHz
+
+  #id=3 -> clk_out1_o4 -> 62.50MHz
+
+  #id=4 -> clk_out2 -> 333.33MHz
+  id=4:vadd_s_1,mm2s_vadd_s_1,mm2s_vadd_s_2,s2mm_vadd_s_1
   ``` 
+
+Vitis will nicely add all required ip and connections depending on the added kernels and their needed clocks/resets onto this Custom Thin Base Platform.
  
 ## More In-Depth
 The following explains the different sub-build steps. Click on each item for more detailed information.  
