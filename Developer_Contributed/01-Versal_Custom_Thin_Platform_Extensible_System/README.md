@@ -42,6 +42,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - The build flow supports both TARGET's in the same `[project-root]`; but you need to execute them yourself the one after the other if you need both results!
     - Some generated directories are depending on the TARGET and are further shown as `[dir]_${TARGET}`.
   - `[project-root]/Makefile`: `export ILA_EN := 0` for disabling the ILA (default); **change it to `export ILA_EN := 1` to enable the ILA**.
+    - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY (re-)build vitis with `export TARGET := hw_emu`! **NO** need for a full (re-)build in that respect! 
   - `[project-root]/Makefile`: `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default); **change it to `export ETH_STATIC := 1` for Ethernet Static Configuration**.
     - `export ETH_STATIC := 0`; **NO** extra configuration needed.
     - `export ETH_STATIC := 1`; please setup your required Ethernet Static Configuration in `[project-root]/petalinux/src/init-ifupdown/interfaces`.
