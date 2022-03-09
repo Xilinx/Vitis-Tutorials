@@ -42,7 +42,6 @@ The input from the PL is connected to the ping-pong buffers `buf0` and `buf0d`, 
 
 The code for `aie_dest1` is as follows:
     
-    ```
     __attribute__ ((noinline)) void aie_dest1(input_window<int32> *in, 
         output_stream<int32> *out, output_window<int32> *outm){
 		aie::vector<int32,4> tmp;
@@ -54,13 +53,11 @@ The code for `aie_dest1` is as follows:
 			window_writeincr(outm,tmp);
 		}
 	}
-    ```
 
 It reads 32 `int` values from the input window and writes them to the stream and window output. The `__attribute__ ((noinline))` command instructs the tool the keep the hierarchy of the kernel function.
 
 The code for `aie_dest2` is as follows:
 
-    ```
     __attribute__ ((noinline)) void aie_dest2(input_stream<int32> *in, input_window<int32> *inm, 
         output_stream<int32> *outm){
 		aie::vector<int32,4> tmp;
@@ -73,7 +70,6 @@ The code for `aie_dest2` is as follows:
 			writeincr(outm,tmp+tmp2);
 		}
 	}
-    ```
 
 It reads from the stream input and the window buffer, and writes to the stream output.
 
@@ -257,9 +253,7 @@ In this section, the reference design is in `testcase_dmafifo_opt`. From perform
 After making these optimizations, run the following command:
 
     
-    ```
     make aiesim
-    ```
     
     
 It can be seen that the design performance can be increased from around 828 MB/s to around 3748 MB/s. This is approaching the theoretical limit of the design (4 GB/s). 
@@ -267,35 +261,27 @@ It can be seen that the design performance can be increased from around 828 MB/s
 Next, run the design in hardware emulation:
 
     
-    ```
     make run_hw_emu
-    ```
     
     
 In QEMU, run the following commands:
 
     
-    ```
     cd /mnt/*1
     ./host.exe a.xclbin
-    ```
     
 
 Build the design for hardware:
 
     
-    ```
     make package TARGET=hw
-    ```
     
     
 The performance in hardware is similar:
 
     
-    ```
     cycle count:109435
     Throughput of the graph: 3742.86 MB/s
-    ```
     
 
 ### Conclusion
