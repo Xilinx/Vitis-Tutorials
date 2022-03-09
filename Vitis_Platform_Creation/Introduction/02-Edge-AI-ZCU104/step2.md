@@ -164,7 +164,7 @@ Device Tree Generator (DTG) also overrides the interrupt controller (axi_intc_0)
 
 You can review the PetaLinux generated device tree in **project-spec/components/device-tree/device-tree/pl.dtsi** file.
 
-You can also add your custom device tree modifications to **project-spec/meta-user/system-user.dtsi**. In this example, we setup sdhci1 to low speed mode.
+You can also add your custom device tree modifications to **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi**. In this example, we setup sdhci1 to low speed mode.
 
 ```
 &sdhci1 {
