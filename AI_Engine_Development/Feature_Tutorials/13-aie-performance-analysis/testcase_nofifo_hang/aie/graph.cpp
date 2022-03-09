@@ -21,6 +21,7 @@ int main(int argc, char **argv)
   gr.init();
   gr.run(4);
   gr.wait(10000);
+  return 0;
 };
 #endif
 

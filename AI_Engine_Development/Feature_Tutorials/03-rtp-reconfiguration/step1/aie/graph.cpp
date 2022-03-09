@@ -31,5 +31,6 @@ int main(int argc, char ** argv) {
   gr.update(gr.trigger,100);
 
   gr.end();
+  return 0;
 };
 #endif

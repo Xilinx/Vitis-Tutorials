@@ -34,6 +34,7 @@ int main(int argc, char **argv)
 	event::stop_profiling(handle);
 	double throughput = (double)total_bytes / (cycle_count * 1e-3); 
 	printf("Throughput of the graph: %f MB/s\n",throughput);
+	return 0;
 };
 #endif
 

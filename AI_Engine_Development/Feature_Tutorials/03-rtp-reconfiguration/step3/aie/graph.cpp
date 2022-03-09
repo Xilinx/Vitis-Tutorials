@@ -28,6 +28,7 @@ int main(int argc, char **argv)
   gr.update(gr.coefficients, wide_filter, 12);
   gr.run(16);
   gr.end();
+  return 0;
 };
 #endif
 
