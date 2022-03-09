@@ -142,7 +142,7 @@ To verify the platform functionality, we will create an acceleation project with
 
    - Select menu **Xilinx -> Add custom platform...**
    - Click **add** button
-   - Select the directory that [step3](./step3.md) generates. For example `ref_files/step3_pfm/platform_repo`
+   - Select the platform directory that [step3](./step3.md) generates. For example `<full_path>/platform_repo`
    - Click **OK**
 
 3. Create vector addition application on the custom platform
