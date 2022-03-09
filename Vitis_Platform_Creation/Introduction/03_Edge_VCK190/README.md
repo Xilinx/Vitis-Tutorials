@@ -25,7 +25,7 @@
 
 # Versal Custom Platform Creation Tutorial
 
-***Version: 2021.2***
+***Version: 2022.1***
 
 In this module, we will create a custom platform to run acceleration applications for VCK190 evaluation board. 
 
