@@ -12,7 +12,7 @@
 
 A platform is a starting point of your Vitis design. Vitis applications are built on top of the platforms. Acceleration applications need acceleration platforms. They can be embedded platforms or DC platforms. Software development applications can be built on software development platforms or embedded acceleration platforms. This document focuses on embedded acceleration platform creation.
 
-Xilinx has provided base platforms for Xilinx Evaluation Boards. The platforms can be downloaded from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html). Source code of base platforms can be downloaded from Xilinx [github](https://github.com/Xilinx/Vitis_Embedded_Platform_Source).
+Xilinx has provided base platforms and common images for Xilinx Evaluation Boards. The platforms and common images can be downloaded from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html). Source code of base platforms can be downloaded from Xilinx [github](https://github.com/Xilinx/Vitis_Embedded_Platform_Source).
 
 User can create custom embedded acceleration platforms by building from scratch, or modifing Xilinx embedded platforms. This document focuses on building from scratch workflow.
 
