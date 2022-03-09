@@ -45,8 +45,6 @@ Before starting this tutorial, complete the following steps:
 2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2022.1` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
-
 ### Objectives
 
 After completing the tutorial, you should be able to:

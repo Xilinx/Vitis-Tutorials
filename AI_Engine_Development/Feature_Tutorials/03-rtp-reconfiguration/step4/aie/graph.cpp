@@ -31,6 +31,7 @@ int main(int argc, char **argv)
   gr.run(16); // start PL kernel & AIE kernel
 
   gr.end();
+  return 0;
 };
 #endif
 

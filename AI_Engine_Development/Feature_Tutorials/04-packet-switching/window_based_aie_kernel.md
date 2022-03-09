@@ -73,7 +73,7 @@ Change the working directory to `window_aie`. The example graph code is in `aie/
 	  }
 	};
 
-This is a graph with a 4:1 splitter `pktsplit<4>` and 1:4 merger `pktmerge<4>`. Note that the connection type for `pktsplit` and `pktmerge` is `adf::pktstream`. The input port `in` is first connected to the `pktsplit`, and `pktsplit` switches the packets to different AI Engine kernels. The outputs of AI Engine kernels are connected to the `pktmerge`, and `pktmerge` generates packet headers for those packets automatically and outputs them through output port, `out`. 
+This is a graph with a 1:4 splitter `pktsplit<4>` and 1:1 merger `pktmerge<4>`. Note that the connection type for `pktsplit` and `pktmerge` is `adf::pktstream`. The input port `in` is first connected to the `pktsplit`, and `pktsplit` switches the packets to different AI Engine kernels. The outputs of AI Engine kernels are connected to the `pktmerge`, and `pktmerge` generates packet headers for those packets automatically and outputs them through output port, `out`. 
 
 Run the make command `make aie` to compile the graph. Then open the compiled summary with the Vitis™ analyzer using the command `vitis_analyzer ./Work/graph.aiecompile_summary`. Then click the `Graph` tab in the Vitis analyzer. The graph of the design is shown as follows.
 

@@ -30,4 +30,5 @@ int main(int argc, char ** argv) {
   gr.run(2);
 
   gr.end();
+  return 0;
 };
