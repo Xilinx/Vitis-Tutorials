@@ -451,7 +451,11 @@ The following are links to Vitis related information referenced in this tutorial
 * [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/irn1582730075765.html)
 
 ## Revision History
-* March 2022
+Click on each item below to see the detailed Revision History:
+
+<details>
+  <summary> March 2022 </summary>
+ 
   - platform:
     - Removed some ip and connections to end-up with the bare minimum base platform needed
       - Vitis nicely adds and changes IP and connections as required
@@ -478,21 +482,37 @@ The following are links to Vitis related information referenced in this tutorial
     - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s (vadd_s streaming kernels) running @ 333MHz (id=4 -> clk_out2)
   - general:
     - Added "make clean_vitis" to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
-* February 2022
-  - petalinux:
+ 
+</details>
+
+<details>
+  <summary> Februari 2022 </summary>
+
+ - petalinux:
     - Added the option ETH_STATIC to setup static Ethernet Configuration
   - ip:
     - Bugfix for the v++ linker to fail in TARGET=hw_emu when other HLS-kernels (like mm2s) are added later on to the design
   - general:
     - Adding the option to build for TARGET=hw_emu
-* October 2021 
-  - petalinux:
+ 
+</details>
+
+<details>
+  <summary> October 2021 </summary>
+
+ - petalinux:
     - Improved petalinux version check
   - ip/aie: 
     - Optimized AI Engine Datamovers
   - general: 
     - Added more clarifications in the README.md
-* September 2021 - Initial Release
+ 
+</details>
+
+<details>
+  <summary> September 2021 - Initial Release </summary>
+ 
+ </details>
 
  
 Licensed under the Apache License, Version 2.0 (the "License");
