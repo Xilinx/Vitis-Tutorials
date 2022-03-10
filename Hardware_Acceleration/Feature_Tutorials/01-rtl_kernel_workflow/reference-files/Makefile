@@ -26,7 +26,7 @@ ABS_COMMON_REPO = $(shell readlink -f $(COMMON_REPO))
 HOST := user
 TARGET := hw_emu
 #TARGET := $(TARGETS)
-DEVICE := xilinx_u200_gen3x16_xdma_1_202110_1 
+DEVICE := xilinx_u200_gen3x16_xdma_2_202110_1 
 XCLBIN := ./xclbin
 XO := ./xo
 
@@ -51,8 +51,8 @@ ECHO:= @echo
 ######################################################################
 host_CXXFLAGS += -g -I./ -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
 # The below are linking flags for C++ Comnpiler
-opencl_LDFLAGS += -L$(XILINX_XRT)/lib -lOpenCL -lpthread
-xrt_LDFLAGS += -L$(XILINX_XRT)/lib -lxrt_coreutil -lpthread
+opencl_LDFLAGS += -L$(XILINX_XRT)/lib -lOpenCL -pthread
+xrt_LDFLAGS += -L$(XILINX_XRT)/lib -lxrt_coreutil -pthread
 
 CXXFLAGS += $(host_CXXFLAGS)
 

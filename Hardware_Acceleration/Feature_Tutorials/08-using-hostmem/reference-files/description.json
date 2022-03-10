@@ -3,7 +3,7 @@
     "description": "08-using-hostmem",
     "flow": "vitis",
  
-    "platform_whitelist": ["u250"],
+    "platform_allowlist": ["u250"],
  
     "testinfo": {
         "jobs": [

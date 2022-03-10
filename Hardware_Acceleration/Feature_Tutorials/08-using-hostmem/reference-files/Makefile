@@ -28,7 +28,7 @@ endif
  
 CFLAGS := -g -std=c++14 -I$(XILINX_XRT)/include
 
-LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lpthread -lrt
+LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -pthread -lrt
 
 #Run time arguments
 EXE_OPT := vadd.$(TARGET).$(LAB).xclbin

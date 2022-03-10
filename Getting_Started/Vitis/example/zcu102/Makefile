@@ -1,13 +1,13 @@
 ndef = $(if $(value $(1)),,$(error $(1) must be set prior to running))
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Getting_Started/Vitis/example/src/*}')
+CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 
 TARGET := hw_emu
-PLATFORM := xilinx_zcu102_base_202120_1
+PLATFORM := xilinx_zcu102_base_202210_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
 EMBEDDED_EXEC_SCRIPT := run_$(TARGET).sh
-EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)package/sd_card.img
 SDKTARGETSYSROOT := $(SYSROOT)
 ROOTFS ?= $(EDGE_COMMON_SW)
 
@@ -20,8 +20,8 @@ else
 	cd $(BUILD_DIR)/package && launch_$(TARGET).sh -no-reboot -run-app $(EMBEDDED_EXEC_SCRIPT)
 endif
 
-#build: host emconfig xclbin
-build: $(BUILD_DIR)/app.exe $(BUILD_DIR)/vadd.xclbin $(BUILD_DIR)/package/sd_card.img
+build: host xclbin package
+#build: $(BUILD_DIR)/app.exe $(BUILD_DIR)/vadd.xclbin $(BUILD_DIR)/package/sd_card.img
 
 host: $(BUILD_DIR)/app.exe
 $(BUILD_DIR)/app.exe:
@@ -29,9 +29,10 @@ $(BUILD_DIR)/app.exe:
 	mkdir -p $(BUILD_DIR)
 	cp xrt.ini $(BUILD_DIR)
 	cp run_$(TARGET).sh $(BUILD_DIR)
-	$(CXX) -Wall -g -std=c++11 $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe \
-		-I/usr/include/xrt \
-		-lOpenCL -lpthread -lrt -lstdc++
+	$(CXX) $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe -Wall -O0 -g -std=c++1y -fmessage-length=0 \
+		-I$(SDKTARGETSYSROOT)/usr/include/xrt -L$(SDKTARGETSYSROOT)/usr/lib \
+		-I$XILINX_VIVADO/include \
+		-lOpenCL -pthread -lrt -lstdc++ --sysroot=$(SDKTARGETSYSROOT)
 
 xo: $(BUILD_DIR)/vadd.xo
 $(BUILD_DIR)/vadd.xo:

@@ -85,7 +85,7 @@ CXXFLAGS += -O2 -g -Wall -fmessage-length=0 -std=c++0x
 
 CXXLDFLAGS := -L$(XILINX_XRT)/lib/
 #CXXLDFLAGS += -lxilinxopencl -lpthread -lrt -lstdc++
-CXXLDFLAGS += -lOpenCL -lpthread -lrt -lstdc++
+CXXLDFLAGS += -lOpenCL -pthread -lrt -lstdc++
 
 ## Kernel Compiler and Linker Flags
 

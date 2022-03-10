@@ -3,7 +3,7 @@
     "description": "06-cholesky-accel-module1",
     "flow": "vitis",
  
-    "platform_whitelist": ["u50"],
+    "platform_allowlist": ["u50"],
  
     "testinfo": {
         "jobs": [
