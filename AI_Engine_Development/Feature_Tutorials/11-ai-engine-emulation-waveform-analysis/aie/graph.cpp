@@ -58,6 +58,7 @@ int main(int argc, char **argv)
   std::cout<<std::endl;
 
   gr.end();
+  return 0;
 };
 #endif
 
