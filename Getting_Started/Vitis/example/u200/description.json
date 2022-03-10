@@ -3,7 +3,7 @@
     "description": "getting-started-with-vitis",
     "flow": "vitis",
  
-    "platform_whitelist": ["u200"], 
+    "platform_allowlist": ["u200"], 
  
     "testinfo": {
         "jobs": [

@@ -3,7 +3,7 @@
     "description": "02-mixing-c-rtl-kernels",
     "flow": "vitis",
  
-    "platform_whitelist": ["u200"],
+    "platform_allowlist": ["u200"],
  
     "testinfo": {
         "jobs": [

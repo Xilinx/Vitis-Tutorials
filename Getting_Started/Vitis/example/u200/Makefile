@@ -1,7 +1,7 @@
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Getting_Started/Vitis/example/src/*}')
 
 TARGET := hw_emu
-PLATFORM := xilinx_u200_gen3x16_xdma_1_202110_1
+PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
 
@@ -14,18 +14,18 @@ else
 	cd $(BUILD_DIR) && XCL_EMULATION_MODE=$(TARGET) ./app.exe
 endif
 
-#build: host emconfig xclbin
-build: $(BUILD_DIR)/app.exe $(BUILD_DIR)/emconfig.json $(BUILD_DIR)/vadd.xclbin
+build: host emconfig xclbin
+#build: $(BUILD_DIR)/app.exe $(BUILD_DIR)/emconfig.json $(BUILD_DIR)/vadd.xclbin
 
 host: $(BUILD_DIR)/app.exe
-$(BUILD_DIR)/app.exe: $(SRCDIR)/host.cpp
+$(BUILD_DIR)/app.exe:
 	mkdir -p $(BUILD_DIR)
 	g++ -Wall -g -std=c++11 $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe \
 		-I${XILINX_XRT}/include/ \
-		-L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
+		-L${XILINX_XRT}/lib/ -lOpenCL -pthread -lrt -lstdc++
 
 xo: $(BUILD_DIR)/vadd.xo
-$(BUILD_DIR)/vadd.xo: $(SRCDIR)/vadd.cpp
+$(BUILD_DIR)/vadd.xo:
 	v++ -c -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/u200.cfg -k vadd -I$(SRCDIR) $(SRCDIR)/vadd.cpp -o $(BUILD_DIR)/vadd.xo 
 
 xclbin: $(BUILD_DIR)/vadd.xclbin

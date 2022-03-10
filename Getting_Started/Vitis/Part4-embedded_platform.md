@@ -29,7 +29,7 @@
 
 ### Setting up the environment
 
-> IMPORTANT: This tutorial requires Vitis 2021.1 or later to run.
+> IMPORTANT: This tutorial requires Vitis 2022.1 or later to run.
 
 *NOTE: The instructions provided below assume that you are running in a bash shell.*
 
@@ -48,11 +48,10 @@ export PLATFORM_REPO_PATHS=<path to the ZCU102 platform install dir>
 export ROOTFS=<path to the ZYNQMP common image directory, containing rootfs>
 ```
 
-* To properly source the cross-compilation SDK, run the `environment-setup-aarch64-xilinx-linux` script in the directory
-where you extracted the SDK source.
+* To properly source the cross-compilation SDK, run the `environment-setup-cortexa72-cortexa53-xilinx-linux` script in the $ROOTFS directory.
 
 ```bash
-source <path to the SDK>/environment-setup-aarch64-xilinx-linux
+source $ROOTFS/environment-setup-cortexa72-cortexa53-xilinx-linux
 ```
 
 *NOTE: The ZYNQMP common image file can be downloaded from the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) page, and contains the Sysroot, Rootfs, and boot Image for Xilinx Zynq MPSoC devices.*

@@ -3,7 +3,7 @@
     "description": "01-rtl_kernel_workflow",
     "flow": "vitis",
  
-    "platform_whitelist": ["u200"],
+    "platform_allowlist": ["u200"],
  
     "testinfo": {
         "jobs": [

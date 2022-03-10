@@ -54,7 +54,7 @@ host: $(SRCDIR)/*.cpp $(SRCDIR)/*.c $(SRCDIR)/*.h
 		-O3 -Wall -fmessage-length=0 -std=c++11\
 		$(HOST_SRC_CPP) \
 		-L$(XILINX_XRT)/lib/ \
-		-lxilinxopencl -lpthread -lrt \
+		-lxilinxopencl -pthread -lrt \
 		-o $(BUILDDIR)/host
 
 emconfig.json:

@@ -3,7 +3,7 @@
     "description": "getting-started-with-vitis",
     "flow": "vitis",
  
-    "platform_whitelist": ["zcu102"], 
+    "platform_allowlist": ["zcu102"], 
  
     "testinfo": {
         "disable": 0,

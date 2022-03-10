@@ -19,13 +19,13 @@ help:
 	@echo ""
 #######################################################################################
 TARGET := sw_emu
-PLATFORM := xilinx_u200_gen3x16_xdma_1_202110_1
+PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
 HOST_EXE := dct_top
 XO := dct.$(TARGET).$(PLATFORM).xo
 XCLBIN := dct.$(TARGET).$(PLATFORM).xclbin
 
 # Host building global settings
-CXXFLAGS := -I$(XILINX_XRT)/include/ -I$(XILINX_VIVADO)/include/ -Wall -O0 -g -std=c++11 -L$(XILINX_XRT)/lib/ -lpthread -lrt -lstdc++
+CXXFLAGS := -I$(XILINX_XRT)/include/ -I$(XILINX_VIVADO)/include/ -Wall -O0 -g -std=c++11 -L$(XILINX_XRT)/lib/ -pthread -lrt -lstdc++
 CXXFLAGS2 := -lOpenCL
 
 # Kernel compiler & linker global settings

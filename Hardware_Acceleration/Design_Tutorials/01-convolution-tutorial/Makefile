@@ -103,7 +103,7 @@ CXXLDFLAGS := -L$(XILINX_XRT)/lib/
 ifneq ($(INPUT_TYPE),random)
 CXXLDFLAGS += -L$(OPENCV_LIB)/
 endif
-CXXLDFLAGS += -lOpenCL -lpthread -lrt -lstdc++ -lxilinxopencl -fopenmp
+CXXLDFLAGS += -lOpenCL -pthread -lrt -lstdc++ -lxilinxopencl -fopenmp
 ifneq ($(INPUT_TYPE),random)
 CXXLDFLAGS += -Wl,-rpath=$(OPENCV_LIB)/ -lopencv_core -lopencv_highgui
 endif

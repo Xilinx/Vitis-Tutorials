@@ -35,7 +35,6 @@ help::
 
 PLATFORM := xilinx_u50_gen3x16_xdma_201920_3
 
-
 ## TARGET can be set as:
 ## sw_emu: software emulation
 ## hw_emu: hardware Emulation
@@ -85,7 +84,7 @@ CXXFLAGS += -O2 -g -Wall -fmessage-length=0 -std=c++0x
 
 CXXLDFLAGS := -L$(XILINX_XRT)/lib/
 #CXXLDFLAGS += -lxilinxopencl -lpthread -lrt -lstdc++
-CXXLDFLAGS += -lOpenCL -lpthread -lrt -lstdc++
+CXXLDFLAGS += -lOpenCL -pthread -lrt -lstdc++
 
 ## Kernel Compiler and Linker Flags
 

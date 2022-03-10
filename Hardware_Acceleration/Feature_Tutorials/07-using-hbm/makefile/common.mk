@@ -41,7 +41,7 @@ $(builddir)/host: $(HOST_SRC_CPP)
 		-O3 -Wall -fmessage-length=0 -std=c++11\
 		$(HOST_SRC_CPP) \
 		-L$(XILINX_XRT)/lib/ \
-		-lxilinxopencl -lpthread -lrt \
+		-lxilinxopencl -pthread -lrt \
 		-o $(builddir)/host
 
 $(builddir)/$(EMCONFIG_FILE):

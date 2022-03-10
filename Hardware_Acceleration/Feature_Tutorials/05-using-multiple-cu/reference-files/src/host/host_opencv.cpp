@@ -5,11 +5,11 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-#include <math.h>
 #include "logger.h"
 #include "cmdlineparser.h" 
 
 #include "xclbin_helper.h" 
+#include "opencv2/opencv.hpp"
 
 #include "coefficients.h"
 #include "filter2d.h" 
@@ -17,6 +17,8 @@
 using namespace sda;
 using namespace sda::utils;
 
+static void IplImage2Raw(IplImage* img, uchar* y, int stride_y, uchar* u, int stride_u, uchar* v, int stride_v);
+static void Raw2IplImage(uchar* y, int stride_y, uchar* u, int stride_u, uchar* v, int stride_v, IplImage* img);
 
 // -------------------------------------------------------------------------------------------
 // An event callback function that prints the operations performed by the OpenCL runtime.
@@ -70,8 +72,7 @@ public:
   	cl_program       &Program )	
   {
 	mKernel  = clCreateKernel(Program, "Filter2DKernel", &mErr);
-	//mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE, &mErr);
-	mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE|CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE, &mErr);
+	mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE, &mErr);
 	mContext = Context;
 	mCounter = 0;
   }
@@ -138,9 +139,6 @@ private:
 };
 
 
-using uchar = unsigned char;
-
-
 
 int main(int argc, char** argv)
 {
@@ -154,18 +152,21 @@ int main(int argc, char** argv)
 	CmdLineParser parser;
 	parser.addSwitch("--nruns", "-n", "Number of times to image is processed", "1");
 	parser.addSwitch("--fpga", "-x", "FPGA binary (xclbin) file to use", "xclbin/fpga.hw.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.awsxclbin");
+	parser.addSwitch("--input", "-i", "Input image file");
 	parser.addSwitch("--filter", "-f", "Filter type (0-3)", "0");
-        parser.addSwitch("--width",   "-w", "Image width",  "64");
-        parser.addSwitch("--height",  "-h", "Image height", "256");
 
 	//parse all command line options
 	parser.parse(argc, argv);
+	string inputImage = parser.value("input");
 	string fpgaBinary = parser.value("fpga");
-        unsigned int width       = parser.value_to_int("width");
-        unsigned int height      = parser.value_to_int("height");
 	int    numRuns    = parser.value_to_int("nruns");
 	int    coeffs     = parser.value_to_int("filter");
 
+	if (inputImage.size() == 0) {
+		std::cout << std::endl;	
+		std::cout << "ERROR: input image file must be specified using -i command line switch" << std::endl;
+		exit(1);
+	}
 	if ((coeffs<0) || (coeffs>3)) {
 		std::cout << std::endl;	
 		std::cout << "ERROR: Supported filter type values are [0:3]" << std::endl;
@@ -174,6 +175,7 @@ int main(int argc, char** argv)
 
 	std::cout << std::endl;	
 	std::cout << "FPGA binary    : " << fpgaBinary << std::endl;
+	std::cout << "Input image    : " << inputImage << std::endl;
 	std::cout << "Number of runs : " << numRuns    << std::endl;
 	std::cout << "Filter type    : " << coeffs     << std::endl;
 	std::cout << std::endl;	
@@ -194,7 +196,19 @@ int main(int argc, char** argv)
 	// Read input image and format inputs
 	// ---------------------------------------------------------------------------------
 	
+	// Create filenames for input and ouput images
+	std::string srcFileName  = inputImage;
+	std::string dstFileName  = inputImage.substr(0, inputImage.size()-4)+"_out.bmp";
 
+	// Read Input image
+	IplImage *src, *dst;
+	src = cvLoadImage(srcFileName.c_str()); //format is BGR
+	if(!src) {
+		std::cout << "ERROR: Loading image " << srcFileName << " failed" << std::endl;
+		exit(1);
+	}
+	unsigned width  = src->width;
+	unsigned height = src->height;
 	unsigned stride = width;
 	unsigned nbytes = (stride*height);
 
@@ -207,6 +221,12 @@ int main(int argc, char** argv)
 	std::vector<uchar, aligned_allocator<uchar>> v_dst(nbytes);
 	std::vector<short, aligned_allocator<short>> coeff(FILTER2D_KERNEL_V_SIZE*FILTER2D_KERNEL_V_SIZE);
 
+
+	// Create destination image
+	dst = cvCreateImage(cvSize(width, height), src->depth, src->nChannels);
+
+	// Convert CV Image to AXI video data
+	IplImage2Raw(src, y_src.data(), stride, u_src.data(), stride, v_src.data(), stride);
 
 	// Copy coefficients to 4k aligned vector
 	memcpy(coeff.data() , &filterCoeffs[coeffs][0][0], coeff.size()*sizeof(short) );
@@ -245,6 +265,17 @@ int main(int argc, char** argv)
 
   auto fpga_end = std::chrono::high_resolution_clock::now();
 
+	// ---------------------------------------------------------------------------------
+	// Format output and write image out 
+	// ---------------------------------------------------------------------------------
+
+	// Convert processed image back to CV Image
+	Raw2IplImage(y_dst.data(), stride, u_dst.data(), stride, v_dst.data(), stride, dst);
+
+	// Convert image to cvMat and write it to disk
+	cvConvert( dst, cvCreateMat(height, width, CV_32FC3 ) );
+	cvSaveImage(dstFileName.c_str(), dst);
+
 
 	// ---------------------------------------------------------------------------------
 	// Compute reference results and compare 
@@ -270,6 +301,11 @@ int main(int argc, char** argv)
 	}
 
   auto cpu_end = std::chrono::high_resolution_clock::now();
+
+	std::string refFileName  = inputImage.substr(0, inputImage.size()-4)+"_ref.bmp";
+	Raw2IplImage(y_ref.data(), stride, u_ref.data(), stride, v_ref.data(), stride, dst);
+	cvConvert( dst, cvCreateMat(height, width, CV_32FC3 ) );
+	cvSaveImage(refFileName.c_str(), dst);
 
 	// Compare results
 	bool diff = false;
@@ -310,9 +346,43 @@ int main(int argc, char** argv)
 	}
 
 	// Release allocated memory
+	cvReleaseImage(&src);
+	cvReleaseImage(&dst);
 	clReleaseProgram(program);
 	clReleaseContext(context);	
 	clReleaseDevice(device);	
 
 	return (diff?1:0);
+}
+
+
+static void IplImage2Raw(IplImage* img, uchar* y_buf, int stride_y, uchar* u_buf, int stride_u, uchar* v_buf, int stride_v)
+{
+    // Assumes RGB or YUV 4:4:4
+    for (int y = 0; y < img->height; y++)
+    {
+        for (int x = 0; x < img->width; x++)
+        {
+        	CvScalar cv_pix = cvGet2D(img, y, x);
+		y_buf[y*stride_y+x] = (uchar)cv_pix.val[0];
+		u_buf[y*stride_u+x] = (uchar)cv_pix.val[1];
+		v_buf[y*stride_v+x] = (uchar)cv_pix.val[2];
+        }
+    }
+}
+
+static void Raw2IplImage(uchar* y_buf, int stride_y, uchar* u_buf, int stride_u, uchar* v_buf, int stride_v, IplImage* img )
+{
+    // Assumes RGB or YUV 4:4:4
+    for (int y = 0; y < img->height; y++)
+    {
+        for (int x = 0; x < img->width; x++)
+        {
+        	CvScalar cv_pix;
+			cv_pix.val[0] = y_buf[y*stride_y+x];
+			cv_pix.val[1] = u_buf[y*stride_u+x];
+			cv_pix.val[2] = v_buf[y*stride_v+x];
+			cvSet2D(img, y, x, cv_pix);
+        }
+    }
 }
