@@ -482,6 +482,7 @@ Click on each item below to see the detailed Revision History:
     - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s (vadd_s streaming kernels) running @ 333MHz (id=4 -> clk_out2)
   - general:
     - Added "make clean_vitis" to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
+    - Makefiles: Streamlining and finetuning
  
 </details>
 
