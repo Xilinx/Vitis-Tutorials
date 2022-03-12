@@ -22,7 +22,7 @@ ECHO                     = @echo
 ###############################################
 
 # DEVICE_NAME = xcvc1902-vsva2197-2MP-e-S or xcvc1902-vsva2197-2MP-e-S-es1
-export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S-es1
+export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S
 
 # TARGET = hw or hw_emu
 export TARGET           := hw

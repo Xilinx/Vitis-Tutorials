@@ -57,12 +57,12 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: ${SD_CARD}
+all: ${BUILD_DIR} ${SD_CARD}
 
 ${BUILD_DIR}:
 	mkdir ${BUILD_DIR}
 
-${BUILD_DIR}/${XCLBIN}: ${BUILD_DIR} ${XO} ${SYSTEM_CFG}
+${BUILD_DIR}/${XCLBIN}: ${XO} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && v++ -l -t ${TARGET} -g --save-temps --platform ../${XPFM} $(addprefix --config ../, ${SYSTEM_CFG}) $(addprefix ../, ${XO}) ../${GRAPH_O} -o ${XCLBIN} |& tee vpp_link.log
 
 ${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
