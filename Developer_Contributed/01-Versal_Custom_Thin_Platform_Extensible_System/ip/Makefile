@@ -17,6 +17,7 @@
 ECHO=@echo
 
 TARGET            ?= hw
+
 XO_DIR            := xo_${TARGET}
 XO_DIRS_EXCLUDE   := $(patsubst %/,%,$(dir $(wildcard xo_*/)))
 KERNEL_DIRS       := $(patsubst %/,%,$(dir $(wildcard */)))

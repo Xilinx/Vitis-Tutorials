@@ -27,13 +27,13 @@ help::
 # =========================================================
 # DEVICE SELECTION
 # =========================================================
+TARGET      ?= hw
 DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
 
-TARGET ?= hw
-IP_TCL := ./pack_kernel.tcl
-KERNEL := counter
-KERNEL_SRC := ./src/* ./${KERNEL}.xdc
-XO := ../xo_${TARGET}/${KERNEL}.xo
+IP_TCL      := ./pack_kernel.tcl
+KERNEL      := counter
+KERNEL_SRC  := ./src/* ./${KERNEL}.xdc
+XO          := ../xo_${TARGET}/${KERNEL}.xo
 
 .PHONY: help clean all
 

@@ -22,7 +22,7 @@ ECHO                     = @echo
 ###############################################
 
 # DEVICE_NAME = xcvc1902-vsva2197-2MP-e-S or xcvc1902-vsva2197-2MP-e-S-es1
-export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S
+export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S-es1
 
 # TARGET = hw or hw_emu
 export TARGET           := hw
@@ -37,12 +37,9 @@ export ETH_STATIC       := 0
 # Variables needed for the build process, PLEASE DO NOT MODIFY #
 ################################################################
 export PLATFORM_CUSTOM  := vck190_thin
-export XSA              := ${PLATFORM_CUSTOM}.xsa
-export XSA_PATH         := $(shell pwd)/platform/hw/build/
-export PFM_EXPORT       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
-export BASE_PFM         := ${PFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
 
-BOARD_REPO              := platform/hw/board_repo
+PFM_EXPORT              := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
+BOARD_REPO              := ./platform/hw/board_repo
 
 ############################################################################
 # Variables needed for Xilinx tools version checking, PLEASE DO NOT MODIFY #

@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TARGET ?= hw
-
-PLATFORM_CUSTOM ?= vck190_thin_${TARGET}
-DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
+TARGET          ?= hw
+PLATFORM_CUSTOM ?= vck190_thin
+DEVICE_NAME     ?= xcvc1902-vsva2197-2MP-e-S
 
 platform: xsa xpfm
 

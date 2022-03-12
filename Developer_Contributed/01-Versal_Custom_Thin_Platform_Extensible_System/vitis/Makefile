@@ -18,19 +18,23 @@ ECHO=@echo
 
 TARGET            ?= hw
 PLATFORM_CUSTOM   ?= vck190_thin
-BASE_PFM          ?= ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
+
+BASE_PFM          := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 XPFM              := ../${BASE_PFM}
-PETALINUX_IMAGES  := ../petalinux/linux/images/linux
+
 IP_DIR            := ../ip
 XO                := $(wildcard ${IP_DIR}/xo_${TARGET}/*.xo)
 GRAPH_O           := ${IP_DIR}/aie/libadf.a
 XCLBIN            := my.xclbin
+
 PS_APPS_DIR       := ../ps_apps
 PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
+
+PETALINUX_IMAGES  := ../petalinux/linux/images/linux
 SD_CARD           := ../package_output_${TARGET}
 BUILD_DIR         := build_${TARGET}
 
-#Force ILA_EN to 0 for hw_emu
+# Force ILA_EN=0 (Disabled) for TARGET=hw_emu
 ifeq (${TARGET}, hw_emu)
     ILA_EN  = 0
 else

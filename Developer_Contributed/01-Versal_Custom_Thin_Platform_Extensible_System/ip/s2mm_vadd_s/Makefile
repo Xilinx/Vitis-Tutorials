@@ -14,10 +14,12 @@
 # limitations under the License.
 #
 
-PLATFORM_CUSTOM ?= vck190_thin
-BASE_PFM        ?=./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 TARGET          ?= hw
+PLATFORM_CUSTOM ?= vck190_thin
+
+BASE_PFM        :=./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 XPFM            := ../../${BASE_PFM}
+
 KERNEL          := s2mm_vadd_s
 KERNEL_SRC      := ./src/${KERNEL}.cpp
 XO              := ../xo_${TARGET}/${KERNEL}.xo
