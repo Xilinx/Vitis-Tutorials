@@ -17,8 +17,7 @@
 TARGET          ?= hw
 PLATFORM_CUSTOM ?= vck190_thin
 
-BASE_PFM        :=./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
-XPFM            := ../../${BASE_PFM}
+XPFM            := ../../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 
 KERNEL          := vadd_s
 KERNEL_SRC      := ./src/${KERNEL}.cpp
@@ -37,7 +36,12 @@ help::
 all: ${XO}
 
 ${XO}: ${KERNEL_SRC} ${XPFM}
-	v++ -c -t ${TARGET} --save-temps --platform ${XPFM} -k ${KERNEL} -o ${XO} ${KERNEL_SRC}
+	v++ --compile --debug --save-temps \
+		--target   ${TARGET} \
+		--platform ${XPFM} \
+		--kernel   ${KERNEL} \
+		--output   ${XO} \
+		${KERNEL_SRC}
 
 clean:
 	rm -f $(XO)* *.log

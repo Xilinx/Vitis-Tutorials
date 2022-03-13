@@ -27,7 +27,7 @@ export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S
 # TARGET = hw or hw_emu
 export TARGET           := hw
 
-# ILA_EN = 0 (NOT Enabled) or 1 (Enabled)
+# ILA_EN = 0 (Disabled) or 1 (Enabled)
 export ILA_EN           := 0
 
 # ETH_STATIC = 0 (ETH DHCP Enabled) or 1 (ETH Static Enabled)
