@@ -63,10 +63,28 @@ ${BUILD_DIR}:
 	mkdir ${BUILD_DIR}
 
 ${BUILD_DIR}/${XCLBIN}: ${XO} ${SYSTEM_CFG}
-	cd ${BUILD_DIR} && v++ -l -t ${TARGET} -g --save-temps --platform ../${XPFM} $(addprefix --config ../, ${SYSTEM_CFG}) $(addprefix ../, ${XO}) ../${GRAPH_O} -o ${XCLBIN} |& tee vpp_link.log
+	cd ${BUILD_DIR} && v++ --link --debug --save-temps \
+                         --target ${TARGET} \
+                         --platform ../${XPFM} \
+                         $(addprefix --config ../, ${SYSTEM_CFG}) \
+                         $(addprefix ../, ${XO}) \
+                         ../${GRAPH_O} \
+                         --output ${XCLBIN} \
+                         |& tee vpp_link.log
 
 ${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
-	cd ${BUILD_DIR} && v++ -p --package.out_dir ../${SD_CARD} -t ${TARGET} -g --save-temps -f ../${XPFM} --package.image_format=fat32 --package.boot_mode=sd --package.rootfs=../${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  --package.kernel_image=../${PETALINUX_IMAGES}/Image ${XCLBIN} ../${GRAPH_O} $(addprefix --package.sd_file=../, ${PS_EXE}) |& tee vpp_pack.log
+	cd ${BUILD_DIR} && v++ --package --debug --save-temps \
+                         --target ${TARGET} \
+                         --platform ../${XPFM} \
+                         --package.out_dir ../${SD_CARD} \
+                         --package.boot_mode=sd \
+                         --package.image_format=fat32 \
+                         --package.kernel_image=../${PETALINUX_IMAGES}/Image \
+                         --package.rootfs=../${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  \
+                         ../${GRAPH_O} \
+                         ${XCLBIN} \
+                         $(addprefix --package.sd_file=../, ${PS_EXE}) \
+                         |& tee vpp_pack.log
 	if [ -e my.ltx ] ; then cp -f my.ltx $(SD_CARD)/probe_0.ltx ; else echo "no probe_0 ltx file" ; fi 
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
 
