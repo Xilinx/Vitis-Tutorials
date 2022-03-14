@@ -21,12 +21,12 @@ DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
 # PLATFORM NAME
 # =========================================================
 PLATFORM_CUSTOM ?= vck190_thin
-PRE_SYNTH ?=true
+PRE_SYNTH       :=true
 
 # =========================================================
 # XSA NAME
 # =========================================================
-XSA ?= ${PLATFORM_CUSTOM}.xsa
+XSA := ${PLATFORM_CUSTOM}.xsa
 
 # =========================================================
 # SOURCE DIRECTORIES

@@ -14,15 +14,18 @@
 # limitations under the License.
 #
 
-CPU_ARCH   := a72
 TARGET     ?= hw
-PROJ_NAME  ?= linux
-SYSROOT    := ../sysroot
 ETH_STATIC ?= 0
 
-XSA_PATH   ?= $(shell pwd)/../platform/hw/build_${TARGET}
+PROJ_NAME  := linux
+SYSROOT    := sysroot
+
+XSA_PATH   := ../platform/hw/build
 
 CFG        := ./src/config
+
+FILE_MAIN_CFG         := ${PROJ_NAME}/project-spec/configs/config
+FILE_ROOT_FS_CFG      := ${PROJ_NAME}/project-spec/configs/rootfs_config
 
 SRC_PATH_DEVICE_TREE  := ./src/device-tree
 DEST_PATH_DEVICE_TREE := ${PROJ_NAME}/project-spec/meta-user/recipes-bsp/device-tree
@@ -30,14 +33,14 @@ DEST_PATH_DEVICE_TREE := ${PROJ_NAME}/project-spec/meta-user/recipes-bsp/device-
 SRC_PATH_ETH_STATIC   := ./src/init-ifupdown
 DEST_PATH_ETH_STATIC  := ${PROJ_NAME}/project-spec/configs/init-ifupdown
 
-FILE_MAIN_CFG         := ${PROJ_NAME}/project-spec/configs/config
-FILE_ROOT_FS_CFG      := ${PROJ_NAME}/project-spec/configs/rootfs_config
+.PHONY: help all clean
 
-.PHONY: 
+help: 
+	echo "Make targets: create update_hw update_config update_device_tree update_build update_bootimage update_sysroot"
 
 all: ${PROJ_NAME} 
 
-${PROJ_NAME}: ${XSA_PATH}
+${PROJ_NAME}: ${XSA_PATH} 
 	make clean
 	make create
 	make update_hw
@@ -47,17 +50,12 @@ ${PROJ_NAME}: ${XSA_PATH}
 	make update_bootimage
 	make update_sysroot
 
-targets:
-	echo "Make targets: create update_hw update_config update_device_tree update_build update_bootimage update_sysroot"
-
-help: targets
-
 create: 
 	petalinux-create -t project --template versal -n ${PROJ_NAME}
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable YOCTO_BUILDTOOLS_EXTENDED 
 
 update_hw:
-	cd ${PROJ_NAME} && petalinux-config --get-hw-description=${XSA_PATH} --silentconfig
+	cd ${PROJ_NAME} && petalinux-config --get-hw-description=../${XSA_PATH} --silentconfig
 
 update_device_tree:
 	cp -r ${SRC_PATH_DEVICE_TREE}/* ${DEST_PATH_DEVICE_TREE}/
@@ -79,29 +77,21 @@ ifeq (${ETH_STATIC}, 1)
 	cp -r ${SRC_PATH_ETH_STATIC}/* ${DEST_PATH_ETH_STATIC}/
 endif
       
-
 update_build:
 	cd ${PROJ_NAME} && petalinux-build
 
 update_bootimage:
-	@echo "BOOT image for base platforms"
 	cd ${PROJ_NAME} && petalinux-package --boot --plm --psmfw --u-boot --dtb --force
 
 update_sysroot:
-	cd ${PROJ_NAME} && mkdir -p ${SYSROOT}
+	mkdir ${SYSROOT}
 	cd ${PROJ_NAME} && petalinux-build --sdk
-	cd ${PROJ_NAME} && petalinux-package --sysroot -d ${SYSROOT}
+	cd ${PROJ_NAME} && petalinux-package --sysroot -d ../${SYSROOT}
 
 dump-dts:
 	cd ${PROJ_NAME}/images/linux && dtc -I dtb -O dts -o dump.dts system.dtb
 
 clean:
 	$(RM) -r ${PROJ_NAME}
-	$(RM) -r sysroot
-
-ultraclean:
-	$(MAKE) ultraclean -C ${PROJ_NAME}
-
-rmproj:
-	$(RM) -r ${PROJ_NAME}
+	$(RM) -r ${SYSROOT}
 

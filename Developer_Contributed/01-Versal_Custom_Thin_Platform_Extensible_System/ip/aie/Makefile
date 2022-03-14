@@ -16,9 +16,10 @@
 
 ECHO := @echo
 
-AIE_WS            := .
 TARGET            ?= hw
+
 TARGET_HW         := hw
+AIE_WS            := .
 AIE_SRC           := ${AIE_WS}/src
 AIE_GRAPHS        := ${AIE_SRC}/graphs
 AIE_KERNELS       := ${AIE_SRC}/kernels
