@@ -46,6 +46,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
   - `[project-root]/Makefile`: `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default); **change it to `export ETH_STATIC := 1` for Ethernet Static Configuration**.
     - `export ETH_STATIC := 0`; **NO** extra configuration needed.
     - `export ETH_STATIC := 1`; please setup your required Ethernet Static Configuration in `[project-root]/petalinux/src/init-ifupdown/interfaces`.
+    - Remark: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation - so build with `export TARGET := hw_emu` - then the recommandation is to use `export ETH_STATIC := 0` (DHCP).
   - `[project-root]/Makefile`: the generated tmp-dir by `[project-root]/linux/petalinux/Makefile` ends up in `/tmp/linux/petalinux`. 
     - If you want to place it somewhere else you need to change `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}` towards your requered location. 
       - Be aware that `[your_tmp_dir]` may **NOT** be located on an NFS-drive!
@@ -419,6 +420,8 @@ root@linux:/media/sd-mmcblk0p1#
     - After completing the linking process, the designer can verify conectivity and configuration of the ILA core in the generated block design in project `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj/prj.xpr`.
     - Once the build process is completed and (Peta)linux boots on your board, it is required to manually set the path for probe file `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
     - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, re-running `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
+  - `export TARGET := hw_emu`
+    - When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation; please read this documentation carefully: https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU
   - Simulation is **NOT** part and **NOT** demonstrated in this Tutorial!
   
 ## Design Considerations
@@ -472,7 +475,7 @@ Click on each item below to see the detailed Revision History:
       - id=4 -> clk_out2    -> 333MHz
   - linux:
     - Updated system-user.dtsi for proper Ethernet PHY configuration
-    - Preperation to later on add an option for yocto 
+    - Preperation to later on add an option for other linux build tools 
   - ip:
     - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - Renamed vadd to vadd_mm (vadd memory mapped kernel)
