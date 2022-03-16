@@ -14,7 +14,7 @@
  # limitations under the License.
  #
 
-ECHO=@echo
+ECHO              := @echo
 
 APP_DIR           := exe
 APP_DIRS_EXCLUDE  := $(patsubst %/,%,$(dir $(wildcard exe*/)))

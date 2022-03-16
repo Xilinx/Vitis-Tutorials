@@ -14,7 +14,7 @@
  # limitations under the License.
  #
 
-ECHO := @echo
+ECHO              := @echo
 
 TARGET            ?= hw
 
