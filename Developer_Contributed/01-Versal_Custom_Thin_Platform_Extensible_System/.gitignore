@@ -46,8 +46,8 @@ packaged_kernel*
 tmp_kernel_pack*
 release_build
 platform/hw/board_repo
-petalinux/linux
-petalinux/sysroot
+linux/build
+linux/sysroot
 ip/*/.ipcache
 ip/*/_x
 ip/*/*.xml

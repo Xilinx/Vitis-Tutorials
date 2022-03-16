@@ -14,7 +14,7 @@
  # limitations under the License.
  #
 
-ECHO=@echo
+ECHO              := @echo
 
 TARGET            ?= hw
 PLATFORM_CUSTOM   ?= vck190_thin
@@ -29,7 +29,10 @@ XCLBIN            := my.xclbin
 PS_APPS_DIR       := ../ps_apps
 PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
 
-PETALINUX_IMAGES  := ../petalinux/linux/images/linux
+LINUX_IMAGES      := ../linux/build/images/linux
+LINUX_KERNEL      := ${LINUX_IMAGES}/Image
+LINUX_ROOTFS      := ${LINUX_IMAGES}/rootfs.cpio.gz.u-boot
+
 SD_CARD           := ../package_output_${TARGET}
 BUILD_DIR         := build_${TARGET}
 
@@ -72,7 +75,7 @@ ${BUILD_DIR}/${XCLBIN}: ${XO} ${SYSTEM_CFG}
 			--output ${XCLBIN} \
 			|& tee vpp_link.log
 
-${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
+${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROOTFS}
 	cd ${BUILD_DIR} && \
 		v++ --package --debug --save-temps \
 			--target ${TARGET} \
@@ -80,8 +83,8 @@ ${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
 			--package.out_dir ../${SD_CARD} \
 			--package.boot_mode=sd \
 			--package.image_format=fat32 \
-			--package.kernel_image=../${PETALINUX_IMAGES}/Image \
-			--package.rootfs=../${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  \
+			--package.kernel_image=../${LINUX_KERNEL} \
+			--package.rootfs=../${LINUX_ROOTFS}  \
 			../${GRAPH_O} \
 			${XCLBIN} \
 			$(addprefix --package.sd_file=../, ${PS_EXE}) \

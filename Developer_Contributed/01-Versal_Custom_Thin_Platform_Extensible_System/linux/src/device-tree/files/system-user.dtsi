@@ -25,3 +25,35 @@
   max-frequency = <0x121eac0>;
 };
 
+&gem0 { /* PMC_MIO_48, LPD_MIO0-11/24/25 */
+	phy-handle = <&phy1>; /* u128 */
+	phy-mode = "rgmii-id";
+	phy1: phy@1 {
+		reg = <1>;
+		ti,rx-internal-delay = <0xb>;
+		ti,tx-internal-delay = <0xa>;
+		ti,fifo-depth = <1>;
+		ti,dp83867-rxctrl-strap-quirk;
+	};
+	phy2: phy@2 {
+		reg = <2>;
+		ti,rx-internal-delay = <0xb>;
+		ti,tx-internal-delay = <0xa>;
+		ti,fifo-depth = <1>;
+		ti,dp83867-rxctrl-strap-quirk;
+	};
+};
+
+&gem1 { /* PMC_MIO_49, LPD_MIO12-23 */
+	phy-handle = <&phy2>; /* u134 */
+	phy-mode = "rgmii-id";
+};
+
+&i2c0 { /* PMC_MIO46/47 */
+	clock-frequency = <400000>;
+};
+
+&i2c1 { /* PMC_MIO44/45 */
+	clock-frequency = <400000>;
+};
+

@@ -14,7 +14,15 @@
  # limitations under the License.
  #
 
-ECHO=@echo
+ECHO        := @echo
+
+TARGET      ?= hw
+DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
+
+IP_TCL      := ./pack_kernel.tcl
+KERNEL      := counter
+KERNEL_SRC  := ./src/* ./${KERNEL}.xdc
+XO          := ../xo_${TARGET}/${KERNEL}.xo
 
 help::
 	$(ECHO) "Makefile Usage:"
@@ -23,17 +31,6 @@ help::
 	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
-
-# =========================================================
-# DEVICE SELECTION
-# =========================================================
-TARGET      ?= hw
-DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
-
-IP_TCL      := ./pack_kernel.tcl
-KERNEL      := counter
-KERNEL_SRC  := ./src/* ./${KERNEL}.xdc
-XO          := ../xo_${TARGET}/${KERNEL}.xo
 
 .PHONY: help clean all
 

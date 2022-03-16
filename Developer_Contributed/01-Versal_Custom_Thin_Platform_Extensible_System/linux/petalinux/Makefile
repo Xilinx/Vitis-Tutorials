@@ -14,33 +14,38 @@
 # limitations under the License.
 #
 
-TARGET     ?= hw
-ETH_STATIC ?= 0
+ECHO                  := @echo
 
-PROJ_NAME  := linux
-SYSROOT    := sysroot
+TARGET                ?= hw
+ETH_STATIC            ?= 0
+LINUX_TMP_DIR         ?= /tmp/linux/petalinux
 
-XSA_PATH   := ../platform/hw/build
+CURR_DIR	            := $(shell pwd)
+PROJ_DIR              := ${CURR_DIR}/../build
+META_DIR              := ${CURR_DIR}/../build-meta
+SYSROOT_DIR           := ${CURR_DIR}/../sysroot
 
-CFG        := ./src/config
+XSA_DIR               := ${CURR_DIR}/../../platform/hw/build
 
-FILE_MAIN_CFG         := ${PROJ_NAME}/project-spec/configs/config
-FILE_ROOT_FS_CFG      := ${PROJ_NAME}/project-spec/configs/rootfs_config
+CFG                   := ./src/config
 
-SRC_PATH_DEVICE_TREE  := ./src/device-tree
-DEST_PATH_DEVICE_TREE := ${PROJ_NAME}/project-spec/meta-user/recipes-bsp/device-tree
+FILE_MAIN_CFG         := ${PROJ_DIR}/project-spec/configs/config
+FILE_ROOT_FS_CFG      := ${PROJ_DIR}/project-spec/configs/rootfs_config
 
-SRC_PATH_ETH_STATIC   := ./src/init-ifupdown
-DEST_PATH_ETH_STATIC  := ${PROJ_NAME}/project-spec/configs/init-ifupdown
+SRC_DIR_DEVICE_TREE   := ../src/device-tree
+DEST_DIR_DEVICE_TREE  := ${PROJ_DIR}/project-spec/meta-user/recipes-bsp/device-tree
+
+SRC_DIR_ETH_STATIC    := ./src/init-ifupdown
+DEST_DIR_ETH_STATIC   := ${PROJ_DIR}/project-spec/configs/init-ifupdown
 
 .PHONY: help all clean
 
 help: 
 	echo "Make targets: create update_hw update_config update_device_tree update_build update_bootimage update_sysroot"
 
-all: ${PROJ_NAME} 
+all: ${PROJ_DIR} 
 
-${PROJ_NAME}: ${XSA_PATH} 
+${PROJ_DIR}: ${XSA_DIR} 
 	make clean
 	make create
 	make update_hw
@@ -51,14 +56,14 @@ ${PROJ_NAME}: ${XSA_PATH}
 	make update_sysroot
 
 create: 
-	petalinux-create -t project --template versal -n ${PROJ_NAME}
+	cd ../ && petalinux-create -t project --template versal -n build --tmpdir ${LINUX_TMP_DIR}
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable YOCTO_BUILDTOOLS_EXTENDED 
 
 update_hw:
-	cd ${PROJ_NAME} && petalinux-config --get-hw-description=../${XSA_PATH} --silentconfig
+	cd ${PROJ_DIR} && petalinux-config --get-hw-description=${XSA_DIR} --silentconfig
 
 update_device_tree:
-	cp -r ${SRC_PATH_DEVICE_TREE}/* ${DEST_PATH_DEVICE_TREE}/
+	cp -r ${SRC_DIR_DEVICE_TREE}/* ${DEST_DIR_DEVICE_TREE}/
 
 update_config:
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_SUBSYSTEM_RFS_FORMATS "cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"
@@ -71,27 +76,29 @@ update_config:
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable ai-engine-driver
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable ai-engine-driver-dev 
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable sysfsutils-dev 
-	cd ${PROJ_NAME} && petalinux-config --silentconfig
-	cd ${PROJ_NAME} && petalinux-config -c rootfs --silentconfig
+	cd ${PROJ_DIR} && petalinux-config --silentconfig
+	cd ${PROJ_DIR} && petalinux-config -c rootfs --silentconfig
 ifeq (${ETH_STATIC}, 1)
-	cp -r ${SRC_PATH_ETH_STATIC}/* ${DEST_PATH_ETH_STATIC}/
+	cp -r ${SRC_DIR_ETH_STATIC}/* ${DEST_DIR_ETH_STATIC}/
 endif
       
 update_build:
-	cd ${PROJ_NAME} && petalinux-build
+	cd ${PROJ_DIR} && petalinux-build
 
 update_bootimage:
-	cd ${PROJ_NAME} && petalinux-package --boot --plm --psmfw --u-boot --dtb --force
+	cd ${PROJ_DIR} && petalinux-package --boot --plm --psmfw --u-boot --dtb --force
 
 update_sysroot:
-	mkdir ${SYSROOT}
-	cd ${PROJ_NAME} && petalinux-build --sdk
-	cd ${PROJ_NAME} && petalinux-package --sysroot -d ../${SYSROOT}
+	mkdir -p ${SYSROOT_DIR}
+	cd ${PROJ_DIR} && petalinux-build --sdk
+	cd ${PROJ_DIR} && petalinux-package --sysroot -d ${SYSROOT_DIR}
 
 dump-dts:
-	cd ${PROJ_NAME}/images/linux && dtc -I dtb -O dts -o dump.dts system.dtb
+	cd ${PROJ_DIR}/images/linux && dtc -I dtb -O dts -o dump.dts system.dtb
 
 clean:
-	$(RM) -r ${PROJ_NAME}
-	$(RM) -r ${SYSROOT}
+	rm -rf ${PROJ_DIR}
+	rm -rf ${META_DIR}
+	rm -rf ${SYSROOT_DIR}
+	rm -rf ${LINUX_TMP_DIR}
 

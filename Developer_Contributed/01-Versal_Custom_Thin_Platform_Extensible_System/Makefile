@@ -22,23 +22,31 @@ ECHO                     = @echo
 ###############################################
 
 # DEVICE_NAME = xcvc1902-vsva2197-2MP-e-S or xcvc1902-vsva2197-2MP-e-S-es1
-export DEVICE_NAME      := xcvc1902-vsva2197-2MP-e-S
+export DEVICE_NAME       := xcvc1902-vsva2197-2MP-e-S-es1
 
 # TARGET = hw or hw_emu
 export TARGET           := hw
 
 # ILA_EN = 0 (Disabled) or 1 (Enabled)
-export ILA_EN           := 0
+export ILA_EN           := 1
 
 # ETH_STATIC = 0 (ETH DHCP Enabled) or 1 (ETH Static Enabled)
-export ETH_STATIC       := 0
+export ETH_STATIC       := 1
+
+# LINUX_TMP_DIR = Any dir which is not NFS
+export LINUX_TMP_DIR    := /tmp/linux/${LINUX_BUILD_TOOL}
 
 ################################################################
 # Variables needed for the build process, PLEASE DO NOT MODIFY #
 ################################################################
 export PLATFORM_CUSTOM  := vck190_thin
 
-PFM_EXPORT              := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
+export LINUX_BUILD_TOOL := petalinux
+
+LINUX_SRC_DIR           := ./linux/src
+LINUX_BUILD_DIR         := ./linux/build
+LINUX_IMAGES            := ${LINUX_BUILD_DIR}/images/linux
+PFM_EXPORT_IMAGES       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/sw
 BOARD_REPO              := ./platform/hw/board_repo
 
 ############################################################################
@@ -51,7 +59,7 @@ VITIS_VERSION           := $(shell vitis -version 2>/dev/null | grep "Vitis " | 
 ##############
 # Build Flow #
 ##############
-.PHONY: clean help all version_check xsa petalinux xpfm bif ip ps_apps vitis
+.PHONY: clean help all version_check xsa linux petalinux yocto xpfm bif ip ps_apps vitis
 
 help::
 	$(ECHO) "Makefile Usage:"
@@ -69,7 +77,7 @@ help::
 	$(ECHO) "      To run full implementation platform, override using environment variable"
 	$(ECHO) "      PRE_SYNTH = False"
 	$(ECHO) ""
-	$(ECHO) "  make petalinux"
+	$(ECHO) "  make linux"
 	$(ECHO) "      Builds Linux related RootFS, U-boot, etc. using Petalinux"
 	$(ECHO) "      * Requires xsa rule to be completed"
 	$(ECHO) ""
@@ -99,7 +107,7 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: version_check ${BOARD_REPO} xsa petalinux xpfm bif ip ps_apps vitis
+all: version_check ${BOARD_REPO} xsa linux xpfm bif ip ps_apps vitis
 
 version_check:
 ifndef VIVADO_VERSION
@@ -128,8 +136,8 @@ ${BOARD_REPO}:
 xsa:
 	$(MAKE) xsa -C platform
 
-petalinux:
-	$(MAKE) all -C petalinux
+linux:
+	$(MAKE) all -C linux/${LINUX_BUILD_TOOL}
 
 xpfm:
 	$(MAKE) xpfm -C platform
@@ -138,11 +146,11 @@ ip:
 	$(MAKE) all -C ip
 
 bif:
-	cp -f ./petalinux/linux/images/linux/u-boot.elf   ${PFM_EXPORT}/sw
-	cp -f ./petalinux/linux/images/linux/system.dtb   ${PFM_EXPORT}/sw
-	cp -f ./petalinux/linux/images/linux/bl31.elf     ${PFM_EXPORT}/sw
-	cp -f ./petalinux/linux/images/linux/boot.scr     ${PFM_EXPORT}/sw/${PLATFORM_CUSTOM}/xrt/image
-	cp -f ./petalinux/src/boot_custom.bif             ${PFM_EXPORT}/sw/${PLATFORM_CUSTOM}/boot/linux.bif
+	cp -f ${LINUX_IMAGES}/u-boot.elf        ${PFM_EXPORT_IMAGES}/u-boot.elf
+	cp -f ${LINUX_IMAGES}/system.dtb        ${PFM_EXPORT_IMAGES}/system.dtb
+	cp -f ${LINUX_IMAGES}/bl31.elf          ${PFM_EXPORT_IMAGES}/bl31.elf
+	cp -f ${LINUX_IMAGES}/boot.scr          ${PFM_EXPORT_IMAGES}/${PLATFORM_CUSTOM}/xrt/image/boot.scr
+	cp -f ${LINUX_SRC_DIR}/boot_custom.bif  ${PFM_EXPORT_IMAGES}/${PLATFORM_CUSTOM}/boot/linux.bif
 
 ps_apps:
 	$(MAKE) all -C ps_apps
@@ -157,7 +165,7 @@ clean_vitis:
 
 clean:
 	$(MAKE) clean -C platform
-	$(MAKE) clean -C petalinux
+	$(MAKE) clean -C linux/${LINUX_BUILD_TOOL}
 	$(MAKE) clean_vitis
 	rm -rf ${BOARD_REPO}
   
