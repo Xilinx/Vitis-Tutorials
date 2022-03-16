@@ -33,6 +33,9 @@ export ILA_EN           := 0
 # ETH_STATIC = 0 (ETH DHCP Enabled) or 1 (ETH Static Enabled)
 export ETH_STATIC       := 0
 
+# LINUX_BUILD_TOOL = petalinux (PLEASE DO NOT MODIFY)
+export LINUX_BUILD_TOOL := petalinux
+
 # LINUX_TMP_DIR = Any dir which is not NFS
 export LINUX_TMP_DIR    := /tmp/linux/${LINUX_BUILD_TOOL}
 
@@ -40,8 +43,6 @@ export LINUX_TMP_DIR    := /tmp/linux/${LINUX_BUILD_TOOL}
 # Variables needed for the build process, PLEASE DO NOT MODIFY #
 ################################################################
 export PLATFORM_CUSTOM  := vck190_thin
-
-export LINUX_BUILD_TOOL := petalinux
 
 LINUX_SRC_DIR           := ./linux/src
 LINUX_BUILD_DIR         := ./linux/build
