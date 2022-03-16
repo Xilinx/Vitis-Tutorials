@@ -14,31 +14,31 @@
  # limitations under the License.
  #
 
-ECHO=@echo
+ECHO             := @echo
 
-SYSROOT         := ../../petalinux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT          := ../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
 
-APP_NAME        := ./aie_dly_test
-APP_EXE         := ../exe/${APP_NAME}.exe
-APP_SRC         := ./src/${APP_NAME}.cpp
-APP_CTRL_SRC    := ./../../ip/aie/Work/ps/c_rts/aie_control_xrt.cpp
+APP_NAME         := ./aie_dly_test
+APP_EXE          := ../exe/${APP_NAME}.exe
+APP_SRC          := ./src/${APP_NAME}.cpp
+APP_CTRL_SRC     := ./../../ip/aie/Work/ps/c_rts/aie_control_xrt.cpp
 
-GCC             ?= aarch64-linux-gnu-g++
+GCC              ?= aarch64-linux-gnu-g++
 
-GCC_INCLUDES = -I${SYSROOT}/usr/include \
-               -I${SYSROOT}/usr/include/xrt \
-               -I${SYSROOT}/usr/include/xaiengine \
-               -I${XILINX_VITIS}/aietools/include \
-               -I../../ip/aie/src
+GCC_INCLUDES     := -I${SYSROOT}/usr/include \
+                    -I${SYSROOT}/usr/include/xrt \
+                    -I${SYSROOT}/usr/include/xaiengine \
+                    -I${XILINX_VITIS}/aietools/include \
+                    -I../../ip/aie/src
 
-GCC_C_FLAGS  := -O -Wall -std=c++14 -DXAIE_DEBUG \
-                -pthread \
-                --sysroot=${SYSROOT}
+GCC_C_FLAGS      := -O -Wall -std=c++14 -DXAIE_DEBUG \
+                    -pthread \
+                    --sysroot=${SYSROOT}
 
-GCC_L_FLAGS  := -L$(SYSROOT)/usr/lib \
-                -L${XILINX_VITIS}/aietools/lib/aarch64.o \
-                -ladf_api_xrt -lxaiengine -lxrt_core -lxrt_coreutil \
-                --sysroot=$(SYSROOT)
+GCC_L_FLAGS      := -L$(SYSROOT)/usr/lib \
+                    -L${XILINX_VITIS}/aietools/lib/aarch64.o \
+                    -ladf_api_xrt -lxaiengine -lxrt_core -lxrt_coreutil \
+                    --sysroot=$(SYSROOT)
 
 .PHONY: clean help all
 

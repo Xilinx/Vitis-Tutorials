@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+ECHO            := @echo
+
 TARGET          ?= hw
 PLATFORM_CUSTOM ?= vck190_thin
 

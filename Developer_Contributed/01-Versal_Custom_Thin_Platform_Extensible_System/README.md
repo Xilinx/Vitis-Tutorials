@@ -15,9 +15,9 @@ The Versal VCK190 System Example Design full Makefile build-flow builds the whol
   1. version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2021.2
   2. board_repo:    Downloads the board files for pre-production and es1 from the Xilinx GitHub 
   3. xsa:           Building the thin platform xsa (only pre-synth)
-  4. petalinux:     Building Petalinux and sysroot
+  4. linux:         Building linux and sysroot (with Petalinux)
   5. xpfm:          Building the Vitis Platform
-  6. bif:           Copy over necessary petalinux files to the generated software platform (required by the Vitis packager)
+  6. bif:           Copy over necessary (Peta)linux files to the generated software platform (required by the Vitis packager)
   7. ip:            Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
   8. ps_apps:       Building all XRT-based PS applications
   9. vitis:         Linking all kernels in the thin platform and packaging all necessary boot/run files
@@ -46,8 +46,9 @@ In the `[project-root]` you can start the full build with `make all` **after** t
   - `[project-root]/Makefile`: `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default); **change it to `export ETH_STATIC := 1` for Ethernet Static Configuration**.
     - `export ETH_STATIC := 0`; **NO** extra configuration needed.
     - `export ETH_STATIC := 1`; please setup your required Ethernet Static Configuration in `[project-root]/petalinux/src/init-ifupdown/interfaces`.
-  - `[project-root]/petalinux/Makefile`: the generated tmp-dir ends up in `/tmp`. 
-    - If you want to place it somewhere else you need to add `--tmpdir [your_tmp_dir]` at the end of the `petalinux-create` line in the `[project-root]/petalinux/Makefile`. 
+    - Remark: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation - so build with `export TARGET := hw_emu` - then the recommandation is to use `export ETH_STATIC := 0` (DHCP).
+  - `[project-root]/Makefile`: the generated tmp-dir by `[project-root]/linux/petalinux/Makefile` ends up in `/tmp/linux/petalinux`. 
+    - If you want to place it somewhere else you need to change `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}` towards your requered location. 
       - Be aware that `[your_tmp_dir]` may **NOT** be located on an NFS-drive!
   - End result: 
     - `export TARGET := hw`: `[project-root]/package_output_hw/sd_card/*` can be used for FAT-32 SD-card (partition); or `[project-root]/package_output_hw/sd_card.img` can be used.
@@ -109,18 +110,23 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
  
 </details>
 <details>
-  <summary> make all -C petalinux </summary>
+  <summary> make all -C linux/petalinux </summary>
 
-`[project-root]/petalinux` Directory/file structure:
+`[project-root]/linux` Directory/file structure:
+| Directory/file      | Description                                             
+| --------------------|--------------------------------------------------------------
+| src/device-tree/*   | Some device-tree changes needed for VCK190              
+| src/boot_custom.bif | bif file needed to have a correct BOOT.BIN in the Vitis packager
+ 
+ `[project-root]/linux/petalinux` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
 | Makefile            | The Petalinux Makefile                                  
-| src/config          | A script used to exchange/add petalinux configuration items
-| src/device-tree/*   | Some device-tree changes needed for VCK190              
-| src/boot_custom.bif | bif file needed to have a correct BOOT.BIN in the Vitis packager   
+| src/config          | A script used to exchange/add Petalinux configuration items
+| src/init-ifupdown/* | Configuration files needed for `export ETH_STATIC := 1`
 
- - Builds all required Petalinux images which end up in `[project-root]/petalinux/linux/images/linux`.
- - It also builds a `sysroot` which ends up in `[project-root]/petalinux/sysroot` (needed for `[project-root]/ps_apps` build).
+ - Builds all required Petalinux images which end up in `[project-root]/linux/build/images/linux`.
+ - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot` (needed for `[project-root]/ps_apps` build).
  
 </details>
 <details>
@@ -138,7 +144,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 <details>
   <summary> make bif </summary>
 
- - Copies over some Petalinux-generated files to the software platform. These are necessary for a correct Vitis-build.
+ - Copies over some (peta)linux-generated files to the software platform. These are necessary for a correct Vitis-build.
  
 </details>
 <details>
@@ -405,15 +411,17 @@ root@linux:/media/sd-mmcblk0p1#
   - xsa: CIPS settings are added manually; configured in the bd-files.
   - The example design is fully FAT-32 
     - if you like to use ext4 rootfs instead: 
-      - petalinux already generates it.
+      - (Peta)linux already generates it.
       - You will need to copy it to the Vitis platform in the `[project-root]/Makefile` in the `bif` section.
       - The `v++ -p` command line in `[project-root]\vitis\Makefile` will need adaptations to be able to use ext4 rootfs instead of FAT-32.
   - `export ILA_EN := 1`
     - The ILA core connectivity is set up during v++ linking process loading the cfg file `[project-root]/vitis/src/ila_0_bd.cfg` and further configuration of ILA properties is managed in tcl file `[project-root]/vitis/src/ila_0_def.tcl`.
     - Using the configuration file `[project-root]/vitis/src/ila_0_bd.cfg` allows the designer to mark AXI port for debug nets to and from the AIE engine for analysis. 
     - After completing the linking process, the designer can verify conectivity and configuration of the ILA core in the generated block design in project `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj/prj.xpr`.
-    - Once the build process is completed and petalinux boots on your board, it is required to manually set the path for probe file `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
+    - Once the build process is completed and (Peta)linux boots on your board, it is required to manually set the path for probe file `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
     - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, re-running `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
+  - `export TARGET := hw_emu`
+    - When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation; please read this documentation carefully: https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU
   - Simulation is **NOT** part and **NOT** demonstrated in this Tutorial!
   
 ## Design Considerations
@@ -465,6 +473,9 @@ Click on each item below to see the detailed Revision History:
       - id=2 -> clk_out1_o3 -> 125MHz
       - id=3 -> clk_out1_o4 -> 62.5MHz
       - id=4 -> clk_out2    -> 333MHz
+  - linux:
+    - Updated system-user.dtsi for proper Ethernet PHY configuration
+    - Preperation to later on add an option for other linux build tools 
   - ip:
     - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - Renamed vadd to vadd_mm (vadd memory mapped kernel)

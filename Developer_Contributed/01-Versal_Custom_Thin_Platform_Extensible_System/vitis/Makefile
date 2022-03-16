@@ -14,7 +14,7 @@
  # limitations under the License.
  #
 
-ECHO=@echo
+ECHO              := @echo
 
 TARGET            ?= hw
 PLATFORM_CUSTOM   ?= vck190_thin
@@ -29,9 +29,14 @@ XCLBIN            := my.xclbin
 PS_APPS_DIR       := ../ps_apps
 PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
 
-PETALINUX_IMAGES  := ../petalinux/linux/images/linux
+LINUX_IMAGES      := ../linux/build/images/linux
+LINUX_KERNEL      := ${LINUX_IMAGES}/Image
+LINUX_ROOTFS      := ${LINUX_IMAGES}/rootfs.cpio.gz.u-boot
+
 SD_CARD           := ../package_output_${TARGET}
 BUILD_DIR         := build_${TARGET}
+
+QEMU_ARGS         := ${SD_CARD}/qemu_args.txt
 
 # Force ILA_EN=0 (Disabled) for TARGET=hw_emu
 ifeq (${TARGET}, hw_emu)
@@ -72,7 +77,7 @@ ${BUILD_DIR}/${XCLBIN}: ${XO} ${SYSTEM_CFG}
 			--output ${XCLBIN} \
 			|& tee vpp_link.log
 
-${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
+${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROOTFS}
 	cd ${BUILD_DIR} && \
 		v++ --package --debug --save-temps \
 			--target ${TARGET} \
@@ -80,8 +85,8 @@ ${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
 			--package.out_dir ../${SD_CARD} \
 			--package.boot_mode=sd \
 			--package.image_format=fat32 \
-			--package.kernel_image=../${PETALINUX_IMAGES}/Image \
-			--package.rootfs=../${PETALINUX_IMAGES}/rootfs.cpio.gz.u-boot  \
+			--package.kernel_image=../${LINUX_KERNEL} \
+			--package.rootfs=../${LINUX_ROOTFS}  \
 			../${GRAPH_O} \
 			${XCLBIN} \
 			$(addprefix --package.sd_file=../, ${PS_EXE}) \
@@ -91,6 +96,11 @@ ${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O}
 		else echo "no probe_0 ltx file" ; \
 	fi 
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
+ifeq (${TARGET}, hw_emu)
+	echo "-net nic,netdev=eth0"                       >> ${QEMU_ARGS}
+	echo "-netdev user,id=eth0,hostfwd=tcp::1114-:22" >> ${QEMU_ARGS}
+	echo "-net nic"                                   >> ${QEMU_ARGS}
+endif
 
 clean:
 	rm -rf ${SD_CARD} ${BUILD_DIR}

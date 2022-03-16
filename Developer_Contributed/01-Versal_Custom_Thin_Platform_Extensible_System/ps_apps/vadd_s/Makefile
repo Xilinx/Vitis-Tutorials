@@ -14,26 +14,26 @@
  # limitations under the License.
  #
 
-ECHO := @echo
+ECHO             := @echo
 
-APP_NAME     := ./vadd_s
-APP_EXE      := ../exe/${APP_NAME}.exe
-APP_SRC      := ./src/${APP_NAME}.cpp
+SYSROOT          := ../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
 
-SYSROOT      := ../../petalinux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
+APP_NAME         := ./vadd_s
+APP_EXE          := ../exe/${APP_NAME}.exe
+APP_SRC          := ./src/${APP_NAME}.cpp
 
-GCC          ?= aarch64-linux-gnu-g++
+GCC              ?= aarch64-linux-gnu-g++
 
-GCC_INCLUDES := -I${SYSROOT}/usr/include/xrt \
-                -I${SYSROOT}/usr/include \
-                -I${XILINX_VITIS}/include
+GCC_INCLUDES     := -I${SYSROOT}/usr/include/xrt \
+                    -I${SYSROOT}/usr/include \
+                    -I${XILINX_VITIS}/include
 
-GCC_C_FLAGS  := -O -Wall -std=c++14 \
-                --sysroot=${SYSROOT}
+GCC_C_FLAGS      := -O -Wall -std=c++14 \
+                    --sysroot=${SYSROOT}
 
-GCC_L_FLAGS  := -lxrt_core -lxrt_coreutil \
-                -L${SYSROOT}/usr/lib \
-                --sysroot=${SYSROOT}
+GCC_L_FLAGS      := -lxrt_core -lxrt_coreutil \
+                    -L${SYSROOT}/usr/lib \
+                    --sysroot=${SYSROOT}
 
 .PHONY: clean help all
 

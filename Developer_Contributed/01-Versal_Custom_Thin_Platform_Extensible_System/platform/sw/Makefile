@@ -39,8 +39,8 @@ XSA := $(XSA_DIR)/$(PLATFORM_CUSTOM).xsa
 # =========================================================
 # SOURCE DIRECTORY
 # =========================================================
-SRC_DIR := src
-PLNX_DIR := ../../petalinux
+SRC_DIR   := src
+LINUX_DIR := ../../linux
 
 # =========================================================
 # XPFM CREATION SCRIPT
@@ -56,10 +56,10 @@ DEPS += $(SRC_DIR)/qemu/aie/pmc_args.txt
 DEPS += $(SRC_DIR)/qemu/aie/qemu_args.txt
 DEPS += $(SRC_DIR)/qemu/lnx/pmc_args.txt
 DEPS += $(SRC_DIR)/qemu/lnx/qemu_args.txt
-DEPS += $(PLNX_DIR)/linux/images/linux/bl31.elf
-DEPS += $(PLNX_DIR)/linux/images/linux/system.dtb
-DEPS += $(PLNX_DIR)/linux/images/linux/u-boot.elf
-DEPS += $(PLNX_DIR)/src/boot_custom.bif
+DEPS += ${LINUX_DIR}/build/images/linux/bl31.elf
+DEPS += ${LINUX_DIR}/build/images/linux/system.dtb
+DEPS += ${LINUX_DIR}/build/images/linux/u-boot.elf
+DEPS += ${LINUX_DIR}/src/boot_custom.bif
 
 # =========================================================
 # BUILD PRODUCTS 
