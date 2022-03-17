@@ -47,7 +47,7 @@ export PLATFORM_CUSTOM  := vck190_thin
 LINUX_SRC_DIR           := ./linux/src
 LINUX_BUILD_DIR         := ./linux/build
 LINUX_IMAGES            := ${LINUX_BUILD_DIR}/images/linux
-PFM_EXPORT_IMAGES       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/sw
+XPFM_EXPORT             := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
 BOARD_REPO              := ./platform/hw/board_repo
 
 ############################################################################
@@ -147,11 +147,13 @@ ip:
 	$(MAKE) all -C ip
 
 bif:
-	cp -f ${LINUX_IMAGES}/u-boot.elf        ${PFM_EXPORT_IMAGES}/u-boot.elf
-	cp -f ${LINUX_IMAGES}/system.dtb        ${PFM_EXPORT_IMAGES}/system.dtb
-	cp -f ${LINUX_IMAGES}/bl31.elf          ${PFM_EXPORT_IMAGES}/bl31.elf
-	cp -f ${LINUX_IMAGES}/boot.scr          ${PFM_EXPORT_IMAGES}/${PLATFORM_CUSTOM}/xrt/image/boot.scr
-	cp -f ${LINUX_SRC_DIR}/boot_custom.bif  ${PFM_EXPORT_IMAGES}/${PLATFORM_CUSTOM}/boot/linux.bif
+	cp -f ${LINUX_IMAGES}/u-boot.elf             ${XPFM_EXPORT}/sw/u-boot.elf
+	cp -f ${LINUX_IMAGES}/system.dtb             ${XPFM_EXPORT}/sw/system.dtb
+	cp -f ${LINUX_IMAGES}/bl31.elf               ${XPFM_EXPORT}/sw/bl31.elf
+	cp -f ${LINUX_IMAGES}/Image                  ${XPFM_EXPORT}/sw/Image
+	cp -f ${LINUX_IMAGES}/rootfs.cpio.gz.u-boot  ${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot
+	cp -f ${LINUX_IMAGES}/boot.scr               ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/xrt/image/boot.scr
+	cp -f ${LINUX_SRC_DIR}/boot_custom.bif       ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/boot/linux.bif
 
 ps_apps:
 	$(MAKE) all -C ps_apps
