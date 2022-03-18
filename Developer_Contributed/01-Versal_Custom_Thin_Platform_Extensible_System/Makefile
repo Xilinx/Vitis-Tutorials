@@ -122,11 +122,13 @@ endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VIVADO_VERSION)))
 	$(ECHO) "[ERROR] Vivado $(REQUIRED_VERSION) NOT found, please setup Vivado correctly!"; exit 1
 endif
+ifeq (${LINUX_BUILD_TOOL}, petalinux)
 ifndef PETALINUX_VER
 	$(ECHO) "[ERROR] Petalinux NOT found, please setup Petalinux correctly!"; exit 1
 endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(PETALINUX_VER)))
 	$(ECHO) "[ERROR] Petalinux $(REQUIRED_VERSION) NOT found, please setup Petalinux correctly!"; exit 1
+endif
 endif
 ifndef VITIS_VERSION
 	$(ECHO) "[ERROR] Vitis NOT found, please setup Vitis correctly!"; exit 1
