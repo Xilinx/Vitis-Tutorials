@@ -19,20 +19,20 @@ ECHO                  := @echo
 LINUX_YOCTO_ROOT      ?= ${HOME}/bin
 LINUX_TMP_DIR         ?= /tmp/linux/yocto
 ETH_STATIC            ?= 0
+LINUX_MACHINE         ?= vck190-versal
 
 CURR_DIR              := $(shell pwd)
-PROJ_DIR              := ${CURR_DIR}/../build
-META_DIR              := ${CURR_DIR}/../build-meta
+PROJ_DIR              := ${CURR_DIR}/../${LINUX_MACHINE}
+META_DIR              := ${CURR_DIR}/../${LINUX_MACHINE}-meta
 SYSROOT_DIR           := ${CURR_DIR}/../sysroot
 
 AUTO_CONF_SRC         := ./src/conf/auto.conf
 AUTO_CONF             := ${PROJ_DIR}/conf/auto.conf
 
-MACHINE               := vck190-versal
-IMAGE                 := petalinux-image-minimal
-
 XSA_DIR               := ${CURR_DIR}/../../platform/hw/build
 XSA                   := $(shell basename ${XSA_DIR}/*.xsa)
+
+IMAGE                 := petalinux-image-minimal
 
 RECIPE_ETH_STATIC     := ${META_DIR}/recipes-bsp/init-ifupdown
 SRC_DIR_ETH_STATIC    := ../src/init-ifupdown
@@ -72,7 +72,7 @@ update_config:
 	@echo -e "SSTATE_DIR        = \"${LINUX_YOCTO_ROOT}/sstate-cache\"" >> ${AUTO_CONF}
 	@echo -e "XSCT_STAGING_DIR  = \"${LINUX_YOCTO_ROOT}/xsct\""         >> ${AUTO_CONF}
 	@echo -e ""                                                         >> ${AUTO_CONF}
-	@echo -e "MACHINE           = \"${MACHINE}\""                       >> ${AUTO_CONF}
+	@echo -e "MACHINE           = \"${LINUX_MACHINE}\""                 >> ${AUTO_CONF}
 	@echo -e ""                                                         >> ${AUTO_CONF}
 	@echo -e "HDF_BASE          = \"file://\""                          >> ${AUTO_CONF}
 	@echo -e "HDF_PATH          = \"${XSA_DIR}/${XSA}\""                >> ${AUTO_CONF}
@@ -99,7 +99,7 @@ update_build:
 update_sysroot:
 	. ${LINUX_YOCTO_ROOT}/setupsdk ${PROJ_DIR} && bitbake ${IMAGE} -c populate_sdk
 	@install -d ${SYSROOT_DIR}
-	${PROJ_DIR}/sdk/*${MACHINE}*.sh -y -d ${SYSROOT_DIR}
+	${PROJ_DIR}/sdk/*${LINUX_MACHINE}*.sh -y -d ${SYSROOT_DIR}
 
 dump-dts:
 	cd ${BUILD_IMAGES_DIR} && ${LINUX_TMP_DIR}/sysroots-components/x86_64/dtc-native/usr/bin/dtc -I dtb -O dts -o dump.dts system.dtb

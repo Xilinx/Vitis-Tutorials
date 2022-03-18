@@ -46,8 +46,8 @@ packaged_kernel*
 tmp_kernel_pack*
 release_build
 platform/hw/board_repo
-linux/build
-linux/build-meta
+linux/vck190-versal
+linux/vck190-versal-meta
 linux/sysroot
 ip/*/.ipcache
 ip/*/_x

@@ -47,9 +47,10 @@ export LINUX_YOCTO_ROOT := ${HOME}/bin
 # Variables needed for the build process, PLEASE DO NOT MODIFY #
 ################################################################
 export PLATFORM_CUSTOM  := vck190_thin
+export LINUX_MACHINE    := vck190-versal
 
 LINUX_SRC_DIR           := ./linux/src
-LINUX_BUILD_DIR         := ./linux/build
+LINUX_BUILD_DIR         := ./linux/${LINUX_MACHINE}
 LINUX_IMAGES            := ${LINUX_BUILD_DIR}/images/linux
 XPFM_EXPORT             := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
 BOARD_REPO              := ./platform/hw/board_repo

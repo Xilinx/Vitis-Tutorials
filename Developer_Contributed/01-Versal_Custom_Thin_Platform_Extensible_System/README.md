@@ -153,7 +153,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The Yocto Makefile                                  
 | src/conf/auto.conf  | Yocto Build Configuration File
  
- - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/build/images/linux`.
+ - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/vck190-versal/images/linux`.
  - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot`; needed for `[project-root]/ps_apps` builds.
  
 </details>
@@ -268,8 +268,8 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
     - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
  ```
-root@linux:~# cd /media/sd-mmcblk0p1/
-root@linux:/media/sd-mmcblk0p1# ./vadd_s.exe a.xclbin
+root@vck190-versal:~# cd /media/sd-mmcblk0p1/
+root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_s.exe a.xclbin
 INFO:    samples = 256
 INFO:    bsize   = 512
 PASSED:  auto my_device = xrt::device(0)
@@ -300,7 +300,7 @@ PASSED:  out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
 
 PASSED:  ./vadd_s.exe
 
-root@linux:/media/sd-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin
+root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
 XAIEFAL: INFO: Resource group Static is created.
@@ -310,7 +310,7 @@ PASSED:  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}
 
 PASSED:  ./vadd_mm_cpp.exe
 
-root@linux:/media/sd-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin
+root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin
 Loading: 'a.xclbin'
 XAIEFAL: INFO: Resource group Avail is created.
 XAIEFAL: INFO: Resource group Static is created.
@@ -318,7 +318,7 @@ XAIEFAL: INFO: Resource group Generic is created.
 
 PASSED:  ./vadd_mm_ocl.exe
 
-root@linux:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin
+root@vck190-versal:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin
 Initializing ADF API...
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
@@ -433,7 +433,7 @@ PASSED:  my_graph.end()
 
 PASSED:  ./aie_dly_test.exe
 
-root@linux:/media/sd-mmcblk0p1#
+root@vck190-versal:/media/sd-mmcblk0p1#
   ```
 
 ## Notes
@@ -511,8 +511,8 @@ Click on each item below to see the detailed Revision History:
     - Petalinux and/or Yocto TMP_DIR is now set and can be changed with `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}`
     - Moved `[project-root]/petalinux` to `[project-root]/linux/petalinux`
     - Added `[project-root]/linux/yocto`
-    - `export LINUX_BUILD_TOOL := petalinux` build ends up in `[project-root]/linux/build`
-    - `export LINUX_BUILD_TOOL := yocto` build ends up in `[project-root]/linux/build` and `[project-root]/linux/build-meta`
+    - `export LINUX_BUILD_TOOL := petalinux` build ends up in `[project-root]/linux/vck190-versal`
+    - `export LINUX_BUILD_TOOL := yocto` build ends up in `[project-root]/linux/vck190-versal` and `[project-root]/linux/vck190-versal-meta`
     - Sysroot build for `export LINUX_BUILD_TOOL := petalinux` or `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/sysroot`
     - Updated `[project-root]/linux/src/device-tree/files/system-user.dtsi` for proper Ethernet PHY configuration
   - platform/sw
