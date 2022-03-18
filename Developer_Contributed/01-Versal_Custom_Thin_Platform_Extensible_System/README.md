@@ -48,7 +48,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - `export ETH_STATIC := 1`; please setup your required Ethernet Static Configuration in `[project-root]/petalinux/src/init-ifupdown/interfaces`.
     - Remark: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation - so build with `export TARGET := hw_emu` - then the recommandation is to use `export ETH_STATIC := 0` (DHCP).
   - `[project-root]/Makefile`: the generated tmp-dir by `[project-root]/linux/petalinux/Makefile` ends up in `/tmp/linux/petalinux`. 
-    - If you want to place it somewhere else you need to change `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}` towards your requered location. 
+    - If you want to place it somewhere else you need to change `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}` towards your required location. 
       - Be aware that `[your_tmp_dir]` may **NOT** be located on an NFS-drive!
   - End result: 
     - `export TARGET := hw`: `[project-root]/package_output_hw/sd_card/*` can be used for FAT-32 SD-card (partition); or `[project-root]/package_output_hw/sd_card.img` can be used.
@@ -117,13 +117,13 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | --------------------|--------------------------------------------------------------
 | src/device-tree/*   | Some device-tree changes needed for VCK190              
 | src/boot_custom.bif | bif file needed to have a correct BOOT.BIN in the Vitis packager
+| src/init-ifupdown/* | Configuration files needed for `export ETH_STATIC := 1`
  
  `[project-root]/linux/petalinux` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
 | Makefile            | The Petalinux Makefile                                  
 | src/config          | A script used to exchange/add Petalinux configuration items
-| src/init-ifupdown/* | Configuration files needed for `export ETH_STATIC := 1`
 
  - Builds all required Petalinux images which end up in `[project-root]/linux/build/images/linux`.
  - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot` (needed for `[project-root]/ps_apps` build).
