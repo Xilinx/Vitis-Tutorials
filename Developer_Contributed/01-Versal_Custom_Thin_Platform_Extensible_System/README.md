@@ -15,7 +15,7 @@ The Versal VCK190 System Example Design full Makefile build-flow builds the whol
   1. version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2021.2
   2. board_repo:    Downloads the board files for pre-production and es1 from the Xilinx GitHub 
   3. xsa:           Building the thin platform xsa (only pre-synth)
-  4. linux:         Building linux and sysroot (with Petalinux)
+  4. linux:         Building linux and sysroot (with Petalinux or Yocto)
   5. xpfm:          Building the Vitis Platform
   6. bif:           Copy over necessary (Peta)linux files to the generated software platform (required by the Vitis packager)
   7. ip:            Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
@@ -32,27 +32,46 @@ The following diagram explains the build-flow dependencies.
  
 ### Build & Prerequisites
 In the `[project-root]` you can start the full build with `make all` **after** taking following prerequisites into account:
-  - **Before starting the build, please correctly setup the 2021.2 version of Vivado, Petalinux and Vitis**
+  - **Before starting the build, please correctly setup the 2021.2 version of Vivado, Vitis and Petalinux/Yocto**
     - If the tools are not setup correctly the build will stop with an ERROR message telling you what is not correctly setup!
+      - Remark: The Yocto Tool setup is not verified!  
     - Be sure that the 2021.2 Y2K22 patch is installed (This is not verified)! 
       - More info can be found here: https://support.xilinx.com/s/article/76960?language=en_US
   - Everything is in the GitHub repository; no extra files are needed. Although some are downloaded from GitHub.
-  - `[project-root]/Makefile`: `export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S` for pre-production board version (default); **change it to `export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S-es1` for es1 board version**.
-  - `[project-root]/Makefile`: `export TARGET := hw` for targetting a VCK190 (default); **change it to `export TARGET := hw_emu` to target hardware emulation**.
+  - `[project-root]/Makefile` - `export DEVICE_NAME` options:
+    - `export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S` for pre-production board version (default).
+    - `export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S-es1` for es1 board version (change if needed).
+  - `[project-root]/Makefile` - `export TARGET` options:
+    - `export TARGET := hw` for targetting a VCK190 board (default).
+    - `export TARGET := hw_emu` for targetting hardware emulation (change if needed).
     - The build flow supports both TARGET's in the same `[project-root]`; but you need to execute them yourself the one after the other if you need both results!
-    - Some generated directories are depending on the TARGET and are further shown as `[dir]_${TARGET}`.
-  - `[project-root]/Makefile`: `export ILA_EN := 0` for disabling the ILA (default); **change it to `export ILA_EN := 1` to enable the ILA**.
+    - Some generated directories are depending on the TARGET selection and are further shown as `[dir]_${TARGET}`.
+  - `[project-root]/Makefile` - `export ILA_EN` options:
+    - `export ILA_EN := 0` for disabling the ILA (default)
+    - `export ILA_EN := 1` for enabling the ILA (change if needed).
     - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY (re-)build vitis with `export TARGET := hw_emu`! **NO** need for a full (re-)build in that respect! 
-  - `[project-root]/Makefile`: `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default); **change it to `export ETH_STATIC := 1` for Ethernet Static Configuration**.
-    - `export ETH_STATIC := 0`; **NO** extra configuration needed.
-    - `export ETH_STATIC := 1`; please setup your required Ethernet Static Configuration in `[project-root]/petalinux/src/init-ifupdown/interfaces`.
-    - Remark: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation - so build with `export TARGET := hw_emu` - then the recommandation is to use `export ETH_STATIC := 0` (DHCP).
-  - `[project-root]/Makefile`: the generated tmp-dir by `[project-root]/linux/petalinux/Makefile` ends up in `/tmp/linux/petalinux`. 
+  - `[project-root]/Makefile` - `export LINUX_BUILD_TOOL` options:
+    - `export LINUX_BUILD_TOOL := petalinux` to use Petalinux as linux build tool (default)
+    - `export LINUX_BUILD_TOOL := yocto` to use Yocto as linux build tool (change if needed).
+      - `[project-root]/Makefile` - `export LINUX_YOCTO_ROOT` options: 
+        - Please setup `export LINUX_YOCTO_ROOT := ${HOME}/bin` to your Yocto install directory. 
+        - Please look in the notes below for more information on how to install/setup Yocto.
+  - `[project-root]/Makefile` - `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}` options:
+    - The `LINUX_TMP_DIR` generated by Petalinux defaults to `/tmp/linux/petalinux`.
+    - The `LINUX_TMP_DIR` generated by Yocto defaults to `/tmp/linux/yocto`.  
     - If you want to place it somewhere else you need to change `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}` towards your required location. 
-      - Be aware that `[your_tmp_dir]` may **NOT** be located on an NFS-drive!
+    - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS-drive!
+  - `[project-root]/Makefile` - `export ETH_STATIC` options:
+    - `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default).
+    - `export ETH_STATIC := 1` for Ethernet Static Configuration (change if needed).
+      - Please setup your required Ethernet Static Configuration in `[project-root]/linux/src/init-ifupdown/interfaces`.
+    - Remark: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation - so build with `export TARGET := hw_emu` - then the recommandation is to use `export ETH_STATIC := 0` (DHCP).
   - End result: 
-    - `export TARGET := hw`: `[project-root]/package_output_hw/sd_card/*` can be used for FAT-32 SD-card (partition); or `[project-root]/package_output_hw/sd_card.img` can be used.
-    - `export TARGET := hw_emu`: `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
+    - `export TARGET := hw`: 
+      - `[project-root]/package_output_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
+      - `[project-root]/package_output_hw/sd_card.img` can be used to be put on an SD-card with a Windows tool like `Win32 Disk Imager` 
+    - `export TARGET := hw_emu`: 
+      - `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
 
 ### Custom Thin Base Platform
 The GENERATED Custom Thin Base Platform BD:
@@ -110,14 +129,14 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
  
 </details>
 <details>
-  <summary> make all -C linux/petalinux </summary>
+  <summary> make all -C linux/${LINUX_BUILD_TOOL} </summary>
 
 `[project-root]/linux` Directory/file structure:
-| Directory/file      | Description                                             
-| --------------------|--------------------------------------------------------------
-| src/device-tree/*   | Some device-tree changes needed for VCK190              
-| src/boot_custom.bif | bif file needed to have a correct BOOT.BIN in the Vitis packager
-| src/init-ifupdown/* | Configuration files needed for `export ETH_STATIC := 1`
+| Directory/file                           | Description                                             
+| -----------------------------------------|-------------------------------------------------------------------
+| src/device-tree/files/system-user.dtsi   | Some device-tree changes needed for VCK190              
+| src/init-ifupdown/interfaces             | Configuration file needed for builds with `export ETH_STATIC := 1`
+| src/boot_custom.bif                      | bif file needed to have a correct BOOT.BIN in the Vitis packager
  
  `[project-root]/linux/petalinux` Directory/file structure:
 | Directory/file      | Description                                             
@@ -125,7 +144,13 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The Petalinux Makefile                                  
 | src/config          | A script used to exchange/add Petalinux configuration items
 
- - Builds all required Petalinux images which end up in `[project-root]/linux/build/images/linux`.
+ `[project-root]/linux/yocto` Directory/file structure:
+| Directory/file      | Description                                             
+| --------------------|--------------------------------------------------------------
+| Makefile            | The Yocto Makefile                                  
+| src/conf/auto.conf  | Yocto Build Configuration File
+ 
+ - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/build/images/linux`.
  - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot` (needed for `[project-root]/ps_apps` build).
  
 </details>
@@ -138,13 +163,14 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The platform xsa/xpfm Makefile                                  
 | sw/*                | The Vitis platform Makefile and sources
 
- - Builds the output files needed for ip and Vitis -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` and some generated subfolders.
+ - Builds the platform needed for ip and Vitis   -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` 
+ - Builds the software platform needed for Vitis -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/sw/*`
  
 </details>
 <details>
   <summary> make bif </summary>
 
- - Copies over some (peta)linux-generated files to the software platform. These are necessary for a correct Vitis-build.
+ - Copies over the linux (Petalinux or Yocto) generated image-files to the software platform. These are necessary for a correct Vitis-build.
  
 </details>
 <details>
@@ -422,6 +448,8 @@ root@linux:/media/sd-mmcblk0p1#
     - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, re-running `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
   - `export TARGET := hw_emu`
     - When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation; please read this documentation carefully: https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU
+  - `export LINUX_BUILD_TOOL := yocto`
+    - More information how to install/setup and build Yocto can be found in: https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto
   - Simulation is **NOT** part and **NOT** demonstrated in this Tutorial!
   
 ## Design Considerations
@@ -464,7 +492,7 @@ Click on each item below to see the detailed Revision History:
 <details>
   <summary> March 2022 </summary>
  
-  - platform:
+  - platform/hw:
     - Removed some ip and connections to end-up with the bare minimum base platform needed
       - Vitis nicely adds and changes IP and connections as required
     - Exposed 1 extra clock via BUFG (clk_out2) next to the 4 exisiting clocks via MBUFGCE (clk_out1_o1-4)
@@ -474,26 +502,41 @@ Click on each item below to see the detailed Revision History:
       - id=3 -> clk_out1_o4 -> 62.5MHz
       - id=4 -> clk_out2    -> 333MHz
   - linux:
-    - Updated system-user.dtsi for proper Ethernet PHY configuration
-    - Preperation to later on add an option for other linux build tools 
+    - Added Yocto as alternative Linux build tool option with:
+      - `[project-root]/Makefile` - `export LINUX_BUILD_TOOL := yocto` 
+      - `[project-root]/Makefile` - `export LINUX_YOCTO_ROOT := ${HOME}/bin` 
+    - Petalinux and/or Yocto TMP_DIR is now set and can be changed with `export LINUX_TMP_DIR := /tmp/linux/${BUILD_LINUX_TOOL}`
+    - Moved `[project-root]/petalinux` to `[project-root]/linux/petalinux`
+    - Added `[project-root]/linux/yocto`
+    - `linux/petalinux` build ends up in `[project-root]/linux/build`
+    - `linux/yocto` build ends up in `[project-root]/linux/build` and `[project-root]/linux/build-meta`
+    - Sysroot build for `linux/petalinux` and/or `linux/yocto` ends up in `[project-root]/linux/sysroot`
+    - Updated `[project-root]/linux/src/device-tree/files/system-user.dtsi` for proper Ethernet PHY configuration
+  - platform/sw
+    - Removed linux dependencies; since not required
+    - Added Ethernet connectivity support for hardware emulation (`export TARGET := hw_emu`)
+  - bif:
+    - Added Image and rootfs.cpio.gz.u-boot copy to keep proper naming when `export LINUX_BUILD_TOOL := yocto`
   - ip:
     - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - Renamed vadd to vadd_mm (vadd memory mapped kernel)
   - ps_apps:
     - Added vadd_s to check the vadd_s streaming kernels
-    - Renamed vadd_cpp and vadd_ocl to vadd_mm_cpp and vadd_mm_ocl to check the vadd memory mapped kernel
+    - Renamed vadd_cpp to vadd_mm_cpp to check the vadd memory mapped kernel
+    - Renamed vadd_ocl to vadd_mm_ocl to check the vadd memory mapped kernel
     - Using explicit "kernel:{kernel_id}" for kernel selection
     - Streamline print out messages
   - vitis:
-    - Added vitis/src/system.cfg as dependency for the Vitis Linker
-    - Added vitis/src/ila_0_bd.cfg as dependency for the Vitis Linker when build with 'ILA_EN=1'
-    - Disable ILA when building vitis with 'TARGET=hw_emu'
+    - Added `vitis/src/system.cfg` as dependency for the Vitis Linker
+    - Added `vitis/src/ila_0_bd.cfg` as dependency for the Vitis Linker when build with 'export ILA_EN := 1'
+    - Disable ILA when building vitis with 'export TARGET := hw_emu'
     - counter and subtractor kernels running @ 500MHz (id=0 -> clk_out1_o1) 
     - vadd_mm (vadd memory mapped kernel) running @ 250MHz (id=1 -> clk_out1_o2)
     - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s (vadd_s streaming kernels) running @ 333MHz (id=4 -> clk_out2)
   - general:
     - Added "make clean_vitis" to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
     - Makefiles: Streamlining and finetuning
+    - `README.md` updated with all new features
  
 </details>
 
