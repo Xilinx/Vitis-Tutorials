@@ -35,7 +35,7 @@ FILE_ROOT_FS_CFG      := ${PROJ_DIR}/project-spec/configs/rootfs_config
 SRC_DIR_DEVICE_TREE   := ../src/device-tree
 DEST_DIR_DEVICE_TREE  := ${PROJ_DIR}/project-spec/meta-user/recipes-bsp/device-tree
 
-SRC_DIR_ETH_STATIC    := ./src/init-ifupdown
+SRC_DIR_ETH_STATIC    := ../src/init-ifupdown
 DEST_DIR_ETH_STATIC   := ${PROJ_DIR}/project-spec/configs/init-ifupdown
 
 .PHONY: help all clean
