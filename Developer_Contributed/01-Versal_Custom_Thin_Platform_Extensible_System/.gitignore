@@ -47,6 +47,7 @@ tmp_kernel_pack*
 release_build
 platform/hw/board_repo
 linux/build
+linux/build-meta
 linux/sysroot
 ip/*/.ipcache
 ip/*/_x

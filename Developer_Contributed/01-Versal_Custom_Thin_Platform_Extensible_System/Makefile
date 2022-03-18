@@ -33,11 +33,15 @@ export ILA_EN           := 0
 # ETH_STATIC = 0 (ETH DHCP Enabled) or 1 (ETH Static Enabled)
 export ETH_STATIC       := 0
 
-# LINUX_BUILD_TOOL = petalinux (PLEASE DO NOT MODIFY)
+# LINUX_BUILD_TOOL = petalinux or yocto
 export LINUX_BUILD_TOOL := petalinux
 
 # LINUX_TMP_DIR = Any dir which is not NFS
 export LINUX_TMP_DIR    := /tmp/linux/${LINUX_BUILD_TOOL}
+
+# LINUX_YOCTO_ROOT = Directory where yocto tools are installed
+# Used ONLY when LINUX_BUILD_TOOL is set to yocto!
+export LINUX_YOCTO_ROOT := ${HOME}/bin
 
 ################################################################
 # Variables needed for the build process, PLEASE DO NOT MODIFY #
@@ -79,7 +83,7 @@ help::
 	$(ECHO) "      PRE_SYNTH = False"
 	$(ECHO) ""
 	$(ECHO) "  make linux"
-	$(ECHO) "      Builds Linux related RootFS, U-boot, etc. using Petalinux"
+	$(ECHO) "      Builds Linux related RootFS, U-boot, etc. using Petalinux or Yocto"
 	$(ECHO) "      * Requires xsa rule to be completed"
 	$(ECHO) ""
 	$(ECHO) "  make xpfm"
