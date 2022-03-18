@@ -513,11 +513,11 @@ Click on each item below to see the detailed Revision History:
     - Added `[project-root]/linux/yocto`
     - `export LINUX_BUILD_TOOL := petalinux` build ends up in `[project-root]/linux/build`
     - `export LINUX_BUILD_TOOL := yocto` build ends up in `[project-root]/linux/build` and `[project-root]/linux/build-meta`
-    - Sysroot build for `export LINUX_BUILD_TOOL := petalinux` or export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/sysroot`
+    - Sysroot build for `export LINUX_BUILD_TOOL := petalinux` or `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/sysroot`
     - Updated `[project-root]/linux/src/device-tree/files/system-user.dtsi` for proper Ethernet PHY configuration
   - platform/sw
     - Removed linux dependencies; since not required
-    - Updated `[project-root]/platform/sw/src/qemu/lnx/qemu_args.txt` for adding Ethernet connectivity support for hardware emulation (`export TARGET := hw_emu`)
+    - Updated `[project-root]/platform/sw/src/qemu/lnx/qemu_args.txt` for adding Ethernet connectivity support (ssh/scp/...) for hardware emulation (`export TARGET := hw_emu`)
   - bif:
     - Added Image and rootfs.cpio.gz.u-boot copy to keep proper naming when `export LINUX_BUILD_TOOL := yocto`
   - ip:
