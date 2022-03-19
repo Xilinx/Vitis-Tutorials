@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -15,22 +15,10 @@ In this section of the tutorial, you will learn how to add PL kernels in HLS int
 
 You now have a working application to be run on the AI Engine array. What you need now is to modify the AI Engine graph to be used in hardware and connect the AI Engine array to the PL using the Vitis compiler (V++).
 
-1. Open the `project.cpp` file and replace the following line:
-```
-simulation::platform<1,1> platform("data/input.txt", "data/output.txt");
-```
-with
+1. The main function in `project.cpp` will not be used in the hardware run, so you need to add a switch (`#if defined(...)`) so that main will not be taken into account for the hardware build.
 
 ```
-PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");
-PLIO *out0 = new PLIO("DataOut1",adf::plio_32_bits, "data/output.txt");
-simulation::platform<1,1> platform(in0, out0);
-```
-
-2. The main function in `project.cpp` will not be used in the hardware run, so you need to add a switch (`#ifdef __AIESIM__`) so that main will not be taken into account for the hardware build.
-
-```
-#ifdef __AIESIM__
+#if defined(__AIESIM__) || defined(__X86SIM__) || defined(__ADF_FRONTEND__)
 
 int main(void) {
   mygraph.init();
@@ -41,7 +29,9 @@ int main(void) {
 #endif
 ```
 
-3. Change the ***Active build configuration*** to ***Hardware*** and rebuild the project.
+2. Change the ***Active build configuration*** to ***Hardware*** using the arrow next to the hammer icon and rebuild the AI Engine application project.  
+
+>**Note**: Make you only build the AI Engine application and not the full system as the build of the full system will fail due to missing components that we will add in the next steps of this tutorial.
 
 ### Step 2. Add PL Kernels
 
@@ -72,13 +62,13 @@ Now that you have imported the kernels, you need to tell the Vitis linker how to
 Create a `system.cfg` file with a text editor and add the following lines.
 ```
 [connectivity]
-stream_connect=mm2s_1.s:ai_engine_0.DataIn1
-stream_connect=ai_engine_0.DataOut1:s2mm_1.s
+stream_connect=mm2s_1.s:ai_engine_0.mygraph_in
+stream_connect=ai_engine_0.mygraph_out:s2mm_1.s
 ```
 
 Note that as per the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=yii1603912637443.html), the naming convention for the compute units (or kernel instances) are `<kernel>_#`, where # indicates the CU instance. Thus the CU names built corresponding to the kernels `mm2s` and `s2mm` in your project are respectively `mm2s_1` and `s2mm_1`.
 The ```stream_connect``` option is defined as `<compute_unit_name>.<kernel_interface_name>:<compute_unit_name>.<kernel_interface_name>`.
-For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit name) called `s` (kernel interface name) to the `DataIn1` (interface name) input of the graph in the `ai_engine_0` (compute unit name) IP you need the following option: `stream_connect=mm2s_1.s:ai_engine_0.DataIn1`.
+For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit name) called `s` (kernel interface name) to the `mygraph_in` (interface name) input of the graph in the `ai_engine_0` (compute unit name) IP you need the following option: `stream_connect=mm2s_1.s:ai_engine_0.mygraph_in`.
 
 3. Right-click the ***simple_application_system_hw_link*** and click ***import sources***. Select the ```system.cfg``` file created and add it to the ***simple_application_system_hw_link*** folder.
 
@@ -88,7 +78,7 @@ For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit 
 
       ![missing image](images/hw_link_cfg3.png)
 
-Add the following option to link your configuration file:
+Add the following option in the ***V++ command line options*** section to link your configuration file:
 ```
 --config ../system.cfg
 ```

@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -17,7 +17,10 @@ In this section of the tutorial, you will learn how to create a new AI Engine ap
 
 2. On the Welcome Page, click on ***Create Application Project*** or click ***File → New →  Application Project***.
 
-3. On the platform page, select the ***base_pfm_vck190*** platform you just created in last step. If you do not use the same workspace from last step, click on ***Add*** and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
+3. On the platform page, select the platform you want to use:
+* If you have created the platform following step 1, select ***base_pfm_vck190*** platform you just created. If you do not use the same workspace from last step, click on ***Add*** and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
+* If you have skipped step 1, select the VCK190 base platform which can be downloaded from Xilinx.com
+>**Note**: Make sure to read and follow the Vitis Software Platform Release Notes (v2021.2) for setting up software and installing the VCK190 base platform.
 
 4. Set the application name as ***simple_application*** and select ***ai_engine*** for the processor.
 

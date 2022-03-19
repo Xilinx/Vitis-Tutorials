@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -37,14 +37,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 7. Import the `aie_control.cpp` file from the AI Engine application project (`simple_application/Hardware/Work/ps/c_rts/aie_control.cpp`).
 
-8. Import the following source files from the `src` folder
-
-   * `main.cpp`
-   * `platform.cpp`
-   * `platform.h`
-   * `platform_config.h`
-
-    ![missing image](images/ps_app_import.png)
+8. Import `main.cpp` from the `src` folder from the git repository
 
 Go through the `main.cpp` file. You can see that the code is initializing the input data and the memory space for the output data. One thing to note is the use of the `.init()` and `.run()` APIs to control the AI Engine.
 
