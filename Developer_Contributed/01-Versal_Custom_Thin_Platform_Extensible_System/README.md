@@ -527,6 +527,7 @@ Click on each item below to see the detailed Revision History:
   - ip:
     - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - Renamed vadd to vadd_mm (vadd memory mapped kernel)
+    - Removed dependency on TARGET for `vitis --compile`; since NOT required
   - ps_apps:
     - Added vadd_s to check the vadd_s streaming kernels
     - Renamed vadd_cpp to vadd_mm_cpp to check the vadd memory mapped kernel
