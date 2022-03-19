@@ -195,7 +195,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | mm2s_vadd_s/*       | XRT-controlled HLS memory-to-streaming kernel used with vadd_s Makefile and sources
 | s2mm_vadd_s/*       | XRT-controlled HLS streaming-to-memory kernel used with vadd_s Makefile and sources
 
- - Builds the output files needed for Vitis linker -> `[project-root]/ip/aie/libadf.a` and `[project-root]/ip/xo_${TARGET}/*.xo`
+ - Builds the output files needed for Vitis linker -> `[project-root]/ip/aie/libadf.a` and `[project-root]/ip/xo_hw/*.xo`
  - Kernel structure/flow:
     - vadd_mm is a memory mapped kernel
     - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
@@ -466,7 +466,7 @@ root@vck190-versal:/media/sd-mmcblk0p1#
     - The `[PS Application].exe` (extension **MUST** be .exe) **MUST** end up in the `[project-root]/ps_apps/exe` dir.
   - `[project-root]/ip`: Kernels can be added by just adding a sub-project in `[project-root]/ip`.
     - **You will need to update the `[project-root]/vitis/src/system.cfg` file to setup the correct connections/clocks.**
-    - A `[kernel].xo` file **MUST** end up in the `[project-root]/ip/xo_${TARGET}` dir
+    - A `[kernel].xo` file **MUST** end up in the `[project-root]/ip/xo_hw` dir
     - An extra aie graph **MUST** be added in the `[project-root]/ip/aie` dir, the `[project-root]/ip/aie/Makefile` will need adaptations.
 
 ## References
