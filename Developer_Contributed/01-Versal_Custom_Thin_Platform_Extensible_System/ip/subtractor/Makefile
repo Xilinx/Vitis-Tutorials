@@ -16,13 +16,12 @@
 
 ECHO        := @echo
 
-TARGET      ?= hw
 DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
 
 IP_TCL      := ./pack_kernel.tcl
 KERNEL      := subtractor
 KERNEL_SRC  := ./src/* ./${KERNEL}.xdc
-XO          := ../xo_${TARGET}/${KERNEL}.xo
+XO          := ../xo_hw/${KERNEL}.xo
 
 help::
 	$(ECHO) "Makefile Usage:"

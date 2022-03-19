@@ -26,7 +26,7 @@ LINUX_KERNEL      := ${XPFM_EXPORT}/sw/Image
 LINUX_ROOTFS      := ${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot
 
 IP_DIR            := ../ip
-XO                := $(wildcard ${IP_DIR}/xo_${TARGET}/*.xo)
+XO                := $(wildcard ${IP_DIR}/xo_hw/*.xo)
 GRAPH_O           := ${IP_DIR}/aie/libadf.a
 XCLBIN            := my.xclbin
 
