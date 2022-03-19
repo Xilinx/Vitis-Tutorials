@@ -534,8 +534,8 @@ Click on each item below to see the detailed Revision History:
     - Using explicit "kernel:{kernel_id}" for kernel selection
     - Streamline print out messages
   - vitis:
-    - Added `vitis/src/system.cfg` as dependency for the Vitis Linker
-    - Added `vitis/src/ila_0_bd.cfg` as dependency for the Vitis Linker when build with 'export ILA_EN := 1'
+    - Added `[project-root]/vitis/src/system.cfg` as dependency for the Vitis Linker
+    - Added `[project-root]/vitis/src/ila_0_bd.cfg` as dependency for the Vitis Linker when build with 'export ILA_EN := 1'
     - Disable ILA when building vitis with 'export TARGET := hw_emu'
     - counter and subtractor kernels running @ 500MHz (id=0 -> clk_out1_o1) 
     - vadd_mm (vadd memory mapped kernel) running @ 250MHz (id=1 -> clk_out1_o2)
@@ -543,8 +543,8 @@ Click on each item below to see the detailed Revision History:
   - general:
     - Added "make clean_vitis" to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
     - Makefiles: Streamlining and finetuning
-    - Makefiles: Improved dependencies to only rebuild what's needed to be rebuilded; and skip rebuilding when not required
-    - `README.md` updated with all new features
+    - Makefiles: Improved dependencies to only rebuild what's needed to be rebuilded after a modification.
+    - `[project-root]/README.md` updated with all new features
  
 </details>
 
