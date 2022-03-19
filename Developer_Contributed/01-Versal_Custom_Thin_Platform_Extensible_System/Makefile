@@ -154,6 +154,9 @@ ip:
 	$(MAKE) all -C ip
 
 bif:
+	$(MAKE) ${XPFM_EXPORT}/sw/Image
+
+${XPFM_EXPORT}/sw/Image: ${LINUX_IMAGES}/Image
 	cp -f ${LINUX_IMAGES}/u-boot.elf             ${XPFM_EXPORT}/sw/u-boot.elf
 	cp -f ${LINUX_IMAGES}/system.dtb             ${XPFM_EXPORT}/sw/system.dtb
 	cp -f ${LINUX_IMAGES}/bl31.elf               ${XPFM_EXPORT}/sw/bl31.elf

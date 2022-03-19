@@ -47,7 +47,7 @@ BUILD_IMAGES_DIR      := ${PROJ_DIR}/images/linux
 
 all: ${PROJ_DIR} 
 
-${PROJ_DIR}: ${XSA_DIR}
+${PROJ_DIR}: ${XSA_DIR} ${AUTO_CONF_SRC}
 	make clean
 	make create
 	make update_config
