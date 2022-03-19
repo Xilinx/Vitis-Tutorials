@@ -543,7 +543,7 @@ Click on each item below to see the detailed Revision History:
   - general:
     - Added "make clean_vitis" to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
     - Makefiles: Streamlining and finetuning
-    - Makefiles: Improved dependencies to only rebuild what's needed to be rebuilded after a modification.
+    - Makefiles: Improved dependencies to only rebuild what's needed to be rebuilded after a modification; nothing more, nothing less
     - `[project-root]/README.md` updated with all new features
  
 </details>
