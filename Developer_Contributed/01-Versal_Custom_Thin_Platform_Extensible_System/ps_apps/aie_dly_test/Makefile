@@ -53,7 +53,7 @@ help::
 
 all: $(APP_EXE)
 
-$(APP_EXE): $(APP_SRC) $(APP_CTRL_SRC)
+$(APP_EXE): $(APP_SRC) $(APP_CTRL_SRC) ${SYSROOT}
 	${GCC} ${GCC_C_FLAGS} $(APP_SRC) $(APP_CTRL_SRC) ${GCC_INCLUDES} $(GCC_L_FLAGS) -o $(APP_EXE)
 
 clean:
