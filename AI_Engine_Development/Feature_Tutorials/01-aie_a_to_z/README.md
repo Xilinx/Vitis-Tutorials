@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -9,17 +9,21 @@
 
 # A to Z Bare-metal Flow
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels.
-The tutorial is based on the 2021.2 Vitis™ unified software platform.
+The tutorial is based on the 2022.1 Vitis™ unified software platform.
+
+>**Note**: This tutorial has been written for multiple versions of the tools. Each version available can be found in the specific github branch. The recommendation is to use the latest version available.
 
 The flow is broken into four different steps shown in the following diagram.
 
 ![missing image](images/diagram.png)
 
 
-<p align="center"><a href="./01-custom_base_platform_creation.md">Start from step 1</a></b></p>
+<p align="center"><a href="./01-custom_base_platform_creation.md">Start from step 1 - Platform Creation (optional)</a></b></p>
+
+<p align="center"><a href="./02-aie_application_creation.md">Start from step 2 - Create the AI Engine Application</a></b></p>
 
 
 

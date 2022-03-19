@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -13,6 +13,8 @@
 
 A platform is the starting point of your design and will be used to build Vitis™ software platform applications.
 
+>**Note**: AMD-Xilinx recommends using the VCK190 base platform provided on Xilinx.com as a starting point for designs. This page is intended for users who would like to understand how the base platform is generated. Other users can start directly from <a href="./02-aie_application_creation.md">step 2 - Create the AI Engine Application</a></b>.
+
 In this first section of the tutorial an example of how to create a new platform is shown. This starts with building the hardware system using the AI Engine in the Vivado® Design Suite.
 
 This is in most ways a traditional Vivado design. You are building the platform, that is, the part of the design that you do not want the Vitis tools to configure or modify. This can include completely unrelated logic, any hierarchy you want to have in the design, but there are some rules that you must follow:
@@ -21,7 +23,7 @@ This is in most ways a traditional Vivado design. You are building the platform,
 - Your design must have at least one clock that you will expose to Vitis for use with any kernels that it adds
 This clock must have an associated `proc_sys_reset` block.
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). 
 
 
 ### Step 1. Build Versal Extensible Embedded Platform Example Design in Vivado
@@ -32,11 +34,11 @@ This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/b
 
 3. Name this project as ***custom_pfm_vck190*** and click ***Next***.
 
-4. In the board selection page, select ***VCK190 ES1 Evaluation Platform***. If you are going to target other platform, you may select others. Click ***Next***.
+4. In the board selection page, select ***VCK190 Evaluation Platform***. If you are going to target other platform, you may select others. Click ***Next***.
 
 5. In the design preset page, make the following changes:
 
-      ![missing image](images/211_design_preset_config.png)
+      ![missing image](images/221_design_preset_config.png)
 
 6. Click ***Finish*** to complete the example design creation phase and this will open up the Vivado project with the template design you just created.
 You can open the block design to view the details of the platform design.
@@ -44,24 +46,24 @@ By using the pre-built template, you can easily get a validated hardware design 
 
       ![missing image](images/211_block_design_complete.png)
 
-7. Click ***Generate Block Design*** from the Flow Navigator panel on the left and select ***Global*** as the synthesis option. Click ***Generate*** and wait for the process to complete.
+7. Click ***Generate Block Design*** from the Flow Navigator panel on the left, click ***Generate*** and wait for the process to complete.
 
 8. Click ***File*** from the menu and select ***Export Platform***.
 
-   a. On the first page, select ***Hardware*** as the platform type (this tutorial runs on hardware).
+   a. On the second page, select ***Hardware and hardware emulation*** as the platform type.
 
-      ![missing image](images/212_export_xsa_pg1.png)
+      ![missing image](images/221_export_xsa_pg1.png)
 
-   b. On the second page select ***Pre-synthesis***.
+   b. On the third page select ***Pre-synthesis***.
 
       ![missing image](images/export_xsa_pg2.png)
 
-   c. On the third page, add the name of the platform.
+   c. On the fourth page, add the name of the platform.
 
       ![missing image](images/export_xsa_updated.PNG)
       Here we name the board as "xd" because of software limitation.
 
-   d. On the fourth page, set the name of the XSA.
+   d. On the fourth page, set the name of the XSA and click ***Finish***.
 
       ![missing image](images/export_xsa_pg4.png)
 

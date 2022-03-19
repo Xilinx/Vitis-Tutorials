@@ -38,7 +38,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "platform.h"
 #include "xil_printf.h"
 #include "xil_cache.h"
 #include "xil_io.h"
@@ -124,8 +123,6 @@ int main()
 	int32_t* out;
 	int status;
 
-    init_platform();
-
     print("Starting AI Engine A to Z Application\n\r");
     printf("------------------------------------\n\n");
     printf("Beginning test\n");
@@ -206,6 +203,5 @@ int main()
     	print("Successfully ran AI Engine A to Z Application with no error");
     }
 
-    cleanup_platform();
     return 0;
 }
