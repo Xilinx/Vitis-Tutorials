@@ -529,7 +529,7 @@ Click on each item below to see the detailed Revision History:
   - ip:
     - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - Renamed vadd to vadd_mm (vadd memory mapped kernel)
-    - Removed dependency on `TARGET` for `vitis --compile`; since **NOT** required
+    - Removed dependency on `TARGET`; since **NOT** required
   - ps_apps:
     - Added vadd_s to check the vadd_s streaming kernels
     - Renamed vadd_cpp to vadd_mm_cpp to check the vadd memory mapped kernel
@@ -538,10 +538,10 @@ Click on each item below to see the detailed Revision History:
     - Streamline print out messages
     - Added dependencies on `${SYSROOT}` and on **ALL** source files from `./src/`
   - vitis:
-    - Disable ILA when building vitis with `export TARGET := hw_emu`
     - counter and subtractor kernels running @ 500MHz (id=0 -> clk_out1_o1) 
     - vadd_mm (vadd memory mapped kernel) running @ 250MHz (id=1 -> clk_out1_o2)
     - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s (vadd_s streaming kernels) running @ 333MHz (id=4 -> clk_out2)
+    - Disable ILA when building vitis with `export TARGET := hw_emu`
     - Added `[project-root]/vitis/src/system.cfg` as dependency for the Vitis Linker
     - Added `[project-root]/vitis/src/ila_0_bd.cfg` as dependency for the Vitis Linker when build with `export ILA_EN := 1`
     - Added `${GRAPH_O}` as dependency for the vitis linker, since you need to perform extra steps to be able to remove this dependency
