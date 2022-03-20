@@ -529,7 +529,7 @@ Click on each item below to see the detailed Revision History:
   - ip:
     - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - Renamed vadd to vadd_mm (vadd memory mapped kernel)
-    - Removed dependency on `TARGET`; since **NOT** required
+    - Removed dependency on `${TARGET}`; since **NOT** required
   - ps_apps:
     - Added vadd_s to check the vadd_s streaming kernels
     - Renamed vadd_cpp to vadd_mm_cpp to check the vadd memory mapped kernel
@@ -548,10 +548,10 @@ Click on each item below to see the detailed Revision History:
   - general:
     - Improved dependencies in almost all `Makefile`s to **ONLY** rebuild what's needed to be rebuild after a modification
     - Added following `[project-root]/Makefile` commands:
-      - `make all_targets` to be able to build everything for **ALL** `TARGET`'s
+      - `make all_targets` to be able to build everything for **ALL** `${TARGET}`'s
       - `make clean_vitis` to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
-      - `make ultraclean_vitis` to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform for **ALL** `TARGET`'s
-      - `make ultraclean` to be able to clean everything for **ALL** `TARGET`'s
+      - `make ultraclean_vitis` to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform for **ALL** `${TARGET}`'s
+      - `make ultraclean` to be able to clean everything for **ALL** `${TARGET}`'s
     - `[project-root]/README.md` updated with all new features
  
 </details>
