@@ -156,7 +156,7 @@ ip:
 bif:
 	$(MAKE) ${XPFM_EXPORT}/sw/Image
 
-${XPFM_EXPORT}/sw/Image: ${LINUX_IMAGES}/Image
+${XPFM_EXPORT}/sw/Image: ${LINUX_IMAGES}/Image ${LINUX_SRC_DIR}/boot_custom.bif
 	cp -f ${LINUX_IMAGES}/u-boot.elf             ${XPFM_EXPORT}/sw/u-boot.elf
 	cp -f ${LINUX_IMAGES}/system.dtb             ${XPFM_EXPORT}/sw/system.dtb
 	cp -f ${LINUX_IMAGES}/bl31.elf               ${XPFM_EXPORT}/sw/bl31.elf
