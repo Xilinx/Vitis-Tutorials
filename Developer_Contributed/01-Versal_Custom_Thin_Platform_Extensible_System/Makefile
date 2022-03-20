@@ -115,6 +115,10 @@ help::
 
 all: version_check ${BOARD_REPO} xsa linux xpfm bif ip ps_apps vitis
 
+all_targets:
+	$(MAKE) all TARGET=hw
+	$(MAKE) all TARGET=hw_emu
+
 version_check:
 ifndef VIVADO_VERSION
 	$(ECHO) "[ERROR] Vivado NOT found, please setup Vivado correctly!"; exit 1
