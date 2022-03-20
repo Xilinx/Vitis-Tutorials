@@ -42,7 +42,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
   - All dependencies in every `Makefile` are setup in such a way that if you need to rebuild after a certain modification; then it **ONLY** rebuilds what's needed to be rebuild. 
     - Example: After already done a full build before; you modify `[project-root]/ip/vadd_s/src/vadd_s.cpp` then if you run `make all` from the `[project-root]` it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link` and the `v++ --package`.
     - This to showcase that **NO** full rebuild is required after every (small) modification once you builded before the platform and did not modify the platform.
-    - Recommandation is to start `make all` always from the `[project-root]`, but of course you can run `make all` in every sub-module if for example you want to check if a sub-module is building correctly.
+    - Recommendation is to start `make all` always from the `[project-root]`, but of course you can run `make all` in every sub-module if for example you want to check if a sub-module is building correctly.
   - `[project-root]/Makefile` export options to be changed if needed:
     - `DEVICE_NAME`:
       - `export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S` for pre-production board version (default).
@@ -73,7 +73,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
       - `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default).
       - `export ETH_STATIC := 1` for Ethernet Static Configuration (change if needed).
         - Please setup your required Ethernet Static Configuration in `[project-root]/linux/src/init-ifupdown/interfaces`.
-      - Remark: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation (`export TARGET := hw_emu`) then the recommandation is to use `export ETH_STATIC := 0` (DHCP).
+      - Remark: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation (`export TARGET := hw_emu`) then the recommendation is to use `export ETH_STATIC := 0` (DHCP).
   - End result: 
     - `export TARGET := hw`: 
       - `[project-root]/package_output_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
