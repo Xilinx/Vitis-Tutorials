@@ -461,7 +461,7 @@ root@vck190-versal:/media/sd-mmcblk0p1#
   - root password = `root` when using ssh/scp/... towards the VCK190 `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`. 
   
 ## Design Considerations
-  Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a Xilinx tools requirement!
+  Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a AMD/Xilinx tools requirement!
   - `[project-root]/ps_apps`: PS applications can easily be added by adding a sub-project for each in `[project-root]/ps_apps/`.
     - Vitis will automatically package them and they will end up in `[project-root]/package_output_${TARGET}`.
     - The `[PS Application].exe` (extension **MUST** be .exe) **MUST** end up in the `[project-root]/ps_apps/exe` dir.
@@ -476,7 +476,7 @@ The following documents provide supplemental information for this tutorial.
 ### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html)
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
-### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
+### [AMD/Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
 The following are links to the XRT information used by this tutorial: 
 
 * [XRT Documentation](https://xilinx.github.io/XRT/master/html/index.html): Explains general XRT API calls used in the PS Host Application. 
