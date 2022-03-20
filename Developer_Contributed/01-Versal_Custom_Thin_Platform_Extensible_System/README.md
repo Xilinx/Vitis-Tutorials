@@ -39,10 +39,10 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - Be sure that the 2021.2 Y2K22 patch is installed (This is not verified)! 
       - More info can be found [here](https://support.xilinx.com/s/article/76960?language=en_US).
   - Everything is in the GitHub repository; no extra files are needed. Although some are downloaded from GitHub.
-  - All dependancies in every `Makefile` are setup in such a way that if you need to rebuild after a certain modification; then it **ONLY** rebuilds what's needed to be rebuild. 
-    - Example: you modify `[project-root]/ip/vadd_s/src/vadd_s.cpp` then if you run `make all` from the `[project-root]` it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link` and the `v++ --package`.
+  - All dependencies in every `Makefile` are setup in such a way that if you need to rebuild after a certain modification; then it **ONLY** rebuilds what's needed to be rebuild. 
+    - Example: After already done a full build before; you modify `[project-root]/ip/vadd_s/src/vadd_s.cpp` then if you run `make all` from the `[project-root]` it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link` and the `v++ --package`.
     - This to showcase that **NO** full rebuild is required after every (small) modification once you builded before the platform and did not modify the platform.
-    - Best is to start `make all` always from the `[project-root]`, but of course you can run `make all` in every sub-module if for example you want to check if a sub-module is compiling correctly.
+    - Recommandation is to start `make all` always from the `[project-root]`, but of course you can run `make all` in every sub-module if for example you want to check if a sub-module is building correctly.
   - `[project-root]/Makefile` export options to be changed if needed:
     - `DEVICE_NAME`:
       - `export DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S` for pre-production board version (default).
@@ -55,7 +55,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
-      - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY (re)build vitis with `export TARGET := hw_emu`! **NO** need for a full (re)build in that respect! 
+      - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect! 
     - `LINUX_BUILD_TOOL`:
       - `export LINUX_BUILD_TOOL := petalinux` to use Petalinux as linux build tool (default).
       - `export LINUX_BUILD_TOOL := yocto` to use Yocto as linux build tool (change if needed).
@@ -67,7 +67,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
       - Defaults to `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}`
         - Defaults to `/tmp/linux/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
         - Defaults to `/tmp/linux/yocto` when `export LINUX_BUILD_TOOL := yocto`.
-        - So if you want to place it somewhere else; please replace it with your required location. 
+      - So if you want to place it somewhere else; please replace it with your required location. 
       - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS-drive!
     - `ETH_STATIC`:
       - `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default).
