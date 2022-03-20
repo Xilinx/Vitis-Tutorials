@@ -18,9 +18,10 @@ ECHO             := @echo
 
 SYSROOT          := ../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
 
-APP_NAME         := ./vadd_mm_cpp
+APP_NAME         := vadd_mm_cpp
 APP_EXE          := ../exe/${APP_NAME}.exe
 APP_SRC          := ./src/${APP_NAME}.cpp
+APP_SRC_DEP      := ./src/*
 
 GCC              ?= aarch64-linux-gnu-g++
 
@@ -47,7 +48,7 @@ help::
 
 all: $(APP_EXE)
 
-$(APP_EXE): $(APP_SRC) ${SYSROOT}
+$(APP_EXE): $(APP_SRC_DEP) ${SYSROOT}
 	${GCC} ${GCC_C_FLAGS} $(APP_SRC) ${GCC_INCLUDES} $(GCC_L_FLAGS) -o $(APP_EXE)
 
 clean:

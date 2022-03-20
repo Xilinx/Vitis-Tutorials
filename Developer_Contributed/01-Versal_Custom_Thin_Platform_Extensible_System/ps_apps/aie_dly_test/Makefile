@@ -18,10 +18,11 @@ ECHO             := @echo
 
 SYSROOT          := ../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
 
-APP_NAME         := ./aie_dly_test
+APP_NAME         := aie_dly_test
 APP_EXE          := ../exe/${APP_NAME}.exe
 APP_SRC          := ./src/${APP_NAME}.cpp
-APP_CTRL_SRC     := ./../../ip/aie/Work/ps/c_rts/aie_control_xrt.cpp
+APP_SRC_DEP      := ./src/*
+APP_SRC_CTRL     := ./../../ip/aie/Work/ps/c_rts/aie_control_xrt.cpp
 
 GCC              ?= aarch64-linux-gnu-g++
 
@@ -53,8 +54,8 @@ help::
 
 all: $(APP_EXE)
 
-$(APP_EXE): $(APP_SRC) $(APP_CTRL_SRC) ${SYSROOT}
-	${GCC} ${GCC_C_FLAGS} $(APP_SRC) $(APP_CTRL_SRC) ${GCC_INCLUDES} $(GCC_L_FLAGS) -o $(APP_EXE)
+$(APP_EXE): $(APP_SRC_DEP) $(APP_SRC_CTRL) ${SYSROOT}
+	${GCC} ${GCC_C_FLAGS} $(APP_SRC) $(APP_SRC_CTRL) ${GCC_INCLUDES} $(GCC_L_FLAGS) -o $(APP_EXE)
 
 clean:
 	rm -rf *.o $(APP_EXE)
