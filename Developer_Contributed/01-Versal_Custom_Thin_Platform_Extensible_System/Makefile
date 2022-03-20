@@ -55,9 +55,9 @@ LINUX_IMAGES            := ${LINUX_BUILD_DIR}/images/linux
 XPFM_EXPORT             := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
 BOARD_REPO              := ./platform/hw/board_repo
 
-############################################################################
-# Variables needed for Xilinx tools version checking, PLEASE DO NOT MODIFY #
-############################################################################
+################################################################################
+# Variables needed for AMD/XILINX tools version checking, PLEASE DO NOT MODIFY #
+################################################################################
 REQUIRED_VERSION         = 2021.2
 VIVADO_VERSION          := $(shell vivado -version 2>/dev/null | grep "Vivado ")
 VITIS_VERSION           := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
@@ -140,7 +140,7 @@ endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VITIS_VERSION)))
 	$(ECHO) "[ERROR] Vitis $(REQUIRED_VERSION) NOT found, please setup Vitis correctly!"; exit 1
 endif
-	$(ECHO) "XILINX TOOLS & VERSION CHECK SUCCESSFUL"
+	$(ECHO) "AMD/XILINX TOOLS & VERSION CHECK SUCCESSFUL"
 
 ${BOARD_REPO}:
 	git clone https://github.com/Xilinx/XilinxBoardStore.git ${BOARD_REPO}
@@ -160,7 +160,7 @@ ip:
 bif:
 	$(MAKE) ${XPFM_EXPORT}/sw/Image
 
-${XPFM_EXPORT}/sw/Image: ${LINUX_IMAGES}/Image ${LINUX_SRC_DIR}/boot_custom.bif
+${XPFM_EXPORT}/sw/Image: ${LINUX_IMAGES}/* ${LINUX_SRC_DIR}/boot_custom.bif
 	cp -f ${LINUX_IMAGES}/u-boot.elf             ${XPFM_EXPORT}/sw/u-boot.elf
 	cp -f ${LINUX_IMAGES}/system.dtb             ${XPFM_EXPORT}/sw/system.dtb
 	cp -f ${LINUX_IMAGES}/bl31.elf               ${XPFM_EXPORT}/sw/bl31.elf
