@@ -524,8 +524,8 @@ Click on each item below to see the detailed Revision History:
     - Updated `[project-root]/platform/sw/src/qemu/lnx/qemu_args.txt` for adding Ethernet connectivity support (ssh/scp/...) for hardware emulation `export TARGET := hw_emu`
     - Removed linux generated images dependencies; since **NOT** required
   - bif:
-    - Added `[project-root]/linux/vck190-versal/images/linux/Image` and `[project-root]/linux/vck190-versal/images/linux/rootfs.cpio.gz.u-boot' copy to the software platform to keep proper naming when `export LINUX_BUILD_TOOL := yocto`
-    - Added some dependancies so its only executed when needed
+    - Added `[project-root]/linux/vck190-versal/images/linux/Image` and `[project-root]/linux/vck190-versal/images/linux/rootfs.cpio.gz.u-boot` copy to the software platform to keep proper naming when `export LINUX_BUILD_TOOL := yocto`
+    - Added some dependencies so its only executed when needed
   - ip:
     - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
     - Renamed vadd to vadd_mm (vadd memory mapped kernel)
@@ -536,23 +536,23 @@ Click on each item below to see the detailed Revision History:
     - Renamed vadd_ocl to vadd_mm_ocl to check the vadd memory mapped kernel
     - Using explicit "kernel:{kernel_id}" for kernel selection
     - Streamline print out messages
-    - Added dependancies on `${SYSROOT}` and on **ALL** source files in `./src/`
+    - Added dependencies on `${SYSROOT}` and on **ALL** source files from `./src/`
   - vitis:
-    - Disable ILA when building vitis with 'export TARGET := hw_emu'
+    - Disable ILA when building vitis with `export TARGET := hw_emu`
     - counter and subtractor kernels running @ 500MHz (id=0 -> clk_out1_o1) 
     - vadd_mm (vadd memory mapped kernel) running @ 250MHz (id=1 -> clk_out1_o2)
     - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s (vadd_s streaming kernels) running @ 333MHz (id=4 -> clk_out2)
     - Added `[project-root]/vitis/src/system.cfg` as dependency for the Vitis Linker
-    - Added `[project-root]/vitis/src/ila_0_bd.cfg` as dependency for the Vitis Linker when build with 'export ILA_EN := 1'
+    - Added `[project-root]/vitis/src/ila_0_bd.cfg` as dependency for the Vitis Linker when build with `export ILA_EN := 1`
     - Added `${GRAPH_O}` as dependency for the vitis linker, since you need to perform extra steps to be able to remove this dependency
     - Added `${LINUX_IMAGE}` and `${LINUX_ROOTFS}` as dependencies for the vitis packager; and those are now taken from the software platform
   - general:
     - Improved dependencies in almost all `Makefile`s to **ONLY** rebuild what's needed to be rebuild after a modification
     - Added following `[project-root]/Makefile` commands:
-      - `"make all_targets"` to be able to build everything for **ALL** `TARGET`'s
-      - `"make clean_vitis"` to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
-      - `"make ultraclean_vitis"` to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform for **ALL** `TARGET`'s
-      - `"make ultraclean"` to be able to clean everything for **ALL** `TARGET`'s
+      - `make all_targets` to be able to build everything for **ALL** `TARGET`'s
+      - `make clean_vitis` to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform
+      - `make ultraclean_vitis` to be able to clean everything (ip, ps_apps, vitis) after the (fixed) platform for **ALL** `TARGET`'s
+      - `make ultraclean` to be able to clean everything for **ALL** `TARGET`'s
     - `[project-root]/README.md` updated with all new features
  
 </details>
