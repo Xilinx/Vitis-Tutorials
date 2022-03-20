@@ -176,10 +176,17 @@ clean_vitis:
 	$(MAKE) clean -C ps_apps
 	$(MAKE) clean -C vitis
 
+ultraclean_vitis:
+	$(MAKE) clean_vitis TARGET=hw
+	$(MAKE) clean_vitis TARGET=hw_emu
+
 clean:
 	$(MAKE) clean -C platform
 	$(MAKE) clean -C linux/${LINUX_BUILD_TOOL}
 	$(MAKE) clean_vitis
 	rm -rf ${BOARD_REPO}
-  
+
+ultraclean:
+	$(MAKE) clean TARGET=hw
+	$(MAKE) clean TARGET=hw_emu
 
