@@ -63,7 +63,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - `LINUX_YOCTO_ROOT`: 
       - ONLY required to setup when `export LINUX_BUILD_TOOL := yocto`.
       - Defaults to `export LINUX_YOCTO_ROOT := ${HOME}/bin` so please change to your local Yocto install directory. 
-      - Please look in the notes below for more information on how to install/setup Yocto.
+      - Please check out the [notes](#notes) for more information on how to install/setup Yocto.
     - `LINUX_TMP_DIR`:
       - Defaults to `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}`
         - Defaults to `/tmp/linux/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
