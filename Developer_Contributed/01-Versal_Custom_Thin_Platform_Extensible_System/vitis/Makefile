@@ -64,7 +64,7 @@ all: ${BUILD_DIR} ${SD_CARD}
 ${BUILD_DIR}:
 	mkdir ${BUILD_DIR}
 
-${BUILD_DIR}/${XCLBIN}: ${XO} ${SYSTEM_CFG}
+${BUILD_DIR}/${XCLBIN}: ${XO} ${GRAPH_O} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && \
 		v++ --link --debug --save-temps \
 			--target ${TARGET} \
