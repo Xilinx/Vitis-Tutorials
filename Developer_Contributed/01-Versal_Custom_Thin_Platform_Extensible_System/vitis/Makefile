@@ -19,24 +19,22 @@ ECHO              := @echo
 TARGET            ?= hw
 PLATFORM_CUSTOM   ?= vck190_thin
 
-XPFM              := ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
+XPFM_EXPORT       := ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
+XPFM              := ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+
+LINUX_KERNEL      := ${XPFM_EXPORT}/sw/Image
+LINUX_ROOTFS      := ${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot
 
 IP_DIR            := ../ip
-XO                := $(wildcard ${IP_DIR}/xo_${TARGET}/*.xo)
+XO                := $(wildcard ${IP_DIR}/xo_hw/*.xo)
 GRAPH_O           := ${IP_DIR}/aie/libadf.a
 XCLBIN            := my.xclbin
 
 PS_APPS_DIR       := ../ps_apps
 PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
 
-LINUX_IMAGES      := ../linux/build/images/linux
-LINUX_KERNEL      := ${LINUX_IMAGES}/Image
-LINUX_ROOTFS      := ${LINUX_IMAGES}/rootfs.cpio.gz.u-boot
-
 SD_CARD           := ../package_output_${TARGET}
 BUILD_DIR         := build_${TARGET}
-
-QEMU_ARGS         := ${SD_CARD}/qemu_args.txt
 
 # Force ILA_EN=0 (Disabled) for TARGET=hw_emu
 ifeq (${TARGET}, hw_emu)
@@ -66,7 +64,7 @@ all: ${BUILD_DIR} ${SD_CARD}
 ${BUILD_DIR}:
 	mkdir ${BUILD_DIR}
 
-${BUILD_DIR}/${XCLBIN}: ${XO} ${SYSTEM_CFG}
+${BUILD_DIR}/${XCLBIN}: ${XO} ${GRAPH_O} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && \
 		v++ --link --debug --save-temps \
 			--target ${TARGET} \
@@ -96,11 +94,6 @@ ${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_
 		else echo "no probe_0 ltx file" ; \
 	fi 
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
-ifeq (${TARGET}, hw_emu)
-	echo "-net nic,netdev=eth0"                       >> ${QEMU_ARGS}
-	echo "-netdev user,id=eth0,hostfwd=tcp::1114-:22" >> ${QEMU_ARGS}
-	echo "-net nic"                                   >> ${QEMU_ARGS}
-endif
 
 clean:
 	rm -rf ${SD_CARD} ${BUILD_DIR}
