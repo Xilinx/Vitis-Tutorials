@@ -19,10 +19,11 @@ ECHO                  := @echo
 TARGET                ?= hw
 ETH_STATIC            ?= 0
 LINUX_TMP_DIR         ?= /tmp/linux/petalinux
+LINUX_MACHINE         ?= vck190-versal
 
-CURR_DIR	            := $(shell pwd)
-PROJ_DIR              := ${CURR_DIR}/../build
-META_DIR              := ${CURR_DIR}/../build-meta
+CURR_DIR              := $(shell pwd)
+PROJ_DIR              := ${CURR_DIR}/../${LINUX_MACHINE}
+META_DIR              := ${CURR_DIR}/../${LINUX_MACHINE}-meta
 SYSROOT_DIR           := ${CURR_DIR}/../sysroot
 
 XSA_DIR               := ${CURR_DIR}/../../platform/hw/build
@@ -35,7 +36,7 @@ FILE_ROOT_FS_CFG      := ${PROJ_DIR}/project-spec/configs/rootfs_config
 SRC_DIR_DEVICE_TREE   := ../src/device-tree
 DEST_DIR_DEVICE_TREE  := ${PROJ_DIR}/project-spec/meta-user/recipes-bsp/device-tree
 
-SRC_DIR_ETH_STATIC    := ./src/init-ifupdown
+SRC_DIR_ETH_STATIC    := ../src/init-ifupdown
 DEST_DIR_ETH_STATIC   := ${PROJ_DIR}/project-spec/configs/init-ifupdown
 
 .PHONY: help all clean
@@ -56,7 +57,7 @@ ${PROJ_DIR}: ${XSA_DIR}
 	make update_sysroot
 
 create: 
-	cd ../ && petalinux-create -t project --template versal -n build --tmpdir ${LINUX_TMP_DIR}
+	cd ../ && petalinux-create -t project --template versal -n ${LINUX_MACHINE} --tmpdir ${LINUX_TMP_DIR}
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable YOCTO_BUILDTOOLS_EXTENDED 
 
 update_hw:

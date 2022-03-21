@@ -16,10 +16,8 @@
 
 ECHO              := @echo
 
-TARGET            ?= hw
-
-XO_DIR            := xo_${TARGET}
-XO_DIRS_EXCLUDE   := $(patsubst %/,%,$(dir $(wildcard xo_*/)))
+XO_DIR            := xo_hw
+XO_DIRS_EXCLUDE   := $(patsubst %/,%,$(dir $(wildcard ${XO_DIR}*/)))
 KERNEL_DIRS       := $(patsubst %/,%,$(dir $(wildcard */)))
 KERNEL_NAME       := $(filter-out ${XO_DIRS_EXCLUDE},$(KERNEL_DIRS))
 KERNEL_NAME_CLEAN := $(addsuffix .clean,$(KERNEL_NAME))
