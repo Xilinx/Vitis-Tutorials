@@ -48,7 +48,7 @@ export LINUX_SSTATE_FEED          := network
 # Only supported for LINUX_BUILD_TOOL := petalinux!
 export LINUX_LOCAL_SSTATE_DIR     := /tmp/plnxcache/sstate_aarch64_2021.2/aarch64
 
-# LINUX_DOWNLOADS_DIR = Absolute Path where "downloads" is located
+# LINUX_LOCAL_DOWNLOADS_DIR = Absolute Path where "downloads" is located
 # Only supported for LINUX_BUILD_TOOL := petalinux!
 export LINUX_LOCAL_DOWNLOADS_DIR  := /tmp/plnxcache/downloads
 
