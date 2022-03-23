@@ -22,26 +22,38 @@ ECHO                     = @echo
 ###############################################
 
 # DEVICE_NAME = xcvc1902-vsva2197-2MP-e-S or xcvc1902-vsva2197-2MP-e-S-es1
-export DEVICE_NAME       := xcvc1902-vsva2197-2MP-e-S
+export DEVICE_NAME                := xcvc1902-vsva2197-2MP-e-S
 
 # TARGET = hw or hw_emu
-export TARGET           := hw
+export TARGET                     := hw
 
 # ILA_EN = 0 (Disabled) or 1 (Enabled)
-export ILA_EN           := 0
-
-# ETH_STATIC = 0 (ETH DHCP Enabled) or 1 (ETH Static Enabled)
-export ETH_STATIC       := 0
+export ILA_EN                     := 0
 
 # LINUX_BUILD_TOOL = petalinux or yocto
-export LINUX_BUILD_TOOL := petalinux
+export LINUX_BUILD_TOOL           := petalinux
 
 # LINUX_TMP_DIR = Any dir which is not NFS
-export LINUX_TMP_DIR    := /tmp/linux/${LINUX_BUILD_TOOL}
+export LINUX_TMP_DIR              := /tmp/linux/${LINUX_BUILD_TOOL}
 
 # LINUX_YOCTO_ROOT = Directory where yocto tools are installed
-# Used ONLY when LINUX_BUILD_TOOL is set to yocto!
-export LINUX_YOCTO_ROOT := ${HOME}/bin
+# Used ONLY when LINUX_BUILD_TOOL := yocto!
+export LINUX_YOCTO_ROOT           := ${HOME}/bin
+
+# LINUX_SSTATE_FEED = network or local
+# Only supported for LINUX_BUILD_TOOL := petalinux!
+export LINUX_SSTATE_FEED          := network
+
+# LINUX_LOCAL_SSTATE_DIR = Absolute Path where "sstate-cache" is located
+# Only supported for LINUX_BUILD_TOOL := petalinux!
+export LINUX_LOCAL_SSTATE_DIR     := /tmp/plnxcache/sstate_aarch64_2021.2/aarch64
+
+# LINUX_DOWNLOADS_DIR = Absolute Path where "downloads" is located
+# Only supported for LINUX_BUILD_TOOL := petalinux!
+export LINUX_LOCAL_DOWNLOADS_DIR  := /tmp/plnxcache/downloads
+
+# LINUX_ETH_CONFIG = DHCP or STATIC
+export LINUX_ETH_CONFIG           := DHCP
 
 ################################################################
 # Variables needed for the build process, PLEASE DO NOT MODIFY #

@@ -18,7 +18,7 @@ ECHO                  := @echo
 
 LINUX_YOCTO_ROOT      ?= ${HOME}/bin
 LINUX_TMP_DIR         ?= /tmp/linux/yocto
-ETH_STATIC            ?= 0
+LINUX_ETH_CONFIG      ?= DHCP
 LINUX_MACHINE         ?= vck190-versal
 
 CURR_DIR              := $(shell pwd)
@@ -79,7 +79,7 @@ update_config:
 	@echo -e ""                                                         >> ${AUTO_CONF}
 
 update_eth:
-ifeq (${ETH_STATIC}, 1)
+ifeq (${LINUX_ETH_CONFIG}, STATIC)
 	@install -d ${RECIPE_ETH_STATIC}/init-ifupdown_1.0/vck190
 	@cp -r ${SRC_DIR_ETH_STATIC}/* ${RECIPE_ETH_STATIC}/init-ifupdown_1.0/vck190
 	@echo -e 'FILESEXTRAPATHS_prepend := "$${THISDIR}/init-ifupdown_1.0/vck190:"\n'  > ${RECIPE_ETH_STATIC}/init-ifupdown_1.0.bbappend

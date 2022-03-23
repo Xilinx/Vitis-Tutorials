@@ -14,30 +14,33 @@
 # limitations under the License.
 #
 
-ECHO                  := @echo
+ECHO                       := @echo
 
-TARGET                ?= hw
-ETH_STATIC            ?= 0
-LINUX_TMP_DIR         ?= /tmp/linux/petalinux
-LINUX_MACHINE         ?= vck190-versal
+TARGET                     ?= hw
+LINUX_ETH_CONFIG           ?= DHCP
+LINUX_TMP_DIR              ?= /tmp/linux/petalinux
+LINUX_MACHINE              ?= vck190-versal
+LINUX_SSTATE_FEED          ?= network
+LINUX_LOCAL_SSTATE_DIR     ?= /tmp/plnxcache/sstate_aarch64_2021.2/aarch64
+LINUX_LOCAL_DOWNLOADS_DIR  ?= /tmp/plnxcache/downloads
 
-CURR_DIR              := $(shell pwd)
-PROJ_DIR              := ${CURR_DIR}/../${LINUX_MACHINE}
-META_DIR              := ${CURR_DIR}/../${LINUX_MACHINE}-meta
-SYSROOT_DIR           := ${CURR_DIR}/../sysroot
+CURR_DIR                   := $(shell pwd)
+PROJ_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}
+META_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}-meta
+SYSROOT_DIR                := ${CURR_DIR}/../sysroot
 
-XSA_DIR               := ${CURR_DIR}/../../platform/hw/build
+XSA_DIR                    := ${CURR_DIR}/../../platform/hw/build
 
-CFG                   := ./src/config
+CFG                        := ./src/config
 
-FILE_MAIN_CFG         := ${PROJ_DIR}/project-spec/configs/config
-FILE_ROOT_FS_CFG      := ${PROJ_DIR}/project-spec/configs/rootfs_config
+FILE_MAIN_CFG              := ${PROJ_DIR}/project-spec/configs/config
+FILE_ROOT_FS_CFG           := ${PROJ_DIR}/project-spec/configs/rootfs_config
 
-SRC_DIR_DEVICE_TREE   := ../src/device-tree
-DEST_DIR_DEVICE_TREE  := ${PROJ_DIR}/project-spec/meta-user/recipes-bsp/device-tree
+SRC_DIR_DEVICE_TREE        := ../src/device-tree
+DEST_DIR_DEVICE_TREE       := ${PROJ_DIR}/project-spec/meta-user/recipes-bsp/device-tree
 
-SRC_DIR_ETH_STATIC    := ../src/init-ifupdown
-DEST_DIR_ETH_STATIC   := ${PROJ_DIR}/project-spec/configs/init-ifupdown
+SRC_DIR_ETH_STATIC         := ../src/init-ifupdown
+DEST_DIR_ETH_STATIC        := ${PROJ_DIR}/project-spec/configs/init-ifupdown
 
 .PHONY: help all clean
 
@@ -58,7 +61,12 @@ ${PROJ_DIR}: ${XSA_DIR}
 
 create: 
 	cd ../ && petalinux-create -t project --template versal -n ${LINUX_MACHINE} --tmpdir ${LINUX_TMP_DIR}
-	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable YOCTO_BUILDTOOLS_EXTENDED 
+	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable  YOCTO_BUILDTOOLS_EXTENDED
+ifeq (${LINUX_SSTATE_FEED}, local)
+	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --disable CONFIG_YOCTO_NETWORK_SSTATE_FEEDS
+	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_YOCTO_LOCAL_SSTATE_FEEDS_URL ${LINUX_LOCAL_SSTATE_DIR}
+	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_PRE_MIRROR_URL "file\:\/\/"${LINUX_LOCAL_DOWNLOADS_DIR}
+endif
 
 update_hw:
 	cd ${PROJ_DIR} && petalinux-config --get-hw-description=${XSA_DIR} --silentconfig
@@ -68,18 +76,18 @@ update_device_tree:
 
 update_config:
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_SUBSYSTEM_RFS_FORMATS "cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable xrt 
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable xrt-dev
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable auto-login
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable packagegroup-petalinux-openamp
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable packagegroup-petalinux-openamp-dev 
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable libsysfs
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable ai-engine-driver
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable ai-engine-driver-dev 
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable sysfsutils-dev 
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  xrt
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  xrt-dev
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  auto-login
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  packagegroup-petalinux-openamp
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  packagegroup-petalinux-openamp-dev
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  libsysfs
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  ai-engine-driver
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  ai-engine-driver-dev
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  sysfsutils-dev
 	cd ${PROJ_DIR} && petalinux-config --silentconfig
 	cd ${PROJ_DIR} && petalinux-config -c rootfs --silentconfig
-ifeq (${ETH_STATIC}, 1)
+ifeq (${LINUX_ETH_CONFIG}, STATIC)
 	cp -r ${SRC_DIR_ETH_STATIC}/* ${DEST_DIR_ETH_STATIC}/
 endif
       
