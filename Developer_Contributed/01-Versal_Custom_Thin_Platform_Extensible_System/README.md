@@ -77,11 +77,11 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `LINUX_LOCAL_SSTATE_DIR`:
       - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux` with `export LINUX_SSTATE_FEED := local`!
       - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnxcache/sstate_aarch64_2021.2/aarch64`.
-      - Change to the directory where you downloaded and extracted the [sstate_aarch64_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - Change to the directory where you extracted the [sstate_aarch64_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
       - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux` with `export LINUX_SSTATE_FEED := local`!
       - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnxcache/downloads`.
-      - Change to the directory where you downloaded and extracted the [downloads_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - Change to the directory where you extracted the [downloads_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
     - `LINUX_ETH_CONFIG`:
       - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
       - `export LINUX_ETH_CONFIG := STATIC` for Ethernet Static Configuration (change if needed).
