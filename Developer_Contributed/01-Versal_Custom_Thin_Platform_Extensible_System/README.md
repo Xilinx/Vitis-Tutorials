@@ -78,9 +78,13 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux` with `export LINUX_SSTATE_FEED := local`!
       - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnxcache/sstate_aarch64_2021.2/aarch64`.
       - Change to the directory where you extracted the [sstate_aarch64_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+    - `LINUX_DOWNLOADS_MIRROR`:
+      - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux`!
+      - `export LINUX_DOWNLOADS_MIRROR := network` for network downloads mirror (default).
+      - `export LINUX_DOWNLOADS_MIRROR := local` for local downloads mirror (change if needed).
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
-      - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux` with `export LINUX_SSTATE_FEED := local`!
-      - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnxcache/downloads`.
+      - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux` with `export LINUX_DOWNLOADS_MIRROR := local`!
+      - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnxmirror/downloads`.
       - Change to the directory where you extracted the [downloads_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
     - `LINUX_ETH_CONFIG`:
       - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
@@ -536,7 +540,9 @@ Click on each item below to see the detailed Revision History:
     - Added the option for local sstate cache **ONLY** for `export LINUX_BUILD_TOOL := petalinux` with:
       - `export LINUX_SSTATE_FEED := local`
       - `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnxcache/sstate_aarch64_2021.2/aarch64`
-      - `export LINUX_DOWNLOADS_DIR := /tmp/plnxcache/downloads`
+    - Added the option for local downloads mirror **ONLY** for `export LINUX_BUILD_TOOL := petalinux` with:
+      - `export LINUX_DOWNLOADS_MIRROR := local`
+      - `export LINUX_DOWNLOADS_DIR := /tmp/plnxmirror/downloads`
   - platform/sw
     - Updated `[project-root]/platform/sw/src/qemu/lnx/qemu_args.txt` for adding Ethernet connectivity support (ssh/scp/...) for hardware emulation `export TARGET := hw_emu`
     - Removed linux generated images dependencies; since **NOT** required
