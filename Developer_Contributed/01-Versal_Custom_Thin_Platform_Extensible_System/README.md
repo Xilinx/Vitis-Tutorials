@@ -31,7 +31,7 @@ The following diagram explains the build-flow dependencies.
 <img src="./documentation/readme_files/Design_dependencies.svg">
  
 ### Build & Prerequisites
-In the `[project-root]` you can start the full build with `make all` **after** taking following prerequisites into account:
+In the `[project-root]` you can start the full build with `make all` or `make all_targets` **after** taking following prerequisites into account:
   - **Before starting the build, please correctly setup the 2021.2 version of Vivado, Vitis and Petalinux/Yocto**
     - If the tools are not setup correctly the build will stop with an ERROR message telling you what is not correctly setup!
       - Remark: The Yocto Tool setup is not verified!
@@ -52,7 +52,7 @@ In the `[project-root]` you can start the full build with `make all` **after** t
       - `export TARGET := hw` for targetting a VCK190 board (default).
       - `export TARGET := hw_emu` for targetting hardware emulation (change if needed).
       - The build flow supports both TARGET's in the same `[project-root]`; if you need both results at once, you can do `make all_targets` from the `[project-root]`!
-      - Some generated directories are depending on the TARGET selection and are further shown as `[dir]_${TARGET}`.
+      - Some generated directories are depending on the `TARGET` selection and are further shown as `[dir]_${TARGET}`.
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
@@ -63,18 +63,32 @@ In the `[project-root]` you can start the full build with `make all` **after** t
     - `LINUX_YOCTO_ROOT`: 
       - ONLY required to setup when `export LINUX_BUILD_TOOL := yocto`.
       - Defaults to `export LINUX_YOCTO_ROOT := ${HOME}/bin` so please change to your local Yocto install directory. 
-      - Please check out the [notes](#notes) for more information on how to install/setup Yocto.
+      - More information on how to install/setup and build Yocto can be found [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto).
     - `LINUX_TMP_DIR`:
       - Defaults to `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}`
         - Defaults to `/tmp/linux/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
         - Defaults to `/tmp/linux/yocto` when `export LINUX_BUILD_TOOL := yocto`.
       - So if you want to place it somewhere else; please replace it with your required location. 
       - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS-drive!
-    - `ETH_STATIC`:
-      - `export ETH_STATIC := 0` for Ethernet DHCP Configuration (default).
-      - `export ETH_STATIC := 1` for Ethernet Static Configuration (change if needed).
+    - `LINUX_SSTATE_FEED`:
+      - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux`!
+      - `export LINUX_SSTATE_FEED := network` for network sstate feed (default).
+      - `export LINUX_SSTATE_FEED := local` for local sstate feed (change if needed).
+    - `LINUX_LOCAL_SSTATE_DIR`:
+      - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux` with `export LINUX_SSTATE_FEED := local`!
+      - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnxcache/sstate_aarch64_2021.2/aarch64`.
+      - Change to the directory where you downloaded and extracted the [sstate_aarch64_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+    - `LINUX_LOCAL_DOWNLOADS_DIR`:
+      - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux` with `export LINUX_SSTATE_FEED := local`!
+      - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnxcache/downloads`.
+      - Change to the directory where you downloaded and extracted the [downloads_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+    - `LINUX_ETH_CONFIG`:
+      - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
+      - `export LINUX_ETH_CONFIG := STATIC` for Ethernet Static Configuration (change if needed).
         - Please setup your required Ethernet Static Configuration in `[project-root]/linux/src/init-ifupdown/interfaces`.
-      - Remark: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation (`export TARGET := hw_emu`) then the recommendation is to use `export ETH_STATIC := 0` (DHCP).
+      - Remarks: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation `export TARGET := hw_emu`:
+        - The recommendation is to use `export LINUX_ETH_CONFIG := DHCP`.
+        - Please read ["Networking in QEMU"](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU) carefully.
   - End result: 
     - `export TARGET := hw`: 
       - `[project-root]/package_output_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
@@ -143,7 +157,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Directory/file                           | Description                                             
 | -----------------------------------------|-------------------------------------------------------------------------------------------
 | src/device-tree/files/system-user.dtsi   | Some device-tree changes needed for VCK190              
-| src/init-ifupdown/interfaces             | Configuration file needed for builds with `export ETH_STATIC := 1`
+| src/init-ifupdown/interfaces             | Configuration file needed for builds with `export LINUX_ETH_CONFIG := DHCP`
 | src/boot_custom.bif                      | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
  
  `[project-root]/linux/petalinux` Directory/file structure:
@@ -454,10 +468,6 @@ root@vck190-versal:/media/sd-mmcblk0p1#
     - After completing the linking process, the designer can verify conectivity and configuration of the ILA core in the generated block design in project `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj/prj.xpr`.
     - Once the build process is completed and linux boots on your board, it is required to manually set the path for probe file `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
     - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, rerunning `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
-  - `export TARGET := hw_emu`
-    - When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation; please read [this documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU) carefully.
-  - `export LINUX_BUILD_TOOL := yocto`
-    - More information how to install/setup and build Yocto can be found [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto).
   - root password = `root` when using ssh/scp/... towards the VCK190 `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`. 
   
 ## Design Considerations
@@ -515,11 +525,18 @@ Click on each item below to see the detailed Revision History:
       - `[project-root]/Makefile` - `export LINUX_YOCTO_ROOT := ${HOME}/bin` 
     - Petalinux and/or Yocto TMP_DIR is now set and can be changed with `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}`
     - Moved `[project-root]/petalinux` to `[project-root]/linux/petalinux`
+    - Moved '[project-root]/petalinux/src/boot_custom.bif` to `[project-root]/linux/src/boot_custom.bif`
+    - Moved '[project-root]/petalinux/src/device-tree` to `[project-root]/linux/src/device-tree`
+    - Moved '[project-root]/petalinux/init-ifupdown` to `[project-root]/linux/src/init-ifupdown`
     - Added `[project-root]/linux/yocto`
     - `export LINUX_BUILD_TOOL := petalinux` build ends up in `[project-root]/linux/vck190-versal`
     - `export LINUX_BUILD_TOOL := yocto` build ends up in `[project-root]/linux/vck190-versal` and `[project-root]/linux/vck190-versal-meta`
     - Sysroot build for `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/sysroot`
     - Updated `[project-root]/linux/src/device-tree/files/system-user.dtsi` for proper Ethernet PHY configuration
+    - Added the option for local sstate cache **ONLY** for `export LINUX_BUILD_TOOL := petalinux` with:
+      - `export LINUX_SSTATE_FEED := local`
+      - `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnxcache/sstate_aarch64_2021.2/aarch64`
+      - `export LINUX_DOWNLOADS_DIR := /tmp/plnxcache/downloads`
   - platform/sw
     - Updated `[project-root]/platform/sw/src/qemu/lnx/qemu_args.txt` for adding Ethernet connectivity support (ssh/scp/...) for hardware emulation `export TARGET := hw_emu`
     - Removed linux generated images dependencies; since **NOT** required
@@ -560,7 +577,7 @@ Click on each item below to see the detailed Revision History:
   <summary> Februari 2022 </summary>
 
  - petalinux:
-    - Added the option ETH_STATIC to setup static Ethernet Configuration
+    - Added the option LINUX_ETH_CONFIG to setup static Ethernet Configuration
   - ip:
     - Bugfix for the v++ linker to fail in TARGET=hw_emu when other HLS-kernels (like mm2s) are added later on to the design
   - general:
