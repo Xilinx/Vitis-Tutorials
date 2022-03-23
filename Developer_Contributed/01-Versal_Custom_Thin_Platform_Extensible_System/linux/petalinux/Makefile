@@ -61,7 +61,7 @@ ${PROJ_DIR}: ${XSA_DIR}
 
 create: 
 	cd ../ && petalinux-create -t project --template versal -n ${LINUX_MACHINE} --tmpdir ${LINUX_TMP_DIR}
-	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable  YOCTO_BUILDTOOLS_EXTENDED
+	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable  CONFIG_YOCTO_BUILDTOOLS_EXTENDED
 ifeq (${LINUX_SSTATE_FEED}, local)
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --disable CONFIG_YOCTO_NETWORK_SSTATE_FEEDS
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_YOCTO_LOCAL_SSTATE_FEEDS_URL ${LINUX_LOCAL_SSTATE_DIR}
