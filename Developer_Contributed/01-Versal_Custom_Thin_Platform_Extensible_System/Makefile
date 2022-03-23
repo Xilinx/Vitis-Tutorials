@@ -41,16 +41,20 @@ export LINUX_TMP_DIR              := /tmp/linux/${LINUX_BUILD_TOOL}
 export LINUX_YOCTO_ROOT           := ${HOME}/bin
 
 # LINUX_SSTATE_FEED = network or local
-# Only supported for LINUX_BUILD_TOOL := petalinux!
+# Supported and Used ONLY when LINUX_BUILD_TOOL := petalinux!
 export LINUX_SSTATE_FEED          := network
 
 # LINUX_LOCAL_SSTATE_DIR = Absolute Path where "sstate-cache" is located
-# Only supported for LINUX_BUILD_TOOL := petalinux!
+# Used ONLY when LINUX_BUILD_TOOL := petalinux and LINUX_SSTATE_FEED := local!
 export LINUX_LOCAL_SSTATE_DIR     := /tmp/plnxcache/sstate_aarch64_2021.2/aarch64
 
-# LINUX_LOCAL_DOWNLOADS_DIR = Absolute Path where "downloads" is located
-# Only supported for LINUX_BUILD_TOOL := petalinux!
-export LINUX_LOCAL_DOWNLOADS_DIR  := /tmp/plnxcache/downloads
+# LINUX_DOWNLOADS_MIRROR = network or local
+# Supported and Used ONLY when LINUX_BUILD_TOOL := petalinux!
+export LINUX_DOWNLOADS_MIRROR     := network
+
+# LINUX_DOWNLOADS_DIR = Absolute Path where "downloads" is located
+# Used ONLY when LINUX_BUILD_TOOL := petalinux and LINUX_DOWNLOADS_MIRROR := local!
+export LINUX_LOCAL_DOWNLOADS_DIR  := /tmp/plnxmirror/downloads
 
 # LINUX_ETH_CONFIG = DHCP or STATIC
 export LINUX_ETH_CONFIG           := DHCP

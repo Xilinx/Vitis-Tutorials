@@ -22,7 +22,8 @@ LINUX_TMP_DIR              ?= /tmp/linux/petalinux
 LINUX_MACHINE              ?= vck190-versal
 LINUX_SSTATE_FEED          ?= network
 LINUX_LOCAL_SSTATE_DIR     ?= /tmp/plnxcache/sstate_aarch64_2021.2/aarch64
-LINUX_LOCAL_DOWNLOADS_DIR  ?= /tmp/plnxcache/downloads
+LINUX_DOWNLOADS_MIRROR     ?= network
+LINUX_LOCAL_DOWNLOADS_DIR  ?= /tmp/plnxmirror/downloads
 
 CURR_DIR                   := $(shell pwd)
 PROJ_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}
@@ -65,6 +66,8 @@ create:
 ifeq (${LINUX_SSTATE_FEED}, local)
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --disable CONFIG_YOCTO_NETWORK_SSTATE_FEEDS
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_YOCTO_LOCAL_SSTATE_FEEDS_URL ${LINUX_LOCAL_SSTATE_DIR}
+endif
+ifeq (${LINUX_DOWNLOADS_MIRROR}, local)
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_PRE_MIRROR_URL "file\:\/\/"${LINUX_LOCAL_DOWNLOADS_DIR}
 endif
 
