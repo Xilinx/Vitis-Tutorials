@@ -79,7 +79,8 @@ In the `[project-root]` you can start the full build with `make all` or `make al
         - Defaults to `/tmp/linux/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
         - Defaults to `/tmp/linux/yocto` when `export LINUX_BUILD_TOOL := yocto`.
       - So if you want to place it somewhere else; please replace it with your required location. 
-      - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS-drive!
+      - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS mounted drive!
+        - If your [project-root] is not on an NFS mounted drive; you can easily add it in your project with for example `export LINUX_TMP_DIR := $(shell pwd)/linux/tmp` 
     - `LINUX_BUILD_SOURCES`:
       - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux`!
       - `export LINUX_BUILD_SOURCES := network` for using online network build-sources (default).
