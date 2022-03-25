@@ -80,7 +80,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `LINUX_BUILD_SOURCES`:
       - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux`!
       - `export LINUX_BUILD_SOURCES := network` for using online network build-sources (default).
-      - `export LINUX_BUILD_SOURCES := local` for using offline **LOCALY STORED** build-sources (change if needed).
+      - `export LINUX_BUILD_SOURCES := local` for using offline **LOCALLY STORED** build-sources (change if needed).
       - Below described `LINUX_LOCAL_DOWNLOADS_DIR` AND `LINUX_LOCAL_SSTATE_DIR` **MUST** be setup!
       - Remark: First petalinux sysroot build needs online build-sources! But it's handled by the Makefiles.
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
