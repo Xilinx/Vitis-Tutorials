@@ -40,8 +40,8 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - More info can be found [here](https://support.xilinx.com/s/article/76960?language=en_US).
   - Everything is in the GitHub repository; no extra files are needed. 
     - Although some are downloaded from GitHub; but that's handled by the Makefiles.
-    - Exception: For OFFLINE petalinux-build where you will need to download and extract some tar.gz files; which is explained more in detail below!
-    - Exception: For Yocto-build where you will need to install Yocto; which is explained more in detail below!
+    - Exception: For building petalinux OFFLINE; you will need to download and extract some tar.gz files; which is explained more in detail below!
+    - Exception: For building with Yocto-build; you will need to install Yocto; which is explained more in detail below!
   - All dependencies in every `Makefile` are setup in such a way that if you need to rebuild after a certain modification; then it **ONLY** rebuilds what's needed to be rebuild. 
     - Example: After already done a full build before; you modify `[project-root]/ip/vadd_s/src/vadd_s.cpp` then if you run `make all` from the `[project-root]` it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link` and the `v++ --package`.
     - This to showcase that **NO** full rebuild is required after every (small) modification once you builded before the platform and did not modify the platform.
