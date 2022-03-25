@@ -44,7 +44,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - This to showcase that **NO** full rebuild is required after every (small) modification once you builded before the platform and did not modify the platform.
     - Recommendation is to start `make all` or `make all_targets` always from the `[project-root]`, but of course you can run `make all` in every sub-module if for example you want to check if a sub-module is building correctly.
     - Remark: You could remove the `${GRAPH_O}` dependency for the `v++ --link` step in the `[project-root]/vitis/Makefile`; but **ONLY** when you **FIX** your AIE I/O ports in **Vitis/Vivado** and do **NOT** do modifications anymore on the AIE I/O port definitions!
-  - `[project-root]/Makefile` make options:
+  - `[project-root]/Makefile` main `make` options:
       - `make all` to build everything for the specified `TARGET`.
       - `make clean` to clean everything for the specified `TARGET`.
       - `make clean_vitis` to clean everything (ip, ps_apps, vitis) after the (fixed) platform for the specified `TARGET`.
@@ -80,7 +80,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `LINUX_BUILD_SOURCES`:
       - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux`!
       - `export LINUX_BUILD_SOURCES := network` for using online network build-sources (default).
-      - `export LINUX_BUILD_SOURCES := local` for using offline local **STORED** build-sources (change if needed).
+      - `export LINUX_BUILD_SOURCES := local` for using offline **LOCALY STORED** build-sources (change if needed).
       - Below described `LINUX_LOCAL_DOWNLOADS_DIR` AND `LINUX_LOCAL_SSTATE_DIR` **MUST** be setup!
       - Remark: First petalinux sysroot build needs online build-sources! But it's handled by the Makefiles.
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
@@ -531,18 +531,18 @@ Click on each item below to see the detailed Revision History:
   - linux:
     - Added Yocto as alternative Linux build tool option with:
       - `[project-root]/Makefile` - `export LINUX_BUILD_TOOL := yocto` 
-      - `[project-root]/Makefile` - `export LINUX_YOCTO_ROOT := ${HOME}/bin` 
+      - `[project-root]/Makefile` - `export LINUX_YOCTO_ROOT := ${HOME}/bin`
+      - Added `[project-root]/linux/yocto`
     - Petalinux and/or Yocto TMP_DIR is now set and can be changed with `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}`
     - Moved `[project-root]/petalinux` to `[project-root]/linux/petalinux`
     - Moved `[project-root]/petalinux/src/boot_custom.bif` to `[project-root]/linux/src/boot_custom.bif`
     - Moved `[project-root]/petalinux/src/device-tree` to `[project-root]/linux/src/device-tree`
     - Moved `[project-root]/petalinux/init-ifupdown` to `[project-root]/linux/src/init-ifupdown`
-    - Added `[project-root]/linux/yocto`
-    - `export LINUX_BUILD_TOOL := petalinux` build ends up in `[project-root]/linux/vck190-versal`
-    - `export LINUX_BUILD_TOOL := yocto` build ends up in `[project-root]/linux/vck190-versal` and `[project-root]/linux/vck190-versal-meta`
+    - Linux build for `export LINUX_BUILD_TOOL := petalinux` ends up in `[project-root]/linux/vck190-versal`
+    - Linux build for `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/vck190-versal` and `[project-root]/linux/vck190-versal-meta`
     - Sysroot build for `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/sysroot`
     - Updated `[project-root]/linux/src/device-tree/files/system-user.dtsi` for proper Ethernet PHY configuration
-    - Added support for offline petalinux-build (Exculing sysroot) with:
+    - Added support for offline petalinux-build (Excluding sysroot build!) with:
       - `export LINUX_BUILD_SOURCES := local`
       - `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnx-workspace/downloads`
       - `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2021.2/aarch64`
