@@ -91,10 +91,12 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - **ONLY** used when `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
       - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnx-workspace/downloads`.
       - Change to the directory where you extracted the [downloads_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - This can be shared amoungst different users.
     - `LINUX_LOCAL_SSTATE_DIR`:
       - **ONLY** used when `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
       - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2021.2/aarch64`.
       - Change to the **WRITABLE** directory where you extracted the [sstate_aarch64_2021.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - This can be shared amoungst different users.
     - `LINUX_ETH_CONFIG`:
       - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
       - `export LINUX_ETH_CONFIG := STATIC` for Ethernet Static Configuration (change if needed).
