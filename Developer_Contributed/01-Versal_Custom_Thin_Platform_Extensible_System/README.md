@@ -75,9 +75,9 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - Defaults to `export LINUX_YOCTO_ROOT := ${HOME}/bin` so please change to your local Yocto install directory. 
       - More information on how to install/setup and build Yocto can be found [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto).
     - `LINUX_TMP_DIR`:
-      - Defaults to `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}`
-        - Defaults to `/tmp/linux/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
-        - Defaults to `/tmp/linux/yocto` when `export LINUX_BUILD_TOOL := yocto`.
+      - Defaults to `export LINUX_TMP_DIR := /tmp/linux/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}`
+        - Defaults to `/tmp/linux/2021.1/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
+        - Defaults to `/tmp/linux/2021.1/yocto` when `export LINUX_BUILD_TOOL := yocto`.
       - So if you want to place it somewhere else; please replace it with your required location. 
       - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS mounted drive!
       - If your [project-root] is **NOT** on an NFS mounted drive; you can easily add it in your project with for example `export LINUX_TMP_DIR := $(shell pwd)/linux/tmp` 
