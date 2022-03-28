@@ -16,7 +16,7 @@
 ## Create Platform Vivado Project
 ## This script takes in two argument:
 ## PLATFORM_NAME
-## DEVICE_NAME (e.g. xcvc1902-vsva2197-1LP-e-S-es1)
+## DEVICE_NAME (e.g. xcvc1902-vsva2197-1LP-e-S)
 ## ===================================================================================
 namespace eval _tcl {
   proc get_script_folder {} {
@@ -32,18 +32,17 @@ set script_folder [_tcl::get_script_folder]
 set_param board.repoPaths ./board_repo/boards/Xilinx/vck190
 
 ## WORKAROUND - Hardcode platform and device name as tcl arguments is not passed properly to Vitis
-#set DEVICE_NAME [lindex $argv 0]
 set PLATFORM_NAME [lindex $argv 0]
 set PLATFORM_TYPE vck190_custom
 set VER "1.0"
 puts "Creating HW Platform project for : \"$PLATFORM_NAME\""
 set DEVICE_NAME [lindex $argv 1]
-#set DEVICE_NAME xcvc1902-vsva2197-1LP-e-S-es1
 puts "Using : \"$DEVICE_NAME\""
 set BOARD_LABEL [lindex $argv 3]
 set BOARD_VER [lindex $argv 4]
+set BUILD_DIR build
 
-create_project -f ${PLATFORM_NAME} build/${PLATFORM_NAME}_vivado -part $DEVICE_NAME
+create_project -f ${PLATFORM_NAME} ${BUILD_DIR}/${PLATFORM_NAME}_vivado -part $DEVICE_NAME
 
 # set board part 
 set_property BOARD_PART xilinx.com:${BOARD_LABEL}:part0:${BOARD_VER} [current_project]
@@ -70,8 +69,8 @@ source pfm_decls.tcl
 ## ===================================================================================
 ## Create a wrapper for block design. Set the block design as top-level wrapper.
 ## ===================================================================================
-make_wrapper -files [get_files build/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd] -top
-add_files -norecurse build/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/hdl/${PLATFORM_NAME}_wrapper.v
+make_wrapper -files [get_files ${BUILD_DIR}/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd] -top
+add_files -norecurse ${BUILD_DIR}/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/hdl/${PLATFORM_NAME}_wrapper.v
 update_compile_order -fileset sources_1
 
 ## ===================================================================================
@@ -108,7 +107,9 @@ set_property platform.run.steps.phys_opt_design.tcl.post [get_files post_physopt
 ## ===================================================================================
 set_property PLATFORM.LINK_XP_SWITCHES_DEFAULT [list param:compiler.skipTimingCheckAndFrequencyScaling=true param:hw_emu.enableProfiling=false] [current_project]
 set_property SELECTED_SIM_MODEL tlm [get_bd_cells /cips_0]
-set_property SELECTED_SIM_MODEL tlm [get_bd_cells /axi_noc_0]
+set_property SELECTED_SIM_MODEL tlm [get_bd_cells /cips_noc]
+set_property SELECTED_SIM_MODEL tlm [get_bd_cells /noc_ddr4]
+set_property SELECTED_SIM_MODEL tlm [get_bd_cells /noc_lpddr4]
 
 ## ===================================================================================
 ## Set output type to hw_export
@@ -134,7 +135,7 @@ import_files
 ## ===================================================================================
 ## Generate files necessary to support block design through design flow
 ## ===================================================================================
-generate_target all [get_files build/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd]
+generate_target all [get_files ${BUILD_DIR}/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd]
 
 variable pre_synth
 set pre_synth ""
@@ -145,8 +146,8 @@ if { $argc > 1} {
 #Pre_synth Platform Flow
 if {$pre_synth} {
   set_property platform.platform_state "pre_synth" [current_project]
-  write_hw_platform -force build/${PLATFORM_NAME}.xsa
-  validate_hw_platform build/${PLATFORM_NAME}.xsa
+  write_hw_platform -force ${BUILD_DIR}/${PLATFORM_NAME}.xsa
+  validate_hw_platform ${BUILD_DIR}/${PLATFORM_NAME}.xsa
 } else {
   set_property generate_synth_checkpoint true [get_files -norecurse *.bd]
   ## ===================================================================================
@@ -165,6 +166,6 @@ if {$pre_synth} {
   # Write the XSA for current design for use as a hardware platform
   # ===================================================================================
   open_run impl_1
-  write_hw_platform -unified -include_bit -force build/${PLATFORM_NAME}.xsa
-  validate_hw_platform build/${PLATFORM_NAME}.xsa
+  write_hw_platform -unified -include_bit -force ${BUILD_DIR}/${PLATFORM_NAME}.xsa
+  validate_hw_platform ${BUILD_DIR}/${PLATFORM_NAME}.xsa
 }

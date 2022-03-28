@@ -17,19 +17,20 @@
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
-#include "vadd_ocl.h"
+#include "vadd_mm_ocl.h"
 
-static const int DATA_SIZE = 4096;
+static const int   DATA_SIZE   = 4096;
 
-static const std::string error_message =
-    "Error: Result mismatch:\n"
-    "i = %d CPU result = %d Device result = %d\n";
+static const char* STR_ERROR   = "ERROR:   ";
+static const char* STR_FAILED  = "FAILED:  ";
+static const char* STR_PASSED  = "PASSED:  ";
+static const char* STR_USAGE   = "USAGE:   ";
 
 int main(int argc, char* argv[]) {
 
     //TARGET_DEVICE macro needs to be passed from gcc command line
     if(argc != 2) {
-		std::cout << "Usage: " << argv[0] <<" <xclbin>" << std::endl;
+		std::cout << STR_USAGE << argv[0] <<" <xclbin>" << std::endl;
 		return EXIT_FAILURE;
 	}
 
@@ -89,7 +90,7 @@ int main(int argc, char* argv[]) {
     
     // This call will get the kernel object from program. A kernel is an 
     // OpenCL function that is executed on the FPGA. 
-    cl::Kernel krnl_vector_add(program,"vadd");
+    cl::Kernel krnl_vector_add(program,"vadd_mm:{vadd_mm_1}");
     
     // These commands will allocate memory on the Device. The cl::Buffer objects can
     // be used to reference the memory locations on the device. 
@@ -132,7 +133,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < DATA_SIZE; i++) {
         int host_result = ptr_a[i] + ptr_b[i];
         if (ptr_result[i] != host_result) {
-            printf(error_message.c_str(), i, host_result, ptr_result[i]);
+            std::cout << STR_ERROR << "[" << i << "]; Expected Result: " << host_result << "; Kernel Result: " << ptr_result[i] << std::endl;
             match = 0;
             break;
         }
@@ -143,8 +144,8 @@ int main(int argc, char* argv[]) {
     q.enqueueUnmapMemObject(buffer_result , ptr_result);
     q.finish();
 
-    std::cout << "VADD TEST " << (match ? "PASSED" : "FAILED") << std::endl; 
-    return (match ? EXIT_FAILURE :  EXIT_SUCCESS);
+   std::cout << std::endl << (match ? STR_PASSED : STR_FAILED) << argv[0] << std::endl << std::endl;
 
+   return (match ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 

@@ -15,18 +15,18 @@
 # =========================================================
 # DEVICE SELECTION
 # =========================================================
-DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S-es1
+DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
 
 # =========================================================
 # PLATFORM NAME
 # =========================================================
-PLATFORM_CUSTOM ?= you_forgot_to_set_platform_name
-PRE_SYNTH ?=true
+PLATFORM_CUSTOM ?= vck190_thin
+PRE_SYNTH       :=true
 
 # =========================================================
 # XSA NAME
 # =========================================================
-XSA ?= ${PLATFORM_CUSTOM}.xsa
+XSA := ${PLATFORM_CUSTOM}.xsa
 
 # =========================================================
 # SOURCE DIRECTORIES
@@ -44,7 +44,7 @@ CREATE_XSA_TCL := platform_xsa.tcl
 # =========================================================
 ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S)
   BOARD_LABEL:=vck190
-  BOARD_VER:=2.2
+  BOARD_VER:=3.0
 else ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S-es1)
   BOARD_LABEL:=vck190_es
   BOARD_VER:=1.3
@@ -73,7 +73,6 @@ DEPS += $(SRC_DIR)/ddr4_dmc_3200_triplet_1.xdc
 # BUILD PRODUCTS
 # ========================================================
 BUILD_DIR := build
-XSA := $(PLATFORM_CUSTOM).xsa
 
 xsa: $(BUILD_DIR)/$(XSA)
 
