@@ -471,6 +471,7 @@ root@vck190-versal:/media/sd-mmcblk0p1#
 
 ## Notes
   - Simulation is **NOT** part and **NOT** demonstrated in this Tutorial!
+  - lpddr4 is now also available in the GENERATED base platform for your convinience, but is NOT used in this Tutorial!
   - `xsa`: CIPS settings are added manually; configured in the bd-files.
   - The example design is fully FAT-32 
     - if you like to use ext4 rootfs instead: 
