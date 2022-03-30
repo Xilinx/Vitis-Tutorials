@@ -7,7 +7,7 @@
  </tr>
 </table>
 
-# Introduction
+# Introduction - System Integration
 
 In this section of the tutorial, you will learn how to add PL kernels in HLS into the system project and build the whole system.
 
@@ -102,7 +102,7 @@ You can see that the Vitis compiler added the two HLS IP (`mm2s` and `s2mm`) and
 In the next step, you will create a PS bare-metal application and run the system with it.
 
 
-<p align="center"><b><a href="./02-aie_application_creation.md">Return to Step 2</a> — <a href="./04-ps_application_creation_run_all.md">Go to Step 4</a></b></p>
+<p align="center"><b><a href="./04-ps_application_creation_run_all.md">Go to PS Application and Run</a></b></p>
 
 
 

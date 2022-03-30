@@ -7,7 +7,7 @@
  </tr>
 </table>
 
-# Introduction
+# Introduction - PS Application creation and Run
 
 In this section of the tutorial, you will learn how to build a PS bare-metal application using the XSA created in the previous step and then build, as well as run the complete system.
 
@@ -132,10 +132,6 @@ B: Use SD card to run the application.
 ## Summary
 
 In this tutorial, you have performed an end-to-end flow to create a platform based on the VCK190 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to run on it.
-
-
-<p align="center"><b><a href="./03-pl_application_creation.md">Return to Step 3</a> — <a href="./README.md">Go back to main page</a> — <a href="./05-RPU version[optional].md">Check out the RPU version design (optional)</a></b></p>
-
 
 
 
