@@ -15,7 +15,7 @@
  #
 # Top-level Makefile -- Calls sub-makefiles
 
-ECHO                     = @echo
+ECHO                               = @echo
 
 ################################################################################
 # Variables needed for AMD/XILINX tools version checking, PLEASE DO NOT MODIFY #
@@ -170,7 +170,11 @@ xsa:
 	$(MAKE) xsa -C platform
 
 linux:
+ifeq (${LINUX_BUILD_SKIP}, false)
 	$(MAKE) all -C linux/${LINUX_BUILD_TOOL}
+else
+	touch ${LINUX_IMAGES}/*
+endif
 
 xpfm:
 	$(MAKE) xpfm -C platform
