@@ -53,5 +53,103 @@
                 "pre_exec": "./env_setup.sh"
             }
         }
-    }
+    },
+    "host": {
+       "host_exe": "host",
+        "compiler": {
+            "sources": [
+                "./sw/host.cpp",
+                "./Work/ps/c_rts/aie_control_xrt.cpp"
+            ], 
+            "includepaths": [
+                "$(SYSROOT)/usr/include/xrt/",
+                "./sw",
+                "./aie" 
+            ],
+            "options": "--sysroot=$(SYSROOT)"
+        },
+        "linker": {
+            "librarypaths": [
+                "$(SYSROOT)/usr/lib/",
+                "xaiengine",
+                "adf_api_xrt",
+                "xrt_core",
+                "xrt_coreutil",
+                "${XILINX_VITIS}/aietools/lib/aarch64.o"
+            ],
+            "options": "--sysroot=$(SYSROOT)"
+        }
+    },
+     "aiecompiler": {
+        "compiler": {
+            "includepaths": [
+                "./aie"
+            ]
+        }
+    },
+    "aiecontainers": [
+        {
+            "accelerators": [
+                {
+                    "location": "./aie/graph.cpp",
+                    "pl-freq": 100,
+                    "workdir": "./Work",
+                    "name": "libadf.a",
+                    "aie_kernel_files":[
+                        "./aie/kernels/polar_clip.cpp",
+                        "./aie/kernels/classifiers/classify.cc", 
+                        "./aie/kernels/decimators/hb27.cc", 
+                        "./aie/kernels/interpolators/hb27_2i.cc"    
+                    ]
+                }
+            ]
+        }
+    ],
+   "data": [
+        "PROJECT/data/golden.txt",
+        "PROJECT/data/input.txt",
+    ],
+    "v++": {
+        "linker": {
+                    "cflags": [
+                        "--config PROJECT/system.cfg"
+                    ]
+                },
+        "package": {
+                    "cflags": [
+                        "--package.defer_aie_run"
+                    ]
+                }
+     },
+     "containers": [
+        {
+            "accelerators": [
+                {
+                    "name": "mm2s", 
+                    "location": "pl_kernels/mm2s.cpp"
+                }, 
+                {
+                    "name": "s2mm", 
+                    "location": "pl_kernels/s2mm.cpp"
+                }, 
+                {
+                    "name": "polar_clip", 
+                    "location": "pl_kernels/polar_clip.cpp"
+                } 
+            ], 
+            "name": "tutorial"
+        }
+    ],
+    "config_make" : "./system.cfg",
+    "launch": [
+        {
+            "name": "generic launch for all flows"
+        }
+    ],
+    "contributors": [
+        {
+            "url": "http://www.xilinx.com", 
+            "group": "Xilinx"
+        }
+    ]
 }

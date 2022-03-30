@@ -9,7 +9,7 @@
 
 # Versal System Design Clocking
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -36,8 +36,8 @@ For detailed information, see the Clocking the PL Kernels section [here](https:/
 
 Run the following steps before starting this tutorial:
 
-1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
-2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2021.2` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.1/sdk.sh`.
+2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2022.1` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
@@ -203,14 +203,14 @@ To run the design on hardware using an SD card, you need to package all the file
 1. Open the `Makefile` with your editor of choice, and familiarize yourself with the contents specific to the `package` task.
 2. In an easier to read command-line view, here is the command:
     ```bash
-    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm \
+    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
         --package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
 		--package.boot_mode=sd \
 		--package.image_format=ext4 \
 		--package.defer_aie_run \
 		--package.sd_file host.exe \
-        tutorial1.xclbin libadf.a
+        tutorial1.xsa libadf.a
     ```
     **NOTE:** Remember to change the `${ROOTFS}` and `${IMAGE}` to the proper paths.
 
