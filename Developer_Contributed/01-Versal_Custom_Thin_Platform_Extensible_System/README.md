@@ -262,6 +262,8 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
  - The output of the Vitis packager ends up in `[project-root]/package_output_${TARGET}`
  - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review:
    - `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj`# vivado `prj.xpr`
+ - Vitis will connect the memory-ports of the vadd_mm kernel to DDR as specified in the `[project-root]/vitis/src/system.cfg`
+ - Vitis will connect the memory-ports of the mm2s_vadd_s, vadd_s and s2mm_vadd_s kernels to LPDDR as specified in the `[project-root]/vitis/src/system.cfg`
  
 </details>
 
@@ -535,6 +537,7 @@ Click on each item below to see the detailed Revision History:
       - id=2 -> clk_out1_o3 -> 125MHz
       - id=3 -> clk_out1_o4 -> 62.5MHz
       - id=4 -> clk_out2    -> 333MHz
+    - Added LPDDR to the base platform
   - linux:
     - Added Yocto as alternative Linux build tool option with:
       - `[project-root]/Makefile` - `export LINUX_BUILD_TOOL := yocto` 
@@ -578,6 +581,7 @@ Click on each item below to see the detailed Revision History:
     - Added `${SYSTEM_CFG}` as dependency for the Vitis Linker
     - Added `${GRAPH_O}` as dependency for the vitis linker, since you need to perform extra steps to be able to remove this dependency
     - Added `${LINUX_IMAGE}` and `${LINUX_ROOTFS}` as dependencies for the vitis packager; and those are now taken from the software platform
+    - mm2s_vadd_s->vadd_s->s2mm_vadd now uses LPDDR
   - general:
     - Improved dependencies in almost all `Makefile`s to **ONLY** rebuild what's needed to be rebuild after a modification
     - Added following `[project-root]/Makefile` commands:
