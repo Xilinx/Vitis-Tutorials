@@ -254,7 +254,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Directory/file      | Description                                             
 | --------------------|---------------------------------------------------------
 | Makefile            | The Vitis generic Makefile for linker and packager
-| src/system.cfg      | Vitis linker configuration file: connections, clocks and memory
+| src/system.cfg      | Vitis linker configuration file: kernel-connections, clocks and memory-ports
 | src/ila_0_bd.cfg    | ILA Vitis connection needed for Vitis linker when `export ILA_EN := 1`
 | src/ila_0_def.tcl   | ILA Vitis tcl needed for Vitis linker when `export ILA_EN := 1`
 
