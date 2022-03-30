@@ -41,7 +41,7 @@ export ILA_EN                     := 0
 export LINUX_BUILD_TOOL           := petalinux
 
 # LINUX_TMP_DIR = Any dir which is not NFS
-export LINUX_TMP_DIR              := /tmp/linux/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}
+export LINUX_TMP_DIR              := /tmp/${USER}/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}
 
 # LINUX_YOCTO_ROOT = Directory where yocto tools are installed
 # Used ONLY when LINUX_BUILD_TOOL := yocto!
