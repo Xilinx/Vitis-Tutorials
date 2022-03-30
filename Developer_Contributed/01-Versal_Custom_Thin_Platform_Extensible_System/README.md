@@ -302,9 +302,35 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
   - Execute the following after boot-up when you reached the Linux command line prompt:
     - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
- ```
+  ```
 root@vck190-versal:~# cd /media/sd-mmcblk0p1/
-root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_s.exe a.xclbin
+root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin 
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
+PASSED:  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
+PASSED:  auto my_vadd_i/oX = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd.group_id(X) (=1))
+PASSED:  auto my_vadd_i/oX_mapped = = my_vadd_i/oX.map<unsigned int*>()
+PASSED:  my_vadd_inputX.sync(XCL_BO_SYNC_BO_TO_DEVICE, VADD_BYTE_SIZE, 0)
+PASSED:  auto my_vadd_run = my_vadd(my_vadd_input0, my_vadd_input1, my_vadd_output, VADD_BYTE_SIZE)
+
+INFO:    Waiting kernel to end...
+
+PASSED:  my_vadd_output.sync(XCL_BO_SYNC_BO_FROM_DEVICE, VADD_BYTE_SIZE, 0)
+
+PASSED:  ./vadd_mm_cpp.exe
+
+root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin 
+Loading: 'a.xclbin'
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+
+PASSED:  ./vadd_mm_ocl.exe
+
+root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_s.exe a.xclbin 
 INFO:    samples = 256
 INFO:    bsize   = 512
 PASSED:  auto my_device = xrt::device(0)
@@ -314,12 +340,12 @@ XAIEFAL: INFO: Resource group Generic is created.
 PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
 PASSED:  auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_1}")
 PASSED:  auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_2}")
-PASSED:  auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0))
+PASSED:  auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0) (=2))
 PASSED:  auto in_01_bo_mapped = = in_01_bo.map<TYPE_DATA*>()
 PASSED:  in_01_bo.sync(XCL_BO_SYNC_BO_TO_DEVICE)
 PASSED:  auto in_01_run = in_01(in_01_bo, nullptr, 256)
 PASSED:  auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_s:{s2mm_vadd_s_1}")
-PASSED:  auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0))
+PASSED:  auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0) (=2))
 PASSED:  auto out_bo_mapped = out_bo.map<TYPE_DATA*>()
 PASSED:  auto out_run = out(out_bo, nullptr, 256)
 PASSED:  dut = xrt::kernel(my_device, xclbin_uuid, "vadd_s:{vadd_s_1}")
@@ -335,25 +361,7 @@ PASSED:  out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
 
 PASSED:  ./vadd_s.exe
 
-root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin
-PASSED:  auto my_device = xrt::device(0)
-XAIEFAL: INFO: Resource group Avail is created.
-XAIEFAL: INFO: Resource group Static is created.
-XAIEFAL: INFO: Resource group Generic is created.
-PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-PASSED:  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
-
-PASSED:  ./vadd_mm_cpp.exe
-
-root@vck190-versal:/media/sd-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin
-Loading: 'a.xclbin'
-XAIEFAL: INFO: Resource group Avail is created.
-XAIEFAL: INFO: Resource group Static is created.
-XAIEFAL: INFO: Resource group Generic is created.
-
-PASSED:  ./vadd_mm_ocl.exe
-
-root@vck190-versal:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin
+root@vck190-versal:/media/sd-mmcblk0p1# ./aie_dly_test.exe a.xclbin 
 Initializing ADF API...
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
@@ -366,109 +374,109 @@ PASSED:  my_graph.reset()
 PASSED:  my_graph.run()
 Poll subtractor register
   Value Reg0:  220
-  Value Reg1:  11c
-  Value Reg2:  175
-  Value Reg3:  36
+  Value Reg1:  156
+  Value Reg2:  17e
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  1ee
-  Value Reg1:  11c
-  Value Reg2:  173
-  Value Reg3:  38
+  Value Reg0:  214
+  Value Reg1:  17e
+  Value Reg2:  17e
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  1f0
-  Value Reg1:  118
+  Value Reg0:  1d2
+  Value Reg1:  17e
   Value Reg2:  174
-  Value Reg3:  3a
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  22c
-  Value Reg1:  11a
-  Value Reg2:  173
-  Value Reg3:  38
+  Value Reg0:  1e8
+  Value Reg1:  17e
+  Value Reg2:  17e
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  1ee
-  Value Reg1:  11a
+  Value Reg0:  1d2
+  Value Reg1:  17e
   Value Reg2:  174
-  Value Reg3:  38
-Poll subtractor register
-  Value Reg0:  23e
-  Value Reg1:  118
-  Value Reg2:  172
-  Value Reg3:  3a
-Poll subtractor register
-  Value Reg0:  212
-  Value Reg1:  118
-  Value Reg2:  185
-  Value Reg3:  3a
-Poll subtractor register
-  Value Reg0:  240
-  Value Reg1:  118
-  Value Reg2:  170
-  Value Reg3:  3a
-Poll subtractor register
-  Value Reg0:  23e
-  Value Reg1:  116
-  Value Reg2:  175
-  Value Reg3:  36
-Poll subtractor register
-  Value Reg0:  1ec
-  Value Reg1:  11a
-  Value Reg2:  175
-  Value Reg3:  3a
-Poll subtractor register
-  Value Reg0:  24a
-  Value Reg1:  118
-  Value Reg2:  170
-  Value Reg3:  38
+  Value Reg3:  32
 Poll subtractor register
   Value Reg0:  21a
-  Value Reg1:  11c
-  Value Reg2:  171
-  Value Reg3:  36
+  Value Reg1:  17e
+  Value Reg2:  17a
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  1ee
-  Value Reg1:  116
-  Value Reg2:  173
-  Value Reg3:  3a
+  Value Reg0:  1d2
+  Value Reg1:  17e
+  Value Reg2:  176
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  1ea
-  Value Reg1:  11a
-  Value Reg2:  172
-  Value Reg3:  38
+  Value Reg0:  220
+  Value Reg1:  17e
+  Value Reg2:  176
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  23e
-  Value Reg1:  116
-  Value Reg2:  173
-  Value Reg3:  38
+  Value Reg0:  1fa
+  Value Reg1:  17e
+  Value Reg2:  17c
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  1ee
-  Value Reg1:  11a
-  Value Reg2:  170
-  Value Reg3:  38
+  Value Reg0:  1d2
+  Value Reg1:  17e
+  Value Reg2:  176
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  214
-  Value Reg1:  11c
-  Value Reg2:  170
-  Value Reg3:  38
+  Value Reg0:  1d2
+  Value Reg1:  180
+  Value Reg2:  17e
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  204
-  Value Reg1:  11c
-  Value Reg2:  177
-  Value Reg3:  38
+  Value Reg0:  1d2
+  Value Reg1:  186
+  Value Reg2:  176
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  214
-  Value Reg1:  118
-  Value Reg2:  172
-  Value Reg3:  3a
+  Value Reg0:  1d2
+  Value Reg1:  17e
+  Value Reg2:  176
+  Value Reg3:  32
 Poll subtractor register
-  Value Reg0:  24c
-  Value Reg1:  118
-  Value Reg2:  173
-  Value Reg3:  34
+  Value Reg0:  202
+  Value Reg1:  186
+  Value Reg2:  176
+  Value Reg3:  32
+Poll subtractor register
+  Value Reg0:  1d2
+  Value Reg1:  17e
+  Value Reg2:  17c
+  Value Reg3:  32
+Poll subtractor register
+  Value Reg0:  20c
+  Value Reg1:  17e
+  Value Reg2:  17c
+  Value Reg3:  32
+Poll subtractor register
+  Value Reg0:  1d2
+  Value Reg1:  17e
+  Value Reg2:  176
+  Value Reg3:  32
+Poll subtractor register
+  Value Reg0:  20e
+  Value Reg1:  17e
+  Value Reg2:  174
+  Value Reg3:  32
+Poll subtractor register
+  Value Reg0:  1ec
+  Value Reg1:  186
+  Value Reg2:  17a
+  Value Reg3:  32
+Poll subtractor register
+  Value Reg0:  1d2
+  Value Reg1:  17e
+  Value Reg2:  174
+  Value Reg3:  32
 PASSED:  my_graph.end()
 
 PASSED:  ./aie_dly_test.exe
 
-root@vck190-versal:/media/sd-mmcblk0p1#
+root@vck190-versal:/media/sd-mmcblk0p1# 
   ```
 
 ## Notes
