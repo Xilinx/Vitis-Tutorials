@@ -15,7 +15,7 @@ limitations under the License.
 **********/
 
 
-#include "graph.cpp"
+#include "graph.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,6 +29,8 @@ limitations under the License.
 
 // Using the adf API that call XRT API
 #include "adf/adf_api/XRTConfig.h"
+
+clipped clipgraph;
 
 static std::vector<char>
 load_xclbin(xrtDeviceHandle device, const std::string& fnm)
