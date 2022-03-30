@@ -18,12 +18,12 @@ The tutorial is based on the 2022.1 Vitis™ unified software platform.
 
 The flow is broken into four different steps shown in the following diagram.
 
-![missing image](images/diagram.png)
+![missing image](images/diagram_22.1.png)
 
 
-<p align="center"><a href="./01-custom_base_platform_creation.md">Start from step 1 - Platform Creation (optional)</a></b></p>
+<p align="center"><a href="./01-custom_base_platform_creation.md">Start with Custom Platform Creation (optional)</a></b></p>
 
-<p align="center"><a href="./02-aie_application_creation.md">Start from step 2 - Create the AI Engine Application</a></b></p>
+<p align="center"><a href="./02-aie_application_creation.md">Start with AI Engine development using base platform</a></b></p>
 
 
 

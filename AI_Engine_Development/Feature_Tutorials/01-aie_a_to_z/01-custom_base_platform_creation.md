@@ -7,13 +7,13 @@
  </tr>
 </table>
 
-# A to Z Bare-metal Flow: Introduction
+# Custom Platform Creation
 
 ## Platforms
 
 A platform is the starting point of your design and will be used to build Vitis™ software platform applications.
 
->**Note**: AMD-Xilinx recommends using the VCK190 base platform provided on Xilinx.com as a starting point for designs. This page is intended for users who would like to understand how the base platform is generated. Other users can start directly from <a href="./02-aie_application_creation.md">step 2 - Create the AI Engine Application</a></b>.
+>**Note**: AMD-Xilinx recommends using the VCK190 base platform provided on Xilinx.com as a starting point for designs. This page is intended for users who would like to understand how the base platform is generated. Other users can start directly from <a href="./02-aie_application_creation.md">AI Engine Development</a></b>.
 
 In this first section of the tutorial an example of how to create a new platform is shown. This starts with building the hardware system using the AI Engine in the Vivado® Design Suite.
 
@@ -96,7 +96,7 @@ In this step, you created the platform starting with building the hardware platf
 
 In the next step, you will build an AI Engine application using this platform.
 
-<p align="center"><b><a href="./README.md">Return to Start of Tutorial</a> — <a href="./02-aie_application_creation.md">Go to Step 2</a></b></p>
+<p align="center"><b><a href="./README.md">Return to Start of Tutorial</a> — <a href="./02-aie_application_creation.md">Go to AI Engine Development</a></b></p>
 
 
 
