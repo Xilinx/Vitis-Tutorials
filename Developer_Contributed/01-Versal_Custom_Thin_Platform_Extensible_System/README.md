@@ -66,7 +66,8 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
-      - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect! 
+      - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect!
+      - More information on how to setup and use the ILA can be found in the [Notes](#notes)
     - `LINUX_BUILD_TOOL`:
       - `export LINUX_BUILD_TOOL := petalinux` to use Petalinux as linux build tool (default).
       - `export LINUX_BUILD_TOOL := yocto` to use Yocto as linux build tool (change if needed).
@@ -162,7 +163,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 
  - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
  - After this step you could open the platform blockdesign in Vivado for review:
-   - `[project-root]/platform/hw/build/vck190_thin_vivado`# vivado `vck190_thin.xpr`
+   - `[project-root]/platform/hw/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
  
 </details>
 <details>
@@ -261,7 +262,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
  - Runs the Vitis linker and packager
  - The output of the Vitis packager ends up in `[project-root]/package_output_${TARGET}`
  - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review:
-   - `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj`# vivado `prj.xpr`
+   - `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj` $ vivado `prj.xpr`
  - Vitis will connect the memory-ports of the vadd_mm kernel to DDR as specified in the `[project-root]/vitis/src/system.cfg`
  - Vitis will connect the memory-ports of the mm2s_vadd_s, vadd_s and s2mm_vadd_s kernels to LPDDR as specified in the `[project-root]/vitis/src/system.cfg`
  
@@ -490,9 +491,13 @@ root@vck190-versal:/media/sd-mmcblk0p1#
   - `export ILA_EN := 1`
     - The ILA core connectivity is set up during v++ linking process loading the cfg file `[project-root]/vitis/src/ila_0_bd.cfg` and further configuration of ILA properties is managed in tcl file `[project-root]/vitis/src/ila_0_def.tcl`.
     - Using the configuration file `[project-root]/vitis/src/ila_0_bd.cfg` allows the designer to mark AXI port for debug nets to and from the AIE engine for analysis. 
-    - After completing the linking process, the designer can verify conectivity and configuration of the ILA core in the generated block design in project `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj/prj.xpr`.
-    - Once the build process is completed and linux boots on your board, it is required to manually set the path for probe file `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
-    - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, rerunning `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
+    - **AFTER** completing the vitis linking process execute the following:
+      - `[project-root]/vitis/build_hw/_x/link/vivado/vpl/prj` $ vivado `prj.xpr`
+      - Vivado: `Open Implemented Design`
+      - Vivado: `Tcl Console`: write_debug_probes `probe_0.ltx`
+      - Vivado: `Close`
+      - `[project-root]/vitis` $ make update_ila
+    - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, rerunning `./aie_dly_test.exe a.xclbin` a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
   - root password = `root` when using ssh/scp/... towards the VCK190 `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`. 
   
 ## Design Considerations
