@@ -36,6 +36,8 @@ PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
 SD_CARD           := ../package_output_${TARGET}
 BUILD_DIR         := build_${TARGET}
 
+ILA_LTX           := ${BUILD_DIR}/_x/link/vivado/vpl/prj/probe_0.ltx
+
 # Force ILA_EN=0 (Disabled) for TARGET=hw_emu
 ifeq (${TARGET}, hw_emu)
     ILA_EN  = 0
@@ -89,11 +91,16 @@ ${SD_CARD}: ${BUILD_DIR}/${XCLBIN} ${PS_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_
 			${XCLBIN} \
 			$(addprefix --package.sd_file=../, ${PS_EXE}) \
 			|& tee vpp_pack.log
-	if [ -e my.ltx ] ; \
-		then cp -f my.ltx $(SD_CARD)/probe_0.ltx ; \
+	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
+	make update_ila
+
+update_ila:
+ifeq (${TARGET}, hw)
+	if [ -e ${ILA_LTX} ] ; \
+		then cp -f ${ILA_LTX} $(SD_CARD)/ ; \
 		else echo "no probe_0 ltx file" ; \
 	fi 
-	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
+endif
 
 clean:
 	rm -rf ${SD_CARD} ${BUILD_DIR}
