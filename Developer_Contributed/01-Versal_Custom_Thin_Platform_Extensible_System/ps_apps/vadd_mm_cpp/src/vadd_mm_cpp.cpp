@@ -28,6 +28,7 @@ static const int VADD_BYTE_SIZE   = VADD_WORD_SIZE * sizeof(unsigned int);
 static const char*    STR_ERROR   = "ERROR:   ";
 static const char*    STR_FAILED  = "FAILED:  ";
 static const char*    STR_PASSED  = "PASSED:  ";
+static const char*    STR_INFO    = "INFO:    ";
 static const char*    STR_USAGE   = "USAGE:   ";
 
 int main(int argc, char* argv[]) {
@@ -50,17 +51,15 @@ int main(int argc, char* argv[]) {
   auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}");
   std::cout << STR_PASSED << "auto my_vadd = xrt::kernel(my_device, xclbin_uuid, \"vadd_mm:{vadd_mm_1}\")" << std::endl;
 
-  auto my_vadd_arg0 = my_vadd.group_id(0);
-  auto my_vadd_arg1 = my_vadd.group_id(1);
-  auto my_vadd_arg2 = my_vadd.group_id(2);
-
-  auto my_vadd_input0 = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd_arg0);
-  auto my_vadd_input1 = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd_arg1);  
-  auto my_vadd_output = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd_arg2);
+  auto my_vadd_input0 = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd.group_id(0));
+  auto my_vadd_input1 = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd.group_id(1));  
+  auto my_vadd_output = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd.group_id(2));
+  std::cout << STR_PASSED << "auto my_vadd_i/oX = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd.group_id(X) (=" << my_vadd.group_id(0) << "))" << std::endl;
 
   auto my_vadd_input0_mapped = my_vadd_input0.map<unsigned int*>();
   auto my_vadd_input1_mapped = my_vadd_input1.map<unsigned int*>();
   auto my_vadd_output_mapped = my_vadd_output.map<unsigned int*>();
+ std::cout << STR_PASSED << "auto my_vadd_i/oX_mapped = = my_vadd_i/oX.map<unsigned int*>()" << std::endl;
 
   //setting input data
   for(int i = 0 ; i < VADD_WORD_SIZE; i++){
@@ -70,12 +69,18 @@ int main(int argc, char* argv[]) {
 
   my_vadd_input0.sync(XCL_BO_SYNC_BO_TO_DEVICE, VADD_BYTE_SIZE, 0);
   my_vadd_input1.sync(XCL_BO_SYNC_BO_TO_DEVICE, VADD_BYTE_SIZE, 0);
+  std::cout << STR_PASSED << "my_vadd_inputX.sync(XCL_BO_SYNC_BO_TO_DEVICE, VADD_BYTE_SIZE, 0)" << std::endl;
 
   auto my_vadd_run = my_vadd(my_vadd_input0, my_vadd_input1, my_vadd_output, VADD_BYTE_SIZE);
+  std::cout << STR_PASSED << "auto my_vadd_run = my_vadd(my_vadd_input0, my_vadd_input1, my_vadd_output, VADD_BYTE_SIZE)" << std::endl;
+
+  // Waiting for all kernels to end
+  std::cout << std::endl << STR_INFO << "Waiting kernel to end..." << std::endl << std::endl;
 
   my_vadd_run.wait();
 
   my_vadd_output.sync(XCL_BO_SYNC_BO_FROM_DEVICE, VADD_BYTE_SIZE, 0);
+  std::cout << STR_PASSED << "my_vadd_output.sync(XCL_BO_SYNC_BO_FROM_DEVICE, VADD_BYTE_SIZE, 0)" << std::endl;
 
   int match = 1;
   for(int i = 0; i < VADD_WORD_SIZE; i++) {

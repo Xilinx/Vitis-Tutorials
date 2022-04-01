@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
 
   auto in_0_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_0.group_id(0));
   auto in_1_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_1.group_id(0));  
-  std::cout << STR_PASSED << "auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0))" << std::endl;
+  std::cout << STR_PASSED << "auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0) (=" << in_0.group_id(0) << "))" << std::endl;
 
   auto in_0_bo_mapped = in_0_bo.map<TYPE_DATA*>();
   auto in_1_bo_mapped = in_1_bo.map<TYPE_DATA*>();
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
   std::cout << STR_PASSED << "auto out = xrt::kernel(my_device, xclbin_uuid, \"s2mm_vadd_s:{s2mm_vadd_s_1}\")" << std::endl;
 
   auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0));
-  std::cout << STR_PASSED << "auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0))" << std::endl;
+  std::cout << STR_PASSED << "auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0) (=" << out.group_id(0) << "))" << std::endl;
 
   auto out_bo_mapped = out_bo.map<TYPE_DATA*>();
   std::cout << STR_PASSED << "auto out_bo_mapped = out_bo.map<TYPE_DATA*>()" << std::endl;

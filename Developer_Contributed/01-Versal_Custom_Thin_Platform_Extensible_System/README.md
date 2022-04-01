@@ -61,7 +61,8 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
-      - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect! 
+      - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect!
+      - More information on how to setup and use the ILA can be found in the [Notes](#notes)
     - `LINUX_BUILD_TOOL`:
       - `export LINUX_BUILD_TOOL := petalinux` to use Petalinux as linux build tool (default).
       - `export LINUX_BUILD_TOOL := yocto` to use Yocto as linux build tool (change if needed).
@@ -70,9 +71,9 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - Defaults to `export LINUX_YOCTO_ROOT := ${HOME}/bin` so please change to your local Yocto install directory. 
       - More information on how to install/setup and build Yocto can be found [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto).
     - `LINUX_TMP_DIR`:
-      - Defaults to `export LINUX_TMP_DIR := /tmp/linux/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}`
-        - Defaults to `/tmp/linux/2022.1/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
-        - Defaults to `/tmp/linux/2022.1/yocto` when `export LINUX_BUILD_TOOL := yocto`.
+      - Defaults to `export LINUX_TMP_DIR := /tmp/${USER}/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}`
+        - Defaults to `/tmp/${USER}/2022.1/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
+        - Defaults to `/tmp/${USER}/2022.1/yocto` when `export LINUX_BUILD_TOOL := yocto`.
       - So if you want to place it somewhere else; please replace it with your required location. 
       - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS mounted drive!
       - If your [project-root] is **NOT** on an NFS mounted drive; you can easily add it in your project with for example `export LINUX_TMP_DIR := $(shell pwd)/linux/tmp` 
@@ -157,7 +158,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 
  - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
  - After this step you could open the platform blockdesign in Vivado for review:
-   - `[project-root]/platform/hw/build/vck190_thin_vivado`# vivado `vck190_thin.xpr`
+   - `[project-root]/platform/hw/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
  
 </details>
 <details>
@@ -249,14 +250,16 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Directory/file      | Description                                             
 | --------------------|---------------------------------------------------------
 | Makefile            | The Vitis generic Makefile for linker and packager
-| src/system.cfg      | Vitis connection and clock configuration needed for Vitis linker
+| src/system.cfg      | Vitis Linker Configuration: kernel-connections, clocks and memory-ports
 | src/ila_0_bd.cfg    | ILA Vitis connection needed for Vitis linker when `export ILA_EN := 1`
 | src/ila_0_def.tcl   | ILA Vitis tcl needed for Vitis linker when `export ILA_EN := 1`
 
  - Runs the Vitis linker and packager
  - The output of the Vitis packager ends up in `[project-root]/package_output_${TARGET}`
  - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review:
-   - `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj`# vivado `prj.xpr`
+   - `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj` $ vivado `prj.xpr`
+ - Vitis will connect the memory-ports of the vadd_mm kernel to DDR4 as specified in the `[project-root]/vitis/src/system.cfg`
+ - Vitis will connect the memory-ports of the mm2s_vadd_s, vadd_s and s2mm_vadd_s kernels to LPDDR4 as specified in the `[project-root]/vitis/src/system.cfg`
  
 </details>
 
@@ -295,9 +298,37 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
   - Execute the following after boot-up when you reached the Linux command line prompt:
     - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
- ```
+  ```
+vck190-versal login: root (automatic login)
+
 root@vck190-versal:~# cd /run/media/mmcblk0p1/
-root@vck190-versal:/run/media/mmcblk0p1# ./vadd_s.exe a.xclbin
+root@vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin 
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
+PASSED:  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
+PASSED:  auto my_vadd_i/oX = xrt::bo(my_device, VADD_BYTE_SIZE, XCL_BO_FLAGS_NONE, my_vadd.group_id(X) (=1))
+PASSED:  auto my_vadd_i/oX_mapped = = my_vadd_i/oX.map<unsigned int*>()
+PASSED:  my_vadd_inputX.sync(XCL_BO_SYNC_BO_TO_DEVICE, VADD_BYTE_SIZE, 0)
+PASSED:  auto my_vadd_run = my_vadd(my_vadd_input0, my_vadd_input1, my_vadd_output, VADD_BYTE_SIZE)
+
+INFO:    Waiting kernel to end...
+
+PASSED:  my_vadd_output.sync(XCL_BO_SYNC_BO_FROM_DEVICE, VADD_BYTE_SIZE, 0)
+
+PASSED:  ./vadd_mm_cpp.exe
+
+root@vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin 
+Loading: 'a.xclbin'
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+
+PASSED:  ./vadd_mm_ocl.exe
+
+root@vck190-versal:/run/media/mmcblk0p1# ./vadd_s.exe a.xclbin 
 INFO:    samples = 256
 INFO:    bsize   = 512
 PASSED:  auto my_device = xrt::device(0)
@@ -307,12 +338,12 @@ XAIEFAL: INFO: Resource group Generic is created.
 PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
 PASSED:  auto in_0 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_1}")
 PASSED:  auto in_1 = xrt::kernel(my_device, xclbin_uuid, "mm2s_vadd_s:{mm2s_vadd_s_2}")
-PASSED:  auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0))
+PASSED:  auto in_01_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, in_01.group_id(0) (=2))
 PASSED:  auto in_01_bo_mapped = = in_01_bo.map<TYPE_DATA*>()
 PASSED:  in_01_bo.sync(XCL_BO_SYNC_BO_TO_DEVICE)
 PASSED:  auto in_01_run = in_01(in_01_bo, nullptr, 256)
 PASSED:  auto out = xrt::kernel(my_device, xclbin_uuid, "s2mm_vadd_s:{s2mm_vadd_s_1}")
-PASSED:  auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0))
+PASSED:  auto out_bo = xrt::bo(my_device, bsize, XCL_BO_FLAGS_NONE, out.group_id(0) (=2))
 PASSED:  auto out_bo_mapped = out_bo.map<TYPE_DATA*>()
 PASSED:  auto out_run = out(out_bo, nullptr, 256)
 PASSED:  dut = xrt::kernel(my_device, xclbin_uuid, "vadd_s:{vadd_s_1}")
@@ -328,25 +359,7 @@ PASSED:  out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
 
 PASSED:  ./vadd_s.exe
 
-root@vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin
-PASSED:  auto my_device = xrt::device(0)
-XAIEFAL: INFO: Resource group Avail is created.
-XAIEFAL: INFO: Resource group Static is created.
-XAIEFAL: INFO: Resource group Generic is created.
-PASSED:  auto xclbin_uuid = my_device.load_xclbin(a.xclbin)
-PASSED:  auto my_vadd = xrt::kernel(my_device, xclbin_uuid, "vadd_mm:{vadd_mm_1}")
-
-PASSED:  ./vadd_mm_cpp.exe
-
-root@vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin
-Loading: 'a.xclbin'
-XAIEFAL: INFO: Resource group Avail is created.
-XAIEFAL: INFO: Resource group Static is created.
-XAIEFAL: INFO: Resource group Generic is created.
-
-PASSED:  ./vadd_mm_ocl.exe
-
-root@vck190-versal:/run/media/mmcblk0p1# ./aie_dly_test.exe a.xclbin
+root@vck190-versal:/run/media/mmcblk0p1# ./aie_dly_test.exe a.xclbin 
 Initializing ADF API...
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
@@ -358,105 +371,105 @@ PASSED:  auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top")
 PASSED:  my_graph.reset()
 PASSED:  my_graph.run()
 Poll subtractor register
+  Value Reg0:  1d2
+  Value Reg1:  15e
+  Value Reg2:  157
+  Value Reg3:  2e
+Poll subtractor register
+  Value Reg0:  1d2
+  Value Reg1:  182
+  Value Reg2:  179
+  Value Reg3:  2e
+Poll subtractor register
+  Value Reg0:  1d2
+  Value Reg1:  18a
+  Value Reg2:  179
+  Value Reg3:  2e
+Poll subtractor register
   Value Reg0:  220
-  Value Reg1:  11c
-  Value Reg2:  175
-  Value Reg3:  36
+  Value Reg1:  192
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  1ee
-  Value Reg1:  11c
-  Value Reg2:  173
-  Value Reg3:  38
+  Value Reg0:  1d2
+  Value Reg1:  192
+  Value Reg2:  181
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  1f0
-  Value Reg1:  118
-  Value Reg2:  174
-  Value Reg3:  3a
+  Value Reg0:  1e8
+  Value Reg1:  18a
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  22c
-  Value Reg1:  11a
-  Value Reg2:  173
-  Value Reg3:  38
+  Value Reg0:  220
+  Value Reg1:  192
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  1ee
-  Value Reg1:  11a
-  Value Reg2:  174
-  Value Reg3:  38
+  Value Reg0:  1da
+  Value Reg1:  192
+  Value Reg2:  181
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  23e
-  Value Reg1:  118
-  Value Reg2:  172
-  Value Reg3:  3a
+  Value Reg0:  220
+  Value Reg1:  18a
+  Value Reg2:  17b
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  212
-  Value Reg1:  118
-  Value Reg2:  185
-  Value Reg3:  3a
+  Value Reg0:  1d2
+  Value Reg1:  18a
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  240
-  Value Reg1:  118
-  Value Reg2:  170
-  Value Reg3:  3a
+  Value Reg0:  220
+  Value Reg1:  192
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  23e
-  Value Reg1:  116
-  Value Reg2:  175
-  Value Reg3:  36
+  Value Reg0:  1d2
+  Value Reg1:  192
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  1ec
-  Value Reg1:  11a
-  Value Reg2:  175
-  Value Reg3:  3a
+  Value Reg0:  202
+  Value Reg1:  18a
+  Value Reg2:  181
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  24a
-  Value Reg1:  118
-  Value Reg2:  170
-  Value Reg3:  38
-Poll subtractor register
-  Value Reg0:  21a
-  Value Reg1:  11c
-  Value Reg2:  171
-  Value Reg3:  36
-Poll subtractor register
-  Value Reg0:  1ee
-  Value Reg1:  116
-  Value Reg2:  173
-  Value Reg3:  3a
-Poll subtractor register
-  Value Reg0:  1ea
-  Value Reg1:  11a
-  Value Reg2:  172
-  Value Reg3:  38
-Poll subtractor register
-  Value Reg0:  23e
-  Value Reg1:  116
-  Value Reg2:  173
-  Value Reg3:  38
-Poll subtractor register
-  Value Reg0:  1ee
-  Value Reg1:  11a
-  Value Reg2:  170
-  Value Reg3:  38
-Poll subtractor register
-  Value Reg0:  214
-  Value Reg1:  11c
-  Value Reg2:  170
-  Value Reg3:  38
+  Value Reg0:  1d2
+  Value Reg1:  18a
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
   Value Reg0:  204
-  Value Reg1:  11c
-  Value Reg2:  177
-  Value Reg3:  38
+  Value Reg1:  18a
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  214
-  Value Reg1:  118
-  Value Reg2:  172
-  Value Reg3:  3a
+  Value Reg0:  1d2
+  Value Reg1:  18a
+  Value Reg2:  179
+  Value Reg3:  2e
 Poll subtractor register
-  Value Reg0:  24c
-  Value Reg1:  118
-  Value Reg2:  173
-  Value Reg3:  34
+  Value Reg0:  206
+  Value Reg1:  192
+  Value Reg2:  179
+  Value Reg3:  2e
+Poll subtractor register
+  Value Reg0:  1d2
+  Value Reg1:  192
+  Value Reg2:  179
+  Value Reg3:  2e
+Poll subtractor register
+  Value Reg0:  208
+  Value Reg1:  18e
+  Value Reg2:  181
+  Value Reg3:  2e
+Poll subtractor register
+  Value Reg0:  1d2
+  Value Reg1:  18a
+  Value Reg2:  17b
+  Value Reg3:  2e
 PASSED:  my_graph.end()
 
 PASSED:  ./aie_dly_test.exe
@@ -466,7 +479,6 @@ root@vck190-versal:/run/media/mmcblk0p1#
 
 ## Notes
   - Simulation is **NOT** part and **NOT** demonstrated in this Tutorial!
-  - lpddr4 is now also available in the GENERATED base platform for your convinience, but is **NOT** used in this Tutorial!
   - `xsa`: CIPS settings are added manually; configured in the bd-files.
   - The example design is fully FAT-32 
     - if you like to use ext4 rootfs instead: 
@@ -476,8 +488,12 @@ root@vck190-versal:/run/media/mmcblk0p1#
   - `export ILA_EN := 1`
     - The ILA core connectivity is set up during v++ linking process loading the cfg file `[project-root]/vitis/src/ila_0_bd.cfg` and further configuration of ILA properties is managed in tcl file `[project-root]/vitis/src/ila_0_def.tcl`.
     - Using the configuration file `[project-root]/vitis/src/ila_0_bd.cfg` allows the designer to mark AXI port for debug nets to and from the AIE engine for analysis. 
-    - After completing the linking process, the designer can verify conectivity and configuration of the ILA core in the generated block design in project `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj/prj.xpr`.
-    - Once the build process is completed and linux boots on your board, it is required to manually set the path for probe file `[project-root]/package_output/probe_0.ltx` in the Vivado Hardware Manager to load the ILA core if this was enabled. 
+    - **AFTER** completing the vitis linking process execute the following:
+      - `[project-root]/vitis/build_hw/_x/link/vivado/vpl/prj` $ vivado `prj.xpr`
+      - Vivado: `Open Implemented Design`
+      - Vivado: `Tcl Console`: write_debug_probes `probe_0.ltx`
+      - Vivado: `Close`
+      - `[project-root]/vitis` $ make update_ila
     - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, rerunning `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
   - root password = `root` when using ssh/scp/... towards the VCK190 `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`.
   

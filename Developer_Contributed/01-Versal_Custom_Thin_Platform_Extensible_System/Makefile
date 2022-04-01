@@ -15,14 +15,14 @@
  #
 # Top-level Makefile -- Calls sub-makefiles
 
-ECHO                     = @echo
+ECHO                               = @echo
 
 ################################################################################
 # Variables needed for AMD/XILINX tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
-REQUIRED_VERSION         = 2022.1
-VIVADO_VERSION          := $(shell vivado -version 2>/dev/null | grep "Vivado ")
-VITIS_VERSION           := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
+REQUIRED_VERSION                   = 2022.1
+VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "Vivado ")
+VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 
 ###############################################
 # Variables that may be changed to your needs #
@@ -38,7 +38,7 @@ export ILA_EN                     := 0
 export LINUX_BUILD_TOOL           := petalinux
 
 # LINUX_TMP_DIR = Any dir which is not NFS
-export LINUX_TMP_DIR              := /tmp/linux/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}
+export LINUX_TMP_DIR              := /tmp/${USER}/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}
 
 # LINUX_YOCTO_ROOT = Directory where yocto tools are installed
 # Used ONLY when LINUX_BUILD_TOOL := yocto!
