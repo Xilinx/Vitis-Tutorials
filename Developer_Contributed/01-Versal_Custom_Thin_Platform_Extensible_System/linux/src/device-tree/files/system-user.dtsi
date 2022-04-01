@@ -16,6 +16,15 @@
 
 /include/ "system-conf.dtsi"
 / {
+  reserved-memory {
+    #address-cells = <2>;
+    #size-cells = <2>;
+    ranges;
+    lpddr_memory: buffer@0 {
+      no-map;
+      reg = <0x500 0x0 0x2 0x0>;
+    };
+  };
 };
 
 &sdhci1{

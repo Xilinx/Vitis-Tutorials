@@ -13,16 +13,15 @@
 # limitations under the License.
 
 puts "Platform Category :\"${PLATFORM_TYPE}\""
-puts "Platform Name : \"${PLATFORM_NAME}\""
-puts "Version : \"${VER}\""
+puts "Platform Name     : \"${PLATFORM_NAME}\""
+puts "Version           : \"${VER}\""
 
-set_property PFM_NAME \
-    "xilinx.com:${PLATFORM_TYPE}:${PLATFORM_NAME}:${VER}" \
-    [get_files build/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd]
+# Configure the platform name
+set_property PFM_NAME "xilinx.com:${PLATFORM_TYPE}:${PLATFORM_NAME}:${VER}" [get_files build/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd]
 
 set pl_clks [get_bd_cells /clk_wizard_0]
 
-# tag the dynamic region clock ports
+# Configure the clk_wizard_0
 set NUM_CLOCKS_TOTAL   2
 set NUM_CLOCKS_MBUFGCE 1
 
@@ -40,7 +39,7 @@ for {set x 1} {$x <= $NUM_CLOCKS_TOTAL} {incr x} {
       } else {
         set clk_default false
       }
-      set pl_rst [get_bd_cells /sys_reset_0]
+      set pl_rst [get_bd_cells /proc_sys_reset_0]
       set clk_settings [concat id \"$clk_id\" is_default \"$clk_default\" proc_sys_reset \"$pl_rst\" status \"fixed\"]
       if {$x <= $NUM_CLOCKS_MBUFGCE} {
         dict set clk_props clk_out${x}_o${y} $clk_settings
@@ -51,112 +50,22 @@ for {set x 1} {$x <= $NUM_CLOCKS_TOTAL} {incr x} {
   }
 }
 
-puts "PFM.CLOCK String : "
-puts $clk_props
-puts "********"
-set_property PFM.CLOCK $clk_props $pl_clks
+set_property PFM.CLOCK $clk_props [get_bd_cells /clk_wizard_0]
 
-# tag the PL control ports
+# Configure the icn_ctrl
 set gp_masters []
 for {set x 1} {$x < 16} {incr x} {
   lappend gp_masters M[format %02d $x]_AXI {memport "M_AXI_GP" sptag "GP"}
 }
-for {set x 0} {$x < 1} {incr x} {
-  set_property PFM.AXI_PORT $gp_masters [get_bd_cells /axi_smc_$x]
-}
 
-set noc_intf_tags []
-# tag the AIE configuration NSU
-#lappend noc_intf_tags M01_AXI {memport "M_AXI_NOC" sptag "GP"}
+set_property PFM.AXI_PORT $gp_masters [get_bd_cells /icn_ctrl]
 
-# tag the DDR slave ports
-for {set x [get_property CONFIG.NUM_SI [get_bd_cells /axi_noc_0]]} \
-    {$x < [expr [get_property CONFIG.NUM_SI [get_bd_cells /axi_noc_0]] + 28]} \
-    {incr x} {
-  set sport S[format %02d $x]_AXI
-  lappend noc_intf_tags S[format %02d $x]_AXI {memport "S_AXI_NOC" sptag "DDR"}
-}
+# Configure the axi_intc_0
+set_property PFM.IRQ {intr {id 0 range 31}} [get_bd_cells /axi_intc_0]
 
-set_property PFM.AXI_PORT $noc_intf_tags [get_bd_cells /axi_noc_0]
-set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_0]
+# Configure the noc_ddr4
+set_property PFM.AXI_PORT {S00_AXI {memport "S_AXI_NOC" sptag "DDR"} S01_AXI {memport "S_AXI_NOC" sptag "DDR"} S02_AXI {memport "S_AXI_NOC" sptag "DDR"} S03_AXI {memport "S_AXI_NOC" sptag "DDR"} S04_AXI {memport "S_AXI_NOC" sptag "DDR"} S05_AXI {memport "S_AXI_NOC" sptag "DDR"} S06_AXI {memport "S_AXI_NOC" sptag "DDR"} S07_AXI {memport "S_AXI_NOC" sptag "DDR"} S08_AXI {memport "S_AXI_NOC" sptag "DDR"} S09_AXI {memport "S_AXI_NOC" sptag "DDR"} S10_AXI {memport "S_AXI_NOC" sptag "DDR"} S11_AXI {memport "S_AXI_NOC" sptag "DDR"} S12_AXI {memport "S_AXI_NOC" sptag "DDR"} S13_AXI {memport "S_AXI_NOC" sptag "DDR"} S14_AXI {memport "S_AXI_NOC" sptag "DDR"} S15_AXI {memport "S_AXI_NOC" sptag "DDR"} S16_AXI {memport "S_AXI_NOC" sptag "DDR"} S17_AXI {memport "S_AXI_NOC" sptag "DDR"} S18_AXI {memport "S_AXI_NOC" sptag "DDR"} S19_AXI {memport "S_AXI_NOC" sptag "DDR"} S20_AXI {memport "S_AXI_NOC" sptag "DDR"} S21_AXI {memport "S_AXI_NOC" sptag "DDR"} S22_AXI {memport "S_AXI_NOC" sptag "DDR"} S23_AXI {memport "S_AXI_NOC" sptag "DDR"} S24_AXI {memport "S_AXI_NOC" sptag "DDR"} S25_AXI {memport "S_AXI_NOC" sptag "DDR"} S26_AXI {memport "S_AXI_NOC" sptag "DDR"} S27_AXI {memport "S_AXI_NOC" sptag "DDR"}} [get_bd_cells /noc_ddr4]
 
+# Configure the noc_lpddr4
+set_property PFM.AXI_PORT {S00_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S01_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S02_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S03_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S04_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S05_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S06_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S07_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S08_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S09_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S10_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S11_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S12_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S13_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S14_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S15_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S16_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S17_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S18_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S19_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S20_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S21_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S22_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S23_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S24_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S25_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S26_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S27_AXI {memport "S_AXI_NOC" sptag "LPDDR"}} [get_bd_cells /noc_lpddr4]
 
-## Hardcoding PFM properties for debug only ##
-## Hardcoding PFM properties for debug only ##  # Create PFM attributes
-## Hardcoding PFM properties for debug only ##  set_property PFM.IRQ {intr { id 0 range 32 }} [get_bd_cells /axi_intc_0]
-## Hardcoding PFM properties for debug only ##
-## Hardcoding PFM properties for debug only ##  set_property PFM.AXI_PORT { \
-## Hardcoding PFM properties for debug only ##    S08_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S09_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S10_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S11_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S12_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S13_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S14_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S15_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S16_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S17_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S18_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S19_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S20_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S21_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    S22_AXI {memport "S_AXI_NOC" sptag "DDR" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M01_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M02_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M03_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M04_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M05_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M06_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M07_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M08_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M09_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M10_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M11_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M12_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M13_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M14_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##    M15_AXI {memport "M_AXI_NOC" sptag "GP" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  } [get_bd_cells /axi_noc_0]
-## Hardcoding PFM properties for debug only ##
-## Hardcoding PFM properties for debug only ##set_property PFM.AXI_PORT { \
-## Hardcoding PFM properties for debug only ##  S01_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S02_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S03_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S04_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S05_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S06_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S07_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S08_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S09_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S10_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S11_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S12_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S13_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S14_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  S15_AXI {memport "S_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M01_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M02_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M03_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M04_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M05_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M06_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M07_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M08_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M09_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M10_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M11_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M12_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M13_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M14_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##  M15_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} \
-## Hardcoding PFM properties for debug only ##} [get_bd_cells /axi_smc_0]
-## Hardcoding PFM properties for debug only ##
-## Hardcoding PFM properties for debug only ##set_property PFM.CLOCK { \
-## Hardcoding PFM properties for debug only ##  clk_out1 {id "0" is_default "true"  proc_sys_reset "/sys_reset_0" status "fixed" freq_hz "500000000"} \
-## Hardcoding PFM properties for debug only ##  clk_out2 {id "1" is_default "false" proc_sys_reset "/sys_reset_1" status "fixed" freq_hz "250000000"} \
-## Hardcoding PFM properties for debug only ##  clk_out3 {id "2" is_default "false" proc_sys_reset "/sys_reset_2" status "fixed" freq_hz "100000000"} \
-## Hardcoding PFM properties for debug only ##} [get_bd_cells /clk_wizard_0]
-## Hardcoding PFM properties for debug only ##
-## Hardcoding PFM properties for debug only ###puts "Setting PFM_NAME for : \"$design_name\" "
-## Hardcoding PFM properties for debug only #### passing the name as variable breaks in Vitis ##set_property PFM_NAME {xilinx.com:vck190_es:${design_name}:1.0} [get_files [current_bd_design].bd]
-## Hardcoding PFM properties for debug only ##set_property PFM_NAME {xilinx.com:vck190_es:vck190_thin:1.0} [get_files [current_bd_design].bd]
