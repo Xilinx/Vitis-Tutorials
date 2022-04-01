@@ -107,7 +107,7 @@
     ],
    "data": [
         "PROJECT/data/golden.txt",
-        "PROJECT/data/input.txt",
+        "PROJECT/data/input.txt"
     ],
     "v++": {
         "linker": {
