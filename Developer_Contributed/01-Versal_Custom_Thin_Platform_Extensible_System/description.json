@@ -3,7 +3,7 @@
     "description": "01-Versal_Custom_Thin_Platform_Extensible_System",
     "gui": "false",
     "flow": "versal",
-    "platform_whitelist": [ "vck190"],
+    "platform_allowlist": [ "vck190"],
     "platform_blacklist": [],
     "testinfo": {
         "disable": false,
@@ -27,7 +27,7 @@
         ],
         "tasks": {
             "build": {
-                "pre_exec": "/proj/petalinux/2021.2/petalinux-v2021.2_daily_latest/tool/petalinux-v2021.2-final/settings.sh"
+                "pre_exec": "/proj/petalinux/2021.2/petalinux-v2022.1_daily_latest/tool/petalinux-v2022.1-final/settings.sh"
             }
         }
     }
