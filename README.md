@@ -133,6 +133,14 @@ The Vitis Tutorials take users through the design methodology and programming mo
     		<td >
             &nbsp; 
           </td>
+	</tr>
+				<tr>
+    <td height="24" >
+			<a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethnernet IPs on Alveo :new: </a> 
+			</td>
+    		<td >
+            &nbsp; 
+          </td>
   </tr>	
   </tbody>
 </table>
