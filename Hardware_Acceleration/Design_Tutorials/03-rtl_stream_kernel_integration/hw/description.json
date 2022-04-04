@@ -4,8 +4,8 @@
     "gui": "false",
     "flow": "vitis",
 
-    "platform_whitelist": [ "xilinx_u200_xdma_201830_2"],
-    "platform_blacklist": [],
+    "platform_allowlist": [ "xilinx_u200_xdma_201830_2"],
+    "platform_blocklist": [],
      
     "testinfo": {
         "disable": false, 

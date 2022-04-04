@@ -3,8 +3,8 @@
     "description": "06-n-body-simulator",
     "flow": "versal",
 
-    "platform_whitelist": [ "vck190"],
-    "platform_blacklist": [],
+    "platform_allowlist": [ "vck190"],
+    "platform_blocklist": [],
 
     "testinfo": {
         "disable": false,

@@ -4,7 +4,7 @@
     "gui": "false",
     "flow": "versal",
     "platform_allowlist": [ "vck190"],
-    "platform_blacklist": [],
+    "platform_blocklist": [],
     "testinfo": {
         "disable": false,
         "jobs": [

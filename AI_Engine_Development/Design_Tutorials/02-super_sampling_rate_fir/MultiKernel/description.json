@@ -3,8 +3,8 @@
     "description": "02-super_sampling_rate_fir--MultiKernel",
     "gui": "false",
     "flow": "versal",
-    "platform_whitelist": [ "vck190"],
-    "platform_blacklist": [],
+    "platform_allowlist": [ "vck190"],
+    "platform_blocklist": [],
     "testinfo": {
         "jobs": [
             {
