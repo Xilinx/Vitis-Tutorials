@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal® AI Engine</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.1 Versal® AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -117,28 +117,24 @@ To run through this tutorial, you will need to download and install the followin
 
 When the elements of the Vitis&trade; software platform are installed, update the target platform environment script.
 
-Create a script file named `env_setup_2021.sh` in your favorite text editor. Replace the placeholders with the appropriate paths:
+Create a script file named `env_setup_2022.sh` in your favorite text editor. Replace the placeholders with the appropriate paths:
 
 ```bash
 export DSPLIB_ROOT=<YOUR-DSPLIB-DIRECTORY>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2021.2/settings64.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2022.1/settings64.sh
 ```
 
 Then source the environment script:
 
 ```bash
-source env_setup_2021.sh
-```  
+source env_setup_2022.sh
+```
 
 ## *Validation*: Confirming Tool Installation
 
-Ensure that you are using the 2021.2 version of Xilinx&reg; tools.
-
-### *Validation*: Confirming Tool Installation
-
-Ensure that you are using the 2021.1 version of Xilinx&reg; tools.
+Ensure that you are using the 2022.1 version of Xilinx&reg; tools.
 
 ```bash
 which vitis
@@ -188,7 +184,7 @@ In the previous figure the AXIS traffic generator provides a path to the AI Engi
     PLIO_WIDTH := 64
     KERNEL_XO := pl_kernels/sim_ipc_axis_master_${PLIO_WIDTH}.xo pl_kernels/sim_ipc_axis_slave_${PLIO_WIDTH}.xo
     ...
-    VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
+    VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
     ```
 
 ### Understanding Python
@@ -417,7 +413,6 @@ For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a
 
 You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021.2/ug1393-vitis-application-acceleration.pdf).
 
-You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1393-vitis-application-acceleration.pdf).
 
 To build the design, run the following command:
 
