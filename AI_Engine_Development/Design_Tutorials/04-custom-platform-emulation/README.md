@@ -9,7 +9,7 @@
 
 # Custom Platform Emulation with RTL Kernel
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -164,7 +164,7 @@ Because there is no HLS kernel in the ADF graph, the `system.cfg` file, which is
 3. Build the emulation design using the following command:
 
     ```bash
-    v++ -l --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xclbin
+    v++ -l --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
     ```
 
     or
@@ -216,7 +216,7 @@ v++ -p -t hw_emu \
     --package.boot_mode=sd \
     --package.kernel_image=../../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step2_petalinux/build/petalinux/images/linux/Image \
     --package.defer_aie_run \
-    --package.sd_file host.exe ../tutorial.xclbin ../libadf.a
+    --package.sd_file host.exe ../tutorial.xsa ../libadf.a
 cd ..
 ```
 
