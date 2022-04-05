@@ -4,7 +4,7 @@
     "description": "Creating a custom VCK190 platform from scratch",
     "gui": "false",
     "flow": "vitis",
-    "platform_allowlist": [],
+    "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
     "testinfo": {
         "jobs": [
