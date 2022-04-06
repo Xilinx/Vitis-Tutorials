@@ -181,7 +181,7 @@ You can also add your custom device tree modifications to **project-spec/meta-us
 
 
 
-### Add EXT4 rootfs support (Optional but recommended)
+### Add EXT4 rootfs support 
 
 It's recommended to use EXT4 for Vitis acceleration designs. PetaLinux uses initramfs format for rootfs by default. It can't retain the rootfs changes in run time. Initramfs keeps rootfs contents in DDR, which makes user useable DDR memory reduced. To make the root file system retain changes and to enable maximum usage of available DDR memory, we'll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store the boot files.
 
