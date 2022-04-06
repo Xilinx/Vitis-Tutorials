@@ -39,13 +39,7 @@ help::
 	@echo  ""
 	@echo  ""
 
-
-
-
-
 print-%  : ; @echo $* = $($*)
-
-
 
 # =========================================================
 # TARGET can be set as:
@@ -53,8 +47,6 @@ print-%  : ; @echo $* = $($*)
 #   hw    : Hardware Run
 # =========================================================
 TARGET := hw_emu
-
-
 
 # =========================================================
 # Profiling/Trace and Datamover type Switches...
@@ -187,10 +179,9 @@ ifneq ($(EN_TRACE),0)
 endif
 
 
-PKG_FLAGS := 
 ifneq ($(EN_TRACE),0)
 
-	PKG_FLAGS += --package.sd_file $(MAKEFILES_REPO)/xrt.ini
+	PKG_FLAGS := --package.sd_file $(MAKEFILES_REPO)/xrt.ini
 
 endif
 
@@ -319,7 +310,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 4000 | tee embedded_run.log
 
 endif
 else
@@ -331,7 +322,9 @@ else
 	@echo "$(EMBEDDED_PACKAGE_OUT)"
 	@echo ""
 
-endif###########################################################################
+endif
+
+###########################################################################
 
 # =========================================================
 # Primary Build Targets
@@ -348,10 +341,5 @@ run: sd_card run_emu
 
 #Clean generated files
 clean:
-	rm -rf .Xil/
-	rm -rf $(BUILD_DIR)/$(WORK_DIR)
-	rm -rf $(BUILD_DIR)/hw_emu
-	rm -rf $(BUILD_DIR)/hw
 	rm -rf $(BUILD_DIR)
-	rm -f xcd.log
-	rm -f xrc.log
+	rm -rf vivado* .Xil *.log vitis* core.*

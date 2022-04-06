@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 # Copyright 2021 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -64,10 +64,10 @@ KV260 provides an off-the-shelf boot image and has its enhanced boot sequence. S
 
     KV260 PetaLinux BSP doesn't enable XRT because it installs XRT with overlay. To create sysroot for application developer cross compiling, we enable XRT in the rootfs.
 
-    - Run `petalinux-config -c rootfs` to launch rootfs configruation window.
+    - Run `petalinux-config -c rootfs` to launch rootfs configuration window.
     - Go to **Filesystem packages -> libs -> xrt**
     - Enable `xrt`
-    - Press Exit to exit configrution. Press Save to save the configuration.
+    - Press Exit to exit configuration. Press Save to save the configuration.
 
 6. Build PetaLinux and generate SDK
 

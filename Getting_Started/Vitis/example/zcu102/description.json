@@ -6,7 +6,7 @@
     "platform_whitelist": ["zcu102"], 
  
     "testinfo": {
-        "disable": 1,
+        "disable": 0,
         "jobs": [
             {
                 "max_memory_MB": 32768,
@@ -29,6 +29,7 @@
         "custom_build_target": {
             "all": "run",
             "hw": "build"
-        }
+        },
+        "custom_board_target": "run_test"
     }
 }

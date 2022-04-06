@@ -1,6 +1,6 @@
-<table>
+﻿<table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>System Project Debug Tutorial with Event Trace</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>System Project Debug Tutorial with Event Trace</h1>
    </td>
  </tr>
 </table>
@@ -8,7 +8,7 @@
 
 ## Introduction
 
-This tutorial targets the event trace feature running on the hardware board that allows users to understand how the design is executed on hardware. With support from Vitis_analyzer, users can view the function calls, stalls (both execution and memory), and the flow of execution in the AI Engine. This information is helpful to improve the overall design performance. The steps within this tutorial introduce event trace compilation options, running the design on hardware to generate event trace with XSDB and XRT flows, collect generated event trace data, and launch Vitis_analyzer to review the design execution on hardware.
+This tutorial targets the event trace feature running on the hardware board that allows you to understand how the design is executed on hardware. With support from Vitis™ analyzer, you can view the function calls, stalls (both execution and memory), and the flow of execution in the AI Engine. This information is helpful to improve the overall design performance. The steps within this tutorial introduce event trace compilation options, running the design on hardware to generate event trace with XSDB and XRT flows, collect generated event trace data, and launch Vitis_analyzer to review the design execution on hardware.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.
 
@@ -47,23 +47,23 @@ Event trace options in AI Engine Compiler. These options are enabled in the Make
 ```bash
 --event-trace=runtime
 --num-trace-streams=8
---event-trace-port=plio
+--event-trace-port=gmio
 --trace-plio-width=64
 --broadcast-enable-core=true
 --xlopt=0
 ```
 
 Where
-* --event-trace=runtime: Enables runtime event trace configuration. The supported values are functions, functions_partial_stalls, functions_all_stalls and runtime.
+* --event-trace=runtime: Enables run-time event trace configuration. The supported values are functions, functions_partial_stalls, functions_all_stalls, and runtime.
 * --num-trace-streams=8: Sets the number of trace streams to be 8 to collect generated event trace data per prior recommendation. (default:8).
-* --event-trace-port=plio: Sets the AI Engine event tracing port to be plio. (default: plio)
+* --event-trace-port=gmio: Sets the AI Engine event tracing port to be plio. (default: plio). Recommend GMIO to preserve PL resources and minimize chances with timing errors in build time.
 * --trace-plio-width=64: Sets PLIO width in bit for trace streams (default: 64)
 * --broadcast-enable-core=true: Enables all AI Engine cores associated with a graph using broadcast. This option reserves one broadcast channel in the array for core enabling purpose. (default: false)
 * --xlopt=0: Disable aiecompiler optimization for debug purposes.
 
 Issue the command `aiecompiler -h` to display AI Engine compiler options that include event trace.
 
-Design with the `--event-trace=runtime` option in build that enables runtime events during compile time. This only needs to build the design once and allows different event trace levels to be generated during run time via XSDB or XRT flow.
+Design with the `--event-trace=runtime` option in build that enables run-time events during compile time. This only needs to build the design once and allows different event trace levels to be generated during run time via XSDB or XRT flow.
 
 ### Step 4. Prepare hardware board
 
@@ -183,6 +183,9 @@ Based on the design, select GMIO if the design has limited PL resources left for
 2. It is required that the `--broadcast-enable-core` option is used to compile the design. This is to eliminate time sync issues where start time of each tile is off by ~100 ns or more.
 3. Run forever applications are supported by XSDB flow only.
 
+# Support
+
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
 # License
 

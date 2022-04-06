@@ -1,6 +1,6 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -61,11 +61,8 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./Design_Tutorials/07-host-code-opt/">XRT Host Code Optimization</a></td>
  <td>This tutorial demonstrates how to optimize your CPU host code to get the most out of interaction between your hardware accelerators and your runtime software.</td>
  </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/08-ivas-ml/">Streaming Video Analytics with IVAS</a></td>
- <td>This tutorial demonstrates a reference platform using the Xilinx IVAS framework for streaming video analytics with Vitis and Vitis AI.</td>
- </tr>
 </table>
+
 
 
 
@@ -106,6 +103,10 @@ The methodology for developing optimized accelerated applications is comprised o
  <tr>
 <td align="center"><a href="./Feature_Tutorials/08-using-hostmem/">Host Memory Access</a></td>
 <td>This tutorial demonstrates how kernels can directly access buffers host memory directly. This capability requires a compatible platform.</td>
+</tr>
+ <tr>
+<td align="center"><a href="./Feature_Tutorials/09-using-ethernet-on-alveo/">Using GT Kernels and Ethnernet IPs on Alveo</a></td>
+<td>This tutorial demonstrates how to use networking GT kernels with generated Ethernet IPs and implement them on Alveo card with Vitis flow.</td>
 </tr>
  </table>
 

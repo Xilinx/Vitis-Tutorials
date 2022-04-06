@@ -15,7 +15,9 @@
 //
 
 `timescale 1 ps / 1 ps
-`default_nettype none
+
+// ONLY TO BE USED FOR STANDALONE RTL DEBUG
+// `default_nettype none
 
 module counter
   # (

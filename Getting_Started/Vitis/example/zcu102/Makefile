@@ -6,16 +6,22 @@ TARGET := hw_emu
 PLATFORM := xilinx_zcu102_base_202120_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
+EMBEDDED_EXEC_SCRIPT := run_$(TARGET).sh
+EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)package/sd_card.img
+SDKTARGETSYSROOT := $(SYSROOT)
+ROOTFS ?= $(EDGE_COMMON_SW)
 
 run: build
 ifeq ($(TARGET),hw)
-	cd $(BUILD_DIR) && ./app.exe
+	#cd $(BUILD_DIR) && ./app.exe
+	echo "Copy the contents of the sd_card folder to an SD card, and run './app.exe' on the target platform."
 else
-	cd $(BUILD_DIR) && XCL_EMULATION_MODE=$(TARGET) ./app.exe
+	#cd $(BUILD_DIR) && XCL_EMULATION_MODE=$(TARGET) ./app.exe
+	cd $(BUILD_DIR)/package && launch_$(TARGET).sh -no-reboot -run-app $(EMBEDDED_EXEC_SCRIPT)
 endif
 
 #build: host emconfig xclbin
-build: $(BUILD_DIR)/app.exe $(BUILD_DIR)/vadd.xclbin $(BUILD_DIR)package/sd_card.img
+build: $(BUILD_DIR)/app.exe $(BUILD_DIR)/vadd.xclbin $(BUILD_DIR)/package/sd_card.img
 
 host: $(BUILD_DIR)/app.exe
 $(BUILD_DIR)/app.exe:
@@ -36,7 +42,7 @@ $(BUILD_DIR)/vadd.xclbin: $(BUILD_DIR)/vadd.xo
 	v++ -l -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/zcu102.cfg $(BUILD_DIR)/vadd.xo -o $(BUILD_DIR)/vadd.xclbin
 
 package: $(BUILD_DIR)/package/sd_card.img
-$(BUILD_DIR)package/sd_card.img: $(BUILD_DIR)/app.exe $(BUILD_DIR)/vadd.xclbin
+$(BUILD_DIR)/package/sd_card.img: $(BUILD_DIR)/app.exe $(BUILD_DIR)/vadd.xclbin
 	$(call ndef,ROOTFS)
 	cd $(BUILD_DIR) && v++ -p -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/zcu102.cfg ./vadd.xclbin \
 		--package.out_dir ./package \

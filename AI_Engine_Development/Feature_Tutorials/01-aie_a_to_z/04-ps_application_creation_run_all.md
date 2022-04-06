@@ -13,7 +13,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 ### Step 1. Create a New Platform in the Bare-metal Domain
 
-1. Open the Vitis software platform 2021.1 in the same workspace directory as the previous step. Click ***File → New →  Platform Project***.
+1. Open the Vitis IDE with the same workspace directory as the previous step. Click ***File → New →  Platform Project***.
 
 2. Set the Platform Project Name to ***AIE_A-to-Z_pfm_vck190*** and click ***Next***.
 
@@ -38,10 +38,11 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 7. Import the `aie_control.cpp` file from the AI Engine application project (`simple_application/Hardware/Work/ps/c_rts/aie_control.cpp`).
 
 8. Import the following source files from the `src` folder
-* `main.cpp`
-* `platform.cpp`
-* `platform.h`
-* `platform_config.h`
+
+   * `main.cpp`
+   * `platform.cpp`
+   * `platform.h`
+   * `platform_config.h`
 
     ![missing image](images/ps_app_import.png)
 
@@ -68,13 +69,23 @@ There are two options to enable an AI Engine graph from a system:
 
 10. In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:
 
-  a. `${env_var:XILINX_VITIS}/aietools/include`
+  -  The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
 
-  b. The sources folder for the AI Engine application (`${workspace_loc:/simple_application/src}`)
+     ![missing image](images/212_ps_app_cfg2.png)
 
-  ![missing image](images/ps_app_cfg2.png)
+And make sure the `${env_var:XILINX_VITIS}/aietools/include` is already added in the directory settings.
 
-11. Build the A72 PS application (`A-to-Z_app`) .     
+11.Modify the Linker Script to increase the heap size for AIE library
+
+  - In the Project Explorer, expand the A-to-z_app.
+
+  - In the src directory, double-click `lscript.ld` to open the linker script for this project.
+
+  - In the linker script modify the Heap size to `0x100000` (1MB).
+
+    ![missing image](images/heapsize.PNG)
+
+12. Build the A72 PS application (`A-to-Z_app`) .     
 
 ### Step 3. Build the Full System
 
@@ -86,23 +97,44 @@ There are two options to enable an AI Engine graph from a system:
 
   ![missing image](images/package_option.png)
 
->**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2020.2;d=yii1603912637443.html)).
+>**Note**: The option  `--package.defer_aie_run` is required when running the AI Engine graph from the PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)).
 
 2. Build the ***simple_application_system*** project.
 
 
 ### Step 4. Run the System
 
-1. Make sure your VCK190 board is connected to your PC.
+We have two ways to run the application.
 
-2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
+A: Use Jtag to launch the application.
 
-      ![missing image](images/run-on-hw.png)
+   1. Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable and set BOOT MODE to JTAG.
 
-3. You should see the application running successfully with no error.
+   2. Right-click on the ***simple_application_system*** and click ***Run As → Launch Hardware***.
 
-      ![missing image](images/hw_output.png)
+         ![missing image](images/run-on-hw.png)
 
+   3. You should see the application running successfully with no error.
+
+         ![missing image](images/hw_output.png)
+
+B: Use SD card to run the application.
+
+   1. Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable and set BOOT MODE to SD Boot.
+
+   2. Right-click on the ***simple_application_system*** and expand Hardware.In the `package_no_aie_debug` directory you would find BOOT.BIN file.
+
+        > We can find BOOT.BIN in **package** and **package_no_aie_debug** directory. The BOOT.BIN in **package** directory is for hardware debug purpose. It stops AI Engine after loading and waits for the run instruction from the debugger. The one in the **package_no_aie_debug** directory is for free running. So we choose BOOT.BIN in **package_no_aie_debug** directory for SD Card free running.
+
+   3. Copy BOOT.BIN to your SD card FAT32 partition. (If you do not know BOOT.BIN location, you can right click BOOT.BIN and select properties. It will show the file location directory.)
+
+         ![missing image](images/package_no_aie_build.PNG)
+
+   4. Insert your SD card into your board and power on your board.
+
+   5. You should see the application running successfully with no error.
+
+         ![missing image](images/hw_output.png)
 
 ## Summary
 

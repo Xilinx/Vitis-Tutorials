@@ -14,10 +14,13 @@
  # limitations under the License.
  #
 
-ECHO=@echo
+ECHO              := @echo
 
-APP_NAME       := $(patsubst %/,%,$(dir $(wildcard */)))
-APP_NAME_CLEAN := $(addsuffix .clean,$(APP_NAME))
+APP_DIR           := exe
+APP_DIRS_EXCLUDE  := $(patsubst %/,%,$(dir $(wildcard exe*/)))
+APP_DIRS          := $(patsubst %/,%,$(dir $(wildcard */)))
+APP_NAME          := $(filter-out ${APP_DIRS_EXCLUDE},$(APP_DIRS))
+APP_NAME_CLEAN    := $(addsuffix .clean,$(APP_NAME))
 
 .PHONY: clean help all $(APP_NAME) $(APP_NAME_CLEAN)
 
@@ -29,12 +32,16 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: $(APP_NAME)
+all: ${APP_DIR} $(APP_NAME)
+
+$(APP_DIR):
+	mkdir ${APP_DIR}
 
 $(APP_NAME):
 	make all -C $@
 
 clean: $(APP_NAME_CLEAN)
+	rm -rf $(APP_DIR)
 
 $(APP_NAME_CLEAN):
 	make clean -C $(basename $@)

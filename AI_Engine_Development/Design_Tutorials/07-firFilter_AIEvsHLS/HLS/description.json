@@ -7,6 +7,14 @@
     "platform_blacklist": [],
      
     "testinfo": {
+        "tasks": {
+           "build": {
+               "pre_exec": "env_setup.sh"
+           },
+           "board": {
+               "pre_exec": "env_setup.sh"
+           }
+        },
         "disable": false, 
         "jobs": [
             {
@@ -20,24 +28,37 @@
                     "vitis_aie_x86sim": 50, 
                     "vitis_hw_build": 500, 
                     "vitis_hw_emu": 200, 
-                    "vitis_hw_run": 30
+                    "vitis_hw_run": 60
                 }
             }
         ], 
         "targets": [ 
             "vitis_hw_build", 
+            "vitis_hw_emu", 
             "vitis_hw_run"
-        ],
+        ], 
         "category": "canary",
-        "make_options" : [
+        "make_options" : [ 
+           "XLNX_VERSAL=${PLATFORM_PATH}/sw/versal/xilinx-versal", 
+           "XRT_ROOT=${PLATFORM_PATH}/sw/versal/xrt", 
+           "EN_TRACE=0",
+           "SDKTARGETSYSROOT=${SYSROOT}", 
            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
-           "SDKTARGETSYSROOT=${SYSROOT}"
+           "CXX+=-mcpu=cortex-a72.cortex-a53",
+           "CXX+=-march=armv8-a+crc",
+           "CXX+=-fstack-protector-strong",
+           "CXX+=-D_FORTIFY_SOURCE=2",
+           "CXX+=-Wformat",
+           "CXX+=-Wformat-security",
+           "CXX+=-Werror=format-security",
+           "CXX+=--sysroot=${SYSROOT}", 
+           "LAUNCH_HW_EMU_EXEC=1"
            ],
         "custom_build_target": {
             "all": "run",
             "hw": "sd_card"
         },
-        "custom_board_target": "run",
+        "custom_board_target": "run_test",
         "customized_params": "multi_params.json"
     }
 }

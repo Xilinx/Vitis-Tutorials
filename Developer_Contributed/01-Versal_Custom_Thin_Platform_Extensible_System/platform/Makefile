@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+TARGET          ?= hw
 PLATFORM_CUSTOM ?= vck190_thin
-DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S-es1
+DEVICE_NAME     ?= xcvc1902-vsva2197-2MP-e-S
 
 platform: xsa xpfm
 
@@ -26,3 +27,4 @@ xpfm:
 clean:
 	$(MAKE) clean -C hw PLATFORM_CUSTOM=$(PLATFORM_CUSTOM) DEVICE_NAME=$(DEVICE_NAME)
 	$(MAKE) clean -C sw PLATFORM_CUSTOM=$(PLATFORM_CUSTOM)
+

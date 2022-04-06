@@ -1,6 +1,6 @@
-<table class="sphinxhide">
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
    </td>
  </tr>
  <tr>
@@ -155,7 +155,9 @@ When the run completes, you should see the TEST PASSED message indicating that t
 
 ### Targeting Hardware
 
-To build for the hardware target, , enter the following commands to setup the target build directory:
+*NOTE: Don't forget to unset the XCL_EMULATION_MODE environment varaible when running the hardware target or an error will occur.*
+
+To build for the hardware target enter the following commands to setup the target build directory:
 
 ```bash
 cd <Path to the cloned repo>/Getting_Started/Vitis/example/u200

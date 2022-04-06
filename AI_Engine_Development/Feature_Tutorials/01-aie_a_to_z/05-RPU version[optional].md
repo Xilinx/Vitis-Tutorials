@@ -9,7 +9,7 @@
 
 # Introduction
 
-The previous tutorial is built based on using the A53 core. To migrate it to use the R5 core, follow the instructions on this page.
+The previous tutorial is built based on using the A72 core. To migrate it to use the R5F core, follow the instructions on this page.
 The flow is the same but you need to make a few modifications.
 
 ## Base Platform Changes

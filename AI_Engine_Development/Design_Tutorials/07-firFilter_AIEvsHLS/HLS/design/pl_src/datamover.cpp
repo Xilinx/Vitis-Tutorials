@@ -24,7 +24,7 @@ void mm2s(
 {
    MM2S:for(int i = 0; i < size; ++i) {
       #pragma HLS PIPELINE II=1
-      #pragma HLS loop_tripcount min=64
+      #pragma HLS loop_tripcount min=512 max=5120
       
       ap_axiu<128, 0, 0, 0> firInp;
       
@@ -36,7 +36,6 @@ void mm2s(
       {
          firInp.data = 0x0;
       }
-       
       
       strmOutToFIR.write(firInp);
    }
@@ -50,20 +49,37 @@ void s2mm(
       int size, int &errCnt
      )
 {
-   S2MM:for(int i = 0; i < size; ++i) {
+   S2MM:for(int i = 0, goldenCtr = 0; i < size; ++i) {
       #pragma HLS PIPELINE II=1
-      #pragma HLS loop_tripcount min=64
+      #pragma HLS loop_tripcount min=512 max=5120
 
       ap_axiu<128, 0, 0, 0> firOut = strmInpFromFIR.read();
-      
-      // All Values should 1...
-      if(i < CHK_CTR)
-      {
-         if(firOut.data != golden_128b[i])
+
+      #if N_FIR_FILTERS == 1
+         // All Values should 1...
+         if(i < CHK_CTR)
+         {
+            if(firOut.data != golden_128b[i])
+               ++errCnt;
+         }
+         else if(firOut.data != 0x0)
             ++errCnt;
-      }
-      else if(firOut.data != 0x0)
-         ++errCnt;
+
+      #elif N_FIR_FILTERS == 10
+         if(i< CHK_ZERO)
+         {
+            if(firOut.data != 0x0)
+               ++errCnt;
+         }
+         else if(i < CHK_CTR)
+         {
+            if(firOut.data != golden_128b[i])
+               ++errCnt;
+         }
+         else if(firOut.data != 0x0)
+            ++errCnt;   
+      #endif
+
    }
 }
 

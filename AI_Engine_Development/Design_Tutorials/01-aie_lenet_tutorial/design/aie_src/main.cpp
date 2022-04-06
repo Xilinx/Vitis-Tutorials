@@ -209,5 +209,5 @@ int main(int argc, char ** argv)
 
    std::cout << "TEST " << (errCnt ? "FAILED" : "PASSED") << std::endl;
 
-   return (errCnt ? EXIT_FAILURE :  EXIT_SUCCESS);
+   return (errCnt ? EXIT_FAILURE : EXIT_SUCCESS);
 }

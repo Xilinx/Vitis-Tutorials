@@ -14,13 +14,20 @@
 
 %.PHONY: help
 help::
-	@echo  " Use the make recipes with required values for TARGET, FFT_2D_PT, FFT_2D_INSTS, ITER_CNT and EN_TRACE"
-	@echo  " TARGET=<hw_emu(default)/hw>"
-	@echo  " FFT_2D_PT=<64,128,256,512,2048(default)>"
-	@echo  " ITER_CNT=<No. of Iterations>"
-	@echo  " EN_TRACE=<0(default),1>"
 	@echo  ""
 	@echo  " Makefile Usage:"
+	@echo  ""
+	@echo  "  make sd_card"
+	@echo  "  Command calls rules: kernels graph xclbin application package, in sequence"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make run"
+	@echo  "  Command calls rules: sd_card run_emu, in sequence"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make all"
+	@echo  "  Command calls rules: sd_card report_metrics vcd run_emu, in sequence"
+	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
 	@echo  "  make kernels"
 	@echo  "  Command to generate the PL kernels"
@@ -28,6 +35,15 @@ help::
 	@echo  ""
 	@echo  "  make graph"
 	@echo  "  Command to generate the AI Engine graph"
+	@echo  ""
+	@echo  "  make aiesim"
+	@echo  "  Command to run aie simulator for the AI Engine graph"
+	@echo  ""
+	@echo  "  make aiesim_profile"
+	@echo  "  Command to run aie simulator for the AI Engine graph and enable kernel print statements"
+	@echo  ""
+	@echo  "  make vcd"
+	@echo  "  Command to run aie simulator for the AI Engine graph and create the vcd and xpe file for the same"
 	@echo  ""
 	@echo  "  make xclbin"
 	@echo  "  Command to generate the xclbin for specified target"
@@ -40,18 +56,53 @@ help::
 	@echo  "  Command to package design into an sd_card for specified target"
 	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
+	@echo  "  make run_emu"
+	@echo  "  Command to run the hw emulator if LAUNCH_HW_EMU_EXEC variable is set to 1"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make report_metrics"
+	@echo  "  Command to run and get vivado utilisation and power reports."
+	@echo  "  Works only for TARGET=hw"
+	@echo  ""
 	@echo  "  make clean_target"
 	@echo  "  Command to remove the generated files for a specific target"
 	@echo  ""
 	@echo  "  make clean_insts"
-	@echo  "  Command to remove the generated files for a specific instance design 1x,5x or 10x"
+	@echo  "  Command to remove the generated files for a specific instance of the design."
 	@echo  ""
 	@echo  "  make clean_fftpt"
 	@echo  "  Command to remove the generated files for a specific fft point size"
 	@echo  ""
-	@echo  "  make cleanall"
-	@echo  "  Command to remove the generated files for all instances and point sizes"
+	@echo  "  make clean_fft2d_dt"
+	@echo  "  Command to remove the generated files for a specific fft datatype"
 	@echo  ""
+	@echo  "  make cleanall"
+	@echo  "  Command to remove the generated files for all variations"
+	@echo  ""
+	@echo  "  make clean_vivado_reports"
+	@echo  "  Command to remove the generated vivado reports files for all variations"
+	@echo  ""
+	@echo  "  make clean_xpe_reports"
+	@echo  "  Command to remove the generated xpe files for all variations"
+	@echo  ""
+	@echo  "  make cleanall_reports"
+	@echo  "  Command to remove all the generated reports for all variations"
+	@echo  ""
+	@echo  " OPTIONS:"
+	@echo  " Use the make recipes with required values for options mentioned below-"
+	@echo  "    TARGET             -specifies target: Hardware or Emulation. Values: hw_emu(default), hw"
+	@echo  "    FFT_2D_DT          -specifies FFT Datatype. Values: 0(cint16, default), 1(cfloat)"
+	@echo  "    FFT_2D_PT          -specifies FFT Point. Values: 64, 128, 256, 512, 2048(default)"
+	@echo  "    FFT_2D_INSTS       -specifies number of FFT instances. Values: 1(default), 5 and 10"
+	@echo  "    PL_FREQ        	 -specifies HLS kernel frequencies. Values: 250Mhz(default)"
+	@echo  "    ITER_CNT           -specifies design iteration count: Values: 8(default)"
+	@echo  "    EN_TRACE           -specifies whether to enable profiling for the design. Values: 0(disabled, default) and 1(enabled)"
+	@echo  "    LAUNCH_HW_EMU_EXEC -specifies whether to launch hw emulator when running make run_emu rule. Values: 0(disabled, default) and 1(enabled)"
+	@echo  ""
+
+# Print all options passed to Makefile
+print-%  : ; @echo $* = $($*)
+
 
 # =========================================================
 # TARGET can be set as:
@@ -59,6 +110,23 @@ help::
 #   hw    : Hardware Run
 # =========================================================
 TARGET := hw_emu
+
+######################################
+# FFT 2D Datatype can be,
+# cint16 (Default) or cfloat...
+# 0=cint16(Default)
+# 1=cfloat
+######################################
+
+FFT_2D_DT := 0
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR_VAL := cint16
+
+else
+   FFT_2D_DT_DIR_VAL := cfloat
+
+endif
 
 # =========================================================
 # 2 Dimentional FFT Point: MAT_ROWS x MAT_COLS(Mat Dims):
@@ -101,16 +169,14 @@ ITER_CNT := 8
 EN_TRACE := 0
 
 ######################################
-# FFT 2D Datatype can be,
-# cint16 (Default) or cfloat...
-# 0=cint16(Default)
-# 1=cfloat
+# When TARGET=hw_emu, hw_emu launch...
+# 1 = Enabled (Default).
+# 0 = Disabled.
 ######################################
-
-FFT_2D_DT := 0
+LAUNCH_HW_EMU_EXEC := 0
 
 # =========================================================
-# Source directory
+# Source directories
 # =========================================================
 # Relative fft_2d directory
 RELATIVE_PROJECT_DIR := ./
@@ -122,37 +188,35 @@ DESIGN_REPO  := $(PROJECT_REPO)/design
 AIE_SRC_REPO := $(DESIGN_REPO)/aie_src
 HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
 PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+
 SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
-HW_EMU_RUN_FILES_REPO  := $(DESIGN_REPO)/hw_emu_files
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-
-ifeq ($(FFT_2D_DT),0)
-   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cint16_dsns
-
-else
-   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cfloat_dsns
-
-endif
-
+FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT_DIR_VAL)_dsns
 FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
-WORK_DIR         := Work
+
+VIVADO_REPORTS_REPO := $(PROJECT_REPO)/vivado_reports_dir
+VIVADO_BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+
+VCD_XPE_REPO := $(PROJECT_REPO)/vcd_xpe_dir
+BLD_VCD_XPE_DIR := $(VCD_XPE_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+VCD_FILE_NAME := $(FFT_2D_DT_DIR_VAL)_fft2d_$(MAT_ROWS)x$(MAT_COLS)_x$(FFT_2D_INSTS)
+BLD_TGT_VCD_FILE := $(BUILD_TARGET_DIR)/$(VCD_FILE_NAME).vcd
+XPE_FILE := $(BLD_VCD_XPE_DIR)/graph_$(VCD_FILE_NAME).xpe
 
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_script.sh
 
-######################################
-# When TARGET=hw_emu, hw_emu launch...
-# 1 = Enabled (Default).
-# 0 = Disabled.
-######################################
-LAUNCH_HW_EMU_EXEC := 1
+WORK_DIR := Work
 
-# Print all options passed to Makefile
-print-%  : ; @echo $* = $($*)
-
+###########################################################
+# Variable Definitions...
+#
 # ==========================================================
 # Below are the names for SDF graph, application executable,
 # kernel executables, and xclbin
@@ -203,6 +267,7 @@ AIE_FLAGS += --platform=$(PLATFORM)
 ifeq ($(FFT_2D_DT),1)
    ifeq ($(FFT_2D_PT),2048)
       ifeq ($(FFT_2D_INSTS),$(filter $(FFT_2D_INSTS),5 10))
+         #For resolving mapper issue with cfloat x5 and x10...		
          AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
       
       endif
@@ -269,7 +334,6 @@ DATAMOVER_KERNEL_VPP_FLAGS += -D FFT_2D_DT=$(FFT_2D_DT)
 VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_0
 
 ifeq ($(FFT_2D_INSTS),$(filter $(FFT_2D_INSTS),5 10))
-   
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_1
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_2
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_3
@@ -278,7 +342,6 @@ ifeq ($(FFT_2D_INSTS),$(filter $(FFT_2D_INSTS),5 10))
 endif
 
 ifeq ($(FFT_2D_INSTS),10)
-   
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_5
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_6
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_7
@@ -290,13 +353,10 @@ endif
 VPP_LINK_FLAGS += --clock.defaultTolerance 0.001
 
 ifeq ($(EN_TRACE),1)
-   
    ifeq ($(FFT_2D_INSTS),1)
-      
       VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
       
    else
-      
       VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:strmInp_from_colwiseFFT
       
    endif
@@ -327,7 +387,7 @@ PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
 PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XCLBIN) $(LIBADF_A)
-PKG_FLAGS += --package.sd_file $(HW_EMU_RUN_FILES_REPO)/$(EMBEDDED_EXEC_SCRIPT)
+PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
 ifeq ($(EN_TRACE),1)
 
@@ -343,6 +403,9 @@ endif
 
 PKG_FLAGS += --package.defer_aie_run
 
+###########################################################
+# Make rules...
+#
 # =========================================================
 # Step 1. Kernel XO File Generation
 # ========================================================
@@ -384,19 +447,27 @@ $(LIBADF_A): $(GRAPH_SRC_CPP)
 	aiecompiler $(AIE_FLAGS) $(GRAPH_SRC_CPP) 2>&1 | tee -a aiecompiler.log
 
 aiesim: $(LIBADF_A)
-	mkdir -p $(BUILD_TARGET_DIR); \
+	cd $(BUILD_TARGET_DIR); \
+	aiesimulator --pkg-dir $(WORK_DIR)/ 2>&1 | tee -a aiesim.log
+
+aiesim_profile: $(LIBADF_A)
 	cd $(BUILD_TARGET_DIR); \
 	aiesimulator --pkg-dir $(WORK_DIR)/ --profile 2>&1 | tee -a aiesim.log
 
-vcd: $(VCD_FILE) vcd_util_n_power
+vcd: $(BLD_TGT_VCD_FILE) $(XPE_FILE)
 
-vcd_util_n_power: $(VCD_FILE)
+# xpe file generation...
+$(XPE_FILE): $(BLD_TGT_VCD_FILE)
 	cd $(BUILD_TARGET_DIR); \
-	vcdanalyze --vcd x$(FFT_2D_INSTS).vcd --xpe
+	vcdanalyze --vcd $(VCD_FILE_NAME).vcd --xpe
+	rm -rf $(BLD_VCD_XPE_DIR)
+	mkdir -p $(BLD_VCD_XPE_DIR)
+	cp -rf $(BUILD_TARGET_DIR)/aiesim_xpe/graph.xpe $(XPE_FILE)
 
-$(VCD_FILE): $(LIBADF_A)
+# vcd file generation...
+$(BLD_TGT_VCD_FILE): $(LIBADF_A)
 	cd $(BUILD_TARGET_DIR); \
-	aiesimulator --pkg-dir $(WORK_DIR)/ --dump-vcd x$(FFT_2D_INSTS) 2>&1 | tee -a vcd.log
+	aiesimulator --pkg-dir $(WORK_DIR)/ --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
 
 # =========================================================
 # Step 3. XCLBIN File Generation
@@ -469,7 +540,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 10800 | tee embedded_run.log
 
 endif
 else
@@ -480,6 +551,23 @@ else
 	@echo "Use sd_card.img from below directory and, follow the steps in README.md for execution on board."
 	@echo "$(EMBEDDED_PACKAGE_OUT)"
 	@echo ""
+
+endif
+
+# =========================================================
+# Step 7. Report Utilization Metrics
+# =========================================================
+# If the target is HW, this generates the power and resource
+# utilization metrics from vivado.
+report_metrics:
+ifeq ($(TARGET),hw_emu)
+	@echo "This build target (report-metrics) not valid when design target is hw_emu"
+
+else
+	rm -rf $(BLD_VIVADO_REPORTS_DIR)
+	mkdir -p $(BLD_VIVADO_REPORTS_DIR)
+	cd $(BLD_VIVADO_REPORTS_DIR); \
+	vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
 
 endif
 
@@ -494,6 +582,9 @@ endif
 # ==> clean_fftpt
 # ==> clean_fft2d_dt
 # ==> cleanall
+# ==> clean_vivado_reports
+# ==> clean_xpe_reports
+# ==> cleanall_reports
 # ========================================================
 
 #Build the design without running the hardware emulation
@@ -502,23 +593,42 @@ sd_card: kernels graph xclbin application package
 #Build the design and then run hardware emulation
 run: sd_card run_emu
 
+#Same as "run" above, but include metrics generation and
+#vcd generation
+all: sd_card report_metrics vcd run_emu
+
 #Clean generated files
 clean_target:
 	@echo "Cleaning $(TARGET) Target Build Dir..."
 	rm -rf $(BUILD_TARGET_DIR)
 
+#Clean fft2d instances dir files...
 clean_insts:
 	@echo "Cleaning $(FFT_2D_INSTS)x Builds..."
 	rm -rf $(INSTS_BLD_DIR)
 
+#Clean fft2d point dir files...
 clean_fftpt:
 	@echo "Cleaning $(MAT_ROWS)x$(MAT_COLS) FFT Builds..."
 	rm -rf $(FFTPT_BLD_DIR)
 
+#Clean fft2d datatype dir files...
 clean_fft2d_dt:
 	@echo "Cleaning $(FFT_2D_DT)_impl Builds..."
 	rm -rf $(FFT_2D_DT_DIR)
 
+#Clean all builds...
 cleanall:
 	rm -rf $(BASE_BLD_DIR)
-	rm -rf vivado* .Xil *.log vitis*
+	rm -rf vivado* .Xil *.log vitis* core.*
+
+#Clean_all vivado reports...
+clean_vivado_reports:
+	rm -rf $(VIVADO_REPORTS_REPO)
+
+#Clean_all xpes...
+clean_xpe_reports:
+	rm -rf $(VCD_XPE_REPO)
+
+#Clean_all reports...
+cleanall_reports: clean_vivado_reports clean_xpe_reports

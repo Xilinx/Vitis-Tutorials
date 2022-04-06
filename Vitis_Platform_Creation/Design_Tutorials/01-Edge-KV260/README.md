@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 # Copyright 2021 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +30,9 @@
 
 To highlight the differences between KV260 and ZCU104, this example will simplify the descriptions of general steps that are shared between all MPSoC platforms, but add more KV260 specific contents. If you have question in some steps, please cross reference [ZCU104 custom embedded platform creation example](../../Introduction/02-Edge-AI-ZCU104/) or ask questions in Github Issues page.
 
+> Note: Since KV260 BSP only releases 2021.1 version, this tutorial will skip 2021.2. The next release for this tutorial would be 2022.1.
 
+> Note: It's validated in [Pull Request #174](https://github.com/Xilinx/Vitis-Tutorials/pull/174) by Victor that if you update [system_step1.tcl](./ref_files/step1_vivado/system_step1.tcl) line 36 from 2021.1 to 2021.2, the design would work well with Vitis 2021.2.
 
 ## Custom Platform Planning
 
@@ -57,14 +59,17 @@ If you have read the [Platform Creation Introduction Tutorials](../../Introducti
 
 Since Kria SOM Starter Kit provides an off-the-shelf boot image and has its enhanced boot sequence, Vitis platform developers and application developers can skip some steps above. Here is a summary for what needs to be done by Kris platform and acceleration application developers.
 
+![Missing Image](./images/kv260_tutorial_workflow.svg)
 
 | Procedure              | Required Actions                                                     | Output                                                  | Skipped Actions   |
 | ---------------------- | -------------------------------------------------------------------- | ------------------------------------------------------- | ----------------- |
 | Platform Hardware      | Same as step 1                                                       | XSA                                                     | N/A               |
-| Platform Software      | Same as step 2; Generate device tree overlay for platform PL of XSA; | pl.dtsi, Linux kernel, rootfs, sysroot, boot components | N/A               |
+| Platform Software      | Same as step 2; Generate device tree overlay for platform PL of XSA; | pl.dtsi, sysroot | N/A               |
 | Platform Creation      | Same as step 3                                                       | Platform (XPFM)                                         | N/A               |
 | Application Creation   | Same as step 4; convert system.bit to bit.bin; Genreate dtbo         | Host App, XCLBIN, bit.bin, dtbo                         | N/A               |
 | Transfer files and run | Use scp to copy generated files to Linux partition on SD card       |                                                         | Write sd_card.img |
+
+> Note: In step 2, though PetaLinux can generate a lot of output components, the only valuable output product is this case is sysroot. It's used for host application cross-compilation. Since the boot images of KV260 Starter Kit is fixed, user doesn't need to generate any boot components, e.g., FSBL, etc.
 
 The following chapters will explain the details about these steps.
 

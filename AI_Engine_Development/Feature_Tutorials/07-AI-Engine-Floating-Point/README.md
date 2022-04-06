@@ -39,13 +39,13 @@ Before starting to explore these examples, refer to the following documents:
 Versal adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
 Intelligent Engines are SIMD VLIW AI Engines for adaptive inference and advanced signal processing compute, and DSP Engines for fixed point, floating point, and complex MAC operations.
 
-![missing image](./images/Versal.png")
+![missing image](./images/Versal.png)
 
 The Intelligent Engine comes as an array of AI Engines connected together using AXI-Stream interconnect blocks:
 
 **AI Engine array**
 
-![missing image](./images/AIEngineArray.png")
+![missing image](./images/AIEngineArray.png)
 
 As seen in the image above, each AI Engine is connected to four memory modules on the four cardinal directions.
 The AI Engine and memory modules are both connected to the AXI-Stream interconnect.
@@ -60,19 +60,19 @@ The AI Engine is  a VLIW (7-way) processor that contains:
 
 **AI Engine Module**
 
-![missing image](./images/AIEngine.png")
+![missing image](./images/AIEngine.png)
 
 Have a look at the fixed-point unit pipeline, as well as floating-point unit pipeline within the vector unit.
 
 ### Fixed-Point Pipeline
 
-![missing image](./images/FixedPointPipeline.jpg")
+![missing image](./images/FixedPointPipeline.jpg)
 
 In this pipeline one can see the data selection and shuffling units; PMXL, PMXR, and PMC. The pre-add (PRA) is just before the multiply block and then two lane reduction blocks (PSA, PSB) allows to perform up to 128 multiplies and get an output on 16 lanes down to two lanes. The accumulator block is fed either by its own output (AM) or by the upshift output. The feedback on the ACC block is only one clock cycle.
 
 ### Floating-point Pipeline
 
-![missing image](./images/FloatingPointPipeline.jpg")
+![missing image](./images/FloatingPointPipeline.jpg)
 
 In this pipeline one can see that the selection and shuffling units (PMXL, PMC) are the same as in the fixed-point unit. Unlike the fixed-point pipeline there is no lane reduction unit, so the lanes that you have at the input will also be there at the output. Another difference is that the post-accumulator is on two clock cycles. If the goal is to reuse the same accumulator over and over, only one `fpmac` per two clock cycles can be issued.
 

@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
    </td>
  </tr>
  <tr>
@@ -31,14 +31,16 @@ During this tutorial, you will:
 3. Alter the kernel linking process to create multiple CUs of the same kernel.
 4. Re-run the hardware emulation and confirm the parallel execution of the CUs.
 
-This tutorial uses an image filter example to demonstrate the multiple CU feature. The host application processes the image, extracts Y, U, and V planes, and then runs the kernel three times to filter each plane of an image. By default, these three kernels run sequentially, using the same hardware resources because the FPGA only contains a single CU of the kernel. This tutorial demonstrates how to increase the number of CU, and then executing the kernel runs in parallel.
+This tutorial uses an image filter example to demonstrate the multiple CU feature. To keep this tutorial design simple the host application uses random data for the pixel instead of a real image. By default, these three kernels run sequentially, using the same hardware resources because the FPGA only contains a single CU of the kernel. This tutorial demonstrates how to increase the number of CU, and then executing the kernel runs in parallel.
+
+An OpenCV version of the host code is also provided in the source code directory `src/host/host_opencv.cpp`, however instruction to use the OpenCV version of the host code is not provided in this tutorial. The OpenCV version of the host-code can be used after installing OpenCV library and make necessary changes related to OpenCV settings in the `Makefile`. 
 
 ## Before You Begin
 
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2020.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform.
+* 2021.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform.
 If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
@@ -46,10 +48,6 @@ If necessary, it can be easily extended to other versions and platforms.
 >* Before to running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration
 Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
->* This tutorial module contains a pre-compiled OpenCV™ library compiled by gcc-6.2.0, and requires gcc/g++ version 5.5 at least, or will return an error during host code compilation. You must also set the LD_LIBRARY_PATH using the following code to pick the required runtime library related to gcc-6:
->   ```
->   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$XILINX_VITIS/lib/lnx64.o/Default
->   ```
 
 ### Accessing the Tutorial Reference Files
 
@@ -63,13 +61,7 @@ You can observe the Makefile used for this tutorial in `reference-files/Makefile
 * **VPP**: Vitis compiler path to compile the kernel code.
 * **EMCONFIGUTIL**: The path of the utility that creates emulation configuration file, `emconfig.json`.
 * **DEVICE**: The target platform.
-* **LFLAGS**: The linker option using the OpenCV library for the host code linker.  
-
-   ```
-   -Wl,-rpath,./opencv/opencv_gcc -L./opencv/opencv_gcc -lopencv_core -lopencv_highgui
-   ```  
-
-* **EXE_OPT**: The runtime options passed as command line arguments: Compiled kernel `xclbin` file, input image.
+* **EXE_OPT**: The runtime options passed as command line arguments: Compiled kernel `xclbin` file.
 
 ### Run Hardware Emulation
 
@@ -87,7 +79,7 @@ For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware m
 
 1. While the emulation run is executing, in another terminal, open the `src/host/host.cpp` file.
 
-2. Inspect lines 255-257. You can see that the Filter function is called three times for the Y, U, and V channels.
+2. Inspect lines 234-236. You can see that the Filter function is called three times for the Y, U, and V channels.
 
    ```
    request[xx*3+0] = Filter(coeff.data(), y_src.data(), width, height, stride, y_dst.data());
@@ -95,7 +87,7 @@ For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware m
    request[xx*3+2] = Filter(coeff.data(), v_src.data(), width, height, stride, v_dst.data());
    ```
 
-   This function is described from line 80. Here, you can see kernel arguments are set, and the kernel is executed by the `clEnqueueTask` command.
+   This function is described from line 78. Here, you can see kernel arguments are set, and the kernel is executed by the `clEnqueueTask` command.
 
    ```
     // Set the kernel arguments
@@ -113,7 +105,7 @@ For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware m
    clEnqueueTask(mQueue, mKernel, 1,  &req->mEvent[0], &req->mEvent[1]);
    ```
 
-   All three `clEnqueueTask` commands are enqueued using a single in-order command queue (line 75). As a result, all the commands are executed sequentially in the order they are added to the queue.
+   All three `clEnqueueTask` commands are enqueued using a single in-order command queue (line 73). As a result, all the commands are executed sequentially in the order they are added to the queue.
 
    ```
    Filter2DDispatcher(
@@ -122,7 +114,7 @@ For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware m
            cl_program       &Program )
      {
            mKernel  = clCreateKernel(Program, "Filter2DKernel", &mErr);
-           mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFI   LING_ENABLE, &mErr);
+           mQueue   = clCreateCommandQueue(Context, Device, CL_QUEUE_PROFILING_ENABLE, &mErr);
            mContext = Context;
            mCounter = 0;
      }
@@ -133,7 +125,7 @@ For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware m
 Review the generated Timeline Trace report (`opencl_trace.csv`).
 
    ```
-   vitis_analyzer filter2d.hw_emu.xclbin.run_summary
+   vitis_analyzer xrt.run_summary
    ```
 
    >**NOTE:** The run directory contains a file named `xrt.ini`. This file contains runtime options that generate additional reports such as the Profile Summary report and Timeline Trace.
@@ -146,7 +138,7 @@ Review the generated Timeline Trace report (`opencl_trace.csv`).
 
 ### Improve the Host Code for Concurrent Kernel Enqueuing
 
-1. Edit the `src/host/host.cpp` host file to change line 75. You will change this line to declare the command queue as an _out-of-order_ command queue.  
+1. Edit the `src/host/host.cpp` host file to change line 73. You will change this line to declare the command queue as an _out-of-order_ command queue.  
 
    Code before the change:
    ```
@@ -182,10 +174,10 @@ nk = Filter2DKernel:3
 
    ```
    make clean
-   make run MODE=hw_emu
+   make run TARGET=hw_emu
    ```
 
-2. View the new `xclbin.run_summary` in the Vitis analyzer.
+2. View the new `xrt.run_summary` in the Vitis analyzer.
 
   You can now see that the application takes advantage of the three CUs, and that the kernel executions overlaps and executes in parallel, speeding up the overall application.
 ![missing image](./images/overlapping_kernels_vitis_2.JPG)
