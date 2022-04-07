@@ -19,25 +19,9 @@
 
 #include "graph.h"
 
-adf::PLIO *pl64_in00  = new adf::PLIO("Stream for Block 0", plio_64_bits,"data/PhaseIn_0.txt", 500);
-adf::PLIO *pl64_in01  = new adf::PLIO("Stream for Block 1", plio_64_bits,"data/PhaseIn_0.txt", 500);
-adf::PLIO *pl64_in02  = new adf::PLIO("Stream for Block 2", plio_64_bits,"data/PhaseIn_0.txt", 500);
-adf::PLIO *pl64_in03  = new adf::PLIO("Stream for Block 3", plio_64_bits,"data/PhaseIn_0.txt", 500);
-
-adf::PLIO *pl64_out0 = new adf::PLIO("64 bits out 0",plio_64_bits,"data/Output_0.txt",500);
-
-adf::simulation::platform<4,1> Platform(pl64_in00,pl64_in01,pl64_in02,pl64_in03,pl64_out0);
 
 TopGraph G;
 
-connect<> net000(Platform.src[0],G.in[0]);
-connect<> net001(Platform.src[1],G.in[1]);
-connect<> net002(Platform.src[2],G.in[2]);
-connect<> net003(Platform.src[3],G.in[3]);
-
-
-
-connect<> net100(G.out,Platform.sink[0]);
 
 int main()
 {

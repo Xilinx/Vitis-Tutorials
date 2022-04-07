@@ -9,7 +9,7 @@
 
 # Using Floating-Point in the AI Engine
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -28,11 +28,23 @@ Before starting to explore these examples, refer to the following documents:
   - **[AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)**
   - **[UG1076: Versal ACAP AI Engine Programming Environment User Guide](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)**
 - Also, download and install:
-  - Vitis 2021.2 **[Download Vitis](https://www.xilinx.com/support/download.html)**
+  - Vitis 2022.1 **[Download Vitis](https://www.xilinx.com/support/download.html)**
   - Licenses for AI Engine tools.
   - Base Platform **[VCK190 Vitis Platform](https://www.xilinx.com/support/download.html)**
 
+  Edit the provided template setup script `env_setup.sh` in your favourite text editor. Replace the placeholders with the appropriate paths:
 
+  ```bash
+  #Setup environment variables
+  export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
+  export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
+  ```
+
+  Then source the environment script:
+
+  ```bash
+  source env_setup.sh
+  ```
 
 ## AI Engine Architecture Details
 

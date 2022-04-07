@@ -9,7 +9,7 @@
 
 # DSP Library Tutorial
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Table of Contents
 
@@ -48,21 +48,6 @@ This tutorial shows how to construct a simple two-stage decimation filter. This 
 * Part 2 shows how to cascade filters together into a chain
 * Part 3 shows how to optimize performance of the filter chain by tuning individual filters
 
-### Directory Structure
-
-```
-dsplib_tutorial_install
-├───images     images for this README
-├───part_1
-│   ├───data
-│   └───src
-├───part_2
-│   ├───data
-│   └───src
-└───part_3
-    ├───data
-    └───src
-```
 
 ## Before You Begin
 
@@ -78,17 +63,17 @@ Tools Documentation:
 
 * [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1076-ai-engine-environment.pdf)
 
-* [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/index.html)
+* [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
 
 To run through this tutorial, you will need to download and install the following tools:
 
-* Install the [Vitis Software Platform 2021.2](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) 
+* Install the [Vitis Software Platform 2022.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
 * Obtain licenses for the AI Engine tools
 
 * Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
-* Download and setup the [VCK190 Vitis Platform for 2021.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and setup the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 ### *Environment*: Setting Up Your Target Platform Environment
 
@@ -97,7 +82,8 @@ When the elements of the Vitis software platform are installed, update the targe
 Edit the provided template setup script `env_setup.sh` in your favourite text editor. Replace the placeholders with the appropriate paths:
 
 ```bash
-#Setup environment variables 
+#Setup environment variables
+export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
 export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
 ```
@@ -110,10 +96,10 @@ source env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Ensure that you are using the 2021.1 version of Xilinx tools.
+Ensure that you are using the 2022.1 version of Xilinx tools.
 
 ## *Validation*: Confirming Tool Installation
-Ensure that you are using the 2021.2 version of Xilinx tools. 
+Ensure that you are using the 2022.1 version of Xilinx tools.
 ```bash
 which vitis
 which aiecompiler
@@ -129,63 +115,33 @@ For novice users, following link provides tutorials to understand the basic Viti
 
 Part 1 of this tutorial will:
 
-* demonstrate how to create a Vitis project
-* link in the DSPLib functions
-* create a simple graph containing a parameterized DSPLib FIR filter.
-* compile and simulate the design
-* evaluate the results.
+* Shows a basic Makefile for AI Engine and X86 compilation, simulation and visualization.
+* Link in the DSPLib functions
+* Create a simple graph containing a parameterized DSPLib FIR filter.
+* Compile and simulate the design
+* Evaluate the results.
 
-### Creating the Project
 
-1. To begin this tutorial, create a new workspace directory, and start the Vitis environment:
-
-    ```bash
-    mkdir ws_dsplib_tutorial_part_1
-    vitis
-    ```
-
-2. You will see the *Select a directory as workspace* window. Navigate to the **ws_dsplib_tutorial_part_1** directory, select it, and click **Launch**. The Vitis application window will appear. 
-
-3. We begin by creating a new application: Click **Create Application Project**. The *Create a New Application Project* window will appear, which explains the basic concepts of a Vitis project. Click **Next** when ready.
-
-4. The *Platform* window will appear. Select **xilinx_vck190_base_202120_1** and click **Next**.
-
-5. The *Application Project Details* window appears next. Give the application the name **displib_tutorial_part_1**. For the *Target processor*, select **ai_engine**,  and click **Next**.
-
-6. The *Domain* window will appear. The default domain, *aiengine*, is the desired domain. Click **Next**.
-
-7. The *Templates* window will appear next. Select **Empty Application** and click **Finish**.
-
-8. Next, we will import the source and data files: In the project tree shown in the Explorer pane, right-click on the **dsplib_tutorial_part_1** project, and select **Import Sources...**.
-
-9. Navigate to **<dsplib_tutorial_install>/part_1** and click **Open**. In the left pane, click on **part_1** to expand it, then click on the **src** and **data** folders. For the "into folder", enter **dsplib_tutorial_part_1**, and click **Finish**.
-![Importing Sources into a Vitis Project](images/DSPLib_tutorial_part_1_Importing_Sources.png)
-
-10. With the files imported, you now need to specify which file is the top level. In the project tree shown in the *Explorer* pane, double-click on **dsplib_tutorial_part_1.prj**.
-
-11. The *Application Project Settings* should appear in the main pane. Click on **Click to select Top-Level File**, and a *File Selection window* should appear. Expand the entries to select **dsplib_tutorial_part_1/src/test.cpp**, and click **OK**.
-
-12. For this project to make use of the DSPLib functions, you need to tell the compiler where to find them.
-Right-click on **dsplib_tutorial_part_1**, and click on **C/C++ Build Settings**.
-
-13. Under the *Tools Settings* tab, **AIE C Compiler**/**Input Spec** should be highlighted (if it is not highlighted, select it). In the **Include Paths** pane, click the **+** sign, and add the directory for each of the following:
-* ${env_var:DSPLIB_ROOT}/L1/src/aie
-* ${env_var:DSPLIB_ROOT}/L1/include/aie
-* ${env_var:DSPLIB_ROOT}/L2/include/aie
-
-The *Properties* Window should now look as follows:
-
-![Changing the Build Settings in a Vitis Project](images/DSPLib_tutorial_part_1_Build_Settings.png)
-
-14. Click **Apply and Close**, then respond **Yes** when asked if you want the index rebuilt.
 
 ### Understanding the Source Files
 
+To begin this tutorial, go to the **part 1** directory:
+
+    ```bash
+    cd part_1
+    ```
+
+List the files available in `aie/src`:
+```
+ls aie/src
+fir_graph.h  system_settings.h  test.cpp
+```
+
 The `system_settings.h` files is a standard header file that defines the constants used in this project. It includes the header file "<adf.h>". This is the Adaptive Data Flow (ADF) header file, which provides the classes used for specifying graphs. It also includes the FIR Filter kernel's header file, `fir_sr_sym_graph.hpp`.
 
-The design itself it implemented in `fir_graph.h`. A graph is used to define elements and the connections between them that make up the design. We will go over some of the key aspects of this file.  
+The design itself it implemented in `fir_graph.h`. A graph is used to define elements and the connections between them that make up the design. We will go over some of the key aspects of this file.
 
-```
+```C++
 using namespace adf
 namespace dsplib = xf::dsp::aie;
 ```
@@ -193,59 +149,62 @@ namespace dsplib = xf::dsp::aie;
 This simplifies accessing the ADF and DSPLib classes.
 
 The FIR filter taps are declared as a vector, and initialized:
-```
+```C++
 	std::vector<int16> chan_taps = std::vector<int16>{
 		 -17,      -65,      -35,       34,      -13,       -6,       18,      -22,
          .... };
-		 
+
 ```
 
 The following line instantiates the DSPLib FIR filter kernel, named chan_FIR (channel filter):
-```
+```C++
 	dsplib::fir::sr_sym::fir_sr_sym_graph<DATA_TYPE, COEFF_TYPE, FIR_LEN_CHAN, SHIFT_CHAN, ROUND_MODE_CHAN, WINDOW_SIZE, AIES_CHAN> chan_FIR;
 ```
 
 The filter's template parameters and their meanings can be found in UG1295.
 
-```
+```C++
 	port<input> in;
 	port<output> out;
 ```
-Specifies the input and output ports for this graph, which are connected to in the higher level file `test.cpp`.
+Specifies the input and output ports for this graph.
 
-```
+```C++
 		connect<>(in, chan_FIR.in);
 		connect<>(chan_FIR.out, out);
 ```
 These statements connect our graph's input and outputs to the FIR filter's input and outputs, respectively.
 
-```
+```C++
 		location<kernel>(chan_FIR.m_firKernels[0]) = tile(18,0);
 ```
 This statement specifies a location attribute for the filter kernel. It specifies the X/Y location of the AI Engine tile within the AI Engine array in which to place the kernel. Location placements for kernels are optional, but shown here to illustrate how physical constraints can be incorporated into the source code. The results of this statement will be seen later when viewing the compilation results.
 
-The third file, `test.cpp`, can be considered the testbench component. It is not intended for hardware implementation, but rather to drive the simulation.
+There is a second graph that will instanciate this `FIRGraph` and connect it to the PLIO elements which are points at which data can be moved onto and off of the AI Engine array:
 
-The following statements instantiate programmable logic input/output (PLIO) elements, and binds them to a file. PLIO elements are points at which data can be moved onto and off of the AI Engine array.
-```
-adf::PLIO *pl128_in  = new adf::PLIO("128 bits read in",  adf::plio_128_bits,"data/input_128b.txt", 250);
-adf::PLIO *pl128_out = new adf::PLIO("128 bits read out", adf::plio_128_bits,"data/output_128b_part_1.txt",250);
+```C++
+class TopGraph : public graph
+	{
+	public:
+		input_plio in;
+		output_plio out;
+
+		FirGraph F;
+
+		TopGraph()
+		{
+			in = input_plio::create("128 bits read in",  adf::plio_128_bits,"data/input_128b.txt",  250);
+			out = output_plio::create("128 bits read out", adf::plio_128_bits,"data/output_128b.txt", 250);
+
+			connect<> (in.out[0],F.in);
+			connect<> (F.out, out.in[0]);
+		};
+	};
 ```
 
-The next pair of statements instantiate the platform, while also binding the previously described PLIO ports to it, and the following line instantiates the filter graph as defined in `fir_graph.h`:
-```
-simulation::platform<1,1> platform(pl128_in, pl128_out);
-FirGraph filter;
-```
+The third file, `test.cpp`, can be considered the testbench component. It is not intended for hardware implementation, but rather to drive the simulation. The main function is specified, which runs the simulation.
 
-The next pair of lines connect the platform's ports to the filter graph's ports:
-```
-connect<> net0(platform.src[0], filter.in);
-connect<> net1(filter.out, platform.sink[0]);
-```
-
-and finally, the main function is specified, which runs the simulation.
-```
+```C++
 int main(void) {
     filter.init() ;
     filter.run(NUM_ITER) ;
@@ -254,30 +213,32 @@ int main(void) {
 }
 ```
 
-### Build AI Engine Emulation
+### Compile the application
 
-After the design files are complete, the next step is to choose a target by selecting a build configuration.
+The `Makefile` is very simple. It allows the user to compile for 2 different targets `x86` and `hw`, visualize the compiler output in `vitis_analyzer`, run an AI Engine or X86 simulation and visualize also the output in `vitis_analyzer`.
 
-There are three build configurations:
+Currently the `Makefile` does not specifies where the DSP Lib includes are located. The first step of this tutorial will consist in adding the following lines, on line 37:
+```Makefile
+#########  Add DSP include files location   #########
+DSP_FLAGS := --include=$(DSPLIB_ROOT)/L1/src/aie
+DSP_FLAGS += --include=$(DSPLIB_ROOT)/L1/include/aie
+DSP_FLAGS += --include=$(DSPLIB_ROOT)/L2/include/aie
+```
 
-* **Emulation-SW** - Compiles to the x86 Simulator. Provides the quickest compiles and fastest validation cycles, but does not provide any implementation details.
-* **Emulation-AIE** - Compiles to the AI Engine Simulator. A slower compile, but targets the AI Engine hardware, and provides implementation details.
-* **Hardware** - Compiles to physical hardware. This is the most time-consuming build, and should be done once the design is verified and ready to be tested on hardware.
+You type `make aie` to run the following command:
+```BASH
+aiecompiler -target=hw $(AIE_FLAGS) $(DSP_FLAGS) $(AIE_GRAPH_FILES)
+```
 
-![Build Configuration Selection](images/DSPLib_tutorial_part_1_Build_Emulation_AIE.png)
+This compiles the design and maps it to the AI Engine Tiles.
 
-In this tutorial, you will be targeting Emulation of the AI Engine. There are two ways to select the build configuration:
+Visualizing the compilation results is performed by typing `make compviz` which runs the following command:
+```BASH
+	vitis_analyzer $(AIE_OUT_DIR)/test.aiecompile_summary
+```
 
-1. From the *Explorer* pane, double-click on the application project file to open it, in this case, **dsplib_tutorial_part_1.prj**. After it  opens, you can select the build configuration on the upper right hand corner and select **Emulation-AIE**.
-2. Click on the arrow symbol besides the hammer to select the active build configuration and select **Emulation-AIE**. This selects the AI Engine emulation and also starts the compilation process.
+After `vitis_analyzer` opens, it will display the Summary page, which provides a brief summary of the project.
 
-After the build configuration is selected, you only need to click on the hammer symbol to (re)compile the project.
-
-Building the project invokes the AI Engine compiler, which compiles the design, and maps it to the AI Engine tiles.
-
-### Using Vitis Analyzer to look at the Compilation Results
-
-From the *Assistant* pane, expand the application (displib_tutorial_part_1), then expand the **Emulation-AIE** section, and double-click **Compile Summary**. Vitis Analyzer will now open.  After it opens, it will display the Summary page, which provides a brief summary of the project.
 
 ![Vitis Analyzer Summary](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Summary.png)
 
@@ -295,17 +256,19 @@ When you are done examining the design, click **File -> Exit**
 
 ### Running the Design through Simulation
 
-1. In the *Explorer* pane, right-click on the application project **dsplib_tutorial_part_1**, and select **Run As -> Run Configurations...**.
+We can now run the simulation for this AI Engine application. I order to get a runtime trace of this simulation we need to specify it to the simulator. Add the following flag (`--dump-vcd=sim`) in the command belonging to the `aiesim` rule:
+```MAKEFILE
+aiesim:
+	aiesimulator --pkg-dir=$(AIE_OUT_DIR) --dump-vcd=sim
+```
 
-2. The *Create, manage and run configurations* window will appear. Click the **Launch new configuration** icon (the document with the plus sign).
+Type `make aiesim` to run the AI Engine simulation, and it will automatically generate the trace of this simulation stored in the file **sim.vcd**.
 
-3. Give the configuration a name, **AI Engine Emulation Config**.
 
-4. Select the **Main** tab, check the **Generate Trace** checkbox, and select **VCD**. Click **Run**. The simulation will begin execution and the log appears on the *Console* pane below. Wait for the simulation to complete (the status bar on the lower right corner will disappear).
 
 ### Using Vitis Analyzer to look at the Simulation Results
 
-From the *Assistant* pane, expand the application **displib_tutorial_part_1**, then expand the **Emulation-AIE** section, and double-click **Run Summary**. Vitis Analyzer will now open. After it opens, it will display the *Summary* page, which provides a brief summary of the simulation.
+Type `make aieviz` to visualize the output of the simulation in `vitis_analyzer`.
 
 Selecting **Trace** on the navigation bar shows the simulation trace. Here you can see kernel activity, the DMA transfer activity, locks for the ping-pong buffers, etc.
 
@@ -319,17 +282,7 @@ Part 2 of this tutorial will:
 * demonstrate how to connect together filters to create a filter chain.
 * show how to identify areas for optimization within the chain
 
-### Creating the Project
 
-For this part, you can create a new workspace and import the source files for part 2 as you did for part 1, or you can save some time and import the existing ZIP of the project provided.  For Part 2, we will demonstrate the latter option.
-
-1. Select **File -> Switch Workspace -> Other...**, click **Browse...**, then select the new folder icon, and give the new folder a name **dsplib_tutorial_part_2**.  Click **Open** and then **Launch**.
-
-2. Select **File -> Import...**
-
-3. Select **Vitis project exported zip file** and click **Next**.
-
-4. Navigate to **<dsplib_tutorial_install>/part_2**, select **dsplib_tutorial_part_2.ide.zip**, click **Open**, and then click **Finish**. The reconstituted project should then appear in the Explorer pane.
 
 ### Changes to the Filter Graph from Part 1
 
@@ -358,31 +311,29 @@ Also, the output of the channel FIR filter is now cascaded into the halfband fil
 		connect<>(hb_FIR.out, out);
 ```
 
-The testbench file, `test.cpp`, is unchanged.
+The class `TopGraph` and testbench file, `test.cpp`, are unchanged.
 
 ### Build AI Engine Emulation
 
-Building the AI Engine emulation for part 2 is identical to part 1, as described previously.
-
-If the build was successful, you can continue straight on through to simulation.
+Type `make aie` to build compile the graph.
 
 ### Running the Design through Simulation
 
-Running part 2 through simulation is identical to part 1, as described previously.
+Type `make aiesim` to run the simulation and save the trace.
 
 ### Using Vitis Analyzer to look at the Compilation and Simulation Results
 
-From the Assistant pane, expand the application **displib_tutorial_part_2**, then expand the **Emulation-AIE** section, and double-click **Run Summary**. Vitis Analyzer will now open. After it opens, it will display the Summary page, which provides a brief summary of the simulation.
+Type `make aieviz` to start `vitis_analyzer`.
 
 Selecting **Graph** on the navigation bar shows a diagram of the filter implementation. In this version of the graph, we can now see the two kernels, each implemented in the own AI Engine tile.
 
-![Vitis Analyzer Graph](images/DSPLib_tutorial_part_3_Vitis_Analyzer_Graph.png)
+![Vitis Analyzer Graph](images/DSPLib_tutorial_part_2_Vitis_Analyzer_Graph.png)
 
 Selecting the **Array** option on the navigation bar shows the physical implementation of the design on the AI Engine array. You can see the two kernels are located in the tiles specified by the location constraints.
 
 ![Vitis Analyzer Array](images/DSPLib_tutorial_part_2_Vitis_Analyzer_Array.png)
 
-Selecting the **Trace** option on the navigation bar shows the tile (18,0) (the chan_FIR kernel) spending most of its time running kernel code, while tile (19,0) (hb_FIR) spends significant time being idle in _main. chan_FIR is the bottleneck in this datapath, which is not surprising because it has many more taps to compute.  
+Selecting the **Trace** option on the navigation bar shows the tile (18,0) (the chan_FIR kernel) spending most of its time running kernel code, while tile (19,0) (hb_FIR) spends significant time being idle in _main. chan_FIR is the bottleneck in this datapath, which is not surprising because it has many more taps to compute.
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_2_Vitis_Analyzer_Trace.png)
 
@@ -394,9 +345,7 @@ Part 3 of this tutorial will:
 
 * demonstrate how to use the CASC_LEN parameter to increase filter performance.
 
-### Creating the Project
 
-Creating part 3 of this project is identical to part 2, as described previously.
 
 ### Changes to the Filter Graph from Part 1
 
@@ -420,17 +369,15 @@ The testbench file, `test.cpp`, is unchanged.
 
 ### Build AI Engine Emulation
 
-Building the AI Engine emulation for part 3 is identical to part 1, as described previously.
-
-If the build was successful, you can continue straight on through to simulation.
+Type `make aie` to build compile the graph.
 
 ### Running the Design through Simulation
 
-Running part 3 through simulation is identical to part 1, as described previously.
+Type `make aiesim` to run the simulation and save the trace.
 
 ### Using Vitis Analyzer to look at the Compilation and Simulation Results
 
-From the Assistant pane, expand the application **displib_tutorial_part_3**, then expand the **Emulation-AIE** section, and double-click **Run Summary**. Vitis Analyzer will now open. After it opens, it will display the Summary page, which provides a brief summary of the simulation.
+Type `make aieviz` to start `vitis_analyzer`.
 
 Selecting **Graph** on the navigation bar shows a diagram of the filter implementation. It illustrates the data connectivity points into and out of the graph (128-bit interfaces), and the symmetrical FIR filter kernel being implemented on five tiles, followed by a single tile implementing the halfband filter.
 
@@ -448,7 +395,7 @@ Selecting the **Trace** option on the navigation bar now shows the channel filte
 
 This tutorial has demonstrated the following:
 
-* How to create a Vitis AI Engine Project
+* How to create a Makefile to handle an AI Engine Project
 * How to create a graph based design description and described the basic element required
 * How to incorporate the FIR filter elements provided by the DSP Library
 * How to compile and simulate the design
@@ -463,10 +410,10 @@ The following documents provide supplemental material useful with this tutorial.
 ### [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1076-ai-engine-environment.pdf)
 Contains chapters on how to develop AI Engine graphs, how to use the Ai Engine compiler, and AI Engine simulation, and performance analysis.
 
-### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/index.html)
+### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
 Contains information regarding the DSPLib example kernels used by this tutorial.
 
-### [Vitis Unified Software Development Platform 2021.2 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+### [Vitis Unified Software Development Platform 2022.1 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 Following links point to Vitis software platform related documents referred in this tutorial:
 
 * [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)

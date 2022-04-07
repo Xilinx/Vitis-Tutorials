@@ -31,6 +31,7 @@ clean:
 	rm data/*
 	touch data/dummy.txt
 	make -C Emulation-AIE clean
+	rm -f vitis_analyzer* 
 
 data:
 	GenerateStreams cint16 64 4 1 512 4 Dirac data/PhaseIn

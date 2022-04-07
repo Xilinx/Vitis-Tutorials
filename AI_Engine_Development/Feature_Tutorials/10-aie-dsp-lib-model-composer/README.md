@@ -9,7 +9,7 @@
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -21,14 +21,10 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 
 Install the tools:
 
-* Get and install [MATLAB and Simulink 2020a, 2020b or 2021a](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
-<<<<<<< HEAD
+* Get and install [MATLAB and Simulink 2021a or 2021b](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
   - Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
 * Get and install [Xilinx Vitis 2021.2](https://www.xilinx.com/support/download.html).
-=======
-  * Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [Xilinx Vitis 2021.1](https://www.xilinx.com/support/download.html).
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
+
 
 
 
@@ -77,22 +73,23 @@ In the workspace sub-window you can see that a number of variables that are defi
 
 ![Workspace](Images/Workspace.png "Workspace variables")
 
-There are 3 additional files:
-* XMC_DSPLib_Solution_Stage1.slx
-* XMC_DSPLib_Solution_Stage2.slx
-* XMC_DSPLib_Solution_Stage3.slx
+There are 4 additional files:
+* VMC_DSPLib_Solution_Stage1.slx
+* VMC_DSPLib_Solution_Stage2.slx
+* VMC_DSPLib_Solution_Stage3.slx
+* VMC_DSPLib_Solution_Stage4.slx
 
-These are there to help you if you cannot complete any of the 3 stages.
+These are there to help you if you cannot complete any of the 4 stages.
 
 ## Stage 1: Create and Simulate the Design
 
 1. On the MATLAB GUI, select the **Home Tab** and click **Simulink**.
 
-![missing image](Images/Image_001.png "Workspace variables")
+![missing image](Images/Image_001.png)
 
 2. Select **Blank Model** to create a new canvas on which to design the Decimation Chain.
 
-![missing image](Images/Image_002.png "Workspace variables")
+![missing image](Images/Image_002.png)
 
 Perform the next two steps to enhance the User Experience. This allows you to have an instant access to the initialization file and to automatically call it when opening the design or when you update it.
 
@@ -120,7 +117,7 @@ Perform the next two steps to enhance the User Experience. This allows you to ha
   * Type `open('CreateFilter.m');` in the edit window on the right.
   * Click **Apply** and **OK**.
 
-Now when you double-lick this bock you will open the initialization matlab function (_CreateFilter.m_) in the MATLAB editor. Save the model **CTRL+S** and assign the name **XMC_DSPLib**.
+Now when you double-lick this bock you will open the initialization matlab function (_CreateFilter.m_) in the MATLAB editor. Save the model **CTRL+S** and assign the name **VMC_DSPLib**.
 
 5. Click the **Library Browser** icon.
 
@@ -135,15 +132,23 @@ Click the **AI Engine** section. This reveals see four subsections:
 
 * DSP
 * Interfaces
+* Signal Routing
+* Sinks
+* Sources
 * Tools
 * User-Defined functions
 
-6. Click the **DSP** sub-section and place the **AIE FIR Halfband Decimator** block in the canvas as shown in the following figure.
+6. Click the **DSP** sub-section. There are 2 sub-menu entries:
+- Stream IO : which contains filter implementations using streaming input and output:
+- Window IO: which contains filter implementations using frame-based input and output.
+
+
+7. Click the **Window IO** sub-section and place the **FIR Halfband Decimator** block in the canvas as shown in the following figure.
 
 ![missing image](Images/Image_007.png)
 
 
-7. Double-click the **AIE FIR HalfBand Decimator** block to open the GUI. Populate the GUI with the following parameters and click **OK**:
+7. Double-click the **AIE FIR HalfBand Decimator** block to open the GUI. Populate the GUI with the following parameters :
     * **Input/output data type**: cint16
     * **Filter coefficients data type**: int16
     * **Filter coefficients**: hb1_aie
@@ -151,6 +156,11 @@ Click the **AI Engine** section. This reveals see four subsections:
     * **Input sampling rate (MSPS)**: 800
     * **Scale output down by 2^: Shift1
     * **Rounding mode**: Floor
+
+    Click on the **Advanced** tab and populate the Input Sampling rate with:
+    * **Input sampling rate (MSPS)**: 800
+
+    Click **Apply** and **OK**.
 
 ![missing image](Images/Image_008.png)
 
@@ -196,10 +206,10 @@ Notice that before the implementing the Decimation Filter the vector length was 
 | Filter Coefficients	| hb1_aie	| hb2_aie	| hb3_aie	| cfi_aie |
 | Filter Length	| N/A | N/A	| N/A | length(cfi) |
 | Input window size (Number of samples)	| 2048	| 1024	| 512	| 256 |
-| Input sampling rate (MSPS)	| 1000	| 500	| 250	| 125 |
+| Input sampling rate (MSPS)	| 800	| 400	| 200	| 100 |
 | Specify Number of Cascade Stage   | Uncheck  |  Uncheck | Uncheck  | Uncheck  |
 | Scale output down by 2^	| Shift1	| Shift2	| Shift3	| ShiftCF |
-| Rounding mode	floor	| floor	| floor	| floor |
+| Rounding mode	floor	| floor	| floor	| floor | floor |
 
 16. Update the **Output Size** parameter of the **To Fixed Size** block to ``256``. The design should look like as follows:
 
@@ -212,11 +222,9 @@ Notice that before the implementing the Decimation Filter the vector length was 
 
 When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink the spectrum can be easily displayed using a spectrum scope.
 
-1. Right-click the canvas and type ``spectrum``. Double-click the **Spectrum Analyzer** block to open the GUI. Set the following parameters (click the left-most button of the icon bar to display the GUI).
-    * **Overlap** (Window options): 50%
-    * **Average** (Trace options): 16
-2. Set the Stop Time of the simulation to **inf**.
-3. Connect the spectrum scope at the output of the last filter (the Channel Filter):
+1. Right-click the canvas and type ``spectrum``.
+2. Connect the spectrum scope at the output of the last filter (the Channel Filter):
+3. Set the Stop Time of the simulation to **inf**.
 
 ![missing image](Images/Image_013.png)
 
@@ -265,12 +273,15 @@ All the simulations that occur in Simulink are the so-called 'Emulation-SW'. The
 In this stage you will generate the graph code of this design and perform bit-true and cycle true simulations with the AI Engine Simulator.
 
 1. Select the four AIE FIR Filters and the Frequency shifting block and type **CTRL+G** to group them in a subsystem. Assign a new name: **FIRchain**.
-2. Click the canvas and type ``model co``. Double-click the block **Model Composer Hub** and set the following parameters:
-    * **Subsystem name**: ``FIRchain``
+2. Click the canvas and type ``model co``. Set the **Subsystem name** to `FIRchain`.
+3. Double-click the block **Model Composer Hub**, select the **AI Engine / Settings** target  and set the following parameters:
     * Check **Create testbench**
-    * Check **Run AIE Simulation**
+    * Check **Run cycle approximate AIE Simulation after code generation**
+    * Check **Plot AIE Simulation Output and Estimate Throughput**
     * Check **Collect Data for Vitis Analyzer**
-3. Click **Apply** and **Generate and Run**.
+3. Click **Apply**
+4. Select the **Generate** tab:
+   * Click on **Generate**.
 
 The simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/src_aie/FIRchain.h``:
 
@@ -279,25 +290,25 @@ The simulink design is run to generate the testbench, then the graph code is gen
 #define __XMC_FIRCHAIN_H__
 
 #include <adf.h>
-#include "./FIR_Halfband_Decimator_c76b579e/FIR_Halfband_Decimator_c76b579e.h"
-#include "./FIR_Halfband_Decimator_6375a0e3/FIR_Halfband_Decimator_6375a0e3.h"
-#include "./FIR_Halfband_Decimator_66ef926b/FIR_Halfband_Decimator_66ef926b.h"
-#include "./FIR_Symmetric_Filter_7df0435a/FIR_Symmetric_Filter_7df0435a.h"
+#include "./FIR_Halfband_Decimator_b6bb9f39/FIR_Halfband_Decimator_b6bb9f39.h"
+#include "./FIR_Halfband_Decimator_c797d059/FIR_Halfband_Decimator_c797d059.h"
+#include "./FIR_Halfband_Decimator_714ce49a/FIR_Halfband_Decimator_714ce49a.h"
+#include "./FIR_Symmetric_00c44acd/FIR_Symmetric_00c44acd.h"
 #include "aiecode_src/FreqShift.h"
 
-class FIRChain : public adf::graph {
+class FIRchain_base : public adf::graph {
 public:
-   FIR_Halfband_Decimator_c76b579e FIR_Halfband_Decimator1;
-   FIR_Halfband_Decimator_6375a0e3 FIR_Halfband_Decimator2;
-   FIR_Halfband_Decimator_66ef926b FIR_Halfband_Decimator3;
-   FIR_Symmetric_Filter_7df0435a FIR_Symmetric_Filter;
+   FIR_Halfband_Decimator_b6bb9f39 FIR_Halfband_Decimator;
+   FIR_Halfband_Decimator_c797d059 FIR_Halfband_Decimator1;
+   FIR_Halfband_Decimator_714ce49a FIR_Halfband_Decimator2;
+   FIR_Symmetric_00c44acd FIR_Symmetric;
    adf::kernel FreqShift_0;
 
 public:
    adf::input_port In1;
    adf::output_port Out1;
 
-   FIRChain() {
+   FIRchain_base() {
       // create kernel FreqShift_0
       FreqShift_0 = adf::kernel::create(FreqShift<256>);
       adf::source(FreqShift_0) = "aiecode_src/FreqShift.cpp";
@@ -306,12 +317,34 @@ public:
       adf::runtime<ratio>( FreqShift_0 ) = 0.9;
 
       // create nets to specify connections
-      adf::connect<  > net0 (In1, FIR_Halfband_Decimator1.in);
-      adf::connect<  > net1 (FIR_Halfband_Decimator1.out, FIR_Halfband_Decimator2.in);
-      adf::connect<  > net2 (FIR_Halfband_Decimator2.out, FIR_Halfband_Decimator3.in);
-      adf::connect<  > net3 (FIR_Halfband_Decimator3.out, FIR_Symmetric_Filter.in);
-      adf::connect< adf::window<1024> > net4 (FIR_Symmetric_Filter.out, FreqShift_0.in[0]);
+      adf::connect<  > net0 (In1, FIR_Halfband_Decimator.in);
+      adf::connect<  > net1 (FIR_Halfband_Decimator.out, FIR_Halfband_Decimator1.in);
+      adf::connect<  > net2 (FIR_Halfband_Decimator1.out, FIR_Halfband_Decimator2.in);
+      adf::connect<  > net3 (FIR_Halfband_Decimator2.out, FIR_Symmetric.in);
+      adf::connect< adf::window<1024> > net4 (FIR_Symmetric.out, FreqShift_0.in[0]);
       adf::connect< adf::window<1024> > net5 (FreqShift_0.out[0], Out1);
+   }
+};
+
+class FIRchain : public adf::graph {
+public:
+   FIRchain_base mygraph;
+
+public:
+   adf::input_plio In1;
+   adf::output_plio Out1;
+
+   FIRchain() {
+      In1 = adf::input_plio::create("In1",
+            adf::plio_32_bits,
+            "./data/input/In1.txt");
+
+      Out1 = adf::output_plio::create("Out1",
+            adf::plio_32_bits,
+            "Out1.txt");
+
+      adf::connect< > (In1.out[0], mygraph.In1);
+      adf::connect< > (mygraph.Out1, Out1.in[0]);
    }
 };
 
@@ -327,6 +360,32 @@ Vitis Analyzer is then launched. From here you can see the **Graph View**, the *
 ![missing image](Images/Image_022.png)
 
 ![missing image](Images/Image_023.png)
+
+The Simulation Data Inspector opens-up and we can see the output frames and the estimate of the output throughput as shown below:
+
+![missing image](Images/Image_024.png)
+
+Here the estimated throughput is 44 MSPS instead of the expected 100 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data @250 MSPS instead of the 800 MSPS that were expected in the graph. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.
+
+## Stage 4: Increasing PLIO bitwidth and re-generate
+
+Solving this problem is fairly easy. Navigate inside the **FIRchain** sub-system. Get the **PLIO** block from **Xilinx Toolbox / AI Engine / Interface** or just type **plio** in the canvas. Double-click on the new block and specify:
+
+- **PLIO width (bits)**: 128
+- Check **Specify PLIO frequency**
+- **PLIO frequency (MHz)** : 250
+
+Click **OK**. Place the block just after the input port, and a copy of this block just before the output port:
+
+![missing image](Images/Image_025.png)
+
+Re-open the **Vitis Model Composer Hub** and click **Generate** to re-compile and re-simulate the design.
+
+After the AI Engine simulation, the estimated throughput is 177 MSPS. This is computed from the following timestamped (green) output data:
+
+![missing image](Images/Image_026.png)
+
+Three frames are received but only two interframe idle time are taken into account. A more precise estimate woul be to count the 512 output samples in between the 2 red vertical line. This gives almost 125 MSPS which is  1/8th of the input sample rate (1 GSPS). This means that the design can support for sure the 800 MSPS that were specified in the design.
 
 ## Conclusion
 

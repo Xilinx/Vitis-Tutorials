@@ -16,19 +16,9 @@
  */
 #include "graph.h"
 
-PLIO *in0 = new PLIO("DataIn0", plio_64_bits, "../data/inputf.txt");
-PLIO *in1 = new PLIO("DataIn1", plio_64_bits, "../data/inputcf.txt");
-PLIO *out0 = new PLIO("DataOut0", plio_64_bits, "foutput.txt");
-PLIO *out1 = new PLIO("DataOut1", plio_64_bits, "cfoutput.txt");
-
-simulation::platform<2,2> P(in0,in1,out0,out1);
 
 TopGraph G;
 
-connect<> net10(P.src[0], G.in[0]);
-connect<> net11(P.src[1], G.in[1]);
-connect<> net20(G.out[0], P.sink[0]);
-connect<> net21(G.out[1], P.sink[1]);
 
 #if defined(__AIESIM__) || defined(__X86SIM__)
    int main(int argc, char ** argv)

@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filters: Implementation on the AI Engine
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 
 ## Introduction

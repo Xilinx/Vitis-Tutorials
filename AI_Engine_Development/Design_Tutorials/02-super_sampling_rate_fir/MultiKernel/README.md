@@ -9,6 +9,8 @@
 
 # Multi-Kernel FIR Filter Implementation
 
+***Version: Vitis 2022.1***
+
 In this second part of the tutorial you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.
 
 Navigate to the `MultiKernel` directory to continue.

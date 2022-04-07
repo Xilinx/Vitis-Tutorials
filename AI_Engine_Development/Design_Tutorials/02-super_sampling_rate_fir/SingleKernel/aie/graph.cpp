@@ -19,17 +19,7 @@
 
 #include "graph.h"
 
-adf::PLIO *pl64_in  = new adf::PLIO("64 bits in G1", plio_64_bits,"data/PhaseIn_0.txt", 500);
-adf::PLIO *pl64_out = new adf::PLIO("64 bits out G1",plio_64_bits,"data/Output_0.txt",500);
-
-adf::simulation::platform<1,1> Platform(pl64_in,pl64_out);
-
 TopGraph G;
-
-connect<> net000(Platform.src[0],G.in);
-
-
-connect<> net100(G.out,Platform.sink[0]);
 
 int main()
 {

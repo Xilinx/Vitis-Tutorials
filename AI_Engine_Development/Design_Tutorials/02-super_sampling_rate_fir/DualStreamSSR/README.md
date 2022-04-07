@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 The purpose of this fourth part of the tutorial is to understand how to improve upon the performance already achieved using the two input and output stream connections to the AI Engine.
 
@@ -160,7 +160,7 @@ private:
     kernel k[8][8];
 
 public:
-    input_port in[32]; // 8 columns, 2 streams per kernel, x2 for the row direction
+    input_port in[16]; // 8 columns, 2 streams per kernel
     output_port out[16]; // 8 columns, 2 streams per kernel
 ```
 
@@ -207,8 +207,25 @@ In row 0, no kernel should discard any sample, in row 1, only the first kernel d
 
 
 
-Finally, all kernels must be connected together with the cascade stream in between them, and the input streams for all of them.
+Finally, all kernels must be connected together with the cascade stream in between them, and the input streams for all of them. In this example we chose to share the DMA FIFOs. There are 2 DMA FIFOs in row 0 for all the even rows, and 2 DMA FIFOs on row 1 for all odd rows:
 
+```C++
+// Input Streams connections
+for(int row = 0;row<NPhases;row++)
+for(int col=0;col<NPhases;col++)
+{
+    int col1 = (row%2?NPhases-col-1:col); // kernel col is inverted on odd rows
+    int fiforow = row%2;
+
+    connect<stream> n0(in[2*col],k[row][col1].in[0]);
+    connect<stream> n1(in[2*col+1],k[row][col1].in[1]);
+    fifo_depth(n0) = 512;
+    fifo_depth(n1) = 512;
+
+    location<fifo>(n0) = dma_fifo(aie_tile, FirstCol+col, fiforow, 0x0000, 512);
+    location<fifo>(n1) = dma_fifo(aie_tile, FirstCol+col, fiforow, 0x2000, 512);
+}
+```
 
 ## Compilation and Analysis
 
@@ -238,13 +255,13 @@ Type `make all` and wait for the `vitis_analyzer` GUI to Display. The Vitis anal
 
 Click **Graph** to visualize the graph of the application:
 
-![missing image](../Images/Graph8Phases.jpg)
+![missing image](../Images/Graph8Phases.png )
 
 The 64 kernels and their 32 independent input streams are clearly visible. The top graph is for the output phases 0, 2, 4, and 6, the phases where the cascade stream goes from left to right on the physical device, and the bottom graph is for the phases 1, 3, 5, and 7 where the cascade stream goes from right to left.
 
 Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
 
-![missing image](../Images/Array8Phases.jpg)
+![missing image](../Images/Array8Phases.png)
 
 In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph. With the four location constraints that were added, the placer had only one solution for the kernel placement: this square. The router had an easy job to feed all these kernels by simply using the south-north AXI-Stream. The path back to the PL from the extremities also uses only the vertical AXI-Streams.
 
