@@ -1,81 +1,98 @@
-/*
- * (c) Copyright 2021 Xilinx, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
+/**********
+© Copyright 2022 Xilinx, Inc.
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+**********/
 
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
 #include <adf.h>
-
-#include "aie_kernels.h"
 #include "include.h"
-#include "hls_kernels.h"
+#include "kernels.h"
 
 using namespace adf;
 
 class clipped : public graph {
 
-private:
-	kernel weightsum;
-	kernel average;
-	kernel clip;
-	kernel classify;
+  private:
+    kernel interpolator;
+    kernel classify;
 
-public:
-	port<input> in;
-	port<output> out;
+  public:
+    // Graph ports
+    port<input> in;
+    port<output> out;
 
+    // polar_clip connection ports
+    port<output> clip_in;
+    port<input> clip_out;
 
+    clipped() {
+      interpolator = kernel::create(fir_27t_sym_hb_2i);
+      classify     = kernel::create(classifier);
 
+      connect< window<INTERPOLATOR27_INPUT_BLOCK_SIZE, INTERPOLATOR27_INPUT_MARGIN> >(in, interpolator.in[0]);
+      connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip_in);
+      connect< stream >(clip_out, classify.in[0]);
+      connect< window<CLASSIFIER_OUTPUT_BLOCK_SIZE> >(classify.out[0], out);
 
+      std::vector<std::string> myheaders;
+      myheaders.push_back("include.h");
 
-	clipped() {
-		weightsum 	= kernel::create(weighted_cpx_sum_with_margin);
-		average 		= kernel::create(vectorized_cpx_average_div);
-		clip 			= kernel::create(polar_clip);
-		classify		= kernel::create(classifier);
+      adf::headers(interpolator) = myheaders;
+      adf::headers(classify) = myheaders;
 
-		fabric<pl>(clip);
+      source(interpolator) = "kernels/hb27_2i.cc";
+      source(classify)    = "kernels/classify.cc";
 
+	  location<kernel>(interpolator) = tile(5,5);
 
-		connect< window<WEIGHTSUM_INPUT_SAMPLES*NBYTES_DATA,WEIGHTSUM_INPUT_MARGIN*NBYTES_DATA> > net0 (in, weightsum.in[0]);
-		connect< window<AVERAGE_INPUT_SAMPLES*NBYTES_DATA*2> > net1 (weightsum.out[0], average.in[0]);
-		connect< window<POLAR_CLIP_INPUT_SAMPLES*NBYTES_DATA>, stream > net2 (average.out[0], clip.in[0]);
-
-		connect< stream > net4(clip.out[0], classify.in[0]);
-
-		connect< window<CLASSIFIER_OUTPUT_SAMPLES*NBYTES_DATA> > net5 (classify.out[0], out);
-
-		std::vector<std::string> myheaders;
-		myheaders.push_back("include.h");
-
-		adf::headers(classify) = myheaders;
-
-	    source(weightsum) = "aie_kernels/weighted_sum.cc";
-	    source(average) = "aie_kernels/average_div.cc";
-		source(clip)         = "polar_clip.cpp";
-	    source(classify)    = "aie_kernels/classify.cc";
-
-	    location<kernel>(weightsum) = tile(5,5);
-
-		runtime<ratio>(weightsum) = 0.8;
-		runtime<ratio>(average) = 0.8;
-		runtime<ratio>(classify) = 0.8;
-	};
+      runtime<ratio>(interpolator) = 0.8;
+      runtime<ratio>(classify) = 0.8;
+    };
 };
 
-#endif /* __GRAPH_H__ */
+#define STR_EXPAND(tok) #tok
+#define STR(tok) STR_EXPAND(tok)
+
+class Lab8 : public graph {
+public:
+    // Connection to the testbench:
+    //  - standard one with files
+    //  - or External Traffic Generator
+    input_plio plin;
+    output_plio clip_in;
+    input_plio clip_out;
+    output_plio plout;
+
+    clipped AIE;
+
+    Lab8()
+    {
+        std::string datadir(STR(DATA_DIR));
+        plin = input_plio::create("DataIn1",adf::plio_32_bits,datadir + "/mm2s.txt");
+        clip_in = output_plio::create("clip_in",adf::plio_32_bits, "data/polar_clip_in.txt");
+        clip_out = input_plio::create("clip_out",adf::plio_32_bits,datadir + "/polar_clip_out.txt");
+        plout = output_plio::create("DataOut1",adf::plio_32_bits, "data/DataOut1.txt");
+
+        connect<> (plin.out[0],AIE.in);
+        connect<> (AIE.clip_in,clip_in.in[0]);
+        connect<> (clip_out.out[0],AIE.clip_out);
+        connect<> (AIE.out,plout.in[0]);
+
+    };
+
+};
+
+#endif /**********__GRAPH_H__**********/

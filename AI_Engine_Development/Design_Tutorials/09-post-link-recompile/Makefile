@@ -12,14 +12,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# Makefile input options
-TARGET ?= hw_emu
 
 .PHONY: hw_emu
 
 all: hw_emu
 
+FILES_DIR := $(PWD)/Files
+
 hw_emu:
-	make -C Phase1 all
-	make -C Phase2 all
-	make -C Phase2 run_emu
+	make -C WithoutIntermediatePlatform FILES_DIR=$(FILES_DIR) all

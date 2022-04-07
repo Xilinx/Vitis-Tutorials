@@ -52,6 +52,8 @@ std::vector<cint16> taps4_p3 = std::vector<cint16>(GetPhase(3,4));
 
 using namespace adf;
 
+#define FirstCol 25
+#define LastCol (FirstCol+3)
 
 
 class FIRGraph_SSR4: public adf::graph
@@ -61,7 +63,7 @@ private:
 
 
 public:
-	input_port in[8];
+	input_port in[4];
 	output_port out[4];
 
 	FIRGraph_SSR4()
@@ -112,7 +114,7 @@ public:
 		// Constraints: location of the first kernel in the cascade
 		for(int i=0;i<NPhases;i++)
 		{
-			int j = (i%2?28:25); // 25 on even rows and 28 on odd rows
+			int j = (i%2?LastCol:FirstCol); // 25 on even rows and 28 on odd rows
 			location<kernel>(k[i][0]) = tile(j,i);
 		}
 
@@ -121,7 +123,7 @@ public:
 		for(int row=0;row<NPhases;row++)
 		{
 			for(int i=0;i<NPhases-1;i++) connect<cascade> (k[row][i].out[0],k[row][i+1].in[1]);
-			connect<stream> (k[row][3].out[0],out[row]);
+			connect<stream> (k[row][NPhases-1].out[0],out[row]);
 		}
 
 		// Input Streams connections
@@ -129,9 +131,11 @@ public:
 			for(int col=0;col<NPhases;col++)
 			{
 				int col1 = (row%2?NPhases-col-1:col); // kernel col is inverted on odd rows
-				int offset = (row%2);
+				int fiforow = row;  // Each Kernel is served by an independent FIFO
 
-				connect<stream>(in[2*col+offset],k[row][col1].in[0]);
+				connect<stream> n0 (in[col],k[row][col1].in[0]);
+                fifo_depth(n0) = 512;
+                location<fifo>(n0) = dma_fifo(aie_tile, FirstCol+col, fiforow, 0x0000, 512);
 			}
 	};
 };
@@ -142,16 +146,18 @@ class TopGraph: public adf::graph
 public:
 	FIRGraph_SSR4 G1;
 
-	input_port in[8];
-	output_port out[4];
+	input_plio in[4];
+	output_plio out[4];
 
 	TopGraph()
 	{
 		for(int i=0;i<4;i++)
 		{
-			connect<> (in[2*i],G1.in[2*i]);
-			connect<> (in[2*i+1],G1.in[2*i+1]);
-			connect<> (G1.out[i],out[i]);
+            in[i] = input_plio::create("Phase "+std::to_string(i),plio_64_bits,"data/PhaseIn_"+std::to_string(i)+".txt",500);
+			connect<> (in[i].out[0],G1.in[i]);
+            out[i] = output_plio::create("64 bits out "+std::to_string(i),plio_64_bits,"data/output_"+std::to_string(i)+".txt",500);
+			connect<> (G1.out[i],out[i].in[0]);
 		}
+
 	}
 };

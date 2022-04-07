@@ -9,7 +9,7 @@
 
 # Single-Stream Interface
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Super Sampling Rate FIR Filter
 
@@ -124,9 +124,16 @@ At this point consider latencies within the kernels. In the operation scheduling
 | **Row 1** | 3L  | 2L  | L  | 0  |
 | **Row 0** | 0  | L  | 2L  | 3L  |
 
-Depending on the row, the latencies are completely different. A latency of less than 32 colock cycle usually gets implemented into the FIFOs included in the AXI-Stream interconnect. Above that number, it gets implemented in a memory module, with an AI Engine serving the inputs and outputs. This would drastically reduce performance. Another possibility is to have these FIFOs implemented in the PL, and have two streams coming from the PL for each column, one serving the even rows and the other serving the odd rows. A single FIFO is required on the first and last columns, but two are necessary for the inner columns:
+Depending on the row, the latencies are completely different.
+
+A first possibility is to have these FIFOs implemented in the PL, and have two streams coming from the PL for each column, one serving the even rows and the other serving the odd rows. A single FIFO is required on the first and last columns, but two are necessary for the inner columns:
 
 ![FourPhasesDualStreams](../Images/FourPhasesDualStreams.jpg)
+
+Another possibility is to have them inside the AI Engine array. A latency of less than 32 colock cycle usually gets implemented into the FIFOs included in the AXI-Stream interconnect. Above that number, it gets implemented in a memory module as a DMA FIFO. Either you can share one DMA FIFO for the odd rows and another one for the even rows, or you dedicate one FIFO for each AI Engine. This is this latter choice that has been done here, and they are constrined to be place right beside the kernel.
+
+
+
 
 
 ## C++ Code Analysis
@@ -142,7 +149,7 @@ private:
 	kernel k[4][4];
 
 public:
-	input_port in[8];
+	input_port in[4];
 	output_port out[4];
 ```
 
@@ -207,14 +214,16 @@ for(int row=0;row<NPhases;row++)
     connect<stream> (k[row][3].out[0],out[row]);
 }
 
-// Input Streams connections
+// Input Streams connections and DMA FIFO constraints
 for(int row = 0;row<NPhases;row++)
     for(int col=0;col<NPhases;col++)
     {
         int col1 = (row%2?NPhases-col-1:col); // kernel col is inverted on odd rows
-        int offset = (row%2);
+        int fiforow = row;  // Each Kernel is served by an independent FIFO
 
-        connect<stream>(in[2*col+offset],k[row][col1].in[0]);
+        connect<stream> n0 (in[col],k[row][col1].in[0]);
+        fifo_depth(n0) = 512;
+        location<fifo>(n0) = dma_fifo(aie_tile, FirstCol+col, fiforow, 0x0000, 512);
     }
 ```
 
@@ -245,13 +254,13 @@ Type `make all` and wait for the `vitis_analyzer` GUI to display. The Vitis anal
 
 Click **Graph** to visualize the graph of the application:
 
-![Graph4Phases](../Images/Graph4Phases.jpg)
+![Graph4Phases](../Images/Graph4Phases.png)
 
 The 16 kernels and their eight independent input streams are clearly visible. The top graph is for the output phases 0 and 2, the phases where the cascade stream is from left to right on the physical device. The bottom graph is for phases 1 and 3 where the cascade stream is from right to left.
 
 Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
 
-![Array4Phases](../Images/Array4Phases.jpg)
+![Array4Phases](../Images/Array4Phases.png)
 
 In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph. With the four location constraints that were added, the placer had only one solution for the kernel placement: this square. The router had an easy job to feed all these kernels by simply using the south-north AXI-Stream. The path back to the PL from the extremities also uses only the vertical AXI-Streams.
 
@@ -302,16 +311,3 @@ The second design contains the previous design but, to show what would be a real
 Before and after the PL we have the same source signal and sinks (scope and spectrumscope) to verify the functionality of the AI Engine+PL design.
 
 ![SSR4WithPL](../Images/SSR4WithPL.jpg)
-
-
-
-
-<<<<<<< HEAD
-
-
-
-
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
-=======
-<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)

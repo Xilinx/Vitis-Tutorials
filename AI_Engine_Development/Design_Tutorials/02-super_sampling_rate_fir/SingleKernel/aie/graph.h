@@ -69,12 +69,13 @@ class TopGraph: public adf::graph
 public:
 	FIRGraph_OneKernel G1;
 
-	input_port in;
-	output_port out;
+	input_plio plin = input_plio::create("64 bits in G1", plio_64_bits,"data/PhaseIn_0.txt", 500);
+	output_plio plout = output_plio::create("64 bits out G1",plio_64_bits,"data/Output_0.txt",500);
+
 
 	TopGraph()
 	{
-		connect<> (in,G1.in);
-		connect<> (G1.out,out);
+		connect<> (plin.out[0],G1.in);
+		connect<> (G1.out,plout.in[0]);
 	}
 };
