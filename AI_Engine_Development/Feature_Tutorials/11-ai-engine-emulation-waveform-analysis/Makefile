@@ -1,9 +1,9 @@
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 
-ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4
-IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/Image
+ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4
+IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image
 SDKTARGETSYSROOT ?= ${SYSROOT}
-BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
+BASE_PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
 
 
 # Makefile input options
@@ -27,7 +27,7 @@ AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="./aie
 AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --xlopt=0 --pl-freq=100 -workdir=./Work 
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
-VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
+VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
 VPP_FLAGS := $(VPP_LINK_FLAGS)
 LDCLFLAGS :=
 
@@ -66,16 +66,16 @@ guard-PLATFORM_REPO_PATHS:
 	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_202120_1)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2021.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2022.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2021.2/Image)
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2022.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux)
 
 ###
 
@@ -136,7 +136,7 @@ package: guard-PLATFORM_REPO_PATHS guard-ROOTFS guard-IMAGE
 		--package.sd_dir ../data \
 		--package.sd_file embedded_exec.sh \
 		--package.sd_file host.exe \
-		../tutorial.xclbin ../libadf.a
+		../tutorial.xsa ../libadf.a
 	@echo "COMPLETE: hw_emu package created."
 
 ###################################################################################################
