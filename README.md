@@ -42,10 +42,15 @@ The Vitis Tutorials take users through the design methodology and programming mo
     		<td >
 			<a href="./Getting_Started/Vitis_HLS">Vitis HLS Introduction</a> 
 		</td>
-        <td >
-			<a href="./Getting_Started/Vitis_Libraries">Vitis Libraries Introduction  :new: </a> 
+        </tr >
+		<tr>
+		<td>
+			<a href="./Getting_Started/Vitis_Libraries">Vitis Libraries Introduction</a> 
 		</td>
-      </tr>	
+      <td>
+	  		<a href="./Getting_Started/Vitis_Platform/">Vitis Platform :new: </a> 
+			  </td>
+			  </tr>		
       </tbody>
 </table>
 

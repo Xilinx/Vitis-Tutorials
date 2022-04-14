@@ -17,22 +17,22 @@
 XSA_NAME=zcu104_custom_platform
 PLATFORM_NAME=zcu104_custom
 PLATFORM_NAME_FSBL=zcu104_custom_fsbl
-COMMON_IMAGE=xilinx-zynqmp-common-v2022.1/Image
-#COMMON_IMAGE_NAME=xilinx-zynqmp-common-v2022.1
+COMMON_IMAGE_NAME=xilinx-zynqmp-common-v2022.1
+COMMON_IMAGE=$(COMMON_IMAGE_NAME)/Image
 all: prep_common sw_comp dtb pfm_fsbl pfm  prep_sw_comp  prep_sysroot 
 main: prep_common sw_comp pfm_partial prep_sw_comp pfm dtb
 
 prep_common:
 	@echo "Extract the common Image.(if no common image ,please download it)"
-	tar xvf xilinx-zynqmp-common-v2022.1.tar.gz -C .
+	tar xvf $(COMMON_IMAGE_NAME).tar.gz -C .
 
 
 sw_comp: $(COMMON_IMAGE)
 	@echo "INFO: Copying software components from common image DIR  to local directory ./boot and ./sd_dir"
 	mkdir -p ./sd_dir && mkdir -p ./boot && \
-	cp xilinx-zynqmp-common-v2022.1/bl31.elf boot/
-	cp xilinx-zynqmp-common-v2022.1/u-boot.elf boot/
-	cp xilinx-zynqmp-common-v2022.1/boot.scr sd_dir/
+	cp $(COMMON_IMAGE_NAME)/bl31.elf boot/
+	cp $(COMMON_IMAGE_NAME)/u-boot.elf boot/
+	cp $(COMMON_IMAGE_NAME)/boot.scr sd_dir/
 	
 dtb:
 	@echo "execute createdts to generate dtb file"
@@ -54,12 +54,12 @@ pfm:
 	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
 prep_sw_comp:
 	mkdir -p sw_comp && \
-	cp xilinx-zynqmp-common-v2022.1/rootfs.ext4 ./sw_comp && \
-	cp xilinx-zynqmp-common-v2022.1/Image ./sw_comp
+	cp $(COMMON_IMAGE_NAME)/rootfs.ext4 ./sw_comp && \
+	cp $(COMMON_IMAGE_NAME)/Image ./sw_comp
 
 prep_sysroot: 
-	rm -rf ./sysroot && mkdir sysroot && sh xilinx-zynqmp-common-v2022.1/sdk.sh -d sysroot -y
+	rm -rf ./sysroot && mkdir sysroot && sh $(COMMON_IMAGE_NAME)/sdk.sh -d sysroot -y
 clean:
-	$(RM) -r vitis_* xrc.log build  sd_dir boot xilinx-zynqmp-common-v2022.1 sysroot
+	$(RM) -r vitis_* xrc.log build  sd_dir boot $(COMMON_IMAGE_NAME) sysroot
 ultraclean: clean
-	$(RM) -r sw_comp $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx xilinx-zynqmp-common-v2022.1.tar.gz mydevice
+	$(RM) -r sw_comp $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx $(COMMON_IMAGE_NAME).tar.gz mydevice

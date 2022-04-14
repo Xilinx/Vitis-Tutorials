@@ -1,0 +1,14 @@
+diff --git a/cpp_kernels/simple_vadd/Makefile b/cpp_kernels/simple_vadd/Makefile
+index bc84b7bd..48b8a70b 100644
+--- a/cpp_kernels/simple_vadd/Makefile
++++ b/cpp_kernels/simple_vadd/Makefile
+@@ -139,7 +139,8 @@ ifeq ($(HOST_ARCH), x86)
+ 	$(VPP) $(VPP_FLAGS) -l $(VPP_LDFLAGS) --temp_dir $(TEMP_DIR) -o'$(BUILD_DIR)/krnl_vadd.link.xclbin' $(+)
+ 	$(VPP) -p $(BUILD_DIR)/krnl_vadd.link.xclbin -t $(TARGET) --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) -o $(BUILD_DIR)/krnl_vadd.xclbin
+ else
+-	$(VPP) $(VPP_FLAGS) -l $(VPP_LDFLAGS) --temp_dir $(TEMP_DIR) -o'$(BUILD_DIR)/krnl_vadd.xclbin' $(+)
++	$(VPP) $(VPP_FLAGS) -l $(VPP_LDFLAGS) --temp_dir $(TEMP_DIR) -o'$(BUILD_DIR)/krnl.xsa' $(+)
++	$(VPP) -p $(BUILD_DIR)/krnl.xsa -t $(TARGET) --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 -o $(BUILD_DIR)/krnl_vadd.xclbin
+ endif
+ 
+ ############################## Setting Rules for Host (Building Host Executable) ##############################
