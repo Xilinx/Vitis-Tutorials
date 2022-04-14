@@ -68,7 +68,7 @@ We'll introduce the platform creation steps in the following pages. Each page de
 
 ## Change Log
 ### 2022.1
-- From this version we begin to use common image instead of the Petalinux building process. If you want to leverage the Petalinux tool to customize your system you can refer [PetaLinux customization page](./petaLinux_customization.md).
+- From this version we begin to use common image instead of the Petalinux building process. If you want to leverage the Petalinux tool to customize your system you can refer [PetaLinux customization page](../../Feature_Tutorials/02_platform_creation_petalinux_component/README.md).
 - For device tree file we suggest to use `createdts` command to generate it.
 ### 2021.2
 - The Vivado project exports XSA for hardware and hardware emulation seperatedly. When creating the platform in [step3](./step3.md), it's recommended to provide seperate XSA for hardware and hardware emulation.

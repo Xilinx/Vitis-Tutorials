@@ -17,6 +17,8 @@ This section contains top-level getting started tutorials for Vitis
   * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within the Vitis High-Level Synthesis environment
 * [**Vitis Libraries**](./Vitis_Libraries) :
   * Learn how to leverage a L1 Vitis library element to build your own design. The FFT example is selected for explanation, and you may follow similar flow to use other library elements.
-
+* [**Vitis Platform**](./Vitis_Platform) :
+  * How to quickly Get started to create a Versal Vitis PLatform and verify this platform with a simple application.
+  This example use the Versal Extensible Platform from CED and pre-built Linux image to create a Vitis embedded acceleration platform and run a Vector Addition example on it. You can develop other acceleration application on this platform.
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
