@@ -12,9 +12,6 @@
 =======
 # AI Engine GMIO Performance Profile
 
-> **Note**: This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.
-
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 AI Engine tools support mapping the GMIO port to the tile DMA one-to-one. It does not support mapping multiple GMIO ports to one tile DMA channel. There is a limit on the number of GMIO ports supported for a given device. For example, the XCVC1902 device on the VCK190 board
 has 16 AI Engine to NoC master unit (NMU) in total. For each AI Engine to NMU, it supports two MM2S and two S2MM channels. Hence there can be a maximum of 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs supported, but note that it can be further limited by the existing hardware platform.
 
@@ -187,7 +184,7 @@ To run it in hardware, use the following make command to build the hardware imag
 After the package is done, run the following commands in the Linux prompt after booting Linux from an SD card:
 
     export XILINX_XRT=/usr
-    cd /mnt/sd-mmcblk0p1
+    cd /run/media/mmcblk0p1
     ./host.exe a.xclbin
 
 The output in hardware is as follows:
@@ -270,7 +267,7 @@ The code to end profling and calculate performance is as follows:
 
 In this example, `event::start_profiling is` called to configure the AI Engine to count the clock cycles from the stream start event to the event that indicates `BLOCK_SIZE_out_Bytes` bytes have been transferred, assuming that the stream stops right after the specified number of bytes are transferred.
 
-For detailed usage about event API, refer to the *Versal ACAP AI Engine Programming Environment User Guide* ([UG1076](./https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2021.2%20English&amp;url=ug1076-ai-engine-environment)).
+For detailed usage about event API, refer to the *Versal ACAP AI Engine Programming Environment User Guide* ([UG1076]).
 
 The code is guarded by macro `__USE_EVENT_PROFILE__`. To use this method of profiling, define `__USE_EVENT_PROFILE__` for g++ cross compiler in `sw/Makefile`:
 

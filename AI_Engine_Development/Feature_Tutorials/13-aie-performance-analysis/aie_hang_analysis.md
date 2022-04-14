@@ -10,7 +10,7 @@
 
 # AI Engine Deadlock Analysis
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 This tutorial introduces you to some common deadlock scenarios and shows you how to detect deadlocks (design hangs) in different tool flows. The methods introduced to detect and analyze deadlock issues include:
 
@@ -132,7 +132,7 @@ When the XSIM GUI pops up, add `ai_engine_0` or the PL kernels' signals to the w
 
 	
 	```
-	cd /mnt/sd-mmcblk0p1
+	cd /run/media/mmcblk0p1
 	./host.exe a.xclbin
 	```
 	
@@ -354,9 +354,9 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	Find the absolute addresses for the kernels in the design. The status of the kernels can be read by running the following command:
 
-		root@versal-rootfs-common-2021_2:/mnt/sd-mmcblk0p1# devmem 0x2000C872004
+		root@versal-rootfs-common-2022_1:/run/media/mmcblk0p1# devmem 0x2000C872004
 		0x00001000
-		root@versal-rootfs-common-2021_2:/mnt/sd-mmcblk0p1# devmem 0x2000C072004 
+		root@versal-rootfs-common-2022_1:/run/media/mmcblk0p1# devmem 0x2000C072004 
 		0x00000200
 		```
 

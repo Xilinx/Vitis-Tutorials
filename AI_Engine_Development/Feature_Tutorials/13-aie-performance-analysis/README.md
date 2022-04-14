@@ -10,7 +10,7 @@
 
 # AI Engine Performance and Deadlock Analysis Tutorial
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
