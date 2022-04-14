@@ -15,7 +15,7 @@ In this section of the tutorial, you will learn how to add PL kernels in HLS int
 
 You now have a working application to be run on the AI Engine array. What you need now is to modify the AI Engine graph to be used in hardware and connect the AI Engine array to the PL using the Vitis compiler (V++).
 
-1. The main function in `project.cpp` will not be used in the hardware run, so you need to add a switch (`#if defined(...)`) so that main will not be taken into account for the hardware build.
+The main function in `project.cpp` will not be used in the hardware run, so you need to add a switch (`#if defined(...)`) so that main will not be taken into account for the hardware build.
 
 ```
 #if defined(__AIESIM__) || defined(__X86SIM__) || defined(__ADF_FRONTEND__)
@@ -28,10 +28,6 @@ int main(void) {
 }
 #endif
 ```
-
-2. Change the ***Active build configuration*** to ***Hardware*** using the arrow next to the hammer icon and rebuild the AI Engine application project.  
-
->**Note**: Make you only build the AI Engine application and not the full system as the build of the full system will fail due to missing components that we will add in the next steps of this tutorial.
 
 ### Step 2. Add PL Kernels
 
@@ -59,20 +55,20 @@ Now that you have imported the kernels, you need to tell the Vitis linker how to
 ![missing image](images/hw_link_cfg1.png)
 
 2. Now you need to tell the Vitis compiler about the connectivity of the system. This step is done using a configuration file.
-Create a `system.cfg` file with a text editor and add the following lines.
+Create a `connectivity.cfg` file with a text editor and add the following lines.
 ```
 [connectivity]
 stream_connect=mm2s_1.s:ai_engine_0.mygraph_in
 stream_connect=ai_engine_0.mygraph_out:s2mm_1.s
 ```
 
-Note that as per the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=yii1603912637443.html), the naming convention for the compute units (or kernel instances) are `<kernel>_#`, where # indicates the CU instance. Thus the CU names built corresponding to the kernels `mm2s` and `s2mm` in your project are respectively `mm2s_1` and `s2mm_1`.
+Note that as per the [Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=yii1603912637443.html), the naming convention for the compute units (or kernel instances) are `<kernel>_#`, where # indicates the CU instance. Thus the CU names built corresponding to the kernels `mm2s` and `s2mm` in your project are respectively `mm2s_1` and `s2mm_1`.
 The ```stream_connect``` option is defined as `<compute_unit_name>.<kernel_interface_name>:<compute_unit_name>.<kernel_interface_name>`.
 For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit name) called `s` (kernel interface name) to the `mygraph_in` (interface name) input of the graph in the `ai_engine_0` (compute unit name) IP you need the following option: `stream_connect=mm2s_1.s:ai_engine_0.mygraph_in`.
 
-3. Right-click the ***simple_application_system_hw_link*** and click ***import sources***. Select the ```system.cfg``` file created and add it to the ***simple_application_system_hw_link*** folder.
+3. Right-click the ***simple_application_system_hw_link*** and click ***import sources***. Select the ```connectivity.cfg``` file created and add it to the ***simple_application_system_hw_link*** folder.
 
-      ![missing image](images/hw_link_cfg2.png)
+      ![missing image](images/221_hw_link_cfg2.png)
 
 4. In the ***simple_application_system_hw_link.prj*** page, right-click the binary container and click ***Edit v++ options***.
 
@@ -80,10 +76,10 @@ For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit 
 
 Add the following option in the ***V++ command line options*** section to link your configuration file:
 ```
---config ../system.cfg
+--config ../connectivity.cfg
 ```
 
-  ![missing image](images/212_hw_link_cfg4.png)
+  ![missing image](images/221_hw_link_cfg4.png)
 
 
 ### Step 4. Build the System
@@ -92,7 +88,7 @@ Add the following option in the ***V++ command line options*** section to link y
 
       ![missing image](images/system_build.png)
 
-2. You can open the generated Vivado project in `<workspace>/simple_system_hw_link/Hardware/binary_container_1.build/link/vivado/vpl/prj` to take a look at the compilation result.
+2. You can open the generated Vivado project in `<workspace>/simple_system_hw_link/Emulation-HW/binary_container_1.build/link/vivado/vpl/prj` to take a look at the compilation result.
 You can see that the Vitis compiler added the two HLS IP (`mm2s` and `s2mm`) and connected them to the memory (NoC) and AI Engine IP.
 
       ![missing image](images/211_vivado_prj.png)
