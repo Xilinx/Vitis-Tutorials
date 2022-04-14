@@ -17,7 +17,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 2. Set the Platform Project Name to ***AIE_A-to-Z_pfm_vck190*** and click ***Next***.
 
-3. Use the XSA generated in the previous step that you can find in `workspace/simple_application_system_hw_link/Hardware/binary_container_1.xsa`, set ***standalone*** as ***Operating system*** and ***CIPS_0_pspmc_0_psv_cortexa72_0*** as ***Processor***, and click ***Finish***.
+3. Use the XSA generated in the previous step that you can find in `workspace/simple_application_system_hw_link/Emulation-HW/binary_container_1.xsa`, set ***standalone*** as ***Operating system*** and ***CIPS_0_pspmc_0_psv_cortexa72_0*** as ***Processor***, and click ***Finish***.
 
 4. Build the platform.
 
@@ -35,7 +35,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 6. Right-click on the ```src``` folder under the ***A-to-Z_app*** project and click ***Import Sources***.
 
-7. Import the `aie_control.cpp` file from the AI Engine application project (`simple_application/Hardware/Work/ps/c_rts/aie_control.cpp`).
+7. Import the `aie_control.cpp` file from the AI Engine application project (`simple_application/Emulation-AIE/Work/ps/c_rts/aie_control.cpp`).
 
 8. Import `main.cpp` from the `src` folder from the git repository
 
@@ -94,9 +94,43 @@ And make sure the `${env_var:XILINX_VITIS}/aietools/include` is already added in
 
 2. Build the ***simple_application_system*** project.
 
+### Step 4. Run the System in Hardware Emulation
 
-### Step 4. Run the System
+Now that the system is built, we can test it in HW emulation.
 
+   1. Right-click on the ***simple_application_system*** and click ***Run As → Launch HW emulator***.
+
+         ![missing image](images/run-hw-emu.png)
+
+
+   2. On the ***Launch On Emulator*** pop-up window click ***Start Emulator and Run***
+
+         ![missing image](images/run-hw-emu-2.png)
+         
+>**Note** You can use the option ***Launch Emulator in GUI mode to display waveforms*** to open Vivado Simulator and observe the waveform from the PL signals. If you select this option make sure you run the simulation in Vivado simulator as QEMU will wait for it.
+
+   3. You should see the application running successfully with no error in the Vitis Emulation console.
+
+         ![missing image](images/hw-emu_output.png)
+         
+
+   4. To stop the emulator click ***Xilinx > Start/Stop Emulator*** and click ***Stop***
+         ![missing image](images/stop-hw-emu.png)
+
+### Step 5. Build the System targeting the Hardware
+
+Before you run the system in Hardware you need to rebuild the system to target the Hardware.
+   1. In the ***simple_application_system.sprj*** page, change the ***Active build configuration*** to ***Hardware***  
+   
+   2. Add the following options in the ***Packaging options*** box:
+
+```
+--package.ps_elf ../../A-to-Z_app/Debug/A-to-Z_app.elf,a72-0 --package.defer_aie_run
+```
+ 
+   3. Select the ***simple_application_system*** and click on the hammer to build the system
+
+### Step 6. Run the System in Hardware
 We have two ways to run the application.
 
 A: Use Jtag to launch the application.
@@ -115,13 +149,13 @@ B: Use SD card to run the application.
 
    1. Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable and set BOOT MODE to SD Boot.
 
-   2. Right-click on the ***simple_application_system*** and expand Hardware.In the `package_no_aie_debug` directory you would find BOOT.BIN file.
+   2. Right-click on the ***simple_application_system*** and expand Hardware.In the `package` directory you would find a sd_card.img file.
 
-        > We can find BOOT.BIN in **package** and **package_no_aie_debug** directory. The BOOT.BIN in **package** directory is for hardware debug purpose. It stops AI Engine after loading and waits for the run instruction from the debugger. The one in the **package_no_aie_debug** directory is for free running. So we choose BOOT.BIN in **package_no_aie_debug** directory for SD Card free running.
+        > We can find the sd_card.img file in **package** and **package_aie_debug** directories. The sd_card.img in **package_aie_debug** directory is for hardware debug purpose. It stops AI Engine after loading and waits for the run instruction from the debugger. The one in the **package** directory is for free running. So we choose sd_card.img in **package** directory for SD Card free running.
 
-   3. Copy BOOT.BIN to your SD card FAT32 partition. (If you do not know BOOT.BIN location, you can right click BOOT.BIN and select properties. It will show the file location directory.)
+   3. Format your SD Card SD card FAT32 partition using the sd_card.img file.
 
-         ![missing image](images/package_no_aie_build.PNG)
+         ![missing image](images/package_sd_card.png)
 
    4. Insert your SD card into your board and power on your board.
 
@@ -131,7 +165,7 @@ B: Use SD card to run the application.
 
 ## Summary
 
-In this tutorial, you have performed an end-to-end flow to create a platform based on the VCK190 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to run on it.
+In this tutorial, you have performed an end-to-end flow to create a platform based on the VCK190 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to control the system. Then we have run the system is HW emulation and HW
 
 
 
