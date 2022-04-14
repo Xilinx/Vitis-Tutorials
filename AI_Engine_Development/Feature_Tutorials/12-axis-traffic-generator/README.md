@@ -103,15 +103,15 @@ Tools Documentation:
 
 To run through this tutorial, you will need to download and install the following tools:
 
-* Install the [Vitis Software Platform 2021.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+* Install the [Vitis Software Platform 2022.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 
-* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+* Install the [Vitis Software Platform 2022.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 
 * Obtain licenses for the AI Engine tools
 
-* Download and setup the [Xilinx DSP Library (DSPLib) 2020.2](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
+* Download and setup the [Xilinx DSP Library (DSPLib) 2022.1](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
 
-* Download and setup the [VCK190 Vitis Platform for 2021.2](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
+* Download and setup the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
 
 ### *Environment*: Setting Up Your Target Platform Environment
 
@@ -130,7 +130,6 @@ Then source the environment script:
 
 ```bash
 source env_setup_2022.sh
-```
 
 ## *Validation*: Confirming Tool Installation
 
@@ -409,7 +408,7 @@ If additional master and slave traffic generator interfaces are required, change
 
 For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a `PLIO` object. For this design, as an example, this line `PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
 
-You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021.2/ug1393-vitis-application-acceleration.pdf).
+You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_1/ug1393-vitis-application-acceleration.pdf).
 
 
 To build the design, run the following command:
@@ -433,7 +432,7 @@ After all the new AI Engine outputs are created, you can compile your host appli
     graph_top.end();
     ```
 
-   **Note:** [XRT](https://xilinx.github.io/XRT/2021.2/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application".
+   **Note:** [XRT](https://xilinx.github.io/XRT/2022.1/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application".
 
 2. Close the main.cpp, and run the command.
 
@@ -477,7 +476,7 @@ After packaging, everything is set to run emulation or hardware.
 2. Execute the following command when the emulated Linux prompt displays:
 
    ```bash
-   cd /mnt/sd-mmcblk0p1
+   cd /run/media/mmcblk0p1
    export XILINX_XRT=/usr
    ```
 

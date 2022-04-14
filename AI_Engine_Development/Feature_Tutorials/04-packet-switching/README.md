@@ -9,7 +9,7 @@
 
 # Packet Switching Tutorial
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 AI Engine kernels can share a single processor and execute in an interleaved manner. In addition, they can also share multiple stream connections on a single physical channel. The explicit packet switching feature allows fine-grain control over how packets are generated, distributed, and consumed in a graph computation. Explicit packet switching is typically recommended in cases where many low bandwidth streams from a common programmable logic (PL) source can be distributed to different AI Engine destinations. Similarly many low bandwidth streams from different AI Engine sources to a common PL destination can also take advantage of this feature. Because a single physical channel is shared between multiple streams, you minimize the number of AI Engine - PL interface streams used.
 

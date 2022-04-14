@@ -9,7 +9,7 @@
 
 # GMIO Tutorial
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -34,7 +34,7 @@ After completing this tutorial, you will be able to:
 * Measure the NOC bandwidth and make trade offs between GMIO and PLIO.
 
 ## Steps
-> **Note**: This tutorial assumes that the user has basic understanding of Adaptive Data Flow (ADF) API and Xilinx® Runtime (XRT) API usage. For more information about ADF API and XRT usage, refer to AI Engine Runtime Parameter Reconfiguration Tutorial and Versal ACAP AI Engine Programming Environment User Guide ([UG1076](./https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2021.2%20English&amp;url=ug1076-ai-engine-environment)).
+> **Note**: This tutorial assumes that the user has basic understanding of Adaptive Data Flow (ADF) API and Xilinx® Runtime (XRT) API usage. For more information about ADF API and XRT usage, refer to AI Engine Runtime Parameter Reconfiguration Tutorial and Versal ACAP AI Engine Programming Environment User Guide ([UG1076]).
 
 **Step 1 - AI Engine GMIO**: Introduces the programming model of AI Engine GMIO, including blocking and non-blocking GMIO transactions. See details in [AIE GMIO Programming Model](./single_aie_gmio.md).
 
