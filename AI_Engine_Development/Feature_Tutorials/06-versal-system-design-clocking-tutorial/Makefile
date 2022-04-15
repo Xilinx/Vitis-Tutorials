@@ -135,7 +135,7 @@ package: guard-PLATFORM_REPO_PATHS guard-ROOTFS guard-IMAGE
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_file embedded_exec.sh \
-		--package.sd_file host.exe ../tutorial1.xsa ../libadf.a
+		--package.sd_file host.exe ../tutorial.xsa ../libadf.a
 
 ###################################################################################################
 
