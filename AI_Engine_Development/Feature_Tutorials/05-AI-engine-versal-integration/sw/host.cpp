@@ -24,8 +24,8 @@ limitations under the License.
 #include "data.h"
 
 // This is used for the PL Kernels
-#include "xrt/xrt.h"
-#include "xrt/experimental/xrt_kernel.h"
+#include "xrt.h"
+#include "experimental/xrt_kernel.h"
 
 // Using the ADF API that call XRT API
 #include "adf/adf_api/XRTConfig.h"
@@ -79,6 +79,10 @@ int main(int argc, char ** argv)
 	auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 	memcpy(in_bomapped, cint16Input, sizeIn * sizeof(int16_t) * 2);
 	printf("Input memory virtual addr 0x%px\n", in_bomapped);
+
+	#if defined(__SYNCBO_ENABLE__) 
+		xrtBOSync(in_bohdl, XCL_BO_SYNC_BO_TO_DEVICE, sizeIn * sizeof(int16_t) * 2 , 0);
+	#endif
 	
 
 	//////////////////////////////////////////
@@ -148,6 +152,10 @@ int main(int argc, char ** argv)
 	std::cout << "s2mm completed with status(" << state << ")\n";
 	xrtRunClose(s2mm_rhdl);
 	xrtKernelClose(s2mm_khdl);
+
+	#if defined(__SYNCBO_ENABLE__) 
+		xrtBOSync(out_bohdl, XCL_BO_SYNC_BO_FROM_DEVICE, sizeOut * sizeof(int) , 0);
+	#endif
 	
 	//////////////////////////////////////////
 	// Comparing the execution data to the golden data
