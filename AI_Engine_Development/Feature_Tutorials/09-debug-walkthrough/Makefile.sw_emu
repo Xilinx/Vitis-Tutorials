@@ -21,7 +21,7 @@ IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image
 GRAPH    = aie/graph.cpp
 LIBADF   = libadf.a
 AIE_CMPL_CMD = aiecompiler -target=x86sim -Xpreproc=-O0 -log-level=5 -v -platform=${PLATFORM} --pl-freq=500 -genArchive -include="./aie" -include="./aie/inc" -include="./aie/kernels" -include="./data" -include="./" --xlopt=0 -workdir=./Work ${GRAPH}
-AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
+X86_SIM_CMD = x86simulator --pkg-dir=./Work
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
@@ -36,14 +36,14 @@ VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}
 
 .PHONY: clean
 
-all: xsa host package
+all: xsa host package data
 
 aie: ${LIBADF}
 ${LIBADF}: ${GRAPH}
 	${AIE_CMPL_CMD}
 
-aiesim: ${LIBADF}
-	${AIE_SIM_CMD}
+x86sim: ${LIBADF}
+	${X86_SIM_CMD}
 
 xsa: guard-PLATFORM_REPO_PATHS ${XSA}
 ${XSA}: ${LIBADF} ${VPP_SPEC} ${XOS}
@@ -85,8 +85,11 @@ guard-SDKTARGETSYSROOT:
 	$(call check_defined, SDKTARGETSYSROOT, Ensure xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux script was run)
 ###
 
+data:
+	wget https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip -O beamformer_data.zip && unzip beamformer_data.zip
+
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
-package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}  
+package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data 
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} ${XSA} ${LIBADF} \
 		--package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
@@ -97,7 +100,7 @@ package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}
 		--package.sd_file ${HOST_EXE}
 
 package_dbg: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_dbg_${TARGET}
-package_dbg_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}  
+package_dbg_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data 
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} ${XSA} ${LIBADF} \
 		--package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \

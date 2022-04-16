@@ -63,7 +63,7 @@ void bf8x8_mid_api(input_window<cint16> * restrict c_input, input_window<cint16>
 
             acc1      = aie::mac(acc1, dat0[6], bufb0); 
             acc1      = aie::mac(acc1, dat0[7], bufb1); 
-            writeincr_v(cascade_out, acc1);
+            writeincr(cascade_out, acc1);
 
             window_decr(c_input,7*8); //Move back to refill start with same contents as outer loop
         }// end of loop for PRB
