@@ -26,7 +26,7 @@
   </tr>
 </table>
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -39,19 +39,17 @@ Techniques to uncover both functional and performance level bugs are described i
 
 Source level debug includes visibility into register contents view, variable values view, breakpoints view, and hence necessitates a GUI. The Vitis™ integrated design environment (IDE) is the tool that supports these debug requirements. This tutorial demonstrates how to use the Vitis IDE to manage these challenges and additional tools and methodologies to assist with your design debug.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes (v2021.2)* for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes (v2022.1)* for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.2/sdk.sh`.
-2. Set up your ROOTFS to point to the xilinx-versal-common-v2021.2/rootfs.ext4.
-3. Set up your IMAGE to point to xilinx-versal-common-v2021.2/Image.
+1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
+2. Set up your ROOTFS to point to the xilinx-versal-common-v2022.1/rootfs.ext4.
+3. Set up your IMAGE to point to xilinx-versal-common-v2022.1/Image.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you download the platform.
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.
-
-To target the VCK190 production board, modify PLATFORM variable in the Makefile(s) to:
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
+This tutorial targets VCK190 production board, PLATFORM variable in the Makefile(s) is:
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
 
 ## Example Design: Beamformer
 
@@ -72,7 +70,7 @@ The complete beamformer design is shown in the Vitis™ analyzer.
 
 There are several ways to debug a system design that include PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. For projects that are command-line based and would like to port to Vitis™ IDE, reference [Port command-line based projects to Vitis IDE](./Debug0_po.md) for detail steps.
 
-For ease of use, a Vitis IDE exported project, `beamformer.ide.zip` can be donwloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer.ide.zip. Then import this zip file into the Vitis IDE.
+For ease of use, a Vitis IDE exported project, `beamformer_2022_1.ide.zip` can be donwloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_2022_1.ide.zip. Then import this zip file into the Vitis IDE.
 
 Step 0. Download data files, `beamformer_data.zip` from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level as this tutorial's Makefile.
 

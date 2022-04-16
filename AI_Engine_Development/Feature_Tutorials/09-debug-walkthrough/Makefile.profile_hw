@@ -36,7 +36,7 @@ VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}
 
 .PHONY: clean
 
-all: xsa host package
+all: xsa host package data
 
 aie: ${LIBADF}
 ${LIBADF}: ${GRAPH}
@@ -85,8 +85,11 @@ guard-SDKTARGETSYSROOT:
 	$(call check_defined, SDKTARGETSYSROOT, Ensure xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux script was run)
 ###
 
+data:
+	wget https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip -O beamformer_data.zip && unzip beamformer_data.zip
+
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
-package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}  
+package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data 
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} ${XSA} ${LIBADF} \
 		--package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
@@ -97,7 +100,7 @@ package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}
 		--package.sd_file ${HOST_EXE}
 
 package_dbg: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_dbg_${TARGET}
-package_dbg_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}  
+package_dbg_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data 
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} ${XSA} ${LIBADF} \
 		--package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
