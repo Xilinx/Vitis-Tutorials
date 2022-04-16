@@ -46,16 +46,7 @@ class clipped : public graph {
       connect< window<INTERPOLATOR27_INPUT_BLOCK_SIZE, INTERPOLATOR27_INPUT_MARGIN> >(in, interpolator.in[0]);
       
       //Win 2 STREAM
-      connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip.in[0]);
-      
-
-      //Win 2 Win
-      //connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE> >(interpolator.out[0], clip.in[0]);
-      
-      //connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip_in);
-
-      //connect<window<POLAR_CLIP_INPUT_BLOCK_SIZE>>(clip.out[0], classify.in[0]);
-      
+      connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip.in[0]); 
       
       connect< stream>(clip.out[0], classify.in[0]);
       
