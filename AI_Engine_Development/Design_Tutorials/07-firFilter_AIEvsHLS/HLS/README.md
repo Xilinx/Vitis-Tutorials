@@ -1,6 +1,6 @@
 <table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
    </td>
  </tr>
 </table>

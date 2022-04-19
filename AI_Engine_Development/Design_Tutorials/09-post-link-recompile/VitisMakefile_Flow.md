@@ -1,6 +1,6 @@
 ﻿<table>
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Post-Link Recompile of an AI Engine Application</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Post-Link Recompile of an AI Engine Application</h1>
    </td>
  </tr>
  <tr>
