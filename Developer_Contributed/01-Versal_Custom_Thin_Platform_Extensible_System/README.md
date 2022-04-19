@@ -474,7 +474,7 @@ PASSED:  my_graph.end()
 
 PASSED:  ./aie_dly_test.exe
 
-root@vck190-versal:/run/media/mmcblk0p1#
+root@vck190-versal:/run/media/mmcblk0p1# 
   ```
 
 ## Notes
