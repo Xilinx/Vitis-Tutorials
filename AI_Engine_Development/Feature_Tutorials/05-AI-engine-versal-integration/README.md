@@ -69,7 +69,7 @@ The design that will be used is shown in the following figure:
 |S2MM|HLS|Stream to Memory Map HLS kernel to feed output result data from AI Engine classifier kernel to DDR via the PL DMA.|
 
 ## Section 1: Compile AI Engine code using the AI Engine compiler for `x86simulator`, viewing compilation results in Vitis Analyzer.
-In the early stages of the development cycle, it is critical to verify the design behavior functionally which identifies the errors. The x86 simulator is an ideal choice for testing, debugging, and verifying this kind of behavior because of the speed of iteration and the high level of data visibility it provides the developer. The x86 simulator is running exclusively on the tool development machine. This means, its performance and memory use are defined by the development machine.
+In the early stages of the development cycle, it is critical to verify the design behavior functionally which identifies the errors. The x86 simulator is an ideal choice for testing, debugging because of the speed of iteration and the high level of data visibility it provides the developer. The x86 simulator is running exclusively on the tool development machine. This means, its performance and memory use are defined by the development machine.
 
 This tutorial design has 3 AI Engine kernels (interpolator, polar_clip and classifier) and two HLS PL kernels (`s2mm` and `mm2s`).
 
@@ -112,6 +112,10 @@ The **Graph** view gives an overview of your graph and how the graph is designed
 
 ![Vitis Analyzer graph Summary](./images/vitis_analyzerx86_graph_summary.PNG)
 
+Clicking on any kernel in the logical diagram, highlights the corresponding kernel source in the graph instance column. You can cross-probe to the source code by clicking on the file.
+
+![Vitis Analyzer Cross Probe](./images/vitis_analyzer_cross_probe.PNG)
+
 You can click on the **Log** to view the compilation log for your graph.
 
 ## Section-2: Simulate the AI Engine graph using the `x86simulator`
@@ -152,8 +156,13 @@ You can then open up the generated `x86sim.aierun_summary` from the `x86simulato
 	```bash
 	vitis_analyzer x86simulator_output/x86sim.aierun_summary
 	```
-	
-## Section 3: Run software emulation.
+This opens the summary view in Vitis Analyzer that displays the simualtion run time and the exact command-line used for simulation.
+
+![Vitis Analyzer Summary](./images/vitis_analyzer_x86sim.PNG)
+
+**Note:** As the x86 simulation runs the design at functional level, kernels do not physically map and route on AI engine array. Hence, an Array view is not available in aierun summary.
+
+## Section 3: Compile and Run software emulation.
 
 ### 1. Compiling HLS Kernels Using v++
 
@@ -205,7 +214,7 @@ sc=ai_engine_0.DataOut1:s2mm.s
 
 **NOTE:** The `v++` command-line can get cluttered, and using the `system.cfg` file can help contain it.
 
-For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a `PLIO` object. For the design, as an example, this line `PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
+For `ai_engine_0` the names are provided in the `graph.h`. For the design, as an example, this line `in = adf::input_plio::create("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
 
 You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021.2/ug1393-vitis-application-acceleration.pdf).
 
@@ -306,7 +315,7 @@ The following table describes the packager options:
 | `sd_file` | Tell the packager what file is to be packaged in the `sd_card` directory. You'll have to specify this multiple times for all the files you want packaged. |
 
 ### 5. Run Software Emulation
-After packaging, everything is set to run emulation. The software emulation can run the PS application as an ARM process by booting petalinux on QEMU machine or as an x86 process. 
+After packaging, everything is set to run emulation. Software emulation is the first step to building and testing the system in a functional process. The software emulation can run the PS application as an ARM process by booting petalinux on QEMU machine or as an x86 process. 
 
 #### Run PS application as an ARM process (QEMU)
 a. To run emulation use the following command:
@@ -696,7 +705,6 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
 	```bash
 	cd ./sw
 	./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt -add-env AIE_COMPILER_WORKDIR=../Work
-	cd ..
 	```
 
 When launched, use the Linux prompt presented to run the design.  Note that the emulation process is slow, so do not touch the keyboard of your terminal or you might stop the emulation of the Versal booth (as it happens in the real HW board)
@@ -755,6 +763,7 @@ Explore the two reports and take notice of any differences and similarities. The
 1. To build for hardware run the following command:
 
 	```bash
+	cd ..
 	make xsa TARGET=hw
 	```
 

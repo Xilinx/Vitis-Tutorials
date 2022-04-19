@@ -23,7 +23,7 @@ limitations under the License.
 
 using namespace adf;
 
-class clipped : public graph {  
+class clipped : public adf::graph {  
 
   private:
     kernel interpolator;
@@ -31,39 +31,45 @@ class clipped : public graph {
     kernel clip;
    
   public:
-    port<input> in;
-    //port<output> clip_in;
-    port<output> out;
-    //port<input> clip_out;
+      
+    //Declaring PLIO objects
+    adf::input_plio in;
+    adf::output_plio out;
 
     clipped() {
-      interpolator = kernel::create(fir_27t_sym_hb_2i);
-      clip         = kernel::create(polar_clip);
-      classify     = kernel::create(classifier);
-
-      //fabric<pl>(clip);
-
-      connect< window<INTERPOLATOR27_INPUT_BLOCK_SIZE, INTERPOLATOR27_INPUT_MARGIN> >(in, interpolator.in[0]);
+      //kernel instantiation
+      interpolator = adf::kernel::create(fir_27t_sym_hb_2i);
+      clip         = adf::kernel::create(polar_clip);
+      classify     = adf::kernel::create(classifier);
       
-      //Win 2 STREAM
-      connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip.in[0]); 
+      adf::source(interpolator) = "kernels/interpolators/hb27_2i.cc";
+      adf::source(clip)         = "kernels/polar_clip.cpp";
+      adf::source(classify)    = "kernels/classifiers/classify.cc";
       
+      //Input PLIO object that specifies the file containing input data
+      in = adf::input_plio::create("DataIn1", adf::plio_32_bits,"data/input.txt");
+      
+      //Output PLIO object that specifies the file containing output data
+      out = adf::output_plio::create("DataOut1",adf::plio_32_bits, "data/output.txt");
+
+      //Window connection between port 'in' and input port of the kernel
+      connect< window<INTERPOLATOR27_INPUT_BLOCK_SIZE, INTERPOLATOR27_INPUT_MARGIN> >(in.out[0], interpolator.in[0]);
+
+      connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip.in[0]);
+      
+      //stream connection between kernels
       connect< stream>(clip.out[0], classify.in[0]);
       
-      
-      //connect< stream >(clip_out, classify.in[0]);
-      connect< window<CLASSIFIER_OUTPUT_BLOCK_SIZE> >(classify.out[0], out);
+      //window connection between output port of the kernel and port 'out'
+      connect< window<CLASSIFIER_OUTPUT_BLOCK_SIZE> >(classify.out[0], out.in[0]);
 
       std::vector<std::string> myheaders;
       myheaders.push_back("include.h");
 
       adf::headers(interpolator) = myheaders;
       adf::headers(classify) = myheaders;
-
-      source(interpolator) = "kernels/interpolators/hb27_2i.cc";
-      source(clip)         = "kernels/polar_clip.cpp";
-      source(classify)    = "kernels/classifiers/classify.cc";
-
+      
+      //Specifying core usage fraction for a kernel
       runtime<ratio>(interpolator) = 0.8;
       runtime<ratio>(clip) = 0.8;
       runtime<ratio>(classify) = 0.8;
