@@ -191,7 +191,8 @@ Vitis-AI applications will install additional software packages. If user would l
 
    - Run `petalinux-config`
    - Go to **Image Packaging Configuration**
-   - Select **Root File System Type** as **EXT4**
+   - Enter into **Root File System Type** 
+   - Select Root File System Type as **EXT4**
    - Exit and Save.
 
    ![missing image](./images/petalinux_image_packaging_configuration.png)

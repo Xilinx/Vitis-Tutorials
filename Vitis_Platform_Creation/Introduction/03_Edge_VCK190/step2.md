@@ -79,9 +79,11 @@ In this step, we'll create a PetaLinux project that includes Vitis Platform requ
    PetaLinux uses **initrd** format for rootfs by default. This format extracts rootfs in DDR memory, which means it reduces the usable DDR memory for runtime and can't retain the rootfs changes after reboot. To enable the root file system to retain changes, we'll use EXT4 format for rootfs as the second partition on SD card while keep the first partition FAT32 to store other boot files.
 
    - Run `petalinux-config`
-   - Go to **Image Packaging Configuration**, select **Root File System Type** as **EXT4**.
+   - Go to **Image Packaging Configuration**, enter into **Root File System Type** and select root file system type as **EXT4**.
 
    ![missing image](./images/step2/petalinux_root_filesystem_type.png)
+
+   - Exit and Save.
 
 
 ### Customize Device-tree   
