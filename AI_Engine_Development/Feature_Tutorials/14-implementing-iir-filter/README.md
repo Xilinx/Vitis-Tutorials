@@ -18,6 +18,7 @@ Part 1b shows to implement a 6<sup>th</sup> order low pass elliptic IIR filter w
 
 Part 2a illustrates the process of minimizing latency and increasing throughput.
 
+Part 2b introduces more techniques to further improve throughput.
 
 This tutorial also provides [Julia](https://julialang.org/) scripts to calculate the IIR filter coefficients and generate test data.
 
