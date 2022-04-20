@@ -8,13 +8,16 @@
 </table>
 
 # Implementing an IIR Filter on the AI Engine
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 This is a multi-part tutorial on how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI engine. 
 
 Part 1a shows how to parallelize the IIR filter difference equation for a *single* second order section and implement it on the SIMD AI engine vector processor.
 
 Part 1b shows to implement a 6<sup>th</sup> order low pass elliptic IIR filter with three second order sections and change the filter coefficients dynamically using run-time parameters.
+
+Part 2a illustrates the process of minimizing latency and increasing throughput.
+
 
 This tutorial also provides [Julia](https://julialang.org/) scripts to calculate the IIR filter coefficients and generate test data.
 
