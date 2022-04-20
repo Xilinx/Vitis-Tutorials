@@ -7,4 +7,4 @@ VitisLibPipeline (branch: 'master', libname: 'Vitis-Tutorials', TARGETS: 'hls_cs
                   disable_standardization: "true",
                   allowed_modes:"sw_emu,hw_emu,hw",
                   yml:'2022.1/tutorial.yml', tql:'2022.1/tutorial.tql',
-                  email: 'alokgupt@xilinx.com', TOOLVERSION: '2022.1_daily_latest')
+                  email: 'alokgupt@amd.com', TOOLVERSION: '2022.1_daily_latest')
