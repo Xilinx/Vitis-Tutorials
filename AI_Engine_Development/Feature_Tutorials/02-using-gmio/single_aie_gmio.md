@@ -14,13 +14,20 @@
 This example introduces the AI Engine GMIO programming model. It includes three steps:
 
 - [AI Engine GMIO Programming Model](#ai-engine-gmio-programming-model)
-		- [Step 1 - Synchronous GMIO Transfer](#step-1---synchronous-gmio-transfer)
-			- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator)
-		- [Step 2 - Asynchronous GMIO Transfer for Input and Synchronous GMIO Transfer for Output](#step-2---asynchronous-gmio-transfer-for-input-and-synchronous-gmio-transfer-for-output)
-			- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator-1)
-		- [Step 3 - Asynchronous GMIO Transfer and Hardware Flow](#step-3---asynchronous-gmio-transfer-and-hardware-flow)
-			- [Run AI Engine simulator and hardware flow](#run-ai-engine-simulator-and-hardware-flow)
-		- [Conclusion](#conclusion)
+
+- [Step 1 - Synchronous GMIO Transfer](#step-1---synchronous-gmio-transfer)
+
+- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator)
+
+- [Step 2 - Asynchronous GMIO Transfer for Input and Synchronous GMIO Transfer for Output](#step-2---asynchronous-gmio-transfer-for-input-and-synchronous-gmio-transfer-for-output)
+
+- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator-1)
+
+- [Step 3 - Asynchronous GMIO Transfer and Hardware Flow](#step-3---asynchronous-gmio-transfer-and-hardware-flow)
+
+- [Run AI Engine simulator and hardware flow](#run-ai-engine-simulator-and-hardware-flow)
+
+- [Conclusion](#conclusion)
 
 The AI Engine simulator event trace is used to see how performance can be improved step by step. The last step introduces code to make GMIO work in hardware.
 
@@ -215,7 +222,7 @@ Run the following make command to build image for hardware:
 After the package is done, run the following commands in the Linux prompt after booting Linux from an SD card:
 
 	export XILINX_XRT=/usr
-	cd /mnt/sd-mmcblk0p1
+	cd /run/media/mmcblk0p1
 	./host.exe a.xclbin
 
 The host code is self-checking. It will check the output data against the golden data. If the output data matches the golden data after the run is complete, it will print the following:

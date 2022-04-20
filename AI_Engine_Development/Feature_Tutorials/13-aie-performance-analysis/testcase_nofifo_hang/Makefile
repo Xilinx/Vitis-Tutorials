@@ -22,7 +22,7 @@ AIE_SIM_CMD = aiesimulator --pkg-dir=./Work --dump-vcd=foo
 X86_CMPL_CMD = aiecompiler -platform=${PLATFORM} --target=x86sim -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
 X86_SIM_CMD = x86simulator 
 X86SIM=0
-EMU_CMD = ./launch_hw_emu.sh -g -aie-sim-options ./sim_options.txt
+EMU_CMD = ./launch_hw_emu.sh 
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
@@ -48,7 +48,7 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_2020210_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_es1_base_202210_1)
 
 guard-ROOTFS:
 	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2022.1/rootfs.ext4)

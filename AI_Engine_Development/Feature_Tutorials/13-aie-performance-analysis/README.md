@@ -27,6 +27,11 @@ Before you begin this tutorial, run the following steps:
 3. Set up your IMAGE to point to `xilinx-versal-common-v2022.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
+This tutorial targets VCK190 production board, PLATFORM variable in the Makefile(s) is: 
+
+	PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+
+
 ### Objectives
 
 After completing this tutorial, you will understand how to:
@@ -35,12 +40,16 @@ After completing this tutorial, you will understand how to:
 - Profile design performance.
 - Identify a performance bottleneck.
 - Analyze a deadlock (hang issue) in the design.
+- AI Engine status analysis with Vitis Analyzer.
 
 ## Steps
 
 **Step 1**: Learn about the execution model of an AI Engine graph, including how memory with lock and FIFO works. Learn performance measurement methods. Identify performance bottlenecks and practise optimization. Go to [AI Engine Graph Execution and Measurement](./aie_execution_measurement.md).
 
 **Step 2**: Learn about how a deadlock might occur with an example design. Learn how to analyze a deadlock in the AI Engine simulator, hardware emulation, and hardware flows. Go to [AI Engine Deadlock Analysis](./aie_hang_analysis.md).
+
+**Step 3**: Learn about how to AI Engine status analysis in HW and HW emulation flows with Vitis Analyzer. Go to [AI Engine Status Analysis](./aie_status_analysis.md).
+
 
 **Tip:** In this tutorial, the designs are self-contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is recommended to start from the beginning and progress through to completion.
 
