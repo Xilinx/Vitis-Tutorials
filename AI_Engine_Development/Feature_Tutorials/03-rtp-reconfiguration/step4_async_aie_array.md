@@ -44,7 +44,7 @@ Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 
 The corresponding AI Engine compiler command is:
 
-    aiecompiler -platform=xilinx_vck190_es1_base_202120_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
+    aiecompiler -platform=xilinx_vck190_es1_base_202210_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
     
 After the AI Engine graph (`libadf.a`) has been generated, verify for correctness using the AI Engine simulator:
 
@@ -177,8 +177,9 @@ For hw mode, run following `make` command to generate an SD card package:
 
 In hardware, after booting Linux from the SD card, run following commands in the Linux prompt:
 
+    mount /dev/mmcblk0p1 /mnt
+    cd /mnt
     export XILINX_XRT=/usr
-    cd /mnt/sd-mmcblk0p1
     ./host.exe a.xclbin
 
 The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print the following:

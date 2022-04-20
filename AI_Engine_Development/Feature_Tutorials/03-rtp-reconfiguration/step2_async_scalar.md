@@ -105,8 +105,9 @@ To exit QEMU press Ctrl+A, x
 
 Alternatively, to run in hardware, after booting Linux from an SD card, run the following commands in the Linux prompt:
 
+	mount /dev/mmcblk0p1 /mnt
+	cd /mnt
 	export XILINX_XRT=/usr
-	cd /mnt/sd-mmcblk0p1
 	./host.exe a.xclbin
 
 The host code is self-checking. It will check the output data against the golden data. If the output data matches the golden data after the run is complete, it will print the following:

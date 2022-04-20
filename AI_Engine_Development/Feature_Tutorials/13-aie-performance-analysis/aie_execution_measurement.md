@@ -276,7 +276,8 @@ In QEMU, run the following commands:
 
     
     ```
-    cd /mnt/*1
+	mount /dev/mmcblk0p1 /mnt
+	cd /mnt
     ./host.exe a.xclbin
     ```
     

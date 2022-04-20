@@ -91,7 +91,7 @@ PL kernels need to be compiled into Xilinx object (`.xo`) files. Run the followi
 	
 The corresponding v++ -c command is:
 	
-	v++ -c --platform xilinx_vck190_base_202120_1 -k random_noise random_noise.cpp -o random_noise.xo --verbose --save-temps
+	v++ -c --platform xilinx_vck190_base_202210_1 -k random_noise random_noise.cpp -o random_noise.xo --verbose --save-temps
 	
 The Makefile rule targets introduced in [Synchronous update of scalar RTP](./step1_sync_scalar.md) and [Asynchronous update of scalar RTP](./step2_async_scalar.md) still apply here. Details about tool options and host code in [Synchronous update of scalar RTP](./step1_sync_scalar.md) are similar. However, you can just choose to run following make command to launch HW emulation:
 
@@ -113,8 +113,9 @@ For hw mode, run following make command to generate an SD card package:
 	
 And in hardware, after booting Linux from the SD card, run following commands in the Linux prompt:
 
+	mount /dev/mmcblk0p1 /mnt
+	cd /mnt
 	export XILINX_XRT=/usr
-	cd /mnt/sd-mmcblk0p1
 	./host.exe a.xclbin
 	
 The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print the following:

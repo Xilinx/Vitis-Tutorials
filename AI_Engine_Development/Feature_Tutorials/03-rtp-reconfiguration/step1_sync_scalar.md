@@ -115,7 +115,7 @@ __Note:__ The default working directory in this step is "step1", unless specifie
    The corresponding command for aiecompiler is:
 
        ```
-	   aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
+	   aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202210_1/xilinx_vck190_es1_base_202210_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
 	   ```
   
    Switches for the AI Engine are as follows:
@@ -194,7 +194,7 @@ To compile the HLS PL kernel, run the following make command:
 The corresponding v++ compiler command is as follows:
 
 	```
-	v++ -c --platform xilinx_vck190_es1_base_202120_1 -k s2mm s2mm.cpp -o s2mm.xo --verbose --save-temps
+	v++ -c --platform xilinx_vck190_es1_base_202210_1 -k s2mm s2mm.cpp -o s2mm.xo --verbose --save-temps
 	```
 
 Switches for the v++ compiler are as follows:
@@ -212,7 +212,7 @@ The next step is to link the AI Engine graph and PL kernels to generate the hard
 This make takes 10 minutes or more to complete. The corresponding v++ linker command is as follows:
 
 	```
-	v++ -g -l --platform xilinx_vck190_es1_base_202120_1 pl_kernels/s2mm.xo libadf.a -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
+	v++ -g -l --platform xilinx_vck190_es1_base_202210_1 pl_kernels/s2mm.xo libadf.a -t hw_emu --save-temps --verbose --config system.cfg -o vck190_aie_base_graph_hw_emu.xclbin
 	```
 
 Switches for the v++ linker are as follows:
@@ -321,7 +321,7 @@ The next step is to use v++ with `-p` to generate the package file. The make com
 The corresponding v++ command is:
 
 	```
-	v++ -p -t hw_emu -f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202120_1/xilinx_vck190_es1_base_202120_1.xpfm \
+	v++ -p -t hw_emu -f $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202210_1/xilinx_vck190_es1_base_202210_1.xpfm \
 	--package.rootfs $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4  \
 	--package.kernel_image $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/Image  \
 	--package.boot_mode=sd \
@@ -372,8 +372,9 @@ To exit QEMU press Ctrl+A, x
 Alternatively, to run in hardware, after booting Linux, run following commands in the Linux prompt:
 	
 	```
+	mount /dev/mmcblk0p1 /mnt
+	cd /mnt
 	export XILINX_XRT=/usr
-	cd /mnt/sd-mmcblk0p1
 	./host.exe a.xclbin
 	```
 

@@ -129,8 +129,9 @@ To run in hardware, first build the system and application using the following m
     
 After Linux has booted, run the following commands at the Linux prompt.
 
+    mount /dev/mmcblk0p1 /mnt
+    cd /mnt
     export XILINX_XRT=/usr
-    cd /mnt/sd-mmcblk0p1
     ./host.exe a.xclbin
     
 The host code is self-checking. It checks the correctness of output data. If the output data is correct, after the run has completed, it will print:

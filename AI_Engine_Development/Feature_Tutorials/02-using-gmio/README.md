@@ -24,6 +24,10 @@ Before starting this tutorial, run the following steps:
 3.	Set up your IMAGE to point to xilinx-versal-common-v2022.1/Image.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
+This tutorial targets VCK190 production board, PLATFORM variable in the Makefile(s) is: 
+
+	PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+
 ## Objectives
 
 After completing this tutorial, you will be able to:

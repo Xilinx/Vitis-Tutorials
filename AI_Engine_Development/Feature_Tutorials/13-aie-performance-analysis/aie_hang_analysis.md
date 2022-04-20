@@ -196,7 +196,17 @@ From how much data has been transferred for the input and output, the status of 
 
 If necessary, an Integrated Logic Analyzer (ILA) can be inserted to probe the interfaces of the PL kernels to detect the AI Engine and PL kernels' running status.
 
-### Methods to Detect AI Engine Status in Hardware Emulation and Hardware
+## Analyzing AI Engine Status in Hardware & HW Emulation with Vitis Analyzer
+
+Please refer to [AI Engine Status Analysis](./aie_status_analysis.md)
+
+### Conclusion
+
+After completing this tutorial, you have learned how to detect and analyze design hang issues.
+
+## Apendix (Optional)
+
+### Manual Dump and Register Reading to Detect AI Engine Status in Hardware Emulation and Hardware
 
 This section provides details of other methods of detecting and analyzing AI Engine running status.
 
@@ -362,11 +372,6 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 
 	Value `0x00001000` indicates that it is `Stream_Stall_MS0`, and value `0x00000200` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil`. 
-
-### Conclusion
-
-After completing this tutorial, you have learned how to detect and analyze design hang issues.
-
 
 # Revision History
 
