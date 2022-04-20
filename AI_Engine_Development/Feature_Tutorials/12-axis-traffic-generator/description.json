@@ -7,7 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-        "disable": false,
+        "disable": true,
         "jobs": [
             {
                 "index": 0,
