@@ -36,7 +36,14 @@ sw_comp: $(COMMON_IMAGE)
 	
 dtb:
 	@echo "execute createdts to generate dtb file"
-	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2021.2 -board  zcu104-revc -compile "
+	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2022.1 -board  zcu104-revc"
+	@echo "add system-user.dtsi to add bootargs"
+	cp system-user.dtsi mydevice/psu_cortexa53_0/device_tree_domain/bsp/
+	echo "#include \"system-user.dtsi\"" >> mydevice/psu_cortexa53_0/device_tree_domain/bsp/system-top.dts 
+	@echo "preprocess the dts"
+	gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dts mydevice/psu_cortexa53_0/device_tree_domain/bsp/system-top.dts 
+	@echo "compile the DTB"
+	dtc -I dts -O dtb -o mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dts
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb boot/
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb sd_dir/
 

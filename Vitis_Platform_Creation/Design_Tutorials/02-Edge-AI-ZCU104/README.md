@@ -79,8 +79,8 @@ We'll introduce the platform creation steps in the following pages. Each page de
   - [Platform Creation General Rules](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Embedded-Platforms-in-Vitis)
   - [Setting up the Vitis environment](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform)
 - Platform Examples
-  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.2/Xilinx_Official_Platforms/zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.2/Xilinx_Official_Platforms/zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
+  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2022.1/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2022.1/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 - [Vitis-AI Github Repository](https://github.com/Xilinx/Vitis-AI)
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
 

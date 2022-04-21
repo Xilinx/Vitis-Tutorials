@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2022 Xilinx Inc.
+* Copyright 2020 Xilinx Inc.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,12 +14,11 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-/include/ "system-conf.dtsi"
 
-
-&sdhci1 {
-      no-1-8-v;
-      disable-wp;
-};
+/ {
+chosen {
+   bootargs = "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M";
+      };
+   };
 
 
