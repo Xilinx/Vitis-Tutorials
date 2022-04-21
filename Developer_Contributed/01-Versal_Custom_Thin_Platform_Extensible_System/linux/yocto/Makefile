@@ -82,14 +82,14 @@ update_eth:
 ifeq (${LINUX_ETH_CONFIG}, STATIC)
 	@install -d ${RECIPE_ETH_STATIC}/init-ifupdown_1.0/vck190
 	@cp -r ${SRC_DIR_ETH_STATIC}/* ${RECIPE_ETH_STATIC}/init-ifupdown_1.0/vck190
-	@echo -e 'FILESEXTRAPATHS_prepend := "$${THISDIR}/init-ifupdown_1.0/vck190:"\n'  > ${RECIPE_ETH_STATIC}/init-ifupdown_1.0.bbappend
+	@echo -e 'FILESEXTRAPATHS:prepend := "$${THISDIR}/init-ifupdown_1.0/vck190:"\n'  > ${RECIPE_ETH_STATIC}/init-ifupdown_1.0.bbappend
 endif
 
 update_device_tree:
 	@install -d ${RECIPE_DEVICE_TREE}/files
 	@cp -r ${SRC_DIR_DEVICE_TREE}/* ${RECIPE_DEVICE_TREE}/
 	@touch ${RECIPE_DEVICE_TREE}/files/system-conf.dtsi
-	@echo -e 'FILESEXTRAPATHS_prepend := "$${THISDIR}/files:"\n'  > ${RECIPE_DEVICE_TREE}/device-tree.bbappend
+	@echo -e 'FILESEXTRAPATHS:prepend := "$${THISDIR}/files:"\n'  > ${RECIPE_DEVICE_TREE}/device-tree.bbappend
 	@echo -e 'SRC_URI += "file://system-conf.dtsi"'              >> ${RECIPE_DEVICE_TREE}/device-tree.bbappend
 	@echo -e "EXTRA_OVERLAYS = \"${DTSI_FILES}\"\n"              >> ${RECIPE_DEVICE_TREE}/device-tree.bbappend
 

@@ -13,7 +13,7 @@ This tutorial describes a Versal VCK190 System Example Design based on a thin cu
 The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
   1. version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.1
-  2. board_repo:    Downloads the board files for pre-production and es1 from the Xilinx GitHub 
+  2. board_repo:    Downloads the board files from the Xilinx GitHub 
   3. xsa:           Building the thin platform xsa (only pre-synth)
   4. linux:         Building linux and sysroot (with Petalinux or Yocto)
   5. xpfm:          Building the Vitis Platform
@@ -34,8 +34,8 @@ The following diagram explains the build-flow dependencies.
 In the `[project-root]` you can start the full build with `make all` or `make all_targets` **after** taking following prerequisites into account:
   - **Before starting the build, please correctly setup the 2022.1 version of Vivado, Vitis and Petalinux/Yocto**
     - If the tools are not setup correctly the build will stop with an ERROR message telling you what is not correctly setup!
-      - Remark: The Yocto Tool setup is not verified!
-      - Remark: The Petalinux Tool and Version check is skipped when targetting Yocto!
+      - REMARK: The Yocto Tool setup is not verified!
+      - REMARK: The Petalinux Tool and Version check is skipped when targetting Yocto!
   - Everything is in the GitHub repository; no extra files are needed. 
     - Although some are downloaded from GitHub; but that's handled by the Makefiles.
     - Exception: For building petalinux OFFLINE; you will need to download and extract some tar.gz files; which is explained more in detail below!
@@ -44,7 +44,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - Example: After already done a full build before; you modify `[project-root]/ip/vadd_s/src/vadd_s.cpp` then if you run `make all` from the `[project-root]` it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link` and the `v++ --package`.
     - This to showcase that **NO** full rebuild is required after every (small) modification once you builded before the platform and did not modify the platform.
     - Recommendation is to start `make all` or `make all_targets` always from the `[project-root]`, but of course you can run `make all` in every sub-module if for example you want to check if a sub-module is building correctly.
-    - Remark: You could remove the `${GRAPH_O}` dependency for the `v++ --link` step in the `[project-root]/vitis/Makefile`; but **ONLY** when you **FIX** your AIE I/O ports in **Vitis/Vivado** and do **NOT** do modifications anymore on the AIE I/O port definitions!
+    - REMARK: You could remove the `${GRAPH_O}` dependency for the `v++ --link` step in the `[project-root]/vitis/Makefile`; but **ONLY** when you **FIX** your AIE I/O ports in **Vitis/Vivado** and do **NOT** do modifications anymore on the AIE I/O port definitions!
   - `[project-root]/Makefile` main `make` options:
       - `make all` to build everything for the specified `TARGET`.
       - `make clean` to clean everything for the specified `TARGET`.
@@ -61,7 +61,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
-      - Remark: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect!
+      - REMARK: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect!
       - More information on how to setup and use the ILA can be found in the [Notes](#notes)
     - `LINUX_BUILD_TOOL`:
       - `export LINUX_BUILD_TOOL := petalinux` to use Petalinux as linux build tool (default).
@@ -82,7 +82,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `export LINUX_BUILD_SOURCES := network` for using online network build-sources (default).
       - `export LINUX_BUILD_SOURCES := local` for using offline **LOCALLY STORED** build-sources (change if needed).
       - Below described `LINUX_LOCAL_DOWNLOADS_DIR` AND `LINUX_LOCAL_SSTATE_DIR` **MUST** be setup!
-      - Remark: First petalinux sysroot build needs online build-sources! But it's handled by the Makefiles.
+      - REMARK: First petalinux sysroot build needs online build-sources! But it's handled by the Makefiles.
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
       - **ONLY** used when `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
       - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnx-workspace/downloads`.
@@ -97,7 +97,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
       - `export LINUX_ETH_CONFIG := STATIC` for Ethernet Static Configuration (change if needed).
         - Please setup your required Ethernet Static Configuration in `[project-root]/linux/src/init-ifupdown/interfaces`.
-      - Remarks: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation `export TARGET := hw_emu`:
+      - REMARKS: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation `export TARGET := hw_emu`:
         - The recommendation is to use `export LINUX_ETH_CONFIG := DHCP`.
         - Please read ["Networking in QEMU"](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU) carefully.
   - End result: 
@@ -144,7 +144,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 <details>
  <summary> make platform/hw/board_repo </summary>
  
- - Downloads all pre-production and es1 board files from the Xilinx GitHub.
+ - Downloads all board files from the Xilinx GitHub.
  
 </details>
 <details>
@@ -168,7 +168,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Directory/file                           | Description                                             
 | -----------------------------------------|-------------------------------------------------------------------------------------------
 | src/device-tree/files/system-user.dtsi   | Some device-tree changes needed for VCK190              
-| src/init-ifupdown/interfaces             | Configuration file needed for builds with `export LINUX_ETH_CONFIG := DHCP`
+| src/init-ifupdown/interfaces             | Configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := DHCP`
 | src/boot_custom.bif                      | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
  
  `[project-root]/linux/petalinux` Directory/file structure:
@@ -265,7 +265,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 
 ## Testing
 ### Running on a VCK190
-  1. Prerequisite: Build was executed with `export TARGET := hw` and for your correct VCK190 version (pre-production or es1)
+  1. Prerequisite: Build was executed with `export TARGET := hw`
   2. Copy over the `[project-root]/package_output_hw/sd_card/*` to an SD-card or put the `[project-root]/package_output_hw/sd_card.img` on an SD-card.
   3. Put the SD-card in the VCK190 Versal SD-card slot (VCK190 top SD-card slot closest to the bracket).
   4. Connect the included USB-cable between the VCK190 (Middle bottom of the bracket) and a computer:
@@ -282,27 +282,48 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
      - Maybe for the first time open all 3 serial ports to see which one is the correct Versal serial port where you can follow the Versal-boot and interact later on.
   5. Power-UP:
      - It will first boot-up up the ZU04, next it will start the Versal boot. 
-     - Only one of the Versal serial ports will give you the Linux command line prompt after booting.
-     - No Password is needed for linux login.
-  6. Continue to "Execution & Results"
+     - Only one of the Versal serial ports will give you the Linux login prompt after booting.
+  6. Continue to "Execution & Results".
 
 ### Running Hardware Emulation
   1. Prerequisite: Build was executed with `export TARGET := hw_emu`
   2. Execute `[project-root]/package_output_hw_emu/`# `./launch_hw_emu.sh`
-  3. The hardware emulation will start and boot-up the whole system and should give you the Linux command line prompt.
+  3. The hardware emulation will start and boot-up the whole system and should give you the Linux login prompt.
      - This can take some time!
-     - No password is needed for linux login.
-  4. Continue to "Execution & Results"
+  4. Continue to "Execution & Results".
 
 ### Execution & Results
-  - Execute the following after boot-up when you reached the Linux command line prompt:
-    - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
+You will need to login with user `petalinux` and setup a new password (it's then also the `sudo` password):
+ ```
+vck190-versal login: petalinux
+You are required to change your password immediately (administrator enforced).
+New password: 
+Retype new password: 
+vck190-versal:~$ sudo su
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+Password: 
+vck190-versal:/home/petalinux#
+ ```
+ 
+`export LINUX_BUILD_TOOL := yocto`: You will need to mount the `/dev/mmcblk0p1`:
+ ```
+vck190-versal:/home/petalinux# mkdir -p /run/media/mmcblk0p1
+vck190-versal:/home/petalinux# mount /dev/mmcblk0p1 /run/media/mmcblk0p1/
+ ```
+ 
+Execute the following after you went though the previous explained steps so you reached the `/run/media/mmcblk0p1` directory:
+  - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
   ```
-vck190-versal login: root (automatic login)
-
-root@vck190-versal:~# cd /run/media/mmcblk0p1/
-root@vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin 
+vck190-versal:/home/petalinux# cd /run/media/mmcblk0p1/
+vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin 
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
 XAIEFAL: INFO: Resource group Static is created.
@@ -320,7 +341,7 @@ PASSED:  my_vadd_output.sync(XCL_BO_SYNC_BO_FROM_DEVICE, VADD_BYTE_SIZE, 0)
 
 PASSED:  ./vadd_mm_cpp.exe
 
-root@vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin 
+vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin 
 Loading: 'a.xclbin'
 XAIEFAL: INFO: Resource group Avail is created.
 XAIEFAL: INFO: Resource group Static is created.
@@ -328,7 +349,7 @@ XAIEFAL: INFO: Resource group Generic is created.
 
 PASSED:  ./vadd_mm_ocl.exe
 
-root@vck190-versal:/run/media/mmcblk0p1# ./vadd_s.exe a.xclbin 
+vck190-versal:/run/media/mmcblk0p1# ./vadd_s.exe a.xclbin 
 INFO:    samples = 256
 INFO:    bsize   = 512
 PASSED:  auto my_device = xrt::device(0)
@@ -359,7 +380,7 @@ PASSED:  out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
 
 PASSED:  ./vadd_s.exe
 
-root@vck190-versal:/run/media/mmcblk0p1# ./aie_dly_test.exe a.xclbin 
+vck190-versal:/run/media/mmcblk0p1# ./aie_dly_test.exe a.xclbin 
 Initializing ADF API...
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
@@ -474,7 +495,7 @@ PASSED:  my_graph.end()
 
 PASSED:  ./aie_dly_test.exe
 
-root@vck190-versal:/run/media/mmcblk0p1# 
+vck190-versal:/run/media/mmcblk0p1# 
   ```
 
 ## Notes
@@ -495,7 +516,7 @@ root@vck190-versal:/run/media/mmcblk0p1#
       - Vivado: `Close`
       - `[project-root]/vitis` $ make update_ila
     - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, rerunning `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
-  - root password = `root` when using ssh/scp/... towards the VCK190 `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`.
+  - `root` password is the one you have setup when using ssh/scp/... towards the VCK190 `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`.
   
 ## Design Considerations
   Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a AMD/Xilinx tools requirement!
