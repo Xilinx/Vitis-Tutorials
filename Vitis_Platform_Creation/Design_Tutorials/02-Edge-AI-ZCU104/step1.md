@@ -343,7 +343,8 @@ When a component comes with multiple types of simulation models, selecting Syste
      - Version: 0.0
      - Description: This platform provides high PS DDR bandwidth and three clocks: 100MHz, 200MHz and 400MHz.
    - Fill in XSA file name: **zcu104_custom_platform_hwemu** and keep the export directory as default. 
-   - Click **Finish**. 
+   - Click **Finish**.
+   - **zcu104_custom_platform_hwemu.xsa** will be generated. The export path is reported in the Tcl console. 
 
    Alternatively, the above export can be done in Tcl scripts
 
