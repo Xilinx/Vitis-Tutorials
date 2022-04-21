@@ -3,9 +3,8 @@
 
 <!DOCTYPE HTML><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--> <!--[if gt IE 8]><!--><html class="no-js" lang="en" ><!--<![endif]--><head>
 		<meta charset="utf-8">
-		<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-		<meta charset="UTF-8">
+		
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -26,15 +25,14 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
     <script type="text/javascript" src="../../_static/js/d3dd8c60ed.js"></script>
     <script type="text/javascript" src="../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../_static/js/header-footer.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
     <script type="text/javascript" src="../../_static/js/linkid.js"></script>
     <script type="text/javascript" src="../../_static/js/Searchbox.min.js"></script>
+	<script type="text/javascript" src="../../_static/js/header-footer.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -49,12 +47,10 @@
   <link rel="stylesheet" href="../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/pro.min.css" media="all" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="index" title="インデックス" href="../../genindex.html" />
-    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="プラットフォーム作成の概要" href="Introduction/01-Overview/README.html" />
-    <link rel="prev" title="AXIS External Traffic Generator の機能チュートリアル" href="../AI_Engine_Development/Feature_Tutorials/12-axis-traffic-generator/README.html" /> 
+    <link rel="prev" title="AI エンジンへの IIR フィルターのインプリメント" href="../AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter/README.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -194,7 +190,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" ><a href="../../index.html" class="icon icon-home" alt="Documentation Home">Vitis™ チュートリアル</a><div class="version">2021.1</div>
+        <div class="wy-side-nav-search" ><a href="../../index.html" class="icon icon-home" alt="Documentation Home">Vitis™ チュートリアル</a><div class="version">2021.2</div>
             
           
 
@@ -218,37 +214,45 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">English version</span></p>
+              <p class="caption"><span class="caption-text">English</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">master</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">はじめに</span></p>
+<p class="caption"><span class="caption-text">入門</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Getting_Started/Vitis-Getting-Started.html">入門</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting_Started/Vitis-Getting-Started.html">概要</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p>
+<p class="caption"><span class="caption-text">アクセラレーション</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware_Accelerators/Hardware-Accelerators.html">ハードウェア アクセラレータ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p>
+<p class="caption"><span class="caption-text">AI エンジン</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://github.com/Xilinx/Vitis-Tutorials/tree/2021.2/AI_Engine_Development">AI エンジン開発</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p>
+<p class="caption"><span class="caption-text">プラットフォーム</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Vitis プラットフォームの作成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/01-Overview/README.html">モジュール 1: プラットフォーム作成の概要</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/02-Edge-AI-ZCU104/README.html">モジュール 2: MPSoC での Vitis カスタム エンベデッド プラットフォームの作成チュートリアル</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/03_Edge_VCK190/README.html">モジュール 3: Versal カスタム プラットフォームの作成チュートリアル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">はじめに</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Introduction/01-Overview/README.html">モジュール 1: プラットフォーム作成の概要</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Introduction/02-Edge-AI-ZCU104/README.html">モジュール 2: MPSoC での Vitis カスタム エンベデッド プラットフォームの作成チュートリアル</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Introduction/03_Edge_VCK190/README.html">モジュール 3: Versal カスタム プラットフォームの作成チュートリアル</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#design-tutorials">設計チュートリアル</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design_Tutorials/01-Edge-KV260/README.html">KV260 でのカスタム エンベデッド プラットフォームの作成例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#feature-tutorials">機能チュートリアル</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Feature_Tutorials/01_platform_creation_streaming_ip/README.html">ストリーム インターフェイスの組み込み</a></li>
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">XRT およびシステム最適化</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Runtime_and_System_Optimization/Runtime_and_System_Optimization.html">ザイリンクス ランタイム (XRT) および Vitis システム最適化</a></li>
+</li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">バージョン</span></p>
+<p class="caption"><span class="caption-text">その他のバージョン</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
@@ -311,39 +315,80 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="vitis-platform-creation-tutorials">
+  <div class="section" id="vitis-platform-creation-tutorials">
 <h1>Vitis プラットフォームの作成チュートリアル<a class="headerlink" href="#vitis-platform-creation-tutorials" title="Permalink to this headline">¶</a></h1>
-<p>ザイリンクスからは、ザイリンクス評価ボード用のベース プラットフォームが提供されており、すぐに開発が始められるようになっています。ザイリンクス ボード上で追加のカスタマイズまたは詳細な開発をする場合、またはカスタム ボード上で開発する場合は、カスタマイズされたハードウェア プラットフォームの作成することをお勧めします。</p>
-<p>これらのチュートリアルでは、プラットフォーム作成の基本を紹介し、カスタム Vitis および Vitis AI 対応プラットフォームを作成するための詳細手順をチュートリアル形式で説明します。</p>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">詳細</p>
 <p><a class="reference external" href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com</a> の Vitis 開発環境を参照。</p>
-</aside>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">プラットフォーム作成チュートリアル</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Introduction/01-Overview/README.html">モジュール 1: プラットフォーム作成の概要</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/01-Overview/README.html#introduction-to-vitis-acceleration-platform">Vitis アクセラレーション プラットフォームの概要</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Introduction/02-Edge-AI-ZCU104/README.html">モジュール 2: MPSoC での Vitis カスタム エンベデッド プラットフォームの作成チュートリアル</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/02-Edge-AI-ZCU104/README.html#custom-platform-planning">カスタム プラットフォーム プランニング</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/02-Edge-AI-ZCU104/README.html#step-by-step-tutorial">詳細手順チュートリアル</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/02-Edge-AI-ZCU104/README.html#references">参考資料</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Introduction/03_Edge_VCK190/README.html">モジュール 3: Versal カスタム プラットフォームの作成チュートリアル</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/03_Edge_VCK190/README.html#requirements">要件</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/03_Edge_VCK190/README.html#reference">参考資料</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction/03_Edge_VCK190/README.html#changelog">変更履歴</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Introduction/03_Edge_VCK190/README.html#id1">2021.1</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 </div>
-</section>
+<div class="section" id="introduction">
+<h2>概要<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>ザイリンクスからは、ザイリンクス評価ボード用のベース プラットフォームが提供されており、すぐに開発が始められるようになっています。</p>
+<p>ザイリンクス ボード上で追加のカスタマイズまたは詳細な開発をする場合、またはカスタム ボード上で開発する場合は、カスタマイズされたハードウェア プラットフォームの作成することをお勧めします。</p>
+<p>これらのチュートリアルでは、プラットフォーム作成の基本を紹介し、カスタム Vitis および Vitis AI™ 対応プラットフォームを作成するための詳細手順をチュートリアル形式で説明します。</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>チュートリアル</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="Introduction/01-Overview/README.html"><span class="doc">モジュール 1 - プラットフォーム作成の概要</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Introduction/02-Edge-AI-ZCU104/README.html"><span class="doc">モジュール 2 - MPSoC での Vitis カスタム エンベデッド プラットフォームの作成チュートリアル</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Introduction/03_Edge_VCK190/README.html"><span class="doc">モジュール 3 - Versal カスタム プラットフォームの作成チュートリアル</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="design-tutorials">
+<h2>設計チュートリアル<a class="headerlink" href="#design-tutorials" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+</div>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>チュートリアル</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="Design_Tutorials/01-Edge-KV260/README.html"><span class="doc">KV260 でのカスタム エンベデッド プラットフォームの作成例</span></a></p></td>
+<td><p><a class="reference internal" href="Introduction/02-Edge-AI-ZCU104/README.html"><span class="doc">ZCU104 カスタム エンベデッド プラットフォーム作成例</span></a>を KV260 Vision AI Starter Kit に適用します。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="feature-tutorials">
+<h2>機能チュートリアル<a class="headerlink" href="#feature-tutorials" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+</div>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>チュートリアル</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="Feature_Tutorials/01_platform_creation_streaming_ip/README.html"><span class="doc">ストリーム インターフェイスの組み込み</span></a></p></td>
+<td><p>プラットフォーム上の Vitis カーネルと AXI ストリーム接続間でデータをストリーミングする方法を示します。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
            </div>
@@ -352,13 +397,13 @@
           <footer> <!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template --> </footer>
 
         </div>
-      </div><!-- Sphinx Page Footer block --><div class="rst-footer-buttons" role="navigation" aria-label="footer navigation"><a href="Introduction/01-Overview/README.html" class="btn btn-neutral float-right" title="Platform Creation Overview" accesskey="n" rel="next">次の手順 <span class="fa fa-arrow-circle-right"></span></a> <a href="../AI_Engine_Development/Feature_Tutorials/12-axis-traffic-generator/README.html" class="btn btn-neutral float-left" title="AXIS External Traffic Generator Feature Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> 前の手順</a></div><br>日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版をご参照ください。
+      </div><!-- Sphinx Page Footer block --><div class="rst-footer-buttons" role="navigation" aria-label="footer navigation"><a href="Introduction/01-Overview/README.html" class="btn btn-neutral float-right" title="Platform Creation Overview" accesskey="n" rel="next">次の手順 <span class="fa fa-arrow-circle-right"></span></a> <a href="../AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter/README.html" class="btn btn-neutral float-left" title="Implementing an IIR Filter on the AI Engine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> 前の手順</a></div>
   
 
   <hr/>
 
   <div role="contentinfo" class="copyright">
-    <p class="footerinfo"><span class="lastupdated">最終更新日: 2021 年 8 月 11 日</span></p><br></div>
+    <p class="footerinfo"><span class="lastupdated">最終更新日: 2022 年 1 月 18 日: このページは最終更新日の英語版を翻訳したものです。最新版は、<a href="https://github.com/Xilinx/Vitis-Tutorials">Github 英語版</a>を参照してください。</span></p><br></div>
       </div>
     </section>
 
@@ -399,7 +444,7 @@
 																</ul>
 															</div>
 														</div>
-														<div class="col-md-pull-6 col-lg-pull-6 col-md-6 col-lg-6"> <span class="copyright">&copy; 2019&ndash;2021, Xilinx, Inc.</span> <ul class="list-inline sub-menu">
+														<div class="col-md-pull-6 col-lg-pull-6 col-md-6 col-lg-6"> <span class="copyright">&copy; 2019-2022, Xilinx, Inc.</span> <ul class="list-inline sub-menu">
 																<li> <a href="https://www.xilinx.com/about/privacy-policy.html">Privacy</a> </li>
 																<li> <a href="https://www.xilinx.com/about/legal.html">Legal</a> </li>
 																<li> <a href="https://www.xilinx.com/about/contact.html">Contact</a> </li>
