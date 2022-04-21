@@ -79,7 +79,6 @@ update_config:
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_SUBSYSTEM_RFS_FORMATS "cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  xrt
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  xrt-dev
-	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  auto-login
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  packagegroup-petalinux-openamp
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  packagegroup-petalinux-openamp-dev
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  libsysfs
