@@ -17,7 +17,7 @@ Versal® adaptive compute acceleration platforms (ACAPs) combine Scalar Engines,
 
 This tutorial demonstrates creating a system design running on the AI Engine, PS, and Programmable logic. The AI Engine domain contains a simple graph consisting of 3 kernels. These kernels are connected by both windows and streams. The PL domain contains data movers that provide input and capture output from the AI Engine. The PS domain contains a host application that controls the entire system. You'll validate the design running on these heterogeneous domains by first emulating the hardware and then running on actual hardware.
 
-This tutorial steps through software emulation, hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. Different Makefile's are provided, which can be used to suit your own needs in a different context. By default, the Makefile is set for `sw_emu`. If you need to build for `hw_emu`,`hw`, use the corresponding Makefiles as instructed in corresponding sections.
+This tutorial steps through software emulation, hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. By default, the Makefile is set for `sw_emu`. If you need to build for `hw_emu`,`hw`, use the corresponding TARGET option as instructed in corresponding sections.
 
 **IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.1) for setting up software and installing the VCK190 base platform.
 
@@ -125,7 +125,7 @@ After the graph has been compiled, you can simulate your design with the `x86sim
 1. To run simulation you can run the command:
 
 	```bash
-	make x86sim
+	make sim
 	```
 
 	Or
@@ -321,6 +321,11 @@ After packaging, everything is set to run emulation. Software emulation is the f
 a. To run emulation use the following command:
 
 ```bash
+make run_emu 
+```
+Or
+
+```bash
 cd ./sw
 ./launch_sw_emu.sh 
 ```
@@ -423,23 +428,27 @@ setenv XCL_EMULATION_MODE sw_emu
 
 ## Section 4: Compile AI Engine code for AIE Simulator, viewing compilation results in Vitis&trade; Analyzer
 
-1) If you have exercised the steps to perform software emulation on x86 process, please make sure to set back the `SYSROOT` and `CXX` variables as mentioned in the **Introduction**. If not, you can skip this step
-2) It is highly recommended to clean the Working directory to remove all the files that are related to the software emulation, before performing any further steps in this section. Run the following command
+**Important**
+
+If you have exercised the steps to perform software emulation on x86 process, please make sure to follow below guidelines. If not, you can skip this step and proceed to compiling an AI Engine graph step directly.
+
+1) Set back the `SYSROOT` and `CXX` variables as mentioned in the **Introduction**.
+2) Clean the Working directory to remove all the files that are related to the software emulation by running the following command
 
 ```bash
 make clean
 ```
-3) Use the tutorials Makefile.hw file that configures the right target to build the hardware emulation and hardware.
+3) Copy back the original Makefile to run hardware emulation and hardware using below command.
 
 ```bash
-cp Makefile.hw Makefile
+cp Makefile.org Makefile
 ```
 ### Compiling an AI Engine ADF Graph for V++ Flow
 
 To compile the graph type to be used in either HW or HW_EMU, use:
 
 ```bash
-make compile
+make compile TARGET=hw
 ```
 Or
 ```bash
@@ -491,7 +500,7 @@ After the graph has been compiled, you can simulate your design with the `aiesim
 1. To run simulation you can run the command:
 
 	```bash
-	make aiesim
+	make sim TARGET=hw
 	```
 
 	Or
@@ -606,7 +615,7 @@ As done for sw_emu target in **Section-3**, compile the `mm2s`, and `s2mm` PL HL
 To compile the kernels, run the following command:
 
 ```bash
-make kernels
+make kernels TARGET=hw_emu
 ```
 or
 
@@ -636,7 +645,7 @@ sc=ai_engine_0.DataOut1:s2mm.s
 To build the design run the follow command:
 
 ```bash
-make xsa
+make xsa TARGET=hw_emu
 ```
 Or
 
@@ -672,10 +681,10 @@ To get more details about the GCC options being used, refer to **Section-3** top
 
 With all the AI Engine outputs and the new platform created, you can now generate the Programmable Device Image (PDI) and a package to be used on an SD card. The PDI contains all executables, bitstreams, and configurations of every element of the device, and the packaged SD card directory contains everything to boot Linux and have your generated application and `.xclbin`.
 
-1. To package the design, run the following command:
+To package the design, run the following command:
 
 	```bash
-	make package
+	make package TARGET=hw_emu
 	```
 
 	Or
@@ -701,6 +710,12 @@ For more details on the packager options, refer to the **Section-3**, topic-**Pa
 After packaging, everything is set to run emulation. Since you ran `aiesimulator` with profiling enabled, you can bring that to hardware emulation. You can pass the `aiesim_options.txt` to the `launch_hw_emu.sh` which will enable the profiling options used in `aiesimulator` to be applied to hardware emulation. To do this, you will just add the `-aie-sim-options ../aiesimulator_output/aiesim_options.txt`.
 
 1. To run emulation use the following command:
+
+	```bash
+	make run_emu TARGET=hw_emu
+	```
+
+	Or
 
 	```bash
 	cd ./sw
