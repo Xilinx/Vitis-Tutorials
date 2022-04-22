@@ -1,14 +1,14 @@
-<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
-    </td>
+<table>
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
+   </td>
+ </tr>
+ <tr>
+ </td>
  </tr>
 </table>
 
-# Asynchronous Update of Array RTP Update for AI Engine Kernel
-
+## Asynchronous Update of Array RTP Update for AI Engine Kernel
 This step demonstrates:
 
   * The Array RTP update for AI Engine kernels
@@ -16,7 +16,7 @@ This step demonstrates:
 
 The example is similar to [Asynchronous Update of Array RTP](./step3_async_array.md), except that the random noise generator is not free-running in this example. The system to be implemented is as follows.
 
-![missing image](./images/figure8.PNG)
+![](./images/figure8.PNG)
 
 __Note__: The default working directory for this step is "step4", unless explicitly specified otherwise.
 
@@ -44,7 +44,7 @@ Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 
 The corresponding AI Engine compiler command is:
 
-    aiecompiler -platform=xilinx_vck190_es1_base_202120_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
+    aiecompiler -platform=<PATH by PLATFORM_REPO_PATHS>/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-axi-lite=true -workdir=./Work aie/graph.cpp
     
 After the AI Engine graph (`libadf.a`) has been generated, verify for correctness using the AI Engine simulator:
 
@@ -130,11 +130,11 @@ After post-processing the data, release the allocated objects:
 
 	gr.end();
 	xrtRunClose(s2mm_rhdl);
-    xrtKernelClose(s2mm_khdl);
+    	xrtKernelClose(s2mm_khdl);
 	xrtRunClose(random_noise_rhdl);
-    xrtKernelClose(random_noise_khdl);
-    xrtBOFree(out_bohdl);
-    xrtDeviceClose(dhdl);
+    	xrtKernelClose(random_noise_khdl);
+    	xrtBOFree(out_bohdl);
+    	xrtDeviceClose(dhdl);
 
 The XRT API version to control graph exectuion is as follows:
 
@@ -192,21 +192,4 @@ In this step you learned about:
   
 Next, review [Asynchronous Array RTP Update and Read for AI Engine Kernel](./step5_async_array_update_read.md).	
 
-==========
-
-# Support
-
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-# License
-
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
-
-You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-<p align="center"><sup>XD001 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p>
-
-==========
+<p align="center"><sup>XD001 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>

@@ -1,11 +1,48 @@
+.com{color:#93a1a1}
+.lit{color:#195f91}
+.pun,.opn,.clo{color:#93a1a1}
+.fun{color:#dc322f}
+.str,.atv{color:#D14}
+.kwd,.linenums .tag{color:#1e347b}
+.typ,.atn,.dec,.var{color:teal}
+.pln{color:#48484c}
+.prettyprint{padding:8px;background-color:#f7f7f9;border:1px solid #e1e1e8}
+.prettyprint.linenums{-webkit-box-shadow:inset 40px 0 0 #fbfbfc,inset 41px 0 0 #ececf0;-moz-box-shadow:inset 40px 0 0 #fbfbfc,inset 41px 0 0 #ececf0;box-shadow:inset 40px 0 0 #fbfbfc,inset 41px 0 0 #ececf0}
+ol.linenums{margin:0 0 0 33px}
+ol.linenums li{padding-left:12px;color:#bebec5;line-height:18px;text-shadow:0 1px 0 #fff}
+.xilinx-bs3 .xilinx-filter-dropdown{width:100%;margin-bottom:10px}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes{margin-bottom:30px}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes button{max-width:200px}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes .dropdown-menu ul{padding:0 15px}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes .dropdown-menu ul label{padding:5px 0 0;font-family:'Roboto',sans-serif;font-weight:400}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes .dropdown-menu ul label span{margin-left:5px;display:inline-block}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes .dropdown-menu ul:first-of-type{padding-top:10px}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes .dropdown-menu ul:last-of-type{border-bottom:1px solid #c2c4c9;margin-bottom:0}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes .dropdown-menu button{background:transparent;color:#ec1c24;font-family:'Roboto',sans-serif;font-weight:400;width:auto;-webkit-box-shadow:none;box-shadow:none;-webkit-box-shadow:0 0 0 0 none;box-shadow:0 0 0 0 none;padding:13px 18px}
+.xilinx-bs3 .xilinx-filter-dropdown.checkboxes .dropdown-menu button[data-function="cancel"]{color:#171c2d;float:right}
+.xilinx-bs3 .xilinx-filter-dropdown button{text-align:left;width:100%;padding:10px 30px 10px 15px;-webkit-box-shadow:none;box-shadow:none;-webkit-box-shadow:0 0 0 0 none;box-shadow:0 0 0 0 none;margin-bottom:0}
+.xilinx-bs3 .xilinx-filter-dropdown button span{position:absolute;right:10px;top:50%;margin-top:-4px}
+.xilinx-bs3 .xilinx-filter-dropdown.open button{-webkit-box-shadow:0 2px 4px 0 #c2c4c9;box-shadow:0 2px 4px 0 #c2c4c9}
+.xilinx-bs3 .xilinx-filter-dropdown.open button span{-webkit-transform:rotate(-180deg);-ms-transform:rotate(-180deg);transform:rotate(-180deg)}
+.xilinx-bs3 .xilinx-filter-dropdown ul.dropdown-menu li a{white-space:normal;padding:10px 15px}
+.xilinx-bs3 .xilinx-filter-dropdown ul.dropdown-menu li.bordered{border-top:1px solid #f2f2f2}
+.xilinx-bs3 .xilinx-filter-dropdown ul.dropdown-menu li.bordered a{color:#ec1c24}
+.xilinx-bs3 .xilinx-filter-dropdown ul.dropdown-menu li.learn-more{border-top:0}
+.xilinx-bs3 .xilinx-filter-dropdown .dropdown-menu{width:100%;top:100%;margin-top:10px;padding:0;-webkit-box-shadow:0 2px 4px 0 #c2c4c9;box-shadow:0 2px 4px 0 #c2c4c9}
+.xilinx-bs3 .xilinx-filter-dropdown .dropdown-menu h4{padding:15px 15px;margin-bottom:0}
+@media(min-width:768px){.xilinx-bs3 .xilinx-filter-dropdown .dropdown-menu ul{columns:2;-webkit-columns:2;-moz-columns:2}
+}
+.xilinx-bs3 .xilinx-filter-dropdown .dropdown-menu ul:last-of-type{padding-bottom:10px}
+.xilinx-bs3 .xilinx-filter-dropdown .dropdown-menu ul li a{padding:10px 15px}
 .xilinx-bs3 .responsive-carousel-4slide .slick-track{margin:0 auto}
 .xilinx-bs3 .responsive-carousel-4slide .slick-arrow{top:45%}
 .xilinx-bs3 .responsive-carousel-4slide .slick-arrow.slick-prev{left:-15px}
 .xilinx-bs3 .responsive-carousel-4slide .slick-arrow.slick-next{right:-15px}
 .xilinx-bs3 .responsive-carousel-4slide .slick-dots{bottom:auto;position:relative}
+.xilinx-bs3 .strip-background{background:#f2f2f2;margin-bottom:25px}
+.xilinx-bs3 .strip-background .strip-child{min-height:0}
 @media(min-width:992px){.xilinx-bs3 .row-eq-height-flex-center>.aem-Grid{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;align-items:center}
 }
-.xilinx-bs3 .title-three-buttons-template .row-eq-height-flex-center .title{text-align:center}
 @media(max-width:767px){.xilinx-bs3 .container.grid-padding>.row .col-xs-1,.xilinx-bs3 .container-fluid.grid-padding>.row .col-xs-1{padding:0 10px}
 .xilinx-bs3 .container.grid-padding>.row .col-xs-1:nth-child(12n),.xilinx-bs3 .container-fluid.grid-padding>.row .col-xs-1:nth-child(12n){padding-right:20px}
 .xilinx-bs3 .container.grid-padding>.row .col-xs-1:nth-child(12n+1),.xilinx-bs3 .container-fluid.grid-padding>.row .col-xs-1:nth-child(12n+1){padding-left:20px}
@@ -168,156 +205,207 @@
 }
 .xilinx-bs3 .xilinx-parsys-top-margin{margin-top:25px}
 .xilinx-bs3 .product-info{margin-bottom:30px}
-.xilinx-bs3 .product-info.no-margin{margin-bottom:0}
-.xilinx-bs3 .product-info .meta-data{margin-bottom:15px}
-.xilinx-bs3 .product-info .meta-data button{width:100%}
-.xilinx-bs3 .product-info .product-label{font-family:'Roboto',sans-serif;font-weight:500}
 .xilinx-bs3 .product-info ul{padding:0;list-style-type:none}
 .xilinx-bs3 .product-info ul li>span{font-family:'Roboto',sans-serif;font-weight:500}
 .xilinx-bs3 .product-info img{margin:10px 15px 20px 0;width:100px}
-.xilinx-bs3 .product-info .dropdown-menu li a{padding:10px 20px}
+.xilinx-bs3 .accelerator-card .strip-background{margin-bottom:0}
+.xilinx-bs3 .accelerator-card .strip-background .stripParsys>div:first-child{margin-top:30px}
+.xilinx-bs3 .application-parent .stripParsys>div:first-child{margin-top:30px}
+.xilinx-bs3 .application-parent .stripParsys>div:last-child{margin-bottom:30px}
+.xilinx-bs3 .one-column-shaded{background-color:#f2f2f2}
+.xilinx-bs3 .partner-accelerator-app .partner-profile-info .product-description{margin-bottom:10px}
+@media(min-width:992px){.xilinx-bs3 .partner-accelerator-app .partner-profile-info .product-description{height:275px;overflow-y:scroll}
+.xilinx-bs3 .partner-accelerator-app .partner-profile-info .partner-profile-right{overflow-y:hidden}
+}
+.xilinx-bs3 .partner-ip .strip-background{margin-bottom:0}
+.xilinx-bs3 .pbx-page .pbxStrip{margin-bottom:0}
+.xilinx-bs3 .landing-page .stripRow2Parsys>div:first-child{margin-top:25px}
+.xilinx-bs3 .landing-page .strip-background.strip-no-margin-bottom{margin-bottom:0}
+.xilinx-bs3 .media-kits-landing-page h1{margin-bottom:0}
+.xilinx-bs3 .media-kits-landing-page hr{margin-top:0}
+@media(min-width:768px){.xilinx-bs3 .media-kits-landing-page hr{margin-top:20px}
+}
+.xilinx-bs3 .media-kits-landing-page .xilinxSearch{padding-top:10px;margin-bottom:0}
+@media(min-width:768px){.xilinx-bs3 .media-kits-landing-page .xilinxSearch{padding-top:0}
+}
+.xilinx-bs3 .media-kits-landing-page .rightParsys .xilinxText{padding:15px 15px 1px 15px;background-color:#f2f2f2}
+.xilinx-bs3 .media-kits-landing-page .rightParsys .xilinxPromo{background-color:#f2f2f2}
+.xilinx-bs3 .media-kits-landing-page .rightParsys .section:first-of-type{margin-top:20px}
+.xilinx-bs3 .partner-profile .partner-profile-info .partner-profile-left{border:1px solid #c2c4c9;padding:15px;margin-bottom:15px}
+.xilinx-bs3 .partner-profile .partner-profile-info .partner-profile-right{background:#f2f2f2;padding:15px}
+@media(min-width:992px){.xilinx-bs3 .partner-profile .partner-profile-info .partner-profile-left{height:392px;margin-bottom:0}
+.xilinx-bs3 .partner-profile .partner-profile-info .partner-profile-right{height:392px;overflow-y:scroll}
+}
+.xilinx-bs3 .partner-profile .strip-gray-background{padding:15px;text-align:center;background:#c2c4c9}
+.xilinx-bs3 .partner-profile .strip-background{margin-bottom:0}
+body .xilinx-bs3 .quickLinks{z-index:999;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;position:fixed;bottom:-175px;right:10px;-webkit-transition:bottom .4s ease;transition:bottom .4s ease}
+body .xilinx-bs3 .quickLinks #bookmarkConfirmation{position:absolute;top:0;left:-160px;background:#fff;padding:10px;display:none;-webkit-box-shadow:0 2px 10px 2px #c2c4c9;box-shadow:0 2px 10px 2px #c2c4c9}
+body .xilinx-bs3 .quickLinks #bookmarkConfirmation.bookmark-animation{display:block}
+body .xilinx-bs3 .quickLinks #bookmarkConfirmation:after{content:'';position:absolute;width:0;height:0;bottom:15px;right:-10px;box-sizing:border-box;border:5px solid #c2c4c9;border-color:#fff #fff transparent transparent;transform-origin:0 0;-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg);-webkit-box-shadow:2px -2px 2px 1px #c2c4c9;box-shadow:2px -2px 2px 1px #c2c4c9}
+body .xilinx-bs3 .quickLinks ul{list-style-type:none;padding:0;margin:0}
+body .xilinx-bs3 .quickLinks ul li{margin-bottom:15px}
+body .xilinx-bs3 .quickLinks ul li form{background-color:transparent;padding:0;margin:0}
+body .xilinx-bs3 .quickLinks ul li button,body .xilinx-bs3 .quickLinks ul li .btn{background-color:#f2f2f2;border:1px solid #c2c4c9;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:7px}
+body .xilinx-bs3 .quickLinks ul li button span.fas,body .xilinx-bs3 .quickLinks ul li .btn span.fas{color:#282d3f !important;width:24px;height:24px;line-height:24px;font-size:20px}
+body .xilinx-bs3 .quickLinks ul li button span.fas.fa-angle-up,body .xilinx-bs3 .quickLinks ul li .btn span.fas.fa-angle-up{position:relative;top:2px}
+body .xilinx-bs3 .quickLinks ul li .btn{background-color:#fff}
+body .xilinx-bs3 .quickLinks.loaded{bottom:-65px}
+body .xilinx-bs3 .quickLinks.loaded.show{bottom:8px}
+.bookmark-animation{animation:animationFrames ease 5s;animation-iteration-count:1;transform-origin:50% 50%;transform:translate(-9999px,0);-webkit-animation:animationFrames ease 5s;-webkit-animation-iteration-count:1;-webkit-transform-origin:50% 50%;-webkit-transform:translate(-9999px,0);-moz-animation:animationFrames ease 5s;-moz-animation-iteration-count:1;-moz-transform-origin:50% 50%;-moz-transform:translate(-9999px,0);-o-animation:animationFrames ease 5s;-o-animation-iteration-count:1;-o-transform-origin:50% 50%;-o-transform:translate(-9999px,0);-ms-animation:animationFrames ease 5s;-ms-animation-iteration-count:1;-ms-transform-origin:50% 50%;-ms-transform:translate(-9999px,0)}
+@keyframes animationFrames{0{opacity:0;transform:translate(300px,0)}
+15%{opacity:0;transform:translate(300px,0)}
+35%{opacity:1;transform:translate(0,0)}
+90%{opacity:1;transform:translate(0,0)}
+99%{opacity:0;transform:translate(0,0)}
+100%{opacity:0;transform:translate(-9999px,0)}
+}
+@-moz-keyframes animationFrames{0{opacity:0;-moz-transform:translate(300px,0)}
+15%{opacity:0;-moz-transform:translate(300px,0)}
+35%{opacity:1;-moz-transform:translate(0,0)}
+90%{opacity:1;-moz-transform:translate(0,0)}
+99%{opacity:0;-moz-transform:translate(0,0)}
+100%{opacity:0;-moz-transform:translate(-9999px,0)}
+}
+@-webkit-keyframes animationFrames{0{opacity:0;-webkit-transform:translate(300px,0)}
+15%{opacity:0;-webkit-transform:translate(300px,0)}
+35%{opacity:1;-webkit-transform:translate(0,0)}
+90%{opacity:1;-webkit-transform:translate(0,0)}
+99%{opacity:0;-webkit-transform:translate(0,0)}
+100%{opacity:0;-webkit-transform:translate(-9999px,0)}
+}
+@-ms-keyframes animationFrames{0{opacity:0;-ms-transform:translate(300px,0)}
+15%{opacity:0;-ms-transform:translate(300px,0)}
+35%{opacity:1;-ms-transform:translate(0,0)}
+90%{opacity:1;-ms-transform:translate(0,0)}
+99%{opacity:0;-ms-transform:translate(0,0)}
+100%{opacity:0;-ms-transform:translate(-9999px,0)}
+}
 .aem-AuthorLayer-Edit .hidden.section.cq-Editable-dom{display:block !important}
-.aem-AuthorLayer-Edit .xilinxNavigationContainer{min-height:50px}
-body .xilinx-bs3 .backToTopButton{z-index:999;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;position:fixed;bottom:-175px;right:10px;-webkit-transition:bottom .4s ease;transition:bottom .4s ease}
-body .xilinx-bs3 .backToTopButton ul{list-style-type:none;padding:0;margin:0}
-body .xilinx-bs3 .backToTopButton ul li{margin-bottom:15px}
-body .xilinx-bs3 .backToTopButton ul li button,body .xilinx-bs3 .backToTopButton ul li .btn{background-color:#f2f2f2;border:1px solid #c2c4c9;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:7px}
-body .xilinx-bs3 .backToTopButton ul li button span.fas,body .xilinx-bs3 .backToTopButton ul li .btn span.fas{color:#282d3f !important;width:24px;height:24px;line-height:24px;font-size:20px}
-body .xilinx-bs3 .backToTopButton ul li button span.fas.fa-angle-up,body .xilinx-bs3 .backToTopButton ul li .btn span.fas.fa-angle-up{position:relative;top:2px}
-body .xilinx-bs3 .backToTopButton ul li .btn{background-color:#fff}
-body .xilinx-bs3 .backToTopButton.loaded{bottom:-65px}
-body .xilinx-bs3 .backToTopButton.loaded.show{bottom:8px}
 .aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header{width:100% !important}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header{position:initial}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column{width:100%}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column>.navbar-nav{display:none}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container{position:initial;width:100%;max-width:100%;background-color:#171c2d;z-index:999999}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav{display:block}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav li button{display:none}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav li button span{display:none}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav li button.active{display:block}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper{float:initial;width:auto;height:auto;padding-top:0;padding-bottom:0}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys{overflow-y:auto;overflow-x:visible;height:auto}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList{min-height:30px;border:2px solid #e00000}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li button{background-color:white;color:black}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li button:hover{background-color:white;color:black}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container{border:3px solid white;position:initial;max-width:100%;margin-top:0;top:initial;left:initial}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container .sub-menu-header{display:none}
-.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container .parsys{float:initial}
+.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header{position:static}
+.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header nav .main-nav .navbar-column{width:100%}
+.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header nav .main-nav .navbar-column .navbar-collapse ul.nav>li{float:left}
+.aem-AuthorLayer-Edit .xf-web-container .xilinx-bs3 .header header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown{position:relative;height:auto !important;left:0}
 body{padding-top:60px}
-body .xilinx-bs3 header.site-header{width:100%;background-color:#171c2d;position:fixed;top:0;left:0;z-index:19999;height:60px}
-body .xilinx-bs3 header.site-header nav{border:0;background-color:transparent;margin:0}
-body .xilinx-bs3 header.site-header nav .main-nav .dropdown button.dropdown-toggle span.fas,body .xilinx-bs3 header.site-header nav .main-nav .dropdown button[data-toggle="dropdown"] span.fas,body .xilinx-bs3 header.site-header nav .main-nav .dropdown button.dropdown-toggle span.far,body .xilinx-bs3 header.site-header nav .main-nav .dropdown button[data-toggle="dropdown"] span.far{font-size:14px;padding:0}
-body .xilinx-bs3 header.site-header nav .main-nav .dropdown.open button span.fas,body .xilinx-bs3 header.site-header nav .main-nav .dropdown.open button span.far{-webkit-transform:rotate(0);-ms-transform:rotate(0);transform:rotate(0)}
-body .xilinx-bs3 header.site-header nav .main-nav .logo-column{float:left;padding:0}
-body .xilinx-bs3 header.site-header nav .main-nav .logo-column .logo{text-align:center;margin:10px 0}
-body .xilinx-bs3 header.site-header nav .main-nav .logo-column .logo a img{height:40px;margin-top:0;max-width:none}
-body .xilinx-bs3 header.site-header nav .main-nav .search-container{display:block;position:absolute;left:150%;top:0;width:100%;height:60px;padding:13px;background-color:#171c2d;opacity:0;-webkit-transition:all .4s ease;transition:all .4s ease}
-body .xilinx-bs3 header.site-header nav .main-nav .search-container.active{left:0;opacity:1}
-body .xilinx-bs3 header.site-header nav .main-nav .search-container button[data-function="search-toggle"]{position:absolute;right:16px;top:0;background:transparent;padding:6px 12px;margin-top:16px}
-body .xilinx-bs3 header.site-header nav .main-nav .search-container button[data-function="search-toggle"] .svg-icon{width:15px;height:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav{float:right}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul{margin:10px 0 6px;float:right}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li{padding:8px 0}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul{background-color:#282d3f;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:0;margin:0 0 0 -127px;top:35px;padding:0}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li{padding:0}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li:first-of-type a,body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li:first-of-type button{border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-left-radius:0;border-bottom-right-radius:0}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li:last-of-type a,body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li:last-of-type button{border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:5px;border-bottom-right-radius:5px}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li a,body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li button{padding:10px 20px;color:#fff;display:block;text-align:left}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li a:hover,body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.user-menu ul li button:hover{background-color:#008282 !important}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li button{background-color:transparent;padding:4px 6px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li button .svg-icon{width:15px;height:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li.open button{background-color:#282d3f}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li:hover button{background-color:#282d3f}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle{background-color:transparent;padding:0;width:23px;height:20px;margin:23px 10px 0;float:left;-webkit-transform:rotate(0);-ms-transform:rotate(0);transform:rotate(0);-webkit-transition:all .5s ease-in-out;transition:all .5s ease-in-out}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle span{position:absolute;height:2px;width:100%;background:#fff;opacity:1;left:0;-webkit-transform:rotate(0);-ms-transform:rotate(0);transform:rotate(0);-webkit-transition:all .25s ease-in-out;transition:all .25s ease-in-out}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle span:nth-child(1){top:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle span:nth-child(2),body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle span:nth-child(3){top:8px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle span:nth-child(4){top:16px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle.open span:nth-child(1){top:8px;width:0;left:50%}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle.open span:nth-child(2){-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle.open span:nth-child(3){-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg)}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column #nav-toggle.open span:nth-child(4){top:8px;width:0;left:50%}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column>ul{display:none}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column ul li button,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column ul li>a{-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;height:60px;border-bottom:3px solid transparent;padding-left:0;padding-right:0;margin-left:15px;margin-right:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column ul li button:hover,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column ul li>a:hover{background-color:transparent;border-bottom:3px solid #e00000}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column ul li>a{padding:10px 15px;color:#fff;font-size:18px;font-weight:500;line-height:inherit;margin:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column [data-function="menu-shadow"].active{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);z-index:2000}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container{position:fixed;width:100%;height:100%;top:0;left:-100%;background-color:#171c2d;z-index:999999}
-@media(min-width:768px){body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container{max-width:450px}
+body .xilinx-bs3 header{width:100%;background-color:#171c2d;position:fixed;top:0;left:0;z-index:1999}
+body .xilinx-bs3 header.mobile-menu-active{height:100%}
+body .xilinx-bs3 header.mobile-menu-active nav .main-nav .navbar-column{height:86%;width:100%;overflow-x:hidden}
+body .xilinx-bs3 header.mobile-menu-active nav .main-nav .mini-nav #nav-toggle span:nth-child(1){top:8px;width:0;left:50%}
+body .xilinx-bs3 header.mobile-menu-active nav .main-nav .mini-nav #nav-toggle span:nth-child(2){-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}
+body .xilinx-bs3 header.mobile-menu-active nav .main-nav .mini-nav #nav-toggle span:nth-child(3){-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg)}
+body .xilinx-bs3 header.mobile-menu-active nav .main-nav .mini-nav #nav-toggle span:nth-child(4){top:8px;width:0;left:50%}
+body .xilinx-bs3 header nav{border:0;background-color:transparent;margin:0}
+body .xilinx-bs3 header nav .main-nav .dropdown button.dropdown-toggle span.fas,body .xilinx-bs3 header nav .main-nav .dropdown button[data-toggle="dropdown"] span.fas,body .xilinx-bs3 header nav .main-nav .dropdown button.dropdown-toggle span.far,body .xilinx-bs3 header nav .main-nav .dropdown button[data-toggle="dropdown"] span.far{font-size:14px;padding:0}
+body .xilinx-bs3 header nav .main-nav .dropdown.open button span.fas,body .xilinx-bs3 header nav .main-nav .dropdown.open button span.far{-webkit-transform:rotate(0);-ms-transform:rotate(0);transform:rotate(0)}
+body .xilinx-bs3 header nav .main-nav .logo-column{float:left}
+body .xilinx-bs3 header nav .main-nav .logo-column .logo{width:105px;margin-top:15px}
+body .xilinx-bs3 header nav .main-nav .logo-column .logo a img{height:20px;margin-top:5px;max-width:none}
+body .xilinx-bs3 header nav .main-nav .navbar-column{float:left;overflow-y:auto;position:fixed;top:60px;left:0}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse{padding:0;margin-bottom:0;height:auto !important;border:0;position:initial}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse .mobile-search-container{padding:25px;border-top:1px solid #8d919a;border-bottom:1px solid #8d919a}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse .mobile-search-container .headerSearch .coveo-search-section .CoveoSearchbox{margin-right:0}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse .mobile-search-container .headerSearch .coveo-search-section .CoveoSearchbox .CoveoSearchButton{right:0}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav{display:table;padding:0 15px 0 20px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li{position:initial;float:none;padding:0 10px 0 0}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li a{color:#fff;background-color:transparent}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li a:hover{color:#ec1c24}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li a:focus{color:#fff}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons>a{position:relative;padding-left:30px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons>a span{width:13px;height:1px;background-color:#fff;-webkit-transition:all .5s ease-in-out;transition:all .5s ease-in-out;position:absolute}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons>a span:nth-child(1){left:5px;top:28px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons>a span:nth-child(2){left:5px;top:28px;-webkit-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg)}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons.active a span:nth-child(1){-webkit-transform:rotate(135deg);-ms-transform:rotate(135deg);transform:rotate(135deg)}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons.active a span:nth-child(2){-webkit-transform:rotate(225deg);-ms-transform:rotate(225deg);transform:rotate(225deg)}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li>a{font-family:'Roboto',sans-serif;font-weight:500;font-size:18px;text-align:left;padding:15px 0;line-height:30px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown{-webkit-transition:height 0 ease;transition:height 0 ease;background-color:#171c2d;width:100%;left:-9999px;margin-left:-15px;height:0;overflow:hidden}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div:last-of-type{border-right:0}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .xilinxList h3{font-family:'Roboto',sans-serif;font-weight:500;font-size:18px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div h1,body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div h2,body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div h3,body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div h4{margin-top:0;text-align:left;color:#fff}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div ul{padding:0;list-style-type:none}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div a:hover{text-decoration:none}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .section:not(.xilinxList){display:block;margin-left:15px;margin-right:15px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .section:not(.xilinxList) p{text-align:left;color:#fff}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .section:not(.xilinxList) a{color:#fff}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .section:not(.xilinxList) a:hover{color:#ec1c24}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .xilinxButton a.btn{border:1px solid #fff;-webkit-transition:all .4s ease;transition:all .4s ease}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .xilinxButton a.btn:hover{color:#ec1c24;border-color:#ec1c24}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .xilinxButton a.btn.submit{background-color:#ec1c24;border:1px solid #ec1c24}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div .xilinxButton a.btn.submit:hover{background-color:transparent}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.active .dropdown{-webkit-transition:height .4s ease;transition:height .4s ease;left:0}
+body .xilinx-bs3 header nav .main-nav .search-container{display:none}
+body .xilinx-bs3 header nav .main-nav .mini-nav{float:right}
+body .xilinx-bs3 header nav .main-nav .mini-nav>ul{padding-right:15px}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle{background-color:transparent;padding:0;width:20px;height:20px;margin:23px 0 0;-webkit-transform:rotate(0);-ms-transform:rotate(0);transform:rotate(0);-webkit-transition:all .5s ease-in-out;transition:all .5s ease-in-out}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle span{position:absolute;height:1px;width:100%;background:#fff;opacity:1;left:0;-webkit-transform:rotate(0);-ms-transform:rotate(0);transform:rotate(0);-webkit-transition:all .25s ease-in-out;transition:all .25s ease-in-out}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle span:nth-child(1){top:0}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle span:nth-child(2),body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle span:nth-child(3){top:8px}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle span:nth-child(4){top:16px}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle.open span:nth-child(1){top:8px;width:0;left:50%}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle.open span:nth-child(2){-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle.open span:nth-child(3){-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg)}
+body .xilinx-bs3 header nav .main-nav .mini-nav #nav-toggle.open span:nth-child(4){top:8px;width:0;left:50%}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul{margin:10px 0 6px;float:right}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li{padding:8px 0}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li.user-menu ul{background-color:#282d3f;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:0;margin:0 0 0 -127px;top:35px;padding:0}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li.user-menu ul li{padding:0}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li.user-menu ul li:first-of-type a{border-top-left-radius:5px;border-top-right-radius:5px}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li.user-menu ul li:last-of-type a{border-bottom-left-radius:5px;border-bottom-right-radius:5px}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li.user-menu ul li a{padding:10px 20px;color:#fff}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li.user-menu ul li a:hover{background-color:#008282 !important}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li button{background-color:transparent;padding:4px 10px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li button .svg-icon{width:15px;height:15px}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li button[data-function="toggle-shopping-cart"]:after{content:'(' attr(data-content) ')';margin-left:5px}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li.open button{background-color:#282d3f}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li:hover button{background-color:#282d3f}
+@media(min-width:768px){body .xilinx-bs3 header{height:auto !important}
+body .xilinx-bs3 header nav .main-nav{position:relative}
+body .xilinx-bs3 header nav .main-nav .logo-column .logo{width:105px}
+body .xilinx-bs3 header nav .main-nav .logo-column .logo a img{height:20px;margin-top:5px}
+body .xilinx-bs3 header nav .main-nav .navbar-column{overflow-y:auto;position:static;margin-left:0;top:static;left:static;height:static;}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse .mobile-search-container{display:none}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav{padding:0 10px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons{padding:0 10px;width:auto}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons span{display:none}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons>a{padding-left:0;text-align:center}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown{position:fixed;margin-left:0;overflow:hidden}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid{border-top:1px solid #8d919a}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;padding:30px 0 30px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li .dropdown>.aem-GridColumn>.container-fluid>.row>div{border-right:1px solid #282d3f}
+html{scroll-padding-top:60px}
+body .xilinx-bs3 header nav .main-nav .search-container{display:block;position:absolute;left:150%;top:0;width:83.333%;height:60px;padding:13px;background-color:#171c2d;opacity:0;-webkit-transition:all .4s ease;transition:all .4s ease}
+body .xilinx-bs3 header nav .main-nav .search-container.active{left:16.667%;opacity:1}
+body .xilinx-bs3 header nav .main-nav .search-container button[data-function="search-toggle"]{position:absolute;right:16px;top:0;background:transparent;padding:6px 12px;margin-top:16px}
+body .xilinx-bs3 header nav .main-nav .search-container button[data-function="search-toggle"] .svg-icon{width:15px;height:15px}
+body .xilinx-bs3 header nav .main-nav .mini-nav>ul{padding-right:0}
+body .xilinx-bs3 header nav .main-nav .mini-nav>ul li button{padding:4px 9px}
 }
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .divider .col-xs-12{padding:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .divider .col-xs-12 hr{border-color:rgba(255,255,255,0.2);margin-top:20px;margin-bottom:30px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper{float:left;width:100%;height:100%;padding-top:1px;padding-bottom:62px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys{overflow-y:auto;overflow-x:hidden;height:100%;padding-top:10px;padding-bottom:10px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList h3{color:#fff;margin-left:30px;margin-top:20px;margin-bottom:20px;font-size:18px;font-weight:600}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul{padding-left:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li{margin-bottom:10px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li.sub-menu-element .sub-menu-element{display:none}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li.sub-menu-element.active .sub-menu-container{left:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li.sub-menu-element button span{margin-top:2px;float:right}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li a,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li button{display:block;transition:0;background-color:transparent;color:#fff;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;border:0;margin-left:0;padding:10px 40px 10px 30px;width:100%;height:auto;text-align:left;font-size:15px;font-weight:400;text-decoration:none}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container{position:fixed;width:100%;height:100%;margin-top:60px;top:0;left:-100%;background-color:#171c2d;z-index:9999999;padding-bottom:123px;max-width:100%}
-@media(min-width:768px){body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container{max-width:450px}
+@media(min-width:992px){body .xilinx-bs3 header nav .main-nav .logo-column .logo{width:130px}
+body .xilinx-bs3 header nav .main-nav .logo-column .logo a img{height:25px;margin-top:2.5px}
+body .xilinx-bs3 header nav .main-nav .navbar-column{margin-left:50px;}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons{padding:0 10px}
+body .xilinx-bs3 header nav .main-nav .mini-nav ul li button{padding:4px 9px}
 }
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container.active{left:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container .sub-menu-header{float:left;width:100%;border-bottom:1px solid rgba(255,255,255,0.2);height:70px;background-color:#171c2d}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container .sub-menu-header [data-function="back"]{padding-left:15px;display:flex;align-items:center;float:left;width:auto;height:100%}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container .sub-menu-header [data-function="back"] span{margin-right:10px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container .parsys{float:left;width:100%}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container{background-color:#282d3f;height:60px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container .navbar-nav{height:60px;padding-left:15px;float:left;max-widht:80%}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container .navbar-nav li{display:block;float:left}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container .navbar-nav li button{background:transparent;padding-left:0;padding-right:0;margin-left:15px;margin-right:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container .navbar-nav li button span{font-size:22px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container .navbar-nav li button.active,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container .navbar-nav li button:hover{border-bottom:3px solid #e00000}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container [data-function="close-menu"]{height:60px;float:right;background-color:transparent;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container [data-function="close-menu"] span{font-size:22px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .sub-menu-container{position:fixed;width:100%;max-width:400px;height:100%;margin-top:60px;top:0;left:-100%;background-color:#171c2d;z-index:9999999}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .sub-menu-container.active{left:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container.active{left:0}
-@media(min-width:768px){body .xilinx-bs3 header.site-header nav .main-nav{position:relative}
-body .xilinx-bs3 header.site-header nav .main-nav .logo-column .logo{width:105px;margin-left:auto;margin-right:auto}
-body .xilinx-bs3 header.site-header nav .main-nav .logo-column .logo a img{max-width:unset}
-body .xilinx-bs3 header.site-header nav .main-nav .logo-column .menu-container .navbar-nav-container .navbar-nav li button{margin-left:15px;margin-right:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .search-container{width:40%}
-body .xilinx-bs3 header.site-header nav .main-nav .search-container.active{left:60%}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav>ul{padding-right:0}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav>ul li button{padding:4px 9px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column>ul{display:block}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column>ul li button,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column>ul li>a{margin-right:15px;margin-left:15px}
+@media(min-width:1200px){body .xilinx-bs3 header nav .main-nav .logo-column .logo{margin-top:10px;width:155px}
+body .xilinx-bs3 header nav .main-nav .logo-column .logo a img{height:30px;margin-top:5px}
+body .xilinx-bs3 header nav .main-nav .navbar-column .navbar-collapse ul.nav>li.accordion-toggle-icons{padding:0 20px}
 }
-@media(min-width:992px){body .xilinx-bs3 header.site-header nav .main-nav .logo-column .logo{width:130px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .navbar-nav li button{margin-left:25px;margin-right:25px;font-size:18px;font-weight:500}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList h3{margin-left:40px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li a,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li button{padding:10px 40px 10px 40px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li a:hover,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li button:hover{background-color:#282d3f}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li:hover{background-color:#282d3f}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .scroll-wrapper .parsys .xilinxHeaderList ul li .sub-menu-container .sub-menu-header [data-function="back"]{padding-left:25px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .menu-container .navbar-nav-container .navbar-nav li button{margin-left:25px;margin-right:25px;font-size:18px;font-weight:500}
-body .xilinx-bs3 header.site-header nav .main-nav .search-container{width:35%}
-body .xilinx-bs3 header.site-header nav .main-nav .search-container.active{left:65%}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li button{padding:4px 9px}
-}
-@media(min-width:1200px){body .xilinx-bs3 header.site-header nav .main-nav .logo-column .logo{margin-top:10px;width:155px}
-}
-.xilinx-bs3 .headerSearch{padding:0;background:#282d3f;position:relative;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}
-.xilinx-bs3 .headerSearch a.dropdown-toggle{position:absolute;z-index:1;top:-1px;left:0;height:38px;background:transparent;border-right:1px solid #171c2d;padding:10px 15px;color:#fff;-moz-border-top-right-radius:0;-webkit-border-top-right-radius:0;border-top-right-radius:0;-moz-border-bottom-right-radius:0;-webkit-border-bottom-right-radius:0;border-bottom-right-radius:0}
+.xilinx-bs3 .headerSearch{padding:0;background:#282d3f;position:relative;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}
+.xilinx-bs3 .headerSearch a.dropdown-toggle{position:absolute;z-index:1;top:-1px;left:0;height:38px;background:transparent;border-right:1px solid #171c2d;padding:10px 15px;color:#fff;-moz-border-top-left-radius:5px;-webkit-border-top-left-radius:5px;border-top-left-radius:5px;-moz-border-bottom-left-radius:5px;-webkit-border-bottom-left-radius:5px;border-bottom-left-radius:5px}
 .xilinx-bs3 .headerSearch a.dropdown-toggle .far.fa-angle-down{font-size:8px;position:relative;top:-2px;left:5px}
 .xilinx-bs3 .headerSearch a.dropdown-toggle:after{display:none}
-.xilinx-bs3 .headerSearch a.dropdown-toggle:hover{color:#e00000}
+.xilinx-bs3 .headerSearch a.dropdown-toggle:hover{color:#ec1c24}
 .xilinx-bs3 .headerSearch ul.dropdown-menu{z-index:2000}
 .xilinx-bs3 .headerSearch ul.dropdown-menu li>a{display:block;font-size:14px;line-height:24px;padding:3px 20px;color:#171c2d}
 .xilinx-bs3 .headerSearch ul.dropdown-menu li ul li a{text-decoration:none;padding-left:30px}
 .xilinx-bs3 .headerSearch ul.dropdown-menu li.active>a{background-color:#c2c4c9}
 .xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section{margin:0}
-.xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .CoveoSearchButton{position:absolute;color:#fff;height:36px;background:transparent;border:0;padding:18px 13px;top:0;right:46px;-moz-border-top-right-radius:0;-webkit-border-top-right-radius:0;border-top-right-radius:0;-moz-border-bottom-right-radius:0;-webkit-border-bottom-right-radius:0;border-bottom-right-radius:0;width:auto}
+.xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .CoveoSearchButton{color:#fff;height:36px;background:transparent;border:0;padding:18px 13px;top:0;right:46px;-moz-border-top-right-radius:0;-webkit-border-top-right-radius:0;border-top-right-radius:0;-moz-border-bottom-right-radius:0;-webkit-border-bottom-right-radius:0;border-bottom-right-radius:0;width:auto}
 .xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .CoveoSearchButton .coveo-search-button-svg{width:0;height:0}
 .xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .CoveoSearchButton .coveo-search-button{position:relative;top:1px}
 .xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .CoveoSearchButton .coveo-search-button:before{content:"\f002";font-family:'Font Awesome\ 5 Pro'}
 .xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .magic-box{height:36px;padding-left:65px;border:1px solid #282d3f}
 .xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .magic-box .magic-box-input{height:30px;background:0}
-.xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .magic-box .magic-box-input input{font-family:'Roboto',sans-serif;font-weight:400;font-size:14px;width:100%;height:36px;padding-top:0;padding-bottom:0;padding-right:40px;padding-left:12px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;color:#fff}
+.xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .magic-box .magic-box-input input{font-family:'Roboto',sans-serif;font-weight:400;font-size:14px;width:100%;height:36px;padding-top:0;padding-bottom:0;padding-right:40px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;color:#fff}
 .xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .magic-box .magic-box-clear{display:none}
 .xilinx-bs3 .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .magic-box .magic-box-clear-svg{color:#fff}
 .xilinx-bs3 .header-search-menu{padding:21px 15px}
@@ -327,83 +415,24 @@ body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li button{padding
 .xilinx-bs3 .header-search-menu .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .magic-box .magic-box-input input{height:34px;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0}
 .xilinx-bs3 .header-search-menu .headerSearch.CoveoSearchInterface .coveo-search-section .CoveoSearchbox .magic-box-clear{line-height:34px}
 .xilinx-bs3 .header-search-menu .headerSearch a.dropdown-toggle{top:-1px;height:38px;padding:10px 15px}
-@keyframes spinner{0.1%{transform:translate3d(-50%,-50%,0) rotate(0)}
-100%{transform:translate3d(-50%,-50%,0) rotate(360deg)}
-}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li [data-target="#cart-container"]{position:relative}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li [data-target="#cart-container"]::after{position:absolute;content:attr(data-content);display:block;height:12px;width:12px;top:2px;right:4px;-moz-border-radius:50%;-webkit-border-radius:50%;border-radius:50%;background-color:#e00000;color:#fff;font-size:9px}
-body .xilinx-bs3 header.site-header nav .main-nav .mini-nav ul li [data-target="#cart-container"][data-content="0"]::after{display:none}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container{right:-100%;left:initial}
-@media(min-width:768px){body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container{max-width:550px}
-}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .navbar-nav-container{background-color:#f2f2f2}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .navbar-nav-container>span{font-size:24px;line-height:28px;height:60px;padding:16px 25px;display:inline-block}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .navbar-nav-container button{color:#171c2d}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper{background-color:#fff;position:relative}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .parsys{padding:40px 30px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="loading-container"]{position:absolute;top:0;left:0;width:0;height:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="loading-container"] i{animation:2s linear infinite spinner;font-size:100px;padding-top:9px;left:50%;top:50%;position:absolute;display:none}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="loading-container"].loading{width:100%;height:100%;background-color:rgba(255,255,255,0.5);z-index:9}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="loading-container"].loading i{display:block}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="cart-info"].empty-cart{display:none}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="cart-empty"]{display:none;text-align:center}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="cart-empty"] h2{margin-top:30px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="cart-empty"] button{padding:0;background-color:transparent;color:#e00000;font-size:16px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="cart-empty"] button:hover{text-decoration:underline}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="cart-empty"] p{margin-bottom:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper [data-function="cart-empty"].empty-cart{display:block}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item{margin-bottom:40px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item [class^='col-']{padding:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item [class^='col-']:first-of-type{padding-left:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item [class^='col-']:last-of-type{padding-right:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .img-wrapper{border:1px solid #c2c4c9;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:3px;max-width:72px;margin-bottom:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .img-wrapper img{width:100%}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .info-col{padding-left:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .info-col a,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .info-col button{color:#e00000;display:block;padding:0;background-color:transparent}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .info-col a:hover,body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .info-col button:hover{text-decoration:underline}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .info-col a{margin-bottom:7.5px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .info-col span{display:block;margin-bottom:10px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .info-col [data-function="remove-item"]{font-size:13px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .quantity-col{text-align:center}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .quantity-col.error input{background:#fff6f6;border-color:#e0b4b4;color:#9f3a38}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .quantity-col.error .error-popup{display:inline-flex}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .add-remove{display:flex;justify-content:center}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .add-remove label{max-height:30px;font-size:15px;border-top-left-radius:.28571429rem;border-bottom-left-radius:.28571429rem;padding:.5833em .833em;color:rgba(0,0,0,0.6);background-color:#e8e8e8;line-height:1}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .add-remove input{max-width:55px;max-height:30px;border-top-right-radius:.28571429rem;border-bottom-right-radius:.28571429rem;border-color:#f2f2f2;border:1px solid rgba(34,36,38,0.15);color:rgba(0,0,0,0.87);box-shadow:inset 0 0 0 0 transparent;transition:color .1s ease,border-color .1s ease}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .error-popup{display:none;position:relative;margin:10px .14285714em;padding:.5833em .833em;font-weight:700;border-radius:.28571429rem;transition:background .1s ease;border:1px solid #e0b4b4;color:#9f3a38;font-size:1rem}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .error-popup::before{border:0 solid;border-color:inherit;position:absolute;content:"";transform:rotate(45deg);background:white;z-index:2;width:.6666em;height:.6666em;transition:background .1s ease;border-width:1px 0 0 1px;transform:translateX(-50%) translateY(-50%) rotate(45deg);top:0;left:50%}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .price-col{display:flex;flex-direction:column;text-align:center;font-size:13px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .cart-item .price-col span{font-size:16px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper hr{margin-bottom:45px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .info-row{margin-top:15px;margin-bottom:15px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper .info-row [class^='col-']:last-of-type{text-align:right}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper button.submit{margin-top:60px}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container .scroll-wrapper form{padding:0}
-body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container.active{right:0;left:initial}
-.xilinx-bs3 footer{font-size:13px;z-index:0;background:#171c2d;color:#fff;padding-top:0px;padding-bottom:0px;}
-.xilinx-bs3 footer .main-footer{border-bottom:1px solid #282d3f;padding-bottom:15px}
-.xilinx-bs3 footer .main-footer .xilinxList .container-fluid{padding-left:15px;padding-right:15px}
+.xilinx-bs3 .footer-spacing{height:50px;width:100%;background:transparent}
+.xilinx-bs3 footer{z-index:0;background:#171c2d;/* color:#fff; *//* padding-top:20px; *//* padding-bottom:20px; */}
+.xilinx-bs3 footer .main-footer{border-bottom:1px solid #282d3f}
 .xilinx-bs3 footer .main-footer .col-md-2{text-align:center;padding:0}
-.xilinx-bs3 footer .main-footer .col-md-2:first-of-type{border-bottom:1px solid #282d3f;padding-bottom:30px;margin-bottom:20px}
-.xilinx-bs3 footer .main-footer .col-md-2 .logo{margin-top:10px}
-.xilinx-bs3 footer .main-footer .col-md-2 .logo img{max-width:140px}
-.xilinx-bs3 footer .main-footer .col-md-2 p.submit{max-width:240px;margin:30px auto 15px}
-.xilinx-bs3 footer .main-footer .col-md-2 button{max-width:450px;margin:0 auto;border-bottom:2px solid transparent}
+.xilinx-bs3 footer .main-footer .col-md-2 button{max-width:450px;margin:0 auto;border-bottom:3px solid transparent}
 .xilinx-bs3 footer .main-footer .col-md-2 button:hover{background-color:transparent}
-.xilinx-bs3 footer .main-footer .col-md-2 button[aria-expanded="false"]:hover{border-bottom:2px solid #e00000}
-.xilinx-bs3 footer .main-footer .col-md-2 button h4{color:#fff;margin:0;font-weight:500;display:inline-block}
-.xilinx-bs3 footer .main-footer .col-md-2 button h4 span{display:inline-block;margin-left:7.5px}
-.xilinx-bs3 footer .main-footer .col-md-2 button.collapsed h4 span{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}
-.xilinx-bs3 footer .main-footer .col-md-2 h4{font-size:16px;color:#fff;font-weight:500;margin-bottom:15px}
-.xilinx-bs3 footer .main-footer .col-md-2 .collapse,.xilinx-bs3 footer .main-footer .col-md-2 .collapsing{background-color:#282d3f;border-top:3px solid #e00000;border-bottom:1px solid #a21820;padding-top:10px}
+.xilinx-bs3 footer .main-footer .col-md-2 button[aria-expanded="false"]:hover{border-bottom:2px solid #ec1c24}
+.xilinx-bs3 footer .main-footer .col-md-2 button h4{color:#fff;margin:0;font-weight:500}
+.xilinx-bs3 footer .main-footer .col-md-2 h4{color:#fff;font-weight:500;margin-bottom:15px}
+.xilinx-bs3 footer .main-footer .col-md-2 .collapse,.xilinx-bs3 footer .main-footer .col-md-2 .collapsing{background-color:#282d3f;border-top:3px solid #ec1c24;border-bottom:1px solid #a21820;padding-top:10px}
 .xilinx-bs3 footer .main-footer .col-md-2 .collapse[aria-expanded="false"],.xilinx-bs3 footer .main-footer .col-md-2 .collapsing[aria-expanded="false"]{border-top:0}
 .xilinx-bs3 footer .main-footer .col-md-2 .collapse .xilinxList ul li,.xilinx-bs3 footer .main-footer .col-md-2 .collapsing .xilinxList ul li{padding:10px 0}
-.xilinx-bs3 footer .main-footer .col-md-2 .collapse .xilinxList ul li:hover a,.xilinx-bs3 footer .main-footer .col-md-2 .collapsing .xilinxList ul li:hover a{color:#e00000}
-.xilinx-bs3 footer .main-footer a.btn.submit{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;text-transform:uppercase;max-width:140px;margin:15px auto 0}
+.xilinx-bs3 footer .main-footer .col-md-2 .collapse .xilinxList ul li:hover a,.xilinx-bs3 footer .main-footer .col-md-2 .collapsing .xilinxList ul li:hover a{color:#a21820}
+.xilinx-bs3 footer .main-footer a.btn.submit{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;margin-bottom:15px}
 .xilinx-bs3 footer a{color:#fff}
-.xilinx-bs3 footer a:hover,.xilinx-bs3 footer a:focus{color:#e00000;text-decoration:none}
+.xilinx-bs3 footer a:hover,.xilinx-bs3 footer a:focus{color:#ec1c24;text-decoration:none}
 .xilinx-bs3 footer ul{list-style:none;padding-left:0}
-.xilinx-bs3 footer .sub-footer{margin-top:10px}
+.xilinx-bs3 footer .sub-footer{margin-top:20px}
 .xilinx-bs3 footer .sub-footer span.copyright{font-size:12px;text-align:center;padding:25px 15px 0 0;float:left;width:100%}
 .xilinx-bs3 footer .sub-footer .lang-select{text-align:center;margin-bottom:20px}
 .xilinx-bs3 footer .sub-footer .lang-select button{width:160px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;background:#282d3f;padding:4px 10px}
@@ -416,10 +445,10 @@ body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container
 .xilinx-bs3 footer .sub-footer .lang-select ul li:first-of-type a{border-top-left-radius:5px;border-top-right-radius:5px}
 .xilinx-bs3 footer .sub-footer .lang-select ul li a{text-align:center;padding:10px 20px;color:#fff}
 .xilinx-bs3 footer .sub-footer .lang-select ul li a:hover{background-color:#008282 !important}
-.xilinx-bs3 footer .sub-footer ul.sub-menu{margin-top:0px}
-.xilinx-bs3 footer .sub-footer ul.sub-menu>li{display:block;text-align:center;padding:0}
+.xilinx-bs3 footer .sub-footer ul.sub-menu{padding:0;margin-top:3px;float:left;width:100%}
+.xilinx-bs3 footer .sub-footer ul.sub-menu>li{margin-left:0;padding:0;display:block;text-align:center}
 .xilinx-bs3 footer .sub-footer ul.sub-menu>li a{font-size:12px;padding:6px 0;display:inline-block}
-.xilinx-bs3 footer .sub-footer ul.social-menu{width:100%;text-align:center;}
+.xilinx-bs3 footer .sub-footer ul.social-menu{width:100%;text-align:center;margin:10px 0}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a:hover,.xilinx-bs3 footer .sub-footer ul.social-menu>li a:focus{color:#fff}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .icon{display:inline-block;vertical-align:middle;height:32px;width:32px;font:normal normal normal 15px/2 'Font Awesome\ 5 Pro';background-color:#282d3f;-webkit-transition:background-color .4s ease;transition:background-color .4s ease;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .icon:before{position:relative;top:2px}
@@ -438,43 +467,35 @@ body .xilinx-bs3 header.site-header nav .main-nav .navbar-column .cart-container
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .weibo:before{content:"\f18a";font-family:'Font Awesome\ 5 Brands'}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .weibo:hover{background-color:#d52729}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .youku{line-height:2.5}
-.xilinx-bs3 footer .sub-footer ul.social-menu>li a .youku:before{content:url('../../../../etc.clientlibs/site/clientlibs/xilinx/site-all/resources/imgs/social/icon-youku.png')}
+.xilinx-bs3 footer .sub-footer ul.social-menu>li a .youku:before{content:url('../../../../etc.clientlibs/site/clientlibs/xilinx/all/resources/imgs/social/icon-youku.png')}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .youku:hover{background-color:#01ace2}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .eetrend{line-height:2.5}
-.xilinx-bs3 footer .sub-footer ul.social-menu>li a .eetrend:before{content:url('../../../../etc.clientlibs/site/clientlibs/xilinx/site-all/resources/imgs/social/icon-eetrend.png')}
+.xilinx-bs3 footer .sub-footer ul.social-menu>li a .eetrend:before{content:url('../../../../etc.clientlibs/site/clientlibs/xilinx/all/resources/imgs/social/icon-eetrend.png')}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .eetrend:hover{background-color:#cf1f1f}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .eetop{line-height:2.5}
-.xilinx-bs3 footer .sub-footer ul.social-menu>li a .eetop:before{content:url('../../../../etc.clientlibs/site/clientlibs/xilinx/site-all/resources/imgs/social/icon-eetop.png')}
+.xilinx-bs3 footer .sub-footer ul.social-menu>li a .eetop:before{content:url('../../../../etc.clientlibs/site/clientlibs/xilinx/all/resources/imgs/social/icon-eetop.png')}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li a .eetop:hover{background-color:#1824db}
 .xilinx-bs3 footer .sub-footer ul.social-menu>li:last-child{margin-right:0}
 @media(min-width:992px){.xilinx-bs3 footer .main-footer{padding-top:50px !important;padding-bottom:60px;margin-bottom:20px}
 .xilinx-bs3 footer .main-footer .col-md-2{text-align:left;padding-left:15px;padding-right:15px}
-.xilinx-bs3 footer .main-footer .col-md-2:first-of-type{border-bottom:0;padding-bottom:0;margin-bottom:0}
-.xilinx-bs3 footer .main-footer .col-md-2 .logo{margin-top:0}
-.xilinx-bs3 footer .main-footer .col-md-2 .logo img{max-width:70%}
 .xilinx-bs3 footer .main-footer .col-md-2 .collapse,.xilinx-bs3 footer .main-footer .col-md-2 .collapsing{height:auto !important;display:block;border:0;background-color:transparent;padding-top:0}
 .xilinx-bs3 footer .main-footer .col-md-2 .collapse .col-xs-12,.xilinx-bs3 footer .main-footer .col-md-2 .collapsing .col-xs-12{padding:0}
 .xilinx-bs3 footer .main-footer .col-md-2 .collapse .xilinxList ul li,.xilinx-bs3 footer .main-footer .col-md-2 .collapsing .xilinxList ul li{padding:4px 0}
-.xilinx-bs3 footer .main-footer p.submit{text-align:left;font-size:13px;margin-top:30px}
-.xilinx-bs3 footer .main-footer a.btn.submit{max-width:none;margin:0}
-.xilinx-bs3 footer .sub-footer{margin-top:0}
+.xilinx-bs3 footer .main-footer p.submit{text-align:center;margin-top:30px}
+.xilinx-bs3 footer .sub-footer{margin-top:0;margin-left: 300px;}
 .xilinx-bs3 footer .sub-footer span.copyright{font-size:12px;display:inline-block;width:auto;padding:10px 15px 0 0}
 .xilinx-bs3 footer .sub-footer .lang-select{float:right;margin:0;margin-right:10px}
 .xilinx-bs3 footer .sub-footer .lang-select button{padding:1px 10px}
-.xilinx-bs3 footer .sub-footer ul.sub-menu>li{display:inline-block}
+.xilinx-bs3 footer .sub-footer ul.sub-menu{float:none;margin-bottom:3px}
+.xilinx-bs3 footer .sub-footer ul.sub-menu>li{padding-top:5px;display:inline-block}
 .xilinx-bs3 footer .sub-footer ul.sub-menu>li:after{content:"|";color:#8d919a;float:right;margin-right:5px}
 .xilinx-bs3 footer .sub-footer ul.sub-menu>li a{padding:0;margin-right:8px}
 .xilinx-bs3 footer .sub-footer ul.sub-menu>li:last-of-type:after{content:""}
 .xilinx-bs3 footer .sub-footer ul.social-menu{width:auto;margin:0}
-
-.xilinx-bs3 footer {padding-left:320px;}
-
 }
-.xilinx-bs3 .callout-banner{width:100%;height:30px;padding-top:3px;background-color:#282d3f;color:#fff;text-align:center;font-size:14px;clear:both}
-.xilinx-bs3 .callout-banner a{color:#fff;text-decoration:underline}
 @media print{body.modal-open{overflow:hidden !important;height:100%}
 body.modal-open .modal-backdrop{background:white !important;opacity:1 !important}
-.xilinx-bs3 header{background:transparent url('../../../../etc.clientlibs/site/clientlibs/xilinx/site-all/resources/imgs/xilinx-logo-printable.png') center center no-repeat !important;height:85px;width:100%}
+.xilinx-bs3 header{background:transparent url('../../../../etc.clientlibs/site/clientlibs/xilinx/all/resources/imgs/xilinx-logo-printable.png') center center no-repeat !important;height:85px;width:100%}
 .xilinx-bs3 header .top-nav,.xilinx-bs3 header .main-nav{display:none}
 .xilinx-bs3 footer .main-footer{display:none}
 .xilinx-bs3 footer .sub-footer .copyright-menu{display:none}
@@ -490,8 +511,3 @@ body.modal-open .modal-backdrop{background:white !important;opacity:1 !important
 .xilinx-bs3 form .agreement .form_row .form_rightcol .textarea{overflow:visible;max-height:none}
 .xilinx-bs3 .quickLinks{display:none}
 }
-.xilinx-bs3 .standalone-sub-footer{margin-top:0 !important}
-.xilinx-bs3 .standalone-sub-footer .standalone-footer{text-align:center}
-.xilinx-bs3 .standalone-sub-footer .standalone-footer span,.xilinx-bs3 .standalone-sub-footer .standalone-footer ul{float:none !important;display:inline}
-.xilinx-bs3 .standalone-sub-footer .standalone-footer span{padding-top:0 !important}
-.xilinx-bs3 .standalone-sub-footer .standalone-footer ul li{padding-top:0 !important}

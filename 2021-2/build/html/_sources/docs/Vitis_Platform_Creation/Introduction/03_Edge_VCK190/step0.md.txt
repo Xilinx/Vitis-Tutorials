@@ -92,14 +92,11 @@ enable_beta_device xcvc*
    - Click **File -> Project -> Open Example**
    - Select **Versal Extensible Embedded Platform** in Select Project Template window.
    - Input **project name** and **project location**. Keep **Create project subdirectory** checked. Click **Next**.
-   - Select target board in Default Part window. In this example, we use **Versal VCK190 Evaluation Platform** or **Versal VCK190 ES1 Evaluation Platform**. Click **Next**.
+   - Select target board in Default Part window. In this example, we use **Versal VCK190 ES1 Evaluation Platform**. Click **Next**.
 
    ![CED Configuration](./images/step0/vivado_ced_config.png)
 
-   - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view. In this example, we can keep the default settings.
-   - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
-   - Configure Memory Settings. By default the example design will only enable DDR4. If you enable LPDDR4, it will enable both DDR4 and LPDDR4. In this example, we can keep the default setting.
-   - Click **Next**.
+   - Configure the clock, interrupt and LPDDR4 configurations. In this example, we can keep everything default and click **Next**.
    - Review the new project summary and click **Finish**.
    - After a while, you will see the design example has been generated.
 
@@ -109,9 +106,9 @@ enable_beta_device xcvc*
 
    
 
-At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. Since it's a validated design, you can go to [step1:Hardware Settings for Vitis Platform](step1.md) to review or update platform settings and skip the validation below.
+***Note: At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. Since it's a validated design, you can go to [step1:Hardware Settings for Vitis Platform](step1.md) to review or update platform settings and skip the validation below.***
 
-***For a custom board, platform developers need to configure CIPS and NOC for processor settings and DDR settings. Please complete the following testings before going to next step.***
+***For a custom board, platform developers need to configure CIPS and NOC for processor settings and DDR settings. Please complete the following testings before going to next steop.***
 
 ### Custom Board Additional Steps
 
@@ -157,7 +154,7 @@ To run this step, please make sure the project is a normal project. **This proje
 
    - Click ***Yes*** if it pops up a message to say *No Implementation Results Available*.
 
-   ![missing image](./images/step0/vivado_no_imp_avail.png)
+   ![](./images/step0/vivado_no_imp_avail.png)
 
    - Click ***OK*** for default options for Launch Runs dialouge.
 
@@ -208,7 +205,7 @@ To run this step, please make sure **This project is a Vitis Platform project** 
 
    Here's the sample prints on UART console of VCK190 board
 
-<!--TODO: update for 2021.2 log -->
+<!--TODO: update for 2021.1 log -->
 <details>
   <summary><b>Show Log</b></summary>
 
@@ -322,7 +319,7 @@ This script downloads the VCK190 ES1 board support and the Versal Extensible Des
 
    
 
-A top level all in one build script is also provided. To build everything (step 0 to step 4) with one command, please go to ***ref_files*** directory and run
+A top level all in one build script is also provided. To build everything (step 0 to step 3) with one command, please go to ***ref_files*** directory and run
 
 ```bash
 make all
@@ -342,9 +339,8 @@ From next step, we will begin to setup the platform properties. It needs the Viv
 - Click **Settings** in **Project Manager**
 - Go to **Project Settings -> General**, enable **Project is an extensible Vitis platform**
 
-### Next Step
 
-Now we have a base bootable design. Next we'll go to [step 1 to update the Vivado design for hardware platform requirements](./step1.md).
+***Now we have a base bootable design. Next we'll go to [step 1 to update the Vivado design for hardware platform requirements](./step1.md).***
 
 
 

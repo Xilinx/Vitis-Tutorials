@@ -1,67 +1,68 @@
+/*
+ * language_data.js
+ * ~~~~~~~~~~~~~~~~
+ *
+ * This script contains the language-specific data used by searchtools.js,
+ * namely the list of stopwords, stemmer, scorer and splitter.
+ *
+ * :copyright: Copyright 2007-2021 by the Sphinx team, see AUTHORS.
+ * :license: BSD, see LICENSE for details.
+ *
+ */
 
-  language_data.js
-  ~~~~~~~~~~~~~~~~
- 
-  This script contains the language-specific data used by searchtools.js,
-  namely the list of stopwords, stemmer, scorer and splitter.
- 
-  copyright Copyright 2007-2020 by the Sphinx team, see AUTHORS.
-  license BSD, see LICENSE for details.
- 
- 
-
-var stopwords = [a,and,are,as,at,be,but,by,for,if,in,into,is,it,near,no,not,of,on,or,such,that,the,their,then,there,these,they,this,to,was,will,with];
+var stopwords = ["a","and","are","as","at","be","but","by","for","if","in","into","is","it","near","no","not","of","on","or","such","that","the","their","then","there","these","they","this","to","was","will","with"];
 
 
- Non-minified version JS is _stemmer.js if file is provided  
+/* Non-minified version is copied as a separate JS file, is available */
 
-  Porter Stemmer
- 
+/**
+ * Porter Stemmer
+ */
 var Stemmer = function() {
 
   var step2list = {
-    ational 'ate',
-    tional 'tion',
-    enci 'ence',
-    anci 'ance',
-    izer 'ize',
-    bli 'ble',
-    alli 'al',
-    entli 'ent',
-    eli 'e',
-    ousli 'ous',
-    ization 'ize',
-    ation 'ate',
-    ator 'ate',
-    alism 'al',
-    iveness 'ive',
-    fulness 'ful',
-    ousness 'ous',
-    aliti 'al',
-    iviti 'ive',
-    biliti 'ble',
-    logi 'log'
+    ational: 'ate',
+    tional: 'tion',
+    enci: 'ence',
+    anci: 'ance',
+    izer: 'ize',
+    bli: 'ble',
+    alli: 'al',
+    entli: 'ent',
+    eli: 'e',
+    ousli: 'ous',
+    ization: 'ize',
+    ation: 'ate',
+    ator: 'ate',
+    alism: 'al',
+    iveness: 'ive',
+    fulness: 'ful',
+    ousness: 'ous',
+    aliti: 'al',
+    iviti: 'ive',
+    biliti: 'ble',
+    logi: 'log'
   };
 
   var step3list = {
-    icate 'ic',
-    ative '',
-    alize 'al',
-    iciti 'ic',
-    ical 'ic',
-    ful '',
-    ness ''
+    icate: 'ic',
+    ative: '',
+    alize: 'al',
+    iciti: 'ic',
+    ical: 'ic',
+    ful: '',
+    ness: ''
   };
 
-  var c = [^aeiou];           consonant
-  var v = [aeiouy];           vowel
-  var C = c + [^aeiouy];     consonant sequence
-  var V = v + [aeiou];       vowel sequence
+  var c = "[^aeiou]";          // consonant
+  var v = "[aeiouy]";          // vowel
+  var C = c + "[^aeiouy]*";    // consonant sequence
+  var V = v + "[aeiou]*";      // vowel sequence
 
-  var mgr0 = ^( + C + ) + V + C;                       [C]VC... is m0
-  var meq1 = ^( + C + ) + V + C + ( + V + )$;     [C]VC[V] is m=1
-  var mgr1 = ^( + C + ) + V + C + V + C;               [C]VCVC... is m1
-  var s_v   = ^( + C + ) + v;                          vowel in stem
+  var mgr0 = "^(" + C + ")?" + V + C;                      // [C]VC... is m>0
+  var meq1 = "^(" + C + ")?" + V + C + "(" + V + ")?$";    // [C]VC[V] is m=1
+  var mgr1 = "^(" + C + ")?" + V + C + V + C;              // [C]VCVC... is m>1
+  var s_v   = "^(" + C + ")?" + v;                         // vowel in stem
 
   this.stemWord = function (w) {
     var stem;
@@ -69,7 +70,7 @@ var Stemmer = function() {
     var firstch;
     var origword = w;
 
-    if (w.length  3)
+    if (w.length < 3)
       return w;
 
     var re;
@@ -78,27 +79,27 @@ var Stemmer = function() {
     var re4;
 
     firstch = w.substr(0,1);
-    if (firstch == y)
+    if (firstch == "y")
       w = firstch.toUpperCase() + w.substr(1);
 
-     Step 1a
-    re = ^(.+)(ssi)es$;
-    re2 = ^(.+)([^s])s$;
+    // Step 1a
+    re = /^(.+?)(ss|i)es$/;
+    re2 = /^(.+?)([^s])s$/;
 
     if (re.test(w))
-      w = w.replace(re,$1$2);
+      w = w.replace(re,"$1$2");
     else if (re2.test(w))
-      w = w.replace(re2,$1$2);
+      w = w.replace(re2,"$1$2");
 
-     Step 1b
-    re = ^(.+)eed$;
-    re2 = ^(.+)(eding)$;
+    // Step 1b
+    re = /^(.+?)eed$/;
+    re2 = /^(.+?)(ed|ing)$/;
     if (re.test(w)) {
       var fp = re.exec(w);
       re = new RegExp(mgr0);
       if (re.test(fp[1])) {
-        re = .$;
-        w = w.replace(re,);
+        re = /.$/;
+        w = w.replace(re,"");
       }
     }
     else if (re2.test(w)) {
@@ -107,32 +108,32 @@ var Stemmer = function() {
       re2 = new RegExp(s_v);
       if (re2.test(stem)) {
         w = stem;
-        re2 = (atbliz)$;
-        re3 = new RegExp(([^aeiouylsz])1$);
-        re4 = new RegExp(^ + C + v + [^aeiouwxy]$);
+        re2 = /(at|bl|iz)$/;
+        re3 = new RegExp("([^aeiouylsz])\\1$");
+        re4 = new RegExp("^" + C + v + "[^aeiouwxy]$");
         if (re2.test(w))
-          w = w + e;
+          w = w + "e";
         else if (re3.test(w)) {
-          re = .$;
-          w = w.replace(re,);
+          re = /.$/;
+          w = w.replace(re,"");
         }
         else if (re4.test(w))
-          w = w + e;
+          w = w + "e";
       }
     }
 
-     Step 1c
-    re = ^(.+)y$;
+    // Step 1c
+    re = /^(.+?)y$/;
     if (re.test(w)) {
       var fp = re.exec(w);
       stem = fp[1];
       re = new RegExp(s_v);
       if (re.test(stem))
-        w = stem + i;
+        w = stem + "i";
     }
 
-     Step 2
-    re = ^(.+)(ationaltionalencianciizerbliallientlieliousliizationationatoralismivenessfulnessousnessalitiivitibilitilogi)$;
+    // Step 2
+    re = /^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|iveness|fulness|ousness|aliti|iviti|biliti|logi)$/;
     if (re.test(w)) {
       var fp = re.exec(w);
       stem = fp[1];
@@ -142,8 +143,8 @@ var Stemmer = function() {
         w = stem + step2list[suffix];
     }
 
-     Step 3
-    re = ^(.+)(icateativealizeicitiicalfulness)$;
+    // Step 3
+    re = /^(.+?)(icate|ative|alize|iciti|ical|ful|ness)$/;
     if (re.test(w)) {
       var fp = re.exec(w);
       stem = fp[1];
@@ -153,9 +154,9 @@ var Stemmer = function() {
         w = stem + step3list[suffix];
     }
 
-     Step 4
-    re = ^(.+)(alanceenceericableibleantementmententouismateitiousiveize)$;
-    re2 = ^(.+)(st)(ion)$;
+    // Step 4
+    re = /^(.+?)(al|ance|ence|er|ic|able|ible|ant|ement|ment|ent|ou|ism|ate|iti|ous|ive|ize)$/;
+    re2 = /^(.+?)(s|t)(ion)$/;
     if (re.test(w)) {
       var fp = re.exec(w);
       stem = fp[1];
@@ -171,31 +172,30 @@ var Stemmer = function() {
         w = stem;
     }
 
-     Step 5
-    re = ^(.+)e$;
+    // Step 5
+    re = /^(.+?)e$/;
     if (re.test(w)) {
       var fp = re.exec(w);
       stem = fp[1];
       re = new RegExp(mgr1);
       re2 = new RegExp(meq1);
-      re3 = new RegExp(^ + C + v + [^aeiouwxy]$);
-      if (re.test(stem)  (re2.test(stem) && !(re3.test(stem))))
+      re3 = new RegExp("^" + C + v + "[^aeiouwxy]$");
+      if (re.test(stem) || (re2.test(stem) && !(re3.test(stem))))
         w = stem;
     }
-    re = ll$;
+    re = /ll$/;
     re2 = new RegExp(mgr1);
     if (re.test(w) && re2.test(w)) {
-      re = .$;
-      w = w.replace(re,);
+      re = /.$/;
+      w = w.replace(re,"");
     }
 
-     and turn initial Y back to y
-    if (firstch == y)
+    // and turn initial Y back to y
+    if (firstch == "y")
       w = firstch.toLowerCase() + w.substr(1);
     return w;
   }
 }
-
 
 
 
@@ -213,7 +213,7 @@ var splitChars = (function() {
          11703, 11711, 11719, 11727, 11735, 12448, 12539, 43010, 43014, 43019, 43587,
          43696, 43713, 64286, 64297, 64311, 64317, 64319, 64322, 64325, 65141];
     var i, j, start, end;
-    for (i = 0; i  singles.length; i++) {
+    for (i = 0; i < singles.length; i++) {
         result[singles[i]] = true;
     }
     var ranges = [[0, 47], [58, 64], [91, 94], [123, 169], [171, 177], [182, 184], [706, 709],
@@ -265,10 +265,10 @@ var splitChars = (function() {
          [64280, 64284], [64434, 64466], [64830, 64847], [64912, 64913], [64968, 65007],
          [65020, 65135], [65277, 65295], [65306, 65312], [65339, 65344], [65371, 65381],
          [65471, 65473], [65480, 65481], [65488, 65489], [65496, 65497]];
-    for (i = 0; i  ranges.length; i++) {
+    for (i = 0; i < ranges.length; i++) {
         start = ranges[i][0];
         end = ranges[i][1];
-        for (j = start; j = end; j++) {
+        for (j = start; j <= end; j++) {
             result[j] = true;
         }
     }
@@ -278,7 +278,7 @@ var splitChars = (function() {
 function splitQuery(query) {
     var result = [];
     var start = -1;
-    for (var i = 0; i  query.length; i++) {
+    for (var i = 0; i < query.length; i++) {
         if (splitChars[query.charCodeAt(i)]) {
             if (start !== -1) {
                 result.push(query.slice(start, i));
@@ -293,4 +293,5 @@ function splitQuery(query) {
     }
     return result;
 }
+
 

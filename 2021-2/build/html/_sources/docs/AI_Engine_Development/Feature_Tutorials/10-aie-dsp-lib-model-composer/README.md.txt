@@ -1,15 +1,11 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
-    </td>
+﻿<table>
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
+   </td>
  </tr>
 </table>
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
-
-***Version: Vitis 2021.2***
 
 ## Introduction
 
@@ -22,13 +18,8 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 Install the tools:
 
 * Get and install [MATLAB and Simulink 2020a, 2020b or 2021a](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
-<<<<<<< HEAD
   - Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [Xilinx Vitis 2021.2](https://www.xilinx.com/support/download.html).
-=======
-  * Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
 * Get and install [Xilinx Vitis 2021.1](https://www.xilinx.com/support/download.html).
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 
 
 
@@ -68,19 +59,18 @@ Channel Filter Norm: 32768
 ```
 
 In the workspace sub-window you can see that a number of variables that are defined:
-
-* ``hb1``, ``hb2``, ``hb3``, ``cfi``: Coefficients of the filters which are used in the Simulink model.
-* ``hb1_aie``, ``hb2_aie``, ``hb3_aie``, ``cfi_aie``: Coefficients vectors which are used in the AI Engine design:
-  * For half-band filters this vector contains only the left-hand side non-null taps including the centre tap.
-  * For symmetric filters this vector contains only the left-hand side taps, including the center tap if the filter length is odd.
-* Shift1, Shift2, Shift3, ShiftCF: The number of bits bits by which the result has to be shifted before the result is sent to the ouput port.
+- ``hb1``, ``hb2``, ``hb3``, ``cfi``: Coefficients of the filters which are used in the Simulink model.
+- ``hb1_aie``, ``hb2_aie``, ``hb3_aie``, ``cfi_aie``: Coefficients vectors which are used in the AI Engine design:
+  - For half-band filters this vector contains only the left-hand side non-null taps including the centre tap.
+  - For symmetric filters this vector contains only the left-hand side taps, including the center tap if the filter length is odd.
+- Shift1, Shift2, Shift3, ShiftCF: The number of bits bits by which the result has to be shifted before the result is sent to the ouput port.
 
 ![Workspace](Images/Workspace.png "Workspace variables")
 
 There are 3 additional files:
-* XMC_DSPLib_Solution_Stage1.slx
-* XMC_DSPLib_Solution_Stage2.slx
-* XMC_DSPLib_Solution_Stage3.slx
+- XMC_DSPLib_Solution_Stage1.slx
+- XMC_DSPLib_Solution_Stage2.slx
+- XMC_DSPLib_Solution_Stage3.slx
 
 These are there to help you if you cannot complete any of the 3 stages.
 
@@ -88,71 +78,71 @@ These are there to help you if you cannot complete any of the 3 stages.
 
 1. On the MATLAB GUI, select the **Home Tab** and click **Simulink**.
 
-![missing image](Images/Image_001.png "Workspace variables")
+![](Images/Image_001.png "Workspace variables")
 
 2. Select **Blank Model** to create a new canvas on which to design the Decimation Chain.
 
-![missing image](Images/Image_002.png "Workspace variables")
+![](Images/Image_002.png "Workspace variables")
 
 Perform the next two steps to enhance the User Experience. This allows you to have an instant access to the initialization file and to automatically call it when opening the design or when you update it.
 
 3. Right-click in the canvas and select **Model Properties**:
-    * Click the **Callbacks** tab.
-    * Click **PreLoadFcn** and type `CreateFilter;` in the edit window on the right.
-    * Click **InitFcn** and type `CreateFilter;` in the edit window on the right.
-    * Click **Apply**.
+    - Click the **Callbacks** tab.
+    - Click **PreLoadFcn** and type `CreateFilter;` in the edit window on the right.
+    - Click **InitFcn** and type `CreateFilter;` in the edit window on the right.
+    - Click **Apply**.
 
-![missing image](Images/Image_003.png)
+![](Images/Image_003.png)
 
 4. Click on the canvas and type `subsys`. Select the first **Subsystem** displayed in the list (Subsystem, Simulink/Ports & Subsystem).
 
-![missing image](Images/Image_004.png)
+![](Images/Image_004.png)
 
-   * Double-click the new block and remove all blocks inside (**CTRL-A** and **Del**).
-   * Go back to the top level by clicking on the Up-arrow.
+   - Double-click the new block and remove all blocks inside (**CTRL-A** and **Del**).
+   - Go back to the top level by clicking on the Up-arrow.
 
 
-![missing image](Images/Image_005.png)
+![](Images/Image_005.png)
 
-  * Right-click the **Subsystem** and select **Properties**.
-  * Click the **Callbacks** tab.
-  * Select **OpenFcn** in the **Callback function list**.
-  * Type `open('CreateFilter.m');` in the edit window on the right.
-  * Click **Apply** and **OK**.
+  - Right-click the **Subsystem** and select **Properties**.
+  - Click the **Callbacks** tab.
+  - Select **OpenFcn** in the **Callback function list**.
+  - Type `open('CreateFilter.m');` in the edit window on the right.
+  - Click **Apply** and **OK**.
 
 Now when you double-lick this bock you will open the initialization matlab function (_CreateFilter.m_) in the MATLAB editor. Save the model **CTRL+S** and assign the name **XMC_DSPLib**.
 
 5. Click the **Library Browser** icon.
 
-![missing image](Images/Image_006.png)
+![](Images/Image_006.png)
 
 Near the end of the list of the Library Browser, you will find the **Xilinx Toolbox**. This contains three sub-libraries:
-* AI Engine
-* HDL
-* HLS
+- AI Engine
+- HDL
+- HLS
 
 Click the **AI Engine** section. This reveals see four subsections:
 
-* DSP
-* Interfaces
-* Tools
-* User-Defined functions
+- DSP
+- Interfaces
+- Tools
+- User-Defined functions
 
 6. Click the **DSP** sub-section and place the **AIE FIR Halfband Decimator** block in the canvas as shown in the following figure.
 
-![missing image](Images/Image_007.png)
+![](Images/Image_007.png)
 
 
 7. Double-click the **AIE FIR HalfBand Decimator** block to open the GUI. Populate the GUI with the following parameters and click **OK**:
-    * **Input/output data type**: cint16
-    * **Filter coefficients data type**: int16
-    * **Filter coefficients**: hb1_aie
-    * **Input Window size (Number of samples)**: 2048
-    * **Input sampling rate (MSPS)**: 800
-    * **Scale output down by 2^: Shift1
-    * **Rounding mode**: Floor
+    - **Input/output data type**: cint16
+    - **Filter coefficients data type**: int16
+    - **Filter coefficients**: hb1_aie
+    - **Input Window size (Number of samples)**: 2048
+    - **Input sampling rate (MSPS)**: 800
+    - **Scale output down by 2^: Shift1
+    - **Rounding mode**: Floor
 
-![missing image](Images/Image_008.png)
+![](Images/Image_008.png)
 
 Now create a data source to feed this filter.
 
@@ -168,20 +158,20 @@ Now create a data source to feed this filter.
 10. The file ``ReferenceChain.slx`` contains the decimation chain using Simulink blocks. **Open** the file **ReferenceChain.slx**. Copy the block **HB1** over to your design.
 11. Copy the small set of blocks (**To Fixed Size**, **Subtract**, **Scope**) to create the following design:
 
-![missing image](Images/Image_009.png)
+![](Images/Image_009.png)
 
 12. Ensure that the parameter **Output Size** of the block **To Fixed Size** is set to 1024.
 
 13. Set the **Stop Time** to ``5000`` and run the design. The FIR filter is compiled and the design is run. The scope should show a completely null difference.
 
 14. To gain more information about the signals traveling through the wires, update the following display parameters:
-    * Right-click the canvas and select **Other Displays --> Signals and Ports --> Signal Dimensions**.
-    * Right-click the canvas and select **Other Displays --> Signals and Ports --> Port Data Types**.
-    * Right-click the canvas and select **Sample Time Display --> all**.
+    - Right-click the canvas and select **Other Displays --> Signals and Ports --> Signal Dimensions**.
+    - Right-click the canvas and select **Other Displays --> Signals and Ports --> Port Data Types**.
+    - Right-click the canvas and select **Sample Time Display --> all**.
 
 After updating the design with **CTRL-D**, the display should look as follows:
 
-![missing image](Images/Image_010.png)
+![](Images/Image_010.png)
 
 Notice that before the implementing the Decimation Filter the vector length was ``2048``, but after implementation this was reduced to ``1024``.
 
@@ -203,7 +193,7 @@ Notice that before the implementing the Decimation Filter the vector length was 
 
 16. Update the **Output Size** parameter of the **To Fixed Size** block to ``256``. The design should look like as follows:
 
-![missing image](Images/Image_011.png)
+![](Images/Image_011.png)
 
 17. Run the design. The added filters are compiled and the design is run through the 5000 samples. The difference between the output should still be 0.
 
@@ -213,42 +203,42 @@ Notice that before the implementing the Decimation Filter the vector length was 
 When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink the spectrum can be easily displayed using a spectrum scope.
 
 1. Right-click the canvas and type ``spectrum``. Double-click the **Spectrum Analyzer** block to open the GUI. Set the following parameters (click the left-most button of the icon bar to display the GUI).
-    * **Overlap** (Window options): 50%
-    * **Average** (Trace options): 16
+    - **Overlap** (Window options): 50%
+    - **Average** (Trace options): 16
 2. Set the Stop Time of the simulation to **inf**.
 3. Connect the spectrum scope at the output of the last filter (the Channel Filter):
 
-![missing image](Images/Image_013.png)
+![](Images/Image_013.png)
 
 Run the simulation. The spectrum scope should display similar to the following:
 
-![missing image](Images/Image_014.png)
+![](Images/Image_014.png)
 
 
 Now add a block coming from a standard templated C++ kernel which source is in the directory ``aiecode_src``. This function will be a frequency shift operation that will be placed after the downsampling chain.
 
 4. Select the block _AIE Kernel_ from the **User-defined Functions** section of the AI Engine Library and place it in the canvas:
 
-![missing image](Images/Image_017.png)
+![](Images/Image_017.png)
 
 5. **Double-click** the block, a GUI will display. Populate it with the following data:
-* **Kernel header file**: ``aiecode_src / FreqShift.h``
-* **Kernel function**: ``FreqShift``
-* **Kernel source file**: ``aiecode_src / FreqShift.cpp``
+- **Kernel header file**: ``aiecode_src / FreqShift.h``
+- **Kernel function**: ``FreqShift``
+- **Kernel source file**: ``aiecode_src / FreqShift.cpp``
 
-![missing image](Images/Image_018.png)
+![](Images/Image_018.png)
 
 6. Click **Import**. A new GUI displays. **FRAME_LENGTH** is the template parameter. Its value is ``256`` because at this stage this is the size of the data frames. The input and output ports have also the same size: ``256`` samples. Click **OK**.
 
-![missing image](Images/Image_019.png)
+![](Images/Image_019.png)
 
 7. Place this new block between the **'AIE FIR Channel'** and **'To Fixed Size'** blocks. Grab the **'FreqShift'** block from the **Reference Chain** Simulink design and place it after the **ChannelFilter** Simulink block. Your design should now look as follows:
 
-![missing image](Images/Image_020.png)
+![](Images/Image_020.png)
 
 8. Click **Run**. The new filter will get compiled and a new spectrum will be displayed:
 
-![missing image](Images/Image_021.png)
+![](Images/Image_021.png)
 
 9. Switch the **Stop Time** back to ``5000`` and verify that the difference is still 0.
 
@@ -256,7 +246,7 @@ Developing an AI Engine graph in Model Composer is relatively straightforward. W
 
 If you want to save some data in a workspace variable for some more complex analysis. This can be done using the **Variable Size Signal** to Workspace block within the **Xilinx Toolbox --> AI Engine --> Tools  blockset**:
 
-![missing image](Images/Image_015.png)
+![](Images/Image_015.png)
 
 All the simulations that occur in Simulink are the so-called 'Emulation-SW'. These types of simulation are bit-exact, but they do not provide any information about timing.
 
@@ -266,10 +256,10 @@ In this stage you will generate the graph code of this design and perform bit-tr
 
 1. Select the four AIE FIR Filters and the Frequency shifting block and type **CTRL+G** to group them in a subsystem. Assign a new name: **FIRchain**.
 2. Click the canvas and type ``model co``. Double-click the block **Model Composer Hub** and set the following parameters:
-    * **Subsystem name**: ``FIRchain``
-    * Check **Create testbench**
-    * Check **Run AIE Simulation**
-    * Check **Collect Data for Vitis Analyzer**
+    - **Subsystem name**: ``FIRchain``
+    - Check **Create testbench**
+    - Check **Run AIE Simulation**
+    - Check **Collect Data for Vitis Analyzer**
 3. Click **Apply** and **Generate and Run**.
 
 The simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/src_aie/FIRchain.h``:
@@ -320,13 +310,13 @@ public:
 
 Finally, the bit-exact simulation (Emulation-AIE) is performed and the result compared to the Simulink simulation:
 
-![missing image](Images/Image_012.png)
+![](Images/Image_012.png)
 
 Vitis Analyzer is then launched. From here you can see the **Graph View**, the **Array View**, the **Timeline**, and the **Profile** information.
 
-![missing image](Images/Image_022.png)
+![](Images/Image_022.png)
 
-![missing image](Images/Image_023.png)
+![](Images/Image_023.png)
 
 ## Conclusion
 

@@ -35,14 +35,14 @@ In this step, we will create the hardware design for the ZCU104 Vitis acceleatio
    - In Project Name dialog set Project name to **zcu104_custom_platform**. Click **Next**.
    - Enable **Project is an extensible Vitis platform**. Click **Next**.
 
-   ![missing image](images/vivado_project_type.png)
+   ![](images/vivado_project_type.png)
 
    - Select **Boards** tab and then select **Zynq UltraScale+ ZCU104 Evaluation Board**. Click **Next**.
    - Review project summary and click **Finish**
 
    Note: If you need to change an existing Vivado project to an extensible platform project, you can go to **Settings** in **Flow Navigator** in an opened Vivado design, go to **General** and enable **project is an extensible Vitis platform**
 
-   ![missing image](images/vitis_settings_extensible.png)
+   ![](images/vitis_settings_extensible.png)
 
 3. Create a block design.
 
@@ -142,7 +142,8 @@ We will add the **Clocking Wizard** to the block diagram and enable clock signal
    **Note**:
 
 
-   - There should be one and only one default clock in the platform. During v++ linker will use the default clock to connect the IP blocks if there are no user assignments for link configuration.
+   - Clock ID should start from 0. If there are two clocks, ID should be 0 and 1. This requirement is from v++ linker.
+   - There should be one and only one default clock in the platform. During v++ linker will use the default clock to connect the IP blocks if there are no user assignments.
 
 
 ### Add Interrupt Support
@@ -162,8 +163,8 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
 
    **Note**:
    
-   - We use **AXI HPM0 LPD** mainly for controlling purpose. It would read and write 32 bit control registers. If the interface is more than 32, AXI Interconnect or SmartConnect will do AXI bus width conversion using PL logic. It would cost logic resource and introduce unnecessary latency.
-   - We reserve **AXI HPM0 FPD** and **AXI HPM1 FPD** for kernel usage. Disabling them from the block diagram can prevent auto connection to use it by accident. We can export the unused AXI interfaces in Platform Setup, no matter it's visible in the block diagram or not.
+   - We use **AXI HPM0 LPD** mainly for controlling purpose. It only needs to read write 32 bit control registers.
+   - We reserve **AXI HPM0 FPD** and **AXI HPM1 FPD** for kernel usage. Disabling them from the block diagram can prevent auto connection to use it by accedent. We can export the unused AXI interfaces in Platform Setup, no matter it's visable or not.
 
 2. Add the **AXI Interrupt Controller** and configure it
 
@@ -184,7 +185,7 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
 
 4. Connect irq of the Interrupt Controller
 
-   - Connect **axi_intc_0.irq** to **zynq_ultra_ps_e_0.pl_ps_irq[0:0]**
+   - Connect axi_intc_0.irq to zynq_ultra_ps_e_0.pl_ps_irq[0:0]
 
    Note:
 
@@ -289,49 +290,11 @@ When a component comes with multiple types of simulation models, selecting Syste
    - Select **Synthesis Options** to **Global**. It will skip IP synthesis during generation.
    - Click **Generate**. .
 
-4. Generate Bitstream (Optional)
-
-   This step is optional for Vitis platforms. In most cases a flat (non-DFX) Vitis platform doesn't need to generate bitstream before exporting the platform. You can execute this step after you understand its benefits and your requirements.
-   
-   - Generating bitstream will run through hardware design implemtation for the platform. It can report errors in the early stage if your platform hardware design has potential errors that cannot be reported by the Validated Design DRC.
-   - If you are going to import the design to the KV260 Start Kit PetaLinux BSP like in [this tutorial](../../Design_Tutorials/01-Edge-KV260), it's required to generate bitstream because the PetaLinux package `fpga-manager-util` in the BSP requires a bit file in the XSA file.
-
-   Here are the steps to generate bitstream.
-
-   - Click **Generate Bitstream** in the navigation window.
-   - Select a proper **number of jobs** for **Launch runs on local host**
-   - Click **OK** to start building.
-
-5. Export the platform
-
-   In this step, we will export XSA for hardware design and hardware emulation seperatedly. We will use these XSA files in step 2 and step 3.
-
-   > Note: Vivado 2021.2 can still export XSA with both hardware and hardware emulation info. This feature will be deprecated in the future. In most real designs, due to the complexity of the design, some peripherals cannot be emulated, or doesn't need to emulate at a cycle accuate level. It's a common practice to provide a simplified hardware design for hardware emulation to recude the emulation run time.
+4. Export the platform
 
    - Click menu **File -> Export -> Export Platform** to launch the **Export Hardware Platform** wizard. This wizard can also be launched by **Export Platform** button in **Flow Navigator** or **Platform Setup** window.
    - Click Next in the first information page.
-   - Select Platform Type: **Hardware**, click Next. If you skipped the emulation setup previously, select **Hardware** here.
-   - Select Platform State: **Pre-synthesis**
-   - If you have generated bitstream in step4, enable **Include bitstream**, click Next
-   - Input Platform Properties and click **Next**. For example,
-     - Name: zcu104_custom_platform
-     - Vendor: xilinx
-     - Board: zcu104
-     - Version: 0.0
-     - Description: This platform provides high PS DDR bandwidth and three clocks: 100MHz, 200MHz and 400MHz.
-   - Fill in XSA file name: **zcu104_custom_platform_hw** and keep the export directory as default. 
-   - Click **Finish**. 
-   - **zcu104_custom_platform_hw.xsa** will be generated. The export path is reported in the Tcl console. 
-
-   (Optional: Only for Hardware Emulation. If you skipped the emulation setup previously, please skip the following step.)
-   
-   Rerun the Export Platform wizard again and export the XSA for hardware emulation. 
-
-   > Note: We used the same hardware and hardware emulation design for this simple project. You can use different Vivado designs for hardware and hardware emulation. Platform developers should keep the two designs logically identical. Otherwise your emulation result cannot represent your hardware design. 
-
-   - Click menu **File -> Export -> Export Platform** to launch the **Export Hardware Platform** wizard. This wizard can also be launched by **Export Platform** button in **Flow Navigator** or **Platform Setup** window.
-   - Click Next in the first information page.
-   - Select Platform Type: **Hardware Emulation**, click Next.
+   - Select Platform Type: **Hardware and Hardware Emulation**, click Next. If you skipped the emulation setup previously, select **Hardware** here.
    - Select Platform State: **Pre-synthesis**, click Next
    - Input Platform Properties and click **Next**. For example,
      - Name: zcu104_custom_platform
@@ -339,8 +302,9 @@ When a component comes with multiple types of simulation models, selecting Syste
      - Board: zcu104
      - Version: 0.0
      - Description: This platform provides high PS DDR bandwidth and three clocks: 100MHz, 200MHz and 400MHz.
-   - Fill in XSA file name: **zcu104_custom_platform_hwemu** and keep the export directory as default. 
+   - Fill in XSA file name: **zcu104_custom_platform** and keep the export directory as default. 
    - Click **Finish**. 
+   - **zcu104_custom_platform.xsa** will be generated. The export path is reported in the Tcl console. 
 
    Alternatively, the above export can be done in Tcl scripts
 
@@ -352,11 +316,10 @@ When a component comes with multiple types of simulation models, selecting Syste
    set_property platform.design_intent.external_host "false" [current_project]
    set_property platform.design_intent.datacenter "false" [current_project]
    # Write pre-synthesis expandable XSA
-   write_hw_platform -hw -force -file ./zcu104_custom_platform_hw.xsa
-   write_hw_platform -hw_emu -force -file ./zcu104_custom_platform_hwemu.xsa
+   write_hw_platform -force -file ./zcu104_custom_platform.xsa
    ```
 
-
+**Now we finish the Hardware platform creation flow, then we should go to the [Step2: Software platform creation](./step2.md)**
 
 ### Fast Track
 
@@ -376,8 +339,4 @@ Scripts are provided to re-create projects and generate outputs. To use these sc
    make clean
    ```
 
-### Next Step 
-
-Now we finish the Hardware platform creation flow, then we should go to the [Step2: Software platform creation](./step2.md)
-
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

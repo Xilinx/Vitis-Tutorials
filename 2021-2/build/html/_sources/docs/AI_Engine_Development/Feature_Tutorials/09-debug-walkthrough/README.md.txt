@@ -1,60 +1,43 @@
-<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
-    </td>
+<table>
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>rom Simulation to Hardware</h1>
+   </td>
  </tr>
-</table>
+ </table>
 
 # AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware
 
 <table style="width:100%">
-  <tr>
-    <td width="20%" align="center"><a href="Debug0_po.md">Migrate AI Engine Command-Line Based Projects to Vitis IDE</a></td>
-    <td width="20%" align="center"><a href="Debug1_86.md">AI Engine Debug with x86simulator</a></td>
-    <td width="20%" align="center"><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></td>
-  </tr>
-  <tr>
-    <td width="20%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
-    <td width="20%" align="center"><a href="Debug4_et.md">AI Engine Debug with Hardware event trace</a></td>
-    <td width="20%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
-    <td width="20%" align="center"><a href="Debug6_pr.md">Profiling Graph Inputs and Outputs with Profiling APIs</a></td>
-    <td width="20%" align="center"><a href="Debug7_il.md">AI Engine Debug with Integrated Logic Analyzer (ILA)</a></td>
+    <tr>
+    <td width="17%" align="center"><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></td>
+    <td width="17%" align="center"><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></td>
+    <td width="17%" align="center"><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></td>
+    <td width="17%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
+    <td width="17%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
   </tr>
 </table>
 
-***Version: Vitis 2021.2***
-
 ## Introduction
-
-System level debug of AI Engine designs that could use up to 400 tiles in the AI Engine domain, PL interfaces and kernels, and PS application can be done at several stages in the design flow. System level debug of AI Engine designs can be categorized as follows:
-
-1. Functional debug that involves techniques to uncover bugs in the AI Engine kernel source code.
-2. Performance level debug that involves debug techniques to uncover reasons for throughput drop or reasons for larger latencies when the AI Engine graph is run either in simulation or in hardware.
+Debugging a multi-processor application is a challenge. With up to 400 tiles in the AI Engine domain, PL interfaces and kernels, and PS application considered as one Versal™ adaptive compute acceleration platforms (ACAPs) system project, it presents even more of a debug challenge. System level debug of AI Engine designs can be categorized as follows:
+1.	Functional debug that involves techniques to uncover bugs in the AI Engine kernel source code.
+2.	Performance level debug  that involves debug techniques to uncover reasons for throughput drop or reasons for larger latencies when the AI Engine graph is run either in simulation or in hardware.
 
 Techniques to uncover both functional and performance level bugs are described in the following sections.  
 
 Source level debug includes visibility into register contents view, variable values view, breakpoints view, and hence necessitates a GUI. The Vitis™ integrated design environment (IDE) is the tool that supports these debug requirements. This tutorial demonstrates how to use the Vitis IDE to manage these challenges and additional tools and methodologies to assist with your design debug.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes (v2021.2)* for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes (v2020.2)* for setting up software and installing the VCK190 base platform.
 
-Before starting this tutorial run the following steps:
+Before starting this tutorial run the steps below:
 
-1. Set up your platform by running the `xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2021.2/sdk.sh`.
-2. Set up your ROOTFS to point to the xilinx-versal-common-v2021.2/rootfs.ext4.
-3. Set up your IMAGE to point to xilinx-versal-common-v2021.2/Image.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you download the platform.
+1. Set up your platform by running the `xilinx-versal-common-v2020.2/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2020.2/sdk.sh`.
+2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2020.2` directory.
+3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you download the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.
 
-To target the VCK190 production board, modify PLATFORM variable in the Makefile(s) to:
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
 
 ## Example Design: Beamformer
-
 The architecture of the beamformer design consists of three kernels with slight differences which are scalable to various matrix sizes and throughput requirements. The design methodology is applicable to matrix multiplication including, but not limited to, 5G wireless communication.
 
 One feature of the beamforming architecture is that only a small number of kernels are required by various system configurations. Depending on the location of the kernels in the cascading chain, they are named first, middle, and last. All the kernels implement (8x8) times (8x12) matrix multiplication and only differ in the input and output interfaces.
@@ -74,30 +57,28 @@ There are several ways to debug a system design that include PS, PL, and AI Engi
 
 For ease of use, a Vitis IDE exported project, `beamformer.ide.zip` can be donwloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer.ide.zip. Then import this zip file into the Vitis IDE.
 
-Step 0. Download data files, `beamformer_data.zip` from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level as this tutorial's Makefile.
+Step 0. Download data files, `beamformer_data.zip` from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level of this tutorial's Makefile.
 
 Step 1. Source the Vitis IDE script or install the Vitis™ IDE.
 
-Step 2. Launch the Vitis IDE using the command **vitis -workspace tutorial**.
+Step 2. Launch the Vitis IDE, using the command **vitis -workspace tutorial**.
 
 Step 3. Click on **File**->**import...**. Select **Vitis project exported zip file**->**Next**. Browse to the `beamformer.ide.zip` file. Click **Next**->**Finish**.
 
 Step 4. You should see the imported beamformer design in the Vitis™ IDE.
 
-After the project is ready in the Vitis IDE, you can move on to the next steps to try out the various debug features in software and hardware emulation and also in hardware.
+After the project is ready in the Vitis IDE, you can move on to the next steps to try out the various debug features in software and hardware emulation, and also in hardware.
 
-**Note**: The imported project specifies a hardware platform path that must be adjusted to your specific installed path to work correctly. Click on **`beamformer_system.sprj`** to update the hardware platform path in the Vitis™ IDE.
+Note: The imported project specifies a hardware platform path that should be adjusted to your specific installed path to work correctly. Click on **`beamformer_system.sprj`** to update the hardware platform path in the Vitis™ IDE.
 
-* [AI Engine Debug with Software Emulator](./Debug1_se.md)
-* [AI Engine Debug with AI Engine Emulator](./Debug2_ai.md)
-* [AI Engine Source Code Debug with Hardware Emulator](./Debug2_he.md)
-* [AI Engine Source Code Debug on Hardware](./Debug3_hw.md)
-* [AI Engine/PL Kernel Debug with XRT Utilities](./Debug5_bc.md)
+* <a href="Debug1_se.md">AI Engine Debug with Software Emulator</a>
+* <a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a>
+* <a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a>
+* <a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a>
+* <a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a>
 
+Note: This tutorial is based on 2020.2 released xilinx_vck190_es1_base_202020_1 platform.
 
-## Support
-
-GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
 ## License
 
@@ -114,4 +95,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center" class="sphinxhide"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+

@@ -17,11 +17,9 @@
 - [Step 4: Test the Platform](#step-4-test-the-platform)
   - [Test 1: Read Platform Info](#test-1-read-platform-info)
   - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
-  - [Fast Track for Vector Addtion](#fast-track-for-vector-addtion)
   - [Test 3: Run a Vitis-AI Demo](#test-3-run-a-vitis-ai-demo)
     - [Create the design](#create-the-design)
     - [Run Application on Board](#run-application-on-board)
-    - [Known Issues](#known-issues)
   - [Congratulations](#congratulations)
 
 ## Step 4: Test the Platform
@@ -35,25 +33,24 @@ With Vitis environment setup, **platforminfo** tool can report XPFM platform inf
 <summary><strong>Click for detailed logs</strong></summary>  
 
 ```bash
-# Run in zcu104_custom_pkg directory
+# in zcu104_custom_pkg directory
 platforminfo ./zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 ==========================
 Basic Platform Information
 ==========================
 Platform:           zcu104_custom_platform
-File:               /group/bcapps/rickys/cases/pfm_zcu104_2021.2/Vitis-Tutorials/Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/ref_files/step3_pfm/platform_repo/zcu104_custom_platform/export/zcu104_custom_platform/zcu104_custom_platform.xpfm
+File:               <your path to>/zcu104_custom_platform.xpfm
 Description:        
 A custom platform ZCU104 platform
-    
 
 =====================================
 Hardware Platform (Shell) Information
 =====================================
 Vendor:                           xilinx
-Board:                            ZCU104_Custom_Platform
-Name:                             ZCU104_Custom_Platform
+Board:                            zcu104_custom_platform
+Name:                             zcu104_custom_platform
 Version:                          0.0
-Generated Version:                2021.2
+Generated Version:                2020.2
 Hardware:                         1
 Software Emulation:               1
 Hardware Emulation:               1
@@ -67,13 +64,14 @@ Board Part:                       xczu7ev-ffvc1156-2-e
 =================
 Clock Information
 =================
-  Default Clock Index: 2
-  Clock Index:         1
+  Default Clock Index: 1
+  Clock Index:         0
     Frequency:         100.000000
-  Clock Index:         2
+  Clock Index:         1
     Frequency:         200.000000
-  Clock Index:         3
+  Clock Index:         2
     Frequency:         400.000000
+
 
 ==================
 Memory Information
@@ -114,8 +112,6 @@ System Configurations:
     Boot Image QEMU Dev Tree:  
 Supported Runtimes:
   Runtime: OpenCL
-
-
 ```
 
 </details>
@@ -135,7 +131,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    - Click **next**
    - Select **zcu104_custom** as platform, click **next**.
    - Name the project **vadd**, click **next**.
-   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```<full_pathname_to_zcu104_custom_pkg>/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh** in Step3). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click **next**.
+   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running **sdk.sh**). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click **next**.
    - Select **System Optimization Examples -> Vector Addition** and click **finish** to generate the application.
    - In the Explorer window double click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
    - Select **vadd_system** in Explorer window and Click **Build** icon in toolbar.
@@ -179,30 +175,6 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    TEST PASSED
    ```
 
-### Fast Track for Vector Addtion
-
-Scripts are provided to create the test applications on the custom platform we created. To use these scripts, please run the following steps.
-
-1. Run build
-
-   ```bash
-   # cd to the step directory, e.g.
-   cd step4_validate
-   make all
-   ```
-
-   The default verification uses hardware emulation. If you'd like to verify vadd application on hardware board, please run the following command to generate the SD card image.
-
-   ```bash
-   cd step4_validate
-   make vadd_hw
-   ```
-
-2. To clean the generated files, please run
-
-   ```bash
-   make clean
-   ```
 
 ### Test 3: Run a Vitis-AI Demo
 
@@ -216,15 +188,16 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    - Open menu Window -> Preferences
    - Go to Library Repository tab
    - Add Vitis-AI:
-     - Click **Add** button
+     - Click Add button
      - Input ID: vitis-ai
      - Name: Vitis AI
-     - Location: assign a target download directory or keep empty. Vitis will use default path `~/.Xilinx` if this field is empty.
-     - Git URL: `https://github.com/Xilinx/Vitis-AI.git`
-     - Branch: The branch you'd like to verify with your platform. Use `1.4` for the Vitis-AI version that matches Vitis 2021.1. You can use `master` for the latest patched version. Please note that the master branch will move forward. At some point `master` branch will point to a new release that not be compatible with Vitis 2021.2.
+     - Location: keep empty or assign a target download directory
+     - Git URL: https://github.com/Xilinx/Vitis-AI.git
+     - Branch: v1.3
 
-   ![missing image](./images/vitis_repo_add_vai.png)
+   ![](./images/vitis_repo_add_vai.png)
 
+   Note: If **Location** is empty, Vitis IDE will clone the git repo to `~/.Xilinx` directory. In this example, we set it to a directory with large storage capability due to home directory size limitation.
 
 2. Download the Vitis-AI library
    
@@ -233,35 +206,21 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    - Wait until the download of Vitis-AI repository completes
    - Click OK to close this window.
 
+   ![](images/vitis_download_lib.png)
+
    Vitis IDE will check the upstream status of each repository. If there are updates, it will allow users to download the updates if the source URL is a remote Git repository.
 
-3. Download Vitis-AI specific sysroot
-   
-   Since Vitis-AI has a different release cycle with PetaLinux, Vitis-AI related PetaLinux recipes are released later than PetaLinux release. At the time that this tutorial releases, Vitis-AI related recipes are not released yet. We cannot build PetaLinux sysroot/sdk with Vitis-AI dependencies. We need to use pre-built Vitis-AI sdk.
-
-   - Download the Vitis-AI cross compile environment setup script: `wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/1.4/setup/mpsoc/VART/host_cross_compiler_setup.sh`
-   - Update the script for installation area. The default install path is `install_path=~/petalinux_sdk_2021.1`. Since we are using PetaLinux 2021.2, it's better to change `install_path=~/petalinux_sdk_2021.2`.
-   - Run the script to setup cross compile environment: `./host_cross_compiler_setup.sh`
-
-   Once Vitis-AI recipes are released, this tutorial will update the steps for building Vitis-AI dependencies to the sysroot using PetaLinux.
-
-4. Create a Vitis-AI design on our zcu104_custom_platform
+3. Create a Vitis-AI design on our zcu104_custom_platform
 
    - Go to menu **File** -> **New** -> **Application Project**
    - Click **Next** in Welcome page
    - Select platform **zcu104_custom_platform**. Click Next.
    - Name the project **dpu_trd**, click **next**.
-   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to sysroot installation path in previous step, e.g. `~/petalinux_sdk_2021.2/sysroots/cortexa72-cortexa53-xilinx-linux/`. 
-   - Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click **next**.
+   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```<full_pathname_to_zcu104_custom_pkg>/pfm/sysroots/aarch64-xilinx-linux```(as you created by running **sdk.sh**). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_custom_plnx/images` directory, which are generated in Step 2. click **next**.
    - Select **dsa -> DPU Kernel (RTL Kernel)** and click **Finish** to generate the application.
-   ![missing image](images/vitis_add_dpu.png)
+   ![](images/vitis_add_dpu.png)
 
-5. Update Build Target
-
-   - Double click the system project file dpu_trd_system.sprj
-   - Change Active Build Configuration to **Hardware**
-
-6. Review and update DPU settings for ZCU104. The default created design has the DPU settings for ZCU102.
+4. Review and update DPU settings for ZCU104. The default created design has the DPU settings for ZCU102.
 
    - Open **dpu_conf.vh** from **dpu_trd_kernels/src/prj/Vitis** directory
    - Update line 37 from `URAM_DISABLE` to `URAM_ENABLE`
@@ -269,50 +228,37 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
 
    **Note**: ZCU104 has ZU7EV device on board. It has less BRAM than ZU9EG on ZCU102 but it has URAM. Turning on URAM support can fulfill the on chip memory requirement by DPU.
 
-7. Update system_hw_link for proper kernel instantiation
+5. Update system_hw_link for proper kernel instantiation
+
+   The DPU kernel requires two phase aligned clocks, 1x clock and 2x clock. The configuration is stored in **dpu_trd/src/prj/Vitis/config_file/prj_config_gui**. It sets up clock and AXI interface connections between the DPU kernel to the platform. This configuration file also sets up implementation strategy so that it works well for timing closure.
+
+   Here's how to use it in our project.
+
+   - Double click dpu_trd_system_hw_link.prj.
+   - In **Hardware Functions** window, right click the binary container "dpu", select **Edit V++ Options**
+   - Input `--config ../../dpu_trd/src/prj/Vitis/config_file/prj_config_gui`. Click OK.
 
    Since ZCU104 has less LUT resources than ZCU102, it's hard to meet timing closure target if we include the softmax IP in PL like ZCU102. The implementation would take quite a long time. The Vitis-AI DPU-TRD design removes the softmax IP in hardware for ZCU104. When the host application detects no softmax IP in hardware, it will calculate softmax with software. The result will be identical but the calculation time will be different. Since our target is to verify the platform, we will remove the softmax kernel in our test application.
 
-   - Double click dpu_trd_system_hw_link.prj.
-   - In Hardware Functions window, remove sfm_xrt_top instance by right clicking it and select Remove.
-   - After removing the sfx_xrt_top instance, the remaining instances in Hardware Functions window is DPUCZDX8G with Compute Units = 2.
-
-8. Review system_hw_link v++ for proper kernel instantiation
-
-   The DPU kernel requires two phase aligned clocks, 1x clock and 2x clock. The configuration is stored in the example design. It sets up clock and AXI interface connections between the DPU kernel to the platform. 
-
-   Here's how to review the setup in the project.
-
-   - Go to **Assistant View**
-   - Double click **dpu_trd_system [System]**
-   - Expand the left tree panel and find dpu_trd_system -> dpu_trd_system_hw_link -> Hardware -> dpu
-
-   ![missing image](./images/hw_link_dpu.png)
-
-   - Click `...` button on the line of V++ Configuration Settings, it shows the configuration like this:
-
-      ```
-      [clock]
-      freqHz=300000000:DPUCZDX8G_1.aclk
-      freqHz=600000000:DPUCZDX8G_1.ap_clk_2
-      freqHz=300000000:DPUCZDX8G_2.aclk
-      freqHz=600000000:DPUCZDX8G_2.ap_clk_2
-
-      [connectivity]
-      sp=DPUCZDX8G_1.M_AXI_GP0:HPC0
-      sp=DPUCZDX8G_1.M_AXI_HP0:HP0
-      sp=DPUCZDX8G_1.M_AXI_HP2:HP1
-      sp=DPUCZDX8G_2.M_AXI_GP0:HPC0
-      sp=DPUCZDX8G_2.M_AXI_HP0:HP2
-      sp=DPUCZDX8G_2.M_AXI_HP2:HP3
-      ```
-
-   > Note: the contents will be written to dpu-link.cfg during build time and pass to v++ Linker command line.
-
-   > Note: To customize the v++ link configuration, you can add contents in V++ configuration settings, or create your own configuration file and add `--config <your_config_file.cfg>` to **V++ Command Line Options** field. If you need to use relative path for the configuration file, the base location is `dpu_trd_system_hw_link/Hardware` directory.
+   - Remove **sfm_xrt_top** instance by right clicking it and select **Remove**.
 
 
-9.  Update package options to add dependency models into SD Card
+6. Update host code build options
+
+   - Double click the system project file dpu_trd_system.sprj
+   - Change Active Build Configuration to **Hardware**
+   - Right click dpu_trd, the host application, select C/C++ Build Settings
+   - Go to **GCC Host Linker** -> **Libraries** tab
+   - Click + button on **Library Search Path (-L)**
+   - Click workspace, select **dpu_trd/src/app/samples/lib**
+   - Click OK. It generates the path `${workspace_loc:/${ProjName}/src/app/samples/lib}`
+   - Click OK.
+   - Adjust the search order to make sure the added path is above the SYSROOT path.
+   - Click Apply and Close.
+
+   Note: the DPU design template automatically sets up the C++ standard to c++17 and adds libraries to link to. User needs to manually setup the library search path. The libraries in src/app/samples/lib are identical to the VART libraries that have been installed in the rootfs. 
+
+7. Update package options to add models into SD Card
 
    - Double click dpu_trd_system.sprj
    - Click ... button on Package options
@@ -323,7 +269,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    
    The dpu_trd in the path name is the application project name in this example. If your project name is different, please update the project name accordingly.
 
-10. Build the hardware design
+8. Build the hardware design
 
    - Select the dpu_trd_system system project
    - Click the hammer button to build the system project
@@ -395,15 +341,15 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    # Model
    root@petalinux:~# cp /mnt/sd-mmcblk0p1/app/model/resnet50.xmodel ~
    # Host app
-   root@petalinux:~# cp /mnt/sd-mmcblk0p1/dpu_trd ~
+   root@petalinux:~# cp /mnt/sd-mmcblk0p1/dpu_trd .
    # Image to test
-   root@petalinux:~# cp /mnt/sd-mmcblk0p1/app/img/bellpeppe-994958.JPEG ~
+   root@petalinux:~# wget https://github.com/Xilinx/Vitis-AI/raw/v1.1/DPU-TRD/app/img/bellpeppe-994958.JPEG
    ```
 
 5. Run the application
 
    ```bash
-   root@petalinux:~# env LD_LIBRARY_PATH=samples/lib XLNX_VART_FIRMWARE=/mnt/sd-mmcblk0p1/dpu.xclbin ./dpu_trd bellpeppe-994958.JPEG
+   env LD_LIBRARY_PATH=samples/lib XLNX_VART_FIRMWARE=/mnt/sd-mmcblk0p1/dpu.xclbin ./dpu_trd bellpeppe-994958.JPEG
    ```
 
    It would show bell pepper has the highest possibility.
@@ -477,15 +423,10 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
 
 </details>
 
-#### Known Issues
-
-1. The default setting of PMIC (irps5401) on ZCU104 can't afford DPU running on heavy loading. You may see crash or hang on heavy loading.
-   - Please refer to [DPU TRD Known issues](https://github.com/Xilinx/Vitis-AI/blob/master/dsa/DPU-TRD/prj/Vitis/README.md#553-known-issues) for more information. (Ref: [issue 101](https://github.com/Xilinx/Vitis-Tutorials/issues/101))
-
 ### Congratulations
 
 We have completed creating a custom platform from scratch and verifying it with a simple vadd application and a relatively complex Vitis-AI use cases.
 
 Please feel free to check more tutorials in this repository.
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

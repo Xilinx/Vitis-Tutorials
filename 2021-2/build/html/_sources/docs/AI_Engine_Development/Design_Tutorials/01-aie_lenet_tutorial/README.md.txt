@@ -1,18 +1,13 @@
-<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
-    </td>
+<table>
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal™ AI Engine LeNet Tutorial</h1>
+   </td>
  </tr>
 </table>
 
 # LeNet Tutorial
 
-***Version: Vitis 2021.2***
-
 ## Table of Contents
-
 [Introduction](#introduction)
 
 [Before You Begin](#Before-you-begin)
@@ -28,10 +23,9 @@
 [References](#references)
 
 ## Introduction
-
 The Xilinx® Versal ACAP is a fully software-programmable, heterogeneous compute platform that combines the Processor System (PS) (Scalar Engines that include the Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic blocks and memory) and AI Engines which belong in the Intelligent Engine category.
 
-This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM. The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (block RAM) and AI Engine memory.
+This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory.
 
 The tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. A Makefile is provided that you can modify to suit your own needs in a different context.
 
@@ -39,13 +33,12 @@ The tutorial takes you through hardware emulation and hardware flow in the conte
   <summary>Objectives</summary> 
 	
 ### Objectives
-
 After completing the tutorial, you should be able to:
 * Build a complete system design by going through the various steps in the Vitis™ unified software platform flow, including creating the AI Engine Adaptive Data Flow API (ADF) graph, compiling the A72 host application and compiling PL kernels, using the Vitis compiler (V++) to link the AI Engine and HLS kernels with the platform, and packaging the design. You will also be able to run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator.
-* Develop an understanding of Convolutional Neural Network (CNN) layer details using the LeNet algorithm and how the layers are mapped into data processing and compute blocks.
+* Develop an understanding of CNN (Convolutional Neural Network) layer details using the LeNet algorithm and how the layers are mapped into data processing and compute blocks.
 * Develop an understanding of the kernels developed in the design - AI Engine kernels to process fully connected convolutional layers and PL kernels to process the input rearrange and max pool and rearrange functions.
 * Develop an understanding of the AI Engine IP interface using the AXI4-Stream interface.
-* Develop an understanding of memory hierarchy in a system-level design involving DDR memory, PL block RAM, and AI Engine memory.
+* Develop an understanding of memory hierarchy in a system-level design involving DDR memory, PL BRAM, and AI Engine memory.
 * Develop an understanding of graph control APIs to enable run-time updates using the run-time parameter (RTP) interface.
 * Develop an understanding of performance measurement and functional/throughput debug at the application level.
 
@@ -54,14 +47,14 @@ After completing the tutorial, you should be able to:
 <details>
   <summary>Tutorial Overview</summary> 
 	
-## Tutorial Overview
-In this application tutorial, the LeNet algorithm is used to perform image classification on an input image using five AI Engine tiles and PL resources including block RAM. A top level block diagram is shown in the following figure. An image is loaded from DDR memory through the Network on Chip (NoC) to block RAM and then to the AI Engine. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine tile to perform matrix multiplication. The output from the first AI Engine tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output is fed to the second AI Engine tile and the output from that tile is sent to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine tiles are then fed into a second fully connected layer implemented in the `core04` AI Engine tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. In between the AI Engine and PL units is a datamover module (refer to the Lenet Controller in the following figure) that contains the following kernels:
+### Tutorial Overview
+In this application tutorial, the LeNet algorithm is used to perform image classification on an input image using five AI Engine tiles and PL resources including block RAM. A top level block diagram is shown in the following figure. An image is loaded from DDR memory through the NoC to block RAM and then to the AI Engine. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine tile to perform matrix multiplication. The output from the first AI Engine tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output is fed to the second AI Engine tile and the output from that tile is sent to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine tiles are then fed into a second fully connected layer implemented in the fifth AI Engine tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. In between the AI Engine and PL units is a datamover module (refer to the Lenet Controller in the following figure) that contains the following kernels:
 * `mm2s`: a memory mapped to stream kernel to feed data from DDR memory through the NoC to the AI Engine Array
 * `s2mm`: a stream to memory mapped kernel to feed data from the AI Engine Array through NoC to DDR memory
 
 ![Image of LeNet Block Diagram](images/Lenet_block_diagram_v1.PNG)
 
-In the design, there are two major PL kernels. The input pre-processing units, M1R1 and M2R2 are contained in the `lenet_kernel` RTL kernel which has already been packaged as a Xilinx object `.xo` (XO) file. The datamover kernel `dma_hls` provides the interface between the AI Engine and DDR memory. The five AI Engine kernels all implement matrix multiplication. The matrix dimensions depend on the image dimension, weight dimension, and number of features.
+In the design, there are two major PL kernels. The input pre-processing unit, M1R1 and M2R2 are contained in the `lenet_kernel` RTL kernel which has already been packaged as a Xilinx object `.xo` (XO) file. The datamover kernel `dma_hls` provides the interface between the AI Engine and DDR memory. The five AI Engine kernels all implement matrix multiplication. The matrix dimensions depend on the image dimension, weight dimension, and number of features.
 
 </details>
 
@@ -112,23 +105,23 @@ Tools Documentation:
 
 To build and run the Lenet tutorial, you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2021.2](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
+* Install the [Vitis Software Platform 2021.1](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) 
 
-* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202120_1` platform)
+* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202110_1` platform)
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT)
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2021.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and set up the [VCK190 Vitis Platform for 2021.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 </details>
 
 <details>
 <summary>Environment: Setting Up the Shell Environment</summary> 
 	
-## Environment: Setting Up the Shell Environment
-When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system-specific paths. 
+### Environment: Setting Up the Shell Environment
+When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system specific paths. 
 
 Edit `env_setup.sh` script with your file paths: 
 ```bash
@@ -160,7 +153,7 @@ platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the above command should be as follows:
 ```bash
-"baseName": "xilinx_vck190_base_202120_1",
+"baseName": "xilinx_vck190_base_202110_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -219,7 +212,7 @@ make run TARGET=hw_emu
   <summary>make kernels: Compile PL Kernels</summary> 
  
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202120_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202110_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
 
 `unzip lenet_kernel.xo`
 
@@ -231,14 +224,14 @@ The following commands compiles the kernels (default TARGET=hw_emu).
 make kernels
 ```
 
-The expanded command is as follows:
+The expanded command is as follow:
 ```
 mkdir -p ./build/hw_emu
 
 cd ./build/hw_emu
 
 v++       --target hw_emu			     \
-          --platform xilinx_vck190_base_202120_1     \
+          --platform xilinx_vck190_base_202110_1     \
           --save-temps                               \
 	  --temp_dir _x	                             \
           --verbose                                  \
@@ -273,7 +266,7 @@ v++       --target hw_emu			     \
   <summary>make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow</summary> 
  
 ### make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
-An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives). 
+An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives. 
 * The AI Engine ADF C++ graph of the design contains AI Engine kernels and PL kernels. 
 * All interconnects between kernels are defined in the C++ graph.
 * All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object. All `adf::sim` platform connections from graph to PLIO map onto ports on the AI Engine subsystem graph that are connected using the Vitis compiler connectivity directives. No dangling ports or implicit connections are allowed by the Vitis compiler. 
@@ -328,7 +321,7 @@ The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into 
  
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
  
-The command to run this step is as follows (default TARGET=hw_emu, default EN_TARCE=0):
+The command to run this step is shown as follows (default TARGET=hw_emu, default EN_TARCE=0):
 ```
 make xclbin
 ``` 
@@ -338,7 +331,7 @@ The expanded command is as follow:
 cd ./build/hw_emu;
 
 v++       -l                                                \
-          --platform xilinx_vck190_base_202120_1            \
+          --platform xilinx_vck190_base_202110_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -358,7 +351,7 @@ If EN_TRACE=1, the command is expanded as follow:
 cd ./build/hw;
 
 v++       -l                                                \
-          --platform xilinx_vck190_base_202120_1            \
+          --platform xilinx_vck190_base_202110_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -432,31 +425,31 @@ or
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib \
 			../build//Work/ps/c_rts/aie_control_xrt.cpp   \
 			-o ../build/app_control.o                   
 			
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib \
 			../design/aie_src/main.cpp                              \
 			-o ../build/lenet_app.o                    
 
 aarch64-linux-gnu-g++   ./build/app_control.o			                \
 			./build/lenet_app.o			                \
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux \
-			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/sysroots/aarch64-xilinx-linux/usr/lib\ 
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux \
+			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/sysroots/aarch64-xilinx-linux/usr/lib\ 
                         -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o    		\
                         -L$(XILINX_VITIS_AIETOOLS)/lib/lnx64.o       		\
                         -ladf_api_xrt                      		        \
@@ -509,10 +502,10 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ./build/hw_emu/_x			        \
-	-f xilinx_vck190_base_202120_1  			\
+	-f xilinx_vck190_base_202110_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
-	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4 \
-	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/Image \
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ./build/hw_emu/package	        \
 	--package.sd_dir ./design/aie_src/data	                \
@@ -536,10 +529,10 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ./build/hw_emu/_x			        \
-	-f xilinx_vck190_base_202120_1  			\
+	-f xilinx_vck190_base_202110_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
-	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4 \
-	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/Image \
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ./build/hw_emu/package	        \
 	--package.sd_dir ./design/aie_src/data	                \
@@ -556,8 +549,8 @@ cd ../../;
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html#vhc1571429852245) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html#vhc1571429852245) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd> Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies \<ext4\|fat32\> output image file format. `ext4`: Linux file system and `fat32`: Windows file system.|
 |--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card`.|
@@ -566,8 +559,8 @@ cd ../../;
 |Inputs Sources|Description|
 |  ---  |  ---  |
 |$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS host application needs the XRT headers in this folder to execute.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4|The root filesystem file for Petalinux.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.2/Image|The pre-built Petalinux Image the processor boots from.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/rootfs.ext4|The root filesystem file for Petalinux.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2021.1/Image|The pre-built Petalinux Image the processor boots from.|
 |design/aie_src/data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS host application uses to verify the output data from the AI Engine.|
 |build/hw_emu/lenet_xrt.elf|The PS host application executabled created in the `make application` step.|
 |build/hw_emu/vck190_aie_lenet.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
@@ -594,14 +587,14 @@ or
 cd ./build/hw_emu/package
 ./launch_hw_emu.sh 
 ```
-When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt display: 
+When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up: 
 ```bash
-root@versal-rootfs-common-2021_2:~#
+root@versal-rootfs-common-2021_1:~#
 ```
 
-In some cases, the following error might display:
+In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2021_2:~## xinit: giving up
+root@versal-rootfs-common-2021_1:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -609,15 +602,15 @@ Enabling notebook extension jupyter-js-widgets/extension...
 [C 13:46:09.233 NotebookApp] Bad config encountered during initialization:
 [C 13:46:09.239 NotebookApp] No such notebook dir: ''/usr/share/example-notebooks''
 ```
+The error can be ignored. Press <enter> to return to the root prompt.
 
-After the root prompt displays, run the following commands to run the design:  
+After the root prompt comes up, run the following commands to run the design:  
 ```
 cd /mnt/sd-mmcblk0p1
-export XCL_EMULATION_MODE=hw_emu
+export XLC_EMULATION_MODE=hw_emu
 export XILINX_XRT=/usr
 ./lenet_xrt.elf a.xclbin
 ```
-
 The `lenet_xrt.elf` should execute, and after a few minutes, you should see the output with *TEST PASSED* on the console. When this is shown, run the following keyboard command to exit the QEMU instance: 
 
 ```
@@ -630,30 +623,29 @@ Press CtrlA, let go of the keyboard, and then press x
 <details>
   <summary>TARGET=hw: Run on Hardware</summary> 
 	  
-## TARGET=hw: Run on Hardware	  
-To run your design on hardware, re-run the following steps with TARGET=hw:
+### TARGET=hw: Run on Hardware	  
+To run your design on hardware, re-run the following steps with TARGET=hw
 
 ```
 make kernels TARGET=hw
 make xclbin TARGET=hw
 make package TARGET=hw 
 ```
-These command create a `build/hw` folder with the kernels, `xclbin`, and `package` for a hardware run.
+These command create a `build/hw` folder with the kernels, `xclbin`, and `package` for a hardware run. 
 
-Now follow **Steps 1-9** to run the `lenet_xrt.elf` excutable on your VCK190 board:
+Now follow **Steps 1-9** to run the `lenet_xrt.elf` excutable on your VCK190 board. 
 
-**Step 1.** Ensure your board is powered off.
+**Step 1.** Ensure your board is powered off. 
 
-**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file onto an SD card.
+**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file onto an SD card. 
 
-**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board.
+**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board. 
 
 **Step 4.** Set the switch SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON.
 
-**Step 5.** Connect your computer to the VCK190 board using the included USB cable.
+**Step 5.** Connect your computer to the VCK190 board using the included USB cable. 
 
-**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following:
-
+**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following: 
 ```
 Port: <COMMXX>
 Speed: 115200
@@ -666,10 +658,9 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
 
-**Step 9.** Run the following commands into the TeraTerm terminal:
-
+**Step 9.** Run the following commands into the TeraTerm terminal: 
 ```
 cd /mnt/sd-mmcblk0p1
 export XILINX_XRT=/usr
@@ -684,8 +675,8 @@ export XILINX_XRT=/usr
 <details>
   <summary>LeNet Architecture and AI Engine/PL Function Partitioning</summary>
 	
-## LeNet Architecture and AI Engine/PL Function Partitioning
-The architecture of the LeNet design is shown in the following figure. The details of the individual layers and their implementation will be described in a later section. This design provides an illustration of the functional partitioning between the AI Engine and PL resources, as shown in the block diagram previously. The input rearrange, max pooling, and rearrange are scalar byte operations and interact with read/write memories to ensure sustained throughput. This set of operations are suitable for implementation in PL rather than in the AI Engine array. With appropriate data rearrangement, the computations in the convolutional layers are presented as matrix multiplications and they are optimized to be implemented in the AI Engine array.
+### LeNet Architecture and AI Engine/PL Function Partitioning
+The architecture of the LeNet design is show in the following figure. The details of the individual layers and their implementation will be described in a later section. This design provides an illustration of the functional partitioning between the AI Engine and PL resources, as shown in the block diagram previously. The input rearrange, max pooling, and rearrange are scalar byte operations and interact with read/write memories to ensure sustained throughput. This set of operations are suitable to be implemented in PL rather than in the AI Engine array. With appropriate data rearrangement, the computation in the convolutional layers are presented as matrix multiplications and they are optimized to be implemented in the AI Engine array.
 
 ![Image of LeNet Architecture](images/Lenet_architecture.PNG)
 
@@ -694,8 +685,8 @@ The architecture of the LeNet design is shown in the following figure. The detai
 <details>
   <summary>Design Platform Details</summary>
 	
-## Design Platform Details
-In the base platform, the CIPS, NoC, and AI Engine are instantiated and interfaces among them are created. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application developed, that is, the PL kernels present in each design might vary. An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives.
+### Design Platform Details
+In the base platform, the CIPS, NoC, and AI Engine are instantiated and interfaces among them are created. To add the various functions in a system level design, PL kernels are added to the base platform depending on the application developed, that is, the PL kernels present in each design might vary.  An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives.
 For this design, the components are added by the `v++ -l` step (make XCLBIN in the tool flow section above) and include the following:
 * AI Engine kernel `graph.o`
 * data mover kernel (`dma_hls.[hw|hw_emu].xo`)
@@ -731,11 +722,11 @@ The LeNet algorithm in this design starts with an image of size 28x28 input impo
 **Max Pool and Data Rearrangement Set 1 (M1R1)**
 
 Pooling is the operation in CNN to enable the detection of the object when presented with different versions of the images by reducing the size of the feature map. Among the types of pooling, the max is chosen to account for distortion. 
-In this design, the output from the first AI Engine tile (core01) is a 576x8 matrix, which is sent to the PL. Each of the columns in the matrix corresponds to a 24x24 dimensional image laid out in the row-major format. The network being implemented has only six output features for the Conv1 layers and hence two of the eight columns do not contain real images. Then a max pool operation is performed and a value is returned from a 2x2 matrix, as seen in the green squares in the following diagram.
+In this design, the output from the first AI Engine tile (core01) is a 576x8 matrix, which is sent to the PL. Each of the columns in the matrix corresponds to a 24x24 dimensional image laid out in the row major format. The network being implemented has only six output features for the Conv1 layers and hence two of the eight columns do not contain real images. Then a max pool operation is performed and a value is returned from a 2x2 matrix, as seen in the green squares in the following diagram.
 
 ![Image of LeNet Maxpool1](images/Lenet_maxpool1.PNG)
 
-The resulting 144x8 byte matrix, which is stored in RAMB36 module, then goes through a rearrange operation, where the data is written into six RAMB18s populated with zeros in the appropriate positions and the addresses are generated by the fanout table. Each RAMB18 is configured as 2048x8 (depth x width). The arrays then go through a second stage or rearrange operation where each array is configured in read mode and 512x32. These block RAMS are rearranged to four block RAMS and five register files After the rearrange function, the data is output as six images each of 64x25 dimension. The data for the previous image needs to be sent out to memory mapped AXI4 before the writing of the new image starts.
+The resulting 144 x 8 byte matrix, which is stored in RAMB36 module, then goes through a rearrange operation, where the data is written into six RAMB18s populated with zeros in the appropriate positions and the addresses are generated by the fanout table. Each RAMB18 is configured as 2048 x 8 (depth x width). The arrays then go through a second stage or rearrange operation where each array is configured in read mode and 512 x 32. These block RAMS are rearranged to four block RAMS and five register files After the rearrange function, the data is output as six images each of 64 x 25 dimension. The data for the previous image needs to be sent out to memory mapped AXI4 before the writing of the new image starts.
 
 Also in M1R1 are two instances of the AXI2BRAM module, one at the PL-AI Engine interface and another at the AI Engine-PL interface. At the PL-AI Engine interface, data is coming into the module in AXI4-Stream format from the AI Engine. 
 
@@ -743,11 +734,11 @@ The AXI stream supplies a data rate of 128 bits/cycle at 250 MHz and the data is
 
 **Max Pool and Data Rearrangement Set 2 (M2R2)**
 
-This module performs the similar operations of max pooling and data rearrangement to M1R1 but on a smaller set of the feature map. It moves and rearranges data from AI Engine tile, core02, to AI Engine tiles, core03 and core05. The output from the second AI Engine tile, core02, is sent to the PL as 16 images of 8x8 representing the 2D image as a column in a row major order is laid out as an array of 64x16 bytes array. Then a max pool operation is performed and a value is returned from a 2x2 matrix. The results are stored in a register file configured as 16 images of 4x4 bytes which then are rearranged before being sent out using two AXI4-Stream to the two AI Engine tiles, core03 and core05.
+This module performs the similar operations of max pooling and data rearrangement to M1R1 but on a smaller set of the feature map. It moves and rearranges data from AI Engine tile, core02, to AI Engine tiles, core03 and core05. The output from the second AI Engine tile, core02, is sent to the PL as 16 images of 8x8 representing the 2D image as a column in a row major order is laid out as an array of 64 x 16 bytes array. Then a max pool operation is performed and a value is returned from a 2x2 matrix. The results are stored in a register file configured as 16 images of 4x4 bytes which then are rearranged before being sent out using two AXI4-Stream to the two AI Engine tiles, core03 and core05.
 
 **Data Mover Kernel**
 
-The PL-based data mover kernel consist of MM2S and S2MM kernels. This module gets the initial image from DDR memory through the NoC and sends the data to AI Engine tile, core01 (after input processing unit inside `lenet_kernel`). It also receives data from AI Engine tile, core04, and streams out the data to DDR memory through the NoC. The side-facing NoC uses a memory mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine array uses an AXI4-Stream interface.
+The PL based data mover kernel consist of MM2S and S2MM kernels. This module gets the initial image from DDR memory through the NoC and sends the data to AI Engine tile, core01 (after input processing unit inside `lenet_kernel`). It also receives data from AI Engine tile, core04, and streams out the data to DDR memory through the NoC. The side facing NoC uses a memory mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine array uses an AXI4-Stream interface.
 
 </details>
 
@@ -784,7 +775,7 @@ The following figure shows the graph representation of the AI Engine kernels. Th
 
 ![Image of LeNet AI Engine Graph](images/Lenet_graph.PNG)
 
-Note: Also defined in the AI Engine graph are the weights (`core<xx>lut.h`). The weights are used in the matrix multiplication with the input matrix running in the AI Engine tiles. Whereas the input feature maps (IFMs) are streamed from the PL to the AI Engine, the weights are stored in the AI Engine tiles.
+Note also defined in the AI Engine graph are the weights (`core<xx>lut.h`). The weights are used in the matrix multiplication with the input matrix running in the AI Engine tiles. Whereas the input feature maps (IFMs) are streamed from the PL to the AI Engine, the weights are stored in the AI Engine tiles.
 
 </details>
 
@@ -849,7 +840,7 @@ myGraph g;
 adf::connect<> net010(platform.src[0], g.in[0]);
 ```
 
-The main program is the driver of the graph. It is used to load, execute, and terminate the graph. This is done by using the Run Time Graph control API calls, which in this design are:
+The main program is the driver of the graph. It is used to load, execute and terminate the graph. This is done by using the Run Time Graph control API calls, which in this design are:
 
 ```int main(int argc, char ** argv)
    {
@@ -927,8 +918,8 @@ auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 ```
 Additionally, the `memcpy` and `memset` functions are used to initialize the data in global memory.
 
-### 5. Open Graph, Obtain Handle and Execute Graph
-The following registration function was added in 2021.1 for XRT to use ADF API callbacks:
+#### 5. Open Graph, Obtain Handle and Execute Graph
+The following registration function is added in 2021.1 for XRT to use ADF API callbacks:
 
 `adf::registerXRT(dhdl, top->m_header.uuid);`
 
@@ -971,39 +962,32 @@ Then run the Vitis analyzer on the summary file, for example, `xclbin.ex.run_sum
 
 The following is the snapshot of the time trace for the LeNet design run.
 
-![Image of Lenet design Timeline Trace](images/Lenet_1x_trace_2021_2.PNG)
+![Image of Lenet design Timeline Trace](images/Lenet_1x_trace.PNG)
 
 Throughput calculation is as follows:
 ```
-Difference in timeline (execution time) = 5097.847us
+Difference in timeline (execution time) = 1,446.973us
 Throughput = no of images / execution time
-          = 100 / 5097.847us
-          = 19,617 images/s
-
-The excution time reported by trace is with the data mover kernel running at 150MHz. Since the data mover kernel is running at 250MHz, we need to scale the execution time. Hence,
-Throughput = 19,617 images/s x (250 / 150 ) = 32,695 images/s
+          = 100 / 1,446.973us
+          = 69,109 images/s
 ```
 
 ## References
-
 The following documents provide supplemental information for this tutorial.
 
 #### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
-
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
 #### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
+The following are links to the XRT information used by this tutorial: 
 
-The following are links to the XRT information used by this tutorial:
+* [XRT Documentation](https://xilinx.github.io/XRT/master/html/index.html): Explains general XRT API calls used in the PS Host Application. 
 
-* [XRT Documentation](https://xilinx.github.io/XRT/master/html/index.html): Explains general XRT API calls used in the PS Host Application.
-
-* [XRT Github Repo](https://github.com/Xilinx/XRT): Contains the XRT source code.
+* [XRT Github Repo](https://github.com/Xilinx/XRT): Contains the XRT source code. 
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
 #### [Vitis Unified Software Development Platform 2021.1 Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
-
 The following are links to Vitis related information referenced in this tutorial:
 
 * [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/kme1569523964461.html)
@@ -1012,9 +996,7 @@ The following are links to Vitis related information referenced in this tutorial
 
 * [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html)
 
-##### Revision History
-
-* Oct 2021 - Updated for 2021.2
+## Revision History
 * July 2021 - Updated for 2021.1
 * Dec 2020 - Initial Release
 
@@ -1033,4 +1015,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD015 | © Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD015</sup></p>

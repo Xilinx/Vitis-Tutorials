@@ -1,17 +1,18 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
-    </td>
+﻿<table>
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
+   <h1>Super Sampling Rate FIR Filters</h1>
+   <h2>Implementation on the AI Engine</h2>
+   </td>
+ </tr>
+ <tr>
+ <td align="center"><h1>Single-Stream Interface</h1>
+ <h2></h2>
+ </td>
  </tr>
 </table>
 
-# Single-Stream Interface
-
-***Version: Vitis 2021.2***
-
-## Super Sampling Rate FIR Filter
+# Super Sampling Rate FIR Filter
 
 The purpose of this third part of the tutorial is to understand how to implement a FIR filter that has an input sample rate above the clock frequency of the AI Engine array.
 
@@ -23,11 +24,11 @@ When the input sampling Rate is above the clock frequency of the processor (Supe
 
 As a first example, suppose there is a 2 Gsps data stream to be processed, it can be split in two phases to be routed to the AI Engine array:
 
-![PolyphaseOrder2](../Images/PolyphaseOrder2.jpg)
+<img src="../Images/PolyphaseOrder2.jpg" width=1000><br>
 
 A 5 Gsps data stream must be split into 5 phases:
 
-![PolyphaseOrder5](../Images/PolyphaseOrder5.jpg)
+<img src="../Images/PolyphaseOrder5.jpg" width=1000><br>
 
 ## Organize Computation for a 2 Gsps Data Stream in 2 Phases
 
@@ -35,17 +36,17 @@ For a single-rate filter, a 2 Gsps input sample rate means also a 2 Gsps output 
 
 Take a look at how **y0** is computed:
 
-![Y0Compute](../Images/Y0Compute.jpg)
+<img src="../Images/Y0Compute.jpg" width=1000><br>
 
 If the data stream is split into two phases, it can be seen that the coefficients also have to be split into two phases.
 
-![Y0Compute2Phases](../Images/Y0Compute2Phases.jpg)
+<img src="../Images/Y0Compute2Phases.jpg" width=1000><br>
 
 Take a look also at how **y2** is computed:
 
-![Y2Compute](../Images/Y2Compute.jpg)
+<img src="../Images/Y2Compute.jpg" width=1000><br>
 
-![Y2Compute2Phases](../Images/Y2Compute2Phases.jpg)
+<img src="../Images/Y2Compute2Phases.jpg" width=1000><br>
 
 For the even output stream, the data and coefficient phases should match:
 - Even data phase sent through a filter built with the even phase coefficients
@@ -53,7 +54,7 @@ For the even output stream, the data and coefficient phases should match:
 
 Take a look at how this is modified for the odd outputs:
 
-![YoddCompute](../Images/YoddCompute.jpg)
+<img src="../Images/YoddCompute.jpg" width=1000><br>
 
 In this case the phases of the data and coefficients should be mixed:
 - Even data phase sent through a filter built with the odd phase coefficients
@@ -66,28 +67,27 @@ In the previous section the balance between data transfer and compute performanc
 The data stream and the coefficients must be split into four phases and then recombined. In the following figures, the various colors correspond to a different phase for the data (blue) and the coefficients(red):
 - Output phase 0, will be split and recombined as follows:
 
-![Phase0Out](../Images/Phase0Out.jpg)
+<img src="../Images/Phase0Out.jpg" width=1000><br>
 
-![Phase0OutDetail](../Images/Phase0OutDetail.jpg)
+<img src="../Images/Phase0OutDetail.jpg" width=1000><br>
 
 - Output phase 1, will be split and recombined as follows:
 
-![Phase1Out](../Images/Phase1Out.jpg)
+<img src="../Images/Phase1Out.jpg" width=1000><br>
 
-![Phase1OutDetail](../Images/Phase1OutDetail.jpg)
+<img src="../Images/Phase1OutDetail.jpg" width=1000><br>
 
 - Output phase 2, will be split and recombined as follows:
 
-![Phase2Out](../Images/Phase2Out.jpg)
+<img src="../Images/Phase2Out.jpg" width=1000><br>
 
-![Phase2OutDetail](../Images/Phase2OutDetail.jpg)
-
+<img src="../Images/Phase2OutDetail.jpg" width=1000><br>
 
 - Output phase 3, will be split and recombined as follows:
 
-![Phase3Out](../Images/Phase3Out.jpg)
+<img src="../Images/Phase3Out.jpg" width=1000><br>
 
-![Phase3OutDetail](../Images/Phase3OutDetail.jpg)
+<img src="../Images/Phase3OutDetail.jpg" width=1000><br>
 
 The Data and the Coefficients being split into *N* Phases (four in this case), the resulting architecture requires *N*Phases x *N*Phases (4x4 = 16) to be implemented.
 
@@ -101,19 +101,19 @@ The kernels created in the previous section can be reused here as the only diffe
 
 To minimize the data routing, all blocks using the same data stream should be placed in the same column. This leads to the following architecture:
 
-![FourPhasesSingleStream](../Images/FourPhasesSingleStream.jpg)
+<img src="../Images/FourPhasesSingleStream.jpg" width=1000><br>
 
 In the AI Engine array the direction of the cascade stream is flipped from one row to the next.
 
-![CascadeDir2](../Images/CascadeDir2.jpg)
+<img src="../Images/CascadeDir2.jpg" width=1000><br>
 
 This feature needs to be taken into account when placing the kernels to get the cascade connections correct in the graph:
 
-![FourPhasesSingleStreamPlaced](../Images/FourPhasesSingleStreamPlaced.jpg)
+<img src="../Images/FourPhasesSingleStreamPlaced.jpg" width=1000><br>
 
 The kernels highlighted in the following figure will need to discard one sample within the initialization function:
 
-![FourPhasesSingleStreamDiscard](../Images/FourPhasesSingleStreamDiscard.jpg)
+<img src="../Images/FourPhasesSingleStreamDiscard.jpg" width=1000><br>
 
 At this point consider latencies within the kernels. In the operation scheduling, data is first read from the stream, a `mul4` and three `mac4` are performed and the accumulator is then sent to the cascade stream. All in all the latency from 'read' to 'write' is approximately 20-25 clock cycles (call it L, L~25). In the left hand side column this means that the data input from the first row to the second row should enter a FIFO of length ~75 (3L). The Input to row two is approximately the same as row zero, and row three should be fed at the same time as row 1. the following table shows the latencies in multiple of L:
 
@@ -126,7 +126,7 @@ At this point consider latencies within the kernels. In the operation scheduling
 
 Depending on the row, the latencies are completely different. A latency of less than 32 colock cycle usually gets implemented into the FIFOs included in the AXI-Stream interconnect. Above that number, it gets implemented in a memory module, with an AI Engine serving the inputs and outputs. This would drastically reduce performance. Another possibility is to have these FIFOs implemented in the PL, and have two streams coming from the PL for each column, one serving the even rows and the other serving the odd rows. A single FIFO is required on the first and last columns, but two are necessary for the inner columns:
 
-![FourPhasesDualStreams](../Images/FourPhasesDualStreams.jpg)
+<img src="../Images/FourPhasesDualStreams.jpg" width=1000><br>
 
 
 ## C++ Code Analysis
@@ -232,12 +232,9 @@ Navigate to the `MultiKernel` directory. In the `Makefile` three methods are def
 
 Take a look at the source code (kernel and graph) to familiarize yourself with the C++ instanciation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
 
-To have the simulation running, input data must be generated. There are 2 possibilities:
+To have the simulation running, input data must be generated. Change directory to `data` and type `GenerateStreams`. The following parameter should be set for this example:
 
-1. Just type `make data`
-2. Change directory to `data` and type `GenerateStreams`. The following parameters should be set for this example:
-
-![generateSingleStreamSSR4](../Images/generateSingleStreamSSR4.jpg)
+<img src="../Images/generateSingleStreamSSR4.jpg" width=800><br>
 
 Click **Generate** then **Exit**. The generated files `PhaseIn_0.txt` ... `PhaseIn_3.txt` should contain mainly 0's, with a few 1's and 2's.
 
@@ -245,23 +242,23 @@ Type `make all` and wait for the `vitis_analyzer` GUI to display. The Vitis anal
 
 Click **Graph** to visualize the graph of the application:
 
-![Graph4Phases](../Images/Graph4Phases.jpg)
+<img src="../Images/Graph4Phases.jpg" width=800><br>
 
 The 16 kernels and their eight independent input streams are clearly visible. The top graph is for the output phases 0 and 2, the phases where the cascade stream is from left to right on the physical device. The bottom graph is for phases 1 and 3 where the cascade stream is from right to left.
 
 Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
 
-![Array4Phases](../Images/Array4Phases.jpg)
+<img src="../Images/Array4Phases.jpg" width=500><br>
 
 In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph. With the four location constraints that were added, the placer had only one solution for the kernel placement: this square. The router had an easy job to feed all these kernels by simply using the south-north AXI-Stream. The path back to the PL from the extremities also uses only the vertical AXI-Streams.
 
 Finally click **Trace** to look at how the entire simulation went through. This may be useful to track where your AI Engine stalls if performance is not as expected:
 
-![Timeline4Phases](../Images/Timeline4Phases.jpg)
+<img src="../Images/Timeline4Phases.jpg" width=1500><br>
 
 Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput output_*`.
 
-![GraphOutput4Phases](../Images/GraphOutput4Phases.jpg)
+<img src="../Images/GraphOutput4Phases.jpg" width=1000><br>
 
 The top graph reflects the real part of the output. The bottom graph this is the imaginary part. On both, the filter impulse response is recognizable.
 
@@ -281,37 +278,15 @@ Total Throughput -->    3808.48 Msps
 
 This architecture achieves very close to 4 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.
 
-# Vitis Model Composer implementation
-
-In the directory _vitis_model_composer_ launch Vitis Model Composer with the comman **model_composer**. There are 2 designs in this directory:
-* _SingleStreamSSR.slx_
-* _SingleStreamSSRwithPL.slx_
-
-The first one is the 4 phases SSR built in the AI Engine array using the AIE blockset of Vitis Model Composer. The design is fed from pure Simulink blocks and the result is diplayed in a scope to verify that the difference with the pure floating-point Simulink implementation is not too high. At the same time the signal is sent through a spectrumscope to verify the output spectrum.
-
-![SSR4_VMC](../Images/SSR4_VMC.jpg)
-
-The second design contains the previous design but, to show what would be a real hardware implementation,the input and the output of the AI Engine array are a Programmable logic design created with the HDL blockset:
-* **Input**:
-    - The 32-bit 4 Gsps input sample rate is divided into 8 branches @500MHz to feed the PL as for a standard ADC.
-    - These 8x 32-bit branches are recombined into 4x 64-bit phases and sent into FIFOs.
-    - Actually there are 2 FIFOs per phase which contains exactly the same data to feed 2 branches that will be consumed on the AI Engine array side at different instants. Two consecutive rows of the array being oriented in opposite ways in hardware, even and odd rows do not consume the data at the same timestamps due to the fact that the latency since the first block of the cascade chains are different.
-* **Output**:
-  - The FIFOs are there to resynchronize the various branches in order to get a clean, well ordered output signal
-
-Before and after the PL we have the same source signal and sinks (scope and spectrumscope) to verify the functionality of the AI Engine+PL design.
-
-![SSR4WithPL](../Images/SSR4WithPL.jpg)
 
 
 
 
-<<<<<<< HEAD
 
 
 
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
-=======
-<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
+
+
+
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

@@ -1,0 +1,1051 @@
+﻿
+
+
+<!DOCTYPE HTML>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description"/>
+		<meta name="keywords"/>
+		<meta property="og:title" content=""/>
+		<meta property="og:description"/>
+		<!-- favicon -->
+		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
+		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
+		<!-- Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
+
+	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+		<!-- Google Tag Manager -->
+	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+	<!-- End Google Tag Manager -->
+	
+        <!-- Google Tag Manager -->
+        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+        <!-- End Google Tag Manager -->	
+
+  
+  
+  
+  
+
+  
+      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
+	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Versal Emulation Waveform Analysis" href="../11-ai-engine-emulation-waveform-analysis/README.html" />
+    <link rel="prev" title="AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware" href="../09-debug-walkthrough/README.html" /> 
+	</head>
+	<body>
+		<div class="xilinx-bs3"/>
+		<div class="root responsivegrid">
+			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
+ <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+
+    
+    
+
+    
+
+
+
+<div class="xf-content-height">
+    
+
+<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
+    
+    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
+	<header data-component="header" class="site-header">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid main-nav">
+				<div class="row">
+					<div class="navbar-column col-xs-4 col-sm-5">
+						<ul class="nav navbar-nav hidden-xs">
+							<li>
+									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
+								</li>
+							<li>
+									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
+								</li>
+							<li>
+									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
+								</li>
+							</ul>
+							
+						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
+							<li>
+									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
+								</li>
+							<li>
+									<button data-target="#header-container-1" data-function="toggle">Products</button>
+								</li>
+							<li>
+									<button data-target="#header-container-2" data-function="toggle">Company</button>
+								</li>
+							</ul>
+							
+						<div id="header-container-0" class="menu-container">
+								<div class="navbar-nav-container">
+									<ul class="nav navbar-nav">
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
+												</li>
+										</ul>
+									<button data-function="close-menu">
+										<span class="fal fa-times" aria-hidden="true"></span>
+									</button>
+								</div>
+							</div>
+							<div id="header-container-1" class="menu-container">
+								<div class="navbar-nav-container">
+									<ul class="nav navbar-nav">
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
+												</li>
+										</ul>
+									<button data-function="close-menu">
+										<span class="fal fa-times" aria-hidden="true"></span>
+									</button>
+								</div>
+							</div>
+							<div id="header-container-2" class="menu-container">
+								<div class="navbar-nav-container">
+									<ul class="nav navbar-nav">
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
+												</li>
+										</ul>
+									<button data-function="close-menu">
+										<span class="fal fa-times" aria-hidden="true"></span>
+									</button>
+								</div>
+							</div>
+							</div>
+					<div class="logo-column col-xs-4 col-sm-2">
+						<div class="logo">
+							<a target="_blank" href="https://www.xilinx.com/">
+								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
+							</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			</nav></header></noindex></div>
+		
+	
+</div>
+
+    
+</div>
+</div>
+
+<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
+    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
+</div>
+</div>
+				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+						<div class="container-fluid">
+							<div class="row">
+							<div class="col-xs-12">
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+      
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+            
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption"><span class="caption-text">AI Engine</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../AI_Engine_Development.html#feature-tutorials">Feature Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../01-aie_a_to_z/README.html">A to Z Bare-metal Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02-using-gmio/README.html">Using GMIO with AIE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03-rtp-reconfiguration/README.html">Runtime Parameter Reconfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04-packet-switching/README.html">Packet Switching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../05-AI-engine-versal-integration/README.html">Versal Integration for Hardware Emulation and Hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06-versal-system-design-clocking-tutorial/README.html">Versal System Design Clocking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-AI-Engine-Floating-Point/README.html">Using Floating-Point in the AI Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../08-dsp-library/README.html">DSP Library Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../09-debug-walkthrough/README.html">Debug Walkthrough</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">AI Engine DSP Library and Model Composer Tutorial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#before-you-begin">Before You Begin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stage-1-create-and-simulate-the-design">Stage 1: Create and Simulate the Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stage-2-further-analysis-of-the-design">Stage 2: Further Analysis of the Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stage-3-generate-the-code-and-perform-emulation-ai-engine">Stage 3: Generate the Code and Perform Emulation-AI Engine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../11-ai-engine-emulation-waveform-analysis/README.html">Versal Emulation Waveform Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../12-axis-traffic-generator/README.html">AXIS External Traffic Generator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../13-aie-performance-analysis/README.html">AI Engine Performance and Deadlock Analysis Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../14-implementing-iir-filter/README.html">Implementing an IIR Filter on the AI Engine</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+            
+			
+			<p class="caption"><span class="caption-text">This Page</span></p>
+				<ul class="current">
+				  <li class="toctree-l1"><a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/10-aie-dsp-lib-model-composer/README.md.txt"
+						rel="nofollow">Show Source</a></li>
+				</ul>
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../AI_Engine_Development.html">AI Engine Development</a> &raquo;</li>
+        
+      <li>Designing with the AI Engine DSPLib and Vitis Model Composer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/10-aie-dsp-lib-model-composer/README.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="designing-with-the-ai-engine-dsplib-and-vitis-model-composer">
+<h1>Designing with the AI Engine DSPLib and Vitis Model Composer<a class="headerlink" href="#designing-with-the-ai-engine-dsplib-and-vitis-model-composer" title="Permalink to this headline">¶</a></h1>
+<p><em><strong>Version: Vitis 2021.2</strong></em></p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of this tutorial is to provide hands-on experience for designing AI Engine applications using Model Composer. This tool is a set of blocksets for Simulink that makes it easy to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.
+Vitis Model Composer can be used to create complex systems targeting the PL (RTL and HLS blocksets) and the AI Engine array (AIE blockset) at the same time. The complete system can be simulated in Simulink, and the code generated (RTL for the PL and C++ graph for the AI Engine array).</p>
+</div>
+<div class="section" id="before-you-begin">
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<p>Install the tools:</p>
+<ul class="simple">
+<li><p>Get and install <a class="reference external" href="https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml">MATLAB and Simulink 2020a, 2020b or 2021a</a>.
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<ul>
+<li><p>Do not forget to also install the DSP System Toolbox (necessary for this tutorial).</p></li>
+</ul>
+</li>
+<li><p>Get and install <a class="reference external" href="https://www.xilinx.com/support/download.html">Xilinx Vitis 2021.2</a>.
+=======</p>
+<ul>
+<li><p>Do not forget to also install the DSP System Toolbox (necessary for this tutorial).</p></li>
+</ul>
+</li>
+<li><p>Get and install <a class="reference external" href="https://www.xilinx.com/support/download.html">Xilinx Vitis 2021.1</a>.</p></li>
+</ul>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>d8d61191… Updated headers and footers, fixed image references (#33)</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The goal of this tutorial is to implement the Decimation Filter Chain depicted below:</p>
+<p><img alt="Decimation Filter Chain" src="../../../../_images/DecimationChain.svg" /></p>
+<ol class="simple">
+<li><p>Open MATLAB by typing <code class="docutils literal notranslate"><span class="pre">model_composer</span></code>. The path to the various blocksets of Model Composer are automatically added.</p></li>
+<li><p>In order to initialize the tutorial environment type <code class="docutils literal notranslate"><span class="pre">setupLab</span></code> in the <strong>MATLAB</strong> command window.</p></li>
+</ol>
+<p>This function includes the directory <code class="docutils literal notranslate"><span class="pre">LabUtils</span></code> in the search path and runs the filter coefficients initialization. The output in the MATLAB command window is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">setupLab</span>
+<span class="n">HB1</span>
+  <span class="n">Center</span> <span class="n">Tap</span><span class="p">:</span> <span class="mi">16384</span>
+<span class="n">Phase</span> <span class="mi">1</span> <span class="n">Norm</span><span class="p">:</span> <span class="mi">16384</span>
+ <span class="n">Max</span> <span class="n">Phase</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">9647</span>
+
+<span class="n">HB2</span>
+  <span class="n">Center</span> <span class="n">Tap</span><span class="p">:</span> <span class="mi">16384</span>
+<span class="n">Phase</span> <span class="mi">1</span> <span class="n">Norm</span><span class="p">:</span> <span class="mi">16384</span>
+ <span class="n">Max</span> <span class="n">Phase</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">9935</span>
+
+<span class="n">HB3</span>
+  <span class="n">Center</span> <span class="n">Tap</span><span class="p">:</span> <span class="mi">16384</span>
+<span class="n">Phase</span> <span class="mi">1</span> <span class="n">Norm</span><span class="p">:</span> <span class="mi">16384</span>
+ <span class="n">Max</span> <span class="n">Phase</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">10373</span>
+
+<span class="n">CF</span>
+<span class="n">Channel</span> <span class="n">Filter</span> <span class="n">Norm</span><span class="p">:</span> <span class="mi">32768</span>
+           <span class="n">Max</span> <span class="n">Coef</span><span class="p">:</span> <span class="mi">28004</span>
+
+<span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<p>In the workspace sub-window you can see that a number of variables that are defined:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hb1</span></code>, <code class="docutils literal notranslate"><span class="pre">hb2</span></code>, <code class="docutils literal notranslate"><span class="pre">hb3</span></code>, <code class="docutils literal notranslate"><span class="pre">cfi</span></code>: Coefficients of the filters which are used in the Simulink model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hb1_aie</span></code>, <code class="docutils literal notranslate"><span class="pre">hb2_aie</span></code>, <code class="docutils literal notranslate"><span class="pre">hb3_aie</span></code>, <code class="docutils literal notranslate"><span class="pre">cfi_aie</span></code>: Coefficients vectors which are used in the AI Engine design:</p>
+<ul>
+<li><p>For half-band filters this vector contains only the left-hand side non-null taps including the centre tap.</p></li>
+<li><p>For symmetric filters this vector contains only the left-hand side taps, including the center tap if the filter length is odd.</p></li>
+</ul>
+</li>
+<li><p>Shift1, Shift2, Shift3, ShiftCF: The number of bits bits by which the result has to be shifted before the result is sent to the ouput port.</p></li>
+</ul>
+<p><img alt="Workspace" src="../../../../_images/Workspace.png" /></p>
+<p>There are 3 additional files:</p>
+<ul class="simple">
+<li><p>XMC_DSPLib_Solution_Stage1.slx</p></li>
+<li><p>XMC_DSPLib_Solution_Stage2.slx</p></li>
+<li><p>XMC_DSPLib_Solution_Stage3.slx</p></li>
+</ul>
+<p>These are there to help you if you cannot complete any of the 3 stages.</p>
+</div>
+<div class="section" id="stage-1-create-and-simulate-the-design">
+<h2>Stage 1: Create and Simulate the Design<a class="headerlink" href="#stage-1-create-and-simulate-the-design" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>On the MATLAB GUI, select the <strong>Home Tab</strong> and click <strong>Simulink</strong>.</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_001.png" /></p>
+<ol class="simple">
+<li><p>Select <strong>Blank Model</strong> to create a new canvas on which to design the Decimation Chain.</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_002.png" /></p>
+<p>Perform the next two steps to enhance the User Experience. This allows you to have an instant access to the initialization file and to automatically call it when opening the design or when you update it.</p>
+<ol class="simple">
+<li><p>Right-click in the canvas and select <strong>Model Properties</strong>:</p>
+<ul class="simple">
+<li><p>Click the <strong>Callbacks</strong> tab.</p></li>
+<li><p>Click <strong>PreLoadFcn</strong> and type <code class="docutils literal notranslate"><span class="pre">CreateFilter;</span></code> in the edit window on the right.</p></li>
+<li><p>Click <strong>InitFcn</strong> and type <code class="docutils literal notranslate"><span class="pre">CreateFilter;</span></code> in the edit window on the right.</p></li>
+<li><p>Click <strong>Apply</strong>.</p></li>
+</ul>
+</li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_003.png" /></p>
+<ol class="simple">
+<li><p>Click on the canvas and type <code class="docutils literal notranslate"><span class="pre">subsys</span></code>. Select the first <strong>Subsystem</strong> displayed in the list (Subsystem, Simulink/Ports &amp; Subsystem).</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_004.png" /></p>
+<ul class="simple">
+<li><p>Double-click the new block and remove all blocks inside (<strong>CTRL-A</strong> and <strong>Del</strong>).</p></li>
+<li><p>Go back to the top level by clicking on the Up-arrow.</p></li>
+</ul>
+<p><img alt="missing image" src="../../../../_images/Image_005.png" /></p>
+<ul class="simple">
+<li><p>Right-click the <strong>Subsystem</strong> and select <strong>Properties</strong>.</p></li>
+<li><p>Click the <strong>Callbacks</strong> tab.</p></li>
+<li><p>Select <strong>OpenFcn</strong> in the <strong>Callback function list</strong>.</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">open('CreateFilter.m');</span></code> in the edit window on the right.</p></li>
+<li><p>Click <strong>Apply</strong> and <strong>OK</strong>.</p></li>
+</ul>
+<p>Now when you double-lick this bock you will open the initialization matlab function (<em>CreateFilter.m</em>) in the MATLAB editor. Save the model <strong>CTRL+S</strong> and assign the name <strong>XMC_DSPLib</strong>.</p>
+<ol class="simple">
+<li><p>Click the <strong>Library Browser</strong> icon.</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_006.png" /></p>
+<p>Near the end of the list of the Library Browser, you will find the <strong>Xilinx Toolbox</strong>. This contains three sub-libraries:</p>
+<ul class="simple">
+<li><p>AI Engine</p></li>
+<li><p>HDL</p></li>
+<li><p>HLS</p></li>
+</ul>
+<p>Click the <strong>AI Engine</strong> section. This reveals see four subsections:</p>
+<ul class="simple">
+<li><p>DSP</p></li>
+<li><p>Interfaces</p></li>
+<li><p>Tools</p></li>
+<li><p>User-Defined functions</p></li>
+</ul>
+<ol class="simple">
+<li><p>Click the <strong>DSP</strong> sub-section and place the <strong>AIE FIR Halfband Decimator</strong> block in the canvas as shown in the following figure.</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_007.png" /></p>
+<ol class="simple">
+<li><p>Double-click the <strong>AIE FIR HalfBand Decimator</strong> block to open the GUI. Populate the GUI with the following parameters and click <strong>OK</strong>:</p>
+<ul class="simple">
+<li><p><strong>Input/output data type</strong>: cint16</p></li>
+<li><p><strong>Filter coefficients data type</strong>: int16</p></li>
+<li><p><strong>Filter coefficients</strong>: hb1_aie</p></li>
+<li><p><strong>Input Window size (Number of samples)</strong>: 2048</p></li>
+<li><p><strong>Input sampling rate (MSPS)</strong>: 800</p></li>
+<li><p>**Scale output down by 2^: Shift1</p></li>
+<li><p><strong>Rounding mode</strong>: Floor</p></li>
+</ul>
+</li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_008.png" /></p>
+<p>Now create a data source to feed this filter.</p>
+<ol class="simple">
+<li><p>Create the following two blocks by clicking the canvas and typing the beginning of the name of the block. Then enter the given parameters:</p></li>
+</ol>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Name to Type</th>
+<th align="left">Block Name to Select</th>
+<th align="left">Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">random</td>
+<td align="left">Random Source</td>
+<td align="left">Source Type: Uniform <br> Minimum: -30000  <br> Maximum: 30000  <br>  Sample time: 1   <br> Samples per frame: 2048   <br> Complexity: complex</td>
+</tr>
+<tr>
+<td align="left">cast</td>
+<td align="left">Cast</td>
+<td align="left">Output data type: int16</td>
+</tr>
+</tbody>
+</table><ol class="simple">
+<li><p>Cascade the three blocks: <strong>Random Source</strong>, <strong>Cast</strong>, <strong>AIE FIR Filter</strong>.</p></li>
+<li><p>The file <code class="docutils literal notranslate"><span class="pre">ReferenceChain.slx</span></code> contains the decimation chain using Simulink blocks. <strong>Open</strong> the file <strong>ReferenceChain.slx</strong>. Copy the block <strong>HB1</strong> over to your design.</p></li>
+<li><p>Copy the small set of blocks (<strong>To Fixed Size</strong>, <strong>Subtract</strong>, <strong>Scope</strong>) to create the following design:</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_009.png" /></p>
+<ol class="simple">
+<li><p>Ensure that the parameter <strong>Output Size</strong> of the block <strong>To Fixed Size</strong> is set to 1024.</p></li>
+<li><p>Set the <strong>Stop Time</strong> to <code class="docutils literal notranslate"><span class="pre">5000</span></code> and run the design. The FIR filter is compiled and the design is run. The scope should show a completely null difference.</p></li>
+<li><p>To gain more information about the signals traveling through the wires, update the following display parameters:</p>
+<ul class="simple">
+<li><p>Right-click the canvas and select <strong>Other Displays –&gt; Signals and Ports –&gt; Signal Dimensions</strong>.</p></li>
+<li><p>Right-click the canvas and select <strong>Other Displays –&gt; Signals and Ports –&gt; Port Data Types</strong>.</p></li>
+<li><p>Right-click the canvas and select <strong>Sample Time Display –&gt; all</strong>.</p></li>
+</ul>
+</li>
+</ol>
+<p>After updating the design with <strong>CTRL-D</strong>, the display should look as follows:</p>
+<p><img alt="missing image" src="../../../../_images/Image_010.png" /></p>
+<p>Notice that before the implementing the Decimation Filter the vector length was <code class="docutils literal notranslate"><span class="pre">2048</span></code>, but after implementation this was reduced to <code class="docutils literal notranslate"><span class="pre">1024</span></code>.</p>
+<ol class="simple">
+<li><p>Update the design with the other three filters using the following parameters:</p></li>
+</ol>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">HB1</th>
+<th align="left">HB2</th>
+<th align="left">HB3</th>
+<th align="left">Channel Filter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Filter Block</td>
+<td align="left">FIR HalfBand Decimator</td>
+<td align="left">FIR HalfBand Decimator</td>
+<td align="left">FIR HalfBand Decimator</td>
+<td align="left">FIR Symmetric Filter</td>
+</tr>
+<tr>
+<td align="left">Input Output data type</td>
+<td align="left">cint16</td>
+<td align="left">cint16</td>
+<td align="left">cint16</td>
+<td align="left">cint16</td>
+</tr>
+<tr>
+<td align="left">Filter Coefficients Data Type</td>
+<td align="left">int16</td>
+<td align="left">int16</td>
+<td align="left">int16</td>
+<td align="left">int16</td>
+</tr>
+<tr>
+<td align="left">Filter Coefficients</td>
+<td align="left">hb1_aie</td>
+<td align="left">hb2_aie</td>
+<td align="left">hb3_aie</td>
+<td align="left">cfi_aie</td>
+</tr>
+<tr>
+<td align="left">Filter Length</td>
+<td align="left">N/A</td>
+<td align="left">N/A</td>
+<td align="left">N/A</td>
+<td align="left">length(cfi)</td>
+</tr>
+<tr>
+<td align="left">Input window size (Number of samples)</td>
+<td align="left">2048</td>
+<td align="left">1024</td>
+<td align="left">512</td>
+<td align="left">256</td>
+</tr>
+<tr>
+<td align="left">Input sampling rate (MSPS)</td>
+<td align="left">1000</td>
+<td align="left">500</td>
+<td align="left">250</td>
+<td align="left">125</td>
+</tr>
+<tr>
+<td align="left">Specify Number of Cascade Stage</td>
+<td align="left">Uncheck</td>
+<td align="left">Uncheck</td>
+<td align="left">Uncheck</td>
+<td align="left">Uncheck</td>
+</tr>
+<tr>
+<td align="left">Scale output down by 2^</td>
+<td align="left">Shift1</td>
+<td align="left">Shift2</td>
+<td align="left">Shift3</td>
+<td align="left">ShiftCF</td>
+</tr>
+<tr>
+<td align="left">Rounding mode floor</td>
+<td align="left">floor</td>
+<td align="left">floor</td>
+<td align="left">floor</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table><ol class="simple">
+<li><p>Update the <strong>Output Size</strong> parameter of the <strong>To Fixed Size</strong> block to <code class="docutils literal notranslate"><span class="pre">256</span></code>. The design should look like as follows:</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_011.png" /></p>
+<ol class="simple">
+<li><p>Run the design. The added filters are compiled and the design is run through the 5000 samples. The difference between the output should still be 0.</p></li>
+</ol>
+</div>
+<div class="section" id="stage-2-further-analysis-of-the-design">
+<h2>Stage 2: Further Analysis of the Design<a class="headerlink" href="#stage-2-further-analysis-of-the-design" title="Permalink to this headline">¶</a></h2>
+<p>When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink the spectrum can be easily displayed using a spectrum scope.</p>
+<ol class="simple">
+<li><p>Right-click the canvas and type <code class="docutils literal notranslate"><span class="pre">spectrum</span></code>. Double-click the <strong>Spectrum Analyzer</strong> block to open the GUI. Set the following parameters (click the left-most button of the icon bar to display the GUI).</p>
+<ul class="simple">
+<li><p><strong>Overlap</strong> (Window options): 50%</p></li>
+<li><p><strong>Average</strong> (Trace options): 16</p></li>
+</ul>
+</li>
+<li><p>Set the Stop Time of the simulation to <strong>inf</strong>.</p></li>
+<li><p>Connect the spectrum scope at the output of the last filter (the Channel Filter):</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_013.png" /></p>
+<p>Run the simulation. The spectrum scope should display similar to the following:</p>
+<p><img alt="missing image" src="../../../../_images/Image_014.png" /></p>
+<p>Now add a block coming from a standard templated C++ kernel which source is in the directory <code class="docutils literal notranslate"><span class="pre">aiecode_src</span></code>. This function will be a frequency shift operation that will be placed after the downsampling chain.</p>
+<ol class="simple">
+<li><p>Select the block <em>AIE Kernel</em> from the <strong>User-defined Functions</strong> section of the AI Engine Library and place it in the canvas:</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_017.png" /></p>
+<ol class="simple">
+<li><p><strong>Double-click</strong> the block, a GUI will display. Populate it with the following data:</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Kernel header file</strong>: <code class="docutils literal notranslate"><span class="pre">aiecode_src</span> <span class="pre">/</span> <span class="pre">FreqShift.h</span></code></p></li>
+<li><p><strong>Kernel function</strong>: <code class="docutils literal notranslate"><span class="pre">FreqShift</span></code></p></li>
+<li><p><strong>Kernel source file</strong>: <code class="docutils literal notranslate"><span class="pre">aiecode_src</span> <span class="pre">/</span> <span class="pre">FreqShift.cpp</span></code></p></li>
+</ul>
+<p><img alt="missing image" src="../../../../_images/Image_018.png" /></p>
+<ol class="simple">
+<li><p>Click <strong>Import</strong>. A new GUI displays. <strong>FRAME_LENGTH</strong> is the template parameter. Its value is <code class="docutils literal notranslate"><span class="pre">256</span></code> because at this stage this is the size of the data frames. The input and output ports have also the same size: <code class="docutils literal notranslate"><span class="pre">256</span></code> samples. Click <strong>OK</strong>.</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_019.png" /></p>
+<ol class="simple">
+<li><p>Place this new block between the <strong>‘AIE FIR Channel’</strong> and <strong>‘To Fixed Size’</strong> blocks. Grab the <strong>‘FreqShift’</strong> block from the <strong>Reference Chain</strong> Simulink design and place it after the <strong>ChannelFilter</strong> Simulink block. Your design should now look as follows:</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_020.png" /></p>
+<ol class="simple">
+<li><p>Click <strong>Run</strong>. The new filter will get compiled and a new spectrum will be displayed:</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/Image_021.png" /></p>
+<ol class="simple">
+<li><p>Switch the <strong>Stop Time</strong> back to <code class="docutils literal notranslate"><span class="pre">5000</span></code> and verify that the difference is still 0.</p></li>
+</ol>
+<p>Developing an AI Engine graph in Model Composer is relatively straightforward. What you have learned here is that you can easily place a spectrum scope within the design at the output of a design, but actually it could be placed anywhere in between two blocks without modifying anything in the kernels and the graph. Furthermore, Simulink has a lot of specific blocksets that can be used to generate test vectors, create a reference model, and compare the signals at any point in the design.</p>
+<p>If you want to save some data in a workspace variable for some more complex analysis. This can be done using the <strong>Variable Size Signal</strong> to Workspace block within the <strong>Xilinx Toolbox –&gt; AI Engine –&gt; Tools  blockset</strong>:</p>
+<p><img alt="missing image" src="../../../../_images/Image_015.png" /></p>
+<p>All the simulations that occur in Simulink are the so-called ‘Emulation-SW’. These types of simulation are bit-exact, but they do not provide any information about timing.</p>
+</div>
+<div class="section" id="stage-3-generate-the-code-and-perform-emulation-ai-engine">
+<h2>Stage 3: Generate the Code and Perform Emulation-AI Engine<a class="headerlink" href="#stage-3-generate-the-code-and-perform-emulation-ai-engine" title="Permalink to this headline">¶</a></h2>
+<p>In this stage you will generate the graph code of this design and perform bit-true and cycle true simulations with the AI Engine Simulator.</p>
+<ol class="simple">
+<li><p>Select the four AIE FIR Filters and the Frequency shifting block and type <strong>CTRL+G</strong> to group them in a subsystem. Assign a new name: <strong>FIRchain</strong>.</p></li>
+<li><p>Click the canvas and type <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">co</span></code>. Double-click the block <strong>Model Composer Hub</strong> and set the following parameters:</p>
+<ul class="simple">
+<li><p><strong>Subsystem name</strong>: <code class="docutils literal notranslate"><span class="pre">FIRchain</span></code></p></li>
+<li><p>Check <strong>Create testbench</strong></p></li>
+<li><p>Check <strong>Run AIE Simulation</strong></p></li>
+<li><p>Check <strong>Collect Data for Vitis Analyzer</strong></p></li>
+</ul>
+</li>
+<li><p>Click <strong>Apply</strong> and <strong>Generate and Run</strong>.</p></li>
+</ol>
+<p>The simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in <code class="docutils literal notranslate"><span class="pre">./code/src_aie/FIRchain.h</span></code>:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __XMC_FIRCHAIN_H__</span>
+<span class="cp">#define __XMC_FIRCHAIN_H__</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;adf.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;./FIR_Halfband_Decimator_c76b579e/FIR_Halfband_Decimator_c76b579e.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;./FIR_Halfband_Decimator_6375a0e3/FIR_Halfband_Decimator_6375a0e3.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;./FIR_Halfband_Decimator_66ef926b/FIR_Halfband_Decimator_66ef926b.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;./FIR_Symmetric_Filter_7df0435a/FIR_Symmetric_Filter_7df0435a.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;aiecode_src/FreqShift.h&quot;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">FIRChain</span> <span class="o">:</span> <span class="k">public</span> <span class="n">adf</span><span class="o">::</span><span class="n">graph</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+   <span class="n">FIR_Halfband_Decimator_c76b579e</span> <span class="n">FIR_Halfband_Decimator1</span><span class="p">;</span>
+   <span class="n">FIR_Halfband_Decimator_6375a0e3</span> <span class="n">FIR_Halfband_Decimator2</span><span class="p">;</span>
+   <span class="n">FIR_Halfband_Decimator_66ef926b</span> <span class="n">FIR_Halfband_Decimator3</span><span class="p">;</span>
+   <span class="n">FIR_Symmetric_Filter_7df0435a</span> <span class="n">FIR_Symmetric_Filter</span><span class="p">;</span>
+   <span class="n">adf</span><span class="o">::</span><span class="n">kernel</span> <span class="n">FreqShift_0</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+   <span class="n">adf</span><span class="o">::</span><span class="n">input_port</span> <span class="n">In1</span><span class="p">;</span>
+   <span class="n">adf</span><span class="o">::</span><span class="n">output_port</span> <span class="n">Out1</span><span class="p">;</span>
+
+   <span class="n">FIRChain</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// create kernel FreqShift_0</span>
+      <span class="n">FreqShift_0</span> <span class="o">=</span> <span class="n">adf</span><span class="o">::</span><span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">FreqShift</span><span class="o">&lt;</span><span class="mi">256</span><span class="o">&gt;</span><span class="p">);</span>
+      <span class="n">adf</span><span class="o">::</span><span class="n">source</span><span class="p">(</span><span class="n">FreqShift_0</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;aiecode_src/FreqShift.cpp&quot;</span><span class="p">;</span>
+
+      <span class="c1">// create kernel constraints FreqShift_0</span>
+      <span class="n">adf</span><span class="o">::</span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">FreqShift_0</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">;</span>
+
+      <span class="c1">// create nets to specify connections</span>
+      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span>  <span class="o">&gt;</span> <span class="n">net0</span> <span class="p">(</span><span class="n">In1</span><span class="p">,</span> <span class="n">FIR_Halfband_Decimator1</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
+      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span>  <span class="o">&gt;</span> <span class="n">net1</span> <span class="p">(</span><span class="n">FIR_Halfband_Decimator1</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">FIR_Halfband_Decimator2</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
+      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span>  <span class="o">&gt;</span> <span class="n">net2</span> <span class="p">(</span><span class="n">FIR_Halfband_Decimator2</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">FIR_Halfband_Decimator3</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
+      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span>  <span class="o">&gt;</span> <span class="n">net3</span> <span class="p">(</span><span class="n">FIR_Halfband_Decimator3</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">FIR_Symmetric_Filter</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
+      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span> <span class="n">adf</span><span class="o">::</span><span class="n">window</span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">net4</span> <span class="p">(</span><span class="n">FIR_Symmetric_Filter</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">FreqShift_0</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span> <span class="n">adf</span><span class="o">::</span><span class="n">window</span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">net5</span> <span class="p">(</span><span class="n">FreqShift_0</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Out1</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">// __XMC_FIRCHAIN_H__</span>
+</pre></div>
+</div>
+<p>Finally, the bit-exact simulation (Emulation-AIE) is performed and the result compared to the Simulink simulation:</p>
+<p><img alt="missing image" src="../../../../_images/Image_012.png" /></p>
+<p>Vitis Analyzer is then launched. From here you can see the <strong>Graph View</strong>, the <strong>Array View</strong>, the <strong>Timeline</strong>, and the <strong>Profile</strong> information.</p>
+<p><img alt="missing image" src="../../../../_images/Image_022.png" /></p>
+<p><img alt="missing image" src="../../../../_images/Image_023.png" /></p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>Model Composer is a very efficient way to create graphs either using your own kernels or using the DSPLib FIR Filter (other blocks will be available in subsequent releases).</p>
+<p>This tool shows its incredible flexibility when it comes to display spectrum or save data at any stage of the graph. All the source and sink blocks can be used anywhere, allowing you to efficiently debug your design in all corner cases.</p>
+<hr class="docutils" />
+<p>© Copyright 2021 Xilinx, Inc.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p align="center"><sup>XD058 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
+</footer>
+
+        </div>
+      </div>
+
+
+	  <!-- Sphinx Page Footer block -->
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../11-ai-engine-emulation-waveform-analysis/README.html" class="btn btn-neutral float-right" title="Versal Emulation Waveform Analysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../09-debug-walkthrough/README.html" class="btn btn-neutral float-left" title="AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo" class="copyright">
+    <p class="footerinfo">
+      <span class="lastupdated">
+        Last updated on February 10, 2022.
+      </span>
+
+    </p>
+	<br>
+  </div>
+      </div>
+    </section>
+
+
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+   <script type="text/javascript">
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+
+  <script type="text/javascript" id="searchindexloader"></script>
+
+
+  
+  
+    
+  
+
+
+
+  <!--  Xilinx template footer block -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+					<div class="xf-content-height">
+						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
+							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+								<noindex>
+                  <!-- make footer fixed - NileshP -->
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+                  <!-- make footer fixed NileshP-->
+									<footer>
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+													<div class="row">
+														<div class="footerSocial parbase">
+														
+															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
+																<div class="lang-select dropup hidden-md hidden-lg">
+		<button data-toggle="dropdown">
+			<span class="fas fa-globe" aria-hidden="true"></span>
+			<span>
+				
+					English
+				</span>
+		<span class="far fa-angle-down" aria-hidden="true"></span>
+	</button>
+	<ul class="dropdown-menu">
+		<li>
+				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
+					日本語
+				</a>
+			</li>
+		<li>
+				<a target="_blank" href="https://china.xilinx.com/" target="_self">
+					简体中文
+				</a>
+			</li>
+		</ul>
+	</div>
+																<ul class="list-inline pull-right social-menu">
+																	<li>
+																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
+																		<span class="linkedin icon"></span>
+																		<span class="sr-only">Connect on LinkedIn</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
+																		<span class="twitter icon"></span>
+																		<span class="sr-only">Follow us on Twitter</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
+																		<span class="facebook icon"></span>
+																		<span class="sr-only">Connect on Facebook</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
+																		<span class="youtube icon"></span>
+																		<span class="sr-only">Watch us on YouTube</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
+																		<span class="newsletter icon"></span>
+																		<span class="sr-only">Subscribe to Newsletter</span>
+																		</a>
+																	</li>
+																</ul>
+																	<div class="lang-select dropup hidden-xs hidden-sm">
+	<button data-toggle="dropdown">
+		<span class="fas fa-globe" aria-hidden="true"></span>
+		<span>
+			
+				English
+			</span>
+		<span class="far fa-angle-down" aria-hidden="true"></span>
+	</button>
+	<ul class="dropdown-menu">
+		<li>
+				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
+					日本語
+				</a>
+			</li>
+		<li>
+				<a target="_blank" href="https://china.xilinx.com/" target="_self">
+					简体中文
+				</a>
+			</li>
+		</ul>
+	</div>
+															</div>
+														</div>
+														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
+															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
+														</div>
+
+													</div>
+													                    <div class="movethisrowtoleft row">
+                        <div class="col-xs-24">
+                            <ul class="sub-menu">
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
+								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
+                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
+                            </ul>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+									</footer>
+								</noindex>
+							</div>
+						</div>
+					</div>
+				</div>
+<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
+    <span data-component="backToTopButton" class="backToTopButton loaded">
+        <ul>
+            <li>
+                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
+                    <span class="fas fa-angle-up" aria-hidden="true"></span>
+                </a>
+            </li>
+        </ul>
+    </span>
+</noindex></div>
+			</div>
+		</div>
+
+
+		<script>window.CQ = window.CQ || {}</script>
+		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
+		<script>
+			var underscoreSetup = function () {
+			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
+			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
+			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
+			}
+
+			underscoreSetup();
+		</script>
+	</body>
+</html>

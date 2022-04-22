@@ -1,6 +1,6 @@
 ﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Tutorials</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Application Acceleration Tutorials</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
   </td>
  </tr>
@@ -32,17 +32,15 @@
 ## Run the C Simulation
 
 With the source code and testbench added to the project, you can now run the C simulation.
->TIP: For more information about the features of a well-written test bench, refer to [Writing a Test Bench](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Writing-a-Test-Bench) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+>TIP: For more information about the features of a well-written test bench, refer to [Writing a Test Bench](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=verifyingcodecsimulation.html;a=sav1584759936384) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
-1. From the Flow Navigator, select **C-Simulation > Run C Simulation**. 
+1. From the main menu, select **Project > Run C Simulation**. 
 
    The C Simulation Dialog is displayed.
 
-    ![Run C SImulation](./images/run_c_simulation.png)
+    ![Add Sources](./images/run_c_simulation.png)
 
 2. Select the **Enable Pre-synthesis Control Flow Viewer** check box to produce a control flow view of your design after C simulation.
-
-   >**NOTE**: This option is not available on Windows.
 
 3. Click **OK**.
 
@@ -51,11 +49,11 @@ With the source code and testbench added to the project, you can now run the C s
    The Control Flow graph, as shown in the following figure, offers some insight into the control structure of your code. Take a look at to see how Vitis HLS understands your code.
    >**NOTE**: Control structure here refers to the branches in your code caused by various kinds of loops and conditional statements like `if` and `switch` statements.
 
-     ![Presynthesis Control Flow](./images/presynth-ctrl-flow-graph.png)
+     ![Presynthesis Control FLow](./images/presynth-ctrl-flow-graph.png)
 4. Zoom in on the graph and examine the structure of the DCT function. It includes the following elements:
 
    * **read_data**: Reads the data from the DDR, as an array, and reformats it into a matrix.
-   * **dct_2d**: Processes the matrix of values, applying the cosine transform to the matrix values.
+   * **dct_2d with a nested function dct_1d**: Processes the matrix of values, applying the cosine transform to the matrix values.
    * **write_data**: Writes the results back to DDR, converting the matrix back into an array.
 
 5. Look at the Loops view below the graph. 
@@ -74,17 +72,9 @@ With the source code and testbench added to the project, you can now run the C s
        * If memory accesses are on different branches, then these accesses would be consider mutually exclusive (and therefore no conflict can occur). 
       * If however, the memory accesses are on the same branch, then loop II violations can occur because of multiple memory accesses in the same sequential portion of the code. 
 
-## Run C Synthesis
+## Run the C Synthesis
 
-1. To run synthesis, simply click the **C Synthesis** toolbar button. 
-
-   The C Synthesis dialog box is displayed.
-
-    ![Run C Synthesis](./images/run_c_synthesis.png)
-
-2. Click **OK**.
-
-   The synthesis command runs, and writes a transcript in the Console view. Examine the transcript to see what steps the tool takes during synthesis. The following list describes some of the steps listed:
+1. To run synthesis, simply click the **C Synthesis** toolbar button. The synthesis command runs, and writes a transcript in the Console view. Examine the transcript to see what steps the tool takes during synthesis. The following list describes some of the steps listed:
    * Project and solution initialization loads source and constraints files, and configures the active solution for synthesis.
    * Start compilation reads source files into memory. 
    * Interface detection and setup reviews and generates port and block interfaces for the function. 
@@ -102,7 +92,7 @@ With the source code and testbench added to the project, you can now run the C s
 
    The Vitis HLS tool also automatically inlines small functions, dissolving the logic into the higher-level calling functions, and pipelines small loops with limited iterations. These features are configurable by user directives or pragmas.
 
-3. After synthesis completes, the Synthesis Summary report displays as shown in the following figure. Review the results.
+2. After synthesis completes, the Synthesis Summary report displays as shown in the following figure. Review the results.
 
    ![Synthesis Summary Report](./images/dct_synthesis_report.png)
 
@@ -122,7 +112,7 @@ The Synthesis Summary report displays the results of synthesis, including perfor
 
    Guidance messages report issues found during synthesis, suggest possible remedies, and provide links to more detailed information.
 
-2. From the Flow Navigator click the **C Synthesis > Reports and Viewers Schedule Viewer** command to display the Schedule Viewer.
+2. In the main menu of the Vitis HLS IDE, click the **Solution** > **Open Schedule Viewer** command to display the Schedule Viewer.
 
    The left side of the Schedule Viewer lists each operation in chronological order in the synthesized function. It displays the design control steps presented horizontally as a timeline starting at step 0, and running through to completion. You can select operations from the list to view the connections between them.
 

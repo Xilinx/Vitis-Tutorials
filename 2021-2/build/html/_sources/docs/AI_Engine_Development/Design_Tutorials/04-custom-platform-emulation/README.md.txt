@@ -1,18 +1,13 @@
-<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal™ ACAP AI Engine Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
-    </td>
+<table>
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
+   </td>
  </tr>
 </table>
 
 # Custom Platform Emulation with RTL Kernel
 
-***Version: Vitis 2021.2***
-
 ## Introduction
-
 This tutorial demonstrates the following two features of the Vitis™ unified software platform flow:
 
 1. Ability to create a custom platform to meet your needs.
@@ -23,15 +18,12 @@ The ability to control your platform, and convert your RTL IP to an RTL kernel a
 Prior to starting this tutorial read and execute the platform creation tutorial https://github.com/Xilinx/Vitis-Tutorials/tree/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190.
 
 ## Overview
-
 In this tutorial you will learn:
-
 * How to create an RTL kernel (outside the ADF graph) to be used with the ADF graph.
 * How to modify the ADF graph code to incorporate the RTL kernel as a PLIO kernel.
 * How to build and emulate the design with a custom platform.
 
 ## Step 1 - Creating Custom RTL IP with the Vivado® Design Suite
-
 After creating the custom platform from the previous tutorial, the next step is to package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
 
 1. Open the `polar_clip_rtl_kernel.tcl` file.
@@ -283,7 +275,7 @@ This tutorial shows how to:
 * Modify the ADF graph to handle more PLIO interfacing.
 * Build and execute the design in emulation.
 
---------------------------------
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
@@ -293,4 +285,4 @@ You may obtain a copy of the License at
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD012</sup></br></p>
+<p align="center"><sup>XD012 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p>

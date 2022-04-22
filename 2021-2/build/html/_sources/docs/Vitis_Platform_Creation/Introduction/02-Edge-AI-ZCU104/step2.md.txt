@@ -33,10 +33,8 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    ```bash
    petalinux-create --type project --template zynqMP --name zcu104_custom_plnx
    cd zcu104_custom_plnx
-   petalinux-config --get-hw-description=<vivado_design_dir>  # The directory where your *.xsa file locates. if you do as step1 says strictly here, the <vivado_design_dir> is the path of <zcu104_custom_platform>
+   petalinux-config --get-hw-description=<vivado_design_dir>
    ```
-
-   > Note: PetaLinux will use XSA to generate the device tree. Since our hardware XSA and hardware emulation XSA have identical peripherals, giving either of them to PetaLinux makes no difference. When simplifying the hardware design for hardware emulation, it's recommended to keep all the peripherals that need device tree and drivers so that the auto-generated device tree can be reused. If the two design has different address-able peripherals, you will need to create two sets of device trees for hardware running and hardware emulation seperatedly.
 
    After this step, your directory hierarchy looks like this.
 
@@ -70,11 +68,12 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    Packages for base XRT support:
 
     ```
-   CONFIG_xrt
+   CONFIG_packagegroup-petalinux-xrt
     ```
-    - xrt is required for Vitis acceleration flow. The dependency packages such as ZOCL driver module will be added automatically.
+    - packagegroup-petalinux-xrt is required for Vitis acceleration flow. It includes XRT and ZOCL.
+    - xrt-dev is required in 2020.1 even when we're not creating a development environment due to a known issue that a soft link required by the deployment environment is packaged into it. XRT 2020.2 fixes this issue.
 
-   Recommended Packages for easy system management
+   Packages for easy system management
 
     ```
    CONFIG_dnf
@@ -91,7 +90,7 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    CONFIG_packagegroup-petalinux-vitisai
     ```
 
-   *Optional Packages for natively building Vitis AI applications on target board:*
+   *Packages for natively building Vitis AI applications on target board:*
 
     ```
    CONFIG_packagegroup-petalinux-self-hosted
@@ -104,7 +103,7 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    CONFIG_packagegroup-petalinux-opencv-dev
     ```
 
-    *Optional Packages for running Vitis-AI demo applications with GUI*
+    *Packages for running Vitis-AI demo applications with GUI*
 
     ```
     CONFIG_mesa-megadriver
@@ -145,36 +144,58 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    - In rootfs config go to **Image Features** and enable **package-management** and **debug_tweaks** option 
    - Click **OK**, **Exit** twice and select **Yes** to save the changes.
 
-5. Disable CPU IDLE in kernel config (Recommended during debugging).
+5. Disable CPU IDLE in kernel config (Optional).
 
-   CPU IDLE would cause processors get into IDLE state (WFI) when the processor is not in use. When JTAG is connected, the hardware server on host machine talks to the processor regularly. If it talks to a processor in IDLE status, the system will hang because of incomplete AXI transactions. So it is recommended to disable the CPU IDLE feature during project development phase. It can be re-enabled after the design has completed to save power in final products.
+   CPU IDLE would cause processors get into IDLE state (WFI) when the processor is not in use. When JTAG is connected, the hardware server on host machine talks to the processor regularly. If it talks to a processorin IDLE status, the system will hang because of incomplete AXI transactions. So it is recommended to disable the CPU IDLE feature during project development phase. It can be re-enabled after the design has completed to save power in final products.
 
    - Launch kernel config: `petalinux-config -c kernel`
    - Ensure the following items are **TURNED OFF** by entering 'n' in the [ ] menu selection:
-     - **CPU Power Management > CPU Idle > CPU idle PM support**
+     - **CPU Power Mangement > CPU Idle > CPU idle PM support**
      - **CPU Power Management > CPU Frequency scaling > CPU Frequency scaling**
    - Exit and Save.
 
 
 ### Update the Device tree
 
-Device tree describes the hardware components of the system. Xilinx device tree generator (DTG) can generate the device tree according to hardware configurations from XSA file. User needs to add customization settings in system-user.dtsi for PetaLinux to consume if there are any settings not available in XSA, for example, any driver nodes that don't have a corresponding hardware, or if user need to override any DTG auto-generated configurations. 
+Device tree describs the hardware components of the system. Xilinx device tree generator (DTG) can generate the device tree according to hardware configrations from XSA file. User needs to add customization settings in system-user.dtsi for PetaLinux to consume if there are any settings not available in XSA, for example, any driver nodes that don't have a corresponding hardware, or if user need to override any DTG auto-generated configurations. 
 
-ZOCL driver module has no associated hardware, but it's required by XRT and Vitis acceleration flow. It requires a device tree node to describe the interrupt signal relationship. In previous Vitis and PetaLinux versions, users need to add ZOCL device tree node manually. From 2021.1, PetaLinux can add ZOCL device tree node automatically if the XSA is a Vitis extensible platform project.
+ZOCL driver module is such a module that has no associated hardware, but it's required by Vitis acceleration flow. It's a part of Xilinx Runtime (XRT). We will add it to the system-user.dtsi.
 
-Device Tree Generator (DTG) also overrides the interrupt controller (axi_intc_0) input numbers parameter from 0 to 32 because in the platform XSA the interrupt controller inputs have not been connected but they will be connected after v++ links the acceleration kernels.
+We will also orverride axi_intc_0's parameter interrupt inputs numbers from 0 to 32 because there was nothing connected to the interrupt controller in the XSA but there will be after v++ links the kernel.
 
-You can review the PetaLinux generated device tree in **project-spec/components/device-tree/device-tree/pl.dtsi** file.
+1. Append the following contents to the **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi** file.
 
-You can also add your custom device tree modifications to **project-spec/meta-user/system-user.dtsi**. In this example, we setup sdhci1 to low speed mode.
+   ```
+   &amba {
+       zyxclmm_drm {
+           compatible = "xlnx,zocl";
+           status = "okay";
+           interrupt-parent = <&axi_intc_0>;
+           interrupts = <0  4>, <1  4>, <2  4>, <3  4>,
+                    <4  4>, <5  4>, <6  4>, <7  4>,
+                    <8  4>, <9  4>, <10 4>, <11 4>,
+                    <12 4>, <13 4>, <14 4>, <15 4>,
+                    <16 4>, <17 4>, <18 4>, <19 4>,
+                    <20 4>, <21 4>, <22 4>, <23 4>,
+                    <24 4>, <25 4>, <26 4>, <27 4>,
+                    <28 4>, <29 4>, <30 4>, <31 4>;
+       };
+   };
+   
+   &axi_intc_0 {
+         xlnx,kind-of-intr = <0x0>;
+         xlnx,num-intr-inputs = <0x20>;
+   };
+   
+   &sdhci1 {
+         no-1-8-v;
+         disable-wp;
+   };
+   
+   ```
 
-```
-&sdhci1 {
-      no-1-8-v;
-      disable-wp;
-};
-```
-
+   - **zyxclmm_drm** node is required by zocl driver.
+   - **axi_intc_0** node overrides interrupt inputs numbers from 0 to 32, set interrupt kind to level high. 
    - **sdhci1** node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104. It's not a part of Vitis acceleration platform requirements.
 
    **Note**: an example file is provided in [ref_files/step2_petalinux/system-user.dtsi](ref_files/step2_petalinux/system-user.dtsi).
@@ -183,7 +204,7 @@ You can also add your custom device tree modifications to **project-spec/meta-us
 
 ### Add EXT4 rootfs support (Optional but recommended)
 
-It's recommended to use EXT4 for Vitis acceleration designs. PetaLinux uses initramfs format for rootfs by default. It can't retain the rootfs changes in run time. Initramfs keeps rootfs contents in DDR, which makes user useable DDR memory reduced. To make the root file system retain changes and to enable maximum usage of available DDR memory, we'll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store the boot files.
+It's recommended to use EXT4 for Vitis acceleration designs. PetaLinux uses initramfs format for rootfs by default, it can't retain the rootfs changes in run time. Initramfs keeps rootfs contents in DDR, which makes user useable DDR memory reduced. To make the root file system retain changes and to enable maximun usage of available DDR memory, we'll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store the boot files.
 
 Vitis-AI applications will install additional software packages. If user would like to run Vitis-AI applications, please use EXT4 rootfs. If in any case initramfs would be used, please add all Vitis-AI dependencies to initramfs.
 
@@ -192,11 +213,11 @@ Vitis-AI applications will install additional software packages. If user would l
    - Run `petalinux-config`
    - Go to **Image Packaging Configuration**
    - Select **Root File System Type** as **EXT4**
+   - Append `ext4` to **Root File System Formats**
    - Exit and Save.
 
-   ![missing image](./images/petalinux_image_packaging_configuration.png)
+   ![](./images/petalinux_image_packaging_configuration.png)
 
-<!--TODO: CMA change is needed. Other changes are not.-->
 2. Let Linux use EXT4 rootfs during boot
 
    The setting of which rootfs to use during boot is controlled by **bootargs**. We would change bootargs settings to allow Linux to boot from EXT4 partition. There are various ways to update bootargs. Please take either way below.
@@ -242,8 +263,9 @@ Vitis-AI applications will install additional software packages. If user would l
    petalinux-build --sdk
    ```
 
-   The generated sysroot package **sdk.sh** will be located in <PetaLinux Project>/images/linux directory. We'll extract it in next step.
+   The generated sysroot package **sdk.sh** will be located in <PetaLinux Project>linux/image directory. We'll extract it in next step.
 
+**Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](step3.md).**
 
 ### Fast Track
 
@@ -265,8 +287,4 @@ Scripts are provided to re-create PetaLinux project and generate outputs. To use
 
 Note: The Fast Track scripts extracts the sysroot to <PetaLinux Project>/images/linux directory. It's different than the step-by-step instructions for the convenience of scripting.
 
-### Next Step
-
-Note: Now HW platform and SW platform are all generated. Next we would [package the Vitis Platform](step3.md).
-
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

@@ -64,9 +64,9 @@ To specify the location of any Data-Center or Embedded platforms you have instal
 
 
 
-.. sidebar:: More Information
+.. sidebar::
 
-   See `Xilinx AR 73698 <https://www.xilinx.com/support/answers/73698.html>`_.
+   For more information see <Xilinx AR 73698 <https://www.xilinx.com/support/answers/73698.html>`_.
 
 
 **********************************************************

@@ -1,21 +1,18 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
-    </td>
+﻿<table>
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
+   </td>
  </tr>
 </table>
 
 # Super Sampling Rate FIR Filters: Implementation on the AI Engine
 
-***Version: Vitis 2021.2***
+This design has been tested using the Vitis software development platform 2020.2.
 
 
 ## Introduction
 
 Versal™ ACAP AI Core Series are heterogeneous devices containing many domains with compute capabilities. With respect to Digital Signal Processing (DSP), and particularly Finite Impulse Response (FIR) filters, the two domains of interest are:
-
 - The Programmable Logic (PL) which is the "classical" domain of Xilinx devices
 - The AI Engine Processor Array which is a new domain within Versal ACAP Xilinx devices
 
@@ -27,19 +24,13 @@ The purpose of this tutorial is to provide a methodology to enable you to make a
 
 Before beginning this tutorial you should be familiar with Versal ACAP architecture and more specifically on the AI Engine array processor and interconnect architecture.
 
-- [Xilinx Website for Versal ACAP AI Core Series](https://www.xilinx.com/products/silicon-devices/acap/versal-ai-core.html)
-- [Introduction to the AI Engine](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
-- [AI Engine Detailed Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
+* [Xilinx Website for Versal ACAP AI Core Series](https://www.xilinx.com/products/silicon-devices/acap/versal-ai-core.html)
+*[Introduction to the AI Engine](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
+*[AI Engine Detailed Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
 
 Software requirements include:
 * [Vitis](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 * [Python 3](https://www.python.org/downloads/)
-* You also have the possibility to test these architectures on the AI Engine using MATLAB Simulink toolset.
-  - [Mathworks](https://www.mathworks.com/) to install **MATLAB** version R2020a, R2020b or R2021a.
-  - **Vitis Model Composer** that is available with the usual install of **Vitis**.
-
-- [Vitis](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
-- [Python 3](https://www.python.org/downloads/)
 
 
 ### Accessing the Tutorial Reference Files
@@ -64,14 +55,13 @@ This tutorial is decomposed into multiple steps:
 
 
 <a name="AIE_Architecture"></a>
-
 ## Summary of AI Engine Architecture
 
 You should have already read the [AI Engine Detailed Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf), so the purpose of this chapter is simply to highlight the features of the AI Engine that will be useful for this tutorial.
 
 Versal™ Adaptive Compute Acceleration Platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
 
-![missing image](./Images/Versal.jpg)
+<img src="./Images/Versal.jpg" width=500 height=380><br>
 
 Intelligent Engines are SIMD VLIW AI Engines for adaptive inference and advanced signal processing compute.
 
@@ -79,18 +69,17 @@ DSP Engines are for fixed point, floating point, and complex MAC operations.
 
 The SIMD VLIW AI Engines come as an array of interconnected processors using AXI-Stream interconnect blocks as shown in the following figure:
 
-![missing image](./Images/AIEngineArray.jpg)
+<img src="./Images/AIEngineArray.jpg" width=500><br>
 
 All arrays (processors, memory modules, AXI interconnects) are driven by a single clock. The slowest speed grade device can run @1 GHz. The highest speedgrade will allow 1.3 GHz clock rates. The AI Engine allows for numerous connection possibilities with the surrounding environment as shown in the following figure.
 
-![missing image](./Images/AIEngine.jpg)
+<img src="./Images/AIEngine.jpg" width=500><br>
 
 ### Memory interface
 
-![missing image](./Images/AIE_MemIF.jpg)
+<img src="./Images/AIE_MemIF.jpg" width=500><br>
 
 Each AI Engine is surrounded by 4x 32 kB memories, each one being divided in four pairs of banks. The bandwidth is very high:
-
 - 2 reads / cycle on 32 bytes (256 bits) each
   - Each bank having a single port, the accesses must be done on different banks to achieve 2x 256 bits/cycle.
 - 1 write / cycle on 32 bytes (256 bits)
@@ -100,7 +89,7 @@ Each AI Engine is surrounded by 4x 32 kB memories, each one being divided in fou
 
 ### Streaming interface
 
-![missing image](./Images/AIE_Streams.jpg)
+<img src="./Images/AIE_Streams.jpg" width=500><br>
 
 The streaming interface is based on two incoming streams and two outgoing streams, each one on 32 bits per clock cycle. These four streams are handled by a stream FIFO that allows the processor to use different bitwidths to access these streams:
 
@@ -119,7 +108,7 @@ Accessing the data to/from the streams using the 128 bit interface does not incr
 
 ### Cascade Streams
 
-![missing image](./Images/AIE_Cascade.jpg)
+<img src="./Images/AIE_Cascade.jpg" width=500><br>
 
 The cascade stream allows an AI Engine processor to transfer the value of some of its accumulator register (384 bits) to its neighbor (on the left or on the right depending on the row):
 
@@ -129,27 +118,25 @@ The cascade stream allows an AI Engine processor to transfer the value of some o
 
 
 <a name="FIR_Filter"></a>
-
 ## What is a FIR Filter?
 
 The purpose of this tutorial is not to train you to be an expert in Digital Signal Processing, however to grasp the basics of FIR filtering it is necessary to understand the computations that are required, and the data that are consumed and produced by the compute block.
 
 A digital signal is an analog signal (audio, radio frequencies, ...) that has been received by a converter (Analog to Digital Converter: ADC) which performs two operations:
-
 - **Slicing**: The impinging signal is sliced into very small time slots on which its amplitude is approximated by a constant value.
 - **Quantizing**: Digital systems understand only bits. The constant value at the output of the slicer is transformed into an integer value whose maximum represents the maximum amplitude that the system can receive.
 
 As a result the digital signal at the output of the ADC is simply a series of *N*-bits values (called samples) that can be processed to extract some useful information. The most basic operation is to multiply some samples by some specific coefficients and accumulate these values to create a "summary" of this part of the signal.
 
-A filtering operation performs this using a sliding window on the signal as shown in the following figure:
+A filtering operation perform this using a sliding window on the signal as shown in the following figure:
 
-![missing image](./Images/FIR_Filter.jpg)
+<img src="./Images/FIR_Filter.jpg" width=1000><br>
 
 Input data samples are in general called **x** (blue squares), the coefficients **c** (green squares) and the output samples **y**:
 
-![missing image](./Images/FIR_Equation.jpg)
+<img src="./Images/FIR_Equation.jpg" width=300><br>
 
-DSP experts may say that this equation represents a _correlation_ and not a _convolution_ which is the mathematical expression of the filtering operation. The easy answer may be to say that it is simply a question of coefficients ordering (and perhaps conjugation for complex coefficients).
+DSP experts may say that this equation represents a _correlation_ and not a _convolution_ which is the mathematical expression of the filtering operation. The easy answer may be to say that it is simply a question of coefficients ordering (and perhaps conjugation for complex coefficients). 
 
 That's why you will always see at the beginning of the various _graph.h_ files the 2 lines:
 
@@ -165,7 +152,6 @@ The first line is the taps vector definition in the correct order for a DSP expe
 
 
 <a name="UtilsDirectory"></a>
-
 ## "Utils" Directory
 
 For this tutorial a number of utilities have been created that you are free to reuse for your own purposes.
@@ -176,12 +162,11 @@ Navigate to the `Utils` directory, and type `source InitPythonPath` to have this
 
 ### GenerateStreams
 
-This utility will use a library **_GenerationLib.py_** to generate input data suitable for the cases you want to test. It is called by typing: `GenerateStreamsGUI`. This displays a GUI in which you can select the appropriate parameters to generate the correct input data files:
+This utility will use a library **_GenerationLib.py_** to generate input data suitable for the cases you want to test. It is called by typing: `GenerateStreams`. This displays a GUI in which you can select the appropriate parameters to generate the correct input data files:
 
-![missing image](./Images/GenerateStreams.jpg)
+<img src="./Images/GenerateStreams.jpg" width=800><br>
 
 You have access to a number of parameters:
-
 - _Data Type_: by default `cint16`as this is what you will use throughout this tutorial
 - _PLIO Width_: by default `64` as this is the width which is used in this tutorial
 - _Number of Phases_: for Super Sampling Rate Filters
@@ -193,41 +178,15 @@ You have access to a number of parameters:
   - Single Stream, Polyphase: `PhaseIn_0.txt`, `PhaseIn_1.txt`, ...
   - Dual streams, Polyphase:  `PhaseIn_0_0.txt`, `PhaseIn_0_0.txt`, `PhaseIn_1_0.txt, `PhaseIn_1_0.txt``, ...
 
-Another possibility is to type `GenerateStreams` with the same parameters. If you type `GenerateStreams` without parameters, a usage text will be displayed:
-
-```BASH
->>GenerateStreams
-
-Stream Content Generation
-
-================================================================================================
-
-Usage:
-GenerateStreams DataType PLIO_Width NPhases NStreams NSamples NFrames SequenceType Basename
-   Datatype: cint16, int16, int32
-   PLIO_Width: 32, 64 or 128
-   NPhases: any integer >= 1
-   NStreams: 1 or 2
-   NSamples: integer, multiple of 8
-   NFrames: Any integer >= 1
-   SequenceType: Dirac, Linear, SinCos, Random
-   Basename: file name that will prepend phase and stream index
-
-================================================================================================
-```
-
-
-
-## ProcessAIEOutput
+### ProcessAIEOutput
 
 This utility takes all generated outputs and displays the reconstructed signal. For Single Stream/Single Phase it will display a signal using the timestamps written in the file.
 
 If your output signals are stored in files named `output_0.txt` ... then navigate to the output directory and type `ProcessAIEOutput output_*` to process the output of the AI Engines.
 
 Two other files are generated:
-
-- `Atot.txt` which is the output phase by phase
-- `out.txt` which is the textfile of the reconstructed signal
+- _Atot.txt_ which is the output phase by phase
+- _out.txt_ which is the textfile of the reconstructed signal
 
 
 ### StreamThroughput
@@ -242,4 +201,4 @@ This utility has been created to view the template arguments that were used for 
 
 
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD020</sup></br></p>

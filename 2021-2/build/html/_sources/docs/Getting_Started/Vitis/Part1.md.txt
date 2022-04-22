@@ -1,6 +1,6 @@
-<table class="sphinxhide">
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Getting Started Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ 入門 Tutorial</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
    </td>
  </tr>
@@ -42,7 +42,7 @@ Vitis accelerated applications can execute on either data-center or embedded acc
 
 * On data-center platforms, the software program runs on an x86 server and the kernels run in the FPGA on a PCIe-attached acceleration card.
 
-* On embedded platforms, the software program runs on an ARM processor of a Xilinx MPSoC device and the kernels run within the same device. 
+* On embedded platforms, the software program runs on an ARM processor of an Xilinx MPSoC device and the kernels run within the same device. 
 
 Because the software and hardware components of a Vitis application use standardized interfaces (XRT APIs and AXI protocols) to interact with each other, the user’s source code remains mostly agnostic of platform-specific details and can be easily ported across different acceleration platforms.
 
@@ -87,4 +87,4 @@ Theory is useful, but nothing beats practice! Proceed to [**Part 2**](./Part2.md
 
  
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>

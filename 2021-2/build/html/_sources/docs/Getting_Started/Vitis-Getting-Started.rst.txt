@@ -1,4 +1,4 @@
-#######################################################
+﻿#######################################################
 Introduction
 #######################################################
 
@@ -6,10 +6,10 @@ Introduction
 
 .. toctree::
    :maxdepth: 3
-   :caption: Getting Started
+   :caption: 入門
    :hidden:
 
-   Vitis Introduction and Getting Started <./Vitis/Getting_Started_Vitis>
+   Vitis Introduction and 入門 <./Vitis/Getting_Started_Vitis>
    Vitis HLS <./Vitis_HLS/Getting_Started_Vitis_HLS>
 
 
@@ -20,7 +20,7 @@ Introduction
    * - Tutorial
      - Description
 	 
-   * - :doc:`Vitis Introduction and Getting Started <./Vitis/Getting_Started_Vitis>`
+   * - :doc:`Vitis Introduction and 入門 <./Vitis/Getting_Started_Vitis>`
      - An overview of the Vitis workflow including kernel development, host software creation, emulation, implementation, and analysis.
        
        See how Vitis unifies software, acceleration, and ML development under a single development platform.
