@@ -9,7 +9,7 @@
         "disable": false,
         "user": {
             "negative": 1,
-            "error_string": "PASSED: Expected Error Message"
+            "error_string": ".ERROR:.*"
         },
         "jobs": [
             {
