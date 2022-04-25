@@ -6,7 +6,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
-		
+		<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -32,14 +33,15 @@
   <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
     <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
     <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
-	<script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -54,6 +56,8 @@
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -328,27 +332,31 @@
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">English version</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">入門</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Hardware-Accelerators.html">Hardware Accelerators</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">XRT and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Runtime_and_System_Optimization.html">Xilinx Runtime (XRT) and Vitis System Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
@@ -423,14 +431,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
-    </td>
+  <table>
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Runtime Parameter Reconfiguration Tutorial</h1>
+   </td>
  </tr>
-</table><div class="section" id="asynchronous-update-of-scalar-rtp-for-pl-inside-a-graph-and-array-rtp-update-for-ai-engine-kernel">
+ <tr>
+ </td>
+ </tr>
+</table><section id="asynchronous-update-of-scalar-rtp-for-pl-inside-a-graph-and-array-rtp-update-for-ai-engine-kernel">
 <h1>Asynchronous Update of Scalar RTP for PL inside a Graph, and Array RTP Update for AI Engine Kernel<a class="headerlink" href="#asynchronous-update-of-scalar-rtp-for-pl-inside-a-graph-and-array-rtp-update-for-ai-engine-kernel" title="Permalink to this headline">¶</a></h1>
 <p>This step demonstrates:</p>
 <ul class="simple">
@@ -438,11 +447,11 @@
 <li><p>The Array RTP update for AI Engine kernels</p></li>
 </ul>
 <p>The example is similar to <a class="reference internal" href="step3_async_array.html"><span class="doc">Asynchronous Update of Array RTP</span></a>, except that an asynchronous scalar runtime parameter is added for the PL kernel inside the graph. The system to be implemented is as follows.</p>
-<p><img alt="missing image" src="../../../../_images/figure8.PNG" /></p>
+<p><img alt="../../../../_images/figure8.PNG" src="../../../../_images/figure8.PNG" /></p>
 <p><strong>Note</strong>: The default working directory for this step is “step4”, unless explicitly specified otherwise.</p>
-<div class="section" id="review-graph-and-rtp-code">
+<section id="review-graph-and-rtp-code">
 <h2>Review Graph and RTP Code<a class="headerlink" href="#review-graph-and-rtp-code" title="Permalink to this headline">¶</a></h2>
-<p>For the PL kernel (<code class="docutils literal notranslate"><span class="pre">random_noise</span></code>) inside the graph , an additional parameter <code class="docutils literal notranslate"><span class="pre">size</span></code> has been added, which is different from the free-running kernel in <a class="reference external" href="https://gitenterprise.xilinx.com/brucey/AIE_RTP_tutorials/blob/master/step3_async_array.html">previous step</a>. And a loop is added in the kernel to iterate <code class="docutils literal notranslate"><span class="pre">size</span></code> times. The code in <code class="docutils literal notranslate"><span class="pre">aie/hls/random_noise.cpp</span></code> is as follows:</p>
+<p>For the PL kernel (<code class="docutils literal notranslate"><span class="pre">random_noise</span></code>) inside the graph , an additional parameter <code class="docutils literal notranslate"><span class="pre">size</span></code> has been added, which is different from the free-running kernel in <a class="reference external" href="https://gitenterprise.xilinx.com/brucey/AIE_RTP_tutorials/blob/master/step3_async_array.md">previous step</a>. And a loop is added in the kernel to iterate <code class="docutils literal notranslate"><span class="pre">size</span></code> times. The code in <code class="docutils literal notranslate"><span class="pre">aie/hls/random_noise.cpp</span></code> is as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extern</span> <span class="s2">&quot;C&quot;</span> <span class="n">void</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">hls</span><span class="p">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="nb">complex</span><span class="o">&lt;</span><span class="n">short</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="nb">int</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
 <span class="c1">#pragma HLS INTERFACE axis port=out</span>
 <span class="c1">#pragma HLS INTERFACE s_axilite port=return bundle=control</span>
@@ -481,8 +490,8 @@
 </pre></div>
 </div>
 <p><strong>Note</strong>: For PL kernels inside a graph, <code class="docutils literal notranslate"><span class="pre">update()</span></code> needs to be called before <code class="docutils literal notranslate"><span class="pre">run()</span></code>. In each graph, the <code class="docutils literal notranslate"><span class="pre">run()</span></code> PL kernel inside the graph will be started once, regardless of the number of iterations set for <code class="docutils literal notranslate"><span class="pre">run()</span></code>. But in each graph the <code class="docutils literal notranslate"><span class="pre">run()</span></code> AI Engine kernel will run the number of iterations set for <code class="docutils literal notranslate"><span class="pre">run()</span></code>. In each graph, <code class="docutils literal notranslate"><span class="pre">wait()</span></code> means both the AI Engine kernel and the PL kernel inside the graph wait to be completed. Thus, it is your responsibility to ensure the AI Engine and PL kernels inside the graph can start and complete in synchronous mode.</p>
-</div>
-<div class="section" id="run-ai-engine-compiler-and-ai-engine-simulator">
+</section>
+<section id="run-ai-engine-compiler-and-ai-engine-simulator">
 <h2>Run AI Engine Compiler and AI Engine Simulator<a class="headerlink" href="#run-ai-engine-compiler-and-ai-engine-simulator" title="Permalink to this headline">¶</a></h2>
 <p>Compile the AI Engine graph (<code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>) using the AI Engine compiler:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aie</span>
@@ -497,9 +506,10 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="run-hardware-cosimulation-and-hardware-flow">
-<h2>Run Hardware Cosimulation and Hardware Flow<a class="headerlink" href="#run-hardware-cosimulation-and-hardware-flow" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="run-hardware-cosimulation-and-hardware-flow">
+<h1>Run Hardware Cosimulation and Hardware Flow<a class="headerlink" href="#run-hardware-cosimulation-and-hardware-flow" title="Permalink to this headline">¶</a></h1>
 <p>The Makefile rule targets introduced in <a class="reference internal" href="step1_sync_scalar.html"><span class="doc">Synchronous update of Scalar RTP</span></a>, <a class="reference internal" href="step2_async_scalar.html"><span class="doc">Asynchronous Update of Scalar RTP</span></a>, and <a class="reference internal" href="step3_async_array.html"><span class="doc">Asynchronous Update of Array RTP</span></a> still apply here. Details about tool options and host code in <a class="reference internal" href="step1_sync_scalar.html"><span class="doc">Synchronous Update of Scalar RTP</span></a> are similar.</p>
 <p>In Linux mode, the following header files are required for the ADF and XRT APIs:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;adf/adf_api/XRTConfig.h&quot;</span>
@@ -617,8 +627,8 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span>
 </pre></div>
 </div>
-<div class="section" id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
 <p>In this step you learned about:</p>
 <ul class="simple">
 <li><p>Asynchronous array RTP</p></li>
@@ -626,9 +636,8 @@
 <li><p>Launching AI Engine simulator, HW cosimulation, and HW</p></li>
 </ul>
 <p>Next, review <a class="reference internal" href="step5_async_array_update_read.html"><span class="doc">Asynchronous Array RTP Update and Read for AI Engine Kernel</span></a>.</p>
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD001</sup></br></p></div>
-</div>
-</div>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD001</sup></br></p></section>
+</section>
 
 
            </div>
@@ -650,7 +659,7 @@
   <div role="contentinfo" class="copyright">
     <p class="footerinfo">
       <span class="lastupdated">
-        Last updated on November 15, 2021.
+        Last updated on August 11, 2021.
       </span>
 
     </p>
@@ -746,7 +755,7 @@
 														<div class="col-md-pull-6 col-lg-pull-6 col-md-6 col-lg-6">
 															<span class="copyright">
                                   
-                                  &copy; 2021, Xilinx, Inc.
+                                  &copy; 2019–2021, Xilinx, Inc.
                               </span>
 															<ul class="list-inline sub-menu">
 																<li>
