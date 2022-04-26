@@ -1,6 +1,6 @@
 {
-    "name": "AI_Engine_Development--07-AI-Engine-Floating-Point--FIRFilter",
-    "description": "07-AI-Engine-Floating-Point--FIRFilter",
+    "name": "AI_Engine_Development--08-DSP-Library--part_1",
+    "description": "08-DSP-Library--part_1",
     "gui": "false",
     "flow": "versal",
     "platform_allowlist": [ "vck190"],
@@ -19,7 +19,7 @@
         ],
         "custom_build_target":
         {
-            "all": "aiesim"
+            "all": "all-aie"
         },
         "tasks": {
             "build": {

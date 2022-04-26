@@ -227,7 +227,6 @@ void SingleStream::FIRinit()
 
 ## Compilation and Analysis
 
-Ensure that the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
 

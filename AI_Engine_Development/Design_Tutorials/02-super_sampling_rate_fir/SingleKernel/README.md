@@ -213,7 +213,6 @@ These four blocks have to be written eight times with different parameters to co
 
 ## Compilation and Analysis
 
-Ensure that the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `SingleKernel` directory. In the `Makefile`, three methods are defined:
 

@@ -34,6 +34,12 @@ This tutorial requires a number of tools and files to be installed:
 
 The AI Engine development documentation is also available [here](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US).
 
+Before starting this tutorial, run the following steps:
+
+1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
+2. Set up your ROOTFS to point to the xilinx-versal-common-v2022.1/rootfs.ext4
+3. Set up your IMAGE to point to xilinx-versal-common-v2022.1/Image.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ## Accessing the Tutorial Reference Files
 
@@ -42,7 +48,7 @@ The AI Engine development documentation is also available [here](https://docs.xi
 
 The sub-directory `Files` contains all the source files necessary for this tutorial.
 
-A `env_setup.sh` script is provided to initialize the Vitis tool and set the platform repository. Modify it accordingly for your install and source it to initialize all necessary environment variables.
+A `addon_setup.sh` script is provided to initialize the platform name.
 
 # AI Engine Application Post-Link Recompile
 

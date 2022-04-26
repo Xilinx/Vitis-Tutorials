@@ -35,17 +35,19 @@ Software requirements include:
 * [Vitis](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 * [Python 3](https://www.python.org/downloads/)
 * You also have the possibility to test these architectures on the AI Engine using MATLAB Simulink toolset.
-  - [Mathworks](https://www.mathworks.com/) to install **MATLAB** version R2020a, R2020b or R2021a.
+  - [Mathworks](https://www.mathworks.com/) to install **MATLAB** version R2021a or R2021b.
   - **Vitis Model Composer** that is available with the usual install of **Vitis**.
 
-- [Vitis](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
-- [Python 3](https://www.python.org/downloads/)
+
+Before starting this tutorial, run the following step:
+
+1. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials.git`.
-2. Navigate to the `Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/Utils/` directory, and type `source InitPythonPath` to have this directory in your path for Python libraries and executable search path.
+2. Navigate to the `Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/` directory, and type `source addon_setup.sh` to update the path for Python libraries and executable.
 
 You can now start the tutorial.
 

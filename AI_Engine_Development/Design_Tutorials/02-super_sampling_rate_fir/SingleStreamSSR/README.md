@@ -229,7 +229,6 @@ for(int row = 0;row<NPhases;row++)
 
 ## Compilation and Analysis
 
-Ensure the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
 - `aie`

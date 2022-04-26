@@ -229,7 +229,6 @@ for(int col=0;col<NPhases;col++)
 
 ## Compilation and Analysis
 
-Ensure the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
 
@@ -257,7 +256,7 @@ Click **Graph** to visualize the graph of the application:
 
 ![missing image](../Images/Graph8Phases.png )
 
-The 64 kernels and their 32 independent input streams are clearly visible. The top graph is for the output phases 0, 2, 4, and 6, the phases where the cascade stream goes from left to right on the physical device, and the bottom graph is for the phases 1, 3, 5, and 7 where the cascade stream goes from right to left.
+The 64 kernels and their 16 independent input streams are clearly visible. The top graph is for the output phases 0, 2, 4, and 6, the phases where the cascade stream goes from left to right on the physical device, and the bottom graph is for the phases 1, 3, 5, and 7 where the cascade stream goes from right to left.
 
 Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
 

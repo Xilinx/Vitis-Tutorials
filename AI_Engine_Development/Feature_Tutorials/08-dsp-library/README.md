@@ -77,33 +77,11 @@ To run through this tutorial, you will need to download and install the followin
 
 ### *Environment*: Setting Up Your Target Platform Environment
 
-When the elements of the Vitis software platform are installed, update the target platform environment script.
+When the elements of the Vitis software platform are installed, follow the steps below:
 
-Edit the provided template setup script `env_setup.sh` in your favourite text editor. Replace the placeholders with the appropriate paths:
+1. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+2. Set up your `DSPLIB_ROOT`environment variable at the location you downloaded the DSP Library.
 
-```bash
-#Setup environment variables
-export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
-```
-
-Then source the environment script:
-
-```bash
-source env_setup.sh
-```
-
-### *Validation*: Confirming Tool Installation
-
-Ensure that you are using the 2022.1 version of Xilinx tools.
-
-## *Validation*: Confirming Tool Installation
-Ensure that you are using the 2022.1 version of Xilinx tools.
-```bash
-which vitis
-which aiecompiler
-```
 
 ### *Other Tutorials*: Learn Basic Vitis Compiler and AI Engine Concepts
 

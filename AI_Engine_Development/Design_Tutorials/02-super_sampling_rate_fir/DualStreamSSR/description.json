@@ -16,7 +16,6 @@
         ],
         "targets": [
             "vitis_aie_sim",
-            "vitis_x86_sim"
         ],
         "custom_build_target":
         {
@@ -24,6 +23,7 @@
         },
         "tasks": {
             "build": {
+                "pre_exec": "./env_setup.sh" ,
                 "pre_exec": "${GITHUB_LIBS_REPO}/Vitis-In-Depth-Tutorial/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/Utils/InitPythonPath"
             }
         }
