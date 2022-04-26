@@ -63,7 +63,7 @@ VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TA
 .PHONY: clean all kernels aie aie2 link package package2 run_emu disp
 
 
-all: disp kernels aie link aie2 host package2  run_emu
+all: kernels aie link aie2 host package2  run_emu
 phase1: kernels aie link host package run_emu
 phase2: aie2 package2 run_emu
 
@@ -189,7 +189,8 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 		--package.boot_mode=sd \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
-		--package.sd_file host.exe  tutorial.xsa  libadf.a
+		--package.sd_file host.exe  tutorial.xsa  libadf.a \
+		--package.sd_file ${FILES_DIR}/embedded_exec.sh
 
 package2: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 	v++ -p -t ${TARGET} \
@@ -199,7 +200,8 @@ package2: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 		--package.boot_mode=sd \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
-		--package.sd_file host.exe  tutorial.xsa  libadf2.a
+		--package.sd_file host.exe  tutorial.xsa  libadf2.a \
+		--package.sd_file ${FILES_DIR}/embedded_exec.sh
 
 ########################################################
 

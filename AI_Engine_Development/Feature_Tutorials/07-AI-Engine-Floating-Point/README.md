@@ -32,19 +32,8 @@ Before starting to explore these examples, refer to the following documents:
   - Licenses for AI Engine tools.
   - Base Platform **[VCK190 Vitis Platform](https://www.xilinx.com/support/download.html)**
 
-  Edit the provided template setup script `env_setup.sh` in your favourite text editor. Replace the placeholders with the appropriate paths:
+Before starting this tutorial set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
-  ```bash
-  #Setup environment variables
-  export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
-  export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-  ```
-
-  Then source the environment script:
-
-  ```bash
-  source env_setup.sh
-  ```
 
 ## AI Engine Architecture Details
 

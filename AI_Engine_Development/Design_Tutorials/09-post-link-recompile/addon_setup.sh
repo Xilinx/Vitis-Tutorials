@@ -16,29 +16,20 @@
 #!/bin/bash
 
 
-export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-
-
-######################## DO NOT CHANGE BELOW LINES ##########################
-
 # =========================================================
 # Platform Selection...
 # =========================================================
 export PFM_NAME=xilinx_vck190_base_202210_1
 
-
-# Source XRT, VITIS, and Aietools...
-source $XILINX_TOOLS_LOCATION/settings64.sh
-
+# =========================================================
+# Do not change anything below this line unless necessary
+# =========================================================
 
 export TOOLS_VERSION=`basename $XILINX_VITIS`
+
 
 #Print env variables
 echo "Tools Version      : "$TOOLS_VERSION
 echo "XILINX_VITIS       : "$XILINX_VITIS
 echo "XILINX_VIVADO      : "$XILINX_VIVADO
-
-
-export PYTHONPATH=$PWD/Utils:$PYTHONPATH
-export PATH=$PWD/Utils:$PATH
+echo "XILINX_HLS         : "$XILINX_HLS

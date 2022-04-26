@@ -141,7 +141,7 @@ In phase 2, there are three stages:
 
  * `run_emu`: Launches the simulation and verifies that the output is still correct.
 
-
+Run `make phase2` to go over all steps. Simulation will be done the same way as in phase 1 but will take longer due to the routing path which is much longer.
 
 # Perform on-board testing
 

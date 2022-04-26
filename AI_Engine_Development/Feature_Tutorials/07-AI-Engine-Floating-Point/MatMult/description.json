@@ -15,8 +15,7 @@
             }
         ],
         "targets": [
-            "vitis_aie_sim",
-            "vitis_x86_sim"
+            "vitis_aie_sim"
         ],
         "custom_build_target":
         {
@@ -24,7 +23,7 @@
         },
         "tasks": {
             "build": {
-                "pre_exec": "${GITHUB_LIBS_REPO}/Vitis-In-Depth-Tutorial/AI_Engine_Development/Design_Tutorials/07-AI-Engine-Floating-Point/Utils/InitPythonPath"
+                "pre_exec": "./env_setup.sh"
             }
         }
     }
