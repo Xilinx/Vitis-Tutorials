@@ -21,7 +21,7 @@ LINUX_ETH_CONFIG           ?= DHCP
 LINUX_BUILD_SOURCES        ?= network
 LINUX_LOCAL_DOWNLOADS_DIR  ?= /tmp/plnx-workspace/downloads
 LINUX_LOCAL_SSTATE_DIR     ?= /tmp/plnx-workspace/sstate_aarch64_2021.2/aarch64
-LINUX_TMP_DIR              ?= /tmp/linux/petalinux
+LINUX_TMP_DIR              ?= /tmp/${USER}/2022.1/petalinux
 
 CURR_DIR                   := $(shell pwd)
 PROJ_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}
@@ -36,10 +36,10 @@ FILE_MAIN_CFG              := ${PROJ_DIR}/project-spec/configs/config
 FILE_ROOT_FS_CFG           := ${PROJ_DIR}/project-spec/configs/rootfs_config
 FILE_BSP_CFG               := ${PROJ_DIR}/project-spec/meta-user/conf/petalinuxbsp.conf
 
-SRC_DIR_DEVICE_TREE        := ../src/device-tree
-DEST_DIR_DEVICE_TREE       := ${PROJ_DIR}/project-spec/meta-user/recipes-bsp/device-tree
+SRC_DIR_DEVICE_TREE        := ../src/recipes-bsp/device-tree/files
+DEST_DIR_DEVICE_TREE       := ${PROJ_DIR}/project-spec/meta-user/recipes-bsp/device-tree/files
 
-SRC_DIR_ETH_STATIC         := ../src/init-ifupdown
+SRC_DIR_ETH_STATIC         := ../src/recipes-bsp/init-ifupdown/files
 DEST_DIR_ETH_STATIC        := ${PROJ_DIR}/project-spec/configs/init-ifupdown
 
 .PHONY: help all clean
