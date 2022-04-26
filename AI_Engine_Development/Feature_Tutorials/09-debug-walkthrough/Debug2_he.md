@@ -63,8 +63,6 @@ make package_dbg
 From terminal 1, setup tool path properly and issue this command to launch hardware emulator and boot up Petalinux.
 ```bash
 ./launch_hw_emu.sh -add-env ENABLE_RDWR_DEBUG=true -add-env RDWR_DEBUG_PORT=10100 -pid-file emulation.pid -no-reboot -forward-port 1440 1534
-# Run next command in emulator shell after emulator is up and ready to debug
-source /mnt/sd-mmcblk0p1/init.sh
 ```
 Command option explanation:
 1. `-add-env RDWR_DEBUG_PORT=${aie_mem_sock_port}`: Defines the port for communicating with the AI Engine domain. In the previous example, it is 10100.
@@ -114,7 +112,7 @@ Expected result
 #### Step 4.5 Setup Execute Script of Newly Created Debug Type
 <img src="images/he_cl_config4.png" width="600" >
 
-**Note:** The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab –e.g. `set aie_work_dir "${PROJECT_PATH}/beamformer/Work/"` and `set vitis_install "${XILINX_VITIS_PATH}/Xilinx/Vitis/2021.2"`
+**Note:** The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab –e.g. `set aie_work_dir "${PROJECT_PATH}/beamformer/Work/"` and `set vitis_install "${XILINX_VITIS_PATH}/Xilinx/Vitis/2022.1"`
 
 #### Step 4.6 Close the debug configuration
 <img src="images/he_cl_config5.png" width="600" >
@@ -130,7 +128,7 @@ Expected result
 <img src="images/he_cl_config7.png" width="600" >
 
 **Note:**
-1. The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab. For example, `set aie_work_dir ${PROJECT_PATH}/beamformer/Work/` and `set vitis_install ${XILINX_VITIS_PATH}/Xilinx/Vitis/2021.2`
+1. The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab. For example, `set aie_work_dir ${PROJECT_PATH}/beamformer/Work/` and `set vitis_install ${XILINX_VITIS_PATH}/Xilinx/Vitis/2022.1`
 2. Step 4.7 requires to start PS application BEFORE launching debugger to debug AI Engine sub-project. Will see issues if above step sequence is not followed.
 3. It takes some time depends on number of times in design to launch AI Engine debugger completely. Beamformer design contains 64 tiles that needs several minutes to complete.
 
@@ -162,4 +160,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD005 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>

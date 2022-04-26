@@ -5,7 +5,7 @@
    </td>
  </tr>
  <tr>
- <td align="center"><h2>AI Engine Debug with s86simulator</h2>
+ <td align="center"><h2>AI Engine Debug with X86simulator</h2>
  </td>
  </tr>
 </table>
@@ -64,7 +64,7 @@ For example, Compare `${PROJECT}/data/ulbf_gold3.txt` and `${PROJECT}/Emulation-
 The simplest form of tracing is to use a formatted `printf()` statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. You can add `printf()` statements to your code to be processed during x86 emulation, or AIE emulation, and remove them or comment them out for hardware builds. To help identify which kernel is printing which line the `X86SIM_KERNEL_NAME` macro can be useful.
 
 ### Step 2.1 Add `printf()` statement
-Select `bf8x8_fst_api.cpp` file in Vitis IDE to be edited. Add `<adf/x86sim/x86simDebug.h>` at line 24 and `printf("%s: %s, %d\n", __FUNCTION__, X86SIM_KERNEL_NAME, __LINE__);` statement at line 37 of `bf8x8_fst_api.cpp` file.
+Select `bf8x8_fst_api.cpp` file in Vitis IDE to be edited. Add `#include <adf/x86sim/x86simDebug.h>` at line 24 and `printf("%s: %s, %d\n", __FUNCTION__, X86SIM_KERNEL_NAME, __LINE__);` statement at line 37 of `bf8x8_fst_api.cpp` file.
 `bf8x8_fst_api.cpp` can be found from Vitis IDE's explorer, browse to `beamformer` project, click on `src` then `kernel` to expand the directory, and click on `bf8x8_fst_api.cpp`. The file will be displayed at the center of the Vitis IDE. To use X86SIM_KERNEL_NAME you must include `adf/x86sim/x86simDebug.h` header file in graph kernel code.
 
 ### Step 2.2 Compile the Project
@@ -106,8 +106,8 @@ Remove added three lines from line 52 of `bf8x8_fst_api.cpp` for other features.
 ### Step 4.1 Launch SW Emulator Debugger
 <img src="images/86_IDE_debug0.png" width="600">
 
-### Step 4.2 Debug Run Time
-All Vitis IDE debug functionalities are supported, e.g. step in, step over, step return, inspect variable values, set/clear break points...
+### Step 4.2 Debug during Run Time
+All Vitis IDE debug functionalities are supported, e.g. step in, step over, step return, inspect variable values, set/clear break points... Need to set break points to proper code to perform debug functionalities.
 <img src="images/86_IDE_debug1.png" width="900">
 
 ### Step 4.3 Inspect Array Values
@@ -200,7 +200,8 @@ Update the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim
 <img src="images/86_dump_conf.png" width="600">
 
 #### Step 6.1.2 Run x86simulator
-Select aiengine domain project, right click on `Run As` and select `Launch SW Emulator`. x86simulator will be launched and run the aiengine domain project. After x86simulator completes, generated files are at `${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump` directory. Filename are in the format of `platform_[sink]/[src]_index.txt` for platform input/output files and `graph-name_sub-graph-class-name_sub-graph-instance-name_kernel-index_[in]/[out]_index.txt` for graph input/output files.
+Select aiengine domain project, right click on `Run As` and select `Launch SW Emulator`. x86simulator will be launched and run the aiengine domain project. After x86simulator completes, generated files are at `${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump` directory. Filename are in the format of  `graph-name_sub-graph-class-name_sub-graph-instance-name_kernel-index_[in]/[out]_index.txt` for graph input/output files.
+
 <img src="images/86_sim_dump.png" width="600">
 
 ### x86simulator Deadlock Detection

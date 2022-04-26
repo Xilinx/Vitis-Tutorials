@@ -9,23 +9,6 @@
 
 # AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware
 
-<table style="width:100%">
-  <tr>
-    <td width="20%" align="center"><a href="Debug0_po.md">Migrate AI Engine Command-Line Based Projects to Vitis IDE</a></td>
-    <td width="20%" align="center"><a href="Debug1_86.md">AI Engine Debug with x86simulator</a></td>
-    <td width="20%" align="center"><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></td>
-  </tr>
-  <tr>
-    <td width="20%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
-    <td width="20%" align="center"><a href="Debug4_et.md">AI Engine Debug with Hardware event trace</a></td>
-    <td width="20%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
-    <td width="20%" align="center"><a href="Debug6_pr.md">Profiling Graph Inputs and Outputs with Profiling APIs</a></td>
-    <td width="20%" align="center"><a href="Debug7_il.md">AI Engine Debug with Integrated Logic Analyzer (ILA)</a></td>
-  </tr>
-</table>
-
 ***Version: Vitis 2022.1***
 
 ## Introduction
@@ -86,11 +69,214 @@ After the project is ready in the Vitis IDE, you can move on to the next steps t
 
 **Note**: The imported project specifies a hardware platform path that must be adjusted to your specific installed path to work correctly. Click on **`beamformer_system.sprj`** to update the hardware platform path in the Vitis™ IDE.
 
-* [AI Engine Debug with Software Emulator](./Debug1_se.md)
-* [AI Engine Debug with AI Engine Emulator](./Debug2_ai.md)
-* [AI Engine Source Code Debug with Hardware Emulator](./Debug2_he.md)
-* [AI Engine Source Code Debug on Hardware](./Debug3_hw.md)
-* [AI Engine/PL Kernel Debug with XRT Utilities](./Debug5_bc.md)
+
+## Debug Methodology
+
+### Debug via Simulations
+
+Due to huge cost and time associated with build real system for testing and verification purposes, there are several simulation and modeling techniques to help evaluating AI Engine designs.
+
+Classification of simulation,
+* Functional vs. Timing simulations.
+
+Functional simulator simulates the functionalities of the design only and do not model microarchitecture details and constraints. X86simulator and SW_emu are considered in this category while Aiesimulator and HW_emu are considered timing simulations that simulates execution time/performance and constraints of the design. Keeping track of those detailed timing information makes them slow and resources intensive in comparison to functional simulators. 
+
+* Application level vs. Full system simulations.
+
+Obviously, application level simulation focus on targeted designs, e.g. AI Engine design instead of a full fledge target operating system (OS). In user level simulation, any system service requests by the simulated application are serviced by the underlying host OS. Application level simulation is usually less complex but likely to show some inaccuracies due to lack of system level support.
+
+
+Supported simulations are categorize in this table.
+<table style="width:100%">
+  <tr>
+    <td width="40%" align="center"></td>
+    <td width="30%" align="center"><a>Functional Simulation</a></td>
+    <td width="30%" align="center"><a>Timing Simulation</a></td>
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>Application Level Simulation</a></td>
+    <td width="30%" align="center"><a href="Debug1_86.md">X86simulator</a></td>
+    <td width="30%" align="center"><a href="Debug2_ai.md">AIEsimulator</a></td>
+  </tr>  
+  <tr>
+    <td width="40%" align="center"><a>System Level Simulation</a></td>
+    <td width="30%" align="center"><a href="Debug1_se.md">SW_emu</a></td>
+    <td width="30%" align="center"><a href="Debug2_he.md">HW_emu</a></td>
+  </tr>
+</table>
+
+These supported simulations help to fix majority of design issues before running the AI Engine design on actual hardware. [UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) contains more details of each simulation’s capabilities and how to apply the supported features to resolve design issues such as memory leaks, memory access conflicts, resource constraints, integration with PL/PS domains.
+* Focus on AI Engine design’s functionalities – <a href="Debug1_86.md">X86simulator</a>.
+* Focus on AI Engine design’s execution time and resources used – <a href="Debug2_ai.md">AIEsimulator</a>.
+* Focus on AI Engine design’s integration with PL and PS domains for fast build and run time. – <a href="Debug1_se.md">SW_emu</a>.
+* Focus on AI Engine design’s integration with PL and PS domains for close to HW run – <a href="Debug2_he.md">HW_emu</a>.
+
+Capabilities of supported simulations are
+<table style="width:100%">
+  <tr>
+    <td width="40%" align="center"><a>Support features/scope</a></td>
+    <td width="15%" align="center"><a href="Debug1_86.md">X86simulator</a></td>
+    <td width="15%" align="center"><a href="Debug2_ai.md">AIEsimulator</a></td>
+    <td width="15%" align="center"><a href="Debug1_se.md">SW_emu</a></td>
+    <td width="15%" align="center"><a href="Debug2_he.md">HW_emu</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>Hardware constraint, heap/stack size, program/data memory size</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>yes</a></td>   
+  </tr>
+   <tr>
+    <td width="40%" align="center"><a>Design execution time approximation</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>no</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>printf() support</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>Debugger support</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>Valgrind support</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>no</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>AIE profiling APIs support</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>yes</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>AIE trace support</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>AIE memory access violation detection</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>no</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>AIE deadlock detection</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>no</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>PL integration</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>yes</a></td>
+    <td width="15%" align="center"><a>yes</a></td>   
+  </tr>
+  <tr>
+    <td width="40%" align="center"><a>PS integration</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>no</a></td>
+    <td width="15%" align="center"><a>yes (exclude baremetal)</a></td>
+    <td width="15%" align="center"><a>yes</a></td>   
+  </tr>
+</table>
+
+
+### Debug via Hardware
+
+After fixing all AI Engine design issues with above simulations, running AI Engine design on hardware could still exhibits issues.
+[UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) debug methodology chapter describes these stages along with detail steps included.
+
+#### Stage 1: Run the design on hardware 
+This is the first stage running the design on hardware. Areas to check
+* Verify input and output data
+  * Restrict pointer usage
+* Error reporting and handling reporting from host application
+  * XRT APIs returned status
+* Design stalls analysis
+  * XRT Xbutil utility
+  * XSDB generate run summary file and display with vitis_analyzer
+
+[AI Engine Debug with Profiling APIs](./Debug6_pr.md)
+
+
+#### Stage 2: Design profiling
+After design issues are cleared from stage 1, we are ready to collect design profiling metrics.
+There are two flows collecting profiling info, both are non-intrusive and requires no design changes.
+* XSDB flow
+  * Requires jtag connection to hardware board and supports interactive communication to hardware board.
+* XRT flow
+  * Add xrt.ini file that instructs predefined metrics to be collected during design run time.
+
+Areas of profiling
+* AI Engine core metrics
+  * heat_map
+  * stalls
+  * execution
+  * stream puts/gets
+  * floating_point 
+  * aie_trace
+  * read/write bandwidth
+* Memory module metrics
+  * conflicts
+  * dma_locks
+  * dma_stalls
+  * read/write bandwidth
+* Interface bandwidth metrics
+  * Input/output bandwidth
+  * Input/output stalls_idle
+
+Due to limited hardware resources, recommend to run the design multiple times to collect different metrics. Then use vitis_analyzer to inspect collected profiling data from multiple runs. Vitis_analyzer can consolidate these data with global view of the design.
+
+
+#### Stage 3: Kernel Analysis
+[AI Engine Debug with Integrated Logic Analyzer](./Debug7_il.md)
+
+
+#### Stage 4: AI Engine Event Trace and Analysis
+[AI Engine Debug with Event Trace](./Debug4_et.md)
+
+
+#### Stage 5: Host Application Debug
+[AI Engine/PL Kernel Debug with XRT Utilities](./Debug5_bc.md)
+
+
+### Tutorial Category
+
+<table style="width:100%">
+  <tr>
+    <td width="20%" align="center"><a href="Debug0_po.md">Migrate AI Engine Command-Line Based Projects to Vitis IDE</a></td>
+    <td width="20%" align="center"><a href="Debug1_86.md">AI Engine Debug with x86simulator</a></td>
+    <td width="20%" align="center"><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></td>
+    <td width="20%" align="center"><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></td>
+    <td width="20%" align="center"><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></td>
+  </tr>
+  <tr>
+    <td width="20%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
+    <td width="20%" align="center"><a href="Debug4_et.md">AI Engine Debug with Hardware event trace</a></td>
+    <td width="20%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
+    <td width="20%" align="center"><a href="Debug6_pr.md">Profiling Graph Inputs and Outputs with Profiling APIs</a></td>
+    <td width="20%" align="center"><a href="Debug7_il.md">AI Engine Debug with Integrated Logic Analyzer (ILA)</a></td>
+  </tr>
+</table>
 
 
 ## Support

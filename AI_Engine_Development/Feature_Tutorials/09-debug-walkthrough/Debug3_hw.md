@@ -45,7 +45,7 @@ Create debug target connection from Vitis™ IDE.
 
 <img src="images/hw_ta_sd.png">
 
-**Note:** The `sd_card.img` at `Hardware/package/sd_card.img` is the file to use for debug. `sd_card.img` at `Hardware/package_no_aie_debug` is for regular run on board without debug.
+**Note:** The `sd_card.img` at `Hardware/package/sd_card.img` is the file for regular use. `sd_card.img` at `Hardware/package_aie_debug` is for debug run on board.
 
 #### Step 2.2. Launch debugger
 Launch PS application with xclbin (or PS application expected variables), so it is ready to be debugged.

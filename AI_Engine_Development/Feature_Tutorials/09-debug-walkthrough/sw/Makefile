@@ -16,9 +16,9 @@ HOST_INC     = -I../ -I../aie
 HOST_OBJ     = aie_control_xrt.o host.o
 AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
 
-CXXFLAGS += -std=c++14 -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -I../aie/inc -I../aie/kernels -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+CXXFLAGS += -std=c++17 -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -I../aie/inc -I../aie/kernels -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
-LDFLAGS += -ladf_api_xrt -lxrt_coreutil -lxaiengine -lgcc -lc -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ --sysroot=${SDKTARGETSYSROOT} -L${SDKTARGETSYSROOT}/usr/lib/ -L$(XILINX_VITIS)/aietools/lib/aarch64.o
+LDFLAGS += -ladf_api_xrt -lxrt_coreutil -lxrt_core -lxaiengine -lgcc -lc -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ --sysroot=${SDKTARGETSYSROOT} -L${SDKTARGETSYSROOT}/usr/lib/ -L$(XILINX_VITIS)/aietools/lib/aarch64.o
 
 .PHONY: clean
 

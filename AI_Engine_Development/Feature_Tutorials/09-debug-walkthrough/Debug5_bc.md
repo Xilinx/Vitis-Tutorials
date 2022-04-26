@@ -4,7 +4,7 @@
    </td>
  </tr>
  <tr>
- <td align="center"><h1>AI Engine/PL Kernel Debug with XRT Utilities</h1>
+ <td align="center"><h1>AI Engine/PL Kernel Debug with XRT Utilities on HW</h1>
  </td>
  </tr>
 </table>
@@ -24,7 +24,7 @@
 # xbutil
 The utility, `xbutil` is supported for PL/AI Engine kernels debug. It provides information for PL/AI Engine kernels.
 
-To use the tools, binary container, for example, xclbin is required to be loaded first then issue commands to obtain information from, or, configure the kernels.
+To use the tool, binary container, for example, xclbin is required to be loaded first after board boots up then issue commands to obtain information from, or, configure the kernels.
 
 Command examples are as follows:
 ```bash
@@ -45,7 +45,7 @@ xbutil examine -d 0000:00:00.0 -r TYPE
 
 A help string is provided by xbutil.
 ```bash
-root@versal-rootfs-common-2021_2:/mnt/sd-mmcblk0p1# xbutil examine --help
+root@versal-rootfs-common-2022_1:/run/media/mmcblk0p1# xbutil examine --help
 
 DESCRIPTION: This command will 'examine' the state of the system/device and will generate a report
              of interest in a text or JSON format.
@@ -215,7 +215,7 @@ Step 3: Burn the generated `sd_card.img` to the SD card, insert SD card into SD 
 
 Step 4: After VCK190 is powered up and booted up complete, run the binaries.
 ```bash
-cd /mnt/sd-mmcblk0p1
+cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
 ```
 

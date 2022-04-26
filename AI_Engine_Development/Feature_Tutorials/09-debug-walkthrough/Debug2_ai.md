@@ -94,7 +94,9 @@ Double-click on **${AIE_PROJECT}/Emulation-AIE/aiesimulator_output/default.aieru
 <img src="images/aie_sim_va.png">
 <img src="images/aie_sim_profile.png">
 
-**Note:** Click on **Trace** for generated event trace info. Click on **Profile** for selected AI Engine tiles' profile report files. These events are timing approximately accurate and can be a good reference for how the design runs.
+**Note:**
+1. Click on **Trace** for generated event trace info. Click on **Profile** for selected AI Engine tiles' profile report files. These events are timing approximately accurate and can be a good reference for how the design runs.
+2. The trace view supports data visualization feature that displays input/output data along with time line to help visualize I/O data of a kernel at given time.
 
 
 ## 3. AI Engine Emulator `printf` Support
@@ -166,7 +168,7 @@ Highlight the beamformer sub-project, right-click to enable pull-down menu, sele
 Access location at address 0x00039900 that is between sections and is not allowed to access. This triggers the memory check error(s) and displays at Vitis IDE console.
 
 <img src="images/aie_sim_mem-check3.png">
-Note: The error messages may be rolled out of visible area, scroll up from console window to inspect the expected error messages.
+**Note:** The error messages may be rolled out of visible area, scroll up from console window to inspect the expected error messages.
 
 ### Step 7. Additional test
 For invalid memory access that is out of kernel program memory range, for example 0xdeadbeef, a segfault error will be thrown regardless of whether the `--enable-memory-check` option is enabled/disabled.
@@ -202,8 +204,6 @@ There are two Linux terminals required. Both terminals are required to point to 
 From terminal 1, setup tool path properly and issue this command to launch hardware emulator and boot up Petalinux.
 ```bash
 ./launch_hw_emu.sh -add-env ENABLE_RDWR_DEBUG=true -add-env RDWR_DEBUG_PORT=10100 -pid-file emulation.pid -no-reboot -forward-port 1440 1534
-# Run next command in emulator shell after emulator is up and ready to debug
-source /mnt/sd-mmcblk0p1/init.sh
 ```
 Command option explanation:
 1. `-add-env RDWR_DEBUG_PORT=${aie_mem_sock_port}` defines the port for communicating with the AI Engine domain. In the previous example, it is 10100.
@@ -217,7 +217,7 @@ Note:
 ### Step 4. Run Host Application from Emulation Console
 After the emulator and Petalinux boot up, issue these commands from the emulator console (terminal 1 from step 3).
 ```bash
-cd /mnt/sd-mmcblk0p1
+cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
 ```
 Note: This step is required to initialize and debug AI Engine tiles because this design has the `--package.defer_aie_run` option.
