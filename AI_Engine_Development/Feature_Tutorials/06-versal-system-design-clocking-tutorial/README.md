@@ -78,11 +78,11 @@ In this design you will use three kernels called: **MM2S**, **S2MM**, and **Pola
 
 Run the following commands:
     ```bash
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp \
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp \
         --hls.clock 150000000:mm2s -o mm2s.xo --save-temps
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp \
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp \
         --hls.clock 150000000:s2mm -o s2mm.xo --save-temps
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip \
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip \
         ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps
     ```
 
@@ -150,7 +150,7 @@ There are many more options available for `v++`. For a full list, see the docume
     Here you are telling the `v++` linker to override the default clock frequency to 200 MHz for the `s2mm` kernel, and setting the clock tolerance to 1 MHz. By setting a tolerance you are giving the linker a better chance to make sure a clock can be generated that meets your bandwidth.
 4. With the changes made you can now run the following command:
     ```bash
-    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202110_1/xilinx_vck190_es1_base_202110_1.xpfm s2mm.xo \
+    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm s2mm.xo \
         mm2s.xo polar_clip.xo ./aie/libadf.a --config system.cfg \
         --save-temps -o tutorial1.xclbin
     ```
