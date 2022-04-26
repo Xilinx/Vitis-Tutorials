@@ -96,7 +96,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `LINUX_ETH_CONFIG`:
       - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
       - `export LINUX_ETH_CONFIG := STATIC` for Ethernet Static Configuration (change if needed).
-        - Please setup your required Ethernet Static Configuration in `[project-root]/linux/src/init-ifupdown/interfaces`.
+        - Please setup your required Ethernet Static Configuration in `[project-root]/linux/src/recipes-bsp/init-ifupdown/interfaces`.
       - REMARKS: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation `export TARGET := hw_emu`:
         - The recommendation is to use `export LINUX_ETH_CONFIG := DHCP`.
         - Please read ["Networking in QEMU"](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU) carefully.
@@ -165,11 +165,12 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
   <summary> make all -C linux/${LINUX_BUILD_TOOL} </summary>
 
 `[project-root]/linux` Directory/file structure:
-| Directory/file                           | Description                                             
-| -----------------------------------------|-------------------------------------------------------------------------------------------
-| src/device-tree/files/system-user.dtsi   | Some device-tree changes needed for VCK190              
-| src/init-ifupdown/interfaces             | Configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := DHCP`
-| src/boot_custom.bif                      | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
+| Directory/file                                       | Description                                             
+| -----------------------------------------------------|-------------------------------------------------------------------------------------------
+| src/recipes-bsp/device-tree/*                        | Linux-recipe and files needed for some device-tree changes needed for VCK190              
+| src/recipes-bsp/init-ifupdown/*                      | Linux-recipe and configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := STATIC`
+| src/recipes-core/base-files/*                        | Linux-recipe needed to automount mmcblk0p1 for builds with `export LINUX_BUILD_TOOL := yocto`
+| src/boot_custom.bif                                  | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
  
  `[project-root]/linux/petalinux` Directory/file structure:
 | Directory/file      | Description                                             
@@ -310,19 +311,14 @@ Administrator. It usually boils down to these three things:
 
 Password: 
 vck190-versal:/home/petalinux#
+vck190-versal:/home/petalinux# cd /run/media/mmcblk0p1/
+vck190-versal:/run/media/mmcblk0p1#
  ```
  
-`export LINUX_BUILD_TOOL := yocto`: You will need to mount the `/dev/mmcblk0p1`:
- ```
-vck190-versal:/home/petalinux# mkdir -p /run/media/mmcblk0p1
-vck190-versal:/home/petalinux# mount /dev/mmcblk0p1 /run/media/mmcblk0p1/
- ```
- 
-Execute the following after you went though the previous explained steps so you reached the `/run/media/mmcblk0p1` directory:
+Execute the following after you went though the previous explained login-step so you reached the `/run/media/mmcblk0p1` directory:
   - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
   ```
-vck190-versal:/home/petalinux# cd /run/media/mmcblk0p1/
 vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin 
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
@@ -585,8 +581,8 @@ Click on each item below to see the detailed Revision History:
     - Petalinux and/or Yocto TMP_DIR is now set and can be changed with `export LINUX_TMP_DIR := /tmp/linux/${LINUX_BUILD_TOOL}`
     - Moved `[project-root]/petalinux` to `[project-root]/linux/petalinux`
     - Moved `[project-root]/petalinux/src/boot_custom.bif` to `[project-root]/linux/src/boot_custom.bif`
-    - Moved `[project-root]/petalinux/src/device-tree` to `[project-root]/linux/src/device-tree`
-    - Moved `[project-root]/petalinux/init-ifupdown` to `[project-root]/linux/src/init-ifupdown`
+    - Moved `[project-root]/petalinux/src/device-tree` to `[project-root]/linux/src/recipes-bsp/device-tree`
+    - Moved `[project-root]/petalinux/init-ifupdown` to `[project-root]/linux/src/recipes-bsp/init-ifupdown`
     - Linux build for `export LINUX_BUILD_TOOL := petalinux` ends up in `[project-root]/linux/vck190-versal`
     - Linux build for `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/vck190-versal` and `[project-root]/linux/vck190-versal-meta`
     - Sysroot build for `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/sysroot`
