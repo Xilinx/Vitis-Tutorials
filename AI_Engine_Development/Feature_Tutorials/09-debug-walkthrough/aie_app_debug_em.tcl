@@ -1,5 +1,5 @@
 #
-# Copyright 2021 Xilinx, Inc.
+# Copyright 2022 Xilinx, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -11,7 +11,7 @@
 # limitations under the License.
 #
 #Set the required variables
-set vitis_install "/proj/xbuilds/2021.2_released/installs/lin64/Vitis/2021.2"
+set vitis_install "/proj/xbuilds/2022.1_released/installs/lin64/Vitis/2022.1"
 set aie_work_dir "${PROJECT_DIR}/Work"
 set aie_mem_sock_port "10100"
 set xrt_server_port "4352"

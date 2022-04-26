@@ -11,7 +11,7 @@
 # limitations under the License.
 #
 
-TARGET   = hw
+TARGET   = hw_emu
 PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
 XSA      = bf_${TARGET}.xsa
 HOST_EXE = host.exe
@@ -21,8 +21,9 @@ IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image
 GRAPH    = aie/graph.cpp
 LIBADF   = libadf.a
 
-AIE_CMPL_CMD = aiecompiler -log-level=5 -v -platform=${PLATFORM} --pl-freq=500 -genArchive -include="./aie" -include="./aie/inc" -include="./aie/kernels" -include="./data" -include="./" --xlopt=0 --num-trace-streams=8 --event-trace=runtime --event-trace-port=plio --broadcast-enable-core=true -workdir=./Work ${GRAPH}
+AIE_CMPL_CMD = aiecompiler -log-level=5 -v -platform=${PLATFORM} --pl-freq=500 -genArchive -include="./aie" -include="./aie/inc" -include="./aie/kernels" -include="./data" -include="./" --xlopt=0 -workdir=./Work ${GRAPH}
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
+EMU_CMD  = ./launch_hw_emu.sh
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
@@ -33,11 +34,12 @@ XOS      = $(subst .cpp,.xo,$(wildcard pl_kernels/*.cpp))
 VCC      = v++
 VPP_SPEC = system.cfg
 VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}  
-# VPP_FLAGS= --verbose --config ${VPP_SPEC}  
 
 .PHONY: clean
 
 all: xsa host package data
+run: all run_hw_emu
+sd_card: all
 
 aie: ${LIBADF}
 ${LIBADF}: ${GRAPH}
@@ -115,7 +117,7 @@ package_dbg_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data
 
 run_hw_emu: launch_hw_emu.sh
 launch_hw_emu.sh: package_hw_emu
-	./launch_hw_emu.sh
+	$(EMU_CMD)
 
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \

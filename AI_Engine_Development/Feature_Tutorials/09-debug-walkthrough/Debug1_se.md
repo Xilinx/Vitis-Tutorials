@@ -68,6 +68,11 @@ The updated host.cpp contains mandatory changes to make software emulation work.
 ...
 ```
 
+IDE needs to add `__SYNCBO_ENABLE__` flag in build.
+
+<img src="images/se_config_1.png" width="450">
+
+
 ### Step 1.5 Build system project
 <img src="images/se_build.png" width="300">
 
@@ -148,7 +153,7 @@ export XCL_EMULATION_MODE=sw_emu
 
 ### Step 4.7 Run application
 ```bash
-cd /mnt/sd-mmcblk0p1
+cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
 ```
 Expect to see `TEST PASSED` from terminal.

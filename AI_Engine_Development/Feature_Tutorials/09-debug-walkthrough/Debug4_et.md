@@ -88,7 +88,7 @@ xsdb
 %xsdb ta
 %xsdb ta 1
 %xsdb source ${XILINX_VITIS_INSTALL_PATH}/installs/lin64/Vitis/2021.2/scripts/vitis/util/aie_trace.tcl
-%xsdb aietrace start -graphs dut -config-level functions_all_stalls -work-dir ./Work -link-summary ./bf_hw.xclbin.xclbin.link_summary -base-address 0x900000000 -depth 0x8000000
+%xsdb aietrace start -graphs dut -config-level functions_all_stalls -work-dir ./Work -link-summary ./bf_hw.xsa.link_summary -base-address 0x900000000 -depth 0x8000000
 ```
 Note:
 1. -base-address `0x900000000` is the address that needs to avoid collision with your design.
@@ -107,7 +107,7 @@ Note: aie_trace_metrics specifies `functions`, `functions_partial_stalls`, or `f
 
 ### Step 6 to Run Application after Petalinux Boots up on Board
 ```bash
-cd /mnt/sd-mmcblk0p1
+cd /run/media/mmcblk0p1
 export XILINX_XRT=/usr
 ./ps_app.exe a.xclbin
 ```
@@ -129,17 +129,10 @@ Transfer `aie_trace_N.txt`, `aie_event_runtime_config.json` and `xrt.run_summary
 Note: Generated run summary file is named `xrt.run_summary` from XRT flow, and named `aie_trace_profile.run_summary` for XSDB flow.
 
 ### Step 8. Launch Vitis Analyzer to Examine Event Trace Files
-Launch Vitis Analyzer tool.
-```bash
-vitis_analyzer
-```
-Select **file->Open Summary**, then browse to the design's run_summary file.
-<img src="images/et_va_init.png">
-<img src="images/et_va_init1.png" width="600">
-
-Or
 ```bash
 vitis_analyzer aie_trace_profile.run.summary
+OR
+vitis_analyzer xrt.run.summary
 ```
 
 Note: When run vitis_analyzer the first time to view the design, vitis_analyzer prompts asking the design's compile summary file, slect `Work/project.aiecompile_summary` file.

@@ -72,7 +72,7 @@ Configure include paths.
 Configure hardware link with `v++` option
 
 <img src="images/po_hw_config.png">
-<img src="images/po_hw_config1.png" width="450">
+<img src="images/po_hw_config1.png" width="600">
 
 Import `system.cfg` file to the proper project/location.
 
@@ -82,8 +82,6 @@ Import `system.cfg` file to the proper project/location.
 Add hardware functions to project.
 
 <img src="images/po_hw_config3.png">
-
-Note: If hardware functions are inside the graph, check mark "PL Kernel in AIE Graph" from this configuration.
 
 Configure number of instances for each PL kernel.
 <img src="images/po_hw_config4.png">
