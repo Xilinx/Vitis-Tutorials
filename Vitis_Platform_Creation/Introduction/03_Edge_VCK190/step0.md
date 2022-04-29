@@ -161,7 +161,7 @@ If the custom platform is created from scratch, it's recommended to run through 
 
    ![missing image](./images/step0/vivado_no_imp_avail.png)
 
-   - Click ***OK*** for default options for Launch Runs dialogue.
+   - Click ***OK*** for default options for Launch Runs dialouge.
 
    It takes a while to generate block diagram and run through implementation.
 
@@ -181,7 +181,7 @@ If the custom platform is created from scratch, it's recommended to run through 
 
 #### (Optional) Validate PDI on Hardware
 
-If the custom platform is created from scratch, it's recommended to test the device image (PDI) on hardware to make sure the device initialization configuration is set correctly. This is not a required step for platform creation, but it can reduce issues you find in the last platform validation stage.
+If the custom platform is created from scratch, it's recommended to test the device image (PDI) on hardware to make sure the device initialization configuration is set correctly. This is not a step required for platform creation, but it can reduce issues you find in the last platform validation stage.
 
 To run this step, please make sure **This project is a Vitis Platform project** is **NOT** selected during platform creation.
 
@@ -250,11 +250,58 @@ If the PDI can't load successfully, please check the CIPS configuration.
 
 </details>
 
+
 #### (Optional) Create PetaLinux Project
 
-If the custom platform is created from scratch, it's recommended to build the PetaLinux image and run on hardware before turning this project into a platform project. This is not a required step for platform creation, but it can reduce issues you find in the step 2 - software preparation.
+If the custom platform is created from scratch, it's recommended to test building the PetaLinux image and run on hardware before turning this project into a platform project. This is not a step required for platform creation, but it can reduce issues you find in the step 2 - software preparation.
 
-To do this test, please make sure **This project is a Vitis Platform project** is **NOT** selected during platform creation and then click [PetaLinux quick building page](./petalinux_build.md) for detailed steps.
+To run this step, please make sure **This project is a Vitis Platform project** is **NOT** selected during platform creation.
+
+<details>
+  <summary><b>Show Detailed Steps</b></summary>
+
+For a quick demonstration in this step, we'll use VCK190 pre-built device tree. It helps to setup peripheral properties, such as Ethernet MAC phy address, etc. These settings are specific to each board. It needs BSP engineers to develop during board bring up phase for custom boards.
+
+1. Create PetaLinux Project with XSA
+
+   ```bash
+   petalinux-create -t project --template versal --force -n petalinux
+   cd petalinux
+   petalinux-config --get-hw-description=<path to xsa directory> --silentconfig
+   ```
+
+   - The created PetaLinux project name is ***petalinux***. Please feel free to change the PetaLinux project name with ***petalinux-create -n*** option.
+   - The XSA used for PetaLinux needs to be a post implementation XSA.
+
+2. Apply VCK190 device tree
+
+   - Run `petalinux-config`
+   - Go to ***DTG Settings***
+   - Enter ***versal-vck190-reva-x-ebm-02-reva*** for ***MACHINE_NAME*** option (CONFIG_SUBSYSTEM_MACHINE_NAME)
+   
+   Note: This preset device setting will add ethernet PHY info to device tree. The [device tree source code][1] will be applied to the PetaLinux project.
+
+[1]: https://github.com/Xilinx/u-boot-xlnx/blob/master/arch/arm/dts/versal-vck190-revA-x-ebm-02-revA.dts
+
+3. Build PetaLinux Image
+
+   ```bash
+   petalinux-build
+   petalinux-package --boot --u-boot
+   ```
+
+   Output ***BOOT.BIN***, ***boot.scr*** and ***image.ub*** are located in ***images/linux*** directory.
+
+
+4. Validate PetaLinux image on Board
+
+   - Copy ***BOOT.BIN***, ***image.ub*** and ***boot.scr*** from **build/petalinux/images/linux** directory to SD card (fat32 partition).
+   - Insert SD card to VCK190, set boot mode to SD boot (0001) and boot the board.
+   - Make sure Linux boot successfully. Login with username: root, password: root
+
+</details>
+<!--For Create PetaLinux Project-->
+
 
 ### Fast Track
 
