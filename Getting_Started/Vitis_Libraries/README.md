@@ -8,7 +8,7 @@
 
 # Getting Started With Vitis Libraries
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 This tutorial focuses on how to leverage the Vitis Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile and simulate on its own till instantiate it into top-level design.
 
@@ -19,9 +19,9 @@ Before playing with the libraries, you need to set up Vitis environment first. F
 Below are the example scripts to set up Vitis and XRT:
 
 ```
-$ source <Vitis Tool Installation Path>/Xilinx/Vitis/2021.2/settings64.sh
-$ source <XRT Installation Path>/xilinx/xrt/setup.sh
-$ export PLATFORM_REPO_PATHS=<Platform Installation Path>/xilinx/platforms
+$ source <Vitis Tool Installation Path>/Vitis/2022.1/settings64.sh
+$ source /opt/xilinx/xrt/setup.sh
+$ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 
 ```
 
@@ -38,7 +38,7 @@ cd /home/project
 git clone https://github.com/Xilinx/Vitis_Libraries.git
 ```
 
-This will take a few seconds to minutes for downloading depending on network.
+This will take a few seconds to minutes for downloading depending on network. 
 After it is completed, you may browse into the sub folders to get familiar with the file structure.
 
 ~~~
@@ -52,6 +52,7 @@ Vitis_Libraries/
 ├── data_compression/
 ├── database/
 ├── dsp/
+├── genomics/
 ├── graph/
 ├── hpc/
 ├── quantitative_finance/
@@ -71,6 +72,7 @@ dsp/
 │   ├── README.md
 │   ├── examples/
 │   ├── include/
+│   ├── meta/
 │   ├── src/
 │   └── tests/
 ├── L2/
@@ -78,6 +80,7 @@ dsp/
 │   ├── benchmarks/
 │   ├── examples/
 │   ├── include/
+│   ├── meta/
 │   └── tests/
 ├── LICENSE.txt
 ├── README.md
@@ -170,12 +173,12 @@ vitis_hls -p prj_impulse_test.prj &
 
 You may browse into the source files, synthesis report or waveform viewer by simply selecting them from the 'Explorer' window and 'Flow Navigator' window.
 
-The top_module.cpp calls the FFT library and the parameters are defined in the data_path.hpp file. For detailed instructions about how to use FFT library, please refer to the Vitis Library [github.io](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/user_guide/L1.html#fixed-point-1-d-ssr-fft-usage) page.
+The top_module.cpp calls the FFT library and the parameters are defined in the data_path.hpp file. For detailed instructions about how to use FFT library, please refer to the Vitis Library [github.io](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/user_guide/L1.html#fixed-point-1-d-ssr-fft-usage) page.
 
 3. Export IP in HLS project
 
-Now we have verified that the library IP is working properly and we will export it to a Vivado IP. To do so, click the `Export RTL` from *IMPLEMENTATION* item in *Flow Navigator*. In the pop-up window, we will leave every settings unchanged and click `OK` to export the IP.›
-By default, the IP will be exported to the <project folder>/solutionN/impl, in this case, it is in following directory:
+Now we have verified that the library IP is working properly and we will export it to a Vivado IP. To do so, click the `Export RTL` from *IMPLEMENTATION* item in *Flow Navigator*. In the pop-up window, we will leave every settings unchanged and click `OK` to export the IP.
+By default, the IP will be exported to the `<project folder>/solutionN/impl`, in this case, it is in following directory:
 
 ~~~
 /home/project/Vitis_Libraries/dsp/L1/examples/1Dfix_impluse/prj_impulse_test.prj/solution1/impl
@@ -187,7 +190,7 @@ In the next step, we will launch Vivado and create a top-level design to instant
 
 4. View Co-Simulation Waveform (optional)
 
-You could modify the co-simulation related command lines in file *./run_hls.tcl* (around line 48) as below to turn-on the xsim waveform dump switch:
+You could modify the co-simulation related command lines in file `./run_hls.tcl` (around line 48) as below to turn-on the xsim waveform dump switch:
 
 ~~~
 ...
@@ -200,7 +203,7 @@ if {$COSIM == 1} {
 Then re-run the command:
 
 ```
- make run COSIM=1 
+ make run COSIM=1 XPART=xcvu9p-flgc2104-2-e
 ```
 
 
@@ -226,9 +229,9 @@ vivado &
 
 Create a new project with default project name *project_1* and select the type as ***RTL Project*** with ***Do not specify sources at this time*** box checked. Select ***xcvu9p-flgc2104-2-e*** as the part of this project. You may select other parts as well.
 
-Now the project has been created. Let's add the source files into the project. Select `Add or create design sources` menu and then click `Add Files` to add the ***fft_wrap.v*** which is located under ***src*** folder. Then select `Add or create simulation sources` menu and then click `Add Files` to add the ***fft_tb.v*** into the project. Use the same procedure to add the ***datain.txt*** and ***dataref.txt*** files into the project as simulation sources as well.
+Now the project has been created. Let's add the source files into the project. Select `Add or create design sources` menu from `PROJECT MANAGER` > `Add Sources` and then click `Add Files` to add the ***fft_wrap.v*** which is located under ***src*** folder. Then select `Add or create simulation sources` menu and click `Add Files` to add the ***fft_tb.v*** into the project. Use the same procedure to add the ***datain.txt*** and ***dataref.txt*** files into the project as simulation sources as well.
 
-The fft_wrap.v simply instantiates the FFT IP which we just exported earlier. We need to set up the IP repo path in order to let Vivado find it. To do so, click `settings` from Flow Navigator panel and add the IP export folder to the repo path.
+The ***fft_wrap.v*** simply instantiates the FFT IP which we just exported earlier. We need to set up the IP repo path in order to let Vivado find it. To do so, click `settings` from Flow Navigator panel and add the IP export folder to the repo path.
 
 ![](images/ip_repo.png)
 
@@ -300,6 +303,7 @@ In this tutorial, we explain how to leverage a L1 Vitis library element to build
 ## Reference
 
 Documentation on Vitis Libraries: https://xilinx.github.io/Vitis_Libraries/
+
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p>
 
