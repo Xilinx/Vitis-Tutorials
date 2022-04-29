@@ -19,18 +19,24 @@ ABS_SW_PATH=$(ABS_BUILD_PATH)/$(PETALINUX_PROJ_NAME)
 PETALINUX_DIR=$(ABS_SW_PATH)
 PETALINUX_CONFIG=$(PETALINUX_DIR)/project-spec/configs/config
 PETALINUX_ROOTFS_CONFIG=$(PETALINUX_DIR)/project-spec/configs/rootfs_config
-BASEPLATFORM=xilinx_zcu104_base_202120_1/hw/hw.xsa
-.PHONY: all get_xsa petalinux clean main
+XSA_PATH 	?=${PLATFORM_REPO_PATHS}/xilinx_zcu104_base_202210_1/hw/
+XSA_NAME	?=hw
+.PHONY: help
 
-all: prep_baseplatform get_xsa petalinux_proj petalinux_build petalinux_build_sdk
-main: prep_baseplatform get_xsa petalinux_proj petalinux_build
+help:
+	@echo "Makefile usage"
+	@echo "make all XSA_PATH=<path/to/base_platform/>  	## to generate Linux Image and SDK tool by using Petalinux with pre-exported XSA file or base paltform "
+	
 
-prep_baseplatform:
-	@echo "Extracet the platform"
-	unzip xilinx_zcu104_base_202210_1.zip
+all: check-xsa petalinux_proj petalinux_build petalinux_build_sdk
 
-get_xsa:$(BASEPLATFORM)
-	cd $(ROOT_DIR); cp xilinx_zcu104_base_202210_1/hw/hw.xsa .
+
+check-xsa:
+ifeq ($(wildcard $(XSA_PATH)/$(XSA_NAME).xsa),)
+	@echo "'XSA_PATH' is not accesible, please either download base platform  from Xilinx official website and set this flag to sepcify the PLATFORM_PATH which contains xsa file, or provide yourself  xsa file path"
+	@make help
+	@echo "exit ....." && exit 1
+endif
 
 
 update_dtsi:
@@ -69,7 +75,7 @@ update_rootfs_config:
 petalinux_proj:
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template zynqMP --force -n $(PETALINUX_PROJ_NAME)
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_config
-	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(ROOT_DIR) --silentconfig
+	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(XSA_PATH)/$(XSA_NAME).xsa --silentconfig
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_rootfs_config
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_dtsi
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
@@ -83,5 +89,5 @@ petalinux_build_sdk:
 	cd $(PETALINUX_DIR) && petalinux-package --sysroot
 
 clean:
-	$(RM) -rf $(ABS_BUILD_PATH) vivado*.log vivado*.jou *.xsa xilinx_zcu104_base_202220_1
+	$(RM) -rf $(ABS_BUILD_PATH) 
 
