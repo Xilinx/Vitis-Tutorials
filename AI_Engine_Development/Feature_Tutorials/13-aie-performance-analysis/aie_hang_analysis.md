@@ -196,19 +196,17 @@ From how much data has been transferred for the input and output, the status of 
 
 If necessary, an Integrated Logic Analyzer (ILA) can be inserted to probe the interfaces of the PL kernels to detect the AI Engine and PL kernels' running status.
 
-## Analyzing AI Engine Status in Hardware & HW Emulation with Vitis Analyzer
-
-Please refer to [AI Engine Status Analysis](./aie_status_analysis.md)
+Refer to [AI Engine Status Analysis](./aie_status_analysis.md) for how to use Vitis Analyzer to understand the AI Engine status in both hardware and hardware emulation.
 
 ### Conclusion
 
 After completing this tutorial, you have learned how to detect and analyze design hang issues.
 
-## Apendix (Optional)
-
-### Manual Dump and Register Reading to Detect AI Engine Status in Hardware Emulation and Hardware
+## Appendix (Optional)
 
 This section provides details of other methods of detecting and analyzing AI Engine running status.
+
+### Manual Dump and Register Reading to Detect AI Engine Status in Hardware Emulation and Hardware
 
 - **Using `xbutil` to report graph running status:** The following command can be used to report graph running status:
 
@@ -373,17 +371,17 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	Value `0x00001000` indicates that it is `Stream_Stall_MS0`, and value `0x00000200` indicates that it is `Lock_Stall_E`. The analysis of the result is similar to using `xbutil`. 
 
-# Revision History
+# Support
 
-- July 2021: Initial release.
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
+# License
 
-© Copyright 2021 Xilinx, Inc.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
 
-  ```
-  http://www.apache.org/licenses/LICENSE-2.0
-  ```
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"><sup>XD051 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p>

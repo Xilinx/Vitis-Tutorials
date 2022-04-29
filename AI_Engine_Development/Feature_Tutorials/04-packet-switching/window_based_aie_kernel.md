@@ -422,7 +422,7 @@ In this step, you learned about the following concepts.
 * Designing PL kernels for packet switching
 * PS application and running HW/HW emulation flows
 
-Next, review [Window Based AI Engine Kernels with Mixed Data Types](./window_based_mix_data_type.md)
+Next, review [Window Based AI Engine Kernels with Mixed Data Types](./window_based_mix_data_type.md).
 
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -437,4 +437,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD029 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p>

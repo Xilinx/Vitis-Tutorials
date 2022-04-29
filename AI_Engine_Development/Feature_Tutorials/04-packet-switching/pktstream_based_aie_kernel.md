@@ -102,7 +102,8 @@ Note that the connection type for the `input_pktstream` and `output_pktstream` i
 
 Note that `input_pktstream` is read as integer input. It needs to be `reinterpret_cast` to other types if needed. 
 
-### Run AI Engine Simulator, HW Emulation, and HW flows
+### Run the AI Engine Simulator, HW Emulation, and HW Flows
+
 Run the AI Engine simulator with the following make command.
 
     make aiesim
@@ -145,16 +146,17 @@ In this tutorial you learned about:
 * Constructing the packet switching graph
 * Writing PL kernels to perform packet switching
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+# Support
 
-    http://www.apache.org/licenses/LICENSE-2.0
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+# License
 
-<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p>
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
+
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"><sup>XD029 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p>
