@@ -32,12 +32,12 @@ platform create -name $platform_name \
     -no-boot-bsp 
 
 # AIE domain
-#domain create -name aiengine -os aie_runtime -proc ai_engine
+domain create -name aiengine -os aie_runtime -proc ai_engine
 
 # Linux domain
 domain create -name xrt -proc psv_cortexa72 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./sd_dir}  -bootmode {sd}
 domain active xrt
-domain config -boot {xilinx-versal-common-v2022.1/}
+domain config -boot {../step2_petalinux/build/petalinux/images/linux}
 domain config -generate-bif
 
 # Generate Platform

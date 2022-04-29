@@ -13,7 +13,7 @@
 # limitations under the License.
 
 XSA_NAME=vck190_custom
-PLATFOMR_PATH = ../../step2_pfm/platform_repo/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
+PLATFOMR_PATH = ../../step3_pfm/platform_repo/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
 
 .PHONY: all clean
 
