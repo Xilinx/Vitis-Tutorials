@@ -2,11 +2,13 @@
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
 
+### Introduction 
+
+The <a href="./Introduction/">Introduction</a> page contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you check the introduction page for details before starting to use the AIE tutorials.
 
 ### Design Tutorials
 
@@ -68,10 +70,6 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="35%" align="center"><b>Tutorial</b>
  <td width="65%" align="center"><b>Description</b>
  </tr>
- <tr>
- <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
- <td>This tutorial introduces a complete end to end flow for a bare-metal host application using AI Engines and PL kernels.</td>
- </tr>
   <tr>
  <td align="center"><a href="./Feature_Tutorials/02-using-gmio/">Using GMIO with AIE</a></td>
  <td>This tutorial introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engines and external DDR</td>
@@ -130,6 +128,10 @@ This tutorial introduces you to performance analysis and optimization methods, a
  <td>
 This multi-part tutorial describes how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.</td>
  </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
+ <td>This tutorial walks through the steps to create a custom Baremetal platform, and also integrate Baremetal host application along with  an AI Engines graph and PL kernels.</td>
+ </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
