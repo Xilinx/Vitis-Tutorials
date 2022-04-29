@@ -9,7 +9,7 @@
 
 # Window Based AI Engine Kernels with Mixed Data Types
 
-This example is similar to the previous [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the difference with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. See [Prepare Data for AI Engnie Simulator](#Prepare-Data-for-AI-Engnie-Simulator). Another difference is that the PS code has to take care of the input and output data types. See [PS Application and HW Emulation Flows](#PS-Application-and-HW-Emulation-Flows).
+This example is similar to the previous [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the difference with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. See [Prepare Data for AI Engine Simulator](#Prepare-Data-for-AI-Engine-Simulator). Another difference is that the PS code has to take care of the input and output data types. See [PS Application and HW Emulation Flows](#PS-Application-and-HW-Emulation-Flows).
 
 The following topics are already covered in [Window Based AI Engine Kernels](./window_based_aie_kernel.md).
 
@@ -18,7 +18,7 @@ The following topics are already covered in [Window Based AI Engine Kernels](./w
 * [Example PL Kernels for Packet Switching](./window_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
 * [Example PS code for Packet Switching](./window_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
 
-### Prepare Data for AI Engnie Simulator
+### Prepare Data for AI Engine Simulator
 
 Change the working directory to `window_aie_mix_int32_float_cint16`. The graph code for this example is the same as the [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example. The AI Engine kernel `core[2]` (`aie/aie_core3.cpp`) has floating point interfaces, and the AI Engine kernel `core[3]` (`aie/aie_core4.cpp`) has `cint16` interfaces. 
 
@@ -142,16 +142,18 @@ In this step, you learned about the following concepts.
 
 Next, review [Packet Stream Based AI Engine Kernels](./pktstream_based_aie_kernel.md).
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# Support
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p>
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
+
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"><sup>XD029 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p>

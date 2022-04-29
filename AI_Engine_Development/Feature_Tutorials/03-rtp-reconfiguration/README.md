@@ -24,9 +24,11 @@ Before starting this tutorial run the steps below:
 3. Set up your IMAGE to point to `xilinx-versal-common-v2022.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
-This tutorial targets VCK190 production board, PLATFORM variable in the Makefile(s) is: 
+This tutorial targets the VCK190 production board. The `PLATFORM` variable in the Makefile(s) is as follows: 
 
-	PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+```
+   PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+```
 
 
 ## Objectives
@@ -72,7 +74,7 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD001 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD001 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p>
 
 ==========
 

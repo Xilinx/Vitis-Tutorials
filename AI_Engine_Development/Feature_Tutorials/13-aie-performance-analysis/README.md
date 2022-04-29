@@ -27,7 +27,7 @@ Before you begin this tutorial, run the following steps:
 3. Set up your IMAGE to point to `xilinx-versal-common-v2022.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
-This tutorial targets VCK190 production board, PLATFORM variable in the Makefile(s) is: 
+This tutorial targets the VCK190 production board. The `PLATFORM` variable in the Makefile(s) is as follows:
 
 	PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
 
@@ -40,7 +40,7 @@ After completing this tutorial, you will understand how to:
 - Profile design performance.
 - Identify a performance bottleneck.
 - Analyze a deadlock (hang issue) in the design.
-- AI Engine status analysis with Vitis Analyzer.
+- Analyze AI Engine status using Vitis Analyzer.
 
 ## Steps
 
@@ -48,25 +48,22 @@ After completing this tutorial, you will understand how to:
 
 **Step 2**: Learn about how a deadlock might occur with an example design. Learn how to analyze a deadlock in the AI Engine simulator, hardware emulation, and hardware flows. Go to [AI Engine Deadlock Analysis](./aie_hang_analysis.md).
 
-**Step 3**: Learn about how to AI Engine status analysis in HW and HW emulation flows with Vitis Analyzer. Go to [AI Engine Status Analysis](./aie_status_analysis.md).
+**Step 3**: Learn about AI Engine status analysis in the hardware and hardware emulation flows using Vitis Analyzer. Go to [AI Engine Status Analysis](./aie_status_analysis.md).
 
 
-**Tip:** In this tutorial, the designs are self-contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is recommended to start from the beginning and progress through to completion.
+**Tip:** In this tutorial, the designs are self contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is recommended to start from the beginning and progress through to completion.
 
-## Revision History
-
-- July 2021: Initial release.
-
-## Support
+# Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-© Copyright 2021 Xilinx, Inc.
+# License
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
-  ```
-  http://www.apache.org/licenses/LICENSE-2.0
-  ```
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
+
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"><sup>XD051 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p>
