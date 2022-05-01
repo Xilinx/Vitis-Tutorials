@@ -224,12 +224,49 @@ This time we will utilize Versal extensible platform from CED example, use pre-b
 
 5. Launch the test application from UART console
 
-   ```
-   cd /run/media/sd-mmcblk0p1
-   ./vadd binary_container_1.xclbin
-   ```
+   <details>
 
-   > Note: Depends on the device tree version, the mount point of the SD card could be /run/media/sd-mmcblk1p1. Please try this path if /mnt/sd-mmcblk0p1 is not available on your system.
+   <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Downloads website</strong></summary>
+
+     Go to auto mounted FAT32 partition and run the application like below:
+
+     ```
+     cd /run/media/sd-mmcblk0p1
+     ./simple_vadd krnl_vadd.xclbin
+     ```
+
+   </details>
+
+   <details>
+   <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+
+     You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
+
+     - Log into the system
+     
+     ```bash
+     petalinux login:petalinux
+     You are required to change your password immediately (administrator enforced).
+     New password:
+     Retype new password:
+     petalinux:~$ sudo su
+     We trust you have received the usual lecture from the local System
+     Administrator. It usually boils down to these three things:
+         #1) Respect the privacy of others.
+         #2) Think before you type.
+         #3) With great power comes great responsibility.
+     Password:
+     petalinux:/home/petalinux#
+     ```
+
+     - Go to auto mounted FAT32 partition and run the application like below:
+
+     ```
+     petalinux:/home/petalinux# cd /run/media/sd-mmcblk0p1
+     petalinux:/home/petalinux# ./simple_vadd krnl_vadd.xclbin
+     ```
+   </details>  
+
 
 6. Expected print on UART console
 

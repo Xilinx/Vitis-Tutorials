@@ -19,6 +19,12 @@ puts "The platform name is \"$platform_name\""
 set xsa_path [lindex $argv 1]
 puts "The xsa path is \"$xsa_path\"" 
 
+set boot_dir [lindex $argv 2]
+puts "The xsa path is \"$boot_dir\"" 
+
+set sd_dir [lindex $argv 3]
+puts "The xsa path is \"$sd_dir\"" 
+
 #set OUTPUT platform_repo
 
 # XSCT commands
@@ -36,9 +42,9 @@ platform create -name $platform_name \
 #domain create -name aiengine -os aie_runtime -proc ai_engine
 
 # Linux domain
-domain create -name xrt -proc psv_cortexa72 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./xilinx-versal-common-v2022.1/sd_dir}  -bootmode {sd}
+domain create -name xrt -proc psv_cortexa72 -os linux -arch {64-bit} -runtime {ocl} -sd-dir ${sd_dir}  -bootmode {sd}
 domain active xrt
-domain config -boot {xilinx-versal-common-v2022.1/}
+domain config -boot ${boot_dir}
 domain config -generate-bif
 
 # Generate Platform
