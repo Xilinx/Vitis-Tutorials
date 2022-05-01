@@ -19,43 +19,52 @@ BD_TCL=run.tcl
 ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
 DTB_PLT_NAME=mydevice
 DTB_LOCATION=$(ROOT_DIR)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
-COMMON_IMAGE_NAME=xilinx-versal-common-v2022.1
+VERSION=2022.1
+COMMON_IMAGE_PATH ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
+BOOT=boot
+SD_DIR=sd_dir
+SW_COMP=sw_comp
+SYSROOT=sysroot
 XSA_NAME=vck190_custom
 PLATFORM_NAME=vck190_custom
 PLATFORM = $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
-SYSROOTDIR=$(ROOT_DIR)/$(COMMON_IMAGE_NAME)/sysroot/
+SYSROOTDIR=$(ROOT_DIR)/$(SYSROOT)
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 
 
-.PHONY: help all hw common dtb sysroot pfm vadd vadd_hw clean ultraclean
-
-all: help hw common dtb sysroot pfm  vadd vadd_hw
+.PHONY: help 
 
 help:
 	@echo "Makefile usage"
-	@echo "make hw       	## to generate XSA file "
-	@echo "make common   	## to extract common image. Before extracting common image ,please perpare the common image under current directory"
-	@echo "make dtb      	## to generate DTB and DTS file by using createdts command "
-	@echo "make sysroot  	## to install Yocto SDK tool"
-	@echo "make pfm      	## to create Vitis platform"
-	@echo "make vadd	 	## to compile Vector Addition application and test hardware simulation"
-	@echo "make vadd_hw  	## to cimple Vector Addition and generate SD_CARD.IMG for hardware platform"
-	@echo "make clean    	## to clean the intermedia files"
-	@echo "make ultrafile	## to clean all the project output file"
+	@echo "make all COMMON_IMAGE_PATH=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
+	
 
+all: check-common-image hw sw_comps dtb sysroot pfm  vadd vadd_hw
+
+#target : check  whether the common image is ready 
+check-common-image:
+ifeq ($(wildcard $(COMMON_IMAGE_PATH)/Image),)
+	@echo "'COMMON_IMAGE_PATH' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
+	@make help
+	@echo "exit ....." && exit 1
+endif
 
 # target: hw
-# Build bare  Vivado design and export XSA
+# Build  Vivado design and export XSA
 hw: $(ABS_BD_TCL)
 	mkdir -p $(ABS_HW_PATH)
 	cd $(ABS_HW_PATH); vivado -mode batch -notrace -source $(ABS_BD_TCL) -tclargs VCK190
 
-
-# target: common
-# extract the common image 
-common: $(COMMON_IMAGE_NAME).tar.gz
-	@echo "Extract the common image, if you do not have please download it"
-	tar xvf $(COMMON_IMAGE_NAME).tar.gz 
+#target :software components
+#copy software components to local directory
+sw_comps:$(COMMON_IMAGE_PATH)/Image
+	@echo "create folder to store sw components and copy software components to local directory ./boot and ./sd_dir"
+	 mkdir -p $(SW_COMP) && mkdir  -p $(BOOT) && mkdir  -p $(SD_DIR)
+	cp $(COMMON_IMAGE_PATH)/u-boot.elf  $(BOOT)/
+	cp $(COMMON_IMAGE_PATH)/bl31.elf  $(BOOT)/
+	cp $(COMMON_IMAGE_PATH)/boot.scr $(SD_DIR)/
+	cp $(COMMON_IMAGE_PATH)/Image  $(SW_COMP)/
+	cp $(COMMON_IMAGE_PATH)/rootfs.ext4  $(SW_COMP)/
 
 # target: dtb
 #generate the DTB file
@@ -69,43 +78,40 @@ dtb: $(ABS_HW_PATH)/$(XSA_NAME)_hw.xsa
 	gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o $(DTB_LOCATION)/system.dts $(DTB_LOCATION)/system-top.dts 
 	@echo "compile the DTB"
 	dtc -I dts -O dtb -o $(DTB_LOCATION)/system.dtb $(DTB_LOCATION)/system.dts
-	cp $(DTB_LOCATION)/system.dtb  $(COMMON_IMAGE_NAME)/
+	cp $(DTB_LOCATION)/system.dtb  $(BOOT)/
 	
-
-# Target: prep_sysroot
+# Target: sysroot
 # Install sysroot to sw_comp directory
-sysroot: $(COMMON_IMAGE_NAME)/sdk.sh
-	rm -rf ./$(COMMON_IMAGE_NAME)/sysroot &&  sh $(COMMON_IMAGE_NAME)/sdk.sh -d  $(COMMON_IMAGE_NAME)/sysroot -y
+sysroot: $(COMMON_IMAGE_PATH)/sdk.sh
+	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_PATH)/sdk.sh -d  $(SYSROOT)/ -y
 
 # Target: pfm
 # Generate the Vitis platform with XSCT
 # Input: vck190_custom.xsa in build/vivado directory
-pfm: $(COMMON_IMAGE_NAME)/Image
-	rm -rf ./$(COMMON_IMAGE_NAME)/sd_dir && mkdir $(COMMON_IMAGE_NAME)/sd_dir
-	cp $(COMMON_IMAGE_NAME)/boot.scr $(COMMON_IMAGE_NAME)/sd_dir
+pfm: $(ABS_HW_PATH) $(ROOT_DIR)/$(BOOT) $(ROOT_DIR)/$(SD_DIR)
 	@echo "INFO: Creating Platform $(XSA_NAME)"
-	xsct xsct_create_pfm.tcl $(PLATFORM_NAME) $(ABS_HW_PATH) && \
+	xsct xsct_create_pfm.tcl $(PLATFORM_NAME) $(ABS_HW_PATH) $(ROOT_DIR)/$(BOOT) $(ROOT_DIR)/$(SD_DIR) && \
 	echo "Platform created:" && \
 	find . -name "*.xpfm"
 
 Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
-	patch -p1 Vitis_Accel_Examples/cpp_kernels/simple_vadd/Makefile meetVitisNewFeature.patch
+
 
 $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(ROOT_DIR)/$(COMMON_IMAGE_NAME) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
-vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin
-	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(ROOT_DIR)/$(COMMON_IMAGE_NAME) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOT)/
+	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 # vadd_hw is a place-holder for manual build and test on hardware
-vadd_hw: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(ROOT_DIR)/$(COMMON_IMAGE_NAME) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+vadd_hw: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOT)/
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 clean:
 	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 
 	$(MAKE) -C $(PL_EXAMPLE_PATH) clean
 
 ultraclean:
-	rm -rf device-tree-xlnx $(DTB_PLT_NAME) $(PLATFORM_NAME) $(COMMON_IMAGE_NAME) Vitis_Accel_Examples
+	rm -rf device-tree-xlnx/ $(DTB_PLT_NAME) $(PLATFORM_NAME) $(SW_COMP) $(BOOT) $(SD_DIR) $(SYSROOT) Vitis_Accel_Examples
 	
