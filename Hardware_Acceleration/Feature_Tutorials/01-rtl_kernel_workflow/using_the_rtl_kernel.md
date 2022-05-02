@@ -1,11 +1,8 @@
-﻿<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
@@ -30,7 +27,7 @@ The New Vitis Application Project window opens.
 
 4. The New Application Project wizard is displayed, with the overview page showing a brief overview of the process. Click **Next**.
 
-5. The Plaform page is displayed. Select `xilinx_u200_gen3x16_xdma_1_202110_1`, and then click **Next** to proceed.
+5. The Plaform page is displayed. Select `xilinx_u200_gen3x16_xdma_2_202110_1`, and then click **Next** to proceed.
 
 ![Platform page](images/rtl_kernel-platform_page.png)
 
@@ -74,7 +71,7 @@ The New Vitis Application Project window opens.
 
 4. The New Application Project wizard is displayed, with the overview page showing a brief overview of the process. Click **Next**.
 
-5. The Plaform page is displayed. Select `xilinx_u200_gen3x16_xdma_1_202110_1`, and then click **Next** to proceed.
+5. The Plaform page is displayed. Select `xilinx_u200_gen3x16_xdma_2_202110_1`, and then click **Next** to proceed.
 
 ![Platform page](images/rtl_kernel-platform_page.png)
 
@@ -179,4 +176,4 @@ In this tutorial you have used the **Package IP/Package_XO** flow to create a us
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>

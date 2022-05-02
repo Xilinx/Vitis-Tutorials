@@ -1,11 +1,8 @@
-﻿<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
@@ -13,7 +10,7 @@
 
 User-managed RTL kernels are only supported in host applications written with the XRT native API, as described in the [XRT documentation](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html). The XRT native API provides a rich set of class objects and functions for XRT-managed kernels, as discussed in the *XRT Native API Host Application* tutorial, and for user-managed kernels as described here. 
 
-Open the `reference-files/src/host/user-host.cpp` file to examine its content and structure. As decribed in [Host Programming](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devhostapp.html#vpy1519742402284) in the Vitis Application Acceleration Development Flow Documentation (UG1393), there are several key steps the host application must follow: 
+Open the `reference-files/src/host/user-host.cpp` file to examine its content and structure. As decribed in [Host Programming](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming) in the Vitis Application Acceleration Development Flow Documentation (UG1393), there are several key steps the host application must follow: 
 
 1. Specifying the accelerator device ID and loading the `.xclbin`
 2. Setting up the kernel and kernel arguments
@@ -37,7 +34,7 @@ This tutorial will walk you through each of these, and discuss the requirements 
 
 The XRT native API requires some `#include` statements to support the various class objects and functions of the different elements of the system. In the code sample above you can see the inclusion of header files for the Xilinx device, the device binary (`.xclbin`), the buffer objects (`xrt_bo`), and the user-managed kernel (`xrt_ip`). This last is an important difference in the XRT native API when working with XRT-managed kernels and user-managed kernels. 
 
-XRT managed kernels (`xrt::kernel`) meet specific requirements of control protocols and interfaces, as described in [Requirements of an RTL Kernel](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devrtlkernel.html#qbh1504034323531) and as such have a richer feature set in the XRT API. User-managed kernels are a bit more unstructured, and so are represented in the IP class with limited features. 
+XRT managed kernels (`xrt::kernel`) meet specific requirements of control protocols and interfaces, as described in [Requirements of an RTL Kernel](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Requirements-of-an-RTL-Kernel) and as such have a richer feature set in the XRT API. User-managed kernels are a bit more unstructured, and so are represented in the IP class with limited features. 
 
 ## Specifying the Device ID and Loading the XCLBIN
 
@@ -187,5 +184,5 @@ Now you have created the RTL Kernel (`.xo`) file from a Vivado IP, and examined 
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021-2022 Xilinx</sup></p>
 

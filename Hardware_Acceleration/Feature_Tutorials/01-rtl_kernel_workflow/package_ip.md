@@ -1,21 +1,16 @@
-﻿<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
 # Package IP/Package XO Flow
 
-***Version: Vitis 2021.2***
+The process described in this lab follows the Package IP flow as described in the [RTL Kernel Development Flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernel-Development-Flow) in the Vitis Application Acceleration Development Flow documentation (UG1393).
 
-The process described in this lab follows the Package IP flow as described in the [RTL Kernel Development Flow](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html;a=rzv1504034325561) in the Vitis Application Acceleration Development Flow documentation (UG1393).
-
->**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/settingupvitisenvironment.html#zks1565446519267).
+>**IMPORTANT:** Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in [Setting up the Vitis Environment](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Vitis-Environment).
 >
 >   ```bash
 >    #setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.
@@ -103,7 +98,7 @@ With the files added to your project, you can package the IP for use as a kernel
 
    ![Package for Vitis](images/control_protocol.png)  
 
-  Enabling the **Package for Vitis** checkbox lets you specify the **Control protocol** for the RTL kernel. The default is `ap_ctrl_hs`, but other protocols such as `user_managed` and `ap_ctrl_chain` are also suported as described in [Software Controllable Kernels](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/appdev.html#pto1621516421839). 
+  Enabling the **Package for Vitis** checkbox lets you specify the **Control protocol** for the RTL kernel. The default is `ap_ctrl_hs`, but other protocols such as `user_managed` and `ap_ctrl_chain` are also suported as described in [Software Controllable Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/SW-Controllable-Kernels). 
 
 3. Select `user_managed` for this tutorial. The tool sets required properties for the Vitis kernel. 
 
@@ -212,5 +207,5 @@ Next, you will examine the [Host Application Coding](./host-code.md) required to
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021-2022 Xilinx</sup></p>
 

@@ -11,8 +11,6 @@
 
 # Vitis Getting Started Tutorial
 
-***Version: Vitis 2021.2***
-
 ## Part 3 : Review the Kernel Code and Host Application
 
  The example used in this tutorial is a trivial vector-add application. The simplicity of this example allows focusing on the key concepts of FPGA acceleration without being distracted by complicated algorithmic consideration.
@@ -119,4 +117,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

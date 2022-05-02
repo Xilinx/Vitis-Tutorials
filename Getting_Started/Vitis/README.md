@@ -12,7 +12,7 @@
 
 # Vitis™ Getting Started Tutorial
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ![img](./images/vitis_101.png)
 
@@ -109,4 +109,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

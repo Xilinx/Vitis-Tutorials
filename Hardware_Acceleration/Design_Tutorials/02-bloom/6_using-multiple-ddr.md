@@ -1,7 +1,7 @@
-<table class="sphinxhide" width="100%">
+<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -20,7 +20,7 @@ Alveo cards have multiple DDR banks, and you can use multiple banks in ping-pong
 * When the host is writing words to DDR bank1, the kernel is reading flags from DDR bank2. 
 * When host is writing documents to DDR bank2, the kernel is reading flags from DDR bank1. 
 
-The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/buildingdevicebinary.html#ejl1524519365386). In this case the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity. 
+The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory). In this case the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity. 
 
     ```
     [connectivity]
@@ -172,4 +172,4 @@ In this tutorial, you learned that optimizing how the host application interacts
 
 ---------------------------------------
 <p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>

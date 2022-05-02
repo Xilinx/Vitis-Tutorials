@@ -2,4 +2,4 @@ Visit the <code>cpu_src</code> and then move to the <code>module</code> prefixed
 
 Local <code>README.md</code> files provide instructions...
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>

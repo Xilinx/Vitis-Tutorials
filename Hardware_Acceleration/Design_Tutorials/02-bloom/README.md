@@ -1,18 +1,15 @@
-<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
 
 # Optimizing Accelerated FPGA Applications: Bloom Filter Example
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -33,7 +30,7 @@ In general, a Bloom filter application has use cases in data analytics, such as 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2021.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
+* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
 
 This tutorial guides you to run the designed accelerator on the FPGA; therefore, the expectation is that you have an Xilinx® Alveo™ U200 Data Center accelerator card set up to run this tutorial. Because it can take several (six or seven) hours to generate the multiple `xclbin` files needed to run the accelerator, pregenerated `xclbin` files are provided for the U200 card. To use these pregenerated files, when building the hardware kernel or running the accelerator on hardware, you need to add the `SOLUTION=1` argument. 
 
@@ -71,7 +68,7 @@ This tutorial guides you to run the designed accelerator on the FPGA; therefore,
 <!--
 1. [Overview of the Original Application](1_overview.md): Provides a brief overview of the Bloom filter application with some examples of how this application is used in real-world scenarios.
 2. [Experience Acceleration Performance](2_experience-acceleration.md): Profile the Bloom filter application and evaluate which sections are best suited for FPGA acceleration. You will also experience the acceleration potential by running the application first as a software-only version and then as an optimized FPGA-accelerated version.
-3. [Architecting the Application](3_architect-the-application.md): In this lab, the original C++ based application computes scores for the documents using a Bloom filter. This lab also discusses setting realistic performance goals for an accelerated application. At the end of this lab, you will have a specification of the kernel based on the [Methodology for Accelerating Applications with the Vitis Software Platform](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=methodologyacceleratingapplications.html#wgb1568690490380).
+3. [Architecting the Application](3_architect-the-application.md): In this lab, the original C++ based application computes scores for the documents using a Bloom filter. This lab also discusses setting realistic performance goals for an accelerated application. At the end of this lab, you will have a specification of the kernel based on the [Methodology for Accelerating Applications with the Vitis Software Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Methodology-for-Accelerating-Data-Center-Applications-with-the-Vitis-Software-Platform).
 4. [Implementing the Kernel](4_implement-kernel.md): Implement the kernel based on the specification from the previous lab, and run the compute part of the algorithm on the FPGA.
 5. [Analyze Data Movement Between Host and Kernel](5_data-movement.md): Analyze the performance results of the kernel you generated. Working with a predefined FPGA accelerator, you learn how to optimize data movements between the host and FPGA, how to efficiently invoke the FPGA kernel, and how to overlap computation on the CPU and FPGA to maximize application performance.
 6. [Using Multiple DDR Banks](6_using-multiple-ddr): Configure multiple DDR banks to improve the kernel performance.
@@ -89,5 +86,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD018</sup></br></p>
 

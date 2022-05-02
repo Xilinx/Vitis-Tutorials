@@ -2,7 +2,7 @@
 Host Memory Access
 ========================
 
-**Version:** Vitis 2021.2
+**Version:** Vitis 2022.1
 
 
 Some of the recent Xilinx Platforms have an XDMA feature to bypass the DMA operation and allow the kernels to directly access the host memory. The direct host memory access provides an alternate data transfer mechanism compared to XDMA based data transfer and can be useful in some of the scenarios. 
@@ -18,9 +18,9 @@ XRT and Platform version
 
 The following XRT and U250 platform versions are used for this tutorial design.
 
-**XRT Version**:    2021.2
+**XRT Version**:    2022.1
 
-**Platform**: xilinx_u250_gen3x16_xdma_shell_3_1   
+**Platform**: xilinx_u250_gen3x16_xdma_3_1_202020_1   
 
 
 Tutorial Description
@@ -280,7 +280,7 @@ Open the vitis_analyzer using the newly generated .run_summary file.
 
 .. code::
     
-    vitis_analyzer vadd.hw.run2.xclbin.run_summary
+    vitis_analyzer xrt.run_summary
     
 In the **Kernel and Compute Units** section you can see average CU execution times are now increased compared to the DDR-based run. Now CU takes more time as accessing the remote memory on the host machine is always slower than accessing on-chip memory on the FPGA card.  However, increasing CU time is not appearing as an overall negative result as the number of CU executions is increased for each CU. In a host memory-based application, the host CPU is not performing any data transfer operation. This can free up CPU cycles which can then otherwise used to increase the overall application performance. In this example, the free CPU cycles helped in processing more CU execution requests resulting in more accomplished data processing within the same period. 
 
@@ -325,4 +325,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Copyright 2020–2021 Xilinx
+Copyright 2020–2022 Xilinx

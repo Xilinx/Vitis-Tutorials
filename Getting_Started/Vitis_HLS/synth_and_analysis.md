@@ -1,8 +1,8 @@
-﻿<table class="sphinxhide">
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
-  </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Tutorials</h1>
+
+   </td>
  </tr>
  <tr>
  <td>
@@ -10,9 +10,8 @@
  </tr>
 </table>
 
-
 <!-- 
-# Copyright 2021 Xilinx Inc.
+# Copyright 2022 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -46,7 +45,7 @@ With the source code and testbench added to the project, you can now run the C s
 
 3. Click **OK**.
 
-   After the simulation completes, the tool displays the `dct_csim.log` file with the results of simulation, and also displays the Pre-synthesis Control Flow graph. The log file does not display information other that the test passed. That is always a good sign.
+   After the simulation completes, the tool displays the `dct_csim.log` file with the results of simulation, and also displays the Pre-synthesis Control Flow graph. The log file displays print statements from the executed testbench, and information that the test passed.
 
    The Control Flow graph, as shown in the following figure, offers some insight into the control structure of your code. Take a look at to see how Vitis HLS understands your code.
    >**NOTE**: Control structure here refers to the branches in your code caused by various kinds of loops and conditional statements like `if` and `switch` statements.
@@ -137,4 +136,4 @@ Next, learn about [using optimization techniques](./optimization_techniques.md) 
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p>

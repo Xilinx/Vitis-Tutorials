@@ -1,8 +1,8 @@
-﻿<table class="sphinxhide">
+<table class="sphinxhide">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
-  </td>
+
+   </td>
  </tr>
  <tr>
  <td>
@@ -11,7 +11,7 @@
 </table>
 
 <!-- 
-# Copyright 2021 Xilinx Inc.
+# Copyright 2022 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
 
 # Vitis HLS Analysis and Optimization
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -43,7 +43,7 @@ In this tutorial, you will work through the Vitis HLS tool GUI to build, analyze
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2021.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
+* 2022.1 Vitis core development kit release.
 
 >**IMPORTANT:**  
 >
@@ -55,7 +55,7 @@ The labs in this tutorial use:
 To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2021.2/settings64.sh
+source <Vitis_install_path>/Vitis/2022.1/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
@@ -105,4 +105,4 @@ Complete the labs in the following order:
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a> — <a href="./../README.md">Return to Getting Started Pathway</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p>

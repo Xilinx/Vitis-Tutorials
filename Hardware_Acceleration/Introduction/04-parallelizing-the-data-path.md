@@ -1,6 +1,6 @@
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - Runtime and System Optimization<br />Example 4: Parallelizing the Data Path</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™Hardware Acceleration Introduction Tutorial</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -217,4 +217,4 @@ those transfer times.
 
 Read [**Example 5:** Optimizing Compute and Transfer](./05-optimizing-compute-and-transfer.md)
 
-<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p>

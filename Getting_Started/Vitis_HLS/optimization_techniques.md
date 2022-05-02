@@ -1,8 +1,8 @@
-﻿<table class="sphinxhide">
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
-  </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Tutorials</h1>
+
+   </td>
  </tr>
  <tr>
  <td>
@@ -11,7 +11,7 @@
 </table>
 
 <!-- 
-# Copyright 2021 Xilinx Inc.
+# Copyright 2022 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ The `HLS PIPELINE II=4` is added to the Directive view.
 
 7. Click **C Synthesis** to rerun synthesis.
 
-    Notice the Interval column for the `dct_2d` function does not meet the II requirement and is reported as a problem.
+    Notice the Interval column for the `dct_2d` function meets the specified II requirement, however the overall results for the `dct` function are not meeting timing.
 
     ![Pipeline Defined II](./images/pipeline-defined-ii.png)
 
@@ -168,4 +168,4 @@ Now that you have examined different optimizations for different issues in the d
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p>

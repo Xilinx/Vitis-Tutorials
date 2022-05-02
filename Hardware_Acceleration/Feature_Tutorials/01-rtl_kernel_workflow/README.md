@@ -1,21 +1,18 @@
-﻿<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
 # Getting Started with RTL Kernels
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Tutorial Overview
 
-In the Vitis application acceleration development flow, as explained in [Kernel Properties](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/appdev.html#fiv1568160307462), RTL kernels can be either XRT-managed kernels adhering to XRT requirements of the `ap_ctrl_chain` or `ap_ctrl_hs` control protocols for execution control, or can be user-managed kernels that do not meet this standard but rather implement any number of user-defined control schemes specified in the RTL design. You can use an existing execution mechanism in an existing RTL design, or design your RTL to support the XRT control scheme. 
+In the Vitis application acceleration development flow, as explained in [Kernel Properties](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/PL-Kernel-Properties), RTL kernels can be either XRT-managed kernels adhering to XRT requirements of the `ap_ctrl_chain` or `ap_ctrl_hs` control protocols for execution control, or can be user-managed kernels that do not meet this standard but rather implement any number of user-defined control schemes specified in the RTL design. You can use an existing execution mechanism in an existing RTL design, or design your RTL to support the XRT control scheme. 
 
 In this tutorial you will examine the process of packaging an existing RTL design with a user-managed control scheme into an RTL kernel, and review the host application requirements to integrate that kernel into your accelerated application. 
 
@@ -34,12 +31,12 @@ Using these reference files, the tutorial guides you through the process of buil
 The labs in this tutorial use:
 
 * BASH Linux shell commands
-* 2021.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. 
+* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. 
 * If necessary, the tutorial can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have the Vitis core development kit installed as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245).
+> * Before running any of the examples, make sure you have the Vitis core development kit installed as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
@@ -49,7 +46,7 @@ The labs in this tutorial use:
 
 ## Requirements for Using an RTL Design as an RTL Kernel
 
-To use an RTL kernel within the Vitis IDE, it must meet both the Vitis core development kit execution model and the hardware interface requirements as described in [RTL Kernels](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=devrtlkernel.html) in the Vitis Application Acceleration Development Flow documentation (UG1393).
+To use an RTL kernel within the Vitis IDE, it must meet both the Vitis core development kit execution model and the hardware interface requirements as described in [RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels) in the Vitis Application Acceleration Development Flow documentation (UG1393).
 
 RTL kernels can use the same software interface and execution model as C/C++ software functions. They are seen by the host application as functions with a void return value, scalar and pointer arguments.
 
@@ -89,4 +86,4 @@ This tutorial demonstrates how to package RTL IPs as Vitis kernels (`.xo`), and 
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021-2022 Xilinx</sup></p>

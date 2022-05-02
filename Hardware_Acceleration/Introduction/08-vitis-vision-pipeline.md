@@ -1,6 +1,6 @@
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - Runtime and System Optimization<br />Example 8: Image Processing Pipeline with Vitis Vision</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™Hardware Acceleration Introduction Tutorial</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -156,4 +156,4 @@ That concludes our runtime introductory tutorial! We certainly hope you found it
 take the opportunity to smash that like button and subscr... wait, wrong venue. But do take the
 time to review our [many other tutorials](../README.md), and thanks for reading!
 
-<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p>

@@ -1,11 +1,10 @@
-<table class="sphinxhide" width="100%">
+<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
-
 
 # Implementing the Kernel
 
@@ -22,7 +21,7 @@ Use the following interface requirements to create kernel:
 - Compute 4 words to be computed in parallel with each word requiring two `MurmurHash2` functions 
 - Compute the hash (two `MurmurHash2` functions) functions for 4 words every cycle. 
 
-Refer to [Methodology for Accelerating Applications with the Vitis Software](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=methodologyacceleratingapplications.html) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+Refer to [Methodology for Accelerating Applications with the Vitis Software](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Methodology-for-Accelerating-Data-Center-Applications-with-the-Vitis-Software-Platform) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ### Macro Architecture Implementation
 
@@ -432,4 +431,4 @@ In the next lab, you [explore sending documents in multiple buffers](./5_data-mo
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="docs/bloom/README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>

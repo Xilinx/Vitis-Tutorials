@@ -1,11 +1,8 @@
-<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
@@ -106,7 +103,7 @@ cd ./../build/DDR_Banks_d512_txSize64 &&  ./host vadd_hw.xclbin 600 0 1 64;
 
 Found Platform
 Platform Name: Xilinx
-DEVICE xilinx_u200_gen3x16_xdma_1_202110_1
+DEVICE xilinx_u200_gen3x16_xdma_2_202110_1
 INFO: Reading vadd_hw.xclbin
 Loading: 'vadd_hw.xclbin'
 - host loop iteration #0 of 1 total iterations
@@ -288,7 +285,7 @@ Start the next step: <a href="3_BW_Explorations.md"> HBM Bandwidth Results</a>
 <hr/>
 <p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
 
 
 
