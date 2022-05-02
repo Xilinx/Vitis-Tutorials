@@ -11,8 +11,6 @@
 
 # Vitis Getting Started Tutorial
 
-***Version: Vitis 2021.2***
-
 ## Part 4 : Build and Run the Embedded Processor Application
 
  In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Embedded Processor Application Acceleration Flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Application-Acceleration-Development-Flow), and includes the image flow diagram shown below. From the image you can see the G++ cross-compiler  for building the host application for the Arm processor, and the use of the Vitis compiler (`v++`) for building the Xilinx device binary (`xclbin`). These are the steps you will be working through in this lab. 
@@ -37,7 +35,6 @@
 
 ```bash
 source <VITIS_install_path>/settings64.sh
-source <XRT_install_path>/setup.sh
 unset LD_LIBRARY_PATH
 ```
 
@@ -72,9 +69,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 $CXX -Wall -g -std=c++11 ../../src/host.cpp -o ./app.exe -I/usr/include/xrt -lOpenCL -lpthread -lrt -lstdc++
-v++ -c -t sw_emu --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t sw_emu --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
-v++ -p -t sw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_sw_emu.sh
+v++ -c -t sw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t sw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -p -t sw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_sw_emu.sh
 ```
 
 Here is a brief explanation of each of these four commands:
@@ -164,9 +161,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 $CXX -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I/usr/include/xrt -lOpenCL -lpthread -lrt -lstdc++
-v++ -c -t hw_emu --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t hw_emu --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
-v++ -p -t hw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file run_app.sh
+v++ -c -t hw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
+v++ -l -t hw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
+v++ -p -t hw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file run_app.sh
 ```
 
 Refer to *Targeting Software Emulation* for a brief explanation of these different commands. The only difference with the previous step is the `v++` target (`-t`) option which is changed from `sw_emu` to `hw_emu`. All other options remain the same.
@@ -214,9 +211,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 $CXX -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I/usr/include/xrt -lOpenCL -lpthread -lrt -lstdc++ -O
-v++ -c -t hw --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t hw --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
-v++ -p -t hw --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file run_app.sh
+v++ -c -t hw --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
+v++ -l -t hw --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
+v++ -p -t hw --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file run_app.sh
 ```
 
 To target Hardware, the `v++ -t` option is set to `hw` and the `emconfigutil` command is not needed, as you will be running on an actual hardware platform rather than an emulated platform. All other options remain identical. 
@@ -233,7 +230,7 @@ export XILINX_XRT=/usr
 
 You should see the same TEST PASSED message indicating that the run completed successfully. If you look in the zcu102/hw folder you will see some of the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
 
-Congratulations!! You have just completed your first run of a Vitis accelerated application on the ZCU102 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2021.2) to use for examples of host application and kernel coding.
+Congratulations!! You have just completed your first run of a Vitis accelerated application on the ZCU102 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.1) to use for examples of host application and kernel coding.
 
 ## Next Step
 
@@ -252,4 +249,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

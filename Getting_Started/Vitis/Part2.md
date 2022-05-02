@@ -11,8 +11,6 @@
 
 # Vitis Getting Started Tutorial
 
-***Version: Vitis 2021.2***
-
 ## Part 2 : Installation and Configuration
 
 To develop and deploy applications with Vitis, you need to install the Vitis unified software environment, the Xilinx Runtime library (XRT) and the platform files specific to the acceleration card used in your project.
@@ -74,14 +72,19 @@ The packages required for each platform can be found on the corresponding downlo
 
 ### Step 5 – Setup the environment to run Vitis
 
-To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
+To configure the environment to run Vitis, run the following script which sets up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2021.2/settings64.sh
-source /opt/xilinx/xrt/setup.sh
+source <Vitis_install_path>/Vitis/2022.1/settings64.sh
 ```
 
 *NOTE: .csh scripts are also provided but this tutorial assumes a bash shell is used.*
+
+To configure XRT for Alveo Data Center accelerator cards run the following script. This is not required for Embedded platforms.
+
+```bash
+source /opt/xilinx/xrt/setup.sh
+```
 
 To specify the location of any Data-Center or Embedded platforms you have installed, set the following environment variable:
 
@@ -114,4 +117,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

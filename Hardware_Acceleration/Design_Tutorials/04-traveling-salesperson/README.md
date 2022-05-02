@@ -1,17 +1,14 @@
-<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
 <!--
 /*
- * Copyright 2021 Xilinx, Inc.
+ * Copyright 2021-2022 Xilinx, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +24,7 @@
  
 # The Traveling Salesperson Problem
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -51,7 +48,7 @@ The execution could take over a minute for 13 cities depending on your CPU, and 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2021.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
+* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**  
 >
@@ -63,7 +60,7 @@ The labs in this tutorial use:
 To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2021.2/settings64.sh
+source <Vitis_install_path>/Vitis/2022.1/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
@@ -110,4 +107,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD018</sup></br></p>

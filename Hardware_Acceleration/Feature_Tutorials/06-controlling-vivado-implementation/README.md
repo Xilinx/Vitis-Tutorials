@@ -1,21 +1,18 @@
-﻿<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
 # Controlling Vivado Implementation
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
-The Vitis™ compiler creates kernel objects from the source code, links the kernels with the targeted shell, and runs the assembled design through the Vivado® tool implementation flows. It generates the platform file (`xclbin`) needed to program the FPGA-based acceleration cards. Sometimes, it is essential to use the advanced Vivado synthesis and implementation options to achieve your desired results, including timing closure. The topics discussed here are documented in [Managing Vivado Synthesis and Implementation Results](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=buildingdevicebinary.html;a=hnw1523048617934) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+The Vitis™ compiler creates kernel objects from the source code, links the kernels with the targeted shell, and runs the assembled design through the Vivado® tool implementation flows. It generates the platform file (`xclbin`) needed to program the FPGA-based acceleration cards. Sometimes, it is essential to use the advanced Vivado synthesis and implementation options to achieve your desired results, including timing closure. The topics discussed here are documented in [Managing Vivado Synthesis and Implementation Results](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Managing-Vivado-Synthesis-and-Implementation-Results) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ## Tutorial Overview
 
@@ -37,12 +34,12 @@ The Vitis core development kit provides two methods to control the Vivado tool f
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2020.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform.
+* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.
 If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**
 >
->* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 >* Before running this lab, you should be familiar with the [Vitis Getting Started](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Getting_Started/Vitis) tutorial.
 
@@ -73,7 +70,7 @@ The `–-vivado` switch is paired with properties or parameters to configure the
 * `object_name`: Specifies the object instance to attach to.
 * `prop_name`: Defines the property_name/value pair which defines both the name and the value to assign.
 
-While you can use `--vivado` options from the `v++` command line, it makes more sense to do some from configuration files specified by the `--config` option. This is explained in [Vitis Compiler Configuration File](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1;t=vitis+doc;d=vitiscommandcompiler.html;a=pni1524163195211) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416). In this tutorial, you will use the following options as examples to see how to control Vivado synthesis and implementation:
+While you can use `--vivado` options from the `v++` command line, it makes more sense to do some from configuration files specified by the `--config` option. This is explained in [Vitis Compiler Configuration File](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416). In this tutorial, you will use the following options as examples to see how to control Vivado synthesis and implementation:
 
 * Completely flatten the hierarchy during RTL synthesis by specifying the `FLATTEN_HIERARCHY=full` property.
   * `--vivado.prop run.my_rm_synth_1.{STEPS.SYNTH_DESIGN.ARGS.FLATTEN_HIERARCHY}={full}`
@@ -88,8 +85,8 @@ In this tutorial, the `-–vivado` command options are defined in the `design.cf
 1. Compile the kernel with the Vitis compiler and link it with the platform file to produce the device binary (`.xclbin`) using the following commands.
 
    ```bash
-   v++ -t hw --config design.cfg -c -k apply_watermark -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo ../src/krnl_watermarking.cl
-   v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo
+   v++ -t hw --config design.cfg -c -k apply_watermark -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo ../src/krnl_watermarking.cl
+   v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo
    ```
 
 2. Open the `design.cfg` file and get familiar with different options. The following list describes some of the command options.
@@ -97,7 +94,7 @@ In this tutorial, the `-–vivado` command options are defined in the `design.cf
       >**Command Options Descriptions**
       >
       >* `-t hw`: Build target is hardware
-      >* `platform=xilinx_u200_gen3x16_xdma_1_202110_1`: Specify the xilinx_u200 platform
+      >* `platform=xilinx_u200_gen3x16_xdma_2_202110_1`: Specify the xilinx_u200 platform
       >* `debug=1`: Generate debug info
       >* `--hls.pre_tcl max_memory.tcl`: Specifies a Tcl script to configure the interface to generate a separate AXI4 interface for each port
       >* `-c`: Compile the kernel
@@ -157,13 +154,13 @@ You can run the Vivado tool in batch mode using a Tcl script or run it interacti
 Next, reuse the `routed.dcp` checkpoint file generated by the `opt.tcl` script to generate a new platform file (`.xclbin`). To do this, add the `--reuse_impl` option to the `v++` command. This reruns the `--link` process using the already implemented Vivado design checkpoint file (`.dcp`). It runs in much less time than the initial hardware build required.
 
 ```bash
-v++ -t hw --config design.cfg -l -o 'apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin' apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo --reuse_impl ./_x/link/vivado/routed.dcp
+v++ -t hw --config design.cfg -l -o 'apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin' apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo --reuse_impl ./_x/link/vivado/routed.dcp
 ```
 
 From the transcript in the command shell, you can see that the steps to generate the implemented design have been skipped, and the bitstream generation starts.
 
 ```bash
-INFO: [VPL 60-423]   Target device: xilinx_u200_gen3x16_xdma_1_202110_1
+INFO: [VPL 60-423]   Target device: xilinx_u200_gen3x16_xdma_2_202110_1
 [11:22:58] Run vpl: Step interactive: Started
 Starting FPGA bitstream generation.
 ```
@@ -184,8 +181,8 @@ The following section summarizes all the steps to control the Vivado tool implem
 2. Generate the platform file (`xclbin`) with `v++` commands.  
 
    ```bash
-   v++ -t hw --config design.cfg -c -k apply_watermark -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo ../src/krnl_watermarking.cl
-   v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo
+   v++ -t hw --config design.cfg -c -k apply_watermark -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo ../src/krnl_watermarking.cl
+   v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo
    ```
 
 3. Optimize the design with the Vivado tool, and rewrite the routed DCP.
@@ -197,7 +194,7 @@ The following section summarizes all the steps to control the Vivado tool implem
 4. Reuse the routed DCP to generate the device binary file (`.xclbin`).
 
    ```bash
-   v++ -t hw --config design.cfg -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo --reuse_impl ./_x/link/vivado/routed.dcp
+   v++ -t hw --config design.cfg -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo --reuse_impl ./_x/link/vivado/routed.dcp
    ```
 
 5. This tutorial has provided host code to make it complete to run through various flows. The following commands are references to build the host and run the application.
@@ -206,7 +203,7 @@ The following section summarizes all the steps to control the Vivado tool implem
    #Generate the host executable.
    g++ -I$XILINX_XRT/include/ -I$XILINX_VIVADO/include/ -Wall -O0 -g -std=c++11 -L$XILINX_XRT/lib/ -lOpenCL -lpthread -lrt -lstdc++ -o 'host' '../src/host.cpp'
    #Please set correct XCL_EMULATION_MODE manually if running sw_emu and hw_emu modes
-   ./host apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin ../src/inputImage.bmp ../src/golden.bmp
+   ./host apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin ../src/inputImage.bmp ../src/golden.bmp
    ```
 
 ## Conclusion
@@ -215,4 +212,4 @@ This tutorial illustrated how to use the `v++` command `--vivado` option to cont
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>

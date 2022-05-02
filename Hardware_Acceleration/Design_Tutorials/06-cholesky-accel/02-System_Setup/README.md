@@ -1,7 +1,7 @@
-<table class="sphinxhide" width="100%">
+<table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Hardware Acceleration</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -25,7 +25,7 @@ The [Vitis Unified Software Development Platform](https://www.xilinx.com/product
 <p>
     For this tutorial, you need to set below environment variable to your Terminal of Nimbix Desktop before start to launch Vitis or run Makefile command we provided with source code.
     </p>
-<pre><code> export PATH=/opt/xilinx/Vivado/2021.2/tps/lnx64/gcc-6.2.0/bin:$PATH </code></pre>
+<pre><code> export PATH=/opt/xilinx/Vivado/2022.1/tps/lnx64/gcc-6.2.0/bin:$PATH </code></pre>
 </details>
 
 
@@ -44,7 +44,7 @@ To install Alveo U50 accelerator card on your server, follow the instructions in
     <p>
         For this tutorial, you need to set below environment variable to your Terminal of Nimbix Desktop before start to launch Vitis or run Makefile command we provided with source code.
     </p>
-    <pre><code>export PATH=/opt/xilinx/Vivado/2021.2/tps/lnx64/gcc-6.2.0/bin:$PATH  </code></pre>
+    <pre><code>export PATH=/opt/xilinx/Vivado/2022.1/tps/lnx64/gcc-6.2.0/bin:$PATH  </code></pre>
 </details>
 
 
@@ -52,7 +52,7 @@ To install Alveo U50 accelerator card on your server, follow the instructions in
 To configure the environment to run the Vitis software platform, run the following scripts, which set up the environment to run in a specific command shell.
 ~~~
 #setup XILINX_VITIS and XILINX_VIVADO variables
-source <Vitis_install_path>/Vitis/2021.2/settings64.sh
+source <Vitis_install_path>/Vitis/2022.1/settings64.sh
 #setup XILINX_XRT
 source /opt/xilinx/xrt/setup.sh
 ~~~
@@ -109,4 +109,4 @@ INFO: All cards validated successfully.
 
 Please proceed to [**Section 3**](../03-Algorithm_Acceleration/README.md).
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>

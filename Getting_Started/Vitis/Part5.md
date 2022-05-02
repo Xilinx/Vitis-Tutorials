@@ -11,8 +11,6 @@
 
 # Vitis Getting Started Tutorial
 
-***Version: Vitis 2021.2***
-
 ## Part 5 : Visualizing Results and Analyzing Reports
 
 Now that you have successfully built and run the vector-add example, now you can look at the results and reports generated along the way. This example is configured to generate build and run summaries for all three build targets (software emulation, hardware emulation and hardware). Any of these summary reports can be viewed and analyzed using the Vitis analyzer tool as described in [Using the Vitis Analyzer](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Using-the-Vitis-Analyzer).
@@ -41,11 +39,10 @@ If you look into the directory where you ran the application, you will notice th
 
 *IMPORTANT: If you targeted the ZCU102 hardware, these files are stored on the SD card and must be copied back to your workstation to continue this lab. Refer to [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform) for more information.*
 
-The generation of these files and reports is controlled by runtime options located in the `xrt.ini` file.  This tutorial contains a pre-existing `xrt.ini` file which enables the generation of profile data and a timeline of execution with the following content:
+The generation of these files and reports is controlled by runtime options located in the `xrt.ini` file.  This tutorial contains a pre-existing `xrt.ini` file which enables the generation a timeline of execution, and the profile summary data, with the following content:
 
 ```bash
 [Debug]
-opencl_summary=true
 opencl_trace=true
 ```
 
@@ -119,4 +116,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

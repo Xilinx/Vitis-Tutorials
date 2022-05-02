@@ -2,9 +2,8 @@
 #debug_mode=batch
 #launch_waveform=batch
 [Debug]
-opencl_summary=true
 opencl_trace=true
-data_transfer_trace=coarse
+device_trace=coarse
 #stall_trace=all
 lop_trace=true
 #continuous_trace=true

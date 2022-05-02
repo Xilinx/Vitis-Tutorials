@@ -1,17 +1,14 @@
-﻿<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
 # Mixing C++ and RTL Kernels
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -35,7 +32,7 @@ The host code and C++ kernel code are supplied. The RTL code will be generated u
 This tutorial uses:
 
 - BASH Linux shell commands.
-- 2021.2 Vitis core development release and the *xilinx_u200_gen3x16_xdma_1_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
+- 2021.2 Vitis core development release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
@@ -46,7 +43,7 @@ Before running any of the examples, ensure you have set up the Vitis core develo
 
   ```bash
     #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-    source /opt/Xilinx/Vitis/2021.2/settings64.sh
+    source /opt/Xilinx/Vitis/2022.1/settings64.sh
     #Setup runtime. XILINX_XRT will be set in this step
     source /opt/xilinx/xrt/setup.sh
   ```
@@ -148,7 +145,7 @@ To run software emulation on the design, set the XCL_EMULATION_MODE environment 
 
    ```bash
    export XCL_EMULATION_MODE=sw_emu
-   ./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin
+   ./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin
    ```
 
    When the application successfully completes, the following message is displayed in the Console window.
@@ -183,7 +180,7 @@ make all TARGET=sw_emu LAB=run1
 export XCL_EMULATION_MODE=sw_emu
 
 # Run software emulation
-./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin
+./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin
 
 # View Application Timeline Trace in Vitis Analyzer
 vitis_analyzer xclbin.run_summary
@@ -207,7 +204,7 @@ You will generate the RTL-based kernel by quickly going through the RTL Kernel W
 2. Select **./mixing-c-rtl-kernels/workspace** as the workspace directory, and click **Launch**.
 3. From the `Welcome` screen select **Create Application Project** to open the `New Project` wizard.
 4. The first page displays a summary of the process. Click **Next** to proceed. 
-5. From the `Platform` page select the **xilinx_u200_gen3x16_xdma_1_202110_1** platform and click **Next**.
+5. From the `Platform` page select the **xilinx_u200_gen3x16_xdma_2_202110_1** platform and click **Next**.
 6. From the `Application Project Details` page, name your project `rtl_project` and click **Next**.
 7. Under SW Acceleration Templates, select **Empty Application**, and click **Finish**. This creates a Vitis IDE project.
 
@@ -301,7 +298,7 @@ With the RTL-based kernel added and host code updated, build the application, ta
 
    ```bash
    export XCL_EMULATION_MODE=hw_emu
-   ./host krnl_vadd.hw_emu.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin
+   ./host krnl_vadd.hw_emu.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin
    ```
 
 5. View the **Application Timeline** report in the Vitis analyzer.
@@ -328,10 +325,10 @@ Because a CPP emulation file was packaged with the RTL Kernel (through the RTL W
 export XCL_EMULATION_MODE=sw_emu
 
 # Run software emulation
-./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin
+./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin
 
 # Open Vitis analyzer and view the timeline waveform
-vitis_analyzer xclbin.run_summary
+vitis_analyzer xrt.run_summary
    ```
 
 ## Next Steps
@@ -341,4 +338,4 @@ With the understanding that Vitis compiler can use kernels from a variety of bui
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021-2022 Xilinx</sup></p>

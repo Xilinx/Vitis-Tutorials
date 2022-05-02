@@ -11,8 +11,6 @@
 
 # Vitis Getting Started Tutorial
 
-***Version: Vitis 2021.2***
-
 ## Part 4 : Build and Run the Data Center Application
 
  In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Data Center Application Acceleration Flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow), and includes the image flow diagram shown below. From the image you can see the standard G++ compilation process for the host application, and the use of the Vitis compiler (`v++`) for building the Xilinx device binary (`xclbin`). These are the steps you will be working through in this lab. 
@@ -29,7 +27,7 @@
 
 ### Setting up the environment
 
-> IMPORTANT: This tutorial requires Vitis 2021.1 or later to run.
+> IMPORTANT: This tutorial requires Vitis 2022.1 or later to run.
 
 *NOTE: The instructions provided below assume that you are running in a bash shell.*
 
@@ -61,9 +59,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-emconfigutil --platform xilinx_u200_gen3x16_xdma_1_202110_1 --nd 1
-v++ -c -t sw_emu --platform xilinx_u200_gen3x16_xdma_1_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t sw_emu --platform xilinx_u200_gen3x16_xdma_1_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
+emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1 --nd 1
+v++ -c -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
+v++ -l -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
 
 Here is a brief explanation of each of these four commands:
@@ -75,10 +73,9 @@ Here is a brief explanation of each of these four commands:
 
 The `-t` option of the `v++` command specifies the build target. Here it is set to `sw_emu` so we are building for software emulation.
 
-Notice also the `--config` option which is used to specify the name of a configuration file containing additional options. Here we are using this configuration file to specify the name of the targeted platform and the mapping of kernel arguments to specific memory banks.
+Notice also the `--config` option which is used to specify the name of a configuration file containing additional options. Here we are using this configuration file to specify the number of kernels and the mapping of kernel arguments to specific memory banks.
 
 ```bash
-platform=xilinx_u200_gen3x16_xdma_1_202110_1
 debug=1
 save-temps=1
 
@@ -137,9 +134,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-emconfigutil --platform xilinx_u200_gen3x16_xdma_1_202110_1 --nd 1
-v++ -c -t hw_emu --platform xilinx_u200_gen3x16_xdma_1_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t hw_emu --platform xilinx_u200_gen3x16_xdma_1_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
+emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1 --nd 1
+v++ -c -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
+v++ -l -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
 
 Refer to *Targeting Software Emulation* for a brief explanation of these different commands. The only difference with the previous step is the `v++` target (`-t`) option which is changed from `sw_emu` to `hw_emu`. All other options remain the same.
@@ -168,8 +165,8 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-v++ -c -t hw --platform xilinx_u200_gen3x16_xdma_1_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t hw --platform xilinx_u200_gen3x16_xdma_1_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
+v++ -c -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
+v++ -l -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
 
 To target Hardware, the `v++ -t` option is set to `hw` and the `emconfigutil` command is not needed, as you will be running on an actual hardware platform rather than an emulated platform. All other options remain identical.
@@ -186,7 +183,7 @@ After the build completes you can run the application on a system with the Alveo
 
 You should see the same TEST PASSED message indicating that the run completed successfully. If you look in the u200/hw folder you will see some of the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
 
-Congratulations!! You have just completed your first run of a Vitis accelerated application on the Alveo U200 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2021.2) to use for examples of host application and kernel coding.
+Congratulations!! You have just completed your first run of a Vitis accelerated application on the Alveo U200 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.1) to use for examples of host application and kernel coding.
 
 ## Next Step
 
@@ -205,4 +202,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

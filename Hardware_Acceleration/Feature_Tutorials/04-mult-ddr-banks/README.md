@@ -1,17 +1,15 @@
-﻿<table class="sphinxhide">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+<table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
+
 # Using Multiple DDR Banks
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -50,7 +48,7 @@ The labs in this tutorial use:
 
 >**IMPORTANT:**
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
@@ -64,7 +62,7 @@ The labs in this tutorial use:
 
    ```bash
      #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-     source /opt/Xilinx/Vitis/2021.1/settings64.sh
+     source /opt/Xilinx/Vitis/2022.1/settings64.sh
      #Setup runtime. XILINX_XRT will be set in this step
      source /opt/xilinx/xrt/setup.sh
    ```
@@ -79,7 +77,7 @@ The labs in this tutorial use:
    >**Makefile Options Descriptions**
    >
    >* `MODE := hw_emu`: Set the build configuration mode to HW Emulation
-   >* `PLATFORM := xilinx_u200_gen3x16_xdma_1_202110_1`: Select the target platform
+   >* `PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1`: Select the target platform
    >* `KERNEL_SRC := src/vadd.cpp`: List the kernel source files
    >* `HOST_SRC := src/host.cpp`: List the host source files
 
@@ -217,4 +215,4 @@ This tutorial showed you how to change the default mapping of ports `in1`, `in2`
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021-2022 Xilinx</sup></p>

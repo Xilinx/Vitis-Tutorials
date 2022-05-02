@@ -1,8 +1,8 @@
-﻿<table class="sphinxhide">
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Vitis™ Application Acceleration Tutorials</h1>
-   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
-  </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Tutorials</h1>
+
+   </td>
  </tr>
  <tr>
  <td>
@@ -11,7 +11,7 @@
 </table>
 
 <!-- 
-# Copyright 2021 Xilinx Inc.
+# Copyright 2022 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -94,7 +94,7 @@ Vitis HLS also provides a Dataflow Graph viewer as one of the features in the An
 
 3. After the simulation completes, select **Solution** > **Open Dataflow Viewer** to open the viewer as shown in the following figure.
 
-   >**TIP:** You can tell if the design has a Dataflow graph by the presence of the ![Dataflow Icon](./images/icon_dataflow.png) icon.
+   >**TIP:** You can tell if the design has a Dataflow graph by the presence of the ![Dataflow Icon](./images/icon_dataflow.png) icon on the project in the Explorer view or the Synthesis Summary.
 
    The DataFlow Viewer displays the function and the flow through the function. After running C/RTL co-simulation, the elements of the graph are filled out with performance data, and the Process and Channel tables beneath the graph are also filled out. Without the performance data provided by co-simulation, the graph and tables will have NA values to reflect the missing values. For more information, refer to [Dataflow Viewer](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Dataflow-Viewer) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
@@ -118,7 +118,7 @@ Now that you have your optimized design, you can transfer the directives from a 
 
    When you change the `ARRAY_PARTITION` directive for the `col_inbuf` variable, the tool will return a **Warning** indicating that it cannot find the `col_inbuf` variable, and will insert the pragma at the first line of the function. Select **OK** to insert the pragma as indicated. 
 
-   You must manually correct the placement of the pragma by cutting and pasting the `#pragma HLS ARRAY_PARTITION...` line into the `dct.cpp` file after the definition of the `col_inbuf` variable on line 71. The pragma must be defined after the variable in order to be associated correctly by the compiler. If this is not done, Vitis HLS will return an error when trying to compile the code.
+   You must manually correct the placement of the pragma by cutting and pasting the `#pragma HLS ARRAY_PARTITION...` line into the `dct.cpp` file after the definition of the `col_inbuf` variable on line 42. The pragma must be defined after the variable in order to be associated correctly by the compiler. If this is not done, Vitis HLS will return an error when trying to compile the code.
 
    With the directives converted to pragmas, the `dct.cpp` code is now portable and carries the optimizations you have completed within the code. 
 
@@ -148,4 +148,4 @@ You have the optimized but uncompiled C++ code (`dct.cpp`) that you saved in an 
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p>
