@@ -18,6 +18,10 @@ all:
 	make data
 	make -C Emulation-AIE all
 
+run:
+	make data
+	make -C Emulation-AIE aie aiesim
+
 aie:
 	make -C Emulation-AIE aie
 
