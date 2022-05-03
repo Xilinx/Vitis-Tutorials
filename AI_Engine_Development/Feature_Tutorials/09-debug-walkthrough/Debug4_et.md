@@ -108,7 +108,6 @@ Note: aie_trace_metrics specifies `functions`, `functions_partial_stalls`, or `f
 ### Step 6 to Run Application after Petalinux Boots up on Board
 ```bash
 cd /run/media/mmcblk0p1
-export XILINX_XRT=/usr
 ./ps_app.exe a.xclbin
 ```
 

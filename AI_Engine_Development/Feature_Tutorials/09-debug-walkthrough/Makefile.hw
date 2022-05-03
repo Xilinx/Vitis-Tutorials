@@ -99,6 +99,7 @@ package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data
 		--package.image_format=ext4 \
 		--package.defer_aie_run \
 		--package.sd_dir data \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file ${HOST_EXE}
 
 package_dbg: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_dbg_${TARGET}
@@ -111,6 +112,7 @@ package_dbg_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data
 		--package.defer_aie_run \
 		--package.enable_aie_debug \
 		--package.sd_dir data \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file ${HOST_EXE}
 
 run_hw_emu: launch_hw_emu.sh

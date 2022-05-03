@@ -106,98 +106,11 @@ Supported simulations are categorize in this table.
 </table>
 
 These supported simulations help to fix majority of design issues before running the AI Engine design on actual hardware. [UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) contains more details of each simulation’s capabilities and how to apply the supported features to resolve design issues such as memory leaks, memory access conflicts, resource constraints, integration with PL/PS domains.
-* Focus on AI Engine design’s functionalities – <a href="Debug1_86.md">X86simulator</a>.
-* Focus on AI Engine design’s execution time and resources used – <a href="Debug2_ai.md">AIEsimulator</a>.
-* Focus on AI Engine design’s integration with PL and PS domains for fast build and run time. – <a href="Debug1_se.md">SW_emu</a>.
-* Focus on AI Engine design’s integration with PL and PS domains for close to HW run – <a href="Debug2_he.md">HW_emu</a>.
 
-Capabilities of supported simulations are
-<table style="width:100%">
-  <tr>
-    <td width="40%" align="center"><a>Support features/scope</a></td>
-    <td width="15%" align="center"><a href="Debug1_86.md">X86simulator</a></td>
-    <td width="15%" align="center"><a href="Debug2_ai.md">AIEsimulator</a></td>
-    <td width="15%" align="center"><a href="Debug1_se.md">SW_emu</a></td>
-    <td width="15%" align="center"><a href="Debug2_he.md">HW_emu</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>Hardware constraint, heap/stack size, program/data memory size</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>yes</a></td>   
-  </tr>
-   <tr>
-    <td width="40%" align="center"><a>Design execution time approximation</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>no</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>printf() support</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>Debugger support</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>Valgrind support</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>no</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>AIE profiling APIs support</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>yes</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>AIE trace support</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>AIE memory access violation detection</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>no</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>AIE deadlock detection</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>no</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>PL integration</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>yes</a></td>
-    <td width="15%" align="center"><a>yes</a></td>   
-  </tr>
-  <tr>
-    <td width="40%" align="center"><a>PS integration</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>no</a></td>
-    <td width="15%" align="center"><a>yes (exclude baremetal)</a></td>
-    <td width="15%" align="center"><a>yes</a></td>   
-  </tr>
-</table>
+#### Step 1: Focus on AI Engine design’s functionalities – <a href="Debug1_86.md">X86simulator</a>.
+#### Step 2: Focus on AI Engine design’s execution time and resources used – <a href="Debug2_ai.md">AIEsimulator</a>.
+#### Step 3: Focus on AI Engine design’s integration with PL and PS domains for fast build and run time. – <a href="Debug1_se.md">SW_emu</a>.
+#### Step 4: Focus on AI Engine design’s integration with PL and PS domains before HW run – <a href="Debug2_he.md">HW_emu</a>.
 
 
 ### Debug via Hardware
@@ -215,36 +128,13 @@ This is the first stage running the design on hardware. Areas to check
   * XRT Xbutil utility
   * XSDB generate run summary file and display with vitis_analyzer
 
-[AI Engine Debug with Profiling APIs](./Debug6_pr.md)
+[AI Engine/PL kernel Debug with XRT utiiities on HW](./Debug5_bc.md)
+
+[AI Engine Debug with Profiling APIs on HW](./Debug6_pa.md#3-Profiling-APIs-on-HW)
 
 
-#### Stage 2: Design profiling
-After design issues are cleared from stage 1, we are ready to collect design profiling metrics.
-There are two flows collecting profiling info, both are non-intrusive and requires no design changes.
-* XSDB flow
-  * Requires jtag connection to hardware board and supports interactive communication to hardware board.
-* XRT flow
-  * Add xrt.ini file that instructs predefined metrics to be collected during design run time.
-
-Areas of profiling
-* AI Engine core metrics
-  * heat_map
-  * stalls
-  * execution
-  * stream puts/gets
-  * floating_point 
-  * aie_trace
-  * read/write bandwidth
-* Memory module metrics
-  * conflicts
-  * dma_locks
-  * dma_stalls
-  * read/write bandwidth
-* Interface bandwidth metrics
-  * Input/output bandwidth
-  * Input/output stalls_idle
-
-Due to limited hardware resources, recommend to run the design multiple times to collect different metrics. Then use vitis_analyzer to inspect collected profiling data from multiple runs. Vitis_analyzer can consolidate these data with global view of the design.
+#### Stage 2: System profiling
+[AI Engine Debug with Profiling Feature](./Debug6_pr.md)
 
 
 #### Stage 3: Kernel Analysis
@@ -256,27 +146,7 @@ Due to limited hardware resources, recommend to run the design multiple times to
 
 
 #### Stage 5: Host Application Debug
-[AI Engine/PL Kernel Debug with XRT Utilities](./Debug5_bc.md)
-
-
-### Tutorial Category
-
-<table style="width:100%">
-  <tr>
-    <td width="20%" align="center"><a href="Debug0_po.md">Migrate AI Engine Command-Line Based Projects to Vitis IDE</a></td>
-    <td width="20%" align="center"><a href="Debug1_86.md">AI Engine Debug with x86simulator</a></td>
-    <td width="20%" align="center"><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></td>
-  </tr>
-  <tr>
-    <td width="20%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
-    <td width="20%" align="center"><a href="Debug4_et.md">AI Engine Debug with Hardware event trace</a></td>
-    <td width="20%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
-    <td width="20%" align="center"><a href="Debug6_pr.md">Profiling Graph Inputs and Outputs with Profiling APIs</a></td>
-    <td width="20%" align="center"><a href="Debug7_il.md">AI Engine Debug with Integrated Logic Analyzer (ILA)</a></td>
-  </tr>
-</table>
+[Host Application Debug](./Debug3_hw.md)
 
 
 ## Support

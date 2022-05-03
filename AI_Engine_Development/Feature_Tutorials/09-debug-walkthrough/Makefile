@@ -20,7 +20,6 @@ IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image
 
 GRAPH    = aie/graph.cpp
 LIBADF   = libadf.a
-
 AIE_CMPL_CMD = aiecompiler -log-level=5 -v -platform=${PLATFORM} --pl-freq=500 -genArchive -include="./aie" -include="./aie/inc" -include="./aie/kernels" -include="./data" -include="./" --xlopt=0 -workdir=./Work ${GRAPH}
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
 EMU_CMD  = ./launch_hw_emu.sh
@@ -58,7 +57,6 @@ ${XOS}:
 	make -C pl_kernels/
 
 host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
-
 ${HOST_EXE}: sw/*.cpp
 	make -C sw/
 
@@ -101,6 +99,7 @@ package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data
 		--package.image_format=ext4 \
 		--package.defer_aie_run \
 		--package.sd_dir data \
+		--package.sd_file embedded_exec.sh \
 		--package.sd_file ${HOST_EXE}
 
 package_dbg: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_dbg_${TARGET}
