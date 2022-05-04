@@ -36,10 +36,10 @@ The AI Engine development documentation is also available [here](https://docs.xi
 
 Before starting this tutorial, run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
-2. Set up your ROOTFS to point to the xilinx-versal-common-v2022.1/rootfs.ext4
-3. Set up your IMAGE to point to xilinx-versal-common-v2022.1/Image.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2022.1/sdk.sh`.
+2. Set up your ROOTFS to point to `xilinx-versal-common-v2022.1/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2022.1/Image`.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
 ## Accessing the Tutorial Reference Files
 
@@ -74,7 +74,7 @@ Completing this tutorial should give you confidence to develop AI Engine designs
 
 ---
 
-&copy; Copyright 2021 Xilinx, Inc.
+&copy; Copyright 2021–2022 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -91,4 +91,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD039</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2021–2022 Xilinx</sup><br><sup>XD039</sup></br></p>

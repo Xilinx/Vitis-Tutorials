@@ -23,7 +23,7 @@ Install the tools:
 
 * Get and install [MATLAB and Simulink 2021a or 2021b](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
   - Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [Xilinx Vitis 2021.2](https://www.xilinx.com/support/download.html).
+* Get and install [Xilinx Vitis 2022.1](https://www.xilinx.com/support/download.html).
 
 
 
@@ -395,7 +395,7 @@ This tool shows its incredible flexibility when it comes to display spectrum or 
 
 ---
 
-&copy; Copyright 2021 Xilinx, Inc.
+&copy; Copyright 2021-2022 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -411,4 +411,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD058 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD058 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>

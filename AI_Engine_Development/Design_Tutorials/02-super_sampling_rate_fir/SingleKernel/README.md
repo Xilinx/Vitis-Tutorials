@@ -271,4 +271,4 @@ Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum thro
 
 
 
-<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD020</sup></br></p>

@@ -207,7 +207,7 @@ In row 0, no kernel should discard any sample, in row 1, only the first kernel d
 
 
 
-Finally, all kernels must be connected together with the cascade stream in between them, and the input streams for all of them. In this example we chose to share the DMA FIFOs. There are 2 DMA FIFOs in row 0 for all the even rows, and 2 DMA FIFOs on row 1 for all odd rows:
+Finally, all kernels must be connected together with the cascade stream in between them, and the input streams for all of them. In this example, the DMA FIFOs are shared. There are two DMA FIFOs in row 0 for all the even rows, and two DMA FIFOs on row 1 for all odd rows:
 
 ```C++
 // Input Streams connections
@@ -317,4 +317,4 @@ This is an 8-phase SSR built in the AI Engine array using the AI Engine blockset
 
 
 
-<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD020</sup></br></p>
