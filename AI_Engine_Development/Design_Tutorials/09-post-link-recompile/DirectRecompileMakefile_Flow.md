@@ -141,7 +141,7 @@ In phase 2, there are three stages:
 
  * `run_emu`: Launches the simulation and verifies that the output is still correct.
 
-Run `make phase2` to go over all steps. Simulation will be done the same way as in phase 1 but will take longer due to the routing path which is much longer.
+Run `make phase2` to go over all steps. Simulation will be done the same way as in phase, 1 but will take longer due to the routing path, which is much longer.
 
 # Perform on-board testing
 
@@ -168,7 +168,7 @@ cd /run/media/mmcblk0p1
 
 ---
 
-&copy; Copyright 2021 Xilinx, Inc.
+&copy; Copyright 2021–2022 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -185,4 +185,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD039</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2021–2022 Xilinx</sup><br><sup>XD039</sup></br></p>

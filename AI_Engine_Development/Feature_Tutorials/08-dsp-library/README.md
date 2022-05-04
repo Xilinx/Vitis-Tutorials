@@ -61,7 +61,7 @@ This tutorial shows how to construct a simple two-stage decimation filter. This 
 
 Tools Documentation:
 
-* [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1076-ai-engine-environment.pdf)
+* [UG1076 Versal ACAP AI Engine Programming Environment](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environmentw)
 
 * [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
 
@@ -385,7 +385,7 @@ In doing so, it has hopefully provided a foundation upon which the user can begi
 ## References
 The following documents provide supplemental material useful with this tutorial.
 
-### [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1076-ai-engine-environment.pdf)
+### [UG1076 Versal ACAP AI Engine Programming Environment](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)
 Contains chapters on how to develop AI Engine graphs, how to use the Ai Engine compiler, and AI Engine simulation, and performance analysis.
 
 ### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
@@ -407,4 +407,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD022 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD022 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>

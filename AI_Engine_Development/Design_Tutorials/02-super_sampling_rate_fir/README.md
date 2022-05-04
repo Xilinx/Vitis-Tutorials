@@ -244,4 +244,4 @@ This utility has been created to view the template arguments that were used for 
 
 
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD020</sup></br></p>

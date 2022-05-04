@@ -32,7 +32,7 @@ Before starting to explore these examples, refer to the following documents:
   - Licenses for AI Engine tools.
   - Base Platform **[VCK190 Vitis Platform](https://www.xilinx.com/support/download.html)**
 
-Before starting this tutorial set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+Before starting this tutorial, set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 
 ## AI Engine Architecture Details
@@ -409,4 +409,4 @@ limitations under the License.
 
 
 
-<p align="center"><sup>XD021 | &copy; Copyright 2020–2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD021 | &copy; Copyright 2020–2022 Xilinx, Inc.</sup></p>
