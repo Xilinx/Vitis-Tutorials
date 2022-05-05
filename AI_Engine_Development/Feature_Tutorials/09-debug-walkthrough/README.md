@@ -53,7 +53,7 @@ The complete beamformer design is shown in the Vitis™ analyzer.
 
 There are several ways to debug a system design that include PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. For projects that are command-line based and would like to port to Vitis™ IDE, reference [Port command-line based projects to Vitis IDE](./Debug0_po.md) for detail steps.
 
-For ease of use, a Vitis IDE exported project, `beamformer_2022_1.ide.zip` can be donwloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_2022_1.ide.zip. Then import this zip file into the Vitis IDE.
+For ease of use, a Vitis IDE exported project, `beamformer_2022_1.ide.zip` can be downloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_2022_1.ide.zip. Then import this zip file into the Vitis IDE.
 
 Step 0. Download data files, `beamformer_data.zip` from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level as this tutorial's Makefile.
 
@@ -107,10 +107,10 @@ Supported simulations are categorize in this table.
 
 These supported simulations help to fix majority of design issues before running the AI Engine design on actual hardware. [UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) contains more details of each simulation’s capabilities and how to apply the supported features to resolve design issues such as memory leaks, memory access conflicts, resource constraints, integration with PL/PS domains.
 
-#### Step 1: Focus on AI Engine design’s functionalities – <a href="Debug1_86.md">X86simulator</a>.
-#### Step 2: Focus on AI Engine design’s execution time and resources used – <a href="Debug2_ai.md">AIEsimulator</a>.
-#### Step 3: Focus on AI Engine design’s integration with PL and PS domains for fast build and run time. – <a href="Debug1_se.md">SW_emu</a>.
-#### Step 4: Focus on AI Engine design’s integration with PL and PS domains before HW run – <a href="Debug2_he.md">HW_emu</a>.
+#### Step 1: Functional Simulation and Debug of AI Engine kernels and graph. – <a href="Debug1_86.md">X86simulator</a>.
+#### Step 2: Performance Level Simulation and Debug of AI Engine graph. – <a href="Debug2_ai.md">AIEsimulator</a>.
+#### Step 3: Software Emulation of AI Engine design integrated with PL and PS domains. – <a href="Debug1_se.md">SW_emu</a>.
+#### Step 4: Hardware Emulation of AI Engine design integrated with PL and PS domains. – <a href="Debug2_he.md">HW_emu</a>.
 
 
 ### Debug via Hardware
@@ -128,7 +128,7 @@ This is the first stage running the design on hardware. Areas to check
   * XRT Xbutil utility
   * XSDB generate run summary file and display with vitis_analyzer
 
-[AI Engine/PL kernel Debug with XRT utiiities on HW](./Debug5_bc.md)
+[AI Engine/PL kernel Debug with XRT utilities on HW](./Debug5_bc.md)
 
 [AI Engine Debug with Profiling APIs on HW](./Debug6_pa.md#3-Profiling-APIs-on-HW)
 

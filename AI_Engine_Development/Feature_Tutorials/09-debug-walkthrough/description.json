@@ -19,7 +19,7 @@
                     "vitis_aie_sim": 50,
                     "vitis_aie_x86sim": 50,
                     "vitis_hw_build": 470,
-                    "vitis_hw_emu": 200,
+                    "vitis_hw_emu": 500,
                     "vitis_hw_run": 30
                 }
             }
