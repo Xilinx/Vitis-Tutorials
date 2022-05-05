@@ -282,9 +282,13 @@ After this step, we get all the must components we need. The next we will attach
 
    - **FAT32 Partition Directory**: Browse to **zcu104_software_platform/pfm/sd_dir** and click OK.
 
+   - **QEMU Data**: Browse to **zcu104_software_platform/pfm/boot** and click OK.
+
    ![vitis_linux_config.PNG](./images/vitis_linux_config.PNG)
 
-   > Note: Starting from 2020.2, Vitis will setup default QEMU arguments to enable Vitis platform emulation. If there are additional QEMU settings, please write your own qemu_args.txt and set the file name in **QEMU Arguments** field.
+   > Note: Setting QEMU DATA to boot components directory would help emulator to find the boot components during Linux boot when doing emulation. 
+
+   > Note: If there are additional QEMU settings, please update qemu_args.txt accordingly.
 
 5. Click **zcu104_custom** project in the Vitis Explorer view, click the **Build** button to build the platform.
 
