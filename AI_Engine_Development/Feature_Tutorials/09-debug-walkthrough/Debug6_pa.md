@@ -43,7 +43,7 @@ static void stop_profiling(handle h);
 ```
 
 
-[1. Profiling APIs with AIE Emulator](#1-Profiling-APIs-with-AIE-Emulator)
+[1. Profiling APIs with AIE Simulator](#1-Profiling-APIs-with-AIE-Simulator)
 
 [2. Profiling APIs with HW Emulator](#2-Profiling-APIs-with-HW-Emulator)
 
@@ -52,7 +52,7 @@ static void stop_profiling(handle h);
 [4. Cross Check I/O Performance values with VCD](#4-Cross-Check-I/O-Performance-values-with-VCD)
 
 
-## 1. Profiling APIs with AIE Emulator
+## 1. Profiling APIs with AIE Simulator
 
 ### Step 1.1 Download the Project
 Clone the project source from git repository and unzip the zip file.
@@ -67,7 +67,7 @@ cp Makefile.emu Makefile
 make libadf.a
 ```
 
-### Step 1.3 Run AIE Emulator
+### Step 1.3 Run AIE Simulator
 ```bash
 aiesimulator --pkg-dir=./Work --i=. --profile
 ```
@@ -129,7 +129,7 @@ Plug in flashed completed SD card to vck190 board's sd slot.
 Power up the vck190 board.
 
 ### Step 3.4 Run the Application
-After vck190 board boots up and ready to accepts commands with Linux prompt, issue these command from terminal.
+After vck190 board boots up and ready to accepts commands with Linux prompt, issue these commands from terminal.
 ```bash
 cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
@@ -143,7 +143,7 @@ Note: Due to slower memory access, hardware and hardware emulation performance v
 
 ## 4. Cross Check I/O Performance values with VCD
 ### Step 4.1 VCD generation
-Command to generate AIE emulation VCD file.
+Command to generate AIE simulation VCD file.
 ```bash
 aiesimulator --pkg-dir=./Work --i=. --dump-vcd=foo
 ```
@@ -158,25 +158,28 @@ AIE_DUMP_VCD=foo
 Follow step 2.4 to run application.
 
 ### Step 4.2 Launch vitis_analyzer to view trace
-Launch vitis_analyser for AIE emulation.
+To launch vitis_analyser for AIE simulation run.
 ```bash
 vitis_analyzer ./aiesimulator_output/default.aierun_summary
 ```
-Launch vitis_analyser for hardware emulation.
+To launch vitis_analyser for hardware emulation run.
 ```bash
 vitis_analyzer ./sim/behav_waveform/xsim/default.aierun_summary
 ```
 
-Hardware event trace steps are available at https://gitenterprise.xilinx.com/swm/Vitis-Tutorials/blob/2022.1_next/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/Debug4_et.md
+For hardware event trace steps that are available at https://gitenterprise.xilinx.com/swm/Vitis-Tutorials/blob/2022.1_next/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/Debug4_et.md
 
 ### Step 4.3 Locate profiled interface
-After default.aierun_summary file is opened with Vitis_analyzer, select `Graph` view, locate the output file `data/ublf_out0.txt` that associated with `attr_o_ulbfo0` PLIO from host.cpp.
+After default.aierun_summary file is opened with Vitis_analyzer, select `Graph` view, locate the output file `data/ublf_out0.txt` that associated with `ulbfo0` output_plio object from graph.h
 ```bash
-PLIO *attr_o_ulbfo0  = new PLIO("ulbfo0",  plio_64_bits, "data/ulbf_out0.txt");
+for(unsigned k=0;k<4; k++) {
+    ulout[k]=output_plio::create("ulbfo"+std::to_string(k), plio_64_bits, "data/ulbf_out"+std::to_string(k)+".txt");
+    connect<>(ulbf.out[k], ulout[k].in[0]);
+}
 ```
-This PLIO is configured using profile API for output performance measurement. This can be found from host.cpp
+This outpt_plio object is configured using profile API for output performance measurement. This can be found from host.cpp
 ```bash
-    event::handle handle1 = event::start_profiling(*attr_o_ulbfo0,  event::io_stream_start_to_bytes_transferred_cycles, OUT_LEN*sizeof(cint16)*2);
+    event::handle handle1 = event::start_profiling(dut.ulout[0],  event::io_stream_start_to_bytes_transferred_cycles, OUT_LEN*sizeof(cint16)*2);
 ...
     if (handle1 != event::invalid_handle)
     {   
@@ -198,7 +201,7 @@ Select the tile links to the output file by moving cursor on top of the tile.
 Switch to `Trace` view, Locate tile(21,0).
 
 ### Step 4.5 Use tool to measure execution time
-Move marker to beginning of kernel execution from an iteration. Add second marker and move the second marker to beginning of another iteration.
+To measure execution time with tool, move marker to beginning of kernel execution from an iteration. Add second marker and move the second marker to beginning of another iteration. This method is same to measure execution time for AIE Simulation, hardware emulaiton or on Hardware.
 
 <img src="images/pr_aie_perf_vcd.png" width="900">
 
