@@ -18,7 +18,15 @@ ABS_HW_PATH=$(ABS_BUILD_PATH)/vivado
 BD_TCL=system_step1.tcl
 ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
 
-all: hw
+.PHONY: help
+
+help:
+	@echo "Makefile usage"
+	@echo "make all 	## to generate hw platform and export XSA file"
+
+
+all: hw 
+
 
 hw:
 	mkdir -p $(ABS_HW_PATH)
@@ -27,3 +35,5 @@ hw:
 
 clean:
 	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 
+
+ultraclean: clean

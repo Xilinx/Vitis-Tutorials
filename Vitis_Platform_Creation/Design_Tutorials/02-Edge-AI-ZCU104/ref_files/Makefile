@@ -12,12 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: all clean step1 step2 step3 petalinux_customization
-all: step1 step2 step3 petalinux_customization
-
 XSA=step1_vivado/build/vivado/zcu104_custom_platform_hw.xsa
-IMG=step2_pfm/xilinx-zynqmp-common-v2022.1/Image
 XPFM=step2_pfm/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
+VERSION				?=2022.1
+COMMON_IMAGE_PATH 	?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
+
+.PHONY: help
+
+help:
+	@echo "Makefile usage"
+	@echo "make all COMMON_IMAGE_PATH=<path/to/common_image/> 	## to generate platform with pre-built software components and do sw emulation with running vadd application to test this platform "
+
+
+all: check-common-image step1 step2 step3 
+
+#target : check  whether the common image is ready 
+check-common-image:
+ifeq ($(wildcard $(COMMON_IMAGE_PATH)/Image),)
+	@echo "'COMMON_IMAGE_PATH' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
+	@make help
+	@echo "exit ....." && exit 1
+endif
 
 # Step 1: Generate XSA with Vivado
 step1: $(XSA)
@@ -40,3 +55,6 @@ clean:
 	$(MAKE) -C step1_vivado clean
 	$(MAKE) -C step2_pfm clean
 	$(MAKE) -C step3_validate clean
+ultraclean:clean
+	$(MAKE) -C step2_pfm ultraclean
+	$(MAKE) -C step3_validate ultraclean

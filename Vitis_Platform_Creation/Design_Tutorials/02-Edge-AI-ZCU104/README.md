@@ -26,17 +26,15 @@
 
 ***Version: Vitis 2022.1 + Vitis AI 2.0***
 
+**Note**: **Vitis-AI 2.0 for Vitis 2022.1** is not available for the moment. Vitis-AI application will be updated soon after Vitis-AI for Vitis 2022.1 released.
+
 In this module, we will create a custom Vitis embedded platform for ZCU104. It will be capable to run ***Vitis acceleration applications*** including ***Vitis-AI applications***. Of course, general ***embedded software application*** can also run on this platform. This example system total structure is like below for your reference.
  
   ![missing image](./images/structure.svg)
 
-> Note: Vitis-AI 2.0 still works with Vitis 2022.1. The validation application for this custom platform may be updated after Vitis-AI for Vitis 2022.1 released.
+Since ZCU104 is a validated Xilinx Evaluation Board and Vivado includes its processing system presets, we will skip to validate the board and start to build the full hardware and generate XSA.
 
-Since ZCU104 is a validated Xilinx Evaluation Board and Vivado includes its processing system presets, we will skip step 0 mentioned in previous overview module and start to build the full hardware and generate XSA.
-
-To prepare the software components, we will utilize the common image and create our own DTB file according to our hardware exported from last step. Then we'll package the platform. At last, we'll run several test applications including Vitis-AI application on this platform to test this customized platform.
-
-
+To prepare the software components, we will utilize the common image and create the DTB file according to the XSA file exported from step1. Then we'll package the platform. At last, we'll run several test applications including Vitis-AI application on this platform to test this customized platform.
 
 ## Custom Platform Planning
 

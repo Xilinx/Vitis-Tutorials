@@ -17,7 +17,7 @@
 - [Step 3: Test the Platform](#step-3-test-the-platform)
   - [Test 1: Read Platform Info](#test-1-read-platform-info)
   - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
-  - [Fast Track for Vector Addtion](#fast-track-for-vector-addtion)
+  - [Fast Track for Vector Addition](#fast-track-for-vector-addition)
   - [Test 3: Run a Vitis-AI Demo](#test-3-run-a-vitis-ai-demo)
     - [Create the design](#create-the-design)
     - [Run Application on Board](#run-application-on-board)
@@ -155,23 +155,77 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    - Copy **zcu104_application_vitis/vadd_system/Hardware/package/sd_card.img** to local if Vitis is running on a remote server.
    - Write **sd_card.img** into SD Card with SD Card image writer applications like Etcher on Windows or dd on Linux.
    - Boot ZCU104 board with the SD card in SD boot mode.
-   - Go to auto mounted FAT32 partition
+     
+     <details>
 
-   ```bash
-   cd /run/media/mmcblk0p1
-   ```
+     <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Downloads website</strong></summary>
 
-   - Run vadd application
+     - Go to auto mounted FAT32 partition
 
-   ```bash
-   ./simple_vadd krnl_vadd.xclbin
-   ```
+     ```bash
+     cd /run/media/mmcblk0p1
+     ```
 
-   - It should show program prints and XRT debug info.
+     - Run vadd application
 
-   ```
-   TEST PASSED
-   ```
+     ```bash
+     ./simple_vadd krnl_vadd.xclbin
+     ```
+
+     - It should show program prints and XRT debug info.
+
+     ```
+     TEST PASSED
+     ```
+
+     </details>
+
+     <details>
+
+     <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+
+     You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
+
+     - Log into the system
+     
+     ```bash
+     petalinux login:petalinux
+     You are required to change your password immediately (administrator enforced).
+     New password:
+     Retype new password:
+     petalinux:~$ sudo su
+     We trust you have received the usual lecture from the local System
+     Administrator. It usually boils down to these three things:
+         #1) Respect the privacy of others.
+         #2) Think before you type.
+         #3) With great power comes great responsibility.
+     Password:
+     petalinux:/home/petalinux#
+     ```
+
+
+     - Go to auto mounted FAT32 partition
+     
+     ```
+     petalinux:/home/petalinux# cd /run/media/mmcblk0p1/
+     ```
+
+
+     - Run vadd application
+
+     ```bash
+     ./simple_vadd krnl_vadd.xclbin
+     ```
+
+
+     - It should show program prints and XRT debug info.
+
+     ```
+     TEST PASSED
+     ```
+
+     </details>
+
 
 4. Test Vector Addition Application in Emulation Mode (Optional)
 
@@ -185,7 +239,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    TEST PASSED
    ```
 
-### Fast Track for Vector Addtion
+### Fast Track for Vector Addition
 
 Scripts are provided to create the test applications on the custom platform we created. To use these scripts, please run the following steps.
 
@@ -193,14 +247,14 @@ Scripts are provided to create the test applications on the custom platform we c
 
    ```bash
    # cd to the step directory, e.g.
-   cd step4_validate
+   cd step3_validate
    make all
    ```
 
    The default verification uses hardware emulation. If you'd like to verify vadd application on hardware board, please run the following command to generate the SD card image.
 
    ```bash
-   cd step4_validate
+   cd step3_validate
    make vadd_hw
    ```
 
@@ -211,6 +265,11 @@ Scripts are provided to create the test applications on the custom platform we c
    ```
 
 ### Test 3: Run a Vitis-AI Demo
+
+**Note**: Vitis AI for Vitis 2022.1 is not released. So we make this step gather up for the moment. We will update it to Vitis 2022.1 soon after Vitis AI for Vitis 2022.1 released.
+
+<details>
+<summary><strong>Vitis-AI Demo</strong></summary>
 
 This test will run a Vitis-AI test application in DPU-TRD to verify DPU function on our custom platform. The most instructions below follows [Vitis-AI DPU-TRD document](https://github.com/Xilinx/Vitis-AI/tree/master/dsa/DPU-TRD/prj/Vitis#6-gui-flow).
 
@@ -246,7 +305,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    Since Vitis-AI has a different release cycle with PetaLinux, Vitis-AI related PetaLinux recipes are released later than PetaLinux release. At the time that this tutorial releases, Vitis-AI related recipes are not released yet. We cannot build PetaLinux sysroot/sdk with Vitis-AI dependencies. We need to use pre-built Vitis-AI sdk.
 
    - Download the Vitis-AI cross compile environment setup script: `wget https://raw.githubusercontent.com/Xilinx/Vitis-AI/1.4/setup/mpsoc/VART/host_cross_compiler_setup.sh`
-   - Update the script for installation area. The default install path is `install_path=~/petalinux_sdk_2021.1`. Since we are using PetaLinux 2022.2, it's better to change `install_path=~/petalinux_sdk_2022.1`.
+   - Update the script for installation area. The default install path is `install_path=~/petalinux_sdk_2021.1`. Since we are using PetaLinux 2021.2, it's better to change `install_path=~/petalinux_sdk_2021.2`.
    - Run the script to setup cross compile environment: `./host_cross_compiler_setup.sh`
 
    Once Vitis-AI recipes are released, this tutorial will update the steps for building Vitis-AI dependencies to the sysroot using PetaLinux.
@@ -257,7 +316,7 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
    - Click **Next** in Welcome page
    - Select platform **zcu104_custom**. Click Next.
    - Name the project **dpu_trd**, click **next**.
-   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to sysroot installation path in previous step, e.g. `~/petalinux_sdk_2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/`. 
+   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to sysroot installation path in previous step, e.g. `~/petalinux_sdk_2021.2/sysroots/cortexa72-cortexa53-xilinx-linux/`. 
    - Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_software_platform/sw_comp` directory, which are generated in Step 2. click **next**.
    - Select **dsa -> DPU Kernel (RTL Kernel)** and click **Finish** to generate the application.
    ![missing image](images/vitis_add_dpu.png)
@@ -487,6 +546,9 @@ This test will run a Vitis-AI test application in DPU-TRD to verify DPU function
 
 1. The default setting of PMIC (irps5401) on ZCU104 can't afford DPU running on heavy loading. You may see crash or hang on heavy loading.
    - Please refer to [DPU TRD Known issues](https://github.com/Xilinx/Vitis-AI/blob/master/dsa/DPU-TRD/prj/Vitis/README.md#553-known-issues) for more information. (Ref: [issue 101](https://github.com/Xilinx/Vitis-Tutorials/issues/101))
+
+
+</details>
 
 ### Congratulations
 

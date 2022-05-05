@@ -21,12 +21,18 @@ PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 
 VAI_DPU_TRD_PATH = Vitis-AI/dsa/DPU-TRD/prj/Vitis/
 
-.PHONY: all vadd platforminfo clean ultraclean dpu-trd
-all: platforminfo vadd dpu-trd
+.PHONY: help
+
+help:
+	@echo "Makefile usage"
+	@echo "make all 	## to build vadd application and run sw emulation on the platform created in former step"
+
+
+all: platforminfo vadd 
 
 
 Vitis_Accel_Examples:
-	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git -b 2021.2
+	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git -b 2022.1
 
 $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples $(PLATFORM)
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux
@@ -37,8 +43,9 @@ vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(PLATFORM)
 vadd_hw: 
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)/sysroots/cortexa72-cortexa53-xilinx-linux
 
+#Vitis AI 2.0 is under preparation. We will update it as soon as possible.
 Vitis-AI:
-	git clone https://github.com/Xilinx/Vitis-AI.git -b 1.4
+	git clone https://github.com/Xilinx/Vitis-AI.git -b 2.0
 
 dpu-trd: Vitis-AI
 	sed -i '37 s/`define URAM_DISABLE/`define URAM_ENABLE/' $(VAI_DPU_TRD_PATH)/dpu_conf.vh
@@ -55,5 +62,5 @@ clean:
 	$(MAKE) -C platforminfo  clean
 	cd $(VAI_DPU_TRD_PATH); git reset --hard
 
-ultraclean:
+ultraclean:clean
 	rm -rf Vitis_Accel_Examples Vitis-AI
