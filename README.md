@@ -247,15 +247,13 @@ The Vitis Tutorials take users through the design methodology and programming mo
 			<a href="./AI_Engine_Development/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>   
 		 </td>
       </tr>
-            <tr>
+	              <tr>
     <td height="24" >
-				&nbsp; 
+			<a href="./AI_Engine_Development/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a> 
 			</td>
     		<td >
-				&nbsp; 
 		  </td>
       <td >
-			<a href="./AI_Engine_Development/Design_Tutorials/09-post-link-recompile">Post-Link recompile of AIE</a>   
 		 </td>
       </tr>
   </tbody>
