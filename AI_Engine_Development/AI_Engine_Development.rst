@@ -126,3 +126,6 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
 
    * - :doc:`Implementing an IIR Filter on the AI Engine <./Feature_Tutorials/14-implementing-iir-filter/README>`
      - This multi-part tutorial describes how to implement an `infinite impulse response (IIR) filter <https://en.wikipedia.org/wiki/Infinite_impulse_response>`_ on the AI Engine.
+
+   * - :doc:`Post-Link Recompile of an AI Engine Application <./Feature_Tutorials/15-post-link-recompile/README>`
+     - This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It avoids a complete Vivado tool run, which can take a long time if timing closure requires specific attention. 

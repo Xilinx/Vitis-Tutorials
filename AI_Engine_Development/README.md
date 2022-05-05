@@ -55,10 +55,6 @@ The methodology for developing optimized accelerated applications is comprised o
    <li>Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators
    <li>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
  </tr>
-   <tr>
- <td align="center"><a href="./Design_Tutorials/09-post-link-recompile/README.md">Post-Link Recompile of an AIE Application </a></td>
- <td>This tutorial shows you how to modify an AI Engine application after the platform has been frozen, this is to avoid a complete Vivado® tool run, which can take a long time if timing closure requires specific attention. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed. The tutorial demonstrates a Vitis IDE flow and a Makefile flow.</td>
- </tr>
 </table>
 
 
@@ -131,6 +127,10 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
   <tr>
  <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
  <td>This tutorial walks through the steps to create a custom Baremetal platform, and also integrate Baremetal host application along with  an AI Engines graph and PL kernels.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/15-post-link-recompile/">Post-Link Recompile of an AI Engine Application </a></td>
+ <td>This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It avoids a complete Vivado® tool run, which can take a long time if timing closure requires specific attention. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed. The tutorial demonstrates a Vitis IDE flow and a Makefile flow.</td>
  </tr>
  </table>
 

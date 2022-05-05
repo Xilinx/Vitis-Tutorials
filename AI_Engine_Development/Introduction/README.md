@@ -257,6 +257,21 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td> </td>
  <td> </td>
  </tr>
+  <tr>
+ <td align="center"><a href="../Feature_Tutorials/15-post-link-recompile/">Post-Link Recompile of an AIE Application </a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ </tr>
  </table>
 
 ### Design Tutorials
@@ -370,21 +385,6 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td> </td>
  <td> </td>
  <td>PL Datamover</td>
- <td> </td>
- <td>x</td>
- <td> </td>
- <td>x</td>
- <td>x</td>
- <td> </td>
- <td> </td>
- </tr>
- <tr>
- <td align="center"><a href="../Design_Tutorials/09-post-link-recompile/">Post-Link Recompile of an AIE Application </a></td>
- <td>Base</td>
- <td>Linux</td>
- <td> </td>
- <td> </td>
- <td>MM2S / S2MM</td>
  <td> </td>
  <td>x</td>
  <td> </td>
