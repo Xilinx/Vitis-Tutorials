@@ -11,7 +11,7 @@
 
 # Bottom-up RTL Kernel Flow with Vitis for Acceleration
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 RTL design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a timing consuming and error-prone process. The Xilinx&reg; Vitis&trade; unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included Vivado&reg; Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-FPGA communication, DMA, and other supporting tasks.
 
