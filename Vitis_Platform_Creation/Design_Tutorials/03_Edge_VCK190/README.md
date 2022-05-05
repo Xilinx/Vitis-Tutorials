@@ -27,7 +27,7 @@
 
 ***Version: 2021.2***
 
-***Version 2022.1*** of this tutorial is under preparation. Please refer the [Versal Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md) for a reference first if you try to use Vitis 2022.1 to create a Versal Platform.
+**Note**: ***Version 2022.1*** of this tutorial is under preparation. Please refer the [Versal Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md) for a reference first if you try to use Vitis 2022.1 to create a Versal Platform.
 
 In this module, we will create a custom platform to run acceleration applications for VCK190 evaluation board. 
 
