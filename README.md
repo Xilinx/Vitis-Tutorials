@@ -136,7 +136,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 			<a href="./Hardware_Acceleration/Feature_Tutorials/08-using-hostmem">Host Memory Access</a> 
 			</td>
     		<td >
-            &nbsp; 
+			<a href="./Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel">Aurora Kernel on Alveo :new: </a>
           </td>
 	</tr>
 				<tr>
