@@ -13,9 +13,9 @@
 
 # Phase 1: Create a Fixed Platform from an AI Engine Application and PL Kernels
 
-1. Launch the **Vitis IDE** on a new workspace, `Phase1Wkspc`:
+1. Launch the Vitis IDE on a new workspace, `Phase1Wkspc`:
 
-   ![Vitis IDE Launcher](./Images/Image001.png)
+   ![Vitis IDE Launcher](./Images/VitisIDELauncher.png)
 
 
 2. The design that will be used for the purposes of this tutorial is shown in the following block diagram:
@@ -24,15 +24,15 @@
 
    The AI Engine graph itself is composed of two kernels:
 
-   * **Interpolator**: which interpolates the input signal by 2.
+   * **Interpolator**: This kernel interpolates the input signal by 2.
    * **Classifier**: The output of this kernel is the quadrant of the input complex number.
 
 
-   The Programmable Logic is composed of three kernels:
+   The programmable logic is composed of three kernels:
 
-   * **mm2s**: sends data to the AI Engine through PLIO.
-   * **PolarClip**: Clips the modulus of the data (complex data).
-   * **s2mm**: gets data from the AI Engine through PLIO.
+   * **mm2s**: This kernel sends data to the AI Engine through PLIO.
+   * **PolarClip**: This kernel clips the modulus of the data (complex data).
+   * **s2mm**: This kernel gets data from the AI Engine through PLIO.
 
    Now create the project, starting with the AI Engine sub-project.
 
@@ -96,7 +96,7 @@ You should now have the following project structure in the Explorer view:
 
 19. Right-click **Cosim1_system_hw_link [pl]** and select **Build Project**.
 
-   The outcome of this link stage contains a major file `cosim_container.xsa` which isthe hardware platform specification
+   The outcome of this link stage contains a major file `cosim_container.xsa` which is the hardware platform specification.
 
    ![Outcome of link stage](./Images/LinkStageOutput.png)
 
