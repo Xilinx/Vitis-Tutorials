@@ -108,7 +108,7 @@ The methodology for developing optimized accelerated applications is comprised o
 <td>This tutorial demonstrates how kernels can directly access buffers host memory directly. This capability requires a compatible platform.</td>
 </tr>
  <tr>
-<td align="center"><a href="./Feature_Tutorials/09-using-ethernet-on-alveo/">Using GT Kernels and Ethnernet IPs on Alveo</a></td>
+<td align="center"><a href="./Feature_Tutorials/09-using-ethernet-on-alveo/">Using GT Kernels and Ethernet IPs on Alveo</a></td>
 <td>This tutorial demonstrates how to use networking GT kernels with generated Ethernet IPs and implement them on Alveo card with Vitis flow.</td>
 </tr>
  </table>
