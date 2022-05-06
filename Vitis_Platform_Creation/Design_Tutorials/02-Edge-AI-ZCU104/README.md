@@ -61,15 +61,17 @@ We'll introduce the platform creation steps in the following pages. Each page de
 - [Step 3: Create Vitis Application](./step3.md)</br>
             Create simple application to validate our Vitis Platform
 
-***Let's start from [step 1: Create the Hradware Platform](./step1.md).***
+***Let's start from [step 1: Create the Hardware Platform](./step1.md).***
 
 
 ## Change Log
+
 ### 2022.1
-- From this version we begin to use common image instead of the Petalinux building process. If you want to leverage the Petalinux tool to customize your system you can refer [PetaLinux customization page](../../Feature_Tutorials/02_platform_creation_petalinux_component/README.md).
-- For device tree file we suggest to use `createdts` command to generate it.
+- From this version we begin to use pre-built Linux common image instead of building Linux components with PetaLinux because the pre-built common image provides most common features for Vitis acceleration and it can help expedite the platform creation process. If you wish to leverage the PetaLinux tool to customize your system you can refer to the [PetaLinux Customization Tutorial](../../Feature_Tutorials/02_platform_creation_petalinux_component/README.md).
+- Simplify the device tree generation flow by using the newly introduced `createdts` XSCT command.
+
 ### 2021.2
-- The Vivado project exports XSA for hardware and hardware emulation seperatedly. When creating the platform in [step3](./step3.md), it's recommended to provide seperate XSA for hardware and hardware emulation.
+- The Vivado project exports XSA for hardware and hardware emulation separately. When creating the platform in [step3](./step3.md), it's recommended to provide separate XSA for hardware and hardware emulation.
 
 ## References
 

@@ -18,6 +18,6 @@ This section contains top-level getting started tutorials for Vitis
 * [**Vitis Libraries**](./Vitis_Libraries) :
   * Learn how to leverage a L1 Vitis library element to build your own design. The FFT example is selected for explanation, and you may follow similar flow to use other library elements.
 * [**Vitis Platform**](./Vitis_Platform) :
-  * This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on Versal by using the Versal Extensible Platform from Vivado Customizable Example Design and a pre-built Linux image.
+  * This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on Versal by using the Versal Extensible Platform from Vivado Customizable Example Design and pre-built Linux common images.
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>

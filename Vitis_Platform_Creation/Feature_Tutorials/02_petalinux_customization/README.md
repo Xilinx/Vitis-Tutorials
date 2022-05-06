@@ -7,7 +7,9 @@
 </table>
 
 
-## PetaLinux building and System customization
+## PetaLinux Building and System Customization
+
+***Version: PetaLinux 2022.1***
 
 A Vitis platform requires software components. This time we'd like to demonstrate software environment customization. We'll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.
 

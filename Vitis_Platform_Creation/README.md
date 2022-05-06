@@ -47,7 +47,7 @@ These tutorials illustrate various platform features and how you can incorporate
  <td>This tutorial demonstrates how you can stream data between Vitis kernels and AXI stream connections exposed in the platform.</td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/02_platform_creation_petalinux_component/">PetaLinux building and System customization</a></td>
+ <td align="center"><a href="./Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization</a></td>
  <td>This tutorial demonstrates how you can customize a PetaLinux project to work for Vitis acceleration applications.</td>
  </tr>
  </table>
