@@ -34,17 +34,13 @@ help::
 	$(ECHO) ""
 	$(ECHO) "Supported Platform (platform_name):"
 	$(ECHO) "  xilinx_u200_gen3x16_xdma_2_202110_1"
-	$(ECHO) "  xilinx_u250_gen3x16_xdma_2_1_202010_1"
-	$(ECHO) "  xilinx_u250_gen3x16_xdma_3_1_202020_1"
-	$(ECHO) "  xilinx_u50_gen3x16_xdma_201920_3"
-	$(ECHO) "  xilinx_u280_xdma_201920_3"
+	$(ECHO) "  xilinx_u250_gen3x16_xdma_4_1_202210_1"
+	$(ECHO) "  xilinx_u50_gen3x16_xdma_5_202210_1"
+	$(ECHO) "  xilinx_u55c_gen3x16_xdma_3_202210_1"
 	$(ECHO) ""
 
-PLATFORM := xilinx_u200_xdma_201830_2
+PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
 TARGET := hw
-
-NCPUS := $(shell grep -c ^processor /proc/cpuinfo)
-JOBS := $(shell expr $(NCPUS) - 1)
 
 XOCCFLAGS := --platform $(PLATFORM) -t $(TARGET)  -s -g
 XOCCLFLAGS += --kernel_frequency 200

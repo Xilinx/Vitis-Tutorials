@@ -381,4 +381,13 @@ Data verification SUCCEED
 
 Xilinx Aurora protocol and IP provide a lightweight and easy-to-use high-performance point-to-point communication solution on Alveo accelerator card. With Vitis flow, the user can use Aurora IP on Alveo cards easily to implements high speed inter-card communication without the involvement of PCIe and host. This enables various and flexible distributed or pipelined hardware acceleration applications.
 
+## Revision History
+
+<details>
+  <summary>2022.1</summary>
+
+  - Initial release
+
+ </details>
+
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
