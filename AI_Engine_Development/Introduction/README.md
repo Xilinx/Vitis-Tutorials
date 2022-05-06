@@ -272,6 +272,20 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td> </td>
  <td> </td>
  </tr>
+  <td align="center"><a href="../Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S/S2MM/PolarClip</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
  </table>
 
 ### Design Tutorials
