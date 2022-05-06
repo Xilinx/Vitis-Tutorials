@@ -132,6 +132,10 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./Feature_Tutorials/15-post-link-recompile/">Post-Link Recompile of an AI Engine Application </a></td>
  <td>This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It avoids a complete Vivado® tool run, which can take a long time if timing closure requires specific attention. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed. The tutorial demonstrates a Vitis IDE flow and a Makefile flow.</td>
  </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a></td>
+ <td>This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array. Some PL blocks are only source or destination kernels, whereas others are processing kernels within the dataflow. This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator, AI Engine simulator, and in hardware emulation.</td>
+ </tr>
  </table>
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>

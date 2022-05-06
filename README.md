@@ -260,13 +260,15 @@ The Vitis Tutorials take users through the design methodology and programming mo
             <td height="24">
                 <a href="./AI_Engine_Development/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a>
             </td>
-            <td>
+            <td height="24">
+                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a>
             </td>
             <td>
             </td>
         </tr>
     </tbody>
 </table>
+
 
 
 <table border="0" width="100%">

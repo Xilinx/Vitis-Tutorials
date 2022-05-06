@@ -129,3 +129,6 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
 
    * - :doc:`Post-Link Recompile of an AI Engine Application <./Feature_Tutorials/15-post-link-recompile/README>`
      - This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It avoids a complete Vivado tool run, which can take a long time if timing closure requires specific attention. 
+
+   * - :doc:`Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows <./Feature_Tutorials/16-external-traffic-generator-aie/README>`
+     - This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array.
