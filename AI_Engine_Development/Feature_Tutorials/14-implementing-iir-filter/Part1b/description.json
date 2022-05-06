@@ -21,7 +21,7 @@
             }
         ],
         "targets": [
-			"vitis_aie_x86simsim"
+			"vitis_aie_x86sim"
         ],
         "category": "canary",
         "make_options": [
@@ -35,7 +35,7 @@
         ],
         "custom_build_target":
         {
-            "all": "aiesim"
+            "all": "x86sim"
         }
     }
 }
