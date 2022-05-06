@@ -49,14 +49,13 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./Getting_Started/Vitis_Libraries">Vitis Libraries Introduction</a>
             </td>
             <td>
-                <a href="./Getting_Started/Vitis_Platform/">Vitis Platform :new: </a>
+                <a href="./Getting_Started/Vitis_Platform/">Vitis Platform Introduction :new:</a>
             </td>
         </tr>
     </tbody>
 </table>
 
 
-<<<<<<< HEAD
 <table border="0" width="100%">
     <tbody>
         <tr>
@@ -125,7 +124,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation">Controlling Vivado Implementation</a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/06-cholesky-accel">Choleskey Algorithm Acceleration</a>
+                <a href="./Hardware_Acceleration/Design_Tutorials/06-cholesky-accel">Cholesky Algorithm Acceleration</a>
             </td>
         </tr>
         <tr>
@@ -146,7 +145,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethnernet IPs on Alveo
+                <a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethernet IPs on Alveo
                     :new: </a>
             </td>
             <td>
@@ -154,101 +153,6 @@ The Vitis Tutorials take users through the design methodology and programming mo
             </td>
         </tr>
     </tbody>
-=======
-<table border="0"  width="100%">
-	<tbody>
-		<tr>
-			<td colspan="2" height="24" align="center">
-			<strong> 	<a href="./Hardware_Acceleration">Hardware Acceleration</a> </strong> 
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2" height="48"   >
-				Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even Verilog and VHDL.
-			</td>
-		</tr>
-    <tr>
-    <td height="24" >
-      <strong> Feature Tutorials </strong>
-      </td>
-    		<td height="24" >
-			<strong> Design Tutorials </strong>
-		</td>
-      </tr>	
-		<tr>
-    <td height="24" >
-			<a href="./Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow">Getting Started with RTL Kernels</a>
-			</td>
-    		<td >
-			<a href="./Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial">Convolution Example</a>  
-		</td>
-      </tr>	
-    		<tr>
-    <td height="24" >
-				<a href="./Hardware_Acceleration/Feature_Tutorials/02-mixing-c-rtl-kernels">Mixing C and RTL</a>  
-			</td>
-    		<td >
-			 <a href="./Hardware_Acceleration/Design_Tutorials/02-bloom">Bloom Filter Example</a>
-		</td>
-      </tr>	
-    		<tr>
-    <td height="24" >
-			<a href="./Hardware_Acceleration/Feature_Tutorials/03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a> 
-			</td>
-    		<td >
-			<a href="./Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a>  
-		</td>
-      </tr>	
-    		<tr>
-    <td height="24" >
-			<a href="./Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks/README.md">Using Multiple DDR Banks</a> 
-			</td>
-    		<td >
-			<a href="./Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson/README.md">Traveling Salesperson Problem</a> 
-		</td>
-      </tr>	
-    		<tr>
-    <td height="24" >
-			<a href="./Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu/README.md">Using Multiple Compute Units</a> 
-			</td>
-    		<td >
-			<a href="./Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a>
-		</td>
-      </tr>	
-    		<tr>
-    <td height="24" >
-			<a href="./Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation">Controlling Vivado Implementation</a>
-			</td>
-    		<td >
-			<a href="./Hardware_Acceleration/Design_Tutorials/06-cholesky-accel">Choleskey Algorithm Acceleration</a>
-		</td>
-      </tr>	
-    		<tr>
-    <td height="24" >
-			<a href="./Hardware_Acceleration/Feature_Tutorials/07-using-hbm">Optimizing for HBM</a>
-			</td>
-    		<td >
-			<a href="./Hardware_Acceleration/Design_Tutorials/07-host-code-opt">XRT Host Code Optimization</a>
-		</td>
-      </tr>	
-        		<tr>
-    <td height="24" >
-			<a href="./Hardware_Acceleration/Feature_Tutorials/08-using-hostmem">Host Memory Access</a> 
-			</td>
-    		<td >
-			<a href="./Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel">Aurora Kernel on Alveo :new: </a>
-          </td>
-	</tr>
-				<tr>
-    <td height="24" >
-			<a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethernet IPs on Alveo :new: </a> 
-			</td>
-    		<td >
-            &nbsp; 
-          </td>
-  </tr>	
-  </tbody>
->>>>>>> swm/2022.1_next
 </table>
 
 
@@ -275,7 +179,8 @@ The Vitis Tutorials take users through the design methodology and programming mo
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/01-aie_a_to_z">A to Z Bare-metal Flow</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW
+                    Emu and HW</a>
             </td>
             <td>
                 <a href="./AI_Engine_Development/Feature_Tutorials/02-using-gmio">Using GMIO with AIE</a>
@@ -296,8 +201,8 @@ The Vitis Tutorials take users through the design methodology and programming mo
             </td>
         </tr>
         <tr>
-            <td height="24"> <a href="./AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW
-                    Emu and HW</a>
+            <td height="24"> 
+                <a href="./AI_Engine_Development/Feature_Tutorials/01-aie_a_to_z">A to Z Bare-metal Flow</a>
             </td>
             <td>
                 <a href="./AI_Engine_Development/Feature_Tutorials/06-versal-system-design-clocking-tutorial">Versal System Design Clocking</a>
@@ -398,7 +303,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="./Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190">Custom Platform Creation on Versal</a>
 			</td> 
 			<td>
-				<a href="./Vitis_Platform_Creation/Feature_Tutorials/02_platform_creation_petalinux_component/">PetaLinux building and System customization :new:</a>
+				<a href="./Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization :new:</a>
 			</td>
 		</tr>		
             <tr>
