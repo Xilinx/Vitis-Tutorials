@@ -30,15 +30,24 @@ The hardware design includes three kernels: *rtc_gen*, *alpha_mix*, and *strm_du
 The designs have been verified with following software/hardware environment and tool chain version:
 * Operating System
   * Redhat/CentOS 7.4 - 7.9
-  * Ubuntu 16.04/18.04
-  * OpenCV & OpenCL libraries required
-* Vitis: 2021.2
-* XRT: 2.12.427
+  * Ubuntu 18.04/20.04
+  * OpenCV libraries required
+* Vitis: 2022.1
+* XRT: 2.13.466
 * Hardware and Platform (need both the deployment and development platforms)
-  * Alveo U200 - xilinx_u200_xdma_201830_2
-  * Alveo U250 - xilinx_u250_xdma_201830_2, xilinx_u250_gen3x16_xdma_3_1_202020_1
-  * Alveo U50  - xilinx_u50_gen3x16_xdma_201920_3
-  * Alveo U280 - xilinx_u280_xdma_201920_3
+  * Alveo U200 - xilinx_u200_gen3x16_xdma_2_202110_1
+  * Alveo U250 - xilinx_u250_gen3x16_xdma_4_1_202210_1
+  * Alveo U50  - xilinx_u50_gen3x16_xdma_5_202210_1
+  * Alveo U55C - xilinx_u55c_gen3x16_xdma_3_202210_1
+
+**Additional Requirements for RedHat/CentOS 7**
+The host program is using XRT Native API, which need higher version of GCC. If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the  following command to install and switch to GCC 7 before compiling the host program.
+
+```shell
+sudo yum install centos-release-scl
+sudo yum install devtoolset-7-gcc-c++
+scl enable devtoolset-7 bash
+```
 
 The directory struction and brief explainations are as below.
 ~~~
@@ -66,8 +75,7 @@ The directory struction and brief explainations are as below.
     ├── media/                      # Media files for test program
     └── src/                        # Test program source codes
         ├── rtc_alpha_tb.cpp        # Test program for the whole design
-        ├── rtc_gen_test.cpp        # Test program for rtc_gen kernel
-        └── xcl2/                   # Xilinx OpenCL include files
+        └── rtc_gen_test.cpp        # Test program for rtc_gen kernel
 ~~~
 
 ## RTL Kernel: rtc_gen (XO)
@@ -207,7 +215,7 @@ This is the fully implemented system, which integrated all the three kernels: *r
 
 ### rtc_gen_test.cpp
 
-This program first judges the running mode according to the environment variable *XCL_EMULATION_MODE*, then chooses to  use binary file *rtc_gen_test_hw.xclbin* or *rtc_gen_test_hw_emu.xclbin* to finish the testing of RTL kernel *rtc_gen*. It will test both the 8-digit and 11-digit clock format, and the generated clock image will be displayed directly. The program also uses XRT low-level API *xclRegRead* to read and print out the value of register *time_val* of *rtc_gen* kernel, namely the value of the internal hardware time counter. The value of *time_val* is also used to control the image display refresh. To ensure the correct operation of *xclRegRead* function, please ensure to create or modify *xrt.ini* file in the execution directory to add following lines:
+This program first judges the running mode according to the environment variable *XCL_EMULATION_MODE*, then chooses to  use binary file *rtc_gen_test_hw.xclbin* or *rtc_gen_test_hw_emu.xclbin* to finish the testing of RTL kernel *rtc_gen*. It will test both the 8-digit and 11-digit clock format, and the generated clock image will be displayed directly. The program also uses *kernel::read_register* API to read and print out the value of register *time_val* of *rtc_gen* kernel, namely the value of the internal hardware time counter. The value of *time_val* is also used to control the image display refresh. To ensure the correct operation of *xclRegRead* function, please ensure to create or modify *xrt.ini* file in the execution directory to add following lines:
 
 ~~~
 [Runtime]
@@ -215,7 +223,7 @@ rw_shared=true
 ~~~
 ### rtc_alpha_tb.cpp
 
-This program first judges the running mode according to the environment variable *XCL_EMULATION_MODE*, then chooses to use binary file *rtc_alpha_hw.xclbin* or *rtc_alpha_hw_emu.xclbin* to mix the generated real time clock images to a background image. The user can select background image, set time format, and set clock time by command parameters. The user can also change the color, size, and position of the clock image by modifying the program source code. This test program also uses *xclRegRead* API to read the value of register *time_val* of *rtc_gen* kernel and use that value to control image display refresh.
+This program first judges the running mode according to the environment variable *XCL_EMULATION_MODE*, then chooses to use binary file *rtc_alpha_hw.xclbin* or *rtc_alpha_hw_emu.xclbin* to mix the generated real time clock images to a background image. The user can select background image, set time format, and set clock time by command parameters. The user can also change the color, size, and position of the clock image by modifying the program source code. This test program also uses *kernel::read_register* API to read the value of register *time_val* of *rtc_gen* kernel and use that value to control image display refresh.
 
 <br/>
 
@@ -410,4 +418,22 @@ You could make modification to following *#define* section at the beginning of *
 
 Vitis provides powerful profiling features which enable you to get a deeper view into the performance, bandwidth usage, design bottleneck, etc. Please read [Profiling the Application](./doc/profile_tutorial.md) for more details. 
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+## Revision History
+
+<details>
+  <summary> 2022.1 </summary>
+
+ - Update Vitis target platform support
+ - In host program, use XRT Native API to replace original OpenCL API.
+
+</details>
+
+<details>
+  <summary>2020.1</summary>
+
+  - Initial release
+
+ </details>
+
+
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>

@@ -40,15 +40,15 @@ help::
 
 # PART setting: uncomment the line matching your Alveo card
 PART := xcu200-fsgd2104-2-e
-#PART := cu250-figd2104-2L-e
+#PART := xcu250-figd2104-2L-e
 #PART := xcu50-fsvh2104-2-e
-#PART := xcu280-fsvh2892-2L-e
+#PART := xcu55c-fsvh2892-2L-e
 
 # PLATFORM setting: uncomment the lin matching your Alveo card
-PLATFORM := xilinx_u200_xdma_201830_2
-#PLATFORM := xilinx_u250_xdma_201830_2
-#PLATFORM := xilinx_u50_gen3x16_xdma_201920_3
-#PLATFORM := xilinx_u280_xdma_201920_3
+PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
+#PLATFORM := xilinx_u250_gen3x16_xdma_4_1_202210_1
+#PLATFORM := xilinx_u50_gen3x16_xdma_5_202210_1
+#PLATFORM := xilinx_u55c_gen3x16_xdma_3_202210_1
 
 # TARGET: set the build target, can be hw or hw_emu
 TARGET := hw
@@ -69,11 +69,9 @@ runsim:
 
 
 ################## hardware build 
-NCPUS := $(shell grep -c ^processor /proc/cpuinfo)
-JOBS := $(shell expr $(NCPUS) - 1)
 
 XOCCFLAGS := --platform $(PLATFORM) -t $(TARGET)  -s -g
-XOCCLFLAGS := --link --optimize 3 --vivado.synth.jobs $(JOBS) --vivado.impl.jobs $(JOBS)
+XOCCLFLAGS := --link --optimize 3
 # You could uncomment following line and modify the options for hardware debug/profiling
 #DEBUG_OPT := --debug.chipscope krnl_aes_1 --debug.protocol all --profile_kernel data:all:all:all:all
 

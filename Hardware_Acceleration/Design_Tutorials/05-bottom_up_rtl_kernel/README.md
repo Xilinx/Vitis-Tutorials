@@ -46,13 +46,13 @@ The designs have been verified with the following software/hardware environment 
   * Perl package installed for Verilog simulation (**required**)
   * OpenSSL library installed for hardware output validate (**required**)
   * GCC 7
-* Vitis: 2021.2
-* XRT: 2.12.427
+* Vitis: 2022.1
+* XRT: 2.13.466
 * Hardware and Platform for your Alveo card (you need both the deployment and development platforms):
-  * Alveo U200: xilinx_u200_xdma_201830_2
-  * Alveo U250: xilinx_u250_xdma_201830_2
-  * Alveo U50: xilinx_u50_gen3x16_xdma_201920_3
-  * Alveo U280: xilinx_u280_xdma_201920_3
+  * Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1
+  * Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1
+  * Alveo U50: xilinx_u50_gen3x16_xdma_5_202210_1
+  * Alveo U55C: xilinx_u55c_gen3x16_xdma_3_202210_1
 
 ### Additional Requirements for RedHat/CentOS
 If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the  following command to install and switch to GCC 7 before compiling the host program.
@@ -123,7 +123,6 @@ The directory structure and brief explanations of the design repository are as f
 │   ├── filelist_krnl_cbc.f                     #   xsim simulation command file
 │   ├── gen_ip.tcl                              #   Vivado tcl script to generate required IPs
 │   ├── krnl_aes_test.cfg                       #   Vitis v++ link config file
-│   ├── krnl_aes_test.xdc                       #   Vitis v++ link constraint
 │   ├── krnl_aes.xdc                            #   constraint for kernel krnl_aes
 │   ├── Makefile                                #   Makefile for all operation
 │   ├── pack_kernel.tcl                         #   Vivado tcl script to pack the kernel
@@ -138,7 +137,6 @@ The directory structure and brief explanations of the design repository are as f
 │   ├── filelist_krnl_cbc.f                     #   xsim simulation command file
 │   ├── gen_ip.tcl                              #   Vivado tcl script to generate required IPs
 │   ├── krnl_cbc_test.cfg                       #   Vitis v++ link config file
-│   ├── krnl_cbc_test.xdc                       #   Vitis v++ link constraint
 │   ├── Makefile                                #   Makefile for all operation
 │   ├── pack_kernel.tcl                         #   Vivado tcl script to pack the kernel
 │   ├── runsim_krnl_cbc_xsim.sh                 #   shell script to run the simulation with xsim   
@@ -148,3 +146,22 @@ The directory structure and brief explanations of the design repository are as f
 │
 └── README.md
 ```
+
+## Revision History
+
+<details>
+  <summary> 2022.1 </summary>
+
+ - Update Vitis target platform support
+ - remove Vivado clock routing XDC
+
+</details>
+
+<details>
+  <summary>2020.2</summary>
+
+  - Initial release
+
+ </details>
+
+ <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>

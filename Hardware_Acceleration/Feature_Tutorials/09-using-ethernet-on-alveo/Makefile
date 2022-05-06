@@ -37,7 +37,7 @@ help::
 
 # Target hardware setting, uncomment appropriate lines 
 BOARD    := u200
-PLATFORM := xilinx_u200_gen3x16_xdma_1_202110_1
+PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
 PART     := xcu200-fsgd2104-2-e
 
 # TARGET: set the build target

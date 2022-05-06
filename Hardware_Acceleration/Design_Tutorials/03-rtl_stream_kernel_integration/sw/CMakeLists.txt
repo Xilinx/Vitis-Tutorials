@@ -17,14 +17,12 @@ cmake_minimum_required(VERSION 3.0)
 
 set(CMAKE_CXX_STANDARD 14)
 set(XRT_INCLUDE_DIRS $ENV{XILINX_XRT}/include)
-set(XRT_LIBS xilinxopencl xrt_core)
-set(XRT_LIBS_EMU xilinxopencl xrt_hwemu)
+set(XRT_LIBS xrt_coreutil)
 
 find_package(OpenCV REQUIRED)
 
 include_directories(
 ${XRT_INCLUDE_DIRS}
-${OpenCV_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -33,7 +31,6 @@ $ENV{XILINX_XRT}/lib
 
 add_executable(rtc_gen_test 
 src/rtc_gen_test.cpp
-src/xcl2/xcl2.cpp
 )
 
 target_link_libraries(rtc_gen_test
@@ -43,31 +40,10 @@ ${OpenCV_LIBRARIES}
 
 add_executable(rtc_alpha_tb 
 src/rtc_alpha_tb.cpp
-src/xcl2/xcl2.cpp
 )
 
 target_link_libraries(rtc_alpha_tb
 ${XRT_LIBS}
-${OpenCV_LIBRARIES}
-)
-
-add_executable(rtc_gen_test_emu 
-src/rtc_gen_test.cpp
-src/xcl2/xcl2.cpp
-)
-
-target_link_libraries(rtc_gen_test_emu
-${XRT_LIBS_EMU}
-${OpenCV_LIBRARIES}
-)
-
-add_executable(rtc_alpha_tb_emu 
-src/rtc_alpha_tb.cpp
-src/xcl2/xcl2.cpp
-)
-
-target_link_libraries(rtc_alpha_tb_emu
-${XRT_LIBS_EMU}
 ${OpenCV_LIBRARIES}
 )
 

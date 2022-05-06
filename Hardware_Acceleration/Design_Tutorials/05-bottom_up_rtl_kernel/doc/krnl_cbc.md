@@ -272,19 +272,6 @@ This starts Vivado in batch mode and calls ``~/krnl_cbc/pack_kernel.tcl`` to pac
 
 #### 4. Build Kernel Testing System Overlay Files
 
-**Note:** # if you are using `xilinx_u200_xdma_201830_2`, `xilinx_u250_xdma_201830_2` or `xilinx_u280_xdma_201920_3`platforms, you must uncomment line 2, line 5, or line 8 in `~/krnl_cbc/krnl_cbc_test.xdc`, respectively.
-
-```shell
-  1 # if you are using xilinx_u200_xdma_201830_2 platform, please uncomment following line
-  2 # set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets pfm_top_i/static_region/slr1/base_clocking/clkwiz_kernel/inst/CLK_CORE_DRP_I/clk_inst/clk_out1]
-  3
-  4 # if you are using xilinx_u250_xdma_201830_2 platform, please uncomment following line
-  5 # set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets pfm_top_i/static_region/slr0/base_clocking/clkwiz_kernel2/inst/CLK_CORE_DRP_I/clk_inst/clk_out1]
-  6
-  7 # if you are using xilinx_u280_xdma_201920_3 platform, please uncomment following line
-  8 #set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets pfm_top_i/static_region/base_clocking/clkwiz_kernel/inst/CLK_CORE_DRP_I/clk_inst/clk_out1]
-```
-
 ##### For a hardware target
 For a hardware target, use the following command:
 

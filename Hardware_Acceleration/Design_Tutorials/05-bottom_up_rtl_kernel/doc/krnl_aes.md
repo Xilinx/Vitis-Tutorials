@@ -200,7 +200,7 @@ void strm_dump (hls::stream<ap_axiu<PTR_WIDTH, 0, 0, 0>>& data_input,
 }          
 ```
 
-In total, four `strm_issue` and four `strm_dump` kernels are integrated with `krnl_aes` in the test system, and the linking operation is scribed in the `~/krnl_aes/Makefile`. The  `~/krnl_aes/krnl_aes_test.cfg` file provides the necessary Vitis linking option for this design. This configuration file includes an additional XDC file, `~/krnl_aes/krnl_aes_test.xdc`, to waive the critical warning encountered in the linking stage for the customized MMCM in the `krnl_aes` kernel.
+In total, four `strm_issue` and four `strm_dump` kernels are integrated with `krnl_aes` in the test system, and the linking operation is scribed in the `~/krnl_aes/Makefile`. The  `~/krnl_aes/krnl_aes_test.cfg` file provides the necessary Vitis linking option for this design.
 
 ## Host Programming
 
@@ -294,19 +294,6 @@ make pack_kernel
 This starts Vivado in batch mode and calls `~/krnl_aes/pack_kernel.tcl` to package the RTL sources, generated IP XCI files, and XDC files into Vivado IP. It then generates the Vitis kernel file `~/krnl_aes/krnl_aes.xo`.
 
 #### 4. Build Kernel Testing System Overlay Files
-
-**Note:** If you are using `xilinx_u200_xdma_201830_2`, `xilinx_u250_xdma_201830_2`, or `xilinx_u280_xdma_201920_3` platforms, you must uncomment line 2, line 5, or line 8 in `~/krnl_aes/krnl_aes_test.xdc`, respectively.
-
-```shell
-  1 # if you are using xilinx_u200_xdma_201830_2 platform, please uncomment following line
-  2 # set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets pfm_top_i/static_region/slr1/base_clocking/clkwiz_kernel/inst/CLK_CORE_DRP_I/clk_inst/clk_out1]
-  3
-  4 # if you are using xilinx_u250_xdma_201830_2 platform, please uncomment following line
-  5 # set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets pfm_top_i/static_region/slr0/base_clocking/clkwiz_kernel2/inst/CLK_CORE_DRP_I/clk_inst/clk_out1]
-  6
-  7 # if you are using xilinx_u280_xdma_201920_3 platform, please uncomment following line
-  8 #set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets pfm_top_i/static_region/base_clocking/clkwiz_kernel/inst/CLK_CORE_DRP_I/clk_inst/clk_out1]
-```
 
 ##### For a hardware target
 For a hardware target, use the following command:
