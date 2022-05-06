@@ -12,7 +12,7 @@
 
 # Initialization
 
-All labs rely on a set of source files that are available in the `Files`sub-directory:
+All labs rely on a set of source files that are available in the `Files` sub-directory:
 
 - `AIE` contains the source files for the AI Engine application.
 - `AIE2` contains the source files for the AI Engine application with location constraints for one of the AI Engine kernels.
@@ -94,7 +94,7 @@ Releasing remaining XRT objects...
 root@versal-rootfs-common-20221:/run/media/mmcblk0p1#
 ```
 
-You can get out of QEMU with `CTRL+a x`.
+You can get out of QEMU by hitting **Ctrl** + **a x**.
 
 
 
