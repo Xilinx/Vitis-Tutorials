@@ -25,13 +25,13 @@
 ***Version: 2022.1***   
 ***Board: VCK190***
 
-In this module, we will  get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 evaluation board in short. 
+In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 evaluation board in short. 
 
-This time we will utilize Versal extensible platform from CED example, use pre-built Linux common image and Createdts command to generate software components. And then create an embedded Versal acceleration platform. At last we will leverage the Vector Addition example to validate this platform. Besides if you need to customize the Linux system image you can refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_platform_creation_petalinux_component/README.md) for reference.
+This time we will utilize Versal extensible platform from the CED example, using pre-built Linux common image and Createdts command to generate software components. And then create an embedded Versal acceleration platform. At last, leverage the Vector Addition example to validate this platform. Besides if you need to customize the Linux system image you can refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_platform_creation_petalinux_component/README.md) for reference.
 
 ## Step 1: Create Vivado Design and Generate XSA
 
-1. Create workspace and Launch Vivado if you haven't
+1. Create a workspace and Launch Vivado if you haven't
 
    - mkdir WorkSpace
    - cd WorkSpace
@@ -59,12 +59,12 @@ This time we will utilize Versal extensible platform from CED example, use pre-b
 
    - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view. In this example, we can keep the default settings.
    - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
-   - Configure Memory Settings. By default the example design will only enable DDR4. If you enable LPDDR4, it will enable both DDR4 and LPDDR4. In this example, we can keep the default setting.
+   - Configure Memory Settings. By default, the example design will only enable DDR4. If you enable LPDDR4, it will enable both DDR4 and LPDDR4. In this example, we can keep the default setting.
    - Click **Next**.
    - Review the new project summary and click **Finish**.
    - After a while, you will see the design example has been generated.
 
-   The generated design is like below:
+   The generated design is like the following:
 
    ![Vivado Design Block Diagram](images/vivado_design_diagram.png)
 
@@ -99,7 +99,7 @@ This time we will utilize Versal extensible platform from CED example, use pre-b
 
 ## Step 2: Create Vitis Platform
 
-1. Download Versal common image from [Xilinx website download page.](https://www.xilinx.com/support/download.html), place it under your `WorkSpace` directory and  extracting the common image.
+1. Download Versal common image from [Xilinx website download page.](https://www.xilinx.com/support/download.html), place it under your `WorkSpace` directory and extract the common image.
 
    ```bash
    tar xvf ../xilinx-versal-common-v2022.1.tar.gz .
@@ -122,7 +122,7 @@ This time we will utilize Versal extensible platform from CED example, use pre-b
    versal-vck190-reva-x-ebm-02-reva -compile   
    ```
 
-   Notice `-hw ` option is your XSA file generated in step1 located in your Vivado Project directory named `vck190_custom_hw.xsa ` . Besides below information would show in XSCT console. Please ignore the warning and that means you succeed to get system.dtb file which is located in <mydevice/psv_cortexa72_0/device_tree_domain/bsp/>.
+   Notice `-hw ` option is your XSA file generated in step1 located in your Vivado Project directory named `vck190_custom_hw.xsa `. Besides below information would show in XSCT console. Please ignore the warning and that means you succeed to get system.dtb file which is located in <mydevice/psv_cortexa72_0/device_tree_domain/bsp/>.
 
    ```bash
    pl.dtsi:9.21-46.4: Warning (unit_address_vs_reg): /amba_pl@0: node has a unit name, but no reg property
@@ -131,7 +131,7 @@ This time we will utilize Versal extensible platform from CED example, use pre-b
 
    Type `exit` in console to exit XSCT console.
 
-   As uboot image in common image package do not have default environment variables. So we need to update the bootargs manually. We prepare one system-user.dtsi under `ref_files` directory. Just copy it to device tree BSP directory and modify system-top.dts to include it like below.
+   As uboot image in common image package does not have default environment variables. So we need to update the bootargs manually. We prepare one system-user.dtsi under `ref_files` directory. Just copy it to device tree BSP directory and modify system-top.dts to include it like below.
 
    ```bash
    cp system-user.dtsi mydevice/psv_cortexa72_0/device_tree_domain/bsp/
@@ -152,7 +152,7 @@ This time we will utilize Versal extensible platform from CED example, use pre-b
 
 3. Create Vitis platform
 
-   - Create two directories under `WorkSpace` directory for FAT32 partition and boot components. Then prepare  images like below:
+   - Create two directories under `WorkSpace` directory for FAT32 partition and boot components. Then prepare  images like the following:
 
       ```bash
       cd WorkSpace
@@ -177,16 +177,18 @@ This time we will utilize Versal extensible platform from CED example, use pre-b
 
    - Click the **linux on psv_cortexa72** domain
    - Update the **Display Name** to `xrt` by clicking the edit button on the right of this line and input the name. We'd like to indicate this is a Linux domain has XRT installed and is capable of running acceleration applications.
-   - Set **Bif file**: Click the drop down button like below and select **Generate BIF**. The generated BIF file is generated in resource directory.
+   - Set **Bif file**: Click the drop down-button like the following diagram and select **Generate BIF**. The generated BIF file is generated in the resource directory.
   
       ![vitis_platform_config](images/vitis_platform_config.PNG)
 
    - **Boot Components Directory**: Browse to **boot** and click OK. Bootgen will look for boot components referred by BIF in this directory to generate BOOT.BIN
    - **FAT32 Partition Directory**: Browse to **sd_dir** and click OK. Files in this directory will be copied to FAT32 partition of SD card.
+   - **QEMU Data**: Browse to **step3_pfm/boot/** and click OK. Emulator will use boot components from this directory.
    - Click **vck190_custom** project in the Vitis Explorer view, click the **Build** button to generate the platform.
-  
    
-   After this step2 we have completed the platform creation process and next we will run an application to validate this platform.
+   >Note: If there are additional QEMU settings, please update qemu_args.txt accordingly.
+   
+   After this step2 we have completed the platform creation process and next, we will run an application to validate this platform.
 
 ## Step 3: Validate this Vitis PLatform
 
@@ -320,14 +322,14 @@ TEST PASSED
 
 Scripts are provided to package and test the Vitis platform.
 
-To use these scripts, please download Versal common image of 2022.1 version and place it under your project directory(e.g. ref_files/), then run the following steps.
+To use these scripts, please download Versal common image from [Xilinx website download page.](https://www.xilinx.com/support/download.html) and give its path to the following command.
 
 1. Run build
 
    ```bash
    # cd to the ref_files directory, e.g.
    cd ref_files
-   make all
+   make all COMMON_IMAGE_PATH=<path/to/common_image/>
    ```
 
 2. To clean the generated files, please run
