@@ -27,7 +27,7 @@
 
 In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 evaluation board in short. 
 
-This time we will utilize Versal extensible platform from the CED example, using pre-built Linux common image and Createdts command to generate software components. And then create an embedded Versal acceleration platform. At last, leverage the Vector Addition example to validate this platform. Besides if you need to customize the Linux system image you can refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_platform_creation_petalinux_component/README.md) for reference.
+This time we will utilize Versal extensible platform from the CED example, using pre-built Linux common image and Createdts command to generate software components. And then create an embedded Versal acceleration platform. At last, leverage the Vector Addition example to validate this platform. Besides if you need to customize the Linux system image you can refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md) for reference.
 
 ## Step 1: Create Vivado Design and Generate XSA
 

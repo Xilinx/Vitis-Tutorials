@@ -67,7 +67,7 @@ We'll introduce the platform creation steps in the following pages. Each page de
 ## Change Log
 
 ### 2022.1
-- From this version we begin to use pre-built Linux common image instead of building Linux components with PetaLinux because the pre-built common image provides most common features for Vitis acceleration and it can help expedite the platform creation process. If you wish to leverage the PetaLinux tool to customize your system you can refer to the [PetaLinux Customization Tutorial](../../Feature_Tutorials/02_platform_creation_petalinux_component/README.md).
+- From this version we begin to use pre-built Linux common image instead of building Linux components with PetaLinux because the pre-built common image provides most common features for Vitis acceleration and it can help expedite the platform creation process. If you wish to leverage the PetaLinux tool to customize your system you can refer to the [PetaLinux Customization Tutorial](../../Feature_Tutorials/02_petalinux_customization/README.md).
 - Simplify the device tree generation flow by using the newly introduced `createdts` XSCT command.
 
 ### 2021.2
