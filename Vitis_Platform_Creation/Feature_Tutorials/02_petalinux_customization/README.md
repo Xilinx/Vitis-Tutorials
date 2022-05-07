@@ -15,11 +15,11 @@ A Vitis platform requires software components. This time we'd like to demonstrat
 
 Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux.
 
-As may know Petalinux project need XSA file as the input which describes the hardware information. If you have Vivado project and export the XSA file you can use it as your project input. This time we will leverage and download  the base platform from [Xilinx website download page](https://www.xilinx.com/support/download.html).  And  we will take ZCU104 evaluation board base platform as example to show how to do system customization. Of course you can download other platform from that page according to your requirement. So first we will download the base platform.
+As XSA file is the mandatory input for Petalinux project. Users can input  XSA file exported from your Vivado project. This time we will leverage and take the zcu104 base platform from [Xilinx website download page](https://www.xilinx.com/support/download.html) as an example to show how to do system customization. Of course, you can download other platforms from that page according to your requirement. 
 
 ### Prepare the base platform
 
-1. Create workspace
+1. Create a workspace
 
    ```bash
    mkdir workspace
@@ -56,7 +56,8 @@ As may know Petalinux project need XSA file as the input which describes the har
    petalinux-config --get-hw-description=xilinx_zcu104_base_202210_1/hw/hw.xsa  # After you extract the base platform you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202210_1> directory. if you want to do emulation you can choose hw_emu.xsa 
    ```
 
-   > Note: we should take care this time we take zcu104 base platform as example. So the option of template is ZynqMP . If your platform is versal platform. You should set option of template to "versal"
+   > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP series chip. Therefore we specify this option as "zynqMP". If your platform is using Versal chipset. Please set this option to "versal".
+
 
    > Note: PetaLinux will use XSA to generate the device tree. Since hardware XSA and hardware emulation XSA have identical peripherals, giving either of them to PetaLinux makes no difference. When simplifying the hardware design for hardware emulation, it's recommended to keep all the peripherals that need device tree and drivers so that the auto-generated device tree can be reused. If the two design has different address-able peripherals, you will need to create two sets of device trees for hardware running and hardware emulation separately.
 
@@ -263,14 +264,14 @@ Vitis-AI applications will install additional software packages. If user would l
 
 ### Fast Track
 
-Scripts are provided to re-create PetaLinux project and generate outputs. To use these scripts, please download the base platform and place in `ref_files` folder. Then  run the following steps.
+Scripts are provided to re-create PetaLinux project and generate outputs. 
 
 1. Run build
 
    ```
    # cd to the step directory, e.g.
    cd ref_files
-   make all
+   make all XSA_PATH=<path/to/base_platform/> # to specify the XSA file path 
    ```
 
 2. To clean the generated files, please run
