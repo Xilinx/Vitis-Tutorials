@@ -82,7 +82,7 @@ Yocto or third-party Linux development tools can also be used as long as they pr
    CONFIG_parted
    CONFIG_resize-part
     ```
-    - dnf is for package package management
+    - dnf is for package management
     - parted, e2fsprogs-resize2fs and resize-part can be used for ext4 partition resize. We will use it to expand the ext4 partition to make full use of SD card size when running Vitis-AI test case in [Step 4](./step4.md).
 
     *Packages for Vitis-AI dependencies support:*
