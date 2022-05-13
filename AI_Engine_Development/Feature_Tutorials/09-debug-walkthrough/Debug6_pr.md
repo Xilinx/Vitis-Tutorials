@@ -18,7 +18,7 @@ In this tutorial you will learn how to:
 
 ## Hardware Profiling Features
 
-Two flows, XSDB and XRT flow, are supported profiling features with AIE design. The profiling feature requires no design source code change to collect profiling data. No special options required to build the design.
+Two flows, XSDB and XRT flow, are supported profiling features with AIE design. The profiling feature requires no design source code change to collect profiling data. No special options required to build the design. You can use [XRT Flow](#XRT-Flow) or [XSDB Flow](#XSDB-Flow) for this tutorial.
 
 ### XRT Flow
 
@@ -57,14 +57,19 @@ cd /run/media/mmcblk0p1
 
 ### Step 1.4 Collect Profiling Files
 After the design run completes on the hardware, the generated profiling files and run_summary files need to be collected and ready to be examined.
-`aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv`, `summary.csv` and `xrt.run_summary` files are created on the SD card.
-Power off the board, take out the sd_card from board and plug in the sd card to host's sd card reader. Copy  `aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv`, `summary.csv` and `xrt.run_summary` files from SD card back to where design is.
+#### Step 1.4.1
+Make sure `aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv`, `summary.csv` and `xrt.run_summary` files are created on the SD card.
+#### Step 1.4.2
+Power off the board and take out the sd_card from board and plug in the sd card to host's sd card reader.
+#### Step 1.4.3
+Copy `aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv`, `summary.csv` and `xrt.run_summary` files from SD card back to where the design is.
 
 ### Step 1.5 Launch Vitis Analyzer to Examine Profiling Files
 ```bash
 vitis_analyzer xrt.run.summary
 ```
-After issuing above command, expect to see result from step 3 and continue this tutorial.
+After issuing above command, expect to see result from [Step 3 Expected Result with Vitis_Analyzer](#Step-3-Expected-Result-with-Vitis_Analyzer) and continue this tutorial.
+
 
 ### XSDB Flow
 
@@ -88,7 +93,7 @@ xsdb
 %xsdb connect -url TCP:${COMPUTER NAME/IP}:3121
 %xsdb ta
 %xsdb ta 1
-%xsdb source ${XILINX_VITIS_INSTALL_PATH}/installs/lin64/Vitis/2021.2/scripts/vitis/util/aie_profile.tcl
+%xsdb source ${XILINX_VITIS)/scripts/vitis/util/aie_profile.tcl
 %xsdb aieprofile start -graphs dut -work-dir ./Work -core-metrics heat_map -memory-metrics conflicts -interface-metrics input_bandwidths:0 -interval 20 -samples 100
 ```
 note:
@@ -102,16 +107,19 @@ note:
 **IMPORTANT: After above command issued, wait until Count: 10, Count: 20, ... is displayed from XSDB console. This indicates XSDB is ready to collect design profiling data.**
 
 ### Step 2.3 to Run Application after Petalinux Boots up on Board
-Same as step 3 of XRT flow.
+```bash
+cd /run/media/mmcblk0p1
+./host.exe a.xclbin
+```
 
 ### Step 2.4 Inspect generated Files
-After XSDB complete, expect to see `aie_profile.csv`, `summary.csv` and `aie_trace_profile.run_summary` files are created and transferred to the host computer at the location where XSDB is launched.
+After XSDB complete, expect to see `aie_profile.csv`, `summary.csv` and `aie_trace_profile.run_summary` files are created on the host computer at the location where XSDB is launched.
 
 ### Step 2.5 Launch Vitis Analyzer to Examine Profiling Files
 ```bash
 vitis_analyzer aie_trace_profile.run.summary
 ```
-After issuing above command, expect to see result from step 3 and continue this tutorial.
+After issuing above command, expect to see result from [Step 3 Expected Result with Vitis_Analyzer](#Step-3-Expected-Result-with-Vitis_Analyzer) and continue this tutorial.
 
 ### Step 3 Expected Result with Vitis_Analyzer
 Vitis_analyzer GUI is launched, select `Profile Summary` then `AI Engine & Memory` or `Interface Channels`.
@@ -120,8 +128,10 @@ Vitis_analyzer GUI is launched, select `Profile Summary` then `AI Engine & Memor
 ### Step 4 Open Multiple Profiling Runs with Vitis_Analyzer
 You can run the application as many times as you would like with your preferences. However, some of these metrics' sets are interconnected because some use group events and others use individual events. For example, the heat_map metric set contains a metric that groups all kinds of stall events in a single metric along with other metrics that group data transfer events (load/store, streams, cascade, etc.) and vector instructions. To get a better view of which stall type(s) are prevalent, re-run with the stalls metric set. To better understand execution, re-run with the execution metric set.
 ### Step 4.1 Generate First Profiling Data
+Apply `heat_map` for `core-metrics`, `conflicts` for `memory-metrics`, and `input_bandwidths` for `interface-metrics` to collect first profiling data.
 Follow step 1.1 to 1.4 if using XRT flow or follow step 2.1 to 2.4 if using XSDB flow. Save profiling data to a directory ex. `profile_0`.
 ### Step 4.2 Generate Second Profiling Data
+Apply `execution` for `core-metrics`, `dma_locks` for `memory-metrics`, and `output_bandwidths` for `interface-metrics` to collect second profiling data.
 Follow step 1.1 to 1.4 if using XRT flow or follow step 2.1 to 2.4 if using XSDB flow. Save profiling data to a directory ex. `profile_1`.
 ### Step 4.3 Open First Profiling Data
 Follow step 1.5 for XRT flow or follow step 2.5 for XSDB flow to open first profiling run_summary file with vitis_analyzer.
@@ -129,7 +139,6 @@ Follow step 1.5 for XRT flow or follow step 2.5 for XSDB flow to open first prof
 Click on `+` from GUI, highlighted in red square to browse and select second profiling run_summary file. Two runs of profiling data are combined.
 <img src="images/pr_hw_perf_va_1.png">
 This example combines first run with `heat_map`, `conflicts`, and `input_bandwidths` metrics and second run with `execution`, `dma_locks` and `output_bandwidth` metrics.
-
 
 Click on `%` to toggle between absolute and percentage values of collected design metrics.
 <img src="images/pr_hw_perf_va_2.png">
@@ -157,11 +166,8 @@ Select `Profile Summary` then `Interface Channels`.
 1. From AI Engine core profiling data, tile(6,1), tile(6,3),... have much larger number of `Store Instructions`. An indication check tile source code if lowering number of `Store Instructions` can be done to improve performance.
 2. From AI Engine Memory profiling data, tile(6,1), tile(9,0),... have non-zero `Memory Conflict Time` value. Suggest running AIE simulator to check for memory access violations and clear those violations if any.
 3. From AI Engine Memory profiling data, tile(6,1), tile(6,3),... have longer `Cumulative DMA Lock Stalls Time`. This leads to check input/output PLIO area to see if PLIO frequency or PLIO width is implemented properly. Suggest using Integrated Logic Analyzer (ILA) to check PLIO input/output states during run time.
-4. From AI Engine Interface profiling data, hardware profiling data shows design `PLIO Bandwidth`. Apply sorting function by click on `PLIO Bandwidth (MB/s)` to examine highest and lowest PLIO bandwidth. Highest is 289.741 MB/s vs. lowest 254.709 MB/s is over 13% difference. This difference suggests to check PLIO input/output implementation and use ILA to check PLIO input/output during run time.
+4. From AI Engine Interface profiling data, hardware profiling data shows design `PLIO Bandwidth`. Apply sorting function by click on `PLIO Bandwidth (MB/s)` to examine highest and lowest PLIO bandwidth. Highest is 289.741 MB/s vs. lowest 254.709 MB/s is over 13% difference. This difference suggests to check PLIO input/output implementation and use ILA checking PLIO input/output during run time.
 
-
-## Limitations
-Due to limited AIE performance counters, warning messages are displayed on console when this situation happens.
 
 # Support
 
