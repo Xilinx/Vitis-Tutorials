@@ -87,7 +87,7 @@ xsdb
 %xsdb connect -url TCP:${COMPUTER NAME/IP}:3121
 %xsdb ta
 %xsdb ta 1
-%xsdb source ${XILINX_VITIS_INSTALL_PATH}/installs/lin64/Vitis/2021.2/scripts/vitis/util/aie_trace.tcl
+%xsdb source ${XILINX_VITIS}/scripts/vitis/util/aie_trace.tcl
 %xsdb aietrace start -graphs dut -config-level functions_all_stalls -work-dir ./Work -link-summary ./bf_hw.xsa.link_summary -base-address 0x900000000 -depth 0x8000000
 ```
 Note:
