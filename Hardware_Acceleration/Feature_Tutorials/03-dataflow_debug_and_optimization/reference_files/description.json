@@ -9,7 +9,7 @@
         "disable": false,
         "user": {
             "negative": 1,
-            "error_string": ".*ERROR:.*"
+            "error_string": [".*ERROR:.*"]
         },
         "jobs": [
             {
