@@ -1,0 +1,20 @@
+{
+    "daily": {
+        "1firs_15taps": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "15"
+        },
+        "1firs_64taps": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "64"
+        },
+        "1firs_129taps": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "129"
+        },
+        "1firs_240taps": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "240"
+        }
+    }
+}

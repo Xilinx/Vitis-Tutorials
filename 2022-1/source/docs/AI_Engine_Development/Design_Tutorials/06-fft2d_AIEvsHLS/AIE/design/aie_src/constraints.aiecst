@@ -1,0 +1,54 @@
+{
+  "GlobalConstraints": {
+    "areaGroup": {
+      "name": "group0",
+      "nodeGroup": ["fft_rows[0]*", "fft_cols[0]*"],
+      "tileGroup": ["(10,0):(12,7)"]
+    },
+    "areaGroup": {
+      "name": "group1",
+      "nodeGroup": ["fft_rows[1]*", "fft_cols[1]*"],
+      "tileGroup": ["(13,0):(15,7)"]
+    },
+    "areaGroup": {
+      "name": "group2",
+      "nodeGroup": ["fft_rows[2]*", "fft_cols[2]*"],
+      "tileGroup": ["(16,0):(18,7)"]
+    },
+    "areaGroup": {
+      "name": "group3",
+      "nodeGroup": ["fft_rows[3]*", "fft_cols[3]*"],
+      "tileGroup": ["(19,0):(21,7)"]
+    },
+    "areaGroup": {
+      "name": "group4",
+      "nodeGroup": ["fft_rows[4]*", "fft_cols[4]*"],
+      "tileGroup": ["(22,0):(24,7)"]
+    },
+    "areaGroup": {
+      "name": "group5",
+      "nodeGroup": ["fft_rows[5]*", "fft_cols[5]*"],
+      "tileGroup": ["(25,0):(27,7)"]
+    },
+    "areaGroup": {
+      "name": "group6",
+      "nodeGroup": ["fft_rows[6]*", "fft_cols[6]*"],
+      "tileGroup": ["(28,0):(30,7)"]
+    },
+    "areaGroup": {
+      "name": "group7",
+      "nodeGroup": ["fft_rows[7]*", "fft_cols[7]*"],
+      "tileGroup": ["(31,0):(33,7)"]
+    },
+    "areaGroup": {
+      "name": "group8",
+      "nodeGroup": ["fft_rows[8]*", "fft_cols[8]*"],
+      "tileGroup": ["(34,0):(36,7)"]
+    },
+    "areaGroup": {
+      "name": "group9",
+      "nodeGroup": ["fft_rows[9]*", "fft_cols[9]*"],
+      "tileGroup": ["(37,0):(39,7)"]
+    }
+  }
+}

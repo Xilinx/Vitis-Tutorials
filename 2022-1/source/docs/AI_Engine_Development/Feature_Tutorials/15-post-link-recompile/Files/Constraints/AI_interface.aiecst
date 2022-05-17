@@ -1,0 +1,28 @@
+{
+  "NodeConstraints": {
+    "DataIn1": {
+      "shim": {
+        "column": 24,
+        "channel": 0
+      }
+    },
+    "clip_in": {
+      "shim": {
+        "column": 24,
+        "channel": 0
+      }
+    },
+    "clip_out": {
+      "shim": {
+        "column": 25,
+        "channel": 0
+      }
+    },
+    "DataOut1": {
+      "shim": {
+        "column": 25,
+        "channel": 0
+      }
+    }
+  }
+}

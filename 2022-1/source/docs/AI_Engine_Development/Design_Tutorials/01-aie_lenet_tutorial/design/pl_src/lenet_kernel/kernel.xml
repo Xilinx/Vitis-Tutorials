@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root versionMajor="1" versionMinor="6">
+  <kernel name="lenet_kernel_1_0" language="ip_c" vlnv="xilinx.com:ip:lenet_kernel:1.0" hwControlProtocol="ap_ctrl_none" attributes="" preferredWorkGroupSizeMultiple="0" workGroupSize="1" interrupt="false">
+    <ports>
+        <!-- <port name="s_axi_control" mode="slave" range="0x1000" dataWidth="32" portType="addressable" base="0x0"/> -->
+      <port name="s_axis_ipr" mode="read_only" dataWidth="64" portType="stream"/>
+      <port name="s_axis_m1r1" mode="read_only" dataWidth="128" portType="stream"/>
+      <port name="s_axis_m2r2" mode="read_only" dataWidth="128" portType="stream"/>
+      <port name="m_axis_ipr" mode="write_only"  dataWidth="128" portType="stream"/>
+      <port name="m_axis_m1r1" mode="write_only"  dataWidth="128" portType="stream"/>
+      <port name="m_axis_m2r2_0" mode="write_only"  dataWidth="128" portType="stream"/>
+      <port name="m_axis_m2r2_1" mode="write_only"  dataWidth="128" portType="stream"/>
+    </ports>
+    <args>
+      <arg name="axis00_s_axis_ipr" addressQualifier="4" id="0" port="s_axis_ipr" size="0x4" offset="0x010" hostOffset="0x0" hostSize="0x4" type="stream&lt;qdma_axis&lt;64,0,0,0>>&amp;"/> 
+      <arg name="axis01_s_axis_m1r1" addressQualifier="4" id="1" port="s_axis_m1r1" size="0x4" offset="0x014" hostOffset="0x0" hostSize="0x4" type="stream&lt;qdma_axis&lt;128,0,0,0>>&amp;"/> 
+      <arg name="axis02_s_axis_m2r2" addressQualifier="4" id="2" port="s_axis_m2r2" size="0x4" offset="0x018" hostOffset="0x0" hostSize="0x4" type="stream&lt;qdma_axis&lt;128,0,0,0>>&amp;"/> 
+      <arg name="axis03_m_axis_ipr" addressQualifier="4" id="3" port="m_axis_ipr" size="0x4" offset="0x01c" hostOffset="0x0" hostSize="0x4" type="stream&lt;qdma_axis&lt;128,0,0,0>>&amp;"/> 
+      <arg name="axis04_m_axis_m1r1" addressQualifier="4" id="4" port="m_axis_m1r1" size="0x4" offset="0x020" hostOffset="0x0" hostSize="0x4" type="stream&lt;qdma_axis&lt;128,0,0,0>>&amp;"/> 
+      <arg name="axis05_m_axis_m2r2_0" addressQualifier="4" id="5" port="m_axis_m2r2_0" size="0x4" offset="0x024" hostOffset="0x0" hostSize="0x4" type="stream&lt;qdma_axis&lt;128,0,0,0>>&amp;"/> 
+      <arg name="axis06_m_axis_m2r2_1" addressQualifier="4" id="6" port="m_axis_m2r2_1" size="0x4" offset="0x028" hostOffset="0x0" hostSize="0x4" type="stream&lt;qdma_axis&lt;128,0,0,0>>&amp;"/> 
+    </args>
+  </kernel>
+</root>

@@ -1,0 +1,154 @@
+{
+    "daily": {
+        "cint16_32x64pt_1x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "64",
+            "FFT_2D_INSTS": "1"
+        },
+        "cint16_64x128pt_1x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "128",
+            "FFT_2D_INSTS": "1"
+        },
+        "cint16_128x256pt_1x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "256",
+            "FFT_2D_INSTS": "1"
+        },
+        "cint16_256x512pt_1x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "512",
+            "FFT_2D_INSTS": "1"
+        },
+        "cint16_1024x2048pt_1x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "2048",
+            "FFT_2D_INSTS": "1"
+        },
+        "cint16_32x64pt_5x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "64",
+            "FFT_2D_INSTS": "5"
+        },
+        "cint16_64x128pt_5x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "128",
+            "FFT_2D_INSTS": "5"
+        },
+        "cint16_128x256pt_5x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "256",
+            "FFT_2D_INSTS": "5"
+        },
+        "cint16_256x512pt_5x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "512",
+            "FFT_2D_INSTS": "5"
+        },
+        "cint16_1024x2048pt_5x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "2048",
+            "FFT_2D_INSTS": "5"
+        },
+         "cint16_32x64pt_10x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "64",
+            "FFT_2D_INSTS": "10"
+        },
+        "cint16_64x128pt_10x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "128",
+            "FFT_2D_INSTS": "10"
+        },
+        "cint16_128x256pt_10x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "256",
+            "FFT_2D_INSTS": "10"
+        },
+        "cint16_256x512pt_10x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "512",
+            "FFT_2D_INSTS": "10"
+        },
+        "cint16_1024x2048pt_10x": {
+            "FFT_2D_DT": "0",
+            "FFT_2D_PT": "2048",
+            "FFT_2D_INSTS": "10"
+        },
+        "cfloat_32x64pt_1x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "64",
+            "FFT_2D_INSTS": "1"
+        },
+        "cfloat_64x128pt_1x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "128",
+            "FFT_2D_INSTS": "1"
+        },
+        "cfloat_128x256pt_1x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "256",
+            "FFT_2D_INSTS": "1"
+        },
+        "cfloat_256x512pt_1x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "512",
+            "FFT_2D_INSTS": "1"
+        },
+        "cfloat_1024x2048pt_1x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "2048",
+            "FFT_2D_INSTS": "1"
+        },
+        "cfloat_32x64pt_5x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "64",
+            "FFT_2D_INSTS": "5"
+        },
+        "cfloat_64x128pt_5x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "128",
+            "FFT_2D_INSTS": "5"
+        },
+        "cfloat_128x256pt_5x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "256",
+            "FFT_2D_INSTS": "5"
+        },
+        "cfloat_256x512pt_5x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "512",
+            "FFT_2D_INSTS": "5"
+        },
+        "cfloat_1024x2048pt_5x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "2048",
+            "FFT_2D_INSTS": "5"
+        },
+         "cfloat_32x64pt_10x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "64",
+            "FFT_2D_INSTS": "10"
+        },
+        "cfloat_64x128pt_10x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "128",
+            "FFT_2D_INSTS": "10"
+        },
+        "cfloat_128x256pt_10x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "256",
+            "FFT_2D_INSTS": "10"
+        },
+        "cfloat_256x512pt_10x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "512",
+            "FFT_2D_INSTS": "10"
+        },
+        "cfloat_1024x2048pt_10x": {
+            "FFT_2D_DT": "1",
+            "FFT_2D_PT": "2048",
+            "FFT_2D_INSTS": "10"
+        }       
+    }
+}
