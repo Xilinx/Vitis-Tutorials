@@ -1,0 +1,33 @@
+#  (c) Copyright 2022 Xilinx, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#!/bin/bash
+#
+# Usage check_op MODE REF_FILE OUTPUT_FILE
+# MODE: 1...4
+#   - 1 : output is the data output with/without timestamp (aiesim/x86sim)
+#   - 2 : data is the last element of each line of the file
+
+if [ $1 -eq 1 ]
+then
+  grep -v T $3 | diff -qs - $2 > out.txt
+  cat out.txt | grep differ && echo "FAIL" && exit 0
+  cat out.txt | grep identical && echo "PASS" && exit 0
+elif [ $1 -eq 2 ]
+then
+  cat $2 | awk -F ' ' '{ print $(NF) }' > ref.txt
+  cat $3 | awk -F ' ' '{ print $(NF) }' > hw.txt
+  diff -qs ref.txt hw.txt  > out.txt
+  cat out.txt | grep differ && echo "FAIL" && exit 0
+  cat out.txt | grep identical && echo "PASS" && exit 0
+fi

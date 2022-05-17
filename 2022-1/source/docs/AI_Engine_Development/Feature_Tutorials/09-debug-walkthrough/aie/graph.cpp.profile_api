@@ -1,0 +1,73 @@
+/*
+ * Copyright 2021 Xilinx, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "graph.h"
+
+#define COL_OFFSET 6
+
+#define UL_INPUT_BA  (4+32)
+#define UL_OUTPUT_BA (8)
+
+// for performance calculation
+#define CIN_LEN 25600
+#define DIN_LEN 38400
+#define OUT_LEN 38400
+
+TEST_BF<COL_OFFSET> dut;
+
+#if defined  (__AIESIM__) || defined(__X86SIM__)
+int main(void) {
+
+    dut.init();
+
+    event::handle handle0 = event::start_profiling(dut.dldin[0], event::io_stream_start_to_bytes_transferred_cycles, DIN_LEN*sizeof(cint16)*2);
+    event::handle handle1 = event::start_profiling(dut.ulout[0], event::io_stream_start_to_bytes_transferred_cycles, OUT_LEN*sizeof(cint16)*2);
+
+    dut.run(100) ;
+    dut.end() ;
+
+    long long cycle_count0, cycle_count1 = 0;
+    if (handle0 != event::invalid_handle)
+    {
+        cycle_count0 = event::read_profiling(handle0);
+        event::stop_profiling(handle0);
+    }
+    if (handle1 != event::invalid_handle)
+    {
+        cycle_count1 = event::read_profiling(handle1);
+        event::stop_profiling(handle1);
+    }
+    printf(" cycle_count0 %ld \n", cycle_count0);
+    printf(" cycle_count1 %ld \n", cycle_count1);
+    if (cycle_count0)
+    {
+        double throughput0 = (double)DIN_LEN*2/(cycle_count0 * 1e-9); //samples per second
+
+        printf(" Input : Throughput %f samples/s\n", throughput0);
+    } else {
+        printf("cycle_count0 is ZERO!\n");
+    }
+    if (cycle_count1)
+    {
+        double throughput1 = (double)OUT_LEN*2/(cycle_count1 * 1e-9); //samples per second
+        printf(" Output: Throughput %f samples/s\n", throughput1);
+    } else {
+        printf("cycle_count1 is ZERO!\n");
+    }
+
+    return 0 ;
+}
+#endif

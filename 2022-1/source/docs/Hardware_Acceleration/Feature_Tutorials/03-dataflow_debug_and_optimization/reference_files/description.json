@@ -1,0 +1,34 @@
+ {
+    "name": "03-dataflow_debug_and_optimization",
+    "description": "03-dataflow_debug_and_optimization",
+    "flow": "hls",
+ 
+    "platform_allowlist": ["u200"],
+ 
+    "testinfo": {
+        "disable": false,
+        "user": {
+            "negative": 1,
+            "error_string": [".*ERROR:.*"]
+        },
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_sw_emu": 30,
+                    "vitis_hw_emu": 200,
+                    "vitis_hw_build": 470,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+             "vitis_sw_emu"
+        ],
+        "make_options" : [ "TARGET='$user_test_mode'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}/Vitis-Tutorials'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'" ],
+        "category": "canary",
+        "custom_build_target": {
+            "all": "run"
+        }
+    }
+}

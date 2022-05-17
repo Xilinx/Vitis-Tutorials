@@ -1,0 +1,134 @@
+#include <iostream>
+#include "adf/new_frontend/adf.h"
+#include "adf/adf_api/X86SimConfig.h"
+
+
+/************************** Graph Configurations  *****************************/
+
+  adf::X86SimGraphConfig GraphConfigurations[] = {
+  // {id, name, runForIter, x86SimPtr}
+    {0, "dut", -1, nullptr},
+  };
+  const int NUM_GRAPH = 1;
+
+/************************** PLIO Configurations  *****************************/
+
+  adf::X86SimPLIOConfig PLIOConfigurations[] = {
+  //{id, name, loginal_name}
+    {0, "dut.dldin[0]", "dlbfid0"},
+    {1, "dut.dldin[1]", "dlbfid1"},
+    {2, "dut.dldin[2]", "dlbfid2"},
+    {3, "dut.dldin[3]", "dlbfid3"},
+    {4, "dut.dlcin[0]", "dlbfic00"},
+    {5, "dut.dlcin[1]", "dlbfic01"},
+    {6, "dut.dlcin[2]", "dlbfic02"},
+    {7, "dut.dlcin[3]", "dlbfic03"},
+    {8, "dut.dlcin[4]", "dlbfic10"},
+    {9, "dut.dlcin[5]", "dlbfic11"},
+    {10, "dut.dlcin[6]", "dlbfic12"},
+    {11, "dut.dlcin[7]", "dlbfic13"},
+    {12, "dut.dlcin[8]", "dlbfic20"},
+    {13, "dut.dlcin[9]", "dlbfic21"},
+    {14, "dut.dlcin[10]", "dlbfic22"},
+    {15, "dut.dlcin[11]", "dlbfic23"},
+    {16, "dut.dlcin[12]", "dlbfic30"},
+    {17, "dut.dlcin[13]", "dlbfic31"},
+    {18, "dut.dlcin[14]", "dlbfic32"},
+    {19, "dut.dlcin[15]", "dlbfic33"},
+    {20, "dut.dlcin[16]", "dlbfic40"},
+    {21, "dut.dlcin[17]", "dlbfic41"},
+    {22, "dut.dlcin[18]", "dlbfic42"},
+    {23, "dut.dlcin[19]", "dlbfic43"},
+    {24, "dut.dlcin[20]", "dlbfic50"},
+    {25, "dut.dlcin[21]", "dlbfic51"},
+    {26, "dut.dlcin[22]", "dlbfic52"},
+    {27, "dut.dlcin[23]", "dlbfic53"},
+    {28, "dut.dlcin[24]", "dlbfic60"},
+    {29, "dut.dlcin[25]", "dlbfic61"},
+    {30, "dut.dlcin[26]", "dlbfic62"},
+    {31, "dut.dlcin[27]", "dlbfic63"},
+    {32, "dut.dlcin[28]", "dlbfic70"},
+    {33, "dut.dlcin[29]", "dlbfic71"},
+    {34, "dut.dlcin[30]", "dlbfic72"},
+    {35, "dut.dlcin[31]", "dlbfic73"},
+    {36, "dut.dlout[0]", "dlbfo0"},
+    {37, "dut.dlout[1]", "dlbfo1"},
+    {38, "dut.dlout[2]", "dlbfo2"},
+    {39, "dut.dlout[3]", "dlbfo3"},
+    {40, "dut.dlout[4]", "dlbfo4"},
+    {41, "dut.dlout[5]", "dlbfo5"},
+    {42, "dut.dlout[6]", "dlbfo6"},
+    {43, "dut.dlout[7]", "dlbfo7"},
+    {44, "dut.uldin[0]", "ulbfid0"},
+    {45, "dut.uldin[1]", "ulbfid1"},
+    {46, "dut.uldin[2]", "ulbfid2"},
+    {47, "dut.uldin[3]", "ulbfid3"},
+    {48, "dut.uldin[4]", "ulbfid4"},
+    {49, "dut.uldin[5]", "ulbfid5"},
+    {50, "dut.uldin[6]", "ulbfid6"},
+    {51, "dut.uldin[7]", "ulbfid7"},
+    {52, "dut.ulcin[0]", "ulbfic00"},
+    {53, "dut.ulcin[1]", "ulbfic01"},
+    {54, "dut.ulcin[2]", "ulbfic02"},
+    {55, "dut.ulcin[3]", "ulbfic03"},
+    {56, "dut.ulcin[4]", "ulbfic04"},
+    {57, "dut.ulcin[5]", "ulbfic05"},
+    {58, "dut.ulcin[6]", "ulbfic06"},
+    {59, "dut.ulcin[7]", "ulbfic07"},
+    {60, "dut.ulcin[8]", "ulbfic10"},
+    {61, "dut.ulcin[9]", "ulbfic11"},
+    {62, "dut.ulcin[10]", "ulbfic12"},
+    {63, "dut.ulcin[11]", "ulbfic13"},
+    {64, "dut.ulcin[12]", "ulbfic14"},
+    {65, "dut.ulcin[13]", "ulbfic15"},
+    {66, "dut.ulcin[14]", "ulbfic16"},
+    {67, "dut.ulcin[15]", "ulbfic17"},
+    {68, "dut.ulcin[16]", "ulbfic20"},
+    {69, "dut.ulcin[17]", "ulbfic21"},
+    {70, "dut.ulcin[18]", "ulbfic22"},
+    {71, "dut.ulcin[19]", "ulbfic23"},
+    {72, "dut.ulcin[20]", "ulbfic24"},
+    {73, "dut.ulcin[21]", "ulbfic25"},
+    {74, "dut.ulcin[22]", "ulbfic26"},
+    {75, "dut.ulcin[23]", "ulbfic27"},
+    {76, "dut.ulcin[24]", "ulbfic30"},
+    {77, "dut.ulcin[25]", "ulbfic31"},
+    {78, "dut.ulcin[26]", "ulbfic32"},
+    {79, "dut.ulcin[27]", "ulbfic33"},
+    {80, "dut.ulcin[28]", "ulbfic34"},
+    {81, "dut.ulcin[29]", "ulbfic35"},
+    {82, "dut.ulcin[30]", "ulbfic36"},
+    {83, "dut.ulcin[31]", "ulbfic37"},
+    {84, "dut.ulout[0]", "ulbfo0"},
+    {85, "dut.ulout[1]", "ulbfo1"},
+    {86, "dut.ulout[2]", "ulbfo2"},
+    {87, "dut.ulout[3]", "ulbfo3"},
+  };
+  const int NUM_PLIO = 88;
+
+
+/************************** ADF API initializer *****************************/
+
+  class InitializeAIEControlXRT
+  {
+  public:
+    InitializeAIEControlXRT()
+    {
+      std::cout<<"Initializing ADF API..."<<std::endl;
+      adf::initializeX86SimConfigurations(GraphConfigurations, NUM_GRAPH,
+                                    nullptr, 0,
+                                    nullptr, 0,
+                                    PLIOConfigurations, NUM_PLIO,
+                                    nullptr, 0);
+    }
+  } initAIEControlXRT;
+
+
+
+#if !defined(__CDO__)
+
+// Kernel Stub Definition
+  void bf8x8_fst_api(input_window<cint16> *,input_window<cint16> *,output_stream<cacc48_t> *) { /* Stub */ } 
+  void bf8x8_lst_api(input_window<cint16> *,input_window<cint16> *,input_stream<cacc48_t> *,output_window<cint16> *) { /* Stub */ } 
+  void bf8x8_mid_api(input_window<cint16> *,input_window<cint16> *,input_stream<cacc48_t> *,output_stream<cacc48_t> *) { /* Stub */ } 
+#endif

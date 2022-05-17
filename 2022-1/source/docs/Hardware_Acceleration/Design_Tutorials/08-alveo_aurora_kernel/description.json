@@ -1,0 +1,29 @@
+{
+    "name": "Hardware-Acceleration-GT-Kernel-Design",
+    "description": "alveo_gt_kernels",
+    "gui": "false",
+    "flow": "vitis",
+
+    "platform_whitelist": [ "xilinx_u200_gen3x16_xdma_2_202110_1", "xilinx_u250_gen3x16_xdma_4_1_202210_1"],
+    "platform_blacklist": [],
+     
+    "testinfo": {
+        "disable": false, 
+        "jobs": [
+            {
+                "max_memory_MB": 76800, 
+                "max_time_min": {
+                    "vitis_hw": 360
+                }
+            }
+        ], 
+        "targets": [
+            "vitis_hw"
+        ],
+        "custom_build_target":
+        {
+            "hw": "xclbin"
+        }
+
+    }
+}

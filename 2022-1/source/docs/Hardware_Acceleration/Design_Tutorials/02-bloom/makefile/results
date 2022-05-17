@@ -1,0 +1,429 @@
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=single_buffer TARGET=hw SOLUTION=1 PF=4
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/single_buffer/kernel_4/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_single_buffer.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/single_buffer/kernel_4/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+cp xrt.ini ./../build/single_buffer/kernel_4/hw
+************  Use Command Line to run application!  ************
+cd ./../build/single_buffer/kernel_4/hw && ./host 100000  ;
+Initializing data
+Creating documents - total size : 1398.903 MBytes (349725824 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+ Processing 1398.903 MBytes of data
+ Single_Buffer: Running with a single buffer of 1398.903 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   936.0106 ms   ( FPGA 447.664 ms )
+ Executed Software-Only version     |   3142.7830 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=single_buffer TARGET=hw SOLUTION=1 PF=8
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/single_buffer/kernel_8/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_single_buffer.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/single_buffer/kernel_8/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+cp xrt.ini ./../build/single_buffer/kernel_8/hw
+************  Use Command Line to run application!  ************
+cd ./../build/single_buffer/kernel_8/hw && ./host 100000  ;
+Initializing data
+Creating documents - total size : 1398.903 MBytes (349725824 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+ Processing 1398.903 MBytes of data
+ Single_Buffer: Running with a single buffer of 1398.903 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   682.7754 ms   ( FPGA 297.307 ms )
+ Executed Software-Only version     |   3085.4909 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=single_buffer TARGET=hw SOLUTION=1 PF=16
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/single_buffer/kernel_16/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_single_buffer.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/single_buffer/kernel_16/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+cp xrt.ini ./../build/single_buffer/kernel_16/hw
+************  Use Command Line to run application!  ************
+cd ./../build/single_buffer/kernel_16/hw && ./host 100000  ;
+Initializing data
+Creating documents - total size : 1398.903 MBytes (349725824 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+ Processing 1398.903 MBytes of data
+ Single_Buffer: Running with a single buffer of 1398.903 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   638.5386 ms   ( FPGA 249.511 ms )
+ Executed Software-Only version     |   3143.2023 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=split_buffer TARGET=hw SOLUTION=1 PF=4
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/split_buffer/kernel_4/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_split_buffer.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/split_buffer/kernel_4/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+if [ -f ../build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo "Copying the xclbin and host files to ./../build/split_buffer/kernel_4/hw "; \
+	cp ../build/single_buffer/kernel_4/hw/runOnfpga_hw.* ./../build/split_buffer/kernel_4/hw;  \
+fi;
+Copying the xclbin and host files to ./../build/split_buffer/kernel_4/hw 
+if ! [ -f ../build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo ""; \
+	echo "***   Please run STEP=single_buffer first! *** "; \
+	echo ""; \
+fi;
+cp xrt.ini ./../build/split_buffer/kernel_4/hw
+************  Use Command Line to run application!  ************
+cd ./../build/split_buffer/kernel_4/hw && ./host 100000  ;
+Initializing data
+Creating documents - total size : 1398.903 MBytes (349725824 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.903 MBytes of data
+ Split_buffer : Splitting data in 2 sub-buffers of 699.452 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   758.6204 ms   ( FPGA 367.750 ms )
+ Executed Software-Only version     |   3077.1335 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=split_buffer TARGET=hw SOLUTION=1 PF=8
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/split_buffer/kernel_8/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_split_buffer.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/split_buffer/kernel_8/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+if [ -f ../build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo "Copying the xclbin and host files to ./../build/split_buffer/kernel_8/hw "; \
+	cp ../build/single_buffer/kernel_8/hw/runOnfpga_hw.* ./../build/split_buffer/kernel_8/hw;  \
+fi;
+Copying the xclbin and host files to ./../build/split_buffer/kernel_8/hw 
+if ! [ -f ../build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo ""; \
+	echo "***   Please run STEP=single_buffer first! *** "; \
+	echo ""; \
+fi;
+cp xrt.ini ./../build/split_buffer/kernel_8/hw
+************  Use Command Line to run application!  ************
+cd ./../build/split_buffer/kernel_8/hw && ./host 100000  ;
+Initializing data
+Creating documents - total size : 1398.903 MBytes (349725824 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.903 MBytes of data
+ Split_buffer : Splitting data in 2 sub-buffers of 699.452 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   645.6742 ms   ( FPGA 256.544 ms )
+ Executed Software-Only version     |   3118.1110 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=split_buffer TARGET=hw SOLUTION=1 PF=16
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/split_buffer/kernel_16/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_split_buffer.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/split_buffer/kernel_16/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+if [ -f ../build/single_buffer/kernel_16/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo "Copying the xclbin and host files to ./../build/split_buffer/kernel_16/hw "; \
+	cp ../build/single_buffer/kernel_16/hw/runOnfpga_hw.* ./../build/split_buffer/kernel_16/hw;  \
+fi;
+Copying the xclbin and host files to ./../build/split_buffer/kernel_16/hw 
+if ! [ -f ../build/single_buffer/kernel_16/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo ""; \
+	echo "***   Please run STEP=single_buffer first! *** "; \
+	echo ""; \
+fi;
+cp xrt.ini ./../build/split_buffer/kernel_16/hw
+************  Use Command Line to run application!  ************
+cd ./../build/split_buffer/kernel_16/hw && ./host 100000  ;
+Initializing data
+Creating documents - total size : 1398.903 MBytes (349725824 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.903 MBytes of data
+ Split_buffer : Splitting data in 2 sub-buffers of 699.452 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   704.1167 ms   ( FPGA 231.982 ms )
+ Executed Software-Only version     |   3139.1430 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=sw_overlap TARGET=hw SOLUTION=1 PF=4
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/sw_overlap/kernel_4/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_sw_overlap.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/sw_overlap/kernel_4/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+if [ -f ../build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo "Copying the xclbin and host files to ./../build/sw_overlap/kernel_4/hw "; \
+	cp ../build/single_buffer/kernel_4/hw/runOnfpga_hw.* ./../build/sw_overlap/kernel_4/hw;  \
+fi;
+Copying the xclbin and host files to ./../build/sw_overlap/kernel_4/hw 
+if ! [ -f ../build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo ""; \
+	echo "***   Please run STEP=single_buffer first! *** "; \
+	echo ""; \
+fi;
+cp xrt.ini ./../build/sw_overlap/kernel_4/hw
+************  Use Command Line to run application!  ************
+cd ./../build/sw_overlap/kernel_4/hw && ./host 100000 16 ;
+Initializing data
+Creating documents - total size : 1398.907 MBytes (349726720 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.907 MBytes of data
+ Splitting data in 16 sub-buffers of 87.432 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   428.9541 ms   ( FPGA 311.099 ms )
+ Executed Software-Only version     |   3089.1367 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=sw_overlap TARGET=hw SOLUTION=1 PF=8
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/sw_overlap/kernel_8/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_sw_overlap.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/sw_overlap/kernel_8/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+if [ -f ../build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo "Copying the xclbin and host files to ./../build/sw_overlap/kernel_8/hw "; \
+	cp ../build/single_buffer/kernel_8/hw/runOnfpga_hw.* ./../build/sw_overlap/kernel_8/hw;  \
+fi;
+Copying the xclbin and host files to ./../build/sw_overlap/kernel_8/hw 
+if ! [ -f ../build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo ""; \
+	echo "***   Please run STEP=single_buffer first! *** "; \
+	echo ""; \
+fi;
+cp xrt.ini ./../build/sw_overlap/kernel_8/hw
+************  Use Command Line to run application!  ************
+cd ./../build/sw_overlap/kernel_8/hw && ./host 100000 16 ;
+Initializing data
+Creating documents - total size : 1398.907 MBytes (349726720 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.907 MBytes of data
+ Splitting data in 16 sub-buffers of 87.432 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   415.6344 ms   ( FPGA 224.844 ms )
+ Executed Software-Only version     |   3072.8504 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=sw_overlap TARGET=hw SOLUTION=1 PF=16
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/sw_overlap/kernel_16/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_sw_overlap.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/sw_overlap/kernel_16/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+if [ -f ../build/single_buffer/kernel_16/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo "Copying the xclbin and host files to ./../build/sw_overlap/kernel_16/hw "; \
+	cp ../build/single_buffer/kernel_16/hw/runOnfpga_hw.* ./../build/sw_overlap/kernel_16/hw;  \
+fi;
+Copying the xclbin and host files to ./../build/sw_overlap/kernel_16/hw 
+if ! [ -f ../build/single_buffer/kernel_16/hw/runOnfpga_hw.xclbin ]; \
+  	then \
+	echo ""; \
+	echo "***   Please run STEP=single_buffer first! *** "; \
+	echo ""; \
+fi;
+cp xrt.ini ./../build/sw_overlap/kernel_16/hw
+************  Use Command Line to run application!  ************
+cd ./../build/sw_overlap/kernel_16/hw && ./host 100000 16 ;
+Initializing data
+Creating documents - total size : 1398.907 MBytes (349726720 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.907 MBytes of data
+ Splitting data in 16 sub-buffers of 87.432 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   419.2751 ms   ( FPGA 216.089 ms )
+ Executed Software-Only version     |   3099.9682 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=multiDDR TARGET=hw SOLUTION=1 PF=4
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/multiDDR/kernel_4/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_sw_overlap_multiDDR.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/multiDDR/kernel_4/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+cp xrt.ini ./../build/multiDDR/kernel_4/hw
+************  Use Command Line to run application!  ************
+cd ./../build/multiDDR/kernel_4/hw && ./host 100000 16 ;
+Initializing data
+Creating documents - total size : 1398.907 MBytes (349726720 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.907 MBytes of data
+ MultiDDR- Splitting data in 16 sub-buffers of 87.432 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   484.0513 ms   ( FPGA 305.019 ms )
+ Executed Software-Only version     |   3194.7272 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=multiDDR TARGET=hw SOLUTION=1 PF=8
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/multiDDR/kernel_8/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_sw_overlap_multiDDR.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/multiDDR/kernel_8/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+cp xrt.ini ./../build/multiDDR/kernel_8/hw
+************  Use Command Line to run application!  ************
+cd ./../build/multiDDR/kernel_8/hw && ./host 100000 16 ;
+Initializing data
+Creating documents - total size : 1398.907 MBytes (349726720 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.907 MBytes of data
+ MultiDDR- Splitting data in 16 sub-buffers of 87.432 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   458.4817 ms   ( FPGA 166.370 ms )
+ Executed Software-Only version     |   3154.4740 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+cd /wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile; make run STEP=multiDDR TARGET=hw SOLUTION=1 PF=16
+make[1]: Entering directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'
+mkdir -p ./../build/multiDDR/kernel_16/hw
+g++ -D__USE_XOPEN2K8 -D__USE_XOPEN2K8 \
+	-I/opt/xilinx/xrt/include/ \
+	-I./../reference_files \
+	-O3 -Wall -fmessage-length=0 -std=c++11\
+	./../reference_files/compute_score_host.cpp ./../reference_files/MurmurHash2.c ./../reference_files/xcl2.cpp ./../reference_files/main.cpp  ./../reference_files/run_sw_overlap_multiDDR.cpp \
+	-L/opt/xilinx/xrt/lib/ \
+	-lxilinxopencl -lpthread -lrt \
+	-o ./../build/multiDDR/kernel_16/hw/host
+./../reference_files/compute_score_fpga_kernel.cpp is being used as source for Generating Kernel
+cp xrt.ini ./../build/multiDDR/kernel_16/hw
+************  Use Command Line to run application!  ************
+cd ./../build/multiDDR/kernel_16/hw && ./host 100000 16 ;
+Initializing data
+Creating documents - total size : 1398.907 MBytes (349726720 words)
+Creating profile weights
+
+Loading runOnfpga_hw.xclbin
+
+ Processing 1398.907 MBytes of data
+ MultiDDR- Splitting data in 16 sub-buffers of 87.432 MBytes for FPGA processing
+--------------------------------------------------------------------
+ Executed FPGA accelerated version  |   447.7949 ms   ( FPGA 147.648 ms )
+ Executed Software-Only version     |   3103.8263 ms
+--------------------------------------------------------------------
+ Verification: PASS
+
+make[1]: Leaving directory '/wrk/xsjhdnobkup5/ravic/Git_May2020/Vitis-Tutorials/docs/Bloom-Filter/makefile'

@@ -1,0 +1,27 @@
+
+{
+    "name": "Vitis_Platform_Creation-Introduction-02-Edge-AI-ZCU104",
+    "description": "Creating a custom ZCU104 platform from scratch",
+    "gui": "false",
+    "flow": "vitis",
+    "platform_allowlist": [],
+    "platform_blocklist": [],
+    "testinfo": {
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_emu": 200
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu"
+        ],
+        "custom_build_target":
+        {
+            "all": "all"
+        }
+    },
+    "OS_JSON":"/proj/dsv/xbot/Jenkins/configuration/vitis_tutorial_edge_os.json"
+}
