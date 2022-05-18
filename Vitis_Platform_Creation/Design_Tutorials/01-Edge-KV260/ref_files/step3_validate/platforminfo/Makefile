@@ -11,14 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+PLATFORM_NAME=kv260_custom
+ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
+PLATFORM=$(ROOT_DIR)/../../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 
-XSA_NAME=kv260_custom_platform
-PLATFOMR_PATH = ../../step3_pfm/platform_repo/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
+.PHONY: help 
 
-.PHONY: all clean
+help:
+	@echo "Makefile usage"
+	@echo "make all 	## to check the platform info"
+
 
 all:
-	platforminfo $(PLATFOMR_PATH) > platforminfo.txt
+	platforminfo  $(PLATFORM) > platforminfo.txt
 
 clean:
 	rm platforminfo.txt

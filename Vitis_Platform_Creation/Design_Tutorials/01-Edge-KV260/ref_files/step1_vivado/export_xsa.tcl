@@ -49,7 +49,7 @@ set_property SELECTED_SIM_MODEL tlm [get_bd_cells /zynq_ultra_ps_e_0]
 
 
 # Setup Platform Properties
-set_property pfm_name {xilinx:kv260:KV260_Custom_Platform:0.0} [get_files -norecurse *.bd]
+set_property pfm_name {xilinx:kv260:kv260_hardware_Platform:0.0} [get_files -norecurse *.bd]
 set_property platform.default_output_type "sd_card" [current_project]
 set_property platform.design_intent.embedded "true" [current_project]
 set_property platform.design_intent.server_managed "false" [current_project]
@@ -65,7 +65,7 @@ generate_target all [get_files [current_bd_design].bd]
 # launch_runs impl_1 -to_step write_bitstream -jobs [numberOfCPUs]
 # wait_on_run impl_1
 # open_run impl_1
-# write_hw_platform -include_bit -force -file ./kv260_custom_platform.xsa
-write_hw_platform -force -file ./kv260_custom_platform.xsa
+# write_hw_platform -include_bit -force -file ./kv260_hardware_platform.xsa
+write_hw_platform -force -file ./kv260_hardware_platform.xsa
 
 

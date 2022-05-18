@@ -16,128 +16,241 @@
 
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Platform Creation Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2022.1 Vitis™ Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
 
-# Step 3: Create the Vitis Platform
+# Step 3: Test the Platform
 
-## Prepare Files for Platform Packaging
+- [Step 3: Test the Platform](#step-3-test-the-platform)
+    - [Test 1: Read Platform Info](#test-1-read-platform-info)
+    - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
+    - [Congratulations](#congratulations)
+    - [Fast Track](#fast-track)
 
-1. We would store all the necessary files for Vitis platform creation flow. Here we name it `kv260_custom_pkg `. Then we create a `pfm` folder inside to hold platform creation source components. 
+### Test 1: Read Platform Info
+
+With Vitis environment setup, **platforminfo** tool can report XPFM platform information.
+
+<details>
+
+<summary><strong>Click for detailed logs</strong></summary>  
+
+```bash
+# in kv260_custom_pkg directory
+platforminfo ./kv260_custom/export/kv260_custom/kv260_custom.xpfm
+==========================
+Basic Platform Information
+==========================
+Platform:           kv260_custom
+File:               /group/bcapps/sven/project/github/Vitis-Tutorials_419/Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260/ref_files/step2_petalinux/platform_repo/kv260_custom/export/kv260_custom/kv260_custom.xpfm
+Description:        
+A custom platform KV260 platform
+    
+
+=====================================
+Hardware Platform (Shell) Information
+=====================================
+Vendor:                           xilinx
+Board:                            kv260_hardware_platform
+Name:                             kv260_hardware_platform
+Version:                          0.0
+Generated Version:                2022.1
+Hardware:                         1
+Software Emulation:               1
+Hardware Emulation:               0
+Hardware Emulation Platform:      0
+FPGA Family:                      zynquplus
+FPGA Device:                      xck26
+Board Vendor:                     xilinx.com
+Board Name:                       xilinx.com:kv260_som:1.3
+Board Part:                       XCK26-SFVC784-2LV-C
+
+=================
+Clock Information
+=================
+  Default Clock Index: 1
+  Clock Index:         0
+    Frequency:         99.999000
+  Clock Index:         1
+    Frequency:         199.998000
+  Clock Index:         2
+    Frequency:         299.997000
+
+==================
+Memory Information
+==================
+  Bus SP Tag: HP!
+  Bus SP Tag: HP0
+  Bus SP Tag: HP2
+  Bus SP Tag: HP3
+  Bus SP Tag: HPC0
+  Bus SP Tag: HPC1
+
+=============================
+Software Platform Information
+=============================
+Number of Runtimes:            1
+Default System Configuration:  kv260_custom
+System Configurations:
+  System Config Name:                      kv260_custom
+  System Config Description:               kv260_custom
+  System Config Default Processor Group:   xrt
+  System Config Default Boot Image:        standard
+  System Config Is QEMU Supported:         1
+  System Config Processor Groups:
+    Processor Group Name:      xrt
+    Processor Group CPU Type:  cortex-a53
+    Processor Group OS Name:   linux
+  System Config Boot Images:
+    Boot Image Name:           standard
+    Boot Image Type:           
+    Boot Image BIF:            kv260_custom/boot/linux.bif
+    Boot Image Data:           kv260_custom/xrt/image
+    Boot Image Boot Mode:      sd
+    Boot Image RootFileSystem: 
+    Boot Image Mount Path:     /mnt
+    Boot Image Read Me:        kv260_custom/boot/generic.readme
+    Boot Image QEMU Args:      kv260_custom/qemu/pmu_args.txt:kv260_custom/qemu/qemu_args.txt
+    Boot Image QEMU Boot:      
+    Boot Image QEMU Dev Tree:  
+Supported Runtimes:
+  Runtime: OpenCL
+```
+
+</details>
+
+We can verify clock information and memory information are set as expected.
+
+### Test 2: Run Vector Addition Application
+
+Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface and interrupt setting in platform are working properly.
+
+1. Creating Vector Addition Application
+
+   - Go to WorkSpace, create a application directory by typing `mkdir kv260_vitis_application`, then go to the application directory by typing `cd kv260_vitis_application` in the console.
+   - launch Vitis by typing `vitis &` in the console.
+   - Select **File -> New -> Application Project**.
+   - Click **Next**
+   - Select **kv260_custom** as platform, click **Next**.
+   - Name the project **vadd**, click **Next**.
+   - Set Domain to **linux on psu_cortexa53**, 
+   - Set **Sys_root path** to ```<full_pathname_to_kv260_vitis_platform>/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh** in step2).
+   - Click **Next**.
+   - Select **Acceleration templates with PL and AIE accelerators -> Vector Addition** and click **Finish** to generate the application.
+   - In the Explorer window double click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
+   - build the project
+     - In the Explorer window double click **vadd_system_hw_link** to expand the directory hierarchy, then slect the **vadd_system_hw_link.prj** and click **Build** icon in toolbar.
+     - In the Explorer window double click **vadd_kernels** to expand the directory hierarchy, then slect the **vadd_kernels.prj** and click **Build** icon in toolbar.
+       - The output is `binary_container_1.xclbin` located in **vadd_system_hw_link/Hardware/** directory. This binary file is the acceleration binary container for XRT configuration and includes system.bit and metadata that describes the kernels
+     - In the Explorer window double click **vadd** to expand the directory hierarchy, then slect the **vadd.prj** and click **Build** icon in toolbar.
+       - The output is `vadd` located in **vadd/Hardware/** directory. This  file is Compiled host application.
+
+
+  > Note: In this step we skip adding the Image and rootfs and only compile the host application and binary file. As a result we have to build host application and hw_link component seperately. Because Vitis V++ tool can not complete the packaging without the rootfs, Image and Boot components.
+
+  > Note: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_vitis_platform/kv260_custom** directory.
+
+  > Note: KV260 Platform doesn't support emulation.
+
+  
+
+2. Prepare the files to be transferred to the board
+
+   Kria SOM uses `xmutil` to load applications dynamically. The load process includes downloading binary file and loading device tree overlay. `xmutil` requires the application files to be stored in `/lib/firmware/xilinx` directory.
+
+   The files related to this application need to have specified extensions. They are `dtbo`, `bin` and `json`. Therefore the final content in the directory on the board would look like this.
 
    ```bash
-   mkdir kv260_custom_pkg
-   cd kv260_custom_pkg
-   mkdir pfm
+   # On target board
+   ls /lib/firmware/xilinx/vadd
+   pl.dtbo                       #DTB overlay file
+   binary_container_1.bin        #Acceleration binary container for XRT configuration. Also includes system.bit and metadata that describes the kernels. 
+   shell.json                    #Description file
    ```
 
-   After this step, your directory hierarchy looks like this.
+   The `dtbo` file is prepared in step2 in `dtg_output` folder. `Binary_container_1.bin` can be renamed from `binary_container_1.xclbin`. For `shell.json`, you can copy it from other applications or create one with the following contents.
+
+    ```json
+    {
+      "shell_type" : "XRT_FLAT",
+      "num_slots": "1"
+    }
+    ```
+
+3. Transfer the files to the board
+
+    Make sure the Ethernet cable of SOM Starter Kit is connected. Use SCP or SFTP to upload the files from host to target board.
+
+    ```bash
+    # Running on host machine
+    scp pl.dtbo binary_container_1.bin shell.json vadd petalinux@<SOM Starter Kit IP>:/home/petalinux
+    ```
+4. Load the hardware
+
+    ```bash
+    # Running on target board
+    sudo mkdir /lib/firmware/xilinx/vadd
+    cd /home/petalinux
+    cp pl.dtbo binary_container_1.bin shell.json /lib/firmware/xilinx/vadd
+    sudo xmutil listapps
+    sudo xmutil unloadapp
+    sudo xmutil loadapp vadd
+    ```
+
+    If the application required files are loaded successfully, the following log is expected:
+
+    ```bash
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay0
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay1
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/afi0
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking0
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay2
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/axi_intc_0
+    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/misc_clk_0
+    xilinx-kv260-starterkit-20221 kernel: irq-xilinx: mismatch in kind-of-intr param
+    xilinx-kv260-starterkit-20221 kernel: zocl-drm axi:zyxclmm_drm: IRQ index 32 not found
+    ```
+
+
+5. Running Vector Addition Application on the Board
+
+   - Run vadd application
 
    ```bash
-   - kv260_custom_platform # Vivado Project Directory
-   - kv260_custom_plnx     # PetaLinux Project Directory
-   - kv260_custom_pkg      # Platform Packaging Directory
-     - pfm                  # Platform Packaging Sources
+   chmod +x ./vadd
+   ./vadd binary_container_1.bin
    ```
 
-2. Install sysroot:
+   - It should show program prints.
 
-   - Go to `<PetaLinux Project>/images/linux` directory.
-   - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. use the `-d` option to provide a full pathname to the output directory **kv260_custom_pkg** (This is an example ) and confirm.
-   - Note: The environment variable **LD_LIBRARY_PATH** must not be set when running this command
-
-
-3. Create `boot` directory and `sd_dir` directory inside pfm directory
-
-   ```bash
-   cd kv260_custom_pkg/pfm
-   mkdir boot
-   mkdir sd_dir
+   ```
+    xilinx-k26-starterkit-2021_1:~$ ./vadd binary_container_1.xclbin
+    INFO: Reading binary_container_1.bin
+    Loading: 'binary_container_1.bin'
+    TEST PASSED
    ```
 
-   After this step, your directory hierarchy looks like this.
+> Note: If you get errors like "error while loading shared libraries: libxilinxopencl.so.2: cannot open shared object file: No such file
+or directory", it's because XRT is not installed in KV260 default rootfs. Please run `sudo dnf install xrt` to install XRT.
 
-   ```bash
-   - kv260_custom_platform # Vivado Project Directory
-   - kv260_custom_plnx     # PetaLinux Project Directory
-   - kv260_custom_pkg      # Platform Packaging Directory
-     - sysroots             # Extracted Sysroot Directory
-     - pfm                  # Platform Packaging Sources
-       - boot               # Platform boot components
-       - sd_dir             # Files to be put in FAT32 partition of SD card
-   ```
 
-   When creating the Vitis platform, we will give boot directory for boot components and sd_dir for FAT32 partition contents in SD card.
+### Congratulations
 
-4. Prepare for the boot components
+We have completed creating a custom platform from scratch and verifying it with a simple vadd application.
 
-   Copy the generated Linux software boot components from **<your_petalinux_dir>/images/linux directory** to the **<full_pathname_to_kv260_custom_pkg>/pfm/boot** directory to prepare for running the Vitis platform packaging flow:
+Please feel free to check more tutorials in this repository.
 
-   - zynqmp_fsbl.elf: MPSoC first stage boot loader
-   - pmufw.elf: MPSoC PMU Firmware
-   - bl31.elf: MPSoC Arm Trusted Firmware
-   - u-boot-dtb.elf: U-boot with device tree in the elf. Please rename it to **u-boot.elf**
-   - system.dtb: Device tree for Linux
+### Fast Track
 
-   > Note: These files are the sources of creating BOOT.BIN. They are required for the Vitis workflow but since KV260 Starter Kit boot components are fixed in the QSPI Flash, these files will not be used in our flow.
+If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run `make all COMMON_IMAGE_PATH=<path/to/common_image/>` in [ref_files](./ref_files) directory to generate the reference design and compare with your design. COMMON_IMAGE_PATH is a flag to specify the common image path. Please download common image from [Xilinx website download page](https://www.xilinx.com/support/download.html) and give the path to the flag.
 
-5. Prepare **sd_dir** directory. 
 
-   Contents in this directory will be packaged to FAT32 partition of sd_card.img by v++ package tool. Usually we will store boot.scr and system.dtb in this directory. Since KV260 workflow doesn't program SD Card, we can skip adding contents to this directory. Please just leave it empty.
+The command line flow has slight differences comparing to Vitis IDE flow.
+- The vector addition application is called `vadd` and `binary_container_1.xclbin` in Vitis IDE flow. The generated files in command line flow are called `simple_vadd` and `krnl_vadd.xclbin`.
 
-### Create a Vitis Platform
-
-First we create a Vitis platform project with the XSA file generated by Vivado from Step 1.
-
-1. Launch Vitis IDE
-   - Go to the **kv260_custom_pkg** folder you created:
-
-   ```bash
-   cd <full_pathname_to_kv260_custom_pkg>
-   ```
-
-   - Launch Vitis by typing `vitis &` in the console.
-   - Select **kv260_custom_pkg** folder as workspace directory.
-
-2. Create a new platform project
-
-   - Select menu **File > New > Platform Project** to create a platform project.
-   - Enter the project name. For this example, type `kv260_custom`. Click **Next**.
-   - In the Platform page,
-     - Click **Browse** button, select the XSA file generated by the Vivado. In this case, it is `kv260_custom_platform.xsa`.
-     - Set the operating system to **linux**.</br>
-     - Set the processor to **psu_cortexa53**.</br>
-     - Architecture: **64-bit**</br>
-     - **Uncheck** option **Generate boot components** because we will use PetaLinux generated boot components.</br>
-     - Click **Finish**.
-
-3. Setup software settings in Platform Settings view.
-
-   - Click the **linux on psu_cortexa53** domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:
-
-   - **Bif file**: Click the drop-down icon and select **Generate BIF**.
-
-     > Note: The file names in `<>` are placeholders. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
-
-   - **Boot Components Directory**: Browse to **kv260_custom_pkg/pfm/boot** and click OK.
-
-   - **FAT32 Partition Directory**: Browse to **kv260_custom_pkg/pfm/sd_dir** and click OK.
-
-4. Click **kv260_custom** project in the Vitis Explorer view, click the **Build** button to generate the platform.
-
-   ![build_vitis_platform.png](./images/build_vitis_platform.png)
-
-   **Note: The generated platform is placed in the export directory. BSP and source files are also provided for re-building the FSBL and PMU if desired and are associated with the platform. The platform is ready to be used for application development.**
-
-   ![vitis_platform_output.png](./images/vitis_platform_output.png)
-
-   If you would create an Vitis application in the same workspace as this platform, you can find this platform available in the platform selection page in platform creation wizard. If you'd like to reuse this platform in another workspace, add its path to PLATFORM_REPO_PATHS environment variable before launching Vitis GUI, or use "Add" button in platform selection page of Vitis GUI to add its path.
-
-### Next Step
-
-Next let us try to [build applications on this platform and test them.](./step4.md)
-
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
