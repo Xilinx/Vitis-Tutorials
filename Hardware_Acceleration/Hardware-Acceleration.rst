@@ -54,9 +54,9 @@ Design Tutorials
    RTL Systems Integration Example <./Design_Tutorials/03-rtl_stream_kernel_integration/README>
    Traveling Salesperson Problem <./Design_Tutorials/04-traveling-salesperson/README>
    Bottom RTL Kernel Design Flow Example <./Design_Tutorials/05-bottom_up_rtl_kernel/README>
-   Cheleskey Algorithm Acceleration <./Design_Tutorials/06-cholesky-accel/README>
+   Choleskey Algorithm Acceleration <./Design_Tutorials/06-cholesky-accel/README>
    XRT Host Code Optimization <./Design_Tutorials/07-host-code-opt/README>
-   Streaming Video Analytics with IVAS <./Design_Tutorials/08-ivas-ml/README>
+   Aurora Kernel on Alveo <./Design_Tutorials/08-alveo_aurora_kernel/README>
 
 
 
@@ -110,6 +110,7 @@ Feature Tutorials
    Controlling Vivado Implementation <./Feature_Tutorials/06-controlling-vivado-implementation/README>
    Optimizing for HBM <./Feature_Tutorials/07-using-hbm/README>
    Host Memory Access <./Feature_Tutorials/08-using-hostmem/README>
+   Using GT Kernels and Ethernet IPs on Alveo <./Feature_Tutorials/09-using-ethernet-on-alveo/README>
 
 
 
@@ -145,4 +146,7 @@ Feature Tutorials
 
    * - :doc:`Host Memory Access <./Feature_Tutorials/08-using-hostmem/README>`
      - This tutorial demonstrates how kernels can directly access buffers host memory directly. This capability requires a compatible platform.
+
+   * - :doc:`Using GT Kernels and Ethernet IPs on Alveo <./Feature_Tutorials/09-using-ethernet-on-alveo/README>`
+     - This tutorial demonstrates how to use networking GT kernels with generated Ethernet IPs and implement them on Alveo card with Vitis flow.
 

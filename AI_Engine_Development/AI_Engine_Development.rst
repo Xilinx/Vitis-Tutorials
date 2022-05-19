@@ -25,7 +25,11 @@ Design Tutorials
 
    LeNet Tutorial <./Design_Tutorials/01-aie_lenet_tutorial/README>
    Super Sampling Rate FIR Filters <./Design_Tutorials/02-super_sampling_rate_fir/README>
+   Beamforming Design <./Design_Tutorials/03-beamforming/README>
    AIE Emulation on Custom Platforms <./Design_Tutorials/04-custom-platform-emulation/README>
+   2D-FFT <./Design_Tutorials/06-fft2d_AIEvsHLS/README>
+   FIR Filter <./Design_Tutorials/07-firFilter_AIEvsHLS/README>
+   N-Body Simulator <./Design_Tutorials/08-n-body-simulator/README>
 
 
 
@@ -43,8 +47,23 @@ Design Tutorials
    * - :doc:`Super Sampling Rate FIR Filters <./Design_Tutorials/02-super_sampling_rate_fir/README>`
      - The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.
 
+   * - :doc:`Beamforming Design <./Design_Tutorials/03-beamforming/README>`
+     - This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.
+
    * - :doc:`AIE Emulation on Custom Platforms <./Design_Tutorials/04-custom-platform-emulation/README>`
      - This tutorial demonstrates the creation and emulation of an AIE design including the Adaptive DataFlow (ADF) graph, RTL kernels, and a custom VCK190 platform.
+
+   * - :doc:`2D-FFT <./Design_Tutorials/06-fft2d_AIEvsHLS/README>`
+     - This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines.
+
+   * - :doc:`FIR Filter <./Design_Tutorials/07-firFilter_AIEvsHLS/README>`
+     - This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.
+
+   * - :doc:`N-Body Simulator <./Design_Tutorials/08-n-body-simulator/README>`
+     - It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:
+
+       - A Python model of an N-Body Simulator run on x86 machine
+       - A scalable AI Engine design that can utilize up to 400 AI Engine tiles
 
 
 
@@ -58,7 +77,6 @@ Feature Tutorials
    :caption: Feature Tutorials
    :hidden:
 
-   A to Z Bare-metal Flow <./Feature_Tutorials/01-aie_a_to_z/README>
    Using GMIO with AIE <./Feature_Tutorials/02-using-gmio/README>
    Runtime Parameter Reconfiguration <./Feature_Tutorials/03-rtp-reconfiguration/README>
    Packet Switching <./Feature_Tutorials/04-packet-switching/README>
@@ -72,11 +90,10 @@ Feature Tutorials
    AXIS External Traffic Generator <./Feature_Tutorials/12-axis-traffic-generator/README>
    AI Engine Performance and Deadlock Analysis Tutorial <./Feature_Tutorials/13-aie-performance-analysis/README>
    Implementing an IIR Filter on the AI Engine <./Feature_Tutorials/14-implementing-iir-filter/README>
+   A to Z Bare-metal Flow <./Feature_Tutorials/01-aie_a_to_z/README>
+   Post-Link Recompile of an AI Engine Application <./Feature_Tutorials/15-post-link-recompile/README>
+   Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows <./Feature_Tutorials/16-external-traffic-generator-aie/README>
 
- <td align="center"><a href="./Feature_Tutorials/implementing-iir-filter/">Implementing an IIR Filter on the AI Engine</a></td>
- <td>
-This multi-part tutorial describes how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.</td>
- </tr>
 
 .. list-table:: 
    :widths: 20 80
@@ -84,9 +101,6 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
    
    * - Tutorial
      - Description
-	 
-   * - :doc:`A to Z Bare-metal Flow <./Feature_Tutorials/01-aie_a_to_z/README>`
-     - This tutorial introduces a complete end to end flow for a bare-metal host application using AI Engines and PL kernels.
 
    * - :doc:`Using GMIO with AIE <./Feature_Tutorials/02-using-gmio/README>`
      - Introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engines and external DDR.
@@ -126,9 +140,13 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
 
    * - :doc:`Implementing an IIR Filter on the AI Engine <./Feature_Tutorials/14-implementing-iir-filter/README>`
      - This multi-part tutorial describes how to implement an `infinite impulse response (IIR) filter <https://en.wikipedia.org/wiki/Infinite_impulse_response>`_ on the AI Engine.
+	 
+   * - :doc:`A to Z Bare-metal Flow <./Feature_Tutorials/01-aie_a_to_z/README>`
+     - This tutorial introduces a complete end to end flow for a bare-metal host application using AI Engines and PL kernels.
 
    * - :doc:`Post-Link Recompile of an AI Engine Application <./Feature_Tutorials/15-post-link-recompile/README>`
      - This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It avoids a complete Vivado tool run, which can take a long time if timing closure requires specific attention. 
 
    * - :doc:`Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows <./Feature_Tutorials/16-external-traffic-generator-aie/README>`
      - This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array.
+
