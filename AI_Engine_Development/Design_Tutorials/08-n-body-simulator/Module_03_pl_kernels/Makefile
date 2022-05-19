@@ -91,7 +91,7 @@ s2m_x4_VPP_FLAGS := --hls.clock 150000000:s2m_x4
 # =========================================================
 # OUTPUT PRODUCTS
 # =========================================================
-BUILD_DIR := $(PL_KERNELS_DIR)/build.$(TARGET).$(PLATFORM)
+BUILD_DIR := $(PL_KERNELS_DIR)/build.$(TARGET).$(PFM)
 TEMP_DIR := $(BUILD_DIR)/_x_temp
 TEMP_REPORT_DIR := $(BUILD_DIR)/reports/_x
 

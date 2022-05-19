@@ -1,1 +1,1 @@
-xilinx_vck190_base_202120_1
+xilinx_vck190_base_202210_1
