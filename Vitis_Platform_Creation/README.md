@@ -27,8 +27,8 @@
  <td>This tutorial demonstrates how you can create a custom Vitis platform on VCK190 demo board and validate the platform.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.md">Custom Platform Creation Example on KV260 Start Kit</a></td>
- <td>Extend the <a href="./Design_Tutorials/02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board: Kria SOM KV260 Start Kit.
+ <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.md">Custom Platform Creation Example on KV260 Starter Kit</a></td>
+ <td>Extend the <a href="./Design_Tutorials/02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board: Kria SOM KV260 Starter Kit.
 </td>
  </tr>
 </table>

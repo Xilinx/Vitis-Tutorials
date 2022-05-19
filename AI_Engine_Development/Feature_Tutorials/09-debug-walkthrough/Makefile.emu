@@ -22,7 +22,7 @@ GRAPH    = aie/graph.cpp
 LIBADF   = libadf.a
 AIE_CMPL_CMD = aiecompiler -log-level=5 -v -platform=${PLATFORM} --pl-freq=500 -genArchive -include="./aie" -include="./aie/inc" -include="./aie/kernels" -include="./data" -include="./" --xlopt=0 -workdir=./Work ${GRAPH}
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
-EMU_CMD  = ./launch_hw_emu.sh
+EMU_CMD  = ./launch_hw_emu.sh -timeout 18000
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
