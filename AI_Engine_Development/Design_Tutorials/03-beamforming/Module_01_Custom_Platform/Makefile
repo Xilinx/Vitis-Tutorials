@@ -1,4 +1,4 @@
-# © Copyright 2020 Xilinx, Inc.
+# © Copyright 2022 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ endif
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 PERL ?= /tools/xgs/perl/5.8.5/bin/perl
-PLATFORM := xilinx_vck190_base_202120_1
+PLATFORM := xilinx_vck190_base_202210_1
 
 DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S
 

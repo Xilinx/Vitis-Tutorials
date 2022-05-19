@@ -9,7 +9,7 @@
 
 # N-Body Simulator
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
 ## Introduction
 
@@ -37,7 +37,7 @@ This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/b
 
 * [Versal ACAP AI Engines for Dummies](https://support.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/yii1603912637443.html)
 
 ### *Tools*: Installing the Tools
 
@@ -75,7 +75,7 @@ source env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Ensure you are using the 2021.2 version of the Xilinx tools.
+Ensure you are using the 2022.1 version of the Xilinx tools.
 
 ```bash
 which vitis
@@ -96,7 +96,7 @@ The goal of this tutorial is to create a general-purpose floating point accelera
 |AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.004657468|
 
 ### PL Data-Mover Kernels
-Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [Vitis Utility Library](https://xilinx.github.io/Vitis_Libraries/utils/2021.1/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  
+Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [Vitis Utility Library](https://xilinx.github.io/Vitis_Libraries/utils/2022.1/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  
 
 ## The N-Body Problem
 The N-Body problem is the problem of predicting the motions of a group of N objects which each have a gravitational force on each other. For any particle `i` in the system, the summation of the gravitational forces from all the other particles results in the acceleration of particle `i`. From this acceleration, we can calculate a particle's velocity and position (`x y z vx vy vz`) will be in the next timestep. Newtonian physics describes the behavior of very large bodies/particles within our universe. With certain assumptions, the laws can be applied to bodies/particles ranging from astronomical size to a golf ball (and even smaller).
@@ -296,4 +296,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>
+<p align="center"> XD068 | &copy; Copyright 2022 Xilinx, Inc.</p>
