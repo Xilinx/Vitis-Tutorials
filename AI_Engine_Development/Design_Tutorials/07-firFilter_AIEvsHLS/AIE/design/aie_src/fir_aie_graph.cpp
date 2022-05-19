@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// © Copyright 2021 Xilinx, Inc.
+// © Copyright 2022 Xilinx, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ using namespace adf;
 //PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"data/fir_input_128b.txt");
 //PLIO *pldata_in  = new PLIO("DataIn",  plio_32_bits,"../../design/aie_src/aiesim_data/input_128b.txt");
 //PLIO *pldata_in  = new PLIO("DataIn",  plio_32_bits,"../../design/aie_src/aiesim_data/input_new.txt");
-PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"../../../design/aie_src/aiesim_data/input_const.txt");
-PLIO *pldata_out = new PLIO("DataOut", plio_128_bits,"data/fir_output_128b.txt");
+PLIO *pldata_in  = new PLIO("DataIn",  plio_128_bits,"input_impulse.txt");
+PLIO *pldata_out = new PLIO("DataOut", plio_128_bits,"data/fir_output_impulse.txt");
 
 simulation::platform<1,1>  plat(pldata_in, pldata_out);
 FirGraph FilterChain;
@@ -34,7 +34,7 @@ connect<> net1(FilterChain.out, plat.sink[0]);
 
 int main(void) {
 	FilterChain.init() ;
-	FilterChain.run(8);  //N_ITERATIONS);
+	FilterChain.run(ITER_CNT);  //N_ITERATIONS);
 	FilterChain.end() ;
     return 0 ;
 }

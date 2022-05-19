@@ -1,5 +1,5 @@
 
-# Copyright 2020 Xilinx Inc.
+# Copyright 2022 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,11 +58,11 @@ step2:
 	$(MAKE) -C Module_03_PL_Design kernels
 
 step3:
-	$(MAKE) -C Module_04_AI_Engine_and_PL_Integration xclbin TARGET=hw REV=rev1
+	$(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa TARGET=hw REV=rev1
 
 SHELL := /bin/bash
 step3b:
-	source /proj/xbuilds/2021.2_daily_latest/xbb/xrt/packages/setenv.sh && $(MAKE) -C Module_04_AI_Engine_and_PL_Integration xclbin TARGET=hw_emu REV=rev1
+	source /proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages/setenv.sh && $(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa TARGET=hw_emu REV=rev1
 
 step4:
 	$(MAKE) -C Module_05_Baremetal_Host_Application application MAIN=main_partial
@@ -75,7 +75,7 @@ step5:
 
 SHELL := /bin/bash
 step6:
-	unset LD_LIBRARY_PATH && source /proj/petalinux/2021.2/petalinux-v2021.2_daily_latest/tool/petalinux-v2021.2-final/settings.sh && $(MAKE) -C Module_07_Petalinux petalinux
+	source /proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages/setenv.sh && unset LD_LIBRARY_PATH && source /proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/tool/petalinux-v2022.1-final/settings.sh && $(MAKE) -C Module_07_Petalinux petalinux
 
 step7:
 	$(MAKE) -C Module_08_Linux_SW_Application exe

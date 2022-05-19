@@ -7,6 +7,30 @@
         "1firs_64taps": {
             "N_FIR_FILTERS": "1",
             "N_FIR_TAPS": "64"
+        },
+        "1firs_129taps": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "129"
+        },
+        "1firs_240taps": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "240"
+        },
+        "10firs_15taps": {
+            "N_FIR_FILTERS": "10",
+            "N_FIR_TAPS": "15"
+        },
+        "10firs_64taps": {
+            "N_FIR_FILTERS": "10",
+            "N_FIR_TAPS": "64"
+        },
+        "10firs_129taps": {
+            "N_FIR_FILTERS": "10",
+            "N_FIR_TAPS": "129"
+        },
+        "10firs_240taps": {
+            "N_FIR_FILTERS": "10",
+            "N_FIR_TAPS": "240"
         }
     }
 }

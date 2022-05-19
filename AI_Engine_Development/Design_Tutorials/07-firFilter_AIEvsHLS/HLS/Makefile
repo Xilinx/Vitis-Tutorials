@@ -1,4 +1,4 @@
-# © Copyright 2021 Xilinx, Inc.
+# © Copyright 2022 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,48 +16,94 @@
 help::
 	@echo  " Makefile Usage:"
 	@echo  ""
-	@echo  "    make kernels [OPTIONS]"
-	@echo  "        Command to generate the PL kernels"
+	@echo  "  make sd_card"
+	@echo  "  Command calls rules: kernels xsa application package, in sequence"
+	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
-	@echo  "    make graph [OPTIONS]"
-	@echo  "        Command to generate the AI Engine graph"
+	@echo  "  make run"
+	@echo  "  Command calls rules: sd_card run_emu, in sequence"
+	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
-	@echo  "    make xclbin [OPTIONS]"
-	@echo  "        Command to generate the xclbin for specified target"
+	@echo  "  make all"
+	@echo  "  Command calls rules: sd_card report_metrics run_emu, in sequence"
+	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
-	@echo  "    make application [OPTIONS]"
-	@echo  "        Command to generate the A72 application"
+	@echo  "  make kernels"
+	@echo  "  Command to generate the PL kernels"
+	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
-	@echo  "    make package [OPTIONS]"
-	@echo  "        Command to package design into an sd_card"
+	@echo  "  make graph"
+	@echo  "  Command to generate the AI Engine graph"
 	@echo  ""
-	@echo  "    make build [OPTIONS]"
-	@echo  "        Executes the previous five targets (kernels, graph, xclbin, application, package) to build the design"
+	@echo  "  make aiesim"
+	@echo  "  Command to run aie simulator for the AI Engine graph"
 	@echo  ""
-	@echo  "    make run_emu [OPTIONS]"
-	@echo  "        Runs Hardware Emulation (if hardware target is specified, moves files to run_dir)"
-	@echo  ""	
-	@echo  "    make clean"
-	@echo  "        Command to remove the generated files"
+	@echo  "  make aiesim_profile"
+	@echo  "  Command to run aie simulator for the AI Engine graph and enable kernel print statements"
 	@echo  ""
-	@echo  "    OPTIONS:"
-	@echo  "        TARGET=[hw|hw_emu]     -specifies target: Hardware or Emulation. Default=hw_emu"
-	@echo  "        N_FIR_FILTERS          -specifies number of FIR Filters. Default=1"
-	@echo  "        N_FIR_TAPS             -specifies number of FIR Filter Taps. Default=15"
+	@echo  "  make vcd"
+	@echo  "  Command to run aie simulator for the AI Engine graph and create the vcd and xpe file for the same"
 	@echo  ""
+	@echo  "  make xsa"
+	@echo  "  Command to generate the xsa for specified target"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make application"
+	@echo  "  Command to generate the A72 application"
+	@echo  ""
+	@echo  "  make package"
+	@echo  "  Command to package design into an sd_card for specified target"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make run_emu"
+	@echo  "  Command to run the hw emulator if LAUNCH_HW_EMU_EXEC variable is set to 1"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make report_metrics"
+	@echo  "  Command to run and get vivado utilisation and power reports."
+	@echo  "  Works only for TARGET=hw"
+	@echo  ""
+	@echo  "  make clean_target"
+	@echo  "  Command to remove the generated files for a specific target"
+	@echo  ""
+	@echo  "  make clean_firFilters_dir"
+	@echo  "  Command to remove the generated files for a specific no. of firs"
+	@echo  ""
+	@echo  "  make clean_firTaps_dir"
+	@echo  "  Command to remove the generated files for a specific no. of fir taps"
+	@echo  ""
+	@echo  "  make cleanall_blds"
+	@echo  "  Command to remove the generated build files for all variations"
+	@echo  ""
+	@echo  "  make cleanall_vivado_reports"
+	@echo  "  Command to remove the generated vivado reports files for all variations"
+	@echo  ""
+	@echo  "  make cleanall_reports"
+	@echo  "  Command to remove all the generated reports for all variations"
+	@echo  ""
+	@echo  "  make cleanall"
+	@echo  "  Command to remove all the generated builds files  and reports for all variations"
+	@echo  ""
+	@echo  " OPTIONS:"
+	@echo  " Use the make recipes with required values for options mentioned below-"
+	@echo  "    TARGET             -specifies target: Hardware or Emulation. Values: hw_emu(default), hw"
+	@echo  "    N_FIR_FILTERS      -specifies number of FIR Filters in cascade chain. Values: 1(default) and 10"
+	@echo  "    N_FIR_TAPS         -specifies number of FIR Filter Taps. Values: 15(default), 64, 129 and 240"
+	@echo  "    PL_FREQ        	 -specifies HLS kernel frequencies. Values: 300Mhz(default)"
+	@echo  "    ITER_CNT           -specifies design iteration count: Values: 8(default)"
+	@echo  "    EN_TRACE           -specifies whether to enable profiling for the design. Values: 0(disabled, default) and 1(enabled)"
+	@echo  "    LAUNCH_HW_EMU_EXEC -specifies whether to launch hw emulator when running make run_emu rule. Values: 0(disabled, default) and 1(enabled)"
+	@echo  ""
+
+# Print all options passed to Makefile
+print-%  : ; @echo $* = $($*)
 
 # =========================================================
 # TARGET can be set as:
 #   hw_emu: Hardware Emulation
 #   hw    : Hardware Run
 # =========================================================
-TARGET        := hw_emu
-
-# =========================================================
-# Iteration Count:
-# 8(default)
-# =========================================================
-ITER_CNT := 8
+TARGET := hw_emu
 
 # =========================================================
 # FIR Chain Parameters:
@@ -68,53 +114,26 @@ N_FIR_FILTERS :=   1
 N_FIR_TAPS    :=  15
 
 # =========================================================
-# Profiling and Trace Switches
-# =========================================================
-EN_TRACE       := 0
-
-# =========================================================
 # PL Frequency in MHz:
-# 300 MHz(default)
+# 300 MHz(default for datamover)
+# 500 MHz(default for fir kernel)
 # =========================================================
-PL_FREQ        := 250
+PL_FREQ        := 300
 VPP_CLOCK_FREQ := $(PL_FREQ)000000
 
 FIR_PL_FREQ        := 500
 FIR_VPP_CLOCK_FREQ := $(FIR_PL_FREQ)000000
 
 # =========================================================
-# FIR Impulse Response Area
+# Iteration Count:
+# 8(default)
 # =========================================================
-IMPULSE_AREA	:= 16383
+ITER_CNT := 8
 
 # =========================================================
-# Source directory
+# Profiling and Trace Switches
 # =========================================================
-#Version Name
-BUILD_VERSION   := fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
-
-#relative FIR filter directory
-RELATIVE_PROJECT_DIR := ./
-
-#absolute FIR filter directory = <user path>/Tutorials/AI_Engine/filter_AIEvsDSP
-PROJECT_REPO	 := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
-
-DESIGN_REPO 	:= $(PROJECT_REPO)/design
-PL_SRC_REPO 	:= $(PROJECT_REPO)/design/pl_src
-APP_SRC_REPO 	:= $(PROJECT_REPO)/design/app_src
-MAKEFILES_REPO := $(PROJECT_REPO)
-
-BASE_BUILD_DIR   := $(PROJECT_REPO)/build
-BUILD_DIR        := $(BASE_BUILD_DIR)/$(BUILD_VERSION)
-BUILD_TARGET_DIR := $(BUILD_DIR)/$(TARGET)
-
-BASE_RUN_DIR := $(PROJECT_REPO)/run_dir
-RUN_DIR		 := $(BASE_RUN_DIR)/$(BUILD_VERSION)
-
-REPORT_DIR   := $(PROJECT_REPO)/../report_dir
-
-EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
-EMBEDDED_EXEC_SCRIPT := run_script.sh
+EN_TRACE := 0
 
 ######################################
 # When TARGET=hw_emu, hw_emu launch...
@@ -123,9 +142,45 @@ EMBEDDED_EXEC_SCRIPT := run_script.sh
 ######################################
 LAUNCH_HW_EMU_EXEC := 0
 
-# Print all options passed to Makefile
-print-%  : ; @echo $* = $($*)
+# =========================================================
+# FIR Impulse Response Area
+# =========================================================
+IMPULSE_AREA := 16383
 
+# =========================================================
+# Source directories
+# =========================================================
+#Relative FIR filter directory
+RELATIVE_PROJECT_DIR := ./
+
+#Absolute FIR filter directory = <user path>/Tutorials/AI_Engine/filter_AIEvsDSP
+PROJECT_REPO := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+DESIGN_REPO  := $(PROJECT_REPO)/design
+PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
+DIRECTIVES_REPO        := $(DESIGN_REPO)/directives
+SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
+PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+PYTHON_SCRIPTS_REPO    := $(DESIGN_REPO)/python_scripts
+
+BASE_BLD_DIR     := $(PROJECT_REPO)/build
+FIR_TAPS_BLD_DIR := $(BASE_BLD_DIR)/fir_$(N_FIR_TAPS)_taps
+FIR_FILTERS_DIR  := $(FIR_TAPS_BLD_DIR)/x$(N_FIR_FILTERS)_firs
+BUILD_TARGET_DIR := $(FIR_FILTERS_DIR)/$(TARGET)
+
+REPORTS_REPO := $(PROJECT_REPO)/reports_dir
+BLD_REPORTS_DIR := $(REPORTS_REPO)/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs
+
+EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
+EMBEDDED_EXEC_SCRIPT := run_script.sh
+
+###########################################################
+# Variable Definitions...
+#
 # =========================================================
 # Kernel Source Files repository
 # =========================================================
@@ -134,7 +189,7 @@ FILTER_KERNEL_NAME    := fir_hls
 
 DATAMOVER_KERNEL_SRC := $(PL_SRC_REPO)/$(DATAMOVER_KERNEL_NAME).cpp
 
-SYSTEM_SETTINGS_H := $(PL_SRC_REPO)/system_settings.h
+SYSTEM_SETTINGS_H := $(PL_SRC_REPO)/system_settings_comm.h
 FILTER_KERNEL_H   := $(PL_SRC_REPO)/$(FILTER_KERNEL_NAME).h
 FILTER_KERNEL_SRC := $(PL_SRC_REPO)/$(FILTER_KERNEL_NAME).cpp
 
@@ -143,26 +198,26 @@ DATAMOVER_KERNEL_SRC := $(PL_SRC_REPO)/$(DATAMOVER_KERNEL_NAME).cpp
 # =========================================================
 # Application Source Files repository
 # =========================================================
-APP_SRC_CPP       := $(APP_SRC_REPO)/fir_hls_app.cpp
+APP_SRC_CPP := $(HOST_APP_SRC)/fir_hls_app.cpp
 
 # =========================================================
 # Below are the names, application executable,
-# kernel executables, and xclbin
+# kernel executables, and xsa
 # =========================================================
-FILTER_KERNEL_XO    := $(BUILD_TARGET_DIR)/fir_hls.$(TARGET).xo
-DATAMOVER_KERNEL_XO := $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_NAME).$(TARGET).xo
-XCLBIN              := $(BUILD_TARGET_DIR)/vck190_hls_fir.$(TARGET).xclbin
-APP_ELF             := fir_hls_xrt.elf
+FILTER_KERNEL_XO    := fir_hls.$(TARGET)
+DATAMOVER_KERNEL_XO := $(DATAMOVER_KERNEL_NAME).$(TARGET)
+XSA     := vck190_hls_fir.$(TARGET).xsa
+APP_ELF := fir_hls_xrt.elf
+APP_ELF_INF_RUN := fir_hls_xrt_inf_run.elf
 
 # =========================================================
 # Application Compiler and Linker Flags
 # =========================================================
 GCC_FLAGS := -O
 GCC_FLAGS += -c
-GCC_FLAGS += -std=c++14
+GCC_FLAGS += -std=c++17
 GCC_FLAGS += -D__linux__
 GCC_FLAGS += -DXAIE_DEBUG
-GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
 GCC_FLAGS += -DN_FIR_FILTERS=$(N_FIR_FILTERS)
 GCC_FLAGS += -DN_FIR_TAPS=$(N_FIR_TAPS)
 
@@ -174,7 +229,7 @@ GCC_FLAGS += -DN_FIR_TAPS=$(N_FIR_TAPS)
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt/
 GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include/
 GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/lib/
-GCC_INC_FLAGS += -I$(APP_SRC_REPO)/
+GCC_INC_FLAGS += -I$(HOST_APP_SRC)/
 GCC_INC_FLAGS += -I$(PL_SRC_REPO)/
 
 GCC_LIB_INC += -L=$(SDKTARGETSYSROOT)/usr/lib
@@ -191,29 +246,73 @@ VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 VPP_FLAGS += --verbose 
 VPP_FLAGS += -g
 
-FIR_KERNEL_VPP_FLAGS  := --hls.pre_tcl $(DESIGN_REPO)/hls_pre.tcl
+FIR_KERNEL_VPP_FLAGS  := --hls.pre_tcl $(DIRECTIVES_REPO)/hls_pre.tcl
 FIR_KERNEL_VPP_FLAGS  += --hls.clock $(FIR_VPP_CLOCK_FREQ):$(FILTER_KERNEL_NAME)
 FIR_KERNEL_VPP_FLAGS  += -D N_FIR_FILTERS=$(N_FIR_FILTERS)
 FIR_KERNEL_VPP_FLAGS  += -D N_FIR_TAPS=$(N_FIR_TAPS)
 
 DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_NAME)
 DATAMOVER_KERNEL_VPP_FLAGS += -D N_FIR_TAPS=$(N_FIR_TAPS)
+DATAMOVER_KERNEL_VPP_FLAGS += -D N_FIR_FILTERS=$(N_FIR_FILTERS)
 
 VPP_LINK_FLAGS := --clock.defaultTolerance 0.001
 VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_NAME)_0
 VPP_LINK_FLAGS += --clock.freqHz $(FIR_VPP_CLOCK_FREQ):$(FILTER_KERNEL_NAME)_0
-VPP_LINK_FLAGS += --config $(DESIGN_REPO)/system.cfg
+VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/system.cfg
 VPP_LINK_FLAGS += -t $(TARGET)
 
 ifeq ($(EN_TRACE),1)
-   VPP_LINK_FLAGS += --profile.trace_memory DDR
-   VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_NAME):$(DATAMOVER_KERNEL_NAME)_0:all
-   VPP_LINK_FLAGS += --profile.data fir_hls:fir_hls_0:all
-
+   ifeq ($(TARGET),hw)
+      #VPP_LINK_FLAGS += --profile.data fir_hls:fir_hls_0:all
+      VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_NAME):$(DATAMOVER_KERNEL_NAME)_0:all
+      VPP_LINK_FLAGS += --profile.trace_memory DDR
+   
+   endif
 endif
 
-#VPP_LINK_FLAGS += --vivado.synth.jobs 16
-#VPP_LINK_FLAGS += --vivado.impl.jobs  16
+VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
+
+ifeq ($(N_FIR_FILTERS),1)
+   ifeq ($(N_FIR_TAPS),15)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+      
+   else ifeq ($(N_FIR_TAPS),64)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+      
+   else ifeq ($(N_FIR_TAPS),129)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
+      
+   else ifeq ($(N_FIR_TAPS),240)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
+      
+   endif
+else ifeq ($(N_FIR_FILTERS),10)
+   ifeq ($(N_FIR_TAPS),15)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SSI_SpreadLogic_high}
+      
+   else ifeq ($(N_FIR_TAPS),64)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+      
+   else ifeq ($(N_FIR_TAPS),129)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_ExploreSequential}
+      VPP_LINK_FLAGS += --xp param:compiler.worstNegativeSlack=-0.050
+      
+   else ifeq ($(N_FIR_TAPS),240)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_RefinePlacement}
+      VPP_LINK_FLAGS += --xp param:compiler.worstNegativeSlack=-0.050
+      
+   endif
+endif
+
+#VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/post_sys_link.tcl
+
+## Enabling Multiple Strategies For Closing Timing...
+#VPP_LINK_FLAGS += --vivado.impl.strategies "ALL"
+##VPP_LINK_FLAGS += --vivado.impl.lsf '{bsub -R "select[type=X86_64] rusage[mem=65536]" -N -q medium}'
+#VPP_LINK_FLAGS += --advanced.param "compiler.enableMultiStrategies=1"
+#VPP_LINK_FLAGS += --advanced.param "compiler.multiStrategiesWaitOnAllRuns=1"
+#VPP_LINK_FLAGS += --vivado.synth.jobs 32
+#VPP_LINK_FLAGS += --vivado.impl.jobs 8
 
 # =========================================================
 # Packaging Flags
@@ -227,17 +326,18 @@ PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
-PKG_FLAGS += --package.sd_file $(APP_ELF) $(XCLBIN)
-PKG_FLAGS += --package.sd_file $(DESIGN_REPO)/$(EMBEDDED_EXEC_SCRIPT)
+PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA)
+PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
-ifneq ($(EN_TRACE),0)
-
-   PKG_FLAGS += --package.sd_file $(DESIGN_REPO)/xrt.ini
-
+ifeq ($(EN_TRACE),1)
+   ifeq ($(TARGET),hw)
+      PKG_FLAGS += --package.sd_file $(PROFILING_CONFIGS_REPO)/xrt.ini
+   
+   endif
 endif
 
 ifdef XRT_ROOT
-
    PKG_FLAGS += --package.sd_dir $(XRT_ROOT)
 
 endif
@@ -251,42 +351,47 @@ endif
 #	[fir_hls | datamover].[hw_emu | hw].xo.compile_summary 
 #	v++_[fir_hls | datamover].[hw_emu | hw].log
 #	_x
-kernels: $(FILTER_KERNEL_XO) \
-         $(DATAMOVER_KERNEL_XO)
+KERNEL_XOS := $(BUILD_TARGET_DIR)/$(FILTER_KERNEL_XO).xo \
+            $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo
 
-$(FILTER_KERNEL_XO): $(FILTER_KERNEL_SRC) $(FILTER_KERNEL_H)
-	python $(DESIGN_REPO)/create_fir_coefs.py -hls $(N_FIR_FILTERS) $(N_FIR_TAPS) $(IMPULSE_AREA) > $(SYSTEM_SETTINGS_H)
+kernels: $(KERNEL_XOS)
+
+$(BUILD_TARGET_DIR)/$(FILTER_KERNEL_XO).xo: $(PL_SRC_REPO)/fir_hls*
+	#python $(PYTHON_SCRIPTS_REPO)/create_fir_coefs.py -hls $(N_FIR_FILTERS) $(N_FIR_TAPS) $(IMPULSE_AREA) > $(SYSTEM_SETTINGS_H)
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
 	v++ --target $(TARGET) $(FIR_KERNEL_VPP_FLAGS) $(VPP_FLAGS) -c -k $(FILTER_KERNEL_NAME) $(FILTER_KERNEL_SRC) -o $@
 
-$(DATAMOVER_KERNEL_XO):
+$(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo: $(PL_SRC_REPO)/datamover*
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
 	v++ --target $(TARGET) $(DATAMOVER_KERNEL_VPP_FLAGS) \
 		$(VPP_FLAGS) -c -k $(DATAMOVER_KERNEL_NAME) \
 		$(DATAMOVER_KERNEL_SRC) -o $@
-
+	@echo ""
+	@echo "HLS Kernel Compilation Complete..."
+	@echo "####################################"
+	@echo ""
 # =========================================================
-# Step 2. XCLBIN File Generation
+# Step 2. XSA File Generation
 # =========================================================
-# This step links the kernels into a xclbin file. 
+# This step links the kernels into a xsa file. 
 # Outputs: in build/[hw_emu | hw]/ directory
-#	vck190_hls_fir.[hw_emu | hw].xclbin
-#	vck190_hls_fir.[hw_emu | hw].xclbin.info
-#	vck190_hls_fir.[hw_emu | hw].xclbin.link_summary
+#	vck190_hls_fir.[hw_emu | hw].xsa
+#	vck190_hls_fir.[hw_emu | hw].xsa.info
+#	vck190_hls_fir.[hw_emu | hw].xsa.link_summary
 #	vck190_hls_fir.[hw_emu | hw].xsa
 #	vck190_hls_fir.[hw_emu | hw].log
-xclbin: $(XCLBIN)
+xsa: kernels $(BUILD_TARGET_DIR)/$(XSA)
 
-$(XCLBIN): $(S2MM_KERNEL_XO)	\
-	   $(MM2S_KERNEL_XO)	\
-      $(FILTER_KERNEL_XO)
+$(BUILD_TARGET_DIR)/$(XSA): $(KERNEL_XOS) $(SYSTEM_CONFIGS_REPO)/*	
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) -o $@ \
-		$(DATAMOVER_KERNEL_XO)	\
-		$(FILTER_KERNEL_XO)
-
+		$(KERNEL_XOS) 
+	@echo ""
+	@echo "XSA Compilation Complete..."
+	@echo "####################################"
+	@echo ""
 # =========================================================
 # Step 3. A72 Application Executable File Generation
 # =========================================================
@@ -295,11 +400,42 @@ $(XCLBIN): $(S2MM_KERNEL_XO)	\
 # Outputs: in build/ directory
 #	fir_hls_app.o 
 # 	fir_hls_xrt.elf
-application:
+
+REG_GCC_FLAGS := $(GCC_FLAGS)
+REG_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+
+application: $(BUILD_TARGET_DIR)/$(APP_ELF)
+
+$(BUILD_TARGET_DIR)/$(APP_ELF): $(APP_SRC_CPP)
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
-	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o fir_hls_app.o $(GCC_LIB_INC) $(GCC_LIB); \
-	$(CXX) fir_hls_app.o $(GCC_LIB_INC) $(GCC_LIB) -o $(APP_ELF)
+	$(CXX) $(REG_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o fir_hls_app.o $(GCC_LIB_INC) $(GCC_LIB); \
+	$(CXX) fir_hls_app.o $(GCC_LIB_INC) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
+	@echo ""
+	@echo "Host Application Compilation Complete..."
+	@echo "#####################################"
+	@echo ""
+
+# This step compiles the A72 application. This step is the  
+# same for TARGET=[hw_emu | hw]. Compile the PS code.
+# Outputs: in build/ directory
+#	fir_hls_app_inf_run.o 
+# 	fir_hls_xrt_inf_run.elf
+
+INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
+INF_RUN_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+
+application_inf_run: $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+
+$(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(APP_SRC_CPP)
+	mkdir -p $(BUILD_TARGET_DIR); \
+	cd $(BUILD_TARGET_DIR); \
+	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o fir_hls_app_inf_run.o $(GCC_LIB_INC) $(GCC_LIB); \
+	$(CXX) fir_hls_app_inf_run.o $(GCC_LIB_INC) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+	@echo ""
+	@echo "Host Application Infinite Run Compilation Complete..."
+	@echo "#####################################"
+	@echo ""
 
 # =========================================================
 # Step 4. Package Generation  
@@ -312,9 +448,15 @@ application:
 # 	package/ directory
 # 	v++.package_summary
 # 	v++_package.log 
-package:
+package: application application_inf_run xsa $(EMBEDDED_PACKAGE_OUT)
+
+$(EMBEDDED_PACKAGE_OUT): $(PROFILING_CONFIGS_REPO)/* $(EXEC_SCRIPTS_REPO)/* $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA)
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p $(PKG_FLAGS)
+	@echo ""
+	@echo "Design Packaging Complete..."
+	@echo "####################################"
+	@echo ""
 
 # =========================================================
 # Step 5. Run Hardware Emulation  
@@ -336,7 +478,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 86400 | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout -10800 | tee embedded_run.log
 
 endif
 else
@@ -354,14 +496,21 @@ endif
 # =========================================================
 # If the target is HW, this generates the power and resource
 # utilization metrics.
-report_metrics:
+report_metrics: xsa $(BLD_REPORTS_DIR)
+
+$(BLD_REPORTS_DIR): $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl
 ifeq ($(TARGET),hw_emu)
 	@echo "This build target (report-metrics) not valid when design target is hw_emu"
+
 else
-	mkdir -p $(REPORT_DIR)
-	vivado -mode batch -source report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
-	mv utilization.txt $(REPORT_DIR)/$(BUILD_VERSION)_utilization.txt
-	mv power.txt       $(REPORT_DIR)/$(BUILD_VERSION)_power.txt	
+	rm -rf $(BLD_REPORTS_DIR)
+	mkdir -p $(BLD_REPORTS_DIR)
+	cd $(BLD_REPORTS_DIR); \
+	vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+	@echo ""
+	@echo "Vivado Utilization/Power Report Generation Complete..."
+	@echo "####################################"
+	@echo ""
 endif
 
 
@@ -372,29 +521,70 @@ endif
 # ==> sd_card
 # ==> run
 # ==> all
-# ==> clean
+# ==> clean_target
+# ==> clean_firFilters_dir
+# ==> clean_firTaps_dir
+# ==> cleanall_blds
+# ==> cleanall_vivado_reports
+# ==> cleanall_reports
 # ==> cleanall
 # =========================================================
 
 #Build the design without running the hardware emulation
 
-sd_card: kernels xclbin application package
+sd_card: package
 
 #Build the design and then run hardware emulation 
 run: sd_card run_emu
 
 #Same as "run" above, but include metrics generation
-all: sd_card report_metrics run_emu
+all: run report_metrics
 
-#Clean generated files
-clean:
-	rm -rf .Xil/
-	rm -rf $(BUILD_DIR)
-	rm -rf $(RUN_DIR)
-	rm -rf vivado*
+#Clean target dir files...
+clean_target:
+	@echo "Cleaning Target Build Dir..."
+	rm -rf $(BUILD_TARGET_DIR)
 
-cleanall:
-	rm -rf $(BASE_BUILD_DIR)
-	rm -rf $(BASE_RUN_DIR)
-	rm -rf vivado* .Xil ../vivado* ../.Xil *.log
+#Clean fir dir files...
+clean_firFilters_dir:
+	@echo "Cleaning $(N_FIR_FILTERS) FIR FILTERS Build Dir..."
+	rm -rf $(FIR_FILTERS_DIR)
 
+#Clean fir taps dir files...
+clean_firTaps_dir:
+	@echo "Cleaning FIR $(N_FIR_TAPS) TAPS Build Dir..."
+	rm -rf $(FIR_TAPS_BLD_DIR)
+
+#Clean all builds...
+cleanall_blds:
+	rm -rf $(BASE_BLD_DIR)
+	rm -rf vivado* .Xil *.log vitis* core.*
+
+#Clean_all vivado reports...
+cleanall_vivado_reports:
+	rm -rf $(REPORTS_REPO)
+
+#Clean_all reports...
+cleanall_reports: cleanall_vivado_reports
+
+#Clean_all builds and reports...
+cleanall: cleanall_blds cleanall_reports
+
+#####################################################################
+# Impl strategies script...
+# Strategies Repo with the impl Script Has to be provided...
+IMPL_STRATEGY_OPT := 1
+IMPL_STRATEGIES_TCL := $(STRATEGIES_REPO)/impl_strategies_explore.tcl
+run_impl_strategies: $(IMPL_STRATEGIES_TCL)
+ifeq ($(TARGET),hw_emu)
+	@echo "This build target (run_impl_strategies) not valid when design target is hw_emu"
+
+else
+	vivado -mode tcl -source $(IMPL_STRATEGIES_TCL) \
+	$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr -tclargs $(IMPL_STRATEGY_OPT)
+	#$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr -tclargs $(BUILD_TARGET_DIR) $(IMPL_STRATEGY_OPT)
+
+endif
+
+open_vivado_proj: $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+	vivado $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
