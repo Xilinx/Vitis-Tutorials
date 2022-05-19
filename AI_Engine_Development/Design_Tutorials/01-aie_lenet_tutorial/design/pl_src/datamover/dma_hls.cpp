@@ -57,7 +57,7 @@ void dma_s2mm(volatile dint *mem_wr, axi_stream &strm_in, int size)
 
 extern "C" {
 
-void dma_hls(volatile dint *mem_rd,  volatile dint *mem_wr, axi_stream &strm_out, axi_stream &strm_in, int mem_rd_size, int mem_wr_size)
+void dma_hls(volatile dint *mem_rd,  volatile dint *mem_wr, axi_stream &strm_out, axi_stream &strm_in, int mem_rd_size, int mem_wr_size,int iterCnt)
 {
   
 #pragma HLS INTERFACE m_axi port=mem_rd depth=4096 offset=slave bundle=gmem0
@@ -70,16 +70,15 @@ void dma_hls(volatile dint *mem_rd,  volatile dint *mem_wr, axi_stream &strm_out
 #pragma HLS INTERFACE s_axilite port=mem_wr bundle=control
 #pragma HLS INTERFACE s_axilite port=mem_rd_size bundle=control
 #pragma HLS INTERFACE s_axilite port=mem_wr_size bundle=control
+#pragma HLS INTERFACE s_axilite port=iterCnt bundle=control
 #pragma HLS INTERFACE s_axilite port=return bundle=control
 
-#pragma HLS DATAFLOW
-
+   for(int i = iterCnt;i;--i)
+   {
+      #pragma HLS DATAFLOW
   
-  dma_mm2s (mem_rd, strm_out, mem_rd_size);
-  dma_s2mm (mem_wr, strm_in, mem_wr_size);
-
+      dma_mm2s (mem_rd, strm_out, mem_rd_size);
+      dma_s2mm (mem_wr, strm_in, mem_wr_size);
+   }
 }
 }
-
-  
-

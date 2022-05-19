@@ -1,4 +1,4 @@
-// © Copyright 2021 Xilinx, Inc.
+// © Copyright 2022 Xilinx, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -563,14 +563,14 @@ void fft_2d(
    
    #pragma HLS DATAFLOW
    
-   ITER_LOOP_FFT_ROWS:for(int i = 0; i < iterCnt; ++i) {
+   ITER_LOOP_FFT_ROWS:for(int i = iterCnt; i ; --i) {
       #pragma HLS loop_tripcount min=1 max=8
       //#pragma HLS DATAFLOW
       
       fft_rows(strmFFTrows_inp, strmFFTrows_out);
    }
    
-   ITER_LOOP_FFT_COLS:for(int i = 0; i < iterCnt; ++i) {
+   ITER_LOOP_FFT_COLS:for(int j = iterCnt; j ; --j) {
       #pragma HLS loop_tripcount min=1 max=8
       //#pragma HLS DATAFLOW
       

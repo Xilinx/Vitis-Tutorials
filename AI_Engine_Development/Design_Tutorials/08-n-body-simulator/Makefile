@@ -1,4 +1,4 @@
-# Copyright 2021 Xilinx Inc.
+# Copyright 2022 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 help::
 	@echo "Makefile Usage:"
 	@echo "  make all TARGET=<hw_emu|hw>"
-	@echo "       Command runs make aie, make pl_kernels, make xclbin, make host, make sd_card for x100_design"
+	@echo "       Command runs make aie, make pl_kernels, make xsa, make host, make sd_card for x100_design"
 	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make aie"
@@ -25,8 +25,8 @@ help::
 	@echo "       Command to create PL HLS kernels *.xo"
 	@echo "       Default TARGET=hw"
 	@echo ""
-	@echo "  make xclbin TARGET=<hw_emu|hw>"
-	@echo "       Command to create XCLBIN" 
+	@echo "  make xsa TARGET=<hw_emu|hw>"
+	@echo "       Command to create XSA" 
 	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make host <hw_emu|hw>"
@@ -58,7 +58,7 @@ help::
 export TARGET :=hw
 
 # ################ TARGET: make all ################
-all: aie pl_kernels xclbin host sd_card
+all: aie pl_kernels xsa host sd_card
 
 # ################ TARGET: make aie ################
 aie: 
@@ -68,8 +68,8 @@ aie:
 pl_kernels: 
 	$(MAKE) all -C Module_03_pl_kernels
 
-# ################ TARGET: make xclbin ################
-xclbin: 
+# ################ TARGET: make xsa ################
+xsa: 
 	$(MAKE) all -C Module_04_full_system_design
 
 # ################ TARGET: make host ################

@@ -68,6 +68,6 @@ typedef hls::stream<ap_axis<DW,0,0,0> > axi_stream;
 void dma_mm2s(volatile dint *mem_rd, axi_stream &strm_out, int size);
 void dma_s2mm(volatile dint *mem_wr, axi_stream &strm_in, int size);
 extern "C" void dma_hls(volatile dint *mem_wr,  volatile dint *mem_rd, axi_stream &strm_out,axi_stream &strm_in,
-			 int mem_rd_size, int mem_wr_size);
+			 int mem_rd_size, int mem_wr_size,int iterCnt);
 
 

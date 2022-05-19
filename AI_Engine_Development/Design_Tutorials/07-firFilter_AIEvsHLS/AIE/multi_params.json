@@ -4,16 +4,85 @@
             "N_FIR_FILTERS": "1",
             "N_FIR_TAPS": "15"
         },
-        "1firs_64taps": {
+        "1firs_64taps_winSz64": {
             "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "64",
+            "FIR_WINDOW_SIZE": "64"
+        },
+        "1firs_64taps_winSz256": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "64",
+            "FIR_WINDOW_SIZE": "256"
+        },
+        "1firs_64taps_winSz1024": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "64",
+            "FIR_WINDOW_SIZE": "1024"
+        },
+        "1firs_64taps_winSz2048": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "64",
+            "FIR_WINDOW_SIZE": "2048"
+        },
+        "1firs_64taps_aiesPerFir1": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "64",
+            "N_AIES_PER_FIR": "1"
+        },
+        "1firs_64taps_aiesPerFir2": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "64",
+            "N_AIES_PER_FIR": "2"
+        },
+        "1firs_64taps_aiesPerFir4": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "64",
+            "N_AIES_PER_FIR": "4"
+        },
+        "1firs_129taps_aiesPerFir1": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "129",
+            "N_AIES_PER_FIR": "1"
+        },
+        "1firs_129taps_aiesPerFir2": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "129",
+            "N_AIES_PER_FIR": "2"
+        },
+        "1firs_129taps_aiesPerFir4": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "129",
+            "N_AIES_PER_FIR": "4"
+        },
+        "1firs_240taps_aiesPerFir1": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "240",
+            "N_AIES_PER_FIR": "1"
+        },
+        "1firs_240taps_aiesPerFir2": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "240",
+            "N_AIES_PER_FIR": "2"
+        },
+        "1firs_240taps_aiesPerFir4": {
+            "N_FIR_FILTERS": "1",
+            "N_FIR_TAPS": "240",
+            "N_AIES_PER_FIR": "4"
+        },
+        "10firs_15taps": {
+            "N_FIR_FILTERS": "10",
+            "N_FIR_TAPS": "15"
+        },
+        "10firs_64taps": {
+            "N_FIR_FILTERS": "10",
             "N_FIR_TAPS": "64"
         },
-        "1firs_129taps": {
-            "N_FIR_FILTERS": "1",
+        "10firs_129taps": {
+            "N_FIR_FILTERS": "10",
             "N_FIR_TAPS": "129"
         },
-        "1firs_240taps": {
-            "N_FIR_FILTERS": "1",
+        "10firs_240taps": {
+            "N_FIR_FILTERS": "10",
             "N_FIR_TAPS": "240"
         }
     }

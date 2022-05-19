@@ -1,4 +1,4 @@
-// © Copyright 2021 Xilinx, Inc.
+// © Copyright 2022 Xilinx, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <cstring>
 
 #include "experimental/xrt_aie.h"
 #include "experimental/xrt_kernel.h"
@@ -27,25 +28,11 @@
 
 /////////////////////////////////////////////////
 // Due to 128bit Data Transfer all dimensions,
-// to be given as by 4 for cint16
-// since 4 samples of cint16 are passed 
+// to be given as by 4.. 
 /////////////////////////////////////////////////
-#if FFT_2D_DT == 0
-   #define MAT_SIZE_128b (MAT_SIZE / 4)
-   #define MAT_ROWS_128b (MAT_ROWS / 4)
-   #define MAT_COLS_128b (MAT_COLS / 4)
-/////////////////////////////////////////////////
-// Due to 128bit Data Transfer all dimensions,
-// to be given as by 2 for cfloat
-// since 2 samples of cfloat are passed 
-/////////////////////////////////////////////////
-
-#elif FFT_2D_DT == 1
-   #define MAT_SIZE_128b (MAT_SIZE / 2)
-   #define MAT_ROWS_128b (MAT_ROWS / 2)
-   #define MAT_COLS_128b (MAT_COLS / 2)
-
-#endif
+#define MAT_SIZE_128b (MAT_SIZE / 4)
+#define MAT_ROWS_128b (MAT_ROWS / 4)
+#define MAT_COLS_128b (MAT_COLS / 4)
 
 using namespace std;
 
@@ -189,133 +176,149 @@ int main(int argc, char ** argv)
    // Open xclbin
    //////////////////////////////////////////
 
-   if(argc != 2) {
+   if(argc < 2) {
       std::cout << "Usage: " << argv[0] <<" <xclbin>" << std::endl;
       return EXIT_FAILURE;
    }
 
-   char* xclbinFilename = argv[1];
+   else {
+      //If argc is 2 it loads xclbin(Normal Flow)
+      //If argc is 3 and argv[2] is LOAD_XCLBIN ,it loads xclbin(To get POWER values)
+      if(argc==2 || (argc==3 && strcmp(argv[2],"LOAD_XCLBIN")==0)) {
 
-   auto dhdl = xrtDeviceOpen(0);
-   auto xclbin = load_xclbin(dhdl, xclbinFilename);
-   auto top = reinterpret_cast<const axlf*>(xclbin.data());
+         const char* xclbinFilename = argv[1];
+         auto dhdl = xrtDeviceOpen(0);
+         auto xclbin = load_xclbin(dhdl, xclbinFilename);
+         auto top = reinterpret_cast<const axlf*>(xclbin.data());
+      }
+      
+      //If argc is 2 it runs design for finite iterations (Normal Flow)
+      //If argc is 3 and argv[2] is RUN_CODE ,it runs design for infinite iterations(To get POWER values)
+      if(argc==2 || (argc==3 && strcmp(argv[2],"RUN_CODE")==0)) {
+         
+         const char* xclbinFilename = argv[1];
+         auto dhdl = xrtDeviceOpen(0);
+         auto xclbin = load_xclbin(dhdl, xclbinFilename);
+         auto top = reinterpret_cast<const axlf*>(xclbin.data());
+         
+         //////////////////////////////////////////
+         // Data-Mover IP Objects...
+         //////////////////////////////////////////
 
-   //////////////////////////////////////////
-   // Data-Mover IP Objects...
-   //////////////////////////////////////////
+         datamover dmaHls[FFT2D_INSTS];
 
-   datamover dmaHls[FFT2D_INSTS];
+         //////////////////////////////////////////
+         // fft_2d IP Objects....
+         //////////////////////////////////////////
+         
+         fft_2d_class fft_2d_kr[FFT2D_INSTS];
 
-   //////////////////////////////////////////
-   // fft_2d IP Objects....
-   //////////////////////////////////////////
-   
-   fft_2d_class fft_2d_kr[FFT2D_INSTS];
+         //////////////////////////////////////////
+         // Initialising fft_2d Kernels...
+         //////////////////////////////////////////
+         
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Initialising fft_2d %d...\n", i);
+            fft_2d_kr[i].init(dhdl, top, i);
+         }
 
-   //////////////////////////////////////////
-   // Initialising fft_2d Kernels...
-   //////////////////////////////////////////
-   
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Initialising fft_2d %d...\n", i);
-      fft_2d_kr[i].init(dhdl, top, i);
+         //////////////////////////////////////////
+         // Initialising DataMover Units...
+         //////////////////////////////////////////
+
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Initialising datamover %d...\n", i);
+            dmaHls[i].init(dhdl, top, i);
+         }
+
+         //////////////////////////////////////////
+         // Running fft_2d Kernels...
+         //////////////////////////////////////////
+
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Running fft_2d %d...\n", i);
+            fft_2d_kr[i].run();
+         }
+
+         //////////////////////////////////////////
+         // Running datamovers in each kernel for
+         //////////////////////////////////////////
+
+         printf("Running datamovers for %d Iterations...\n", ITER_CNT);
+
+         //////////////////////////////////////////
+         // Running for Datamover IPs...
+         //////////////////////////////////////////
+
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Running datamover %d...\n", i);
+            dmaHls[i].run();
+         }
+
+         //////////////////////////////////////////
+         // Wait for fft_2d Kernels to complete...
+         //////////////////////////////////////////	
+         
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Waiting for fft_2d %d to complete...\n", i);
+            fft_2d_kr[i].waitTo_complete();
+         }
+
+         //////////////////////////////////////////
+         // Waiting for Datamover IPs
+         // to complete...
+         //////////////////////////////////////////
+         
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Waiting for datamover %d to complete...\n", i);
+            dmaHls[i].waitTo_complete();
+         }
+
+         //////////////////////////////////////////
+         // Comparing each fft_2d output with
+         // Golden...
+         //////////////////////////////////////////
+
+         uint32_t errCnt = 0;
+         
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Checking Golden for FFT_2D Kernel %d...\n", i);
+            dmaHls[i].golden_check(&errCnt, i);
+         }
+
+         /////////////////////////////////////////////////
+         // Clean up XRT close device and
+         // kernel handles...
+         /////////////////////////////////////////////////
+
+         //Closing PL-Handles
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            std::cout << "\nClosing FFT_2D " << i << " handles...\n";
+            fft_2d_kr[i].close();
+         }
+
+         //Closing PL-Handles
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            std::cout << "\nClosing Datamover " << i << " handles...\n";
+            dmaHls[i].close();
+         }
+
+         //Closing Device
+         std::cout << "Closing Device...\n";
+         xrtDeviceClose(dhdl);
+
+         std::cout << "TEST " << (errCnt ? "FAILED" : "PASSED") << std::endl;
+
+         return (errCnt ? EXIT_FAILURE :  EXIT_SUCCESS);
+      }
    }
-
-   //////////////////////////////////////////
-   // Initialising DataMover Units...
-   //////////////////////////////////////////
-
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Initialising datamover %d...\n", i);
-      dmaHls[i].init(dhdl, top, i);
-   }
-
-   //////////////////////////////////////////
-   // Running fft_2d Kernels...
-   //////////////////////////////////////////
-
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Running fft_2d %d...\n", i);
-      fft_2d_kr[i].run();
-   }
-
-   //////////////////////////////////////////
-   // Running datamovers in each kernel for
-   //////////////////////////////////////////
-
-   printf("Running datamovers for %d Iterations...\n", ITER_CNT);
-
-   //////////////////////////////////////////
-   // Running for Datamover IPs...
-   //////////////////////////////////////////
-
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Running datamover %d...\n", i);
-      dmaHls[i].run();
-   }
-
-   //////////////////////////////////////////
-   // Wait for fft_2d Kernels to complete...
-   //////////////////////////////////////////	
-   
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Waiting for fft_2d %d to complete...\n", i);
-      fft_2d_kr[i].waitTo_complete();
-   }
-
-   //////////////////////////////////////////
-   // Waiting for Datamover IPs
-   // to complete...
-   //////////////////////////////////////////
-   
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Waiting for datamover %d to complete...\n", i);
-      dmaHls[i].waitTo_complete();
-   }
-
-   //////////////////////////////////////////
-   // Comparing each fft_2d output with
-   // Golden...
-   //////////////////////////////////////////
-
-   uint32_t errCnt = 0;
-   
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Checking Golden for FFT_2D Kernel %d...\n", i);
-      dmaHls[i].golden_check(&errCnt, i);
-   }
-
-   /////////////////////////////////////////////////
-   // Clean up XRT close device and
-   // kernel handles...
-   /////////////////////////////////////////////////
-
-   //Closing PL-Handles
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      std::cout << "\nClosing FFT_2D " << i << " handles...\n";
-      fft_2d_kr[i].close();
-   }
-
-   //Closing PL-Handles
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      std::cout << "\nClosing Datamover " << i << " handles...\n";
-      dmaHls[i].close();
-   }
-
-   //Closing Device
-   std::cout << "Closing Device...\n";
-   xrtDeviceClose(dhdl);
-
-   std::cout << "TEST " << (errCnt ? "FAILED" : "PASSED") << std::endl;
-
-   return (errCnt ? EXIT_FAILURE :  EXIT_SUCCESS);
 }

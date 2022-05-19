@@ -1,4 +1,4 @@
-#  © Copyright 2020 Xilinx, Inc.
+#  © Copyright 2022 Xilinx, Inc.
 #  Licensed under the Apache License, Version 2.0 (the 'License');
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
@@ -44,9 +44,9 @@ TARGET := hw_emu
 TEST_BF_O := $(MODULE_02_DIR)/build/libadf.a
 
 # =========================================================
-# XCLBIN Revision Selection 
-#  rev0: creates XCLBIN rev0 without timing closure
-#  rev1: creates XCLBIN rev1 with timing closure
+# XSA Revision Selection 
+#  rev0: creates XSA rev0 without timing closure
+#  rev1: creates XSA rev1 with timing closure
 # =========================================================
 REV := rev1
 
@@ -100,25 +100,25 @@ DEPS += $(PLATFORM_USE)
 # BUILD PRODUCTS
 # =========================================================
 BUILD_DIR := build
-XCLBIN	  := beamforming.$(REV).$(TARGET).xclbin 
+XSA	  := beamforming.$(REV).$(TARGET).xsa 
 
-xclbin_prebuilt: $(BUILD_DIR)/README.md
+xsa_prebuilt: $(BUILD_DIR)/README.md
 
 $(BUILD_DIR)/README.md:
 	wget -O build.zip https://www.xilinx.com/bin/public/openDownload?filename=build.zip
 	unzip build.zip
-	unzip $(BUILD_DIR)/rev1/hw/xclbin.zip -d $(BUILD_DIR)/rev1/hw
 	unzip $(BUILD_DIR)/rev1/hw/xsa.zip -d $(BUILD_DIR)/rev1/hw
-	unzip $(BUILD_DIR)/rev1/hw_emu/xclbin.zip -d $(BUILD_DIR)/rev1/hw_emu 
+	unzip $(BUILD_DIR)/rev1/hw/xsa.zip -d $(BUILD_DIR)/rev1/hw
+	unzip $(BUILD_DIR)/rev1/hw_emu/xsa.zip -d $(BUILD_DIR)/rev1/hw_emu 
 
-xclbin_all:
-	$(MAKE) xclbin TARGET=hw REV=rev0
-	$(MAKE) xclbin TARGET=hw REV=rev1
-	$(MAKE) xclbin TARGET=hw_emu REV=rev1
+xsa_all:
+	$(MAKE) xsa TARGET=hw REV=rev0
+	$(MAKE) xsa TARGET=hw REV=rev1
+	$(MAKE) xsa TARGET=hw_emu REV=rev1
 
-xclbin: $(BUILD_DIR)/$(REV)/$(TARGET)/$(XCLBIN)
+xsa: $(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA)
 
-$(BUILD_DIR)/$(REV)/$(TARGET)/$(XCLBIN): $(DEPS)
+$(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA): $(DEPS)
 	mkdir -p $(BUILD_DIR)/$(REV)/$(TARGET); \
 	cd $(BUILD_DIR)/$(REV)/$(TARGET);	\
 	v++ -l					\
@@ -129,10 +129,10 @@ $(BUILD_DIR)/$(REV)/$(TARGET)/$(XCLBIN): $(DEPS)
 		$(TEST_BF_O)			\
 		$(XOS)				\
 		--config $(CONFIG_INI)		\
-		-o $(XCLBIN)
+		-o $(XSA)
 
 clean:
-	rm -rf $(BUILD_DIR)/$(REV)/$(TARGET)/$(XCLBIN)
+	rm -rf $(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA)
 	rm -rf $(BUILD_DIR)/$(REV)/$(TARGET)
 	rm -rf $(BUILD_DIR)/$(REV)
 	rm -rf $(BUILD_DIR)/rev0

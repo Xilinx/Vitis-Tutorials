@@ -1,4 +1,4 @@
-// © Copyright 2021 Xilinx, Inc.
+// © Copyright 2022 Xilinx, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <cstring>
 
 #include "adf/adf_api/XRTConfig.h"
 
@@ -49,6 +50,12 @@
    #define MAT_ROWS_128b (MAT_ROWS / 2)
    #define MAT_COLS_128b (MAT_COLS / 2)
 
+#endif
+
+#if ITER_CNT == -1
+   #define AIE_GRAPH_ITER_CNT ITER_CNT
+#else
+   #define AIE_GRAPH_ITER_CNT (ITER_CNT * MAT_ROWS)
 #endif
 
 using namespace std;
@@ -142,10 +149,10 @@ class datamover
    }
 };
 
-class fft2d_graph
+class fft2d_hostapp_graph
 {
    public:
-   xrtGraphHandle fft_rows_gr, fft_cols_gr;
+   xrtGraphHandle fft2d_graph_gr;
 
    int init(xrtDeviceHandle dhdl, const axlf *top, char insts)
    {
@@ -153,32 +160,20 @@ class fft2d_graph
       // 2D-FFT Graph Init for AIE
       //////////////////////////////////////////
       
-      std::string fft_rows_obj_str = "fft_rows[" + to_string(insts) + "]";
-      std::string fft_cols_obj_str = "fft_cols[" + to_string(insts) + "]";
+      std::string fft2d_graph_obj_str = "fft2d_graph";
 
-      const char *fft_rows_obj = fft_rows_obj_str.c_str();
-      const char *fft_cols_obj = fft_cols_obj_str.c_str();
+      const char *fft2d_graph_obj = fft2d_graph_obj_str.c_str();
 
       int init_st = 0;
 
-      fft_rows_gr = xrtGraphOpen(dhdl, top->m_header.uuid, fft_rows_obj);
-      if (!fft_rows_gr) {
-         throw std::runtime_error("Unable to open FFT Rows graph handle");
+      fft2d_graph_gr = xrtGraphOpen(dhdl, top->m_header.uuid, fft2d_graph_obj);
+      if (!fft2d_graph_gr) {
+         throw std::runtime_error("Unable to open FFT graph handle");
 	      init_st = 1;
       }
       else
       {
-         printf("FFT Rows graph Initialised...\n");
-      }
-
-      fft_cols_gr = xrtGraphOpen(dhdl, top->m_header.uuid, fft_cols_obj);
-      if (!fft_cols_gr) {
-         throw std::runtime_error("Unable to open FFT Cols graph handle");
-	      init_st = 1;
-      }
-      else
-      {
-         printf("FFT Cols graph Initialised...\n");
+         printf("FFT graph Initialised...\n");
       }
 
       return init_st;
@@ -192,31 +187,17 @@ class fft2d_graph
       
       int init_st = 0;
 
-      int ret = xrtGraphReset(fft_rows_gr);
-      ret = xrtGraphRun(fft_rows_gr, ITER_CNT * MAT_ROWS);
+      int ret = xrtGraphReset(fft2d_graph_gr);
+      ret = xrtGraphRun(fft2d_graph_gr, AIE_GRAPH_ITER_CNT);
       if (ret) {
-         throw std::runtime_error("Unable to run FFT Rows graph");
+         throw std::runtime_error("Unable to run FFT  graph");
          init_st = 1;
       }
       else
       {
-         printf("FFT Rows graph running...\n");
+         printf("FFT graph running...\n");
       }
        
-      ret = xrtGraphReset(fft_cols_gr);
-      ///////////////////////////////////////////
-      // Due to increased ping-pong buffer size,
-      // same no. iterations as rowise fft gr...
-      ret = xrtGraphRun(fft_cols_gr, ITER_CNT * MAT_ROWS);
-      if (ret) {
-         throw std::runtime_error("Unable to run FFT Cols graph");
-         init_st = 1;
-      }
-      else
-      {
-         printf("FFT Cols graph running...\n");
-      }
-
       return init_st;
    }
 
@@ -226,11 +207,9 @@ class fft2d_graph
       // 2D-FFT Graph End for AIE
       //////////////////////////////////////////
        
-      xrtGraphClose(fft_rows_gr);
-      printf("FFT Rows graph end...\n");
+      xrtGraphClose(fft2d_graph_gr);
+      printf("FFT graph end...\n");
 
-      xrtGraphClose(fft_cols_gr);
-      printf("FFT Cols graph end...\n");
    }
 };
 
@@ -240,132 +219,140 @@ int main(int argc, char ** argv)
    // Open xclbin
    //////////////////////////////////////////
 
-   if(argc != 2) {
+   if(argc < 2) {
       std::cout << "Usage: " << argv[0] <<" <xclbin>" << std::endl;
       return EXIT_FAILURE;
    }
 
-   char* xclbinFilename = argv[1];
+   else {
+      //If argc is 2 it loads xclbin(Normal Flow)
+      //If argc is 3 and argv[2] is LOAD_XCLBIN ,it loads xclbin(To get POWER values)
+      if(argc==2 || (argc==3 && strcmp(argv[2],"LOAD_XCLBIN")==0)) {
 
-   auto dhdl = xrtDeviceOpen(0);
-   auto xclbin = load_xclbin(dhdl, xclbinFilename);
-   auto top = reinterpret_cast<const axlf*>(xclbin.data());
-
-   //////////////////////////////////////////
-   // Data-Mover IP Objects...
-   //////////////////////////////////////////
-
-   datamover dmaHls[FFT2D_INSTS];
-
-   //////////////////////////////////////////
-   // FFT 2D Graph Objects...
-   //////////////////////////////////////////
-
-   fft2d_graph fft2d_gr[FFT2D_INSTS];
-
-   //////////////////////////////////////////
-   // Initialising DataMover Units...
-   //////////////////////////////////////////
-
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Initialising datamover %d...\n", i);
-      dmaHls[i].init(dhdl, top, i);
-   }
-
-   //////////////////////////////////////////
-   // Initialising 2D-FFT Graphs...
-   //////////////////////////////////////////
-
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Initialising 2D-FFT Graph %d...\n", i);
-      int ret = fft2d_gr[i].init(dhdl, top, i);
+         const char* xclbinFilename = argv[1];
+         auto dhdl = xrtDeviceOpen(0);
+         auto xclbin = load_xclbin(dhdl, xclbinFilename);
+         auto top = reinterpret_cast<const axlf*>(xclbin.data());
+      }
       
-      if (ret != 0)
-         return ret;
-   }
+      //If argc is 2 it runs design for finite iterations (Normal Flow)
+      //If argc is 3 and argv[2] is RUN_CODE ,it runs design for infinite iterations(To get POWER values)
+      if(argc==2 || (argc==3 && strcmp(argv[2],"RUN_CODE")==0)) {
 
-   //////////////////////////////////////////
-   // Running 2D-FFT Graphs...
-   //////////////////////////////////////////
-
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Running 2D-FFT Graph %d...\n", i);
-      int ret = fft2d_gr[i].run();
-      
-      if (ret != 0)
-         return ret;
-   }
-
-   //////////////////////////////////////////
-   // Running datamovers in each kernel for
-   // ITER_CNT times...
-   //////////////////////////////////////////
-
-   printf("Running datamovers for %d Iterations...\n", ITER_CNT);
-
-   //////////////////////////////////////////
-   // Running for 2kpt s2mm/mm2s IPs...
-   //////////////////////////////////////////
-
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Running datamover %d...\n", i);
-      dmaHls[i].run();
-   }
-
-   //////////////////////////////////////////
-   // Waiting for Datamover IPs
-   // to complete...
-   //////////////////////////////////////////
+         const char* xclbinFilename = argv[1];
+         auto dhdl = xrtDeviceOpen(0);
+         auto xclbin = load_xclbin(dhdl, xclbinFilename);
+         auto top = reinterpret_cast<const axlf*>(xclbin.data());   
+         //////////////////////////////////////////
+         // Data-Mover IP Objects...
+         //////////////////////////////////////////
    
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Waiting for datamover %d to complete...\n", i);
-      dmaHls[i].waitTo_complete();
-   }
-
-   //////////////////////////////////////////
-   // Comparing each fft_2d output with
-   // Golden...
-   //////////////////////////////////////////
-
-   uint32_t errCnt = 0;
+         datamover dmaHls[FFT2D_INSTS];
    
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Checking Golden for FFT_2D Kernel %d...\n", i);
-      dmaHls[i].golden_check(&errCnt, i);
-   }
-
-   /////////////////////////////////////////////////
-   // Clean up XRT, close device, pl-kernels
-   // and graph handles...
-   /////////////////////////////////////////////////
-
-   //Closing PL-Handles
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      std::cout << "\nClosing Datamover " << i << " handles...\n";
-      dmaHls[i].close();
-   }
-
-   //Closing Graphs
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      std::cout << "Closing 2D-FFT Graph " << i << "...\n";
-      fft2d_gr[i].close();
-      printf("2D-FFT Graph %d end.\n",i);
-   }
-
-   //Closing Device
-   xrtDeviceClose(dhdl);
-
-   //Final Result
-   std::cout << "TEST " << (errCnt ? "FAILED" : "PASSED") << std::endl;
-
-   //Exit with result
-   return (errCnt ? EXIT_FAILURE :  EXIT_SUCCESS);
+         //////////////////////////////////////////
+         // FFT 2D Graph Objects...
+         //////////////////////////////////////////
+   
+         fft2d_hostapp_graph fft2d_gr;
+   
+         //////////////////////////////////////////
+         // Initialising DataMover Units...
+         //////////////////////////////////////////
+   
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Initialising datamover %d...\n", i);
+            dmaHls[i].init(dhdl, top, i);
+         }
+   
+         //////////////////////////////////////////
+         // Initialising 2D-FFT Graphs...
+         //////////////////////////////////////////
+   
+         printf("Initialising 2D-FFT Graph %d...\n", 0);
+         int ret = fft2d_gr.init(dhdl, top, 0);
+         
+         if (ret != 0)
+            return ret;
+   
+         //////////////////////////////////////////
+         // Running 2D-FFT Graphs...
+         //////////////////////////////////////////
+   
+         printf("Running 2D-FFT Graph %d...\n", 0);
+         ret = fft2d_gr.run();
+         
+         if (ret != 0)
+            return ret;
+        
+   
+         //////////////////////////////////////////
+         // Running datamovers in each kernel for
+         // ITER_CNT times...
+         //////////////////////////////////////////
+   
+         printf("Running datamovers for %d Iterations...\n", ITER_CNT);
+   
+         //////////////////////////////////////////
+         // Running for 2kpt s2mm/mm2s IPs...
+         //////////////////////////////////////////
+   
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Running datamover %d...\n", i);
+            dmaHls[i].run();
+         }
+   
+         //////////////////////////////////////////
+         // Waiting for Datamover IPs
+         // to complete...
+         //////////////////////////////////////////
+         
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Waiting for datamover %d to complete...\n", i);
+            dmaHls[i].waitTo_complete();
+         }
+   
+         //////////////////////////////////////////
+         // Comparing each fft_2d output with
+         // Golden...
+         //////////////////////////////////////////
+   
+         uint32_t errCnt = 0;
+         
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            printf("Checking Golden for FFT_2D Kernel %d...\n", i);
+            dmaHls[i].golden_check(&errCnt, i);
+         }
+   
+         /////////////////////////////////////////////////
+         // Clean up XRT, close device, pl-kernels
+         // and graph handles...
+         /////////////////////////////////////////////////
+   
+         //Closing PL-Handles
+         for(int i = 0; i < FFT2D_INSTS; ++i)
+         {
+            std::cout << "\nClosing Datamover " << i << " handles...\n";
+            dmaHls[i].close();
+         }
+   
+         //Closing Graphs
+         std::cout << "Closing 2D-FFT Graph " << 0 << "...\n";
+         fft2d_gr.close();
+         printf("2D-FFT Graph %d end.\n",0);
+         
+   
+         //Closing Device
+         xrtDeviceClose(dhdl);
+   
+         //Final Result
+         std::cout << "TEST " << (errCnt ? "FAILED" : "PASSED") << std::endl;
+   
+         //Exit with result
+         return (errCnt ? EXIT_FAILURE :  EXIT_SUCCESS);
+      }
+  }
 }

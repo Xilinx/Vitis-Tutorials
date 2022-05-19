@@ -1,6 +1,10 @@
 <table>
  <tr>
+<<<<<<< HEAD
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
+=======
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.1 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
+>>>>>>> Updated Designs for 2022.1
    </td>
  </tr>
 </table>
@@ -49,6 +53,50 @@ The following options can be specified in the make steps. See the make steps for
 
 * EN_TRACE: Flag to enable trace data to be captured. 0 is disabled and 1 is enabled. Default is 0.
 
+The Makefile uses the following directory references:
+
+```
+#Relative fir directory
+RELATIVE_PROJECT_DIR := ./
+
+#Absolute fir directory = <user path>/Tutorials/AI_Engine/fir
+PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+DESIGN_REPO  := $(PROJECT_REPO)/design
+AIE_SRC_REPO := $(DESIGN_REPO)/aie_src
+PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
+SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
+PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+PYTHON_SCRIPTS_REPO    := $(DESIGN_REPO)/python_scripts
+
+BASE_BLD_DIR := $(PROJECT_REPO)/build
+FIR_TAPS_BLD_DIR    := $(BASE_BLD_DIR)/fir_$(N_FIR_TAPS)_taps
+FIR_FILTERS_DIR     := $(FIR_TAPS_BLD_DIR)/x$(N_FIR_FILTERS)_firs
+FIR_WINDOW_SIZE_DIR := $(FIR_FILTERS_DIR)/winSz_$(FIR_WINDOW_SIZE)
+AIES_PER_FIR_DIR    := $(FIR_WINDOW_SIZE_DIR)/x$(N_AIES_PER_FIR)_aie_per_fir
+BUILD_TARGET_DIR    := $(AIES_PER_FIR_DIR)/$(TARGET)
+
+VIVADO_REPORTS_REPO := $(PROJECT_REPO)/vivado_reports_dir
+VIVADO_BLD_REPORTS_DIR := $(REPORTS_REPO)/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIES_PER_FIR)_aie_per_fir
+
+VCD_XPE_REPO := $(PROJECT_REPO)/vcd_xpe_dir
+BLD_VCD_XPE_DIR := $(VCD_XPE_REPO)/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIES_PER_FIR)_aie_per_fir
+VCD_FILE_NAME := fir_$(N_FIR_TAPS)_taps_x$(N_FIR_FILTERS)_firs_winSz_$(FIR_WINDOW_SIZE)_x$(N_AIES_PER_FIR)_aie_per_fir
+BLD_TGT_VCD_FILE := $(BUILD_TARGET_DIR)/$(VCD_FILE_NAME).vcd
+XPE_FILE := $(BLD_VCD_XPE_DIR)/graph_$(VCD_FILE_NAME).xpe
+
+EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
+EMBEDDED_EXEC_SCRIPT := run_script.sh
+
+WORK_DIR := Work
+AIESIM_DATA_DIR := $(AIE_SRC_REPO)/aiesim_data
+AIESIM_INPUT_FILE := $(AIESIM_DATA_DIR)/input_impulse.txt
+```
+
 </details>
 
 <details>
@@ -80,7 +128,7 @@ The individual make steps to build the design with the options applied to them a
 <summary>make kernels: Compile PL Kernels</summary>
 
 ## make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202120_1`) and compiles them into their respective XO files.
+In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202210_1`) and compiles them into their respective XO files.
 
 The following command compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):
 
@@ -97,7 +145,7 @@ cd ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 v++ 	--target hw_emu					\
 	--hls.clock 250000000:datamover 			\
     -D N_FIR_TAPS=15
-	--platform xilinx_vck190_base_202120_1		\
+	--platform xilinx_vck190_base_202210_1		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
@@ -157,7 +205,7 @@ aiecompiler -include=$(DSPLIB_ROOT)/L1/src/aie 		\
 		-include=$(DSPLIB_ROOT)/L1/include/aie 		\
 		-include=$(DSPLIB_ROOT)/L2/include/aie 		\
 		-include=../../../design/aie_src 		\
-		--platform=$(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm 	\
+		--platform=$(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm 	\
 		--workdir=Work 					\
 		--log-level=5 					\
 		--pl-freq=300 					\
@@ -211,7 +259,7 @@ The expanded command is as follows:
 cd ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
 v++ 	-l 						\
-	--platform xilinx_vck190_base_202120_1		\
+	--platform xilinx_vck190_base_202210_1		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
@@ -351,7 +399,7 @@ Summary of the switches used:
 |-l\<library\>|Search the library named `library` when linking. The 2D-FFT tutorial requires `adf_api_xrt` and `xrt_coreutil` libraries.|
 |-L \<dir\>|Add directory `<dir>` to the list of directories to be searched for -l.|
 
-[XRT Documentation](https://xilinx.github.io/XRT/2021.2/html/index.html)
+[XRT Documentation](https://xilinx.github.io/XRT/2022.1/html/index.html)
 [Details of Host Application Programming](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-for-Bare-metal-Systems)
 
 |Inputs Sources|Description|
@@ -390,7 +438,7 @@ v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
 	--temp_dir ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/_x						\
-	-f xilinx_vck190_base_202120_1												\
+	-f xilinx_vck190_base_202210_1												\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 									\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/rootfs.ext4 						\
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/Image 						\
@@ -459,12 +507,12 @@ cd ../build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up:
 ```bash
-root@versal-rootfs-common-2021_2:~#
+root@versal-rootfs-common-2022_1:~#
 ```
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2021_2:~# xinit: giving up
+root@versal-rootfs-common-2022_1:~# xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -550,7 +598,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power ON the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2022_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 ```
@@ -818,7 +866,7 @@ The following documents provide supplemental information for this tutorial.
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
 
 # Revision History
-* Dec 2021 Release
+* Dec 2022 Release
 
 # Support
 
@@ -832,4 +880,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD061 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD061 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>

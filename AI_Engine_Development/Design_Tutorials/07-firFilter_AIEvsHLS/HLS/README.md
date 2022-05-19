@@ -1,6 +1,10 @@
 <table>
  <tr>
+<<<<<<< HEAD
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
+=======
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
+>>>>>>> Updated Designs for 2022.1
    </td>
  </tr>
 </table>
@@ -47,6 +51,38 @@ The following options can be specified in the make steps. See the make steps for
 
 * EN_TRACE: Flag to enable trace data to be captured. 0 is disabled and 1 is enabled. Default is 0.
 
+The Makefile uses the following directory references:
+
+```
+#Relative FIR filter directory
+RELATIVE_PROJECT_DIR := ./
+
+#Absolute FIR filter directory = <user path>/Tutorials/AI_Engine/filter_AIEvsDSP
+PROJECT_REPO := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+DESIGN_REPO  := $(PROJECT_REPO)/design
+PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
+DIRECTIVES_REPO        := $(DESIGN_REPO)/directives
+SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
+PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+PYTHON_SCRIPTS_REPO    := $(DESIGN_REPO)/python_scripts
+
+BASE_BLD_DIR := $(PROJECT_REPO)/build
+FIR_TAPS_BLD_DIR := $(BASE_BLD_DIR)/fir_$(N_FIR_TAPS)_taps
+FIR_FILTERS_DIR  := $(FIR_TAPS_BLD_DIR)/x$(N_FIR_FILTERS)_firs
+BUILD_TARGET_DIR := $(FIR_FILTERS_DIR)/$(TARGET)
+
+VIVADO_REPORTS_REPO := $(PROJECT_REPO)/reports_dir
+VIVADO_BLD_REPORTS_DIR := $(REPORTS_REPO)/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs
+
+EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
+EMBEDDED_EXEC_SCRIPT := run_script.sh
+```
+
 </details>
 
 <details>
@@ -78,7 +114,7 @@ The individual make steps to build the design with the options that applied to t
 <summary>make kernels: Compile PL Kernels</summary>
 
 ## make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202120_1`) and compiles them into their respective XO files.
+In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202210_1`) and compiles them into their respective XO files.
 
 The following commands compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):
 
@@ -95,7 +131,7 @@ cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 v++ --target hw_emu					\
    --hls.pre_tcl ./directives/hls_pre.tcl		\
 	--hls.clock 500000000:fir_hls 			\
-	--platform xilinx_vck190_base_202120_1		\
+	--platform xilinx_vck190_base_202210_1		\
 	--include ../../../design/pl_src 		\
 	--save-temps 					\
 	--temp_dir _x 					\
@@ -107,7 +143,7 @@ v++ --target hw_emu					\
 
 v++ --target hw_emu					\
 	--hls.clock 250000000:datamover 			\
-	--platform xilinx_vck190_base_202120_1		\
+	--platform xilinx_vck190_base_202210_1		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
@@ -165,7 +201,7 @@ The expanded command is as follows:
 cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
 v++ -l 						\
-	--platform xilinx_vck190_base_202120_1 		\
+	--platform xilinx_vck190_base_202210_1 		\
 	--include ../../../design/pl_src 		\
 	--save-temps 					\
 	--temp_dir _x 					\
@@ -273,7 +309,7 @@ Summary of the Switches used:
 |-l\<library\>|Search the library named `library` when linking. The 2D-FFT tutorial requires `adf_api_xrt` and `xrt_coreutil` libraries.|
 |-L \<dir\>|Add directory `<dir>` to the list of directories to be searched for -l.|
 
-[XRT Documentation](https://xilinx.github.io/XRT/2021.2/html/index.html)
+[XRT Documentation](https://xilinx.github.io/XRT/2022.1/html/index.html)
 [Details of Host Application Programming](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-for-Bare-metal-Systems)
 
 |Inputs Sources|Description|
@@ -310,7 +346,7 @@ v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
 	--temp_dir ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/_x						\
-	-f xilinx_vck190_base_202120_1												\
+	-f xilinx_vck190_base_202210_1												\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 									\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/rootfs.ext4 						\
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/Image 						\
@@ -376,12 +412,12 @@ cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up:
 ```bash
-root@versal-rootfs-common-2021_2:~#
+root@versal-rootfs-common-2022_1:~#
 ```
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2021_2:~# xinit: giving up
+root@versal-rootfs-common-2022_1:~# xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -459,7 +495,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power ON the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2021_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2022_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 ```
@@ -734,7 +770,7 @@ Contains sections on how to develop AI Engine graphs, how to use the AI Engine c
 Describes the FIR Compiler IP describes all of the parameters and settings and how they control the final filter implementation.
 
 # Revision History
-* Jul 2021 - Initial Release
+* Jul 2022 - Initial Release
 
 # Support
 
@@ -750,4 +786,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD061 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD061 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>
