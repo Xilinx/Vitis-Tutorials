@@ -1,5 +1,5 @@
 <!--
-# Copyright 2021 Xilinx Inc.
+# Copyright 2022 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Platform Creation Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2022.1 Vitis™ Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
@@ -28,28 +28,31 @@ In this step, we will create the hardware design for the KV260 Vitis acceleratio
 
 ## Create Base Vivado Project from Preset
 
-1. Launch Vivado
+1. Create a workspace and launch Vivado
 
    Run the following commands in Linux console.
 
    ```bash
+   mkdir WorkSpace
+   cd WorkSpace
    source <Vitis_Install_Directory>/settings64.sh
    vivado &
    ```
 
-2. Create a Vivado project named **kv260_custom_platform**.
+2. Create a Vivado project named **kv260_hardware_platform**.
 
    - Select **File->Project->New**, Click **Next**.
-   - In Project Name dialog set Project name to **kv260_custom_platform**. Click **Next**.
+   - In Project Name dialog set Project name to **kv260_hardware_platform** and keep **Create project subdirectory** checked. Then click **Next**.
    - Enable **Project is an extensible Vitis platform**. Click **Next**.
 
-   ![vivado_project_type.png](images/vivado_project_type.png)
+      ![vivado_project_type.png](images/vivado_project_type.png)
 
    - Select **Boards** tab
    - Click **Refresh** button to load the latest list of boards.
    - Select **Kria KV260 Vision AI Starter Kit**.
-   - Click **Connections**, select **Vision AI Starter Kit carrier card**, click OK.
+   - Click **Connections**, click drop-down button and select **Vision AI Starter Kit carrier card**, click OK.
       ![Missing Image](./images/kv260_cc.png)
+
    - Click **Next**.
    - Review project summary and click **Finish**
 
@@ -274,14 +277,14 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
    - Select Platform Type: **Hardware and Hardware Emulation**, click Next. If you skipped the emulation setup previously, select **Hardware** here.
    - Select Platform State: **Pre-synthesis**, enable **Include Bitstream**, click Next
    - Input Platform Properties and click **Next**. For example,
-     - Name: kv260_custom_platform
+     - Name: kv260_hardware_platform
      - Vendor: xilinx
      - Board: kv260
      - Version: 0.0
      - Description: This platform provides high PS DDR bandwidth and three clocks: 100MHz, 200MHz and 400MHz.
-   - Fill in XSA file name: **kv260_custom_platform** and keep the export directory as default. 
+   - Fill in XSA file name: **kv260_hardware_platform** and keep the export directory as default. 
    - Click **Finish**. 
-   - **kv260_custom_platform.xsa** will be generated. The export path is reported in the Tcl console. 
+   - **kv260_hardware_platform.xsa** will be generated. The export path is reported in the Tcl console. 
 
    >Note: We enable Include Bitstream to fulfill the requirement of the fpga-manager-util package in PetaLinux.
 
@@ -295,11 +298,11 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
    set_property platform.design_intent.external_host "false" [current_project]
    set_property platform.design_intent.datacenter "false" [current_project]
    # Write pre-synthesis expandable XSA
-   write_hw_platform -include_bit -force -file ./kv260_custom_platform.xsa
+   write_hw_platform -include_bit -force -file ./kv260_hardware_platform.xsa
    ```
 
 ### Next Step
 
-Now we finish the Hardware platform creation flow, then we should go to the [Step2: Software platform creation](./step2.md)
+Now we finish the Hardware platform creation flow, then we should go to the [Step2: Vitis platform creation](./step2.md)
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
