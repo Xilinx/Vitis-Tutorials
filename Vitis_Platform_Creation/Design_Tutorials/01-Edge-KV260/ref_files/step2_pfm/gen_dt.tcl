@@ -12,7 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-hsi open_hw_design ./kv260_custom_platform.xsa
+set xsa_name [lindex $argv 0]
+puts "The xsa name is \"$xsa_name\"" 
+set xsa_path [lindex $argv 1]
+puts "The xsa path is \"$xsa_path\"" 
+
+hsi open_hw_design ${xsa_path}/${xsa_name}.xsa
 hsi set_repo_path ./dtg
 hsi create_sw_design device-tree -os device_tree -proc psu_cortexa53_0
 hsi set_property CONFIG.dt_overlay true [hsi::get_os]
