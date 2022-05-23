@@ -1,4 +1,4 @@
-// © Copyright 2021 Xilinx, Inc.
+// © Copyright 2022 Xilinx, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,15 +55,31 @@ void s2mm(
       #pragma HLS loop_tripcount min=64
 
       ap_axiu<128, 0, 0, 0> firOut = strmInpFromFIR.read();
-      
-      // All Values should 1...
-      if(i < CHK_CTR)
-      {
-         if(firOut.data != golden_128b[i])
+
+      #if N_FIR_FILTERS == 1
+         // All Values should 1...
+         if(i < CHK_CTR)
+         {
+            if(firOut.data != golden_128b[i])
+               ++errCnt;
+         }
+         else if(firOut.data != 0x0)
             ++errCnt;
-      }
-      else if(firOut.data != 0x0)
-         ++errCnt;
+
+      #elif N_FIR_FILTERS == 10
+         if(i< CHK_ZERO)
+         {
+            if(firOut.data != 0x0)
+               ++errCnt;
+         }
+         else if(i < CHK_CTR)
+         {
+            if(firOut.data != golden_128b[i])
+               ++errCnt;
+         }
+         else if(firOut.data != 0x0)
+            ++errCnt;   
+      #endif
    }
 }
 
@@ -90,14 +106,14 @@ int datamover(
    
    int errCnt = 0;
    
-   ITER_MM2S:for(int i = 0; i < iterCnt; ++i)
+   ITER_MM2S:for(int i = iterCnt; i ; --i)
    {
       #pragma HLS loop_tripcount min=1 max=8
       
       mm2s(strmOutToFIR, size);
    }
    
-   ITER_S2MM:for(int j = 0; j < iterCnt; ++j)
+   ITER_S2MM:for(int j = iterCnt; j ; --j)
    {
       #pragma HLS loop_tripcount min=1 max=8
       

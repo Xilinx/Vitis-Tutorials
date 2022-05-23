@@ -18,6 +18,12 @@ ABS_HW_PATH=$(ABS_BUILD_PATH)/vivado
 BD_TCL=system_step1.tcl
 ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
 
+.PHONY: help
+
+help:
+	@echo "Makefile usage"
+	@echo "make all 	## Generate hw platform and export XSA file"
+
 all: hw
 
 hw:

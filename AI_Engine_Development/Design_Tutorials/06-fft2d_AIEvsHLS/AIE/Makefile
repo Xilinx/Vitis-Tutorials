@@ -1,4 +1,4 @@
-# © Copyright 2021 Xilinx, Inc.
+# © Copyright 2022 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,20 @@
 
 %.PHONY: help
 help::
-	@echo  " Use the make recipes with required values for TARGET, FFT_2D_PT, FFT_2D_INSTS, ITER_CNT and EN_TRACE"
-	@echo  " TARGET=<hw_emu(default)/hw>"
-	@echo  " FFT_2D_PT=<64,128,256,512,2048(default)>"
-	@echo  " ITER_CNT=<No. of Iterations>"
-	@echo  " EN_TRACE=<0(default),1>"
 	@echo  ""
 	@echo  " Makefile Usage:"
+	@echo  ""
+	@echo  "  make sd_card"
+	@echo  "  Command calls rules: kernels graph xsa application package, in sequence"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make run"
+	@echo  "  Command calls rules: sd_card run_emu, in sequence"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make all"
+	@echo  "  Command calls rules: sd_card report_metrics vcd run_emu, in sequence"
+	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
 	@echo  "  make kernels"
 	@echo  "  Command to generate the PL kernels"
@@ -29,8 +36,17 @@ help::
 	@echo  "  make graph"
 	@echo  "  Command to generate the AI Engine graph"
 	@echo  ""
-	@echo  "  make xclbin"
-	@echo  "  Command to generate the xclbin for specified target"
+	@echo  "  make aiesim"
+	@echo  "  Command to run aie simulator for the AI Engine graph"
+	@echo  ""
+	@echo  "  make aiesim_profile"
+	@echo  "  Command to run aie simulator for the AI Engine graph and enable kernel print statements"
+	@echo  ""
+	@echo  "  make vcd"
+	@echo  "  Command to run aie simulator for the AI Engine graph and create the vcd and xpe file for the same"
+	@echo  ""
+	@echo  "  make xsa"
+	@echo  "  Command to generate the xsa for specified target"
 	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
 	@echo  "  make application"
@@ -40,18 +56,58 @@ help::
 	@echo  "  Command to package design into an sd_card for specified target"
 	@echo  "  Default TARGET is hw_emu"
 	@echo  ""
+	@echo  "  make run_emu"
+	@echo  "  Command to run the hw emulator if LAUNCH_HW_EMU_EXEC variable is set to 1"
+	@echo  "  Default TARGET is hw_emu"
+	@echo  ""
+	@echo  "  make report_metrics"
+	@echo  "  Command to run and get vivado utilisation and power reports."
+	@echo  "  Works only for TARGET=hw"
+	@echo  ""
 	@echo  "  make clean_target"
 	@echo  "  Command to remove the generated files for a specific target"
 	@echo  ""
 	@echo  "  make clean_insts"
-	@echo  "  Command to remove the generated files for a specific instance design 1x,5x or 10x"
+	@echo  "  Command to remove the generated files for a specific instance of the design."
 	@echo  ""
 	@echo  "  make clean_fftpt"
 	@echo  "  Command to remove the generated files for a specific fft point size"
 	@echo  ""
-	@echo  "  make cleanall"
-	@echo  "  Command to remove the generated files for all instances and point sizes"
+	@echo  "  make clean_fft2d_dt"
+	@echo  "  Command to remove the generated files for a specific fft datatype"
 	@echo  ""
+	@echo  "  make cleanall_blds"
+	@echo  "  Command to remove the generated build files for all variations"
+	@echo  ""
+	@echo  "  make cleanall_vivado_reports"
+	@echo  "  Command to remove the generated vivado reports files for all variations"
+	@echo  ""
+	@echo  "  make cleanall_xpe_reports"
+	@echo  "  Command to remove the generated xpe files for all variations"
+	@echo  ""
+	@echo  "  make cleanall_reports"
+	@echo  "  Command to remove all the generated reports for all variations"
+	@echo  ""
+	@echo  "  make cleanall"
+	@echo  "  Command to remove all the generated builds files  and reports for all variations"
+	@echo  ""
+	@echo  " OPTIONS:"
+	@echo  " Use the make recipes with required values for options mentioned below-"
+	@echo  "    TARGET             -specifies target: Hardware or Emulation. Values: hw_emu(default), hw"
+	@echo  "    FFT_2D_DT          -specifies FFT Datatype. Values: 0(cint16, default), 1(cfloat)"
+	@echo  "    FFT_2D_PT          -specifies FFT Point. Values: 64, 128, 256, 512, 2048(default)"
+	@echo  "    FFT_2D_INSTS       -specifies number of FFT instances. Values: 1(default), 5 and 10"
+	@echo  "    PL_FREQ        	 -specifies HLS kernel frequencies. Values: 250Mhz(default)"
+	@echo  "    ITER_CNT           -specifies design iteration count: Values: 8(default)"
+	@echo  "    EN_TRACE           -specifies whether to enable profiling for the design. Values: 0(disabled, default) and 1(enabled)"
+	@echo  "    LAUNCH_HW_EMU_EXEC -specifies whether to launch hw emulator when running make run_emu rule. Values: 0(disabled, default) and 1(enabled)"
+	@echo  ""
+
+# Print all options passed to Makefile
+print-%  : ; @echo $* = $($*)
+
+# For SPRITE
+DSPLIB_ROOT=$(DSPLIB_VITIS)/dsp
 
 # =========================================================
 # TARGET can be set as:
@@ -59,6 +115,23 @@ help::
 #   hw    : Hardware Run
 # =========================================================
 TARGET := hw_emu
+
+######################################
+# FFT 2D Datatype can be,
+# cint16 (Default) or cfloat...
+# 0=cint16(Default)
+# 1=cfloat
+######################################
+
+FFT_2D_DT := 0
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR_VAL := cint16
+
+else
+   FFT_2D_DT_DIR_VAL := cfloat
+
+endif
 
 # =========================================================
 # 2 Dimentional FFT Point: MAT_ROWS x MAT_COLS(Mat Dims):
@@ -86,8 +159,9 @@ FFT_2D_INSTS := 1
 # PL Frequency in Mhz:
 #   250Mhz(default)
 # =========================================================
-PL_FREQ := 250
-VPP_CLOCK_FREQ := $(PL_FREQ)000000
+PL_FREQ := 312.5
+HZ_UNIT := 1000000
+VPP_CLOCK_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * $(HZ_UNIT)" | bc`)
 
 # =========================================================
 # Iteration Count:
@@ -101,16 +175,14 @@ ITER_CNT := 8
 EN_TRACE := 0
 
 ######################################
-# FFT 2D Datatype can be,
-# cint16 (Default) or cfloat...
-# 0=cint16(Default)
-# 1=cfloat
+# When TARGET=hw_emu, hw_emu launch...
+# 1 = Enabled (Default).
+# 0 = Disabled.
 ######################################
-
-FFT_2D_DT := 0
+LAUNCH_HW_EMU_EXEC := 0
 
 # =========================================================
-# Source directory
+# Source directories
 # =========================================================
 # Relative fft_2d directory
 RELATIVE_PROJECT_DIR := ./
@@ -122,40 +194,38 @@ DESIGN_REPO  := $(PROJECT_REPO)/design
 AIE_SRC_REPO := $(DESIGN_REPO)/aie_src
 HOST_APP_SRC := $(DESIGN_REPO)/host_app_src
 PL_SRC_REPO  := $(DESIGN_REPO)/pl_src
+
 SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
-HW_EMU_RUN_FILES_REPO  := $(DESIGN_REPO)/hw_emu_files
+EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
+VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-
-ifeq ($(FFT_2D_DT),0)
-   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cint16_dsns
-
-else
-   FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/cfloat_dsns
-
-endif
-
+FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT_DIR_VAL)_dsns
 FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
-WORK_DIR         := Work
+
+REPORTS_REPO := $(PROJECT_REPO)/reports_dir
+BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+
+XPE_REPO := $(PROJECT_REPO)/xpe_dir
+BLD_XPE_DIR := $(XPE_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/$(TARGET)
+VCD_FILE_NAME := $(FFT_2D_DT_DIR_VAL)_fft2d_$(MAT_ROWS)x$(MAT_COLS)_x$(FFT_2D_INSTS)
+BLD_TGT_VCD_FILE := $(BUILD_TARGET_DIR)/$(VCD_FILE_NAME).vcd
+XPE_FILE := $(BLD_XPE_DIR)/graph_$(VCD_FILE_NAME).xpe
 
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_script.sh
 
-######################################
-# When TARGET=hw_emu, hw_emu launch...
-# 1 = Enabled (Default).
-# 0 = Disabled.
-######################################
-LAUNCH_HW_EMU_EXEC := 1
+WORK_DIR := Work
 
-# Print all options passed to Makefile
-print-%  : ; @echo $* = $($*)
-
+###########################################################
+# Variable Definitions...
+#
 # ==========================================================
 # Below are the names for SDF graph, application executable,
-# kernel executables, and xclbin
+# kernel executables, and xsa
 # ==========================================================
 DATAMOVER_KERNEL_TOP := dma_hls
 DATAMOVER_KERNEL_XO  := $(DATAMOVER_KERNEL_TOP).$(TARGET)
@@ -164,7 +234,8 @@ LIBADF_A := $(BUILD_TARGET_DIR)/libadf.a
 VCD_FILE := $(BUILD_TARGET_DIR)/x$(FFT_2D_INSTS).vcd
 
 APP_ELF := fft_2d_aie_xrt.elf
-XCLBIN  := vck190_aie_fft_2d.$(TARGET).xclbin
+APP_ELF_INF_RUN := fft_2d_aie_xrt_inf_run.elf
+XSA := vck190_aie_fft_2d.$(TARGET).xsa
 
 # =========================================================
 # Kernel Source Files repository
@@ -198,37 +269,43 @@ AIE_FLAGS += --Xpreproc="-DFFT2D_INSTS=$(FFT_2D_INSTS)"
 AIE_FLAGS += --Xpreproc="-DMAT_ROWS=$(MAT_ROWS)"
 AIE_FLAGS += --Xpreproc="-DMAT_COLS=$(MAT_COLS)"
 AIE_FLAGS += --Xpreproc="-DFFT_2D_DT=$(FFT_2D_DT)"
+AIE_FLAGS += --Xpreproc="-DITER_CNT=8"
+#AIE_FLAGS += --Xpreproc="-DITER_CNT=$(ITER_CNT)"
 AIE_FLAGS += --platform=$(PLATFORM)
-
-ifeq ($(FFT_2D_DT),1)
-   ifeq ($(FFT_2D_PT),2048)
-      ifeq ($(FFT_2D_INSTS),$(filter $(FFT_2D_INSTS),5 10))
-         AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
-      
-      endif
-   endif
-endif
+#AIE_FLAGS += --target=$(TARGET)
 
 AIE_FLAGS += --log-level=5
 AIE_FLAGS += --test-iterations=2
 AIE_FLAGS += --pl-freq=$(PL_FREQ)
 AIE_FLAGS += --dataflow
 
-AIE_FLAGS += --heapsize=7000
+# Constraints for same shim solution for all variations
+# aids in timeing closure of the design...
+AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+
+AIE_FLAGS += --Xmapper=BufferOptLevel9
+AIE_FLAGS += --Xrouter=DMAFIFOsInFreeBankOnly
+
+#AIE_FLAGS += --heapsize=7000
 AIE_FLAGS += --Xchess="main:bridge.llibs=softfloat m"
 AIE_FLAGS += --workdir=$(WORK_DIR)
+
+# Aiesimulator flags
+#-i - Alias of --input-dir=<dir> option
+#-o - Alias of --output-dir=<dir> option
+AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/
+AIE_SIM_FLAGS += -i=$(AIE_SRC_REPO)/aiesim_data/$(FFT_2D_DT_DIR_VAL)_IOfiles/fft2d_$(MAT_ROWS)x$(MAT_COLS)_ioFiles
 
 # =========================================================
 # Application Compiler and Linker Flags
 # =========================================================
 GCC_FLAGS := -O
 GCC_FLAGS += -c
-GCC_FLAGS += -std=c++14
+GCC_FLAGS += -std=c++17
 GCC_FLAGS += -D__linux__
 GCC_FLAGS += -D__PS_ENABLE_AIE__
 GCC_FLAGS += -DXAIE_DEBUG
 GCC_FLAGS += -DFFT2D_INSTS=$(FFT_2D_INSTS)
-GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
 GCC_FLAGS += -DMAT_ROWS=$(MAT_ROWS)
 GCC_FLAGS += -DMAT_COLS=$(MAT_COLS)
 GCC_FLAGS += -DFFT_2D_DT=$(FFT_2D_DT)
@@ -266,10 +343,9 @@ DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_T
 DATAMOVER_KERNEL_VPP_FLAGS += -D FFT_2D_DT=$(FFT_2D_DT)
 #DATAMOVER_KERNEL_VPP_FLAGS += --hls.jobs 32
 
-VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_0
+VPP_LINK_FLAGS := --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_0
 
 ifeq ($(FFT_2D_INSTS),$(filter $(FFT_2D_INSTS),5 10))
-   
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_1
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_2
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_3
@@ -278,7 +354,6 @@ ifeq ($(FFT_2D_INSTS),$(filter $(FFT_2D_INSTS),5 10))
 endif
 
 ifeq ($(FFT_2D_INSTS),10)
-   
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_5
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_6
    VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_7
@@ -290,19 +365,18 @@ endif
 VPP_LINK_FLAGS += --clock.defaultTolerance 0.001
 
 ifeq ($(EN_TRACE),1)
+   ifeq ($(TARGET),hw)
+      ifeq ($(FFT_2D_INSTS),1)
+         VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
+      
+      else
+         VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:strmInp_from_colwiseFFT
+      
+      endif
+      
+      VPP_LINK_FLAGS += --profile.trace_memory DDR
    
-   ifeq ($(FFT_2D_INSTS),1)
-      
-      VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
-      
-   else
-      
-      VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:strmInp_from_colwiseFFT
-      
    endif
-
-   VPP_LINK_FLAGS += --profile.trace_memory DDR
-   
 endif
 
 VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/x$(FFT_2D_INSTS).cfg
@@ -326,23 +400,27 @@ PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
-PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XCLBIN) $(LIBADF_A)
-PKG_FLAGS += --package.sd_file $(HW_EMU_RUN_FILES_REPO)/$(EMBEDDED_EXEC_SCRIPT)
+PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA) $(LIBADF_A)
+PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN) 
+PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
 ifeq ($(EN_TRACE),1)
-
-   PKG_FLAGS += --package.sd_file $(PROFILING_CONFIGS_REPO)/xrt.ini
-
+   ifeq ($(TARGET),hw)
+      PKG_FLAGS += --package.sd_file $(PROFILING_CONFIGS_REPO)/xrt.ini
+   
+   endif
 endif
 
 ifdef XRT_ROOT
-
    PKG_FLAGS += --package.sd_dir $(XRT_ROOT)
 
 endif
 
 PKG_FLAGS += --package.defer_aie_run
 
+###########################################################
+# Make rules...
+#
 # =========================================================
 # Step 1. Kernel XO File Generation
 # ========================================================
@@ -356,20 +434,23 @@ KERNEL_XOS := $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo
 
 kernels: $(KERNEL_XOS)
 
-$(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo:
+$(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo: $(PL_SRC_REPO)/dma_hls*
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
 	v++ --target $(TARGET) $(DATAMOVER_KERNEL_VPP_FLAGS) \
 		$(VPP_FLAGS) -c -k $(DATAMOVER_KERNEL_TOP) \
 		$(DATAMOVER_KERNEL_SRC) -o $@
-
+	@echo ""
+	@echo "HLS Kernel Compilation Complete..."
+	@echo "####################################"
+	@echo ""
 # =========================================================
 # Step 2. AI Engine SDF Graph File and $(WORK_DIR)/ Directory
 #         (containing the Graph Executable) Generation
 # ========================================================
 # This step creates an SDF Graph and the $(WORK_DIR)/ directory.
 # The $(WORK_DIR)/ directory contains the graph executable
-# (fft_2d.o) which is used in the make xclbin step. 
+# (fft_2d.o) which is used in the make xsa step. 
 # The aiecompiler is invoked with the -target=hw.
 # Outputs: in build/ directory
 #	libsdf.a
@@ -378,44 +459,76 @@ $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo:
 #	xnwOut/
 graph: $(LIBADF_A)
 
-$(LIBADF_A): $(GRAPH_SRC_CPP)
+$(LIBADF_A):  $(AIE_SRC_REPO)/graph.*
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
 	aiecompiler $(AIE_FLAGS) $(GRAPH_SRC_CPP) 2>&1 | tee -a aiecompiler.log
+	@echo ""
+	@echo "AIE Compilation Complete..."
+	@echo "####################################"
+	@echo ""
 
-aiesim: $(LIBADF_A)
-	mkdir -p $(BUILD_TARGET_DIR); \
+aiesim: graph
 	cd $(BUILD_TARGET_DIR); \
-	aiesimulator --pkg-dir $(WORK_DIR)/ --profile 2>&1 | tee -a aiesim.log
+	aiesimulator $(AIE_SIM_FLAGS) 2>&1 | tee -a aiesim.log
+	@echo ""
+	@echo "AIE Simulation, Without Profiling, Complete..."
+	@echo "####################################"
+	@echo ""
 
-vcd: $(VCD_FILE) vcd_util_n_power
-
-vcd_util_n_power: $(VCD_FILE)
+aiesim_profile: graph
 	cd $(BUILD_TARGET_DIR); \
-	vcdanalyze --vcd x$(FFT_2D_INSTS).vcd --xpe
+	aiesimulator $(AIE_SIM_FLAGS) --profile 2>&1 | tee -a aiesim.log
+	@echo ""
+	@echo "AIE Simulation, With Profiling, Complete..."
+	@echo "####################################"
+	@echo ""
 
-$(VCD_FILE): $(LIBADF_A)
+vcd: graph $(XPE_FILE)
+
+# xpe file generation...
+$(XPE_FILE): $(BLD_TGT_VCD_FILE)
 	cd $(BUILD_TARGET_DIR); \
-	aiesimulator --pkg-dir $(WORK_DIR)/ --dump-vcd x$(FFT_2D_INSTS) 2>&1 | tee -a vcd.log
+	vcdanalyze --vcd $(VCD_FILE_NAME).vcd --xpe
+	rm -rf $(BLD_XPE_DIR)
+	mkdir -p $(BLD_XPE_DIR)
+	cp -rf $(BUILD_TARGET_DIR)/aiesim_xpe/*.xpe $(XPE_FILE)
+	@echo ""
+	@echo "AIE XPE Generation Complete..."
+	@echo "####################################"
+	@echo ""
+
+# vcd file generation...
+$(BLD_TGT_VCD_FILE): $(AIE_SRC_REPO)/aiesim_data/*
+	cd $(BUILD_TARGET_DIR); \
+	aiesimulator $(AIE_SIM_FLAGS) --profile --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
+	@echo ""
+	@echo "AIE VCD Trace Generation Complete..."
+	@echo "####################################"
+	@echo ""
+
 
 # =========================================================
-# Step 3. XCLBIN File Generation
+# Step 3. XSA File Generation
 # ========================================================
 # This step links the graph executable and
-# the kernels into a xclbin file.
+# the kernels into a xsa file.
 # Outputs: in build/[hw_emu | hw]/ directory
-#	vck190_aie_fft_2d.[hw_emu | hw].xclbin
-#	vck190_aie_fft_2d.[hw_emu | hw].xclbin.info
-#	vck190_aie_fft_2d.[hw_emu | hw].xclbin.link_summary
+#	vck190_aie_fft_2d.[hw_emu | hw].xsa
+#	vck190_aie_fft_2d.[hw_emu | hw].xsa.info
+#	vck190_aie_fft_2d.[hw_emu | hw].xsa.link_summary
 #	vck190_aie_fft_2d.[hw_emu | hw].xsa
 #	vck190_aie_fft_2d.[hw_emu | hw].log
-xclbin: $(BUILD_TARGET_DIR)/$(XCLBIN)
+xsa:  kernels graph $(BUILD_TARGET_DIR)/$(XSA)
 
-$(BUILD_TARGET_DIR)/$(XCLBIN): kernels $(LIBADF_A)
+$(BUILD_TARGET_DIR)/$(XSA):$(KERNEL_XOS) $(SYSTEM_CONFIGS_REPO)/*
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) -t $(TARGET) -o $@ \
 		    $(KERNEL_XOS) $(LIBADF_A)
-
+	@echo ""
+	@echo "XSA Compilation Complete..."
+	@echo "####################################"
+	@echo ""
 # =========================================================
 # Step 4. A72 Application Executable File Generation
 # ========================================================
@@ -425,12 +538,43 @@ $(BUILD_TARGET_DIR)/$(XCLBIN): kernels $(LIBADF_A)
 # 	aie_control.o
 #	fft_2d_aie_app.o
 # 	fft_2d_aie_xrt.elf
-application: $(LIBADF_A)
-	@rm -rf $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/fft_2d_aie_app.o $(BUILD_TARGET_DIR)/$(APP_ELF)
-	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control.o
-	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/fft_2d_aie_app.o $(GCC_INC_LIB) $(GCC_LIB)
-	$(CXX) $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/fft_2d_aie_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
 
+REG_GCC_FLAGS := $(GCC_FLAGS)
+REG_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+
+application: graph $(BUILD_TARGET_DIR)/$(APP_ELF)
+
+$(BUILD_TARGET_DIR)/$(APP_ELF): $(HOST_APP_SRC)/* $(LIBADF_A)
+	@rm -rf $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/fft_2d_aie_app.o $(BUILD_TARGET_DIR)/$(APP_ELF)
+	$(CXX) $(REG_GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control.o
+	$(CXX) $(REG_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/fft_2d_aie_app.o $(GCC_INC_LIB) $(GCC_LIB)
+	$(CXX) $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/fft_2d_aie_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
+	@echo ""
+	@echo "Host Application Compilation Complete..."
+	@echo "####################################"
+	@echo ""
+
+# This step compiles the A72 application. This step is the 
+# same for TARGET=[hw_emu | hw]. Compile the PS code.
+# Outputs: in build/ directory
+# 	aie_control_inf_run.o
+#	fft_2d_aie_app_inf_run.o
+# 	fft_2d_aie_xrt_inf_run.elf
+#
+INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
+INF_RUN_GCC_FLAGS += -DITER_CNT=-1
+
+application_inf_run: graph $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+
+$(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(HOST_APP_SRC)/* $(LIBADF_A)
+	@rm -rf $(BUILD_TARGET_DIR)/app_control_inf_run.o $(BUILD_TARGET_DIR)/fft_2d_aie_app_inf_run.o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control_inf_run.o
+	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/fft_2d_aie_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB)
+	$(CXX) $(BUILD_TARGET_DIR)/app_control_inf_run.o $(BUILD_TARGET_DIR)/fft_2d_aie_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+	@echo ""
+	@echo "Host Application Infinite Run Compilation Complete..."
+	@echo "####################################"
+	@echo ""
 # =========================================================
 # Step 5. Package Generation 
 # ========================================================
@@ -442,11 +586,17 @@ application: $(LIBADF_A)
 # 	package/ directory
 # 	v++.package_summary
 # 	v++_package.log
-package:
+package: application application_inf_run xsa $(EMBEDDED_PACKAGE_OUT)
+
+$(EMBEDDED_PACKAGE_OUT): $(PROFILING_CONFIGS_REPO)/* $(EXEC_SCRIPTS_REPO)/* $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA)
 	rm -rf $(EMBEDDED_PACKAGE_OUT)
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p $(PKG_FLAGS)
 	cp -rf $(BUILD_TARGET_DIR)/package $(BUILD_TARGET_DIR)/package_backup
+	@echo ""
+	@echo "Design Packaging Complete..."
+	@echo "####################################"
+	@echo ""
 
 # =========================================================
 # Step 6. Run Hardware Emulation 
@@ -469,7 +619,11 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 10800 | tee embedded_run.log
+	@echo ""
+	@echo "HW Emulation Complete..."
+	@echo "####################################"
+	@echo ""
 
 endif
 else
@@ -483,42 +637,111 @@ else
 
 endif
 
+# =========================================================
+# Step 7. Report Utilization Metrics
+# =========================================================
+# If the target is HW, this generates the power and resource
+# utilization metrics from vivado.
+report_metrics: xsa $(BLD_REPORTS_DIR)
+
+$(BLD_REPORTS_DIR): $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl
+ifeq ($(TARGET),hw_emu)
+	@echo "This build target (report-metrics) not valid when design target is hw_emu"
+
+else
+	rm -rf $(BLD_REPORTS_DIR)
+	mkdir -p $(BLD_REPORTS_DIR)
+	cd $(BLD_REPORTS_DIR); \
+	vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+	@echo ""
+	@echo "Vivado Utilization/Power Report Generation Complete..."
+	@echo "####################################"
+	@echo ""
+
+endif
+
 ###########################################################################
 
 # =========================================================
 # Primary Build Targets
 # ==> sd_card
 # ==> run
+# ==> all
 # ==> clean_target
 # ==> clean_insts
 # ==> clean_fftpt
 # ==> clean_fft2d_dt
+# ==> cleanall_blds
+# ==> cleanall_vivado_reports
+# ==> cleanall_xpe_reports
+# ==> cleanall_reports
 # ==> cleanall
 # ========================================================
 
 #Build the design without running the hardware emulation
-sd_card: kernels graph xclbin application package
+sd_card: package
 
 #Build the design and then run hardware emulation
 run: sd_card run_emu
+
+#Same as "run" above, but include metrics generation and
+#vcd generation
+all: run report_metrics vcd 
 
 #Clean generated files
 clean_target:
 	@echo "Cleaning $(TARGET) Target Build Dir..."
 	rm -rf $(BUILD_TARGET_DIR)
 
+#Clean fft2d instances dir files...
 clean_insts:
 	@echo "Cleaning $(FFT_2D_INSTS)x Builds..."
 	rm -rf $(INSTS_BLD_DIR)
 
+#Clean fft2d point dir files...
 clean_fftpt:
 	@echo "Cleaning $(MAT_ROWS)x$(MAT_COLS) FFT Builds..."
 	rm -rf $(FFTPT_BLD_DIR)
 
+#Clean fft2d datatype dir files...
 clean_fft2d_dt:
 	@echo "Cleaning $(FFT_2D_DT)_impl Builds..."
 	rm -rf $(FFT_2D_DT_DIR)
 
-cleanall:
+#Clean all builds...
+cleanall_blds:
 	rm -rf $(BASE_BLD_DIR)
-	rm -rf vivado* .Xil *.log vitis*
+	rm -rf vivado* .Xil *.log vitis* core.*
+
+#Clean_all vivado reports...
+cleanall_vivado_reports:
+	rm -rf $(VIVADO_REPORTS_REPO)
+
+#Clean_all xpes...
+cleanall_xpe_reports:
+	rm -rf $(XPE_REPO)
+
+#Clean_all reports...
+cleanall_reports: cleanall_vivado_reports cleanall_xpe_reports
+
+#Clean_all builds and reports...
+cleanall: cleanall_blds cleanall_reports
+
+#####################################################################
+# Impl strategies script...
+# Strategies Repo with the impl Script Has to be provided...
+IMPL_STRATEGY_OPT := 1
+IMPL_STRATEGIES_TCL := $(STRATEGIES_REPO)/impl_strategies_explore.tcl
+run_impl_strategies: $(IMPL_STRATEGIES_TCL)
+ifeq ($(TARGET),hw_emu)
+	@echo "This build target (run_impl_strategies) not valid when design target is hw_emu"
+
+else
+	vivado -mode tcl -source $(IMPL_STRATEGIES_TCL) \
+	$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr -tclargs $(IMPL_STRATEGY_OPT)
+	#$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr -tclargs $(BUILD_TARGET_DIR) $(IMPL_STRATEGY_OPT)
+
+endif
+
+open_vivado_proj: $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+	vivado $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr

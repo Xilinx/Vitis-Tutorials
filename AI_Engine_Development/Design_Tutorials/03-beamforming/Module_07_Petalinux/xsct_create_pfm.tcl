@@ -31,7 +31,7 @@ domain config -qemu-args ./src/qemu/aie/qemu_args.txt
 domain config -qemu-data ./src/boot
 
 # Linux domain
-domain create -name xrt -proc psv_cortexa72 -os linux -arch {64-bit} -runtime {ocl} -image {./build/image}  -bootmode {sd}
+domain create -name xrt -proc psv_cortexa72 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./build/image}  -bootmode {sd}
 domain active xrt
 domain config -boot {build/vck190_linux/images/linux}
 domain config -bif ./build/vck190_linux/images/linux/linux.bif

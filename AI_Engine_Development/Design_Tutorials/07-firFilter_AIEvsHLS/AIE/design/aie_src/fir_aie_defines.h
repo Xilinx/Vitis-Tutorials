@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// © Copyright 2021 Xilinx, Inc.
+// © Copyright 2022 Xilinx, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
 // Filter Parameters
 #define FIR_DOWNSHIFT        14
 #define FIR_ROUND_MODE        0
-#define N_AIES_PER_FIR        1
+//#define N_AIES_PER_FIR        1
 
 // Simulation parameters
 #define N_ITERATIONS          8

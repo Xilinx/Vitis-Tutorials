@@ -1,4 +1,4 @@
-#  © Copyright 2020 Xilinx, Inc.
+#  © Copyright 2022 Xilinx, Inc.
 #  Licensed under the Apache License, Version 2.0 (the 'License');
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
@@ -52,9 +52,9 @@ PLATFORM_USE := $(MODULE_01_DIR)/sw/build/vck190_v1_0/export/vck190_v1_0/vck190_
 LIBADF_A := $(MODULE_02_DIR)/build/libadf.a
 
 # =========================================================
-# XCLBIN SELECTION
+# XSA SELECTION
 # =========================================================
-XCLBIN := $(MODULE_04_DIR)/build/rev1/$(TARGET)/beamforming.rev1.$(TARGET).xclbin
+XSA := $(MODULE_04_DIR)/build/rev1/$(TARGET)/beamforming.rev1.$(TARGET).xsa
 
 # =========================================================
 # PS HOST APPLICATION SELECTION
@@ -78,8 +78,8 @@ graph:
 kernels: 
 	$(MAKE) kernels -C $(MODULE_03_DIR)
 
-xclbin: 
-	$(MAKE) xclbin_prebuilt -C $(MODULE_04_DIR)
+xsa: 
+	$(MAKE) xsa_prebuilt -C $(MODULE_04_DIR)
 
 application: 
 	$(MAKE) application -C $(MODULE_05_DIR)
@@ -91,7 +91,7 @@ $(BUILD_TARGET_MAIN_DIR)/$(PACKAGE_DIR)/$(SD_CARD_IMG):
 	cd $(BUILD_TARGET_MAIN_DIR);			\
 	v++ -p -t $(TARGET) 				\
 		-f $(PLATFORM_USE) 				\
-		$(XCLBIN) $(LIBADF_A) 			\
+		$(XSA) $(LIBADF_A) 			\
 		--package.out_dir $(PACKAGE_DIR)	\
 		--package.domain aiengine 		\
 		--package.boot_mode=sd 			\
@@ -102,7 +102,7 @@ run_emu:
 	cd $(BUILD_TARGET_MAIN_DIR)/$(PACKAGE_DIR); \
 	./launch_hw_emu.sh
 
-build: platform graph kernels xclbin application package 
+build: platform graph kernels xsa application package 
 
 run: build run_emu
 

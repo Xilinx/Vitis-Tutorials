@@ -10,7 +10,7 @@
         "disable": false,
         "user": {
             "negative": 1,
-            "error_string": ".*XRT.*ERROR:.*"
+            "error_string": [".*XRT.*ERROR:.*"]
         },
         "jobs": [
             {

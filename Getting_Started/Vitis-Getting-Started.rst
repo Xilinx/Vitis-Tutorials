@@ -11,7 +11,8 @@ Introduction
 
    Vitis Introduction and Getting Started <./Vitis/Getting_Started_Vitis>
    Vitis HLS <./Vitis_HLS/Getting_Started_Vitis_HLS>
-
+   Vitis Libraries <./Vitis_Libraries/README>
+   Vitis Platform <./Vitis_Platform/README>
 
 .. list-table:: 
    :widths: 20 80
@@ -27,6 +28,12 @@ Introduction
 
    * - :doc:`Vitis HLS <./Vitis_HLS/Getting_Started_Vitis_HLS>`
      - See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within the Vitis High-Level Synthesis environment.
+
+   * - :doc:`Vitis Libraries <./Vitis_Libraries/README>`
+     - Learn how to leverage a L1 Vitis library element to build your own design. The FFT example is selected for explanation, and you may follow similar flow to use other library elements.
+
+   * - :doc:`Vitis Platform <./Vitis_Platform/README>`
+     - This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on Versal by using the Versal Extensible Platform from Vivado Customizable Example Design and pre-built Linux common images.
 
 
 
