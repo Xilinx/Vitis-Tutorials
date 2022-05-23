@@ -18,6 +18,8 @@ PLATFORM_NAME_FSBL=kv260_custom_fsbl
 XSA_NAME=kv260_hardware_platform
 VERSION=2022.1
 COMMON_IMAGE_PATH ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
+DT_PLAT_NAME=mydeivice
+DT_PATH=$(ROOT_DIR)/$(DT_PLAT_NAME)/psu_cortexa53_0/device_tree_domain/bsp
 BOOT=boot
 SD_DIR=sd_dir
 SYSROOT=sysroot
@@ -30,7 +32,7 @@ help:
 	@echo "make all COMMON_IMAGE_PATH=<path/to/common_image/>  	## Generate platform with pre-built software components"
 	
 
-all: check-common-image sw_comps dtbo dtb pfm_fsbl pfm  sysroot 
+all: check-common-image sw_comps dtb dtbo pfm_fsbl pfm  sysroot 
 
 #target : check  whether the common image is ready 
 check-common-image:
@@ -52,27 +54,15 @@ sw_comps:$(COMMON_IMAGE_PATH)/Image
 	cp $(COMMON_IMAGE_PATH)/rootfs.ext4  $(SW_COMP)/
 
 
-dtg:
-	git clone https://github.com/Xilinx/device-tree-xlnx.git -b xlnx_rel_v2022.1 dtg
-
-
-
-dt_output/pl.dtsi: dtg
-	@echo "INFO: Generating device tree from XSA" 
-	xsct gen_dt.tcl $(XSA_NAME)  ../step1_vivado/build/vivado 
-
-# Compile dt overlay for PL
-dtbo: dt_output/pl.dtsi
-	dtc -@ -O dtb -o dt_output/pl.dtbo dt_output/pl.dtsi
-	@echo	
-	@echo "INFO: Device tree generated in dt_output directory"
-
 dtb:
 	@echo "execute createdts to generate dtb file"
-	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME).xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2022.1  -compile"
-	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(BOOT)/
-	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(SD_DIR)/
+	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME).xsa -zocl  -platform-name $(DT_PLAT_NAME) -out .  -git-branch xlnx_rel_v2022.1  -overlay -compile"
+	cp $(DT_PATH)/system.dtb $(BOOT)/
+	cp $(DT_PATH)/system.dtb $(SD_DIR)/
 
+dtbo:$(DT_PATH)/pl.dtsi
+	dtc -@ -O dtb -o $(DT_PATH)/pl.dtbo $(DT_PATH)/pl.dtsi
+	mkdir -p dtbo_output && cp $(DT_PATH)/pl.dtbo dtbo_output/
 
 pfm_fsbl:
 	@echo "INFO: Creating simple Platform $(PLATFORM_NAME_FSBL) to get FSBL and PMU"
@@ -93,7 +83,7 @@ sysroot: $(COMMON_IMAGE_PATH)/sdk.sh
 	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_PATH)/sdk.sh -d  $(SYSROOT)/ -y
 
 clean:
-	$(RM) -r IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx  mydevice dt_output dtg boot sd_dir
+	$(RM) -r IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx  mydevice dt_output dtg boot sd_dir dtbo_output
 
 ultraclean: clean
 	$(RM) -r sw_comp  sysroot
