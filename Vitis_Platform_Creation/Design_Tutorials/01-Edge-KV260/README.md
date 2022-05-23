@@ -70,6 +70,8 @@ Since Kria SOM Starter Kit provides an off-the-shelf boot image and has its enha
 
 > Note: In step 2, after extracting the common image there are a lot of output components, the only valuable output product in this case is sysroot. It's used for host application cross-compilation. Since the boot images of KV260 Starter Kit is fixed, user doesn't need to generate any boot components, e.g., FSBL, etc.
 
+> Note: In this case we assume you start to do this experiment after you have already had your board booted up successfully. If you do not please refer to [kv260 getting started page](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started/getting-started.html).
+
 The following chapters will explain the details about these steps.
 
 ## Step-by-Step Tutorial
