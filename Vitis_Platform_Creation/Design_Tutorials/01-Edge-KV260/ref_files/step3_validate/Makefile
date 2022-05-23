@@ -51,7 +51,7 @@ $(PL_EXAMPLE_PATH)/shell.json:
 vadd_hw_package: $(PL_EXAMPLE_PATH)/simple_vadd  $(PL_EXAMPLE_PATH)/shell.json
 	@echo "INFO: Packaging Completed"
 	mkdir -p vadd
-	cp ../step2_pfm/dt_output/pl.dtbo vadd/
+	cp ../step2_pfm/dtbo_output/pl.dtbo vadd/
 	cp $(PL_EXAMPLE_PATH)/shell.json vadd/
 	cp $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin vadd/krnl_vadd.bin
 	cp $(PL_EXAMPLE_PATH)/simple_vadd vadd/

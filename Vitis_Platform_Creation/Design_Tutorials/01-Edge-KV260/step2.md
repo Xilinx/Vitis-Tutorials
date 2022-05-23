@@ -125,58 +125,60 @@ If you need to do system customization, please take the following steps as refer
   1. It needs to have ZOCL node so that XRT driver can be loaded properly
   2. It can include any configurations of the PL IP in the platform logic designed in step 1.
 
-  The device tree information for PL in your application is loaded after Linux boot together with the PL bitstream. A device tree overlay (DTBO) can be loaded and unloaded in Linux. For more information about DTBO, please refer to https://lkml.org/lkml/2012/11/5/615. 
+  The device tree information for PL in your application is loaded after Linux boot together with the XCLBIN file which contains the PL bitstream. A device tree overlay (DTBO) can be loaded and unloaded in Linux. For more information about DTBO, please refer to https://lkml.org/lkml/2012/11/5/615. 
 
-  Xilinx provides Device Tree Generator (DTG) to generate device tree from XSA file exported from Vivado. DTG is configurable for which information to be generated. According to our requirement, we will use these two options:
-
-  - `CONFIG.dt_zocl`: Generate ZOCL device tree node for XRT
-  - `CONFIG.dt_overlay`: Add overlay properties in dtsi for DTBO generation
+  Xilinx provides a new command `createdts` executed in XSCT tool to generate device tree from XSA file exported from Vivado. 
 
   Run the following steps to generate DTBO from XSA
 
-1. Install DTG
+1. Generate device tree file
 
-    ```bash
-    cd kv260_vitis_platform
-    git clone https://github.com/Xilinx/device-tree-xlnx
-    cd device-tree-xlnx
-    git checkout xlnx_rel_v2021.1
-    ```
+   ```bash
+   source <Vitis_tool_install_dir>/settings64.sh
+   cd kv260_vitis_platform
+   xsct
+   createdts -hw ../kv260_hardware_platform/kv260_hardware_platform.xsa -zocl \
+   -platform-name mydevice -git-branch xlnx_rel_v2022.1 -overlay -compile
+   ```
 
-2. Generate DTS from XSA with XSCT.
+   The `createdts` command has the following input values. Please specify them as you need.
 
-   - Launch XSCT
+   -  `-platform-name`: Platform name
+   -  `-hw`: Hardware XSA file with path
+   -  `-git-branch`: device tree branch
+   -  `-zocl`: enable the zocl driver support
+   -  `-overlay`: enable the device tree overlay support
+   -  `-compile`: specify the option to compile the device tree to DTB file
 
-    ```bash
-    cd kv260_vitis_platform
-    mkdir dtg_output
-    xsct
-    ```
+   Notice below information would show in XSCT console. Please ignore the warning and that also means you succeed to get system.dtb file which is located in <mydevice/psu_cortexa53_0/device_tree_domain/bsp>.
 
-   - Use XSCT HSI commands to read XSA and generate DTS.
+   ```bash
+   pl.dtsi:9.21-32.4: Warning (unit_address_vs_reg): /amba_pl@0: node has a unit name, but no reg property                                                      
+   system-top.dts:26.9-29.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name
+   zynqmp.dtsi:790.43-794.6: Warning (pci_device_reg): /axi/pcie@fd0e0000/legacy-interrupt-controller: missing PCI reg property
+   pl.dtsi:27.26-31.5: Warning (simple_bus_reg): /amba_pl@0/misc_clk_0: missing or empty reg/ranges property
+   ```
 
-    ```bash
-    hsi open_hw_design <design_name.xsa>
-    hsi set_repo_path device-tree-xlnx
-    hsi create_sw_design device-tree -os device_tree -proc psu_cortexa53_0
-    hsi set_property CONFIG.dt_overlay true [hsi::get_os]
-    hsi set_property CONFIG.dt_zocl true [hsi::get_os]
-    hsi generate_target -dir dtg_output
-    hsi close_hw_design [hsi current_hw_design]
-    ```
+   > Note: Createdts is a command executing in XSCT console to generate device files. This command needs several inputs to generate the device tree files. Regarding the meaning of every option you can execute help command to check the details. Besides XSCT is a Console tool of Vitis. You can start it by typing `xsct` in Linux terminal to start it. Or, you can select menu **Xilinx > XSCT Console** to start the XSCT tool after you launch Vitis.
 
-    You can save the hsi commands in a gen_dt.tcl file and use `xsct gen_dt.tcl` to execute it. If you type these commands in XSCT console directly, you can close XSCT console after the generation completes.
+   Execute the following command to exit XSCT console.
 
-3. Compile the dtsi to dtbo.
+   ```bash
+   exit
+   ```
 
-    Run the following command in the shell with PetaLinux environment.
+2. Compile the dtsi to dtbo.
 
-    ```bash
-    cd dtg_output
-    dtc -@ -O dtb -o pl.dtbo pl.dtsi
-    ```
+   Run the following command to build the dtsi file and create a directory to store the dtbo file.
 
-    > Note: `dtc` is device tree compiler. For more info about dtc, please check its [man page](http://manpages.ubuntu.com/manpages/trusty/man1/dtc.1.html) and [source code](https://git.kernel.org/pub/scm/utils/dtc/dtc.git/tree/README?h=main).
+   ```bash
+   cd kv260_vitis_platform
+   dtc -@ -O dtb -o mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtbo mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtsi
+   mkdir dtg_output
+   cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtbo dtg_output
+   ```
+
+   > Note: `dtc` is device tree compiler. For more info about dtc, please check its [man page](http://manpages.ubuntu.com/manpages/trusty/man1/dtc.1.html) and [source code](https://git.kernel.org/pub/scm/utils/dtc/dtc.git/tree/README?h=main).
 
 
 
@@ -215,7 +217,8 @@ If you need to do system customization, please take the following steps as refer
    - kv260_vitis_platform               # Software components and vitis platform directory
      - xilinx-zynqmp-common-v2022.1     # common image directory
      - device-tree-xlnx                 # device tree repo directory
-     - dtg_output                       # device tree output directory
+     - mydevice                         # device tree source file directory
+     - dtg_output                       # DTBO file directory
      - sysroots                         # Extracted Sysroot Directory
      - pfm                              # Platform Packaging Sources
        - boot                           # boot components directory
