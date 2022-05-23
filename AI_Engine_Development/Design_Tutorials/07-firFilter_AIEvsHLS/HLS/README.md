@@ -1,10 +1,6 @@
 <table>
  <tr>
-<<<<<<< HEAD
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
-=======
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
->>>>>>> Updated Designs for 2022.1
    </td>
  </tr>
 </table>
@@ -17,8 +13,6 @@
 [Software Design Details](#software-design-details)
 
 [References](#references)
-
-[Revision History](#revision-history)
 
 # Building the Design
 
@@ -769,8 +763,6 @@ Contains sections on how to develop AI Engine graphs, how to use the AI Engine c
 ### [ FIR Compiler v7.2](https://www.xilinx.com/support/documentation/ip_documentation/fir_compiler/v7_2/pg149-fir-compiler.pdf)
 Describes the FIR Compiler IP describes all of the parameters and settings and how they control the final filter implementation.
 
-# Revision History
-* Jul 2022 - Initial Release
 
 # Support
 
@@ -786,4 +778,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD061 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD061 | &copy; Copyright 2021–2022 Xilinx, Inc.</sup></p>
