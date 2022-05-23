@@ -1,0 +1,10 @@
+build
+**.log
+**/.*.sw*
+**/core.*
+**vitis*
+**vivado*
+**/.Xil
+**/.nfs*
+reports_dir
+xpe_dir

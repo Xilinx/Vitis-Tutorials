@@ -1,4 +1,4 @@
-// © Copyright 2021 Xilinx, Inc.
+// © Copyright 2022 Xilinx, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -203,14 +203,14 @@ int dma_hls(
    goldenVal.range(127, 64) = GOLDEN_DATA;
    goldenVal.range( 63,  0) = GOLDEN_DATA;
 
-   ITER_MM2S0:for(int i = 0; i < iterCnt; ++i)
+   ITER_MM2S0:for(int i = iterCnt; i ; --i)
    {
       #pragma HLS loop_tripcount min=1 max=8
       
       mm2s0(strmOut_to_rowiseFFT, matSz);
    }
    
-   ITER_S2MM0_TO_MM2S1:for(int i = 0; i < iterCnt; ++i)
+   ITER_S2MM0_TO_MM2S1:for(int j = iterCnt; j ; --j)
    {
       #pragma HLS loop_tripcount min=1 max=8
       
@@ -218,7 +218,7 @@ int dma_hls(
                         matSz, rows, cols, stg0_errCnt, goldenVal);
    }
    
-   ITER_S2MM1:for(int i = 0; i < iterCnt; ++i)
+   ITER_S2MM1:for(int k = iterCnt; k ; --k)
    {
       #pragma HLS loop_tripcount min=1 max=8
       

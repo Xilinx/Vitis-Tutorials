@@ -39,7 +39,7 @@ PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 DESIGN_DIR := $(PROJECT_DIR)
 
 AIE_APP_DIR := $(DESIGN_DIR)/Module_02_aie
-XCLBIN_DIR := $(DESIGN_DIR)/Module_04_full_system_design
+XSA_DIR := $(DESIGN_DIR)/Module_04_full_system_design
 HOST_SW_DIR := $(DESIGN_DIR)/Module_05_host_sw
 SD_CARD_DIR := $(DESIGN_DIR)/Module_06_sd_card_and_hw_run
 DATA_DIR := $(DESIGN_DIR)/data
@@ -59,8 +59,8 @@ EMU_CMD := ./launch_hw_emu.sh
 # =========================================================
 # BUILD DIRECTORIES
 # =========================================================
-BUILD_DIR := $(SD_CARD_DIR)/build.$(TARGET).$(PLATFORM)
-XCLBIN_OUTPUT_DIR := $(XCLBIN_DIR)/build.$(TARGET).$(PLATFORM)
+BUILD_DIR := $(SD_CARD_DIR)/build.$(TARGET).$(PFM)
+XSA_OUTPUT_DIR := $(XSA_DIR)/build.$(TARGET).$(PFM)
 EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)
 
 # =========================================================
@@ -81,22 +81,22 @@ SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd
 host: 
 	$(MAKE) host -C $(HOST_SW_DIR)
 
-# ################ TARGET: make xclbin ################
-xclbin: 
-	$(MAKE) xclbin -C $(XCLBIN_DIR)
+# ################ TARGET: make xsa ################
+xsa: 
+	$(MAKE) xsa -C $(XSA_DIR)
 
 # ################ TARGET: make all ################
 all: sd_card
 
 # ################ TARGET: make sd_card ################
-sd_card: host xclbin $(EMBEDDED_PACKAGE_OUT)/sd_card.img
+sd_card: host xsa $(EMBEDDED_PACKAGE_OUT)/sd_card.img
 
-$(EMBEDDED_PACKAGE_OUT)/sd_card.img: $(PACKAGE_FILES) $(XCLBIN_OUTPUT_DIR)/hpc.xclbin $(AIE_APP_DIR)/build/libadf.a
+$(EMBEDDED_PACKAGE_OUT)/sd_card.img: $(PACKAGE_FILES) $(XSA_OUTPUT_DIR)/hpc.xsa $(AIE_APP_DIR)/build/libadf.a
 	mkdir -p $(BUILD_DIR); \
 	cd $(BUILD_DIR); \
 	v++ -t $(TARGET) \
 	--platform $(PLATFORM) \
-	-p $(XCLBIN_OUTPUT_DIR)/hpc.xclbin $(AIE_APP_DIR)/build/libadf.a \
+	-p $(XSA_OUTPUT_DIR)/hpc.xsa $(AIE_APP_DIR)/build/libadf.a \
 	--package.out_dir $(EMBEDDED_PACKAGE_OUT) \
 	--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
 	--package.kernel_image $(EDGE_COMMON_SW)/Image \
@@ -108,7 +108,7 @@ $(EMBEDDED_PACKAGE_OUT)/sd_card.img: $(PACKAGE_FILES) $(XCLBIN_OUTPUT_DIR)/hpc.x
 # ################ TARGET: make run ################
 run: sd_card
 ifeq ($(TARGET),$(filter $(TARGET),hw_emu))
-ifeq ($(findstring vck190, $(PLATFORM)), vck190)
+ifeq ($(findstring vck190, $(PFM)), vck190)
 	@echo "-net nic,netdev=eth0 -netdev user,id=eth0,hostfwd=tcp::1114-:22 -net nic" >> $(EMBEDDED_PACKAGE_OUT)/qemu_args.txt
 	export XCL_EMULATION_MODE=$(TARGET)
 	xterm & 

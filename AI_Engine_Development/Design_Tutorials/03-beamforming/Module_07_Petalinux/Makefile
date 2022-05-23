@@ -1,4 +1,4 @@
-#  © Copyright 2020 Xilinx, Inc.
+#  © Copyright 2022 Xilinx, Inc.
 #  Licensed under the Apache License, Version 2.0 (the 'License');
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
@@ -15,7 +15,7 @@
 # PROJECT and MODULE REPOS
 # =========================================================
 ifndef PATH_TO_BSP
-  PATH_TO_BSP=/proj/petalinux/2021.2/petalinux-v2021.2_daily_latest/bsp/release
+  PATH_TO_BSP=/proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/bsp/release
   export PATH_TO_BSP
 endif
 
@@ -30,7 +30,7 @@ MODULE_04_DIR := $(PROJECT_DIR)/Module_04_AI_Engine_and_PL_Integration
 # =========================================================
 # BSP SELECTION
 # =========================================================
-BSP :=  xilinx-vck190-v2021.2-final.bsp
+BSP :=  xilinx-vck190-v2022.1-final.bsp
 
 # =========================================================
 # XSA SELECTION

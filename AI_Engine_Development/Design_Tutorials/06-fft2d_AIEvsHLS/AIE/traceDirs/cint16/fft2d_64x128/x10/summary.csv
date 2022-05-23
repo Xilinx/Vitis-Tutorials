@@ -1,0 +1,141 @@
+Profile Summary
+Generated on: 2038-01-19 01:06:35
+Msec since Epoch: 2147475995204
+Profiled application: 
+Target platform: Xilinx
+Tool version: 2022.1
+XRT build version: 2.13.0
+Build version branch: 2022.1
+Build version hash: 2a6dc026480914ea1c9f02977a6ab4b57e8a3c8d
+Build version date: N/A
+Target devices: edge-0
+Flow mode: System Run
+
+Compute Unit Utilization
+Device,Compute Unit,Kernel,Global Work Size,Local Work Size,Number Of Calls,Dataflow Execution,Max Overlapping Executions,Dataflow Acceleration,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),Clock Frequency (MHz),
+edge-0,dma_hls_0,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27907,1.27907,1.27907,1.27907,156.25,
+edge-0,dma_hls_1,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27037,1.27037,1.27037,1.27037,156.25,
+edge-0,dma_hls_2,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27077,1.27078,1.27077,1.27078,156.25,
+edge-0,dma_hls_3,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27165,1.27166,1.27165,1.27166,156.25,
+edge-0,dma_hls_4,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.2711,1.2711,1.2711,1.2711,156.25,
+edge-0,dma_hls_5,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27102,1.27103,1.27102,1.27103,156.25,
+edge-0,dma_hls_6,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27104,1.27105,1.27104,1.27105,156.25,
+edge-0,dma_hls_7,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27112,1.27112,1.27112,1.27112,156.25,
+edge-0,dma_hls_8,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27068,1.27068,1.27068,1.27068,156.25,
+edge-0,dma_hls_9,dma_hls,0:0:0,0:0:0,1,Yes,1,1.000000x,1.27116,1.27116,1.27116,1.27116,156.25,
+
+
+
+
+Data Transfer: Streams
+Device,Master Port,Master Kernel Arguments,Slave Port,Slave Kernel Arguments,Number Of Transfers,Transfer Rate (MB/s),Average Size (KB),Link Utilization (%),Link Starve (%),Link Stall (%),
+edge-0,ai_engine_0/M10_AXIS,M10_AXIS,dma_hls_0/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1185.39,0.256,94.8313,5.16872,0,
+edge-0,ai_engine_0/M11_AXIS,M11_AXIS,dma_hls_1/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1185.12,0.256,94.8093,5.19067,0,
+edge-0,ai_engine_0/M12_AXIS,M12_AXIS,dma_hls_2/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1185.22,0.256,94.8176,5.18244,0,
+edge-0,ai_engine_0/M13_AXIS,M13_AXIS,dma_hls_3/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1185.01,0.256,94.8011,5.1989,0,
+edge-0,ai_engine_0/M14_AXIS,M14_AXIS,dma_hls_4/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1185.32,0.256,94.8258,5.17421,0,
+edge-0,ai_engine_0/M15_AXIS,M15_AXIS,dma_hls_5/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1185.05,0.256,94.8038,5.19616,0,
+edge-0,ai_engine_0/M16_AXIS,M16_AXIS,dma_hls_6/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1184.6,0.256,94.7682,5.2318,0,
+edge-0,ai_engine_0/M17_AXIS,M17_AXIS,dma_hls_7/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1185.97,0.256,94.878,5.12204,0,
+edge-0,ai_engine_0/M18_AXIS,M18_AXIS,dma_hls_8/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1185.39,0.256,94.8313,5.16872,0,
+edge-0,ai_engine_0/M19_AXIS,M19_AXIS,dma_hls_9/strmInp_from_colwiseFFT,strmInp_from_colwiseFFT,1024,1184.71,0.256,94.7764,5.22358,0,
+
+
+
+
+
+TITLE:HAL API Calls
+SECTION:API Calls,HAL API Calls
+COLUMN:<html>API Name</html>,string,Name of HAL XRT API,
+COLUMN:<html>Number<br>Of Calls</html>,int,Number of calls to API,
+COLUMN:<html>Total<br>Time (ms)</html>,float,Total execution time (in ms),
+COLUMN:<html>Minimum<br>Time (ms)</html>,float,Minimum execution time (in ms),
+COLUMN:<html>Average<br>Time (ms)</html>,float,Average execution time (in ms),
+COLUMN:<html>Maximum<br>Time (ms)</html>,float,Maximum execution time (in ms),
+ENTRY:xclAllocBO,14,223.503,0.03303,15.9645,112.385,
+ENTRY:xclClose,2,25.864,0.03727,12.932,25.8267,
+ENTRY:xclCloseContext,13,202.332,11.3354,15.564,30.7786,
+ENTRY:xclExecBuf,12,7.58279,0.00963,0.631899,7.39906,
+ENTRY:xclExecWait,11,0.46925,0.00548,0.0426591,0.33484,
+ENTRY:xclFreeBO,13,41.8906,0.01377,3.22235,41.6481,
+ENTRY:xclGetBOProperties,2,0.03899,0.01821,0.019495,0.02078,
+ENTRY:xclLoadXclbin,2,804.845,352.798,402.423,452.047,
+ENTRY:xclMapBO,14,3.0342,0.01924,0.216729,1.40585,
+ENTRY:xclOpen,4,115.933,16.4642,28.9832,33.4809,
+ENTRY:xclOpenContext,13,376.571,11.9505,28.967,53.0793,
+ENTRY:xclProbe,4,78.7884,16.4489,19.6971,23.863,
+ENTRY:xclRead,348,1.1591,0.00238,0.00333075,0.02613,
+ENTRY:xclSyncBO,4,49.5733,0.02659,12.3933,24.8202,
+ENTRY:xclWrite,198,0.5978,0.00192,0.00301919,0.02171,
+
+Guidance Parameters
+Parameter,Element,Value,
+CU_CALLS,edge-0|dma_hls_0,1,
+CU_CALLS,edge-0|dma_hls_1,1,
+CU_CALLS,edge-0|dma_hls_2,1,
+CU_CALLS,edge-0|dma_hls_3,1,
+CU_CALLS,edge-0|dma_hls_4,1,
+CU_CALLS,edge-0|dma_hls_5,1,
+CU_CALLS,edge-0|dma_hls_6,1,
+CU_CALLS,edge-0|dma_hls_7,1,
+CU_CALLS,edge-0|dma_hls_8,1,
+CU_CALLS,edge-0|dma_hls_9,1,
+NUM_MONITORS,edge-0|XCL_PERF_MON_MEMORY|0,0,
+NUM_MONITORS,edge-0|XCL_PERF_MON_ACCEL|10,10,
+NUM_MONITORS,edge-0|XCL_PERF_MON_STR|10,10,
+MEMORY_USAGE,edge-0|DDR,1,
+MEMORY_USAGE,edge-0|DDR,1,
+MEMORY_USAGE,edge-0|LPDDR,0,
+PLRAM_DEVICE,all,0,
+HBM_DEVICE,all,0,
+KDMA_DEVICE,all,0,
+P2P_DEVICE,all,0,
+PORT_BIT_WIDTH,dma_hls_0/,0,
+PORT_BIT_WIDTH,dma_hls_1/,0,
+PORT_BIT_WIDTH,dma_hls_2/,0,
+PORT_BIT_WIDTH,dma_hls_3/,0,
+PORT_BIT_WIDTH,dma_hls_4/,0,
+PORT_BIT_WIDTH,dma_hls_5/,0,
+PORT_BIT_WIDTH,dma_hls_6/,0,
+PORT_BIT_WIDTH,dma_hls_7/,0,
+PORT_BIT_WIDTH,dma_hls_8/,0,
+PORT_BIT_WIDTH,dma_hls_9/,0,
+KERNEL_COUNT,dma_hls,10,
+TRACE_MEMORY,all,TS2MM,
+TRACE_BUFFER_FULL,edge-0,false
+MEMORY_TYPE_BIT_WIDTH,edge-0|DDR,64,
+APPLICATION_RUN_TIME_MS,all,2582.07,
+TOTAL_KERNEL_RUN_TIME_MS,all,16.5936,
+XRT_INI_SETTING,opencl_summary,0,Generation of OpenCL summary report (deprecated)
+XRT_INI_SETTING,opencl_trace,0,Generation of trace of OpenCL APIs and memory transfers
+XRT_INI_SETTING,opencl_device_counter,0,Hardware counters added to OpenCL summary file (deprecated)
+XRT_INI_SETTING,device_counters,0,Hardware counters added to summary file
+XRT_INI_SETTING,host_trace,0,Enable the top level of host trace
+XRT_INI_SETTING,native_xrt_trace,0,Generation of Native XRT API function trace
+XRT_INI_SETTING,xrt_trace,1,Generation of hardware SHIM function trace
+XRT_INI_SETTING,data_transfer_trace,fine,Collection of data from PL monitors and added to summary and trace (deprecated)
+XRT_INI_SETTING,device_trace,off,Collection of data from PL monitors and added to summary and trace
+XRT_INI_SETTING,power_profile,0,Polling of power data during execution of application
+XRT_INI_SETTING,power_profile_interval_ms,20,Interval for reading power data (in ms)
+XRT_INI_SETTING,stall_trace,off,Enables hardware generation of stalls in compute units
+XRT_INI_SETTING,trace_buffer_size,500M,Size of buffer to allocate for trace (memory offload only)
+XRT_INI_SETTING,verbosity,4,Verbosity level
+XRT_INI_SETTING,continuous_trace,0,Continuous offloading of trace from memory to host
+XRT_INI_SETTING,trace_buffer_offload_interval_ms,10,Interval for reading of device data to host (in ms)
+XRT_INI_SETTING,trace_file_dump_interval_s,5,Interval for dumping files to host (in s)
+XRT_INI_SETTING,lop_trace,0,Generation of lower overhead OpenCL trace. Should not be used with other OpenCL options.
+XRT_INI_SETTING,debug_mode,batch,Debug mode (emulation only)
+XRT_INI_SETTING,aie_trace,0,Generation of AI Engine trace
+XRT_INI_SETTING,aie_trace_buffer_size,8M,Size of buffer to allocate for AI Engine trace
+XRT_INI_SETTING,aie_trace_metrics,functions,Configuration level used for AI Engine trace
+XRT_INI_SETTING,aie_trace_periodic_offload,1,Periodic offloading of aie trace from memory to host
+XRT_INI_SETTING,aie_trace_buffer_offload_interval_ms,10,Interval for reading of device aie trace data to host (in ms)
+XRT_INI_SETTING,aie_trace_file_dump_interval_s,5,Interval for dumping aie trace files to host (in s)
+XRT_INI_SETTING,aie_profile,0,Generation of AI Engine profiling
+XRT_INI_SETTING,aie_profile_interval_us,1000,Interval for reading AI Engine profile counters (in us)
+XRT_INI_SETTING,aie_profile_core_metrics,,Metric set for AI Engine core modules
+XRT_INI_SETTING,aie_profile_memory_metrics,,Metric set for AI Engine memory modules
+XRT_INI_SETTING,aie_profile_interface_metrics,,Metric set for AI Engine interface modules
+XRT_INI_SETTING,aie_status,0,Generation of AI Engine debug/status
+XRT_INI_SETTING,aie_status_interval_us,1000,Interval for reading AI Engine debug/status registers (in us)
+XRT_INI_SETTING,vitis_ai_profile,0,Generation of Vitis AI summary and trace (Vitis AI designs only)

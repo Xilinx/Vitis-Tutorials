@@ -1,4 +1,4 @@
-# © Copyright 2020 Xilinx, Inc.
+# © Copyright 2022 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -63,7 +63,11 @@ BUILD_DIR 	:= build
 WORK_DIR 	:= Work
 AIE_APP_O 	:= libadf.a
 SIM_LOG 	:= aiesim.log
-
+XPE_REPO := $(BUILD_DIR)/xpe_dir
+BLD_XPE_DIR := $(XPE_REPO)/beamforming
+VCD_FILE_NAME := beamforming
+BLD_TGT_VCD_FILE := $(BUILD_DIR)/$(VCD_FILE_NAME).vcd
+XPE_FILE := $(BLD_XPE_DIR)/$(VCD_FILE_NAME).xpe
 # =========================================================
 # SIMULATION OPTIONS
 # =========================================================
@@ -71,7 +75,7 @@ MAX_CYCLES := 350000
 LOG_FILE    := log.txt  
 TEMP_FILE   := t.txt
 
-all : graph sim check_op3x get_tp3x
+all : graph sim vcd check_op3x get_tp3x
 
 graph: $(BUILD_DIR)/libadf.a
 
@@ -91,6 +95,29 @@ sim: $(BUILD_DIR)/aiesimulator_output/$(SIM_LOG)
 $(BUILD_DIR)/aiesimulator_output/$(SIM_LOG):
 	cd $(BUILD_DIR); \
 	aiesimulator --pkg-dir=$(WORK_DIR) --output-dir=aiesimulator_output |& tee $(SIM_LOG)
+
+vcd: $(XPE_FILE)
+
+# xpe file generation...
+$(XPE_FILE): $(BLD_TGT_VCD_FILE)
+	cd $(BUILD_DIR); \
+	vcdanalyze --vcd $(VCD_FILE_NAME).vcd --xpe
+	rm -rf $(BLD_XPE_DIR)
+	mkdir -p $(BLD_XPE_DIR)
+	cp -rf $(BUILD_DIR)/aiesim_xpe/*.xpe $(XPE_FILE)
+	@echo ""
+	@echo "AIE XPE Generation Complete..."
+	@echo "####################################"
+	@echo ""
+
+# vcd file generation...
+$(BLD_TGT_VCD_FILE): 
+	cd $(BUILD_DIR); \
+	aiesimulator --pkg-dir=$(WORK_DIR) --output-dir=aiesimulator_output  --profile --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
+	@echo ""
+	@echo "AIE VCD Trace Generation Complete..."
+	@echo "####################################"
+	@echo ""
 
 get_tp3x:
 	@for p in {0..23} ; do \

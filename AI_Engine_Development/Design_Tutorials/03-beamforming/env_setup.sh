@@ -1,4 +1,4 @@
-# © Copyright 2020 Xilinx, Inc.
+# © Copyright 2022 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,13 +13,17 @@
 # limitations under the License.
 
 #Setup environment variables 
-export XILINX_XRT=<XRT-LOCATION>
-export PATH_TO_BSP=<PATH-TO-BSPs>
+export PLATFORM_REPO_PATHS=/proj/xbuilds/2022.1_daily_latest/internal_platforms
+export XILNX_TOOLS_LOCATION=/proj/xbuilds/2022.1_daily_latest/installs/lin64/Vitis/HEAD
+export PATH_TO_BSP=/proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/bsp/release
+export PETALINUX_TOOLS_LOCATION=/proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/tool/petalinux-v2022.1-final
+export XILINX_XRT=/proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages
+export XILINXD_LICENSE_FILE=2100@aiengine-eng
 
 #Source setup scripts
-source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh 
-source <PETALINUX-TOOLS-LOCATION>/settings.sh 
-source $XILINX_XRT/setup.sh
+source $XILNX_TOOLS_LOCATION/settings64.sh
+source $PETALINUX_TOOLS_LOCATION/settings.sh 
+source $XILINX_XRT/setenv.sh
 
 #Print env variables
 echo "XILINX_VITIS       : "$XILINX_VITIS
