@@ -1,10 +1,6 @@
 <table>
  <tr>
-<<<<<<< HEAD
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
-=======
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.1 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
->>>>>>> Updated Designs for 2022.1
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2022.1 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -865,9 +861,6 @@ The following documents provide supplemental information for this tutorial.
 ### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
 
-# Revision History
-* Dec 2022 Release
-
 # Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
@@ -880,4 +873,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD061 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD061 | &copy; Copyright 2021–2022 Xilinx, Inc.</sup></p>
