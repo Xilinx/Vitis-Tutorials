@@ -17,7 +17,7 @@
 
 [Before You Begin](#Before-you-begin)
 
-[Building the Lenet Design](#building-the-lenet-design)
+[Building the LeNet Design](#building-the-lenet-design)
 
 [Hardware Design Details](#hardware-design-details)
 
@@ -31,7 +31,7 @@
 
 The Xilinx® Versal ACAP is a fully software-programmable, heterogeneous compute platform that combines the Processor System (PS) (Scalar Engines that include the Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic blocks and memory) and AI Engines which belong in the Intelligent Engine category.
 
-This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM. The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (block RAM) and AI Engine memory.
+This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL, including block RAM. The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (block RAM) and AI Engine memory.
 
 The tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. A Makefile is provided that you can modify to suit your own needs in a different context.
 
@@ -41,9 +41,9 @@ The tutorial takes you through hardware emulation and hardware flow in the conte
 ### Objectives
 
 After completing the tutorial, you should be able to:
-* Build a complete system design by going through the various steps in the Vitis™ unified software platform flow, including creating the AI Engine Adaptive Data Flow API (ADF) graph, compiling the A72 host application and compiling PL kernels, using the Vitis compiler (V++) to link the AI Engine and HLS kernels with the platform, and packaging the design. You will also be able to run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator.
+* Build a complete system design by going through the various steps in the Vitis™ unified software platform flow, including creating the AI Engine Adaptive Data Flow (ADF) API graph, compiling the A72 host application and compiling PL kernels, using the Vitis compiler (V++) to link the AI Engine and HLS kernels with the platform, and packaging the design. You will also be able to run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator.
 * Develop an understanding of Convolutional Neural Network (CNN) layer details using the LeNet algorithm and how the layers are mapped into data processing and compute blocks.
-* Develop an understanding of the kernels developed in the design - AI Engine kernels to process fully connected convolutional layers and PL kernels to process the input rearrange and max pool and rearrange functions.
+* Develop an understanding of the kernels developed in the design; AI Engine kernels to process fully connected convolutional layers and PL kernels to process the input rearrange and max pool and rearrange functions.
 * Develop an understanding of the AI Engine IP interface using the AXI4-Stream interface.
 * Develop an understanding of memory hierarchy in a system-level design involving DDR memory, PL block RAM, and AI Engine memory.
 * Develop an understanding of graph control APIs to enable run-time updates using the run-time parameter (RTP) interface.
@@ -55,9 +55,9 @@ After completing the tutorial, you should be able to:
   <summary>Tutorial Overview</summary>
 
 ## Tutorial Overview
-In this application tutorial, the LeNet algorithm is used to perform image classification on an input image using five AI Engine tiles and PL resources including block RAM. A top level block diagram is shown in the following figure. An image is loaded from DDR memory through the Network on Chip (NoC) to block RAM and then to the AI Engine. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine tile to perform matrix multiplication. The output from the first AI Engine tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output is fed to the second AI Engine tile and the output from that tile is sent to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine tiles are then fed into a second fully connected layer implemented in the `core04` AI Engine tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. In between the AI Engine and PL units is a datamover module (refer to the Lenet Controller in the following figure) that contains the following kernels:
-* `mm2s`: a memory mapped to stream kernel to feed data from DDR memory through the NoC to the AI Engine Array
-* `s2mm`: a stream to memory mapped kernel to feed data from the AI Engine Array through NoC to DDR memory
+In this application tutorial, the LeNet algorithm is used to perform image classification on an input image using five AI Engine tiles and PL resources including block RAM. A top level block diagram is shown in the following figure. An image is loaded from DDR memory through the Network on Chip (NoC) to block RAM and then to the AI Engine. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine tile to perform matrix multiplication. The output from the first AI Engine tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output is fed to the second AI Engine tile and the output from that tile is sent to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine tiles are then fed into a second fully connected layer implemented in the `core04` AI Engine tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. In between the AI Engine and PL units is a datamover module (refer to the LeNet Controller in the following figure) that contains the following kernels:
+* `mm2s`: a memory-mapped to stream kernel to feed data from DDR memory through the NoC to the AI Engine Array.
+* `s2mm`: a stream to memory-mapped kernel to feed data from the AI Engine Array through NoC to DDR memory.
 
 ![Image of LeNet Block Diagram](images/Lenet_block_diagram_v1.PNG)
 
@@ -179,7 +179,7 @@ Output of the above command should be as follows:
   <summary>LeNet Design Build</summary>
 
 ### LeNet Design Build
-In this section, you will build and run the LeNet design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step.
+In this section, you will build and run the LeNet design. You will compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step.
 
 ![Image of LeNet Vitis Tool Flow](images/Lenet_vitis_toolflow_2022_1.PNG)
 
@@ -188,7 +188,7 @@ At the end of this section, the design flow will generate a new directory (calle
 </details>
 
 ## Make Steps
-To run the following `make` steps (for example, `make kernels`, `make graph`, etc), you must be in the lenet tutorial folder.
+To run the following `make` steps (for example, `make kernels`, `make graph`, etc), you must be in the leNet tutorial folder.
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
 
@@ -209,7 +209,7 @@ make build TARGET=hw EN_TRACE=1
 
 The default value of EN_TRACE is 0. This command runs the `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
 
-You can also run the following command to build the entire Lenet tutorial *and* launch hardware emulation:
+You can also run the following command to build the entire LeNet tutorial *and* launch hardware emulation:
 ```bash
 make run TARGET=hw_emu
 ```
@@ -276,7 +276,7 @@ v++       --target hw_emu			     \
 An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives).
 * The AI Engine ADF C++ graph of the design contains AI Engine kernels and PL kernels.
 * All interconnects between kernels are defined in the C++ graph.
-* All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object. All `adf::sim` platform connections from graph to PLIO map onto ports on the AI Engine subsystem graph that are connected using the Vitis compiler connectivity directives. No dangling ports or implicit connections are allowed by the Vitis compiler.
+* All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object. All `adf::sim` platform connections from graph to PLIO map onto ports on the AI Engine subsystem graph that is connected using the Vitis compiler connectivity directives. No dangling ports or implicit connections are allowed by the Vitis compiler.
 
 To compile the graph using the Makefile flow type:
 ```
@@ -324,7 +324,7 @@ The following is a description of the output objects that results from executing
 After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate both an XCLBIN and a new XSA file.
 
 ### Platform
-The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx) and the Vitis tools build the hardware design and integrate the AI Engine and PL kernels into the design.
+The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx) and the Vitis tool builds the hardware design and integrates the AI Engine and PL kernels into the design.
 
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
 
@@ -473,7 +473,7 @@ cd ../../;
 |-D__linux__|
 |-DXAIE_DEBUG|Enable debug interface capabilities where certain core status, event status, or stack trace can be dumped out.|
 |-I \<dir\>|Add the directory `dir` to the list of directories to be searched for header files.|
-|-o \<file\>|Place output in file `<file>`. This applies regardless of the output being produced, whether it be an executable file, an object file, an assembler file or preprocessed C code.|
+|-o \<file\>|Place output in file `<file>`. This applies regardless of the output being produced, whether it be an executable file, an object file, an assembler file, or preprocessed C code.|
 |--sysroot=\<dir\>|Use `dir` as the logical root directory for headers and libraries. For example, if the compiler normally searches for headers in `/usr/include` and libraries in `/usr/lib`, it instead searches in `dir/usr/include` and `dir/usr/lib`.|
 |-l\<library\>|Search the library named `library` when linking. The LeNet tutorial requires `adf_api`, `xrt_coreutil`, `xrt_core`, `aiengine`, `metal`, and `open_amp` libraries.|
 |-L \<dir\>|Add directory `<dir>` to the list of directories to be searched for -l.|
@@ -698,10 +698,10 @@ The architecture of the LeNet design is shown in the following figure. The detai
 In the base platform, the CIPS, NoC, and AI Engine are instantiated and interfaces among them are created. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application developed, that is, the PL kernels present in each design might vary. An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives.
 For this design, the components are added by the `v++ -l` step (make XCLBIN in the tool flow section above) and include the following:
 * AI Engine kernel `graph.o`
-* data mover kernel (`dma_hls.[hw|hw_emu].xo`)
-* lenet kernel (`lenet_kernel.xo`)
+* Data mover kernel (`dma_hls.[hw|hw_emu].xo`)
+* LeNet kernel (`lenet_kernel.xo`)
 * `ai_engine_system` block which includes the data width converter and clock converter kernels
-* any other necessary connections and interfaces
+* Any other necessary connections and interfaces
 
 To see a schematic view of the design with the extended platform (as shown in the following figure), open in the Vivado  `build/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr` folder.
 
@@ -730,12 +730,12 @@ The LeNet algorithm in this design starts with an image of size 28x28 input impo
 
 **Max Pool and Data Rearrangement Set 1 (M1R1)**
 
-Pooling is the operation in CNN to enable the detection of the object when presented with different versions of the images by reducing the size of the feature map. Among the types of pooling, the max is chosen to account for distortion.
+The pooling operation in CNN enables the detection of the object when presented with different versions of the images by reducing the size of the feature map. From the types of pooling available, 'max' is chosen to account for distortion.
 In this design, the output from the first AI Engine tile (core01) is a 576x8 matrix, which is sent to the PL. Each of the columns in the matrix corresponds to a 24x24 dimensional image laid out in the row-major format. The network being implemented has only six output features for the Conv1 layers and hence two of the eight columns do not contain real images. Then a max pool operation is performed and a value is returned from a 2x2 matrix, as seen in the green squares in the following diagram.
 
 ![Image of LeNet Maxpool1](images/Lenet_maxpool1.PNG)
 
-The resulting 144x8 byte matrix, which is stored in RAMB36 module, then goes through a rearrange operation, where the data is written into six RAMB18s populated with zeros in the appropriate positions and the addresses are generated by the fanout table. Each RAMB18 is configured as 2048x8 (depth x width). The arrays then go through a second stage or rearrange operation where each array is configured in read mode and 512x32. These block RAMS are rearranged to four block RAMS and five register files After the rearrange function, the data is output as six images each of 64x25 dimension. The data for the previous image needs to be sent out to memory mapped AXI4 before the writing of the new image starts.
+The resulting 144x8 byte matrix, which is stored in RAMB36 module, then goes through a rearrange operation, where the data is written into six RAMB18s populated with zeros in the appropriate positions and the addresses are generated by the fanout table. Each RAMB18 is configured as 2048x8 (depth x width). The arrays then go through a second stage or rearrange operation where each array is configured in read mode and 512x32. These block RAMS are rearranged to four block RAMS and five register files After the rearrange function, the data is output as six images each of 64x25 dimension. The data for the previous image needs to be sent out to memory-mapped AXI4 before the writing of the new image starts.
 
 Also in M1R1 are two instances of the AXI2BRAM module, one at the PL-AI Engine interface and another at the AI Engine-PL interface. At the PL-AI Engine interface, data is coming into the module in AXI4-Stream format from the AI Engine.
 
@@ -743,11 +743,11 @@ The AXI stream supplies a data rate of 128 bits/cycle at 250 MHz and the data is
 
 **Max Pool and Data Rearrangement Set 2 (M2R2)**
 
-This module performs the similar operations of max pooling and data rearrangement to M1R1 but on a smaller set of the feature map. It moves and rearranges data from AI Engine tile, core02, to AI Engine tiles, core03 and core05. The output from the second AI Engine tile, core02, is sent to the PL as 16 images of 8x8 representing the 2D image as a column in a row major order is laid out as an array of 64x16 bytes array. Then a max pool operation is performed and a value is returned from a 2x2 matrix. The results are stored in a register file configured as 16 images of 4x4 bytes which then are rearranged before being sent out using two AXI4-Stream to the two AI Engine tiles, core03 and core05.
+This module performs the similar operations of max pooling and data rearrangement to M1R1 but on a smaller set of the feature map. It moves and rearranges data from AI Engine tile core02, to AI Engine tiles core03 and core05. The output from the second AI Engine tile, core02, is sent to the PL as 16 images of 8x8 representing the 2D image as a column in a row-major order is laid out as an array of 64x16 bytes array. Then a max pool operation is performed and a value is returned from a 2x2 matrix. The results are stored in a register file configured as 16 images of 4x4 bytes which then are rearranged before being sent out using two AXI4-Stream to the two AI Engine tiles, core03 and core05.
 
 **Data Mover Kernel**
 
-The PL-based data mover kernel consist of MM2S and S2MM kernels. This module gets the initial image from DDR memory through the NoC and sends the data to AI Engine tile, core01 (after input processing unit inside `lenet_kernel`). It also receives data from AI Engine tile, core04, and streams out the data to DDR memory through the NoC. The side-facing NoC uses a memory mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine array uses an AXI4-Stream interface.
+The PL-based data mover kernel consist of MM2S and S2MM kernels. This module gets the initial image from DDR memory through the NoC and sends the data to AI Engine tile, core01 (after input processing unit inside `lenet_kernel`). It also receives data from AI Engine tile, core04, and streams out the data to DDR memory through the NoC. The side-facing NoC uses a memory-mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine array uses an AXI4-Stream interface.
 
 </details>
 
@@ -756,7 +756,7 @@ The PL-based data mover kernel consist of MM2S and S2MM kernels. This module get
 
 ### Design Implementation
 
-The following table provides details on the design implementation. It includes image dimensions, weight dimensions, and number of features in each layer.
+The following table provides details on the design implementation. It includes image dimensions, weight dimensions, and the number of features in each layer.
 
 ![Image of Lenet Design Implementation](images/Lenet_implementation.PNG)
 
@@ -867,7 +867,7 @@ The main program is the driver of the graph. It is used to load, execute, and te
   <summary>PL Kernels</summary>
 
 ### PL Kernels
-In addition to kernels operating in the AI Engine array, this design specifies two kernels to run on the PL region of the device (written in HLS C++), `lenet_kernel` and `dma_hls`. Note the `dma_hls` kernel is brought into the design during the Vitis kernel compilation whereas the `lenet_kernel` is only brought in later in the Vitis link stage since the kernel is pre-packaged.
+In addition to kernels operating in the AI Engine array, this design specifies two kernels to run on the PL region of the device (written in HLS C++), `lenet_kernel` and `dma_hls`. Note the `dma_hls` kernel is brought into the design during the Vitis kernel compilation whereas the `lenet_kernel` is only brought in later in the Vitis link stage because the kernel is pre-packaged.
 
 The `dma_hls` kernel is an IP which contains `dma_mm2s` and `dma_s2mm`. `dma_mm2s` reads data from a memory-mapped AXI4 interface and writes it to an AXI4-Stream interface. `dma_s2mm` reads data from an AXI4-Stream interface and writes it to a memory-mapped AXI4 interface. The kernel specifies the following pragmas:
 
@@ -885,7 +885,7 @@ The `dma_hls` kernel is an IP which contains `dma_mm2s` and `dma_s2mm`. `dma_mm2
 The LeNet tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/program_ps_host_application.html#ykt1590616160037) to understand the process to create a host application.
 
 In addition to the PS host application (`main.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control_xrt.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code.
-The AI Engine control code is used by the PS host application for the following reasons:
+The AI Engine control code is used by the PS host application to do the following:
 * Control the initial loading of the AI Engine kernels.
 * Run the graph for several iterations, update the run time parameters associated with the graph, exit, and reset the AI Engine tiles.
 
@@ -893,7 +893,7 @@ The PS Host application stack diagram for the LeNet tutorial is shown in the fol
 
 ![Alt Text](images/Lenet_PS_stack_20202.PNG)
 
-The steps in the tutorial to run the A72 application are described as follows:
+The steps to run the A72 application are as follows:
 
 #### 1. Include graph.cpp
 Include the `graph.cpp` AI Engine application file. This file contains the instantiation of the AI Engine LeNet data flow graph object.
@@ -920,14 +920,14 @@ auto top = reinterpret_cast<const axlf*>(xclbin.data());
 `xrtKernelHandle dmahls_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "dma_hls");`
 
 #### 4. Allocate Buffers for Input Data and Results in Global Memory
-The A72 application allocates BO (buffer objects) to store input data and output results in global memory (DDR). For example:
+The A72 application allocates buffer objects (BO) to store input data and output results in global memory (DDR). For example:
 ```
 xrtBufferHandle in_bohdl = xrtBOAlloc(dhdl, input_size_in_bytes,  0, 0);
 auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 ```
 Additionally, the `memcpy` and `memset` functions are used to initialize the data in global memory.
 
-### 5. Open Graph, Obtain Handle and Execute Graph
+### 5. Open Graph, Obtain Handle, and Execute Graph
 The following registration function was added in 2022.1 for XRT to use ADF API callbacks:
 
 `adf::registerXRT(dhdl, top->m_header.uuid);`
