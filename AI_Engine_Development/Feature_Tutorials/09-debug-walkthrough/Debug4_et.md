@@ -35,7 +35,7 @@ In this tutorial you will learn how to:
 Download the design from https://github.com/Xilinx/Vitis-Tutorials/. Go to ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough to obtain source code of this tutorial.
 
 ### Step 2. Setup build environmental variables
-Follow the instructions from the introduction section of https://github.com/Xilinx/Vitis-Tutorials/blob/master/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/README.md for  build environmental variables setup.
+Follow the instructions from the introduction section of [09-debug-walkthrough](./README.md) for build environmental variables setup.
 
 ### Step 3. Build the tutorial
 After source code is downloaded, use the Makefile from this repository.

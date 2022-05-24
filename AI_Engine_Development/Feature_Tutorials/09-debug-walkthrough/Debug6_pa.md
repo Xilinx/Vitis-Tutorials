@@ -167,7 +167,7 @@ To launch vitis_analyser for hardware emulation run.
 vitis_analyzer ./sim/behav_waveform/xsim/default.aierun_summary
 ```
 
-For hardware event trace steps that are available at https://gitenterprise.xilinx.com/swm/Vitis-Tutorials/blob/2022.1_next/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/Debug4_et.md
+For hardware event trace steps that are available at [AI Engine Debug with Event Trace](./Debug4_et.md)
 
 ### Step 4.3 Locate profiled interface
 After default.aierun_summary file is opened with Vitis_analyzer, select `Graph` view, locate the output file `data/ublf_out0.txt` that associated with `ulbfo0` output_plio object from graph.h
