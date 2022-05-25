@@ -28,7 +28,7 @@ VPP := v++
 AIECC := aiecompiler
 
 AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
-AIE_FLAGS := --target=x86sim $(AIE_INCLUDE_FLAGS) -workdir=./Work 
+AIE_FLAGS := --target=x86sim $(AIE_INCLUDE_FLAGS) --platform $(BASE_PLATFORM) -workdir=./Work 
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) -t $(TARGET) --save-temps -g
 VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
@@ -81,7 +81,7 @@ guard-SDKTARGETSYSROOT:
 
 ###
 
-all: kernels compile x86sim xsa host package
+all: kernels aie x86sim xsa host package
 sd_card: all
 
 ######################################################
@@ -94,7 +94,7 @@ kernels: guard-PLATFORM_REPO_PATHS $(KERNEL_XO)
 %.xo: pl_kernels/%.cpp
 	$(VPP) $(VPP_XO_FLAGS) -k $(basename $(notdir $<)) $< -o $@
 
-compile: $(GRAPH_O)
+aie: $(GRAPH_O)
 
 x86sim: $(GRAPH_O)
 	x86simulator --pkg-dir=./Work 
