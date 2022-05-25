@@ -1,0 +1,943 @@
+﻿
+
+
+<!DOCTYPE HTML>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description"/>
+		<meta name="keywords"/>
+		<meta property="og:title" content=""/>
+		<meta property="og:description"/>
+		<!-- favicon -->
+		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
+		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
+		<!-- Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
+
+	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+		<!-- Google Tag Manager -->
+	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+	<!-- End Google Tag Manager -->
+	
+        <!-- Google Tag Manager -->
+        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+        <!-- End Google Tag Manager -->	
+
+  
+  
+  
+  
+
+  
+      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
+	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Versal AI Engine/HLS FIR Filter Tutorial" href="../07-firFilter_AIEvsHLS/README.html" />
+    <link rel="prev" title="Custom Platform Emulation with RTL Kernel" href="../04-custom-platform-emulation/README.html" /> 
+	</head>
+	<body>
+		<div class="xilinx-bs3"/>
+		<div class="root responsivegrid">
+			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
+ <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+
+    
+    
+
+    
+
+
+
+<div class="xf-content-height">
+    
+
+<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
+    
+    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
+	<header data-component="header" class="site-header">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid main-nav">
+				<div class="row">
+					<div class="navbar-column col-xs-4 col-sm-5">
+						<ul class="nav navbar-nav hidden-xs">
+							<li>
+									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
+								</li>
+							<li>
+									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
+								</li>
+							<li>
+									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
+								</li>
+							</ul>
+							
+						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
+							<li>
+									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
+								</li>
+							<li>
+									<button data-target="#header-container-1" data-function="toggle">Products</button>
+								</li>
+							<li>
+									<button data-target="#header-container-2" data-function="toggle">Company</button>
+								</li>
+							</ul>
+							
+						<div id="header-container-0" class="menu-container">
+								<div class="navbar-nav-container">
+									<ul class="nav navbar-nav">
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
+												</li>
+										</ul>
+									<button data-function="close-menu">
+										<span class="fal fa-times" aria-hidden="true"></span>
+									</button>
+								</div>
+							</div>
+							<div id="header-container-1" class="menu-container">
+								<div class="navbar-nav-container">
+									<ul class="nav navbar-nav">
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
+												</li>
+										</ul>
+									<button data-function="close-menu">
+										<span class="fal fa-times" aria-hidden="true"></span>
+									</button>
+								</div>
+							</div>
+							<div id="header-container-2" class="menu-container">
+								<div class="navbar-nav-container">
+									<ul class="nav navbar-nav">
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
+												</li>
+										<li>
+												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
+												</li>
+										</ul>
+									<button data-function="close-menu">
+										<span class="fal fa-times" aria-hidden="true"></span>
+									</button>
+								</div>
+							</div>
+							</div>
+					<div class="logo-column col-xs-4 col-sm-2">
+						<div class="logo">
+							<a target="_blank" href="https://www.xilinx.com/">
+								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
+							</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			</nav></header></noindex></div>
+		
+	
+</div>
+
+    
+</div>
+</div>
+
+<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
+    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
+</div>
+</div>
+				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+						<div class="container-fluid">
+							<div class="row">
+							<div class="col-xs-12">
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2022.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+      
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+            
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption"><span class="caption-text">AI Engine</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../01-aie_lenet_tutorial/README.html">Versal® AI Engine LeNet Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01-aie_lenet_tutorial/README.html#revision-history">Revision History</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02-super_sampling_rate_fir/README.html">Super Sampling Rate FIR Filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03-beamforming/README.html">Beamforming Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03-beamforming/README.html#support">Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03-beamforming/README.html#license">License</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04-custom-platform-emulation/README.html">Custom Platform Emulation with RTL Kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04-custom-platform-emulation/README.html#license">License</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#objectives">Objectives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#design-overview">Design Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#directory-structure">Directory Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#before-you-begin">Before You Begin</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#documentation-explore-ai-engine-architecture">Documentation: Explore AI Engine Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installing-the-tools">Installing the Tools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#platform">Platform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-environment">Setting up the Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#confirming-tool-installation">Confirming Tool Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#design-implementations">Design Implementations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ai-engine-and-hls-implementation-comparison">AI Engine and HLS Implementation Comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ai-engine-documentation">AI Engine Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vitis-dsp-libraries">Vitis DSP Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#xilinx-runtime-xrt-architecture">Xilinx Runtime (XRT) Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vitis-unified-software-development-platform-2021-2-documentation">Vitis Unified Software Development Platform 2021.2 Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#known-issues">Known Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#support">Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html">Versal AI Engine/HLS FIR Filter Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#before-you-begin">Before You Begin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#design-implementations">Design Implementations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#choosing-between-ai-engine-and-hls-implementations">Choosing between AI Engine and HLS Implementations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#ai-engine-specific-design-considerations">AI Engine Specific Design Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#measuring-resources-throughput-latency-and-power">Measuring Resources, Throughput, Latency, and Power</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#conclusion">Conclusion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#revision-history">Revision History</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#support">Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-firFilter_AIEvsHLS/README.html#license">License</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../08-n-body-simulator/README.html">N-Body Simulator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../08-n-body-simulator/README.html#support">Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../08-n-body-simulator/README.html#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#feature-tutorials">Feature Tutorials</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+            
+			
+			<p class="caption"><span class="caption-text">This Page</span></p>
+				<ul class="current">
+				  <li class="toctree-l1"><a href="../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS/README.md.txt"
+						rel="nofollow">Show Source</a></li>
+				</ul>
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../AI_Engine_Development.html">AI Engine Development</a> &raquo;</li>
+        
+      <li>Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS/README.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal® ACAP AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="versal-2d-fft-implementation-using-vitis-acceleration-library-tutorial-xd073">
+<h1>Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)<a class="headerlink" href="#versal-2d-fft-implementation-using-vitis-acceleration-library-tutorial-xd073" title="Permalink to this headline">¶</a></h1>
+<p><em><strong>Version: Vitis 2021.2</strong></em></p>
+<div class="section" id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="#introduction">Introduction</a></p>
+<p><a class="reference external" href="#Before-you-Begin">Before You Begin</a></p>
+<p><a class="reference external" href="#Design-Implementations">Design Implementations</a></p>
+<p><a class="reference external" href="#AI-Engine-and-HLS-Implementation-Comparison">AI Engine and HLS Implementation Comparison</a></p>
+<p><a class="reference external" href="#References">References</a></p>
+<p><a class="reference external" href="#Known-Issues">Known Issues</a></p>
+</div>
+</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The Versal® ACAP is a a fully software programmable, heterogeneous compute platform that combines the following:</p>
+<ul class="simple">
+<li><p>Scalar Engines (a processor subsystem (PS) that includes Arm® processors)</p></li>
+<li><p>Adaptable Engines (programmable logic (PL) and memory)</p></li>
+<li><p>Intelligent Engines (including both including both AI and DSP Engines)</p></li>
+</ul>
+<p>This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with HLS using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.</p>
+<p>A Makefile is provided for each implementation. It can be used to create the design for <code class="docutils literal notranslate"><span class="pre">cint16</span></code> and <code class="docutils literal notranslate"><span class="pre">cfloat</span></code> datatypes, for various point sizes (32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048), different numbers of fft_2d HLS kernel/AI Engine graph instances (1, 5, and 10), and lastly for different targets (hw_emu and hw).</p>
+<p>The design documentation demonstrates hardware and software design details including the methodology for each implementation, elaborating on the functional partitioning. The compilation, execution, and measurement steps as well as observations are given.</p>
+<details>
+  <summary>Objectives</summary> <div class="section" id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<p>After completing the tutorial, you should be able to:</p>
+<ul class="simple">
+<li><p>Develop a system-level 2D-FFT design by identifying an algorithm and deploying it on AI Engines or PL and DSP Engines using Vitis™ HLS.</p></li>
+<li><p>Build a complete system design by going through the following steps in the Vitis flow:</p>
+<ul>
+<li><p>Create the AI Engine Adaptive Data Flow API (ADF) graph.</p></li>
+<li><p>Compile the A72 host application and compiling PL kernels.</p></li>
+<li><p>Use the Vitis compiler (V++) to link the AI Engine and HLS kernels with the platform.</p></li>
+<li><p>Package the design.</p></li>
+<li><p>Run the design through the hardware emulation and hardware flow in a mixed SystemC/RTL cycle-accurate/QEMU-based simulator.</p></li>
+</ul>
+</li>
+<li><p>Develop a consistent harness to have the data mover kernels maintain a similar interface with AI Engine or HLS/PL kernels (using AXI4-Stream).</p></li>
+<li><p>Understand graph control APIs for AI Engine implementation and HLS APIs for controlling HLS/PL kernels.</p></li>
+<li><p>Understand the methodological differences between a design created using AI Engines and a design created using PL and DSP Engines via HLS.</p></li>
+<li><p>Understand metrics including utilization, performance/throughput, and power across various instances of FFT arrays of different dimensions.</p></li>
+</ul>
+</details><details>
+  <summary>Design Overview</summary> </div>
+<div class="section" id="design-overview">
+<h2>Design Overview<a class="headerlink" href="#design-overview" title="Permalink to this headline">¶</a></h2>
+<p>This design aims to implement a 2D-FFT algorithm performed on (for example) a 1024 x 2048 matrix using 1024- and 2048-point 1D-FFT kernels. The pseudo-code to implement the algorithm is shown in the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>x = rand(a,b);         % Create matrix of dimensions m x n
+
+x_2fft = fft2(x);      % Reference generation, 2 dimensional FFT of matrix &#39;x&#39;
+
+FFT2D, using 1D – FFT.
+x_row = fft(x);        % Row wise 1D-FFT
+x_row = x_row.’;       % Transpose
+x_col = fft(x_row);    % Row wise 1D-FFT
+x_col = x_col.’;       % Transpose
+
+x_2fft - x_col         % Calculate the error difference
+</pre></div>
+</div>
+<p>In calculating each 1D-FFT, one dimension is kept constant while the other is computed. The transpose function is applied after each 1D-FFT compute. The transpose function moves the entry along each element of the dimension to the corresponding element of the other dimension. A golden data set is generated as reference and the error difference is calculated.</p>
+<p>A similar algorithm is deployed in the two implementations using either the AI Engines or HLS targeting the PL and DSP Engines. The design compiles through Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value = 1 or 1.5, depending on the cint16 or cfloat datatype) input to the row-wise 1D-FFT and check its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).</p>
+<p>The transposed pattern of that, generated within the PL, is then streamed as input to the col-wise 1D-FFT. Its output is then checked against the expected output (all 1s). The data mover kernel returns the total error count in both stages to the host application, which is used to declare a pass or fail of the test case.</p>
+<p>To help you compare the methodology of the AI Engine and HLS based implementations, the design build process can be modified to analyze how each implementation scales with different numbers of instances (x1, x5, and x10) of various matrix array dimensions (rows x cols = 32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048).</p>
+<p>A similar set of harnesses is developed and maintained between the two implementations. This allows you to generate and check input/output vectors using the PL-based data mover kernels, and to move data to and from the AI and HLS kernels. In both cases, Xilinx Runtime (XRT) running on A72 controls data flow in compute and data mover kernels through graph control APIs. These graph control APIs control the AI Engine kernels and HLS APIs, which in turn control the HLS/PL kernels.</p>
+</details><details>
+  <summary>Directory Structure</summary> </div>
+<div class="section" id="directory-structure">
+<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fft2d_AIEvsHLS</span>
+<span class="o">|</span><span class="n">__AIE</span><span class="o">......................</span><span class="n">contains</span> <span class="n">AI</span> <span class="n">Engine</span> <span class="n">implementation</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">Makefile</span><span class="o">....................</span><span class="k">with</span> <span class="n">recipes</span> <span class="k">for</span> <span class="n">each</span> <span class="n">step</span> <span class="n">of</span> <span class="n">the</span> <span class="n">design</span> <span class="n">compilation</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">images</span><span class="o">......................</span><span class="n">contains</span> <span class="n">images</span> <span class="n">used</span> <span class="k">for</span> <span class="n">AI</span> <span class="n">Engine</span> <span class="n">Design</span> <span class="n">documentation</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">description</span><span class="o">.</span><span class="n">json</span><span class="o">............</span><span class="n">required</span> <span class="k">for</span> <span class="n">XOAH</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">build</span><span class="o">.......................</span><span class="n">created</span> <span class="ow">and</span> <span class="n">contains</span> <span class="n">subfolders</span> <span class="kn">from</span> <span class="nn">design</span> <span class="n">build</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">design</span><span class="o">......................</span><span class="n">contains</span> <span class="n">source</span> <span class="ow">and</span> <span class="n">include</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">aie_src</span><span class="o">....................</span><span class="n">contains</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">aie</span> <span class="n">source</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">pl_src</span><span class="o">.....................</span><span class="n">contains</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">data</span> <span class="n">mover</span> <span class="n">source</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">host_app_src</span><span class="o">...............</span><span class="n">contains</span> <span class="n">host</span> <span class="n">application</span> <span class="n">source</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">system_configs</span><span class="o">.............</span><span class="n">contains</span> <span class="nb">all</span> <span class="n">system</span> <span class="n">configuration</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">profiling_configs</span><span class="o">..........</span><span class="n">contains</span> <span class="n">xrt</span><span class="o">.</span><span class="n">ini</span> <span class="n">file</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">hw_emu_files</span><span class="o">...............</span><span class="n">contains</span> <span class="n">hw_emu</span> <span class="n">launch</span> <span class="n">script</span>
+<span class="o">|</span><span class="n">__HLS</span><span class="o">......................</span><span class="n">contains</span> <span class="n">HLS</span> <span class="n">implementation</span> <span class="n">targeting</span> <span class="n">PL</span> <span class="ow">and</span> <span class="n">DSP</span> <span class="n">Engines</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">Makefile</span><span class="o">....................</span><span class="k">with</span> <span class="n">recipes</span> <span class="k">for</span> <span class="n">each</span> <span class="n">step</span> <span class="n">of</span> <span class="n">the</span> <span class="n">design</span> <span class="n">compilation</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">images</span><span class="o">......................</span><span class="n">contains</span> <span class="n">images</span> <span class="n">used</span> <span class="k">for</span> <span class="n">DSP</span> <span class="n">Design</span> <span class="n">documentation</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">description</span><span class="o">.</span><span class="n">json</span><span class="o">............</span><span class="n">required</span> <span class="k">for</span> <span class="n">XOAH</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">build</span><span class="o">.......................</span><span class="n">created</span> <span class="ow">and</span> <span class="n">contains</span> <span class="n">subfolders</span> <span class="kn">from</span> <span class="nn">design</span> <span class="n">build</span>
+<span class="o">|</span>    <span class="o">|</span><span class="n">design</span><span class="o">......................</span><span class="n">contains</span> <span class="n">source</span> <span class="ow">and</span> <span class="n">include</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">pl_src</span><span class="o">.....................</span><span class="n">contains</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">fft_2d</span> <span class="ow">and</span> <span class="n">data</span> <span class="n">mover</span> <span class="n">source</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">host_app_src</span><span class="o">...............</span><span class="n">contains</span> <span class="n">host</span> <span class="n">application</span> <span class="n">source</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">system_configs</span><span class="o">.............</span><span class="n">contains</span> <span class="nb">all</span> <span class="n">system</span> <span class="n">configuration</span> <span class="n">files</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">profiling_configs</span><span class="o">..........</span><span class="n">contains</span> <span class="n">xrt</span><span class="o">.</span><span class="n">ini</span> <span class="n">file</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">directives</span><span class="o">.................</span><span class="n">contains</span> <span class="n">directives</span> <span class="k">for</span> <span class="n">various</span> <span class="n">vitis</span> <span class="n">compilation</span> <span class="n">stages</span> <span class="n">like</span> <span class="n">hls</span><span class="o">.</span><span class="n">pre_tcl</span> <span class="n">etc</span><span class="o">.</span>
+<span class="o">|</span>    <span class="o">|</span>       <span class="o">|</span><span class="n">hw_emu_files</span><span class="o">...............</span><span class="n">contains</span> <span class="n">hw_emu</span> <span class="n">launch</span> <span class="n">script</span>
+</pre></div>
+</div>
+</details></div>
+</div>
+<div class="section" id="before-you-begin">
+<h1>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h1>
+<details><summary>Documentation: Explore AI Engine Architecture</summary> <div class="section" id="documentation-explore-ai-engine-architecture">
+<h2>Documentation: Explore AI Engine Architecture<a class="headerlink" href="#documentation-explore-ai-engine-architecture" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html">AI Engine Development Design Process</a></p></li>
+<li><p><a class="reference external" href="https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf">AM009 AI Engine Architecture Manual</a></p></li>
+<li><p><a class="reference external" href="https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493">Versal ACAP AI Engines for Dummies</a></p></li>
+</ul>
+</details><details>
+<summary>Installing the Tools</summary> </div>
+<div class="section" id="installing-the-tools">
+<h2>Installing the Tools<a class="headerlink" href="#installing-the-tools" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.xilinx.com/member/versal_ai_tools_ea.html">AI Engine Tools Lounge</a></p></li>
+<li><p><a class="reference external" href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">AI Engine Documentation</a></p></li>
+</ul>
+<p>To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perform the following steps:</p>
+<ul class="simple">
+<li><p>Install the <a class="reference external" href="https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html">Vitis Software Platform</a>.</p></li>
+<li><p>Obtain licenses for AI Engine tools.</p></li>
+<li><p>Follow the instructions in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms">Installing Xilinx Runtime and Platforms</a> (XRT).</p></li>
+<li><p>Download and set up the <a class="reference external" href="https://www.xilinx.com/member/vck190_headstart.html#docs">VCK190 Vitis Platform</a>.</p></li>
+</ul>
+</details><details>
+<summary>Platform</summary> </div>
+<div class="section" id="platform">
+<h2>Platform<a class="headerlink" href="#platform" title="Permalink to this headline">¶</a></h2>
+<p>Before beginning the tutorial, make sure you have read and followed the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes">Vitis Software Platform Release Notes (v2021.2)</a> for setting up software and installing the VCK190 base platform.</p>
+<p>This tutorial targets the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/vck190.html">VCK190 production board</a>. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.</p>
+</details><details>
+<summary>Setting Up the Environment</summary></div>
+<div class="section" id="setting-up-the-environment">
+<h2>Setting up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<p>When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system-specific paths.</p>
+<p>To set up XRT, if you have not done this already, run the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">source</span> \<span class="o">&lt;</span><span class="n">XRT</span><span class="o">-</span><span class="n">Location</span>\<span class="o">&gt;/</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>In the design directory of each implementation, edit <code class="docutils literal notranslate"><span class="pre">env_setup.sh</span></code> script with your file paths, then source the environment script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> env_setup.sh
+</pre></div>
+</div>
+<p>The script sets up the environment variables and sources scripts explained below:</p>
+<ol class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable is based on where you downloaded the platform.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">XILINX_TOOLS_LOCATION</span></code> path to the Xilinx tools is used to source the <code class="docutils literal notranslate"><span class="pre">settings64.sh</span></code> script.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">XLNX_VERSAL</span></code> path to the <code class="docutils literal notranslate"><span class="pre">xilinx-versal-common-v2021.2</span></code> directory is used in the step below.</p></li>
+<li><p>The platform is set up by running the <code class="docutils literal notranslate"><span class="pre">xilinx-versal-common-v2021.2/environment-setup-cortexa72-cortexa53-xilinx-linux</span></code> script as provided in the platform download This script sets up the <code class="docutils literal notranslate"><span class="pre">SDKTARGETSYSROOT</span></code> and <code class="docutils literal notranslate"><span class="pre">CXX</span></code> variables. If the script is not present, you <em>must</em> run the <code class="docutils literal notranslate"><span class="pre">xilinx-versal-common-v2021.2/sdk.sh</span></code> script.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DSPLIB_ROOT</span></code> is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.</p></li>
+<li><p>In the script, you can optionally set up an <code class="docutils literal notranslate"><span class="pre">XRT_ROOT</span></code> environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically be excluded from packaging.</p></li>
+<li><p>The script also sets up the <code class="docutils literal notranslate"><span class="pre">PLATFORM</span></code> variable pointing to the required <code class="docutils literal notranslate"><span class="pre">.xpfm</span></code> file of the target platform set by the variable <code class="docutils literal notranslate"><span class="pre">tgt_plat</span></code>.</p></li>
+</ol>
+</details><details>
+<summary>Confirming Tool Installation</summary> </div>
+<div class="section" id="confirming-tool-installation">
+<h2>Confirming Tool Installation<a class="headerlink" href="#confirming-tool-installation" title="Permalink to this headline">¶</a></h2>
+<p>To confirm that you have installed the correct tools, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which vitis
+which aiecompiler
+</pre></div>
+</div>
+<p>To confirm you have the VCK190 base platform, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>platforminfo --list <span class="p">|</span> grep -m <span class="m">1</span> -A <span class="m">9</span> vck190
+</pre></div>
+</div>
+<p>The output of the above command should be as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> <span class="s2">&quot;baseName&quot;</span>: <span class="s2">&quot;xilinx_vck190_base_202120_1&quot;</span>,
+            <span class="s2">&quot;version&quot;</span>: <span class="s2">&quot;1.0&quot;</span>,
+            <span class="s2">&quot;type&quot;</span>: <span class="s2">&quot;sdsoc&quot;</span>,
+            <span class="s2">&quot;dataCenter&quot;</span>: <span class="s2">&quot;false&quot;</span>,
+            <span class="s2">&quot;embedded&quot;</span>: <span class="s2">&quot;true&quot;</span>,
+            <span class="s2">&quot;externalHost&quot;</span>: <span class="s2">&quot;false&quot;</span>,
+            <span class="s2">&quot;serverManaged&quot;</span>: <span class="s2">&quot;false&quot;</span>,
+            <span class="s2">&quot;platformState&quot;</span>: <span class="s2">&quot;pre_synth&quot;</span>,
+            <span class="s2">&quot;usesPR&quot;</span>: <span class="s2">&quot;false&quot;</span>,
+</pre></div>
+</div>
+</details></div>
+</div>
+<div class="section" id="design-implementations">
+<h1>Design Implementations<a class="headerlink" href="#design-implementations" title="Permalink to this headline">¶</a></h1>
+<p>The Makefile and source files for the AI Engine and HLS implementations are in the <code class="docutils literal notranslate"><span class="pre">AIE</span></code> and <code class="docutils literal notranslate"><span class="pre">DSP</span></code> directories respectively. For the documentation of the flow to build the design and details of the hardware and software design, follow each of the links below:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="AIE">AI Engine design implementation</a></p></li>
+<li><p><a class="reference external" href="HLS">HLS design implementation with DSP Engines</a></p></li>
+</ul>
+</div>
+<div class="section" id="ai-engine-and-hls-implementation-comparison">
+<h1>AI Engine and HLS Implementation Comparison<a class="headerlink" href="#ai-engine-and-hls-implementation-comparison" title="Permalink to this headline">¶</a></h1>
+<p>The following table shows a comparison between a 1024 x 2048 point 10-instance FFT-2D design implemented using the AI Engines and HLS with DSP Engines respectively. It lists the throughput, resource utilization, power consumption, and performance in throughput/Watt for <code class="docutils literal notranslate"><span class="pre">cint16</span></code> implementations.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">Design Target</th>
+<th align="center">Aggregate Throughput<br/>(in MSPS)</th>
+<th align="center">Average Latency (in μs)</th>
+<th align="center">AIE Vector Cores</th>
+<th align="center">AIE Vector Load</th>
+<th align="center">Active Mem Banks /<br/> Mem R/W Rate</th>
+<th align="center">Active AIE Tiles</th>
+<th align="center">FF (Regs) /<br/> CLB LUTs</th>
+<th align="center">BRAMs</th>
+<th align="center">DSPs</th>
+<th align="center">Dynamic Power<br/>(in mW)</th>
+<th align="center">Performance per Watt<br/>(in MSPS/Watt)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">AIE</td>
+<td align="center">6004.71</td>
+<td align="center">3480.89</td>
+<td align="center">20</td>
+<td align="center">76%</td>
+<td align="center">396 /<br/>20%</td>
+<td align="center">56</td>
+<td align="center">11720 /<br/> 4156</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">4461</td>
+<td align="center">1345.89</td>
+</tr>
+<tr>
+<td align="center">HLS</td>
+<td align="center">4968.15</td>
+<td align="center">4200.20</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">98665 /<br/> 61125</td>
+<td align="center">155</td>
+<td align="center">180</td>
+<td align="center">6127</td>
+<td align="center">810.86</td>
+</tr>
+</tbody>
+</table><p>These observations give a clear indication of where the AI Engines in Versal can offer improvements:</p>
+<ul class="simple">
+<li><p>An almost 20% improvement on the aggregate throughput.</p></li>
+<li><p>Reduced latency by ~20%.</p></li>
+<li><p>Performance increase of ~2x to 1183 MSPS/Watt.</p></li>
+<li><p>Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~108K FFs, ~70K LUTs and 335 BRAMs are reduced to just 56 AI Engines, 11k FFs, and 4K LUTs.</p></li>
+</ul>
+<p>It is important to understand that those 56 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 36 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 36 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/maproutemethod.html#mcq1622542393364">this page</a> for details on the AI Engine mapper/router).</p>
+<p>Additionally, further increasing the number of instances in the AI Engine design is easier compared to the HLS design, which will run into timing closure issues, especially for higher FFT point size designs.</p>
+<p><strong>Measurement:</strong></p>
+<ol class="simple">
+<li><p>AI Engine design resource utilization is measured using Xilinx Power Estimator (XPE) and Vivado (report utilization under implementation for FFs and CLB LUTs). For the HLS design, resource utilization is measured using Vivado.</p></li>
+<li><p>AI Engine power consumption is measured using XPE. HLS power consumption is measured using Vivado (report power under implementation).</p></li>
+<li><p>Throughput is measured using viewing runtime profiling generated trace texts in <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code>.</p></li>
+</ol>
+<p>For detailed instructions on taking measurements of the parameters, refer to the individual implementation section.</p>
+</div>
+<div class="section" id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ai-engine-documentation">
+<h2><a class="reference external" href="https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&amp;content-lang=en-US">AI Engine Documentation</a><a class="headerlink" href="#ai-engine-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.</p>
+</div>
+<div class="section" id="vitis-dsp-libraries">
+<h2><a class="reference external" href="https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp">Vitis DSP Libraries</a><a class="headerlink" href="#vitis-dsp-libraries" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/">Vitis DSP Libraries Comprehensive Documentation</a></p></li>
+</ul>
+</div>
+<div class="section" id="xilinx-runtime-xrt-architecture">
+<h2><a class="reference external" href="https://xilinx.github.io/XRT/master/html/index.html">Xilinx Runtime (XRT) Architecture</a><a class="headerlink" href="#xilinx-runtime-xrt-architecture" title="Permalink to this headline">¶</a></h2>
+<p>Below are links to the XRT information used by this tutorial:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://xilinx.github.io/XRT/master/html/index.html">XRT Documentation</a>: Explains general XRT API calls used in the PS Host Application.</p></li>
+<li><p><a class="reference external" href="https://github.com/Xilinx/XRT">XRT Github Repo</a>: Contains the XRT source code.</p></li>
+<li><p><a class="reference external" href="https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h">XRT AIE API</a>: Documents the AI Engine XRT API calls</p></li>
+<li><p><a class="reference external" href="https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1451-xrt-release-notes.pdf">XRT Release Notes</a></p></li>
+</ul>
+</div>
+<div class="section" id="vitis-unified-software-development-platform-2021-2-documentation">
+<h2><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html">Vitis Unified Software Development Platform 2021.2 Documentation</a><a class="headerlink" href="#vitis-unified-software-development-platform-2021-2-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Below are links to Vitis related information referenced in this tutorial:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/kme1569523964461.html">Vitis Application Acceleration Development Flow Documentation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">Vitis Application Acceleration Development Flow Tutorials</a></p></li>
+<li><p><a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls">Vitis HLS</a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="known-issues">
+<h1>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h1>
+<p>The timestamps represented in the hardware execution generated trace, have known a issue due to which they are scaled compared to the actual. This issue will be fixed in the subsequent tool versions. All calculations/observations in this tutorial are based on the hw_emu runs.</p>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<p>GitHub issues will be used for tracking requests and bugs. For questions, go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"> XD073 | &copy; Copyright 2021 Xilinx, Inc.</p></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
+</footer>
+
+        </div>
+      </div>
+
+
+	  <!-- Sphinx Page Footer block -->
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../07-firFilter_AIEvsHLS/README.html" class="btn btn-neutral float-right" title="Versal AI Engine/HLS FIR Filter Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../04-custom-platform-emulation/README.html" class="btn btn-neutral float-left" title="Custom Platform Emulation with RTL Kernel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo" class="copyright">
+    <p class="footerinfo">
+      <span class="lastupdated">
+        Last updated on May 16, 2022.
+      </span>
+
+    </p>
+	<br>
+  </div>
+      </div>
+    </section>
+
+
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+   <script type="text/javascript">
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+
+  <script type="text/javascript" id="searchindexloader"></script>
+
+
+  
+  
+    
+  
+
+
+
+  <!--  Xilinx template footer block -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+					<div class="xf-content-height">
+						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
+							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
+								<noindex>
+                  <!-- make footer fixed - NileshP -->
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+                  <!-- make footer fixed NileshP-->
+									<footer>
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+													<div class="row">
+														<div class="footerSocial parbase">
+														
+															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
+																<div class="lang-select dropup hidden-md hidden-lg">
+		<button data-toggle="dropdown">
+			<span class="fas fa-globe" aria-hidden="true"></span>
+			<span>
+				
+					English
+				</span>
+		<span class="far fa-angle-down" aria-hidden="true"></span>
+	</button>
+	<ul class="dropdown-menu">
+		<li>
+				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
+					日本語
+				</a>
+			</li>
+		<li>
+				<a target="_blank" href="https://china.xilinx.com/" target="_self">
+					简体中文
+				</a>
+			</li>
+		</ul>
+	</div>
+																<ul class="list-inline pull-right social-menu">
+																	<li>
+																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
+																		<span class="linkedin icon"></span>
+																		<span class="sr-only">Connect on LinkedIn</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
+																		<span class="twitter icon"></span>
+																		<span class="sr-only">Follow us on Twitter</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
+																		<span class="facebook icon"></span>
+																		<span class="sr-only">Connect on Facebook</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
+																		<span class="youtube icon"></span>
+																		<span class="sr-only">Watch us on YouTube</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
+																		<span class="newsletter icon"></span>
+																		<span class="sr-only">Subscribe to Newsletter</span>
+																		</a>
+																	</li>
+																</ul>
+																	<div class="lang-select dropup hidden-xs hidden-sm">
+	<button data-toggle="dropdown">
+		<span class="fas fa-globe" aria-hidden="true"></span>
+		<span>
+			
+				English
+			</span>
+		<span class="far fa-angle-down" aria-hidden="true"></span>
+	</button>
+	<ul class="dropdown-menu">
+		<li>
+				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
+					日本語
+				</a>
+			</li>
+		<li>
+				<a target="_blank" href="https://china.xilinx.com/" target="_self">
+					简体中文
+				</a>
+			</li>
+		</ul>
+	</div>
+															</div>
+														</div>
+														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
+															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
+														</div>
+
+													</div>
+													                    <div class="movethisrowtoleft row">
+                        <div class="col-xs-24">
+                            <ul class="sub-menu">
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
+                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
+								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
+                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
+                            </ul>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+									</footer>
+								</noindex>
+							</div>
+						</div>
+					</div>
+				</div>
+<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
+    <span data-component="backToTopButton" class="backToTopButton loaded">
+        <ul>
+            <li>
+                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
+                    <span class="fas fa-angle-up" aria-hidden="true"></span>
+                </a>
+            </li>
+        </ul>
+    </span>
+</noindex></div>
+			</div>
+		</div>
+
+
+		<script>window.CQ = window.CQ || {}</script>
+		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
+		<script>
+			var underscoreSetup = function () {
+			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
+			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
+			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
+			}
+
+			underscoreSetup();
+		</script>
+	</body>
+</html>
