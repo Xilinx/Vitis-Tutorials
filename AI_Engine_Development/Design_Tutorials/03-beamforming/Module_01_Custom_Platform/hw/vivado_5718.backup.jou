@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2022.1 (64-bit)
+# SW Build 3526262 on Mon Apr 18 15:47:01 MDT 2022
+# IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+# Start of session at: Fri May 13 00:11:39 2022
+# Process ID: 5718
+# Current directory: /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw
+# Command line: vivado -mode batch -source vck190_v1_0_xsa.tcl -tclargs xcvc1902-vsva2197-2MP-e-S
+# Log file: /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/vivado.log
+# Journal file: /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/vivado.jou
+# Running On: xsjlc210672, OS: Linux, CPU Frequency: 3396.313 MHz, CPU Physical cores: 32, Host memory: 403952 MB
+#-----------------------------------------------------------
+source vck190_v1_0_xsa.tcl

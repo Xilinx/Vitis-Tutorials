@@ -2,19 +2,17 @@
 # Vivado v2022.1 (64-bit)
 # SW Build 3526262 on Mon Apr 18 15:47:01 MDT 2022
 # IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
-# Start of session at: Wed May 25 22:51:57 2022
-# Process ID: 32151
-# Current directory: /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw
+# Start of session at: Fri May 13 00:11:39 2022
+# Process ID: 5718
+# Current directory: /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw
 # Command line: vivado -mode batch -source vck190_v1_0_xsa.tcl -tclargs xcvc1902-vsva2197-2MP-e-S
-# Log file: /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/vivado.log
-# Journal file: /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/vivado.jou
-# Running On: xsjlc210672, OS: Linux, CPU Frequency: 999.914 MHz, CPU Physical cores: 32, Host memory: 403952 MB
+# Log file: /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/vivado.log
+# Journal file: /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/vivado.jou
+# Running On: xsjlc210672, OS: Linux, CPU Frequency: 3396.313 MHz, CPU Physical cores: 32, Host memory: 403952 MB
 #-----------------------------------------------------------
-Sourcing tcl script '/home/jithinp/.Xilinx/Vivado/Vivado_init.tcl'
-478 Beta devices matching pattern found, 478 enabled.
-enable_beta_device: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 3230.965 ; gain = 8.148 ; free physical = 143886 ; free virtual = 364563
 source vck190_v1_0_xsa.tcl
 # create_project vck190_v1_0 build/vck190_v1_0_vivado -part [lindex $argv 0] 
+create_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:06 . Memory (MB): peak = 3224.836 ; gain = 2.020 ; free physical = 60569 ; free virtual = 379530
 # set argv [lindex $argv 0]
 # set argc 1
 # source src/dr.bd.tcl
@@ -91,8 +89,8 @@ source vck190_v1_0_xsa.tcl
 ## 
 ## }
 INFO: [BD::TCL 103-2003] Currently there is no design <vck190_v1_0> in project, so creating one...
-Wrote  : </everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd> 
-create_bd_design: Time (s): cpu = 00:00:04 ; elapsed = 00:00:08 . Memory (MB): peak = 3293.598 ; gain = 24.648 ; free physical = 143348 ; free virtual = 364026
+Wrote  : </everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd> 
+create_bd_design: Time (s): cpu = 00:00:04 ; elapsed = 00:00:08 . Memory (MB): peak = 3287.469 ; gain = 24.648 ; free physical = 60915 ; free virtual = 379877
 INFO: [BD::TCL 103-2004] Making design <vck190_v1_0> as current_bd_design.
 ## common::send_gid_msg -ssname BD::TCL -id 2005 -severity "INFO" "Currently the variable <design_name> is equal to \"$design_name\"."
 INFO: [BD::TCL 103-2005] Currently the variable <design_name> is equal to "vck190_v1_0".
@@ -4152,10 +4150,10 @@ xilinx.com:ip:ai_engine:* xilinx.com:ip:axi_dbg_hub:* xilinx.com:ip:clk_gen_sim:
 ## }
 ## create_root_design ""
 INFO: [Device 21-403] Loading part xcvc1902-vsva2197-2MP-e-S
-create_bd_cell: Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 3301.598 ; gain = 8.000 ; free physical = 143025 ; free virtual = 363703
+create_bd_cell: Time (s): cpu = 00:00:06 ; elapsed = 00:00:10 . Memory (MB): peak = 3295.469 ; gain = 8.000 ; free physical = 62394 ; free virtual = 381357
 WARNING: [IP_Flow 19-3374] An attempt to modify the value of disabled parameter 'CLKFBOUT_MULT' from '40.000000' to '80.000000' has been ignored for IP 'pl_clkwiz'
 WARNING: [IP_Flow 19-3374] An attempt to modify the value of disabled parameter 'SECONDARY_IN_FREQ' from '100.000' to '54.000' has been ignored for IP 'pl_clkwiz'
-create_bd_cell: Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 3699.566 ; gain = 198.168 ; free physical = 142574 ; free virtual = 363265
+create_bd_cell: Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 3661.547 ; gain = 194.172 ; free physical = 61916 ; free virtual = 380943
 WARNING: [IP_Flow 19-8048] Ignoring parameter 'SMON_INT_MEASUREMENT_ENABLE' as is not configurable on IP 'pspmc_0'.
 WARNING: [IP_Flow 19-8048] Ignoring parameter 'SEM_NPI_GOLDEN_CHECKSUM_SW' as is not configurable on IP 'pspmc_0'.
 Slave segment '/ps_noc/S05_AXI/C0_DDR_LOW0' is being assigned into address space '/ps_cips/FPD_AXI_NOC_0' at <0x0000_0000 [ 2G ]>.
@@ -4199,12 +4197,12 @@ INFO: [Ipconfig 75-122] Detailed placement phase
 INFO: [Ipconfig 75-133] Running NOC Routing
 NoC Compiler Finished Successfully
 NoC Solution | Checksum: dfe792b3
-INFO: [Ipconfig 75-108] Writing file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/common/nsln/NOC_Power.xpe.
+INFO: [Ipconfig 75-108] Writing file /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/common/nsln/NOC_Power.xpe.
 WARNING: [BD 41-702] Propagation TCL tries to overwrite USER strength parameter C_S_AXI_ID_WIDTH(16) on '/noc_ai_mm_0' with propagated value(2). Command ignored
 INFO: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: SmartConnect vck190_v1_0_ctrl_sm_0 is in Low-Area Mode.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: IP vck190_v1_0_ctrl_sm_0 is configured in Low-area mode as all propagated traffic is low-bandwidth (AXI4LITE). SI S00_AXI has property HAS_BURST == 1. WRAP bursts are not supported in Low-area mode and will result in DECERR if received.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: If WRAP transactions are required then turn off Low-area mode using ADVANCED_PROPERTIES. Execute following: set_property CONFIG.ADVANCED_PROPERTIES {__experimental_features__ {disable_low_area_mode 1}} [get_bd_cells /vck190_v1_0_ctrl_sm_0]
-xit::source_ipfile: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 3932.438 ; gain = 23.812 ; free physical = 142539 ; free virtual = 363231
+xit::source_ipfile: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 3895.684 ; gain = 23.812 ; free physical = 61664 ; free virtual = 380694
 INFO: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: SmartConnect vck190_v1_0_ctrl_sm_0_0 is in Low-Area Mode.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: IP vck190_v1_0_ctrl_sm_0_0 is configured in Low-area mode as all propagated traffic is low-bandwidth (AXI4LITE). SI S00_AXI has property HAS_BURST == 1. WRAP bursts are not supported in Low-area mode and will result in DECERR if received.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: If WRAP transactions are required then turn off Low-area mode using ADVANCED_PROPERTIES. Execute following: set_property CONFIG.ADVANCED_PROPERTIES {__experimental_features__ {disable_low_area_mode 1}} [get_bd_cells /vck190_v1_0_ctrl_sm_0_0]
@@ -4265,9 +4263,9 @@ WARNING: [BD 41-237] Bus Interface property WUSER_WIDTH does not match between /
 WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S07_AXI(17) and /ps_cips/LPD_AXI_NOC_0(0)
 WARNING: [BD 41-237] Bus Interface property AWUSER_WIDTH does not match between /axi_dbg_hub_0/S_AXI(0) and /ps_noc/M00_AXI(18)
 WARNING: [BD 41-237] Bus Interface property ARUSER_WIDTH does not match between /axi_dbg_hub_0/S_AXI(0) and /ps_noc/M00_AXI(18)
-validate_bd_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:43 . Memory (MB): peak = 4162.289 ; gain = 429.012 ; free physical = 141980 ; free virtual = 362673
-Wrote  : </everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd> 
-save_bd_design: Time (s): cpu = 00:00:07 ; elapsed = 00:00:14 . Memory (MB): peak = 4162.289 ; gain = 0.000 ; free physical = 141407 ; free virtual = 362606
+validate_bd_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:45 . Memory (MB): peak = 4125.504 ; gain = 430.277 ; free physical = 61356 ; free virtual = 380412
+Wrote  : </everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd> 
+save_bd_design: Time (s): cpu = 00:00:07 ; elapsed = 00:00:14 . Memory (MB): peak = 4125.504 ; gain = 0.000 ; free physical = 61245 ; free virtual = 380414
 # source pfm_decls.tcl
 ## set_property PFM_NAME \
 ##     "xilinx.com:vck190_v1_0:vck190_v1_0:1.0" \
@@ -4316,13 +4314,13 @@ INFO: [Ipconfig 75-122] Detailed placement phase
 INFO: [Ipconfig 75-133] Running NOC Routing
 NoC Compiler Finished Successfully
 NoC Solution | Checksum: dfe792b3
-INFO: [Ipconfig 75-108] Writing file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/common/nsln/NOC_Power.xpe.
+INFO: [Ipconfig 75-108] Writing file /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/common/nsln/NOC_Power.xpe.
 WARNING: [BD 41-702] Propagation TCL tries to overwrite USER strength parameter C_S_AXI_ID_WIDTH(16) on '/noc_ai_mm_0' with propagated value(2). Command ignored
 WARNING: [BD 41-702] Propagation TCL tries to overwrite USER strength parameter C_S_AXI_ID_WIDTH(16) on '/noc_ai_mm_0' with propagated value(2). Command ignored
 INFO: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: SmartConnect vck190_v1_0_ctrl_sm_0 is in Low-Area Mode.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: IP vck190_v1_0_ctrl_sm_0 is configured in Low-area mode as all propagated traffic is low-bandwidth (AXI4LITE). SI S00_AXI has property HAS_BURST == 1. WRAP bursts are not supported in Low-area mode and will result in DECERR if received.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: If WRAP transactions are required then turn off Low-area mode using ADVANCED_PROPERTIES. Execute following: set_property CONFIG.ADVANCED_PROPERTIES {__experimental_features__ {disable_low_area_mode 1}} [get_bd_cells /vck190_v1_0_ctrl_sm_0]
-xit::source_ipfile: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 4283.680 ; gain = 0.000 ; free physical = 141605 ; free virtual = 362529
+xit::source_ipfile: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 4257.121 ; gain = 0.000 ; free physical = 61253 ; free virtual = 380418
 INFO: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: SmartConnect vck190_v1_0_ctrl_sm_0_0 is in Low-Area Mode.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: IP vck190_v1_0_ctrl_sm_0_0 is configured in Low-area mode as all propagated traffic is low-bandwidth (AXI4LITE). SI S00_AXI has property HAS_BURST == 1. WRAP bursts are not supported in Low-area mode and will result in DECERR if received.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: If WRAP transactions are required then turn off Low-area mode using ADVANCED_PROPERTIES. Execute following: set_property CONFIG.ADVANCED_PROPERTIES {__experimental_features__ {disable_low_area_mode 1}} [get_bd_cells /vck190_v1_0_ctrl_sm_0_0]
@@ -4382,7 +4380,7 @@ WARNING: [BD 41-237] Bus Interface property WUSER_WIDTH does not match between /
 WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S07_AXI(17) and /ps_cips/LPD_AXI_NOC_0(0)
 WARNING: [BD 41-237] Bus Interface property AWUSER_WIDTH does not match between /axi_dbg_hub_0/S_AXI(0) and /ps_noc/M00_AXI(18)
 WARNING: [BD 41-237] Bus Interface property ARUSER_WIDTH does not match between /axi_dbg_hub_0/S_AXI(0) and /ps_noc/M00_AXI(18)
-Wrote  : </everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd> 
+Wrote  : </everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd> 
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M00_AXI_rid'(2) to pin: '/axi_dbg_hub_0/s_axi_rid'(16) - Only lower order bits will be connected.
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M00_AXI_bid'(2) to pin: '/axi_dbg_hub_0/s_axi_bid'(16) - Only lower order bits will be connected.
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/axi_dbg_hub_0/s_axi_awid'(16) to pin: '/ps_noc/M00_AXI_awid'(2) - Only lower order bits will be connected.
@@ -4391,7 +4389,7 @@ WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M01_AXI_rid'(
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ai_engine_0/S00_AXI_awid'(16) to pin: '/ps_noc/M01_AXI_awid'(2) - Only lower order bits will be connected.
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ai_engine_0/S00_AXI_arid'(16) to pin: '/ps_noc/M01_AXI_arid'(2) - Only lower order bits will be connected.
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M01_AXI_bid'(2) to pin: '/ai_engine_0/S00_AXI_bid'(16) - Only lower order bits will be connected.
-Verilog Output written to : /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/synth/vck190_v1_0.v
+Verilog Output written to : /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/synth/vck190_v1_0.v
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M00_AXI_rid'(2) to pin: '/axi_dbg_hub_0/s_axi_rid'(16) - Only lower order bits will be connected.
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M00_AXI_bid'(2) to pin: '/axi_dbg_hub_0/s_axi_bid'(16) - Only lower order bits will be connected.
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/axi_dbg_hub_0/s_axi_awid'(16) to pin: '/ps_noc/M00_AXI_awid'(2) - Only lower order bits will be connected.
@@ -4400,9 +4398,9 @@ WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M01_AXI_rid'(
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ai_engine_0/S00_AXI_awid'(16) to pin: '/ps_noc/M01_AXI_awid'(2) - Only lower order bits will be connected.
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ai_engine_0/S00_AXI_arid'(16) to pin: '/ps_noc/M01_AXI_arid'(2) - Only lower order bits will be connected.
 WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M01_AXI_bid'(2) to pin: '/ai_engine_0/S00_AXI_bid'(16) - Only lower order bits will be connected.
-Verilog Output written to : /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/sim/vck190_v1_0.v
-Verilog Output written to : /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/hdl/vck190_v1_0_wrapper.v
-make_wrapper: Time (s): cpu = 00:00:51 ; elapsed = 00:01:08 . Memory (MB): peak = 4330.305 ; gain = 168.016 ; free physical = 141240 ; free virtual = 362464
+Verilog Output written to : /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/sim/vck190_v1_0.v
+Verilog Output written to : /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/hdl/vck190_v1_0_wrapper.v
+make_wrapper: Time (s): cpu = 00:00:50 ; elapsed = 00:01:07 . Memory (MB): peak = 4292.871 ; gain = 167.367 ; free physical = 61072 ; free virtual = 380301
 # add_files -norecurse build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/hdl/vck190_v1_0_wrapper.v
 INFO: [Project 1-1716] Could not find the wrapper file build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/hdl/vck190_v1_0_wrapper.v, checking in project .gen location instead.
 INFO: [Vivado 12-12390] Found file build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/hdl/vck190_v1_0_wrapper.v, adding it to Project
@@ -4437,12 +4435,12 @@ INFO: [Ipconfig 75-122] Detailed placement phase
 INFO: [Ipconfig 75-133] Running NOC Routing
 NoC Compiler Finished Successfully
 NoC Solution | Checksum: dfe792b3
-INFO: [Ipconfig 75-108] Writing file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/common/nsln/NOC_Power.xpe.
+INFO: [Ipconfig 75-108] Writing file /everest/psdv_cases_bkup/mkumars/Github/Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/common/nsln/NOC_Power.xpe.
 WARNING: [BD 41-702] Propagation TCL tries to overwrite USER strength parameter C_S_AXI_ID_WIDTH(16) on '/noc_ai_mm_0' with propagated value(2). Command ignored
 INFO: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: SmartConnect vck190_v1_0_ctrl_sm_0 is in Low-Area Mode.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: IP vck190_v1_0_ctrl_sm_0 is configured in Low-area mode as all propagated traffic is low-bandwidth (AXI4LITE). SI S00_AXI has property HAS_BURST == 1. WRAP bursts are not supported in Low-area mode and will result in DECERR if received.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0: If WRAP transactions are required then turn off Low-area mode using ADVANCED_PROPERTIES. Execute following: set_property CONFIG.ADVANCED_PROPERTIES {__experimental_features__ {disable_low_area_mode 1}} [get_bd_cells /vck190_v1_0_ctrl_sm_0]
-xit::source_ipfile: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 4467.867 ; gain = 0.000 ; free physical = 141015 ; free virtual = 362431
+xit::source_ipfile: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 4420.207 ; gain = 0.000 ; free physical = 60881 ; free virtual = 380078
 INFO: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: SmartConnect vck190_v1_0_ctrl_sm_0_0 is in Low-Area Mode.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: IP vck190_v1_0_ctrl_sm_0_0 is configured in Low-area mode as all propagated traffic is low-bandwidth (AXI4LITE). SI S00_AXI has property HAS_BURST == 1. WRAP bursts are not supported in Low-area mode and will result in DECERR if received.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_0_0: If WRAP transactions are required then turn off Low-area mode using ADVANCED_PROPERTIES. Execute following: set_property CONFIG.ADVANCED_PROPERTIES {__experimental_features__ {disable_low_area_mode 1}} [get_bd_cells /vck190_v1_0_ctrl_sm_0_0]
@@ -4491,401 +4489,3 @@ WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_8_0: If WRAP tra
 INFO: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_9_0: SmartConnect vck190_v1_0_ctrl_sm_9_0 is in Low-Area Mode.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_9_0: IP vck190_v1_0_ctrl_sm_9_0 is configured in Low-area mode as all propagated traffic is low-bandwidth (AXI4LITE). SI S00_AXI has property HAS_BURST == 1. WRAP bursts are not supported in Low-area mode and will result in DECERR if received.
 WARNING: [xilinx.com:ip:smartconnect:1.0-1] vck190_v1_0_ctrl_sm_9_0: If WRAP transactions are required then turn off Low-area mode using ADVANCED_PROPERTIES. Execute following: set_property CONFIG.ADVANCED_PROPERTIES {__experimental_features__ {disable_low_area_mode 1}} [get_bd_cells /vck190_v1_0_ctrl_sm_9_0]
-WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S00_AXI(17) and /ps_cips/FPD_CCI_NOC_0(0)
-WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S01_AXI(17) and /ps_cips/FPD_CCI_NOC_1(0)
-WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S02_AXI(17) and /ps_cips/FPD_CCI_NOC_2(0)
-WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S03_AXI(17) and /ps_cips/FPD_CCI_NOC_3(0)
-WARNING: [BD 41-237] Bus Interface property WUSER_WIDTH does not match between /ps_noc/S05_AXI(17) and /ps_cips/FPD_AXI_NOC_0(0)
-WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S05_AXI(17) and /ps_cips/FPD_AXI_NOC_0(0)
-WARNING: [BD 41-237] Bus Interface property WUSER_WIDTH does not match between /ps_noc/S06_AXI(17) and /ps_cips/FPD_AXI_NOC_1(0)
-WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S06_AXI(17) and /ps_cips/FPD_AXI_NOC_1(0)
-WARNING: [BD 41-237] Bus Interface property WUSER_WIDTH does not match between /ps_noc/S07_AXI(17) and /ps_cips/LPD_AXI_NOC_0(0)
-WARNING: [BD 41-237] Bus Interface property RUSER_WIDTH does not match between /ps_noc/S07_AXI(17) and /ps_cips/LPD_AXI_NOC_0(0)
-WARNING: [BD 41-237] Bus Interface property AWUSER_WIDTH does not match between /axi_dbg_hub_0/S_AXI(0) and /ps_noc/M00_AXI(18)
-WARNING: [BD 41-237] Bus Interface property ARUSER_WIDTH does not match between /axi_dbg_hub_0/S_AXI(0) and /ps_noc/M00_AXI(18)
-validate_bd_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:45 . Memory (MB): peak = 4476.781 ; gain = 41.316 ; free physical = 140585 ; free virtual = 362031
-# set_param dsa.includeMEContent true
-# import_files
-INFO: [filemgmt 20-348] Importing the appropriate files for fileset: 'constrs_1'
-INFO: [filemgmt 20-334] All file(s) are already imported in fileset: 'sources_1'
-INFO: [filemgmt 20-348] Importing the appropriate files for fileset: 'sources_1'
-INFO: [filemgmt 20-334] All file(s) are already imported in fileset: 'utils_1'
-INFO: [filemgmt 20-348] Importing the appropriate files for fileset: 'utils_1'
-# generate_target all [get_files build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd]
-INFO: [BD 41-1662] The design 'vck190_v1_0.bd' is already validated. Therefore parameter propagation will not be re-run.
-Wrote  : </everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd> 
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M00_AXI_rid'(2) to pin: '/axi_dbg_hub_0/s_axi_rid'(16) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M00_AXI_bid'(2) to pin: '/axi_dbg_hub_0/s_axi_bid'(16) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/axi_dbg_hub_0/s_axi_awid'(16) to pin: '/ps_noc/M00_AXI_awid'(2) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/axi_dbg_hub_0/s_axi_arid'(16) to pin: '/ps_noc/M00_AXI_arid'(2) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M01_AXI_rid'(2) to pin: '/ai_engine_0/S00_AXI_rid'(16) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ai_engine_0/S00_AXI_awid'(16) to pin: '/ps_noc/M01_AXI_awid'(2) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ai_engine_0/S00_AXI_arid'(16) to pin: '/ps_noc/M01_AXI_arid'(2) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M01_AXI_bid'(2) to pin: '/ai_engine_0/S00_AXI_bid'(16) - Only lower order bits will be connected.
-Verilog Output written to : /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/synth/vck190_v1_0.v
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M00_AXI_rid'(2) to pin: '/axi_dbg_hub_0/s_axi_rid'(16) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M00_AXI_bid'(2) to pin: '/axi_dbg_hub_0/s_axi_bid'(16) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/axi_dbg_hub_0/s_axi_awid'(16) to pin: '/ps_noc/M00_AXI_awid'(2) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/axi_dbg_hub_0/s_axi_arid'(16) to pin: '/ps_noc/M00_AXI_arid'(2) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M01_AXI_rid'(2) to pin: '/ai_engine_0/S00_AXI_rid'(16) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ai_engine_0/S00_AXI_awid'(16) to pin: '/ps_noc/M01_AXI_awid'(2) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ai_engine_0/S00_AXI_arid'(16) to pin: '/ps_noc/M01_AXI_arid'(2) - Only lower order bits will be connected.
-WARNING: [BD 41-2384] Width mismatch when connecting pin: '/ps_noc/M01_AXI_bid'(2) to pin: '/ai_engine_0/S00_AXI_bid'(16) - Only lower order bits will be connected.
-Verilog Output written to : /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/sim/vck190_v1_0.v
-Verilog Output written to : /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/hdl/vck190_v1_0_wrapper.v
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-Calling reg_generate
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ai_engine_0_0/bd_0/hw_handoff/vck190_v1_0_ai_engine_0_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ai_engine_0_0/bd_0/synth/vck190_v1_0_ai_engine_0_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ai_engine_0 .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_dbg_hub_0 .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block clk_gen_sim_0 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M01_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M02_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M03_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M04_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M05_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M06_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M07_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M08_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M09_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M10_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M11_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M12_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M13_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M14_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M15_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_0/bd_0/synth/vck190_v1_0_ctrl_sm_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_0_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_0_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_0_0/bd_0/synth/vck190_v1_0_ctrl_sm_0_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_0 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_0_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_1_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_1_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_1_0/bd_0/synth/vck190_v1_0_ctrl_sm_1_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_1 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_3_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_3_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_3_0/bd_0/synth/vck190_v1_0_ctrl_sm_3_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_3 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_4_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_4_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_4_0/bd_0/synth/vck190_v1_0_ctrl_sm_4_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_4 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_5_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_5_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_5_0/bd_0/synth/vck190_v1_0_ctrl_sm_5_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_5 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_6_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_6_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_6_0/bd_0/synth/vck190_v1_0_ctrl_sm_6_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_6 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_7_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_7_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_7_0/bd_0/synth/vck190_v1_0_ctrl_sm_7_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_7 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_10_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_10_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_10_0/bd_0/synth/vck190_v1_0_ctrl_sm_10_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_10 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_10_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_11_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_11_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_11_0/bd_0/synth/vck190_v1_0_ctrl_sm_11_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_11 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_11_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_2_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_2_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_2_0/bd_0/synth/vck190_v1_0_ctrl_sm_2_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_2 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_12_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_12_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_12_0/bd_0/synth/vck190_v1_0_ctrl_sm_12_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_12 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_12_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_13_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_13_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_13_0/bd_0/synth/vck190_v1_0_ctrl_sm_13_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_13 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_13_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_14_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_14_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_14_0/bd_0/synth/vck190_v1_0_ctrl_sm_14_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_14 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_14_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_15_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_15_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_15_0/bd_0/synth/vck190_v1_0_ctrl_sm_15_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_15 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_15_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_1_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_2_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_3_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_4_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_5_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_6_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_7_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_8_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_8_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_8_0/bd_0/synth/vck190_v1_0_ctrl_sm_8_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_8 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_8_tie .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_9_0/bd_0/hw_handoff/vck190_v1_0_ctrl_sm_9_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ctrl_sm_9_0/bd_0/synth/vck190_v1_0_ctrl_sm_9_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_9 .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI'. A default connection has been created.
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ctrl_sm_9_tie .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block pl_clk_out1_rst .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block pl_clk_out2_rst .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block pl_clk_out3_rst .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block pl_clk_out4_rst .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block pl_clk_out5_rst .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block pl_clk_out6_rst .
-INFO: [BD 41-1029] Generation completed for the IP Integrator block pl_clkwiz .
-INFO: [xilinx.com:ip:pspmc:1.2-2] bd_9459_pspmc_0_0: XDC Generation
-INFO: [xilinx.com:ip:pspmc:1.2-2] bd_9459_pspmc_0_0: Time taken by generate_ps_data 1844 ms
-INFO: [xilinx.com:ip:pspmc:1.2-2] bd_9459_pspmc_0_0: Time taken by XDC_generate is 1844 ms
-INFO: [xilinx.com:ip:pspmc:1.2-2] bd_9459_pspmc_0_0: REG Generation
-INFO: [xilinx.com:ip:pspmc:1.2-2] bd_9459_pspmc_0_0: Time taken by generate_ps_data 930 ms
-INFO: [xilinx.com:ip:pspmc:1.2-2] bd_9459_pspmc_0_0: Time taken by reg_generate is 931 ms
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ps_cips_0/bd_0/hw_handoff/vck190_v1_0_ps_cips_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ps_cips_0/bd_0/synth/vck190_v1_0_ps_cips_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ps_cips .
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S01_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S02_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S03_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S04_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S05_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S06_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S07_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M00_AXI'. A default connection has been created.
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M01_AXI'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S01_AXI_nmu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S01_AXI_nmu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'SAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S07_AXI_rpu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S07_AXI_rpu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'SAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S04_AXI_nmu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S04_AXI_nmu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'SAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S06_AXI_nmu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S06_AXI_nmu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'SAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S03_AXI_nmu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S03_AXI_nmu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'SAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S00_AXI_nmu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S00_AXI_nmu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'SAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S02_AXI_nmu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S02_AXI_nmu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'SAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S05_AXI_nmu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nmu:1.0-1] bd_b87e_S05_AXI_nmu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'SAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nsu:1.0-1] bd_b87e_M00_AXI_nsu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nsu:1.0-1] bd_b87e_M00_AXI_nsu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'MAXI4'. A default connection has been created.
-INFO: [xilinx.com:ip:noc_nsu:1.0-1] bd_b87e_M01_AXI_nsu_0: device = xcvc1902
-INFO: [xilinx.com:ip:noc_nsu:1.0-1] bd_b87e_M01_AXI_nsu_0: device = xcvc1902
-INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'MAXI4'. A default connection has been created.
-Calling reg_generate
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ps_noc_0/bd_0/hw_handoff/vck190_v1_0_ps_noc_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/ip/vck190_v1_0_ps_noc_0/bd_0/synth/vck190_v1_0_ps_noc_0.hwdef
-INFO: [BD 41-1029] Generation completed for the IP Integrator block ps_noc .
-Exporting to file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/hw_handoff/vck190_v1_0.hwh
-Generated Hardware Definition File /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.gen/sources_1/bd/vck190_v1_0/synth/vck190_v1_0.hwdef
-generate_target: Time (s): cpu = 00:01:42 ; elapsed = 00:02:35 . Memory (MB): peak = 4715.961 ; gain = 239.180 ; free physical = 140890 ; free virtual = 362260
-# write_hw_platform -force build/vck190_v1_0.xsa
-INFO: [Project 1-1918] Creating Hardware Platform: /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0.xsa ...
-WARNING: [Project 1-1067] Property 'platform.design_intent.server_managed' is not explicitly set, this information is required to ensure proper platform usage during compilation and linking
-WARNING: [Project 1-1067] Property 'platform.design_intent.external_host' is not explicitly set, this information is required to ensure proper platform usage during compilation and linking
-WARNING: [Project 1-1067] Property 'platform.design_intent.datacenter' is not explicitly set, this information is required to ensure proper platform usage during compilation and linking
-WARNING: [Project 1-1067] Property 'platform.design_intent.embedded' is not explicitly set, this information is required to ensure proper platform usage during compilation and linking
-INFO: [Project 1-655] Project does not have Board Part set. Board related data may be missing or incomplete in the generated Hardware Platform.
-WARNING: [Project 1-646] Board name, vendor and part not set in Hardware Platform.
-WARNING: [Project 1-645] Board images not set in Hardware Platform.
-INFO: [Project 1-1906] Skipping semantic label enumeration.
-INFO: [Project 1-1042] Successfully generated hpfm file
-write_project_tcl: Time (s): cpu = 00:00:12 ; elapsed = 00:00:11 . Memory (MB): peak = 5129.047 ; gain = 238.465 ; free physical = 140143 ; free virtual = 362013
-INFO: [Project 1-1931] Found the BD which contains AIE archive - /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0_vivado/vck190_v1_0.srcs/sources_1/bd/vck190_v1_0/vck190_v1_0.bd
-INFO: [Project 1-1932] Generating a pre-synthesis device image (.pdi file) and writing it to the platform file /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0.xsa.
-
-Generating CIPS Files... 
-INFO: [Hsi 55-2053] elapsed time for repository (/proj/xbuilds/SWIP/2022.1_0420_0327/installs/lin64/Vivado/2022.1/data/embeddedsw) loading 1 seconds
-/proj/xbuilds/SWIP/2022.1_0420_0327/installs/lin64/Vivado/2022.1/gnu/microblaze/lin
-WARNING: CONFIG.C_PSS_REF_CLK_FREQ not found. Using default value for XPAR_PSU_PSS_REF_CLK_FREQ_HZ.
-gmake[3]: Entering directory `/everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/.Xil/Vivado-32151-xsjlc210672/versal_plm/versal_plm_bsp'
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/standalone_v7_7/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/coresightps_dcc_v1_8/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/sysmonpsv_v3_0/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpuf_v1_5/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/emacps_v3_16/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/uartpsv_v1_6/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilplmi_v1_6/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/cfupmc_v1_4/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/ddrpsv_v1_4/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/ttcps_v3_15/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/uartlite_v3_7/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/pmonpsv_v2_1/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilsecure_v4_7/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/iomodule_v2_13/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpdi_v1_5/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/zdma_v1_14/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilloader_v1_6/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/csudma_v1_11/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpm_v4_0/src
-Include files for this library have already been copied.
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilnvm_v2_5/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/ipipsu_v2_11/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/trngpsv_v1_1/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/cpu_v2_15/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/sdps_v3_14/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilffs_v4_7/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/cframe_v1_3/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/qspipsu_v1_15/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilsem_v1_5/src
-Include files for this library have already been copied.
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/rtcpsu_v1_11/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpdi_v1_5/src
-Compiling Xilpdi Library
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilplmi_v1_6/src
-Compiling XilPLMI Library
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilloader_v1_6/src
-Compiling XilLoader Library
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpm_v4_0/src
-Compiling XilPM Library
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilsecure_v4_7/src
-Compiling XilSecure Library
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilsem_v1_5/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpuf_v1_5/src
-Compiling XilPuf Library
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilnvm_v2_5/src
-Compiling XilNvm Library
-Finished building libraries sequentially.
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/standalone_v7_7/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/coresightps_dcc_v1_8/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/sysmonpsv_v3_0/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpuf_v1_5/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/uartpsv_v1_6/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/emacps_v3_16/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilplmi_v1_6/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/cfupmc_v1_4/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/ddrpsv_v1_4/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/ttcps_v3_15/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/uartlite_v3_7/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/pmonpsv_v2_1/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilsecure_v4_7/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/iomodule_v2_13/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpdi_v1_5/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/zdma_v1_14/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilloader_v1_6/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/csudma_v1_11/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilpm_v4_0/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilnvm_v2_5/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/ipipsu_v2_11/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/trngpsv_v1_1/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/cpu_v2_15/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/sdps_v3_14/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilffs_v4_7/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/cframe_v1_3/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/qspipsu_v1_15/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilsem_v1_5/src
-Running Make include in ps_cips_pspmc_0_psv_pmc_0/libsrc/rtcpsu_v1_11/src
-Include files for this library have already been copied.
-Include files for this library have already been copied.
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/standalone_v7_7/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/coresightps_dcc_v1_8/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/sysmonpsv_v3_0/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/emacps_v3_16/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/uartpsv_v1_6/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/cfupmc_v1_4/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/ddrpsv_v1_4/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/ttcps_v3_15/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/uartlite_v3_7/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/pmonpsv_v2_1/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/iomodule_v2_13/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/zdma_v1_14/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/csudma_v1_11/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/ipipsu_v2_11/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/trngpsv_v1_1/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/cpu_v2_15/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/sdps_v3_14/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/xilffs_v4_7/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/cframe_v1_3/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/qspipsu_v1_15/src
-Running Make libs in ps_cips_pspmc_0_psv_pmc_0/libsrc/rtcpsu_v1_11/src
-Compiling xsysmonpsv
-xcoresightpsdcc.c:39:2: warning: #warning "The driver is supported only for ARM architecture" [-Wcpp]
-   39 | #warning "The driver is supported only for ARM architecture"
-      |  ^~~~~~~
-In file included from xiomodule_g.c:16:
-../../../include/xparameters.h:1201:61: warning: conversion from 'long long unsigned int' to 'unsigned int' changes value from '18446744073709551615' to '4294967295' [-Woverflow]
- 1201 | #define XPAR_PS_CIPS_PSPMC_0_PSV_PMC_IOMODULE_0_IO_BASEADDR 0xFFFFFFFFFFFFFFFFU
-      |                                                             ^~~~~~~~~~~~~~~~~~~
-xiomodule_g.c:30:17: note: in expansion of macro 'XPAR_PS_CIPS_PSPMC_0_PSV_PMC_IOMODULE_0_IO_BASEADDR'
-   30 |                 XPAR_PS_CIPS_PSPMC_0_PSV_PMC_IOMODULE_0_IO_BASEADDR,
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-microblaze_sleep.c:73:9: note: '#pragma message: For the sleep routines, assembly instructions are used'
-   73 | #pragma message ("For the sleep routines, assembly instructions are used")
-      |         ^~~~~~~
-DEBUG NON_LTO_OBJECTS is ../../../lib/microblaze_interrupt_handler.o
-Finished building libraries parallelly.
-/proj/xbuilds/SWIP/2022.1_0420_0327/installs/lin64/Vivado/2022.1/gnu/microblaze/lin/x86_64-oesdk-linux/usr/bin/microblaze-xilinx-elf/microblaze-xilinx-elf-ar.real: creating ps_cips_pspmc_0_psv_pmc_0/lib/libxil.a
-Finished building libraries
-gmake[3]: Leaving directory `/everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/.Xil/Vivado-32151-xsjlc210672/versal_plm/versal_plm_bsp'
-gmake[3]: Entering directory `/everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/.Xil/Vivado-32151-xsjlc210672/versal_plm'
-gmake[3]: Leaving directory `/everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/.Xil/Vivado-32151-xsjlc210672/versal_plm'
-INFO: [Project 1-1179] Generating /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/.Xil/Vivado-32151-xsjlc210672/xsa/vck190_v1_0_presynth.bif file ...
-
-
-****** Xilinx Bootgen v2022.1
-  **** Build date : Apr 18 2022-16:09:43
-    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
-
-
-[INFO]   : Bootimage generated successfully
-
-INFO: [Project 1-1945] The Hardware Platform can be used for Hardware and Hardware Emulation
-INFO: [Project 1-1941] Successfully created Hardware Platform: /everest/psdv_cases_bkup/jithinp/vitis/vitis_tutorials_my_fork_2022_1/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_01_Custom_Platform/hw/build/vck190_v1_0.xsa
-write_hw_platform: Time (s): cpu = 00:01:08 ; elapsed = 00:02:02 . Memory (MB): peak = 5129.047 ; gain = 413.086 ; free physical = 139284 ; free virtual = 361030
-INFO: [Common 17-206] Exiting Vivado at Wed May 25 23:00:38 2022...
