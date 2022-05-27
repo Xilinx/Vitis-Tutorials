@@ -971,18 +971,68 @@ Then run the Vitis analyzer on the summary file, for example, `xclbin.ex.run_sum
 
 The following is the snapshot of the time trace for the LeNet design run.
 
-![Image of Lenet design Timeline Trace](images/Lenet_1x_trace_2022_2.PNG)
+![Image of Lenet design Timeline Trace](images/Lenet_1x_trace_2022_1.PNG)
 
 Throughput calculation is as follows:
 ```
-Difference in timeline (execution time) = 5097.847us
+Difference in timeline (execution time) = 4119us
 Throughput = no of images / execution time
-          = 100 / 5097.847us
-          = 19,617 images/s
+          = 100 / 4119us
+          = 24,277 images/s
 
 The excution time reported by trace is with the data mover kernel running at 150MHz. Since the data mover kernel is running at 250MHz, we need to scale the execution time. Hence,
-Throughput = 19,617 images/s x (250 / 150 ) = 32,695 images/s
+Throughput = 24,277 images/s x (250 / 150 ) = 40,462 images/s
 ```
+
+## Power Measurement Details
+Resource utilization and power are measured using vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2022.1 version) tools.
+
+The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
+
+1. Open the Vivado project: ``$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr``.
+
+2. Go to **Open Implemented Design** then click **Report Utilization**. In the Utilization tab shown in the following figure, select **ai_engine_0** and view the **Registers** and **CLB LUTs** :
+
+** Or **
+
+1. Do `make report_metrics TARGET=hw`, (recipe expanded below), alongwith relevant options, to generate `utilization_hierarchical.txt` under `$(BLD_REPORTS_DIR)/` directory:
+
+```
+report_metrics:
+ifeq ($(TARGET),hw_emu)
+	@echo "This build target (report-metrics) not valid when design target is hw_emu"
+
+else
+	rm -rf $(BLD_REPORTS_DIR)
+	mkdir -p $(BLD_REPORTS_DIR)
+	cd $(BLD_REPORTS_DIR); \
+	vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+
+endif
+```
+
+The vcdanalyze tool is used to generate a `graph.xpe` file which can be input to XPE for viewing the AI Engine resource utilization and power. The steps are as follows:
+
+1. Run `make vcd` (recipe expanded below) to create the `graph.xpe` file under `$(BUILD_TARGET_DIR)/aiesim_xpe/`:
+
+```
+cd $(BUILD_TARGET_DIR); \
+aiesimulator $(AIE_SIM_FLAGS) --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
+cd $(BUILD_TARGET_DIR); \
+vcdanalyze --vcd x$(VCD_FILE_NAME).vcd --xpe
+```
+
+2. If you do not already have it installed, download and install [XPE for Versal Version 2022.1](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
+
+3. Load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization for  lenet design:
+
+![Image of Lenet XPE Util and Power Measurement](images/lenet_xpe_Pow_nUtil.PNG)
+
+A summary of resource utilization and power is given in the following table.
+
+| Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | Dynamic Power<br/>(in mW) | 
+|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:-------------------------:|
+| 5                       | 12%         | 52                            | 3%           | 14               | 6%                | 1191                      |
 
 ## References
 
@@ -1013,14 +1063,9 @@ The following are links to Vitis related information referenced in this tutorial
 * [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/irn1582730075765.html)
 
 # Revision History
-* Apr 2022 - Updated for 2022.1
-<<<<<<< HEAD
-* Oct 2022 - Updated for 2022.1
-* July 2022 - Updated for 2022.1
-=======
+* May 2022 - Updated for 2022.1
 * Oct 2021 - Updated for 2021.2
 * July 2021 - Updated for 2021.1
->>>>>>> 151a3f3f255cf9d3fab8551439d830ee640c3e86
 * Dec 2020 - Initial Release
 
 

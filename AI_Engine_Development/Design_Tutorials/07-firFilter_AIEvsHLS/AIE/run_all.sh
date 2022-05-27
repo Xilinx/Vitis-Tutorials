@@ -112,13 +112,13 @@ fir_filters_lst=("1" "10")
 ################################################
 if [ -z "$winSz" ]
 then
-   winSz=3
-   winSz_loopStart=3
+   winSz=1
+   winSz_loopStart=1
 
 elif [[ $winSz == "a" ]]
 then
-   winSz=3
-   winSz_loopStart=3
+   winSz=1
+   winSz_loopStart=1
 
 else
    winSz_loopStart=$winSz
@@ -157,7 +157,7 @@ aiesPerFir_lst=("1" "2" "4")
 ################################################
 if [ -z $iters ]
 then
-   iters="16"
+   iters="8"
 fi
 
 ################################################
