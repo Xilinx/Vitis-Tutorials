@@ -4,7 +4,7 @@
    </td>
  </tr>
  <tr>
- <td align="center"><h1>AI Engine Debug with Integrated Logic Analyzer (ILA)</h1>
+ <td align="center"><h2>AI Engine Debug with Integrated Logic Analyzer (ILA)</h1>
  </td>
  </tr>
 </table>
@@ -13,7 +13,7 @@
 [AI Engine Debug with Integrated Logic Analyzer](#AI_Engine_Debug_with_Integrated_Logic_Analyzer)
 
 
-# AI Engine Debug with Integrated Logic Analyzer (ILA)
+## AI Engine Debug with Integrated Logic Analyzer (ILA)
 
 Adding ChipScope helps debugging AIE PL interfaces in the design running on hardware including checking for AXI protocol violations, hardware kernel issues, data integrity, and performance issues of the design. 
 To debug using ILAs, the design is required to enable ILA in hardware build.
@@ -32,11 +32,11 @@ v++ -g -l --platform ${PLATFORM} ${XOS} ${LIBADF} \
        --debug.chipscope mm2s_v4_1:s0 \
        -t ${TARGET} ${VPP_FLAGS} -o $@
 ```
-**Note:** v++ allows multiple --debug.chipscope lines to meet design debug needs.
+**Note:** v++ allows multiple `--debug.chipscope` lines to meet design debug needs.
 
 
 ### Step 1. Prepare the ILA enabled Makefile.
-Use the provided Makefile.ILA from this tutorial's root directory. Rename Makefile.ILA to Makefile
+Use the provided `Makefile.ILA` from this tutorial's root directory. Rename `Makefile.ILA` to `Makefile`.
 ```bash
 cd ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough
 cp Makefile.ILA Makefile
@@ -46,7 +46,7 @@ cp Makefile.ILA Makefile
 ```bash
 make clean; make
 ```
-After the design is built. Inspect the ILA insertion with mm2s_v4_1:s0 and s2mm_v4_1:s0 interfaces.
+After the design is built. Inspect the ILA insertion with `mm2s_v4_1:s0` and `s2mm_v4_1:s0` interfaces.
 <img src="images/il_vivado0.png" width="900">
 <img src="images/il_vivado1.png" width="900">
 
@@ -57,34 +57,33 @@ Flash the SD card with the ILA enabled design, plug in the flashed SD card to VC
 ## Setup the connection with Vivado
 ### Step 4. Setup Connection to the Hardware Board
 #### Step 4.1. Target Connection Setup
-##### Run hardware server from computer that connects to target board
-Launch hw_server from the computer that has JTAG connection to the VCK190 board.
+Run hardware server from computer that connects to target board. To do so, launch hw_server from the computer that has JTAG connection to the VCK190 board.
 <img src="images/hw_ta_hw.png" width="600">
 
 #### Step 4.2. Launch Vivado
-Launch Vivado™ from where the to be debugged project is by issue command, "vivado"  
+Launch Vivado™ from where the to be debugged project is by issue command, `vivado`.  
 
 #### Step 4.3. Setup Vivado Hardware Manager
-After Vivado™ is up, click on highlighted icon.
+After Vivado is up, click on highlighted icon.
 <img src="images/il_open.png" width="900">
 
 #### Step 4.4. Setup Hardware Target
 <img src="images/il_open_2.png" width="900">
 
 #### Step 4.5. Input Hardware Target
-Enter hardware server's IP address or hostname to highlighted area and click on "Next" icon.
+Enter hardware server's IP address or hostname to highlighted area and click **Next**.
 <img src="images/il_open_3.png" width="900">
 
 #### Step 4.6. Check Hardware Target
-Confirm target's information from JTAG chain then click on "Next" icon. 
+Confirm target's information from JTAG chain then click **Next**. 
 <img src="images/il_open_4.png" width="900">
 
 #### Step 4.7. Select probe file
-Click on `...` to select the generated probe file. It is named `bf_hw.ltx` from this tutorial.
+Click the elipsis (**...**) to select the generated probe file. It is named `bf_hw.ltx` from this tutorial.
 <img src="images/il_pb_file.png" width="900">
 
 #### Step 4.8. Select ILA to be examined.
-Click on `hw_ila_1' to examine the design.
+Click on `hw_ila_1` to examine the design.
 <img src="images/il_pb_menu.png" width="900">
 
 #### Step 4.9. Setup design's signals to be debugged
@@ -93,7 +92,7 @@ Click on `+` to configure the desired signals and their values during run time.
 <img src="images/il_pb_trig1.png" width="900">
 
 #### Step 4.10. Enable ILA to capture the configured signals to debug
-Click on one of highlighted icons to capture configured signals.
+Click one of highlighted icons to capture configured signals.
 <img src="images/il_trig_run.png" width="900">
 
 Wait for ILA is ready to capture signals, run the application from vck190 board.
@@ -101,12 +100,13 @@ Wait for ILA is ready to capture signals, run the application from vck190 board.
 #### Step 4.11. Expected result
 <img src="images/il_run_done.png" width="900">
 
-After completing above steps, we are able to see the captured, related AXI signals and data are shown in waveform with timing information from Vivado™.
+After completing above steps, we are able to see the captured, related AXI signals and data are shown in waveform with timing information from Vivado.
 
 #### Step 5. Examine captured results
 <img src="images/il_run_result.png" width="900">
-Review above captured result, mm2s_v4_1_s0:TVALID shows '1' indicates a valid data is available at the time marker pointed.
-Moving time marker across time line, changes of AIX protocol valuses indicate values changed at what time shown below.
+
+Review the above captured result. `mm2s_v4_1_s0:TVALID` shows '1' which indicates a valid data is available at the time marker pointed.
+Moving time marker across time line, changes of AIX protocol values indicate values changed at what time shown below.
 <img src="images/il_run_result1.png" width="900">
 
 
@@ -129,4 +129,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>

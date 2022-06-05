@@ -27,12 +27,12 @@ Source level debug includes visibility into register contents view, variable val
 Before starting this tutorial run the following steps:
 
 1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
-2. Set up your ROOTFS to point to the xilinx-versal-common-v2022.1/rootfs.ext4.
-3. Set up your IMAGE to point to xilinx-versal-common-v2022.1/Image.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.1/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2022.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you download the platform.
 
 This tutorial targets VCK190 production board, PLATFORM variable in the Makefile(s) is:
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+`PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm`
 
 ## Example Design: Beamformer
 
@@ -55,19 +55,19 @@ There are several ways to debug a system design that include PS, PL, and AI Engi
 
 For ease of use, a Vitis IDE exported project, `beamformer_2022_1.ide.zip` can be downloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_2022_1.ide.zip. Then import this zip file into the Vitis IDE.
 
-Step 0. Download data files, `beamformer_data.zip` from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level as this tutorial's Makefile.
+Step 0. Download data files, `beamformer_data.zip`, from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level as the Makefile of this tutorial.
 
-Step 1. Source the Vitis IDE script or install the Vitis™ IDE.
+Step 1. Source the Vitis IDE script or install the Vitis IDE.
 
-Step 2. Launch the Vitis IDE using the command **vitis -workspace tutorial**.
+Step 2. Launch the Vitis IDE using the command `vitis -workspace tutorial`.
 
 Step 3. Click on **File**->**import...**. Select **Vitis project exported zip file**->**Next**. Browse to the `beamformer.ide.zip` file. Click **Next**->**Finish**.
 
-Step 4. You should see the imported beamformer design in the Vitis™ IDE.
+Step 4. You should see the imported beamformer design in the Vitis IDE.
 
 After the project is ready in the Vitis IDE, you can move on to the next steps to try out the various debug features in software and hardware emulation and also in hardware.
 
-**Note**: The imported project specifies a hardware platform path that must be adjusted to your specific installed path to work correctly. Click on **`beamformer_system.sprj`** to update the hardware platform path in the Vitis™ IDE.
+**Note**: The imported project specifies a hardware platform path that must be adjusted to your specific installed path to work correctly. Click on **`beamformer_system.sprj`** to update the hardware platform path in the Vitis IDE.
 
 
 ## Debug Methodology
@@ -79,7 +79,7 @@ Due to huge cost and time associated with build real system for testing and veri
 Classification of simulation,
 * Functional vs. Timing simulations.
 
-Functional simulator simulates the functionalities of the design only and do not model microarchitecture details and constraints. X86simulator and SW_emu are considered in this category while Aiesimulator and HW_emu are considered timing simulations that simulates execution time/performance and constraints of the design. Keeping track of those detailed timing information makes them slow and resources intensive in comparison to functional simulators. 
+Functional simulator simulates the functionalities of the design only and do not model microarchitecture details and constraints. X86simulator and SW_emu are considered in this category while Aiesimulator and HW_emu are considered timing simulations that simulates execution time/performance and constraints of the design. Keeping track of those detailed timing information makes them slow and resources intensive in comparison to functional simulators.
 
 * Application level vs. Full system simulations.
 
@@ -105,20 +105,31 @@ Supported simulations are categorize in this table.
   </tr>
 </table>
 
-These supported simulations help to fix majority of design issues before running the AI Engine design on actual hardware. [UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) contains more details of each simulation’s capabilities and how to apply the supported features to resolve design issues such as memory leaks, memory access conflicts, resource constraints, integration with PL/PS domains.
+These supported simulations help to fix majority of design issues before running the AI Engine design on actual hardware. [UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) contains more details of the simulation capabilities and how to apply the supported features to resolve design issues such as memory leaks, memory access conflicts, resource constraints, integration with PL/PS domains.
 
-#### Step 1: Functional Simulation and Debug of AI Engine kernels and graph. – <a href="Debug1_86.md">X86simulator</a>.
-#### Step 2: Performance Level Simulation and Debug of AI Engine graph. – <a href="Debug2_ai.md">AIEsimulator</a>.
-#### Step 3: Software Emulation of AI Engine design integrated with PL and PS domains. – <a href="Debug1_se.md">SW_emu</a>.
-#### Step 4: Hardware Emulation of AI Engine design integrated with PL and PS domains. – <a href="Debug2_he.md">HW_emu</a>.
+#### Step 1: Functional Simulation and Debug of AI Engine kernels and graph.
+
+See [X86simulator](./Debug1_86.md).
+
+#### Step 2: Performance Level Simulation and Debug of AI Engine graph.
+
+See [AIEsimulator](./Debug2_ai.md).
+
+#### Step 3: Software Emulation of AI Engine design integrated with PL and PS domains.
+
+See [SW_emu](./Debug1_se.md).
+
+#### Step 4: Hardware Emulation of AI Engine design integrated with PL and PS domains.
+
+See [HW_emu](./Debug2_he.md).
 
 
 ### Debug via Hardware
 
-After fixing all AI Engine design issues with above simulations, running AI Engine design on hardware could still exhibits issues.
-[UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) debug methodology chapter describes these stages along with detail steps included.
+After fixing all AI Engine design issues with above simulations, running AI Engine design on hardware could still exhibits issues. Chapter 18, "AI Engine Hardware Profile and Debug Methodology" in
+[UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) describes these stages along with detail steps included.
 
-#### Stage 1: Run the design on hardware 
+#### Stage 1: Run the design on hardware
 This is the first stage running the design on hardware. Areas to check
 * Verify input and output data
   * Restrict pointer usage
@@ -128,25 +139,23 @@ This is the first stage running the design on hardware. Areas to check
   * XRT Xbutil utility
   * XSDB generate run summary file and display with vitis_analyzer
 
-[AI Engine/PL kernel Debug with XRT utilities on HW](./Debug5_bc.md)
-
-[AI Engine Debug with Profiling APIs on HW](./Debug6_pa.md#3-Profiling-APIs-on-HW)
+See [AI Engine/PL kernel Debug with XRT utilities on HW](./Debug5_bc.md), and [AI Engine Debug with Profiling APIs on HW](./Debug6_pa.md#3-Profiling-APIs-on-HW).
 
 
 #### Stage 2: System profiling
-[AI Engine Debug with Profiling Feature](./Debug6_pr.md)
+See [AI Engine Debug with Profiling Feature](./Debug6_pr.md).
 
 
 #### Stage 3: Kernel Analysis
-[AI Engine Debug with Integrated Logic Analyzer](./Debug7_il.md)
+See [AI Engine Debug with Integrated Logic Analyzer](./Debug7_il.md).
 
 
 #### Stage 4: AI Engine Event Trace and Analysis
-[AI Engine Debug with Event Trace](./Debug4_et.md)
+See [AI Engine Debug with Event Trace](./Debug4_et.md).
 
 
 #### Stage 5: Host Application Debug
-[Host Application Debug](./Debug3_hw.md)
+See [Host Application Debug](./Debug3_hw.md).
 
 
 ## Support
@@ -168,4 +177,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center" class="sphinxhide"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center" class="sphinxhide"><sup>XD005 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>
