@@ -91,7 +91,7 @@ export XCL_EMULATION_MODE=sw_emu
 <img src="images/se_run.png" width="450">
 
 ### Step 2.3 Verify Run Result
-Software emulator output files from design are located at `${PROJECT}/Emulation-SW/data`. Verify the output files `${PROJECT}/Emulation-SW/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-SW/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis IDE supports `compare with` feature to compare two files, highlight two files to be compared then right click one of highlighted file and select `compare with` then `each other`.
+Software emulator output files from design are located at `${PROJECT}/Emulation-SW/data`. Verify the output files `${PROJECT}/Emulation-SW/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-SW/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis™ IDE supports `compare with` feature to compare two files, highlight two files to be compared then right click one of highlighted file and select `compare with` then `each other`.
 For example, Compare `${PROJECT}/data/ulbf_gold3.txt` and `${PROJECT}/Emulation-SW/data/ulbf_out3.txt`
 
 <img src="images/se_compare.png" width="600">
@@ -102,7 +102,7 @@ For example, Compare `${PROJECT}/data/ulbf_gold3.txt` and `${PROJECT}/Emulation-
 <img src="images/se_debug.png" width="450">
 
 ### Step 3.2 Debug with Software Emulator
-Click on `Start Emulator and Debug` to allow software emulator and debugger to run.
+Click ***Start Emulator and Debug*** to allow software emulator and debugger to run.
 <img src="images/se_debug0.png" width="450">
 
 <img src="images/se_debug1.png" width="900">
@@ -110,7 +110,7 @@ Click on `Start Emulator and Debug` to allow software emulator and debugger to r
 Example of debugging mm2s_v8.cpp
 <img src="images/se_debug2.png" width="900">
 
-Note: Accessing vector variables values from software emulator is not fully supported. Recommend using `x86simulator` to inspect vector variables values.
+**Note**: Accessing vector variables values from software emulator is not fully supported. Recommend using `x86simulator` to inspect vector variables values.
 <img src="images/se_debug3.png" width="900">
 
 ## 4. Command line project build and run with software emulator
@@ -184,4 +184,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>

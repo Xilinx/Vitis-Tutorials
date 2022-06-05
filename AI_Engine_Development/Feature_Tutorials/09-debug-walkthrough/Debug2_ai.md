@@ -59,7 +59,7 @@ During debug, highlighted areas indicate changes in values since the last step.
 <img src="images/he_run_aie.png">
 
 ### Step 5. Verify Result
-AI Engine emulator output files from the design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data`. Verify the output files `${PROJECT}/Emulation-AIE/aiesimulation_output/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-AIE/aiesimulation_output/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis IDE supports the compare with feature to compare two files, highlight the files to be compared, then right-click one of highlighted files, and select `compare with` > `each other with transformation` > `Predefined filters` > `Remove timestamp`.
+AI Engine emulator output files from the design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data`. Verify the output files `${PROJECT}/Emulation-AIE/aiesimulation_output/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-AIE/aiesimulation_output/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis™ IDE supports the compare with feature to compare two files, highlight the files to be compared, then right-click one of highlighted files, and select `compare with` > `each other with transformation` > `Predefined filters` > `Remove timestamp`.
 Selecting `each other with transformation` is required because AI Engine emulation inserts a timestamp for each output data.
 
 
@@ -144,7 +144,7 @@ readelf -S 6_0
 <img src="images/aie_sim_mem-check1.png" width="450">
 
 ### Step 2. Add access to an invalid memory address
-Add these 7 lines at line 35 of **bf8x8_fst_api.cpp** file to access invalid memory address access, for example 0x00039900.
+Add these 7 lines at line 35 of `bf8x8_fst_api.cpp` file to access invalid memory address access, for example 0x00039900.
 ```bash
 #if 1
     // demo
@@ -168,7 +168,8 @@ Highlight the beamformer sub-project, right-click to enable pull-down menu, sele
 Access location at address 0x00039900 that is between sections and is not allowed to access. This triggers the memory check error(s) and displays at Vitis IDE console.
 
 <img src="images/aie_sim_mem-check3.png">
-**Note:** The error messages may be rolled out of visible area, scroll up from console window to inspect the expected error messages.
+
+**Note**: The error messages may be rolled out of visible area, scroll up from console window to inspect the expected error messages.
 
 ### Step 7. Additional test
 For invalid memory access that is out of kernel program memory range, for example 0xdeadbeef, a segfault error will be thrown regardless of whether the `--enable-memory-check` option is enabled/disabled.
@@ -209,7 +210,7 @@ Command option explanation:
 1. `-add-env RDWR_DEBUG_PORT=${aie_mem_sock_port}` defines the port for communicating with the AI Engine domain. In the previous example, it is 10100.
 2. `-forward-port ${linux_tcf_agent_port}` 1534 defines the port for the Linux TCF agent. In the previous example, it is 1440, which is the default.
 
-Note:
+**Note**:
 1. `launch_hw_emu.sh` is generated properly when the project under debug is built and packaged with the hardware emulator correctly. Update the repository's Makefile line 3 from `TARGET = hw` to `TARGET = hw_emu`.
 2. This command takes a few minutes to run because both hardware emulator and Petalinux are required to boot up properly.
 3. Wait until both hardware server and Petalinux boot up before moving to the next step.
@@ -266,4 +267,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>

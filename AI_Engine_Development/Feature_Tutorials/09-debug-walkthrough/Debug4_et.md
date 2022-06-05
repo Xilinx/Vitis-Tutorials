@@ -1,6 +1,10 @@
 <table>
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>System Project Debug Tutorial with Event Trace</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
+   </td>
+ </tr>
+ <tr>
+  <td align="center"><h2>System Project Debug Tutorial with Event Trace</h1>
    </td>
  </tr>
 </table>
@@ -32,16 +36,16 @@ In this tutorial you will learn how to:
 ## Event Trace Build Options, Generation and Visualization
 
 ### Step 1. Download tutorial source code
-Download the design from https://github.com/Xilinx/Vitis-Tutorials/. Go to ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough to obtain source code of this tutorial.
+Download the design from https://github.com/Xilinx/Vitis-Tutorials/. Go to `${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough` to obtain source code of this tutorial.
 
 ### Step 2. Setup build environmental variables
 Follow the instructions from the introduction section of [09-debug-walkthrough](./README.md) for build environmental variables setup.
 
 ### Step 3. Build the tutorial
 After source code is downloaded, use the Makefile from this repository.
-Type in "make" to build this event trace tutorial.
+Type `make` to build this event trace tutorial.
 
-Note: Due to the size of this tutorial and build machine configuration, it may take several hours for the build to complete.
+**Note**: Due to the size of this tutorial and build machine configuration, it may take several hours for the build to complete.
 
 Event trace options in AI Engine Compiler. These options are enabled in the Makefile.
 ```bash
@@ -54,12 +58,12 @@ Event trace options in AI Engine Compiler. These options are enabled in the Make
 ```
 
 Where
-* --event-trace=runtime: Enables run-time event trace configuration. The supported values are functions, functions_partial_stalls, functions_all_stalls, and runtime.
-* --num-trace-streams=8: Sets the number of trace streams to be 8 to collect generated event trace data per prior recommendation. (default:8).
-* --event-trace-port=gmio: Sets the AI Engine event tracing port to be plio. (default: plio). Recommend GMIO to preserve PL resources and minimize chances with timing errors in build time.
-* --trace-plio-width=64: Sets PLIO width in bit for trace streams (default: 64)
-* --broadcast-enable-core=true: Enables all AI Engine cores associated with a graph using broadcast. This option reserves one broadcast channel in the array for core enabling purpose. (default: false)
-* --xlopt=0: Disable aiecompiler optimization for debug purposes.
+* `--event-trace=runtime`: Enables run-time event trace configuration. The supported values are `functions`, `functions_partial_stalls`, `functions_all_stalls`, and `runtime`.
+* `--num-trace-streams=8`: Sets the number of trace streams to be 8 to collect generated event trace data per prior recommendation. (default: `8`).
+* `--event-trace-port=gmio`: Sets the AI Engine event tracing port to be plio. (default: `plio`). Recommend GMIO to preserve PL resources and minimize chances with timing errors in build time.
+* `--trace-plio-width=64`: Sets PLIO width in bit for trace streams (default: `64`)
+* `--broadcast-enable-core=true`: Enables all AI Engine cores associated with a graph using broadcast. This option reserves one broadcast channel in the array for core enabling purpose. (default: `false`)
+* `--xlopt=0`: Disable aiecompiler optimization for debug purposes.
 
 Issue the command `aiecompiler -h` to display AI Engine compiler options that include event trace.
 
@@ -90,10 +94,10 @@ xsdb
 %xsdb source ${XILINX_VITIS}/scripts/vitis/util/aie_trace.tcl
 %xsdb aietrace start -graphs dut -config-level functions_all_stalls -work-dir ./Work -link-summary ./bf_hw.xsa.link_summary -base-address 0x900000000 -depth 0x8000000
 ```
-Note:
-1. -base-address `0x900000000` is the address that needs to avoid collision with your design.
-2. -depth `0x8000000` is the size of event trace file. Please adjust accordingly with your design size and amount of event trace data.
-3. -config-level specifies functions, functions_partial_stalls, or functions_all_stalls.
+**Note**:
+1. `-base-address 0x900000000` is the address that needs to avoid collision with your design.
+2. `-depth 0x8000000` is the size of event trace file. Please adjust accordingly with your design size and amount of event trace data.
+3. `-config-level` specifies `functions`, `functions_partial_stalls`, or `functions_all_stalls`.
 
 #### Step 5.2. Event Trace with XRT flow
 Create an `xrt.ini` file on SD card using the following lines.
@@ -103,7 +107,7 @@ aie_trace=true
 aie_trace_buffer_size=100M
 aie_trace_metrics = functions_all_stalls
 ```
-Note: aie_trace_metrics specifies `functions`, `functions_partial_stalls`, or `functions_all_stalls`.
+**Note**: `aie_trace_metrics` specifies `functions`, `functions_partial_stalls`, or `functions_all_stalls`.
 
 ### Step 6 to Run Application after Petalinux Boots up on Board
 ```bash
@@ -123,9 +127,9 @@ After the design run completes on the hardware, the generated events and run_sum
 
 #### Step 7.2. XRT Flow
 `aie_trace_N.txt`, `aie_event_runtime_config.json` and `xrt.run_summary` files are created on the SD card.
-Transfer `aie_trace_N.txt`, `aie_event_runtime_config.json` and `xrt.run_summary` files from SD card back to where design is at same level as design's Work directory.
+Transfer `aie_trace_N.txt`, `aie_event_runtime_config.json` and `xrt.run_summary` files from SD card back to where design is at the same level as the design's Work directory.
 
-Note: Generated run summary file is named `xrt.run_summary` from XRT flow, and named `aie_trace_profile.run_summary` for XSDB flow.
+**Note**: Generated run summary file is named `xrt.run_summary` from XRT flow, and named `aie_trace_profile.run_summary` for XSDB flow.
 
 ### Step 8. Launch Vitis Analyzer to Examine Event Trace Files
 ```bash
@@ -134,7 +138,7 @@ OR
 vitis_analyzer xrt.run.summary
 ```
 
-Note: When run vitis_analyzer the first time to view the design, vitis_analyzer prompts asking the design's compile summary file, slect `Work/project.aiecompile_summary` file.
+**Note**: When you run vitis_analyzer for the first time to view the design, vitis_analyzer prompts you for the design's compile summary file. Select the `Work/project.aiecompile_summary` file.
 
 Select **Trace** from Vitis analyzer. Initially details of events are not shown.
 <img src="images/et_va_init2.png">
@@ -167,13 +171,13 @@ Based on the design, select GMIO if the design has limited PL resources left for
 | Between 40 and 80 | 8 |
 | Larger than 80    | 16 |
 | Intense debug     | 16 |
-|                   | Not recommended to use more than 16 streams due to resource constraints |
+|                   | Xilinx recommends no more than 16 streams due to resource constraints |
 
 
 ## Event Trace Limitations
 1. Due to limited resources, overruns can be seen from event trace. Follow [Number of event trace streams methodology](#Number-of-event-trace-streams-methodology) to configure number of trace streams minimize overruns issue.
 2. It is required that the `--broadcast-enable-core` option is used to compile the design. This is to eliminate time sync issues where start time of each tile is off by ~100 ns or more.
-3. Run forever applications are supported by XSDB flow only.
+3. Run forever applications are supported by the XSDB flow only.
 
 # Support
 
@@ -194,4 +198,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD054 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD054 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>

@@ -68,7 +68,7 @@ Command option explanation:
 1. `-add-env RDWR_DEBUG_PORT=${aie_mem_sock_port}`: Defines the port for communicating with the AI Engine domain. In the previous example, it is 10100.
 2. `-forward-port ${linux_tcf_agent_port} 1534`: Defines the port for the Linux TCF agent. In the previous example, it is 1440, which is the default.
 
-Note:
+**Note**:
 1. `launch_hw_emu.sh` is generated properly when the project under debug is built and packaged with hardware emulator correctly. Update repository's Makefile line 3 from "TARGET = hw" to "TARGET = hw_emu".
 2. Previous command takes a few minutes to complete due to both hardware emulator and Petalinux are required to boot up properly.
 3. Wait until both hardware server and Petalinux boot up BEFORE moving to next steps.
@@ -120,7 +120,7 @@ Expected result
 #### Step 4.7 Run PS (by resume) Application so AI Engine can be Initialized and Debugged
 <img src="images/he_cl_config6.png" width="450" >
 
-#### Step 4.8 Wait until PS has Initialized AI Engine and Observe "Starting graph run" from Console
+#### Step 4.8 Wait until PS has Initialized AI Engine and Observe "Starting graph run" from the Console
 <img src="images/he_cl_config6_1.png" width="600" >
 
 #### Step 4.9 Launch AI Engine Debugger to Debug the AI Engine Sub-project
@@ -128,7 +128,7 @@ Expected result
 <img src="images/he_cl_config7.png" width="600" >
 
 **Note:**
-1. The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab. For example, `set aie_work_dir ${PROJECT_PATH}/beamformer/Work/` and `set vitis_install ${XILINX_VITIS_PATH}/Xilinx/Vitis/2022.1`
+1. The script, `aie_app_debug_em.tcl` is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab. For example, `set aie_work_dir ${PROJECT_PATH}/beamformer/Work/` and `set vitis_install ${XILINX_VITIS_PATH}/Xilinx/Vitis/2022.1`
 2. Step 4.7 requires to start PS application BEFORE launching debugger to debug AI Engine sub-project. Will see issues if above step sequence is not followed.
 3. It takes some time depends on number of times in design to launch AI Engine debugger completely. Beamformer design contains 64 tiles that needs several minutes to complete.
 

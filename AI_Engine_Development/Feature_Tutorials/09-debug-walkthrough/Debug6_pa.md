@@ -4,7 +4,7 @@
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Profiling Graph Inputs and Outputs with Profiling APIs</h1>
+ <td align="center"><h2>Profiling Graph Inputs and Outputs with Profiling APIs</h1>
  </td>
  </tr>
 </table>
@@ -43,7 +43,7 @@ static void stop_profiling(handle h);
 ```
 
 
-[1. Profiling APIs with AIE Simulator](#1-Profiling-APIs-with-AIE-Simulator)
+[1. Profiling APIs with AI Engine Simulator](#1-Profiling-APIs-with-AI-Engine-Simulator)
 
 [2. Profiling APIs with HW Emulator](#2-Profiling-APIs-with-HW-Emulator)
 
@@ -52,13 +52,13 @@ static void stop_profiling(handle h);
 [4. Cross Check I/O Performance values with VCD](#4-Cross-Check-I/O-Performance-values-with-VCD)
 
 
-## 1. Profiling APIs with AIE Simulator
+## 1. Profiling APIs with AI Engine Simulator
 
 ### Step 1.1 Download the Project
 Clone the project source from git repository and unzip the zip file.
 
 ### Step 1.2 Prepare Profiling APIs applied graph code
-Use this tutorial's graph.cpp.profile_api that contains AIE profiling APIs.
+Use this tutorial's graph.cpp.profile_api that contains AI Engine profiling APIs.
 ```bash
 cd ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/aie
 cp graph.cpp.profile_api graph.cpp
@@ -67,7 +67,7 @@ cp Makefile.emu Makefile
 make libadf.a
 ```
 
-### Step 1.3 Run AIE Simulator
+### Step 1.3 Run AI Engine Simulator
 ```bash
 aiesimulator --pkg-dir=./Work --i=. --profile
 ```
@@ -84,7 +84,7 @@ vitis_analyzer ./aiesimulator_output/default.aierun_summary
 
 ### Step 2.1 Prepare profiling APIs applied host code and Makefile
 After step 1.1 completed.
-Use this tutorial's host.cpp.profile_api that contains AIE profiling APIs and Makefile for HW Emulation.
+Use this tutorial's host.cpp.profile_api that contains AI Engine profiling APIs and Makefile for HW Emulation.
 ```bash
 cd ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/sw
 cp host.cpp.profile_api host.cpp
@@ -122,7 +122,7 @@ make
 ```
 
 ### Step 3.2 Flash SD card
-Flash generated sd_card.img to SD card.
+Flash generated `sd_card.img` to SD card.
 
 ### Step 3.3 Boots up VCK190 board
 Plug in flashed completed SD card to vck190 board's sd slot.
@@ -138,12 +138,12 @@ cd /run/media/mmcblk0p1
 ### Step 3.5 Expected result
 <img src="images/pr_hw_perf.png" width="600">
 
-Note: Due to slower memory access, hardware and hardware emulation performance values are not optimized and less than AIE simulation.
+**Note**: Due to slower memory access, hardware and hardware emulation performance values are not optimized and less than AI Engine simulation.
 
 
 ## 4. Cross Check I/O Performance values with VCD
 ### Step 4.1 VCD generation
-Command to generate AIE simulation VCD file.
+Command to generate AI Engine simulation VCD file.
 ```bash
 aiesimulator --pkg-dir=./Work --i=. --dump-vcd=foo
 ```
@@ -151,18 +151,18 @@ Command to generate hardware emulation VCD file.
 ```bash
 ./launch_hw_emu.sh -add-env AIE_COMPILER_WORKDIR=${PROJECT_FULL_PATH}/Work -aie-sim-options ${PROJECT_FULL_PATH}/aiesim_options.txt
 ```
-Where aiesim_options.txt content is
+Where `aiesim_options.txt` content is
 ```bash
 AIE_DUMP_VCD=foo
 ```
 Follow step 2.4 to run application.
 
-### Step 4.2 Launch vitis_analyzer to view trace
-To launch vitis_analyser for AIE simulation run.
+### Step 4.2 Launch Vitis Analyzer to view trace
+To launch Vitis™ Analyzer for AI Engine simulation run.
 ```bash
 vitis_analyzer ./aiesimulator_output/default.aierun_summary
 ```
-To launch vitis_analyser for hardware emulation run.
+To launch Vitis Analyzer for hardware emulation run.
 ```bash
 vitis_analyzer ./sim/behav_waveform/xsim/default.aierun_summary
 ```
@@ -170,14 +170,14 @@ vitis_analyzer ./sim/behav_waveform/xsim/default.aierun_summary
 For hardware event trace steps that are available at [AI Engine Debug with Event Trace](./Debug4_et.md)
 
 ### Step 4.3 Locate profiled interface
-After default.aierun_summary file is opened with Vitis_analyzer, select `Graph` view, locate the output file `data/ublf_out0.txt` that associated with `ulbfo0` output_plio object from graph.h
+After `default.aierun_summary` file is opened with Vitis Analyzer, select **Graph** view, locate the output file `data/ublf_out0.txt` that associated with `ulbfo0` output_plio object from `graph.h`.
 ```bash
 for(unsigned k=0;k<4; k++) {
     ulout[k]=output_plio::create("ulbfo"+std::to_string(k), plio_64_bits, "data/ulbf_out"+std::to_string(k)+".txt");
     connect<>(ulbf.out[k], ulout[k].in[0]);
 }
 ```
-This outpt_plio object is configured using profile API for output performance measurement. This can be found from host.cpp
+This outpt_plio object is configured using profile API for output performance measurement. This can be found from `host.cpp`.
 ```bash
     event::handle handle1 = event::start_profiling(dut.ulout[0],  event::io_stream_start_to_bytes_transferred_cycles, OUT_LEN*sizeof(cint16)*2);
 ...
@@ -201,7 +201,7 @@ Select the tile links to the output file by moving cursor on top of the tile.
 Switch to `Trace` view, Locate tile(21,0).
 
 ### Step 4.5 Use tool to measure execution time
-To measure execution time with tool, move marker to beginning of kernel execution from an iteration. Add second marker and move the second marker to beginning of another iteration. This method is same to measure execution time for AIE Simulation, hardware emulaiton or on Hardware.
+To measure execution time with tool, move marker to beginning of kernel execution from an iteration. Add second marker and move the second marker to beginning of another iteration. This method is same to measure execution time for AI Engine Simulation, hardware emulation or on Hardware.
 
 <img src="images/pr_aie_perf_vcd.png" width="900">
 
@@ -217,7 +217,7 @@ Performance calculation:
 
 
 ## Limitations
-Due to limited AIE performance counters, calling AIE profiling APIs may return errors. Host code is required to check profiling APIs' return code to ensure correctness of profiling APIs.
+Due to limited AIE performance counters, calling AI Engine profiling APIs may return errors. Host code is required to check profiling APIs' return code to ensure correctness of profiling APIs.
 
 # Support
 
@@ -238,4 +238,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>
