@@ -35,7 +35,7 @@ In this tutorial you will learn:
 After creating the custom platform from the previous tutorial, the next step is to package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
 
 1. Open the `polar_clip_rtl_kernel.tcl` file.
-2. This Tcl script creates an IP following the Vivado IP Packaging flow as described in the [Creating and Packaging Custom IP User Guide (UG1118)](https://www.xilinx.com/cgi-bin/docs/rdoc?d=xilinx2021_1/ug1118-vivado-creating-packaging-custom-ip.pdf).
+2. This Tcl script creates an IP following the Vivado IP Packaging flow as described in the [Creating and Packaging Custom IP User Guide (UG1118)](https://www.xilinx.com/cgi-bin/docs/rdoc?d=xilinx2022_1/ug1118-vivado-creating-packaging-custom-ip.pdf).
 
     Note the following points:
 
@@ -53,7 +53,7 @@ After creating the custom platform from the previous tutorial, the next step is 
         ipx::remove_bus_parameter FREQ_HZ [ipx::get_bus_interfaces out_sample -of_objects [ipx::current_core]]
         ```
 
-    * At the end of the script there is the `package_xo` command. This command analyzes the IP that was created to make sure proper AXI interfaces are used and other rule checks are followed. It then creates the XO file in the same location as the IP repository. A key function used in this command is the `-output_kernel_xml`. The `kernel.xml` file is key to the RTL kernel as it describes to the Vitis tool how the kernel should be controlled. You can find more information on RTL kernels and their requirements [here](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=devrtlkernel.html).
+    * At the end of the script there is the `package_xo` command. This command analyzes the IP that was created to make sure proper AXI interfaces are used and other rule checks are followed. It then creates the XO file in the same location as the IP repository. A key function used in this command is the `-output_kernel_xml`. The `kernel.xml` file is key to the RTL kernel as it describes to the Vitis tool how the kernel should be controlled. You can find more information on RTL kernels and their requirements [here](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2022.1;d=devrtlkernel.html).
 
         ```tcl
         package_xo -kernel_name $kernelName \
@@ -118,7 +118,7 @@ To set up the ADF graph to interface with the `polar_clip` RTL kernel, you must 
    * The `simulation::platform` object now has the two extra PLIO interfaces.
    * There are additional net objects to hook up the RTL kernel to the rest of the platform object.
 
-For more information on RTL kernels in the AI Engine see: [Design Flow Using RTL Programmable Logic](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=programmable_logic_integration.html;a=rdd1604332009149).
+For more information on RTL kernels in the AI Engine see: [Design Flow Using RTL Programmable Logic](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2022.1;d=programmable_logic_integration.html;a=rdd1604332009149).
 
 3. Compile the graph using the following command:
 
@@ -293,4 +293,4 @@ You may obtain a copy of the License at
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD012</sup></br></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD012</sup></br></p>
