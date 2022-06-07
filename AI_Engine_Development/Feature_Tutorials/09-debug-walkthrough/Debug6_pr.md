@@ -66,7 +66,7 @@ Copy `aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv`,
 
 ### Step 1.5 Launch Vitis Analyzer to Examine Profiling Files
 ```bash
-vitis_analyzer xrt.run.summary
+vitis_analyzer xrt.run_summary
 ```
 After issuing above command, expect to see result from [Step 3 Expected Result with Vitis_Analyzer](#Step-3-Expected-Result-with-Vitis_Analyzer) and continue this tutorial.
 
@@ -115,7 +115,7 @@ After XSDB complete, expect to see `aie_profile.csv`, `summary.csv` and `aie_tra
 
 ### Step 2.5 Launch Vitis Analyzer to Examine Profiling Files
 ```bash
-vitis_analyzer aie_trace_profile.run.summary
+vitis_analyzer aie_trace_profile.run_summary
 ```
 After issuing the above command, expect to see result from [Step 3 Expected Result with Vitis_Analyzer](#Step-3-Expected-Result-with-Vitis_Analyzer) and continue this tutorial.
 

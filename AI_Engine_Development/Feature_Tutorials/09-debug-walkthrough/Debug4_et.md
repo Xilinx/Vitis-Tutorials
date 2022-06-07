@@ -60,9 +60,9 @@ Event trace options in AI Engine Compiler. These options are enabled in the Make
 Where
 * `--event-trace=runtime`: Enables run-time event trace configuration. The supported values are `functions`, `functions_partial_stalls`, `functions_all_stalls`, and `runtime`.
 * `--num-trace-streams=8`: Sets the number of trace streams to be 8 to collect generated event trace data per prior recommendation. (default: `8`).
-* `--event-trace-port=gmio`: Sets the AI Engine event tracing port to be plio. (default: `plio`). Recommend GMIO to preserve PL resources and minimize chances with timing errors in build time.
-* `--trace-plio-width=64`: Sets PLIO width in bit for trace streams (default: `64`)
-* `--broadcast-enable-core=true`: Enables all AI Engine cores associated with a graph using broadcast. This option reserves one broadcast channel in the array for core enabling purpose. (default: `false`)
+* `--event-trace-port=gmio`: Sets the AI Engine event tracing port to be gmio. (default: `gmio`). Recommend GMIO to preserve PL resources and minimize chances with timing errors in build time.
+* `--trace-plio-width=64`: Sets PLIO width in bit for trace streams (default: `64`). Valid only when event-trace-port is `plio`.
+* `--broadcast-enable-core=true`: Enables all AI Engine cores associated with a graph using broadcast. This option reserves one broadcast channel in the array for core enabling purpose. (default: `true`)
 * `--xlopt=0`: Disable aiecompiler optimization for debug purposes.
 
 Issue the command `aiecompiler -h` to display AI Engine compiler options that include event trace.
@@ -133,9 +133,9 @@ Transfer `aie_trace_N.txt`, `aie_event_runtime_config.json` and `xrt.run_summary
 
 ### Step 8. Launch Vitis Analyzer to Examine Event Trace Files
 ```bash
-vitis_analyzer aie_trace_profile.run.summary
+vitis_analyzer aie_trace_profile.run_summary
 OR
-vitis_analyzer xrt.run.summary
+vitis_analyzer xrt.run_summary
 ```
 
 **Note**: When you run vitis_analyzer for the first time to view the design, vitis_analyzer prompts you for the design's compile summary file. Select the `Work/project.aiecompile_summary` file.
@@ -152,7 +152,7 @@ Now you know that all the steps of event trace running on hardware board.
 ## Event Trace Considerations
 
 ### Event Trace Choice Considerations
-Based on the design, select GMIO if the design has limited PL resources left for event trace generation. Otherwise, select PLIO for event trace generation.
+Based on the design, select GMIO if the design has limited PL resources left for event trace generation.
 
 |           | Baremetal | Petalinux | Bandwidth                        | PL resources used |
 | :---| :---: | :---: | :---: | :--- |
