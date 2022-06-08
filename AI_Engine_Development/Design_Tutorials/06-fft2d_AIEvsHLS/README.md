@@ -253,17 +253,17 @@ The following table shows a comparison between a 1024 x 2048 point 10-instance F
 
 | Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 6004.71                            | 3480.89                 | 20               | 76%             | 396 /<br/>20%                        | 56               | 11720 /<br/> 4156         | 0     | 0    | 4461                      | 1345.89                                |
-| HLS           | 4968.15                            | 4200.20                 | NA               | NA              | NA                                   | NA               | 98665 /<br/> 61125        | 155   | 180  | 6127                      | 810.86                                 |
+| AIE           | 7528.710                           | 2873.628                | 20               | 78%             | 404 /<br/>20%                        | 46               | 11720 /<br/> 4157         | 0     | 0    | 5572                      | 1351.17                                |
+| HLS           | 4979.797                           | 4040.900                | NA               | NA              | NA                                   | NA               | 98899 /<br/> 61591        | 250   | 180  | 5800                      | 858.59                                 |
 
 These observations give a clear indication of where the AI Engines in Versal can offer improvements:
 
-* An almost 20% improvement on the aggregate throughput.
-* Reduced latency by ~20%.
-* Performance increase of ~2x to 1183 MSPS/Watt.
-* Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~108K FFs, ~70K LUTs and 335 BRAMs are reduced to just 56 AI Engines, 11k FFs, and 4K LUTs.
+* An almost 51% improvement on the aggregate throughput.
+* Reduced latency by ~29%.
+* Performance increase of ~2x to 1351 MSPS/Watt.
+* Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~98K FFs, ~61K LUTs and 250 BRAMs are reduced to just 46 AI Engines, 11k FFs, and 4K LUTs.
 
-It is important to understand that those 56 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 36 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 36 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router).
+It is important to understand that those 46 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 26 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 26 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router).
 
 Additionally, further increasing the number of instances in the AI Engine design is easier compared to the HLS design, which will run into timing closure issues, especially for higher FFT point size designs.
 

@@ -119,7 +119,7 @@ class datamover_class {
          // Reading the error count for the ap_return reg of the hls kernel...
          xrtKernelReadRegister(datamover_khdl, 0x10, &instance_errCnt);
          
-         std::cout << "FIR execution " << (instance_errCnt ? "Failed! " : "Passed! ") << "With error count " << instance_errCnt << ".\n" << std::endl;
+         //std::cout << "FIR execution " << (instance_errCnt ? "Failed! " : "Passed! ") << "With error count " << instance_errCnt << ".\n" << std::endl;
 
          // Adding instance error to the total error count...
          *errCnt += instance_errCnt;
