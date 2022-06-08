@@ -1,4 +1,6 @@
 Module_01_Custom_Platform/hw/build
+Module_01_Custom_Platform/hw/*.jou
+Module_01_Custom_Platform/hw/*.log
 Module_01_Custom_Platform/sw/build
 
 Module_02_AI_Engine_Design/build/
