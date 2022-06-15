@@ -196,15 +196,15 @@ To run the following `make` steps (for example, `make kernels`, `make graph`, et
 If you are an advanced user and are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design with one command:
 
 ```bash
-make build TARGET=hw_emu
+make all TARGET=hw_emu
 ```
 or
 ```bash
-make build TARGET=hw EN_TRACE=0
+make all TARGET=hw EN_TRACE=0
 ```
 or
 ```bash
-make build TARGET=hw EN_TRACE=1
+make all TARGET=hw EN_TRACE=1
 ```
 
 The default value of EN_TRACE is 0. This command runs the `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
