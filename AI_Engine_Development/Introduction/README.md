@@ -168,7 +168,7 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td>x</td>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AIE DSPLib and Model Composer</a></td>
+ <td align="center"><a href="../Feature_Tutorials/10-aie-dsp-lib-model-composer/">AIE DSPLib and Model Composer</a></td>
  <td>Base</td>
  <td>Linux</td>
  <td>x</td>
