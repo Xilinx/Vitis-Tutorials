@@ -210,7 +210,7 @@ Typically, one of the first steps of a design is deciding on an architecture/imp
 
 For DSP based design, the designer begins with an estimate of the system clock rate that the PL is capable of, and divides that by the desired filter throughput to determine how many clock cycles can be used to process a sample. By feeding this number into the FIR Compiler, the FIR is constructed with the minimum resources required to implement the design; the higher the clock cycles per sample, the fewer resources used.
 
-For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/QoR page](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/user_guide/L2/5-benchmark.html).
+For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/QoR page](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/user_guide/L2/benchmark.html).
 
 For the filter sizes selected in this tutorial, the following AI Engine throughputs were obtained:
 
