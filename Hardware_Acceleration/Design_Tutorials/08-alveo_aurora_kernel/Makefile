@@ -88,7 +88,7 @@ $(XCLBIN_OBJ): krnl_aurora.xo strm_issue_$(TARGET).xo strm_dump_$(TARGET).xo krn
 
 ################## software build for XRT Native API code
 
-CXXFLAGS := -std=c++14 -Wno-deprecated-declarations
+CXXFLAGS := -std=c++17 -Wno-deprecated-declarations
 CXXFLAGS += -I$(XILINX_XRT)/include
 LDFLAGS := -L$(XILINX_XRT)/lib
 LDFLAGS += $(LDFLAGS) -lxrt_coreutil

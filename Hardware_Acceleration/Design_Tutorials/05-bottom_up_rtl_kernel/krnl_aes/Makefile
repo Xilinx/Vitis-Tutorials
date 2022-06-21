@@ -87,7 +87,7 @@ strm_issue.xo: ./hls/strm_issue.cpp
 all: gen_ip pack_kernel build_hw
 
 ################## software build 
-CXXFLAGS := -std=c++14 -Wno-deprecated-declarations
+CXXFLAGS := -std=c++17 -Wno-deprecated-declarations
 CXXFLAGS += -I$(XILINX_XRT)/include
 LDFLAGS := -L$(XILINX_XRT)/lib
 LDFLAGS += -lxrt_coreutil -lssl -lcrypto

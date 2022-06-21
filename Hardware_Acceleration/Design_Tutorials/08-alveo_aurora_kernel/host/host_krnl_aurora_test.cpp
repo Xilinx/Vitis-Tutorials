@@ -19,6 +19,7 @@
 #include <iostream>
 #include <fstream>
 #include <bitset>
+#include <unistd.h>
 
 // Please use 'xbutil list' command to get the device id of the target alveo card if multiple
 //   cards are installed in the system.
