@@ -22,7 +22,7 @@
         ],
         "custom_build_target":
         {
-            "hw": "xclbin"
+            "all": "all"
         }
 
     }

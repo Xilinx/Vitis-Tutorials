@@ -80,7 +80,7 @@ build_hw:
 all: gen_ip pack_kernel build_hw
 
 ################## software build for XRT Native API code
-CXXFLAGS := -std=c++14 -Wno-deprecated-declarations
+CXXFLAGS := -std=c++17 -Wno-deprecated-declarations
 CXXFLAGS += -I$(XILINX_XRT)/include
 LDFLAGS := -L$(XILINX_XRT)/lib
 LDFLAGS += $(LDFLAGS) -lxrt_coreutil -lssl -lcrypto -lpthread
