@@ -262,6 +262,7 @@ AIE_FLAGS += --Xpreproc="-DFFT2D_INSTS=$(FFT_2D_INSTS)"
 AIE_FLAGS += --Xpreproc="-DMAT_ROWS=$(MAT_ROWS)"
 AIE_FLAGS += --Xpreproc="-DMAT_COLS=$(MAT_COLS)"
 AIE_FLAGS += --Xpreproc="-DFFT_2D_DT=$(FFT_2D_DT)"
+AIE_FLAGS += --Xpreproc="-DITER_CNT=8"
 AIE_FLAGS += --platform=$(PLATFORM)
 
 ifeq ($(FFT_2D_DT),1)
@@ -283,6 +284,11 @@ AIE_FLAGS += --heapsize=7000
 AIE_FLAGS += --Xchess="main:bridge.llibs=softfloat m"
 AIE_FLAGS += --workdir=$(WORK_DIR)
 
+# Aiesimulator flags
+#-i - Alias of --input-dir=<dir> option
+#-o - Alias of --output-dir=<dir> option
+AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/
+AIE_SIM_FLAGS += -i=$(AIE_SRC_REPO)/aiesim_data/$(FFT_2D_DT_DIR_VAL)_IOfiles/fft2d_$(MAT_ROWS)x$(MAT_COLS)_ioFiles
 # =========================================================
 # Application Compiler and Linker Flags
 # =========================================================
@@ -448,11 +454,11 @@ $(LIBADF_A): $(GRAPH_SRC_CPP)
 
 aiesim: $(LIBADF_A)
 	cd $(BUILD_TARGET_DIR); \
-	aiesimulator --pkg-dir $(WORK_DIR)/ 2>&1 | tee -a aiesim.log
+	aiesimulator $(AIE_SIM_FLAGS) --profile 2>&1 | tee -a aiesim.log
 
 aiesim_profile: $(LIBADF_A)
 	cd $(BUILD_TARGET_DIR); \
-	aiesimulator --pkg-dir $(WORK_DIR)/ --profile 2>&1 | tee -a aiesim.log
+	aiesimulator $(AIE_SIM_FLAGS) --profile 2>&1 | tee -a aiesim.log
 
 vcd: $(BLD_TGT_VCD_FILE) $(XPE_FILE)
 
@@ -467,8 +473,7 @@ $(XPE_FILE): $(BLD_TGT_VCD_FILE)
 # vcd file generation...
 $(BLD_TGT_VCD_FILE): $(LIBADF_A)
 	cd $(BUILD_TARGET_DIR); \
-	aiesimulator --pkg-dir $(WORK_DIR)/ --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
-
+	aiesimulator $(AIE_SIM_FLAGS) --profile --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
 # =========================================================
 # Step 3. XCLBIN File Generation
 # ========================================================
