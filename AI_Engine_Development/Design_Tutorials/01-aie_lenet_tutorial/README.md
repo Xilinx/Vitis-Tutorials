@@ -84,7 +84,7 @@ lenet
 </details>
 
 ## Before You Begin
-Note: This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from Xilinx website and ensure you have the correct licenses installed.
 
 <details>
 
@@ -196,15 +196,15 @@ To run the following `make` steps (for example, `make kernels`, `make graph`, et
 If you are an advanced user and are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design with one command:
 
 ```bash
-make build TARGET=hw_emu
+make all TARGET=hw_emu
 ```
 or
 ```bash
-make build TARGET=hw EN_TRACE=0
+make all TARGET=hw EN_TRACE=0
 ```
 or
 ```bash
-make build TARGET=hw EN_TRACE=1
+make all TARGET=hw EN_TRACE=1
 ```
 
 The default value of EN_TRACE is 0. This command runs the `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
