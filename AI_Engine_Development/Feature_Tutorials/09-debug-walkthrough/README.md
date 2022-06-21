@@ -146,7 +146,7 @@ See [AI Engine/PL kernel Debug with XRT utilities on HW](./Debug5_bc.md), and [A
 See [AI Engine Debug with Profiling Feature](./Debug6_pr.md).
 
 
-#### Stage 3: Kernel Analysis
+#### Stage 3: PL Kernel Analysis
 See [AI Engine Debug with Integrated Logic Analyzer](./Debug7_il.md).
 
 
