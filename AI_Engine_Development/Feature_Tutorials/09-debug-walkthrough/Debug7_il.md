@@ -58,6 +58,7 @@ Flash the SD card with the ILA enabled design, plug in the flashed SD card to VC
 ### Step 4. Setup Connection to the Hardware Board
 #### Step 4.1. Target Connection Setup
 Run hardware server from computer that connects to target board. To do so, launch hw_server from the computer that has JTAG connection to the VCK190 board.
+
 <img src="images/hw_ta_hw.png" width="600">
 
 #### Step 4.2. Launch Vivado
@@ -79,7 +80,7 @@ Confirm target's information from JTAG chain then click **Next**.
 <img src="images/il_open_4.png" width="900">
 
 #### Step 4.7. Select probe file
-Click the elipsis (**...**) to select the generated probe file. It is named `bf_hw.ltx` from this tutorial.
+Click the elipsis (**...**) to select the generated probe file. It is at `${PROJECT_PATH}/_x/link/int/bf_hw.ltx` from this tutorial.
 <img src="images/il_pb_file.png" width="900">
 
 #### Step 4.8. Select ILA to be examined.
@@ -89,6 +90,8 @@ Click on `hw_ila_1` to examine the design.
 #### Step 4.9. Setup design's signals to be debugged
 Click on `+` to configure the desired signals and their values during run time.
 <img src="images/il_pb_trig.png" width="900">
+
+Example below selects TVALID signal from `mm2s_v4_1_s0` and `xilinx_vck190_es1_base_s2mm_v4_1_0_so` interfaces that capture valid transfers are driven from master.
 <img src="images/il_pb_trig1.png" width="900">
 
 #### Step 4.10. Enable ILA to capture the configured signals to debug
