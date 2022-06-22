@@ -207,7 +207,7 @@ or
 make all TARGET=hw EN_TRACE=1
 ```
 
-The default value of EN_TRACE is 0. This command runs the `make kernels`, `make graph`, `make xclbin`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
+The default value of EN_TRACE is 0. This command runs the `make kernels`, `make graph`, `make xsa`, `make application`, and `make package` for hardware emulation or for running on hardware (VCK190 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware `EN_TRACE` can be set to 1 to enable trace to measure throughput.  
 
 You can also run the following command to build the entire LeNet tutorial *and* launch hardware emulation:
 ```bash
@@ -318,9 +318,9 @@ The following is a description of the output objects that results from executing
  </details>
 
 <details>
-  <summary>make xclbin: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary>
+  <summary>make xsa: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary>
 
-### make xclbin: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform
+### make xsa: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform
 After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate both an XCLBIN and a new XSA file.
 
 ### Platform
@@ -330,7 +330,7 @@ To test this feature in this tutorial, use the base VCK190 platform to build the
 
 The command to run this step is as follows (default TARGET=hw_emu, default EN_TARCE=0):
 ```
-make xclbin
+make xsa
 ```
 
 The expanded command is as follow:
@@ -348,7 +348,7 @@ v++       -l                                                \
           dma_hls.hw_emu.xo                                 \	  
           ../../design/pl_src/lenet_kernel/lenet_kernel.xo  \
           ../build/libadf.a                             \
-          -o vck190_aie_lenet.hw_emu.xclbin   
+          -o vck190_aie_lenet.hw_emu.xsa   
 
 cd ../../;
 ```
@@ -370,7 +370,7 @@ v++       -l                                                \
           dma_hls.hw_emu.xo                                 \	  
           ../../design/pl_src/lenet_kernel/lenet_kernel.xo  \
           ../build/libadf.a                             \
-          -o vck190_aie_lenet.hw_emu.xclbin   
+          -o vck190_aie_lenet.hw_emu.xsa   
 
 cd ../../;
 ```
@@ -517,7 +517,7 @@ v++	-p  							\
 	--package.out_dir ./build/hw_emu/package	        \
 	--package.sd_dir ./design/aie_src/data	                \
 	--package.image_format=ext4				\
-	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ./build/libadf.a \
+	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xsa ./build/libadf.a \
 	--package.defer_aie_run
 
 cd ../../;
@@ -544,7 +544,7 @@ v++	-p  							\
 	--package.out_dir ./build/hw_emu/package	        \
 	--package.sd_dir ./design/aie_src/data	                \
 	--package.image_format=ext4				\
-	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xclbin ./build/libadf.a \
+	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xsa ./build/libadf.a \
 	--package.defer_aie_run                                                                                \
         --package.sd_file $(MAKEFILES_REPO)/xrt.ini
 
@@ -570,7 +570,7 @@ cd ../../;
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2022.1/Image|The pre-built Petalinux Image the processor boots from.|
 |design/aie_src/data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS host application uses to verify the output data from the AI Engine.|
 |build/hw_emu/lenet_xrt.elf|The PS host application executabled created in the `make application` step.|
-|build/hw_emu/vck190_aie_lenet.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
+|build/hw_emu/vck190_aie_lenet.hw_emu.xsa|The XSA file created in the `make xsa` step.|
 |build/libadf.a|The compiled AI Engine design graph created in the `make graph` step.|
 
 The output of the Package step is the package directory that contains the contents to run hardware emulation.
@@ -635,10 +635,10 @@ To run your design on hardware, re-run the following steps with TARGET=hw:
 
 ```
 make kernels TARGET=hw
-make xclbin TARGET=hw
+make xsa TARGET=hw
 make package TARGET=hw
 ```
-These command create a `build/hw` folder with the kernels, `xclbin`, and `package` for a hardware run.
+These command create a `build/hw` folder with the kernels, `xsa`, and `package` for a hardware run.
 
 Now follow **Steps 1-9** to run the `lenet_xrt.elf` excutable on your VCK190 board:
 
@@ -967,7 +967,7 @@ Transfer the .csv and \_summary files back to the design directory, for example:
 ```
 Scp -r *.csv *_summary <user>@10.10.71.101:<path>
 ```
-Then run the Vitis analyzer on the summary file, for example, `xclbin.ex.run_summary`
+Then run the Vitis analyzer on the summary file, for example, `xclbin.run_summary`
 
 The following is the snapshot of the time trace for the LeNet design run.
 
