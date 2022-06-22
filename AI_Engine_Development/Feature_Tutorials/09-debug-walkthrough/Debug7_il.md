@@ -80,7 +80,9 @@ Confirm target's information from JTAG chain then click **Next**.
 <img src="images/il_open_4.png" width="900">
 
 #### Step 4.7. Select probe file
-Click the elipsis (**...**) to select the generated probe file. It is at `${PROJECT_PATH}/_x/link/int/bf_hw.ltx` from this tutorial.
+
+Click the elipsis (**...**) to select the generated probe file. It is located at `${PROJECT_PATH}/_x/link/int/bf_hw.ltx`.
+
 <img src="images/il_pb_file.png" width="900">
 
 #### Step 4.8. Select ILA to be examined.
