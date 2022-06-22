@@ -17,7 +17,7 @@ The utility, `xbutil`, is supported for PL/AI Engine debug. It can be used to
 * [report XRT errors](#Report-XRT-Errors).
 
 
-# Report AI Engine Status
+## Report AI Engine Status
 
 ### Step 0 Prepare the boot image and boot the board
 After the design is built correctly without error, we are ready to run on the hardware board.
@@ -27,6 +27,7 @@ After the design is built correctly without error, we are ready to run on the ha
 * Connect the USB type C cable to the board and computer that supports serial port connection.
 * Set the serial port configuration with Speed=115200, Data=8 bit, Parity=none, Stop bits=1 bit and flow control=none.
 * Power up the vck190 board to see boot messages from serial connection.
+
 
 ### Step 1.1 Generate AI Engine status data
 Create an xrt.ini file on SD card using the following lines.
@@ -43,16 +44,16 @@ cd /run/media/mmcblk0p1
 ```
 
 ### Step 1.3 Collect AI Engine Status Files
-After the design run completes on the hardware, the generated profiling files and run_summary files need to be collected and ready to be examined.
+After the design run completes on the hardware, the generated profiling files and `run_summary` files need to be collected and ready to be examined.
 
 #### Step 1.3.1
-Make sure `aie_status_edge.json`, `aieshim_status_edge.json`, `summary.csv` and `xrt.run_summary` files are generated on SD card.
+Make sure `aie_status_edge.json`, `aieshim_status_edge.json`, `summary.csv` and `xrt.run_summary` files are generated on the SD card.
 
 #### Step 1.3.2
-Power off the board and take out the sd_card from board and plug in the sd card to host's sd card reader.
+Power off the board and take out the SD card from the board, and plug it into the host SD card reader.
 
 #### Step 1.3.3
-Copy `aie_status_edge.json`, `aieshim_status_edge.json`, `summary.csv` and `xrt.run_summary` files from SD card back to where the design is.
+Copy `aie_status_edge.json`, `aieshim_status_edge.json`, `summary.csv` and `xrt.run_summary` files from the SD card back to where the design is.
 * `xrt.run_summary`: Run summary that contains list of files information that can be used by `vitis analyzer`.
 * `aie_status_edge.json`: Status of AI Engine and AI Engine memory.
 * `aieshim_status_edge.json`: AI Engine interface tiles status.
@@ -73,9 +74,8 @@ Click on `Graph` view then `Tile Status`.
 * `PC`: Shows the current PC (program counter) value. It can be cross-probed with source code by clicking it.
 <img src="images/bc_va3.png">
 
-* `Error Event`: Shows error events that have happened before the status was generated.
+* `Error Event`: Shows error events that occurred before the status was generated.
 * `Buffers`: Shows buffer objects in the design with the current status.
-
 
 Click on `DMA Status`. DMA status shows each tile's DMA input/output channel status.
 <img src="images/bc_va2.png">
@@ -83,7 +83,7 @@ Click on `DMA Status`. DMA status shows each tile's DMA input/output channel sta
 Reference [UG1076, Analyzing AI Engine Status in Vitis Analyzer](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Vitis-Analyzer) section for details.
 
 
-# Report XRT Errors
+## Report XRT Errors
 
 Reference [xrt-error-api](https://xilinx.github.io/XRT/2022.1/html/xrt_native_apis.html#xrt-error-api) for detail information.
 
@@ -141,7 +141,6 @@ cd /run/media/mmcblk0p1
 ### Step 2.6 Report Mechanism with xbutil
 Issue command `xbutil examine -d 0000:00:00.0 -r error` to VCK190 console to get output from console.
 <img src="images/bc_err.png" width="600">
-
 
 # Support
 
