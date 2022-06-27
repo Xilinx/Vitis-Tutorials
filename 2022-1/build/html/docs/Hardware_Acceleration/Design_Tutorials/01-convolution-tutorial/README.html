@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,10 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="Mixed Kernels Design Tutorial with AXI Stream and Vitis" href="../03-rtl_stream_kernel_integration/README.html" />
-    <link rel="prev" title="Optimizing Accelerated FPGA Applications: Bloom Filter Example" href="../02-bloom/README.html" /> 
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,51 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">Bloom Filter Example</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Convolution Example</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#introduction-to-acceleration">Introduction to Acceleration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#running-fpga-accelerated-application">Running FPGA Accelerated Application</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">Choleskey Algorithm Acceleration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT Host Code Optimization</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../08-alveo_aurora_kernel/README.html">Aurora Kernel on Alveo</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -348,8 +312,6 @@ function OptanonWrapper() { }
     
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
-        
       <li>Accelerating Video Convolution Filtering Application</li>
     
     
@@ -376,11 +338,11 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="accelerating-video-convolution-filtering-application">
-<h1>Accelerating Video Convolution Filtering Application<a class="headerlink" href="#accelerating-video-convolution-filtering-application" title="Permalink to this headline">¶</a></h1>
+<h1>Accelerating Video Convolution Filtering Application<a class="headerlink" href="#accelerating-video-convolution-filtering-application" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>This tutorial introduces you to a compute-intensive application that is accelerated using the Xilinx Alveo Data Center accelerator card. It goes through the design of a specific kernel that runs on the FPGA and briefly discusses optimization of the host-side application for performance. The kernel is designed to maximize throughput, and the host application is optimized to transfer data in an effective manner that moves in-between the host and FPGA card. The host application essentially eliminates the data movement latency by overlapping data transfers for multiple kernel calls. Another essential purpose of this tutorial is to show <strong><em>how one can easily estimate the performance of hardware kernels that can be built using Vitis HLS and how accurate and close these estimates are to actual hardware performance</em></strong></p>
 <div class="section" id="introduction-to-acceleration">
-<h2>Introduction to Acceleration<a class="headerlink" href="#introduction-to-acceleration" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction to Acceleration<a class="headerlink" href="#introduction-to-acceleration" title="Permalink to this heading">¶</a></h2>
 <p>The first lab is designed to let you quickly experience the acceleration performance that can be achieved by porting the video filter to Xilinx’s Alveo accelerator card. The Alveo series cards are designed for accelerating data center applications. However, this tutorial can be adapted to other accelerator cards with some simple changes.</p>
 <p>The steps to be carried out for this first lab include:</p>
 <ul class="simple">
@@ -389,17 +351,17 @@ function OptanonWrapper() { }
 </ul>
 <p>This lab demonstrates the significant performance gain that can be achieved as compared to CPU performance. Whereas the next labs in this tutorial will illustrate and guide how such performance can be achieved using different optimizations and design techniques for 2D convolution kernels and the host side application.</p>
 <div class="section" id="cloning-the-github-repository-and-setting-up-the-vitis-tool">
-<h3>Cloning the GitHub Repository and Setting Up the Vitis Tool<a class="headerlink" href="#cloning-the-github-repository-and-setting-up-the-vitis-tool" title="Permalink to this headline">¶</a></h3>
+<h3>Cloning the GitHub Repository and Setting Up the Vitis Tool<a class="headerlink" href="#cloning-the-github-repository-and-setting-up-the-vitis-tool" title="Permalink to this heading">¶</a></h3>
 <p>To run this tutorial you will need to clone a git repo and also download and extract some compressed files, please follow the instruction given below:</p>
 <div class="section" id="clone-git-repo">
-<h4>Clone Git Repo<a class="headerlink" href="#clone-git-repo" title="Permalink to this headline">¶</a></h4>
+<h4>Clone Git Repo<a class="headerlink" href="#clone-git-repo" title="Permalink to this heading">¶</a></h4>
 <p>Clone the repository using the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/Xilinx/Vitis-Tutorials.git
 </pre></div>
 </div>
 </div>
 <div class="section" id="copy-and-extract-large-files">
-<h4>Copy and Extract Large Files<a class="headerlink" href="#copy-and-extract-large-files" title="Permalink to this headline">¶</a></h4>
+<h4>Copy and Extract Large Files<a class="headerlink" href="#copy-and-extract-large-files" title="Permalink to this heading">¶</a></h4>
 <p>Copy and extract large files in convolution tutorial directory as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /VITIS_TUTORIAL_REPO_PATH/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial
 wget https://www.xilinx.com/bin/public/openDownload?filename<span class="o">=</span>conv_tutorial_files.tar.gz -O conv_tutorial_files.tar.gz
@@ -409,7 +371,7 @@ tar -xvzf  conv_tutorial_files.tar.gz
 <p><strong>NOTE</strong> : VITIS_TUTORIAL_REPO_PATH is the local directory path where git repo is cloned.</p>
 </div>
 <div class="section" id="setting-up-the-vitis-tool">
-<h4>Setting Up the Vitis Tool<a class="headerlink" href="#setting-up-the-vitis-tool" title="Permalink to this headline">¶</a></h4>
+<h4>Setting Up the Vitis Tool<a class="headerlink" href="#setting-up-the-vitis-tool" title="Permalink to this heading">¶</a></h4>
 <p>Setup the application build and runtime environment using the following commands as per your local installation:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;XILINX_VITIS_INSTALL_PATH&gt;/settings64.sh
 <span class="nb">source</span> &lt;XRT_INSTALL_PATH&gt;/setup.sh
@@ -418,7 +380,7 @@ tar -xvzf  conv_tutorial_files.tar.gz
 </div>
 </div>
 <div class="section" id="baseline-the-application-performance">
-<h3>Baseline the Application Performance<a class="headerlink" href="#baseline-the-application-performance" title="Permalink to this headline">¶</a></h3>
+<h3>Baseline the Application Performance<a class="headerlink" href="#baseline-the-application-performance" title="Permalink to this heading">¶</a></h3>
 <p>The software application processes High Definition(HD) video frames/images with 1920x1080 resolution. It performs convolution on a set of images and prints the summary of performance results. It is used for measuring baseline software performance. Please the set the environment variable that points to tutorial direction relative to repo path as follow:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CONV_TUTORIAL_DIR</span><span class="o">=</span>/VITIS_TUTORIAL_REPO_PATH/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial
 </pre></div>
@@ -448,9 +410,9 @@ CPU  Throughput   :    <span class="m">12</span>.7112 MB/s
 </div>
 </div>
 <div class="section" id="running-fpga-accelerated-application">
-<h2>Running FPGA Accelerated Application<a class="headerlink" href="#running-fpga-accelerated-application" title="Permalink to this headline">¶</a></h2>
+<h2>Running FPGA Accelerated Application<a class="headerlink" href="#running-fpga-accelerated-application" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="launching-the-host-application">
-<h3>Launching the Host Application<a class="headerlink" href="#launching-the-host-application" title="Permalink to this headline">¶</a></h3>
+<h3>Launching the Host Application<a class="headerlink" href="#launching-the-host-application" title="Permalink to this heading">¶</a></h3>
 <p>Now launch the application, which uses FPGA accelerated video convolution filter. The application will be run on an actual FPGA card, also called System Run.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>
 make run
@@ -486,7 +448,7 @@ FPGA Speedup      :    <span class="m">68</span>.1764 x
 </div>
 </div>
 <div class="section" id="results">
-<h3>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h3>
+<h3>Results<a class="headerlink" href="#results" title="Permalink to this heading">¶</a></h3>
 <p>From the host application console output, it is clear that the FPGA accelerated kernel can outperform CPU-only implementation by a factor of 68x. It is a large gain in terms of performance over CPU. The following labs will illustrate how this performance allows processing more than 3 HD video channels with 1080p resolution in parallel. The tutorial describes how to achieve such performance gains by building a kernel and host application written in C++.  The host application uses OpenCL APIs and Xilinx Runtime (XRT) underneath it, demonstrating how to unleash this custom-built hardware kernel’s computing power effectively.</p>
 <hr class="docutils" />
 <p align="center"><b>
@@ -516,15 +478,6 @@ limitations under the License.</p>
 
 
 	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../03-rtl_stream_kernel_integration/README.html" class="btn btn-neutral float-right" title="Mixed Kernels Design Tutorial with AXI Stream and Vitis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../02-bloom/README.html" class="btn btn-neutral float-left" title="Optimizing Accelerated FPGA Applications: Bloom Filter Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

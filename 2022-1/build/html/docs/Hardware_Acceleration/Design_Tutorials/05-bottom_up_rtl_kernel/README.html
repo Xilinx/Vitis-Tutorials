@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,10 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="Vitis Hardware Acceleration on Cholesky Algorithm" href="../06-cholesky-accel/README.html" />
-    <link rel="prev" title="The Traveling Salesperson Problem" href="../04-traveling-salesperson/README.html" /> 
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,53 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">Bloom Filter Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">Convolution Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Bottom RTL Kernel Design Flow Example</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#about-this-tutorial">About This Tutorial</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#device-and-software-requirements">Device and Software Requirements</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#tutorial-contents">Tutorial Contents</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#revision-history">Revision History</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">Choleskey Algorithm Acceleration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT Host Code Optimization</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../08-alveo_aurora_kernel/README.html">Aurora Kernel on Alveo</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -350,8 +312,6 @@ function OptanonWrapper() { }
     
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
-        
       <li>Bottom-up RTL Kernel Flow with Vitis for Acceleration</li>
     
     
@@ -381,11 +341,11 @@ function OptanonWrapper() { }
  </td>
  </tr>
 </table><div class="section" id="bottom-up-rtl-kernel-flow-with-vitis-for-acceleration">
-<h1>Bottom-up RTL Kernel Flow with Vitis for Acceleration<a class="headerlink" href="#bottom-up-rtl-kernel-flow-with-vitis-for-acceleration" title="Permalink to this headline">¶</a></h1>
+<h1>Bottom-up RTL Kernel Flow with Vitis for Acceleration<a class="headerlink" href="#bottom-up-rtl-kernel-flow-with-vitis-for-acceleration" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>RTL design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a timing consuming and error-prone process. The Xilinx® Vitis™ unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included Vivado® Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-FPGA communication, DMA, and other supporting tasks.</p>
 <div class="section" id="about-this-tutorial">
-<h2>About This Tutorial<a class="headerlink" href="#about-this-tutorial" title="Permalink to this headline">¶</a></h2>
+<h2>About This Tutorial<a class="headerlink" href="#about-this-tutorial" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial introduces a bottom-up Vitis-based RTL kernel construct and wrap-up process, as well as the host-kernel interaction with <a class="reference external" href="https://xilinx.github.io/XRT/">Xilinx Runtime library (XRT)</a>. All the steps in this tutorial use the command-line interface, except those needed to view waveform or system diagram.</p>
 <p>This tutorial uses an example design to illustrate the relevant concept and steps. The following image shows the block diagram of this design. It is a simple AES accelerator design and comprises two kernels, <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> and <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code>. The <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel is the core AES computation core with AXI streams slave and master ports. The <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code> kernel handles the host-kernel data exchange, and the implementation of AES-ECB and AES-CBD modes along with the krnl_aes module.</p>
 <div align="center">
@@ -403,7 +363,7 @@ function OptanonWrapper() { }
 <p><strong>Note</strong>: This is not a detailed tools usage guideline, so only basic ideas and steps are shown. You will need to refer to other documents for details.</p>
 </div>
 <div class="section" id="device-and-software-requirements">
-<h2>Device and Software Requirements<a class="headerlink" href="#device-and-software-requirements" title="Permalink to this headline">¶</a></h2>
+<h2>Device and Software Requirements<a class="headerlink" href="#device-and-software-requirements" title="Permalink to this heading">¶</a></h2>
 <p>The designs have been verified with the following software/hardware environment and tool chain versions:</p>
 <ul class="simple">
 <li><p>Operating Systems:</p>
@@ -427,7 +387,7 @@ function OptanonWrapper() { }
 </li>
 </ul>
 <div class="section" id="additional-requirements-for-redhat-centos">
-<h3>Additional Requirements for RedHat/CentOS<a class="headerlink" href="#additional-requirements-for-redhat-centos" title="Permalink to this headline">¶</a></h3>
+<h3>Additional Requirements for RedHat/CentOS<a class="headerlink" href="#additional-requirements-for-redhat-centos" title="Permalink to this heading">¶</a></h3>
 <p>If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the  following command to install and switch to GCC 7 before compiling the host program.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install centos-release-scl
 sudo yum install devtoolset-7-gcc-c++
@@ -440,7 +400,7 @@ scl <span class="nb">enable</span> devtoolset-7 bash
 </div>
 </div>
 <div class="section" id="additional-requirements-for-ubuntu">
-<h3>Additional Requirements for Ubuntu<a class="headerlink" href="#additional-requirements-for-ubuntu" title="Permalink to this headline">¶</a></h3>
+<h3>Additional Requirements for Ubuntu<a class="headerlink" href="#additional-requirements-for-ubuntu" title="Permalink to this heading">¶</a></h3>
 <p>To install OpenSSL library for Ubuntu, use:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install libssl-dev
 </pre></div>
@@ -448,7 +408,7 @@ scl <span class="nb">enable</span> devtoolset-7 bash
 </div>
 </div>
 <div class="section" id="tutorial-contents">
-<h2>Tutorial Contents<a class="headerlink" href="#tutorial-contents" title="Permalink to this headline">¶</a></h2>
+<h2>Tutorial Contents<a class="headerlink" href="#tutorial-contents" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial is separated into three parts, and are intended to be used in order.</p>
 <ol class="simple">
 <li><p><a class="reference internal" href="doc/aes.html"><span class="doc">AES Introduction and Core AES Computing RTL Module</span></a></p></li>
@@ -514,7 +474,7 @@ An MMCM IP is used in this kernel to generate required core clock, while the AXI
 </div>
 </div>
 <div class="section" id="revision-history">
-<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this headline">¶</a></h2>
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
 <details>
   <summary> 2022.1 </summary><ul class="simple">
 <li><p>Update Vitis target platform support</p></li>
@@ -540,15 +500,6 @@ An MMCM IP is used in this kernel to generate required core clock, while the AXI
 
 
 	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../06-cholesky-accel/README.html" class="btn btn-neutral float-right" title="Vitis Hardware Acceleration on Cholesky Algorithm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../04-traveling-salesperson/README.html" class="btn btn-neutral float-left" title="The Traveling Salesperson Problem" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

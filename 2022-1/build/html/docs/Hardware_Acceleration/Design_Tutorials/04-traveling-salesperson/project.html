@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -370,7 +355,7 @@ function OptanonWrapper() { }
 <div><p><strong>In this section…</strong><br />We load the C++ <strong>traveling salesperson problem</strong> (TSP) design in Vitis HLS GUI.</p>
 </div></blockquote>
 <div class="section" id="launching-the-vitis-hls-gui">
-<h1>Launching the Vitis HLS GUI<a class="headerlink" href="#launching-the-vitis-hls-gui" title="Permalink to this headline">¶</a></h1>
+<h1>Launching the Vitis HLS GUI<a class="headerlink" href="#launching-the-vitis-hls-gui" title="Permalink to this heading">¶</a></h1>
 <p>Open a terminal and navigate to the <code class="docutils literal notranslate"><span class="pre">build</span></code> directory, then launch the vitis_hls command (see below).  It will open the graphical interface of Vitis HLS and configure the project based on the the content of hls.tcl (a Tcl file):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@server:~$ </span><span class="nb">cd</span> ./build
 <span class="gp">user@server:~$ </span>vitis_hls -p hls.tcl <span class="p">&amp;</span>
@@ -383,31 +368,31 @@ The testbench is found just below in <code class="docutils literal notranslate">
 <p>Here is the content of the Tcl file (notice that how the tsp.cpp and its testbench tsp_TB.cpp are added to the project):</p>
 <div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># Project setup</span>
 <span class="c">#</span>
-<span class="nv">open_project</span> <span class="o">-</span>reset proj
-<span class="nv">set_top</span> tsp
-<span class="nv">add_files</span> ..<span class="o">/</span>code<span class="o">/</span>tsp.cpp
-<span class="nv">add_files</span> <span class="o">-</span>tb ..<span class="o">/</span>code<span class="o">/</span>tsp_TB.cpp
+<span class="nv">open_project</span><span class="w"> </span><span class="o">-</span>reset<span class="w"> </span>proj
+<span class="nv">set_top</span><span class="w"> </span>tsp
+<span class="nv">add_files</span><span class="w"> </span>..<span class="o">/</span>code<span class="o">/</span>tsp.cpp
+<span class="nv">add_files</span><span class="w"> </span><span class="o">-</span>tb<span class="w"> </span>..<span class="o">/</span>code<span class="o">/</span>tsp_TB.cpp
 
 <span class="c"># Solution commands</span>
 <span class="c">#</span>
-<span class="nv">open_solution</span> <span class="s2">&quot;solution1&quot;</span> <span class="o">-</span>flow_target vivado
-<span class="nv">set_part</span> <span class="k">{</span><span class="nv">xcvu9p-flga2104-2-i</span><span class="k">}</span>
-<span class="nv">create_clock</span> <span class="o">-</span>period <span class="mf">3.0</span> <span class="o">-</span>name default
-<span class="nv">set_clock_uncertainty</span> <span class="mf">0.5</span>
-<span class="nv">config_export</span> <span class="o">-</span>format ip_catalog <span class="o">-</span>rtl verilog
+<span class="nv">open_solution</span><span class="w"> </span><span class="s2">&quot;solution1&quot;</span><span class="w"> </span><span class="o">-</span>flow_target<span class="w"> </span>vivado
+<span class="nv">set_part</span><span class="w"> </span><span class="k">{</span><span class="nv">xcvu9p-flga2104-2-i</span><span class="k">}</span>
+<span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mf">3.0</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>default
+<span class="nv">set_clock_uncertainty</span><span class="w"> </span><span class="mf">0.5</span>
+<span class="nv">config_export</span><span class="w"> </span><span class="o">-</span>format<span class="w"> </span>ip_catalog<span class="w"> </span><span class="o">-</span>rtl<span class="w"> </span>verilog
 
 <span class="c"># Main flow commands</span>
 <span class="c">#</span>
 <span class="nv">csim_design</span>
 <span class="nv">csynth_design</span>
 <span class="nv">cosim_design</span>
-<span class="nv">export_design</span> <span class="o">-</span>flow impl <span class="o">-</span>rtl verilog <span class="o">-</span>format syn_dcp
+<span class="nv">export_design</span><span class="w"> </span><span class="o">-</span>flow<span class="w"> </span>impl<span class="w"> </span><span class="o">-</span>rtl<span class="w"> </span>verilog<span class="w"> </span><span class="o">-</span>format<span class="w"> </span>syn_dcp
 </pre></div>
 </div>
 <p>This accelerated <code class="docutils literal notranslate"><span class="pre">tsp</span></code> function receives distances as a series of integers computed outside of the function by the testbench.<br />Clik on the link below for an explanation of the design structure.</p>
 </div>
 <div class="section" id="next-step">
-<h1>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h1>
+<h1>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="design.html"><span class="doc">Design structure</span></a></p></li>
 </ul>

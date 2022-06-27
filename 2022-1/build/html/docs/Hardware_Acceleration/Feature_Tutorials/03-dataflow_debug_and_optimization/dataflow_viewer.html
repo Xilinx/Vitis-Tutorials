@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,11 +338,11 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="dataflow-viewer-basics">
-<h1>1. Dataflow Viewer Basics<a class="headerlink" href="#dataflow-viewer-basics" title="Permalink to this headline">¶</a></h1>
+<h1>1. Dataflow Viewer Basics<a class="headerlink" href="#dataflow-viewer-basics" title="Permalink to this heading">¶</a></h1>
 <p>The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code on top of the loop-level parallelism where possible. The optimization is done in two parts - first, the compiler infers the parallel tasks and sets up the communication channels and the associated control; second, after the generated RTL design is simulated, you can analyze the performance of the DATAFLOW optimization. Due to this fact, the Dataflow viewer lets you see the dataflow structure inferred by the tool, inspect the channels (FIFO/PIPO), and examine the effect of channel depth on performance. Performance data is then back-annotated to the Dataflow viewer from the co-simulation results. The Dataflow viewer also displays a representation of the dataflow graph structure, showing the different processes and the underlying producer-consumer connections.</p>
 <p><strong>Tip:</strong> You must apply the DATAFLOW pragma or directive to your design for the Dataflow viewer to be populated. You can apply dataflow to the top-level function, or specify regions of a function, or loops. For more information, refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/set_directive_dataflow">set_directive_dataflow</a> in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).</p>
 <div class="section" id="taking-the-tour">
-<h2>Taking the tour<a class="headerlink" href="#taking-the-tour" title="Permalink to this headline">¶</a></h2>
+<h2>Taking the tour<a class="headerlink" href="#taking-the-tour" title="Permalink to this heading">¶</a></h2>
 <p>As the first exercise in this tutorial you will synthesize the example design and bring up the Dataflow viewer to take a tour of the features of the viewer. In this lab, you will look at a simple <a class="reference external" href="./reference-files/dataflow/diamond.cpp">dataflow example</a>, found in the <code class="docutils literal notranslate"><span class="pre">reference-files/dataflow</span></code> folder.</p>
 <p>In this lab, you will:</p>
 <ol class="simple">
@@ -365,11 +350,11 @@ function OptanonWrapper() { }
 <li><p>Understand how to use the different features of the Dataflow viewer (both before and after cosimulation).</p></li>
 </ol>
 <div class="section" id="first-lab">
-<h3>First Lab<a class="headerlink" href="#first-lab" title="Permalink to this headline">¶</a></h3>
+<h3>First Lab<a class="headerlink" href="#first-lab" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>Change directory to the <code class="docutils literal notranslate"><span class="pre">03-dataflow_debug_and_optimization/reference-files/dataflow</span></code> directory, you can launch the Vitis HLS GUI by issuing the following command:</p></li>
 </ol>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span> <span class="o">-</span><span class="n">p</span> <span class="n">script</span><span class="p">.</span><span class="n">tcl</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">script</span><span class="p">.</span><span class="n">tcl</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The Vitis HLS GUI will launch and create the project needed to synthesize the design but the GUI will stop short of executing the commands in the <code class="docutils literal notranslate"><span class="pre">script.tcl</span></code> file.</p>
@@ -387,11 +372,11 @@ function OptanonWrapper() { }
 </ol>
 <p>In the preceding figure there are four areas of interest:</p>
 <div class="section" id="module-hierarchy-view">
-<h4>Module Hierarchy View<a class="headerlink" href="#module-hierarchy-view" title="Permalink to this headline">¶</a></h4>
+<h4>Module Hierarchy View<a class="headerlink" href="#module-hierarchy-view" title="Permalink to this heading">¶</a></h4>
 <p>First is the <strong>Module Hierarchy</strong> view which shows the function hierarchy that is inside the top-level <code class="docutils literal notranslate"><span class="pre">diamond</span></code> function. In addition to displaying the module hierarchy, you can inspect the details of each sub-function in the hierarchy such as latency, II, and logic resource estimates.</p>
 </div>
 <div class="section" id="the-dataflow-graph-pane">
-<h4>The Dataflow Graph Pane<a class="headerlink" href="#the-dataflow-graph-pane" title="Permalink to this headline">¶</a></h4>
+<h4>The Dataflow Graph Pane<a class="headerlink" href="#the-dataflow-graph-pane" title="Permalink to this heading">¶</a></h4>
 <p>The second area of interest is the Dataflow Graph view which displays the connectivity between the functions inside the dataflow region in graph form. Ports of the dataflow region are represented by horizontal grey bars (see figure for the <code class="docutils literal notranslate"><span class="pre">vecIn</span></code> and <code class="docutils literal notranslate"><span class="pre">vecOut</span></code> ports).</p>
 <p>The nodes in the graph (shown as blue boxes) represent the functions or loops inside the dataflow region. Note that these might contain functions inferred by the compiler and not just functions defined by the user. These inferred functions will typically contain the suffix <code class="docutils literal notranslate"><span class="pre">_proc</span></code>.</p>
 <p>The edges in the graph (shown as blue, green, or gold arrows) represent the communication between the functions:</p>
@@ -404,7 +389,7 @@ function OptanonWrapper() { }
 <p>To the top right of the graph pane, the <code class="docutils literal notranslate"><span class="pre">Filter</span></code> icon lets you filter different channel subtypes such as stream/task level/scalar propagation FIFO as well as PIPO and stream of blocks.</p>
 </div>
 <div class="section" id="dataflow-properties-table">
-<h4>Dataflow Properties Table<a class="headerlink" href="#dataflow-properties-table" title="Permalink to this headline">¶</a></h4>
+<h4>Dataflow Properties Table<a class="headerlink" href="#dataflow-properties-table" title="Permalink to this heading">¶</a></h4>
 <p>At the bottom part of the GUI is the Dataflow Properties table which shows various details about the dataflow processes (or functions) and the dataflow channels.</p>
 <ol class="simple">
 <li><p>Click on each process/function in the Dataflow Graph view and see the corresponding process being highlighted in the Dataflow Properties table.</p></li>
@@ -419,7 +404,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="viewing-the-dataflow-graph-after-rtl-co-simulation">
-<h3>Viewing the Dataflow Graph after RTL co-simulation<a class="headerlink" href="#viewing-the-dataflow-graph-after-rtl-co-simulation" title="Permalink to this headline">¶</a></h3>
+<h3>Viewing the Dataflow Graph after RTL co-simulation<a class="headerlink" href="#viewing-the-dataflow-graph-after-rtl-co-simulation" title="Permalink to this heading">¶</a></h3>
 <p>After synthesis, you must run co-simulation. For more information, refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/C/RTL-Co-Simulation-in-Vitis-HLS">C/RTL Co-Simulation in Vitis HLS</a> in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
 <ol>
 <li><p>From the menu, select the <strong>Solution &gt; Run C/RTL Co-Simulation</strong> command.
@@ -450,7 +435,7 @@ The Co-simulation dialog box displays as shown in the figure below.</p>
 </ol>
 </div>
 <div class="section" id="viewing-dataflow-performance-using-waveforms">
-<h3>Viewing Dataflow Performance using Waveforms<a class="headerlink" href="#viewing-dataflow-performance-using-waveforms" title="Permalink to this headline">¶</a></h3>
+<h3>Viewing Dataflow Performance using Waveforms<a class="headerlink" href="#viewing-dataflow-performance-using-waveforms" title="Permalink to this heading">¶</a></h3>
 <p>The Dataflow viewer by design can only show you the static view of the dataflow optimization. The graph shows the call-graph like structure of the dataflow region (as shown below). In this graph, you can get a sense of the throughput of your design by observing the II and Latency of each function along a given path.</p>
 <p><img alt="Throughput" src="../../../../_images/throughput.png" /></p>
 <p>It is difficult to see how the functions inside the dataflow region are executed in parallel and how the execution of the functions overlap. In order to visualize this dynamic timeline you can use the Vivado XSIM simulator and waveform viewer.</p>
@@ -489,7 +474,7 @@ The Co-simulation dialog box displays as shown in the figure below.</p>
 </div>
 </div>
 <div class="section" id="next-step">
-<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p><a class="reference internal" href="fifo_sizing_and_deadlocks.html"><span class="doc">FIFO Sizing and Deadlocks</span></a>: Review how to use the deadlock detection feature in the GUI and how to resize FIFOs to avoid deadlocks and achieve better performance.</p></li>
 </ol>

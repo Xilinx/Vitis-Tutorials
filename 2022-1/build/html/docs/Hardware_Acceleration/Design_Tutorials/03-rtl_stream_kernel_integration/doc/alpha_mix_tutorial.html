@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -347,7 +332,7 @@ function OptanonWrapper() { }
            <div itemprop="articleBody">
             
   <div class="section" id="alpha-mix-hls-c-kernel-creation">
-<h1>ALPHA_MIX HLS C Kernel Creation<a class="headerlink" href="#alpha-mix-hls-c-kernel-creation" title="Permalink to this headline">¶</a></h1>
+<h1>ALPHA_MIX HLS C Kernel Creation<a class="headerlink" href="#alpha-mix-hls-c-kernel-creation" title="Permalink to this heading">¶</a></h1>
 <p>According to the design specification, the <em>alpha_mix</em> kernel will include following functions:</p>
 <ul class="simple">
 <li><p>Receive monochrome (one channel 8-bit depth) digital clock images via AXI Stream slave interface</p></li>
@@ -358,21 +343,21 @@ function OptanonWrapper() { }
 <li><p>Output the mixed image via AXI Stream master interface</p></li>
 </ul>
 <p>Following code block is the top level function declaration for <em>alpha_mix</em> kernel. You can see that: the hardware AXI stream port (master or slave) is represented by <em>hls::stream</em> data type; the hardware AXI master port (read or write) is represented by <em>ap_uint</em> (actually array pointer) data type; those kernel arguments are represented by normal <em>int</em> data type, which will be grouped up to map to an AXI slave interface.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">alpha_mix</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="mi">64</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">time_img_input</span><span class="p">,</span>   <span class="c1">// time image input</span>
-               <span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">256</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">bgr_img_input</span><span class="p">,</span>                         <span class="c1">// background image input</span>
-               <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="mi">64</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">mix_img_output</span><span class="p">,</span>   <span class="c1">// mixed image output</span>
-               <span class="kt">int</span>     <span class="n">time_img_rows_in</span><span class="p">,</span>                            <span class="c1">// input time image height</span>
-               <span class="kt">int</span>     <span class="n">time_img_cols_in</span><span class="p">,</span>                            <span class="c1">// input time image width</span>
-               <span class="kt">int</span>     <span class="n">time_img_rows_rsz</span><span class="p">,</span>                           <span class="c1">// resized time image height</span>
-               <span class="kt">int</span>     <span class="n">time_img_cols_rsz</span><span class="p">,</span>                           <span class="c1">// resized time image width</span>
-               <span class="kt">int</span>     <span class="n">time_img_pos_row</span><span class="p">,</span>                            <span class="c1">// resized time image position - Y</span>
-               <span class="kt">int</span>     <span class="n">time_img_pos_col</span><span class="p">,</span>                            <span class="c1">// resized time image position - X</span>
-               <span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span> <span class="n">time_char_color</span><span class="p">,</span>                         <span class="c1">// [31:0] = [xRGB]</span>
-               <span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span> <span class="n">time_bgr_color</span><span class="p">,</span>                          <span class="c1">// [31:0] = [xRGB]</span>
-               <span class="kt">int</span>     <span class="n">time_bgr_opacity</span><span class="p">,</span>                            <span class="c1">// time image background opacity，[7:0] used</span>
-               <span class="kt">int</span>     <span class="n">bgr_img_rows</span><span class="p">,</span>                                <span class="c1">// background image height</span>
-               <span class="kt">int</span>     <span class="n">bgr_img_cols</span>                                 <span class="c1">// background image width</span>
-<span class="p">)</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">alpha_mix</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="mi">64</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">time_img_input</span><span class="p">,</span><span class="w">   </span><span class="c1">// time image input</span>
+<span class="w">               </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">256</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">bgr_img_input</span><span class="p">,</span><span class="w">                         </span><span class="c1">// background image input</span>
+<span class="w">               </span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="mi">64</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mix_img_output</span><span class="p">,</span><span class="w">   </span><span class="c1">// mixed image output</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">time_img_rows_in</span><span class="p">,</span><span class="w">                            </span><span class="c1">// input time image height</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">time_img_cols_in</span><span class="p">,</span><span class="w">                            </span><span class="c1">// input time image width</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">time_img_rows_rsz</span><span class="p">,</span><span class="w">                           </span><span class="c1">// resized time image height</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">time_img_cols_rsz</span><span class="p">,</span><span class="w">                           </span><span class="c1">// resized time image width</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">time_img_pos_row</span><span class="p">,</span><span class="w">                            </span><span class="c1">// resized time image position - Y</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">time_img_pos_col</span><span class="p">,</span><span class="w">                            </span><span class="c1">// resized time image position - X</span>
+<span class="w">               </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">time_char_color</span><span class="p">,</span><span class="w">                         </span><span class="c1">// [31:0] = [xRGB]</span>
+<span class="w">               </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">time_bgr_color</span><span class="p">,</span><span class="w">                          </span><span class="c1">// [31:0] = [xRGB]</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">time_bgr_opacity</span><span class="p">,</span><span class="w">                            </span><span class="c1">// time image background opacity，[7:0] used</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">bgr_img_rows</span><span class="p">,</span><span class="w">                                </span><span class="c1">// background image height</span>
+<span class="w">               </span><span class="kt">int</span><span class="w">     </span><span class="n">bgr_img_cols</span><span class="w">                                 </span><span class="c1">// background image width</span>
+<span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Following is the sub-function and data flow diagram for <em>alpha_mix</em> kernel.</p>

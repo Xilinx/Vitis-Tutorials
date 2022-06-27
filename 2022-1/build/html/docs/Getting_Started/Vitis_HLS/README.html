@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -369,17 +354,17 @@ function OptanonWrapper() { }
 # See the License for the specific language governing permissions and
 # limitations under the License.
 --><div class="section" id="vitis-hls-analysis-and-optimization">
-<h1>Vitis HLS Analysis and Optimization<a class="headerlink" href="#vitis-hls-analysis-and-optimization" title="Permalink to this headline">¶</a></h1>
+<h1>Vitis HLS Analysis and Optimization<a class="headerlink" href="#vitis-hls-analysis-and-optimization" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>Vitis High-Level Synthesis (HLS) is a key part of the Vitis application acceleration development flow. The tool is responsible for compiling C/C++ and OpenCL code into a kernel for acceleration in the programmable logic (PL) region of Xilinx devices. Thus, it is the tool that compiles the hardware kernels for the Vitis tools by performing high-level synthesis.</p>
 <blockquote>
 <div><p><strong>TIP:</strong> Vitis HLS can also be used to generate Vivado IP from C/C++ code, but that flow is not the subject of this tutorial. Although similar, there are some significant differences between producing Vitis XO kernels and Vivado RTL IP. However, you can use this tutorial as a general introduction to the Vitis HLS tool.</p>
 </div></blockquote>
 <p>In this tutorial, you will work through the Vitis HLS tool GUI to build, analyze, and optimize a hardware kernel. You are working through the Vitis kernel flow in the Vitis tool. For more information, refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Process-Overview">Enabling the Vitis Kernel Flow</a> in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
 <div class="section" id="before-you-begin">
-<h3>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h3>
+<h3>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h3>
 <p>The labs in this tutorial use:</p>
 <ul class="simple">
 <li><p>BASH Linux shell commands.</p></li>
@@ -394,7 +379,7 @@ function OptanonWrapper() { }
 </div></blockquote>
 </div>
 <div class="section" id="setup-the-environment-to-run-vitis">
-<h3>Setup the environment to run Vitis<a class="headerlink" href="#setup-the-environment-to-run-vitis" title="Permalink to this headline">¶</a></h3>
+<h3>Setup the environment to run Vitis<a class="headerlink" href="#setup-the-environment-to-run-vitis" title="Permalink to this heading">¶</a></h3>
 <p>To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;Vitis_install_path&gt;/Vitis/2022.1/settings64.sh
 <span class="nb">source</span> /opt/xilinx/xrt/setup.sh
@@ -412,7 +397,7 @@ function OptanonWrapper() { }
 <p>For more information see <a class="reference external" href="https://www.xilinx.com/support/answers/73698.html">Xilinx AR 73698</a>.</p>
 </div>
 <div class="section" id="accessing-the-tutorial-reference-files">
-<h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this headline">¶</a></h3>
+<h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>To access the reference files, type the following into a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Getting_Started/Vitis_HLS</span></code> directory, and then access the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p></li>
@@ -420,7 +405,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>Complete the labs in the following order:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="new_project.html"><span class="doc">Creating a Vitis HLS Project</span></a></p></li>

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,7 +339,7 @@ function OptanonWrapper() { }
  </tr>
 </table><p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
 <p>The tutorials under the AI Engine Development category help you learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors. In order to successfully deploy AI Engine applications in hardware, you need to be aware of the Vitis and AI Engine tools and flows.</p>
 <ul class="simple">
 <li><p>The AI Engine <a href="../Feature_Tutorials/"><strong>Feature Tutorials</strong></a> highlight specific features and flows that help develop AI Engine applications.</p></li>
@@ -363,7 +348,7 @@ function OptanonWrapper() { }
 <p>These tutorials target the <strong>VCK190</strong> board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.</p>
 </div>
 <div class="section" id="environment-settings">
-<h1>Environment Settings<a class="headerlink" href="#environment-settings" title="Permalink to this headline">¶</a></h1>
+<h1>Environment Settings<a class="headerlink" href="#environment-settings" title="Permalink to this heading">¶</a></h1>
 <p><strong>IMPORTANT</strong>: Before beginning the tutorial make sure you have read and followed the <em>Vitis Software Platform Release Notes</em> (v2022.1) for setting up software and installing the VCK190 base platform.</p>
 <p>Run the following steps to setup environment ( <strong>NOT</strong> apply to tutorials that do not use the VCK190 base platform ):</p>
 <ol class="simple">
@@ -373,7 +358,7 @@ function OptanonWrapper() { }
 <li><p>Set up your <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable based upon where you downloaded the platform.</p></li>
 </ol>
 <div class="section" id="feature-tutorials">
-<h2>Feature Tutorials<a class="headerlink" href="#feature-tutorials" title="Permalink to this headline">¶</a></h2>
+<h2>Feature Tutorials<a class="headerlink" href="#feature-tutorials" title="Permalink to this heading">¶</a></h2>
  <table style="width:100%">
  <tr>
  <td width="7%" align="center"><b>Tutorial</b>
@@ -631,7 +616,7 @@ function OptanonWrapper() { }
  </tr>
  </table></div>
 <div class="section" id="design-tutorials">
-<h2>Design Tutorials<a class="headerlink" href="#design-tutorials" title="Permalink to this headline">¶</a></h2>
+<h2>Design Tutorials<a class="headerlink" href="#design-tutorials" title="Permalink to this heading">¶</a></h2>
  <table style="width:100%">
  <tr>
  <td width="7%" align="center"><b>Tutorial</b>

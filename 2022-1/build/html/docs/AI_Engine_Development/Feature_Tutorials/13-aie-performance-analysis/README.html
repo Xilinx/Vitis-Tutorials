@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="Implementing an IIR Filter on the AI Engine" href="../14-implementing-iir-filter/README.html" />
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
@@ -307,17 +303,6 @@ function OptanonWrapper() { }
 </li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -400,14 +385,14 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="ai-engine-performance-and-deadlock-analysis-tutorial">
-<h1>AI Engine Performance and Deadlock Analysis Tutorial<a class="headerlink" href="#ai-engine-performance-and-deadlock-analysis-tutorial" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine Performance and Deadlock Analysis Tutorial<a class="headerlink" href="#ai-engine-performance-and-deadlock-analysis-tutorial" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example.</p>
 </div>
 <div class="section" id="before-you-begin">
-<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p><strong>IMPORTANT</strong>: First, set up the Vitis™ unified software platform and install the VCK190 base platform. Follow the instructions in the <em>Vitis Software Platform Release Notes</em> (v2022.1).</p>
 <p>Before you begin this tutorial, run the following steps:</p>
 <ol class="simple">
@@ -421,7 +406,7 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <div class="section" id="objectives">
-<h3>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h3>
+<h3>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h3>
 <p>After completing this tutorial, you will understand how to:</p>
 <ul class="simple">
 <li><p>Read lock signals in Vitis Analyzer.</p></li>
@@ -433,7 +418,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="steps">
-<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline">¶</a></h2>
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this heading">¶</a></h2>
 <p><strong>Step 1</strong>: Learn about the execution model of an AI Engine graph, including how memory with lock and FIFO works. Learn performance measurement methods. Identify performance bottlenecks and practise optimization. Go to <a class="reference internal" href="aie_execution_measurement.html"><span class="doc">AI Engine Graph Execution and Measurement</span></a>.</p>
 <p><strong>Step 2</strong>: Learn about how a deadlock might occur with an example design. Learn how to analyze a deadlock in the AI Engine simulator, hardware emulation, and hardware flows. Go to <a class="reference internal" href="aie_hang_analysis.html"><span class="doc">AI Engine Deadlock Analysis</span></a>.</p>
 <p><strong>Step 3</strong>: Learn about AI Engine status analysis in the hardware and hardware emulation flows using Vitis Analyzer. Go to <a class="reference internal" href="aie_status_analysis.html"><span class="doc">AI Engine Status Analysis</span></a>.</p>
@@ -441,11 +426,11 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

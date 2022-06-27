@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../../" src="../../../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../../../" id="documentation_options" src="../../../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../../../_static/jquery.js"></script>
         <script src="../../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -358,7 +343,7 @@ function OptanonWrapper() { }
 <em>2&gt; Running the algorithm on the CPU</em></p>
 </div></blockquote>
 <div class="section" id="algorithm-description">
-<h1>Algorithm Description<a class="headerlink" href="#algorithm-description" title="Permalink to this headline">¶</a></h1>
+<h1>Algorithm Description<a class="headerlink" href="#algorithm-description" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial is based on a C++ kernel that we’ll optimize for highest throughput.</p>
 <p>The algorithm is a common linear algebra solver, the decomposition of a Hermitian, positive-definite matrix into the product of a lower triangular matrix and its conjugate transpose.  For this purpose we will use the Cholesky decomposition or Cholesky factorization (pronounced /ʃo-LESS-key/).  This solver is useful for several numerical problems, in particular for Monte Carlo simulations.</p>
 <p>This algorithm has a serial complexity O(n<sup>3</sup>).</p>
@@ -369,7 +354,7 @@ https://xilinx.github.io/Vitis_Libraries/solver/2022.1/guide_L2/L2_api.html#potr
 <p>For our purpose, we will start with a simple description implemented in C++ and explain how to adapt it for acceleration with an Alveo U50 card.</p>
 </div>
 <div class="section" id="run-this-design-on-cpu">
-<h1>Run this design on CPU<a class="headerlink" href="#run-this-design-on-cpu" title="Permalink to this headline">¶</a></h1>
+<h1>Run this design on CPU<a class="headerlink" href="#run-this-design-on-cpu" title="Permalink to this heading">¶</a></h1>
 <p>Open a terminal and navigate to the <code>./docs/cpu_src</code> directory.</p>
 <p>Run the following command to compile the design:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="o">++</span> <span class="n">cpu_cholesky</span><span class="o">.</span><span class="n">cpp</span> <span class="n">test</span><span class="o">.</span><span class="n">cpp</span> <span class="n">matrixUtility</span><span class="o">.</span><span class="n">hpp</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">0</span><span class="n">x</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">o</span> <span class="n">test</span>
@@ -386,7 +371,7 @@ Study the code to check how it implements the Cholesky algorithm.</p>
 </div></blockquote>
 </div>
 <div class="section" id="next">
-<h1>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h1>
+<h1>Next<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h1>
 <p>Continue to <a class="reference internal" href="../module1_baseline/README.html"><span class="doc">module 1</span></a> to build and run a baseline version with Vitis.</p>
 <p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
 

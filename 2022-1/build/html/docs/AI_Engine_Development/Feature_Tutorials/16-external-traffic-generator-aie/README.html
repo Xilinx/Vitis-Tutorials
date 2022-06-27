@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,9 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="Vitis Platform Creation Tutorials" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html" />
     <link rel="prev" title="Introduction" href="../15-post-link-recompile/README.html" /> 
 	</head>
 	<body>
@@ -251,19 +254,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
@@ -313,17 +308,6 @@ function OptanonWrapper() { }
 </li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -405,15 +389,15 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="python-and-c-external-traffic-generators-for-ai-engine-simulation-and-emulation-flows">
-<h1>Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows<a class="headerlink" href="#python-and-c-external-traffic-generators-for-ai-engine-simulation-and-emulation-flows" title="Permalink to this headline">¶</a></h1>
+<h1>Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows<a class="headerlink" href="#python-and-c-external-traffic-generators-for-ai-engine-simulation-and-emulation-flows" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 </div>
 <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
 <p>Versal™ adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. In a bottom-up approach, each part of system is simulated independently before being integrated in a more complete simulation. An heterogeneous device as the Versal ACAP authorizes dataflows to go through a diversity of engines for completion.</p>
 <p>This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array. Some PL blocks are only source or destination kernels, whereas others are processing kernels within the dataflow. This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator (<code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>), AI Engine simulator (<code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code>), and in hardware emulation (<code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>).</p>
 <div class="section" id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h2>
 <p>After completing the tutorial, you will be able to do the following:</p>
 <ul class="simple">
 <li><p>Create a Python script or C++ application.</p></li>
@@ -426,10 +410,10 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="before-you-begin">
-<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial uses Python. In addition to having the Xilinx tools installed, you also need a valid installation of Python 3.</p>
 <div class="section" id="python-environment-setup">
-<h3>Python Environment Setup<a class="headerlink" href="#python-environment-setup" title="Permalink to this headline">¶</a></h3>
+<h3>Python Environment Setup<a class="headerlink" href="#python-environment-setup" title="Permalink to this heading">¶</a></h3>
 <p>The external traffic generators use Python and require non-standard packages to be installed. Perform the following steps to install these packages.</p>
 <ol>
 <li><p>Make sure you are using the latest version of Python 3. This tutorial has been developed with version 3.6.5. Run the following command to check the version:</p>
@@ -462,7 +446,7 @@ matplotlib
 </ol>
 </div>
 <div class="section" id="xilinx-tools-initialization">
-<h3>Xilinx Tools Initialization<a class="headerlink" href="#xilinx-tools-initialization" title="Permalink to this headline">¶</a></h3>
+<h3>Xilinx Tools Initialization<a class="headerlink" href="#xilinx-tools-initialization" title="Permalink to this heading">¶</a></h3>
 <p>Before starting this tutorial, run the following steps.</p>
 <ol class="simple">
 <li><p>Set up the following paths in the script <code class="docutils literal notranslate"><span class="pre">env_setup.sh</span></code>:</p></li>
@@ -489,7 +473,7 @@ matplotlib
 </div>
 </div>
 <div class="section" id="design-overview">
-<h1>Design Overview<a class="headerlink" href="#design-overview" title="Permalink to this headline">¶</a></h1>
+<h1>Design Overview<a class="headerlink" href="#design-overview" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial is based on a basic design, as shown below. This design contains two AI Engine kernels with an intermediate kernel in the PL. The overall system is fed and flushed from kernels that are also in the PL.</p>
 <p><img alt="Diagram of the design" src="../../../../_images/TutorialImages-CompleteSystem.svg" /></p>
 <p>In a standard simulation scheme, you would have to perform several steps:</p>
@@ -509,9 +493,9 @@ matplotlib
 <p><img alt="External Traffic Generator based Simulation" src="../../../../_images/TutorialImages-ETGSimulation.svg" /></p>
 </div>
 <div class="section" id="tutorial-steps">
-<h1>Tutorial Steps<a class="headerlink" href="#tutorial-steps" title="Permalink to this headline">¶</a></h1>
+<h1>Tutorial Steps<a class="headerlink" href="#tutorial-steps" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="step-1-adf-graph-modifications">
-<h2>Step 1: ADF Graph Modifications<a class="headerlink" href="#step-1-adf-graph-modifications" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1: ADF Graph Modifications<a class="headerlink" href="#step-1-adf-graph-modifications" title="Permalink to this heading">¶</a></h2>
 <p>To use external traffic generators for any kind of simulation, you need to make modifications to the graph code, specifically the <code class="docutils literal notranslate"><span class="pre">graph.h</span></code> file. This file contains the PLIO constructors, which are used to connect the graph to the programmable logic.</p>
 <ol class="simple">
 <li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">aie/src</span></code> and open <code class="docutils literal notranslate"><span class="pre">graph.h</span></code>.</p></li>
@@ -522,7 +506,7 @@ matplotlib
 <p><strong>Note</strong>: Code guarding this is optional. It is used in this instance to show the changes needed. These modifications are simple. Remove the filenames of the test vectors, and the simulator (AI Engine or x86) automatically takes responsibility for creating ports to connect Unix sockets.</p>
 </div>
 <div class="section" id="step-2-linking-for-hardware-emulation">
-<h2>Step 2: Linking for Hardware Emulation<a class="headerlink" href="#step-2-linking-for-hardware-emulation" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2: Linking for Hardware Emulation<a class="headerlink" href="#step-2-linking-for-hardware-emulation" title="Permalink to this heading">¶</a></h2>
 <p>In a standard simulation, the various XO files (<code class="docutils literal notranslate"><span class="pre">mm2s</span></code>, <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code>, and <code class="docutils literal notranslate"><span class="pre">s2mm</span></code>) would be created and linked to the AI Engine array, leaving no room for the external traffic generators. A configuration file for such a simulation can be seen in <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code>:</p>
 <div class="highlight-BASH notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>connectivity<span class="o">]</span>
 <span class="nv">nk</span><span class="o">=</span>mm2s:1:mm2s
@@ -553,14 +537,14 @@ matplotlib
 </div>
 </div>
 <div class="section" id="step-3-external-traffic-generators">
-<h2>Step 3: External Traffic Generators<a class="headerlink" href="#step-3-external-traffic-generators" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3: External Traffic Generators<a class="headerlink" href="#step-3-external-traffic-generators" title="Permalink to this heading">¶</a></h2>
 <p>The overall goal of the external traffic generator is to send or receive data to or from the AI Engine array through a specific port. The sender can generate data on the fly or read it from a file. The receiver can keep data and save it somewhere, or process it in a function. When the external traffic generator takes the place of a PL kernel that performs processing, it can use a Python/C++ model of the functionality or even use the original HLS function.</p>
 <div class="section" id="python-scripts">
-<h3>Python Scripts<a class="headerlink" href="#python-scripts" title="Permalink to this headline">¶</a></h3>
+<h3>Python Scripts<a class="headerlink" href="#python-scripts" title="Permalink to this heading">¶</a></h3>
 <p>To test this design, you can use a Python script as an external traffic generator. Each kernel of the AI Engine is tested separately to show that multiple traffic generators can be run in parallel. The following image shows the general flow of the Python to be used in <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code>, <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>, and <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>:</p>
 <p><img alt="Diagram of the python ETG" src="../../../../_images/TutorialImages-PythonETG.svg" /></p>
 <div class="section" id="script-analysis">
-<h4>Script Analysis<a class="headerlink" href="#script-analysis" title="Permalink to this headline">¶</a></h4>
+<h4>Script Analysis<a class="headerlink" href="#script-analysis" title="Permalink to this heading">¶</a></h4>
 <p>The general overview of what the script does as follows:</p>
 <ol class="simple">
 <li><p>Read in two input files (<code class="docutils literal notranslate"><span class="pre">mm2s.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">polar_clip_out.txt</span></code>).</p></li>
@@ -572,7 +556,7 @@ matplotlib
 <p>The script contains a class <code class="docutils literal notranslate"><span class="pre">ExternalTraffic</span></code> that contains functions that communicate with the XTLM utilities objects.</p>
 </div>
 <div class="section" id="instantiating-the-xtlm-utilies">
-<h4>Instantiating the XTLM Utilies<a class="headerlink" href="#instantiating-the-xtlm-utilies" title="Permalink to this headline">¶</a></h4>
+<h4>Instantiating the XTLM Utilies<a class="headerlink" href="#instantiating-the-xtlm-utilies" title="Permalink to this heading">¶</a></h4>
 <ol class="simple">
 <li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">TrafficGenerator/Python</span></code> and open the file <code class="docutils literal notranslate"><span class="pre">xtg_aie.py</span></code>.</p></li>
 <li><p>Scroll to lines 155-159. This is where you instantiate the master/slave utilities for communicating with the simulator. To allow for direct connections to be made between the functions that will be generating the data and the simulator, the name of the utility being instantiated is the same as the name used in the following files:</p>
@@ -585,7 +569,7 @@ matplotlib
 <p>These utility objects contain the functions to transport and receive packets of data for processing, and require the data to be converted into a byte array.</p>
 </div>
 <div class="section" id="transmitting-data-through-the-ipc-axis-master-util-utility">
-<h4>Transmitting Data through the ipc_axis_master_util Utility<a class="headerlink" href="#transmitting-data-through-the-ipc-axis-master-util-utility" title="Permalink to this headline">¶</a></h4>
+<h4>Transmitting Data through the ipc_axis_master_util Utility<a class="headerlink" href="#transmitting-data-through-the-ipc-axis-master-util-utility" title="Permalink to this heading">¶</a></h4>
 <p>In <code class="docutils literal notranslate"><span class="pre">xtg_aie.py</span></code>, go to line 35, the <code class="docutils literal notranslate"><span class="pre">mm2s</span></code> function. This function performs the following operations:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. It reads the input text file (`mm2s.txt`) into the variable `L`.
 2. It transforms the data into a byte array by using two&#39;s complement and OR-ing the real and imaginary values together.
@@ -594,7 +578,7 @@ matplotlib
 </div>
 </div>
 <div class="section" id="receiving-data-through-the-ipc-axis-slave-util-utility">
-<h4>Receiving Data through the ipc_axis_slave_util Utility<a class="headerlink" href="#receiving-data-through-the-ipc-axis-slave-util-utility" title="Permalink to this headline">¶</a></h4>
+<h4>Receiving Data through the ipc_axis_slave_util Utility<a class="headerlink" href="#receiving-data-through-the-ipc-axis-slave-util-utility" title="Permalink to this heading">¶</a></h4>
 <p>Navigate to line 69, the <code class="docutils literal notranslate"><span class="pre">s2mm</span></code> function. This function performs the following operations:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. It receives data using the `sample_transaction` function. This is a blocking function, so it will not continue until it sees data from the utility.
 2. It parses the data, which is still a byte array, and transports it back to the `run` function using the `self.child1.send()` function.
@@ -603,7 +587,7 @@ matplotlib
 </div>
 </div>
 <div class="section" id="c-application">
-<h3>C++ Application<a class="headerlink" href="#c-application" title="Permalink to this headline">¶</a></h3>
+<h3>C++ Application<a class="headerlink" href="#c-application" title="Permalink to this heading">¶</a></h3>
 <p>A C++ application has also been created to test this feature. On top of reading and writing files, this application uses the original HLS code of the <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code> function to test it in situ. The following image shows the general flow of the Python to be used in <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code>, <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>, and <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>:</p>
 <p><img alt="Diagram of the C++ ETG" src="../../../../_images/TutorialImages-CppETG.svg" /></p>
 <p>In the <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> file, the function <code class="docutils literal notranslate"><span class="pre">main()</span></code> is defined along with the three classes which are instantiated in it:</p>
@@ -639,7 +623,7 @@ matplotlib
 </div>
 </div>
 <div class="section" id="step-4-testing-the-functionalities">
-<h2>Step 4: Testing the Functionalities<a class="headerlink" href="#step-4-testing-the-functionalities" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4: Testing the Functionalities<a class="headerlink" href="#step-4-testing-the-functionalities" title="Permalink to this heading">¶</a></h2>
 <p>For simplicity, all the tests can be conducted using variables defined in the command line of the Makefile. The three variables are as follows:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">TARGET</span></code>:</p>
@@ -692,7 +676,7 @@ make <span class="nv">TARGET</span><span class="o">=</span>hw_emu <span class="n
 </div>
 </div>
 <div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, you have learned about the following:</p>
 <ul class="simple">
 <li><p>The required modifications to enable external traffic generators in the graph code.</p></li>
@@ -707,11 +691,11 @@ make <span class="nv">TARGET</span><span class="o">=</span>hw_emu <span class="n
 <li><p>You can mimic the flow of a PL kernel that is needed by the AI Engine (for example, <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code>).</p></li>
 </ul>
 <div class="section" id="support">
-<h3>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h3>
+<h3>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h3>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
+<h3>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h3>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
@@ -734,8 +718,6 @@ make <span class="nv">TARGET</span><span class="o">=</span>hw_emu <span class="n
 	  <!-- Sphinx Page Footer block -->
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html" class="btn btn-neutral float-right" title="Vitis Platform Creation Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../15-post-link-recompile/README.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

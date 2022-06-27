@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="Designing with the AI Engine DSPLib and Vitis Model Composer" href="../10-aie-dsp-lib-model-composer/README.html" />
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
@@ -310,17 +306,6 @@ function OptanonWrapper() { }
 </li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -402,10 +387,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="ai-engine-debug-walkthrough-tutorial-from-simulation-to-hardware">
-<h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware<a class="headerlink" href="#ai-engine-debug-walkthrough-tutorial-from-simulation-to-hardware" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware<a class="headerlink" href="#ai-engine-debug-walkthrough-tutorial-from-simulation-to-hardware" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>System level debug of AI Engine designs that could use up to 400 tiles in the AI Engine domain, PL interfaces and kernels, and PS application can be done at several stages in the design flow. System level debug of AI Engine designs can be categorized as follows:</p>
 <ol class="simple">
 <li><p>Functional debug that involves techniques to uncover bugs in the AI Engine kernel source code.</p></li>
@@ -425,7 +410,7 @@ function OptanonWrapper() { }
 PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm</p>
 </div>
 <div class="section" id="example-design-beamformer">
-<h2>Example Design: Beamformer<a class="headerlink" href="#example-design-beamformer" title="Permalink to this headline">¶</a></h2>
+<h2>Example Design: Beamformer<a class="headerlink" href="#example-design-beamformer" title="Permalink to this heading">¶</a></h2>
 <p>The architecture of the beamformer design consists of three kernels with slight differences which are scalable to various matrix sizes and throughput requirements. The design methodology is applicable to matrix multiplication including, but not limited to, 5G wireless communication.</p>
 <p>One feature of the beamforming architecture is that only a small number of kernels are required by various system configurations. Depending on the location of the kernels in the cascading chain, they are named first, middle, and last. All the kernels implement (8x8) times (8x12) matrix multiplication and only differ in the input and output interfaces.
 The first kernel in the cascading chain does not have cascading input, while the last one writes the output to local memory instead of the cascading bus.</p>
@@ -436,7 +421,7 @@ At the end of computation, the partial summations are sent to the next AI Engine
 <img alt="VA_beamformer.png&quot;" src="../../../../_images/VA_beamformer.png" /></p>
 </div>
 <div class="section" id="methods">
-<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h2>
 <p>There are several ways to debug a system design that include PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. For projects that are command-line based and would like to port to Vitis™ IDE, reference <a class="reference internal" href="Debug0_po.html"><span class="doc">Port command-line based projects to Vitis IDE</span></a> for detail steps.</p>
 <p>For ease of use, a Vitis IDE exported project, <code class="docutils literal notranslate"><span class="pre">beamformer_2022_1.ide.zip</span></code> can be downloaded from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_2022_1.ide.zip. Then import this zip file into the Vitis IDE.</p>
 <p>Step 0. Download data files, <code class="docutils literal notranslate"><span class="pre">beamformer_data.zip</span></code> from https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip. Unzip this file and save it at the same level as this tutorial’s Makefile.</p>
@@ -448,9 +433,9 @@ At the end of computation, the partial summations are sent to the next AI Engine
 <p><strong>Note</strong>: The imported project specifies a hardware platform path that must be adjusted to your specific installed path to work correctly. Click on <strong><code class="docutils literal notranslate"><span class="pre">beamformer_system.sprj</span></code></strong> to update the hardware platform path in the Vitis™ IDE.</p>
 </div>
 <div class="section" id="debug-methodology">
-<h2>Debug Methodology<a class="headerlink" href="#debug-methodology" title="Permalink to this headline">¶</a></h2>
+<h2>Debug Methodology<a class="headerlink" href="#debug-methodology" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="debug-via-simulations">
-<h3>Debug via Simulations<a class="headerlink" href="#debug-via-simulations" title="Permalink to this headline">¶</a></h3>
+<h3>Debug via Simulations<a class="headerlink" href="#debug-via-simulations" title="Permalink to this heading">¶</a></h3>
 <p>Due to huge cost and time associated with build real system for testing and verification purposes, there are several simulation and modeling techniques to help evaluating AI Engine designs.</p>
 <p>Classification of simulation,</p>
 <ul class="simple">
@@ -480,24 +465,24 @@ At the end of computation, the partial summations are sent to the next AI Engine
   </tr>
 </table><p>These supported simulations help to fix majority of design issues before running the AI Engine design on actual hardware. <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment">UG1076</a> contains more details of each simulation’s capabilities and how to apply the supported features to resolve design issues such as memory leaks, memory access conflicts, resource constraints, integration with PL/PS domains.</p>
 <div class="section" id="step-1-functional-simulation-and-debug-of-ai-engine-kernels-and-graph-a-href-debug1-86-md-x86simulator-a">
-<h4>Step 1: Functional Simulation and Debug of AI Engine kernels and graph. – <a href="Debug1_86.md">X86simulator</a>.<a class="headerlink" href="#step-1-functional-simulation-and-debug-of-ai-engine-kernels-and-graph-a-href-debug1-86-md-x86simulator-a" title="Permalink to this headline">¶</a></h4>
+<h4>Step 1: Functional Simulation and Debug of AI Engine kernels and graph. – <a href="Debug1_86.md">X86simulator</a>.<a class="headerlink" href="#step-1-functional-simulation-and-debug-of-ai-engine-kernels-and-graph-a-href-debug1-86-md-x86simulator-a" title="Permalink to this heading">¶</a></h4>
 </div>
 <div class="section" id="step-2-performance-level-simulation-and-debug-of-ai-engine-graph-a-href-debug2-ai-md-aiesimulator-a">
-<h4>Step 2: Performance Level Simulation and Debug of AI Engine graph. – <a href="Debug2_ai.md">AIEsimulator</a>.<a class="headerlink" href="#step-2-performance-level-simulation-and-debug-of-ai-engine-graph-a-href-debug2-ai-md-aiesimulator-a" title="Permalink to this headline">¶</a></h4>
+<h4>Step 2: Performance Level Simulation and Debug of AI Engine graph. – <a href="Debug2_ai.md">AIEsimulator</a>.<a class="headerlink" href="#step-2-performance-level-simulation-and-debug-of-ai-engine-graph-a-href-debug2-ai-md-aiesimulator-a" title="Permalink to this heading">¶</a></h4>
 </div>
 <div class="section" id="step-3-software-emulation-of-ai-engine-design-integrated-with-pl-and-ps-domains-a-href-debug1-se-md-sw-emu-a">
-<h4>Step 3: Software Emulation of AI Engine design integrated with PL and PS domains. – <a href="Debug1_se.md">SW_emu</a>.<a class="headerlink" href="#step-3-software-emulation-of-ai-engine-design-integrated-with-pl-and-ps-domains-a-href-debug1-se-md-sw-emu-a" title="Permalink to this headline">¶</a></h4>
+<h4>Step 3: Software Emulation of AI Engine design integrated with PL and PS domains. – <a href="Debug1_se.md">SW_emu</a>.<a class="headerlink" href="#step-3-software-emulation-of-ai-engine-design-integrated-with-pl-and-ps-domains-a-href-debug1-se-md-sw-emu-a" title="Permalink to this heading">¶</a></h4>
 </div>
 <div class="section" id="step-4-hardware-emulation-of-ai-engine-design-integrated-with-pl-and-ps-domains-a-href-debug2-he-md-hw-emu-a">
-<h4>Step 4: Hardware Emulation of AI Engine design integrated with PL and PS domains. – <a href="Debug2_he.md">HW_emu</a>.<a class="headerlink" href="#step-4-hardware-emulation-of-ai-engine-design-integrated-with-pl-and-ps-domains-a-href-debug2-he-md-hw-emu-a" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4: Hardware Emulation of AI Engine design integrated with PL and PS domains. – <a href="Debug2_he.md">HW_emu</a>.<a class="headerlink" href="#step-4-hardware-emulation-of-ai-engine-design-integrated-with-pl-and-ps-domains-a-href-debug2-he-md-hw-emu-a" title="Permalink to this heading">¶</a></h4>
 </div>
 </div>
 <div class="section" id="debug-via-hardware">
-<h3>Debug via Hardware<a class="headerlink" href="#debug-via-hardware" title="Permalink to this headline">¶</a></h3>
+<h3>Debug via Hardware<a class="headerlink" href="#debug-via-hardware" title="Permalink to this heading">¶</a></h3>
 <p>After fixing all AI Engine design issues with above simulations, running AI Engine design on hardware could still exhibits issues.
 <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment">UG1076</a> debug methodology chapter describes these stages along with detail steps included.</p>
 <div class="section" id="stage-1-run-the-design-on-hardware">
-<h4>Stage 1: Run the design on hardware<a class="headerlink" href="#stage-1-run-the-design-on-hardware" title="Permalink to this headline">¶</a></h4>
+<h4>Stage 1: Run the design on hardware<a class="headerlink" href="#stage-1-run-the-design-on-hardware" title="Permalink to this heading">¶</a></h4>
 <p>This is the first stage running the design on hardware. Areas to check</p>
 <ul class="simple">
 <li><p>Verify input and output data</p>
@@ -521,29 +506,29 @@ At the end of computation, the partial summations are sent to the next AI Engine
 <p><a class="reference external" href="./Debug6_pa.md#3-Profiling-APIs-on-HW">AI Engine Debug with Profiling APIs on HW</a></p>
 </div>
 <div class="section" id="stage-2-system-profiling">
-<h4>Stage 2: System profiling<a class="headerlink" href="#stage-2-system-profiling" title="Permalink to this headline">¶</a></h4>
+<h4>Stage 2: System profiling<a class="headerlink" href="#stage-2-system-profiling" title="Permalink to this heading">¶</a></h4>
 <p><a class="reference internal" href="Debug6_pr.html"><span class="doc">AI Engine Debug with Profiling Feature</span></a></p>
 </div>
 <div class="section" id="stage-3-kernel-analysis">
-<h4>Stage 3: Kernel Analysis<a class="headerlink" href="#stage-3-kernel-analysis" title="Permalink to this headline">¶</a></h4>
+<h4>Stage 3: Kernel Analysis<a class="headerlink" href="#stage-3-kernel-analysis" title="Permalink to this heading">¶</a></h4>
 <p><a class="reference internal" href="Debug7_il.html"><span class="doc">AI Engine Debug with Integrated Logic Analyzer</span></a></p>
 </div>
 <div class="section" id="stage-4-ai-engine-event-trace-and-analysis">
-<h4>Stage 4: AI Engine Event Trace and Analysis<a class="headerlink" href="#stage-4-ai-engine-event-trace-and-analysis" title="Permalink to this headline">¶</a></h4>
+<h4>Stage 4: AI Engine Event Trace and Analysis<a class="headerlink" href="#stage-4-ai-engine-event-trace-and-analysis" title="Permalink to this heading">¶</a></h4>
 <p><a class="reference internal" href="Debug4_et.html"><span class="doc">AI Engine Debug with Event Trace</span></a></p>
 </div>
 <div class="section" id="stage-5-host-application-debug">
-<h4>Stage 5: Host Application Debug<a class="headerlink" href="#stage-5-host-application-debug" title="Permalink to this headline">¶</a></h4>
+<h4>Stage 5: Host Application Debug<a class="headerlink" href="#stage-5-host-application-debug" title="Permalink to this heading">¶</a></h4>
 <p><a class="reference internal" href="Debug3_hw.html"><span class="doc">Host Application Debug</span></a></p>
 </div>
 </div>
 </div>
 <div class="section" id="support">
-<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h2>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>

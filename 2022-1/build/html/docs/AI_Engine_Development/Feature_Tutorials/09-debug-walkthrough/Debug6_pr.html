@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -356,20 +341,20 @@ function OptanonWrapper() { }
  </td>
  </tr>
 </table><div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial you will learn how to:</p>
 <ul class="simple">
 <li><p>Use hardware profiling features to inspect design.</p></li>
 </ul>
 </div>
 <div class="section" id="hardware-profiling-features">
-<h1>Hardware Profiling Features<a class="headerlink" href="#hardware-profiling-features" title="Permalink to this headline">¶</a></h1>
+<h1>Hardware Profiling Features<a class="headerlink" href="#hardware-profiling-features" title="Permalink to this heading">¶</a></h1>
 <p>Two flows, XSDB and XRT flow, are supported profiling features with AIE design. The profiling feature requires no design source code change to collect profiling data. No special options required to build the design. You can use <a class="reference external" href="#XRT-Flow">XRT Flow</a> or <a class="reference external" href="#XSDB-Flow">XSDB Flow</a> for this tutorial.</p>
 <div class="section" id="xrt-flow">
-<h2>XRT Flow<a class="headerlink" href="#xrt-flow" title="Permalink to this headline">¶</a></h2>
+<h2>XRT Flow<a class="headerlink" href="#xrt-flow" title="Permalink to this heading">¶</a></h2>
 </div>
 <div class="section" id="step-1-1-prepare-the-boot-image-and-boot-the-board">
-<h2>Step 1.1 Prepare the boot image and boot the board<a class="headerlink" href="#step-1-1-prepare-the-boot-image-and-boot-the-board" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.1 Prepare the boot image and boot the board<a class="headerlink" href="#step-1-1-prepare-the-boot-image-and-boot-the-board" title="Permalink to this heading">¶</a></h2>
 <p>After the design is built correctly without error, we are ready to run on the hardware board.</p>
 <ul class="simple">
 <li><p>Flash the SD card with the built sd_card.img.</p></li>
@@ -380,7 +365,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="step-1-2-generate-profiling-data">
-<h2>Step 1.2 Generate Profiling data<a class="headerlink" href="#step-1-2-generate-profiling-data" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.2 Generate Profiling data<a class="headerlink" href="#step-1-2-generate-profiling-data" title="Permalink to this heading">¶</a></h2>
 <p>Create an <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> file on SD card using the following lines.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>Debug<span class="o">]</span>
 <span class="nv">aie_profile</span> <span class="o">=</span> <span class="nb">true</span>
@@ -398,54 +383,54 @@ Available predefined metrics:
 3. aie_profile_interface_metrics: input_bandwidths, output_bandwidths, input_stalls_idle and output_stalls_idle.
 --></div>
 <div class="section" id="step-1-3-to-run-application-after-petalinux-boots-up-on-board">
-<h2>Step 1.3 to Run Application after Petalinux Boots up on Board<a class="headerlink" href="#step-1-3-to-run-application-after-petalinux-boots-up-on-board" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.3 to Run Application after Petalinux Boots up on Board<a class="headerlink" href="#step-1-3-to-run-application-after-petalinux-boots-up-on-board" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /run/media/mmcblk0p1
 ./host.exe a.xclbin
 </pre></div>
 </div>
 </div>
 <div class="section" id="step-1-4-collect-profiling-files">
-<h2>Step 1.4 Collect Profiling Files<a class="headerlink" href="#step-1-4-collect-profiling-files" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.4 Collect Profiling Files<a class="headerlink" href="#step-1-4-collect-profiling-files" title="Permalink to this heading">¶</a></h2>
 <p>After the design run completes on the hardware, the generated profiling files and run_summary files need to be collected and ready to be examined.</p>
 <div class="section" id="step-1-4-1">
-<h3>Step 1.4.1<a class="headerlink" href="#step-1-4-1" title="Permalink to this headline">¶</a></h3>
+<h3>Step 1.4.1<a class="headerlink" href="#step-1-4-1" title="Permalink to this heading">¶</a></h3>
 <p>Make sure <code class="docutils literal notranslate"><span class="pre">aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv</span></code>, <code class="docutils literal notranslate"><span class="pre">summary.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">xrt.run_summary</span></code> files are created on the SD card.</p>
 </div>
 <div class="section" id="step-1-4-2">
-<h3>Step 1.4.2<a class="headerlink" href="#step-1-4-2" title="Permalink to this headline">¶</a></h3>
+<h3>Step 1.4.2<a class="headerlink" href="#step-1-4-2" title="Permalink to this heading">¶</a></h3>
 <p>Power off the board and take out the sd_card from board and plug in the sd card to host’s sd card reader.</p>
 </div>
 <div class="section" id="step-1-4-3">
-<h3>Step 1.4.3<a class="headerlink" href="#step-1-4-3" title="Permalink to this headline">¶</a></h3>
+<h3>Step 1.4.3<a class="headerlink" href="#step-1-4-3" title="Permalink to this heading">¶</a></h3>
 <p>Copy <code class="docutils literal notranslate"><span class="pre">aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv</span></code>, <code class="docutils literal notranslate"><span class="pre">summary.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">xrt.run_summary</span></code> files from SD card back to where the design is.</p>
 </div>
 </div>
 <div class="section" id="step-1-5-launch-vitis-analyzer-to-examine-profiling-files">
-<h2>Step 1.5 Launch Vitis Analyzer to Examine Profiling Files<a class="headerlink" href="#step-1-5-launch-vitis-analyzer-to-examine-profiling-files" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.5 Launch Vitis Analyzer to Examine Profiling Files<a class="headerlink" href="#step-1-5-launch-vitis-analyzer-to-examine-profiling-files" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis_analyzer xrt.run.summary
 </pre></div>
 </div>
 <p>After issuing above command, expect to see result from <a class="reference external" href="#Step-3-Expected-Result-with-Vitis_Analyzer">Step 3 Expected Result with Vitis_Analyzer</a> and continue this tutorial.</p>
 </div>
 <div class="section" id="xsdb-flow">
-<h2>XSDB Flow<a class="headerlink" href="#xsdb-flow" title="Permalink to this headline">¶</a></h2>
+<h2>XSDB Flow<a class="headerlink" href="#xsdb-flow" title="Permalink to this heading">¶</a></h2>
 </div>
 <div class="section" id="step-2-1-prepare-the-boot-image-and-boot-the-board">
-<h2>Step 2.1 Prepare the boot image and boot the board<a class="headerlink" href="#step-2-1-prepare-the-boot-image-and-boot-the-board" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.1 Prepare the boot image and boot the board<a class="headerlink" href="#step-2-1-prepare-the-boot-image-and-boot-the-board" title="Permalink to this heading">¶</a></h2>
 <p>Same as step 1.1 of XRT flow.</p>
 </div>
 <div class="section" id="step-2-2-generate-profiling-data">
-<h2>Step 2.2 Generate Profiling data<a class="headerlink" href="#step-2-2-generate-profiling-data" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.2 Generate Profiling data<a class="headerlink" href="#step-2-2-generate-profiling-data" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="step-2-2-1-target-connection-setup">
-<h3>Step 2.2.1 Target Connection Setup<a class="headerlink" href="#step-2-2-1-target-connection-setup" title="Permalink to this headline">¶</a></h3>
+<h3>Step 2.2.1 Target Connection Setup<a class="headerlink" href="#step-2-2-1-target-connection-setup" title="Permalink to this heading">¶</a></h3>
 <div class="section" id="run-hardware-server-from-computer-that-connects-to-target-board">
-<h4>Run hardware server from computer that connects to target board<a class="headerlink" href="#run-hardware-server-from-computer-that-connects-to-target-board" title="Permalink to this headline">¶</a></h4>
+<h4>Run hardware server from computer that connects to target board<a class="headerlink" href="#run-hardware-server-from-computer-that-connects-to-target-board" title="Permalink to this heading">¶</a></h4>
 <p>Launch hw_server from the computer that has JTAG connection to the VCK190 board.
 <img src="images/hw_ta_hw.png" width="600"></p>
 </div>
 </div>
 <div class="section" id="step-2-2-2-connect-xsdb-to-board">
-<h3>Step 2.2.2 Connect XSDB to Board<a class="headerlink" href="#step-2-2-2-connect-xsdb-to-board" title="Permalink to this headline">¶</a></h3>
+<h3>Step 2.2.2 Connect XSDB to Board<a class="headerlink" href="#step-2-2-2-connect-xsdb-to-board" title="Permalink to this heading">¶</a></h3>
 <p>Launch xsdb from your host computer at the same level of the design’s Work directory:
 Issue this commands from XSDB prompt,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xsdb
@@ -469,48 +454,48 @@ Issue this commands from XSDB prompt,</p>
 </div>
 </div>
 <div class="section" id="step-2-3-to-run-application-after-petalinux-boots-up-on-board">
-<h2>Step 2.3 to Run Application after Petalinux Boots up on Board<a class="headerlink" href="#step-2-3-to-run-application-after-petalinux-boots-up-on-board" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.3 to Run Application after Petalinux Boots up on Board<a class="headerlink" href="#step-2-3-to-run-application-after-petalinux-boots-up-on-board" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /run/media/mmcblk0p1
 ./host.exe a.xclbin
 </pre></div>
 </div>
 </div>
 <div class="section" id="step-2-4-inspect-generated-files">
-<h2>Step 2.4 Inspect generated Files<a class="headerlink" href="#step-2-4-inspect-generated-files" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.4 Inspect generated Files<a class="headerlink" href="#step-2-4-inspect-generated-files" title="Permalink to this heading">¶</a></h2>
 <p>After XSDB complete, expect to see <code class="docutils literal notranslate"><span class="pre">aie_profile.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">summary.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">aie_trace_profile.run_summary</span></code> files are created on the host computer at the location where XSDB is launched.</p>
 </div>
 <div class="section" id="step-2-5-launch-vitis-analyzer-to-examine-profiling-files">
-<h2>Step 2.5 Launch Vitis Analyzer to Examine Profiling Files<a class="headerlink" href="#step-2-5-launch-vitis-analyzer-to-examine-profiling-files" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.5 Launch Vitis Analyzer to Examine Profiling Files<a class="headerlink" href="#step-2-5-launch-vitis-analyzer-to-examine-profiling-files" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis_analyzer aie_trace_profile.run.summary
 </pre></div>
 </div>
 <p>After issuing above command, expect to see result from <a class="reference external" href="#Step-3-Expected-Result-with-Vitis_Analyzer">Step 3 Expected Result with Vitis_Analyzer</a> and continue this tutorial.</p>
 </div>
 <div class="section" id="step-3-expected-result-with-vitis-analyzer">
-<h2>Step 3 Expected Result with Vitis_Analyzer<a class="headerlink" href="#step-3-expected-result-with-vitis-analyzer" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3 Expected Result with Vitis_Analyzer<a class="headerlink" href="#step-3-expected-result-with-vitis-analyzer" title="Permalink to this heading">¶</a></h2>
 <p>Vitis_analyzer GUI is launched, select <code class="docutils literal notranslate"><span class="pre">Profile</span> <span class="pre">Summary</span></code> then <code class="docutils literal notranslate"><span class="pre">AI</span> <span class="pre">Engine</span> <span class="pre">&amp;</span> <span class="pre">Memory</span></code> or <code class="docutils literal notranslate"><span class="pre">Interface</span> <span class="pre">Channels</span></code>.
 <img src="images/pr_hw_perf_va.png"></p>
 </div>
 <div class="section" id="step-4-open-multiple-profiling-runs-with-vitis-analyzer">
-<h2>Step 4 Open Multiple Profiling Runs with Vitis_Analyzer<a class="headerlink" href="#step-4-open-multiple-profiling-runs-with-vitis-analyzer" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4 Open Multiple Profiling Runs with Vitis_Analyzer<a class="headerlink" href="#step-4-open-multiple-profiling-runs-with-vitis-analyzer" title="Permalink to this heading">¶</a></h2>
 <p>You can run the application as many times as you would like with your preferences. However, some of these metrics’ sets are interconnected because some use group events and others use individual events. For example, the heat_map metric set contains a metric that groups all kinds of stall events in a single metric along with other metrics that group data transfer events (load/store, streams, cascade, etc.) and vector instructions. To get a better view of which stall type(s) are prevalent, re-run with the stalls metric set. To better understand execution, re-run with the execution metric set.</p>
 </div>
 <div class="section" id="step-4-1-generate-first-profiling-data">
-<h2>Step 4.1 Generate First Profiling Data<a class="headerlink" href="#step-4-1-generate-first-profiling-data" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.1 Generate First Profiling Data<a class="headerlink" href="#step-4-1-generate-first-profiling-data" title="Permalink to this heading">¶</a></h2>
 <p>Apply <code class="docutils literal notranslate"><span class="pre">heat_map</span></code> for <code class="docutils literal notranslate"><span class="pre">core-metrics</span></code>, <code class="docutils literal notranslate"><span class="pre">conflicts</span></code> for <code class="docutils literal notranslate"><span class="pre">memory-metrics</span></code>, and <code class="docutils literal notranslate"><span class="pre">input_bandwidths</span></code> for <code class="docutils literal notranslate"><span class="pre">interface-metrics</span></code> to collect first profiling data.
 Follow step 1.1 to 1.4 if using XRT flow or follow step 2.1 to 2.4 if using XSDB flow. Save profiling data to a directory ex. <code class="docutils literal notranslate"><span class="pre">profile_0</span></code>.</p>
 </div>
 <div class="section" id="step-4-2-generate-second-profiling-data">
-<h2>Step 4.2 Generate Second Profiling Data<a class="headerlink" href="#step-4-2-generate-second-profiling-data" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.2 Generate Second Profiling Data<a class="headerlink" href="#step-4-2-generate-second-profiling-data" title="Permalink to this heading">¶</a></h2>
 <p>Apply <code class="docutils literal notranslate"><span class="pre">execution</span></code> for <code class="docutils literal notranslate"><span class="pre">core-metrics</span></code>, <code class="docutils literal notranslate"><span class="pre">dma_locks</span></code> for <code class="docutils literal notranslate"><span class="pre">memory-metrics</span></code>, and <code class="docutils literal notranslate"><span class="pre">output_bandwidths</span></code> for <code class="docutils literal notranslate"><span class="pre">interface-metrics</span></code> to collect second profiling data.
 Follow step 1.1 to 1.4 if using XRT flow or follow step 2.1 to 2.4 if using XSDB flow. Save profiling data to a directory ex. <code class="docutils literal notranslate"><span class="pre">profile_1</span></code>.</p>
 </div>
 <div class="section" id="step-4-3-open-first-profiling-data">
-<h2>Step 4.3 Open First Profiling Data<a class="headerlink" href="#step-4-3-open-first-profiling-data" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.3 Open First Profiling Data<a class="headerlink" href="#step-4-3-open-first-profiling-data" title="Permalink to this heading">¶</a></h2>
 <p>Follow step 1.5 for XRT flow or follow step 2.5 for XSDB flow to open first profiling run_summary file with vitis_analyzer.</p>
 </div>
 <div class="section" id="step-4-4-open-second-profiling-data">
-<h2>Step 4.4 Open Second Profiling Data<a class="headerlink" href="#step-4-4-open-second-profiling-data" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.4 Open Second Profiling Data<a class="headerlink" href="#step-4-4-open-second-profiling-data" title="Permalink to this heading">¶</a></h2>
 <p>Click on <code class="docutils literal notranslate"><span class="pre">+</span></code> from GUI, highlighted in red square to browse and select second profiling run_summary file. Two runs of profiling data are combined.
 <img src="images/pr_hw_perf_va_1.png">
 This example combines first run with <code class="docutils literal notranslate"><span class="pre">heat_map</span></code>, <code class="docutils literal notranslate"><span class="pre">conflicts</span></code>, and <code class="docutils literal notranslate"><span class="pre">input_bandwidths</span></code> metrics and second run with <code class="docutils literal notranslate"><span class="pre">execution</span></code>, <code class="docutils literal notranslate"><span class="pre">dma_locks</span></code> and <code class="docutils literal notranslate"><span class="pre">output_bandwidth</span></code> metrics.</p>
@@ -520,10 +505,10 @@ This example combines first run with <code class="docutils literal notranslate">
 <img src="images/pr_hw_perf_va_4.png"></p>
 </div>
 <div class="section" id="profiling-data-explanation">
-<h2>Profiling Data Explanation<a class="headerlink" href="#profiling-data-explanation" title="Permalink to this headline">¶</a></h2>
+<h2>Profiling Data Explanation<a class="headerlink" href="#profiling-data-explanation" title="Permalink to this heading">¶</a></h2>
 <p>An easy way to know the definition of profile data category by moving mouse cursor to column title. For example, <code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">Time</span> <span class="pre">(ms)</span></code> is “Amount of time (in ms) AI Engine was active when it was enabled.”</p>
 <div class="section" id="ai-engine-core-profiling-data">
-<h3>AI Engine core profiling data<a class="headerlink" href="#ai-engine-core-profiling-data" title="Permalink to this headline">¶</a></h3>
+<h3>AI Engine core profiling data<a class="headerlink" href="#ai-engine-core-profiling-data" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">Time</span> <span class="pre">(ms)</span></code> = <code class="docutils literal notranslate"><span class="pre">Stall</span> <span class="pre">Time</span> <span class="pre">(ms)</span></code> + <code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">Utilization</span> <span class="pre">Time</span> <span class="pre">(ms)</span></code>.</p></li>
 <li><p>Take tile(6,0) as an example, tile(6,0) is active for a period of 1.401 milliseconds, where 1.333 milliseconds is stalled and 0.069 milliseconds is actively executing instructions. During 0.069 milliseconds active period, 0.061 milliseconds is executing vector instructions. There are 0.008 milliseconds spent on other instructions such as load/store instructions.</p></li>
@@ -531,14 +516,14 @@ This example combines first run with <code class="docutils literal notranslate">
 </ol>
 </div>
 <div class="section" id="ai-engine-memory-profiling-data">
-<h3>AI Engine memory profiling data<a class="headerlink" href="#ai-engine-memory-profiling-data" title="Permalink to this headline">¶</a></h3>
+<h3>AI Engine memory profiling data<a class="headerlink" href="#ai-engine-memory-profiling-data" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Memory</span> <span class="pre">Conflict</span> <span class="pre">Time</span> <span class="pre">(ms)</span></code> indicates memory access conflicts time runing AI Engine execution. Recommend rerunning <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code> with <code class="docutils literal notranslate"><span class="pre">-enable-memory-check</span></code> option to check design memory access conflicts.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Cumulative</span> <span class="pre">Memory</span> <span class="pre">Errors</span> <span class="pre">Time</span> <span class="pre">(ms)</span></code> indicates time taken due to ECC errors in any of the data memory banks as well as MM2S and S2MM DMAs.</p></li>
 </ol>
 </div>
 <div class="section" id="interface-profiling-data">
-<h3>Interface profiling data<a class="headerlink" href="#interface-profiling-data" title="Permalink to this headline">¶</a></h3>
+<h3>Interface profiling data<a class="headerlink" href="#interface-profiling-data" title="Permalink to this heading">¶</a></h3>
 <p>Select <code class="docutils literal notranslate"><span class="pre">Profile</span> <span class="pre">Summary</span></code> then <code class="docutils literal notranslate"><span class="pre">Interface</span> <span class="pre">Channels</span></code>.
 <img src="images/pr_hw_perf_va_3.png"></p>
 <ol class="simple">
@@ -547,7 +532,7 @@ This example combines first run with <code class="docutils literal notranslate">
 </div>
 </div>
 <div class="section" id="profiling-data-analysis">
-<h2>Profiling Data Analysis<a class="headerlink" href="#profiling-data-analysis" title="Permalink to this headline">¶</a></h2>
+<h2>Profiling Data Analysis<a class="headerlink" href="#profiling-data-analysis" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>From AI Engine core profiling data, tile(6,1), tile(6,3),… have much larger number of <code class="docutils literal notranslate"><span class="pre">Store</span> <span class="pre">Instructions</span></code>. An indication check tile source code if lowering number of <code class="docutils literal notranslate"><span class="pre">Store</span> <span class="pre">Instructions</span></code> can be done to improve performance.</p></li>
 <li><p>From AI Engine Memory profiling data, tile(6,1), tile(9,0),… have non-zero <code class="docutils literal notranslate"><span class="pre">Memory</span> <span class="pre">Conflict</span> <span class="pre">Time</span></code> value. Suggest running AIE simulator to check for memory access violations and clear those violations if any.</p></li>
@@ -557,11 +542,11 @@ This example combines first run with <code class="docutils literal notranslate">
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>

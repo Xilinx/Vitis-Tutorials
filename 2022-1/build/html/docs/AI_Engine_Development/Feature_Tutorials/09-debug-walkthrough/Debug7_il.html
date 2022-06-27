@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -357,11 +342,11 @@ function OptanonWrapper() { }
  </tr>
 </table><p><a class="reference external" href="#AI_Engine_Debug_with_Integrated_Logic_Analyzer">AI Engine Debug with Integrated Logic Analyzer</a></p>
 <div class="section" id="ai-engine-debug-with-integrated-logic-analyzer-ila">
-<h1>AI Engine Debug with Integrated Logic Analyzer (ILA)<a class="headerlink" href="#ai-engine-debug-with-integrated-logic-analyzer-ila" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine Debug with Integrated Logic Analyzer (ILA)<a class="headerlink" href="#ai-engine-debug-with-integrated-logic-analyzer-ila" title="Permalink to this heading">¶</a></h1>
 <p>Adding ChipScope helps debugging AIE PL interfaces in the design running on hardware including checking for AXI protocol violations, hardware kernel issues, data integrity, and performance issues of the design.
 To debug using ILAs, the design is required to enable ILA in hardware build.</p>
 <div class="section" id="enable-ila-in-design">
-<h2>Enable ILA in design<a class="headerlink" href="#enable-ila-in-design" title="Permalink to this headline">¶</a></h2>
+<h2>Enable ILA in design<a class="headerlink" href="#enable-ila-in-design" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial uses v++ –debug option to enable ILA IP core insertion to the design.
 Syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">debug</span><span class="o">.</span><span class="n">chipscope</span> <span class="o">&lt;</span><span class="n">cu_name</span><span class="o">&gt;</span><span class="p">[:</span><span class="o">&lt;</span><span class="n">interface_name</span><span class="o">&gt;</span><span class="p">]</span>
@@ -376,7 +361,7 @@ Syntax:</p>
 </div>
 <p><strong>Note:</strong> v++ allows multiple –debug.chipscope lines to meet design debug needs.</p>
 <div class="section" id="step-1-prepare-the-ila-enabled-makefile">
-<h3>Step 1. Prepare the ILA enabled Makefile.<a class="headerlink" href="#step-1-prepare-the-ila-enabled-makefile" title="Permalink to this headline">¶</a></h3>
+<h3>Step 1. Prepare the ILA enabled Makefile.<a class="headerlink" href="#step-1-prepare-the-ila-enabled-makefile" title="Permalink to this heading">¶</a></h3>
 <p>Use the provided Makefile.ILA from this tutorial’s root directory. Rename Makefile.ILA to Makefile</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">DOWNLOAD_PATH</span><span class="si">}</span>/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough
 cp Makefile.ILA Makefile
@@ -384,7 +369,7 @@ cp Makefile.ILA Makefile
 </div>
 </div>
 <div class="section" id="step-2-build-the-ila-enabled-design">
-<h3>Step 2. Build the ILA enabled design<a class="headerlink" href="#step-2-build-the-ila-enabled-design" title="Permalink to this headline">¶</a></h3>
+<h3>Step 2. Build the ILA enabled design<a class="headerlink" href="#step-2-build-the-ila-enabled-design" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean<span class="p">;</span> make
 </pre></div>
 </div>
@@ -393,72 +378,72 @@ cp Makefile.ILA Makefile
 <img src="images/il_vivado1.png" width="900"></p>
 </div>
 <div class="section" id="step-3-boot-up-the-design">
-<h3>Step 3. Boot up the design<a class="headerlink" href="#step-3-boot-up-the-design" title="Permalink to this headline">¶</a></h3>
+<h3>Step 3. Boot up the design<a class="headerlink" href="#step-3-boot-up-the-design" title="Permalink to this heading">¶</a></h3>
 <p>Flash the SD card with the ILA enabled design, plug in the flashed SD card to VCK190 sd card slot and boot up the board.</p>
 </div>
 </div>
 <div class="section" id="setup-the-connection-with-vivado">
-<h2>Setup the connection with Vivado<a class="headerlink" href="#setup-the-connection-with-vivado" title="Permalink to this headline">¶</a></h2>
+<h2>Setup the connection with Vivado<a class="headerlink" href="#setup-the-connection-with-vivado" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="step-4-setup-connection-to-the-hardware-board">
-<h3>Step 4. Setup Connection to the Hardware Board<a class="headerlink" href="#step-4-setup-connection-to-the-hardware-board" title="Permalink to this headline">¶</a></h3>
+<h3>Step 4. Setup Connection to the Hardware Board<a class="headerlink" href="#step-4-setup-connection-to-the-hardware-board" title="Permalink to this heading">¶</a></h3>
 <div class="section" id="step-4-1-target-connection-setup">
-<h4>Step 4.1. Target Connection Setup<a class="headerlink" href="#step-4-1-target-connection-setup" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.1. Target Connection Setup<a class="headerlink" href="#step-4-1-target-connection-setup" title="Permalink to this heading">¶</a></h4>
 <div class="section" id="run-hardware-server-from-computer-that-connects-to-target-board">
-<h5>Run hardware server from computer that connects to target board<a class="headerlink" href="#run-hardware-server-from-computer-that-connects-to-target-board" title="Permalink to this headline">¶</a></h5>
+<h5>Run hardware server from computer that connects to target board<a class="headerlink" href="#run-hardware-server-from-computer-that-connects-to-target-board" title="Permalink to this heading">¶</a></h5>
 <p>Launch hw_server from the computer that has JTAG connection to the VCK190 board.
 <img src="images/hw_ta_hw.png" width="600"></p>
 </div>
 </div>
 <div class="section" id="step-4-2-launch-vivado">
-<h4>Step 4.2. Launch Vivado<a class="headerlink" href="#step-4-2-launch-vivado" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.2. Launch Vivado<a class="headerlink" href="#step-4-2-launch-vivado" title="Permalink to this heading">¶</a></h4>
 <p>Launch Vivado™ from where the to be debugged project is by issue command, “vivado”</p>
 </div>
 <div class="section" id="step-4-3-setup-vivado-hardware-manager">
-<h4>Step 4.3. Setup Vivado Hardware Manager<a class="headerlink" href="#step-4-3-setup-vivado-hardware-manager" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.3. Setup Vivado Hardware Manager<a class="headerlink" href="#step-4-3-setup-vivado-hardware-manager" title="Permalink to this heading">¶</a></h4>
 <p>After Vivado™ is up, click on highlighted icon.
 <img src="images/il_open.png" width="900"></p>
 </div>
 <div class="section" id="step-4-4-setup-hardware-target">
-<h4>Step 4.4. Setup Hardware Target<a class="headerlink" href="#step-4-4-setup-hardware-target" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.4. Setup Hardware Target<a class="headerlink" href="#step-4-4-setup-hardware-target" title="Permalink to this heading">¶</a></h4>
 <img src="images/il_open_2.png" width="900"></div>
 <div class="section" id="step-4-5-input-hardware-target">
-<h4>Step 4.5. Input Hardware Target<a class="headerlink" href="#step-4-5-input-hardware-target" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.5. Input Hardware Target<a class="headerlink" href="#step-4-5-input-hardware-target" title="Permalink to this heading">¶</a></h4>
 <p>Enter hardware server’s IP address or hostname to highlighted area and click on “Next” icon.
 <img src="images/il_open_3.png" width="900"></p>
 </div>
 <div class="section" id="step-4-6-check-hardware-target">
-<h4>Step 4.6. Check Hardware Target<a class="headerlink" href="#step-4-6-check-hardware-target" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.6. Check Hardware Target<a class="headerlink" href="#step-4-6-check-hardware-target" title="Permalink to this heading">¶</a></h4>
 <p>Confirm target’s information from JTAG chain then click on “Next” icon.
 <img src="images/il_open_4.png" width="900"></p>
 </div>
 <div class="section" id="step-4-7-select-probe-file">
-<h4>Step 4.7. Select probe file<a class="headerlink" href="#step-4-7-select-probe-file" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.7. Select probe file<a class="headerlink" href="#step-4-7-select-probe-file" title="Permalink to this heading">¶</a></h4>
 <p>Click on <code class="docutils literal notranslate"><span class="pre">...</span></code> to select the generated probe file. It is named <code class="docutils literal notranslate"><span class="pre">bf_hw.ltx</span></code> from this tutorial.
 <img src="images/il_pb_file.png" width="900"></p>
 </div>
 <div class="section" id="step-4-8-select-ila-to-be-examined">
-<h4>Step 4.8. Select ILA to be examined.<a class="headerlink" href="#step-4-8-select-ila-to-be-examined" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.8. Select ILA to be examined.<a class="headerlink" href="#step-4-8-select-ila-to-be-examined" title="Permalink to this heading">¶</a></h4>
 <p>Click on `hw_ila_1’ to examine the design.
 <img src="images/il_pb_menu.png" width="900"></p>
 </div>
 <div class="section" id="step-4-9-setup-design-s-signals-to-be-debugged">
-<h4>Step 4.9. Setup design’s signals to be debugged<a class="headerlink" href="#step-4-9-setup-design-s-signals-to-be-debugged" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.9. Setup design’s signals to be debugged<a class="headerlink" href="#step-4-9-setup-design-s-signals-to-be-debugged" title="Permalink to this heading">¶</a></h4>
 <p>Click on <code class="docutils literal notranslate"><span class="pre">+</span></code> to configure the desired signals and their values during run time.
 <img src="images/il_pb_trig.png" width="900">
 <img src="images/il_pb_trig1.png" width="900"></p>
 </div>
 <div class="section" id="step-4-10-enable-ila-to-capture-the-configured-signals-to-debug">
-<h4>Step 4.10. Enable ILA to capture the configured signals to debug<a class="headerlink" href="#step-4-10-enable-ila-to-capture-the-configured-signals-to-debug" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.10. Enable ILA to capture the configured signals to debug<a class="headerlink" href="#step-4-10-enable-ila-to-capture-the-configured-signals-to-debug" title="Permalink to this heading">¶</a></h4>
 <p>Click on one of highlighted icons to capture configured signals.
 <img src="images/il_trig_run.png" width="900"></p>
 <p>Wait for ILA is ready to capture signals, run the application from vck190 board.</p>
 </div>
 <div class="section" id="step-4-11-expected-result">
-<h4>Step 4.11. Expected result<a class="headerlink" href="#step-4-11-expected-result" title="Permalink to this headline">¶</a></h4>
+<h4>Step 4.11. Expected result<a class="headerlink" href="#step-4-11-expected-result" title="Permalink to this heading">¶</a></h4>
 <img src="images/il_run_done.png" width="900"><p>After completing above steps, we are able to see the captured, related AXI signals and data are shown in waveform with timing information from Vivado™.</p>
 </div>
 <div class="section" id="step-5-examine-captured-results">
-<h4>Step 5. Examine captured results<a class="headerlink" href="#step-5-examine-captured-results" title="Permalink to this headline">¶</a></h4>
+<h4>Step 5. Examine captured results<a class="headerlink" href="#step-5-examine-captured-results" title="Permalink to this heading">¶</a></h4>
 <img src="images/il_run_result.png" width="900">
 Review above captured result, mm2s_v4_1_s0:TVALID shows '1' indicates a valid data is available at the time marker pointed.
 Moving time marker across time line, changes of AIX protocol valuses indicate values changed at what time shown below.
@@ -467,11 +452,11 @@ Moving time marker across time line, changes of AIX protocol valuses indicate va
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>

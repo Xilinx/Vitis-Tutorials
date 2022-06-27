@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>For our first example, let’s look at how to load images onto the Alveo? Data Center accelerator card.  When
 you power on the system, the Alveo card will initialize its shell.  Recall from earlier that
 the shell implements connectivity with the host PC but leaves most of the logic as a blank canvas for you to
@@ -363,7 +348,7 @@ the FPGA is, in fact, one of the most inherently time consuming parts of the app
 for exactly how expensive, let’s try loading an image.</p>
 </div>
 <div class="section" id="key-code">
-<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this headline">¶</a></h1>
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>In this example, we initialize the OpenCL runtime API for XRT, create a command queue, and - most importantly -
 configure the Alveo card FPGA.  This is generally a one-time operation: once the card is configured it will
 typically remain configured until power is removed or it’s reconfigured by another application.  Note that if
@@ -375,24 +360,24 @@ refer to the file <code class="docutils literal notranslate"><span class="pre">d
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Xilinx OpenCL and XRT includes</span>
 <span class="cp">#include</span><span class="cpf">&quot;xcl2.hpp&quot;</span><span class="cp"></span>
 
-<span class="cp">#include</span> <span class="cpf">&lt;CL/cl.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;CL/cl.h&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
 <p>Of these two, only <code class="docutils literal notranslate"><span class="pre">CL/cl.h</span></code> is required. <code class="docutils literal notranslate"><span class="pre">xcl2.hpp</span></code> is a library of Xilinx-provided helper functions to wraparound some of the required initialization functions.</p>
 <p>Once we include the appropriate headers, we need to initialize the command queue, load the binary file, and program it into the FPGA, as shown in the listing below.  This is effectively boilerplate code you’ll need to include in every program at some point.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// This application will use the first Xilinx device found in the system</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Device</span><span class="o">&gt;</span> <span class="n">devices</span> <span class="o">=</span> <span class="n">xcl</span><span class="o">::</span><span class="n">get_xil_devices</span><span class="p">();</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Device</span> <span class="n">device</span>               <span class="o">=</span> <span class="n">devices</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Device</span><span class="o">&gt;</span><span class="w"> </span><span class="n">devices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xcl</span><span class="o">::</span><span class="n">get_xil_devices</span><span class="p">();</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Device</span><span class="w"> </span><span class="n">device</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="n">devices</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
 
-<span class="n">cl</span><span class="o">::</span><span class="n">Context</span> <span class="nf">context</span><span class="p">(</span><span class="n">device</span><span class="p">);</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">CommandQueue</span> <span class="nf">q</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">device</span><span class="p">);</span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Context</span><span class="w"> </span><span class="nf">context</span><span class="p">(</span><span class="n">device</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">CommandQueue</span><span class="w"> </span><span class="nf">q</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">stringdevice_name</span>      <span class="o">=</span> <span class="n">device</span><span class="p">.</span><span class="n">getInfo</span><span class="o">&lt;</span><span class="n">CL_DEVICE_NAME</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="n">std</span><span class="o">::</span><span class="n">stringbinaryFile</span>       <span class="o">=</span> <span class="n">xcl</span><span class="o">::</span><span class="n">find_binary_file</span><span class="p">(</span><span class="n">device_name</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Program</span><span class="o">::</span><span class="n">Binaries</span> <span class="n">bins</span>  <span class="o">=</span> <span class="n">xcl</span><span class="o">::</span><span class="n">import_binary_file</span><span class="p">(</span><span class="n">binaryFile</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">stringdevice_name</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">device</span><span class="p">.</span><span class="n">getInfo</span><span class="o">&lt;</span><span class="n">CL_DEVICE_NAME</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">stringbinaryFile</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">xcl</span><span class="o">::</span><span class="n">find_binary_file</span><span class="p">(</span><span class="n">device_name</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Program</span><span class="o">::</span><span class="n">Binaries</span><span class="w"> </span><span class="n">bins</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">xcl</span><span class="o">::</span><span class="n">import_binary_file</span><span class="p">(</span><span class="n">binaryFile</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">devices</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Program</span> <span class="nf">program</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">bins</span><span class="p">);</span>
+<span class="n">devices</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Program</span><span class="w"> </span><span class="nf">program</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">devices</span><span class="p">,</span><span class="w"> </span><span class="n">bins</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The workflow here can be summed up as follows:</p>
@@ -407,7 +392,7 @@ checks the current Alveo card configuration.  If it is already programmed, we ca
 device metadata from the xclbin.  But if not, let’s program the device now.</p>
 </div>
 <div class="section" id="running-the-application">
-<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this headline">¶</a></h1>
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./00_load_kernels</span> <span class="pre">alveo_examples</span></code></p>
 <p>The program will output a message similar to this:</p>
@@ -435,7 +420,7 @@ OpenCL Initialization : 1624.634 ms
 <p>0.26 seconds is much better than 1.6 seconds! We still have to read the file from disk, parse it, and ensure the xclbin loaded into the FPGA is correct, but the overall initialization time is significantly lower.</p>
 </div>
 <div class="section" id="extra-exercises">
-<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this headline">¶</a></h1>
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ol class="simple">
 <li><p>Use the <strong>xbutil</strong> utility to query the board.  Can you see which .xclbin file is loaded?</p></li>
@@ -444,7 +429,7 @@ the FPGA is programmed?</p></li>
 </ol>
 </div>
 <div class="section" id="key-takeaways">
-<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this headline">¶</a></h1>
+<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>FPGA configuration is an expensive operation.  Ideally, initialize the FPGA long before it’s needed.  This
 can be done in a separate thread, during other initialization tasks in your application, or even at system

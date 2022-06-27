@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,14 +339,14 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="building-the-design">
-<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this headline">¶</a></h1>
+<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <p><em>Estimated time: 11 minutes</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="nb">all</span>
 </pre></div>
 </div>
 <p>or, follow steps 1-3 as follows:</p>
 <div class="section" id="step-1-download-the-vitis-utility-library">
-<h2>Step 1: Download the Vitis Utility Library<a class="headerlink" href="#step-1-download-the-vitis-utility-library" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1: Download the Vitis Utility Library<a class="headerlink" href="#step-1-download-the-vitis-utility-library" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="n">Vitis_Libraries</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
@@ -369,14 +354,14 @@ function OptanonWrapper() { }
 <p>This will download the folder <code class="docutils literal notranslate"><span class="pre">Vitis_Libraries/utils</span></code>. You will be using its L2 Data-Mover generator tool.</p>
 </div>
 <div class="section" id="step-2-generate-m2s-x2-cpp-and-s2m-x4-cpp-datamover-kernels">
-<h2>Step 2: Generate m2s_x2.cpp and s2m_x4.cpp Datamover kernels<a class="headerlink" href="#step-2-generate-m2s-x2-cpp-and-s2m-x4-cpp-datamover-kernels" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2: Generate m2s_x2.cpp and s2m_x4.cpp Datamover kernels<a class="headerlink" href="#step-2-generate-m2s-x2-cpp-and-s2m-x4-cpp-datamover-kernels" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ksrc</span><span class="o">.</span><span class="n">mk</span> <span class="n">GENKERNEL</span><span class="o">=</span><span class="n">Vitis_Libraries</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">L2</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">generate_kernels</span> <span class="n">SPEC</span><span class="o">=./</span><span class="n">kernel</span><span class="o">/</span><span class="n">spec</span><span class="o">.</span><span class="n">json</span> <span class="n">TOOLDIR</span><span class="o">=./</span><span class="n">_krnlgen</span>
 </pre></div>
 </div>
 <p>Here you use the L2 Data-Mover generator tool (Vitis_Libraries/utils/L2/scripts/generate_kernels). This tool uses the <code class="docutils literal notranslate"><span class="pre">kernel/spec.json</span></code> specification to write <code class="docutils literal notranslate"><span class="pre">kernel/m2s_x2.cpp</span></code> and <code class="docutils literal notranslate"><span class="pre">kernel/s2m_x4.cpp</span></code> HLS kernel source files.</p>
 </div>
 <div class="section" id="step-3-compile-hls-pl-kernels">
-<h2>Step 3: Compile HLS PL Kernels<a class="headerlink" href="#step-3-compile-hls-pl-kernels" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3: Compile HLS PL Kernels<a class="headerlink" href="#step-3-compile-hls-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>Following is an example of how the <code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code> kernel is compiled.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">++</span> <span class="o">-</span><span class="n">c</span>                                                                 \
     <span class="o">-</span><span class="n">t</span> <span class="n">hw</span>                                                              \
@@ -396,7 +381,7 @@ function OptanonWrapper() { }
 <p>The same compilation options are used to compile the <code class="docutils literal notranslate"><span class="pre">s2m_x4</span></code>, <code class="docutils literal notranslate"><span class="pre">packet_sender</span></code>, and <code class="docutils literal notranslate"><span class="pre">packet_receiver</span></code> kernels.</p>
 </div>
 <div class="section" id="hls-pl-kernels">
-<h2>HLS PL Kernels<a class="headerlink" href="#hls-pl-kernels" title="Permalink to this headline">¶</a></h2>
+<h2>HLS PL Kernels<a class="headerlink" href="#hls-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>After coming up with 400 tile AI Engine design, the next step is the come up with the way to move data from DDR send it to the AI Engine. We do this by using the the Vitis™ core development kit, to create kernel code in C++ meant to be accelerated on the FPGA. The kernel code is compiled by the Vitis Compiler (<code class="docutils literal notranslate"><span class="pre">v++</span> <span class="pre">-c</span></code>) into kernel objects (XO). The following is a table describing each HLS PL kernel.</p>
 <table border="1" class="docutils">
 <thead>
@@ -431,11 +416,11 @@ function OptanonWrapper() { }
 </table><p>Using Vivado timing closure techniques, you can increase the FMax if needed. To showcase the example, integrate using the 300 MHz clock. There is also a 400 MHz timing-closed design in the <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Design_Tutorials/03-beamforming">beamforming tutorial</a>.</p>
 <p><img alt="alt text" src="../../../../../_images/pl_kernels_highlighted.PNG" /></p>
 <div class="section" id="m2s-x2">
-<h3>m2s_x2<a class="headerlink" href="#m2s-x2" title="Permalink to this headline">¶</a></h3>
+<h3>m2s_x2<a class="headerlink" href="#m2s-x2" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code> is generated from the <code class="docutils literal notranslate"><span class="pre">kernel/spec.json</span></code> specification. Review this file. Notice the <code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code> kernel implementation is set to <code class="docutils literal notranslate"><span class="pre">LoadDdrToStream</span></code>, meaning this kernel is used to move data from DDR (AXI-MM) to AXI-Stream. It is specified to have two channels. The first channel moves data from a DDR <code class="docutils literal notranslate"><span class="pre">buffer</span></code> called <code class="docutils literal notranslate"><span class="pre">ibuff</span></code> to an AXI-stream called <code class="docutils literal notranslate"><span class="pre">istrm</span></code>. This channel moves the <code class="docutils literal notranslate"><span class="pre">i</span></code> data out of DDR to AXI-Stream. The second channel moves <code class="docutils literal notranslate"><span class="pre">j</span></code> data from DDR buffer <code class="docutils literal notranslate"><span class="pre">jbuff</span></code> to an AXI-Stream <code class="docutils literal notranslate"><span class="pre">jstrm</span></code> and streams the data directly into the AI Engine’s <code class="docutils literal notranslate"><span class="pre">input_j</span></code> port.</p>
 </div>
 <div class="section" id="packet-sender">
-<h3>packet_sender<a class="headerlink" href="#packet-sender" title="Permalink to this headline">¶</a></h3>
+<h3>packet_sender<a class="headerlink" href="#packet-sender" title="Permalink to this heading">¶</a></h3>
 <p>After <code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code> kernel loads <code class="docutils literal notranslate"><span class="pre">i</span></code> data onto an AXI-Stream, the <code class="docutils literal notranslate"><span class="pre">istrm</span></code> is the input to the <code class="docutils literal notranslate"><span class="pre">packet_sender</span></code> kernel. The <code class="docutils literal notranslate"><span class="pre">packet_sender</span></code> kernel takes raw <code class="docutils literal notranslate"><span class="pre">i</span></code> data and packetizes it for the AI Engine. Review the <code class="docutils literal notranslate"><span class="pre">kernel/packet_sender.cpp</span></code> definition. The <code class="docutils literal notranslate"><span class="pre">packet_sender</span></code> does the following:</p>
 <ul class="simple">
 <li><p>generates a header AXI-Stream packet</p></li>
@@ -446,16 +431,16 @@ function OptanonWrapper() { }
 <p>It repeats these actions so all 100 <code class="docutils literal notranslate"><span class="pre">tx</span></code> streams have a packet header and 224 data packets written to it. This is 1 iteration of data the AI Engine is expecting. The 100 <code class="docutils literal notranslate"><span class="pre">tx</span></code> streams are connected to the 100 <code class="docutils literal notranslate"><span class="pre">input_i</span></code> ports on the AI Engine.</p>
 </div>
 <div class="section" id="packet-receiver">
-<h3>packet_receiver<a class="headerlink" href="#packet-receiver" title="Permalink to this headline">¶</a></h3>
+<h3>packet_receiver<a class="headerlink" href="#packet-receiver" title="Permalink to this heading">¶</a></h3>
 <p>After the AI Engine’s 100 N-Body Subsystems crunch the N-Body equations on the <code class="docutils literal notranslate"><span class="pre">input_i</span></code> and <code class="docutils literal notranslate"><span class="pre">input_j</span></code> data, it outputs four data packets on each of the 100 <code class="docutils literal notranslate"><span class="pre">output_i</span></code> ports. Each output data packet can have a header of 0, 1, 2, or 3, indicating that it is coming from <code class="docutils literal notranslate"><span class="pre">nbody_kernel[0]</span></code>,  <code class="docutils literal notranslate"><span class="pre">nbody_kernel[1]</span></code>, <code class="docutils literal notranslate"><span class="pre">nbody_kernel[2]</span></code>, or <code class="docutils literal notranslate"><span class="pre">nbody_kernel[3]</span></code> in each of the nbody_subsystems. The 100 <code class="docutils literal notranslate"><span class="pre">output_i</span></code> ports are connected to the 100 <code class="docutils literal notranslate"><span class="pre">rx</span></code> streams on the <code class="docutils literal notranslate"><span class="pre">packet_receiver</span></code> kernel. The <code class="docutils literal notranslate"><span class="pre">packet_receiver</span></code> kernel receives four packets from each of the 100 <code class="docutils literal notranslate"><span class="pre">rx</span></code> streams, and depending on the packet header, writes the data to <code class="docutils literal notranslate"><span class="pre">tx0</span></code>, <code class="docutils literal notranslate"><span class="pre">tx1</span></code>, <code class="docutils literal notranslate"><span class="pre">tx2</span></code>, or <code class="docutils literal notranslate"><span class="pre">tx3</span></code> streams.</p>
 </div>
 <div class="section" id="s2m-x4">
-<h3>s2m_x4<a class="headerlink" href="#s2m-x4" title="Permalink to this headline">¶</a></h3>
+<h3>s2m_x4<a class="headerlink" href="#s2m-x4" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">s2m_x4</span></code> kernel is generated from the <code class="docutils literal notranslate"><span class="pre">kernel/spec.json</span></code> specification. Review this file again. Notice that the <code class="docutils literal notranslate"><span class="pre">s2m_x4</span></code> kernel has an implementation <code class="docutils literal notranslate"><span class="pre">StoreStreamToMaster</span></code> which moves data from AXI-Streams to DDR. The <code class="docutils literal notranslate"><span class="pre">s2m_x4</span></code> kernel has 4 channels: <code class="docutils literal notranslate"><span class="pre">k0</span></code>,<code class="docutils literal notranslate"><span class="pre">k1</span></code>,<code class="docutils literal notranslate"><span class="pre">k2</span></code>, and <code class="docutils literal notranslate"><span class="pre">k3</span></code>. Each stream writes the data coming from the <code class="docutils literal notranslate"><span class="pre">tx0</span></code>-<code class="docutils literal notranslate"><span class="pre">tx3</span></code> streams to a DDR buffer.</p>
 </div>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/Xilinx/Vitis_Libraries">Vitis Libraries Github Repo</a></p></li>
 <li><p><a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/utils/2021.1/index.html">Vitis Utilities Library Documentation</a></p></li>
@@ -464,16 +449,16 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>After compiling the PL datamover kernels, you are ready to link the entire hardware design together in the next module, <a class="reference external" href="../Module_04_full_system_design">Module 04 - Full System Design</a>.</p>
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://support.xilinx.com/">support.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

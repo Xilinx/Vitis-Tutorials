@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -361,7 +346,7 @@ function OptanonWrapper() { }
 # See the License for the specific language governing permissions and
 # limitations under the License.
 --><div class="section" id="step-2-create-vitis-software-platform">
-<h1>Step 2: Create Vitis Software Platform<a class="headerlink" href="#step-2-create-vitis-software-platform" title="Permalink to this headline">¶</a></h1>
+<h1>Step 2: Create Vitis Software Platform<a class="headerlink" href="#step-2-create-vitis-software-platform" title="Permalink to this heading">¶</a></h1>
 <p>In this step, we will create a Vitis platform running Linux operation system. The Vitis platform requires several software components which need to be prepared in advance. Since Xilinx provides common software images for quick evaluation. Therefore we will utilize the common image for a quick start. DTB file is not prepared in the common image package as different platforms have different device peripherals. So we will use <code class="docutils literal notranslate"><span class="pre">createdts</span></code> command to generate the device tree file for our platform. Certainly, if you need to customize the system image like kernel or rootfs you can refer to the <a class="reference internal" href="../../Feature_Tutorials/02_petalinux_customization/README.html"><span class="doc">PetaLinux customization page</span></a> for customization. Below are the software components we need for our platform and its provenance.</p>
 <table border="1" class="docutils">
 <thead>
@@ -430,7 +415,7 @@ function OptanonWrapper() { }
 </tbody>
 </table><p>As most of the components are extracted from the common image package we will prepare the common image first.</p>
 <div class="section" id="prepare-the-common-images">
-<h2>Prepare the common images<a class="headerlink" href="#prepare-the-common-images" title="Permalink to this headline">¶</a></h2>
+<h2>Prepare the common images<a class="headerlink" href="#prepare-the-common-images" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Download common image from <a class="reference external" href="https://www.xilinx.com/support/download.html">Xilinx website download page.</a>  go to the <strong>WorkSpace</strong> folder we created in step1 and Place the image package in <strong>WorkSpace</strong> folder like below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> WorkSpace
@@ -453,7 +438,7 @@ tar xvf ../xilinx-zynqmp-common-v2022.1.tar.gz -C .
 <p>From the above picture, you can see boot file, kernel image, rootfs and SDK tool are ready. DTB and first stage boot related files are not available. Since Vitis can generate FSBL and PMU firmware by enabling the option of <strong>Generate boot components</strong> when creating a platform. We will create a Vitis platform and enable the option of <strong>Generate boot components</strong> to generate the FSBL and PMU firmware.</p>
 </div>
 <div class="section" id="create-fsbl-and-pmu-firmware">
-<h2>Create FSBL and PMU firmware<a class="headerlink" href="#create-fsbl-and-pmu-firmware" title="Permalink to this headline">¶</a></h2>
+<h2>Create FSBL and PMU firmware<a class="headerlink" href="#create-fsbl-and-pmu-firmware" title="Permalink to this heading">¶</a></h2>
 <p>As mentioned above we will create a Vitis Platform to obtain FSBL and PMU firmware. Using Vitis IDE and XSCT command both are capable of creating this platform. However, Vitis IDE can only support one XSA file as input. If your design has two XSA (hw and hw-emu), please use XSCT to create the platform.</p>
  <details> <summary><strong>Click here to expand the detailed steps using Vitis IDE to create a Vitis platform</strong></summary>  <ol class="simple">
 <li><p>Launch Vitis IDE</p></li>
@@ -536,7 +521,7 @@ platform generate
 </details><p>In this step, we create a platform to get FSBL and PMU firmware. We will add all the components to the platform in the last step. The rest file we need to prepare is the DTB file.</p>
 </div>
 <div class="section" id="create-the-device-tree-file">
-<h2>Create the device tree file<a class="headerlink" href="#create-the-device-tree-file" title="Permalink to this headline">¶</a></h2>
+<h2>Create the device tree file<a class="headerlink" href="#create-the-device-tree-file" title="Permalink to this heading">¶</a></h2>
 <p>Utilize XSCT tool to execute one command to generate device tree files:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> zcu104_software_platform
 xsct 
@@ -571,7 +556,7 @@ pl.dtsi:27.26-31.5: Warning <span class="o">(</span>simple_bus_reg<span class="o
 </pre></div>
 </div>
 <div class="section" id="update-the-device-tree">
-<h3>Update the Device tree<a class="headerlink" href="#update-the-device-tree" title="Permalink to this headline">¶</a></h3>
+<h3>Update the Device tree<a class="headerlink" href="#update-the-device-tree" title="Permalink to this heading">¶</a></h3>
 <p>Device tree describes the hardware components of the system. <code class="docutils literal notranslate"><span class="pre">createdts</span></code> command can generate the device tree file according to the hardware configurations from XSA file. If there are any settings not available in XSA, for example, any driver nodes that don’t have corresponding hardware, or user have their own design hardware, User needs to add customization settings in <code class="docutils literal notranslate"><span class="pre">system-user.dtsi</span></code>.</p>
 <p>Besides uboot in common image does not have default environment variables. So updating the bootargs manually is needed. A pre-prepared <code class="docutils literal notranslate"><span class="pre">system-user.dtsi</span></code> file which adds pre-defined bootargs is under <code class="docutils literal notranslate"><span class="pre">ref_files</span></code> directory. Please copy this file to device tree BSP directory and modify system-top.dts to include this file. Please update DTS and rebuild it according to the following steps.</p>
 <p>Go to <code class="docutils literal notranslate"><span class="pre">zcu104_software_platform</span></code> directory.</p>
@@ -591,7 +576,7 @@ dtc -I dts -O dtb -o system.dtb system.dts <span class="c1"># compile the dts</s
 </div>
 </div>
 <div class="section" id="create-vitis-platform">
-<h2>Create Vitis Platform<a class="headerlink" href="#create-vitis-platform" title="Permalink to this headline">¶</a></h2>
+<h2>Create Vitis Platform<a class="headerlink" href="#create-vitis-platform" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>First We will create four directories: <strong>pfm, boot, sd_dir sw_comp</strong> to store the components and copy files to these directories.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> WorkSpace/zcu104_software_platform
@@ -668,7 +653,7 @@ cp xilinx-zynqmp-common-v2022.1/Image pfm/sw_comp
 </ol>
 </div>
 <div class="section" id="fast-track">
-<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this headline">¶</a></h2>
+<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to create the Vitis platform. To use these scripts, please run the following steps.</p>
 <ol>
 <li><p>Run build</p>
@@ -689,7 +674,7 @@ cp xilinx-zynqmp-common-v2022.1/Image pfm/sw_comp
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Next let’s try to <a class="reference internal" href="step3.html"><span class="doc">build some applications on this platform and test them.</span></a></p>
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
 </div>

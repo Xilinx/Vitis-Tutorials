@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,10 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="Accelerating Video Convolution Filtering Application" href="../01-convolution-tutorial/README.html" />
-    <link rel="prev" title="Introduction" href="../../Introduction/README.html" /> 
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,51 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Bloom Filter Example</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#before-you-begin">Before You Begin</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">Convolution Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">Choleskey Algorithm Acceleration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT Host Code Optimization</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../08-alveo_aurora_kernel/README.html">Aurora Kernel on Alveo</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -348,8 +312,6 @@ function OptanonWrapper() { }
     
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
-        
       <li>Optimizing Accelerated FPGA Applications: Bloom Filter Example</li>
     
     
@@ -376,10 +338,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="optimizing-accelerated-fpga-applications-bloom-filter-example">
-<h1>Optimizing Accelerated FPGA Applications: Bloom Filter Example<a class="headerlink" href="#optimizing-accelerated-fpga-applications-bloom-filter-example" title="Permalink to this headline">¶</a></h1>
+<h1>Optimizing Accelerated FPGA Applications: Bloom Filter Example<a class="headerlink" href="#optimizing-accelerated-fpga-applications-bloom-filter-example" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The methodology for accelerating applications on an FPGA is comprised of multiple phases:</p>
 <ul class="simple">
 <li><p><strong>Architecting the application</strong>: Make key decisions about the architecture of the application and decide some important factors, such as what software functions should be mapped to FPGA kernels, how much parallelism is needed, and how it should be delivered.</p></li>
@@ -390,7 +352,7 @@ function OptanonWrapper() { }
 <p>In general, a Bloom filter application has use cases in data analytics, such as browsing through unstructured email and text file data to identify the documents that are closely associated with a specific user and send notifications accordingly.</p>
 </div>
 <div class="section" id="before-you-begin">
-<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>TIP</strong>: This tutorial takes approximately two hours to complete.</p>
 </div></blockquote>
@@ -408,7 +370,7 @@ function OptanonWrapper() { }
 </ul>
 </div></blockquote>
 <div class="section" id="accessing-the-tutorial-reference-files">
-<h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this headline">¶</a></h3>
+<h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>To access the tutorial content, enter the following in a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">http://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Design_Tutorials/02-bloom</span></code> directory.</p>
@@ -429,7 +391,7 @@ tar -xvzf  xclbin_save.tar.gz
 </ol>
 </div>
 <div class="section" id="tutorial-outline">
-<h3>Tutorial Outline<a class="headerlink" href="#tutorial-outline" title="Permalink to this headline">¶</a></h3>
+<h3>Tutorial Outline<a class="headerlink" href="#tutorial-outline" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="1_overview.html"><span class="doc">Overview of the Original Application</span></a></p></li>
 <li><p><a class="reference internal" href="2_experience-acceleration.html"><span class="doc">Experience Acceleration Performance</span></a></p></li>
@@ -470,15 +432,6 @@ limitations under the License.</p>
 
 
 	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../01-convolution-tutorial/README.html" class="btn btn-neutral float-right" title="Accelerating Video Convolution Filtering Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../../Introduction/README.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

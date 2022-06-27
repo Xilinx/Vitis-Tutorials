@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -361,10 +346,10 @@ function OptanonWrapper() { }
 # See the License for the specific language governing permissions and
 # limitations under the License.
 --><div class="section" id="step-1-create-hardware-platform">
-<h1>Step 1: Create Hardware Platform<a class="headerlink" href="#step-1-create-hardware-platform" title="Permalink to this headline">¶</a></h1>
+<h1>Step 1: Create Hardware Platform<a class="headerlink" href="#step-1-create-hardware-platform" title="Permalink to this heading">¶</a></h1>
 <p>In this step, we will use Vivado to create the hardware design for the ZCU104 Vitis acceleration platform. We will start from a ZCU104 preset design, add platform required peripherals and configure them. After everything is set, we will export the hardware design to XSA.</p>
 <div class="section" id="create-base-vivado-project-from-preset">
-<h2>Create Base Vivado Project from Preset<a class="headerlink" href="#create-base-vivado-project-from-preset" title="Permalink to this headline">¶</a></h2>
+<h2>Create Base Vivado Project from Preset<a class="headerlink" href="#create-base-vivado-project-from-preset" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Create workspace and Launch Vivado</p>
 <p>Run the following commands in Linux console.</p>
@@ -421,7 +406,7 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 <p>For a custom board, please double click MPSoC block and setup parameters according to the board hardware. Next we’ll add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.</p>
 </div>
 <div class="section" id="customize-system-design-for-clock-and-reset">
-<h2>Customize System Design for Clock and Reset<a class="headerlink" href="#customize-system-design-for-clock-and-reset" title="Permalink to this headline">¶</a></h2>
+<h2>Customize System Design for Clock and Reset<a class="headerlink" href="#customize-system-design-for-clock-and-reset" title="Permalink to this heading">¶</a></h2>
 <p>V++ linker can automatically link the clock signals between kernel and platform. The available clock signals in the platform are exported by <strong>PFM.CLK</strong> property.</p>
 <p>For simple designs, interrupt signals can be sourced by processor’s <strong>pl_clk</strong>. The limitation is that the processor has maximum 4 pl_clks and their phase is not aligned.</p>
 <p>To provide more interrupt signals, or to provide phase aligned clocks, we can use <strong>Clocking Wizard</strong>.</p>
@@ -493,7 +478,7 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </ol>
 </div>
 <div class="section" id="add-interrupt-support">
-<h2>Add Interrupt Support<a class="headerlink" href="#add-interrupt-support" title="Permalink to this headline">¶</a></h2>
+<h2>Add Interrupt Support<a class="headerlink" href="#add-interrupt-support" title="Permalink to this heading">¶</a></h2>
 <p>V++ linker can automatically link the interrupt signals between kernel and platform. The available interrupt signals in the platform are exported by <strong>PFM.IRQ</strong> property.</p>
 <p>For simple designs, interrupt signals can be sourced by processor’s <strong>pl_ps_irq</strong>. The limitation is that it can only provide maximum 16 interrupt signals. To provide more interrupt signals, We can use <strong>AXI Interrupt Controller</strong>. We’ll enable <strong>AXI HPM0 LPD</strong> to control the <strong>AXI Interrupt Controller</strong>. The next we will add the <strong>AXI Interrupt Controller</strong> and enable interrupt signals for <strong>PFM.IRQ</strong>. Here are the detailed steps.</p>
 <ol>
@@ -556,7 +541,7 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 <p><img alt="ipi_fully_connection.png" src="../../../../_images/ipi_fully_connection1.png" /></p>
 </div>
 <div class="section" id="enable-axi-interfaces-for-the-platform">
-<h2>Enable AXI Interfaces for the Platform<a class="headerlink" href="#enable-axi-interfaces-for-the-platform" title="Permalink to this headline">¶</a></h2>
+<h2>Enable AXI Interfaces for the Platform<a class="headerlink" href="#enable-axi-interfaces-for-the-platform" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Enable AXI Master interfaces from PS</p>
 <ul class="simple">
@@ -596,7 +581,7 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </ol>
 </div>
 <div class="section" id="emulation-setup-optional">
-<h2>Emulation Setup (Optional)<a class="headerlink" href="#emulation-setup-optional" title="Permalink to this headline">¶</a></h2>
+<h2>Emulation Setup (Optional)<a class="headerlink" href="#emulation-setup-optional" title="Permalink to this heading">¶</a></h2>
 <p>This step is only needed when creating an emulation-capable platform.</p>
 <p>When a component comes with multiple types of simulation models, selecting SystemC TLM (Transaction-level Modeling) model would run much faster than RTL model. For Processing System component, it’s mandatory to use TLM for Hardware Emulation.</p>
 <ol>
@@ -608,14 +593,14 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 <li><p>Scroll down to <code class="docutils literal notranslate"><span class="pre">SELECTED_SIM_MODEL</span></code> property. Change it from <strong>rtl</strong> to <strong>tlm</strong> to select to use TLM model.</p></li>
 <li><p>Notice the equvalent Tcl command shown in tcl console is:</p></li>
 </ul>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">set_property</span> SELECTED_SIM_MODEL tlm <span class="k">[</span><span class="nv">get_bd_cells</span> <span class="o">/</span>zynq_ultra_ps_e_0<span class="k">]</span>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">set_property</span><span class="w"> </span>SELECTED_SIM_MODEL<span class="w"> </span>tlm<span class="w"> </span><span class="k">[</span><span class="nv">get_bd_cells</span><span class="w"> </span><span class="o">/</span>zynq_ultra_ps_e_0<span class="k">]</span>
 </pre></div>
 </div>
 </li>
 </ol>
 </div>
 <div class="section" id="export-hardware-xsa">
-<h2>Export Hardware XSA<a class="headerlink" href="#export-hardware-xsa" title="Permalink to this headline">¶</a></h2>
+<h2>Export Hardware XSA<a class="headerlink" href="#export-hardware-xsa" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Validate the block design</p>
 <ul class="simple">
@@ -704,21 +689,21 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </ul>
 <p>Alternatively, the above export can be done in Tcl scripts</p>
 <div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># Setting platform properties</span>
-<span class="nv">set_property</span> platform.default_output_type <span class="s2">&quot;sd_card&quot;</span> <span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
-<span class="nv">set_property</span> platform.design_intent.embedded <span class="s2">&quot;true&quot;</span> <span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
-<span class="nv">set_property</span> platform.design_intent.server_managed <span class="s2">&quot;false&quot;</span> <span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
-<span class="nv">set_property</span> platform.design_intent.external_host <span class="s2">&quot;false&quot;</span> <span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
-<span class="nv">set_property</span> platform.design_intent.datacenter <span class="s2">&quot;false&quot;</span> <span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.default_output_type<span class="w"> </span><span class="s2">&quot;sd_card&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.design_intent.embedded<span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.design_intent.server_managed<span class="w"> </span><span class="s2">&quot;false&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.design_intent.external_host<span class="w"> </span><span class="s2">&quot;false&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.design_intent.datacenter<span class="w"> </span><span class="s2">&quot;false&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
 <span class="c"># Write pre-synthesis expandable XSA</span>
-<span class="nv">write_hw_platform</span> <span class="o">-</span>hw <span class="o">-</span>force <span class="o">-</span>file .<span class="o">/</span>zcu104_custom_platform_hw.xsa
-<span class="nv">write_hw_platform</span> <span class="o">-</span>hw_emu <span class="o">-</span>force <span class="o">-</span>file .<span class="o">/</span>zcu104_custom_platform_hwemu.xsa
+<span class="nv">write_hw_platform</span><span class="w"> </span><span class="o">-</span>hw<span class="w"> </span><span class="o">-</span>force<span class="w"> </span><span class="o">-</span>file<span class="w"> </span>.<span class="o">/</span>zcu104_custom_platform_hw.xsa
+<span class="nv">write_hw_platform</span><span class="w"> </span><span class="o">-</span>hw_emu<span class="w"> </span><span class="o">-</span>force<span class="w"> </span><span class="o">-</span>file<span class="w"> </span>.<span class="o">/</span>zcu104_custom_platform_hwemu.xsa
 </pre></div>
 </div>
 </li>
 </ol>
 </div>
 <div class="section" id="fast-track">
-<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this headline">¶</a></h2>
+<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to re-create projects and generate outputs. To use these scripts, please run the following steps.</p>
 <ol>
 <li><p>Run build</p>
@@ -736,7 +721,7 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Now we finish the Hardware platform creation flow, then we should go to the <a class="reference internal" href="step2.html"><span class="doc">Step2: Create Vitis Software platform</span></a></p>
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
 </div>

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,75 +339,75 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="building-the-design">
-<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this headline">¶</a></h1>
+<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <p>The next step is to create the Linux PS host application.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">exe</span>
 </pre></div>
 </div>
 <p>The individual commands are explained later on in this module.</p>
 <div class="section" id="introduction-programming-the-ps-host-application">
-<h2>Introduction: Programming the PS Host Application<a class="headerlink" href="#introduction-programming-the-ps-host-application" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction: Programming the PS Host Application<a class="headerlink" href="#introduction-programming-the-ps-host-application" title="Permalink to this heading">¶</a></h2>
 <p>A top-level PS application running on the Cortex-A72 processor controls the AI Engine graph and the PL kernels. In Module 05, you created a PS host application for a bare-metal system. In this module, you will create a PS host application that runs on a Linux operating system (built in Module 07).</p>
 <p>Detailed descriptions of compiler flags, include directories, and linker flags are available in <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#ariaid-title7">AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Compile the Embedded Application for the Cortex-A72 Processor</a>.</p>
 <p>Linux host applications use the Xilinx Runtime (XRT) API to control the PL and AI Engine kernels. In this tutorial, XRT is used to access the AI Engine graph and generic UIO drivers to access the PL kernels.</p>
 </div>
 <div class="section" id="execution-flow-chart">
-<h2>Execution Flow Chart<a class="headerlink" href="#execution-flow-chart" title="Permalink to this headline">¶</a></h2>
+<h2>Execution Flow Chart<a class="headerlink" href="#execution-flow-chart" title="Permalink to this heading">¶</a></h2>
 <p>The Linux PS host application is the <code class="docutils literal notranslate"><span class="pre">beamformer.cpp</span></code> file. The following figure shows the execution flow diagram implemented by the <code class="docutils literal notranslate"><span class="pre">beamformer.cpp</span></code>.</p>
 <p><img alt="Linux PS Host Application Execution Flow" src="../../../../../_images/Linux_Host_Application_Execution_Flow.png" /></p>
 <p>The following sections detail the important steps in the execution flow.</p>
 </div>
 <div class="section" id="bind-uio-drivers-with-pl-kernels">
-<h2>Bind UIO Drivers with PL Kernels<a class="headerlink" href="#bind-uio-drivers-with-pl-kernels" title="Permalink to this headline">¶</a></h2>
+<h2>Bind UIO Drivers with PL Kernels<a class="headerlink" href="#bind-uio-drivers-with-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In Module 07, you created the PetaLinux software platform with a custom DTSI file that listed out the generic UIO drivers for each PL kernel instance. Each UIO driver in the DTSI file has the same name as each PL kernel instance name specified in the <code class="docutils literal notranslate"><span class="pre">config_2regslice.ini</span></code> file in Module 04.</p>
 <p>One of the first things the host application does is bind the UIO drivers to the PL kernels. It searches for the UIO devices in the system for the known PL kernel names. This is done by calling the <code class="docutils literal notranslate"><span class="pre">dlbf_assign_addr</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_assign_addr</span></code> functions defined in the <code class="docutils literal notranslate"><span class="pre">src/utils/utils_dlbf.cpp</span></code> and <code class="docutils literal notranslate"><span class="pre">src/utils/utils_ulbf.cpp</span></code> files.</p>
 <p>These functions call the <code class="docutils literal notranslate"><span class="pre">mmap</span></code> function to bind the physical address of the PL kernels to a memory pointer. The host application uses the memory pointer to access the register maps of the PL kernels.</p>
 <div class="section" id="changes-in-2021-1">
-<h3>Changes in 2021.1<a class="headerlink" href="#changes-in-2021-1" title="Permalink to this headline">¶</a></h3>
+<h3>Changes in 2021.1<a class="headerlink" href="#changes-in-2021-1" title="Permalink to this heading">¶</a></h3>
 <p>All AI Engine related APIs are handled through XRT APIs. XRT APIs provide this flexibility by parsing the metadata in aie.xclbin and corresponding binding code in compiled aie_control_xrt.cpp. Hence, it is no longer necessary to include graph.h or graph.cpp into host application compilation. Instead, only the PLIOs needed for performance measurements need to be included in host_app.cpp. These changes are implemented in the source code in this module.</p>
 <p>Thus, host application is agnostic to AI Engine source code starting 2021.1.</p>
 </div>
 </div>
 <div class="section" id="load-aie-xclbin">
-<h2>Load AIE XCLBIN<a class="headerlink" href="#load-aie-xclbin" title="Permalink to this headline">¶</a></h2>
+<h2>Load AIE XCLBIN<a class="headerlink" href="#load-aie-xclbin" title="Permalink to this heading">¶</a></h2>
 <p>The host application resets the AI Engine array, loads the AI Engine array, and enables the AI Engine graph.</p>
 <div class="section" id="reset-ai-engine">
-<h3>Reset AI Engine<a class="headerlink" href="#reset-ai-engine" title="Permalink to this headline">¶</a></h3>
+<h3>Reset AI Engine<a class="headerlink" href="#reset-ai-engine" title="Permalink to this heading">¶</a></h3>
 <p>The host application can reset and reload the AIE array whenever required. To do this, XRT must be built into the PetaLinux build. In the host application, you can use the following API to reset the AI Engine with the <code class="docutils literal notranslate"><span class="pre">xrtResetAIEArray</span></code> function:</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span> <span class="k">auto</span> <span class="n">dhdl</span>   <span class="o">=</span> <span class="n">xrtDeviceOpen</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
- <span class="p">...</span>
-<span class="n">reset_done</span> <span class="o">=</span> <span class="n">xrtResetAIEArray</span><span class="p">(</span><span class="n">dhdl</span><span class="p">);</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">reset_done</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">){</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;[Beamformer] AIE reset FAILS </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">log_plnx</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[Beamformer] AIE reset FAILS&quot;</span> <span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;[Beamformer] Exiting the application as it cannot be run</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">log_plnx</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[Beamformer] Exiting the application as it cannot be run&quot;</span> <span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">reset_done</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;[Beamformer] AIE reset done successfully</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">log_plnx</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[Beamformer] AIE reset done successfully&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">dhdl</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">xrtDeviceOpen</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="n">reset_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xrtResetAIEArray</span><span class="p">(</span><span class="n">dhdl</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">reset_done</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[Beamformer] AIE reset FAILS </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log_plnx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;[Beamformer] AIE reset FAILS&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[Beamformer] Exiting the application as it cannot be run</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log_plnx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;[Beamformer] Exiting the application as it cannot be run&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">reset_done</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[Beamformer] AIE reset done successfully</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log_plnx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;[Beamformer] AIE reset done successfully&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>If the <code class="docutils literal notranslate"><span class="pre">xrtResetAIEArray</span></code> function fails, the AI Engine reset has not been accomplished successfully and a system reboot might be required. See the <a class="reference external" href="https://github.com/Xilinx/XRT/blob/a155e1630d18884c9f82d71f3a0b4e8a91074069/src/runtime_src/core/include/experimental/xrt_aie.h">API Documentation</a>.</p>
 <p>This function does not orchestrate system reset but <em>only</em> resets the AI Engine array.</p>
 </div>
 <div class="section" id="load-ai-engine-with-xclbin">
-<h3>Load AI Engine with XCLBIN<a class="headerlink" href="#load-ai-engine-with-xclbin" title="Permalink to this headline">¶</a></h3>
+<h3>Load AI Engine with XCLBIN<a class="headerlink" href="#load-ai-engine-with-xclbin" title="Permalink to this heading">¶</a></h3>
 <p>The host application loads the AI Engine with the XCLBIN with the <code class="docutils literal notranslate"><span class="pre">xclloadxclbin()</span></code> function.</p>
 <p>The following snippet of code shows usage in the application shows how to load AIE. See the <a class="reference external" href="https://xilinx.github.io/XRT/master/html/xrt.main.html?highlight=xclloadxclbin#c.xclLoadXclBin">API Documentation</a>.</p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//In load_xclbin()</span>
-<span class="p">...</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">xclLoadXclBin</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">top</span><span class="p">))</span>
- <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;Bitstream download failed&quot;</span><span class="p">);</span>
-<span class="p">...</span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">xclLoadXclBin</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="p">))</span><span class="w"></span>
+<span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;Bitstream download failed&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
 </pre></div>
 </div>
 <p>If the AI Engine load fails, the <code class="docutils literal notranslate"><span class="pre">load_xclbin()</span></code> function throws an exception. A system reboot might be required.</p>
 </div>
 <div class="section" id="reset-ai-engine-in-the-middle-of-execution">
-<h3>Reset AI Engine in the Middle of Execution<a class="headerlink" href="#reset-ai-engine-in-the-middle-of-execution" title="Permalink to this headline">¶</a></h3>
+<h3>Reset AI Engine in the Middle of Execution<a class="headerlink" href="#reset-ai-engine-in-the-middle-of-execution" title="Permalink to this heading">¶</a></h3>
 <p>Sometimes it is necessary to stop a running execution of the system and start over. To restart the system and start again, there is a flow to follow. These steps can be performed any number of times in the host application.</p>
 <p><strong>1. Quiesce PL kernels (that is to say, stop PL&lt;-&gt;AIE data paths)</strong></p>
 <p>As a prerequisite, the PL kernels should have the ability to be quiesced by the host application. All the examples shown in this design have this feature by way of the start register (that is, all PL kernels are AXI-MM slaves to the PS). The PS communicates with the PL kernels to hold them in an idle state before the reset/load of the AI Engine.</p>
@@ -434,7 +419,7 @@ function OptanonWrapper() { }
 <p>Lastly, restart the PL kernels to send/receive PL traffic to/from the AI Engine.</p>
 </div>
 <div class="section" id="command-line-arguments">
-<h3>Command-Line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h3>
+<h3>Command-Line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">beamformer.cpp</span></code> file takes two command line arguments:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">beamformer</span><span class="o">.</span><span class="n">exe</span> <span class="o">&lt;</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
 </pre></div>
@@ -465,11 +450,11 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

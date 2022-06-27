@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -366,10 +351,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="step-3-create-the-vitis-platform">
-<h1>Step 3: Create the Vitis Platform<a class="headerlink" href="#step-3-create-the-vitis-platform" title="Permalink to this headline">¶</a></h1>
+<h1>Step 3: Create the Vitis Platform<a class="headerlink" href="#step-3-create-the-vitis-platform" title="Permalink to this heading">¶</a></h1>
 <p>Vitis Platform can be created with Vitis GUI or XSCT command line. Vitis IDE can create platforms with single XSA. XSCT can create platforms with either single XSA or two XSA files. We will introduct both flows below.</p>
 <div class="section" id="prepare-for-platform-packaging">
-<h2>Prepare for Platform Packaging<a class="headerlink" href="#prepare-for-platform-packaging" title="Permalink to this headline">¶</a></h2>
+<h2>Prepare for Platform Packaging<a class="headerlink" href="#prepare-for-platform-packaging" title="Permalink to this heading">¶</a></h2>
 <p>We would store all the necessary files in one directory for Vitis platform creation flow.</p>
 <p>Required platform creation source files</p>
 <table border="1" class="docutils">
@@ -468,7 +453,7 @@ cp &lt;your_petalinux_dir&gt;/images/linux/rootfs.ext4 .
 </div></blockquote>
 </div>
 <div class="section" id="platform-packaging">
-<h2>Platform Packaging<a class="headerlink" href="#platform-packaging" title="Permalink to this headline">¶</a></h2>
+<h2>Platform Packaging<a class="headerlink" href="#platform-packaging" title="Permalink to this heading">¶</a></h2>
 <p>To support packaging two XSA files into the platform, this example uses XSCT flow primarily. If you don’t need hardware emulation, you can choose to use the Vitis IDE flow.</p>
 <blockquote>
 <div><p>Note: Vitis IDE support for creating Vitis platforms with two XSA will be added in the future.</p>
@@ -585,11 +570,11 @@ vitis -workspace ./platform_repo <span class="p">&amp;</span>
 <p><img alt="Vitis Platform Output" src="../../../../_images/vitis_platform_output2.png" /></p>
 </details></div>
 <div class="section" id="next-step">
-<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Next let’s move to <a class="reference internal" href="step4.html"><span class="doc">step 4 to try to build some applications on this platform and test them.</span></a></p>
 </div>
 <div class="section" id="fast-track">
-<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this headline">¶</a></h2>
+<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to package the Vitis platform.</p>
 <p>To use these scripts, please run the following steps.</p>
 <ol>

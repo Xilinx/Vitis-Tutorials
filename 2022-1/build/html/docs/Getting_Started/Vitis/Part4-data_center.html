@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -356,9 +341,9 @@ function OptanonWrapper() { }
  </td>
  </tr>
 </table><div class="section" id="vitis-getting-started-tutorial">
-<h1>Vitis Getting Started Tutorial<a class="headerlink" href="#vitis-getting-started-tutorial" title="Permalink to this headline">¶</a></h1>
+<h1>Vitis Getting Started Tutorial<a class="headerlink" href="#vitis-getting-started-tutorial" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="part-4-build-and-run-the-data-center-application">
-<h2>Part 4 : Build and Run the Data Center Application<a class="headerlink" href="#part-4-build-and-run-the-data-center-application" title="Permalink to this headline">¶</a></h2>
+<h2>Part 4 : Build and Run the Data Center Application<a class="headerlink" href="#part-4-build-and-run-the-data-center-application" title="Permalink to this heading">¶</a></h2>
 <p>In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow">Data Center Application Acceleration Flow</a>, and includes the image flow diagram shown below. From the image you can see the standard G++ compilation process for the host application, and the use of the Vitis compiler (<code class="docutils literal notranslate"><span class="pre">v++</span></code>) for building the Xilinx device binary (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>). These are the steps you will be working through in this lab.</p>
 <p><img alt="img" src="../../../_images/data_center_flow.png" /></p>
 <ul class="simple">
@@ -368,9 +353,9 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="building-and-running-on-alveo-u200-data-center-accelerator-card">
-<h2>Building and Running on Alveo U200 Data-Center Accelerator Card<a class="headerlink" href="#building-and-running-on-alveo-u200-data-center-accelerator-card" title="Permalink to this headline">¶</a></h2>
+<h2>Building and Running on Alveo U200 Data-Center Accelerator Card<a class="headerlink" href="#building-and-running-on-alveo-u200-data-center-accelerator-card" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="setting-up-the-environment">
-<h3>Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h3>
+<h3>Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this heading">¶</a></h3>
 <blockquote>
 <div><p>IMPORTANT: This tutorial requires Vitis 2022.1 or later to run.</p>
 </div></blockquote>
@@ -390,7 +375,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="targeting-software-emulation">
-<h3>Targeting Software Emulation<a class="headerlink" href="#targeting-software-emulation" title="Permalink to this headline">¶</a></h3>
+<h3>Targeting Software Emulation<a class="headerlink" href="#targeting-software-emulation" title="Permalink to this heading">¶</a></h3>
 <p>To build for software emulation, enter the following commands to setup the target build directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> &lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200
 mkdir sw_emu
@@ -454,7 +439,7 @@ TEST PASSED
 <p>These files and reports are the results of the build and run process targeting the software emulation build. You wil be taking a closer look at some of these files in Part 5 of this tutorial.</p>
 </div>
 <div class="section" id="targeting-hardware-emulation">
-<h3>Targeting Hardware Emulation<a class="headerlink" href="#targeting-hardware-emulation" title="Permalink to this headline">¶</a></h3>
+<h3>Targeting Hardware Emulation<a class="headerlink" href="#targeting-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <p>To build for hardware emulation, enter the following commands to setup the target build directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> &lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200
 mkdir hw_emu
@@ -478,7 +463,7 @@ v++ -l -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../s
 <p>When the run completes, you should see the TEST PASSED message indicating that the run completed successfully. You can list the contents of the u200/hw_emu folder to see the files that were created during this build and run process. Refer to <em>Targeting Software Emulation</em> for a brief explanation of the different files.</p>
 </div>
 <div class="section" id="targeting-hardware">
-<h3>Targeting Hardware<a class="headerlink" href="#targeting-hardware" title="Permalink to this headline">¶</a></h3>
+<h3>Targeting Hardware<a class="headerlink" href="#targeting-hardware" title="Permalink to this heading">¶</a></h3>
 <p>To build for the hardware target, , enter the following commands to setup the target build directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> &lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200
 mkdir hw
@@ -504,7 +489,7 @@ v++ -l -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u
 </div>
 </div>
 <div class="section" id="next-step">
-<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p><strong>Click here to <a class="reference internal" href="Part5.html"><span class="doc">Visualizing Results and Viewing Reports</span></a></strong></p>
 <hr class="docutils" />
 <p>License statement</p>

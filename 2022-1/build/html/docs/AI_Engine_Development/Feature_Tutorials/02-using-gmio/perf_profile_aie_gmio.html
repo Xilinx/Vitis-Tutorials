@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -355,16 +340,16 @@ function OptanonWrapper() { }
  </tr>
 </table><p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <div class="section" id="ai-engine-gmio-performance-profile">
-<h1>AI Engine GMIO Performance Profile<a class="headerlink" href="#ai-engine-gmio-performance-profile" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine GMIO Performance Profile<a class="headerlink" href="#ai-engine-gmio-performance-profile" title="Permalink to this heading">¶</a></h1>
 <p>=======</p>
 </div>
 <div class="section" id="id1">
-<h1>AI Engine GMIO Performance Profile<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine GMIO Performance Profile<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
 <p>AI Engine tools support mapping the GMIO port to the tile DMA one-to-one. It does not support mapping multiple GMIO ports to one tile DMA channel. There is a limit on the number of GMIO ports supported for a given device. For example, the XCVC1902 device on the VCK190 board
 has 16 AI Engine to NoC master unit (NMU) in total. For each AI Engine to NMU, it supports two MM2S and two S2MM channels. Hence there can be a maximum of 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs supported, but note that it can be further limited by the existing hardware platform.</p>
 <p>In this example, 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs are utilized in the graph and the performance from one input and one output to 32 inputs and 32 outputs through various ways is profiled. Then you will learn about the NOC bandwidth and the advantages and disadvantages of choosing GMIO for data transfer.</p>
 <div class="section" id="design-introduction">
-<h2>Design Introduction<a class="headerlink" href="#design-introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Design Introduction<a class="headerlink" href="#design-introduction" title="Permalink to this heading">¶</a></h2>
 <p>This design has a graph that has 32 AI Engine kernels. Each kernel has one input and one output. Thus, 32 AI Engine GMIO inputs and 32 AI Engine GMIO outputs are connected to the graph.</p>
 <p>Change the working directory to <code class="docutils literal notranslate"><span class="pre">perf_profile_aie_gmio</span></code>. Take a look at the graph code in <code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="nb">int</span> <span class="n">col</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">6</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">49</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">29</span><span class="p">,</span><span class="mi">39</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">46</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">27</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">47</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">7</span><span class="p">};</span>
@@ -469,14 +454,14 @@ has 16 AI Engine to NoC master unit (NMU) in total. For each AI Engine to NMU, i
 </div>
 <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <div class="section" id="performance-profiling-methods">
-<h3>Performance Profiling Methods<a class="headerlink" href="#performance-profiling-methods" title="Permalink to this headline">¶</a></h3>
+<h3>Performance Profiling Methods<a class="headerlink" href="#performance-profiling-methods" title="Permalink to this heading">¶</a></h3>
 </div>
 </div>
 </div>
 <div class="section" id="in-this-example-some-methods-for-profiling-the-design-are-introduced-the-code-to-be-profiled-is-in-aie-graph-cpp">
-<h1>In this example, some methods for profiling the design are introduced. The code to be profiled is in <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>:<a class="headerlink" href="#in-this-example-some-methods-for-profiling-the-design-are-introduced-the-code-to-be-profiled-is-in-aie-graph-cpp" title="Permalink to this headline">¶</a></h1>
+<h1>In this example, some methods for profiling the design are introduced. The code to be profiled is in <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>:<a class="headerlink" href="#in-this-example-some-methods-for-profiling-the-design-are-introduced-the-code-to-be-profiled-is-in-aie-graph-cpp" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="id2">
-<h2>Performance Profiling Methods<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>Performance Profiling Methods<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
 <p>In this example, we will introduce some methods for profiling the design. The code to be profiled is in <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>:</p>
 <blockquote>
 <div><blockquote>
@@ -652,7 +637,7 @@ PASS!
 </div>
 <p>It is seen that when the used GMIO ports number increases, the performance for the specific GMIO port drops, indicating that the total system throughput is limited by NOC and DDR bandwidth.</p>
 <div class="section" id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>In this tutorial, you learned about:</p>
 <ul class="simple">
 <li><p>Programming model for AI Engine GMIO</p></li>

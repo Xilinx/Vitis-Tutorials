@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,9 +339,9 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="custom-platform-creation">
-<h1>Custom Platform Creation<a class="headerlink" href="#custom-platform-creation" title="Permalink to this headline">¶</a></h1>
+<h1>Custom Platform Creation<a class="headerlink" href="#custom-platform-creation" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="platforms">
-<h2>Platforms<a class="headerlink" href="#platforms" title="Permalink to this headline">¶</a></h2>
+<h2>Platforms<a class="headerlink" href="#platforms" title="Permalink to this heading">¶</a></h2>
 <p>A platform is the starting point of your design and will be used to build Vitis™ software platform applications.</p>
 <blockquote>
 <div><p><strong>Note</strong>: AMD-Xilinx recommends using the VCK190 base platform provided on Xilinx.com as a starting point for designs. This page is intended for users who would like to understand how the base platform is generated. Other users can start directly from <a href="./02-aie_application_creation.md">AI Engine Development</a></b>.</p>
@@ -370,7 +355,7 @@ This clock must have an associated <code class="docutils literal notranslate"><s
 </ul>
 <p>This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html).</p>
 <div class="section" id="step-1-build-versal-extensible-embedded-platform-example-design-in-vivado">
-<h3>Step 1. Build Versal Extensible Embedded Platform Example Design in Vivado<a class="headerlink" href="#step-1-build-versal-extensible-embedded-platform-example-design-in-vivado" title="Permalink to this headline">¶</a></h3>
+<h3>Step 1. Build Versal Extensible Embedded Platform Example Design in Vivado<a class="headerlink" href="#step-1-build-versal-extensible-embedded-platform-example-design-in-vivado" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Launch Vivado IDE and select <em><strong>Open Example Project</strong></em> from the Welcome window. You can also do it by clicking <em><strong>File</strong></em> from the menu and select <em><strong>Project</strong></em> and then <em><strong>Open Example</strong></em>.</p></li>
 <li><p>Click <em><strong>Next</strong></em> to skip the first page of the wizard. In the template selection page, select the <em><strong>Versal Extensible Embedded Platform</strong></em> template. Click <em><strong>Next</strong></em>.</p></li>
@@ -400,7 +385,7 @@ Here we name the board as “xd” because of software limitation.</p>
 </ol>
 </div>
 <div class="section" id="step-2-build-the-platform-in-the-vitis-software-platform">
-<h3>Step 2. Build the Platform in the Vitis Software Platform<a class="headerlink" href="#step-2-build-the-platform-in-the-vitis-software-platform" title="Permalink to this headline">¶</a></h3>
+<h3>Step 2. Build the Platform in the Vitis Software Platform<a class="headerlink" href="#step-2-build-the-platform-in-the-vitis-software-platform" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Open the Vitis IDE and select a workspace.</p></li>
 <li><p>On the Welcome Page, select <em><strong>Create Platform Project</strong></em> or select <em><strong>File → New →  Platform Project …</strong></em>.</p></li>

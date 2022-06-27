@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>Image processing is a great area for acceleration in an FPGA, and there are a few reasons for it.  First and foremost, if you’re doing any kind of pixel-level processing as the images get larger and larger, the amount of computation goes up with it.  But, more importantly, they map very nicely to our train analogy from earlier.</p>
 <p>Let’s look at a very simple example: a bilateral resize algorithm.  This algorithm takes an input image and scales it to a new, arbitrary resolution.  The steps to do that might look something like this:</p>
 <ul class="simple">
@@ -381,7 +366,7 @@ axes: build a kernel that can process your algorithm as efficiently as possible,
 as you can take advantage of in the FPGA fabric.</p>
 </div>
 <div class="section" id="key-code">
-<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this headline">¶</a></h1>
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>For this algorithm we’ll make use of the Vitis Vision libraries.  These are hardware-optimized libraries
 implementing many commonly-used vision functions (conceptually similar to OpenCV) functions that you can
 directly use in your applications.  We can also mix and match them with software OpenCV functions or other
@@ -394,7 +379,7 @@ stream of functionality whose only fundamental contention is bandwidth, not regi
 <p>In the Vitis Vision library, you configure things such as the number of pixels to process per clock, etc. via templates.  I won’t go into detail here, but please refer to <a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/vision/2020.1/index.html">Vitis Vision Libraries Documentation</a> for more information.</p>
 </div>
 <div class="section" id="running-the-application">
-<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this headline">¶</a></h1>
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./07_opencv_resize</span> <span class="pre">alveo_examples</span> <span class="pre">&lt;path_to_image&gt;</span></code></p>
 <p>Because of the way we’ve configured the hardware in this example, your image must conform to certain requirements.  Because we’re processing eight pixels per clock, your input width must be a multiple of eight.</p>
@@ -429,8 +414,8 @@ not as I/O bound as before; we can beat the CPU, but only just.</p>
 not the input resolution.  We need to transfer in the same amount of data, but instead of converting the
 image to 1/3 its input size, let’s instead double the resolution and see what happens.  Change the code for
 the example as in listing 3.20 and recompile.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span> <span class="n">out_width</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">cols</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
-<span class="kt">uint32_t</span> <span class="n">out_height</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">rows</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">out_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">cols</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">out_height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">rows</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Running the example again, we see something interesting:</p>
@@ -490,7 +475,7 @@ you can see that you would have almost used all of your time already.</p>
 O(N) operation, and a simple one at that with just a few multiplications and additions on the pixel values.</p>
 </div>
 <div class="section" id="extra-exercises">
-<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this headline">¶</a></h1>
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
 <li><p>Edit the host code to play with the image sizes.  How does the run time change if you scale up more?  Down

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,7 +339,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="building-the-design">
-<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this headline">¶</a></h1>
+<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <p>The next step is to build the PL kernels (XO files). This design requires the creation of seven different RTL PL kernels. Run the following commands to build all of them.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make kernels
 </pre></div>
@@ -385,7 +370,7 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <p>The above make command creates the xilinx object files (XO) for PL kernels used in the design (highlighted in blue below).</p>
 <p><img alt="Beamforming Block Diagram with Emphasis on PL Kernels" src="../../../../../_images/beamforming_block_diagram_pl_emphasis_3.PNG" /></p>
 <div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h2>
 <p>Each PL kernel has <code class="docutils literal notranslate"><span class="pre">run_&lt;kernel_name&gt;.tcl</span></code>, <code class="docutils literal notranslate"><span class="pre">bd_&lt;kernel_name&gt;.tcl</span></code>, <code class="docutils literal notranslate"><span class="pre">kernel_&lt;kernel_name&gt;.xml</span></code>, and <code class="docutils literal notranslate"><span class="pre">hdl/*.v</span></code> RTL code as dependencies.</p>
 <table border="1" class="docutils">
 <thead>
@@ -406,7 +391,7 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </tbody>
 </table><p>The <code class="docutils literal notranslate"><span class="pre">hdl/</span></code> folder in each PL kernel folder contains the Verilog RTL that is used to create the PL kernels.</p>
 <div class="section" id="pl-master-kernels">
-<h3>PL Master Kernels<a class="headerlink" href="#pl-master-kernels" title="Permalink to this headline">¶</a></h3>
+<h3>PL Master Kernels<a class="headerlink" href="#pl-master-kernels" title="Permalink to this heading">¶</a></h3>
 <p>The PL Master kernels are the <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code>, <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code>, <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code>, and <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code> kernels. The RTL for these kernels consists of the following modules:</p>
 <table border="1" class="docutils">
 <thead>
@@ -451,7 +436,7 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </tbody>
 </table></div>
 <div class="section" id="pl-slave-kernels">
-<h3>PL Slave Kernels<a class="headerlink" href="#pl-slave-kernels" title="Permalink to this headline">¶</a></h3>
+<h3>PL Slave Kernels<a class="headerlink" href="#pl-slave-kernels" title="Permalink to this heading">¶</a></h3>
 <p>The PL Slave kernels are the <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> kernels. The RTL for these kernels consists of the following modules:</p>
 <table border="1" class="docutils">
 <thead>
@@ -481,7 +466,7 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </table></div>
 </div>
 <div class="section" id="build-products">
-<h2>Build Products<a class="headerlink" href="#build-products" title="Permalink to this headline">¶</a></h2>
+<h2>Build Products<a class="headerlink" href="#build-products" title="Permalink to this heading">¶</a></h2>
 <p>Each PL kernel results in the following build products:</p>
 <table border="1" class="docutils">
 <thead>
@@ -502,10 +487,10 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </tbody>
 </table></div>
 <div class="section" id="pl-kernels-master-and-slaves">
-<h2>PL Kernels: Master and Slaves<a class="headerlink" href="#pl-kernels-master-and-slaves" title="Permalink to this headline">¶</a></h2>
+<h2>PL Kernels: Master and Slaves<a class="headerlink" href="#pl-kernels-master-and-slaves" title="Permalink to this heading">¶</a></h2>
 <p>Now that you have an AI Engine application, the next step is to find a way to send the input data and store the output data on hardware. This is accomplished by creating PL master kernels that store the input data in block RAM and feed it to the AI Engine. Reference inputs are used in this design to mimic data flow that would come from a radio antenna. PL slave kernels, which receive AI Engine output data and store it into URAM resources, must also be created.</p>
 <div class="section" id="id1">
-<h3>PL Master Kernels<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>PL Master Kernels<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>The PL master kernels are the <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code>, <code class="docutils literal notranslate"><span class="pre">dlbf_coeff</span></code>, <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code>, and <code class="docutils literal notranslate"><span class="pre">ulbf_coeff</span></code> kernels. A <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code> PL kernel stores the reference input data matrices for the downlink subgraph in the AI Engine graph. The <code class="docutils literal notranslate"><span class="pre">dlbf_coeff</span></code> PL kernel stores the reference input coefficients for the downlink subgraph. The <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code> PL kernel stores the input data for the uplink subgraph. The <code class="docutils literal notranslate"><span class="pre">ulbf_coeff</span></code> stores the input coefficient data for the uplink subgraph.</p>
 <p>Open the Vivado projects for these PL kernels and review their source code. They are all composed of the same modules: a AXI BRAM Controller IP, a control status register (CSR) module, a clock domain crossing (CDC) module, and multiple data master modules. The data master modules are initialized with the reference input data and input coefficients from <code class="docutils literal notranslate"><span class="pre">*_hex.mem</span></code> files in the <code class="docutils literal notranslate"><span class="pre">data/</span></code> folder.</p>
 <p><img alt="PL Master Kernel Vivado Screenshot" src="../../../../../_images/pl_master_data_kernel_vivado.png" /></p>
@@ -591,17 +576,17 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <li><p><strong>Data Master Modules:</strong> These modules contain BRAM instances that store the input data that is sent to the AI Engine. They are initialized by <code class="docutils literal notranslate"><span class="pre">data/*_hex.mem</span></code> files with input data. There are four data master modules in the <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code> and <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code> PL kernels. There are eight data master modules in the <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code> PL kernels.</p></li>
 </ul>
 <div class="section" id="pl-master-execution-flow">
-<h4>PL Master Execution Flow<a class="headerlink" href="#pl-master-execution-flow" title="Permalink to this headline">¶</a></h4>
+<h4>PL Master Execution Flow<a class="headerlink" href="#pl-master-execution-flow" title="Permalink to this heading">¶</a></h4>
 <p>Through the control path (highlighted in blue in the block diagram above), CIPS block requests data from specific addresses to be sent from the data master modules to the AI Engine. The data master modules then send out the data at the requested address through an AXI4-Stream interface to the AI Engine. The AI Engine receives its downlink input data matrices, downlink input coefficient data, uplink input data matrices, and uplink input coefficient data this way. The PL masters must follow a certain execution flow to function properly.</p>
 <div class="section" id="reset">
-<h5>Reset<a class="headerlink" href="#reset" title="Permalink to this headline">¶</a></h5>
+<h5>Reset<a class="headerlink" href="#reset" title="Permalink to this heading">¶</a></h5>
 <p>First, the PL masters must be reset by asserting their RESET bits to 1’b1 and then deasserting them to 0’b1.</p>
 </div>
 <div class="section" id="configuration">
-<h5>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h5>
+<h5>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h5>
 <p>The PL masters must then have their BLOCK_SIZE, NITER, and ROLLOVER_ADDR registers configured.</p>
 <div class="section" id="block-size">
-<h6>BLOCK_SIZE<a class="headerlink" href="#block-size" title="Permalink to this headline">¶</a></h6>
+<h6>BLOCK_SIZE<a class="headerlink" href="#block-size" title="Permalink to this heading">¶</a></h6>
 <p>The value you set the BLOCK_SIZE register to is determined by the number of 32-bit complex data samples you send to the AI Engine. Because the PL interface to the AI Engine is 64 bit, you can fit two 32-bit complex data samples in a single data packet. The BLOCK_SIZE register for each PL master kernel is as follows:</p>
 <table border="1" class="docutils">
 <thead>
@@ -628,7 +613,7 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </tbody>
 </table></div>
 <div class="section" id="niter-and-rollover-addr">
-<h6>NITER and ROLLOVER_ADDR<a class="headerlink" href="#niter-and-rollover-addr" title="Permalink to this headline">¶</a></h6>
+<h6>NITER and ROLLOVER_ADDR<a class="headerlink" href="#niter-and-rollover-addr" title="Permalink to this heading">¶</a></h6>
 <p>The value of the NITER register determines the number BLOCK_SIZE chunks of input data to send of the AI Engine. Because there is a finite amount of BRAM resources, it is not possible to store a large amount of unique input data. A design choice has been made to store four BLOCK_SIZE chunks of unique data in the PL masters.</p>
 <ul class="simple">
 <li><p>When NITER &lt;=4, up to four unique BLOCK_SIZE chunks of data are sent to the AI Engine.</p></li>
@@ -660,17 +645,17 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </table></div>
 </div>
 <div class="section" id="start">
-<h5>Start<a class="headerlink" href="#start" title="Permalink to this headline">¶</a></h5>
+<h5>Start<a class="headerlink" href="#start" title="Permalink to this heading">¶</a></h5>
 <p>After configuration, the PL master kernels are ready to send the data stored in their BRAMs to the AI Engine. When the GO bit is asserted, the PL traffic to the AI Engine starts. Deasserting the GO bit stops PL traffic to the AI Engine.</p>
 <p><img alt="PL Master Kernel Data Storage" src="../../../../../_images/PL_master_kernel_data_storage.png" /></p>
 </div>
 <div class="section" id="done">
-<h5>Done<a class="headerlink" href="#done" title="Permalink to this headline">¶</a></h5>
+<h5>Done<a class="headerlink" href="#done" title="Permalink to this heading">¶</a></h5>
 <p>When the PL Master kernels have sent a BLOCK_SIZE number TDATA packets to the AI Engine for NITER number of times, then then they assert their MASTER_DONE bits.</p>
 </div>
 </div>
 <div class="section" id="ip-kernelization">
-<h4>IP Kernelization<a class="headerlink" href="#ip-kernelization" title="Permalink to this headline">¶</a></h4>
+<h4>IP Kernelization<a class="headerlink" href="#ip-kernelization" title="Permalink to this heading">¶</a></h4>
 <p>Take a look at the <code class="docutils literal notranslate"><span class="pre">package_xo</span></code> command, which can be found in the last line of <code class="docutils literal notranslate"><span class="pre">run_*.tcl</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>package_xo -kernel_name ${IP_NAME} -ctrl_protocol user_managed -ip_directory [pwd]/../${IP_REPO}/${IP_NAME} -xo_path [pwd]/../${IP_REPO}/${IP_NAME}.xo -force -output_kernel_xml [pwd]/kernel_${IP_NAME}_auto.xml
 </pre></div>
@@ -680,7 +665,7 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </div>
 </div>
 <div class="section" id="id2">
-<h3>PL Slave Kernels<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>PL Slave Kernels<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>The PL slave kernels are the <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> and the <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> kernels. These kernels store the output data generated from the AI Engine application. Open the Vivado projects for the PL kernels and review their source code.</p>
 <p><img alt="PL Slave Kernel Block Diagram" src="../../../../../_images/pl_slave_kernel_block_diagram.png" /></p>
 <ul class="simple">
@@ -728,17 +713,17 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <li><p><strong>Data Slave RAM Module:</strong> Contains the URAM instance that stores the output data produced by the AI Engine. There is one slave RAM module in the <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> PL kernels.</p></li>
 </ul>
 <div class="section" id="pl-slave-execution-flow">
-<h4>PL Slave Execution Flow<a class="headerlink" href="#pl-slave-execution-flow" title="Permalink to this headline">¶</a></h4>
+<h4>PL Slave Execution Flow<a class="headerlink" href="#pl-slave-execution-flow" title="Permalink to this heading">¶</a></h4>
 <p>The control path (highlighted in blue in the preceding block diagram) is the same as the one in the PL master kernels; however, the CSR module syncs with a data slave RAM module. The AI Engine writes its output data to a data slave RAM module through an AXI4-Stream interface. The AI Engine application writes its output data from downlink and uplink subgraphs to the <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> PL kernels this way. The PL slaves must follow a certain execution flow to function properly.</p>
 <div class="section" id="id3">
-<h5>Reset<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h5>
+<h5>Reset<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h5>
 <p>Just like the PL masters, the PL slaves must first be reset by asserting their RESET bits to 1’b1 and then deasserting them to 0’b1.</p>
 </div>
 <div class="section" id="id4">
-<h5>Configuration<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h5>
+<h5>Configuration<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h5>
 <p>The PL slaves must then have their BLOCK_SIZE, NITER, and ROLLOVER_ADDR registers configured.</p>
 <div class="section" id="id5">
-<h6>BLOCK_SIZE<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h6>
+<h6>BLOCK_SIZE<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h6>
 <p>Although there is no explicit BLOCK_SIZE register, PL slave kernels do receive &lt;BLOCK_SIZE&gt; chunks of data from the AI Engine as follows:</p>
 <table border="1" class="docutils">
 <thead>
@@ -763,48 +748,48 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </table></div>
 </div>
 <div class="section" id="id6">
-<h5>NITER and ROLLOVER_ADDR<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h5>
+<h5>NITER and ROLLOVER_ADDR<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h5>
 <p>The NITER register tells the PL slave kernel how many &lt;BLOCK_SIZE&gt; chunks of data to expect and store in their URAMs.</p>
 <p>The PL slave kernels do not have a ROLLOVER_ADDR register because the aim is to keep all of the output data for functional verification. Data starts to be overwritten when NITER &gt; 4.</p>
 </div>
 <div class="section" id="id7">
-<h5>Start<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h5>
+<h5>Start<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h5>
 <p>The PL slave kernels are slaves to the AI Engine because the AI Engine writes output data to them. Because the PL kernels must wait until the AI Engine fills their URAMs, there is no GO bit on the PL slave kernels.</p>
 </div>
 <div class="section" id="id8">
-<h5>Done<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h5>
+<h5>Done<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h5>
 <p>When the PL slave kernels have received the &lt;BLOCK_SIZE&gt; amount of data for NITER number of times, they assert their SLAVE_DONE bits.</p>
 </div>
 </div>
 </div>
 <div class="section" id="axi4-stream-register-slice">
-<h3>AXI4-Stream Register Slice<a class="headerlink" href="#axi4-stream-register-slice" title="Permalink to this headline">¶</a></h3>
+<h3>AXI4-Stream Register Slice<a class="headerlink" href="#axi4-stream-register-slice" title="Permalink to this heading">¶</a></h3>
 <p>The AXI4-Stream Register Slice IP (axi_register_slice) is available in the IP Catalog. It is a flip-flop that is used to pipeline paths. It is used during timing closure (see Module 04).</p>
 </div>
 </div>
 <div class="section" id="beamforming-design-downlink-ai-engine-graph">
-<h2>Beamforming Design: Downlink AI Engine Graph<a class="headerlink" href="#beamforming-design-downlink-ai-engine-graph" title="Permalink to this headline">¶</a></h2>
+<h2>Beamforming Design: Downlink AI Engine Graph<a class="headerlink" href="#beamforming-design-downlink-ai-engine-graph" title="Permalink to this heading">¶</a></h2>
 <p>Each downlink AI Engine graph has four input data ports, 32 input coefficient ports, and eight output ports. A <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code> PL kernel has four AXI4-Stream output ports to that plug into the four input data ports of the downlink AI Engine graph. A <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code> PL kernel has four AXI4-Stream output ports. So, eight <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code> PL kernels are required to plug into the 4*8=32 input coefficient ports. A <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> PL kernel has one AXI4-Stream input port. So, eight <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> PL kernels are required to plug into the eight output ports.</p>
 <p>Remember, our system instantiates three downlink graphs, so the total number of DLBF PL kernels becomes: three <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code>, 24 <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code>, and 24 <code class="docutils literal notranslate"><span class="pre">dlbfs_slave</span></code> PL kernels.</p>
 </div>
 <div class="section" id="beamforming-design-uplink-ai-engine-graph">
-<h2>Beamforming Design: Uplink AI Engine Graph<a class="headerlink" href="#beamforming-design-uplink-ai-engine-graph" title="Permalink to this headline">¶</a></h2>
+<h2>Beamforming Design: Uplink AI Engine Graph<a class="headerlink" href="#beamforming-design-uplink-ai-engine-graph" title="Permalink to this heading">¶</a></h2>
 <p>Each uplink AI Engine graph has eight input data ports, 32 input coefficient ports, and four output ports. A <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code> PL kernel has eight AXI4-Stream output ports that plug into the eight input data ports of the uplink AI Engine graph. A <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code> PL kernel has eight AXI4-Stream output ports. So, four <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code> PL kernels are required to plug into the 8*4=32 input coefficient ports. A <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> PL kernel has one AXI4-Stream input port. So, four <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> PL kernels are required to plug into the four output ports.</p>
 <p>Remember, our system instantiates three uplink graphs, so the total number of ULBF PL kernels becomes: three <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code>, 12 <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code>, and 12 <code class="docutils literal notranslate"><span class="pre">ulbf_slaves</span></code>.</p>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/devrtlkernel.html#qnk1504034323350">Vitis Application Acceleration Development Flow Documentation, Developing Applications, RTL Kernels</a> - This is a reference on how to create your own custom RTL kernels. Please note that the PL kernels in this design do not completely adhere to the recommended guidelines.</p></li>
 </ul>
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

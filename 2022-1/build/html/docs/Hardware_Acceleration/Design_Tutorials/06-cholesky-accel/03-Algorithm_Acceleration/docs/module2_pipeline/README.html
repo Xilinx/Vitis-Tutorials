@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../../" src="../../../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../../../" id="documentation_options" src="../../../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../../../_static/jquery.js"></script>
         <script src="../../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -359,7 +344,7 @@ function OptanonWrapper() { }
 <p>This module is meant to focus on the <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> pragma and go through the description below.
 The kernel source code with the loops annotated with the pragma will produce the same results as in <strong>module 1</strong>, that’s because since simple loops and inner loops (for nested loops) are automatically pipelined by the tool. This version also adds the <code>interface</code> pragma to explicitely describe the connectivity and settings for the C ports of the kernel.</p>
 <div class="section" id="pipelining-for-throughput">
-<h1>Pipelining for Throughput<a class="headerlink" href="#pipelining-for-throughput" title="Permalink to this headline">¶</a></h1>
+<h1>Pipelining for Throughput<a class="headerlink" href="#pipelining-for-throughput" title="Permalink to this heading">¶</a></h1>
 <p>High-level synthesis can be very conservative by default, for example loop body instructions are entirely executed at each iteration instead of executing in a staggered fashion.  That latter style of execution is explicitely enabled by the <code>PIPELINE</code> pragma, it then reduces the initiation interval (II) for a function or loop (here in this tutorial, it’s applied on loops) by allowing the concurrent execution of the different operations.
 A pipelined function or loop can then process new inputs every <N> clock cycles, where <N> is the II of the loop or function. The default II for the <code>PIPELINE</code> pragma is 1, which processes a new input every clock cycle. You can also specify the initiation interval through the use of the II option.</p>
 <p>Pipelining a loop allows its operations to be implemented so that these operations execute concurrently as shown in the following animated figure below. In that example and by default there are 3 clock cycles between each input read (so II=3), and it requires 12 clock cycles fully execute the loop compared to 6 when the pragma is used.</p>
@@ -367,22 +352,22 @@ A pipelined function or loop can then process new inputs every <N> clock cycles,
 <p>If the Vitis high-level synthesis tool cannot create a design with the user-specified II, it issues a warning and creates a design with the lowest achievable II.
 You can then analyze this design with the warning message to determine what steps must be taken to create a design that satisfies the required initiation interval.</p>
 <p>To enable the pragma in the C source, insert it within the body of the function or loop.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="cp">#pragma HLS pipeline II=&lt;int&gt; enable_flush rewind</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="cp">#pragma HLS pipeline II=&lt;int&gt; enable_flush rewind</span>
 </pre></div>
 </div>
 <p>II=int specifies the desired number of clock cycles between each  initiation interval for the pipeline. The HLS tool tries to meet this request but based on data dependencies, the actual result might have a larger initiation interval. The enable_flush modifier is optional and keeps on pushing data out if the data valid at the input of the pipeline goes inactive. The rewind modifier is also optional and enables continuous loop pipelining with no pause between one loop iteration ending and the next iteration starting. Rewinding is effective only if there is one single loop (or a perfect loop nest) inside the top-level function.</p>
 <p>In the following example function <code>foo</code> is pipelined with an initiation interval of 1:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">foo</span> <span class="p">{</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">}</span> <span class="p">{</span>
-  <span class="cp">#pragma HLS pipeline II=1</span>
-  <span class="p">...</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="cp">#pragma HLS pipeline II=1</span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Take a look at the kernel source code and notice how the <code>PIPELINE</code> pragma/directive is applied for several loops in the code.
 Since Vitis HLS automatically pipelines the most inner loops, the results won’t be different compared to what was seen in the previous module (the baseline).</p>
 </div>
 <div class="section" id="the-code-interface-code-pragma">
-<h1>The <code>INTERFACE</code> Pragma<a class="headerlink" href="#the-code-interface-code-pragma" title="Permalink to this headline">¶</a></h1>
+<h1>The <code>INTERFACE</code> Pragma<a class="headerlink" href="#the-code-interface-code-pragma" title="Permalink to this heading">¶</a></h1>
 <p>The <code>INTERFACE</code> pragma specifies the physical adapters for the kernel C ports and how they attach to the platform during what’s referred to as “interface synthesis” in HLS.</p>
 <p>These physical adapters and their associated RTL implementation are derived from the following:</p>
 <ul class="simple">
@@ -412,7 +397,7 @@ The bus width is specified as a power of 2, between 32-bits and 512-bits (i.e. 3
 </div></blockquote>
 <hr class="docutils" />
 <div class="section" id="next">
-<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h2>
 <p>You can now continue to <a class="reference internal" href="../module3_datatype/README.html"><span class="doc">&lt;b&gt;module 3&lt;/b&gt;</span></a> or run this version of the design to verify it behaves similarly to module 1.</p>
 <p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
 </div>

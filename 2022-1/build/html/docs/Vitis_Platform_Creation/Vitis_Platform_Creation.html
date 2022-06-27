@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -72,10 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Vitis Custom Embedded Platform Creation Example on ZCU104" href="Design_Tutorials/02-Edge-AI-ZCU104/README.html" />
-    <link rel="prev" title="Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows" href="../AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie/README.html" /> 
+    <link rel="search" title="Search" href="../../search.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,48 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Vitis Platform Creation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#design-tutorials">Design Tutorials</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Design_Tutorials/02-Edge-AI-ZCU104/README.html">Custom Platform Creation Tutorial on MPSoC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Design_Tutorials/03_Edge_VCK190/README.html">Custom Platform Creation Tutorial on Versal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Design_Tutorials/01-Edge-KV260/README.html">Custom Platform Creation Example on KV260 Starter Kit</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#feature-tutorials">Feature Tutorials</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Feature_Tutorials/01_platform_creation_streaming_ip/README.html">Versal Platform Creation with Custom IP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Feature_Tutorials/01_platform_creation_streaming_ip/README.html#overview">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Feature_Tutorials/01_platform_creation_streaming_ip/README.html#support">Support</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Feature_Tutorials/01_platform_creation_streaming_ip/README.html#license">License</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Feature_Tutorials/02_petalinux_customization/README.html">PetaLinux Building and System Customization</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -365,15 +332,15 @@ function OptanonWrapper() { }
            <div itemprop="articleBody">
             
   <div class="section" id="vitis-platform-creation-tutorials">
-<h1>Vitis Platform Creation Tutorials<a class="headerlink" href="#vitis-platform-creation-tutorials" title="Permalink to this headline">¶</a></h1>
+<h1>Vitis Platform Creation Tutorials<a class="headerlink" href="#vitis-platform-creation-tutorials" title="Permalink to this heading">¶</a></h1>
 <div class="sidebar">
 <p class="sidebar-title">More Information</p>
 <p>See Vitis Development Environment on <a class="reference external" href="https://www.xilinx.com/products/design-tools/vitis.html">xilinx.com</a>.</p>
 </div>
 <div class="section" id="design-tutorials">
-<h2>Design Tutorials<a class="headerlink" href="#design-tutorials" title="Permalink to this headline">¶</a></h2>
+<h2>Design Tutorials<a class="headerlink" href="#design-tutorials" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Design Tutorials</span></p>
+<p class="caption" role="heading"><span class="caption-text">Design Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Design_Tutorials/02-Edge-AI-ZCU104/README.html">Custom Platform Creation Tutorial on MPSoC</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Design_Tutorials/02-Edge-AI-ZCU104/README.html#custom-platform-planning">Custom Platform Planning</a></li>
@@ -429,7 +396,7 @@ function OptanonWrapper() { }
 </table>
 </div>
 <div class="section" id="feature-tutorials">
-<h2>Feature Tutorials<a class="headerlink" href="#feature-tutorials" title="Permalink to this headline">¶</a></h2>
+<h2>Feature Tutorials<a class="headerlink" href="#feature-tutorials" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 </div>
 <table class="colwidths-given docutils align-default">
@@ -467,15 +434,6 @@ function OptanonWrapper() { }
 
 
 	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="Design_Tutorials/02-Edge-AI-ZCU104/README.html" class="btn btn-neutral float-right" title="Vitis Custom Embedded Platform Creation Example on ZCU104" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie/README.html" class="btn btn-neutral float-left" title="Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

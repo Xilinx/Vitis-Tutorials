@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -367,7 +352,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="step-4-test-the-platform">
-<h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this headline">¶</a></h1>
+<h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference external" href="#step-4-test-the-platform">Step 4: Test the Platform</a></p>
 <ul>
@@ -382,7 +367,7 @@ function OptanonWrapper() { }
 </li>
 </ul>
 <div class="section" id="test-1-read-platform-info">
-<h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this headline">¶</a></h2>
+<h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this heading">¶</a></h2>
 <p>With Vitis environment setup, <strong>platforminfo</strong> tool can report XPFM platform information.</p>
 <details><summary><strong>Click for detailed logs</strong></summary>  <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># in kv260_custom_pkg directory</span>
 platforminfo ./kv260_custom/export/kv260_custom/kv260_custom.xpfm
@@ -467,7 +452,7 @@ Supported Runtimes:
 </div>
 </details><p>We can verify clock information and memory information are set as expected.</p>
 <div class="section" id="test-2-run-vector-addition-application">
-<h3>Test 2: Run Vector Addition Application<a class="headerlink" href="#test-2-run-vector-addition-application" title="Permalink to this headline">¶</a></h3>
+<h3>Test 2: Run Vector Addition Application<a class="headerlink" href="#test-2-run-vector-addition-application" title="Permalink to this heading">¶</a></h3>
 <p>Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface and interrupt setting in platform are working properly.</p>
 <ol class="simple">
 <li><p>Creating Vector Addition Application</p>
@@ -527,10 +512,10 @@ mv system.bit.bin vadd.bit.bin
 <li><p>Compile <code class="docutils literal notranslate"><span class="pre">pl.dtsi</span></code> to dtbo with command <code class="docutils literal notranslate"><span class="pre">dtc</span> <span class="pre">-&#64;</span> <span class="pre">-O</span> <span class="pre">dtb</span> <span class="pre">-o</span> <span class="pre">step4_validate/vadd.dtbo</span> <span class="pre">step2_petalinux/dt_output/pl.dtsi</span></code></p></li>
 </ul>
 <p>Prepare shell.json. You can copy it from other applications or create one with the following contents.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;shell_type&quot;</span> <span class="p">:</span> <span class="s2">&quot;XRT_FLAT&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;num_slots&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;shell_type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;XRT_FLAT&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;num_slots&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
@@ -577,12 +562,12 @@ or directory”, it’s because XRT is not installed in KV260 default rootfs. Pl
 </div></blockquote>
 </div>
 <div class="section" id="congratulations">
-<h3>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this headline">¶</a></h3>
+<h3>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this heading">¶</a></h3>
 <p>We have completed creating a custom platform from scratch and verifying it with a simple vadd application.</p>
 <p>Please feel free to check more tutorials in this repository.</p>
 </div>
 <div class="section" id="fast-track">
-<h3>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this headline">¶</a></h3>
+<h3>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h3>
 <p>If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> in <a class="reference external" href="./ref_files">ref_files</a> directory to generate the reference design and compare with your design.</p>
 <p>Since the PetaLinux project requires KV260 BSP, please download KV260 <a class="reference external" href="https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM">Starter Kit BSP</a> and save it to <code class="docutils literal notranslate"><span class="pre">ref_files/step2_petalinux</span></code> directory before running make.</p>
 <p>The command line flow has slight differences comparing to Vitis IDE flow.</p>

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,7 +339,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="running-the-simulation">
-<h1>Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h1>
+<h1>Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this heading">¶</a></h1>
 <p><em>Estimated time: less than 1 minute</em></p>
 <p>Run the python simulation with the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="nb">all</span>
@@ -372,7 +357,7 @@ function OptanonWrapper() { }
 <li><p>pandas</p></li>
 </ul>
 <div class="section" id="python-simulations-on-x86-machine">
-<h2>Python Simulations on x86 Machine<a class="headerlink" href="#python-simulations-on-x86-machine" title="Permalink to this headline">¶</a></h2>
+<h2>Python Simulations on x86 Machine<a class="headerlink" href="#python-simulations-on-x86-machine" title="Permalink to this heading">¶</a></h2>
 <p>Review the <code class="docutils literal notranslate"><span class="pre">test.py</span></code> file. Notice that it runs three unit tests: <code class="docutils literal notranslate"><span class="pre">test_random_x1</span></code>, <code class="docutils literal notranslate"><span class="pre">test_random_x10</span></code>, and <code class="docutils literal notranslate"><span class="pre">test_random_x100</span></code>. Each unit test creates two instances of the <code class="docutils literal notranslate"><span class="pre">Particles</span></code> class: <code class="docutils literal notranslate"><span class="pre">particles_i</span></code> and <code class="docutils literal notranslate"><span class="pre">particles_j</span></code>. Each <code class="docutils literal notranslate"><span class="pre">Particles</span></code> object contains arrays of floating point values for the particle positions, particle velocities, and mass (<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span> <span class="pre">m</span></code>). These arrays are initalized with random values with the <code class="docutils literal notranslate"><span class="pre">setSphereInitialConditions()</span></code> function in <code class="docutils literal notranslate"><span class="pre">pylib/particles.py</span></code> file. The <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> positions are constrained to be in a sphere by invoking <code class="docutils literal notranslate"><span class="pre">cos()</span></code> and <code class="docutils literal notranslate"><span class="pre">sin()</span></code> functions. The remaining constrains are as follows:</p>
 <ul class="simple">
 <li><p>minimum z initial position = -1000</p></li>
@@ -410,7 +395,7 @@ function OptanonWrapper() { }
 </table><p>The 100 tile AI Engine design simulates 12,800 particles. The single tile AI Engine design (x1_design) simulates 128 particles, and the 10 tile AI Engine design (x10_design) simulates 1280 particles.</p>
 </div>
 <div class="section" id="results">
-<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this heading">¶</a></h2>
 <p>You should see something similar to the following execution times for the python simulation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="n">test_random_x1</span> <span class="p">(</span><span class="n">__main__</span><span class="o">.</span><span class="n">PySimUnitTest</span><span class="p">)</span>
@@ -450,7 +435,7 @@ function OptanonWrapper() { }
 </tbody>
 </table></div>
 <div class="section" id="optional-creating-animation-gifs">
-<h2>(Optional) Creating Animation GiFs<a class="headerlink" href="#optional-creating-animation-gifs" title="Permalink to this headline">¶</a></h2>
+<h2>(Optional) Creating Animation GiFs<a class="headerlink" href="#optional-creating-animation-gifs" title="Permalink to this heading">¶</a></h2>
 <p>You can create these .gifs with the following command:</p>
 <p><em>Estimated time: 3 hours</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">animations</span>
@@ -458,16 +443,16 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>After running the Python NBody Simulator, you are ready to move to the next module, <a class="reference external" href="../Module_02_aie">Module 02-AI Engine Design</a>.</p>
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://support.xilinx.com/">support.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

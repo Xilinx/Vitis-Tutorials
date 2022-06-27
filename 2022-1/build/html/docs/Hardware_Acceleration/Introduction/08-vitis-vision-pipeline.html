@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>We looked at a straightforward bilateral resize algorithm in the last example.  While we saw that it wasn’t
 an amazing candidate for acceleration, perhaps you might want to simultaneously convert a buffer to a number
 of different resolutions (say for different machine learning algorithms).  Or, you might just want to offload
@@ -382,18 +367,18 @@ and a square gaussian window of width <code class="docutils literal notranslate"
 <p>For fun, let’s make <code class="docutils literal notranslate"><span class="pre">k</span></code> relatively large without going overboard: we’ll choose a 7 × 7 window.</p>
 </div>
 <div class="section" id="key-code">
-<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this headline">¶</a></h1>
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>For this algorithm we’ll continue to use of the <strong>Vitis Vision</strong>libraries.</p>
 <p>As before, we’ll configure the library (in the hardware, via templates in our hardware source files) to process eight pixels per clock cycle.  Functionally, our hardware algorithm is now equivalent to this in standard software OpenCV:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span><span class="o">::</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">resize_ocv</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span><span class="p">(</span><span class="n">out_width</span><span class="p">,</span> <span class="n">out_height</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">CV_INTER_LINEAR</span><span class="p">);</span>
-<span class="n">cv</span><span class="o">::</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">resize_ocv</span><span class="p">,</span> <span class="n">result_ocv</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="mf">3.0f</span><span class="p">,</span> <span class="mf">3.0f</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">BORDER_CONSTANT</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span><span class="o">::</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="n">resize_ocv</span><span class="p">,</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Size</span><span class="p">(</span><span class="n">out_width</span><span class="p">,</span><span class="w"> </span><span class="n">out_height</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">CV_INTER_LINEAR</span><span class="p">);</span><span class="w"></span>
+<span class="n">cv</span><span class="o">::</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">resize_ocv</span><span class="p">,</span><span class="w"> </span><span class="n">result_ocv</span><span class="p">,</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Size</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="mf">3.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0f</span><span class="p">,</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">BORDER_CONSTANT</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>We’re resizing as in <a class="reference internal" href="07-image-resizing-with-vitis-vision.html"><span class="doc">Example 7</span></a>, and as we mentioned are applying a
 7 × 7 window to the Gaussian blur function.  We have also (arbitrarily) selected σx = σy =3.0</p>
 </div>
 <div class="section" id="running-the-application">
-<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this headline">¶</a></h1>
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./08_opencv_resize</span> <span class="pre">alveo_examples</span> <span class="pre">&lt;path_to_image&gt;</span></code></p>
 <p>Because of the way we’ve configured the hardware in this example, your image must conform to certain requirements.  Because we’re processing eight pixels per clock, your input width must be a multiple of eight.</p>
@@ -483,7 +468,7 @@ The comparison column will compare the “Scale Up” results from
 </table><p>We hope you can see the advantage!</p>
 </div>
 <div class="section" id="extra-exercises">
-<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this headline">¶</a></h1>
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
 <li><p>Edit the host code to play with the image sizes.  How does the run time change if you scale up more?  Down
@@ -492,7 +477,7 @@ more?  Where is the crossover point where it no longer makes sense to use an acc
 </ul>
 </div>
 <div class="section" id="key-takeaways">
-<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this headline">¶</a></h1>
+<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Pipelining and streaming from one operation to the next in the fabric is beneficial.</p></li>
 <li><p>Using FPGA-optimized libraries like xf::OpenCV allows you to easily trade off processing speed vs.

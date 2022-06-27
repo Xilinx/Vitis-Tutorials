@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -366,9 +351,9 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="step-4-test-the-platform">
-<h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this headline">¶</a></h1>
+<h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="test-1-read-platform-info">
-<h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this headline">¶</a></h2>
+<h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this heading">¶</a></h2>
 <p>With Vitis environment setup, <strong>platforminfo</strong> tool can report XPFM platform information.</p>
 <p>We can verify hardware configuration (clocks, memory) and software configuration (domain) are set as expected.</p>
 <details>
@@ -456,7 +441,7 @@ function OptanonWrapper() { }
 </div>
 </details></div>
 <div class="section" id="test-2-run-a-pl-acceleration-application">
-<h2>Test 2: Run a PL acceleration application<a class="headerlink" href="#test-2-run-a-pl-acceleration-application" title="Permalink to this headline">¶</a></h2>
+<h2>Test 2: Run a PL acceleration application<a class="headerlink" href="#test-2-run-a-pl-acceleration-application" title="Permalink to this heading">¶</a></h2>
 <p>To verify the platform functionality, we will create an acceleation project with PL kernel. We will use Vitis built-in Vector Addition template to do this test.</p>
 <ol>
 <li><p>Launch Vitis</p>
@@ -505,7 +490,7 @@ function OptanonWrapper() { }
 </li>
 </ol>
 <div class="section" id="optional-test-the-application-on-hardware-emulation">
-<h3>(Optional) Test the Application on Hardware Emulation<a class="headerlink" href="#optional-test-the-application-on-hardware-emulation" title="Permalink to this headline">¶</a></h3>
+<h3>(Optional) Test the Application on Hardware Emulation<a class="headerlink" href="#optional-test-the-application-on-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Launch Emulator for PS</p>
 <ul class="simple">
@@ -538,7 +523,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="test-the-application-on-hardware">
-<h3>Test the Application on Hardware<a class="headerlink" href="#test-the-application-on-hardware" title="Permalink to this headline">¶</a></h3>
+<h3>Test the Application on Hardware<a class="headerlink" href="#test-the-application-on-hardware" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Copy <code class="docutils literal notranslate"><span class="pre">vadd_system/Hardware/package/sd_card.img</span></code> to local if you build the project on a remote server or virtual machine.</p></li>
 <li><p>Program sd_card.img to SD card. Refer to <a class="reference external" href="https://www.xilinx.com/support/answers/73711.html">AR#73711</a> for detailed steps.</p>
@@ -602,7 +587,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="test-3-run-an-aie-pl-acceleration-application-project">
-<h2>Test 3: Run an AIE + PL acceleration application project<a class="headerlink" href="#test-3-run-an-aie-pl-acceleration-application-project" title="Permalink to this headline">¶</a></h2>
+<h2>Test 3: Run an AIE + PL acceleration application project<a class="headerlink" href="#test-3-run-an-aie-pl-acceleration-application-project" title="Permalink to this heading">¶</a></h2>
 <p>To verify the platform functionality, we will create a project with AIE + PL kernel and PS application and run it on VCK190 board.</p>
 <ol class="simple">
 <li><p>Create vector addition application on the custom platform</p>
@@ -631,7 +616,7 @@ function OptanonWrapper() { }
 <li><p>After a successful build, <strong>sd_card.img</strong> is generated in <code class="docutils literal notranslate"><span class="pre">plaie_system/Hardware/package</span></code> and <code class="docutils literal notranslate"><span class="pre">plaie_system/Hardware/package_no_aie_debug</span></code> directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the <strong>sd_card.img</strong> in <strong>package</strong> directory has a package parameter <code class="docutils literal notranslate"><span class="pre">enable_aie_debug=1</span></code>. It’s used for debugging. The one in <strong>package_no_aie_debug</strong> can work for free running.</p></li>
 </ol>
 <div class="section" id="id1">
-<h3>Test the Application on Hardware<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Test the Application on Hardware<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Copy the <strong>sd_card.img</strong> from <code class="docutils literal notranslate"><span class="pre">plaie_system/Hardware/package_no_aie_debug</span></code> directory to local, if the project is run on a server or virtual machine.</p>
 <blockquote>
@@ -689,7 +674,7 @@ function OptanonWrapper() { }
 </div>
 </details></div>
 <div class="section" id="id2">
-<h3>(Optional) Test the Application on Hardware Emulation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>(Optional) Test the Application on Hardware Emulation<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Launch Emulator for PS</p>
 <ul class="simple">

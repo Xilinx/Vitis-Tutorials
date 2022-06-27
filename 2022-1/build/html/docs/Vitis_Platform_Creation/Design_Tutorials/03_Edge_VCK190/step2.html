@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -366,10 +351,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="step-2-create-the-software-components-with-petalinux">
-<h1>Step 2: Create the Software Components with PetaLinux<a class="headerlink" href="#step-2-create-the-software-components-with-petalinux" title="Permalink to this headline">¶</a></h1>
+<h1>Step 2: Create the Software Components with PetaLinux<a class="headerlink" href="#step-2-create-the-software-components-with-petalinux" title="Permalink to this heading">¶</a></h1>
 <p>In this step, we’ll create a PetaLinux project that includes Vitis Platform required components.</p>
 <div class="section" id="create-the-petalinux-project">
-<h2>Create the PetaLinux Project<a class="headerlink" href="#create-the-petalinux-project" title="Permalink to this headline">¶</a></h2>
+<h2>Create the PetaLinux Project<a class="headerlink" href="#create-the-petalinux-project" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Setup PetaLinux environment: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;petaLinux_tool_install_dir&gt;/settings.sh</span></code></p></li>
 <li><p>Create PetaLinux Project with XSA we created in previous step</p>
@@ -389,7 +374,7 @@ petalinux-config --get-hw-description<span class="o">=</span>. --silentconfig
 </ol>
 </div>
 <div class="section" id="customize-root-file-system-kernel-device-tree-and-u-boot">
-<h2>Customize Root File System, Kernel, Device Tree and U-boot<a class="headerlink" href="#customize-root-file-system-kernel-device-tree-and-u-boot" title="Permalink to this headline">¶</a></h2>
+<h2>Customize Root File System, Kernel, Device Tree and U-boot<a class="headerlink" href="#customize-root-file-system-kernel-device-tree-and-u-boot" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Add XRT to rootfs packages</p>
 <ul class="simple">
@@ -425,7 +410,7 @@ petalinux-config --get-hw-description<span class="o">=</span>. --silentconfig
 </ol>
 </div>
 <div class="section" id="customize-device-tree">
-<h2>Customize Device-tree<a class="headerlink" href="#customize-device-tree" title="Permalink to this headline">¶</a></h2>
+<h2>Customize Device-tree<a class="headerlink" href="#customize-device-tree" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Apply VCK190 device tree</p>
 <ul class="simple">
@@ -445,7 +430,7 @@ petalinux-config --get-hw-description<span class="o">=</span>. --silentconfig
 <p><strong>Note</strong>: From 2021.1, PetaLinux will detect XSA type and generate ZOCL node in device tree automatically and update interrupt input number according to your hardware settings in XSA if the XSA is an extensible XSA. User doesn’t need to make device tree modification for Vitis acceletaion manually.</p>
 </div>
 <div class="section" id="build-petalinux-image">
-<h2>Build PetaLinux Image<a class="headerlink" href="#build-petalinux-image" title="Permalink to this headline">¶</a></h2>
+<h2>Build PetaLinux Image<a class="headerlink" href="#build-petalinux-image" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>From any directory within the PetaLinux project, build the PetaLinux project.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">petalinux</span><span class="o">-</span><span class="n">build</span>
@@ -463,11 +448,11 @@ petalinux-config --get-hw-description<span class="o">=</span>. --silentconfig
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Now we have generated platform hardware and software. Next we would go to <a class="reference internal" href="step3.html"><span class="doc">step 3</span></a> to package the Vitis Platform.</p>
 </div>
 <div class="section" id="fast-track">
-<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this headline">¶</a></h2>
+<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to re-create PetaLinux project and generate outputs. To use these scripts, please run the following steps.</p>
 <ol>
 <li><p>Run build</p>

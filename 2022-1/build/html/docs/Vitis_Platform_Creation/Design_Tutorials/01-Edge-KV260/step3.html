@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -367,9 +352,9 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="step-3-create-the-vitis-platform">
-<h1>Step 3: Create the Vitis Platform<a class="headerlink" href="#step-3-create-the-vitis-platform" title="Permalink to this headline">¶</a></h1>
+<h1>Step 3: Create the Vitis Platform<a class="headerlink" href="#step-3-create-the-vitis-platform" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="prepare-files-for-platform-packaging">
-<h2>Prepare Files for Platform Packaging<a class="headerlink" href="#prepare-files-for-platform-packaging" title="Permalink to this headline">¶</a></h2>
+<h2>Prepare Files for Platform Packaging<a class="headerlink" href="#prepare-files-for-platform-packaging" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>We would store all the necessary files for Vitis platform creation flow. Here we name it <code class="docutils literal notranslate"><span class="pre">kv260_custom_pkg</span> </code>. Then we create a <code class="docutils literal notranslate"><span class="pre">pfm</span></code> folder inside to hold platform creation source components.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir kv260_custom_pkg
@@ -428,7 +413,7 @@ mkdir sd_dir
 </li>
 </ol>
 <div class="section" id="create-a-vitis-platform">
-<h3>Create a Vitis Platform<a class="headerlink" href="#create-a-vitis-platform" title="Permalink to this headline">¶</a></h3>
+<h3>Create a Vitis Platform<a class="headerlink" href="#create-a-vitis-platform" title="Permalink to this heading">¶</a></h3>
 <p>First we create a Vitis platform project with the XSA file generated by Vivado from Step 1.</p>
 <ol>
 <li><p>Launch Vitis IDE</p>
@@ -480,7 +465,7 @@ mkdir sd_dir
 </ol>
 </div>
 <div class="section" id="next-step">
-<h3>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h3>
+<h3>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h3>
 <p>Next let us try to <a class="reference internal" href="step4.html"><span class="doc">build applications on this platform and test them.</span></a></p>
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
 </div>

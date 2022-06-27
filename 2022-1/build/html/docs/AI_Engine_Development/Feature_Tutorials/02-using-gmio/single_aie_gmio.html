@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,7 +339,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="ai-engine-gmio-programming-model">
-<h1>AI Engine GMIO Programming Model<a class="headerlink" href="#ai-engine-gmio-programming-model" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine GMIO Programming Model<a class="headerlink" href="#ai-engine-gmio-programming-model" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>This example introduces the AI Engine GMIO programming model. It includes three steps:</p>
 <ul class="simple">
@@ -369,7 +354,7 @@ function OptanonWrapper() { }
 </ul>
 <p>The AI Engine simulator event trace is used to see how performance can be improved step by step. The last step introduces code to make GMIO work in hardware.</p>
 <div class="section" id="step-1-synchronous-gmio-transfer">
-<h2>Step 1 - Synchronous GMIO Transfer<a class="headerlink" href="#step-1-synchronous-gmio-transfer" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1 - Synchronous GMIO Transfer<a class="headerlink" href="#step-1-synchronous-gmio-transfer" title="Permalink to this heading">¶</a></h2>
 <p>In this step, the synchronous GMIO transfer mode is introduced. Change the working directory to <code class="docutils literal notranslate"><span class="pre">single_aie_gmio/step1</span></code>. Looking at the graph code <code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code>, it can be seen that the design has one output <code class="docutils literal notranslate"><span class="pre">gmioOut</span></code> with type <code class="docutils literal notranslate"><span class="pre">output_gmio</span></code>, one input <code class="docutils literal notranslate"><span class="pre">gmioIn</span></code> with type <code class="docutils literal notranslate"><span class="pre">input_gmio</span></code>, and an AI Engine kernel <code class="docutils literal notranslate"><span class="pre">weighted_sum_with_margin</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">mygraph</span><span class="p">:</span> <span class="n">public</span> <span class="n">adf</span><span class="p">::</span><span class="n">graph</span>
 <span class="p">{</span>
@@ -450,7 +435,7 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <div class="section" id="run-ai-engine-compiler-and-ai-engine-simulator">
-<h3>Run AI Engine compiler and AI Engine simulator<a class="headerlink" href="#run-ai-engine-compiler-and-ai-engine-simulator" title="Permalink to this headline">¶</a></h3>
+<h3>Run AI Engine compiler and AI Engine simulator<a class="headerlink" href="#run-ai-engine-compiler-and-ai-engine-simulator" title="Permalink to this heading">¶</a></h3>
 <p>Run the following make command to compile the design graph <code class="docutils literal notranslate"><span class="pre">libadf.a</span></code> and launch the AI Engine simulator:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
 </pre></div>
@@ -465,7 +450,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="step-2-asynchronous-gmio-transfer-for-input-and-synchronous-gmio-transfer-for-output">
-<h2>Step 2 - Asynchronous GMIO Transfer for Input and Synchronous GMIO Transfer for Output<a class="headerlink" href="#step-2-asynchronous-gmio-transfer-for-input-and-synchronous-gmio-transfer-for-output" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2 - Asynchronous GMIO Transfer for Input and Synchronous GMIO Transfer for Output<a class="headerlink" href="#step-2-asynchronous-gmio-transfer-for-input-and-synchronous-gmio-transfer-for-output" title="Permalink to this heading">¶</a></h2>
 <p>In the previous step, it was identified that the sequential manner of data transfer and kernel execution is the main bottleneck of the design performance. In this step, the AI Engine kernel is replaced with a vectorized version to reduce kernel execution time. Change the working directory to <code class="docutils literal notranslate"><span class="pre">single_aie_gmio/step2</span></code>. The vectorized kernel code is in <code class="docutils literal notranslate"><span class="pre">aie/weighted_sum.cc</span></code>.</p>
 <p>Besides the kernel update, we try to do asynchronous GMIO transfers for inputs, but leave synchronous GMIO transfers for outputs in this step. The purpose of mixing synchronous and asynchronous GMIO transfers is to overlap data transfer and kernel execution. Thus, the performance is further improved.</p>
 <p>Examine the code in main function <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>. This time <code class="docutils literal notranslate"><span class="pre">ITERATION</span></code> is four, and graph is executed by four iterations with <code class="docutils literal notranslate"><span class="pre">gr.run(ITERATION)</span></code> and the GMIO transaction from memory to AI Engine is through non-blocking GMIO API <code class="docutils literal notranslate"><span class="pre">gr.gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);</span></code>. It does not block the following executions. However, we will keep using blocking GMIO API for output data.</p>
@@ -480,7 +465,7 @@ function OptanonWrapper() { }
 </div>
 <p>Although a non-blocking GMIO API is used to transfer the input data, there is no need for explicit synchronization between data transfer and kernel execution. The synchronization between input data transfer and kernel execution is guaranteed by the window buffer, meaning that every iteration of kernel execution will wait for the block of input data to be ready. The output data is synchronized using a blocking GMIO API. After the blocking API returns, the data is guaranteed to be available in DDR memory and the post-processing sequence can be safely started.</p>
 <div class="section" id="id1">
-<h3>Run AI Engine compiler and AI Engine simulator<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Run AI Engine compiler and AI Engine simulator<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>Run the following make command to compile the design graph <code class="docutils literal notranslate"><span class="pre">libadf.a</span></code> and launch the AI Engine simulator:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
 </pre></div>
@@ -495,7 +480,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="step-3-asynchronous-gmio-transfer-and-hardware-flow">
-<h2>Step 3 - Asynchronous GMIO Transfer and Hardware Flow<a class="headerlink" href="#step-3-asynchronous-gmio-transfer-and-hardware-flow" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3 - Asynchronous GMIO Transfer and Hardware Flow<a class="headerlink" href="#step-3-asynchronous-gmio-transfer-and-hardware-flow" title="Permalink to this heading">¶</a></h2>
 <p>In this step, we will see how to asynchronously transfer output data with non-blocking GMIO API, and how to use <code class="docutils literal notranslate"><span class="pre">GMIO::wait</span></code> to perform data synchronization. In addition, we will see how to run the AI Engine program with GMIO in hardware.</p>
 <p>Change the working directory to <code class="docutils literal notranslate"><span class="pre">single_aie_gmio/step3</span></code>. Examine <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>. The main difference in code is as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gr</span><span class="o">.</span><span class="n">gmioIn</span><span class="o">.</span><span class="n">gm2aie_nb</span><span class="p">(</span><span class="n">dinArray</span><span class="p">,</span><span class="n">BLOCK_SIZE_in_Bytes</span><span class="p">);</span><span class="o">//</span><span class="n">Transfer</span> <span class="nb">all</span> <span class="n">blocks</span> <span class="nb">input</span> <span class="n">data</span> <span class="n">at</span> <span class="n">a</span> <span class="n">time</span>
@@ -528,7 +513,7 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <div class="section" id="run-ai-engine-simulator-and-hardware-flow">
-<h3>Run AI Engine simulator and hardware flow<a class="headerlink" href="#run-ai-engine-simulator-and-hardware-flow" title="Permalink to this headline">¶</a></h3>
+<h3>Run AI Engine simulator and hardware flow<a class="headerlink" href="#run-ai-engine-simulator-and-hardware-flow" title="Permalink to this heading">¶</a></h3>
 <p>Run the following make command to compile the design graph <code class="docutils literal notranslate"><span class="pre">libadf.a</span></code> and launch the AI Engine simulator:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
 </pre></div>
@@ -557,7 +542,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>In this example, you learned about the following core concepts:</p>
 <ul class="simple">
 <li><p>Programming model for blocking and non-blocking GMIO transactions</p></li>

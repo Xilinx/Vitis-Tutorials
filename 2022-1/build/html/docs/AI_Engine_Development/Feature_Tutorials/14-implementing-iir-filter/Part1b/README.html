@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,36 +339,36 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="implementing-an-iir-filter-on-the-ai-engine-part-1b">
-<h1>Implementing an IIR Filter on the AI Engine - Part 1b<a class="headerlink" href="#implementing-an-iir-filter-on-the-ai-engine-part-1b" title="Permalink to this headline">¶</a></h1>
+<h1>Implementing an IIR Filter on the AI Engine - Part 1b<a class="headerlink" href="#implementing-an-iir-filter-on-the-ai-engine-part-1b" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="recap">
-<h2>Recap<a class="headerlink" href="#recap" title="Permalink to this headline">¶</a></h2>
+<h2>Recap<a class="headerlink" href="#recap" title="Permalink to this heading">¶</a></h2>
 <p>In Part 1a, we showed the process of calculating 8 outputs of a second order section of an IIR filter <em>in parallel</em> using the AI engine.</p>
 <p>In this section, we will show how to modify the ADF graph and the testbench for a 6<sup>th</sup> order elliptical lowpass filter.</p>
 </div>
 <div class="section" id="julia-script">
-<h2>Julia Script<a class="headerlink" href="#julia-script" title="Permalink to this headline">¶</a></h2>
+<h2>Julia Script<a class="headerlink" href="#julia-script" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">aie_iir_1b.jl</span></code> is a <a class="reference external" href="https://julialang.org/">Julia</a> script which can design and generate the required SIMD coefficients for an arbitrary IIR filter.</p>
 <p>In its pristine state, the user parameters are as shown below:</p>
-<div class="highlight-Julia notranslate"><div class="highlight"><pre><span></span><span class="n">first_set</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>	<span class="c"># true: 1st set; false: 2nd set</span>
+<div class="highlight-Julia notranslate"><div class="highlight"><pre><span></span><span class="n">first_set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w">	</span><span class="c"># true: 1st set; false: 2nd set</span><span class="w"></span>
 
-<span class="k">if</span> <span class="n">first_set</span>
-    <span class="n">fp</span> <span class="o">=</span> <span class="mf">10.0e6</span>         	<span class="c"># passband frequency</span>
-    <span class="n">coeff_file_suffix</span> <span class="o">=</span> <span class="s">&quot;a&quot;</span>	<span class="c"># file suffix to distinguish different coefficient sets</span>
-                        	<span class="c"># with the same architecture</span>
-<span class="k">else</span>
-    <span class="n">fp</span> <span class="o">=</span> <span class="mf">20.0e6</span>         	<span class="c"># passband frequency</span>
-    <span class="n">coeff_file_suffix</span> <span class="o">=</span> <span class="s">&quot;b&quot;</span> 	<span class="c"># 2nd set of coefficients</span>
-<span class="k">end</span> <span class="c"># if first_set</span>
-    
-<span class="n">fs</span> <span class="o">=</span> <span class="mf">100.0e6</span>            <span class="c"># sampling frequency</span>
-<span class="n">p</span> <span class="o">=</span> <span class="mi">6</span>                   <span class="c"># no. of poles</span>
-<span class="n">rp</span> <span class="o">=</span> <span class="mf">0.1</span>                <span class="c"># passband ripple (dB)</span>
-<span class="n">rs</span> <span class="o">=</span> <span class="mf">80.0</span>               <span class="c"># stopband attenuation (dB)</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">256</span>                 <span class="c"># no. of samples for impulse response</span>
-<span class="n">show_plots</span> <span class="o">=</span> <span class="nb">true</span>       <span class="c"># display plots?</span>
-<span class="n">write_cmatrix</span> <span class="o">=</span> <span class="nb">true</span>    <span class="c"># write C matrix to files?</span>
-<span class="n">write_impulse</span> <span class="o">=</span> <span class="nb">true</span>    <span class="c"># write impulse response?</span>
+<span class="k">if</span><span class="w"> </span><span class="n">first_set</span><span class="w"></span>
+<span class="w">    </span><span class="n">fp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.0e6</span><span class="w">         	</span><span class="c"># passband frequency</span><span class="w"></span>
+<span class="w">    </span><span class="n">coeff_file_suffix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="w">	</span><span class="c"># file suffix to distinguish different coefficient sets</span><span class="w"></span>
+<span class="w">                        	</span><span class="c"># with the same architecture</span><span class="w"></span>
+<span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="n">fp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20.0e6</span><span class="w">         	</span><span class="c"># passband frequency</span><span class="w"></span>
+<span class="w">    </span><span class="n">coeff_file_suffix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="w"> 	</span><span class="c"># 2nd set of coefficients</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="c"># if first_set</span><span class="w"></span>
+<span class="w">    </span>
+<span class="n">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100.0e6</span><span class="w">            </span><span class="c"># sampling frequency</span><span class="w"></span>
+<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w">                   </span><span class="c"># no. of poles</span><span class="w"></span>
+<span class="n">rp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="w">                </span><span class="c"># passband ripple (dB)</span><span class="w"></span>
+<span class="n">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">80.0</span><span class="w">               </span><span class="c"># stopband attenuation (dB)</span><span class="w"></span>
+<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="w">                 </span><span class="c"># no. of samples for impulse response</span><span class="w"></span>
+<span class="n">show_plots</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="w">       </span><span class="c"># display plots?</span><span class="w"></span>
+<span class="n">write_cmatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="w">    </span><span class="c"># write C matrix to files?</span><span class="w"></span>
+<span class="n">write_impulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="w">    </span><span class="c"># write impulse response?</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Start Julia and run the script using the following commands:</p>
@@ -397,69 +382,69 @@ function OptanonWrapper() { }
 <p>Move the generated <code class="docutils literal notranslate"><span class="pre">*.dat</span></code> files into the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory and the generated <code class="docutils literal notranslate"><span class="pre">*.h</span></code> files (coefficient files) into the <code class="docutils literal notranslate"><span class="pre">src</span></code> directory.</p>
 </div>
 <div class="section" id="adaptive-dataflow-adf-graph">
-<h2>Adaptive Dataflow (ADF) Graph<a class="headerlink" href="#adaptive-dataflow-adf-graph" title="Permalink to this headline">¶</a></h2>
+<h2>Adaptive Dataflow (ADF) Graph<a class="headerlink" href="#adaptive-dataflow-adf-graph" title="Permalink to this heading">¶</a></h2>
 <p>The modified ADF graph may look something like this:</p>
 <p><code class="docutils literal notranslate"><span class="pre">graph.hpp</span></code></p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __GRAPH_H__			</span><span class="c1">// include guard to prevent multiple inclusion</span>
 
-	<span class="cp">#define __GRAPH_H__</span>
+<span class="w">	</span><span class="cp">#define __GRAPH_H__</span>
 
-	<span class="cp">#include</span> <span class="cpf">&lt;adf.h&gt;</span><span class="c1">		// Adaptive DataFlow header</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;adf.h&gt;</span><span class="c1">		// Adaptive DataFlow header</span><span class="cp"></span>
 
-	<span class="cp">#include</span> <span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
 
-	<span class="k">using</span> <span class="k">namespace</span> <span class="nn">adf</span><span class="p">;</span>
+<span class="w">	</span><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">adf</span><span class="p">;</span><span class="w"></span>
 
-	<span class="c1">// dataflow graph declaration</span>
-	<span class="k">class</span> <span class="nc">the_graph</span> <span class="o">:</span> <span class="k">public</span> <span class="n">graph</span> <span class="p">{</span>	<span class="c1">// inherit all properties of the adaptive     dataflow graph</span>
+<span class="w">	</span><span class="c1">// dataflow graph declaration</span>
+<span class="w">	</span><span class="k">class</span><span class="w"> </span><span class="nc">the_graph</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">graph</span><span class="w"> </span><span class="p">{</span><span class="w">	</span><span class="c1">// inherit all properties of the adaptive     dataflow graph</span>
 
-		<span class="k">private</span><span class="o">:</span>
-			<span class="n">kernel</span> <span class="n">section1</span><span class="p">;</span>
-			<span class="n">kernel</span> <span class="n">section2</span><span class="p">;</span>
-			<span class="n">kernel</span> <span class="n">section3</span><span class="p">;</span>
+<span class="w">		</span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">			</span><span class="n">kernel</span><span class="w"> </span><span class="n">section1</span><span class="p">;</span><span class="w"></span>
+<span class="w">			</span><span class="n">kernel</span><span class="w"> </span><span class="n">section2</span><span class="p">;</span><span class="w"></span>
+<span class="w">			</span><span class="n">kernel</span><span class="w"> </span><span class="n">section3</span><span class="p">;</span><span class="w"></span>
 
-		<span class="k">public</span><span class="o">:</span>
-			<span class="n">input_port</span> <span class="n">in</span><span class="p">;</span>		<span class="c1">// input port for data to enter the kernel</span>
-			<span class="n">input_port</span> <span class="n">cmtx1</span><span class="p">;</span>	<span class="c1">// input port for SIMD matrix coefficients</span>
-			<span class="n">input_port</span> <span class="n">cmtx2</span><span class="p">;</span>
-			<span class="n">input_port</span> <span class="n">cmtx3</span><span class="p">;</span>
-			<span class="n">output_port</span> <span class="n">out</span><span class="p">;</span>	<span class="c1">// output port for data to leave the kernel</span>
+<span class="w">		</span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">			</span><span class="n">input_port</span><span class="w"> </span><span class="n">in</span><span class="p">;</span><span class="w">		</span><span class="c1">// input port for data to enter the kernel</span>
+<span class="w">			</span><span class="n">input_port</span><span class="w"> </span><span class="n">cmtx1</span><span class="p">;</span><span class="w">	</span><span class="c1">// input port for SIMD matrix coefficients</span>
+<span class="w">			</span><span class="n">input_port</span><span class="w"> </span><span class="n">cmtx2</span><span class="p">;</span><span class="w"></span>
+<span class="w">			</span><span class="n">input_port</span><span class="w"> </span><span class="n">cmtx3</span><span class="p">;</span><span class="w"></span>
+<span class="w">			</span><span class="n">output_port</span><span class="w"> </span><span class="n">out</span><span class="p">;</span><span class="w">	</span><span class="c1">// output port for data to leave the kernel</span>
 
-			<span class="c1">// constructor</span>
-			<span class="n">the_graph</span><span class="p">()</span> <span class="p">{</span>
+<span class="w">			</span><span class="c1">// constructor</span>
+<span class="w">			</span><span class="n">the_graph</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-				<span class="c1">// associate the kernel with the function to be executed</span>
-				<span class="n">section1</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">SecondOrderSection</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">);</span>
-				<span class="n">section2</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">SecondOrderSection</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">);</span>
-				<span class="n">section3</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">SecondOrderSection</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">				</span><span class="c1">// associate the kernel with the function to be executed</span>
+<span class="w">				</span><span class="n">section1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">SecondOrderSection</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">);</span><span class="w"></span>
+<span class="w">				</span><span class="n">section2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">SecondOrderSection</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">);</span><span class="w"></span>
+<span class="w">				</span><span class="n">section3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">SecondOrderSection</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">);</span><span class="w"></span>
 
-				<span class="k">const</span> <span class="kt">unsigned</span> <span class="n">num_bytes</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+<span class="w">				</span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">num_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span><span class="w"></span>
 
-				<span class="c1">// establish connections</span>
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span> <span class="n">net0</span> <span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>				<span class="c1">// window size in bytes</span>
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx1</span><span class="p">,</span> <span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+<span class="w">				</span><span class="c1">// establish connections</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">net0</span><span class="w"> </span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w">				</span><span class="c1">// window size in bytes</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx1</span><span class="p">,</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span><span class="w"></span>
 
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span> <span class="n">net1</span> <span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">section2</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>	<span class="c1">// window size in bytes</span>
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx2</span><span class="p">,</span> <span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section2</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">net1</span><span class="w"> </span><span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">section2</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w">	</span><span class="c1">// window size in bytes</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx2</span><span class="p">,</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section2</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span><span class="w"></span>
 
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span> <span class="n">net2</span> <span class="p">(</span><span class="n">section2</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">section3</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>	<span class="c1">// window size in bytes</span>
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx3</span><span class="p">,</span> <span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section3</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">net2</span><span class="w"> </span><span class="p">(</span><span class="n">section2</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">section3</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w">	</span><span class="c1">// window size in bytes</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx3</span><span class="p">,</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section3</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span><span class="w"></span>
 
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span> <span class="n">net3</span> <span class="p">(</span><span class="n">section3</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="p">);</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">net3</span><span class="w"> </span><span class="p">(</span><span class="n">section3</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">out</span><span class="p">);</span><span class="w"></span>
 
-				<span class="c1">// specify which source code file contains the kernel function</span>
-				<span class="n">source</span><span class="p">(</span><span class="n">section1</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;kernel.cpp&quot;</span><span class="p">;</span>
-				<span class="n">source</span><span class="p">(</span><span class="n">section2</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;kernel.cpp&quot;</span><span class="p">;</span>
-				<span class="n">source</span><span class="p">(</span><span class="n">section3</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;kernel.cpp&quot;</span><span class="p">;</span>
+<span class="w">				</span><span class="c1">// specify which source code file contains the kernel function</span>
+<span class="w">				</span><span class="n">source</span><span class="p">(</span><span class="n">section1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;kernel.cpp&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">				</span><span class="n">source</span><span class="p">(</span><span class="n">section2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;kernel.cpp&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">				</span><span class="n">source</span><span class="p">(</span><span class="n">section3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;kernel.cpp&quot;</span><span class="p">;</span><span class="w"></span>
 
-				<span class="c1">// !!! temporary value: assumes this kernel dominates the AI engine tile !!!</span>
-				<span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">section1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
-				<span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">section2</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
-				<span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">section3</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+<span class="w">				</span><span class="c1">// !!! temporary value: assumes this kernel dominates the AI engine tile !!!</span>
+<span class="w">				</span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">section1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">				</span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">section2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">				</span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">section3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
 
-			<span class="p">}</span> <span class="c1">// end the_graph()</span>
+<span class="w">			</span><span class="p">}</span><span class="w"> </span><span class="c1">// end the_graph()</span>
 
-	<span class="p">};</span> <span class="c1">// end class the_graph</span>
+<span class="w">	</span><span class="p">};</span><span class="w"> </span><span class="c1">// end class the_graph</span>
 
 <span class="cp">#endif </span><span class="c1">// __GRAPH_H__</span>
 </pre></div>
@@ -474,79 +459,79 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="testbench-code">
-<h2>Testbench Code<a class="headerlink" href="#testbench-code" title="Permalink to this headline">¶</a></h2>
+<h2>Testbench Code<a class="headerlink" href="#testbench-code" title="Permalink to this heading">¶</a></h2>
 <p>The testbench may look something like this:</p>
 <p><code class="docutils literal notranslate"><span class="pre">tb.cpp</span></code></p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//#define RTP_SWITCH		// comment out to check impulse response</span>
 
-<span class="cp">#include</span> <span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;graph.hpp&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C1a.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C2a.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C3a.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;graph.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C1a.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C2a.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C3a.h&quot;</span><span class="cp"></span>
 
 <span class="cp">#ifdef RTP_SWITCH</span>
-	<span class="cp">#include</span> <span class="cpf">&quot;C1b.h&quot;</span><span class="cp"></span>
-	<span class="cp">#include</span> <span class="cpf">&quot;C2b.h&quot;</span><span class="cp"></span>
-	<span class="cp">#include</span> <span class="cpf">&quot;C3b.h&quot;</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C1b.h&quot;</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C2b.h&quot;</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C3b.h&quot;</span><span class="cp"></span>
 <span class="cp">#endif </span><span class="c1">// RTP_SWITCH</span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">std</span><span class="p">;</span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">adf</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">adf</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// the testbench requires a virtual platform for simulation</span>
 <span class="cp">#ifndef RTP_SWITCH</span>
-	<span class="n">simulation</span><span class="o">::</span><span class="n">platform</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">platform</span><span class="p">(</span><span class="s">&quot;data/input.dat&quot;</span><span class="p">,</span> <span class="s">&quot;output.dat&quot;</span><span class="p">);</span>
+<span class="w">	</span><span class="n">simulation</span><span class="o">::</span><span class="n">platform</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">platform</span><span class="p">(</span><span class="s">&quot;data/input.dat&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;output.dat&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="cp">#else</span>
-	<span class="n">simulation</span><span class="o">::</span><span class="n">platform</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">platform</span><span class="p">(</span><span class="s">&quot;data/two_freqs.dat&quot;</span><span class="p">,</span> <span class="s">&quot;output.dat&quot;</span><span class="p">);</span>
+<span class="w">	</span><span class="n">simulation</span><span class="o">::</span><span class="n">platform</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">platform</span><span class="p">(</span><span class="s">&quot;data/two_freqs.dat&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;output.dat&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="cp">#endif </span><span class="c1">// RTP_SWITCH</span>
 
 
 <span class="c1">// specify the DFG</span>
-<span class="n">the_graph</span> <span class="n">my_graph</span><span class="p">;</span>
+<span class="n">the_graph</span><span class="w"> </span><span class="n">my_graph</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// define connections between virtual platform and the DFG</span>
-<span class="n">connect</span><span class="o">&lt;&gt;</span> <span class="n">net0</span> <span class="p">(</span><span class="n">platform</span><span class="p">.</span><span class="n">src</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">my_graph</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
-<span class="n">connect</span><span class="o">&lt;&gt;</span> <span class="n">net1</span> <span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">platform</span><span class="p">.</span><span class="n">sink</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="n">connect</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">net0</span><span class="w"> </span><span class="p">(</span><span class="n">platform</span><span class="p">.</span><span class="n">src</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">my_graph</span><span class="p">.</span><span class="n">in</span><span class="p">);</span><span class="w"></span>
+<span class="n">connect</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">net1</span><span class="w"> </span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">platform</span><span class="p">.</span><span class="n">sink</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
 
-<span class="k">const</span> <span class="kt">unsigned</span> <span class="n">num_pts</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>						<span class="c1">// number of sample points in &quot;input.dat&quot;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">num_pts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span><span class="w">						</span><span class="c1">// number of sample points in &quot;input.dat&quot;</span>
 
 <span class="cp">#ifndef RTP_SWITCH</span>
-	<span class="k">const</span> <span class="kt">unsigned</span> <span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_pts</span><span class="o">/</span><span class="mi">8</span><span class="p">;</span>		<span class="c1">// number of iterations to run</span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">num_iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_pts</span><span class="o">/</span><span class="mi">8</span><span class="p">;</span><span class="w">		</span><span class="c1">// number of iterations to run</span>
 <span class="cp">#else</span>
-	<span class="k">const</span> <span class="kt">unsigned</span> <span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_pts</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>	<span class="c1">// number of iterations to run</span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">num_iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_pts</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w">	</span><span class="c1">// number of iterations to run</span>
 <span class="cp">#endif </span><span class="c1">// RTP_SWITCH</span>
 
 <span class="c1">// main simulation program</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>	<span class="c1">// load the DFG into the AI engine array, establish connectivity, etc.</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">init</span><span class="p">();</span><span class="w">	</span><span class="c1">// load the DFG into the AI engine array, establish connectivity, etc.</span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx1</span><span class="p">,</span> <span class="n">C1a</span><span class="p">,</span> <span class="mi">96</span><span class="p">);</span>
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx2</span><span class="p">,</span> <span class="n">C2a</span><span class="p">,</span> <span class="mi">96</span><span class="p">);</span>
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx3</span><span class="p">,</span> <span class="n">C3a</span><span class="p">,</span> <span class="mi">96</span><span class="p">);</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx1</span><span class="p">,</span><span class="w"> </span><span class="n">C1a</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx2</span><span class="p">,</span><span class="w"> </span><span class="n">C2a</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx3</span><span class="p">,</span><span class="w"> </span><span class="n">C3a</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">);</span><span class="w"></span>
 
-	<span class="cp">#ifndef RTP_SWITCH</span>
-		<span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">);</span>	<span class="c1">// run the DFG for the specified number of iterations</span>
-	<span class="cp">#else</span>
-		<span class="c1">// run with set &quot;a&quot; for 1st half</span>
-		<span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">);</span>	<span class="c1">// run the DFG for the specified number of iterations</span>
-		<span class="n">my_graph</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>	<span class="c1">// wait for all iterations to finish before loading new coefficients</span>
+<span class="w">	</span><span class="cp">#ifndef RTP_SWITCH</span>
+<span class="w">		</span><span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">);</span><span class="w">	</span><span class="c1">// run the DFG for the specified number of iterations</span>
+<span class="w">	</span><span class="cp">#else</span>
+<span class="w">		</span><span class="c1">// run with set &quot;a&quot; for 1st half</span>
+<span class="w">		</span><span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">);</span><span class="w">	</span><span class="c1">// run the DFG for the specified number of iterations</span>
+<span class="w">		</span><span class="n">my_graph</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span><span class="w">	</span><span class="c1">// wait for all iterations to finish before loading new coefficients</span>
 
-		<span class="c1">// load set &quot;b&quot;</span>
-		<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx1</span><span class="p">,</span> <span class="n">C1b</span><span class="p">,</span> <span class="mi">96</span><span class="p">);</span>
-		<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx2</span><span class="p">,</span> <span class="n">C2b</span><span class="p">,</span> <span class="mi">96</span><span class="p">);</span>
-		<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx3</span><span class="p">,</span> <span class="n">C3b</span><span class="p">,</span> <span class="mi">96</span><span class="p">);</span>
+<span class="w">		</span><span class="c1">// load set &quot;b&quot;</span>
+<span class="w">		</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx1</span><span class="p">,</span><span class="w"> </span><span class="n">C1b</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx2</span><span class="p">,</span><span class="w"> </span><span class="n">C2b</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx3</span><span class="p">,</span><span class="w"> </span><span class="n">C3b</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">);</span><span class="w"></span>
 
-		<span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">);</span>	<span class="c1">// run the DFG for the specified number of iterations</span>
+<span class="w">		</span><span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">);</span><span class="w">	</span><span class="c1">// run the DFG for the specified number of iterations</span>
 
-	<span class="cp">#endif </span><span class="c1">// RTP_SWITCH</span>
+<span class="w">	</span><span class="cp">#endif </span><span class="c1">// RTP_SWITCH</span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>	<span class="c1">// housekeeping</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w">	</span><span class="c1">// housekeeping</span>
 
-	<span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
 
-<span class="p">}</span> <span class="c1">// end main()</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// end main()</span>
 </pre></div>
 </div>
 <p>Notes:</p>
@@ -557,15 +542,15 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="building-and-running-the-design">
-<h2>Building and Running the Design<a class="headerlink" href="#building-and-running-the-design" title="Permalink to this headline">¶</a></h2>
+<h2>Building and Running the Design<a class="headerlink" href="#building-and-running-the-design" title="Permalink to this heading">¶</a></h2>
 <p>We will use <code class="docutils literal notranslate"><span class="pre">Emulation-SW</span></code> to verify the functionality of the design. Similar to Part1a, we may use Julia to calculate the maximum value of the absolute error between the reference and the generated impulse response (run <code class="docutils literal notranslate"><span class="pre">check1.jl</span></code>). The impulse response error for this 3 stage design is shown below.</p>
 <p><img alt="Fig. 2" src="../../../../../_images/impresp_error1.PNG" /></p>
 </div>
 <div class="section" id="changing-coefficients-during-runtime">
-<h2>Changing Coefficients During Runtime<a class="headerlink" href="#changing-coefficients-during-runtime" title="Permalink to this headline">¶</a></h2>
+<h2>Changing Coefficients During Runtime<a class="headerlink" href="#changing-coefficients-during-runtime" title="Permalink to this heading">¶</a></h2>
 <p>We set <code class="docutils literal notranslate"><span class="pre">first_set</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> in <code class="docutils literal notranslate"><span class="pre">aie_iir_1b.jl</span></code> as shown below to generate another set of coefficients for an LPF with a passband of 20MHz.</p>
-<div class="highlight-Julia notranslate"><div class="highlight"><pre><span></span><span class="n">first_set</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>	<span class="c"># true: 1st set; false: 2nd set</span>
-<span class="o">...</span>
+<div class="highlight-Julia notranslate"><div class="highlight"><pre><span></span><span class="n">first_set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">	</span><span class="c"># true: 1st set; false: 2nd set</span><span class="w"></span>
+<span class="o">...</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The frequency response with a 20MHz passband is shown below.</p>
@@ -583,16 +568,16 @@ function OptanonWrapper() { }
 <p>The complete design is included in the <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">src</span></code> directories. Refer to the aie_exp/Part1 tutorial if you are unfamiliar with building a Vitis design from scratch.</p>
 </div>
 <div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>We showed how a 6<sup>th</sup> order IIR filter composed of 3 second order sections may be cascaded in the ADF graph.</p>
 <p>We also showed how it is possible to change coefficients at runtime using asynchronous run-time parameters.</p>
 <p>In Part 1, we have focused only on functional verification using <code class="docutils literal notranslate"><span class="pre">Emulation-SW</span></code>. In upcoming installments, we will analyze the design and optimize it for throughput.</p>
 <div class="section" id="support">
-<h3>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h3>
+<h3>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h3>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
+<h3>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h3>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

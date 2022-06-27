@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -347,12 +332,12 @@ function OptanonWrapper() { }
            <div itemprop="articleBody">
             
   <div class="section" id="hardware-emulation">
-<h1>Hardware Emulation<a class="headerlink" href="#hardware-emulation" title="Permalink to this headline">¶</a></h1>
+<h1>Hardware Emulation<a class="headerlink" href="#hardware-emulation" title="Permalink to this heading">¶</a></h1>
 <p>There are 3 types of builds and runs in Vitis, Software Emulation, Hardware Emulation and System Hardware. Since RTL kernels naturally don’t support software emulation, this tutorial will only demonstrate hardware emulation flow.</p>
 <p>In addition to functional correctness, hardware emulation provides a cycle-accurate performance and detailed resource estimates , but the compile and execution times are longer than for software emulation, it is recommended to use small data sets for validation during hardware emulation to keep run times manageable.</p>
 <p>In mix-kernel design, hardware emulation has often been used to test system level integration and view the interaction between multiple kernels.</p>
 <div class="section" id="waveform-report">
-<h2>Waveform Report<a class="headerlink" href="#waveform-report" title="Permalink to this headline">¶</a></h2>
+<h2>Waveform Report<a class="headerlink" href="#waveform-report" title="Permalink to this heading">¶</a></h2>
 <p>Vitis can generate a waveform view when running hardware emulation, it displays in-depth details include data transfers between the kernel and global memory and data flow through inter-kernel pipes.</p>
 <p>To enable waveform data collection, make sure <code class="docutils literal notranslate"><span class="pre">-g</span></code> option was used during compilation, and associated switch is turned on at the <em>xrt.ini</em> file, which should be placed at the same directory as the host executable file. We already delivered a working <em>xrt.ini</em> with this tutorial, you can check it under <em>./sw/build/</em> directory. For more details, refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/obl1532064985142.html">xrt.ini File </a> from Vitis online documentation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Emulation</span><span class="p">]</span>

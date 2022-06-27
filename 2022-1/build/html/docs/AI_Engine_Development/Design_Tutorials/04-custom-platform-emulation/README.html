@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)" href="../06-fft2d_AIEvsHLS/README.html" />
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a><ul class="current">
@@ -315,17 +311,6 @@ function OptanonWrapper() { }
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#feature-tutorials">Feature Tutorials</a></li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -407,10 +392,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="custom-platform-emulation-with-rtl-kernel">
-<h1>Custom Platform Emulation with RTL Kernel<a class="headerlink" href="#custom-platform-emulation-with-rtl-kernel" title="Permalink to this headline">¶</a></h1>
+<h1>Custom Platform Emulation with RTL Kernel<a class="headerlink" href="#custom-platform-emulation-with-rtl-kernel" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial demonstrates the following two features of the Vitis™ unified software platform flow:</p>
 <ol class="simple">
 <li><p>Ability to create a custom platform to meet your needs.</p></li>
@@ -420,7 +405,7 @@ function OptanonWrapper() { }
 <p>Prior to starting this tutorial read and execute the platform creation tutorial https://github.com/Xilinx/Vitis-Tutorials/tree/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190.</p>
 </div>
 <div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial you will learn:</p>
 <ul class="simple">
 <li><p>How to create an RTL kernel (outside the ADF graph) to be used with the ADF graph.</p></li>
@@ -429,7 +414,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="step-1-creating-custom-rtl-ip-with-the-vivado-design-suite">
-<h2>Step 1 - Creating Custom RTL IP with the Vivado® Design Suite<a class="headerlink" href="#step-1-creating-custom-rtl-ip-with-the-vivado-design-suite" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1 - Creating Custom RTL IP with the Vivado® Design Suite<a class="headerlink" href="#step-1-creating-custom-rtl-ip-with-the-vivado-design-suite" title="Permalink to this heading">¶</a></h2>
 <p>After creating the custom platform from the previous tutorial, the next step is to package your RTL code as a Vivado IP and generate a Vitis RTL kernel.</p>
 <ol>
 <li><p>Open the <code class="docutils literal notranslate"><span class="pre">polar_clip_rtl_kernel.tcl</span></code> file.</p></li>
@@ -438,14 +423,14 @@ function OptanonWrapper() { }
 <ul>
 <li><p>The script creates a Vivado Design Suite project; this is required to create any IP because all source and constraint files need to be local to the IP.</p></li>
 <li><p>Lines 40 and 41 are used to associate the correct clock pins to the interfaces. This is required for the Vitis compiler which links those interfaces to the platform clocking.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">ipx</span><span class="o">::</span>associate_bus_interfaces <span class="o">-</span>busif in_sample <span class="o">-</span>clock ap_clk <span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>current_core<span class="k">]</span>
-<span class="nv">ipx</span><span class="o">::</span>associate_bus_interfaces <span class="o">-</span>busif out_sample <span class="o">-</span>clock ap_clk <span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>current_core<span class="k">]</span>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">ipx</span><span class="o">::</span>associate_bus_interfaces<span class="w"> </span><span class="o">-</span>busif<span class="w"> </span>in_sample<span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>ap_clk<span class="w"> </span><span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>current_core<span class="k">]</span>
+<span class="nv">ipx</span><span class="o">::</span>associate_bus_interfaces<span class="w"> </span><span class="o">-</span>busif<span class="w"> </span>out_sample<span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>ap_clk<span class="w"> </span><span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>current_core<span class="k">]</span>
 </pre></div>
 </div>
 </li>
 <li><p>On lines 44 and 45 the <code class="docutils literal notranslate"><span class="pre">FREQ_HZ</span></code> bus parameter is removed. This parameter is used in IP integrator, and is to make sure the associated clock of the interface is used correctly. However, the Vitis compiler sets this during the compilation process, and having it set in the IP will cause the compiler to incorrectly link the clocks.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">ipx</span><span class="o">::</span>remove_bus_parameter FREQ_HZ <span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>get_bus_interfaces in_sample <span class="o">-</span>of_objects <span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>current_core<span class="k">]]</span>
-<span class="nv">ipx</span><span class="o">::</span>remove_bus_parameter FREQ_HZ <span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>get_bus_interfaces out_sample <span class="o">-</span>of_objects <span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>current_core<span class="k">]]</span>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">ipx</span><span class="o">::</span>remove_bus_parameter<span class="w"> </span>FREQ_HZ<span class="w"> </span><span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>get_bus_interfaces<span class="w"> </span>in_sample<span class="w"> </span><span class="o">-</span>of_objects<span class="w"> </span><span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>current_core<span class="k">]]</span>
+<span class="nv">ipx</span><span class="o">::</span>remove_bus_parameter<span class="w"> </span>FREQ_HZ<span class="w"> </span><span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>get_bus_interfaces<span class="w"> </span>out_sample<span class="w"> </span><span class="o">-</span>of_objects<span class="w"> </span><span class="k">[</span><span class="nv">ipx</span><span class="o">::</span>current_core<span class="k">]]</span>
 </pre></div>
 </div>
 </li>
@@ -472,39 +457,39 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="step-2-interfacing-plio-kernels-to-graph">
-<h2>Step 2 - Interfacing PLIO Kernels to graph<a class="headerlink" href="#step-2-interfacing-plio-kernels-to-graph" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2 - Interfacing PLIO Kernels to graph<a class="headerlink" href="#step-2-interfacing-plio-kernels-to-graph" title="Permalink to this heading">¶</a></h2>
 <p>To set up the ADF graph to interface with the <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code> RTL kernel, you must add other connections to PLIOs that represent the RTL kernel.</p>
 <ol>
 <li><p>The following <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> shows how to connect to the RTL kernel.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;graph.h&quot;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;graph.h&quot;</span><span class="cp"></span>
 
-<span class="n">PLIO</span> <span class="o">*</span><span class="n">in0</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PLIO</span><span class="p">(</span><span class="s">&quot;DataIn1&quot;</span><span class="p">,</span> <span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span><span class="s">&quot;data/input.txt&quot;</span><span class="p">);</span>
+<span class="n">PLIO</span><span class="w"> </span><span class="o">*</span><span class="n">in0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PLIO</span><span class="p">(</span><span class="s">&quot;DataIn1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span><span class="s">&quot;data/input.txt&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// RTL Kernel PLIO</span>
-<span class="n">PLIO</span> <span class="o">*</span><span class="n">ai_to_pl</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PLIO</span><span class="p">(</span><span class="s">&quot;clip_in&quot;</span><span class="p">,</span><span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span> <span class="s">&quot;data/output.txt&quot;</span><span class="p">);</span>
-<span class="n">PLIO</span> <span class="o">*</span><span class="n">pl_to_ai</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PLIO</span><span class="p">(</span><span class="s">&quot;clip_out&quot;</span><span class="p">,</span> <span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span><span class="s">&quot;data/input2.txt&quot;</span><span class="p">);</span>
+<span class="n">PLIO</span><span class="w"> </span><span class="o">*</span><span class="n">ai_to_pl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PLIO</span><span class="p">(</span><span class="s">&quot;clip_in&quot;</span><span class="p">,</span><span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;data/output.txt&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">PLIO</span><span class="w"> </span><span class="o">*</span><span class="n">pl_to_ai</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PLIO</span><span class="p">(</span><span class="s">&quot;clip_out&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span><span class="s">&quot;data/input2.txt&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">PLIO</span> <span class="o">*</span><span class="n">out0</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PLIO</span><span class="p">(</span><span class="s">&quot;DataOut1&quot;</span><span class="p">,</span><span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span> <span class="s">&quot;data/output.txt&quot;</span><span class="p">);</span>
+<span class="n">PLIO</span><span class="w"> </span><span class="o">*</span><span class="n">out0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PLIO</span><span class="p">(</span><span class="s">&quot;DataOut1&quot;</span><span class="p">,</span><span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;data/output.txt&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// RTL Kernel Addition to the platform</span>
-<span class="n">simulation</span><span class="o">::</span><span class="n">platform</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">platform</span><span class="p">(</span><span class="n">in0</span><span class="p">,</span> <span class="n">pl_to_ai</span><span class="p">,</span> <span class="n">out0</span><span class="p">,</span> <span class="n">ai_to_pl</span><span class="p">);</span>
+<span class="n">simulation</span><span class="o">::</span><span class="n">platform</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">platform</span><span class="p">(</span><span class="n">in0</span><span class="p">,</span><span class="w"> </span><span class="n">pl_to_ai</span><span class="p">,</span><span class="w"> </span><span class="n">out0</span><span class="p">,</span><span class="w"> </span><span class="n">ai_to_pl</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">clipped</span> <span class="n">clipgraph</span><span class="p">;</span>
+<span class="n">clipped</span><span class="w"> </span><span class="n">clipgraph</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">connect</span><span class="o">&lt;&gt;</span> <span class="n">net0</span><span class="p">(</span><span class="n">platform</span><span class="p">.</span><span class="n">src</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">clipgraph</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
+<span class="n">connect</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">net0</span><span class="p">(</span><span class="n">platform</span><span class="p">.</span><span class="n">src</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">clipgraph</span><span class="p">.</span><span class="n">in</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Additional nets to the RTL Kernel</span>
-<span class="n">connect</span><span class="o">&lt;&gt;</span> <span class="n">net1</span><span class="p">(</span><span class="n">clipgraph</span><span class="p">.</span><span class="n">clip_in</span><span class="p">,</span><span class="n">platform</span><span class="p">.</span><span class="n">sink</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<span class="n">connect</span><span class="o">&lt;&gt;</span> <span class="n">net2</span><span class="p">(</span><span class="n">platform</span><span class="p">.</span><span class="n">src</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">clipgraph</span><span class="p">.</span><span class="n">clip_out</span><span class="p">);</span>
-<span class="n">connect</span><span class="o">&lt;&gt;</span> <span class="n">net3</span><span class="p">(</span><span class="n">clipgraph</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">platform</span><span class="p">.</span><span class="n">sink</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="n">connect</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">net1</span><span class="p">(</span><span class="n">clipgraph</span><span class="p">.</span><span class="n">clip_in</span><span class="p">,</span><span class="n">platform</span><span class="p">.</span><span class="n">sink</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="n">connect</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">net2</span><span class="p">(</span><span class="n">platform</span><span class="p">.</span><span class="n">src</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">clipgraph</span><span class="p">.</span><span class="n">clip_out</span><span class="p">);</span><span class="w"></span>
+<span class="n">connect</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">net3</span><span class="p">(</span><span class="n">clipgraph</span><span class="p">.</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">platform</span><span class="p">.</span><span class="n">sink</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
 
 <span class="cp">#ifdef __AIESIM__</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">clipgraph</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
-    <span class="n">clipgraph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
-    <span class="n">clipgraph</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">clipgraph</span><span class="p">.</span><span class="n">init</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">clipgraph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">clipgraph</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 <span class="cp">#endif</span>
 </pre></div>
 </div>
@@ -531,7 +516,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="step-3-building-input-output-plio-kernels">
-<h2>Step 3 - Building Input/Output PLIO Kernels<a class="headerlink" href="#step-3-building-input-output-plio-kernels" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3 - Building Input/Output PLIO Kernels<a class="headerlink" href="#step-3-building-input-output-plio-kernels" title="Permalink to this heading">¶</a></h2>
 <p>Similar to the <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code> kernel, the <code class="docutils literal notranslate"><span class="pre">mm2s</span></code> and <code class="docutils literal notranslate"><span class="pre">s2mm</span></code> kernels are not part of the ADF graph. Unlike the <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code> (RTL kernel), these are HLS-based kernels and use the Vitis compiler to compile them into XO files. Remember that instead of targeting a Xilinx provided platform, you are targeting the custom platform created in the previous tutorial.</p>
 <p>To build these kernels run the following commands:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v++ -c --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_files/step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm -g --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
@@ -544,15 +529,15 @@ v++ -c --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_f
 </div>
 </div>
 <div class="section" id="step-4-building-xclbin">
-<h2>Step 4 - Building XCLBIN<a class="headerlink" href="#step-4-building-xclbin" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4 - Building XCLBIN<a class="headerlink" href="#step-4-building-xclbin" title="Permalink to this heading">¶</a></h2>
 <p>Because there is no HLS kernel in the ADF graph, the <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file, which is used to determine connectivity, needs to reflect the new AI Engine interfacing.</p>
 <ol>
 <li><p>Open the <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file and the <code class="docutils literal notranslate"><span class="pre">sc</span></code> options and note that there are two lines specific to the <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code> kernel. Note that the name of the interfaces are the same as defined previously in the code snippet for the <code class="docutils literal notranslate"><span class="pre">graph.h</span></code> file where the first parameter of the PLIO object is instantiated.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">connectivity</span><span class="p p-Indicator">]</span>
-<span class="l l-Scalar l-Scalar-Plain">sc=mm2s_1.s:ai_engine_0.DataIn1</span>
-<span class="l l-Scalar l-Scalar-Plain">sc=ai_engine_0.clip_in:polar_clip_1.in_sample</span>
-<span class="l l-Scalar l-Scalar-Plain">sc=polar_clip_1.out_sample:ai_engine_0.clip_out</span>
-<span class="l l-Scalar l-Scalar-Plain">sc=ai_engine_0.DataOut1:s2mm_1.s</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">connectivity</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">sc=mm2s_1.s:ai_engine_0.DataIn1</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">sc=ai_engine_0.clip_in:polar_clip_1.in_sample</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">sc=polar_clip_1.out_sample:ai_engine_0.clip_out</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">sc=ai_engine_0.DataOut1:s2mm_1.s</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
@@ -569,7 +554,7 @@ v++ -c --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_f
 </ol>
 </div>
 <div class="section" id="step-5-build-host-application">
-<h2>Step 5 - Build Host Application<a class="headerlink" href="#step-5-build-host-application" title="Permalink to this headline">¶</a></h2>
+<h2>Step 5 - Build Host Application<a class="headerlink" href="#step-5-build-host-application" title="Permalink to this heading">¶</a></h2>
 <p>Building the host application follows a similar procedure, regardless of whether it is targeting a base platform or custom platform. Make sure to use the appropriate <code class="docutils literal notranslate"><span class="pre">SYSROOT</span></code> path for the design. Also make sure to adjust the path based upon where you cloned the repositories.</p>
 <p>Build the host application:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aarch64-linux-gnu-g++ -Wall -c -std<span class="o">=</span>c++14 -Wno-int-to-pointer-cast <span class="se">\</span>
@@ -596,7 +581,7 @@ aarch64-linux-gnu-g++ *.o -ladf_api_xrt -lxrt_coreutil <span class="se">\</span>
 </div>
 </div>
 <div class="section" id="step-6-package">
-<h2>Step 6 - Package<a class="headerlink" href="#step-6-package" title="Permalink to this headline">¶</a></h2>
+<h2>Step 6 - Package<a class="headerlink" href="#step-6-package" title="Permalink to this heading">¶</a></h2>
 <p>When packaging the design, make sure that the <code class="docutils literal notranslate"><span class="pre">rootfs</span></code>, <code class="docutils literal notranslate"><span class="pre">kernel_image</span></code>, and <code class="docutils literal notranslate"><span class="pre">platform</span></code> all point to the custom platform with the custom Linux build. If any of these items are not correct, packaging can throw an error, or, if it does package, then the emulation will malfunction.</p>
 <p>To package the design run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./sw
@@ -617,7 +602,7 @@ v++ -p -t hw_emu <span class="se">\</span>
 </div>
 </div>
 <div class="section" id="step-7-run-emulation">
-<h2>Step 7 - Run Emulation<a class="headerlink" href="#step-7-run-emulation" title="Permalink to this headline">¶</a></h2>
+<h2>Step 7 - Run Emulation<a class="headerlink" href="#step-7-run-emulation" title="Permalink to this heading">¶</a></h2>
 <p>After packaging, everything is ready to run emulation or to run on hardware.</p>
 <ol>
 <li><p>To run emulation use the following command:</p>
@@ -647,7 +632,7 @@ v++ -p -t hw_emu <span class="se">\</span>
 </ol>
 <p>You should see an output displaying <strong>TEST PASSED</strong>. When this is shown, run the keyboard command: <code class="docutils literal notranslate"><span class="pre">Ctrl+A</span> <span class="pre">x</span></code> to end the QEMU instance.</p>
 <div class="section" id="to-view-emulation-waveforms">
-<h3>To View Emulation Waveforms<a class="headerlink" href="#to-view-emulation-waveforms" title="Permalink to this headline">¶</a></h3>
+<h3>To View Emulation Waveforms<a class="headerlink" href="#to-view-emulation-waveforms" title="Permalink to this heading">¶</a></h3>
 <p>The following image shows a debug waveform to show the data movement through the system. The general flow of data is as follows:</p>
 <ul class="simple">
 <li><p>Data goes from DDR memory to the AI Engine through the <code class="docutils literal notranslate"><span class="pre">mm2s</span></code> kernel.</p></li>
@@ -665,7 +650,7 @@ v++ -p -t hw_emu <span class="se">\</span>
 </div>
 </div>
 <div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial shows how to:</p>
 <ul class="simple">
 <li><p>Create a custom RTL kernel from a Vivado IP.</p></li>
@@ -675,7 +660,7 @@ v++ -p -t hw_emu <span class="se">\</span>
 </div>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at</p>
 <p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>

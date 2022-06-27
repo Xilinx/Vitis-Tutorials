@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows" href="../16-external-traffic-generator-aie/README.html" />
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
@@ -309,17 +305,6 @@ function OptanonWrapper() { }
 </li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -399,7 +384,7 @@ function OptanonWrapper() { }
    </td>
  </tr></table><p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
 <p>AI Engine application development can start early in the system development stage. Little by little, the AI Engine development team and the hardware development team converge to an interface between the Adaptable Engine and the AI Engine array. At some point, this interface is fixed and should not be changed. This tutorial shows you how to modify an AI Engine application after the platform has been frozen while avoiding a complete Vivado® tool run, which can take a long time if timing closure requires specific attention.</p>
 <p>There are two ways to perform this operation:</p>
 <ol class="simple">
@@ -411,7 +396,7 @@ function OptanonWrapper() { }
 <p>This tutorial details all the steps to perform hardware emulation (<code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>), but it supports also the hardware implementation flow by changing the compilation target.</p>
 </div>
 <div class="section" id="before-you-begin">
-<h1>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h1>
+<h1>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial requires a number of tools and files to be installed:</p>
 <ul class="simple">
 <li><p>Download and install the Vitis™ software platform from <a class="reference external" href="https://www.xilinx.com/support/download.html">here</a>. See the installation instructions <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration">here</a>.</p></li>
@@ -427,7 +412,7 @@ function OptanonWrapper() { }
 <li><p>Set up your <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable based on where you downloaded the platform.</p></li>
 </ol>
 <div class="section" id="accessing-the-tutorial-reference-files">
-<h2>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this headline">¶</a></h2>
+<h2>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>To access the reference files, type the following into a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">PostLinkRecompile</span></code> directory.</p></li>
@@ -437,7 +422,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="ai-engine-application-post-link-recompile">
-<h1>AI Engine Application Post-Link Recompile<a class="headerlink" href="#ai-engine-application-post-link-recompile" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine Application Post-Link Recompile<a class="headerlink" href="#ai-engine-application-post-link-recompile" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial contains the following labs:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="DirectRecompileMakefile_Flow.html"><span class="doc">Lab 1</span></a> is based on a direct recompile Makefile.</p></li>
@@ -451,15 +436,15 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="objectives">
-<h1>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h1>
+<h1>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It demonstrates a Vitis IDE flow and a Makefile flow.</p>
 <p>Completing this tutorial should give you confidence to develop AI Engine designs based on a hardware/software platform, knowing that you can modify the AI Engine part and the processing system control application. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed.</p>
 <div class="section" id="support">
-<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h2>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="memory-allocation-concepts">
-<h1>Memory Allocation Concepts<a class="headerlink" href="#memory-allocation-concepts" title="Permalink to this headline">¶</a></h1>
+<h1>Memory Allocation Concepts<a class="headerlink" href="#memory-allocation-concepts" title="Permalink to this heading">¶</a></h1>
 <p>When you run a program on a CPU, you don’t generally worry about how the underlying hardware manages memory.
 There are occasional issues with alignment, etc. on some processor architectures, but largely modern OSes and
 compilers abstract these things to a degree where they’re not usually visible unless you deal with a lot of
@@ -435,7 +420,7 @@ processor accessing data in a non-cacheable buffer will generally be much slower
 management operations in the first place.  This is usually used for models where the processor is sequencing buffers but not actually accessing the data they contain.</p>
 </div>
 <div class="section" id="alveo-guided-software-introduction">
-<h1>Alveo Guided Software Introduction<a class="headerlink" href="#alveo-guided-software-introduction" title="Permalink to this headline">¶</a></h1>
+<h1>Alveo Guided Software Introduction<a class="headerlink" href="#alveo-guided-software-introduction" title="Permalink to this heading">¶</a></h1>
 <p>Whew, that’s a lot of background! Let’s quickly recap the important points before we jump into the guided software example:</p>
 <ul class="simple">
 <li><p>Acceleration is generally done on some intersection of two axes: trying to do the same task <strong>faster</strong>

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -72,10 +74,12 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Versal® AI Engine LeNet Tutorial" href="Design_Tutorials/01-aie_lenet_tutorial/README.html" />
-    <link rel="prev" title="Using GT Kernel in Alveo with Vitis Flow" href="../Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo/README.html" /> 
+    <link rel="prev" title="Vitis Tutorials" href="../../index.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">AI Engine Development</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#design-tutorials">Design Tutorials</a><ul>
@@ -336,17 +332,6 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
-</ul>
 
             
 			
@@ -418,14 +403,14 @@ function OptanonWrapper() { }
            <div itemprop="articleBody">
             
   <div class="section" id="ai-engine-development">
-<h1>AI Engine Development<a class="headerlink" href="#ai-engine-development" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine Development<a class="headerlink" href="#ai-engine-development" title="Permalink to this heading">¶</a></h1>
 <div class="sidebar">
 <p class="sidebar-title">More Information</p>
 <p>See Vitis™ Development Environment on <a class="reference external" href="https://www.xilinx.com/products/design-tools/vitis.html">xilinx.com</a></p>
 </div>
 <p>The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto ACAP kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary build optionss to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.</p>
 <div class="section" id="design-tutorials">
-<h2>Design Tutorials<a class="headerlink" href="#design-tutorials" title="Permalink to this headline">¶</a></h2>
+<h2>Design Tutorials<a class="headerlink" href="#design-tutorials" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 </div>
 <table class="colwidths-given docutils align-default">
@@ -469,7 +454,7 @@ function OptanonWrapper() { }
 </table>
 </div>
 <div class="section" id="feature-tutorials">
-<h2>Feature Tutorials<a class="headerlink" href="#feature-tutorials" title="Permalink to this headline">¶</a></h2>
+<h2>Feature Tutorials<a class="headerlink" href="#feature-tutorials" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 </div>
 <table class="colwidths-given docutils align-default">
@@ -555,7 +540,7 @@ function OptanonWrapper() { }
         <a href="Design_Tutorials/01-aie_lenet_tutorial/README.html" class="btn btn-neutral float-right" title="Versal® AI Engine LeNet Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo/README.html" class="btn btn-neutral float-left" title="Using GT Kernel in Alveo with Vitis Flow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../../index.html" class="btn btn-neutral float-left" title="Vitis Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

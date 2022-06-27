@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>The FPGA image that we’ve loaded contains a very simple vector addition core.  It takes two buffers of
 arbitrary length as inputs and produces a buffer of equal length as an output.  As the name implies, during
 the process it adds them together.</p>
@@ -362,12 +347,12 @@ algorithm in the listing below directly into the FPGA fabric.  This isn’t part
 implementation tools will do some optimization for us, but we can make it better. With this code, we can
 process one addition operation on each tick of the clock but we’re still only processing one 32-bit output at
 a time.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">vadd_sw</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">size</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-       <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">vadd_sw</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>It’s very important to note that at this point there is no way this code will beat the processor.  The clock
@@ -378,7 +363,7 @@ manage the buffers for our inputs and outputs to this function.  Only after that
 advantage of the acceleration we can get from the Alveo Data Center accelerator card.</p>
 </div>
 <div class="section" id="key-code">
-<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this headline">¶</a></h1>
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>This example is the first time we’re going to actually run something on the FPGA, modest though it may be.  In order to run something on the card there are four things that we must do:</p>
 <ol class="simple">
 <li><p>Allocate and populate the buffers we will use to send and receive data from the card.</p></li>
@@ -389,10 +374,10 @@ advantage of the acceleration we can get from the Alveo Data Center accelerator 
 <p>As you can see, only one of those things actually takes place on the card. Memory management will make or break your application’s performance, so let’s start to take a look at that.</p>
 <p>If you haven’t done acceleration work before, you may be tempted to jump in and just use normal calls to <code class="docutils literal notranslate"><span class="pre">malloc()</span></code> or <code class="docutils literal notranslate"><span class="pre">new</span></code> to allocate your memory.  In this example we’ll do just that, allocating a series of buffers to transfer between the host and the Alveo card.  We’ll allocate four buffers: two input buffers to add together, one output buffer for the Alveo to use, and an extra buffer for a software implementation of our <code class="docutils literal notranslate"><span class="pre">vadd</span></code> function.  This allows us to see something interesting: how we allocate memory for Alveo also impacts how efficiently the processor will run.</p>
 <p>Buffers are allocated simply, as in the listing below.  In our case, <code class="docutils literal notranslate"><span class="pre">BUFSIZE</span></code> is 24 MiB, or 6 × 1024 × 1024 values of type <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>.  Any code not mentioned here is either identical or functionally equivalent to the previous examples.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span> <span class="n">a</span> <span class="o">=</span><span class="k">new</span> <span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span>
-<span class="kt">uint32_t</span><span class="o">*</span> <span class="n">b</span> <span class="o">=</span><span class="k">new</span> <span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span>
-<span class="kt">uint32_t</span><span class="o">*</span> <span class="n">c</span> <span class="o">=</span><span class="k">new</span> <span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span>
-<span class="kt">uint32_t</span><span class="o">*</span> <span class="n">d</span> <span class="o">=</span><span class="k">new</span> <span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This will allocate memory that is <strong>virtual</strong>, <strong>paged</strong>, and, most importantly, <strong>non-aligned</strong>.  In
@@ -403,28 +388,28 @@ send them down to the Alveo global memory.  We do that by creating OpenCL buffer
 own pointers. This isn’t necessarily bad, but because we haven’t taken care allocating our pointers it’s going
 to hurt our performance.</p>
 <p>The listing below contains the code mapping our allocated buffers to OpenCL buffer objects.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Memory</span><span class="o">&gt;</span> <span class="n">inBufVec</span><span class="p">,</span> <span class="n">outBufVec</span><span class="p">;</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="nf">a_to_device</span><span class="p">(</span><span class="n">context</span><span class="p">,</span>
-                       <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span> <span class="o">|</span>
-                                                 <span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span>
-                       <span class="n">BUFSIZE</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span>
-                       <span class="n">a</span><span class="p">,</span>
-                       <span class="nb">NULL</span><span class="p">);</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="nf">b_to_device</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span>
-                       <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span> <span class="o">|</span>
-                                                <span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span>
-                       <span class="n">BUFSIZE</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span>
-                       <span class="n">b</span><span class="p">,</span>
-                       <span class="nb">NULL</span><span class="p">);</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="nf">c_from_device</span><span class="p">(</span><span class="n">context</span><span class="p">,</span>
-                        <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span> <span class="o">|</span>
-                                                  <span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span>
-                        <span class="n">BUFSIZE</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span>
-                        <span class="n">c</span><span class="p">,</span>
-                        <span class="nb">NULL</span><span class="p">);</span>
-<span class="n">inBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">a_to_device</span><span class="p">);</span>
-<span class="n">inBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">b_to_device</span><span class="p">);</span>
-<span class="n">outBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">c_from_device</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Memory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">inBufVec</span><span class="p">,</span><span class="w"> </span><span class="n">outBufVec</span><span class="p">;</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">a_to_device</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                                 </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                       </span><span class="n">BUFSIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                       </span><span class="n">a</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">b_to_device</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                                </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                       </span><span class="n">BUFSIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                       </span><span class="n">b</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">c_from_device</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                                  </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                        </span><span class="n">BUFSIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                        </span><span class="n">c</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">inBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">a_to_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">inBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">b_to_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">outBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">c_from_device</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>What we’re doing here is allocating <code class="docutils literal notranslate"><span class="pre">cl::Buffer</span></code> objects, which are recognized by the API, and passing in
@@ -435,9 +420,9 @@ only</strong>.  Then, <code class="docutils literal notranslate"><span class="pr
 additionally add these buffer objects to vectors so that we can transfer multiple buffers at once (note that
 we’re essentially adding pointers to the vectors, not the data buffers themselves).</p>
 <p>Next, we can transfer the input buffers down to the Alveo card:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span> <span class="n">event_sp</span><span class="p">;</span>
-<span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">(</span><span class="n">inBufVec</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span>
-<span class="n">clWaitForEvents</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="n">cl_event</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="w"> </span><span class="n">event_sp</span><span class="p">;</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">(</span><span class="n">inBufVec</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
+<span class="n">clWaitForEvents</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cl_event</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this code snippet the “main event” is the call to enqueueMigrateMemObjects() on line 108.  We pass in our
@@ -454,23 +439,23 @@ maximum performance.</p>
 our argument list looked like this:</p>
 <p><code class="docutils literal notranslate"><span class="pre">(uint32_t*a,</span> <span class="pre">uint32_t*b,</span> <span class="pre">uint32_t*c,</span> <span class="pre">uint32_t</span> <span class="pre">size)</span></code></p>
 <p>In our case <code class="docutils literal notranslate"><span class="pre">a</span></code> is argument 0, <code class="docutils literal notranslate"><span class="pre">b</span></code> is argument 1, and so on.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a_to_device</span><span class="p">);</span>
-<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b_to_device</span><span class="p">);</span>
-<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">c_from_device</span><span class="p">);</span>
-<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">BUFSIZE</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">a_to_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">b_to_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">c_from_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Next, we add the kernel itself to the command queue so that it will begin executing.  Generally speaking, you
 would enqueue the transfers and the kernel such that they’d execute back-to-back rather than synchronizing in
 between.  The line of code that adds the execution of the kernel to the command queue is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">krnl</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">krnl</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>If you don’t want to wait at this point you can again pass in <code class="docutils literal notranslate"><span class="pre">NULL</span></code> instead of a <code class="docutils literal notranslate"><span class="pre">cl::Event</span></code> object.</p>
 <p>And, finally, once the kernel completes we want to transfer the memory back to the host so that we can access
 the new values from the CPU.  This is done as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">(</span><span class="n">outBufVec</span><span class="p">,</span> <span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span>
-<span class="n">clWaitForEvents</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="n">cl_event</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">(</span><span class="n">outBufVec</span><span class="p">,</span><span class="w"> </span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
+<span class="n">clWaitForEvents</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cl_event</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this instance we do want to wait for synchronization.  This is important; recall that when we call these
@@ -489,7 +474,7 @@ attempt to access the buffer immediately after enqueuing the transfer, it have f
 to better report on the timing of various operations in the workflow.</p>
 </div>
 <div class="section" id="running-the-application">
-<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this headline">¶</a></h1>
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory.</p>
 <p><code class="docutils literal notranslate"><span class="pre">./01_simple_malloc</span> <span class="pre">alveo_examples</span></code></p>
 <p>The program will output a message similar to this:</p>
@@ -584,7 +569,7 @@ For now let’s establish a baseline:</p>
 </tbody>
 </table></div>
 <div class="section" id="extra-exercises">
-<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this headline">¶</a></h1>
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
 <li><p>Vary the size of the buffers allocated.  Can you derive an approximate relationship between buffer size and
@@ -594,7 +579,7 @@ the timing for individual operations? Do they all scale at the same rate?</p></l
 </ul>
 </div>
 <div class="section" id="key-takeaways">
-<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this headline">¶</a></h1>
+<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Once again we have to pay our FPGA configuration “tax”.  We will need to save at least 250 ms over the CPU
 to make up for it.  Note that our trivial example will never be at the CPU if we’re just looking at

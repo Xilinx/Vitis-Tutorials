@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,10 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="PetaLinux Building and System Customization" href="../02_petalinux_customization/README.html" />
-    <link rel="prev" title="Vitis Custom Embedded Platform Creation Example on KV260" href="../../Design_Tutorials/01-Edge-KV260/README.html" /> 
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,50 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../Vitis_Platform_Creation.html#design-tutorials">Design Tutorials</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html#feature-tutorials">Feature Tutorials</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Versal Platform Creation with Custom IP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#step-1-create-a-hardware-platform">Step 1: Create a Hardware Platform</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#step-2-add-custom-ip-into-the-block-design">Step 2: Add Custom IP into the Block Design</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#step-3-create-the-software-components-with-petalinux">Step 3: Create the Software Components with PetaLinux</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#step-4-package-the-platform-in-the-vitis-software-platform">Step 4: Package the Platform in the Vitis Software Platform</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#step-5-test-the-platform">Step 5: Test the Platform</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#support">Support</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../02_petalinux_customization/README.html">PetaLinux Building and System Customization</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -347,8 +312,6 @@ function OptanonWrapper() { }
     
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../../Vitis_Platform_Creation.html">Vitis Platform Creation Tutorials</a> &raquo;</li>
-        
       <li>Versal Platform Creation with Custom IP</li>
     
     
@@ -375,13 +338,13 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="versal-platform-creation-with-custom-ip">
-<h1>Versal Platform Creation with Custom IP<a class="headerlink" href="#versal-platform-creation-with-custom-ip" title="Permalink to this headline">¶</a></h1>
+<h1>Versal Platform Creation with Custom IP<a class="headerlink" href="#versal-platform-creation-with-custom-ip" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
 <p>In this tutorial, you will learn how to add custom IPs into a Versal® ACAP platform. This tutorial is an ‘add-on’ to the basic <a class="reference external" href="../../Introduction/03_Edge_VCK190">Versal platform creation tutorial</a>. So for each step, there will be a pointer to the corresponding part of that tutorial, as required.</p>
 <p>This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html).</p>
 </div>
 <div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>The tutorial is structured as follows:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="#versal-platform-creation-with-custom-ip">Versal Platform Creation with Custom IP</a></p></li>
@@ -398,12 +361,12 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="#license">License</a></p></li>
 </ul>
 <div class="section" id="step-1-create-a-hardware-platform">
-<h2>Step 1: Create a Hardware Platform<a class="headerlink" href="#step-1-create-a-hardware-platform" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1: Create a Hardware Platform<a class="headerlink" href="#step-1-create-a-hardware-platform" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, you will use the prebuilt example design for VCK190 board to build the hardware platform. This method saves time instead of having to manually create the IP integrator block design.</p>
 <p>Follow the instructions in <a class="reference external" href="../../Introduction/03_Edge_VCK190/step0">Versal platform creation tutorial-Step0</a>. You can skip the optional steps.</p>
 </div>
 <div class="section" id="step-2-add-custom-ip-into-the-block-design">
-<h2>Step 2: Add Custom IP into the Block Design<a class="headerlink" href="#step-2-add-custom-ip-into-the-block-design" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2: Add Custom IP into the Block Design<a class="headerlink" href="#step-2-add-custom-ip-into-the-block-design" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you will add a DDS compiler IP into the platform design that you created in the last step. The DDS compiler IP is provided in the Xilinx IP catalog in the Vivado® Design Suite. To see details about this IP, see the product guide, <a class="reference external" href="https://www.xilinx.com/support/documentation/ip_documentation/dds_compiler/v6_0/pg141-dds-compiler.pdf">PG141</a>. Because it is a publicly available IP, it supports simulation inherently. If you want to add your own IP cores, you must provide simulation models to support simulation.</p>
 <ol>
 <li><p>Reopen the system block design that was created in last step if you have already closed it.</p></li>
@@ -435,15 +398,15 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="step-3-create-the-software-components-with-petalinux">
-<h2>Step 3: Create the Software Components with PetaLinux<a class="headerlink" href="#step-3-create-the-software-components-with-petalinux" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3: Create the Software Components with PetaLinux<a class="headerlink" href="#step-3-create-the-software-components-with-petalinux" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you will create a PetaLinux project that includes the Vitis unified software platform required components. Follow the instructions in <a class="reference external" href="../../Introduction/03_Edge_VCK190/step2">Versal platform creation tutorial-Step2</a>.</p>
 </div>
 <div class="section" id="step-4-package-the-platform-in-the-vitis-software-platform">
-<h2>Step 4: Package the Platform in the Vitis Software Platform<a class="headerlink" href="#step-4-package-the-platform-in-the-vitis-software-platform" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4: Package the Platform in the Vitis Software Platform<a class="headerlink" href="#step-4-package-the-platform-in-the-vitis-software-platform" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you will package the hardware XSA with software components in the Vitis IDE. Follow the instructions in <a class="reference external" href="../../Introduction/03_Edge_VCK190/step3">Versal platform creation tutorial-Step3</a>.</p>
 </div>
 <div class="section" id="step-5-test-the-platform">
-<h2>Step 5: Test the Platform<a class="headerlink" href="#step-5-test-the-platform" title="Permalink to this headline">¶</a></h2>
+<h2>Step 5: Test the Platform<a class="headerlink" href="#step-5-test-the-platform" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you will build a simple <code class="docutils literal notranslate"><span class="pre">vadd</span></code> application and run hardware emulation to test the platform. Follow the instructions in <a class="reference external" href="../../Introduction/03_Edge_VCK190/step4">Versal platform creation tutorial-Step4</a>, but we will make some modifications.</p>
 <p>You just need to run test 2 on that page. After creating the <code class="docutils literal notranslate"><span class="pre">vadd</span></code> system project, make the following changes.</p>
 <ol class="simple">
@@ -550,11 +513,11 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
@@ -573,15 +536,6 @@ function OptanonWrapper() { }
 
 
 	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../02_petalinux_customization/README.html" class="btn btn-neutral float-right" title="PetaLinux Building and System Customization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../../Design_Tutorials/01-Edge-KV260/README.html" class="btn btn-neutral float-left" title="Vitis Custom Embedded Platform Creation Example on KV260" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

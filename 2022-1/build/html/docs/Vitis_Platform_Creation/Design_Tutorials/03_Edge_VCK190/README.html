@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,10 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="Vitis Custom Embedded Platform Creation Example on KV260" href="../01-Edge-KV260/README.html" />
-    <link rel="prev" title="Vitis Custom Embedded Platform Creation Example on ZCU104" href="../02-Edge-AI-ZCU104/README.html" /> 
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,46 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html#design-tutorials">Design Tutorials</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../02-Edge-AI-ZCU104/README.html">Custom Platform Creation Tutorial on MPSoC</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Custom Platform Creation Tutorial on Versal</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#changelog">Changelog</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../01-Edge-KV260/README.html">Custom Platform Creation Example on KV260 Starter Kit</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../Vitis_Platform_Creation.html#feature-tutorials">Feature Tutorials</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -343,8 +312,6 @@ function OptanonWrapper() { }
     
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../../Vitis_Platform_Creation.html">Vitis Platform Creation Tutorials</a> &raquo;</li>
-        
       <li>Versal Custom Platform Creation Tutorial</li>
     
     
@@ -385,7 +352,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="versal-custom-platform-creation-tutorial">
-<h1>Versal Custom Platform Creation Tutorial<a class="headerlink" href="#versal-custom-platform-creation-tutorial" title="Permalink to this headline">¶</a></h1>
+<h1>Versal Custom Platform Creation Tutorial<a class="headerlink" href="#versal-custom-platform-creation-tutorial" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: 2021.2</strong></em></p>
 <p><strong>Note</strong>: <em><strong>Version 2022.1</strong></em> of this tutorial is under preparation. Please refer the <a class="reference internal" href="../../../Getting_Started/Vitis_Platform/README.html"><span class="doc">Versal Platform Quick Start</span></a> for a reference first if you try to use Vitis 2022.1 to create a Versal Platform.</p>
 <p>In this module, we will create a custom platform to run acceleration applications for VCK190 evaluation board.</p>
@@ -404,7 +371,7 @@ function OptanonWrapper() { }
 <li><p><a class="reference internal" href="faq.html"><span class="doc">Frequently Asked Questions</span></a></p></li>
 </ul>
 <div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial design supports VCK190 production board and VCK190 ES1 board.</p>
 <ul class="simple">
 <li><p>Vitis 2021.2 supports VCK190 production board. No additional licenses and settings are needed to use this board.</p></li>
@@ -413,7 +380,7 @@ function OptanonWrapper() { }
 <p>This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux.</p>
 </div>
 <div class="section" id="reference">
-<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html">UG1393: Vitis Acceleration Flow User Guide</a></p>
 <ul>
@@ -424,15 +391,15 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="changelog">
-<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
+<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="id1">
-<h3>2021.2<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>2021.2<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>In Step 1, the Vivado project exports XSA for hardware and hardware emulation seperatedly. When creating the platform in <a class="reference internal" href="step3.html"><span class="doc">step3</span></a>, it’s recommended to provide seperate XSA for hardware and hardware emulation.</p></li>
 </ul>
 </div>
 <div class="section" id="id2">
-<h3>2021.1<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>2021.1<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Step 0: Vivado example design has more customizable options for clocks and interrupts.</p></li>
 <li><p>Step 1: Removed tcl commands for platform setup because the Platform Setup Wizard can do the job well.</p></li>
@@ -458,15 +425,6 @@ function OptanonWrapper() { }
 
 
 	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../01-Edge-KV260/README.html" class="btn btn-neutral float-right" title="Vitis Custom Embedded Platform Creation Example on KV260" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../02-Edge-AI-ZCU104/README.html" class="btn btn-neutral float-left" title="Vitis Custom Embedded Platform Creation Example on ZCU104" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

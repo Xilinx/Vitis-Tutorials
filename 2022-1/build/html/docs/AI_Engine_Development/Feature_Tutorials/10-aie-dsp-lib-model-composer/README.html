@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="Versal Emulation Waveform Analysis" href="../11-ai-engine-emulation-waveform-analysis/README.html" />
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
@@ -312,17 +308,6 @@ function OptanonWrapper() { }
 </li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -404,15 +389,15 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="designing-with-the-ai-engine-dsplib-and-vitis-model-composer">
-<h1>Designing with the AI Engine DSPLib and Vitis Model Composer<a class="headerlink" href="#designing-with-the-ai-engine-dsplib-and-vitis-model-composer" title="Permalink to this headline">¶</a></h1>
+<h1>Designing with the AI Engine DSPLib and Vitis Model Composer<a class="headerlink" href="#designing-with-the-ai-engine-dsplib-and-vitis-model-composer" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The purpose of this tutorial is to provide hands-on experience for designing AI Engine applications using Model Composer. This tool is a set of blocksets for Simulink that makes it easy to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.
 Vitis Model Composer can be used to create complex systems targeting the PL (RTL and HLS blocksets) and the AI Engine array (AIE blockset) at the same time. The complete system can be simulated in Simulink, and the code generated (RTL for the PL and C++ graph for the AI Engine array).</p>
 </div>
 <div class="section" id="before-you-begin">
-<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>Install the tools:</p>
 <ul class="simple">
 <li><p>Get and install <a class="reference external" href="https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml">MATLAB and Simulink 2021a or 2021b</a>.</p>
@@ -424,7 +409,7 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 </ul>
 </div>
 <div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The goal of this tutorial is to implement the Decimation Filter Chain depicted below:</p>
 <p><img alt="Decimation Filter Chain" src="../../../../_images/DecimationChain.svg" /></p>
 <ol class="simple">
@@ -477,7 +462,7 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <p>These are there to help you if you cannot complete any of the 4 stages.</p>
 </div>
 <div class="section" id="stage-1-create-and-simulate-the-design">
-<h2>Stage 1: Create and Simulate the Design<a class="headerlink" href="#stage-1-create-and-simulate-the-design" title="Permalink to this headline">¶</a></h2>
+<h2>Stage 1: Create and Simulate the Design<a class="headerlink" href="#stage-1-create-and-simulate-the-design" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>On the MATLAB GUI, select the <strong>Home Tab</strong> and click <strong>Simulink</strong>.</p></li>
 </ol>
@@ -703,7 +688,7 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 </ol>
 </div>
 <div class="section" id="stage-2-further-analysis-of-the-design">
-<h2>Stage 2: Further Analysis of the Design<a class="headerlink" href="#stage-2-further-analysis-of-the-design" title="Permalink to this headline">¶</a></h2>
+<h2>Stage 2: Further Analysis of the Design<a class="headerlink" href="#stage-2-further-analysis-of-the-design" title="Permalink to this heading">¶</a></h2>
 <p>When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink the spectrum can be easily displayed using a spectrum scope.</p>
 <ol class="simple">
 <li><p>Right-click the canvas and type <code class="docutils literal notranslate"><span class="pre">spectrum</span></code>.</p></li>
@@ -748,7 +733,7 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <p>All the simulations that occur in Simulink are the so-called ‘Emulation-SW’. These types of simulation are bit-exact, but they do not provide any information about timing.</p>
 </div>
 <div class="section" id="stage-3-generate-the-code-and-perform-emulation-ai-engine">
-<h2>Stage 3: Generate the Code and Perform Emulation-AI Engine<a class="headerlink" href="#stage-3-generate-the-code-and-perform-emulation-ai-engine" title="Permalink to this headline">¶</a></h2>
+<h2>Stage 3: Generate the Code and Perform Emulation-AI Engine<a class="headerlink" href="#stage-3-generate-the-code-and-perform-emulation-ai-engine" title="Permalink to this heading">¶</a></h2>
 <p>In this stage you will generate the graph code of this design and perform bit-true and cycle true simulations with the AI Engine Simulator.</p>
 <ol class="simple">
 <li><p>Select the four AIE FIR Filters and the Frequency shifting block and type <strong>CTRL+G</strong> to group them in a subsystem. Assign a new name: <strong>FIRchain</strong>.</p></li>
@@ -772,64 +757,64 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __XMC_FIRCHAIN_H__</span>
 <span class="cp">#define __XMC_FIRCHAIN_H__</span>
 
-<span class="cp">#include</span> <span class="cpf">&lt;adf.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;./FIR_Halfband_Decimator_b6bb9f39/FIR_Halfband_Decimator_b6bb9f39.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;./FIR_Halfband_Decimator_c797d059/FIR_Halfband_Decimator_c797d059.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;./FIR_Halfband_Decimator_714ce49a/FIR_Halfband_Decimator_714ce49a.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;./FIR_Symmetric_00c44acd/FIR_Symmetric_00c44acd.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;aiecode_src/FreqShift.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;adf.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;./FIR_Halfband_Decimator_b6bb9f39/FIR_Halfband_Decimator_b6bb9f39.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;./FIR_Halfband_Decimator_c797d059/FIR_Halfband_Decimator_c797d059.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;./FIR_Halfband_Decimator_714ce49a/FIR_Halfband_Decimator_714ce49a.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;./FIR_Symmetric_00c44acd/FIR_Symmetric_00c44acd.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;aiecode_src/FreqShift.h&quot;</span><span class="cp"></span>
 
-<span class="k">class</span> <span class="nc">FIRchain_base</span> <span class="o">:</span> <span class="k">public</span> <span class="n">adf</span><span class="o">::</span><span class="n">graph</span> <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-   <span class="n">FIR_Halfband_Decimator_b6bb9f39</span> <span class="n">FIR_Halfband_Decimator</span><span class="p">;</span>
-   <span class="n">FIR_Halfband_Decimator_c797d059</span> <span class="n">FIR_Halfband_Decimator1</span><span class="p">;</span>
-   <span class="n">FIR_Halfband_Decimator_714ce49a</span> <span class="n">FIR_Halfband_Decimator2</span><span class="p">;</span>
-   <span class="n">FIR_Symmetric_00c44acd</span> <span class="n">FIR_Symmetric</span><span class="p">;</span>
-   <span class="n">adf</span><span class="o">::</span><span class="n">kernel</span> <span class="n">FreqShift_0</span><span class="p">;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FIRchain_base</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">graph</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="n">FIR_Halfband_Decimator_b6bb9f39</span><span class="w"> </span><span class="n">FIR_Halfband_Decimator</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FIR_Halfband_Decimator_c797d059</span><span class="w"> </span><span class="n">FIR_Halfband_Decimator1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FIR_Halfband_Decimator_714ce49a</span><span class="w"> </span><span class="n">FIR_Halfband_Decimator2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FIR_Symmetric_00c44acd</span><span class="w"> </span><span class="n">FIR_Symmetric</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">adf</span><span class="o">::</span><span class="n">kernel</span><span class="w"> </span><span class="n">FreqShift_0</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">public</span><span class="o">:</span>
-   <span class="n">adf</span><span class="o">::</span><span class="n">input_port</span> <span class="n">In1</span><span class="p">;</span>
-   <span class="n">adf</span><span class="o">::</span><span class="n">output_port</span> <span class="n">Out1</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="n">adf</span><span class="o">::</span><span class="n">input_port</span><span class="w"> </span><span class="n">In1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">adf</span><span class="o">::</span><span class="n">output_port</span><span class="w"> </span><span class="n">Out1</span><span class="p">;</span><span class="w"></span>
 
-   <span class="n">FIRchain_base</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// create kernel FreqShift_0</span>
-      <span class="n">FreqShift_0</span> <span class="o">=</span> <span class="n">adf</span><span class="o">::</span><span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">FreqShift</span><span class="o">&lt;</span><span class="mi">256</span><span class="o">&gt;</span><span class="p">);</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">source</span><span class="p">(</span><span class="n">FreqShift_0</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;aiecode_src/FreqShift.cpp&quot;</span><span class="p">;</span>
+<span class="w">   </span><span class="n">FIRchain_base</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// create kernel FreqShift_0</span>
+<span class="w">      </span><span class="n">FreqShift_0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">FreqShift</span><span class="o">&lt;</span><span class="mi">256</span><span class="o">&gt;</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">source</span><span class="p">(</span><span class="n">FreqShift_0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;aiecode_src/FreqShift.cpp&quot;</span><span class="p">;</span><span class="w"></span>
 
-      <span class="c1">// create kernel constraints FreqShift_0</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">FreqShift_0</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">;</span>
+<span class="w">      </span><span class="c1">// create kernel constraints FreqShift_0</span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">FreqShift_0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.9</span><span class="p">;</span><span class="w"></span>
 
-      <span class="c1">// create nets to specify connections</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span>  <span class="o">&gt;</span> <span class="n">net0</span> <span class="p">(</span><span class="n">In1</span><span class="p">,</span> <span class="n">FIR_Halfband_Decimator</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span>  <span class="o">&gt;</span> <span class="n">net1</span> <span class="p">(</span><span class="n">FIR_Halfband_Decimator</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">FIR_Halfband_Decimator1</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span>  <span class="o">&gt;</span> <span class="n">net2</span> <span class="p">(</span><span class="n">FIR_Halfband_Decimator1</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">FIR_Halfband_Decimator2</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span>  <span class="o">&gt;</span> <span class="n">net3</span> <span class="p">(</span><span class="n">FIR_Halfband_Decimator2</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">FIR_Symmetric</span><span class="p">.</span><span class="n">in</span><span class="p">);</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span> <span class="n">adf</span><span class="o">::</span><span class="n">window</span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">net4</span> <span class="p">(</span><span class="n">FIR_Symmetric</span><span class="p">.</span><span class="n">out</span><span class="p">,</span> <span class="n">FreqShift_0</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span> <span class="n">adf</span><span class="o">::</span><span class="n">window</span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">net5</span> <span class="p">(</span><span class="n">FreqShift_0</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Out1</span><span class="p">);</span>
-   <span class="p">}</span>
-<span class="p">};</span>
+<span class="w">      </span><span class="c1">// create nets to specify connections</span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="n">net0</span><span class="w"> </span><span class="p">(</span><span class="n">In1</span><span class="p">,</span><span class="w"> </span><span class="n">FIR_Halfband_Decimator</span><span class="p">.</span><span class="n">in</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="n">net1</span><span class="w"> </span><span class="p">(</span><span class="n">FIR_Halfband_Decimator</span><span class="p">.</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">FIR_Halfband_Decimator1</span><span class="p">.</span><span class="n">in</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="n">net2</span><span class="w"> </span><span class="p">(</span><span class="n">FIR_Halfband_Decimator1</span><span class="p">.</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">FIR_Halfband_Decimator2</span><span class="p">.</span><span class="n">in</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="n">net3</span><span class="w"> </span><span class="p">(</span><span class="n">FIR_Halfband_Decimator2</span><span class="p">.</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">FIR_Symmetric</span><span class="p">.</span><span class="n">in</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">window</span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">net4</span><span class="w"> </span><span class="p">(</span><span class="n">FIR_Symmetric</span><span class="p">.</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">FreqShift_0</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">window</span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">net5</span><span class="w"> </span><span class="p">(</span><span class="n">FreqShift_0</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">Out1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="k">class</span> <span class="nc">FIRchain</span> <span class="o">:</span> <span class="k">public</span> <span class="n">adf</span><span class="o">::</span><span class="n">graph</span> <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-   <span class="n">FIRchain_base</span> <span class="n">mygraph</span><span class="p">;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FIRchain</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">graph</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="n">FIRchain_base</span><span class="w"> </span><span class="n">mygraph</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">public</span><span class="o">:</span>
-   <span class="n">adf</span><span class="o">::</span><span class="n">input_plio</span> <span class="n">In1</span><span class="p">;</span>
-   <span class="n">adf</span><span class="o">::</span><span class="n">output_plio</span> <span class="n">Out1</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="n">adf</span><span class="o">::</span><span class="n">input_plio</span><span class="w"> </span><span class="n">In1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">adf</span><span class="o">::</span><span class="n">output_plio</span><span class="w"> </span><span class="n">Out1</span><span class="p">;</span><span class="w"></span>
 
-   <span class="n">FIRchain</span><span class="p">()</span> <span class="p">{</span>
-      <span class="n">In1</span> <span class="o">=</span> <span class="n">adf</span><span class="o">::</span><span class="n">input_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;In1&quot;</span><span class="p">,</span>
-            <span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span>
-            <span class="s">&quot;./data/input/In1.txt&quot;</span><span class="p">);</span>
+<span class="w">   </span><span class="n">FIRchain</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">In1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">input_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;In1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;./data/input/In1.txt&quot;</span><span class="p">);</span><span class="w"></span>
 
-      <span class="n">Out1</span> <span class="o">=</span> <span class="n">adf</span><span class="o">::</span><span class="n">output_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Out1&quot;</span><span class="p">,</span>
-            <span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span>
-            <span class="s">&quot;Out1.txt&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="n">Out1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">output_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Out1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">adf</span><span class="o">::</span><span class="n">plio_32_bits</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;Out1.txt&quot;</span><span class="p">);</span><span class="w"></span>
 
-      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">In1</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mygraph</span><span class="p">.</span><span class="n">In1</span><span class="p">);</span>
-      <span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">mygraph</span><span class="p">.</span><span class="n">Out1</span><span class="p">,</span> <span class="n">Out1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-   <span class="p">}</span>
-<span class="p">};</span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">In1</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">mygraph</span><span class="p">.</span><span class="n">In1</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">adf</span><span class="o">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">mygraph</span><span class="p">.</span><span class="n">Out1</span><span class="p">,</span><span class="w"> </span><span class="n">Out1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
 <span class="cp">#endif </span><span class="c1">// __XMC_FIRCHAIN_H__</span>
 </pre></div>
@@ -844,7 +829,7 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <p>Here the estimated throughput is 44 MSPS instead of the expected 100 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data &#64;250 MSPS instead of the 800 MSPS that were expected in the graph. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.</p>
 </div>
 <div class="section" id="stage-4-increasing-plio-bitwidth-and-re-generate">
-<h2>Stage 4: Increasing PLIO bitwidth and re-generate<a class="headerlink" href="#stage-4-increasing-plio-bitwidth-and-re-generate" title="Permalink to this headline">¶</a></h2>
+<h2>Stage 4: Increasing PLIO bitwidth and re-generate<a class="headerlink" href="#stage-4-increasing-plio-bitwidth-and-re-generate" title="Permalink to this heading">¶</a></h2>
 <p>Solving this problem is fairly easy. Navigate inside the <strong>FIRchain</strong> sub-system. Get the <strong>PLIO</strong> block from <strong>Xilinx Toolbox / AI Engine / Interface</strong> or just type <strong>plio</strong> in the canvas. Double-click on the new block and specify:</p>
 <ul class="simple">
 <li><p><strong>PLIO width (bits)</strong>: 128</p></li>
@@ -859,7 +844,7 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <p>Three frames are received but only two interframe idle time are taken into account. A more precise estimate woul be to count the 512 output samples in between the 2 red vertical line. This gives almost 125 MSPS which is  1/8th of the input sample rate (1 GSPS). This means that the design can support for sure the 800 MSPS that were specified in the design.</p>
 </div>
 <div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>Model Composer is a very efficient way to create graphs either using your own kernels or using the DSPLib FIR Filter (other blocks will be available in subsequent releases).</p>
 <p>This tool shows its incredible flexibility when it comes to display spectrum or save data at any stage of the graph. All the source and sink blocks can be used anywhere, allowing you to efficiently debug your design in all corner cases.</p>
 <hr class="docutils" />

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,10 +339,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="implementing-an-iir-filter-on-the-ai-engine-part-2b">
-<h1>Implementing an IIR Filter on the AI Engine - Part 2b<a class="headerlink" href="#implementing-an-iir-filter-on-the-ai-engine-part-2b" title="Permalink to this headline">¶</a></h1>
+<h1>Implementing an IIR Filter on the AI Engine - Part 2b<a class="headerlink" href="#implementing-an-iir-filter-on-the-ai-engine-part-2b" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="preliminaries">
-<h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">¶</a></h2>
+<h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this heading">¶</a></h2>
 <p>In Part 2a, we examined the generated assembler code and found that there is a <code class="docutils literal notranslate"><span class="pre">NOP</span></code> (no operation) between the <code class="docutils literal notranslate"><span class="pre">VFPMAC</span></code> (vector floating-point multiply-accumulate) mnemonics. This <code class="docutils literal notranslate"><span class="pre">NOP</span></code> is unavoidable as a floating-point accumulation requires 2 cycles (see Fig. 26 of <a class="reference external" href="https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf">AM009</a>).</p>
 <p>There are 2 possible solutions to “squeeze out” the <code class="docutils literal notranslate"><span class="pre">NOPs</span></code> to allow a floating-point multiply-accumulate on each cycle.</p>
 <ul class="simple">
@@ -373,146 +358,146 @@ function OptanonWrapper() { }
 <p>We start by using the AI Engine APIs.</p>
 </div>
 <div class="section" id="kernel-header">
-<h2>Kernel Header<a class="headerlink" href="#kernel-header" title="Permalink to this headline">¶</a></h2>
+<h2>Kernel Header<a class="headerlink" href="#kernel-header" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __KERNEL_HPP__	</span><span class="c1">// include guard to prevent multiple inclusion</span>
 
-	<span class="cp">#define __KERNEL_HPP__</span>
+<span class="w">	</span><span class="cp">#define __KERNEL_HPP__</span>
 
-	<span class="cp">#include</span> <span class="cpf">&lt;adf.h&gt;</span><span class="c1">			// Adaptive DataFlow header</span><span class="cp"></span>
-	<span class="cp">#include</span> <span class="cpf">&lt;aie_api/aie.hpp&gt;</span><span class="c1">	// header files for high-level intrinsics</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;adf.h&gt;</span><span class="c1">			// Adaptive DataFlow header</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;aie_api/aie.hpp&gt;</span><span class="c1">	// header files for high-level intrinsics</span><span class="cp"></span>
 
-	<span class="k">typedef</span> <span class="n">aie</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span> <span class="n">Vector8f</span><span class="p">;</span>		<span class="c1">// vector of 8 floating-point elements</span>
-	<span class="k">typedef</span> <span class="n">aie</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">16</span><span class="o">&gt;</span> <span class="n">Vector16f</span><span class="p">;</span>	<span class="c1">// vector of 8 floating-point elements</span>
-	<span class="k">typedef</span> <span class="n">aie</span><span class="o">::</span><span class="n">accum</span><span class="o">&lt;</span><span class="n">accfloat</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span> <span class="n">VAcc8f</span><span class="p">;</span>		<span class="c1">// accumulator with 8 floating-point elements</span>
+<span class="w">	</span><span class="k">typedef</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Vector8f</span><span class="p">;</span><span class="w">		</span><span class="c1">// vector of 8 floating-point elements</span>
+<span class="w">	</span><span class="k">typedef</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Vector16f</span><span class="p">;</span><span class="w">	</span><span class="c1">// vector of 8 floating-point elements</span>
+<span class="w">	</span><span class="k">typedef</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">accum</span><span class="o">&lt;</span><span class="n">accfloat</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VAcc8f</span><span class="p">;</span><span class="w">		</span><span class="c1">// accumulator with 8 floating-point elements</span>
 
-	<span class="n">define</span> <span class="n">USE_API</span>	<span class="c1">// comment out to use low-level intrinsics</span>
+<span class="w">	</span><span class="n">define</span><span class="w"> </span><span class="n">USE_API</span><span class="w">	</span><span class="c1">// comment out to use low-level intrinsics</span>
 
-	<span class="k">const</span> <span class="kt">unsigned</span> <span class="n">burst_cnt</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>	<span class="c1">// process burst_cnt * 8 samples per function invocation</span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">burst_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span><span class="w">	</span><span class="c1">// process burst_cnt * 8 samples per function invocation</span>
 
-	<span class="k">template</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="n">id</span><span class="o">&gt;</span>
-	<span class="kt">void</span> <span class="n">SecondOrderSection</span><span class="p">(</span>
-		<span class="n">input_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">idata</span><span class="p">,</span>
-		<span class="n">output_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">odata</span><span class="p">,</span>
-		<span class="k">const</span> <span class="kt">float</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">)[</span><span class="mi">48</span><span class="p">],</span>		<span class="c1">// run-time parameter: SIMD matrix of coefficients (even columns)</span>
-		<span class="k">const</span> <span class="kt">float</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">)[</span><span class="mi">48</span><span class="p">]</span>		<span class="c1">// run-time parameter: SIMD matrix of coefficients (odd columns)</span>
-	<span class="p">);</span>
+<span class="w">	</span><span class="k">template</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">id</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">	</span><span class="kt">void</span><span class="w"> </span><span class="n">SecondOrderSection</span><span class="p">(</span><span class="w"></span>
+<span class="w">		</span><span class="n">input_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">idata</span><span class="p">,</span><span class="w"></span>
+<span class="w">		</span><span class="n">output_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">odata</span><span class="p">,</span><span class="w"></span>
+<span class="w">		</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">)[</span><span class="mi">48</span><span class="p">],</span><span class="w">		</span><span class="c1">// run-time parameter: SIMD matrix of coefficients (even columns)</span>
+<span class="w">		</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">)[</span><span class="mi">48</span><span class="p">]</span><span class="w">		</span><span class="c1">// run-time parameter: SIMD matrix of coefficients (odd columns)</span>
+<span class="w">	</span><span class="p">);</span><span class="w"></span>
 
 <span class="cp">#endif </span><span class="c1">// __KERNEL_HPP__</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="kernel-code-ai-engine-api">
-<h2>Kernel Code (AI Engine API)<a class="headerlink" href="#kernel-code-ai-engine-api" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;aie_api/aie_adf.hpp&gt;</span><span class="cp"></span>
+<h2>Kernel Code (AI Engine API)<a class="headerlink" href="#kernel-code-ai-engine-api" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;aie_api/aie_adf.hpp&gt;</span><span class="cp"></span>
 
-<span class="cp">#include</span> <span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
 
-<span class="k">template</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="n">id</span><span class="o">&gt;</span>
-<span class="kt">void</span> <span class="n">SecondOrderSection</span><span class="p">(</span>
-	<span class="n">input_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">idata</span><span class="p">,</span>
-	<span class="n">output_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">odata</span><span class="p">,</span>
-	<span class="k">const</span> <span class="kt">float</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">)[</span><span class="mi">48</span><span class="p">],</span>			<span class="c1">// run-time parameter: SIMD matrix of coefficients (even columns)</span>
-	<span class="k">const</span> <span class="kt">float</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">)[</span><span class="mi">48</span><span class="p">]</span>			<span class="c1">// run-time parameter: SIMD matrix of coefficients (odd columns)</span>
-	<span class="p">)</span> <span class="p">{</span>
-	<span class="k">static</span> <span class="n">Vector8f</span> <span class="n">state_reg</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span>	<span class="c1">// clear states</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">id</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">SecondOrderSection</span><span class="p">(</span><span class="w"></span>
+<span class="w">	</span><span class="n">input_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">idata</span><span class="p">,</span><span class="w"></span>
+<span class="w">	</span><span class="n">output_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">odata</span><span class="p">,</span><span class="w"></span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">)[</span><span class="mi">48</span><span class="p">],</span><span class="w">			</span><span class="c1">// run-time parameter: SIMD matrix of coefficients (even columns)</span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">)[</span><span class="mi">48</span><span class="p">]</span><span class="w">			</span><span class="c1">// run-time parameter: SIMD matrix of coefficients (odd columns)</span>
+<span class="w">	</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="n">Vector8f</span><span class="w"> </span><span class="n">state_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span><span class="w">	</span><span class="c1">// clear states</span>
 
-	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">burst_cnt</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-	<span class="c1">//chess_prepare_for_pipelining</span>
-	<span class="p">{</span>
-		<span class="n">Vector8f</span> <span class="n">xreg_hi</span> <span class="o">=</span> <span class="n">window_readincr_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="n">idata</span><span class="p">);</span>		<span class="c1">// fetch input samples</span>
-		<span class="n">Vector16f</span> <span class="n">xreg</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">concat</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span> <span class="n">xreg_hi</span><span class="p">);</span>
+<span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">burst_cnt</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">	</span><span class="c1">//chess_prepare_for_pipelining</span>
+<span class="w">	</span><span class="p">{</span><span class="w"></span>
+<span class="w">		</span><span class="n">Vector8f</span><span class="w"> </span><span class="n">xreg_hi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">window_readincr_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="n">idata</span><span class="p">);</span><span class="w">		</span><span class="c1">// fetch input samples</span>
+<span class="w">		</span><span class="n">Vector16f</span><span class="w"> </span><span class="n">xreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">concat</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span><span class="w"> </span><span class="n">xreg_hi</span><span class="p">);</span><span class="w"></span>
 
-		<span class="n">VAcc8f</span> <span class="n">acc_e</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="n">accfloat</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span>	<span class="c1">// even accumulator</span>
-		<span class="n">VAcc8f</span> <span class="n">acc_o</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="n">accfloat</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span>	<span class="c1">// odd accumulator</span>
+<span class="w">		</span><span class="n">VAcc8f</span><span class="w"> </span><span class="n">acc_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="n">accfloat</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span><span class="w">	</span><span class="c1">// even accumulator</span>
+<span class="w">		</span><span class="n">VAcc8f</span><span class="w"> </span><span class="n">acc_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="n">accfloat</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span><span class="w">	</span><span class="c1">// odd accumulator</span>
 
-		<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="w">		</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-			<span class="n">Vector8f</span> <span class="n">coeff_e</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">load_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">[</span><span class="mi">8</span> <span class="o">*</span> <span class="n">j</span><span class="p">]);</span>		<span class="c1">// even columns</span>
-			<span class="kt">float</span> <span class="n">xreg_e</span> <span class="o">=</span> <span class="n">xreg</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">4</span><span class="p">];</span>
-			<span class="n">acc_e</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">mac</span><span class="p">(</span><span class="n">acc_e</span><span class="p">,</span> <span class="n">xreg_e</span><span class="p">,</span> <span class="n">coeff_e</span><span class="p">);</span>
+<span class="w">			</span><span class="n">Vector8f</span><span class="w"> </span><span class="n">coeff_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">load_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">[</span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j</span><span class="p">]);</span><span class="w">		</span><span class="c1">// even columns</span>
+<span class="w">			</span><span class="kt">float</span><span class="w"> </span><span class="n">xreg_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xreg</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">];</span><span class="w"></span>
+<span class="w">			</span><span class="n">acc_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">mac</span><span class="p">(</span><span class="n">acc_e</span><span class="p">,</span><span class="w"> </span><span class="n">xreg_e</span><span class="p">,</span><span class="w"> </span><span class="n">coeff_e</span><span class="p">);</span><span class="w"></span>
 
-			<span class="n">Vector8f</span> <span class="n">coeff_o</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">load_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">[</span><span class="mi">8</span> <span class="o">*</span> <span class="n">j</span><span class="p">]);</span>		<span class="c1">// odd columns</span>
-			<span class="kt">float</span> <span class="n">xreg_o</span> <span class="o">=</span> <span class="n">xreg</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">5</span><span class="p">];</span>
-			<span class="n">acc_o</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">mac</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span> <span class="n">xreg_o</span><span class="p">,</span> <span class="n">coeff_o</span><span class="p">);</span>
+<span class="w">			</span><span class="n">Vector8f</span><span class="w"> </span><span class="n">coeff_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">load_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">[</span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j</span><span class="p">]);</span><span class="w">		</span><span class="c1">// odd columns</span>
+<span class="w">			</span><span class="kt">float</span><span class="w"> </span><span class="n">xreg_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xreg</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">];</span><span class="w"></span>
+<span class="w">			</span><span class="n">acc_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">mac</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span><span class="w"> </span><span class="n">xreg_o</span><span class="p">,</span><span class="w"> </span><span class="n">coeff_o</span><span class="p">);</span><span class="w"></span>
 
-		<span class="p">}</span> <span class="c1">// end for (auto j = 0; j &lt; 6; j ++)</span>
+<span class="w">		</span><span class="p">}</span><span class="w"> </span><span class="c1">// end for (auto j = 0; j &lt; 6; j ++)</span>
 
-		<span class="n">acc_o</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">add</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span> <span class="n">acc_e</span><span class="p">.</span><span class="n">to_vector</span><span class="p">());</span>	<span class="c1">// acc_o += acc_e</span>
-		<span class="n">Vector8f</span> <span class="n">yout</span> <span class="o">=</span> <span class="n">acc_o</span><span class="p">.</span><span class="n">to_vector</span><span class="p">();</span>
+<span class="w">		</span><span class="n">acc_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">add</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span><span class="w"> </span><span class="n">acc_e</span><span class="p">.</span><span class="n">to_vector</span><span class="p">());</span><span class="w">	</span><span class="c1">// acc_o += acc_e</span>
+<span class="w">		</span><span class="n">Vector8f</span><span class="w"> </span><span class="n">yout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">acc_o</span><span class="p">.</span><span class="n">to_vector</span><span class="p">();</span><span class="w"></span>
 
-		<span class="c1">// update states</span>
-		<span class="n">state_reg</span> <span class="o">=</span> <span class="n">xreg_hi</span><span class="p">;</span>
-		<span class="n">state_reg</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">yout</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
-		<span class="n">state_reg</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">yout</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
-		<span class="n">window_writeincr</span><span class="p">(</span><span class="n">odata</span><span class="p">,</span> <span class="n">yout</span><span class="p">);</span>
+<span class="w">		</span><span class="c1">// update states</span>
+<span class="w">		</span><span class="n">state_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xreg_hi</span><span class="p">;</span><span class="w"></span>
+<span class="w">		</span><span class="n">state_reg</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yout</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span><span class="w"></span>
+<span class="w">		</span><span class="n">state_reg</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yout</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span><span class="w"></span>
+<span class="w">		</span><span class="n">window_writeincr</span><span class="p">(</span><span class="n">odata</span><span class="p">,</span><span class="w"> </span><span class="n">yout</span><span class="p">);</span><span class="w"></span>
 
-	<span class="p">}</span> <span class="c1">// end for (auto i = 0; i &lt; burst_cnt; i++)</span>
+<span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="c1">// end for (auto i = 0; i &lt; burst_cnt; i++)</span>
 
-<span class="p">}</span> <span class="c1">// end SecondOrderSection()</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// end SecondOrderSection()</span>
 </pre></div>
 </div>
 <p>Note the 2 loops in the function:</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">burst_cnt</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>	<span class="c1">// process more samples to reduce overhead</span>
-	<span class="p">...</span>
-	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>	<span class="c1">// matrix-vector multiplication</span>
-		<span class="p">...</span>
-	<span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">burst_cnt</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">	</span><span class="c1">// process more samples to reduce overhead</span>
+<span class="w">	</span><span class="p">...</span><span class="w"></span>
+<span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">	</span><span class="c1">// matrix-vector multiplication</span>
+<span class="w">		</span><span class="p">...</span><span class="w"></span>
+<span class="w">	</span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The outer <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is added such that more samples can be processed during each function call, thereby reducing overhead and improving throughput.</p>
 </div>
 <div class="section" id="graph-code">
-<h2>Graph Code<a class="headerlink" href="#graph-code" title="Permalink to this headline">¶</a></h2>
+<h2>Graph Code<a class="headerlink" href="#graph-code" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __GRAPH_H__			</span><span class="c1">// include guard to prevent multiple inclusion</span>
 
-	<span class="cp">#define __GRAPH_H__</span>
+<span class="w">	</span><span class="cp">#define __GRAPH_H__</span>
 
-	<span class="cp">#include</span> <span class="cpf">&lt;adf.h&gt;</span><span class="c1">		// Adaptive DataFlow header</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;adf.h&gt;</span><span class="c1">		// Adaptive DataFlow header</span><span class="cp"></span>
 
-	<span class="cp">#include</span> <span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
+<span class="w">	</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
 
-	<span class="k">using</span> <span class="k">namespace</span> <span class="nn">adf</span><span class="p">;</span>
+<span class="w">	</span><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">adf</span><span class="p">;</span><span class="w"></span>
 
-	<span class="c1">// dataflow graph declaration</span>
-	<span class="k">class</span> <span class="nc">the_graph</span> <span class="o">:</span> <span class="k">public</span> <span class="n">graph</span> <span class="p">{</span>	<span class="c1">// inherit all properties of the adaptive     dataflow graph</span>
+<span class="w">	</span><span class="c1">// dataflow graph declaration</span>
+<span class="w">	</span><span class="k">class</span><span class="w"> </span><span class="nc">the_graph</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">graph</span><span class="w"> </span><span class="p">{</span><span class="w">	</span><span class="c1">// inherit all properties of the adaptive     dataflow graph</span>
 
-		<span class="k">public</span><span class="o">:</span>
-			<span class="n">input_plio</span> <span class="n">pl_in</span><span class="p">;</span>
-			<span class="n">output_plio</span> <span class="n">pl_out</span><span class="p">;</span>
+<span class="w">		</span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">			</span><span class="n">input_plio</span><span class="w"> </span><span class="n">pl_in</span><span class="p">;</span><span class="w"></span>
+<span class="w">			</span><span class="n">output_plio</span><span class="w"> </span><span class="n">pl_out</span><span class="p">;</span><span class="w"></span>
 
-			<span class="n">kernel</span> <span class="n">section1</span><span class="p">;</span>
-			<span class="n">input_port</span> <span class="n">cmtx_e</span><span class="p">;</span>	<span class="c1">// input port for SIMD matrix coefficients (even columns)</span>
-			<span class="n">input_port</span> <span class="n">cmtx_o</span><span class="p">;</span>	<span class="c1">// input port for SIMD matrix coefficients (odd columns)</span>
+<span class="w">			</span><span class="n">kernel</span><span class="w"> </span><span class="n">section1</span><span class="p">;</span><span class="w"></span>
+<span class="w">			</span><span class="n">input_port</span><span class="w"> </span><span class="n">cmtx_e</span><span class="p">;</span><span class="w">	</span><span class="c1">// input port for SIMD matrix coefficients (even columns)</span>
+<span class="w">			</span><span class="n">input_port</span><span class="w"> </span><span class="n">cmtx_o</span><span class="p">;</span><span class="w">	</span><span class="c1">// input port for SIMD matrix coefficients (odd columns)</span>
 
-			<span class="c1">// constructor</span>
-			<span class="n">the_graph</span><span class="p">()</span> <span class="p">{</span>
+<span class="w">			</span><span class="c1">// constructor</span>
+<span class="w">			</span><span class="n">the_graph</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-				<span class="c1">// associate the kernel with the function to be executed</span>
-				<span class="n">section1</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">SecondOrderSection</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">				</span><span class="c1">// associate the kernel with the function to be executed</span>
+<span class="w">				</span><span class="n">section1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">SecondOrderSection</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">);</span><span class="w"></span>
 
-				<span class="n">pl_in</span> <span class="o">=</span> <span class="n">input_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">,</span> <span class="n">plio_32_bits</span><span class="p">,</span> <span class="s">&quot;data/input.dat&quot;</span><span class="p">);</span>
-				<span class="n">pl_out</span> <span class="o">=</span> <span class="n">output_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Output&quot;</span><span class="p">,</span> <span class="n">plio_32_bits</span><span class="p">,</span> <span class="s">&quot;output.dat&quot;</span><span class="p">);</span>
+<span class="w">				</span><span class="n">pl_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">plio_32_bits</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;data/input.dat&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">				</span><span class="n">pl_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">output_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Output&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">plio_32_bits</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;output.dat&quot;</span><span class="p">);</span><span class="w"></span>
 
-				<span class="k">const</span> <span class="kt">unsigned</span> <span class="n">num_bytes</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="o">*</span> <span class="n">burst_cnt</span><span class="p">;</span>
+<span class="w">				</span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">num_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">burst_cnt</span><span class="p">;</span><span class="w"></span>
 
-				<span class="c1">// establish connections</span>
+<span class="w">				</span><span class="c1">// establish connections</span>
 
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx_e</span><span class="p">,</span> <span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx_o</span><span class="p">,</span> <span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx_e</span><span class="p">,</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span><span class="w"></span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">parameter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmtx_o</span><span class="p">,</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span><span class="w"></span>
 
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">pl_in</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>				<span class="c1">// window size in bytes</span>
-				<span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pl_out</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">pl_in</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">section1</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w">				</span><span class="c1">// window size in bytes</span>
+<span class="w">				</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">num_bytes</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">section1</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">pl_out</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
 
-				<span class="c1">// specify which source code file contains the kernel function</span>
-				<span class="n">source</span><span class="p">(</span><span class="n">section1</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;kernel.cpp&quot;</span><span class="p">;</span>
+<span class="w">				</span><span class="c1">// specify which source code file contains the kernel function</span>
+<span class="w">				</span><span class="n">source</span><span class="p">(</span><span class="n">section1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;kernel.cpp&quot;</span><span class="p">;</span><span class="w"></span>
 
-				<span class="c1">// !!! temporary value: assumes this kernel dominates the AI engine tile !!!</span>
-				<span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">section1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+<span class="w">				</span><span class="c1">// !!! temporary value: assumes this kernel dominates the AI engine tile !!!</span>
+<span class="w">				</span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">section1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
 
-			<span class="p">}</span> <span class="c1">// end the_graph()</span>
+<span class="w">			</span><span class="p">}</span><span class="w"> </span><span class="c1">// end the_graph()</span>
 
-	<span class="p">};</span> <span class="c1">// end class the_graph</span>
+<span class="w">	</span><span class="p">};</span><span class="w"> </span><span class="c1">// end class the_graph</span>
 
 <span class="cp">#endif </span><span class="c1">// __GRAPH_H__</span>
 </pre></div>
@@ -520,46 +505,46 @@ function OptanonWrapper() { }
 <p>Note that the graph uses the <em>enhanced programming model</em> (see UG1076 (v2021.2)) which eliminates the need for a global <code class="docutils literal notranslate"><span class="pre">simulation::platform</span></code> variable.</p>
 </div>
 <div class="section" id="testbench-code">
-<h2>Testbench Code<a class="headerlink" href="#testbench-code" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;graph.hpp&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C1_e.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C1_o.h&quot;</span><span class="cp"></span>
+<h2>Testbench Code<a class="headerlink" href="#testbench-code" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;graph.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C1_e.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C1_o.h&quot;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">std</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">adf</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">adf</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// specify the DFG</span>
-<span class="n">the_graph</span> <span class="n">my_graph</span><span class="p">;</span>
+<span class="n">the_graph</span><span class="w"> </span><span class="n">my_graph</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// main simulation program</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>	<span class="c1">// load the DFG into the AI engine array, establish connectivity, etc.</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">init</span><span class="p">();</span><span class="w">	</span><span class="c1">// load the DFG into the AI engine array, establish connectivity, etc.</span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx_e</span><span class="p">,</span> <span class="n">C1_e</span><span class="p">,</span> <span class="mi">48</span><span class="p">);</span>
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx_o</span><span class="p">,</span> <span class="n">C1_o</span><span class="p">,</span> <span class="mi">48</span><span class="p">);</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx_e</span><span class="p">,</span><span class="w"> </span><span class="n">C1_e</span><span class="p">,</span><span class="w"> </span><span class="mi">48</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx_o</span><span class="p">,</span><span class="w"> </span><span class="n">C1_o</span><span class="p">,</span><span class="w"> </span><span class="mi">48</span><span class="p">);</span><span class="w"></span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>	<span class="c1">// run the DFG for the specified number of iterations</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">	</span><span class="c1">// run the DFG for the specified number of iterations</span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>		<span class="c1">// housekeeping</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w">		</span><span class="c1">// housekeeping</span>
 
-	<span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
 
-<span class="p">}</span> <span class="c1">// end main()</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// end main()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="analysis-using-ai-engine-api">
-<h2>Analysis (using AI Engine API)<a class="headerlink" href="#analysis-using-ai-engine-api" title="Permalink to this headline">¶</a></h2>
+<h2>Analysis (using AI Engine API)<a class="headerlink" href="#analysis-using-ai-engine-api" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="generated-code">
-<h3>Generated Code<a class="headerlink" href="#generated-code" title="Permalink to this headline">¶</a></h3>
+<h3>Generated Code<a class="headerlink" href="#generated-code" title="Permalink to this heading">¶</a></h3>
 <p><img alt="Fig. 3" src="../../../../../_images/hli_asm.PNG" />
 In the generated assembly code, note that there are 13 <code class="docutils literal notranslate"><span class="pre">VFPMAC</span></code>s: 6 for each even and odd column, and another for summing the final accumulator results. Note that the <code class="docutils literal notranslate"><span class="pre">VFPMAC</span></code> instructions are not as tightly packed, i.e., some <code class="docutils literal notranslate"><span class="pre">VFPMAC</span></code>s have other instructions between them.</p>
 </div>
 <div class="section" id="throughput">
-<h3>Throughput<a class="headerlink" href="#throughput" title="Permalink to this headline">¶</a></h3>
+<h3>Throughput<a class="headerlink" href="#throughput" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">burst_cnt</span></code> variable determines the total number of samples processed during each function call. The inner loop processes 8 samples per iteration, so the total number of processed samples will be <code class="docutils literal notranslate"><span class="pre">burst_cnt</span></code> * 8.</p>
 <p>The throughput is obtained as follows (see <code class="docutils literal notranslate"><span class="pre">api_thruput.xlsx</span></code>):</p>
 <ul class="simple">
@@ -582,55 +567,55 @@ In the generated assembly code, note that there are 13 <code class="docutils lit
 </div>
 </div>
 <div class="section" id="kernel-code-lli">
-<h2>Kernel Code (LLI)<a class="headerlink" href="#kernel-code-lli" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;aie_api/aie_adf.hpp&gt;</span><span class="cp"></span>
+<h2>Kernel Code (LLI)<a class="headerlink" href="#kernel-code-lli" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;aie_api/aie_adf.hpp&gt;</span><span class="cp"></span>
 
-<span class="cp">#include</span> <span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
 
-<span class="k">template</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="n">id</span><span class="o">&gt;</span>
-<span class="kt">void</span> <span class="n">SecondOrderSection</span><span class="p">(</span>
-	<span class="n">input_window_float</span> <span class="o">*</span><span class="n">idata</span><span class="p">,</span>
-	<span class="n">output_window_float</span> <span class="o">*</span><span class="n">odata</span><span class="p">,</span><span class="n">iteration</span>
-	<span class="k">const</span> <span class="kt">float</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">)[</span><span class="mi">48</span><span class="p">],</span>			<span class="c1">// run-time parameter: SIMD matrix of coefficients (even columns)</span>
-	<span class="k">const</span> <span class="kt">float</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">)[</span><span class="mi">48</span><span class="p">]</span>			<span class="c1">// run-time parameter: SIMD matrix of coefficients (odd columns)</span>
-<span class="p">)</span> <span class="p">{</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">id</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">SecondOrderSection</span><span class="p">(</span><span class="w"></span>
+<span class="w">	</span><span class="n">input_window_float</span><span class="w"> </span><span class="o">*</span><span class="n">idata</span><span class="p">,</span><span class="w"></span>
+<span class="w">	</span><span class="n">output_window_float</span><span class="w"> </span><span class="o">*</span><span class="n">odata</span><span class="p">,</span><span class="n">iteration</span><span class="w"></span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">)[</span><span class="mi">48</span><span class="p">],</span><span class="w">			</span><span class="c1">// run-time parameter: SIMD matrix of coefficients (even columns)</span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">)[</span><span class="mi">48</span><span class="p">]</span><span class="w">			</span><span class="c1">// run-time parameter: SIMD matrix of coefficients (odd columns)</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-	<span class="k">static</span> <span class="n">v8float</span> <span class="n">state_reg</span> <span class="o">=</span> <span class="n">null_v8float</span><span class="p">();</span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="n">v8float</span><span class="w"> </span><span class="n">state_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">null_v8float</span><span class="p">();</span><span class="w"></span>
 
-	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">burst_cnt</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">burst_cnt</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-		<span class="n">v8float</span> <span class="n">xreg_hi</span> <span class="o">=</span> <span class="n">window_readincr_v8</span><span class="p">(</span><span class="n">idata</span><span class="p">);</span>
-		<span class="n">v16float</span> <span class="n">xreg</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span> <span class="n">xreg_hi</span><span class="p">);</span>
+<span class="w">		</span><span class="n">v8float</span><span class="w"> </span><span class="n">xreg_hi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">window_readincr_v8</span><span class="p">(</span><span class="n">idata</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">v16float</span><span class="w"> </span><span class="n">xreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span><span class="w"> </span><span class="n">xreg_hi</span><span class="p">);</span><span class="w"></span>
 
-		<span class="n">v8float</span> <span class="n">acc_e</span> <span class="o">=</span> <span class="n">null_v8float</span><span class="p">();</span>
-		<span class="n">v8float</span> <span class="n">acc_o</span> <span class="o">=</span> <span class="n">null_v8float</span><span class="p">();</span>
+<span class="w">		</span><span class="n">v8float</span><span class="w"> </span><span class="n">acc_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">null_v8float</span><span class="p">();</span><span class="w"></span>
+<span class="w">		</span><span class="n">v8float</span><span class="w"> </span><span class="n">acc_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">null_v8float</span><span class="p">();</span><span class="w"></span>
 
-		<span class="n">v8float</span> <span class="o">*</span><span class="n">ptr_coeff_e</span> <span class="o">=</span> <span class="p">(</span><span class="n">v8float</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-		<span class="n">v8float</span> <span class="o">*</span><span class="n">ptr_coeff_o</span> <span class="o">=</span> <span class="p">(</span><span class="n">v8float</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">		</span><span class="n">v8float</span><span class="w"> </span><span class="o">*</span><span class="n">ptr_coeff_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v8float</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">C_e</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">		</span><span class="n">v8float</span><span class="w"> </span><span class="o">*</span><span class="n">ptr_coeff_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v8float</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">C_o</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
 
-		<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-		<span class="n">chess_flatten_loop</span>
-		<span class="p">{</span>
+<span class="w">		</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">		</span><span class="n">chess_flatten_loop</span><span class="w"></span>
+<span class="w">		</span><span class="p">{</span><span class="w"></span>
 
-			<span class="n">v8float</span> <span class="n">coeff_e</span> <span class="o">=</span> <span class="o">*</span><span class="n">ptr_coeff_e</span><span class="o">++</span><span class="p">;</span>
-			<span class="n">acc_e</span> <span class="o">=</span> <span class="n">fpmac</span><span class="p">(</span><span class="n">acc_e</span><span class="p">,</span> <span class="n">xreg</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">coeff_e</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x76543210</span><span class="p">);</span>
+<span class="w">			</span><span class="n">v8float</span><span class="w"> </span><span class="n">coeff_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">ptr_coeff_e</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">			</span><span class="n">acc_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fpmac</span><span class="p">(</span><span class="n">acc_e</span><span class="p">,</span><span class="w"> </span><span class="n">xreg</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">coeff_e</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mh">0x76543210</span><span class="p">);</span><span class="w"></span>
 
-			<span class="n">v8float</span> <span class="n">coeff_o</span> <span class="o">=</span> <span class="o">*</span><span class="n">ptr_coeff_o</span><span class="o">++</span><span class="p">;</span>
-			<span class="n">acc_o</span> <span class="o">=</span> <span class="n">fpmac</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span> <span class="n">xreg</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">5</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">coeff_o</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x76543210</span><span class="p">);</span>
+<span class="w">			</span><span class="n">v8float</span><span class="w"> </span><span class="n">coeff_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">ptr_coeff_o</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">			</span><span class="n">acc_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fpmac</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span><span class="w"> </span><span class="n">xreg</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">coeff_o</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mh">0x76543210</span><span class="p">);</span><span class="w"></span>
 
-		<span class="p">}</span> <span class="c1">// end for (auto j = 0; j &lt; 6; j++)</span>
+<span class="w">		</span><span class="p">}</span><span class="w"> </span><span class="c1">// end for (auto j = 0; j &lt; 6; j++)</span>
 
-		<span class="n">acc_o</span> <span class="o">=</span> <span class="n">fpadd</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span> <span class="n">acc_e</span><span class="p">);</span>
-		<span class="n">window_writeincr</span><span class="p">(</span><span class="n">odata</span><span class="p">,</span> <span class="n">acc_o</span><span class="p">);</span>
+<span class="w">		</span><span class="n">acc_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fpadd</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span><span class="w"> </span><span class="n">acc_e</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">window_writeincr</span><span class="p">(</span><span class="n">odata</span><span class="p">,</span><span class="w"> </span><span class="n">acc_o</span><span class="p">);</span><span class="w"></span>
 
-		<span class="c1">// update states</span>
-		<span class="n">state_reg</span> <span class="o">=</span> <span class="n">xreg_hi</span><span class="p">;</span>
-		<span class="n">state_reg</span> <span class="o">=</span> <span class="n">upd_elem</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">ext_elem</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span> <span class="mi">6</span><span class="p">));</span>
-		<span class="n">state_reg</span> <span class="o">=</span> <span class="n">upd_elem</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">ext_elem</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span> <span class="mi">7</span><span class="p">));</span>
+<span class="w">		</span><span class="c1">// update states</span>
+<span class="w">		</span><span class="n">state_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xreg_hi</span><span class="p">;</span><span class="w"></span>
+<span class="w">		</span><span class="n">state_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_elem</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">ext_elem</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">));</span><span class="w"></span>
+<span class="w">		</span><span class="n">state_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_elem</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">ext_elem</span><span class="p">(</span><span class="n">acc_o</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">));</span><span class="w"></span>
 
-	<span class="p">}</span> <span class="c1">// end for (auto i = 0; i &lt; burst_cnt; i++)</span>
+<span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="c1">// end for (auto i = 0; i &lt; burst_cnt; i++)</span>
 
-<span class="p">}</span> <span class="c1">// end SecondOrderSection()</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// end SecondOrderSection()</span>
 </pre></div>
 </div>
 <p>Note the use of the <code class="docutils literal notranslate"><span class="pre">chess_flatten_loop</span></code> pragma. This pragma unrolls the loop completely, eliminating the loop construct. Documentation on compiler pragmas may be found in the AI Engine Lounge.</p>
@@ -655,7 +640,7 @@ Note the “tighter” spacing between <code class="docutils literal notranslate
 </ul>
 </div>
 <div class="section" id="conclusions">
-<h2>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h2>
+<h2>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">¶</a></h2>
 <p>The AI Engine API is intended to improve productivity by increasing the level of abstraction, relative to the low-level intrinsics.
 <img alt="Fig. 6" src="../../../../../_images/api_vs_lli_table.PNG" />
 We recommend using the AI Engine API, and only use low-level intrinsics to squeeze out more performance to meet target specifications.</p>
@@ -672,11 +657,11 @@ We recommend using the AI Engine API, and only use low-level intrinsics to squee
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

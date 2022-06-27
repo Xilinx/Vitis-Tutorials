@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -356,7 +341,7 @@ function OptanonWrapper() { }
  </td>
  </tr>
 </table><div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial you will learn how to:</p>
 <ul class="simple">
 <li><p>Add profiling APIs in graph and PS code to calculate design performance.</p></li>
@@ -366,7 +351,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="profiling-apis">
-<h1>Profiling APIs<a class="headerlink" href="#profiling-apis" title="Permalink to this headline">¶</a></h1>
+<h1>Profiling APIs<a class="headerlink" href="#profiling-apis" title="Permalink to this heading">¶</a></h1>
 <p>Start profiling API,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/// Start profiling and acquire resources needed <span class="k">for</span> profiling. Should be called after graph::init<span class="o">()</span>.
 /// @param io Plarform PLIO or GMIO object.
@@ -395,13 +380,13 @@ static void stop_profiling<span class="o">(</span>handle h<span class="o">)</spa
 <p><a class="reference external" href="#4-Cross-Check-I/O-Performance-values-with-VCD">4. Cross Check I/O Performance values with VCD</a></p>
 </div>
 <div class="section" id="profiling-apis-with-aie-simulator">
-<h1>1. Profiling APIs with AIE Simulator<a class="headerlink" href="#profiling-apis-with-aie-simulator" title="Permalink to this headline">¶</a></h1>
+<h1>1. Profiling APIs with AIE Simulator<a class="headerlink" href="#profiling-apis-with-aie-simulator" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="step-1-1-download-the-project">
-<h2>Step 1.1 Download the Project<a class="headerlink" href="#step-1-1-download-the-project" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.1 Download the Project<a class="headerlink" href="#step-1-1-download-the-project" title="Permalink to this heading">¶</a></h2>
 <p>Clone the project source from git repository and unzip the zip file.</p>
 </div>
 <div class="section" id="step-1-2-prepare-profiling-apis-applied-graph-code">
-<h2>Step 1.2 Prepare Profiling APIs applied graph code<a class="headerlink" href="#step-1-2-prepare-profiling-apis-applied-graph-code" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.2 Prepare Profiling APIs applied graph code<a class="headerlink" href="#step-1-2-prepare-profiling-apis-applied-graph-code" title="Permalink to this heading">¶</a></h2>
 <p>Use this tutorial’s graph.cpp.profile_api that contains AIE profiling APIs.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">DOWNLOAD_PATH</span><span class="si">}</span>/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/aie
 cp graph.cpp.profile_api graph.cpp
@@ -412,22 +397,22 @@ make libadf.a
 </div>
 </div>
 <div class="section" id="step-1-3-run-aie-simulator">
-<h2>Step 1.3 Run AIE Simulator<a class="headerlink" href="#step-1-3-run-aie-simulator" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.3 Run AIE Simulator<a class="headerlink" href="#step-1-3-run-aie-simulator" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiesimulator --pkg-dir<span class="o">=</span>./Work --i<span class="o">=</span>. --profile
 </pre></div>
 </div>
 </div>
 <div class="section" id="step-1-4-expected-result">
-<h2>Step 1.4 Expected Result<a class="headerlink" href="#step-1-4-expected-result" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1.4 Expected Result<a class="headerlink" href="#step-1-4-expected-result" title="Permalink to this heading">¶</a></h2>
 <img src="images/pr_aie_perf.png" width="600"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis_analyzer ./aiesimulator_output/default.aierun_summary
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="profiling-apis-with-hw-emulator">
-<h1>2. Profiling APIs with HW Emulator<a class="headerlink" href="#profiling-apis-with-hw-emulator" title="Permalink to this headline">¶</a></h1>
+<h1>2. Profiling APIs with HW Emulator<a class="headerlink" href="#profiling-apis-with-hw-emulator" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="step-2-1-prepare-profiling-apis-applied-host-code-and-makefile">
-<h2>Step 2.1 Prepare profiling APIs applied host code and Makefile<a class="headerlink" href="#step-2-1-prepare-profiling-apis-applied-host-code-and-makefile" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.1 Prepare profiling APIs applied host code and Makefile<a class="headerlink" href="#step-2-1-prepare-profiling-apis-applied-host-code-and-makefile" title="Permalink to this heading">¶</a></h2>
 <p>After step 1.1 completed.
 Use this tutorial’s host.cpp.profile_api that contains AIE profiling APIs and Makefile for HW Emulation.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">DOWNLOAD_PATH</span><span class="si">}</span>/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/sw
@@ -438,19 +423,19 @@ cp Makefile.emu Makefile
 </div>
 </div>
 <div class="section" id="step-2-2-build-the-design">
-<h2>Step 2.2 Build the Design<a class="headerlink" href="#step-2-2-build-the-design" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.2 Build the Design<a class="headerlink" href="#step-2-2-build-the-design" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make
 </pre></div>
 </div>
 </div>
 <div class="section" id="step-2-3-run-hardware-emulator">
-<h2>Step 2.3 Run Hardware Emulator<a class="headerlink" href="#step-2-3-run-hardware-emulator" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.3 Run Hardware Emulator<a class="headerlink" href="#step-2-3-run-hardware-emulator" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./launch_hw_emu.sh
 </pre></div>
 </div>
 </div>
 <div class="section" id="step-2-4-run-application">
-<h2>Step 2.4 Run Application<a class="headerlink" href="#step-2-4-run-application" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2.4 Run Application<a class="headerlink" href="#step-2-4-run-application" title="Permalink to this heading">¶</a></h2>
 <p>After Petalinux boots up.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /run/media/mmcblk0p1
 ./host.exe a.xclbin
@@ -459,9 +444,9 @@ cp Makefile.emu Makefile
 <img src="images/pr_hw_emu_perf.png" width="600"></div>
 </div>
 <div class="section" id="profiling-apis-on-hw">
-<h1>3. Profiling APIs on HW<a class="headerlink" href="#profiling-apis-on-hw" title="Permalink to this headline">¶</a></h1>
+<h1>3. Profiling APIs on HW<a class="headerlink" href="#profiling-apis-on-hw" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="step-3-1-prepare-hw-makefile">
-<h2>Step 3.1 Prepare HW Makefile<a class="headerlink" href="#step-3-1-prepare-hw-makefile" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3.1 Prepare HW Makefile<a class="headerlink" href="#step-3-1-prepare-hw-makefile" title="Permalink to this heading">¶</a></h2>
 <p>After step 1.1 completed.
 Use this tutorial’s Makefile for Hardware.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">DOWNLOAD_PATH</span><span class="si">}</span>/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough
@@ -471,16 +456,16 @@ make
 </div>
 </div>
 <div class="section" id="step-3-2-flash-sd-card">
-<h2>Step 3.2 Flash SD card<a class="headerlink" href="#step-3-2-flash-sd-card" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3.2 Flash SD card<a class="headerlink" href="#step-3-2-flash-sd-card" title="Permalink to this heading">¶</a></h2>
 <p>Flash generated sd_card.img to SD card.</p>
 </div>
 <div class="section" id="step-3-3-boots-up-vck190-board">
-<h2>Step 3.3 Boots up VCK190 board<a class="headerlink" href="#step-3-3-boots-up-vck190-board" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3.3 Boots up VCK190 board<a class="headerlink" href="#step-3-3-boots-up-vck190-board" title="Permalink to this heading">¶</a></h2>
 <p>Plug in flashed completed SD card to vck190 board’s sd slot.
 Power up the vck190 board.</p>
 </div>
 <div class="section" id="step-3-4-run-the-application">
-<h2>Step 3.4 Run the Application<a class="headerlink" href="#step-3-4-run-the-application" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3.4 Run the Application<a class="headerlink" href="#step-3-4-run-the-application" title="Permalink to this heading">¶</a></h2>
 <p>After vck190 board boots up and ready to accepts commands with Linux prompt, issue these commands from terminal.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /run/media/mmcblk0p1
 ./host.exe a.xclbin
@@ -488,14 +473,14 @@ Power up the vck190 board.</p>
 </div>
 </div>
 <div class="section" id="step-3-5-expected-result">
-<h2>Step 3.5 Expected result<a class="headerlink" href="#step-3-5-expected-result" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3.5 Expected result<a class="headerlink" href="#step-3-5-expected-result" title="Permalink to this heading">¶</a></h2>
 <img src="images/pr_hw_perf.png" width="600"><p>Note: Due to slower memory access, hardware and hardware emulation performance values are not optimized and less than AIE simulation.</p>
 </div>
 </div>
 <div class="section" id="cross-check-i-o-performance-values-with-vcd">
-<h1>4. Cross Check I/O Performance values with VCD<a class="headerlink" href="#cross-check-i-o-performance-values-with-vcd" title="Permalink to this headline">¶</a></h1>
+<h1>4. Cross Check I/O Performance values with VCD<a class="headerlink" href="#cross-check-i-o-performance-values-with-vcd" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="step-4-1-vcd-generation">
-<h2>Step 4.1 VCD generation<a class="headerlink" href="#step-4-1-vcd-generation" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.1 VCD generation<a class="headerlink" href="#step-4-1-vcd-generation" title="Permalink to this heading">¶</a></h2>
 <p>Command to generate AIE simulation VCD file.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiesimulator --pkg-dir<span class="o">=</span>./Work --i<span class="o">=</span>. --dump-vcd<span class="o">=</span>foo
 </pre></div>
@@ -511,7 +496,7 @@ Power up the vck190 board.</p>
 <p>Follow step 2.4 to run application.</p>
 </div>
 <div class="section" id="step-4-2-launch-vitis-analyzer-to-view-trace">
-<h2>Step 4.2 Launch vitis_analyzer to view trace<a class="headerlink" href="#step-4-2-launch-vitis-analyzer-to-view-trace" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.2 Launch vitis_analyzer to view trace<a class="headerlink" href="#step-4-2-launch-vitis-analyzer-to-view-trace" title="Permalink to this heading">¶</a></h2>
 <p>To launch vitis_analyser for AIE simulation run.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis_analyzer ./aiesimulator_output/default.aierun_summary
 </pre></div>
@@ -523,7 +508,7 @@ Power up the vck190 board.</p>
 <p>For hardware event trace steps that are available at https://gitenterprise.xilinx.com/swm/Vitis-Tutorials/blob/2022.1_next/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/Debug4_et.md</p>
 </div>
 <div class="section" id="step-4-3-locate-profiled-interface">
-<h2>Step 4.3 Locate profiled interface<a class="headerlink" href="#step-4-3-locate-profiled-interface" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.3 Locate profiled interface<a class="headerlink" href="#step-4-3-locate-profiled-interface" title="Permalink to this heading">¶</a></h2>
 <p>After default.aierun_summary file is opened with Vitis_analyzer, select <code class="docutils literal notranslate"><span class="pre">Graph</span></code> view, locate the output file <code class="docutils literal notranslate"><span class="pre">data/ublf_out0.txt</span></code> that associated with <code class="docutils literal notranslate"><span class="pre">ulbfo0</span></code> output_plio object from graph.h</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="o">(</span>unsigned <span class="nv">k</span><span class="o">=</span><span class="m">0</span><span class="p">;</span>k&lt;<span class="m">4</span><span class="p">;</span> k++<span class="o">)</span> <span class="o">{</span>
     ulout<span class="o">[</span>k<span class="o">]=</span>output_plio::create<span class="o">(</span><span class="s2">&quot;ulbfo&quot;</span>+std::to_string<span class="o">(</span>k<span class="o">)</span>, plio_64_bits, <span class="s2">&quot;data/ulbf_out&quot;</span>+std::to_string<span class="o">(</span>k<span class="o">)</span>+<span class="s2">&quot;.txt&quot;</span><span class="o">)</span><span class="p">;</span>
@@ -551,15 +536,15 @@ Power up the vck190 board.</p>
 <img src="images/pr_aie_perf_tile.png" width="900">
 Select the tile links to the output file by moving cursor on top of the tile.</div>
 <div class="section" id="step-4-4-locate-tile">
-<h2>Step 4.4 Locate tile<a class="headerlink" href="#step-4-4-locate-tile" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.4 Locate tile<a class="headerlink" href="#step-4-4-locate-tile" title="Permalink to this heading">¶</a></h2>
 <p>Switch to <code class="docutils literal notranslate"><span class="pre">Trace</span></code> view, Locate tile(21,0).</p>
 </div>
 <div class="section" id="step-4-5-use-tool-to-measure-execution-time">
-<h2>Step 4.5 Use tool to measure execution time<a class="headerlink" href="#step-4-5-use-tool-to-measure-execution-time" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.5 Use tool to measure execution time<a class="headerlink" href="#step-4-5-use-tool-to-measure-execution-time" title="Permalink to this heading">¶</a></h2>
 <p>To measure execution time with tool, move marker to beginning of kernel execution from an iteration. Add second marker and move the second marker to beginning of another iteration. This method is same to measure execution time for AIE Simulation, hardware emulaiton or on Hardware.</p>
 <img src="images/pr_aie_perf_vcd.png" width="900"></div>
 <div class="section" id="step-4-6-performance-calculation">
-<h2>Step 4.6 Performance Calculation<a class="headerlink" href="#step-4-6-performance-calculation" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4.6 Performance Calculation<a class="headerlink" href="#step-4-6-performance-calculation" title="Permalink to this heading">¶</a></h2>
 <p>Above example indicates 9.400 microseconds (us) is used for 10 iterations execution time. Each iteration execution time is 0.94 us or 940 nanoseconds (ns) in average.</p>
 <p>Per output file <code class="docutils literal notranslate"><span class="pre">ulbf_out0.txt</span></code>, 38400 lines for 100 iterations. Each iteration processes and outputs 384 lines. Each line has 2 cint16 samples.</p>
 <p>Performance calculation:</p>
@@ -567,15 +552,15 @@ Select the tile links to the output file by moving cursor on top of the tile.</d
 </div>
 </div>
 <div class="section" id="limitations">
-<h1>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h1>
+<h1>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">¶</a></h1>
 <p>Due to limited AIE performance counters, calling AIE profiling APIs may return errors. Host code is required to check profiling APIs’ return code to ensure correctness of profiling APIs.</p>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>

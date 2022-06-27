@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="package-ip-package-xo-flow">
-<h1>Package IP/Package XO Flow<a class="headerlink" href="#package-ip-package-xo-flow" title="Permalink to this headline">¶</a></h1>
+<h1>Package IP/Package XO Flow<a class="headerlink" href="#package-ip-package-xo-flow" title="Permalink to this heading">¶</a></h1>
 <p>The process described in this lab follows the Package IP flow as described in the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernel-Development-Flow">RTL Kernel Development Flow</a> in the Vitis Application Acceleration Development Flow documentation (UG1393).</p>
 <blockquote>
 <div><p><strong>IMPORTANT:</strong> Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Vitis-Environment">Setting up the Vitis Environment</a>.</p>
@@ -365,7 +350,7 @@ function OptanonWrapper() { }
 </div>
 </div></blockquote>
 <div class="section" id="create-a-new-project">
-<h2>Create a New Project<a class="headerlink" href="#create-a-new-project" title="Permalink to this headline">¶</a></h2>
+<h2>Create a New Project<a class="headerlink" href="#create-a-new-project" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Change directory to the tutorial folder: <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">./01-rtl_kernel_workflow</span></code>.</p></li>
 <li><p>Launch the Vivado®  IDE, enter the <code class="docutils literal notranslate"><span class="pre">vivado</span></code> command in a terminal window.</p></li>
@@ -400,7 +385,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="add-kernel-sources">
-<h2>Add Kernel Sources<a class="headerlink" href="#add-kernel-sources" title="Permalink to this headline">¶</a></h2>
+<h2>Add Kernel Sources<a class="headerlink" href="#add-kernel-sources" title="Permalink to this heading">¶</a></h2>
 <p>You are ready to add RTL files into the project to package as an IP. The RTL files have been provided for you in this tutorial, but this is the point at which you would insert your own RTL code.</p>
 <ol>
 <li><p>In the Sources view, click the <strong>Add Sources</strong> command (<img alt="Add Sources" src="../../../../_images/icon_add_sources.png" />). The Add Sources window is displayed.</p></li>
@@ -428,7 +413,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="open-the-ip-packager">
-<h2>Open the IP Packager<a class="headerlink" href="#open-the-ip-packager" title="Permalink to this headline">¶</a></h2>
+<h2>Open the IP Packager<a class="headerlink" href="#open-the-ip-packager" title="Permalink to this heading">¶</a></h2>
 <p>With the files added to your project, you can package the IP for use as a kernel.</p>
 <ol>
 <li><p>To start this process, select <strong>Tools</strong> &gt; <strong>Create and Package New IP</strong>.</p></li>
@@ -445,7 +430,7 @@ The Create and Package IP summary page is displayed.
 </ol>
 </div>
 <div class="section" id="specify-the-control-protocol">
-<h2>Specify the Control Protocol<a class="headerlink" href="#specify-the-control-protocol" title="Permalink to this headline">¶</a></h2>
+<h2>Specify the Control Protocol<a class="headerlink" href="#specify-the-control-protocol" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Under Packaging Steps, select <strong>Compatibility</strong>.</p></li>
 <li><p>Enable <strong>Package for Vitis</strong>, and ensure that both <strong>Package for IPI</strong> and <strong>Ignore Freq_Hz</strong> are enabled as well. This lets you package the IP as a kernel object (.xo) for use in the Vitis tool flow, and also configures the specific Xilinx parts or device families compatible with your custom IP.</p>
@@ -467,7 +452,7 @@ The Create and Package IP summary page is displayed.
 </div></blockquote>
 </div>
 <div class="section" id="edit-ports-and-interfaces">
-<h2>Edit Ports and Interfaces<a class="headerlink" href="#edit-ports-and-interfaces" title="Permalink to this headline">¶</a></h2>
+<h2>Edit Ports and Interfaces<a class="headerlink" href="#edit-ports-and-interfaces" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Under Packaging Steps, select <strong>Ports and Interfaces</strong>. This displays the Ports and Interfaces window.</p></li>
 <li><p>Right-click the <code class="docutils literal notranslate"><span class="pre">m00_axi</span></code> interface and select <strong>Associate Clocks</strong>.</p>
@@ -478,7 +463,7 @@ The Create and Package IP summary page is displayed.
 </ol>
 </div>
 <div class="section" id="add-control-registers-and-address-offsets">
-<h2>Add Control Registers and Address Offsets<a class="headerlink" href="#add-control-registers-and-address-offsets" title="Permalink to this headline">¶</a></h2>
+<h2>Add Control Registers and Address Offsets<a class="headerlink" href="#add-control-registers-and-address-offsets" title="Permalink to this heading">¶</a></h2>
 <p>To fix the error in the Ports and Interfaces window, you must add at least one register to the <code class="docutils literal notranslate"><span class="pre">s_axilite</span></code> interface. This can be done through the <strong>Addressing and Memory</strong> section of the Package IP window.  The user-managed kernel requires a number of registers to be added with the following attributes.</p>
 <table border="1" class="docutils">
 <thead>
@@ -552,7 +537,7 @@ This displays the Addressing and Memory window.</p></li>
 <p><img alt="../../../../_images/address-memory-win.png" src="../../../../_images/address-memory-win.png" /></p>
 </div>
 <div class="section" id="check-integrity-assign-properties-and-package-ip">
-<h2>Check Integrity, Assign Properties, and Package IP<a class="headerlink" href="#check-integrity-assign-properties-and-package-ip" title="Permalink to this headline">¶</a></h2>
+<h2>Check Integrity, Assign Properties, and Package IP<a class="headerlink" href="#check-integrity-assign-properties-and-package-ip" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Under the Packaging Steps, Select <strong>Review and Package</strong>.
 This displays the Review and Package window. You are now ready to package the IP. However, first check that an archive file will be generated when packaging the IP. This is the default behavior when <strong>Package for Vitis</strong> is enabled.</p></li>
@@ -583,7 +568,7 @@ This displays the Review and Package window. You are now ready to package the IP
 <p>You will use the <code class="docutils literal notranslate"><span class="pre">.xo</span></code> file in the Vitis application acceleration flow as explained later in this tutorial.</p>
 </div>
 <div class="section" id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>Next, you will examine the <a class="reference internal" href="host-code.html"><span class="doc">Host Application Coding</span></a> required to integrate the user-managed RTL kernel into your accelerated application.
 </br></p>
 <hr/>

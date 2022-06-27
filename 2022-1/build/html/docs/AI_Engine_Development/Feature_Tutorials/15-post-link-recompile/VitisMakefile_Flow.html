@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -355,7 +340,7 @@ function OptanonWrapper() { }
  <td align="center"><h1>Lab 2: Vitis Makefile Flow</h1>
  </td>
  </tr></table><div class="section" id="initialization">
-<h1>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h1>
+<h1>Initialization<a class="headerlink" href="#initialization" title="Permalink to this heading">¶</a></h1>
 <p>All labs rely on a set of source files that are available in the <code class="docutils literal notranslate"><span class="pre">Files</span></code> sub-directory:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">AIE</span></code> contains the source files for the AI Engine application.</p></li>
@@ -372,7 +357,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="phase-1-creating-a-fixed-platform-from-an-ai-engine-application-and-pl-kernels">
-<h1>Phase 1: Creating a Fixed Platform from an AI Engine Application and PL Kernels<a class="headerlink" href="#phase-1-creating-a-fixed-platform-from-an-ai-engine-application-and-pl-kernels" title="Permalink to this headline">¶</a></h1>
+<h1>Phase 1: Creating a Fixed Platform from an AI Engine Application and PL Kernels<a class="headerlink" href="#phase-1-creating-a-fixed-platform-from-an-ai-engine-application-and-pl-kernels" title="Permalink to this heading">¶</a></h1>
 <p>This lab uses the same files as the <a class="reference internal" href="VitisIDE_Flow.html"><span class="doc">Vitis IDE flow</span></a>, but all the operations are completed within a terminal.</p>
 <ol>
 <li><p>To complete phase 1, change directory: <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">Phase1</span></code>.</p>
@@ -426,7 +411,7 @@ function OptanonWrapper() { }
 <p>You can get out of QEMU by hitting <strong>Ctrl</strong> + <strong>a x</strong>.</p>
 </div>
 <div class="section" id="phase-2-using-a-platform-generated-by-vitis-and-modifying-the-ai-engine-application">
-<h1>Phase 2: Using a Platform Generated by Vitis and Modifying the AI Engine Application<a class="headerlink" href="#phase-2-using-a-platform-generated-by-vitis-and-modifying-the-ai-engine-application" title="Permalink to this headline">¶</a></h1>
+<h1>Phase 2: Using a Platform Generated by Vitis and Modifying the AI Engine Application<a class="headerlink" href="#phase-2-using-a-platform-generated-by-vitis-and-modifying-the-ai-engine-application" title="Permalink to this heading">¶</a></h1>
 <p>Phase 2 contains the following stages:</p>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pfm</span></code>: Create a fixed platform with the AI Engine and PS domains. The PS domain is a Linux-based OS that uses XRT to control the PL and the AI Engine kernels.</p></li>
@@ -477,7 +462,7 @@ function OptanonWrapper() { }
 <p>The fifth and final stage, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run_emu</span></code>, starts the hardware emulation that will also verify the correctness of the output.</p>
 </div>
 <div class="section" id="perform-on-board-testing">
-<h1>Perform On-Board Testing<a class="headerlink" href="#perform-on-board-testing" title="Permalink to this headline">¶</a></h1>
+<h1>Perform On-Board Testing<a class="headerlink" href="#perform-on-board-testing" title="Permalink to this heading">¶</a></h1>
 <ol class="simple">
 <li><p>To perform on-board testing, the same stages can be replicated but with a different target:</p></li>
 </ol>
@@ -494,11 +479,11 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <div class="section" id="support">
-<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h2>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

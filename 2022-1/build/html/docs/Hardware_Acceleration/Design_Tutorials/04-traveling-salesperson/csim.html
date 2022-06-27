@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -370,31 +355,31 @@ function OptanonWrapper() { }
 <div><p><strong>In this section…</strong><br />Executing <code class="docutils literal notranslate"><span class="pre">main</span></code> to functionaly verify the <code class="docutils literal notranslate"><span class="pre">tsp</span></code> function.</p>
 </div></blockquote>
 <div class="section" id="run-the-vitis-hls-c-simulation">
-<h1>Run the Vitis HLS C Simulation<a class="headerlink" href="#run-the-vitis-hls-c-simulation" title="Permalink to this headline">¶</a></h1>
+<h1>Run the Vitis HLS C Simulation<a class="headerlink" href="#run-the-vitis-hls-c-simulation" title="Permalink to this heading">¶</a></h1>
 <p>As discussed, the testbench file is visible on the left hand side of the Vitis HLS GUI, from the <em>Explorer</em> pane: <code class="docutils literal notranslate"><span class="pre">proj-&gt;TestBench</span></code> with the file <code class="docutils literal notranslate"><span class="pre">tsp_TB.cpp</span></code>.
 Inside the tesbench we see that city coordinates are converted to distances.
 City coordinates:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">const</span> <span class="n">Coord</span> <span class="n">cities</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{{</span><span class="mf">40.7127837</span><span class="p">,</span> <span class="mf">-74.0059413</span> <span class="p">},</span>
-                          <span class="p">{</span><span class="mf">34.0522342</span><span class="p">,</span> <span class="mf">-118.2436849</span><span class="p">},</span>
-                          <span class="p">{</span><span class="mf">41.8781136</span><span class="p">,</span> <span class="mf">-87.6297982</span> <span class="p">},</span>
-                          <span class="p">{</span><span class="mf">29.7604267</span><span class="p">,</span> <span class="mf">-95.3698028</span> <span class="p">},</span>
-                          <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">Coord</span><span class="w"> </span><span class="n">cities</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="mf">40.7127837</span><span class="p">,</span><span class="w"> </span><span class="mf">-74.0059413</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">                          </span><span class="p">{</span><span class="mf">34.0522342</span><span class="p">,</span><span class="w"> </span><span class="mf">-118.2436849</span><span class="p">},</span><span class="w"></span>
+<span class="w">                          </span><span class="p">{</span><span class="mf">41.8781136</span><span class="p">,</span><span class="w"> </span><span class="mf">-87.6297982</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">                          </span><span class="p">{</span><span class="mf">29.7604267</span><span class="p">,</span><span class="w"> </span><span class="mf">-95.3698028</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">                          </span><span class="p">...</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Calculation for distances (as previously discussed, these numbers are normalized to integers before feeding them into the <code class="docutils literal notranslate"><span class="pre">tsp</span></code> accelerator function):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span>
-                       <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">cities</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="o">-</span><span class="n">cities</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-                     <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">cities</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="o">-</span><span class="n">cities</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">y</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-                      <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="w"></span>
+<span class="w">                       </span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">cities</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="o">-</span><span class="n">cities</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">                     </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">cities</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="o">-</span><span class="n">cities</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">                      </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The testbench sends 16-bit (<code class="docutils literal notranslate"><span class="pre">uint16_t</span></code>) data types transcoded from floating-point for efficient hardware processing:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Normalizing distances to get the maximum precision on 16-bit integers</span>
-<span class="kt">uint16_t</span> <span class="n">maxUint</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span>
-<span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span> <span class="p">{</span>
-  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Distance (fp32): &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; Norm. (uint16): &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)((</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">maxDist</span><span class="p">)</span> <span class="o">*</span> <span class="n">maxUint</span><span class="p">);</span>
-  <span class="n">inputDistances</span><span class="p">.</span><span class="n">write</span><span class="p">((</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">maxDist</span><span class="p">)</span> <span class="o">*</span> <span class="n">maxUint</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">maxUint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Distance (fp32): &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; Norm. (uint16): &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="p">)((</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">maxDist</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">maxUint</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">inputDistances</span><span class="p">.</span><span class="n">write</span><span class="p">((</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">maxDist</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">maxUint</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Before running the simulation open the <code class="docutils literal notranslate"><span class="pre">tsp.h</span></code> file and examine the number of cities (<code class="docutils literal notranslate"><span class="pre">N=5</span></code>). To begin with you will use only a few cities to allow simulation to complete quickly. In the next lab you will set the number of cities to 13 for synthesis. You can open the <code class="docutils literal notranslate"><span class="pre">tsp.h</span></code> file in the Vitis HLS GUI from the <code class="docutils literal notranslate"><span class="pre">tsp.cpp</span></code> file by holding the mouse over the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;tsp.h&quot;</span></code> line and press CTRL key while clicking the mouse.</p>
@@ -407,7 +392,7 @@ and from its drop-down menu, select <strong>C simulation</strong>:</p>
 <p>As we see on the screenshot above, the result is 75662 (scaled integer) or 51.6494. It matches the pre-computed result stored in the testbench.</p>
 </div>
 <div class="section" id="next">
-<h1>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h1>
+<h1>Next<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="csynth.html"><span class="doc">Run the C synthesis</span></a></p></li>
 </ul>

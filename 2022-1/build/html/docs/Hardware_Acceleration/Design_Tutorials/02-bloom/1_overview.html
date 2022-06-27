@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="overview-of-the-original-application">
-<h1>Overview of the Original Application<a class="headerlink" href="#overview-of-the-original-application" title="Permalink to this headline">¶</a></h1>
+<h1>Overview of the Original Application<a class="headerlink" href="#overview-of-the-original-application" title="Permalink to this heading">¶</a></h1>
 <p>Document filtering is the process in which a system monitors a stream of incoming documents, classifies them according to their content, and selects documents relevant to a specific user or topic. Document filtering is used extensively in the everyday querying, retrieval, and analysis of information that helps to identify relevant documents of interest.</p>
 <p>In practical scenarios, the number of documents to search through for an event can be very large and because the monitoring of events must run in real-time, a smaller execution time is required for processing all the documents. In this tutorial, you compute a score for each document, which represents the document’s relevance.</p>
 <p>The user’s interest is represented by a search array, which contains words of interest and has a weight associated with it, indicating the prominence of the word. While monitoring the incoming stream of documents, you want to find the weight associated with words stored in the database. A native implementation accesses the database for every word in the document to check if a word is present and if present, retrieve the weight of the word. A more optimized approach uses a space-efficient Bloom filter in your cache that can report whether a word is present in the database, which reduces the number of expensive database queries.</p>
@@ -366,7 +351,7 @@ function OptanonWrapper() { }
 <li><p>The number of elements are 18 and the number of hash functions computed for each element is 3.</p></li>
 </ul>
 <div class="section" id="tutorial-implementation">
-<h2>Tutorial Implementation<a class="headerlink" href="#tutorial-implementation" title="Permalink to this headline">¶</a></h2>
+<h2>Tutorial Implementation<a class="headerlink" href="#tutorial-implementation" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, each document consists of an array of words where: each word is a 32-bit unsigned integer comprised of a 24-bit word ID and an 8-bit integer representing the frequency. The search array consists of words of interest to the user, and represents a smaller set of 24-bit word IDs, where each word ID has a weight associated with it, determining the importance of the word.</p>
 <ol>
 <li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Design_Tutorials/02-bloom</span></code> directory.</p></li>
@@ -377,7 +362,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>In the next step, you will <a class="reference internal" href="2_experience-acceleration.html"><span class="doc">experience the acceleration potential</span></a> before creating and optimizing a kernel.</p>
 <p align="center" class="sphinxhide"><b>
 </b></p>

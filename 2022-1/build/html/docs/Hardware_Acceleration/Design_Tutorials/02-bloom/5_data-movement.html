@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="data-movement-between-the-host-and-kernel">
-<h1>Data Movement Between the Host and Kernel<a class="headerlink" href="#data-movement-between-the-host-and-kernel" title="Permalink to this headline">¶</a></h1>
+<h1>Data Movement Between the Host and Kernel<a class="headerlink" href="#data-movement-between-the-host-and-kernel" title="Permalink to this heading">¶</a></h1>
 <p>In the previous step, you implemented a sequential execution of the written words from the host, computing hash functions on the FPGA, and reading flags by the host.</p>
 <p>The compute does not start until the entire input is read into the FPGA, and similarly, the host read from the FPGA does not start until compute is done on the FPGA.</p>
 <p>In this lab, you will work with an:</p>
@@ -376,122 +361,122 @@ function OptanonWrapper() { }
 </li>
 </ul>
 <div class="section" id="overlap-of-host-data-transfer-and-compute-with-split-buffers">
-<h2>Overlap of Host Data Transfer and Compute with Split Buffers<a class="headerlink" href="#overlap-of-host-data-transfer-and-compute-with-split-buffers" title="Permalink to this headline">¶</a></h2>
+<h2>Overlap of Host Data Transfer and Compute with Split Buffers<a class="headerlink" href="#overlap-of-host-data-transfer-and-compute-with-split-buffers" title="Permalink to this heading">¶</a></h2>
 <p>The following figure illustrates the use case where the input data is split into two sub-buffers.</p>
 <p><img alt="missing image" src="../../../../_images/overlap_split_buffer.PNG" /></p>
 <div class="section" id="host-code-modifications">
-<h3>Host Code Modifications<a class="headerlink" href="#host-code-modifications" title="Permalink to this headline">¶</a></h3>
+<h3>Host Code Modifications<a class="headerlink" href="#host-code-modifications" title="Permalink to this heading">¶</a></h3>
 <p>Navigate to <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/reference_files</span></code>, and with a file editor, open <code class="docutils literal notranslate"><span class="pre">run_split_buffer.cpp</span></code>.</p>
 <p>Lines 64 through 148 are modified to optimize the host code to send the input buffer in two iterations which enables the overlap of data transfers with the accelerator execution. The following steps explain the process in detail:</p>
 <ol>
 <li><p>The following two sub-buffers for <code class="docutils literal notranslate"><span class="pre">input_doc_words</span></code> and <code class="docutils literal notranslate"><span class="pre">output_inh_flags</span></code> are created.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Make buffers resident in the device</span>
-<span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_bloom_filter</span><span class="p">,</span> <span class="n">buffer_input_doc_words</span><span class="p">,</span> <span class="n">buffer_output_inh_flags</span><span class="p">},</span> <span class="n">CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED</span><span class="p">);</span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_bloom_filter</span><span class="p">,</span><span class="w"> </span><span class="n">buffer_input_doc_words</span><span class="p">,</span><span class="w"> </span><span class="n">buffer_output_inh_flags</span><span class="p">},</span><span class="w"> </span><span class="n">CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Specify size of sub-buffers, one for each transaction </span>
-<span class="kt">unsigned</span> <span class="n">subbuf_doc_sz</span> <span class="o">=</span> <span class="n">total_doc_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-<span class="kt">unsigned</span> <span class="n">subbuf_inh_sz</span> <span class="o">=</span> <span class="n">total_doc_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="n">subbuf_doc_sz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total_doc_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="n">subbuf_inh_sz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total_doc_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Declare sub-buffer regions to specify offset and size of sub-buffer   </span>
-<span class="n">cl_buffer_region</span> <span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<span class="n">cl_buffer_region</span> <span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">cl_buffer_region</span><span class="w"> </span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+<span class="n">cl_buffer_region</span><span class="w"> </span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
 
 <span class="c1">// Declare sub-buffers</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
 
- <span class="c1">// Specify offset and size of sub-buffers </span>
-<span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)};</span>
-<span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="nf">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">),</span> <span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)};</span>
-<span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">)};</span>
-<span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="nf">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">),</span> <span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">)};</span>
+<span class="w"> </span><span class="c1">// Specify offset and size of sub-buffers </span>
+<span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)};</span><span class="w"></span>
+<span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="nf">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">),</span><span class="w"> </span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)};</span><span class="w"></span>
+<span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">)};</span><span class="w"></span>
+<span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="nf">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">),</span><span class="w"> </span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">)};</span><span class="w"></span>
 
 <span class="c1">// Create sub-buffers from buffers based on sub-buffer regions</span>
-<span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_output_inh_flags</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span> <span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_output_inh_flags</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span> <span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-<span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_input_doc_words</span><span class="p">.</span><span class="n">createSubBuffer</span> <span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span>  <span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_input_doc_words</span><span class="p">.</span><span class="n">createSubBuffer</span> <span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span>  <span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer_output_inh_flags</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span><span class="w"> </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer_output_inh_flags</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span><span class="w"> </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer_input_doc_words</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="w"> </span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span><span class="w">  </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer_input_doc_words</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="w"> </span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span><span class="w">  </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
 
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
- <span class="kt">double</span> <span class="n">mbytes_total</span>  <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">total_doc_size</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="mi">1000</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span>
-<span class="kt">double</span> <span class="n">mbytes_block</span>  <span class="o">=</span> <span class="n">mbytes_total</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot; Processing %.3f MBytes of data</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">mbytes_total</span><span class="p">);</span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot; Splitting data in 2 sub-buffers of %.3f MBytes for FPGA processing</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">mbytes_block</span><span class="p">);</span>  
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">mbytes_total</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">total_doc_size</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="mi">1000</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">mbytes_block</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">mbytes_total</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot; Processing %.3f MBytes of data</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mbytes_total</span><span class="p">);</span><span class="w"></span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot; Splitting data in 2 sub-buffers of %.3f MBytes for FPGA processing</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mbytes_block</span><span class="p">);</span><span class="w">  </span>
 </pre></div>
 </div>
 </li>
 <li><p>A vector of events are created to coordinate the read, compute, and write operations, so that each iteration is independent of the other iteration, allowing for an overlap between the data transfer and compute.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create Events to co-ordinate read,compute and write for each iteration </span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span> <span class="n">wordWait</span><span class="p">;</span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span> <span class="n">krnlWait</span><span class="p">;</span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span> <span class="n">flagWait</span><span class="p">;</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="n">wordWait</span><span class="p">;</span><span class="w"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="n">krnlWait</span><span class="p">;</span><span class="w"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="n">flagWait</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;--------------------------------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;--------------------------------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">time_point</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">;</span>
-<span class="n">t1</span> <span class="o">=</span> <span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+<span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">time_point</span><span class="w"> </span><span class="n">t1</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="p">;</span><span class="w"></span>
+<span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 <li><p>The kernel arguments are set, and the kernel is enqueued to load the Bloom filter coefficients.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Only load the Bloom filter in the kernel</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Event</span> <span class="n">buffDone</span><span class="p">,</span><span class="n">krnlDone</span><span class="p">,</span><span class="n">flagDone</span><span class="p">;</span>
-<span class="n">total_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">load_filter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-<span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">total_size</span><span class="p">);</span>
-<span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">load_filter</span><span class="p">);</span>
-<span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_bloom_filter</span><span class="p">},</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span>
-<span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span>
-<span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span>
-<span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="w"> </span><span class="n">buffDone</span><span class="p">,</span><span class="n">krnlDone</span><span class="p">,</span><span class="n">flagDone</span><span class="p">;</span><span class="w"></span>
+<span class="n">total_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">load_filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="p">);</span><span class="w"></span>
+<span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">load_filter</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_bloom_filter</span><span class="p">},</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 <li><p>During the first iteration, the kernel arguments are set, the commands to write the input buffer with first set of words to the FPGA, execute the kernel, and read the results back to the host, are enqueued.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">//  Set Kernel Arguments, Read, Enqueue Kernel and Write for first iteration</span>
-  <span class="n">total_size</span> <span class="o">=</span> <span class="n">total_doc_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-  <span class="n">load_filter</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">total_size</span><span class="p">);</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">load_filter</span><span class="p">);</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-  <span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">]},</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span> 
-  <span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span>
-  <span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span>
-  <span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span>
-  <span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]},</span> <span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">krnlWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">flagDone</span><span class="p">);</span>
-  <span class="n">flagWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">flagDone</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">//  Set Kernel Arguments, Read, Enqueue Kernel and Write for first iteration</span>
+<span class="w">  </span><span class="n">total_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total_doc_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">load_filter</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">load_filter</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">]},</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span><span class="w"> </span>
+<span class="w">  </span><span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]},</span><span class="w"> </span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">flagDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">flagWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">flagDone</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 <li><p>During the second iteration, the kernel arguments are set, the commands to write the input buffer with second set of words to the FPGA, execute the kernel, and read the results back to the host, are enqueued.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">//  Set Kernel Arguments, Read, Enqueue Kernel and Write for second iteration</span>
-  <span class="n">total_size</span> <span class="o">=</span> <span class="n">total_doc_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-  <span class="n">load_filter</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">total_size</span><span class="p">);</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">load_filter</span><span class="p">);</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-  <span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span> 
-  <span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span>
-  <span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span>
-  <span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span>
-  <span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span> <span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">krnlWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">flagDone</span><span class="p">);</span>
-  <span class="n">flagWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">flagDone</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">//  Set Kernel Arguments, Read, Enqueue Kernel and Write for second iteration</span>
+<span class="w">  </span><span class="n">total_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total_doc_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">load_filter</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">load_filter</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span><span class="w"> </span>
+<span class="w">  </span><span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span><span class="w"> </span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">flagDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">flagWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">flagDone</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 <li><p>The host waits until the output is read back from the FPGA.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Wait until all results are copied back to the host before doing the post-processing</span>
- <span class="n">flagWait</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">wait</span><span class="p">();</span>
- <span class="n">flagWait</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">wait</span><span class="p">();</span>
+<span class="w"> </span><span class="n">flagWait</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="n">flagWait</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 </ol>
 </div>
 <div class="section" id="run-the-application-using-the-bloom8x-kernel">
-<h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#run-the-application-using-the-bloom8x-kernel" title="Permalink to this headline">¶</a></h3>
+<h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#run-the-application-using-the-bloom8x-kernel" title="Permalink to this heading">¶</a></h3>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> directory, and run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> cd $LAB_WORK_DIR/makefile; make run STEP=split_buffer TARGET=hw PF=8 
 </pre></div>
@@ -509,7 +494,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="review-profile-report-and-timeline-trace-for-the-bloom8x-kernel">
-<h2>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#review-profile-report-and-timeline-trace-for-the-bloom8x-kernel" title="Permalink to this headline">¶</a></h2>
+<h2>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#review-profile-report-and-timeline-trace-for-the-bloom8x-kernel" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Run the following commands to view the Timeline Trace report with Bloom8x kernel.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/split_buffer/kernel_8/hw/runOnfpga_hw.xclbin.run_summary 
@@ -537,7 +522,7 @@ function OptanonWrapper() { }
 </ol>
 <p>When the Bloom8x kernel is used, you can also confirm from the reports that the kernel enqueue time for each compute is smaller than each host transfer. Therefore, there is no real benefit of using the Bloom16x kernel because you are limited by the transfer time from the host. The execution time of the Bloom16x kernel will be faster, but the kernel does not improve the overall application performance. You can confirm this fact by using the Bloom16x kernel in the next step.</p>
 <div class="section" id="run-the-application-using-the-bloom16x-kernel">
-<h3>Run the Application Using the Bloom16x Kernel<a class="headerlink" href="#run-the-application-using-the-bloom16x-kernel" title="Permalink to this headline">¶</a></h3>
+<h3>Run the Application Using the Bloom16x Kernel<a class="headerlink" href="#run-the-application-using-the-bloom16x-kernel" title="Permalink to this heading">¶</a></h3>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> directory, and run the <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=split_buffer TARGET=hw PF=16
 </pre></div>
@@ -557,94 +542,94 @@ function OptanonWrapper() { }
 <p>You will continue this lab with the Bloom8x kernel.</p>
 </div>
 <div class="section" id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>The total execution time on the FPGA has been improved because of the overlapping computation with data transfers. The execution time of the first kernel run and the first data read have been eliminated.</p>
 </div>
 </div>
 <div class="section" id="overlap-of-host-data-transfer-and-compute-with-multiple-buffers">
-<h2>Overlap of Host Data Transfer and Compute with Multiple Buffers<a class="headerlink" href="#overlap-of-host-data-transfer-and-compute-with-multiple-buffers" title="Permalink to this headline">¶</a></h2>
+<h2>Overlap of Host Data Transfer and Compute with Multiple Buffers<a class="headerlink" href="#overlap-of-host-data-transfer-and-compute-with-multiple-buffers" title="Permalink to this heading">¶</a></h2>
 <p>In the previous step, you split the input buffer into two sub-buffers and overlapped the first compute with the second data transfer. In this step, you will write generic code, so the input data is split and processed in an arbitrary number of iterations to achieve the optimal execution time.</p>
 <div class="section" id="id1">
-<h3>Host Code Modifications<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Host Code Modifications<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>Open <code class="docutils literal notranslate"><span class="pre">run_generic_buffer.cpp</span></code> in <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/reference_files</span></code> with a file editor.</p>
 <p>Lines 67 through 139 are modified to optimize the host code to send the input buffer in multiple iterations to enable the overlapping of the data transfer and compute. The process is explained in detail as follows:</p>
 <ol>
 <li><p>The following multiple sub-buffers are created for <code class="docutils literal notranslate"><span class="pre">input_doc_words</span></code> and <code class="docutils literal notranslate"><span class="pre">output_inh_flags</span></code>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// Specify size of sub buffers for each iteration</span>
-  <span class="kt">unsigned</span> <span class="n">subbuf_doc_sz</span> <span class="o">=</span> <span class="n">total_doc_size</span><span class="o">/</span><span class="n">num_iter</span><span class="p">;</span>
-  <span class="kt">unsigned</span> <span class="n">subbuf_inh_sz</span> <span class="o">=</span> <span class="n">total_doc_size</span><span class="o">/</span><span class="n">num_iter</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Specify size of sub buffers for each iteration</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">subbuf_doc_sz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total_doc_size</span><span class="o">/</span><span class="n">num_iter</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">subbuf_inh_sz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total_doc_size</span><span class="o">/</span><span class="n">num_iter</span><span class="p">;</span><span class="w"></span>
 
-  <span class="c1">// Declare sub buffer regions to specify offset and size for each iteration</span>
-  <span class="n">cl_buffer_region</span> <span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span>
-  <span class="n">cl_buffer_region</span> <span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span>
+<span class="w">  </span><span class="c1">// Declare sub buffer regions to specify offset and size for each iteration</span>
+<span class="w">  </span><span class="n">cl_buffer_region</span><span class="w"> </span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">cl_buffer_region</span><span class="w"> </span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span><span class="w"></span>
 
-  <span class="c1">// Declare sub buffers</span>
-  <span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span>
-  <span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span>
+<span class="w">  </span><span class="c1">// Declare sub buffers</span>
+<span class="w">  </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span><span class="w"></span>
 
-  <span class="c1">// Define sub buffers from buffers based on sub-buffer regions</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">num_iter</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span>
-    <span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">*</span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">),</span> <span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)};</span>
-    <span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">*</span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">),</span> <span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">)};</span>
-    <span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_output_inh_flags</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span> <span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_input_doc_words</span><span class="p">.</span><span class="n">createSubBuffer</span> <span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span>  <span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-  <span class="p">}</span>
+<span class="w">  </span><span class="c1">// Define sub buffers from buffers based on sub-buffer regions</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_iter</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">*</span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">),</span><span class="w"> </span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)};</span><span class="w"></span>
+<span class="w">    </span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">*</span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">),</span><span class="w"> </span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">)};</span><span class="w"></span>
+<span class="w">    </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer_output_inh_flags</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span><span class="w"> </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer_input_doc_words</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="w"> </span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span><span class="w">  </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 
-  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-  <span class="kt">double</span> <span class="n">mbytes_total</span>  <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">total_doc_size</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="mi">1000</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span>
-  <span class="kt">double</span> <span class="n">mbytes_block</span>  <span class="o">=</span> <span class="n">mbytes_total</span> <span class="o">/</span> <span class="n">num_iter</span><span class="p">;</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">&quot; Processing %.3f MBytes of data</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">mbytes_total</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">num_iter</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot; Splitting data in %d sub-buffers of %.3f MBytes for FPGA processing</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">num_iter</span><span class="p">,</span> <span class="n">mbytes_block</span><span class="p">);</span>
-  <span class="p">}</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">mbytes_total</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">total_doc_size</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="mi">1000</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">mbytes_block</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">mbytes_total</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">num_iter</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; Processing %.3f MBytes of data</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mbytes_total</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">num_iter</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; Splitting data in %d sub-buffers of %.3f MBytes for FPGA processing</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num_iter</span><span class="p">,</span><span class="w"> </span><span class="n">mbytes_block</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 <li><p>A vector of events are created to coordinate the read, compute, and write operations, so every iteration is independent of other iterations, which allows for an overlap between the data transfer and compute.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// Create Events for coordinating read,compute and write for each iteration</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span> <span class="n">wordWait</span><span class="p">;</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span> <span class="n">krnlWait</span><span class="p">;</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span> <span class="n">flagWait</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Create Events for coordinating read,compute and write for each iteration</span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="n">wordWait</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="n">krnlWait</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="n">flagWait</span><span class="p">;</span><span class="w"></span>
 
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;--------------------------------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;--------------------------------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
 
-    <span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">time_point</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">;</span>
-    <span class="n">t1</span> <span class="o">=</span> <span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+<span class="w">    </span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">time_point</span><span class="w"> </span><span class="n">t1</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 <li><p>The kernel arguments are set, and the kernel is enqueued to load the Bloom filter coefficients.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// Set Kernel arguments and load the Bloom filter coefficients in the kernel</span>
-  <span class="n">cl</span><span class="o">::</span><span class="n">Event</span> <span class="n">buffDone</span><span class="p">,</span> <span class="n">krnlDone</span><span class="p">;</span>
-  <span class="n">total_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="n">load_filter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">total_size</span><span class="p">);</span>
-  <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">load_filter</span><span class="p">);</span>
-  <span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_bloom_filter</span><span class="p">},</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span>
-  <span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span>
-  <span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span>
-  <span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Set Kernel arguments and load the Bloom filter coefficients in the kernel</span>
+<span class="w">  </span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="w"> </span><span class="n">buffDone</span><span class="p">,</span><span class="w"> </span><span class="n">krnlDone</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">total_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">load_filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">load_filter</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_bloom_filter</span><span class="p">},</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 <li><p>For each iteration, kernel arguments are set, and the commands to write the input buffer to the FPGA, execute the kernel, and read the results back to the host, are enqueued.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// Set Kernel arguments. Read, Enqueue Kernel and Write for each iteration</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">num_iter</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="n">cl</span><span class="o">::</span><span class="n">Event</span> <span class="n">buffDone</span><span class="p">,</span> <span class="n">krnlDone</span><span class="p">,</span> <span class="n">flagDone</span><span class="p">;</span>
-    <span class="n">total_size</span> <span class="o">=</span> <span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">);</span>
-    <span class="n">load_filter</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">total_size</span><span class="p">);</span>
-    <span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">load_filter</span><span class="p">);</span>
-    <span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]},</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span>
-    <span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span>
-    <span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span>
-    <span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span>
-    <span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]},</span> <span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">krnlWait</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">flagDone</span><span class="p">);</span>
-    <span class="n">flagWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">flagDone</span><span class="p">);</span>
-  <span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Set Kernel arguments. Read, Enqueue Kernel and Write for each iteration</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_iter</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="w"> </span><span class="n">buffDone</span><span class="p">,</span><span class="w"> </span><span class="n">krnlDone</span><span class="p">,</span><span class="w"> </span><span class="n">flagDone</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">total_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">load_filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">load_filter</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]},</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]},</span><span class="w"> </span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">flagDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">flagWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">flagDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
@@ -661,7 +646,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="id2">
-<h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>In this step, you will explore the Bloom8x kernel with 100,000 documents split into 2, 4, 8, 16, 32, 64, and 128 chunks, and explore which option results in the best performance.</p>
 <ol>
 <li><p>Go to the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> directory and run the <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
@@ -698,7 +683,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="id3">
-<h3>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Run the following commands to view the Timeline Trace report with Bloom8x kernel.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/generic_buffer/kernel_8/hw/runOnfpga_hw.xclbin.run_summary
@@ -720,65 +705,65 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="overlap-between-the-host-cpu-and-fpga">
-<h2>Overlap Between the Host CPU and FPGA<a class="headerlink" href="#overlap-between-the-host-cpu-and-fpga" title="Permalink to this headline">¶</a></h2>
+<h2>Overlap Between the Host CPU and FPGA<a class="headerlink" href="#overlap-between-the-host-cpu-and-fpga" title="Permalink to this heading">¶</a></h2>
 <p>In the previous steps, you looked at optimizing the execution time of the FPGA by overlapping the data transfer from the host to FPGA and compute on the FPGA. After the FPGA compute is complete, the CPU computes the document scores based on the output from the FPGA. Until now, the FPGA processing and CPU post-processing executed sequentially.</p>
 <p>If you look at the previous Timeline Trace reports, you can see red segments on the very first row that shows the OpenCL API Calls made by the host application. This indicates that the host is waiting, staying idle while the FPGA computes the hash and flags. In this step, you will overlap the FPGA processing with the CPU post-processing.</p>
 <p>Because the total compute is split into multiple iterations, you can start post-processing on the host CPU after the corresponding iteration is complete, allowing the overlap between the CPU and FPGA processing. The performance increases because the CPU is also processing in parallel with the FPGA, which reduces the execution time.</p>
 <div class="section" id="id4">
-<h3>Host Code Modifications<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3>Host Code Modifications<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Open <code class="docutils literal notranslate"><span class="pre">run_sw_overlap.cpp</span></code> in <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/reference_files</span></code> with a file editor.</p>
 <p>Lines 134 through 171 are modified to optimize the host code such that CPU processing is overlapped with FPGA processing. It is explained in detail as follows.</p>
 <p>The following variables are created to keep track of the words processed by the FPGA.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// Create variables to keep track of number of words needed by CPU to compute score and number of words processed by FPGA such that CPU processing can overlap with FPGA</span>
-  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">curr_entry</span><span class="p">;</span>
-  <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">inh_flags</span><span class="p">;</span>
-  <span class="kt">unsigned</span> <span class="kt">int</span>  <span class="n">available</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="kt">unsigned</span> <span class="kt">int</span>  <span class="n">needed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="kt">unsigned</span> <span class="kt">int</span>  <span class="n">iter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Create variables to keep track of number of words needed by CPU to compute score and number of words processed by FPGA such that CPU processing can overlap with FPGA</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">curr_entry</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">inh_flags</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">  </span><span class="n">available</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">  </span><span class="n">needed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">  </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 <li><p>Block the host only if the hash function of the words are still not computed by FPGA, thereby allowing overlap between the CPU and FPGA processing.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">doc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">doc</span><span class="o">&lt;</span><span class="n">total_num_docs</span><span class="p">;</span><span class="n">doc</span><span class="o">++</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">doc_sizes</span><span class="p">[</span><span class="n">doc</span><span class="p">];</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">doc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">doc</span><span class="o">&lt;</span><span class="n">total_num_docs</span><span class="p">;</span><span class="n">doc</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doc_sizes</span><span class="p">[</span><span class="n">doc</span><span class="p">];</span><span class="w"></span>
 
-    <span class="c1">// Calculate size by needed by CPU for processing next document score</span>
-    <span class="n">needed</span> <span class="o">+=</span> <span class="n">size</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Calculate size by needed by CPU for processing next document score</span>
+<span class="w">    </span><span class="n">needed</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Check if flags processed by FPGA is greater than needed by CPU. Else, block CPU</span>
-    <span class="c1">// Update the number of available words and sub-buffer count(iter)</span>
+<span class="w">    </span><span class="c1">// Check if flags processed by FPGA is greater than needed by CPU. Else, block CPU</span>
+<span class="w">    </span><span class="c1">// Update the number of available words and sub-buffer count(iter)</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">needed</span> <span class="o">&gt;</span> <span class="n">available</span><span class="p">)</span>
-    <span class="p">{</span>
-      <span class="n">flagWait</span><span class="p">[</span><span class="n">iter</span><span class="p">].</span><span class="n">wait</span><span class="p">();</span>
-      <span class="n">available</span> <span class="o">+=</span> <span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">iter</span><span class="p">].</span><span class="n">size</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">);</span>
-      <span class="n">iter</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">needed</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">available</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">flagWait</span><span class="p">[</span><span class="n">iter</span><span class="p">].</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">available</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">iter</span><span class="p">].</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">iter</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">n</span><span class="o">++</span><span class="p">)</span>
-    <span class="p">{</span>
-      <span class="n">curr_entry</span> <span class="o">=</span> <span class="n">input_doc_words</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
-      <span class="n">inh_flags</span>  <span class="o">=</span> <span class="n">output_inh_flags</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input_doc_words</span><span class="p">[</span><span class="n">n</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">inh_flags</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">output_inh_flags</span><span class="p">[</span><span class="n">n</span><span class="p">];</span><span class="w"></span>
 
-      <span class="k">if</span> <span class="p">(</span><span class="n">inh_flags</span><span class="p">)</span>
-      <span class="p">{</span>
-        <span class="kt">unsigned</span> <span class="n">frequency</span> <span class="o">=</span> <span class="n">curr_entry</span> <span class="o">&amp;</span> <span class="mh">0x00ff</span><span class="p">;</span>
-        <span class="kt">unsigned</span> <span class="n">word_id</span> <span class="o">=</span> <span class="n">curr_entry</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>
-        <span class="n">ans</span> <span class="o">+=</span> <span class="n">profile_weights</span><span class="p">[</span><span class="n">word_id</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">frequency</span><span class="p">;</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="n">profile_score</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span> <span class="o">=</span> <span class="n">ans</span><span class="p">;</span>
-  <span class="p">}</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inh_flags</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">frequency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00ff</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">word_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">ans</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">profile_weights</span><span class="p">[</span><span class="n">word_id</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">frequency</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">profile_score</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ans</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 </ol>
 </div>
 <div class="section" id="id5">
-<h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
 <p>Go to the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> directory, and run the <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=sw_overlap TARGET=hw PF=8 ITER=8
 </pre></div>
@@ -795,7 +780,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="id6">
-<h3>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Run the following commands to view the Timeline Trace with Bloom8x kernel.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/sw_overlap/kernel_8/hw/runOnfpga_hw.xclbin.run_summary 
@@ -814,7 +799,7 @@ Device transfer.</p></li>
 </ol>
 </div>
 <div class="section" id="review-profile-summary-report-for-the-bloom8x-kernel">
-<h3>Review Profile Summary Report for the Bloom8x Kernel<a class="headerlink" href="#review-profile-summary-report-for-the-bloom8x-kernel" title="Permalink to this headline">¶</a></h3>
+<h3>Review Profile Summary Report for the Bloom8x Kernel<a class="headerlink" href="#review-profile-summary-report-for-the-bloom8x-kernel" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p><em>Kernels &amp; Compute Unit:Kernel Execution</em> reports 168ms. This should be same as when Bloom8x kernel run with ITER=8.</p></li>
 <li><p><em>Kernels &amp; Compute Unit: Compute Unit Stalls</em> section also confirms that “External Memory” stalls are about 20.045 ms compared to no “External Memory” stalls when single buffer was used. This will result in slower data transfer and kernel compute compared to single buffer run.</p>
@@ -832,13 +817,13 @@ Device transfer.</p></li>
 <p>In the next lab, you will compare the results for “Host Data Transfer Rates” and “CU Utilization”.</p>
 </div>
 <div class="section" id="throughput-achieved">
-<h3>Throughput Achieved<a class="headerlink" href="#throughput-achieved" title="Permalink to this headline">¶</a></h3>
+<h3>Throughput Achieved<a class="headerlink" href="#throughput-achieved" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Based on the results, the throughput of the application is 1399 MB/427 ms = approx 3.27 GBs.` You have now approximately 7.2 times (=3057 ms/427 ms) the performance results compared to the software results.</p></li>
 </ul>
 </div>
 <div class="section" id="opportunities-for-performance-improvements">
-<h3>Opportunities for Performance Improvements<a class="headerlink" href="#opportunities-for-performance-improvements" title="Permalink to this headline">¶</a></h3>
+<h3>Opportunities for Performance Improvements<a class="headerlink" href="#opportunities-for-performance-improvements" title="Permalink to this heading">¶</a></h3>
 <p>The host and kernel are trying to access the same DDR bank at the same time which resulted in an external memory stall of 20.045 ms. These accesses cause memory contention and limits the speed-up of application execution. In the next module, you will <a class="reference internal" href="6_using-multiple-ddr.html"><span class="doc">make use of additional bank</span></a> to minimize the memory contentions.</p>
 <hr class="docutils" />
 <p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>

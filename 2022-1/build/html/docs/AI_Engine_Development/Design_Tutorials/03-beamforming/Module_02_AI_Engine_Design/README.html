@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,7 +339,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="building-the-design">
-<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this headline">¶</a></h1>
+<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <p>Create the AI Engine graph application by running the <code class="docutils literal notranslate"><span class="pre">make</span></code> step as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make graph
 </pre></div>
@@ -373,7 +358,7 @@ aiecompiler -v                      <span class="se">\</span>
 </pre></div>
 </div>
 <div class="section" id="options-table">
-<h2>Options Table<a class="headerlink" href="#options-table" title="Permalink to this headline">¶</a></h2>
+<h2>Options Table<a class="headerlink" href="#options-table" title="Permalink to this heading">¶</a></h2>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -405,7 +390,7 @@ aiecompiler -v                      <span class="se">\</span>
 </tbody>
 </table></div>
 <div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h2>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -445,7 +430,7 @@ aiecompiler -v                      <span class="se">\</span>
 </tbody>
 </table></div>
 <div class="section" id="build-products">
-<h2>Build Products<a class="headerlink" href="#build-products" title="Permalink to this headline">¶</a></h2>
+<h2>Build Products<a class="headerlink" href="#build-products" title="Permalink to this heading">¶</a></h2>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -473,14 +458,14 @@ aiecompiler -v                      <span class="se">\</span>
 </tbody>
 </table></div>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="ai-engine-kernels-graphs-and-applications">
-<h3>AI Engine Kernels, Graphs, and Applications<a class="headerlink" href="#ai-engine-kernels-graphs-and-applications" title="Permalink to this headline">¶</a></h3>
+<h3>AI Engine Kernels, Graphs, and Applications<a class="headerlink" href="#ai-engine-kernels-graphs-and-applications" title="Permalink to this heading">¶</a></h3>
 <p>AI Engine kernels are computation functions that work together to build data flow graphs. Multiple subgraphs can be stitched together into larger high-level graphs. This beamforming tutorial uses three beamforming kernels that implement matrix multiplication functions. These kernels are strung together to form the downlink and uplink subgraphs. Three uplink and three downlink subgraphs are instantiated in a high-level data flow graph <code class="docutils literal notranslate"><span class="pre">TEST_BF</span></code> defined in <code class="docutils literal notranslate"><span class="pre">test_bf.h</span></code>. The AI Engine application contains an instance of the <code class="docutils literal notranslate"><span class="pre">TEST_BF</span></code> graph and can be compiled and simulated using the AI Engine tool chain.</p>
 </div>
 </div>
 <div class="section" id="ai-engine-kernels-and-graphs">
-<h2>AI Engine Kernels and Graphs<a class="headerlink" href="#ai-engine-kernels-and-graphs" title="Permalink to this headline">¶</a></h2>
+<h2>AI Engine Kernels and Graphs<a class="headerlink" href="#ai-engine-kernels-and-graphs" title="Permalink to this heading">¶</a></h2>
 <p>The fundamental beamforming kernel computes a complex matrix multiplication on a (8x8) coefficient matrix times a (8x1) input data matrix which results in a (8x1) output data matrix. The beamforming kernel repeats the matrix multiplication computation on as many (8x1) input data matrices as are fed into it.</p>
 <p>When the beamforming kernel computes the matrix multiplication, the results are only partial summations. The beamforming kernel then sends the partial results to identical kernels in a cascade chain for further accumulation and multiplication into a final accumulated (8x1) output data matrix. A real 5G system is determined by the number of layers (M) and number of antennas (N). For this beamforming tutorial, M is determined by the number of inputs into the chain (that is, the length of the input data matrix (8) times the number of kernels in a cascade chain). N is determined by the number of final accumulated outputs at the end of the chain (8) times the number of chains in your design.</p>
 <p>This beamforming kernel comes in three flavors: <code class="docutils literal notranslate"><span class="pre">bf8x8_fst</span></code>, <code class="docutils literal notranslate"><span class="pre">bf8x8_mid</span></code>, and <code class="docutils literal notranslate"><span class="pre">bf8x8_lst</span></code>. Review the source files defined in the <code class="docutils literal notranslate"><span class="pre">src/kernels/</span></code> folder.</p>
@@ -488,35 +473,35 @@ aiecompiler -v                      <span class="se">\</span>
 <p>The kernels are strung together into a cascading chain, and they are named first, middle, and last depending on their location in the cascading chain. All three of these kernels implement the matrix multiplication function and only differ in the input and output interfaces. The first kernel in the cascading chain does not have a cascading input because it is the first kernel in a chain. The middle kernel has both a cascading input and a cascading output. The last kernel has both a cascading input and output, but writes the output to local memory instead of the cascading bus.</p>
 <p>All three beamforming kernel types start by loading the input data and input coefficient data from PL kernels. The first beamforming kernel computes the matrix multiplication, computes the first partial summation, and sends it to a middle kernel using an output cascade. The middle kernel reads the partial summation from the previous kernel, computes its own matrix multiplication on the accumulated data, and generates its own output cascade. This output cascade becomes the input cascade to either another middle kernel or the last kernel. The last kernel does the final matrix multiplication on the accumulated data and writes the final results to a PL kernel. The entire chain of beamforming kernels repeats these calculations on new input data for 12 subcarriers in total.</p>
 <div class="section" id="cascading-chain-subgraph">
-<h3>Cascading Chain Subgraph<a class="headerlink" href="#cascading-chain-subgraph" title="Permalink to this headline">¶</a></h3>
+<h3>Cascading Chain Subgraph<a class="headerlink" href="#cascading-chain-subgraph" title="Permalink to this heading">¶</a></h3>
 <p>The subgraph <code class="docutils literal notranslate"><span class="pre">bfCascadingChain</span></code> is used to create a cascading chain of beamforming kernels. Review the graph definition in the <code class="docutils literal notranslate"><span class="pre">src/inc/subsys.h</span></code>. It is a templated subgraph with parameters <code class="docutils literal notranslate"><span class="pre">xoff</span></code>, <code class="docutils literal notranslate"><span class="pre">yoff</span></code>, and <code class="docutils literal notranslate"><span class="pre">len</span></code>. The <code class="docutils literal notranslate"><span class="pre">xoff</span></code> and <code class="docutils literal notranslate"><span class="pre">yoff</span></code> parameters define the coordinate of the leftmost AI Engine. The <code class="docutils literal notranslate"><span class="pre">len</span></code> parameter specifies the length of the cascading chain (<code class="docutils literal notranslate"><span class="pre">len-2</span></code> = the number of middle kernels in a chain). The port arrays <code class="docutils literal notranslate"><span class="pre">din[len]</span></code> and <code class="docutils literal notranslate"><span class="pre">cin[len]</span></code> are the data input and coefficient input ports. The size of these arrays is determined by the <code class="docutils literal notranslate"><span class="pre">len</span></code> parameter (so, we need one data input port and one coefficient input port for each kernel in the cascade chain). Additionally, there is one output port <code class="docutils literal notranslate"><span class="pre">out</span></code> for the final output in the last kernel.</p>
 <p>You can create subgraphs that contains multiple cascading chains where each chain can be customized to contain any number of beamforming kernels.
 <img alt="Multiple cascading chains in a subgraph" src="../../../../../_images/cascading_chains.PNG" /></p>
 </div>
 <div class="section" id="downlink-subgraph">
-<h3>Downlink Subgraph<a class="headerlink" href="#downlink-subgraph" title="Permalink to this headline">¶</a></h3>
+<h3>Downlink Subgraph<a class="headerlink" href="#downlink-subgraph" title="Permalink to this heading">¶</a></h3>
 <p>The subgraph DL64A32L is a 64-antenna-32-layer downlink subgraph. Review the graph definition in the <code class="docutils literal notranslate"><span class="pre">src/inc/subsys.h</span></code>. It consists of eight <code class="docutils literal notranslate"><span class="pre">bfCascadingChain</span></code> subgraphs of length four beamforming kernels. This subgraph has four data input ports and 32 coefficient input ports. All eight chains get the same input data. Each chain gets four of the coefficient input ports each. There are eight output data ports for the output of each chain.</p>
 </div>
 <div class="section" id="uplink-subgraph">
-<h3>Uplink Subgraph<a class="headerlink" href="#uplink-subgraph" title="Permalink to this headline">¶</a></h3>
+<h3>Uplink Subgraph<a class="headerlink" href="#uplink-subgraph" title="Permalink to this heading">¶</a></h3>
 <p>The uplink subgraph UL64A32L is the reverse of the downlink subgraph. Review the graph definition in the <code class="docutils literal notranslate"><span class="pre">src/inc/subsys.h</span></code> It consists of four <code class="docutils literal notranslate"><span class="pre">bfCascadingChain</span></code> subgraphs each of the length of eight beamforming kernels. This subgraph has eight data input ports and 32 coefficient input ports. All four chains get the same input data. Each chain gets eight of the coefficient input ports each. There are four output data ports for the output of each chain.</p>
 </div>
 <div class="section" id="test-beamforming-graph">
-<h3>Test Beamforming Graph<a class="headerlink" href="#test-beamforming-graph" title="Permalink to this headline">¶</a></h3>
+<h3>Test Beamforming Graph<a class="headerlink" href="#test-beamforming-graph" title="Permalink to this heading">¶</a></h3>
 <p>The test beamforming <code class="docutils literal notranslate"><span class="pre">TEST_BF</span></code> graph is the high-level AI Engine graph that contains three instances of the <code class="docutils literal notranslate"><span class="pre">DL64A32L</span></code> subgraph and three instances of the <code class="docutils literal notranslate"><span class="pre">UL64A32L</span></code> subgraph. Review the graph definition in the <code class="docutils literal notranslate"><span class="pre">src/test_bf.h</span></code>.</p>
 </div>
 </div>
 <div class="section" id="ai-engine-application">
-<h2>AI Engine Application<a class="headerlink" href="#ai-engine-application" title="Permalink to this headline">¶</a></h2>
+<h2>AI Engine Application<a class="headerlink" href="#ai-engine-application" title="Permalink to this heading">¶</a></h2>
 <p>Review the <code class="docutils literal notranslate"><span class="pre">test_bf_3x.cpp</span></code> AI Engine application. Note that all the input and output PLIO ports for the <code class="docutils literal notranslate"><span class="pre">TEST_BF</span></code> graph are instantiated. Next, instantiate the virtual platform and connect the virtual platform’s <code class="docutils literal notranslate"><span class="pre">src</span></code> and <code class="docutils literal notranslate"><span class="pre">sink</span></code> arrays to PLIOs.</p>
 <p>Each input PLIO port has a <code class="docutils literal notranslate"><span class="pre">*.txt</span></code> file relative to the current directory that sources the input platform data. Each output PLIO port specifies a <code class="docutils literal notranslate"><span class="pre">.*txt</span></code> file to sink the output platform data. The beamforming kernels expect <code class="docutils literal notranslate"><span class="pre">cint16</span></code> data inputs, so the input data <code class="docutils literal notranslate"><span class="pre">*.txt</span></code> files are organized as four columns per row where each column represents a 16-bit real or imaginary value.</p>
 <p>Lastly, the AI Engine application uses the Run Time Graph Control API with an infinite graph execution. The graph <code class="docutils literal notranslate"><span class="pre">dut</span></code> is declared from the <code class="docutils literal notranslate"><span class="pre">TEST_BF</span></code> graph class. In the <code class="docutils literal notranslate"><span class="pre">main</span></code> function, this graph object is initialized and run. The <code class="docutils literal notranslate"><span class="pre">init()</span></code> method loads the graph to the AI Engine array at specific AI Engine tiles. This includes loading the ELF binaries for each AI Engine, configuring the stream switching for routing, and configuring the DMAs for I/O. It leaves the processors in a disabled state. The <code class="docutils literal notranslate"><span class="pre">run()</span></code> method starts the graph execution by enabling the processors. This graph runs for one iteration. The run-time event API for performance profiling is used to calculate the throughput of two of the output ports.</p>
 </div>
 <div class="section" id="sending-data-to-the-beamforming-kernels">
-<h2>Sending Data to the Beamforming Kernels<a class="headerlink" href="#sending-data-to-the-beamforming-kernels" title="Permalink to this headline">¶</a></h2>
+<h2>Sending Data to the Beamforming Kernels<a class="headerlink" href="#sending-data-to-the-beamforming-kernels" title="Permalink to this heading">¶</a></h2>
 <p>AI Engine kernels consume input blocks of data and produce output blocks of data. There are two data access mechanisms kernels can do: window-based access or stream-based access. The beamforming kernels access data with the window-based access mechanism.</p>
 <div class="section" id="ai-engine-kernels-parameters">
-<h3>AI Engine Kernels Parameters<a class="headerlink" href="#ai-engine-kernels-parameters" title="Permalink to this headline">¶</a></h3>
+<h3>AI Engine Kernels Parameters<a class="headerlink" href="#ai-engine-kernels-parameters" title="Permalink to this heading">¶</a></h3>
 <p>The view that a kernel has of incoming blocks of data is called an input window. Input windows are defined by type, to define the type of data contained within that window. The beamforming kernels expect an input window carrying complex integers where both the real and imaginary parts are 16 bits wide for the input data (<code class="docutils literal notranslate"><span class="pre">x_input</span></code>) and input coefficient (<code class="docutils literal notranslate"><span class="pre">c_input</span></code>) parameters.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">bf8x8_fst</span><span class="p">(</span>                                     \
             <span class="n">input_window_cint16</span> <span class="o">*</span> <span class="n">restrict</span> <span class="n">c_input</span><span class="p">,</span> \
@@ -536,16 +521,16 @@ aiecompiler -v                      <span class="se">\</span>
 </div>
 </div>
 <div class="section" id="ai-engine-subgraph-window-connections">
-<h3>AI Engine Subgraph Window Connections<a class="headerlink" href="#ai-engine-subgraph-window-connections" title="Permalink to this headline">¶</a></h3>
+<h3>AI Engine Subgraph Window Connections<a class="headerlink" href="#ai-engine-subgraph-window-connections" title="Permalink to this heading">¶</a></h3>
 <p>The size of the window (in bytes) is declared with the <code class="docutils literal notranslate"><span class="pre">connect&lt;window&lt;WINDOOW_SIZE&gt;&gt;</span></code> construct. The <code class="docutils literal notranslate"><span class="pre">bfCascadeChain</span></code> data flow graph establishes the window connections between the input and output ports of the graph and the input ports of the beamforming kernels.</p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Make connections for input data and coefficient</span>
-<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">len</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-  <span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">IN_COEF_WINSZ</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">cin</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">core</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-  <span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">IN_DATA_WINSZ</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">din</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">core</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-<span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">len</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">  </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">IN_COEF_WINSZ</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">cin</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">core</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">IN_DATA_WINSZ</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">din</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">core</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">// Connect Output</span>
-<span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">OUT_DATA_WINSZ</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">core</span><span class="p">[(</span><span class="n">len</span><span class="mi">-1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="n">yoff</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">))].</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="p">);</span>
+<span class="n">connect</span><span class="o">&lt;</span><span class="n">window</span><span class="o">&lt;</span><span class="n">OUT_DATA_WINSZ</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">core</span><span class="p">[(</span><span class="n">len</span><span class="mi">-1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="n">yoff</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">))].</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">out</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The window sizes of the coefficient, data, and output ports are as follows:</p>
@@ -576,7 +561,7 @@ aiecompiler -v                      <span class="se">\</span>
 </tbody>
 </table></div>
 <div class="section" id="ai-engine-application-data-files">
-<h3>AI Engine Application Data Files<a class="headerlink" href="#ai-engine-application-data-files" title="Permalink to this headline">¶</a></h3>
+<h3>AI Engine Application Data Files<a class="headerlink" href="#ai-engine-application-data-files" title="Permalink to this heading">¶</a></h3>
 <p>Lastly, you need to send the actual input data to the beamforming kernels and receive the output data from the beamforming kernels. This is accomplished through the PLIOs instantiated in the AI Engine application. Each PLIO specifies a 64-bit PL interface with an associated input or output data file. This means each row in the data files can store two (32-bit) complex data samples. An AI Engine kernel that is expecting a cint16 with a 64-bit PLIO needs a data file organized as four columns per row, where each column represents a 16-bit real or imaginary value.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="mi">16</span><span class="o">-</span><span class="n">bit</span> <span class="n">real</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="mi">16</span><span class="o">-</span><span class="n">bit</span> <span class="n">imaginary</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="mi">16</span><span class="o">-</span><span class="n">bit</span> <span class="n">real</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="mi">16</span><span class="o">-</span><span class="n">bit</span> <span class="n">imaginary</span><span class="o">&gt;</span>
 </pre></div>
@@ -584,7 +569,7 @@ aiecompiler -v                      <span class="se">\</span>
 </div>
 </div>
 <div class="section" id="simulating-the-ai-engine-graph-application">
-<h2>Simulating the AI Engine Graph Application<a class="headerlink" href="#simulating-the-ai-engine-graph-application" title="Permalink to this headline">¶</a></h2>
+<h2>Simulating the AI Engine Graph Application<a class="headerlink" href="#simulating-the-ai-engine-graph-application" title="Permalink to this heading">¶</a></h2>
 <p>Next, conduct a System C simulation of your AI Engine application using the AI Engine System C Simulator (<code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code>). This simulator can model the AI Engine array, global memory (DDR memory), and network-on-chip (NoC). Invoke the AI Engine System C simulator with the following <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">sim</span>
 </pre></div>
@@ -596,7 +581,7 @@ aiesimulator –pkg-dir Work –output-dir aiesimulator-output |&amp; tee aiesim
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code> executes the AI Engine application where the AI Engine graph is initialized, run, and terminated by the control thread expressed in the <code class="docutils literal notranslate"><span class="pre">main</span></code> function. By default, the <code class="docutils literal notranslate"><span class="pre">dut.run()</span></code> option specifies a graph that runs forever. In our AI Engine application, dut.run(NITER) is specified, where NITER = 1. This runs the graph for one iteration. This means the simulation has the AI Engine receiving “one block” of data samples through the input ports, and the AI Engine outputs “one block” of data samples through the output ports. The block size of the data input, coefficient input, and data output ports is specified by the <code class="docutils literal notranslate"><span class="pre">IN_DATA_WINSZ</span></code>, <code class="docutils literal notranslate"><span class="pre">IN_COEF_WINSZ</span></code>, and <code class="docutils literal notranslate"><span class="pre">OUT_DATA_WINSZ</span></code> global variables.</p>
 <div class="section" id="run-time-event-api-for-performance-profiling">
-<h3>Run-Time Event API for Performance Profiling<a class="headerlink" href="#run-time-event-api-for-performance-profiling" title="Permalink to this headline">¶</a></h3>
+<h3>Run-Time Event API for Performance Profiling<a class="headerlink" href="#run-time-event-api-for-performance-profiling" title="Permalink to this heading">¶</a></h3>
 <p>Additionally, in the AI Engine application, the <code class="docutils literal notranslate"><span class="pre">event::start_profiling</span></code> and <code class="docutils literal notranslate"><span class="pre">event::read_profiling</span></code> API calls are specified. These calls configure the AI Engine to count the accumulated number of clock cycles. Because we know how much data is coming out of the AI Engine (<code class="docutils literal notranslate"><span class="pre">OUT_DATA_WINSZ</span></code>), and using this API gets us the number of clock cycles its takes to receive all the output data, we can calculate the port throughput (bytes per second). This calculation is done in the AI Engine application and printed to the console during simulation. Note that the longer the data is simulated, the higher the throughput accuracy. Currently the number of iterations is chosen as 20.</p>
 <p>Open the <code class="docutils literal notranslate"><span class="pre">build/aiesim.log</span></code> file to view the following throughput calculations for two of the output PLIOs:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
@@ -608,11 +593,11 @@ aiesimulator –pkg-dir Work –output-dir aiesimulator-output |&amp; tee aiesim
 </div>
 </div>
 <div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>5G NR massive MIMO systems require intensive computation for matrix multiplication. It is shown that three 100 MHz 32-layer-64-antenna 5G NR beamforming systems can be implemented on 192 AI Engines with three kernels with slight differences. The proposed matrix multiplication implementation on AI Engine has a flexible and scalable architecture applicable to a wide range of use cases including but not limited to 5G wireless.</p>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html">AI Engine Documentation</a></p></li>
 <li><p><a class="reference external" href="https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2021.2%20English&amp;url=ug1076-ai-engine-environment">AI Engine Documentation: AI Engine Programming</a> (to learn more about AI Engine graph and kernels)</p></li>
@@ -628,11 +613,11 @@ aiesimulator –pkg-dir Work –output-dir aiesimulator-output |&amp; tee aiesim
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

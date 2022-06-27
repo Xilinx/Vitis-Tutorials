@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -355,7 +340,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="ai-engine-status-analysis">
-<h1>AI Engine Status Analysis<a class="headerlink" href="#ai-engine-status-analysis" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine Status Analysis<a class="headerlink" href="#ai-engine-status-analysis" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>This tutorial shows you how to output a summary of the AI Engine status for further analysis in Vitis Analyzer. The main methods to output AI Engine status are as follows:</p>
 <ul class="simple">
@@ -366,7 +351,7 @@ function OptanonWrapper() { }
 <p><strong>Note:</strong> The default working directory in this step is <code class="docutils literal notranslate"><span class="pre">testcase_nofifo_hang</span></code>, unless explicitly stated otherwise.</p>
 <p><strong>Note:</strong> The description here is based on the hardware flow. The methods decribed in this tutorial also apply for the hardware emulation flow.</p>
 <div class="section" id="setting-up-and-running-the-design">
-<h2>Setting Up and Running the Design<a class="headerlink" href="#setting-up-and-running-the-design" title="Permalink to this headline">¶</a></h2>
+<h2>Setting Up and Running the Design<a class="headerlink" href="#setting-up-and-running-the-design" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Change the directory to <code class="docutils literal notranslate"><span class="pre">testcase_nofifo_hang</span></code>.</p></li>
 <li><p>Modify the host code (<code class="docutils literal notranslate"><span class="pre">sw/host.cpp</span></code>) to call <code class="docutils literal notranslate"><span class="pre">gr.end();</span></code>, which causes the design to hang forever.</p></li>
@@ -386,7 +371,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="option-1-automated-and-periodic-ai-engine-status-output">
-<h2><strong>Option 1: Automated and Periodic AI Engine Status Output</strong><a class="headerlink" href="#option-1-automated-and-periodic-ai-engine-status-output" title="Permalink to this headline">¶</a></h2>
+<h2><strong>Option 1: Automated and Periodic AI Engine Status Output</strong><a class="headerlink" href="#option-1-automated-and-periodic-ai-engine-status-output" title="Permalink to this heading">¶</a></h2>
 <p>In the working directory <code class="docutils literal notranslate"><span class="pre">/run/media/mmcblk0p1</span></code>, create the file <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code>, and put the following contents into it:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Debug</span><span class="p">]</span>
 <span class="n">aie_status</span><span class="o">=</span><span class="n">true</span>
@@ -418,7 +403,7 @@ function OptanonWrapper() { }
 </ul>
 <p>Copy them to the local server for further analysis in Vitis Analyzer.</p>
 <div class="section" id="analyzing-the-automated-status-output">
-<h3><strong>Analyzing the Automated Status Output</strong><a class="headerlink" href="#analyzing-the-automated-status-output" title="Permalink to this headline">¶</a></h3>
+<h3><strong>Analyzing the Automated Status Output</strong><a class="headerlink" href="#analyzing-the-automated-status-output" title="Permalink to this heading">¶</a></h3>
 <p>Open the run summary file with the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>	<span class="n">vitis_analyzer</span> <span class="n">xrt</span><span class="o">.</span><span class="n">run_summary</span>
 </pre></div>
@@ -449,7 +434,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="option-2-manual-output-the-ai-engine-status">
-<h2><strong>Option 2: Manual output the AI Engine status</strong><a class="headerlink" href="#option-2-manual-output-the-ai-engine-status" title="Permalink to this headline">¶</a></h2>
+<h2><strong>Option 2: Manual output the AI Engine status</strong><a class="headerlink" href="#option-2-manual-output-the-ai-engine-status" title="Permalink to this heading">¶</a></h2>
 <p>In Linux, run the application:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">mmcblk0p1</span>
 <span class="o">./</span><span class="n">host</span><span class="o">.</span><span class="n">exe</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
@@ -461,7 +446,7 @@ function OptanonWrapper() { }
 </div>
 <p>Copy the JSON output to a local server for further analysis in Vitis Analyzer.</p>
 <div class="section" id="analyzing-the-manual-status-output">
-<h3><strong>Analyzing the Manual Status Output</strong><a class="headerlink" href="#analyzing-the-manual-status-output" title="Permalink to this headline">¶</a></h3>
+<h3><strong>Analyzing the Manual Status Output</strong><a class="headerlink" href="#analyzing-the-manual-status-output" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>In Vitis Analyzer, click <strong>File → Import Xbutil JSON Output…</strong>.</p></li>
 <li><p>In the prompted window, set the following options:</p>
@@ -474,17 +459,17 @@ function OptanonWrapper() { }
 <p><img alt="graph view" src="../../../../_images/aie_status5.PNG" /></p>
 </div>
 <div class="section" id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>After completing this tutorial, you have learned how to output the live status of the AI Engine and how to analyze it in Vitis Analyzer.</p>
 </div>
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

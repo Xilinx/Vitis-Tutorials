@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,10 +339,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="implementing-an-iir-filter-on-the-ai-engine-part-2a">
-<h1>Implementing an IIR Filter on the AI Engine - Part 2a<a class="headerlink" href="#implementing-an-iir-filter-on-the-ai-engine-part-2a" title="Permalink to this headline">¶</a></h1>
+<h1>Implementing an IIR Filter on the AI Engine - Part 2a<a class="headerlink" href="#implementing-an-iir-filter-on-the-ai-engine-part-2a" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="preliminaries">
-<h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">¶</a></h2>
+<h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this heading">¶</a></h2>
 <p>In Part 1a, we focused on vectorizing the calculation for a second order section of an IIR filter using Emulation-SW mode. Using eqn. (4) in Part 1a, we saw that we can calculate 8 consecutive outputs by multiplying an 8x12 matrix of constants with a 12x1 vector (composed of 8 consecutive inputs and 4 states).</p>
 <p><img alt="Fig. 1" src="../../../../../_images/eqn41.PNG" /></p>
 <p>From Fig. 26 of <a class="reference external" href="https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf">AM009</a>, we can see that the floating-point vector processor can perform 8 multiply-accumulate operations on floating-point operands in 2 cycles, in E6 and E7. Note that the red dashed arrow in the figure indicates the feedback path for the accumulator. Thus, <em>ideally</em>, 12*2=24 cycles would be the minimum required to calculate 8 floating-point outputs.</p>
@@ -375,71 +360,71 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="kernel-code">
-<h2>Kernel Code<a class="headerlink" href="#kernel-code" title="Permalink to this headline">¶</a></h2>
+<h2>Kernel Code<a class="headerlink" href="#kernel-code" title="Permalink to this heading">¶</a></h2>
 <p>As a first step, we use the kernel code shown below.</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="n">id</span><span class="o">&gt;</span>
-<span class="kt">void</span> <span class="n">SecondOrderSection</span><span class="p">(</span>
-    <span class="n">input_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">idata</span><span class="p">,</span>		<span class="c1">// 8 input samples per iteration</span>
-    <span class="n">output_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">odata</span><span class="p">,</span> 	<span class="c1">// 8 output samples per iteration</span>
-    <span class="k">const</span> <span class="kt">float</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">C</span><span class="p">)[</span><span class="mi">96</span><span class="p">]</span>		<span class="c1">// RTP port for coefficient matrix</span>
-<span class="p">)</span> <span class="p">{</span>
-	<span class="k">static</span> <span class="n">Vector8f</span> <span class="n">state_reg</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span>	<span class="c1">// clear states on 1st call</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">id</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">SecondOrderSection</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">input_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">idata</span><span class="p">,</span><span class="w">		</span><span class="c1">// 8 input samples per iteration</span>
+<span class="w">    </span><span class="n">output_window</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">odata</span><span class="p">,</span><span class="w"> 	</span><span class="c1">// 8 output samples per iteration</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">C</span><span class="p">)[</span><span class="mi">96</span><span class="p">]</span><span class="w">		</span><span class="c1">// RTP port for coefficient matrix</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="n">Vector8f</span><span class="w"> </span><span class="n">state_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span><span class="w">	</span><span class="c1">// clear states on 1st call</span>
 
-    <span class="n">Vector8f</span> <span class="n">xreg_hi</span> <span class="o">=</span> <span class="n">window_readincr_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="n">idata</span><span class="p">);</span>		<span class="c1">// fetch 8 input samples</span>
-	<span class="n">Vector16f</span> <span class="n">xreg</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">concat</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span> <span class="n">xreg_hi</span><span class="p">);</span>	<span class="c1">// xreg[4]: ym2; xreg[5]: ym1; xreg[6]: xm2; xreg[7]: xm1; xreg[8:15]: x0:x7</span>
-	<span class="n">Vector8f</span> <span class="n">coeff</span><span class="p">;</span>
-	<span class="n">VAcc8f</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="n">accfloat</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">// acc[] = 0</span>
+<span class="w">    </span><span class="n">Vector8f</span><span class="w"> </span><span class="n">xreg_hi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">window_readincr_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="n">idata</span><span class="p">);</span><span class="w">		</span><span class="c1">// fetch 8 input samples</span>
+<span class="w">	</span><span class="n">Vector16f</span><span class="w"> </span><span class="n">xreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">concat</span><span class="p">(</span><span class="n">state_reg</span><span class="p">,</span><span class="w"> </span><span class="n">xreg_hi</span><span class="p">);</span><span class="w">	</span><span class="c1">// xreg[4]: ym2; xreg[5]: ym1; xreg[6]: xm2; xreg[7]: xm1; xreg[8:15]: x0:x7</span>
+<span class="w">	</span><span class="n">Vector8f</span><span class="w"> </span><span class="n">coeff</span><span class="p">;</span><span class="w"></span>
+<span class="w">	</span><span class="n">VAcc8f</span><span class="w"> </span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">zeros</span><span class="o">&lt;</span><span class="n">accfloat</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">// acc[] = 0</span>
 
-	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">coeff</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">load_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C</span><span class="p">[</span><span class="mi">8</span> <span class="o">*</span> <span class="n">i</span><span class="p">]);</span>  <span class="c1">// get a column </span>
-		<span class="kt">float</span> <span class="n">xval</span> <span class="o">=</span> <span class="n">xreg</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">];</span>           <span class="c1">// aie::mac() requires compile-time constant arguments</span>
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">mac</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">xval</span><span class="p">);</span>   <span class="c1">// acc[] += coeff[] * xval</span>
-	<span class="p">}</span>
+<span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">		</span><span class="n">coeff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">load_v</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C</span><span class="p">[</span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">i</span><span class="p">]);</span><span class="w">  </span><span class="c1">// get a column </span>
+<span class="w">		</span><span class="kt">float</span><span class="w"> </span><span class="n">xval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xreg</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">];</span><span class="w">           </span><span class="c1">// aie::mac() requires compile-time constant arguments</span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">mac</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="w"> </span><span class="n">coeff</span><span class="p">,</span><span class="w"> </span><span class="n">xval</span><span class="p">);</span><span class="w">   </span><span class="c1">// acc[] += coeff[] * xval</span>
+<span class="w">	</span><span class="p">}</span><span class="w"></span>
 
-	<span class="n">Vector8f</span> <span class="n">yout</span> <span class="o">=</span> <span class="n">acc</span><span class="p">;</span>	<span class="c1">// transfer accumulator register to vector register to update states</span>
+<span class="w">	</span><span class="n">Vector8f</span><span class="w"> </span><span class="n">yout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">acc</span><span class="p">;</span><span class="w">	</span><span class="c1">// transfer accumulator register to vector register to update states</span>
 
-	<span class="c1">// update states</span>
-    	<span class="n">state_reg</span> <span class="o">=</span> <span class="n">xreg_hi</span><span class="p">;</span>
-	<span class="n">state_reg</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">yout</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
-	<span class="n">state_reg</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">yout</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
+<span class="w">	</span><span class="c1">// update states</span>
+<span class="w">    	</span><span class="n">state_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xreg_hi</span><span class="p">;</span><span class="w"></span>
+<span class="w">	</span><span class="n">state_reg</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yout</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span><span class="w"></span>
+<span class="w">	</span><span class="n">state_reg</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yout</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span><span class="w"></span>
 
-	<span class="n">window_writeincr</span><span class="p">(</span><span class="n">odata</span><span class="p">,</span> <span class="n">yout</span><span class="p">);</span>  <span class="c1">// write out 8 samples</span>
+<span class="w">	</span><span class="n">window_writeincr</span><span class="p">(</span><span class="n">odata</span><span class="p">,</span><span class="w"> </span><span class="n">yout</span><span class="p">);</span><span class="w">  </span><span class="c1">// write out 8 samples</span>
 
-<span class="p">}</span> <span class="c1">// end SecondOrderSection()</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// end SecondOrderSection()</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">for</span></code> loop scales each column of the coefficient matrix with an element in <code class="docutils literal notranslate"><span class="pre">xreg</span></code> and accumulates the result. This performs the matrix and vector multiplication in eqn. (4).</p>
 </div>
 <div class="section" id="testbench-code">
-<h2>Testbench Code<a class="headerlink" href="#testbench-code" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;graph.hpp&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C1.h&quot;</span><span class="cp"></span>
+<h2>Testbench Code<a class="headerlink" href="#testbench-code" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;kernel.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;graph.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;C1.h&quot;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">std</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">adf</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">adf</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// specify the dataflow graph (DFG)</span>
-<span class="n">the_graph</span> <span class="n">my_graph</span><span class="p">;</span>
+<span class="n">the_graph</span><span class="w"> </span><span class="n">my_graph</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">const</span> <span class="kt">unsigned</span> <span class="n">num_pts</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>			<span class="c1">// number of sample points in &quot;input.dat&quot;</span>
-<span class="k">const</span> <span class="kt">unsigned</span> <span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_pts</span><span class="o">/</span><span class="mi">8</span><span class="p">;</span>	<span class="c1">// number of iterations to run</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">num_pts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span><span class="w">			</span><span class="c1">// number of sample points in &quot;input.dat&quot;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">num_iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_pts</span><span class="o">/</span><span class="mi">8</span><span class="p">;</span><span class="w">	</span><span class="c1">// number of iterations to run</span>
 
 <span class="c1">// main simulation program</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>				<span class="c1">// load the DFG into the AI engine array, establish     connectivity, etc.</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">init</span><span class="p">();</span><span class="w">				</span><span class="c1">// load the DFG into the AI engine array, establish     connectivity, etc.</span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx1</span><span class="p">,</span> <span class="n">C1</span><span class="p">,</span> <span class="mi">96</span><span class="p">);</span>	<span class="c1">// transfer coefficients</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_graph</span><span class="p">.</span><span class="n">cmtx1</span><span class="p">,</span><span class="w"> </span><span class="n">C1</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">);</span><span class="w">	</span><span class="c1">// transfer coefficients</span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">);</span>	<span class="c1">// run the DFG for the specified number of iterations</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">);</span><span class="w">	</span><span class="c1">// run the DFG for the specified number of iterations</span>
 
-	<span class="n">my_graph</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>					<span class="c1">// terminate AI engine processing</span>
+<span class="w">	</span><span class="n">my_graph</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w">					</span><span class="c1">// terminate AI engine processing</span>
 
-	<span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
 
-<span class="p">}</span> <span class="c1">// end main()</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// end main()</span>
 </pre></div>
 </div>
 <p>The testbench</p>
@@ -451,7 +436,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="analysis">
-<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">¶</a></h2>
 <p>We begin by setting the <code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">build</span> <span class="pre">configuration</span></code> to <code class="docutils literal notranslate"><span class="pre">Emulation-AIE</span></code> and building the design with the default optimization level (xlopt = 1). After a successful build, right-click on <code class="docutils literal notranslate"><span class="pre">aie_iir_2a</span> <span class="pre">[aiengine]</span></code> and select <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">As</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Launch</span> <span class="pre">AIE</span> <span class="pre">Emulator</span></code>. After a successful simulation, we can now enable profiling. Right-click on <code class="docutils literal notranslate"><span class="pre">aie_iir_2a</span> <span class="pre">[aiengine]</span></code>, select <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Configurations...</span></code>, and click on <code class="docutils literal notranslate"><span class="pre">Generate</span> <span class="pre">Profile</span></code> in the <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Configurations</span></code> window [Note: it may be necessary to increase the height of the <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Configurations</span></code> window to see the <code class="docutils literal notranslate"><span class="pre">Generate</span> <span class="pre">Profile</span></code> section].</p>
 <p><img alt="Fig. 3" src="../../../../../_images/enable_profiling.PNG" /></p>
 <p>Click the <code class="docutils literal notranslate"><span class="pre">Run</span></code> button to re-run with profiling enabled.</p>
@@ -473,7 +458,7 @@ function OptanonWrapper() { }
 <p>Scroll down to where the <code class="docutils literal notranslate"><span class="pre">VFPMAC</span></code> assembler mnemonics become visible.</p>
 <p><img alt="Fig. 7" src="../../../../../_images/vfpmac.PNG" /></p>
 <p>From the kernel code, note that the statement:</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">acc</span> <span class="o">=</span> <span class="n">aie</span><span class="o">::</span><span class="n">mac</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">xval</span><span class="p">);</span>   <span class="c1">// acc[] += coeff[] * xval</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aie</span><span class="o">::</span><span class="n">mac</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="w"> </span><span class="n">coeff</span><span class="p">,</span><span class="w"> </span><span class="n">xval</span><span class="p">);</span><span class="w">   </span><span class="c1">// acc[] += coeff[] * xval</span>
 </pre></div>
 </div>
 <p>generates the <code class="docutils literal notranslate"><span class="pre">VFPMAC</span></code> mnemonic (vector floating-point multiply-accumulate). Also note that the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop has been unrolled, and that there is a <code class="docutils literal notranslate"><span class="pre">NOP</span></code> (no operation) between each <code class="docutils literal notranslate"><span class="pre">VFPMAC</span></code> to account for the 2-cycle floating-point accumulation latency.</p>
@@ -482,17 +467,17 @@ function OptanonWrapper() { }
 <p>The <code class="docutils literal notranslate"><span class="pre">ya</span></code> register is composed of the 256-bit <code class="docutils literal notranslate"><span class="pre">wr[0:3]</span></code> registers. For this example, the <code class="docutils literal notranslate"><span class="pre">wr0</span></code> register is updated with the columns of the coefficient matrix using the <code class="docutils literal notranslate"><span class="pre">VLDA</span></code> (vector load A) mnemonic. The <code class="docutils literal notranslate"><span class="pre">VLDA</span></code> mnemonic transfers 8 floating-point values from data memory to a vector register. In this example, there is a 7 cycle latency from the <code class="docutils literal notranslate"><span class="pre">VLDA</span></code> mnemonic (loading data into <code class="docutils literal notranslate"><span class="pre">wr0</span></code>) to the time the data is used for computation with <code class="docutils literal notranslate"><span class="pre">VFPMAC</span></code>.</p>
 </div>
 <div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>We showed how to calculate a floating-point 8x12 matrix and 12x1 vector multiplication using a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop and some high-level intrinsics (AI engine APIs) in 80 cycles. We also showed how to use Vitis Analyzer to view some statistics of the generated program (e.g. cycles consumed) as well as examine the generated assembler code.</p>
 <p>In Part 2b, we will attempt to further optimize the program to achieve a multiply-accumulate operation on every cycle.</p>
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="Versal Integration for Hardware Emulation and Hardware" href="../05-AI-engine-versal-integration/README.html" />
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
@@ -306,17 +302,6 @@ function OptanonWrapper() { }
 </li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -398,7 +383,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="packet-switching-tutorial">
-<h1>Packet Switching Tutorial<a class="headerlink" href="#packet-switching-tutorial" title="Permalink to this headline">¶</a></h1>
+<h1>Packet Switching Tutorial<a class="headerlink" href="#packet-switching-tutorial" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>AI Engine kernels can share a single processor and execute in an interleaved manner. In addition, they can also share multiple stream connections on a single physical channel. The explicit packet switching feature allows fine-grain control over how packets are generated, distributed, and consumed in a graph computation. Explicit packet switching is typically recommended in cases where many low bandwidth streams from a common programmable logic (PL) source can be distributed to different AI Engine destinations. Similarly many low bandwidth streams from different AI Engine sources to a common PL destination can also take advantage of this feature. Because a single physical channel is shared between multiple streams, you minimize the number of AI Engine - PL interface streams used.</p>
 <p>This tutorial walks you through the steps to create window interface AI Engine kernels that share the same AI Engine - PL interface streams (step 1), to create designs with float and <code class="docutils literal notranslate"><span class="pre">cint16</span></code> data types (step 2), and to create packet stream interface AI Engine kernels that share AI Engine - PL interface streams (step 3). The AI Engine kernels are different in these steps. In particular, packet stream interfaces and associated built-in functions are introduced in step 3. The graph construction is covered in detail in step 1 and step 3 (only with differences). All these designs share the same PL kernels that are introduced in step 1. The PS codes for these steps are similar; this is covered in detail in step 1 and step 2 (with differences).</p>
@@ -416,7 +401,7 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <div class="section" id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h2>
 <p>After completing this tutorial, you will be able to:</p>
 <ul class="simple">
 <li><p>Construct a packet switching graph</p></li>
@@ -427,7 +412,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="steps">
-<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline">¶</a></h2>
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this heading">¶</a></h2>
 <p><strong>Step 1</strong>: Construct an explicit packet switching graph with window interface AI Engine kernels. PL kernels and PS code for the system design are also introduced. See details in <a class="reference internal" href="window_based_aie_kernel.html"><span class="doc">Window-Based AI Engine Kernels</span></a>.</p>
 <p><strong>Step 2</strong>: Special consideration on float and <code class="docutils literal notranslate"><span class="pre">cint*</span></code> data types. See details in <a class="reference internal" href="window_based_mix_data_type.html"><span class="doc">Window-Based AI Engine Kernels with Mixed Data Types</span></a>.</p>
 <p><strong>Step 3</strong>: Introduce the packet stream interface and built-in functions for AI Engine kernels, which allows you to fine control how packets are decoded and constructed. See details in <a class="reference internal" href="pktstream_based_aie_kernel.html"><span class="doc">Packet Stream-Based AI Engine Kernels</span></a>.</p>
@@ -436,11 +421,11 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

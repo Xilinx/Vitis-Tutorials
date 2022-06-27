@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,44 +338,44 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>Ensuring that our allocated memory is aligned to page boundaries gave us a significant improvement over our
 initial configuration.  There is another workflow we can use with OpenCL, though, which is to have OpenCL and
 XRT allocate the buffers and then map them to userspace pointers for use by the application.  Let’s
 experiment with that and see the effect it has on our timing.</p>
 </div>
 <div class="section" id="key-code">
-<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this headline">¶</a></h1>
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>Conceptually this is a small change, but unlike Example 2 this example is a bit more involved in terms of the
 required code changes.  This is mostly because instead of using standard userspace memory allocation,
 we’re going to ask the OpenCL runtime to allocate buffers for us.  Once we have the buffers, we then need to
 map them into userspace so that we can access the data they contain.</p>
 <p>For our allocation, we change from the previous example’s code to the following:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Memory</span><span class="o">&gt;</span> <span class="n">inBufVec</span><span class="p">,</span> <span class="n">outBufVec</span><span class="p">;</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="nf">a_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span>
-                 <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span> <span class="o">|</span>
-                                           <span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span>
-                 <span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span>
-                 <span class="nb">NULL</span><span class="p">,</span>
-                 <span class="nb">NULL</span><span class="p">);</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="nf">b_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span>
-                 <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span> <span class="o">|</span>
-                                           <span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span>
-                 <span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span>
-                 <span class="nb">NULL</span><span class="p">,</span>
-                 <span class="nb">NULL</span><span class="p">);</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="nf">c_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span>
-                 <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span> <span class="o">|</span>
-                                           <span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span>
-                 <span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span>
-                 <span class="nb">NULL</span><span class="p">,</span>
-                 <span class="nb">NULL</span><span class="p">);</span>
-<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span> <span class="nf">d_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span>
-                 <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_WRITE</span> <span class="o">|</span>
-                                           <span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span>
-                 <span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span>
-                 <span class="nb">NULL</span><span class="p">,</span>
-                 <span class="nb">NULL</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Memory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">inBufVec</span><span class="p">,</span><span class="w"> </span><span class="n">outBufVec</span><span class="p">;</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">a_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">b_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">c_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">d_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_WRITE</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this case we’re allocating our OpenCL buffer objects significantly earlier in the program, and we also
@@ -402,22 +387,22 @@ have changed: we pass in the flag <code class="docutils literal notranslate"><sp
 runtime that we want to allocate a buffer instead of using an existing buffer.  We also no longer need to
 pass in a pointer to the user buffer (since we’re allocating a new one), so we pass <code class="docutils literal notranslate"><span class="pre">NULL</span></code> instead.</p>
 <p>We then need to map our OpenCL buffers to the userspace pointers to <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">d</span></code> that we’ll use immediately in software.  There’s no need to map a pointer to <code class="docutils literal notranslate"><span class="pre">c</span></code> at this time, we can do that later when we need to read from that buffer after kernel execution.  We do this as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">a_buf</span><span class="p">,</span>
-                                           <span class="n">CL_TRUE</span><span class="p">,</span>
-                                           <span class="n">CL_MAP_WRITE</span><span class="p">,</span>
-                                           <span class="mi">0</span><span class="p">,</span>
-                                           <span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">a_buf</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_TRUE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MAP_WRITE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
 
-<span class="kt">uint32_t</span><span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">b_buf</span><span class="p">,</span>
-                                           <span class="n">CL_TRUE</span><span class="p">,</span>
-                                           <span class="n">CL_MAP_WRITE</span><span class="p">,</span>
-                                           <span class="mi">0</span><span class="p">,</span>
-                                           <span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span>
-<span class="kt">uint32_t</span><span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">d_buf</span><span class="p">,</span>
-                                           <span class="n">CL_TRUE</span><span class="p">,</span>
-                                           <span class="n">CL_MAP_WRITE</span> <span class="o">|</span> <span class="n">CL_MAP_READ</span><span class="p">,</span>
-                                           <span class="mi">0</span><span class="p">,</span>
-                                           <span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">b_buf</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_TRUE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MAP_WRITE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">d_buf</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_TRUE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MAP_WRITE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CL_MAP_READ</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Once we perform the mapping, we can use the userspace pointers as normal to access the buffer contents.One
@@ -429,21 +414,21 @@ the buffer.  The OpenCL runtime will recognize that the buffer contents are curr
 Data Center accelerator card global memory and will take care of migrating the buffer back to the host for
 us.  This is a coding style choice you must make, but fundamentally the code below is sufficient to migrate
 <code class="docutils literal notranslate"><span class="pre">c</span></code> back to the host memory.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">c_buf</span><span class="p">,</span>
-                                           <span class="n">CL_TRUE</span><span class="p">,</span>
-                                           <span class="n">CL_MAP_READ</span><span class="p">,</span>
-                                           <span class="mi">0</span><span class="p">,</span>
-                                           <span class="n">BUFSIZE</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">c_buf</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_TRUE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MAP_READ</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">BUFSIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Finally, as we mentioned earlier you need to unmap the memory objects so that they can be destroyed cleanly
 by the runtime.  We do this at the end of the program instead of using <code class="docutils literal notranslate"><span class="pre">free()</span></code> on the buffers as before.
 This must be done before the command queue is finished.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">a_buf</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
-<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">b_buf</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
-<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">c_buf</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
-<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">d_buf</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
-<span class="n">q</span><span class="p">.</span><span class="n">finish</span><span class="p">();</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">a_buf</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">b_buf</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">c_buf</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">d_buf</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">finish</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>To summarize the key workflow for this use model, we need to:</p>
@@ -456,7 +441,7 @@ This must be done before the command queue is finished.</p>
 </ol>
 </div>
 <div class="section" id="running-the-application">
-<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this headline">¶</a></h1>
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./03_buffer_map</span> <span class="pre">alveo_examples</span></code></p>
 <p>The program will output a message similar to this:</p>
@@ -579,7 +564,7 @@ allocate many small buffers.</p>
 <p>In general, buffers should be allocated outside the critical path of your application and this method shifts the burden away from your high-performance sections if used correctly.</p>
 </div>
 <div class="section" id="extra-exercises">
-<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this headline">¶</a></h1>
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
 <li><p>Once again, vary the size of the buffers allocated.  Do the relationships that you derived in the previous
@@ -589,7 +574,7 @@ example still hold true?</p></li>
 </ul>
 </div>
 <div class="section" id="key-takeaways">
-<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this headline">¶</a></h1>
+<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Using the OpenCL and XRT APIs can lead to localized performance boosts, although fundamentally there’s no
 escaping your taxes.</p></li>

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="N-Body Simulator" href="../08-n-body-simulator/README.html" />
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a><ul class="current">
@@ -331,17 +327,6 @@ function OptanonWrapper() { }
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#feature-tutorials">Feature Tutorials</a></li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -423,10 +408,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="versal-ai-engine-hls-fir-filter-tutorial">
-<h1>Versal AI Engine/HLS FIR Filter Tutorial<a class="headerlink" href="#versal-ai-engine-hls-fir-filter-tutorial" title="Permalink to this headline">¶</a></h1>
+<h1>Versal AI Engine/HLS FIR Filter Tutorial<a class="headerlink" href="#versal-ai-engine-hls-fir-filter-tutorial" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
 <div class="section" id="table-of-contents">
-<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="#introduction">Introduction</a></p>
 <p><a class="reference external" href="#before-you-begin">Before You Begin</a></p>
 <p><a class="reference external" href="#design-implementations">Design Implementations</a></p>
@@ -438,14 +423,14 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
 <p>The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully software-programmable, heterogeneous compute platform that combines the processor system (PS) (Scalar Engines that include the Arm® processors), programmable logic (PL) (Adaptable Engines that include the programmable logic blocks and memory) and the Intelligent Engines comprising of both the AI and DSP Engines.</p>
 <p>This tutorial is one of several to perform two implementations of a system-level design using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs. In each implementation, the tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal ACAP system design. A makefile is provided so that you can modify it to suit your needs in a different context.</p>
 <p>An important goal and criteria of this tutorial is the use of C++ based kernels for AI Engine and HLS library kernels for DSP Engine and data movers. The use of Vitis™ application acceleration development flow and library kernels is illustrated throughout the tutorial to demonstrate the ease of kernel integration and scalability in a system design. In the Vitis application acceleration development flow, the Vitis HLS tool automates much of the code modifications required to implement and optimize the C/C++ code in PL, including the ease of data mover kernel coding. The inference of required pragmas to produce the right interface for users’ function arguments and to pipeline loops and functions is the foundation of the Vitis HLS in the application acceleration flow. Vitis HLS also supports customization of your code to implement different interface standards or specific optimizations to achieve design objectives, enable scaling, and leverage automation.Note: Alternative design methods to Vitis HLS may increase PL based performance, e.g. using LogiCORE™ FIR Compiler IP and RTL based data movers could increase raw performance but will increase dynamic power and design time.</p>
 <p>A frequently asked question is whether using AI Engines, HLS or RTL targeting DSPs produces the better implementation. The answer depends on the design objectives, complexity, and characteristics of every individual design. A section in this tutorial is provided which discusses the trade-offs and provides  guidance in helping to determine the best choice for your design.In addition another section discusses AI Engine specific design considerations because AI Engines are a relatively new technology compared to the mature FPGA fabric or PL with DSPs.</p>
 <details>
 <summary>Objectives</summary><div class="section" id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h2>
 <p>After completing the tutorial, you should be able to:</p>
 <ul class="simple">
 <li><p>Develop a system level design (FIR filter in this case) by identifying the algorithm and deploying the same algorithm on AI Engine and DSP Engines using Vitis HLS.</p></li>
@@ -457,7 +442,7 @@ function OptanonWrapper() { }
 </details><details>
 <summary>Overview</summary></div>
 <div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial implements a FIR filter chain, one implementation targeted at AI Engines and another targeted at DSP Engines using Vitis HLS.</p>
 <p>FIR filters provide a large design space to explore. For the purposes of this tutorial, the following parameters are held fixed/constant:</p>
 <ul class="simple">
@@ -472,7 +457,7 @@ function OptanonWrapper() { }
 </details><details>
   <summary>Directory Structure</summary></div>
 <div class="section" id="directory-structure">
-<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h2>
+<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">filter_AIEvsHLS</span>
 <span class="o">+--</span> <span class="n">AIE</span><span class="o">......................</span><span class="n">contains</span> <span class="n">AI</span> <span class="n">Engine</span> <span class="n">implementation</span>
 <span class="o">|</span>   <span class="o">+--</span> <span class="n">build</span> <span class="o">...................</span><span class="n">created</span> <span class="ow">and</span> <span class="n">contains</span> <span class="n">subfolders</span> <span class="kn">from</span> <span class="nn">design</span> <span class="n">build</span>
@@ -493,10 +478,10 @@ function OptanonWrapper() { }
 </details></div>
 </div>
 <div class="section" id="before-you-begin">
-<h1>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h1>
+<h1>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h1>
 <details>
 <summary>Documentation: Explore AI Engine Architecture</summary><div class="section" id="documentation-explore-ai-engine-architecture">
-<h2><em>Documentation</em>: Explore AI Engine Architecture<a class="headerlink" href="#documentation-explore-ai-engine-architecture" title="Permalink to this headline">¶</a></h2>
+<h2><em>Documentation</em>: Explore AI Engine Architecture<a class="headerlink" href="#documentation-explore-ai-engine-architecture" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html">AI Engine Development Design Process</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf">AM009 AI Engine Architecture Manual</a></p></li>
@@ -504,7 +489,7 @@ function OptanonWrapper() { }
 </ul>
 </details><details><summary>Tools: Installing the Tools</summary></div>
 <div class="section" id="tools-installing-the-tools">
-<h2><em>Tools</em>: Installing the Tools<a class="headerlink" href="#tools-installing-the-tools" title="Permalink to this headline">¶</a></h2>
+<h2><em>Tools</em>: Installing the Tools<a class="headerlink" href="#tools-installing-the-tools" title="Permalink to this heading">¶</a></h2>
 <p>Tools Documentation:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/member/forms/registration/versal_ai_engines.html#documentation">Versal AI Engines Secure Site</a></p></li>
@@ -522,7 +507,7 @@ function OptanonWrapper() { }
 </details><details>
 <summary>Environment: Setting Up the Shell Environment</summary></div>
 <div class="section" id="environment-setting-up-the-shell-environment">
-<h2>Environment: Setting Up the Shell Environment<a class="headerlink" href="#environment-setting-up-the-shell-environment" title="Permalink to this headline">¶</a></h2>
+<h2>Environment: Setting Up the Shell Environment<a class="headerlink" href="#environment-setting-up-the-shell-environment" title="Permalink to this heading">¶</a></h2>
 <p>When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system specific paths.</p>
 <p>Edit <code class="docutils literal notranslate"><span class="pre">env_setup.sh</span></code> script with your file paths:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">XILINX_XRT</span><span class="o">=</span>&lt;XRT-LOCATION&gt;
@@ -540,7 +525,7 @@ function OptanonWrapper() { }
 </details><details>
 <summary>Validation: Confirming Tool Installation</summary></div>
 <div class="section" id="validation-confirming-tool-installation">
-<h2>Validation: Confirming Tool Installation<a class="headerlink" href="#validation-confirming-tool-installation" title="Permalink to this headline">¶</a></h2>
+<h2>Validation: Confirming Tool Installation<a class="headerlink" href="#validation-confirming-tool-installation" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which vitis
 which aiecompiler
 </pre></div>
@@ -564,20 +549,20 @@ which aiecompiler
 </details></div>
 </div>
 <div class="section" id="design-implementations">
-<h1>Design Implementations<a class="headerlink" href="#design-implementations" title="Permalink to this headline">¶</a></h1>
+<h1>Design Implementations<a class="headerlink" href="#design-implementations" title="Permalink to this heading">¶</a></h1>
 <p>The Makefile and source files for the AI Engine and HLS implementations are in the respective directories “AIE” and “HLS”. For the documentation of the flow to build the design and details of the hardware and software design, click on each of the following links:</p>
 <p><a class="reference external" href="AIE">AI Engines design implementation</a></p>
 <p><a class="reference external" href="HLS">HLS with DSP Engines design implementation</a></p>
 </div>
 <div class="section" id="choosing-between-ai-engine-and-hls-implementations">
-<h1>Choosing between AI Engine and HLS Implementations<a class="headerlink" href="#choosing-between-ai-engine-and-hls-implementations" title="Permalink to this headline">¶</a></h1>
+<h1>Choosing between AI Engine and HLS Implementations<a class="headerlink" href="#choosing-between-ai-engine-and-hls-implementations" title="Permalink to this heading">¶</a></h1>
 <p>The choice of which engine (AI or DSP) to use for implementing a specific function in your design or application is not always a simple one. This decision should be taken based on specific requirements of your application with respect to performance requirements and resources. There are some high-level guidelines which can help with architecting your design to a Xilinx Versal device with AI Engines. For example, small functions with modest amounts of computation will most likely be more efficient targeting the PL and DSP Engines. However, as the computational needs start to increase, moving those functions to the AI Engine will provide better efficiency.</p>
 <p>It is important not to take that decision in isolation at the function level, but to look at the problem in relation to the complete dataflow path. For instance, an inefficient function implemented in the AI Engine may offer better total efficiency when preceded and followed in the dataflow by large amounts of efficient compute functions. It is likely that it will offer overall better throughput and latency than moving the data to the PL for that specific function and back into the AI Engine array.</p>
 <p>For this discussion, computational efficiency is defined as the throughput (Msamples/sec) divided by power (W), and can only be used to compare designs that are identical from a functional standpoint. Given two identical designs with identical throughputs,for the purpose this tutorial, the one using less power is considered the better solution.</p>
 <p>Typically, one of the first steps of a design is deciding on an architecture/implementation to meet throughput and latency targets. This architecture/implementation choice generally determines the resources used and power consumed, which may also be required to meet specific targets.</p>
 <details>
 <summary>Meeting Throughput Requirements</summary><div class="section" id="meeting-throughput-requirements">
-<h2>Meeting Throughput Requirements<a class="headerlink" href="#meeting-throughput-requirements" title="Permalink to this headline">¶</a></h2>
+<h2>Meeting Throughput Requirements<a class="headerlink" href="#meeting-throughput-requirements" title="Permalink to this heading">¶</a></h2>
 <p>For DSP based design, the designer begins with an estimate of the system clock rate that the PL is capable of, and divides that by the desired filter throughput to determine how many clock cycles can be used to process a sample. By feeding this number into the FIR Compiler, the FIR is constructed with the minimum resources required to implement the design; the higher the clock cycles per sample, the fewer resources used.</p>
 <p>For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the <a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/user_guide/L2/5-benchmark.html">Vitis DSP Library Benchmark/QoR page</a>.</p>
 <p>For the filter sizes selected in this tutorial, the following AI Engine throughputs were obtained:</p>
@@ -611,7 +596,7 @@ which aiecompiler
 </details><details>
 <summary>Resource Utilization</summary></div>
 <div class="section" id="resource-utilization">
-<h2>Resource Utilization<a class="headerlink" href="#resource-utilization" title="Permalink to this headline">¶</a></h2>
+<h2>Resource Utilization<a class="headerlink" href="#resource-utilization" title="Permalink to this heading">¶</a></h2>
 <p>The AI Engine can reduce the overall requirement on the PL and DSPs in a design with a lot of vectorizable compute. For example, the following shows the required resources for the same 64-Tap FIR filter implemented in both AI Engine and PL with DSPs:</p>
 <table border="1" class="docutils">
 <thead>
@@ -683,7 +668,7 @@ which aiecompiler
 </details><details>
 <summary>Power Utilization</summary></div>
 <div class="section" id="power-utilization">
-<h2>Power Utilization<a class="headerlink" href="#power-utilization" title="Permalink to this headline">¶</a></h2>
+<h2>Power Utilization<a class="headerlink" href="#power-utilization" title="Permalink to this heading">¶</a></h2>
 <p>In general, smaller designs are more power efficient in the PL than in AI Engines, but the advantage switches over to AI Engines as the design becomes larger.</p>
 <p>This can be seen in the following dynamic power graph for 240-tap FIR chains with 1, 5, and 10 FIR filters connected sequentially. In the case of the HLS or DSP implementation, the power slope is a straight line which would go through the origin. For the AI Engine implementation, a single filter starts off with a much higher dynamic power, but the slope is shallower, so in a 5 filter chain, the power is similar  the HLS implementation, and the advantage starts to move towards the AI Engine implementations, and then at ten FIR filters in the chain, the power of the AI Engine implementation is using ~1 Watt less than that of the HLS and DSP based FIR filter chain.
 <img alt="Image of 240 Tap FIR filter dynamic power" src="../../../../_images/fir_graph_240tap_power.png" /></p>
@@ -691,17 +676,17 @@ which aiecompiler
 </details><details>
 <summary>Computational Efficiency</summary></div>
 <div class="section" id="computational-efficiency">
-<h2>Computational Efficiency<a class="headerlink" href="#computational-efficiency" title="Permalink to this headline">¶</a></h2>
+<h2>Computational Efficiency<a class="headerlink" href="#computational-efficiency" title="Permalink to this heading">¶</a></h2>
 <p>Computational efficiency is a very common and important metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (MegaSamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240-tap FIR filter chain with 1, 5, and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.</p>
 <p><img alt="Image of 240 Tap FIR computational efficiency" src="../../../../_images/fir_graph_240tap_efficiency.png" /></p>
 <p>(*)Note: DSP Refers to the HLS Implementation.</p>
 </details></div>
 </div>
 <div class="section" id="ai-engine-specific-design-considerations">
-<h1>AI Engine Specific Design Considerations<a class="headerlink" href="#ai-engine-specific-design-considerations" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine Specific Design Considerations<a class="headerlink" href="#ai-engine-specific-design-considerations" title="Permalink to this heading">¶</a></h1>
 <details>
 <summary>Assigning Multiple AI Engines per Filter</summary><div class="section" id="assigning-multiple-ai-engines-per-filter">
-<h2>Assigning Multiple AI Engines per Filter<a class="headerlink" href="#assigning-multiple-ai-engines-per-filter" title="Permalink to this headline">¶</a></h2>
+<h2>Assigning Multiple AI Engines per Filter<a class="headerlink" href="#assigning-multiple-ai-engines-per-filter" title="Permalink to this heading">¶</a></h2>
 <p>For a HLS implementation, specifying the number of clocks per sample establishes the throughput and is the primary factor in determining how many resources are required, and the relationship is quite linear.</p>
 <p>For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter called cascade length (CASC_LEN), which can be used to assign multiple AI Engines to a particular filter kernel. This results in increased throughput, but the relationship is not linear. The following graphs show the results for a single 129 tap FIR filter, with CASC_LENs of 1,2, and 4.
 <img alt="Image of 129 Tap FIR filter metrics" src="../../../../_images/fir_graph_129tap_casc_len.png" /></p>
@@ -747,7 +732,7 @@ which aiecompiler
 </details><details>
 <summary>Window Size</summary></div>
 <div class="section" id="window-size">
-<h2>Window Size<a class="headerlink" href="#window-size" title="Permalink to this headline">¶</a></h2>
+<h2>Window Size<a class="headerlink" href="#window-size" title="Permalink to this heading">¶</a></h2>
 <p>The AI Engine processes data in bursts and these data bursts are transferred between AI Engines utilizing ping-pong buffers. The data from one engine is written into one of the two buffers and when it is filled, the buffers are swapped and the data read out by the downstream engine. The size of these data bursts is referred to as the window size, and establishing the optimum window size is a balancing act between throughput and latency. Larger window sizes provide higher throughput because there the burst overhead is less of an influence on the performance. However, latency increases proportionately to the window size.</p>
 <p>Thus, the window size should be chosen to be just large enough such that the desired throughput target is met.</p>
 <p>The following is data for the AI Engine with one 64-tap FIR filter example for various window sizes:</p>
@@ -792,10 +777,10 @@ which aiecompiler
 </details></div>
 </div>
 <div class="section" id="measuring-resources-throughput-latency-and-power">
-<h1>Measuring Resources, Throughput, Latency, and Power<a class="headerlink" href="#measuring-resources-throughput-latency-and-power" title="Permalink to this headline">¶</a></h1>
+<h1>Measuring Resources, Throughput, Latency, and Power<a class="headerlink" href="#measuring-resources-throughput-latency-and-power" title="Permalink to this heading">¶</a></h1>
 <details>
 <summary>Measuring Resources, Throughput, Latency, and Power</summary><div class="section" id="resource-and-power-utilization">
-<h2>Resource and Power Utilization<a class="headerlink" href="#resource-and-power-utilization" title="Permalink to this headline">¶</a></h2>
+<h2>Resource and Power Utilization<a class="headerlink" href="#resource-and-power-utilization" title="Permalink to this heading">¶</a></h2>
 <p>The power and resource utilization information can be found in the report_dir directory, with the file name: fir_[aie|dsp]<em>&lt;number_of_fir_filters&gt;firs</em>&lt;number_of_filter_taps&gt;taps_utilization.txt</p>
 <p>Or, if you wish to extract this information from the design yourself, open the project in Vivado tools:</p>
 <p><code class="docutils literal notranslate"><span class="pre">build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr</span></code></p>
@@ -874,7 +859,7 @@ which aiecompiler
 </table></details><details>
 <summary>Throughput and Latency Measurements</summary></div>
 <div class="section" id="throughput-and-latency-measurements">
-<h2>Throughput and Latency Measurements<a class="headerlink" href="#throughput-and-latency-measurements" title="Permalink to this headline">¶</a></h2>
+<h2>Throughput and Latency Measurements<a class="headerlink" href="#throughput-and-latency-measurements" title="Permalink to this heading">¶</a></h2>
 <p>To maintain consistency between the AI Engine and DSP implementation, the same flow to measure throughput is used to run the design in hardware and capture trace data in run time. Refer to the <a class="reference external" href="https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation">Vitis Unified Software Development Platform documentation</a> for more information.
 To setup the flow to measure throughput, refer to the section “Run on Hardware” in the AI Engine and HLS implementation documentation, and run the application.</p>
 <p>After the application has been run, three files will be created:</p>
@@ -905,22 +890,22 @@ Transfer the .csv and _summary files back to the run_dir directory, for example:
 </details></div>
 </div>
 <div class="section" id="conclusion">
-<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h1>
+<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial, we have demonstrated how to implement FIR filter chains in both the AI Engine and PL with(DSPs) using HLS using the Vitis kernel based flow.</p>
 <p>Also, we explored the AI Engine implementation and how design decisions can affect the overall performance for a FIR filter chain with respect to throughput, resources and performance. Part of this exercise was to show that small FIRs taken in isolation may not be that efficient an implementation when targeting AI Engine but as the FIRs increase in size and the number of instances increase, it becomes apparent that AI Engine becomes the most efficient solution. It can also be seen from the results, how even more compute, beyond this example, and a larger data path will enable greater efficiency of implementation and performance than the traditional FPGA programmable logic and DSP engines, if that is what your application needs.</p>
 </div>
 <div class="section" id="revision-history">
-<h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this headline">¶</a></h1>
+<h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Dec 2021 Release</p></li>
 </ul>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

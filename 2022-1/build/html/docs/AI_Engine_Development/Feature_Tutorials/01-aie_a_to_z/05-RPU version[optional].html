@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,11 +339,11 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
 <p>The previous tutorial is built based on using the A53 core. To migrate it to use the R5 core, follow the instructions on this page.
 The flow is the same but you need to make a few modifications.</p>
 <div class="section" id="base-platform-changes">
-<h2>Base Platform Changes<a class="headerlink" href="#base-platform-changes" title="Permalink to this headline">¶</a></h2>
+<h2>Base Platform Changes<a class="headerlink" href="#base-platform-changes" title="Permalink to this heading">¶</a></h2>
 <p>The Vivado tools design needs to be modified to have the AI Engine domain mapped into the RPU address space. The Versal ACAP RPU is a 32-bit processor, but addressing the AI Engine requires at least 44 bits.  This issue can be resolved using the address remap capability of the NoC NMU.</p>
 <p>To do this, run the following commands in the Tcl console:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">set_property</span> <span class="n">CONFIG</span><span class="o">.</span><span class="n">REMAPS</span> <span class="p">{{</span><span class="n">M00_AXI</span> <span class="p">{{</span><span class="mh">0x4000_0000</span> <span class="mh">0x200_0000_0000</span> <span class="mi">1</span><span class="n">G</span><span class="p">}}}}</span> <span class="p">[</span><span class="n">get_bd_intf_pins</span> <span class="o">/</span><span class="n">ps_noc</span><span class="o">/</span><span class="n">S01_AXI</span><span class="p">]</span>
@@ -371,7 +356,7 @@ The flow is the same but you need to make a few modifications.</p>
 <p>After the block design passes validation, regenerate the output and export the platform XSA file.</p>
 </div>
 <div class="section" id="rebuild-simple-application-system-project">
-<h2>Rebuild Simple Application System Project<a class="headerlink" href="#rebuild-simple-application-system-project" title="Permalink to this headline">¶</a></h2>
+<h2>Rebuild Simple Application System Project<a class="headerlink" href="#rebuild-simple-application-system-project" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Because the XSA file has been changed, you need to rebuild the base platform first. To rebuild the base platform, right-click the <em><strong>base_pfm_vck190</strong></em> project and select <em><strong>update hardware specifications</strong></em>. Choose the XSA file that you just exported in the previous step.</p></li>
 <li><p>After the XSA file has been updated, click the hammer icon to rebuild the base platform project.</p></li>
@@ -379,14 +364,14 @@ The flow is the same but you need to make a few modifications.</p>
 </ol>
 </div>
 <div class="section" id="update-fixed-platform">
-<h2>Update Fixed Platform<a class="headerlink" href="#update-fixed-platform" title="Permalink to this headline">¶</a></h2>
+<h2>Update Fixed Platform<a class="headerlink" href="#update-fixed-platform" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Because the simple application system project was rebuilt, the exported fixed platform XSA was changed. Therefore we need to follow the same process to update the <em><strong>AIE_A-to-Z_pfm_vck190</strong></em> platform project. Right-click on it and select <em><strong>update hardware specifications</strong></em>.</p></li>
 <li><p>After the XSA file has been updated, click the hammer icon to rebuild the fixed platform project.</p></li>
 </ol>
 </div>
 <div class="section" id="ps-application-project-changes">
-<h2>PS Application Project Changes<a class="headerlink" href="#ps-application-project-changes" title="Permalink to this headline">¶</a></h2>
+<h2>PS Application Project Changes<a class="headerlink" href="#ps-application-project-changes" title="Permalink to this heading">¶</a></h2>
 <p>The bare-metal application uses AI Engine driver APIs that are included in the BSP of the platform. To point the tool to those libraries, you need to make a few changes to the compiler/linker settings.</p>
 <ol>
 <li><p>Right-click on the A72 PS application (A-to-Z_app) and click on <em><strong>c/c++ Build Settings</strong></em>.</p>

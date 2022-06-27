@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,10 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Optimizing Accelerated FPGA Applications: Bloom Filter Example" href="../Design_Tutorials/02-bloom/README.html" />
-    <link rel="prev" title="Vitis Hardware Acceleration" href="../Hardware-Acceleration.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,42 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../Hardware-Acceleration.html#introduction">Introduction</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Introduction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#provided-design-files">Provided Design Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -339,8 +312,6 @@ function OptanonWrapper() { }
     
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
-        
       <li>Introduction</li>
     
     
@@ -367,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>Xilinx FPGAs and Versal ACAP devices are uniquely suitable for low-latency acceleration of high performance algorithms and workloads. With the demise of traditional Moore’s Law scaling, design-specific architectures(DSAs) are becoming the tool of choice for developers needing the optimal balance of capability, power, latency, and flexibility. But, approaching FPGA and ACAP development from a purely software background can seem daunting.</p>
 <p>With this set of documentation and tutorials, our goal is to provide you with an easy-to-follow, guided introduction to accelerating applications with Xilinx technology. We will begin from the first principles of acceleration: understanding the fundamental architectural approaches, identifying suitable code for acceleration, and interacting with the software APIs for managing memory and interacting with the target
@@ -375,14 +346,14 @@ device in an optimal way.</p>
 <p>This set of documents is intended for use by software developers, it is not a low-level hardware developer’s guide. The topics of RTL coding, low-level FPGA architecture, high-level synthesis optimization, and so on are covered elsewhere in other Xilinx documents. Our goal here is to get you up and running with Vitis quickly, with the confidence to approach your own acceleration goals and grow your familiarity and skill with Xilinx over time.</p>
 </div>
 <div class="section" id="provided-design-files">
-<h1>Provided Design Files<a class="headerlink" href="#provided-design-files" title="Permalink to this headline">¶</a></h1>
+<h1>Provided Design Files<a class="headerlink" href="#provided-design-files" title="Permalink to this heading">¶</a></h1>
 <p>In this directory tree you will find a collection of documents and a directory named <code class="docutils literal notranslate"><span class="pre">design_source</span></code>.
 The <code class="docutils literal notranslate"><span class="pre">design_source</span></code> directory contains all of the design elements - hardware and software - for the
 tutorial you’re currently reading. The example applications correspond to specific sections in the guide.
 Every effort has been made to keep the code samples as concise and “to the point” as possible.</p>
 </div>
 <div class="section" id="table-of-contents">
-<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial is divided into several discrete example desings. Note that each design builds on the last one,
 so if this is your first time here we recommend proceeding through the tutorial in order.</p>
 <ul class="simple">
@@ -467,15 +438,6 @@ so if this is your first time here we recommend proceeding through the tutorial 
 
 
 	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../Design_Tutorials/02-bloom/README.html" class="btn btn-neutral float-right" title="Optimizing Accelerated FPGA Applications: Bloom Filter Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../Hardware-Acceleration.html" class="btn btn-neutral float-left" title="Vitis Hardware Acceleration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

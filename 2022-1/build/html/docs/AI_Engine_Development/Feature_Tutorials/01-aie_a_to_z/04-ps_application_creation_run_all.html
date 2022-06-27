@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,10 +339,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="introduction-ps-application-creation-and-run">
-<h1>Introduction - PS Application creation and Run<a class="headerlink" href="#introduction-ps-application-creation-and-run" title="Permalink to this headline">¶</a></h1>
+<h1>Introduction - PS Application creation and Run<a class="headerlink" href="#introduction-ps-application-creation-and-run" title="Permalink to this heading">¶</a></h1>
 <p>In this section of the tutorial, you will learn how to build a PS bare-metal application using the XSA created in the previous step and then build, as well as run the complete system.</p>
 <div class="section" id="step-1-create-a-new-platform-in-the-bare-metal-domain">
-<h2>Step 1. Create a New Platform in the Bare-metal Domain<a class="headerlink" href="#step-1-create-a-new-platform-in-the-bare-metal-domain" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1. Create a New Platform in the Bare-metal Domain<a class="headerlink" href="#step-1-create-a-new-platform-in-the-bare-metal-domain" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Open the Vitis IDE with the same workspace directory as the previous step. Click <em><strong>File → New →  Platform Project</strong></em>.</p></li>
 <li><p>Set the Platform Project Name to <em><strong>AIE_A-to-Z_pfm_vck190</strong></em> and click <em><strong>Next</strong></em>.</p></li>
@@ -366,7 +351,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="step-2-build-the-baremetal-ai-engine-control-application">
-<h2>Step 2. Build the Baremetal AI Engine Control Application<a class="headerlink" href="#step-2-build-the-baremetal-ai-engine-control-application" title="Permalink to this headline">¶</a></h2>
+<h2>Step 2. Build the Baremetal AI Engine Control Application<a class="headerlink" href="#step-2-build-the-baremetal-ai-engine-control-application" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Create a new application by clicking on <em><strong>New → Application Project</strong></em>.</p></li>
 <li><p>Select <em><strong>AIE_A-to-Z_pfm_vck190</strong></em> as the platform.</p></li>
@@ -419,7 +404,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="step-3-build-the-full-system">
-<h2>Step 3. Build the Full System<a class="headerlink" href="#step-3-build-the-full-system" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3. Build the Full System<a class="headerlink" href="#step-3-build-the-full-system" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Click <em><strong>simple_application_system.sprj</strong></em>. Add the following options in the <em><strong>Packaging options</strong></em> box:</p></li>
 </ol>
@@ -435,7 +420,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="step-4-run-the-system-in-hardware-emulation">
-<h2>Step 4. Run the System in Hardware Emulation<a class="headerlink" href="#step-4-run-the-system-in-hardware-emulation" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4. Run the System in Hardware Emulation<a class="headerlink" href="#step-4-run-the-system-in-hardware-emulation" title="Permalink to this heading">¶</a></h2>
 <p>Now that the system is built, we can test it in HW emulation.</p>
 <ol>
 <li><p>Right-click on the <em><strong>simple_application_system</strong></em> and click <em><strong>Run As → Launch HW emulator</strong></em>.</p>
@@ -457,7 +442,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="step-5-build-the-system-targeting-the-hardware">
-<h2>Step 5. Build the System targeting the Hardware<a class="headerlink" href="#step-5-build-the-system-targeting-the-hardware" title="Permalink to this headline">¶</a></h2>
+<h2>Step 5. Build the System targeting the Hardware<a class="headerlink" href="#step-5-build-the-system-targeting-the-hardware" title="Permalink to this heading">¶</a></h2>
 <p>Before you run the system in Hardware you need to rebuild the system to target the Hardware.</p>
 <ol class="simple">
 <li><p>In the <em><strong>simple_application_system.sprj</strong></em> page, change the <em><strong>Active build configuration</strong></em> to <em><strong>Hardware</strong></em></p></li>
@@ -471,7 +456,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="step-6-run-the-system-in-hardware">
-<h2>Step 6. Run the System in Hardware<a class="headerlink" href="#step-6-run-the-system-in-hardware" title="Permalink to this headline">¶</a></h2>
+<h2>Step 6. Run the System in Hardware<a class="headerlink" href="#step-6-run-the-system-in-hardware" title="Permalink to this heading">¶</a></h2>
 <p>We have two ways to run the application.</p>
 <p>A: Use Jtag to launch the application.</p>
 <ol>
@@ -501,7 +486,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, you have performed an end-to-end flow to create a platform based on the VCK190 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to control the system. Then we have run the system is HW emulation and HW</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.

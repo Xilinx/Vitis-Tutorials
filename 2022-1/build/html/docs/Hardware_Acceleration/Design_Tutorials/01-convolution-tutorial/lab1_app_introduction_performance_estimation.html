@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="video-convolution-filter-introduction-and-performance-estimation">
-<h1>Video Convolution Filter: Introduction and Performance Estimation<a class="headerlink" href="#video-convolution-filter-introduction-and-performance-estimation" title="Permalink to this headline">¶</a></h1>
+<h1>Video Convolution Filter: Introduction and Performance Estimation<a class="headerlink" href="#video-convolution-filter-introduction-and-performance-estimation" title="Permalink to this heading">¶</a></h1>
 <p>This lab will explore a 2D video convolution filter and measure its performance on the host machine. These measurements will establish a performance baseline. The amount of acceleration that should be provided by hardware implementation is calculated based on the required performance constraints. In the next lab, we will estimate the performance of the FPGA accelerator. In a nutshell, during this lab, you will:</p>
 <ul class="simple">
 <li><p>Learn about video convolution filters</p></li>
@@ -362,7 +347,7 @@ function OptanonWrapper() { }
 <li><p>Estimate the performance of hardware accelerator before implementation</p></li>
 </ul>
 <div class="section" id="video-filtering-applications-and-2-d-convolution-filters">
-<h2>Video Filtering Applications and 2-D Convolution Filters<a class="headerlink" href="#video-filtering-applications-and-2-d-convolution-filters" title="Permalink to this headline">¶</a></h2>
+<h2>Video Filtering Applications and 2-D Convolution Filters<a class="headerlink" href="#video-filtering-applications-and-2-d-convolution-filters" title="Permalink to this heading">¶</a></h2>
 <p>Video applications use different types of filters extensively for multiple reasons: filter noise, manipulate motion blur, enhance color and contrast, edge detection, creative effects, etc. At its core, a convolution video filter carries out some form of data average around a pixel, which redefines the amount and type of correlation any pixel has to its surrounding area. Such filtering is carried out for all the pixels in a video frame.</p>
 <p>A matrix of coefficients defines a convolution filter. The convolution operation is essentially a sum of products performed on a pixel set (a frame/image sub-matrix centered around a given pixel) and a coefficients matrix. The figure below illustrates how convolution is calculated for a pixel; it is highlighted in yellow. Here the filter has a coefficient matrix that is 3x3 in size. The figure also displays how the whole output image is generated during the filtering process. The index of the output pixel being generated is the index of the input pixel highlighted in yellow that is being filtered. In algorithmic terms, the process of filtering consists of:</p>
 <ul class="simple">
@@ -373,7 +358,7 @@ function OptanonWrapper() { }
 </ul>
 <p><img alt="Convolution Filter" src="../../../../_images/convolution.jpg" /></p>
 <div class="section" id="performance-requirements-for-1080p-hd-video">
-<h3>Performance Requirements for 1080p HD Video<a class="headerlink" href="#performance-requirements-for-1080p-hd-video" title="Permalink to this headline">¶</a></h3>
+<h3>Performance Requirements for 1080p HD Video<a class="headerlink" href="#performance-requirements-for-1080p-hd-video" title="Permalink to this heading">¶</a></h3>
 <p>You can easily calculate the application performance requirements given the standard performance specs for 1080p High Definition (HD) video. Then these top-level requirements can be translated into constraints for hardware implementation or software throughput requirements. For 1080p HD video at 60 frames per seconds(FPS) the specs are listed below as well as required throughput in terms of pixels per second is calculated:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Video <span class="nv">Resolution</span>        <span class="o">=</span> <span class="m">1920</span> x <span class="m">1080</span>
 Frame Width <span class="o">(</span>pixels<span class="o">)</span>    <span class="o">=</span> <span class="m">1920</span> 
@@ -390,66 +375,66 @@ Throughput <span class="o">(</span>MB/s<span class="o">)</span>     <span class=
 </div>
 </div>
 <div class="section" id="software-implementation">
-<h2>Software Implementation<a class="headerlink" href="#software-implementation" title="Permalink to this headline">¶</a></h2>
+<h2>Software Implementation<a class="headerlink" href="#software-implementation" title="Permalink to this heading">¶</a></h2>
 <p>This section will discuss the baseline software implementation and performance measurements, which will be used to gauge the acceleration requirements given the performance constraints.</p>
 <p>The convolution filter is implemented in software using a typical multi-level nested loop structure. Outer two loops define the pixel to be processed(iterating over each pixel). The inner two loops perform the sum-of-product (SOP) operation, actual convolution filtering between the coefficient matrix and the selected sub-matrix from the image centered around the processed pixel.</p>
 <p><strong>TIP:</strong> Boundary conditions where it is not possible to center sub-matrix around a given pixel require special processing.  This algorithm assumes all pixels beyond the boundary of the image have zero values.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">Filter2D</span><span class="p">(</span>
-        <span class="k">const</span> <span class="kt">char</span>           <span class="n">coeffs</span><span class="p">[</span><span class="n">FILTER_V_SIZE</span><span class="p">][</span><span class="n">FILTER_H_SIZE</span><span class="p">],</span>
-        <span class="kt">float</span>                <span class="n">factor</span><span class="p">,</span>
-        <span class="kt">short</span>                <span class="n">bias</span><span class="p">,</span>
-        <span class="kt">unsigned</span> <span class="kt">short</span>       <span class="n">width</span><span class="p">,</span>
-        <span class="kt">unsigned</span> <span class="kt">short</span>       <span class="n">height</span><span class="p">,</span>
-        <span class="kt">unsigned</span> <span class="kt">short</span>       <span class="n">stride</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span>
-        <span class="kt">unsigned</span> <span class="kt">char</span>       <span class="o">*</span><span class="n">dst</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">y</span><span class="o">&lt;</span><span class="n">height</span><span class="p">;</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">x</span><span class="o">&lt;</span><span class="n">width</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">// Apply 2D filter to the pixel window</span>
-            <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">row</span><span class="o">&lt;</span><span class="n">FILTER_V_SIZE</span><span class="p">;</span> <span class="n">row</span><span class="o">++</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">col</span><span class="o">&lt;</span><span class="n">FILTER_H_SIZE</span><span class="p">;</span> <span class="n">col</span><span class="o">++</span><span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">pixel</span><span class="p">;</span>
-                    <span class="kt">int</span> <span class="n">xoffset</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">col</span><span class="o">-</span><span class="p">(</span><span class="n">FILTER_H_SIZE</span><span class="o">/</span><span class="mi">2</span><span class="p">));</span>
-                    <span class="kt">int</span> <span class="n">yoffset</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">row</span><span class="o">-</span><span class="p">(</span><span class="n">FILTER_V_SIZE</span><span class="o">/</span><span class="mi">2</span><span class="p">));</span>
-                    <span class="c1">// Deal with boundary conditions : clamp pixels to 0 when outside of image </span>
-                    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">xoffset</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">xoffset</span><span class="o">&gt;=</span><span class="n">width</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">yoffset</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">yoffset</span><span class="o">&gt;=</span><span class="n">height</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
-                        <span class="n">pixel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                        <span class="n">pixel</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="n">yoffset</span><span class="o">*</span><span class="n">stride</span><span class="o">+</span><span class="n">xoffset</span><span class="p">];</span>
-                    <span class="p">}</span>
-                    <span class="n">sum</span> <span class="o">+=</span> <span class="n">pixel</span><span class="o">*</span><span class="n">coeffs</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">];</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            
-            <span class="c1">// Normalize and saturate result</span>
-            <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">outpix</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">(</span><span class="n">MAX</span><span class="p">((</span><span class="kt">int</span><span class="p">(</span><span class="n">factor</span> <span class="o">*</span> <span class="n">sum</span><span class="p">)</span><span class="o">+</span><span class="n">bias</span><span class="p">),</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">255</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Filter2D</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w">           </span><span class="n">coeffs</span><span class="p">[</span><span class="n">FILTER_V_SIZE</span><span class="p">][</span><span class="n">FILTER_H_SIZE</span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="kt">float</span><span class="w">                </span><span class="n">factor</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">short</span><span class="w">                </span><span class="n">bias</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w">       </span><span class="n">width</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w">       </span><span class="n">height</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w">       </span><span class="n">stride</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w">       </span><span class="o">*</span><span class="n">dst</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="o">&lt;</span><span class="n">height</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="o">&lt;</span><span class="n">width</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Apply 2D filter to the pixel window</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">row</span><span class="o">&lt;</span><span class="n">FILTER_V_SIZE</span><span class="p">;</span><span class="w"> </span><span class="n">row</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">col</span><span class="o">&lt;</span><span class="n">FILTER_H_SIZE</span><span class="p">;</span><span class="w"> </span><span class="n">col</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">pixel</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">xoffset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">col</span><span class="o">-</span><span class="p">(</span><span class="n">FILTER_H_SIZE</span><span class="o">/</span><span class="mi">2</span><span class="p">));</span><span class="w"></span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">yoffset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">row</span><span class="o">-</span><span class="p">(</span><span class="n">FILTER_V_SIZE</span><span class="o">/</span><span class="mi">2</span><span class="p">));</span><span class="w"></span>
+<span class="w">                    </span><span class="c1">// Deal with boundary conditions : clamp pixels to 0 when outside of image </span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">xoffset</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">xoffset</span><span class="o">&gt;=</span><span class="n">width</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">yoffset</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">yoffset</span><span class="o">&gt;=</span><span class="n">height</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="n">pixel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="n">pixel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">src</span><span class="p">[</span><span class="n">yoffset</span><span class="o">*</span><span class="n">stride</span><span class="o">+</span><span class="n">xoffset</span><span class="p">];</span><span class="w"></span>
+<span class="w">                    </span><span class="p">}</span><span class="w"></span>
+<span class="w">                    </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">pixel</span><span class="o">*</span><span class="n">coeffs</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">];</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span>
+<span class="w">            </span><span class="c1">// Normalize and saturate result</span>
+<span class="w">            </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">outpix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MIN</span><span class="p">(</span><span class="n">MAX</span><span class="p">((</span><span class="kt">int</span><span class="p">(</span><span class="n">factor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sum</span><span class="p">)</span><span class="o">+</span><span class="n">bias</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span><span class="w"></span>
 
-            <span class="c1">// Write output</span>
-            <span class="n">dst</span><span class="p">[</span><span class="n">y</span><span class="o">*</span><span class="n">stride</span><span class="o">+</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">outpix</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">            </span><span class="c1">// Write output</span>
+<span class="w">            </span><span class="n">dst</span><span class="p">[</span><span class="n">y</span><span class="o">*</span><span class="n">stride</span><span class="o">+</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">outpix</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The following snapshot shows how the top-level function calls the convolution filter function for an image with three components or channels. Here OpenMP pragma is used to parallelize software execution using multiple threads. You can open <strong><em>src/host_randomized.cpp</em></strong> and <strong><em>src/filter2d_sw.cpp</em></strong> from tutorial directory to examine all implementation details.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>   <span class="cp">#pragma omp parallel for num_threads(3)</span>
-  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="n">numRunsSW</span><span class="p">;</span> <span class="n">n</span><span class="o">++</span><span class="p">)</span> 
-  <span class="p">{</span>
-    <span class="c1">// Compute reference results</span>
-    <span class="n">Filter2D</span><span class="p">(</span><span class="n">filterCoeffs</span><span class="p">[</span><span class="n">filterType</span><span class="p">],</span> <span class="n">factor</span><span class="p">,</span> <span class="n">bias</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">y_src</span><span class="p">,</span> <span class="n">y_ref</span><span class="p">);</span>
-    <span class="n">Filter2D</span><span class="p">(</span><span class="n">filterCoeffs</span><span class="p">[</span><span class="n">filterType</span><span class="p">],</span> <span class="n">factor</span><span class="p">,</span> <span class="n">bias</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">u_src</span><span class="p">,</span> <span class="n">u_ref</span><span class="p">);</span>
-    <span class="n">Filter2D</span><span class="p">(</span><span class="n">filterCoeffs</span><span class="p">[</span><span class="n">filterType</span><span class="p">],</span> <span class="n">factor</span><span class="p">,</span> <span class="n">bias</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">v_src</span><span class="p">,</span> <span class="n">v_ref</span><span class="p">);</span>
-  <span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="cp">#pragma omp parallel for num_threads(3)</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="o">&lt;</span><span class="n">numRunsSW</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="o">++</span><span class="p">)</span><span class="w"> </span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Compute reference results</span>
+<span class="w">    </span><span class="n">Filter2D</span><span class="p">(</span><span class="n">filterCoeffs</span><span class="p">[</span><span class="n">filterType</span><span class="p">],</span><span class="w"> </span><span class="n">factor</span><span class="p">,</span><span class="w"> </span><span class="n">bias</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">stride</span><span class="p">,</span><span class="w"> </span><span class="n">y_src</span><span class="p">,</span><span class="w"> </span><span class="n">y_ref</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Filter2D</span><span class="p">(</span><span class="n">filterCoeffs</span><span class="p">[</span><span class="n">filterType</span><span class="p">],</span><span class="w"> </span><span class="n">factor</span><span class="p">,</span><span class="w"> </span><span class="n">bias</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">stride</span><span class="p">,</span><span class="w"> </span><span class="n">u_src</span><span class="p">,</span><span class="w"> </span><span class="n">u_ref</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Filter2D</span><span class="p">(</span><span class="n">filterCoeffs</span><span class="p">[</span><span class="n">filterType</span><span class="p">],</span><span class="w"> </span><span class="n">factor</span><span class="p">,</span><span class="w"> </span><span class="n">bias</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">stride</span><span class="p">,</span><span class="w"> </span><span class="n">v_src</span><span class="p">,</span><span class="w"> </span><span class="n">v_ref</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="section" id="running-the-software-application">
-<h3>Running the Software Application<a class="headerlink" href="#running-the-software-application" title="Permalink to this headline">¶</a></h3>
+<h3>Running the Software Application<a class="headerlink" href="#running-the-software-application" title="Permalink to this heading">¶</a></h3>
 <p>To run the software application, go to the directory called “sw_run” and launch the application as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>/sw_run
 ./run.sh
@@ -484,7 +469,7 @@ CPU  Throughput   :    <span class="m">14</span>.5617 MB/s
 </div>
 </div>
 <div class="section" id="hardware-implementation">
-<h2>Hardware Implementation<a class="headerlink" href="#hardware-implementation" title="Permalink to this headline">¶</a></h2>
+<h2>Hardware Implementation<a class="headerlink" href="#hardware-implementation" title="Permalink to this heading">¶</a></h2>
 <p>To understand what kind of hardware implementation is needed given the performance constraints, you can examine the convolution kernel in some detail:</p>
 <ul class="simple">
 <li><p>The core compute is done in a 4-level nested loop, but you can break it to the compute per output pixel produced.</p></li>
@@ -493,7 +478,7 @@ CPU  Throughput   :    <span class="m">14</span>.5617 MB/s
 <li><p>The inner two loops are performing a dot product of size 225(15x15). In other words, the two inner loops perform 225 multiply-accumulate (MAC) operations for every output pixel produced.</p></li>
 </ul>
 <div class="section" id="baseline-hardware-implementation-performance">
-<h3>Baseline Hardware Implementation Performance<a class="headerlink" href="#baseline-hardware-implementation-performance" title="Permalink to this headline">¶</a></h3>
+<h3>Baseline Hardware Implementation Performance<a class="headerlink" href="#baseline-hardware-implementation-performance" title="Permalink to this heading">¶</a></h3>
 <p>The simplest and most straightforward hardware implementation can be achieved by passing this current kernel source code through the Vitis HLS tool. It will pipeline the innermost loop with II=1, performing only one multiply-accumulate(MAC) per cycle. The performance can be estimated based on the MACs as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> MACs per <span class="nv">Cycle</span> <span class="o">=</span> <span class="m">1</span>
  Hardware Fmax<span class="o">(</span>MHz<span class="o">)</span> <span class="o">=</span> <span class="m">300</span>
@@ -513,7 +498,7 @@ Acceleration Factor to Meet SW <span class="nv">Performance</span>    <span clas
 </div>
 </div>
 <div class="section" id="performance-estimation-for-optimized-hardware-implementations">
-<h3>Performance Estimation for Optimized Hardware Implementations<a class="headerlink" href="#performance-estimation-for-optimized-hardware-implementations" title="Permalink to this headline">¶</a></h3>
+<h3>Performance Estimation for Optimized Hardware Implementations<a class="headerlink" href="#performance-estimation-for-optimized-hardware-implementations" title="Permalink to this heading">¶</a></h3>
 <p>From the above calculations, it is clear that you need to improve the performance of a baseline hardware implementation by 280x to process 60 FPS. One of the paths you can take is to start unrolling the inner loops and pipeline. For example, by unrolling the innermost loop, which iterates 15 times, you can improve the performance by 15x. With that one change, the hardware performance will already be better than software-only implementation, but not yet good enough to meet the required video performance. Another approach you can follow is to unroll the inner two loops and gain in performance by 15*15=225, which means a throughput of 1-output pixel per cycle. The performance and memory bandwidth requirements will be as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">Throughput</span>  <span class="o">=</span> Fmax * Pixels produced per <span class="nv">cycle</span> <span class="o">=</span> <span class="m">300</span> * <span class="nv">1</span> <span class="o">=</span> <span class="m">300</span> MB/s
 Output Memory <span class="nv">Bandwidth</span> <span class="o">=</span> Fmax * Pixels produced per <span class="nv">cycle</span> <span class="o">=</span>  <span class="m">300</span> MB/s

@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -354,22 +339,22 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="creating-the-animation-gif">
-<h1>Creating the Animation GIF<a class="headerlink" href="#creating-the-animation-gif" title="Permalink to this headline">¶</a></h1>
+<h1>Creating the Animation GIF<a class="headerlink" href="#creating-the-animation-gif" title="Permalink to this heading">¶</a></h1>
 <p>You can create a gif from your own <code class="docutils literal notranslate"><span class="pre">data/animation_data.txt</span></code> file using the following command:</p>
 <p><em>Estimated time: 3 minutes</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">animation</span>
 </pre></div>
 </div>
 <div class="section" id="results">
-<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this heading">¶</a></h2>
 <p>The following is a GIF created from the <code class="docutils literal notranslate"><span class="pre">data/animation_data_golden.txt</span></code> file. You should get a similar GIF from your own data.</p>
 <div class="section" id="particles-simulated-on-a-400-tile-ai-engine-accelerator-for-300-timesteps">
-<h3>12,800 Particles Simulated on a 400 tile AI Engine Accelerator for 300 Timesteps<a class="headerlink" href="#particles-simulated-on-a-400-tile-ai-engine-accelerator-for-300-timesteps" title="Permalink to this headline">¶</a></h3>
+<h3>12,800 Particles Simulated on a 400 tile AI Engine Accelerator for 300 Timesteps<a class="headerlink" href="#particles-simulated-on-a-400-tile-ai-engine-accelerator-for-300-timesteps" title="Permalink to this heading">¶</a></h3>
 <p><img alt="alt text" src="../../../../../_images/animation.gif" /></p>
 </div>
 </div>
 <div class="section" id="latency-performance-comparisons">
-<h2>Latency Performance Comparisons<a class="headerlink" href="#latency-performance-comparisons" title="Permalink to this headline">¶</a></h2>
+<h2>Latency Performance Comparisons<a class="headerlink" href="#latency-performance-comparisons" title="Permalink to this heading">¶</a></h2>
 <p>Following is a table comparing the executions times to simulate 12,800 particles for one timestep on the different N-Body Simulators explored in this tutorial.</p>
 <table border="1" class="docutils">
 <thead>
@@ -403,7 +388,7 @@ function OptanonWrapper() { }
 </table><p>As you can see, the N-Body Simulator implemented on the AI Engine offers a x2,800 improvement over the Python O(N) implementation and a x24,800 improvement over the C++ O(N<sup>2</sup>) implementation. A vectorized C++ NBody Simulator O(N) implementation can be created with pthreads, but is left as an exercise for the user.</p>
 </div>
 <div class="section" id="design-throughput-calculations-effective-vs-theoretical">
-<h2>Design Throughput Calculations (Effective vs. Theoretical)<a class="headerlink" href="#design-throughput-calculations-effective-vs-theoretical" title="Permalink to this headline">¶</a></h2>
+<h2>Design Throughput Calculations (Effective vs. Theoretical)<a class="headerlink" href="#design-throughput-calculations-effective-vs-theoretical" title="Permalink to this heading">¶</a></h2>
 <p>The following table describes the total number of floating-point operations (FLOP) for 1 iteration of a single <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> AI Engine kernel:</p>
 <table border="1" class="docutils">
 <thead>
@@ -471,10 +456,10 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="optional-building-x1-design-and-x10-design">
-<h2>(Optional) Building x1_design and x10_design<a class="headerlink" href="#optional-building-x1-design-and-x10-design" title="Permalink to this headline">¶</a></h2>
+<h2>(Optional) Building x1_design and x10_design<a class="headerlink" href="#optional-building-x1-design-and-x10-design" title="Permalink to this heading">¶</a></h2>
 <p>What has been presented so far is the 100 compute unit AI Engine design utilizing all 400 AI Engine tiles. However, to get there you had to create the intermediate AI Engine designs that contain a single compute unit (4 tiles) and 10 compute units (40 tiles). If you wish to run the <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code>, hardware emulation, or build an AI Engine NBody Simulator with significantly shorter build times, feel free to build the <code class="docutils literal notranslate"><span class="pre">x1_design</span></code> or <code class="docutils literal notranslate"><span class="pre">x10_design</span></code>.</p>
 <div class="section" id="building-the-x1-design-simulates-128-particles">
-<h3>Building the x1_design (simulates 128 particles)<a class="headerlink" href="#building-the-x1-design-simulates-128-particles" title="Permalink to this headline">¶</a></h3>
+<h3>Building the x1_design (simulates 128 particles)<a class="headerlink" href="#building-the-x1-design-simulates-128-particles" title="Permalink to this heading">¶</a></h3>
 <p><em>Estimated time: 1 hour</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">x1_design</span>
 <span class="n">make</span> <span class="nb">all</span> <span class="n">TARGET</span><span class="o">=&lt;</span><span class="n">hw</span><span class="o">|</span><span class="n">hw_emu</span><span class="o">&gt;</span>
@@ -483,7 +468,7 @@ function OptanonWrapper() { }
 <p>128 particles simulated for 300 timesteps</p>
 <p><img alt="alt text" src="../../../../../_images/animation1.gif" /></p>
 <div class="section" id="building-the-x10-design-simulates-1-280-particles">
-<h4>Building the x10_design (simulates 1,280 particles)<a class="headerlink" href="#building-the-x10-design-simulates-1-280-particles" title="Permalink to this headline">¶</a></h4>
+<h4>Building the x10_design (simulates 1,280 particles)<a class="headerlink" href="#building-the-x10-design-simulates-1-280-particles" title="Permalink to this heading">¶</a></h4>
 <p><em>Estimated time: 1 hour</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">x10_design</span>
 <span class="n">make</span> <span class="nb">all</span> <span class="n">TARGET</span><span class="o">=&lt;</span><span class="n">hw</span><span class="o">|</span><span class="n">hw_emu</span><span class="o">&gt;</span>
@@ -496,11 +481,11 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://support.xilinx.com/">support.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

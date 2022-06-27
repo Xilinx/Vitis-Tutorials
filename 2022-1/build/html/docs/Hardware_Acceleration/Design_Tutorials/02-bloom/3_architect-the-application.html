@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,10 +338,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="architect-a-device-accelerated-application">
-<h1>Architect a Device-Accelerated Application<a class="headerlink" href="#architect-a-device-accelerated-application" title="Permalink to this headline">¶</a></h1>
+<h1>Architect a Device-Accelerated Application<a class="headerlink" href="#architect-a-device-accelerated-application" title="Permalink to this heading">¶</a></h1>
 <p>In this lab, you evaluate the available functions or loops from the original C code, and identify which functions to target for FPGA acceleration. You must manually review the code, loop structure, and access patterns before actually running any tool.</p>
 <div class="section" id="identify-functions-to-accelerate-on-the-fpga">
-<h2>Identify Functions to Accelerate on the FPGA<a class="headerlink" href="#identify-functions-to-accelerate-on-the-fpga" title="Permalink to this headline">¶</a></h2>
+<h2>Identify Functions to Accelerate on the FPGA<a class="headerlink" href="#identify-functions-to-accelerate-on-the-fpga" title="Permalink to this heading">¶</a></h2>
 <p>In the <code class="docutils literal notranslate"><span class="pre">02-bloom/cpu_src</span></code> directory, the main function calls the <code class="docutils literal notranslate"><span class="pre">runOnCPU</span></code> function. This function is implemented in the <code class="docutils literal notranslate"><span class="pre">02-bloom/cpu_src/compute_score_host.cpp</span></code> file.</p>
 <p>The algorithm can be divided into two sections:</p>
 <ul class="simple">
@@ -365,37 +350,37 @@ function OptanonWrapper() { }
 </ul>
 <p>You will evaluate which of these sections are a good fit for the FPGA.</p>
 <div class="section" id="evaluate-the-murmurhash2-function">
-<h3>Evaluate the MurmurHash2 Function<a class="headerlink" href="#evaluate-the-murmurhash2-function" title="Permalink to this headline">¶</a></h3>
+<h3>Evaluate the MurmurHash2 Function<a class="headerlink" href="#evaluate-the-murmurhash2-function" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/cpu_src</span></code> directory for the original source code.</p></li>
 <li><p>With a file editor, open the <code class="docutils literal notranslate"><span class="pre">MurmurHash2.c</span></code> file.</p></li>
 <li><p>Review the following <code class="docutils literal notranslate"><span class="pre">MurmurHash2</span></code> hash function code.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">MurmurHash2</span> <span class="p">(</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">seed</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="mh">0x5bd1e995</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">MurmurHash2</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x5bd1e995</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Initialize the hash to a &#39;random&#39; value</span>
-<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">seed</span> <span class="o">^</span> <span class="n">len</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Mix 4 bytes at a time into the hash</span>
-<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">key</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">switch</span><span class="p">(</span><span class="n">len</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="n">h</span> <span class="o">^=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">;</span>
-  <span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="n">h</span> <span class="o">^=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">;</span>
-  <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="n">h</span> <span class="o">^=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-  <span class="n">h</span> <span class="o">*=</span> <span class="n">m</span><span class="p">;</span>
-<span class="p">};</span>
+<span class="k">switch</span><span class="p">(</span><span class="n">len</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">h</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
 <span class="c1">// Do a few final mixes of the hash to ensure the last few</span>
 <span class="c1">// bytes are well-incorporated.</span>
-<span class="n">h</span> <span class="o">^=</span> <span class="n">h</span> <span class="o">&gt;&gt;</span> <span class="mi">13</span><span class="p">;</span>
-<span class="n">h</span> <span class="o">*=</span> <span class="n">m</span><span class="p">;</span>
-<span class="n">h</span> <span class="o">^=</span> <span class="n">h</span> <span class="o">&gt;&gt;</span> <span class="mi">15</span><span class="p">;</span>
+<span class="n">h</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">13</span><span class="p">;</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">return</span> <span class="n">h</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="k">return</span><span class="w"> </span><span class="n">h</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <em>computational complexity</em> is the number of basic computing operations required to execute the function.</p>
@@ -412,37 +397,37 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="evaluate-the-first-for-loop-in-the-runcpu-function-hash-functionality">
-<h3>Evaluate the First “for” Loop in the runCPU Function—”Hash” Functionality<a class="headerlink" href="#evaluate-the-first-for-loop-in-the-runcpu-function-hash-functionality" title="Permalink to this headline">¶</a></h3>
+<h3>Evaluate the First “for” Loop in the runCPU Function—”Hash” Functionality<a class="headerlink" href="#evaluate-the-first-for-loop-in-the-runcpu-function-hash-functionality" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Open <code class="docutils literal notranslate"><span class="pre">compute_score_host.cpp</span></code> file in the file editor.</p></li>
 <li><p>Look at the following code at lines 32 through 58 that computes the output flags.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Compute output flags based on hash function output for the words in all documents</span>
-<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">doc</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">doc</span><span class="o">&lt;</span><span class="n">total_num_docs</span><span class="p">;</span><span class="n">doc</span><span class="o">++</span><span class="p">)</span> 
-<span class="p">{</span>
-  <span class="n">profile_score</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">doc_sizes</span><span class="p">[</span><span class="n">doc</span><span class="p">];</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">doc</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">doc</span><span class="o">&lt;</span><span class="n">total_num_docs</span><span class="p">;</span><span class="n">doc</span><span class="o">++</span><span class="p">)</span><span class="w"> </span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">profile_score</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doc_sizes</span><span class="p">[</span><span class="n">doc</span><span class="p">];</span><span class="w"></span>
 
-  <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-  <span class="p">{</span> 
-    <span class="kt">unsigned</span> <span class="n">curr_entry</span> <span class="o">=</span> <span class="n">input_doc_words</span><span class="p">[</span><span class="n">size_offset</span><span class="o">+</span><span class="n">i</span><span class="p">];</span>
-    <span class="kt">unsigned</span> <span class="n">word_id</span> <span class="o">=</span> <span class="n">curr_entry</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>
-    <span class="kt">unsigned</span> <span class="n">hash_pu</span> <span class="o">=</span>  <span class="n">MurmurHash2</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">word_id</span> <span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-    <span class="kt">unsigned</span> <span class="n">hash_lu</span> <span class="o">=</span>  <span class="n">MurmurHash2</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">word_id</span> <span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
-    <span class="kt">bool</span> <span class="n">doc_end</span> <span class="o">=</span> <span class="p">(</span><span class="n">word_id</span><span class="o">==</span><span class="n">docTag</span><span class="p">);</span>
-    <span class="kt">unsigned</span> <span class="n">hash1</span> <span class="o">=</span> <span class="n">hash_pu</span><span class="o">&amp;</span><span class="n">hash_bloom</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">inh1</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">doc_end</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">bloom_filter</span><span class="p">[</span> <span class="n">hash1</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">hash1</span> <span class="o">&amp;</span> <span class="mh">0x1f</span><span class="p">)));</span>
-    <span class="kt">unsigned</span> <span class="n">hash2</span> <span class="o">=</span> <span class="p">(</span><span class="n">hash_pu</span><span class="o">+</span><span class="n">hash_lu</span><span class="p">)</span><span class="o">&amp;</span><span class="n">hash_bloom</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">inh2</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">doc_end</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">bloom_filter</span><span class="p">[</span> <span class="n">hash2</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">hash2</span> <span class="o">&amp;</span> <span class="mh">0x1f</span><span class="p">)));</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input_doc_words</span><span class="p">[</span><span class="n">size_offset</span><span class="o">+</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">word_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">hash_pu</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">MurmurHash2</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">word_id</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">hash_lu</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">MurmurHash2</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">word_id</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">doc_end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">word_id</span><span class="o">==</span><span class="n">docTag</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">hash1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash_pu</span><span class="o">&amp;</span><span class="n">hash_bloom</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">inh1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">doc_end</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">bloom_filter</span><span class="p">[</span><span class="w"> </span><span class="n">hash1</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">hash1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x1f</span><span class="p">)));</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">hash2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">hash_pu</span><span class="o">+</span><span class="n">hash_lu</span><span class="p">)</span><span class="o">&amp;</span><span class="n">hash_bloom</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">inh2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">doc_end</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">bloom_filter</span><span class="p">[</span><span class="w"> </span><span class="n">hash2</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">hash2</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x1f</span><span class="p">)));</span><span class="w"></span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">inh1</span> <span class="o">&amp;&amp;</span> <span class="n">inh2</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">inh_flags</span><span class="p">[</span><span class="n">size_offset</span><span class="o">+</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="n">inh_flags</span><span class="p">[</span><span class="n">size_offset</span><span class="o">+</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inh1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">inh2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">inh_flags</span><span class="p">[</span><span class="n">size_offset</span><span class="o">+</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">inh_flags</span><span class="p">[</span><span class="n">size_offset</span><span class="o">+</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 
-  <span class="n">size_offset</span><span class="o">+=</span><span class="n">size</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">  </span><span class="n">size_offset</span><span class="o">+=</span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>From this code, you can see:</p>
@@ -459,25 +444,25 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="evaluate-the-second-for-loop-in-the-runoncpu-function-profile-compute-score-functionality">
-<h3>Evaluate the Second “for” Loop in the runOnCPU Function—”Profile Compute Score” Functionality<a class="headerlink" href="#evaluate-the-second-for-loop-in-the-runoncpu-function-profile-compute-score-functionality" title="Permalink to this headline">¶</a></h3>
+<h3>Evaluate the Second “for” Loop in the runOnCPU Function—”Profile Compute Score” Functionality<a class="headerlink" href="#evaluate-the-second-for-loop-in-the-runoncpu-function-profile-compute-score-functionality" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Look at the following code that computes the document score.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">doc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">doc</span><span class="o">&lt;</span><span class="n">total_num_docs</span><span class="p">;</span><span class="n">doc</span><span class="o">++</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="n">profile_score</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">doc_sizes</span><span class="p">[</span><span class="n">doc</span><span class="p">];</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">doc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">doc</span><span class="o">&lt;</span><span class="n">total_num_docs</span><span class="p">;</span><span class="n">doc</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">profile_score</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doc_sizes</span><span class="p">[</span><span class="n">doc</span><span class="p">];</span><span class="w"></span>
 
-  <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span><span class="n">n</span><span class="o">++</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">inh_flags</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
-    <span class="p">{</span>
-      <span class="kt">unsigned</span> <span class="n">curr_entry</span> <span class="o">=</span> <span class="n">input_doc_words</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
-      <span class="kt">unsigned</span> <span class="n">frequency</span> <span class="o">=</span> <span class="n">curr_entry</span> <span class="o">&amp;</span> <span class="mh">0x00ff</span><span class="p">;</span>
-      <span class="kt">unsigned</span> <span class="n">word_id</span> <span class="o">=</span> <span class="n">curr_entry</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>
-      <span class="n">profile_score</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span><span class="o">+=</span> <span class="n">profile_weights</span><span class="p">[</span><span class="n">word_id</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">frequency</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">,</span><span class="n">n</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inh_flags</span><span class="p">[</span><span class="n">n</span><span class="p">])</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input_doc_words</span><span class="p">[</span><span class="n">n</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">frequency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00ff</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">word_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">profile_score</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span><span class="o">+=</span><span class="w"> </span><span class="n">profile_weights</span><span class="p">[</span><span class="n">word_id</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">frequency</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <ul>
@@ -493,7 +478,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="establish-the-realistic-goal-for-the-overall-application">
-<h2>Establish the Realistic Goal for the Overall Application<a class="headerlink" href="#establish-the-realistic-goal-for-the-overall-application" title="Permalink to this headline">¶</a></h2>
+<h2>Establish the Realistic Goal for the Overall Application<a class="headerlink" href="#establish-the-realistic-goal-for-the-overall-application" title="Permalink to this heading">¶</a></h2>
 <p>The Compute Score function is calculated on the CPU. Based on your calculations in the previous lab, it takes about 380 ms. You cannot accelerate the function further for a given CPU. Even if the FPGA can compute the hash function in zero time, the application will still take at the minimum of 380 ms, but running the FPGA in no time is also not realistic. You also need to account for sending the data from the CPU to the FPGA and retrieving it back to the CPU from the FPGA which will also add a delay.</p>
 <ol>
 <li><p>Set the goal for the application such that the Compute Hash function (in Hardware) should run as fast as the Compute Score on the CPU so that the hash function does not become the bottleneck.</p>
@@ -505,7 +490,7 @@ function OptanonWrapper() { }
 </li>
 </ol>
 <div class="section" id="determine-the-maximum-achievable-throughput">
-<h3>Determine the Maximum Achievable Throughput<a class="headerlink" href="#determine-the-maximum-achievable-throughput" title="Permalink to this headline">¶</a></h3>
+<h3>Determine the Maximum Achievable Throughput<a class="headerlink" href="#determine-the-maximum-achievable-throughput" title="Permalink to this heading">¶</a></h3>
 <p>In most FPGA-accelerated systems, the maximum achievable throughput is limited by the PCIe® bus. The PCIe bus performance is influenced by many different aspects, such as the motherboard, drivers, targeted shell, and transfer sizes. The Vitis core development kit provides a utility, <code class="docutils literal notranslate"><span class="pre">xbutil</span></code>.</p>
 <p>Run the <code class="docutils literal notranslate"><span class="pre">xbutil</span> <span class="pre">validate</span></code> command to measure the maximum PCIe bandwidth that can be achieved. The throughput on your design target cannot exceed this upper limit.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">xbutil</span> <span class="pre">validate</span></code> command produces the following output.</p>
@@ -522,7 +507,7 @@ function OptanonWrapper() { }
 <p>The PCIe FPGA write bandwidth is about 9 GB/sec and the FPGA read bandwidth is about 12 GB/sec. The PCIe bandwidth is 3.1 GB/sec above your established goal.</p>
 </div>
 <div class="section" id="identifying-parallelization-for-an-fpga-application">
-<h3>Identifying Parallelization for an FPGA Application<a class="headerlink" href="#identifying-parallelization-for-an-fpga-application" title="Permalink to this headline">¶</a></h3>
+<h3>Identifying Parallelization for an FPGA Application<a class="headerlink" href="#identifying-parallelization-for-an-fpga-application" title="Permalink to this heading">¶</a></h3>
 <p>In Software, the flow will look similar to the following figure.
 <img alt="missing image" src="../../../../_images/Architect1.PNG" /></p>
 <ul class="simple">
@@ -550,7 +535,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>In this lab, you profiled an application and determined which parts were best-suited for FPGA acceleration. You also created the setup to create an optimized kernel to achieve your acceleration goal. You will explore these steps in the following lab sections:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="4_implement-kernel.html"><span class="doc">Implementing the Kernel</span></a>: Create an optimized kernel with 4, 8, and 16 words to be processed in parallel and all 100,000 documents worth 1.4 GB are sent from host to kernel in single batch.</p></li>

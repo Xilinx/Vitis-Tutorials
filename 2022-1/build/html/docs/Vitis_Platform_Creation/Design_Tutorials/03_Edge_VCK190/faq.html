@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -366,9 +351,9 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="frequently-asked-questions">
-<h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="why-can-t-my-platform-boot-on-hardware">
-<h2>Why can’t my platform boot on hardware?<a class="headerlink" href="#why-can-t-my-platform-boot-on-hardware" title="Permalink to this headline">¶</a></h2>
+<h2>Why can’t my platform boot on hardware?<a class="headerlink" href="#why-can-t-my-platform-boot-on-hardware" title="Permalink to this heading">¶</a></h2>
 <p>The Versal platform has various boot stages. We need to isolate the failing stage to find more details of trouble shooting.</p>
 <ul class="simple">
 <li><p>For <em><strong>Xilinx Versal Platform Loader and Manager</strong></em> stage issues, it loads PDI file and initialize each components. Please check the Vivado settings if this step halts or report errors.</p></li>
@@ -376,19 +361,19 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="why-can-t-my-platform-boot-on-hardware-emulation">
-<h2>Why can’t my platform boot on hardware emulation?<a class="headerlink" href="#why-can-t-my-platform-boot-on-hardware-emulation" title="Permalink to this headline">¶</a></h2>
+<h2>Why can’t my platform boot on hardware emulation?<a class="headerlink" href="#why-can-t-my-platform-boot-on-hardware-emulation" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Please make sure the SELECTED_SIM_MODEL is set to TLM for CIPS, NOC and AI Engine.</p></li>
 </ul>
 </div>
 <div class="section" id="when-is-the-aie-app-and-pl-kernel-being-programmed">
-<h2>When is the AIE app and PL kernel being programmed?<a class="headerlink" href="#when-is-the-aie-app-and-pl-kernel-being-programmed" title="Permalink to this headline">¶</a></h2>
+<h2>When is the AIE app and PL kernel being programmed?<a class="headerlink" href="#when-is-the-aie-app-and-pl-kernel-being-programmed" title="Permalink to this heading">¶</a></h2>
 <p>Since the platform we create is not a DFX platform, PL kernels are implemented and packaged with platform all the times. They are included in BOOT.BIN. They are downloaded to hardware during boot time.</p>
 <p>When host application is launched, it reads the kernel metadata from xclbin file to understand the kernel topology and parameters. This step won’t configure PL bit stream.</p>
 <p>AI Engine has two run methods: configure during boot or load graph in host application.</p>
 </div>
 <div class="section" id="why-my-aie-system-application-hangs">
-<h2>Why my AIE system application hangs?<a class="headerlink" href="#why-my-aie-system-application-hangs" title="Permalink to this headline">¶</a></h2>
+<h2>Why my AIE system application hangs?<a class="headerlink" href="#why-my-aie-system-application-hangs" title="Permalink to this heading">¶</a></h2>
 <p>If you test the platform with PL+AIE system application and it hangs on the board with following error message, pressing Ctrl+C reports command stall, you are probably using the <strong>sd_card.img</strong> in <strong>package</strong> directory rather than <strong>package_no_aie_debug</strong> directory. The application in package directory is used for debugging. It will stop after loading and wait for debugger to connect to it.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>   <span class="mf">52.262013</span><span class="p">]</span> <span class="p">[</span><span class="n">drm</span><span class="p">]</span> <span class="n">Pid</span> <span class="mi">715</span> <span class="n">opened</span> <span class="n">device</span>
 <span class="p">[</span>   <span class="mf">52.265891</span><span class="p">]</span> <span class="p">[</span><span class="n">drm</span><span class="p">]</span> <span class="n">Pid</span> <span class="mi">715</span> <span class="n">closed</span> <span class="n">device</span>

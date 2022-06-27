@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,10 +338,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="fifo-sizing-for-performance-and-avoiding-deadlocks">
-<h1>FIFO Sizing for Performance and avoiding Deadlocks<a class="headerlink" href="#fifo-sizing-for-performance-and-avoiding-deadlocks" title="Permalink to this headline">¶</a></h1>
+<h1>FIFO Sizing for Performance and avoiding Deadlocks<a class="headerlink" href="#fifo-sizing-for-performance-and-avoiding-deadlocks" title="Permalink to this heading">¶</a></h1>
 <p>Due to the dynamic nature of the dataflow optimization, and the propensity of different parallel tasks to execute at different rates, it is possible that poorly sized dataflow channels can cause loss of performance and/or deadlock. There are different types of dataflow channels - some are created by the user while some are created by the tool.</p>
 <div class="section" id="types-of-channels">
-<h2>Types of channels<a class="headerlink" href="#types-of-channels" title="Permalink to this headline">¶</a></h2>
+<h2>Types of channels<a class="headerlink" href="#types-of-channels" title="Permalink to this heading">¶</a></h2>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -428,7 +413,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="deadlock-detection-and-analysis">
-<h2>Deadlock Detection and Analysis<a class="headerlink" href="#deadlock-detection-and-analysis" title="Permalink to this headline">¶</a></h2>
+<h2>Deadlock Detection and Analysis<a class="headerlink" href="#deadlock-detection-and-analysis" title="Permalink to this heading">¶</a></h2>
 <p>Insufficiently sized FIFOs (and PIPOs) in dataflow can cause deadlocks. Consider the following diagram:
 <img alt="Dataflow FIFO Channels" src="../../../../_images/dataflow_fifo_channels.png" /></p>
 <ul class="simple">
@@ -472,11 +457,11 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="second-lab">
-<h2>Second Lab<a class="headerlink" href="#second-lab" title="Permalink to this headline">¶</a></h2>
+<h2>Second Lab<a class="headerlink" href="#second-lab" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Change directory to the <code class="docutils literal notranslate"><span class="pre">03-dataflow_debug_and_optimization/reference-files/deadlock</span></code> directory, and launch the Vitis HLS tool by issuing the following command:</p></li>
 </ol>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span> <span class="o">-</span><span class="n">p</span> <span class="n">script</span><span class="p">.</span><span class="n">tcl</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">script</span><span class="p">.</span><span class="n">tcl</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The Vitis HLS GUI will launch and create the project needed to synthesize the design but the GUI will stop short of executing the commands in the <code class="docutils literal notranslate"><span class="pre">script.tcl</span></code> file.</p>
@@ -501,7 +486,7 @@ function OptanonWrapper() { }
 <li><p>Automated FIFO sizing</p></li>
 </ul>
 <div class="section" id="manual-fifo-sizing">
-<h3>Manual FIFO Sizing<a class="headerlink" href="#manual-fifo-sizing" title="Permalink to this headline">¶</a></h3>
+<h3>Manual FIFO Sizing<a class="headerlink" href="#manual-fifo-sizing" title="Permalink to this heading">¶</a></h3>
 <p>Performance losses due to insufficient FIFO or PIPO depth always cause at least one process to block on a full FIFO. Determining the right size for the FIFO depth is generally an unsolvable problem. Fortunately, RTL co-simulation also reports the maximum depth achieved for each channel so that even if you assign an arbitrarily large depth for the FIFO, you can always resize it to the max depth achieved. Additionally, increasing FIFO or PIPO depths never reduces performance, it simply consumes additional resources.</p>
 <p><img alt="Adjusting FIFO Depth 1." src="../../../../_images/adjusting_fifo_depth.png" /></p>
 <p>As discussed, you must resize <strong>data_channel1</strong> that is between producer <strong>proc_1_1_U0</strong> and consumer <strong>proc_1_2_U0</strong> processes. In order to resize the blocked FIFO, follow these steps:</p>
@@ -546,9 +531,9 @@ function OptanonWrapper() { }
 <p><img alt="Back Annotate" src="../../../../_images/remove_directive.png" /></p>
 </div>
 <div class="section" id="global-fifo-sizing">
-<h3>Global FIFO Sizing<a class="headerlink" href="#global-fifo-sizing" title="Permalink to this headline">¶</a></h3>
+<h3>Global FIFO Sizing<a class="headerlink" href="#global-fifo-sizing" title="Permalink to this heading">¶</a></h3>
 <p>In order to use the Global FIFO sizing flow, it will require you to restart from the beginning. Exit the Vitis HLS GUI and restart it by executing the following at the command line:</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span> <span class="o">-</span><span class="n">p</span> <span class="n">script</span><span class="p">.</span><span class="n">tcl</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">script</span><span class="p">.</span><span class="n">tcl</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Next follow these steps:</p>
@@ -560,7 +545,7 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span> <span class="n">The</span> <span class="n">maximum</span> <span class="n">depth</span> <span class="n">reached</span> <span class="n">by</span> <span class="n">any</span> <span class="n">of</span> <span class="n">the</span> <span class="mi">26</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="p">()</span> <span class="n">instances</span> <span class="n">in</span> <span class="n">the</span> <span class="n">design</span> <span class="n">is</span> <span class="mi">40</span> 
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">maximum</span><span class="w"> </span><span class="n">depth</span><span class="w"> </span><span class="n">reached</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="mi">26</span><span class="w"> </span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="p">()</span><span class="w"> </span><span class="n">instances</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">design</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span>
 </pre></div>
 </div>
 <ol>
@@ -581,7 +566,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="automated-fifo-sizing">
-<h3>Automated FIFO Sizing<a class="headerlink" href="#automated-fifo-sizing" title="Permalink to this headline">¶</a></h3>
+<h3>Automated FIFO Sizing<a class="headerlink" href="#automated-fifo-sizing" title="Permalink to this heading">¶</a></h3>
 <p>Of the three approaches, the automatic FIFO sizing is the easiest but:</p>
 <ul class="simple">
 <li><p>It requires repeated cosimulation runs and so may take a while to converge.</p></li>
@@ -589,7 +574,7 @@ function OptanonWrapper() { }
 </ul>
 <p>The algorithm automatically increases the depth of FIFOs that block writers until performance no longer increases. It may increase some FIFO depths beyond what is reasonable and will require user inspection.</p>
 <p>In order to use the Automated FIFO sizing flow, it will require you to restart from the beginning. Exit the Vitis HLS GUI and restart it by executing the following at the command line:</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span> <span class="o">-</span><span class="n">p</span> <span class="n">script</span><span class="p">.</span><span class="n">tcl</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">script</span><span class="p">.</span><span class="n">tcl</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Next follow these steps:</p>
@@ -608,7 +593,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="takeaways">
-<h2>Takeaways<a class="headerlink" href="#takeaways" title="Permalink to this headline">¶</a></h2>
+<h2>Takeaways<a class="headerlink" href="#takeaways" title="Permalink to this heading">¶</a></h2>
 <p>In summary, the Dataflow viewer enables the following throughput analysis tasks:</p>
 <ul class="simple">
 <li><p>The graph shows the overall topology of the DATAFLOW region and shows what type of channels (FIFO/PIPO) were inferred for communication between the tasks in the DATAFLOW region. Analyzing each channel and process can be useful to resolve issues such as deadlock or poor throughput because of bad FIFO sizing.</p></li>

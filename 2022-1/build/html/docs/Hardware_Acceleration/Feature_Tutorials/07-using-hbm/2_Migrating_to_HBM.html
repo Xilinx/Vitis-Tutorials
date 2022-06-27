@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,10 +338,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="application-overview">
-<h1>Application Overview<a class="headerlink" href="#application-overview" title="Permalink to this headline">¶</a></h1>
+<h1>Application Overview<a class="headerlink" href="#application-overview" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial uses a simple example of vector addition with DDR based implementation. Ports <code class="docutils literal notranslate"><span class="pre">in1</span></code> and <code class="docutils literal notranslate"><span class="pre">in2</span></code> are reading from DDR banks 0 and 1, respectively, and port <code class="docutils literal notranslate"><span class="pre">out</span></code> is writing the results in DDR bank 2. The tutorial will walk through the necessary changes to the existing application to migrate to HBM.</p>
 <div class="section" id="using-ddr">
-<h2>Using DDR<a class="headerlink" href="#using-ddr" title="Permalink to this headline">¶</a></h2>
+<h2>Using DDR<a class="headerlink" href="#using-ddr" title="Permalink to this heading">¶</a></h2>
 <p>The kernel code is a simple vector addition with the following function signature.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">vadd</span><span class="p">(</span>
   <span class="n">const</span> <span class="n">unsigned</span> <span class="nb">int</span> <span class="o">*</span><span class="n">in1</span><span class="p">,</span> <span class="o">//</span> <span class="n">Read</span><span class="o">-</span><span class="n">Only</span> <span class="n">Vector</span> <span class="mi">1</span>
@@ -400,7 +385,7 @@ function OptanonWrapper() { }
 <p>For more information on the kernel source code, refer to  <code class="docutils literal notranslate"><span class="pre">&lt;Project&gt;/reference_files/host.cpp</span></code></p>
 </div>
 <div class="section" id="run-application-using-ddr">
-<h2>Run application using DDR<a class="headerlink" href="#run-application-using-ddr" title="Permalink to this headline">¶</a></h2>
+<h2>Run application using DDR<a class="headerlink" href="#run-application-using-ddr" title="Permalink to this heading">¶</a></h2>
 <p>Let’s run the hardware application using DDR with a size of 600MB, sequential address pattern, and enqueue the kernel one time. The host will migrate 600MB to DDR0 (buffer_in1) and DDR1(buffer_in2) respectively. The kernel will perform the compute and store the results in DDR2, buffer_output.</p>
 <p>Here is the makefile command to run ()</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#make ddr_addSeq_build  - executed already in first module.</span>
@@ -445,11 +430,11 @@ TEST PASSED
 </div>
 </div>
 <div class="section" id="migration-to-hbm">
-<h1>Migration to HBM<a class="headerlink" href="#migration-to-hbm" title="Permalink to this headline">¶</a></h1>
+<h1>Migration to HBM<a class="headerlink" href="#migration-to-hbm" title="Permalink to this heading">¶</a></h1>
 <p>The host code and kernel code are agnostic to the memory type used, whether DDR is used or HBM, or even PLRAMs. The only change you will need to make here is to modify the connectivity file.</p>
 <p>Vitis flow makes it easy to switch memory connection using <code class="docutils literal notranslate"><span class="pre">-sp</span></code> switches, and in this case, we need to replace DDR with HBM. The capacity of each HBM bank is 256MB. Since our application requires 600MB of data to be added, we will need 3 HBM banks as contiguous memory. Vitis flow enables this by grouping the memory as shown below in the connectivity file.</p>
 <div class="section" id="run-application-using-hbm">
-<h2>Run application using HBM<a class="headerlink" href="#run-application-using-hbm" title="Permalink to this headline">¶</a></h2>
+<h2>Run application using HBM<a class="headerlink" href="#run-application-using-hbm" title="Permalink to this heading">¶</a></h2>
 <p>You will perform the following 3 experiments here.</p>
 <ol class="simple">
 <li><p>Kernel ports, in1 and in2 read from 2 HBM PCs. Host sends 512MB data to HBM.</p></li>
@@ -579,7 +564,7 @@ TEST PASSED
 </div>
 </div>
 <div class="section" id="next-step">
-<h1>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h1>
+<h1>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h1>
 <p>In the next steps, you will experiment with how to achieve the maximum bandwidth using all 32 channels as connectivity but accessing either 1 PC or a group of PCs from a single kernel port and varying the address patterns as transaction size.</p>
 <p align="center"><b>
 Start the next step: <a href="3_BW_Explorations.md"> HBM Bandwidth Results</a>

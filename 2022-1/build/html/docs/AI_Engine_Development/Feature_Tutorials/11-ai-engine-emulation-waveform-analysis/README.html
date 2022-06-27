@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="AXIS External Traffic Generator Feature Tutorial" href="../12-axis-traffic-generator/README.html" />
@@ -251,19 +255,11 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
@@ -310,17 +306,6 @@ function OptanonWrapper() { }
 </li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -402,10 +387,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="versal-emulation-waveform-analysis">
-<h1>Versal Emulation Waveform Analysis<a class="headerlink" href="#versal-emulation-waveform-analysis" title="Permalink to this headline">¶</a></h1>
+<h1>Versal Emulation Waveform Analysis<a class="headerlink" href="#versal-emulation-waveform-analysis" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>Simulating a complete system in the Vitis™ unified software platform allows for a near-hardware run of a design without the hardware, and has the added benefit of detailed waveform analysis during hardware emulation to identify issues in the programmable logic (PL), AI Engine interfaces, and memory read/writes that might be harder to debug on hardware.</p>
 <p>This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal®  ACAP. It steps through the process of building a design for hardware emulation, launching emulation with waveform viewing, and detailed information on how to read the waveforms, as well as using the Vitis analyzer to continue the analysis with generated trace output waveforms and data.</p>
 <p>It is strongly recommended to go through the <strong>Versal Integration tutorial</strong> and the <strong>Versal System Design Clocking tutorial</strong> before running this tutorial.</p>
@@ -420,7 +405,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h2>
 <p>After completing this tutorial you should be able to:</p>
 <ul class="simple">
 <li><p>Use XSIM as a live waveform viewer to view signals to and from the AI Engine including stream data and run-time parameters (RTP).</p></li>
@@ -429,27 +414,27 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="tutorial-overview">
-<h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this headline">¶</a></h2>
+<h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="design-overview">
-<h3>Design Overview<a class="headerlink" href="#design-overview" title="Permalink to this headline">¶</a></h3>
+<h3>Design Overview<a class="headerlink" href="#design-overview" title="Permalink to this heading">¶</a></h3>
 <p>The design is a simple FIR filter that takes in random noise generated by the PL kernel, <code class="docutils literal notranslate"><span class="pre">random_noise</span></code>, and gets asynchronous RTP updates to the AI Engine to update the FIR filter coefficients. To confirm the coefficients are applied, the host code reads back the coefficients.</p>
 <p><img alt="Block Diagram" src="../../../../_images/design_block_diagram.png" /></p>
 </div>
 </div>
 <div class="section" id="transaction-level-modeling">
-<h2>Transaction Level Modeling<a class="headerlink" href="#transaction-level-modeling" title="Permalink to this headline">¶</a></h2>
+<h2>Transaction Level Modeling<a class="headerlink" href="#transaction-level-modeling" title="Permalink to this heading">¶</a></h2>
 <p>Transaction level modeling (TLM) models Control Interfaces and Processing Systems (CIPS), Network on Chip (NoC), and AI Engine blocks, using SystemC, to show transaction-level communication in the waveform. It is cycle-approximate modeling. It can provide high-level information such as the address and data of the transactions to/from DDR memory or a specific PL kernel.</p>
 <p>In the following diagram, the CIPS, NoC, and AI Engine are modeled in SystemC.</p>
 <p><img alt="Model Block Diagram" src="../../../../_images/model_block_diagram.png" /></p>
 </div>
 <div class="section" id="steps">
-<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline">¶</a></h2>
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this heading">¶</a></h2>
 <p><strong>Step 1</strong>: Building the Design</p>
 <p><strong>Step 2</strong>: Launching Emulation with the XSIM Waveform GUI</p>
 <p><strong>Step 3</strong>: Using XSIM Waveform GUI and <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/QEMU">QEMU</a></p>
 <p><strong>Step 4</strong>: Using Vitis Analyzer</p>
 <div class="section" id="step-1-build-design">
-<h3>Step 1: Build Design<a class="headerlink" href="#step-1-build-design" title="Permalink to this headline">¶</a></h3>
+<h3>Step 1: Build Design<a class="headerlink" href="#step-1-build-design" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>To build the design run the following commands.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make aie
@@ -484,7 +469,7 @@ make package
 </ol>
 </div>
 <div class="section" id="step-2-launching-emulation-with-xsim-waveform-gui">
-<h3>Step 2: Launching Emulation with XSIM Waveform GUI<a class="headerlink" href="#step-2-launching-emulation-with-xsim-waveform-gui" title="Permalink to this headline">¶</a></h3>
+<h3>Step 2: Launching Emulation with XSIM Waveform GUI<a class="headerlink" href="#step-2-launching-emulation-with-xsim-waveform-gui" title="Permalink to this heading">¶</a></h3>
 <p>After the building and packaging of the design is complete you can run hardware emulation on your design. Ensure that <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code> is in the <code class="docutils literal notranslate"><span class="pre">sw</span></code> directory.</p>
 <ol>
 <li><p>To launch emulation with the XSIM Waveform GUI run the following command.</p>
@@ -526,46 +511,46 @@ XSIM started. xsim_pid=3300
 <p>In this view you can select the signals you want to watch from the <strong>Scope</strong> and <strong>Objects</strong> views.</p>
 </li>
 <li><p>In the <strong>Tcl Console</strong> at the bottom of the view, run the following command.</p>
-<div class="highlight-Tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>add_waveforms.tcl
+<div class="highlight-Tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>add_waveforms.tcl
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">add_waveforms.tcl</span></code> file removes any default signals provided by the simulation environment, and adds in all the signals you want to view. There are some signals that are important to have such as: NoC, DDR memory, PL Kernel, and CIPS signals. Your design interacts with these components, and being able to trace signal changes from CIPS to the NoC to/from DDR memory, and then to your design can prove helpful in debugging any potential issue with data transfers.
 This file contains the following.</p>
 <div class="highlight-Tcl notranslate"><div class="highlight"><pre><span></span><span class="c">## Remove all waveforms before adding new ones</span>
-<span class="nv">remove_wave</span> <span class="o">-</span>of <span class="k">[</span><span class="nv">get_wave_config</span><span class="k">]</span> <span class="k">[</span><span class="nv">get_waves</span> <span class="o">-</span>of <span class="k">[</span><span class="nv">get_wave_config</span><span class="k">]</span> <span class="o">-</span>regexp <span class="s2">&quot;.*&quot;</span><span class="k">]</span>
+<span class="nv">remove_wave</span><span class="w"> </span><span class="o">-</span>of<span class="w"> </span><span class="k">[</span><span class="nv">get_wave_config</span><span class="k">]</span><span class="w"> </span><span class="k">[</span><span class="nv">get_waves</span><span class="w"> </span><span class="o">-</span>of<span class="w"> </span><span class="k">[</span><span class="nv">get_wave_config</span><span class="k">]</span><span class="w"> </span><span class="o">-</span>regexp<span class="w"> </span><span class="s2">&quot;.*&quot;</span><span class="k">]</span>
 
 <span class="c">## Set the appropriate paths based upon the platform being used</span>
-<span class="k">set</span> scope_path <span class="s2">&quot;/xilinx_vck190_base_wrapper_sim_wrapper/xilinx_vck190_base_wrapper_i/xilinx_vck190_base_i&quot;</span>
+<span class="k">set</span><span class="w"> </span>scope_path<span class="w"> </span><span class="s2">&quot;/xilinx_vck190_base_wrapper_sim_wrapper/xilinx_vck190_base_wrapper_i/xilinx_vck190_base_i&quot;</span>
 
 <span class="c">## Create a wave group called CIPS and add all signals for the CIPS_0 to it</span>
-<span class="k">set</span> CIPS <span class="k">[</span><span class="nv">add_wave_group</span> CIPS<span class="k">]</span>
-<span class="k">set</span> cips_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>CIPS_0<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$CIPS</span> <span class="nv">$cips_intf</span>
+<span class="k">set</span><span class="w"> </span>CIPS<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>CIPS<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>cips_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>CIPS_0<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$CIPS</span><span class="w"> </span><span class="nv">$cips_intf</span>
 
 <span class="c">## Create a wave group called NOISE and add all signals of the random_noise_1 to it</span>
-<span class="k">set</span> NOISE <span class="k">[</span><span class="nv">add_wave_group</span> NOISE<span class="k">]</span>
-<span class="k">set</span> noise_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>random_noise_1<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$NOISE</span> <span class="nv">$noise_intf</span>
+<span class="k">set</span><span class="w"> </span>NOISE<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>NOISE<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>noise_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>random_noise_1<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$NOISE</span><span class="w"> </span><span class="nv">$noise_intf</span>
 
 <span class="c">## Create a wave group called S2MM and add all signals of the S2MM kernel to it</span>
-<span class="k">set</span> S2MM <span class="k">[</span><span class="nv">add_wave_group</span> S2MM<span class="k">]</span>
-<span class="k">set</span> s2mm_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>s2mm_1<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$S2MM</span> <span class="nv">$s2mm_intf</span>
+<span class="k">set</span><span class="w"> </span>S2MM<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>S2MM<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>s2mm_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>s2mm_1<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$S2MM</span><span class="w"> </span><span class="nv">$s2mm_intf</span>
 
 <span class="c">## Create a wave group called CIPS_NOC and all signals of the CIPS NoC to it</span>
-<span class="k">set</span> CIPS_NOC <span class="k">[</span><span class="nv">add_wave_group</span> CIPS_NOC<span class="k">]</span>
-<span class="k">set</span> cips_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>cips_noc<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$CIPS_NOC</span> <span class="nv">$cips_intf</span>
+<span class="k">set</span><span class="w"> </span>CIPS_NOC<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>CIPS_NOC<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>cips_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>cips_noc<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$CIPS_NOC</span><span class="w"> </span><span class="nv">$cips_intf</span>
 
 <span class="c">## Create a wave group called DDR4 and all signals to/from DDR4</span>
-<span class="k">set</span> DDR4 <span class="k">[</span><span class="nv">add_wave_group</span> DDR4<span class="k">]</span>
-<span class="k">set</span> ddr4_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>noc_ddr4<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$DDR4</span> <span class="nv">$ddr4_intf</span>
+<span class="k">set</span><span class="w"> </span>DDR4<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>DDR4<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>ddr4_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>noc_ddr4<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$DDR4</span><span class="w"> </span><span class="nv">$ddr4_intf</span>
 
 <span class="c">## Create a wave group called AIENGINE and all signals of the AI Engine block to it</span>
-<span class="k">set</span> AIENGINE <span class="k">[</span><span class="nv">add_wave_group</span> AIENGINE<span class="k">]</span>
-<span class="k">set</span> aie_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>ai_engine_0<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$AIENGINE</span> <span class="nv">$aie_intf</span>
+<span class="k">set</span><span class="w"> </span>AIENGINE<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>AIENGINE<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>aie_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>ai_engine_0<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$AIENGINE</span><span class="w"> </span><span class="nv">$aie_intf</span>
 </pre></div>
 </div>
 <p><strong>NOTE</strong>: This file can be executed automatically from the <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code> command by using the <code class="docutils literal notranslate"><span class="pre">-user-pre-sim-script</span> <span class="pre">add_waveforms.tcl</span></code>.</p>
@@ -585,7 +570,7 @@ This file contains the following.</p>
 <p><strong>NOTE</strong>: For more information about this simulator view and how to use it, see the <a class="reference external" href="https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug900-vivado-logic-simulation.pdf">UG900 Vivado Design Suite User Guide: Logic Simulation</a>.</p>
 </div>
 <div class="section" id="step-3-using-xsim-waveform-gui-and-qemu">
-<h3>Step 3: Using XSIM Waveform GUI and QEMU<a class="headerlink" href="#step-3-using-xsim-waveform-gui-and-qemu" title="Permalink to this headline">¶</a></h3>
+<h3>Step 3: Using XSIM Waveform GUI and QEMU<a class="headerlink" href="#step-3-using-xsim-waveform-gui-and-qemu" title="Permalink to this heading">¶</a></h3>
 <p>A great benefit of having a waveform viewer showing live data is so you can see how the signals interact with each other. This includes the programming of the AI Engine and device traffic to/from the DDR memory, traffic to/from the PL kernels, as well as seeing RTP data being written to the AI Engine.</p>
 <ol>
 <li><p>Click the <strong>Run All</strong> button (<img alt="run all" src="../../../../_images/run_all.png" />).</p></li>
@@ -617,15 +602,15 @@ xinit: server error
 <li><p>Pause the execution of the design when you see all signals in the view stop toggling.</p></li>
 </ol>
 <div class="section" id="exploring-the-waveforms">
-<h4>Exploring the Waveforms<a class="headerlink" href="#exploring-the-waveforms" title="Permalink to this headline">¶</a></h4>
+<h4>Exploring the Waveforms<a class="headerlink" href="#exploring-the-waveforms" title="Permalink to this heading">¶</a></h4>
 <p>One of the things the waveform viewer can help with is figuring out the order in which data is transferred from a source to a destination. In the following sections you can see how to explore the various waveforms specific to certain communication/data transfer.</p>
 <p><strong>NOTE</strong>: If AI Engine kernels contain <code class="docutils literal notranslate"><span class="pre">printf</span></code> statements, the output will show up in the XSIM Waveform GUI in the <strong>Tcl Console</strong> and will be written to the <code class="docutils literal notranslate"><span class="pre">simulate.log</span></code> file after emulation is closed.</p>
 <div class="section" id="checking-proper-boot-up-using-pmc">
-<h5>Checking Proper Boot-up Using PMC<a class="headerlink" href="#checking-proper-boot-up-using-pmc" title="Permalink to this headline">¶</a></h5>
+<h5>Checking Proper Boot-up Using PMC<a class="headerlink" href="#checking-proper-boot-up-using-pmc" title="Permalink to this heading">¶</a></h5>
 <p>The first key step to ensure emulation is operating correctly is making sure that the PS is able to program the platform management controller (PMC). This system is responsible for booting and configuring the device. Seeing the signal through the CIPS, NoC, and the AI Engine is a sign that things are operating normally.</p>
 <ol>
 <li><p>To see this signal only run the following Tcl script.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>bootup_signals.tcl
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>bootup_signals.tcl
 </pre></div>
 </div>
 <p><img alt="Bootup Signals" src="../../../../_images/bootup_signals.png" /></p>
@@ -640,14 +625,14 @@ xinit: server error
 </div>
 </div>
 <div class="section" id="transactions-generated-by-ps-qemu-to-pl-aie">
-<h4>Transactions generated by PS (QEMU) to PL/AIE<a class="headerlink" href="#transactions-generated-by-ps-qemu-to-pl-aie" title="Permalink to this headline">¶</a></h4>
+<h4>Transactions generated by PS (QEMU) to PL/AIE<a class="headerlink" href="#transactions-generated-by-ps-qemu-to-pl-aie" title="Permalink to this heading">¶</a></h4>
 <p>Users can see the logs at : sim/behav_waveform/xsim/rp_log.txt. Note that PS to DDR transactions cannot be seen here as QEMU has a backdoor direct connection into DDR buffer.</p>
 <div class="section" id="pl-to-ai-engine">
-<h5>PL to AI Engine<a class="headerlink" href="#pl-to-ai-engine" title="Permalink to this headline">¶</a></h5>
+<h5>PL to AI Engine<a class="headerlink" href="#pl-to-ai-engine" title="Permalink to this heading">¶</a></h5>
 <p>After bootup and the device is configured, the application can begin to run. In this design, there is a PL kernel called <code class="docutils literal notranslate"><span class="pre">random</span> <span class="pre">noise</span></code> that is generating data that is being fed directly into the AI Engine. The key here is looking at the <code class="docutils literal notranslate"><span class="pre">s_axi_control</span></code> interface to see when the PS sends the <code class="docutils literal notranslate"><span class="pre">run</span></code> signal.</p>
 <ol>
 <li><p>To view the specific signals controlling the PL kernel, run the following.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>pl_to_aie.tcl
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>pl_to_aie.tcl
 </pre></div>
 </div>
 </li>
@@ -669,11 +654,11 @@ xinit: server error
 </ol>
 </div>
 <div class="section" id="ai-engine-rtp-signals">
-<h5>AI Engine RTP Signals<a class="headerlink" href="#ai-engine-rtp-signals" title="Permalink to this headline">¶</a></h5>
+<h5>AI Engine RTP Signals<a class="headerlink" href="#ai-engine-rtp-signals" title="Permalink to this heading">¶</a></h5>
 <p>As mentioned in the <strong>Overview</strong> this design is sending RTP values to the AI Engine through the <code class="docutils literal notranslate"><span class="pre">graph.update()</span></code> host application. From the host code, you can see that there are two updates being done, both with an array size of 12. Because these only apply to the AI Engine kernel, these will write signals to the <code class="docutils literal notranslate"><span class="pre">AIENGINE/S00_AXI</span></code> interface. However, there are other signals that show the same values because these are the interfaces the data traverses to the destination.</p>
 <ol>
 <li><p>Run the following Tcl script to see only the AI Engine signal.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>rtp_signals.tcl
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>rtp_signals.tcl
 </pre></div>
 </div>
 </li>
@@ -693,11 +678,11 @@ xinit: server error
 </ol>
 </div>
 <div class="section" id="ai-engine-to-pl-to-ddr-memory">
-<h5>AI Engine to PL to DDR Memory<a class="headerlink" href="#ai-engine-to-pl-to-ddr-memory" title="Permalink to this headline">¶</a></h5>
+<h5>AI Engine to PL to DDR Memory<a class="headerlink" href="#ai-engine-to-pl-to-ddr-memory" title="Permalink to this heading">¶</a></h5>
 <p>After the RTP update has been sent, you can start to see output data being written to DDR memory. In this design, the AI Engine is sending data from the <code class="docutils literal notranslate"><span class="pre">S00_AXIS</span></code> interface and getting it to the <code class="docutils literal notranslate"><span class="pre">s2mm</span></code> kernel. This kernel is a FIFO written in HLS and is used to write the output to DDR memory.</p>
 <ol>
 <li><p>To view these signals run the following.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>aie_to_ddr.tcl
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>aie_to_ddr.tcl
 </pre></div>
 </div>
 <p>You should see something similar to the following.</p>
@@ -715,7 +700,7 @@ xinit: server error
 </ol>
 </div>
 <div class="section" id="limitations">
-<h5>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h5>
+<h5>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">¶</a></h5>
 <p>Note the following limitations of the waveform viewer.</p>
 <ul class="simple">
 <li><p>Signals internal to the AI Engine can be viewed using VCD. They are not integrated in the general XSIM Waveform GUI.</p></li>
@@ -726,7 +711,7 @@ xinit: server error
 </div>
 </div>
 <div class="section" id="step-4-using-vitis-analyzer">
-<h3>Step 4: Using Vitis Analyzer<a class="headerlink" href="#step-4-using-vitis-analyzer" title="Permalink to this headline">¶</a></h3>
+<h3>Step 4: Using Vitis Analyzer<a class="headerlink" href="#step-4-using-vitis-analyzer" title="Permalink to this heading">¶</a></h3>
 <p>After emulation is complete, you can look at the profiling and VCD trace data that was also generated at the same time. Note that if profiling and VCD signal features are not used, emulation runs faster.</p>
 <p>Using the XSIM Waveform GUI to view waveforms is powerful in allowing you to see the data path and flow of the design, as well as debug potential issues like a hang. However, this will only show the programmable logic side of the system. To investigate the AI Engine signals, you need to use the VCD trace in the Vitis analyzer. To use the Vitis analyzer, open up a <code class="docutils literal notranslate"><span class="pre">.aierun_summary</span></code> file.</p>
 <ol>
@@ -764,7 +749,7 @@ xinit: server error
 </div>
 </div>
 <div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial you have learned:</p>
 <ul class="simple">
 <li><p>To read the waveform viewer to follow data flow pathing for a simple Versal design.</p></li>

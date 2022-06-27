@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -353,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="acceleration-concepts">
-<h1>Acceleration Concepts<a class="headerlink" href="#acceleration-concepts" title="Permalink to this headline">¶</a></h1>
+<h1>Acceleration Concepts<a class="headerlink" href="#acceleration-concepts" title="Permalink to this heading">¶</a></h1>
 <p>Rather than diving immediately into the API, especially if you don’t have much experience with acceleration,
 let’s start with a simplified analogy to help explain what must happen in an acceleration system.</p>
 <p>Imagine that you have been given the job of giving tours of your city.  Your city may be large or small, dense
@@ -379,7 +364,7 @@ the low-latency streaming of a domain-specific architecture for unparalleled per
 metaphor and roll up our sleeves.</p>
 </div>
 <div class="section" id="identifying-acceleration">
-<h1>Identifying Acceleration<a class="headerlink" href="#identifying-acceleration" title="Permalink to this headline">¶</a></h1>
+<h1>Identifying Acceleration<a class="headerlink" href="#identifying-acceleration" title="Permalink to this heading">¶</a></h1>
 <p>In general, for acceleration systems we are trying to hit a particular performance target, whether that target
 is expressed in terms of overall end-to-end latency, frames per second, raw throughput, or something else.</p>
 <p>Generally speaking, candidates for acceleration are algorithmic processing blocks that work on large chunks of
@@ -426,7 +411,7 @@ any heterogeneous accelerator.</p>
 </ul>
 </div>
 <div class="section" id="alveo-overview">
-<h1>Alveo Overview<a class="headerlink" href="#alveo-overview" title="Permalink to this headline">¶</a></h1>
+<h1>Alveo Overview<a class="headerlink" href="#alveo-overview" title="Permalink to this heading">¶</a></h1>
 <p>Before diving into the software, let us familiarize ourselves with the capabilities of the Alveo Data Center
 accelerator card itself.  Each Alveo card combines three essential things: a powerful FPGA or ACAP for
 acceleration, high-bandwidth DDR4 memory banks, and connectivity to a host server via a high-bandwidth PCIe
@@ -469,7 +454,7 @@ analogy from earlier; we’ll explore it in more detail later).</p></li>
 </ul>
 </div>
 <div class="section" id="xilinx-runtime-xrt-and-apis">
-<h1>Xilinx Runtime (XRT) and APIs<a class="headerlink" href="#xilinx-runtime-xrt-and-apis" title="Permalink to this headline">¶</a></h1>
+<h1>Xilinx Runtime (XRT) and APIs<a class="headerlink" href="#xilinx-runtime-xrt-and-apis" title="Permalink to this heading">¶</a></h1>
 <p>Although this may seem obvious, any hardware acceleration system can be broadly discussed in two parts: the
 hardware architecture and implementation, and the software that interacts with that hardware.  For Vitis,
 regardless of any higher-level software frameworks you may be using in your application such as FFmpeg,

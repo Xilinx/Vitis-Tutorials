@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -366,11 +351,11 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="step-1-hardware-settings-for-vitis-platform">
-<h1>Step 1: Hardware Settings for Vitis Platform<a class="headerlink" href="#step-1-hardware-settings-for-vitis-platform" title="Permalink to this headline">¶</a></h1>
+<h1>Step 1: Hardware Settings for Vitis Platform<a class="headerlink" href="#step-1-hardware-settings-for-vitis-platform" title="Permalink to this heading">¶</a></h1>
 <p>The Versal Extensible Platform Example has setup the platform properties. We will review these properties in this step.</p>
 <p>For a custom board platform, you will need to setup these properties manually. They can be set in GUI or Tcl. We will discuss the setup flow in detail.</p>
 <div class="section" id="review-the-versal-extensible-platform-example-platform-setup">
-<h2>Review the Versal Extensible Platform Example Platform Setup<a class="headerlink" href="#review-the-versal-extensible-platform-example-platform-setup" title="Permalink to this headline">¶</a></h2>
+<h2>Review the Versal Extensible Platform Example Platform Setup<a class="headerlink" href="#review-the-versal-extensible-platform-example-platform-setup" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Launch Vivado and open the design we created in step 0 if you haven’t</p>
 <ul class="simple">
@@ -421,7 +406,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="review-the-simulation-model">
-<h2>Review the Simulation Model<a class="headerlink" href="#review-the-simulation-model" title="Permalink to this headline">¶</a></h2>
+<h2>Review the Simulation Model<a class="headerlink" href="#review-the-simulation-model" title="Permalink to this heading">¶</a></h2>
 <p>The Versal Extensible Platform Example has setup the simulation model of each IP properly. We will review the settings in this session. If you created the block design by yourself, please make sure these settings are applied before running emulation on your platform.</p>
 <p>Some blocks in the block design has multiple types of simulation models. Vitis emulation requires these blocks to use SystemC TLM (Transaction-level Modeling) model when available. TLM is the default simulation model for CIPS, NOC and AI Engine. We can review them to make sure they are correct before exporting the hardware.</p>
 <ol>
@@ -437,7 +422,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="export-hardware-xsa">
-<h2>Export Hardware XSA<a class="headerlink" href="#export-hardware-xsa" title="Permalink to this headline">¶</a></h2>
+<h2>Export Hardware XSA<a class="headerlink" href="#export-hardware-xsa" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Generate Block Diagram</p>
 <ul class="simple">
@@ -471,7 +456,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="export-hardware-emulation-xsa">
-<h2>Export Hardware Emulation XSA<a class="headerlink" href="#export-hardware-emulation-xsa" title="Permalink to this headline">¶</a></h2>
+<h2>Export Hardware Emulation XSA<a class="headerlink" href="#export-hardware-emulation-xsa" title="Permalink to this heading">¶</a></h2>
 <p>A change in Vitis 2021.2 requires hardware and hardware emulation provide their own XSA files during platform creation step in XSCT. One XSA with both hardware and hardware emulation content is still supported in 2021.2. It will be deprecated in the future.</p>
 <blockquote>
 <div><p>Note: We used the same hardware and hardware emulation design for this simple project. You can use different Vivado designs for hardware and hardware emulation. Platform developers should keep the two designs logically identical. Otherwise your emulation result cannot represent your hardware design.</p>
@@ -491,12 +476,12 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Now we finish the Hardware platform creation flow. Next we would go to <a class="reference internal" href="step2.html"><span class="doc">step 2</span></a> to create platform software.</p>
 </div>
 </div>
 <div class="section" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference external" href="https://www.xilinx.com/support/answers/72033.html">AR# 72033: How do I add boards and example designs to my Vivado environment?</a></p>
 <p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
 

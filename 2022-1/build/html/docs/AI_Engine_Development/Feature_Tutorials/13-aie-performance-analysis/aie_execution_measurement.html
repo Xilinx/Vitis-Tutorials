@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -355,13 +340,13 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="ai-engine-graph-execution-and-measurement">
-<h1>AI Engine Graph Execution and Measurement<a class="headerlink" href="#ai-engine-graph-execution-and-measurement" title="Permalink to this headline">¶</a></h1>
+<h1>AI Engine Graph Execution and Measurement<a class="headerlink" href="#ai-engine-graph-execution-and-measurement" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>AI Engine graph execution uses locks for memory synchronization. The stream interfaces have inherent data synchronization through backward or forward pressure.</p>
 <p>This example introduces the Trace view to show how kernels with buffers and streams are executed and synchronized. Performance measurement methods are also introduced to help you identify the performance bottlenecks in the design. An optimized version of the design is then introduced.</p>
 <p><strong>Note:</strong> The default working directory in this step is <code class="docutils literal notranslate"><span class="pre">testcase_ssfifo</span></code>, unless explicitly stated otherwise.</p>
 <div class="section" id="graph-and-kernel-code">
-<h2>Graph and Kernel Code<a class="headerlink" href="#graph-and-kernel-code" title="Permalink to this headline">¶</a></h2>
+<h2>Graph and Kernel Code<a class="headerlink" href="#graph-and-kernel-code" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> command to compile the design:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aie</span>
@@ -416,7 +401,7 @@ __attribute__ ((noinline)) void aie_dest2(input_stream&lt;int32&gt; *in, input_w
 <p>It reads from the stream input and the window buffer, and writes to the stream output.</p>
 </div>
 <div class="section" id="graph-execution-model">
-<h2>Graph Execution Model<a class="headerlink" href="#graph-execution-model" title="Permalink to this headline">¶</a></h2>
+<h2>Graph Execution Model<a class="headerlink" href="#graph-execution-model" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Use the following command to run AI Engine simulator:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
@@ -450,7 +435,7 @@ __attribute__ ((noinline)) void aie_dest2(input_stream&lt;int32&gt; *in, input_w
 </ol>
 </div>
 <div class="section" id="graph-performance-measurement">
-<h2>Graph Performance Measurement<a class="headerlink" href="#graph-performance-measurement" title="Permalink to this headline">¶</a></h2>
+<h2>Graph Performance Measurement<a class="headerlink" href="#graph-performance-measurement" title="Permalink to this heading">¶</a></h2>
 <p>There are multiple ways to measure performance:</p>
 <ol>
 <li><p>The AI Engine simulator output contains a timestamp for each piece of output data. It is possible to make performance calculations both manually and by using scripts. For example, the output of the example (<code class="docutils literal notranslate"><span class="pre">aiesimulator_output/data/output.txt</span></code>) looks like the following:</p>
@@ -520,7 +505,7 @@ __attribute__ ((noinline)) void aie_dest2(input_stream&lt;int32&gt; *in, input_w
 </ol>
 </div>
 <div class="section" id="design-optimization-considerations">
-<h2>Design Optimization Considerations<a class="headerlink" href="#design-optimization-considerations" title="Permalink to this headline">¶</a></h2>
+<h2>Design Optimization Considerations<a class="headerlink" href="#design-optimization-considerations" title="Permalink to this heading">¶</a></h2>
 <p>In this section, the reference design is in <code class="docutils literal notranslate"><span class="pre">testcase_dmafifo_opt</span></code>. From performing the above analysis, it can be seen that the bottleneck of this design contains the following issues:</p>
 <ul>
 <li><p>The interface bandwidth is not optimal. The design uses a PLIO width of 32 bits running at 250 MHz. Change it to 128 bits running at 250 MHz. The relevant code is in <code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code>:</p>
@@ -594,17 +579,17 @@ Throughput of the graph: 3742.86 MB/s
 </pre></div>
 </div>
 <div class="section" id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>This example has shown a number of different ways to do performance analysis and profiling. Some optimization skills have also been introduced. In the next section, take a look at how deadlocks might occur, and how to analyze them: see <a class="reference internal" href="aie_hang_analysis.html"><span class="doc">AI Engine Deadlock Analysis</span></a>.</p>
 </div>
 </div>
 </div>
 <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 </div>
 <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>

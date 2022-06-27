@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,10 +74,10 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="Host Code Optimization" href="../07-host-code-opt/README.html" />
-    <link rel="prev" title="Bottom-up RTL Kernel Flow with Vitis for Acceleration" href="../05-bottom_up_rtl_kernel/README.html" /> 
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
 	<body>
 		<div class="xilinx-bs3"/>
@@ -251,47 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">Bloom Filter Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">Convolution Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Choleskey Algorithm Acceleration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT Host Code Optimization</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../08-alveo_aurora_kernel/README.html">Aurora Kernel on Alveo</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -344,8 +312,6 @@ function OptanonWrapper() { }
     
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
-        
       <li>Vitis Hardware Acceleration on Cholesky Algorithm</li>
     
     
@@ -372,7 +338,7 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="vitis-hardware-acceleration-on-cholesky-algorithm">
-<h1>Vitis Hardware Acceleration on Cholesky Algorithm<a class="headerlink" href="#vitis-hardware-acceleration-on-cholesky-algorithm" title="Permalink to this headline">¶</a></h1>
+<h1>Vitis Hardware Acceleration on Cholesky Algorithm<a class="headerlink" href="#vitis-hardware-acceleration-on-cholesky-algorithm" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>This tutorial is divided in 3 sections.</p>
 <ul class="simple">
@@ -456,15 +422,6 @@ limitations under the License.</p>
 
 
 	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../07-host-code-opt/README.html" class="btn btn-neutral float-right" title="Host Code Optimization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../05-bottom_up_rtl_kernel/README.html" class="btn btn-neutral float-left" title="Bottom-up RTL Kernel Flow with Vitis for Acceleration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

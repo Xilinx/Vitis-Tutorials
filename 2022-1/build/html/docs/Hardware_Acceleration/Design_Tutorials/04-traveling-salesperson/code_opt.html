@@ -58,8 +58,10 @@ function OptanonWrapper() { }
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
@@ -72,6 +74,8 @@ function OptanonWrapper() { }
   <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 	</head>
@@ -249,32 +253,13 @@ function OptanonWrapper() { }
               
             
             
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
-</ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
             
@@ -370,7 +355,7 @@ function OptanonWrapper() { }
 <div><p><strong>NOTE:</strong><br />In this section, the <strong>traveling salesperson problem</strong> (TSP) design is implemented with 4 parallel memory lookups to fetch distances.</p>
 </div></blockquote>
 <div class="section" id="load-the-project-into-vitis-hls">
-<h1>Load the project into Vitis HLS<a class="headerlink" href="#load-the-project-into-vitis-hls" title="Permalink to this headline">¶</a></h1>
+<h1>Load the project into Vitis HLS<a class="headerlink" href="#load-the-project-into-vitis-hls" title="Permalink to this heading">¶</a></h1>
 <p>Open a terminal and navigate to the <code class="docutils literal notranslate"><span class="pre">build</span></code> directory. Launch the following command which will open the graphical interface of Vitis HLS and configure the project based on the settings included in the hls_opt.tcl Tcl file:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@server:~$ </span><span class="nb">cd</span> ./build
 <span class="gp">user@server:~$ </span>vitis_hls -p hls_opt.tcl <span class="p">&amp;</span>
@@ -380,46 +365,46 @@ function OptanonWrapper() { }
 The testbench is found below in <code class="docutils literal notranslate"><span class="pre">proj-&gt;TestBench</span></code> in the file is <code class="docutils literal notranslate"><span class="pre">tsp_TB.cpp</span></code>.</p>
 </div>
 <div class="section" id="review-code-changes">
-<h1>Review Code Changes<a class="headerlink" href="#review-code-changes" title="Permalink to this headline">¶</a></h1>
+<h1>Review Code Changes<a class="headerlink" href="#review-code-changes" title="Permalink to this heading">¶</a></h1>
 <p>There are now 4 arrays for the distances:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span> <span class="n">distances_0</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span>
-<span class="kt">uint16_t</span> <span class="n">distances_1</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span>
-<span class="kt">uint16_t</span> <span class="n">distances_2</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span>
-<span class="kt">uint16_t</span> <span class="n">distances_3</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_0</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_1</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_2</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_3</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The incoming distance data points are still read one at a time, but they are copied into all 4 memories:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">loop_distances</span><span class="p">:</span> <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="kt">uint16_t</span> <span class="n">val</span><span class="p">;</span>
-    <span class="n">streamDistances</span> <span class="o">&gt;&gt;</span> <span class="n">val</span><span class="p">;</span>
-    <span class="n">distances_0</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-    <span class="n">distances_1</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-    <span class="n">distances_2</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-    <span class="n">distances_3</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-  <span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">loop_distances</span><span class="p">:</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">streamDistances</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_0</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_1</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_2</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_3</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">loop_compute</span></code> main loop continuously increments by 4 and distributes the 4 values to copies of the <code class="docutils literal notranslate"><span class="pre">compute</span></code> function.  Each evaluates a route:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">loop_compute</span><span class="p">:</span> <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span> <span class="n">i_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i_</span> <span class="o">&lt;</span> <span class="n">factorialN</span><span class="p">;</span> <span class="n">i_</span> <span class="o">+=</span> <span class="mi">4</span> <span class="p">)</span>
-  <span class="p">{</span>
-    <span class="cp">#pragma HLS pipeline II=1</span>
-    <span class="n">candidate0</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate0</span><span class="p">,</span> <span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">0</span><span class="p">,</span> <span class="n">distances_0</span><span class="p">));</span>
-    <span class="n">candidate1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate1</span><span class="p">,</span> <span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">distances_1</span><span class="p">));</span>
-    <span class="n">candidate2</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate2</span><span class="p">,</span> <span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="n">distances_2</span><span class="p">));</span>
-    <span class="n">candidate3</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate3</span><span class="p">,</span> <span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">3</span><span class="p">,</span> <span class="n">distances_3</span><span class="p">));</span>
-  <span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">loop_compute</span><span class="p">:</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">factorialN</span><span class="p">;</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#pragma HLS pipeline II=1</span>
+<span class="w">    </span><span class="n">candidate0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate0</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">distances_0</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">candidate1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate1</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">distances_1</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">candidate2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate2</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">distances_2</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">candidate3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate3</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">distances_3</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Final determination of the shortest distance:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// Determine shortest between the 4 candidates</span>
-    <span class="n">shortestDistance</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">({</span> <span class="n">candidate0</span><span class="p">,</span> <span class="n">candidate1</span><span class="p">,</span>
-                                  <span class="n">candidate2</span><span class="p">,</span> <span class="n">candidate3</span> <span class="p">});</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1">// Determine shortest between the 4 candidates</span>
+<span class="w">    </span><span class="n">shortestDistance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">({</span><span class="w"> </span><span class="n">candidate0</span><span class="p">,</span><span class="w"> </span><span class="n">candidate1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="n">candidate2</span><span class="p">,</span><span class="w"> </span><span class="n">candidate3</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="running-c-simulation-and-c-synthesis">
-<h1>Running C-simulation and C-synthesis<a class="headerlink" href="#running-c-simulation-and-c-synthesis" title="Permalink to this headline">¶</a></h1>
+<h1>Running C-simulation and C-synthesis<a class="headerlink" href="#running-c-simulation-and-c-synthesis" title="Permalink to this heading">¶</a></h1>
 <p>First you will run C simulation to confirm the optimized design works as expected. Edit the <code class="docutils literal notranslate"><span class="pre">tsp.h</span></code> file to make sure the number of cities is small (<code class="docutils literal notranslate"><span class="pre">N=5</span></code>) for faster simulation run times, and <strong>Run C Simulation</strong>.</p>
 <p>After reviewing the results of simulation, increase the number of cities again (<code class="docutils literal notranslate"><span class="pre">N=13</span></code>) in the <code class="docutils literal notranslate"><span class="pre">tsp.h</span></code> file for C synthesis so that you can compare results with the original design. <strong>Run C Synthesis</strong>.</p>
 <p>The following figure shows the C synthesis report in the Vitis HLS GUI (the <strong>Performance and Resource Estimates</strong> section):<br /><img src="./images/synthesis2.png" alt="synthesis" title="synthesis" width="900" height="200" /></p>
