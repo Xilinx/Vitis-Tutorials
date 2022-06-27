@@ -12,9 +12,8 @@
 
 ## Tutorial Overview
 
-In the Vitis application acceleration development flow, as explained in [Kernel Properties](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/PL-Kernel-Properties), RTL kernels can be either XRT-managed kernels adhering to XRT requirements of the `ap_ctrl_chain` or `ap_ctrl_hs` control protocols for execution control, or can be user-managed kernels that do not meet this standard but rather implement any number of user-defined control schemes specified in the RTL design. You can use an existing execution mechanism in an existing RTL design, or design your RTL to support the XRT control scheme. 
-
-In this tutorial you will examine the process of packaging an existing RTL design with a user-managed control scheme into an RTL kernel, and review the host application requirements to integrate that kernel into your accelerated application. 
+In this tutorial you will examine the process of packaging an existing RTL design into an RTL kernel for use with the Vitis application acceleration development flow. 
+As explained in [RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels) the RTL design typically contains a user-managed control scheme that determines how the design starts and ends operation, handles data inputs and outputs, and interacts with surrounding functions. This control scheme can include control registers that can be written to, or read from to define or determine the state of the kernel. 
 
 This tutorial includes an RTL design containing a simple vector accumulation example that performs a `B[i] = A[i]+B[i]` operation, which you will build into a Xilinx compiled object file (.xo) for use in the Vitis flow. It also contains a host application using the [XRT native API](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html) which interacts with the kernel. The host application:
 
@@ -42,33 +41,17 @@ The labs in this tutorial use:
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`
-2. Navigate to `Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files` directory.
-
-## Requirements for Using an RTL Design as an RTL Kernel
-
-To use an RTL kernel within the Vitis IDE, it must meet both the Vitis core development kit execution model and the hardware interface requirements as described in [RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels) in the Vitis Application Acceleration Development Flow documentation (UG1393).
-
-RTL kernels can use the same software interface and execution model as C/C++ software functions. They are seen by the host application as functions with a void return value, scalar and pointer arguments.
-
-- It must start when called.
-- It is responsible for processing data to provide the necessary results.
-- It must send a notification when processing is complete.
-
-For instance, the function signature for the RTL kernel in this tutorial:
-
-```
-void vadd_A_B(int *a, int *b, int scalar)
-```
+2. Navigate to `./Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files` directory.
 
 ### Vector-Accumulate RTL IP
 
-For this tutorial, the Vector-Accumulate RTL IP performing `B[i]=A[i]+B[i]` meets all the requirements described above and has the following characteristics:
+An RTL kernel in the Vitis design flow must implement an execution model and satisfy the hardware interface requirements as described in [RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels) in the Vitis Application Acceleration Development Flow documentation (UG1393). The Vector-Accumulate RTL IP used in this tutorial performs the operation `B[i]=A[i]+B[i]` and has the following characteristics:
 
 - An AXI4-Lite slave interface (`s_axilite`) used to access programmable registers (control registers, scalar arguments, and pointer base addresses).
   - Offset `0x00` - Control Register: Controls and provides kernel status
     - Bit `0`: **start signal**: Asserted by the host application when kernel can start processing data. Must be cleared when the **done** signal is asserted.
     - Bit `1`: **done signal**: Asserted by the kernel when it has completed operation. Cleared on read.
-    - Bit `2`: **idle signal**: Asserted by this signal when it is not processing any data. The transition from Low to High should occur synchronously with the assertion of the **done** signal.
+    - Bit `2`: **idle signal**: Asserted by the kernel when it is not processing any data. The transition from Low to High should occur synchronously with the assertion of the **done** signal.
   - Offset `0x10` Register for the scalar `size` argument
   - Offset `0x18` Register specifying the base address for pointer argument `A`
   - Offset `0x24` Register specifying the base address for pointer argument `B`
@@ -77,6 +60,12 @@ For this tutorial, the Vector-Accumulate RTL IP performing `B[i]=A[i]+B[i]` meet
     - The RTL designer is responsible for partitioning global memory spaces to specify the kernel arguments. The base address (memory offset) for each partition must be set by a control register programmable through the `s_axilite` interface as described above.
 
 >**TIP:** If your original RTL design uses a different execution model or hardware interfaces, you must customize your host application to address the kernel as required or add logic to the kernel to ensure that the design behaves in an expected manner.
+
+The kernel must also have a function signature to be called from the host application. The function signature for the RTL kernel in this tutorial is as follows:
+
+```
+void vadd_A_B(int *a, int *b, int scalar)
+```
 
 ## Next Steps
 
