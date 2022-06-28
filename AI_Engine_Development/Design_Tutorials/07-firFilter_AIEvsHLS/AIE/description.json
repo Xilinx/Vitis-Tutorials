@@ -9,11 +9,11 @@
     "testinfo": {
         "tasks": {
            "build": {
-               "pre_exec": "./env_setup.sh"
+               "pre_exec": "./env_setup_versal.sh"
            },
            "board": {
-               "pre_exec": "./env_setup.sh",
-               "post_exec": "./copy_script.sh"
+               "pre_exec": "./env_setup_versal.sh",
+               "post_exec": "./addon/copy_perf_files.sh"
            }
         },
         "user": {
