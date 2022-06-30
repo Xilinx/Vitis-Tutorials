@@ -329,7 +329,7 @@ To use these scripts, please download Versal common image from [Xilinx website d
    ```bash
    # cd to the ref_files directory, e.g.
    cd ref_files
-   make all COMMON_IMAGE_PATH=<path/to/common_image/>
+   make all COMMON_IMAGE_VERSAL=<path/to/common_image/>
    ```
 
 2. To clean the generated files, please run

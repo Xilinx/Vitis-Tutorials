@@ -6,6 +6,14 @@
     "platform_allowlist": ["vck190"],
     "platform_blocklist": [],
     "testinfo": {
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+         },
         "jobs": [
             {
                 "max_memory_MB": 32768,
