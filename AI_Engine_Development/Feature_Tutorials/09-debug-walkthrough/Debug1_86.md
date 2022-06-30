@@ -49,7 +49,7 @@ To improve debug visibility, enable `-O0` in aiengine domain project build confi
 ### Step 1.4 Run with x86 Emulator
 <img src="images/86_run.png" width="450">
 
-Note: Both step 1.2 and 1.3 are right click on aiengine domain project to select x86simulator. Ignore `Launch SW Emulator` from Vitis IDE GUI.
+**Note**: Both step 1.2 and 1.3 are right click on aiengine domain project to select x86simulator. Ignore `Launch SW Emulator` from Vitis™ IDE GUI.
 
 ### Step 1.5 Console Displays Emulation Result
 <img src="images/86_run1.png" width="450">
@@ -80,7 +80,7 @@ Expect to observe the output of `printf()` statement displayed at Vitis IDE cons
 ## 3. Printf() with Vector Data Types
 `x86simulator` supports output array data value via printf().
 
-### Step 3.1 Add printf() in source code
+### Step 3.1 Add `printf()` in source code
 Add these three lines at line 52 of `bf8x8_fst_api.cpp` and recompile the AI Engine domain project.
 ```bash
 int16_t* print_ptr = (int16_t*)&bufa0;
@@ -95,7 +95,7 @@ Array values are displayed at console.
 
 <img src="images/86_printf_array.png" width="600">
 
-Note: With the AI Engine simulator the --profile option is required in order to observe `printf()` outputs but with `x86simulator` no additional options are needed to enable `printf()` calls. This is one of the benefits of the `x86simulator`.
+**Note**: With the AI Engine simulator the --profile option is required in order to observe `printf()` outputs but with `x86simulator` no additional options are needed to enable `printf()` calls. This is one of the benefits of the `x86simulator`.
 
 ### Step 3.4 Reverse Added printf() Statements
 Remove added three lines from line 52 of `bf8x8_fst_api.cpp` for other features.
@@ -111,7 +111,7 @@ All Vitis IDE debug functionalities are supported, e.g. step in, step over, step
 <img src="images/86_IDE_debug1.png" width="900">
 
 ### Step 4.3 Inspect Array Values
-Double click on `Variables` view to enlarge view area. Double click again to make it back to original size.
+Double click the `Variables` view to enlarge view area. Double click again to restore it back to the original size.
 To inspect vector values, click on arrow of `bufa0`, arrow of `data`, arrow of `val`, arrow of `data` (where array<v1cint16, 8> is shown, arrow of `__elems_` (where shows `__elems_[0]` to `__elems_[7]`, arrow of `__elems_[0]`, arrow of `val`, arrow of `data`, arrow of `__elems_`, arrow of `__elems_[0]`, arrow of `val`, arrow of `VBitDataBase<16, true, false>`, arrow of `data`, (x)=0. It shows unsigned value of 61038 that translates to signed decimal value of -4498.
 Follow above steps and click on `__elems_[1]` instead of `__elems_[0]`, the value is 5022.
 <img src="images/86_IDE_debug2.png" width="900">
@@ -200,7 +200,7 @@ Update the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim
 <img src="images/86_dump_conf.png" width="600">
 
 #### Step 6.1.2 Run x86simulator
-Select aiengine domain project, right click on `Run As` and select `Launch SW Emulator`. x86simulator will be launched and run the aiengine domain project. After x86simulator completes, generated files are at `${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump` directory. Filename are in the format of  `graph-name_sub-graph-class-name_sub-graph-instance-name_kernel-index_[in]/[out]_index.txt` for graph input/output files.
+Select aiengine domain project, right click on **Run As** and select **Launch SW Emulator**. x86simulator will be launched and run the aiengine domain project. After x86simulator completes, generated files are at `${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump` directory. Filename are in the format of  `graph-name_sub-graph-class-name_sub-graph-instance-name_kernel-index_[in]/[out]_index.txt` for graph input/output files.
 
 <img src="images/86_sim_dump.png" width="600">
 
@@ -212,7 +212,7 @@ Update the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim
 
 #### Step 6.2.2 Setup Deadlock Condition
 Empty `${PROJECT_PATH}/data/dlbf_din0.txt` file.
-Note: Make sure to backup the file content for other feature runs.
+**Note**: Make sure to backup the file content for other feature runs.
 
 #### Step 6.2.3 Run x86simulator
 Select aiengine domain project, right click on `Run As` and select `Launch SW Emulator`. x86simulator will be launched and run the aiengine domain project. x86simulator detects error and output messages on console. File `${PROJECT_PATH}/Emulation-SW/x86simulator_output/simulator_state_post_analysis.dot` is generated.
@@ -230,7 +230,7 @@ Use `dot` application converts .dot file to .png file, `dot -Tpng simulator_stat
 #### Step 6.3.1 Enable Trace Feature
 Update the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options`, change `trace=no` to `trace=yes` and `trace-print=no` to `trace-print=yes` Or add `--trace` and `--trace-print` to run configuration and click on `Apply` then `Close`.
 
-Note:
+**Note**:
 `--trace` option to get a full trace report at the end of the simulation.
 `--trace-print` option to get output displayed on the console while the simulation is running.
 
@@ -248,15 +248,15 @@ Select aiengine domain project, right click on `Run As` and select `Launch SW Em
 6. End of a lock stall, i.e., the point in time where an attempt to acquire a window port that initially blocked, finally returns.
 
 #### Differences between `trace` and `trace-print`
-Besides output to file versus output to console, The columns of the output of --trace-print contain the following information.
-1. Timestamp: It is the same as in x86sim_event_trace.data.txt.
-2. Internal name of the kernel (x86sim_event_trace.data.txt uses the user name).
+Besides output to file versus output to console, The columns of the output of `--trace-print` contain the following information.
+1. Timestamp: It is the same as in `x86sim_event_trace.data.txt`.
+2. Internal name of the kernel (`x86sim_event_trace.data.txt` uses the user name).
 3. Event type.
 4. Numeric value whose meaning depends on the event type: It encodes the port that you are waiting on for a lock or stream stall. It encodes the iteration number of a start of an iteration event.
 
 ### x86simulator Memory Access Violation and Valgrind
 Memory access violations occur when a kernel is reading or writing out of bounds of an object or reading uninitialized memory. This can manifest itself in multiple ways like a simulator crash or hang. It can also cause simulator results to be non-repeatable. The `x86simulator --valgrind` option will find memory access violations in kernel source code.
-Note: Valgrind needs to be installed for this feature to work. Xilinx recommends using Valgrind version 3.16.1.
+**Note**: Valgrind needs to be installed for this feature to work. Xilinx recommends using Valgrind version 3.16.1.
 This option allows detection of memory access violations in kernel source code using 'x86simulator' with Valgrind. The following kinds of access violations can be detected.
 1. Out-of-bounds write
 2. Out-of-bounds read
@@ -279,7 +279,7 @@ Update the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim
 An example of no invalid memory access message from `valgrind`,
 ```bash
 ==150659== Memcheck, a memory error detector
-==150659== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==150659== Copyright (C) 2002-2015, and GNU GPLd, by Julian Seward et al.
 ==150659== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
 ==150659== Command: ./Work/pthread/sim.out
 ==150659== 
@@ -306,7 +306,7 @@ printf("%s, %d\n", __FUNCTION__, demo);
 #### Step 6.4.5 Expected Errors from `valgrind`
 ```bash 
 ==32176== Memcheck, a memory error detector
-==32176== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==32176== Copyright (C) 2002-2015, and GNU GPLd, by Julian Seward et al.
 ==32176== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
 ==32176== Command: ./Work/pthread/sim.out
 ==32176== 
@@ -365,7 +365,7 @@ bf8x8_fst_api, 0
 ==32176== ERROR SUMMARY: 72 errors from 6 contexts (suppressed: 0 from 0)
 ```
 
-Note:
+**Note**:
 1. The error message is generated by `valgrind` application instead of `x86simulator`.
 2. Running the x86simulator with the Valgrind option will increase the simulation run time.
 
@@ -382,7 +382,7 @@ All above `x86simulator` features are supported in command line projects. Since 
 Clone the project source from git repository and unzip the downloaded zip file.
 
 #### Step 7.1.2 Prepare Makefiles and source code
-Use this tutorial's Makefile.sw_emu that configures right target to build.
+Use this tutorial's `Makefile.sw_emu` that configures right target to build.
 ```bash
 cd ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough
 cp Makefile.sw_emu Makefile
@@ -500,4 +500,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>

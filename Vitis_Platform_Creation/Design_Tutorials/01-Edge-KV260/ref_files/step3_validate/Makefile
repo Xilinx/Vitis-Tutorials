@@ -42,7 +42,7 @@ vadd_hw: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin
 # vadd_hw generates the files for running on hardware. User needs to pick the files required by KV260, rename thr file and transfer them to the board
 # Do not use the generated sd_card.img
 $(PL_EXAMPLE_PATH)/simple_vadd:   Vitis_Accel_Examples $(PLATFORM)  
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=zynquplus HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 
 $(PL_EXAMPLE_PATH)/shell.json:
@@ -51,9 +51,9 @@ $(PL_EXAMPLE_PATH)/shell.json:
 vadd_hw_package: $(PL_EXAMPLE_PATH)/simple_vadd  $(PL_EXAMPLE_PATH)/shell.json
 	@echo "INFO: Packaging Completed"
 	mkdir -p vadd
-	cp ../step2_pfm/dt_output/pl.dtbo vadd/
+	cp ../step2_pfm/dtbo_output/pl.dtbo vadd/
 	cp $(PL_EXAMPLE_PATH)/shell.json vadd/
-	cp $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin vadd/krnl_vadd.bin
+	cp $(PL_EXAMPLE_PATH)/build_dir.hw.$(PLATFORM_NAME)/krnl_vadd.xclbin vadd/krnl_vadd.bin
 	cp $(PL_EXAMPLE_PATH)/simple_vadd vadd/
 	@echo "Please  copy vadd to /lib/firmware/xilinx/ on target board"
 	@echo "then use xmutil to load hardware."

@@ -21,15 +21,9 @@ limitations under the License.
 #include <chrono>
 #include <ctime>
 
-#if !defined(__AIESIM__) && !defined(__X86SIM__)
 #include "adf/adf_api/XRTConfig.h"
-#include "xrt/experimental/xrt_aie.h"
-#include "xrt/experimental/xrt_device.h"
-#include "xrt/experimental/xrt_kernel.h"
-#include "xrt/experimental/xrt_bo.h"
+#include "xrt/xrt_kernel.h"
 #include "xrt/experimental/xrt_error.h"
-#endif
-#include "xrt/xrt.h"
 #include "xrt/xrt_error_code.h"
 
 #define CIN_LEN 25600
@@ -101,7 +95,7 @@ load_xclbin(xrtDeviceHandle device, const std::string& fnm)
 int main(int argc, char* argv[]) {
 
     //TARGET_DEVICE macro needs to be passed from gcc command line
-    if(argc != 2) {
+    if(argc < 2) {
         std::cout << "Usage: " << argv[0] <<" <xclbin>" << std::endl;
         return EXIT_FAILURE;
     }
@@ -111,9 +105,13 @@ int main(int argc, char* argv[]) {
     // Creates a vector of DATA_SIZE elements with an initial value of 10 and 32
     // using customized allocator for getting buffer alignment to 4k boundary
 
-#if !defined(__AIESIM__)
+#if !defined(__AIESIM__) && !defined(__X86SIM__)
     // Load xclbin 
     std::cout << "Loading: '" << xclbinFilename << "'\n";
+    auto device = xrt::device(0); //device index=0
+//    auto dhdl = xrtDeviceOpenFromXcl(device); 
+//    auto uuid = device.load_xclbin(xclbinFilename);
+
     auto dhdl = xrtDeviceOpen(0);
     auto xclbin = load_xclbin(dhdl, xclbinFilename);
     auto top = reinterpret_cast<const axlf*>(xclbin.data());
@@ -258,44 +256,25 @@ int main(int argc, char* argv[]) {
     std::cout<<"Starting graph run"<<std::endl;
     Timer timer;
 
-#if 0
     dut.run(100);
-    dut.wait();
-#endif
 
-    xrtGraphHandle ghdl;
-    ghdl = xrtGraphOpen(dhdl, top->m_header.uuid, "dut");
-    rval = xrtGraphRun(ghdl, 100);
-    if (rval != 0)
-    {
-        std::cout << "RUN error = 0x%x\n" << rval << std::endl;
+    try {
+        dut.wait();
     }
+    catch (const std::system_error& ex) {
+        if (ex.code().value() == ETIME) {
+            xrt::error error(device, XRT_ERROR_CLASS_AIE);
 
-    rval = xrtGraphWait(ghdl, 0);
-    if (rval != 0)
-    {
-        std::cout << "WAIT error = 0x%x\n" << rval << std::endl;
+            auto errCode = error.get_error_code();
+            auto timestamp = error.get_timestamp();
+            auto err_str = error.to_string();
 
-        if (rval == -ETIME)
-        {
-            /* wait for Graph done timeout */
-            xrtErrorCode errCode;
-            uint64_t timestamp;
-
-            rval = xrtErrorGetLast(dhdl, XRT_ERROR_CLASS_AIE, &errCode, &timestamp);
-            if (rval == 0)
-            {
-                size_t len;
-                std::vector<char> buf(256);
-                if (xrtErrorGetString(dhdl, errCode, buf.data(), buf.size(), &len))
-                {
-                    std::cout << "xrtErrorGetString() error!" << std::endl;
-                } else {
-                    std::cout << buf.data() << std::endl;
-                }
-            }
-        }
-    }
+            /* code to deal with this specific error */
+            std::cout << timestamp << " error code:" << errCode << " Error:" << err_str << std::endl;
+         } else {
+         /* Something else */
+         }
+     }
 
     double timer_stop=timer.stop();
     double throughput=OUT_LEN*2/timer_stop*1000000/1024/1024;
@@ -322,12 +301,9 @@ int main(int argc, char* argv[]) {
             std::cout << buf.data() << std::endl;
         }
     }
-
     std::cout<<"End of A fake error reported."<<std::endl;
 
-#if 0
     dut.end();
-#endif
 
     for (int i = 0; i < 8; i++)
     {
@@ -401,14 +377,6 @@ int main(int argc, char* argv[]) {
     xrtDeviceClose(dhdl);
 
     std::cout << "TEST " << (match ? "FAILED" : "PASSED") << std::endl; 
-
-#if 0
-    rval = xrtGraphEnd(ghdl, 0);
-    if (rval != 0)
-    {
-        std::cout << "END error = 0x%x\n" << rval << std::endl;
-    }
-#endif
 
     return (match ? EXIT_FAILURE :  EXIT_SUCCESS);
 }

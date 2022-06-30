@@ -1,4 +1,4 @@
-// © Copyright 2022 Xilinx, Inc.
+// © Copyright 2021–2022 Xilinx, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,11 +28,25 @@
 
 /////////////////////////////////////////////////
 // Due to 128bit Data Transfer all dimensions,
-// to be given as by 4.. 
+// to be given as by 4 for cint16
+// since 4 samples of cint16 are passed 
 /////////////////////////////////////////////////
-#define MAT_SIZE_128b (MAT_SIZE / 4)
-#define MAT_ROWS_128b (MAT_ROWS / 4)
-#define MAT_COLS_128b (MAT_COLS / 4)
+#if FFT_2D_DT == 0
+   #define MAT_SIZE_128b (MAT_SIZE / 4)
+   #define MAT_ROWS_128b (MAT_ROWS / 4)
+   #define MAT_COLS_128b (MAT_COLS / 4)
+/////////////////////////////////////////////////
+// Due to 128bit Data Transfer all dimensions,
+// to be given as by 2 for cfloat
+// since 2 samples of cfloat are passed 
+/////////////////////////////////////////////////
+
+#elif FFT_2D_DT == 1
+   #define MAT_SIZE_128b (MAT_SIZE / 2)
+   #define MAT_ROWS_128b (MAT_ROWS / 2)
+   #define MAT_COLS_128b (MAT_COLS / 2)
+
+#endif
 
 using namespace std;
 

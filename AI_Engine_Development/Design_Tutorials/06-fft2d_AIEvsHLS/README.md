@@ -253,17 +253,17 @@ The following table shows a comparison between a 1024 x 2048 point 10-instance F
 
 | Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 6004.71                            | 3480.89                 | 20               | 76%             | 396 /<br/>20%                        | 56               | 11720 /<br/> 4156         | 0     | 0    | 4461                      | 1345.89                                |
-| HLS           | 4968.15                            | 4200.20                 | NA               | NA              | NA                                   | NA               | 98665 /<br/> 61125        | 155   | 180  | 6127                      | 810.86                                 |
+| AIE           | 7528.710                           | 2873.628                | 20               | 78%             | 404 /<br/>20%                        | 46               | 11720 /<br/> 4157         | 0     | 0    | 5572                      | 1351.17                                |
+| HLS           | 4979.797                           | 4040.900                | NA               | NA              | NA                                   | NA               | 98899 /<br/> 61591        | 250   | 180  | 5800                      | 858.59                                 |
 
 These observations give a clear indication of where the AI Engines in Versal can offer improvements:
 
-* An almost 20% improvement on the aggregate throughput.
-* Reduced latency by ~20%.
-* Performance increase of ~2x to 1183 MSPS/Watt.
-* Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~108K FFs, ~70K LUTs and 335 BRAMs are reduced to just 56 AI Engines, 11k FFs, and 4K LUTs.
+* An almost 51% improvement on the aggregate throughput.
+* Reduced latency by ~29%.
+* Performance increase of ~2x to 1351 MSPS/Watt.
+* Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~98K FFs, ~61K LUTs and 250 BRAMs are reduced to just 46 AI Engines, 11k FFs, and 4K LUTs.
 
-It is important to understand that those 56 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 36 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 36 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/maproutemethod.html#mcq1622542393364) for details on the AI Engine mapper/router).
+It is important to understand that those 46 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 26 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 26 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router).
 
 Additionally, further increasing the number of instances in the AI Engine design is easier compared to the HLS design, which will run into timing closure issues, especially for higher FFT point size designs.
 
@@ -281,11 +281,11 @@ For detailed instructions on taking measurements of the parameters, refer to the
 
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
 
-### [Vitis DSP Libraries](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
+### Vitis DSP Libraries
 
 * [Vitis DSP Libraries Comprehensive Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/) 
 
-### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
+### Xilinx Runtime (XRT) Architecture
 
 Below are links to the XRT information used by this tutorial: 
 
@@ -295,13 +295,13 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_1/ug1451-xrt-release-notes.pdf)
+* [XRT Release Notes](https://docs.xilinx.com/r/en-US/ug1451-xrt-release-notes)
 
-### [Vitis Unified Software Development Platform 2022.1 Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/index.html)
+### Vitis Unified Software Development Platform 2022.1 Documentation
 
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
@@ -315,11 +315,6 @@ The timestamps represented in the hardware execution generated trace, have known
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# Revision History
-* Apr 2022 - Updated for 2022.1
-* Oct 2022 - Updated for 2022.1
-* July 2022 - Updated for 2022.1
-* Dec 2020 - Initial Release
 
 # License
 
@@ -332,4 +327,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD073 | &copy; Copyright 2022 Xilinx, Inc.</p>
+<p align="center"> XD073 | &copy; Copyright 2021–2022 Xilinx, Inc.</p>

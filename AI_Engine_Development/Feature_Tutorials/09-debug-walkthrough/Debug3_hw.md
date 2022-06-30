@@ -39,7 +39,7 @@ Create debug target connection from Vitis™ IDE.
 
 ### Step 2. Debug Project in Vitis IDE
 #### Step 2.1. Target Preparation
-* Make sure that sd_card is burn with expected binaries.
+* Make sure that sd_card is burned with expected binaries.
 * Plug-in sd_card into SD card slot and power up the board.
 * After board boots up, click on **Debug** to launch debugger.
 
@@ -48,20 +48,28 @@ Create debug target connection from Vitis™ IDE.
 **Note:** The `sd_card.img` at `Hardware/package/sd_card.img` is the file for regular use. `sd_card.img` at `Hardware/package_aie_debug` is for debug run on board.
 
 #### Step 2.2. Launch debugger
-Launch PS application with xclbin (or PS application expected variables), so it is ready to be debugged.
+Launch PS application with `xclbin` (or PS application expected variables), so it is ready to be debugged.
+
 <img src="images/hw_ta_run2.png" width="450">
 
 After PS application is running and waiting to be debugged, launch Vitis IDE debugger.
+
 <img src="images/hw_ta_run.png">
 
-Debugger launched, expected to see AI Engine cores, source code window that allows debug (step-into, step-through, step-return), variables view, breakpoint view, register view. Application is ready to be debugged.
+The Debugger launches, where you can expect to see AI Engine cores, and 
+- the source code window that allows debug (step-into, step-through, step-return)
+- the variables view 
+- the breakpoint view
+- the register view 
+The application is ready to be debugged.
+
 <img src="images/hw_ta_run1.png">
 
 From Vitis IDE, the application is being debugged during run time.
 
 <img src="images/hw_ta_run3.png" width="450">
 
-From Vitis IDE, click on **resume** for all AI Engine cores, and final “TEST PASSED” is displayed.
+From Vitis IDE, click **resume** for all AI Engine cores, and final “TEST PASSED” is displayed.
 <img src="images/hw_ta_run4.png" width="450">
 
 <!--
@@ -120,7 +128,7 @@ vitis -debug -h
 1. There are maximum four breakpoints available for each tile. One of these four breakpoints is assigned to first line of main() by default and can be cleared and then assigned to other lines during debug.
 2. Due to compiler, `-O0` option is not supported, non-sequential execution when stepping through source code is expected.
 3. If an individual kernel is highlighted, select resume button to continue execution until next breakpoint or blocked to wait for I/O. If the beamformer design is highlighted, select resume button to resume all kernels execution until meet each kernel's breakpoint or blocked  waiting for each kernel's I/O operation.
-4. Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in variables view for those optimized variables' values. Limitations from <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> applies.
+4. Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in the variables view for those optimized variables' values. Limitations from <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> applies.
 5. `printf()` is not supported in hardware debug.
 
 # Support
@@ -142,4 +150,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p>

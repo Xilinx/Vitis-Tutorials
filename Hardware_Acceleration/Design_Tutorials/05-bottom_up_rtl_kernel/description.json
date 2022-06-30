@@ -1,5 +1,5 @@
 {
-    "name": "Hardware-Acceleration-Design-05-bottom_rtl_kernel_cbc",
+    "name": "Hardware-Acceleration-Design-05-bottom_rtl_kernel",
     "description": "bottom_rtl_kernel_flow_integration_cbc",
     "gui": "false",
     "flow": "vitis",
@@ -22,7 +22,7 @@
         ],  
         "custom_build_target":
         {
-            "hw": "all"
+            "all": "all"
         }              
     }
 }

@@ -1,10 +1,6 @@
 <table>
  <tr>
-<<<<<<< HEAD
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.2 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
-=======
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
->>>>>>> Updated LeNET and FFT-2D Design for 2022.1
    </td>
  </tr>
 </table>
@@ -39,7 +35,7 @@ At the end of this section, the design flow will generate a new directory (calle
 	
 ## Make Steps
 
-To run the following `make` steps (for example, `make kernels`, `make xclbin`, and so on), you must be in the `HLS/` folder. The following options can be specified in the `make` steps. Instructions for how to apply them are provided later in this section.
+To run the following `make` steps (for example, `make kernels`, `make xsa`, and so on), you must be in the `HLS/` folder. The following options can be specified in the `make` steps. Instructions for how to apply them are provided later in this section.
 
 `TARGET:` This option can be set to `hw` or `hw_emu` to build the design in the hardware or hardware emulation flow. The default is `hw_emu`.
 
@@ -106,7 +102,7 @@ or
 make run TARGET=hw FFT_2D_DT=0 FFT_2D_INSTS=5 ITER_CNT=16 EN_TRACE=1 FFT_2D_PT=64 (hardware, 5 instances, 16 iterations, enable trace profiling, matrix dimentions rows=32 and columns=64 )
 ```
 
-This command runs the `make kernels`, `make xclbin`, `make application`, `make package`, and `make run_emu` steps for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The settings also apply to individual make steps listed below.
+This command runs the `make kernels`, `make xsa`, `make application`, `make package`, and `make run_emu` steps for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The settings also apply to individual make steps listed below.
 
 The generated files for each `FFT_2D_INSTS` are placed under an individual directory: `$(BUILD_TARGET_DIR)/`. Each `make` step to build the design is specified in the following sections. These sections also detail the options used and the location of input and output files in each case.
 
@@ -148,7 +144,7 @@ v++ --target hw_emu --hls.clock 250000000:dma_hls --platform xilinx_vck190_base_
    $(DESIGN_REPO)/pl_src/dma_hls.cpp -o $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/vitiscommandcompiler.html#wrj1504034328013) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
+See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
 
 
 |Switch|Description|
@@ -176,11 +172,11 @@ See [this page](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/vitiscom
 </details>
 
 <details>
-<summary>make xclbin: Using the Vitis Tools to Link HLS Kernels with the Platform</summary> 
+<summary>make xsa: Using the Vitis Tools to Link HLS Kernels with the Platform</summary> 
  
-## make xclbin: Using the Vitis Tools to Link HLS Kernels with the Platform
+## make xsa: Using the Vitis Tools to Link HLS Kernels with the Platform
 
-After the HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XCLBIN file. 
+After the HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XSA file. 
 
 The Vitis tools allow you to integrate the HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx and the Vitis tools build the hardware design and integrate the HLS kernels into the design).
  
@@ -189,7 +185,7 @@ To test this feature in this tutorial, use the base VCK190 platform to build the
 The command to run this step is shown as follows (default `FFT_2D_DT=0`, `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `EN_TRACE=0`, `FFT_2D_PT=2048`):
 
 ```
-make xclbin
+make xsa
 ``` 
 
 The expanded command is as follows:
@@ -204,7 +200,7 @@ v++ -l --platform xilinx_vck190_base_202220_1 --save-temps --temp_dir $(BUILD_TA
    --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16} \
    --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_low} \
    --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore} \
-   -t hw_emu -o $(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xclbin $(BUILD_TARGET_DIR)/fft_2d.hw_emu.xo \
+   -t hw_emu -o $(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xsa $(BUILD_TARGET_DIR)/fft_2d.hw_emu.xo \
    $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
 
@@ -236,7 +232,7 @@ If `EN_TRACE` is enabled, the following Vitis compiler flags are also set:
 ```
 For higher values of `FFT_2D_INSTS`, only the `strmInp_from_colwiseFFT` port is profiled to avoid too much data.
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/buildingdevicebinary.html#mjs1528399150499) for a detailed description of Vitis linking options. The following table provides a summary of the switches used. 
+See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-Kernels) for a detailed description of Vitis linking options. The following table provides a summary of the switches used. 
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -245,9 +241,9 @@ See [this page](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/building
 |--temp_dir <string>|This allows you to manage the location where the tool writes temporary files created during the build process. The temporary results are written by the Vitis compiler, and then removed, unless the `--save-temps` option is also specified.|
 |--verbose|Display verbose/debug information.|
 |--output \| -o|Specifies the name of the output file generated by the V++ command. In this design the outputs of the HLS/DSP kernels with their interfacing with the PL kernels are in XO files.|
-|--vivado.prop \<arg\>|Specifies properties for the Vivado Design Suite to be used during synthesis and implementation of the FPGA binary (xclbin). See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/vivado-Options) for detailed Vivado options.|
+|--vivado.prop \<arg\>|Specifies properties for the Vivado Design Suite to be used during synthesis and implementation of the FPGA binary (xsa). See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/vivado-Options) for detailed Vivado options.|
 |--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IPs. This option needs to be specified during linking. See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) for detailed profiling options.|
-|--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. See [this page](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/vitiscommandcompiler.html#lpy1600804966354__section_bmy_v3z_54b) for detailed profiling options.|
+|--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) for detailed profiling options.|
 |--config <config_file>|Specifies a configuration file containing V++ switches.|
 
 The information to tell the linker how to connect the HLS/DSP and PL kernels together is described in a configuration file, `system_configs/x$(FFT_2D_INSTS).cfg`. The file describes the overall connection scheme of the system.
@@ -278,11 +274,11 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceler
 |  ---  |  ---  |
 |--connectivity.nk|Number of kernels. `dma_hls:1:dma_hls_0` means that the Vitis compiler should instantiate one dma_hls kernel and name the instance `dma_hls_0`.|
 |--connectivity.stream_connect|How the kernels will connect to IPs, platforms, or other kernels. The elaborates the streaming port connections like. `dma_hls_0.strmOut_to_rowiseFFT:fft_2d_0.strmFFTrows_inp` means that the Vitis compiler should connect the port `strmOut_to_rowiseFFT` of `dma_hls_0` HLS kernel to the `strmFFTrows_inp` of the `fft_2d_0` HLS kernel.|
-|param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XCLBIN file, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
+|param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XSA file, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
 
 The Vitis compiler calls the Vivado® IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
 
-You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now have generated the XCLBIN file, `$(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xclbin`, that will be used to execute your design on the platform.
+You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now have generated the XSA file, `$(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xsa`, that will be used to execute your design on the platform.
 
 
 </details>
@@ -316,7 +312,7 @@ aarch64-xilinx-linux-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack
 ```
 
 
-See [this page](https://xilinx.github.io/XRT/2022.1/html/index.html) for XRT documentation. See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming4) for details of host application programming.
+See [this page](https://xilinx.github.io/XRT/2022.1/html/index.html) for XRT documentation. See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming) for details of host application programming.
 
 
 |Switch|Description|
@@ -367,7 +363,7 @@ cd $(BUILD_TARGET_DIR);	\
 v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202220_1 \
    --package.rootfs $(XLNX_VERSAL)/rootfs.ext4 --package.kernel_image $(XLNX_VERSAL)/Image --package.boot_mode=sd \
    --package.out_dir $(BUILD_TARGET_DIR)/package --package.image_format=ext4 --package.sd_file $(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf \
-   $(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw.xclbin
+   $(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw.xsa
 ```
 
 If `EN_TRACE` is enabled, the following Vitis compiler flags are also set:
@@ -389,8 +385,8 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceler
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/acceleration_installation.html) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/acceleration_installation.html) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd> Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies \<ext4\|fat32\> output image file format. `ext4` is the Linux file system and `fat32` is the Windows file system.|
 |--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card`.|
@@ -401,7 +397,7 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceler
 |$(XLNX_VERSAL)/rootfs.ext4|The root filesystem file for PetaLinux.|
 $(XLNX_VERSAL)/Image|The pre-built PetaLinux image the processor boots from.|
 |$(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf|The PS host application executable created in the `make application` step.|
-|$(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
+|$(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xsa|The XSA file created in the `make xsa` step.|
 
 The output of the V++ Package step is the package directory that contains the contents to run hardware emulation. 
 
@@ -478,11 +474,11 @@ To run the design in hardware, rerun the following `make` steps with `TARGET=hw`
 
 ```
 make kernels TARGET=hw
-make xclbin TARGET=hw 
+make xsa TARGET=hw 
 make package TARGET=hw 
 ```
 
-These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XCLBIN, and `package` for a hardware run. 
+These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XSA, and `package` for a hardware run. 
 
 Run the following step to set up the execution file, generated images, and base images (`$(BUILD_TARGET_DIR)/package/sd_card` and `$(BUILD_TARGET_DIR)/package/sd_card.img`).
 
@@ -490,7 +486,7 @@ Run the following step to set up the execution file, generated images, and base 
 make run_emu TARGET=hw 
 ```
 
-These commands create a `build/hw` folder with the kernels, XCLBIN, and `package` for a hardware run. Follow steps 1-9 to run the `fft_2d_hls_xrt.elf` executable on your VCK190 board. 
+These commands create a `build/hw` folder with the kernels, XSA, and `package` for a hardware run. Follow steps 1-9 to run the `fft_2d_hls_xrt.elf` executable on your VCK190 board. 
 
 **Step 1.** Ensure your board is powered off. 
 
@@ -552,7 +548,7 @@ The data mover is a PL-based data generator and checker. It generates impulse in
 
 ## Design Details
 
-The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, DSP, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the PL/HLS kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). In the design, the components are added by the Vitis compiler `-l` step (see [make XCLBIN](#make-xclbin-using-the-vitis-tools-to-link-hls-kernels-with-the-platform)) and include the following:
+The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, DSP, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the PL/HLS kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). In the design, the components are added by the Vitis compiler `-l` step (see [make XSA](#make-xsa-using-the-vitis-tools-to-link-hls-kernels-with-the-platform)) and include the following:
 
 * `fft_2d` HLS/DSP kernel (`fft_2d.[hw|hw_emu].xo`)
 * Data mover kernel (`dma_hls.[hw|hw_emu].xo`)
@@ -632,7 +628,7 @@ ITER_LOOP_FFT_COLS:for(int i = 0; i < iterCnt; ++i) {
 
 Pipelining reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the [PIPELINE pragma](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline) or directive.
 
-The [DATAFLOW pragma](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow) enables task-level pipelining as described in [Exploiting Task Level Parallelism: Dataflow Optimization](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/vitis_hls_optimization_techniques.html#bmx1539734225930), allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design.
+The [DATAFLOW pragma](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow) enables task-level pipelining as described in [Exploiting Task Level Parallelism: Dataflow Optimization](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Exploiting-Task-Level-Parallelism-Dataflow-Optimization), allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design.
 
 All operations are performed sequentially in a C description. In the absence of any directives that limit resources (such as pragma HLS allocation), the Vitis HLS tool seeks to minimize latency and improve concurrency. However, data dependencies can limit this. For example, functions or loops that access arrays must finish all read/write accesses to the arrays before they complete. This prevents the next function or loop that consumes the data from starting operation. The DATAFLOW optimization enables the operations in a function or loop to start operation before the previous function or loop completes all its operations.
 
@@ -724,11 +720,11 @@ In the HLS implementation, due to timing closure limitations, the `fft_2d` kerne
 
 ### Timing Closure
 
-For timing closure of the whole design, different implementation properties are used, as mentioned in the `make xclbin` step above. These strategies are required because timing closure does not happen for the design if the default implementation settings are used.
+For timing closure of the whole design, different implementation properties are used, as mentioned in the `make xsa` step above. These strategies are required because timing closure does not happen for the design if the default implementation settings are used.
 
-For the purposes of achieving timing closure for the 256 x 512 point x10 and 1024 x 2048 point x10 designs, over 200 implementation strategies were used, out of which three met timing. Out of that, those with the least power were chosen as the implementation strategy in the `v++ -l / make xclbin` step.
+For the purposes of achieving timing closure for the 256 x 512 point x10 and 1024 x 2048 point x10 designs, over 200 implementation strategies were used, out of which three met timing. Out of that, those with the least power were chosen as the implementation strategy in the `v++ -l / make xsa` step.
 
-For more information about implementation strategies, see the _Vivado Implementation User Guide_ [UG904](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_1/ug904-vivado-implementation.pdf)
+For more information about implementation strategies, see the _Vivado Implementation User Guide_ [UG904](https://docs.xilinx.com/r/en-US/ug904-vivado-implementation)
 
 </details>
 
@@ -737,7 +733,7 @@ For more information about implementation strategies, see the _Vivado Implementa
 	
 ## HLS/DSP Kernel Representation
 
-An HLS/DSP kernel comprises the [Fast Fourier Transform LogiCORE IP](https://www.xilinx.com/products/intellectual-property/fft.html#overview) instantiated in the HLS kernel using the [HLS FFT library](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/hls_ip_libraries.html#pmv1539734237197). Additionally, the kernel has the input and output wrappers for reading and writing data into and out of the FFT core. You can view the function call graph in the Vitis HLS GUI, as shown in the following figure.
+An HLS/DSP kernel comprises the [Fast Fourier Transform LogiCORE IP](https://www.xilinx.com/products/intellectual-property/fft.html#overview) instantiated in the HLS kernel using the [HLS FFT library](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/FFT-IP-Library). Additionally, the kernel has the input and output wrappers for reading and writing data into and out of the FFT core. You can view the function call graph in the Vitis HLS GUI, as shown in the following figure.
 
 ![Image of 2D-FFT HLS Function Call Graph](images/fft_2d_hls_function_call_graph.PNG)
 
@@ -1355,13 +1351,11 @@ Resource utilization is measured using the Vivado tool. The registers, CLB LUTs,
 
 1. Open the Vivado project: `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr`.
 2. Open **Implemented Design** and click **Report Utilization**.
-3. In the Utilization tab (shown inthe following figure), select **fft_2d_0** and view the registers, CLB LUTs, BRAMs, and DSPs for the 1024 x 2048 point - 1 instance - cint16 design:
+3. In the Utilization tab (shown in the following figure), select **fft_2d_0** and view the registers, CLB LUTs, BRAMs, and DSPs for the 1024 x 2048 point - 1 instance - cint16 design:
 
 ![Image of 2D-FFT HLS Utilization](images/fft_2d_hls_vivado_resources.PNG)
 
-** Or **
-
-1. Do `make report_metrics TARGET=hw`, (recipe expanded below), alongwith relevant options, to generate `utilization_hierarchical.txt` under `$(BLD_REPORTS_DIR)/` directory:
+Alternatively, run `make report_metrics TARGET=hw` along with the relevant options to generate `utilization_hierarchical.txt` under the `$(BLD_REPORTS_DIR)/` directory:
 
 ```
 report_metrics:
@@ -1377,45 +1371,45 @@ else
 endif
 ```
 
-Summary of Resource Utilization for all Variations:
+A summary of resource utilization for all variations is shown in the following table.
 
 #### cint16 Designs
-| Number of Instances | FFT Configurations       | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines |
+| Number of Instances | FFT Configurations    | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines |
 |:----------------:|:------------------------:|:---------:|:--------:|:-----:|:------------------:|
-| 1                | 64 point (32 x 64)       | 5970      | 3440     | 5     | 8                  |
-| 1                | 128 point (64 x 128)     | 6691      | 4395     | 5     | 10                 |
-| 1                | 256 point (128 x 256)    | 7502      | 4574     | 6     | 12                 |
-| 1                | 512 point (256 x 512)    | 8222      | 5419     | 8     | 14                 |
-| 1                | 2048 point (1024 x 2048) | 9871      | 6114     | 15.5  | 18                 |
-| 5                | 64 point (32 x 64)       | 29854     | 17296    | 25    | 40                 |
-| 5                | 128 point (64 x 128)     | 33589     | 20457    | 25    | 50                 |
-| 5                | 256 point (128 x 256)    | 37551     | 22994    | 30    | 60                 |
-| 5                | 512 point (256 x 512)    | 41250     | 25195    | 40    | 70                 |
-| 5                | 2048 point (1024 x 2048) | 49319     | 30577    | 77.5  | 90                 |
-| 10               | 64 point (32 x 64)       | 59702     | 34529    | 50    | 80                 |
-| 10               | 128 point (64 x 128)     | 67195     | 40615    | 50    | 100                |
-| 10               | 256 point (128 x 256)    | 75022     | 45981    | 60    | 120                |
-| 10               | 512 point (256 x 512)    | 82357     | 50361    | 80    | 140                |
-| 10               | 2048 point (1024 x 2048) | 98665     | 61125    | 155   | 180                |
+| 1                | 64 point (32 x 64)       | 5994      | 3519     | 6     | 8                  |
+| 1                | 128 point (64 x 128)     | 6739      | 4127     | 6     | 10                 |
+| 1                | 256 point (128 x 256)    | 7515      | 4642     | 8     | 12                 |
+| 1                | 512 point (256 x 512)    | 8262      | 5104     | 12    | 14                 |
+| 1                | 2048 point (1024 x 2048) | 9858      | 6134     | 25    | 18                 |
+| 5                | 64 point (32 x 64)       | 29952     | 17615    | 30    | 40                 |
+| 5                | 128 point (64 x 128)     | 33742     | 20585    | 30    | 50                 |
+| 5                | 256 point (128 x 256)    | 37631     | 23245    | 40    | 60                 |
+| 5                | 512 point (256 x 512)    | 41299     | 25559    | 60    | 70                 |
+| 5                | 2048 point (1024 x 2048) | 49373     | 30773    | 125   | 90                 |
+| 10               | 64 point (32 x 64)       | 59889     | 35233    | 60    | 80                 |
+| 10               | 128 point (64 x 128)     | 67531     | 41251    | 60    | 100                |
+| 10               | 256 point (128 x 256)    | 75260     | 46513    | 80    | 120                |
+| 10               | 512 point (256 x 512)    | 82746     | 51106    | 120   | 140                |
+| 10               | 2048 point (1024 x 2048) | 98899     | 61591    | 250   | 180                |
 
 #### cfloat Designs
-| Number of Instances | FFT Configurations       | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines |
+| Number of Instances | FFT Configurations    | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines |
 |:----------------:|:------------------------:|:---------:|:--------:|:-----:|:------------------:|
-| 1                | 64 point (32 x 64)       | 12738     | 7195     | 6     | 24                 |
-| 1                | 128 point (64 x 128)     | 14391     | 8666     | 6     | 30                 |
-| 1                | 256 point (128 x 256)    | 16063     | 8949     | 10    | 36                 |
-| 1                | 512 point (256 x 512)    | 17737     | 9832     | 14.5  | 45                 |
-| 1                | 2048 point (1024 x 2048) | 21480     | 11920    | 30    | 63                 |
-| 5                | 64 point (32 x 64)       | 52722     | 36227    | 30    | 120                |
-| 5                | 128 point (64 x 128)     | 71950     | 43316    | 30    | 150                |
-| 5                | 256 point (128 x 256)    | 80326     | 44879    | 50    | 180                |
-| 5                | 512 point (256 x 512)    | 78771     | 49195    | 72.5  | 225                |
-| 5                | 2048 point (1024 x 2048) | 107290    | 59620    | 150   | 315                |
-| 10               | 64 point (32 x 64)       | 127507    | 65782    | 60    | 240                |
-| 10               | 128 point (64 x 128)     | 143848    | 86624    | 60    | 300                |
-| 10               | 256 point (128 x 256)    | 160879    | 89730    | 100   | 360                |
-| 10               | 512 point (256 x 512)    | 177463    | 98560    | 145   | 450                |
-| 10               | 2048 point (1024 x 2048) | 214621    | 119232   | 300   | 630                |
+| 1                | 64 point (32 x 64)       | 12777     | 7258     | 8     | 24                 |
+| 1                | 128 point (64 x 128)     | 14448     | 8768     | 8     | 30                 |
+| 1                | 256 point (128 x 256)    | 16089     | 9041     | 16    | 36                 |
+| 1                | 512 point (256 x 512)    | 17807     | 9932     | 25    | 45                 |
+| 1                | 2048 point (1024 x 2048) | 21544     | 12210    | 56    | 63                 |
+| 5                | 64 point (32 x 64)       | 64051     | 36404    | 40    | 120                |
+| 5                | 128 point (64 x 128)     | 72237     | 43866    | 40    | 150                |
+| 5                | 256 point (128 x 256)    | 80629     | 45193    | 80    | 180                |
+| 5                | 512 point (256 x 512)    | 89124     | 49701    | 125   | 225                |
+| 5                | 2048 point (1024 x 2048) | 107891    | 61029    | 280   | 315                |
+| 10               | 64 point (32 x 64)       | 128091    | 72629    | 80    | 240                |
+| 10               | 128 point (64 x 128)     | 144483    | 87835    | 80    | 300                |
+| 10               | 256 point (128 x 256)    | 161325    | 90503    | 160   | 360                |
+| 10               | 512 point (256 x 512)    | 178237    | 99388    | 250   | 450                |
+| 10               | 2048 point (1024 x 2048) | 215642    | 122903   | 560   | 630                |
 
 </details>
 
@@ -1436,40 +1430,55 @@ A summary of power utilization for all variations is given in the following tabl
 #### cint16 Designs
 | Number of Instances | FFT Configurations       | Dynamic Power (in mW) |
 |:----------------:|:------------------------:|:---------------------:|
-| 1                | 64 point (32 x 64)       | 272                   |
-| 1                | 128 point (64 x 128)     | 262                   |
-| 1                | 256 point (128 x 256)    | 449                   |
-| 1                | 512 point (256 x 512)    | 347                   |
-| 1                | 2048 point (1024 x 2048) | 615                   |
-| 5                | 64 point (32 x 64)       | 1399                  |
-| 5                | 128 point (64 x 128)     | 1620                  |
-| 5                | 256 point (128 x 256)    | 1779                  |
-| 5                | 512 point (256 x 512)    | 2193                  |
-| 5                | 2048 point (1024 x 2048) | 3134                  |
-| 10               | 64 point (32 x 64)       | 2658                  |
-| 10               | 128 point (64 x 128)     | 3279                  |
-| 10               | 256 point (128 x 256)    | 3802                  |
-| 10               | 512 point (256 x 512)    | 4379                  |
-| 10               | 2048 point (1024 x 2048) | 6127                  |
+| 1                | 64 point (32 x 64)       | 290                   |
+| 1                | 128 point (64 x 128)     | 320                   |
+| 1                | 256 point (128 x 256)    | 440                   |
+| 1                | 512 point (256 x 512)    | 460                   |
+| 1                | 2048 point (1024 x 2048) | 670                   |
+| 5                | 64 point (32 x 64)       | 1370                  |
+| 5                | 128 point (64 x 128)     | 1460                  |
+| 5                | 256 point (128 x 256)    | 1860                  |
+| 5                | 512 point (256 x 512)    | 2120                  |
+| 5                | 2048 point (1024 x 2048) | 3200                  |
+| 10               | 64 point (32 x 64)       | 2630                  |
+| 10               | 128 point (64 x 128)     | 3040                  |
+| 10               | 256 point (128 x 256)    | 3770                  |
+| 10               | 512 point (256 x 512)    | 4110                  |
+| 10               | 2048 point (1024 x 2048) | 5800                  |
 
 #### cfloat Designs
 | Number of Instances | FFT Configurations       | Dynamic Power (in mW) |
 |:----------------:|:------------------------:|:---------------------:|
-| 1                | 64 point (32 x 64)       | 537                   |
-| 1                | 128 point (64 x 128)     | 707                   |
-| 1                | 256 point (128 x 256)    | 890                   |
-| 1                | 512 point (256 x 512)    | 1046                  |
-| 1                | 2048 point (1024 x 2048) | 1178                  |
-| 5                | 64 point (32 x 64)       | 2396                  |
-| 5                | 128 point (64 x 128)     | 3278                  |
-| 5                | 256 point (128 x 256)    | 4663                  |
-| 5                | 512 point (256 x 512)    | 5559                  |
-| 5                | 2048 point (1024 x 2048) | 6547                  |
-| 10               | 64 point (32 x 64)       | 5195                  |
-| 10               | 128 point (64 x 128)     | 7106                  |
-| 10               | 256 point (128 x 256)    | 10019                 |
-| 10               | 512 point (256 x 512)    | 12051                 |
-| 10               | 2048 point (1024 x 2048) | 12799                 |
+| 1                | 64 point (32 x 64)       | 590                   |
+| 1                | 128 point (64 x 128)     | 740                   |
+| 1                | 256 point (128 x 256)    | 830                   |
+| 1                | 512 point (256 x 512)    | 1100                  |
+| 1                | 2048 point (1024 x 2048) | 1150                  |
+| 5                | 64 point (32 x 64)       | 2740                  |
+| 5                | 128 point (64 x 128)     | 3670                  |
+| 5                | 256 point (128 x 256)    | 4800                  |
+| 5                | 512 point (256 x 512)    | 5410                  |
+| 5                | 2048 point (1024 x 2048) | 6850                  |
+| 10               | 64 point (32 x 64)       | 5400                  |
+| 10               | 128 point (64 x 128)     | 7230                  |
+| 10               | 256 point (128 x 256)    | 8360                  |
+| 10               | 512 point (256 x 512)    | 10610                 |
+| 10               | 2048 point (1024 x 2048) | 12390                 |
+
+#### Power from XPE vs HW
+
+**cint16**
+| Number of Instances | FFT Configurations       | XPE Load(in A) | HW Load(in A) |
+|:-----------------:|:--------------------------:|:--------------:|:-------------:|
+| 10                | 512 point (256x512)        |  6.976         |  5.584        |
+| 10                | 2048 point (1024x2048)     |  9.024         |  7.693        |
+
+**cfloat**
+| Number of Instances | FFT Configurations       | XPE Load(in A) | HW Load(in A) |
+|:-----------------:|:--------------------------:|:--------------:|:-------------:|
+| 10                | 512 point (256x512)        |  15.035        |  8.919        |
+| 10                | 2048 point (1024x2048)     |  17.282        |  12.089       |
+
 
 </details>
 
@@ -1491,10 +1500,10 @@ data_transfer_trace=fine
 trace_buffer_size=500M
 ```
 
- Refer to the [xrt.ini](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/xrtini.html#tpi1504034339424) documentation for more information.
+ Refer to the [xrt.ini](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) documentation for more information.
 
 
-2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xclbin.run_summary` files back to your system.
+2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xrt.run_summary` files back to your system.
 
 3. Open `xclbin.ex.run_summary` using `vitis_analyzer`: `vitis_analyzer xclbin.ex.run_summary`.
 
@@ -1532,40 +1541,40 @@ Summary of Throughput & Latency for all Variations:
 #### cint16 Designs
 | Number of Instances | FFT Configurations           | Data Transfer size | Average Throughput<br/>(in MSPS) | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:--------------------------------:|:----------------------------------:|:---------------------------:|:---------------------------:|
-| 1                | 64 point (32 x 64)           | 16384              | 417.50                           |  417.50                            |  4.94                       | 4.94                        |
-| 1                | 128 point<br/>(64 x 128)     | 65536              | 459.00                           |  459.00                            |  17.89                      | 17.89                       |
-| 1                | 256 point<br/>(128 x 256)    | 262144             | 479.80                           |  479.80                            |  68.34                      | 68.34                       |
-| 1                | 512 point<br/>(256 x 512)    | 1048576            | 490.03                           |  490.03                            |  267.52                     | 267.52                      |
-| 1                | 2048 point<br/>(1024 x 2048) | 16777216           | 498.18                           |  498.18                            |  4215.06                    | 4215.06                     |
-| 5                | 64 point (32 x 64)           | 16384              | 417.49                           |  2087.46                           |  4.94                       | 4.94                        |
-| 5                | 128 point<br/>(64 x 128)     | 65536              | 458.99                           |  2294.94                           |  17.89                      | 17.89                       |
-| 5                | 256 point<br/>(128 x 256)    | 262144             | 479.80                           |  2398.99                           |  68.34                      | 68.34                       |
-| 5                | 512 point<br/>(256 x 512)    | 1048576            | 488.52                           |  2442.58                           |  267.52                     | 267.52                      |
-| 5                | 2048 point<br/>(1024 x 2048) | 16777216           | 496.54                           |  2482.69                           |  4200.20                    | 4200.20                     |
-| 10               | 64 point (32 x 64)           | 16384              | 417.47                           |  4174.69                           |  4.95                       | 4.94                        |
-| 10               | 128 point<br/>(64 x 128)     | 65536              | 459.00                           |  4590.00                           |  17.89                      | 17.89                       |
-| 10               | 256 point<br/>(128 x 256)    | 262144             | 479.80                           |  4797.98                           |  68.34                      | 68.33                       |
-| 10               | 512 point<br/>(256 x 512)    | 1048576            | 490.03                           |  4900.34                           |  267.52                     | 267.52                      |
-| 10               | 2048 point<br/>(1024 x 2048) | 16777216           | 496.82                           |  4968.15                           |  4200.20                    | 4200.20                    |
+| 1                | 64 point (32 x 64)           | 32768              |   475.327                        | 475.327                            |     4.878	                |    4.878                     |
+| 1                | 128 point<br/>(64 x 128)     | 131072             |   483.889                        | 483.889                            |     17.084	                |    17.084                    |
+| 1                | 256 point<br/>(128 x 256)    | 524288             |   491.386                        | 491.386                            |     65.157	                |    65.157                    |
+| 1                | 512 point<br/>(256 x 512)    | 2097152            |   494.564                        | 494.564                            |     255.648	             |    255.648                   |
+| 1                | 2048 point<br/>(1024 x 2048) | 33554432           |   498.012                        | 498.012                            |     4040.897               |  	4040.897                  |
+| 5                | 64 point (32 x 64)           | 32768              |   453.514                        | 2267.570                           |       4.831	             |    4.831                     |
+| 5                | 128 point<br/>(64 x 128)     | 131072             |   476.453                        | 2382.266                           |       17.082               |  	17.080                    |
+| 5                | 256 point<br/>(128 x 256)    | 524288             |   489.715                        | 2448.576                           |       65.159               |  	65.157                    |
+| 5                | 512 point<br/>(256 x 512)    | 2097152            |   494.070                        | 2470.349                           |       255.65               |  	255.648                   |
+| 5                | 2048 point<br/>(1024 x 2048) | 33554432           |   497.989                        | 2489.945                           |       4040.9               |    4040.900                  |
+| 10               | 64 point (32 x 64)           | 32768              |   450.255                        | 4502.546                           |       4.830	             |    4.830                     |
+| 10               | 128 point<br/>(64 x 128)     | 131072             |   477.398                        | 4773.977                           |       17.081               |  	17.080                    |
+| 10               | 256 point<br/>(128 x 256)    | 524288             |   489.810                        | 4898.099                           |       65.160               |  	65.157                    |
+| 10               | 512 point<br/>(256 x 512)    | 2097152            |   494.097                        | 4940.971                           |       255.65               |  	255.648                   |
+| 10               | 2048 point<br/>(1024 x 2048) | 33554432           |   497.980                        | 4979.797                           |       4040.9               |  	4040.897                  |
 
 #### cfloat Designs
 | Number of Instances | FFT Configurations           | Data Transfer size | Average Throughput<br/>(in MSPS) | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:--------------------------------:|:----------------------------------:|:---------------------------:|:---------------------------:|
-| 1                | 64 point (32 x 64)           | 16384              |  406.87                          |  406.87                            | 5.07                        | 5.07                        |
-| 1                | 128 point<br/>(64 x 128)     | 65536              |  454.16                          |  454.16                            | 18.08                       | 18.08                       |
-| 1                | 256 point<br/>(128 x 256)    | 262144             |  477.52                          |  477.52                            | 68.66                       | 68.66                       |
-| 1                | 512 point<br/>(256 x 512)    | 1048576            |  488.97                          |  488.97                            | 268.10                      | 268.10                      |
-| 1                | 2048 point<br/>(1024 x 2048) | 16777216           |  495.56                          |  495.56                            | 4201.37                     | 4201.37                     |
-| 5                | 64 point (32 x 64)           | 16384              |  406.88                          |  2034.40                           | 5.07                        | 5.07                        |
-| 5                | 128 point<br/>(64 x 128)     | 65536              |  454.16                          |  2270.82                           | 18.08                       | 18.08                       |
-| 5                | 256 point<br/>(128 x 256)    | 262144             |  477.52                          |  2387.59                           | 68.66                       | 68.66                       |
-| 5                | 512 point<br/>(256 x 512)    | 1048576            |  488.97                          |  2444.85                           | 268.10                      | 268.10                      |
-| 5                | 2048 point<br/>(1024 x 2048) | 16777216           |  495.83                          |  2479.17                           | 4201.37                     | 4201.37                     |
-| 10               | 64 point (32 x 64)           | 16384              |  406.86                          |  4068.56                           | 5.07                        | 5.07                        |
-| 10               | 128 point<br/>(64 x 128)     | 65536              |  454.16                          |  4541.65                           | 18.06                       | 17.95                       |
-| 10               | 256 point<br/>(128 x 256)    | 262144             |  477.52                          |  4775.18                           | 68.66                       | 68.66                       |
-| 10               | 512 point<br/>(256 x 512)    | 1048576            |  488.97                          |  4889.97                           | 268.18                      | 268.10                      |
-| 10               | 2048 point<br/>(1024 x 2048) | 16777216           |  495.56                          |  4955.56                           | 4201.38                     | 4201.37                     |
+| 1                | 64 point (32 x 64)           | 32768              |    446.865                       |  446.865                           |  5.161                      |  5.161                      |
+| 1                | 128 point<br/>(64 x 128)     | 131072             |    475.222                       |  475.222                           |  17.584                     |  17.584                     |
+| 1                | 256 point<br/>(128 x 256)    | 524288             |    482.784                       |  482.784                           |  66.033                     |  66.033                     |
+| 1                | 512 point<br/>(256 x 512)    | 2097152            |    490.018                       |  490.018                           |  257.272                    |  257.272                    |
+| 1                | 2048 point<br/>(1024 x 2048) | 33554432           |    497.035                       |  497.035                           |  4046.968                   |  4046.968                   |
+| 5                | 64 point (32 x 64)           | 32768              |    427.607                       |  2138.033                          |  5.161                      |  5.161                      |
+| 5                | 128 point<br/>(64 x 128)     | 131072             |    469.496                       |  2347.478                          |  17.583                     |  17.583                     |
+| 5                | 256 point<br/>(128 x 256)    | 524288             |    481.365                       |  2406.825                          |  66.033                     |  66.032                     |
+| 5                | 512 point<br/>(256 x 512)    | 2097152            |    489.519                       |  2447.597                          |  257.272                    |  257.272                    |
+| 5                | 2048 point<br/>(1024 x 2048) | 33554432           |    497.003                       |  2485.016                          |  4046.969                   |  4046.968                   |
+| 10               | 64 point (32 x 64)           | 32768              |    411.684                       |  4116.843                          |  5.160                      |  5.160                      |
+| 10               | 128 point<br/>(64 x 128)     | 131072             |    469.370                       |  4693.705                          |  17.580                     |  17.580                     |
+| 10               | 256 point<br/>(128 x 256)    | 524288             |    481.377                       |  4813.773                          |  66.033                     |  66.032                     |
+| 10               | 512 point<br/>(256 x 512)    | 2097152            |    489.630                       |  4896.301                          |  257.272                    |  257.272                    |
+| 10               | 2048 point<br/>(1024 x 2048) | 33554432           |    497.013                       |  4970.128                          |  4046.968                   |  4046.968                   |
 
 
 </details>
@@ -1579,8 +1588,8 @@ Performance per Watt is represented as throughput in MSPS/power in Watts. The fo
 
 ```
 Performance per Watt = Throughput(MSPS) / Power(Watt)
-                     = (498.508 / 0.772) MSPS/Watt
-                     = 645.735 MSPS/Watt
+                     = (498.012 / 0.67) MSPS/Watt
+                     = 743.301 MSPS/Watt
 ```
 
 A summary of performance per Watt for all variations is shown in the following table.
@@ -1588,40 +1597,40 @@ A summary of performance per Watt for all variations is shown in the following t
 #### cint16 Designs
 | Number of Instances | FFT Configurations           | Performance per Watt (in MSPS/Watt) |
 |:----------------:|:----------------------------:|:-----------------------------------:|
-| 1                | 64 point<br/>(32 x 64)       |  1534.93                            |
-| 1                | 128 point<br/>(64 x 128)     |  1751.91                            |
-| 1                | 256 point<br/>(128 x 256)    |  1068.60                            |
-| 1                | 512 point<br/>(256 x 512)    |  1412.19                            |
-| 1                | 2048 point<br/>(1024 x 2048) |  810.05                             |
-| 5                | 64 point<br/>(32 x 64)       |  1492.11                            |
-| 5                | 128 point<br/>(64 x 128)     |  1416.63                            |
-| 5                | 256 point<br/>(128 x 256)    |  1348.50                            |
-| 5                | 512 point<br/>(256 x 512)    |  1113.81                            |
-| 5                | 2048 point<br/>(1024 x 2048) |  792.18                             |
-| 10               | 64 point<br/>(32 x 64)       |  1570.61                            |
-| 10               | 128 point<br/>(64 x 128)     |  1399.82                            |
-| 10               | 256 point<br/>(128 x 256)    |  1261.96                            |
-| 10               | 512 point<br/>(256 x 512)    |  1119.05                            |
-| 10               | 2048 point<br/>(1024 x 2048) |  810.86                             |
+| 1                | 64 point<br/>(32 x 64)       |    1639.06                          |
+| 1                | 128 point<br/>(64 x 128)     |    1512.15                          |
+| 1                | 256 point<br/>(128 x 256)    |    1116.79                          |
+| 1                | 512 point<br/>(256 x 512)    |    1075.14                          |
+| 1                | 2048 point<br/>(1024 x 2048) |    743.30                           |
+| 5                | 64 point<br/>(32 x 64)       |    1655.16                          |
+| 5                | 128 point<br/>(64 x 128)     |    1631.69                          |
+| 5                | 256 point<br/>(128 x 256)    |    1316.44                          |
+| 5                | 512 point<br/>(256 x 512)    |    1165.26                          |
+| 5                | 2048 point<br/>(1024 x 2048) |    778.11                           |
+| 10               | 64 point<br/>(32 x 64)       |    1711.99                          |
+| 10               | 128 point<br/>(64 x 128)     |    1570.39                          |
+| 10               | 256 point<br/>(128 x 256)    |    1299.23                          |
+| 10               | 512 point<br/>(256 x 512)    |    1202.18                          |
+| 10               | 2048 point<br/>(1024 x 2048) |    858.59                           |
 
 #### cfloat Designs
 | Number of Instances | FFT Configurations           | Performance per Watt (in MSPS/Watt) |
 |:----------------:|:----------------------------:|:-----------------------------------:|
-| 1                | 64 point<br/>(32 x 64)       |  757.67                             |
-| 1                | 128 point<br/>(64 x 128)     |  642.38                             |
-| 1                | 256 point<br/>(128 x 256)    |  536.54                             |
-| 1                | 512 point<br/>(256 x 512)    |  467.47                             |
-| 1                | 2048 point<br/>(1024 x 2048) |  420.68                             |
-| 5                | 64 point<br/>(32 x 64)       |  849.08                             |
-| 5                | 128 point<br/>(64 x 128)     |  692.75                             |
-| 5                | 256 point<br/>(128 x 256)    |  512.03                             |
-| 5                | 512 point<br/>(256 x 512)    |  439.80                             |
-| 5                | 2048 point<br/>(1024 x 2048) |  383.95                             |
-| 10               | 64 point<br/>(32 x 64)       |  783.17                             |
-| 10               | 128 point<br/>(64 x 128)     |  639.13                             |
-| 10               | 256 point<br/>(128 x 256)    |  476.61                             |
-| 10               | 512 point<br/>(256 x 512)    |  405.75                             |
-| 10               | 2048 point<br/>(1024 x 2048) |  387.18                             |
+| 1                | 64 point<br/>(32 x 64)       |  757.40                             |
+| 1                | 128 point<br/>(64 x 128)     |  642.19                             |
+| 1                | 256 point<br/>(128 x 256)    |  581.67                             |
+| 1                | 512 point<br/>(256 x 512)    |  445.47                             |
+| 1                | 2048 point<br/>(1024 x 2048) |  432.20                             |
+| 5                | 64 point<br/>(32 x 64)       |  780.30                             |
+| 5                | 128 point<br/>(64 x 128)     |  639.64                             |
+| 5                | 256 point<br/>(128 x 256)    |  501.42                             |
+| 5                | 512 point<br/>(256 x 512)    |  452.42                             |
+| 5                | 2048 point<br/>(1024 x 2048) |  362.78                             |
+| 10               | 64 point<br/>(32 x 64)       |  762.38                             |
+| 10               | 128 point<br/>(64 x 128)     |  649.20                             |
+| 10               | 256 point<br/>(128 x 256)    |  575.81                             |
+| 10               | 512 point<br/>(256 x 512)    |  461.48                             |
+| 10               | 2048 point<br/>(1024 x 2048) |  401.14                             |
 
 </details>
 
@@ -1635,40 +1644,40 @@ A consolidated summary of observations for all the point sizes and all the corre
 #### cint16 Designs
 | FFT Configuration - Number of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | FF (Regs) | CLB LUTs | BRAMs | Number of DSP Engines | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:---------:|:--------:|:-----:|:------------------:|:-------------------------:|:---------------------------------------:|
-| 64 point<br/>(32 x 64)<br/> - x1        | 417.50                            | 4.94                         | 5970      | 3440     | 5    | 8                  | 272                        | 1534.93                                 |
-| 128 point<br/>(64 x 128)<br/> - x1      | 459.00                            | 17.89                        | 6691      | 4395     | 5    | 10                 | 262                        | 1751.91                                 |
-| 256 point<br/>(128 x 256)<br/> - x1     | 479.80                            | 68.34                        | 7502      | 4574     | 6    | 12                 | 449                        | 1068.60                                 |
-| 512 point<br/>(256 x 512)<br/> - x1     | 490.03                            | 267.52                       | 8222      | 5419     | 8    | 14                 | 347                        | 1412.19                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x1  | 498.18                            | 4215.06                      | 9871      | 6114     | 15.5 | 18                 | 615                        | 810.05                                  |
-| 64 point<br/>(32 x 64)<br/> - x5        | 2087.46                           | 4.94                         | 29854     | 17296    | 25   | 40                 | 1399                       | 1492.11                                 |
-| 128 point<br/>(64 x 128)<br/> - x5      | 2294.94                           | 17.89                        | 33589     | 20457    | 25   | 50                 | 1620                       | 1416.63                                 |
-| 256 point<br/>(128 x 256)<br/> - x5     | 2398.99                           | 68.34                        | 37551     | 22994    | 30   | 60                 | 1779                       | 1348.50                                 |
-| 512 point<br/>(256 x 512)<br/> - x5     | 2442.58                           | 267.52                       | 41250     | 25195    | 40   | 70                 | 2193                       | 1113.81                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x5  | 2482.69                           | 4200.20                      | 49319     | 30577    | 77.5 | 90                 | 3134                       | 792.18                                  |
-| 64 point<br/>(32 x 64)<br/> - x10       | 4174.69                           | 4.95                         | 59702     | 34529    | 50   | 80                 | 2658                       | 1570.61                                 |
-| 128 point<br/>(64 x 128)<br/> - x10     | 4590.00                           | 17.89                        | 67195     | 40615    | 50   | 100                | 3279                       | 1399.82                                 |
-| 256 point<br/>(128 x 256)<br/> - x10    | 4797.98                           | 68.34                        | 75022     | 45981    | 60   | 120                | 3802                       | 1261.96                                 |
-| 512 point<br/>(256 x 512)<br/> - x10    | 4900.34                           | 267.52                       | 82357     | 50361    | 80   | 140                | 4379                       | 1119.05                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x10 | 4968.15                           | 4200.20                      | 98665     | 61125    | 155  | 180                | 6127                       | 810.86                                  |
+| 64 point<br/>(32 x 64)<br/> - x1        |   475.327                          |    4.878	                   | 5994      | 3519     |6      | 8                  | 290                       | 1639.06                                 |
+| 128 point<br/>(64 x 128)<br/> - x1      |   483.889                          |    17.084	                | 6739      | 4127     |6      | 10                 | 320                       | 1512.15                                 |
+| 256 point<br/>(128 x 256)<br/> - x1     |   491.386                          |    65.157	                | 7515      | 4642     |8      | 12                 | 440                       | 1116.79                                 |
+| 512 point<br/>(256 x 512)<br/> - x1     |   494.564                          |    255.648                  | 8262      | 5104     |12     | 14                 | 460                       | 1075.14                                 |
+| 2048 point<br/>(1024 x 2048)<br/> - x1  |   498.012                          |    4040.897                 | 9858      | 6134     |25     | 18                 | 670                       | 743.30                                  |
+| 64 point<br/>(32 x 64)<br/> - x5        |   2267.570                         |    4.831                    | 29952     | 17615    |30     | 40                 | 1370                      | 1655.16                                 |
+| 128 point<br/>(64 x 128)<br/> - x5      |   2382.266                         |    17.082                   | 33742     | 20585    |30     | 50                 | 1460                      | 1631.69                                 |
+| 256 point<br/>(128 x 256)<br/> - x5     |   2448.576                         |    65.159                   | 37631     | 23245    |40     | 60                 | 1860                      | 1316.44                                 |
+| 512 point<br/>(256 x 512)<br/> - x5     |   2470.349                         |    255.65                   | 41299     | 25559    |60     | 70                 | 2120                      | 1165.26                                 |
+| 2048 point<br/>(1024 x 2048)<br/> - x5  |   2489.945                         |    4040.9                   | 49373     | 30773    |125    | 90                 | 3200                      | 778.11                                  |
+| 64 point<br/>(32 x 64)<br/> - x10       |   4502.546                         |    4.830                    | 59889     | 35233    |60     | 80                 | 2630                      | 1711.99                                 |
+| 128 point<br/>(64 x 128)<br/> - x10     |   4773.977                         |    17.081                   | 67531     | 41251    |60     | 100                | 3040                      | 1570.39                                 |
+| 256 point<br/>(128 x 256)<br/> - x10    |   4898.099                         |    65.160                   | 75260     | 46513    |80     | 120                | 3700                      | 1299.23                                 |
+| 512 point<br/>(256 x 512)<br/> - x10    |   4940.971                         |    255.65                   | 82746     | 51106    |120    | 140                | 4110                      | 1202.18                                 |
+| 2048 point<br/>(1024 x 2048)<br/> - x10 |   4979.797                         |    4040.9                   | 98899     | 61591    |250    | 180                | 5800                      | 858.59                                  |
 
 #### cfloat Designs
 | FFT Configuration - Number of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:---------:|:--------:|:-----:|:------------------:|:-------------------------:|:---------------------------------------:|
-| 64 point<br/>(32 x 64)<br/> - x1        | 406.87                             | 5.07                        | 12738     | 7195     | 6     | 24                 | 537                       | 757.67                                  |
-| 128 point<br/>(64 x 128)<br/> - x1      | 454.16                             | 18.08                       | 14391     | 8666     | 6     | 30                 | 707                       | 642.38                                  |
-| 256 point<br/>(128 x 256)<br/> - x1     | 477.52                             | 68.66                       | 16063     | 8949     | 10    | 36                 | 890                       | 536.54                                  |
-| 512 point<br/>(256 x 512)<br/> - x1     | 488.97                             | 268.10                      | 17737     | 9832     | 14.5  | 45                 | 1046                      | 467.47                                  |
-| 2048 point<br/>(1024 x 2048)<br/> - x1  | 495.56                             | 4201.37                     | 21480     | 11920    | 30    | 63                 | 1178                      | 420.68                                  |
-| 64 point<br/>(32 x 64)<br/> - x5        | 2034.40                            | 5.07                        | 52722     | 36227    | 30    | 120                | 2396                      | 849.08                                  |
-| 128 point<br/>(64 x 128)<br/> - x5      | 2270.82                            | 18.08                       | 71950     | 43316    | 30    | 150                | 3278                      | 692.75                                  |
-| 256 point<br/>(128 x 256)<br/> - x5     | 2387.59                            | 68.66                       | 80326     | 44879    | 50    | 180                | 4663                      | 512.03                                  |
-| 512 point<br/>(256 x 512)<br/> - x5     | 2444.85                            | 268.10                      | 78771     | 49195    | 72.5  | 225                | 5559                      | 439.80                                  |
-| 2048 point<br/>(1024 x 2048)<br/> - x5  | 2479.17                            | 4201.37                     | 107290    | 59620    | 150   | 315                | 6547                      | 383.95                                  |
-| 64 point<br/>(32 x 64)<br/> - x10       | 4068.56                            | 5.07                        | 127507    | 65782    | 60    | 240                | 5195                      | 783.17                                  |
-| 128 point<br/>(64 x 128)<br/> - x10     | 4541.65                            | 18.06                       | 143848    | 86624    | 60    | 300                | 7106                      | 639.13                                  |
-| 256 point<br/>(128 x 256)<br/> - x10    | 4775.18                            | 68.66                       | 160879    | 89730    | 100   | 360                | 10019                     | 476.61                                  |
-| 512 point<br/>(256 x 512)<br/> - x10    | 4889.97                            | 268.18                      | 177463    | 98560    | 145   | 450                | 12051                     | 405.75                                  |
-| 2048 point<br/>(1024 x 2048)<br/> - x10 | 4955.56                            | 4201.38                     | 214621    | 119232   | 300   | 630                | 12799                     | 387.18                                  |
+| 64 point<br/>(32 x 64)<br/> - x1        |  446.865                           | 5.161                       | 12777     |7258      |8     | 24                 | 590                        | 757.40                                  |
+| 128 point<br/>(64 x 128)<br/> - x1      |  475.222                           | 17.584                      | 14448     |8768      |8     | 30                 | 740                        | 642.19                                  |
+| 256 point<br/>(128 x 256)<br/> - x1     |  482.784                           | 66.033                      | 16089     |9041      |16    | 36                 | 830                        | 581.67                                  |
+| 512 point<br/>(256 x 512)<br/> - x1     |  490.018                           | 257.272                     | 17807     |9932      |25    | 45                 | 1100                       | 445.47                                  |
+| 2048 point<br/>(1024 x 2048)<br/> - x1  |  497.035                           | 4046.968                    | 21544     |12210     |56    | 63                 | 1150                       | 432.20                                  |
+| 64 point<br/>(32 x 64)<br/> - x5        |  2138.033                          | 5.161                       | 64051     |36404     |40    | 120                | 2740                       | 780.30                                  |
+| 128 point<br/>(64 x 128)<br/> - x5      |  2347.478                          | 17.583                      | 72237     |43866     |40    | 150                | 3670                       | 639.64                                  |
+| 256 point<br/>(128 x 256)<br/> - x5     |  2406.825                          | 66.033                      | 80629     |45193     |80    | 180                | 4800                       | 501.42                                  |
+| 512 point<br/>(256 x 512)<br/> - x5     |  2447.597                          | 257.272                     | 89124     |49701     |125   | 225                | 5410                       | 452.42                                  |
+| 2048 point<br/>(1024 x 2048)<br/> - x5  |  2485.016                          | 4046.969                    | 107891    |61029     |280   | 315                | 6850                       | 362.78                                  |
+| 64 point<br/>(32 x 64)<br/> - x10       |  4116.843                          | 5.160                       | 128091    |72629     |80    | 240                | 5400                       | 762.38                                  |
+| 128 point<br/>(64 x 128)<br/> - x10     |  4693.705                          | 17.580                      | 144483    |87835     |80    | 300                | 7230                       | 649.20                                  |
+| 256 point<br/>(128 x 256)<br/> - x10    |  4813.773                          | 66.033                      | 161325    |90503     |160   | 360                | 8360                       | 575.81                                  |
+| 512 point<br/>(256 x 512)<br/> - x10    |  4896.301                          | 257.272                     | 178237    |99388     |250   | 450                | 10610                      | 461.48                                  |
+| 2048 point<br/>(1024 x 2048)<br/> - x10 |  4970.128                          | 4046.968                    | 215642    |122903    |560   | 630                | 12390                      | 401.14                                  |
 
 From these observations, it can be seen that with an increase in the FFT point size, the throughput does _not_ increase appreciably and eventually saturates. The power, however, increases in proportion to the resources used. Consequently, the performance per Watt maintains a decreasing trend with the increase in the FFT point size and the number of FFT-2D Instances.
 
@@ -1687,4 +1696,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD073 | &copy; Copyright 2022 Xilinx, Inc.</p>
+<p align="center"> XD073 | &copy; Copyright 2021–2022 Xilinx, Inc.</p>
