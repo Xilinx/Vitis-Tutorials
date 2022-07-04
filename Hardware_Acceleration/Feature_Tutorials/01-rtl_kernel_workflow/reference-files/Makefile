@@ -49,7 +49,7 @@ ECHO:= @echo
 ###################################################################
 # G++ COMPILER FLAGS
 ######################################################################
-host_CXXFLAGS += -g -I./ -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
+host_CXXFLAGS += -g -I./ -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++17
 # The below are linking flags for C++ Comnpiler
 opencl_LDFLAGS += -L$(XILINX_XRT)/lib -lOpenCL -pthread
 xrt_LDFLAGS += -L$(XILINX_XRT)/lib -lxrt_coreutil -pthread
