@@ -1,4 +1,4 @@
-<table width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -109,7 +109,7 @@ set_property ipi_drc {ignore_freq_hz true} [ipx::current_core]
 set_property vitis_drc {ctrl_protocol user_managed} [ipx::current_core]
 ```
 
->**TIP**: Notice that the **Ports and Interfaces** tab now shows a DRC error because you have enabled the **Package for Vitis** checkbox. The error indicates that the Vitis compatible IP must have at least one AXIS (AXI-streaming) interface, or at least one defined register on the AXI slave interface. In this case the `s_axi_control` interface does not have a defined register which you will add shortly. 
+>**TIP**: Notice that the **Ports and Interfaces** tab now shows a DRC error because you have enabled the **Package for Vitis** checkbox. The error indicates that the Vitis compatible IP must have a defined register on the AXI-Lite interface (s_axilite), or at least one AXI-streaming (AXIS) interface. In this case you will be adding registers to the `s_axi_control` interface. 
 
 ## Edit Ports and Interfaces
 

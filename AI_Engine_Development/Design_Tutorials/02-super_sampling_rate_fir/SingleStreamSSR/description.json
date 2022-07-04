@@ -29,7 +29,7 @@
         },
         "tasks": {
             "build": {
-                "pre_exec": "./env_setup.sh" 
+                "pre_exec": "./env_setup_versal.sh" 
             }
         }
     }
