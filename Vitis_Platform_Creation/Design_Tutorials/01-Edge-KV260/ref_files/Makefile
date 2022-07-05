@@ -13,21 +13,21 @@
 # limitations under the License.
 
 VERSION				?=2022.1
-COMMON_IMAGE_PATH 	?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
+COMMON_IMAGE_ZYNQMP 	?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 
 .PHONY: help
 
 help:
 	@echo "Makefile usage"
-	@echo "make all COMMON_IMAGE_PATH=<path/to/common_image/> 	## Generate platform with pre-built software components and compile the vadd application to test this platform "
+	@echo "make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/> 	## Generate platform with pre-built software components and compile the vadd application to test this platform "
 
 
 all: check-common-image step1 step2 step3 
 
 #target : check  whether the common image is ready 
 check-common-image:
-ifeq ($(wildcard $(COMMON_IMAGE_PATH)/Image),)
-	@echo "'COMMON_IMAGE_PATH' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
+ifeq ($(wildcard $(COMMON_IMAGE_ZYNQMP)/Image),)
+	@echo "'COMMON_IMAGE_ZYNQMP' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
 	@make help
 	@echo "exit ....." && exit 1
 endif

@@ -20,7 +20,7 @@ ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
 DTB_PLT_NAME=mydevice
 DTB_LOCATION=$(ROOT_DIR)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
 VERSION=2022.1
-COMMON_IMAGE_PATH ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
+COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 BOOT=boot
 SD_DIR=sd_dir
 SW_COMP=sw_comp
@@ -36,15 +36,15 @@ PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 
 help:
 	@echo "Makefile usage"
-	@echo "make all COMMON_IMAGE_PATH=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
+	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
 	
 
 all: check-common-image hw sw_comps dtb sysroot pfm  vadd vadd_hw
 
 #target : check  whether the common image is ready 
 check-common-image:
-ifeq ($(wildcard $(COMMON_IMAGE_PATH)/Image),)
-	@echo "'COMMON_IMAGE_PATH' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
+ifeq ($(wildcard $(COMMON_IMAGE_VERSAL)/Image),)
+	@echo "'COMMON_IMAGE_VERSAL' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
 	@make help
 	@echo "exit ....." && exit 1
 endif
@@ -57,14 +57,14 @@ hw: $(ABS_BD_TCL)
 
 #target :software components
 #copy software components to local directory
-sw_comps:$(COMMON_IMAGE_PATH)/Image
+sw_comps:$(COMMON_IMAGE_VERSAL)/Image
 	@echo "create folder to store sw components and copy software components to local directory ./boot and ./sd_dir"
 	 mkdir -p $(SW_COMP) && mkdir  -p $(BOOT) && mkdir  -p $(SD_DIR)
-	cp $(COMMON_IMAGE_PATH)/u-boot.elf  $(BOOT)/
-	cp $(COMMON_IMAGE_PATH)/bl31.elf  $(BOOT)/
-	cp $(COMMON_IMAGE_PATH)/boot.scr $(SD_DIR)/
-	cp $(COMMON_IMAGE_PATH)/Image  $(SW_COMP)/
-	cp $(COMMON_IMAGE_PATH)/rootfs.ext4  $(SW_COMP)/
+	cp $(COMMON_IMAGE_VERSAL)/u-boot.elf  $(BOOT)/
+	cp $(COMMON_IMAGE_VERSAL)/bl31.elf  $(BOOT)/
+	cp $(COMMON_IMAGE_VERSAL)/boot.scr $(SD_DIR)/
+	cp $(COMMON_IMAGE_VERSAL)/Image  $(SW_COMP)/
+	cp $(COMMON_IMAGE_VERSAL)/rootfs.ext4  $(SW_COMP)/
 
 # target: dtb
 #generate the DTB file
@@ -82,8 +82,8 @@ dtb: $(ABS_HW_PATH)/$(XSA_NAME)_hw.xsa
 	
 # Target: sysroot
 # Install sysroot to sw_comp directory
-sysroot: $(COMMON_IMAGE_PATH)/sdk.sh
-	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_PATH)/sdk.sh -d  $(SYSROOT)/ -y
+sysroot: $(COMMON_IMAGE_VERSAL)/sdk.sh
+	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_VERSAL)/sdk.sh -d  $(SYSROOT)/ -y
 
 # Target: pfm
 # Generate the Vitis platform with XSCT
