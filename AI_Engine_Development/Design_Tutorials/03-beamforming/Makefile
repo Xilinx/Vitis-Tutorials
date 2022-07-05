@@ -32,7 +32,7 @@ PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)
 SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd_file))
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-PERL ?= /tools/xgs/perl/5.8.5/bin/perl
+#PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
 RESULT_VAL ?= 
 RUN_LEVEL ?= 7
