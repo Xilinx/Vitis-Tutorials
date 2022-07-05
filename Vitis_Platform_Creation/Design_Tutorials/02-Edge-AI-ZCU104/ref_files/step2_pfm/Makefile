@@ -17,7 +17,7 @@ XSA_NAME=zcu104_custom_platform
 PLATFORM_NAME=zcu104_custom
 PLATFORM_NAME_FSBL=zcu104_custom_fsbl
 VERSION=2022.1
-COMMON_IMAGE_PATH ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
+COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 BOOT=boot
 SD_DIR=sd_dir
 SYSROOT=sysroot
@@ -28,15 +28,15 @@ SW_COMP=sw_comp
 
 help:
 	@echo "Makefile usage"
-	@echo "make all COMMON_IMAGE_PATH=<path/to/common_image/>  	## to generate platform with pre-built software components"
+	@echo "make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>  	## to generate platform with pre-built software components"
 	
 
 all: check-common-image sw_comps dtb pfm_fsbl pfm  sysroot 
 
 #target : check  whether the common image is ready 
 check-common-image:
-ifeq ($(wildcard $(COMMON_IMAGE_PATH)/Image),)
-	@echo "'COMMON_IMAGE_PATH' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
+ifeq ($(wildcard $(COMMON_IMAGE_ZYNQMP)/Image),)
+	@echo "'COMMON_IMAGE_ZYNQMP' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
 	@make help
 	@echo "exit ....." && exit 1
 endif
@@ -44,14 +44,14 @@ endif
 
 #target :software components
 #copy software components to local directory
-sw_comps:$(COMMON_IMAGE_PATH)/Image
+sw_comps:$(COMMON_IMAGE_ZYNQMP)/Image
 	@echo "create folder to store sw components and copy software components to local directory ./boot and ./sd_dir"
 	mkdir -p $(SW_COMP) && mkdir  -p $(BOOT) && mkdir  -p $(SD_DIR)
-	cp $(COMMON_IMAGE_PATH)/u-boot.elf  $(BOOT)/
-	cp $(COMMON_IMAGE_PATH)/bl31.elf  $(BOOT)/
-	cp $(COMMON_IMAGE_PATH)/boot.scr $(SD_DIR)/
-	cp $(COMMON_IMAGE_PATH)/Image  $(SW_COMP)/
-	cp $(COMMON_IMAGE_PATH)/rootfs.ext4  $(SW_COMP)/
+	cp $(COMMON_IMAGE_ZYNQMP)/u-boot.elf  $(BOOT)/
+	cp $(COMMON_IMAGE_ZYNQMP)/bl31.elf  $(BOOT)/
+	cp $(COMMON_IMAGE_ZYNQMP)/boot.scr $(SD_DIR)/
+	cp $(COMMON_IMAGE_ZYNQMP)/Image  $(SW_COMP)/
+	cp $(COMMON_IMAGE_ZYNQMP)/rootfs.ext4  $(SW_COMP)/
 
 #:DTB 
 #generate dtb file	
@@ -84,8 +84,8 @@ pfm:
 	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
  
 #install SDK tool
-sysroot: $(COMMON_IMAGE_PATH)/sdk.sh
-	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_PATH)/sdk.sh -d  $(SYSROOT)/ -y
+sysroot: $(COMMON_IMAGE_ZYNQMP)/sdk.sh
+	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_ZYNQMP)/sdk.sh -d  $(SYSROOT)/ -y
 
 clean:
 	rm -rf  IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx  mydevice
