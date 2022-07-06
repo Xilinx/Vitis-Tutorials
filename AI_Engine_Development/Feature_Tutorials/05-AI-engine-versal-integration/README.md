@@ -281,6 +281,7 @@ The follow table describes some of the GCC options being used:
 
 
 ### 4. Package the Design
+
 With all the AI Engine outputs and the new platform created, you can now generate the packaged SD card directory contains everything to boot Linux and have your generated application and `.xclbin`.
 
 To package the design, run the following command:
@@ -288,10 +289,10 @@ To package the design, run the following command:
 ```bash
 make package
 ```
+
 Or
 
-```bash
-	
+```bash	
 cd ./sw
 v++ -p -t sw_emu  \
 	-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
@@ -691,24 +692,24 @@ With all the AI Engine outputs and the new platform created, you can now generat
 
 To package the design, run the following command:
 
-	```bash
-	make package TARGET=hw_emu
-	```
+```bash
+make package TARGET=hw_emu
+```
 
-	Or
+Or
 
-	```bash
-	cd ./sw
-	v++ --package -t hw_emu \
-		-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
-		--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4 \
-		--package.image_format=ext4 \
-		--package.boot_mode=sd \
-		--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/Image \
-		--package.defer_aie_run \
-		--package.sd_file host.exe ../tutorial.xsa ../libadf.a
-	cd ..
-	```
+```bash
+cd ./sw
+v++ --package -t hw_emu \
+	-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
+	--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4 \
+	--package.image_format=ext4 \
+	--package.boot_mode=sd \
+	--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/Image \
+	--package.defer_aie_run \
+	--package.sd_file host.exe ../tutorial.xsa ../libadf.a
+cd ..
+```
 
 **NOTE:** By default the `--package` flow will create a `a.xclbin` automatically if the `-o` switch is not set.
 
