@@ -29,16 +29,16 @@
             "IMAGE=${EDGE_COMMON_SW}/Image",
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh\\\"",
             "EMBEDDED_PACKAGE_OUT=./",
-            "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
-        ],
+            "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh",
+            "PFM_NAME=xilinx_vck190_base_202210_1" 
+       ],
         "custom_build_target":
         {
             "all": "hw_emu"
         },
         "tasks": {
             "build": {
-                "pre_exec": "./env_setup_versal.sh",
-                "pre_exec": "./addon_setup.sh"
+                "pre_exec": "./env_setup_versal.sh"
             }
         }
     }
