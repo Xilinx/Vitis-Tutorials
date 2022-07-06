@@ -15,7 +15,7 @@
 
 By default, in the Vitis™ core development kit, the data transfer between the kernel and the DDR is achieved using a single DDR bank. In some applications, data movement is a performance bottleneck. In cases where the kernels need to move large amounts of data between the global memory (DDR) and the FPGA, you can use multiple DDR banks. This enables the kernels to access multiple memory banks simultaneously. As a result, the application performance increases.
 
-The System Port mapping option using the `v++` command `--sp` switch allows the designer to map kernel ports to specific global memory banks, such as DDR or PLRAM. This tutorial shows you how to map kernel ports to multiple DDR banks.
+The System Port mapping option using the `v++` command allows the designer to map kernel ports to specific global memory banks, such as DDR, HBM or PLRAM. This tutorial shows you how to map kernel ports to multiple DDR banks.
 
 ## Tutorial Overview
 
@@ -37,14 +37,14 @@ Assume that in the application, you want to access:
 
 To achieve the desired mapping, instruct the Vitis core development kit to connect each kernel argument to the desired bank.
 
-The example in this tutorial uses a C++ kernel; however, the steps described are also the same for RTL and OpenCL™ API kernels.
+The example in this tutorial uses a C++ kernel; however, the steps described are also the same for RTL kernels.
 
 ## Before You Begin
 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2020.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
+* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
 >
@@ -57,6 +57,14 @@ The labs in this tutorial use:
 2. Navigate to the `Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks` directory, and then access the `reference-files` directory.
 
 ### Tutorial Setup
+
+Note: This tutorial showcases only hw_emu flow. If the user wants to run HW flow and has a server with multiple devices, they need to ensure that the correct `device_index` is used in the host code. 
+
+   ```
+   unsigned int device_index = 0;
+   std::cout << "Open the device" << device_index << std::endl;
+   auto device = xrt::device(device_index);
+   ```
 
 1. To set up the Vitis core development kit, run the following commands.
 
@@ -91,9 +99,9 @@ The labs in this tutorial use:
    INFO: [CFGEN 83-2226] Inferring mapping for argument vadd_1.out to DDR[1]
    ```
 
-   This confirms the mapping is automatically inferred by the Vitis core development kit for each of the kernel arguments in the absence of explicit `--sp` options being specified.
+   This confirms the mapping is automatically inferred by the Vitis core development kit for each of the kernel arguments in the absence of explicit [connectivity] options being specified.
 
-3. Run HW-Emulation by executing the makefile with the `check` option.
+3. Run HW-Emulation by executing the makefile with the `run` option.
 
    ```bash
    make run
@@ -145,19 +153,27 @@ You will instruct the `v++` Kernel Linker to connect the kernel arguments to the
    * Argument `in2` accesses DDR Bank1
    * Argument `out` accesses DDR Bank2.
 
-   The three `sp` options are added in `connectivity.cfg` file and you need to modify the Makefile to use that config file.
+   The three `sp` options are added in `connectivity.cfg` file.
 
-2. Open the Makefile and comment line 18, and uncomment line 19 to add the config file into `v++` linker options:
+2. Config file is added into `v++` linker options when we run the design with LAB=run2:
 
    ```
-   # Linker options to map kernel ports to DDR banks
-   #VPP_LINK_OPTS := --profile.data all:all:all
+   ifneq ($(LAB),$(filter $(LAB),run1))
    VPP_LINK_OPTS := --config connectivity.cfg
+   endif
    ```
 
    Using config files is a feature for the Vitis software platform. You can put options into different files and use `--config` to include them in a build.
 
-3. After you have saved the changes, complete a clean build of the design in HW Emulation mode.
+3. Host-code remains the same even if you change the bank connection. Below lines infer the bank connection and create buffers in appropriate bank automatically from kernel.group_id(N). 
+
+   ```
+   auto bo0 = xrt::bo(device, vector_size_bytes, krnl.group_id(0));
+   auto bo1 = xrt::bo(device, vector_size_bytes, krnl.group_id(1));
+   auto bo_out = xrt::bo(device, vector_size_bytes, krnl.group_id(2));
+   ```
+
+4. Complete a clean build of the design with LAB=run2.
 
    ```bash
     make clean
@@ -180,7 +196,7 @@ You will instruct the `v++` Kernel Linker to connect the kernel arguments to the
 
    This confirms that the Vitis core development kit has correctly mapped the kernel arguments to the specified DDR banks from the `--sp` options provided.
 
-4. Run HW-Emulation, and verify the correctness of the design.
+5. Run HW-Emulation, and verify the correctness of the design.
 
    ```bash
    make run LAB=run2
@@ -196,10 +212,10 @@ vadd_1:m_axi_gmem1-DDR[1]          RD = 0.391 KB               WR = 0.000 KB
 vadd_1:m_axi_gmem2-DDR[2]          RD = 0.000 KB               WR = 0.391 KB
 ```
 
-  You can also open the `vadd.hw_emu.xclbin.run_summary` and look at the Profile Summary to examine the **Kernel to Global Memory** section showing data transfers. 
+  You can also open the `xrt.run_summary` and look at the Profile Summary to examine the **Kernel to Global Memory** section showing data transfers. 
 
    ```bash
-   vitis_analyzer vadd.hw_emu.xclbin.run_summary
+   vitis_analyzer xrt.run_summary
    ```
 You will see the DDR banks assigned to each of the kernel arguments along with the traffic on each of the interfaces during HW-Emulation.
 
