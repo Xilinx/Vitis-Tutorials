@@ -8,6 +8,7 @@
     "platform_blacklist": [],
      
     "testinfo": {
+        "test_name": "HW_D_08-alveo-aurora",
         "disable": false, 
         "jobs": [
             {

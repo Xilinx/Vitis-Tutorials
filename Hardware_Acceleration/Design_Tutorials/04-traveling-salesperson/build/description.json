@@ -6,6 +6,7 @@
     "platform_allowlist": ["u200"],
  
     "testinfo": {
+       "test_name": "HW_D_04-travel-sales",
        "disable": 1,
        "jobs": [
             {
