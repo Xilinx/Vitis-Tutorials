@@ -6,6 +6,7 @@
     "platform_allowlist": ["u250"],
  
     "testinfo": {
+        "test_name": "HW_F_08-using-hostmem",
         "jobs": [
             {
                 "max_memory_MB": 32768,

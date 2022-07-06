@@ -8,6 +8,7 @@
     "platform_blocklist": [],
      
     "testinfo": {
+        "test_name": "HW_F_09-eth-on-alveo",
         "disable": false, 
         "jobs": [
             {

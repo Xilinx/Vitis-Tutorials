@@ -6,6 +6,7 @@
     "platform_allowlist": ["u200"],
  
     "testinfo": {
+        "test_name": "HW_D_07-host-code-opt",
         "jobs": [
             {
                 "max_memory_MB": 32768,
