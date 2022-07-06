@@ -6,6 +6,7 @@
     "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
     "testinfo": {
+	"test_name": "AIE_F_08-dsp-lib_part2",
         "jobs": [
             {
                 "max_memory_MB": 32768,
