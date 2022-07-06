@@ -6,6 +6,7 @@
     "platform_allowlist": ["vck190"],
     "platform_blocklist": [],
     "testinfo": {
+        "test_name": "GS_pfm",
         "tasks": {
             "build": {
                 "pre_exec": "./env_setup_versal.sh"

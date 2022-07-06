@@ -6,6 +6,7 @@
     "platform_allowlist": ["u200"], 
  
     "testinfo": {
+	"test_name": "GS_vitis_u200",
         "jobs": [
             {
                 "max_memory_MB": 32768,
