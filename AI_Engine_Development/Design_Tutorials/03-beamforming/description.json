@@ -51,7 +51,7 @@
            "CXX+=-Wformat",
            "CXX+=-Wformat-security",
            "CXX+=-Werror=format-security",
-           "CXX+=--sysroot=${SYSROOT}"
+           "CXX+=--sysroot=${SYSROOT}",
            ],
         "custom_build_target": {
             "all": "run",
