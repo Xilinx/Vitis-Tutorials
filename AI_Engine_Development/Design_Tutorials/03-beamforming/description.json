@@ -7,7 +7,6 @@
     "platform_blocklist": [],
     
     "testinfo": {
-        "test_name": "AIE_D_03-beamforming",
         "tasks": {
            "build": {
                "pre_exec": "./env_setup_versal.sh"
@@ -15,6 +14,9 @@
            "board": {
                "pre_exec": "./env_setup_versal.sh"
            }
+        },
+        "user": {
+           "sync_sd_card":1
         },
         "disable": false,
         "jobs": [
@@ -51,7 +53,8 @@
            "CXX+=-Wformat",
            "CXX+=-Wformat-security",
            "CXX+=-Werror=format-security",
-           "CXX+=--sysroot=${SYSROOT}"
+           "CXX+=--sysroot=${SYSROOT}",
+           "LAUNCH_HW_EMU_EXEC=1"
            ],
         "custom_build_target": {
             "all": "run",
