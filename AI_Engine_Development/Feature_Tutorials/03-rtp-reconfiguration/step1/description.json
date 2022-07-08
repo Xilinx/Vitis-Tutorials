@@ -7,7 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-	"test_name": "AIE_F_03-rtp_step1",
+        "test_name": "AIE_F_03-rtp_step1",
         "disable": false,
         "jobs": [
             {

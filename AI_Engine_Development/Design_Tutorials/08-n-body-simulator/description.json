@@ -7,6 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
+        "test_name": "AIE_D_08-N-Body",
         "disable": false,
         "jobs": [
             {

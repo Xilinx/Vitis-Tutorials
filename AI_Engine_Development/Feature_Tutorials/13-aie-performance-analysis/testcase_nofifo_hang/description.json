@@ -7,7 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-	"test_name": "AIE_F_13-perf_nofifo",
+        "test_name": "AIE_F_13-perf_nofifo",
         "disable": false,
         "user": {
             "negative": 1,

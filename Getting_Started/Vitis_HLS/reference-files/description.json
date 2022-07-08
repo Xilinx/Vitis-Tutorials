@@ -7,7 +7,7 @@
     "platform_blocklist": ["u280"],
  
     "testinfo": {
-	"test_name": "GS_hls",
+        "test_name": "GS_hls",
         "jobs": [
             {
                 "max_memory_MB": 32768,

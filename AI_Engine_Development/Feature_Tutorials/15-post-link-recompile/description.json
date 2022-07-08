@@ -6,7 +6,7 @@
     "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
     "testinfo": {
-	"test_name": "AIE_F_15-post-link",
+        "test_name": "AIE_F_15-post-link",
         "jobs": [
             {
                 "max_memory_MB": 32768,

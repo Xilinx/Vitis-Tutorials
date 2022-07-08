@@ -7,7 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-	"test_name": "AIE_F_04-pkt-sw_pkts",
+        "test_name": "AIE_F_04-pkt-sw_pkts",
         "disable": false,
         "jobs": [
             {

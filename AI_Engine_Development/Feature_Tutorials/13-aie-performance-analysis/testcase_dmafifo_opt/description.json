@@ -7,7 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-	"test_name": "AIE_F_13-perf_dmafifo",
+        "test_name": "AIE_F_13-perf_dmafifo",
         "disable": false,
         "jobs": [
             {

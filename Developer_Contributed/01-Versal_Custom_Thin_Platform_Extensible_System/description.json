@@ -6,6 +6,7 @@
     "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
     "testinfo": {
+        "test_name": "CTB_01-Thin-PFM",
         "disable": false,
         "jobs": [
             {

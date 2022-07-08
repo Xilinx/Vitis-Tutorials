@@ -7,7 +7,7 @@
     "platform_blacklist": [],
 
     "testinfo": {
-	"test_name": "AIE_F_14-iir_part2b",
+        "test_name": "AIE_F_14-iir_part2b",
         "disable": false,
         "jobs": [
             {
