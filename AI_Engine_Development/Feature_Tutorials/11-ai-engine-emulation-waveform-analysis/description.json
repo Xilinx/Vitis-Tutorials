@@ -7,7 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-	"test_name": "AIE_F_11-aie-emu",
+        "test_name": "AIE_F_11-aie-emu",
         "disable": false,
         "jobs": [
             {

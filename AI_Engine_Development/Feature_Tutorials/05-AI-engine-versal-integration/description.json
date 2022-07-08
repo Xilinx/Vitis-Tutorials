@@ -7,7 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-	"test_name": "AIE_F_05-versal-INTG",
+        "test_name": "AIE_F_05-versal-INTG",
         "disable": false,
         "jobs": [
             {
