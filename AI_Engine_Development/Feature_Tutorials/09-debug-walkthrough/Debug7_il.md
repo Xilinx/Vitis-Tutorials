@@ -1,4 +1,4 @@
-<table>
+<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -80,7 +80,8 @@ Confirm target's information from JTAG chain then click **Next**.
 <img src="images/il_open_4.png" width="900">
 
 #### Step 4.7. Select probe file
-Click the elipsis (**...**) to select the generated probe file. It is at `${PROJECT_PATH}/_x/link/int/bf_hw.ltx` from this tutorial.
+Click the ellipsis (**...**) to select the generated probe file, `${PROJECT_PATH}/bf_hw.ltx` or `${PROJECT_PATH}/_x/link/int/bf_hw.ltx` from this design.
+
 <img src="images/il_pb_file.png" width="900">
 
 #### Step 4.8. Select ILA to be examined.
@@ -91,7 +92,8 @@ Click on `hw_ila_1` to examine the design.
 Click on `+` to configure the desired signals and their values during run time.
 <img src="images/il_pb_trig.png" width="900">
 
-Example below selects TVALID signal from `mm2s_v4_1_s0` and `xilinx_vck190_es1_base_s2mm_v4_1_0_so` interfaces that capture valid transfers are driven from master.
+Example below selects TVALID signal from `mm2s_v4_1_s0` and `vitis_design_s2mm_v4_1_0_so` interfaces that capture valid transfers are driven from master. Set value to `B (both transition` so transitions of valid data signals can be captured. 
+
 <img src="images/il_pb_trig1.png" width="900">
 
 #### Step 4.10. Enable ILA to capture the configured signals to debug
@@ -108,8 +110,9 @@ After completing above steps, we are able to see the captured, related AXI signa
 #### Step 5. Examine captured results
 <img src="images/il_run_result.png" width="900">
 
+Expand `slot_0:mm2s_v4_1_s0:Interface` and `slot_1:vitis_design_s2mm_v4_1_0_s0:Interface` by click on `>` icon.
 Review the above captured result. `mm2s_v4_1_s0:TVALID` shows '1' which indicates a valid data is available at the time marker pointed.
-Moving time marker across time line, changes of AIX protocol values indicate values changed at what time shown below.
+Moving time marker across time line, changes of AIX protocol values indicate values changed at what time shown below. For example at clock cycle 4, `TVALID` is 1 where `TDATA` is `57f8a5855ea25c52`. This is how to determine when and what a valid data is sent/received.
 <img src="images/il_run_result1.png" width="900">
 
 

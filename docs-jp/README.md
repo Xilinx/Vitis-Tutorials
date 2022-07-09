@@ -1,5 +1,5 @@
 <p align="right"><a href="../README.md">English</a> | <a>日本語</a></p>
-<table width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://japan.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ チュートリアル</h1>
     </td>

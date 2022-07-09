@@ -1,4 +1,4 @@
-<table>
+<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2022.1 Versal® AI Engine</h1>
    </td>
