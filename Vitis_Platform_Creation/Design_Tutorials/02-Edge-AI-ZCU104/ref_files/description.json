@@ -4,7 +4,7 @@
     "description": "Creating a custom ZCU104 platform from scratch",
     "gui": "false",
     "flow": "vitis",
-    "platform_allowlist": [],
+    "platform_allowlist": ["zcu"],
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "PFM_D_02-ZCU104",
