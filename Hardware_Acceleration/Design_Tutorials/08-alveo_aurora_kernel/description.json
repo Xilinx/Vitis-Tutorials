@@ -1,10 +1,10 @@
 {
-    "name": "Hardware-Acceleration-GT-Kernel-Design",
-    "description": "alveo_gt_kernels",
+    "name": "HW_D_08-alveo-aurora",
+    "description": "HW_D_08-alveo-aurora",
     "gui": "false",
     "flow": "vitis",
 
-    "platform_whitelist": [ "xilinx_u200_gen3x16_xdma_2_202110_1", "xilinx_u250_gen3x16_xdma_4_1_202210_1"],
+    "platform_whitelist": [ "u200", "u250"],
     "platform_blacklist": [],
      
     "testinfo": {

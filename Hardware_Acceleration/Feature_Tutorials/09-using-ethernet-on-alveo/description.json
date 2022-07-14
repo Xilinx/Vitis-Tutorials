@@ -1,10 +1,10 @@
 {
-    "name": "Hardware-Acceleration-GT-Kernel-Design",
-    "description": "alveo_gt_kernels",
+    "name": "HW_F_09-eth-on-alveo",
+    "description": "HW_F_09-eth-on-alveo",
     "gui": "false",
     "flow": "vitis",
 
-    "platform_allowlist": [ "xilinx_u200_gen3x16_xdma_2_202110_1"],
+    "platform_allowlist": [ "u200"],
     "platform_blocklist": [],
      
     "testinfo": {
