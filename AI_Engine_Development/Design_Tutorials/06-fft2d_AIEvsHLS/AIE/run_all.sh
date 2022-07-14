@@ -64,7 +64,7 @@ fi
 ################################################
 if [ -z "$trgt" ]
 then
-   trgt=1
+   trgt=0
    trgt_loopStart=0
 else
    if [[ $trgt == "hw" ]]
@@ -92,12 +92,12 @@ trgt_lst=("hw" "hw_emu")
 if [ -z "$fftpt" ]
 then
    fftpt=4
-   fftpt_loopStart=0
+   fftpt_loopStart=4
 
 elif [[ $fftpt == "a" ]]
 then
    fftpt=4
-   fftpt_loopStart=0
+   fftpt_loopStart=4
 
 else
    fftpt_loopStart=$fftpt
@@ -147,7 +147,7 @@ fftinsts=("1" "5" "10" "15" "20" "25" "30" "36" "40" "50" "60")
 ################################################
 if [ -z $iters ]
 then
-   iters="16"
+   iters="1"
 fi
 
 ################################################

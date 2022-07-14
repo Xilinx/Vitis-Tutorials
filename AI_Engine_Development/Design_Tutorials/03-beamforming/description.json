@@ -1,41 +1,62 @@
-{
+{ 
     "name": "AI_Engine_Development-03-beamforming",
-    "description": "03-beamforming",
+    "description": "beamforming_aie_tutorial",
     "flow": "versal",
-
+    
     "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
-     
+    
     "testinfo": {
         "test_name": "AIE_D_03-beamforming",
-        "disable": false, 
+        "tasks": {
+           "build": {
+               "pre_exec": "./env_setup_versal.sh"
+           },
+           "board": {
+               "pre_exec": "./env_setup_versal.sh"
+           }
+        },
+        "disable": false,
         "jobs": [
             {
-                "index": 0, 
-                "dependency": [], 
-                "env": "", 
-                "cmd": "", 
-                "max_memory_MB": 32768, 
+                "index": 0,
+                "dependency": [],
+                "env": "",
+                "cmd": "",
+                "max_memory_MB": 32768,
                 "max_time_min": {
-                    "vitis_aie_sim": 50, 
-                    "vitis_aie_x86sim": 50, 
-                    "vitis_hw_build": 960, 
-                    "vitis_hw_emu": 960, 
+                    "vitis_aie_sim": 50,
+                    "vitis_aie_x86sim": 50,
+                    "vitis_hw_build": 960,
+                    "vitis_hw_emu": 960,
                     "vitis_hw_run": 30
                 }
             }
-        ], 
-        "targets": [
-            "vitis_hw_emu", 
-            "vitis_hw_build", 
+        ],
+        "targets": [ 
+            "vitis_hw_emu",
             "vitis_hw_run"
-        ], 
+        ],
         "category": "canary",
-	"custom_build_target":
-        {
+        "make_options" : [ 
+           "XLNX_VERSAL=${SYSROOT}/../../",
+           "XRT_ROOT=${SYSROOT}/../../../xrt",
+           "EN_TRACE=1",
+           "SDKTARGETSYSROOT=${SYSROOT}",
+           "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+           "CXX+=-mcpu=cortex-a72.cortex-a53",
+           "CXX+=-march=armv8-a+crc",
+           "CXX+=-fstack-protector-strong",
+           "CXX+=-D_FORTIFY_SOURCE=2",
+           "CXX+=-Wformat",
+           "CXX+=-Wformat-security",
+           "CXX+=-Werror=format-security",
+           "CXX+=--sysroot=${SYSROOT}"
+           ],
+        "custom_build_target": {
             "all": "run",
-            "hw" : "sd_card"
-        }
-
+            "hw": "sd_card"
+        },
+        "custom_board_target": "run_test"
     }
 }
