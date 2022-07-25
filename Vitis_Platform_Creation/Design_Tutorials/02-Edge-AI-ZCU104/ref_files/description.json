@@ -1,10 +1,10 @@
 
 {
     "name": "Vitis_Platform_Creation-Introduction-02-Edge-AI-ZCU104",
-    "description": "Creating a custom ZCU104 platform from scratch",
+    "description": "Vitis_Platform_Creation-Introduction-02-Edge-AI-ZCU104",
     "gui": "false",
     "flow": "vitis",
-    "platform_allowlist": ["zcu"],
+    "platform_allowlist": ["zcu104"],
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "PFM_D_02-ZCU104",

@@ -1,7 +1,7 @@
 
 {
     "name": "Vitis_Platform_Creation-Introduction-03-Edge-VCK190",
-    "description": "Creating a custom VCK190 platform from scratch",
+    "description": "Vitis_Platform_Creation-Introduction-03-Edge-VCK190",
     "gui": "false",
     "flow": "vitis",
     "platform_allowlist": [ "vck190"],
