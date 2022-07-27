@@ -29,6 +29,7 @@ META_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}-meta
 SYSROOT_DIR                := ${CURR_DIR}/../sysroot
 
 XSA_DIR                    := ${CURR_DIR}/../../platform/hw/build
+XSA_FILE                   := $(shell basename ${XSA_DIR}/*.xsa)
 
 CFG                        := ./src/config
 
@@ -49,7 +50,7 @@ help:
 
 all: ${PROJ_DIR} 
 
-${PROJ_DIR}: ${XSA_DIR}/*.xsa
+${PROJ_DIR}: ${XSA_DIR}/${XSA_FILE}
 	make clean
 	make create
 	make update_hw
