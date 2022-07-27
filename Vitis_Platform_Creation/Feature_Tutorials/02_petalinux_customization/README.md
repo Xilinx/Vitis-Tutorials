@@ -11,11 +11,11 @@
 
 ***Version: PetaLinux 2022.1***
 
-A Vitis platform requires software components. This time we'd like to demonstrate software environment customization. We'll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.
+A Vitis platform requires software components. In this module we'd like to demonstrate software environment customization. We'll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.
 
 Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux.
 
-As XSA file is the mandatory input for Petalinux project. Users can input  XSA file exported from your Vivado project. This time we will leverage and take the zcu104 base platform from [Xilinx website download page](https://www.xilinx.com/support/download.html) as an example to show how to do system customization. Of course, you can download other platforms from that page according to your requirement. 
+As XSA file is the mandatory input for Petalinux project. Users can input  XSA file exported from your Vivado project. This time we will leverage ready-made base platform from [Xilinx website download center](https://www.xilinx.com/support/download.html) and take zcu104 base platform as an example to show how to do system customization. Of course, you can download other platforms from that page according to your requirement. 
 
 ### Prepare the base platform
 
@@ -56,8 +56,9 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    petalinux-config --get-hw-description=xilinx_zcu104_base_202210_1/hw/hw.xsa  # After you extract the base platform you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202210_1> directory. if you want to do emulation you can choose hw_emu.xsa 
    ```
 
-   > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP series chip. Therefore we specify this option as "zynqMP". If your platform is using Versal chipset. Please set this option to "versal".
+   > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP series chip. Therefore we specify this option as "zynqMP". If your platform is using Versal chipset. Please set this option to `versal`.
 
+   > Note: If user are customizing Linux image for VCK190 board, Please ensure the XSA file is exported from a normal project (not a Vitis extensible project ) and includes the device image.
 
    > Note: PetaLinux will use XSA to generate the device tree. Since hardware XSA and hardware emulation XSA have identical peripherals, giving either of them to PetaLinux makes no difference. When simplifying the hardware design for hardware emulation, it's recommended to keep all the peripherals that need device tree and drivers so that the auto-generated device tree can be reused. If the two design has different address-able peripherals, you will need to create two sets of device trees for hardware running and hardware emulation separately.
 
@@ -191,9 +192,9 @@ You can also add your custom device tree modifications to **project-spec/meta-us
 };
 ```
 
-   - **sdhci1** node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104. It's not a part of Vitis acceleration platform requirements.
+   - **sdhci1** node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104. It's not a part of Vitis acceleration platform requirements. 
 
-   **Note**: an example file is provided in [ref_files/system-user.dtsi](ref_files/system-user.dtsi).
+   **Note**: an example file [zcu104/system-user.dtsi](ref_files/zcu104/system-user.dtsi) is provided for zcu104 board and [vck190/system-user.dtsi](ref_files/vck190/system-user.dtsi) for VCK190 board.
 
 
 
@@ -221,14 +222,13 @@ Vitis-AI applications will install additional software packages. If user would l
    Method A: PetaLinux config
 
    - Run `petalinux-config`
-   - Change **DTG settings -> Kernel Bootargs -> generate boot args automatically** to NO and update **User Set Kernel Bootargs** to `earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M`. Click OK, Exit thrice and Save.
+   - Change **DTG settings -> Kernel Bootargs -> generate boot args automatically** to NO and update **User Set Kernel Bootargs** to `earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M`. Click OK, Exit three times and Save.
    
    Method B: device tree
 
    - Update in  **system-user.dtsi**
    - Add `chosen` node in root in addition to the previous changes to this file.
    ```
-   /include/ "system-conf.dtsi"
    / {
 	   chosen {
 	   	bootargs = "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M";
@@ -270,7 +270,7 @@ Scripts are provided to re-create PetaLinux project and generate outputs.
 
    ```
    # cd to the step directory, e.g.
-   cd ref_files
+   cd ref_files/board/
    make all XSA_PATH=<path/to/base_platform/> # to specify the XSA file path 
    ```
 
