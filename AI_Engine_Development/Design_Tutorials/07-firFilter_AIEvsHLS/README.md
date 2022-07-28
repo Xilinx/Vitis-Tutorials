@@ -126,8 +126,6 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
-
 * Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 * [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
@@ -144,12 +142,10 @@ When the elements of the Vitis software platform are installed, update the shell
 
 Edit `env_setup.sh` script with your file paths:
 ```bash
-export XILINX_XRT=<XRT-LOCATION>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
 export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
 
 source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh
-source $XILINX_XRT/setup.sh
 ```
 Then source the environment script:
 ```bash
