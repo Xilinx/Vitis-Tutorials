@@ -107,7 +107,10 @@ help::
 print-%  : ; @echo $* = $($*)
 
 # For SPRITE
-DSPLIB_ROOT=$(DSPLIB_VITIS)/dsp
+ifeq (,$(DSPLIB_ROOT))
+	DSPLIB_ROOT=$(DSPLIB_VITIS)/dsp
+endif
+
 
 # =========================================================
 # TARGET can be set as:
@@ -223,6 +226,10 @@ WORK_DIR := Work
 ###########################################################
 # Variable Definitions...
 #
+# =========================================================
+# Platform
+# =========================================================
+PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
 # ==========================================================
 # Below are the names for SDF graph, application executable,
 # kernel executables, and xsa
