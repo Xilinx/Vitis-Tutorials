@@ -14,14 +14,6 @@
 # limitations under the License.
 -->
 
-
-<table width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
-    </td>
- </tr>
-</table>
-
 ## Frequently Asked Questions
 
 ### Why can't my platform boot on hardware?

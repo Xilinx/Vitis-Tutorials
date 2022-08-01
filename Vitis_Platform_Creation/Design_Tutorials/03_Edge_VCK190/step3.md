@@ -14,14 +14,6 @@
 # limitations under the License.
 -->
 
-
-<table width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
-    </td>
- </tr>
-</table>
-
 ## Step 3: Run application on the Platform
 
 ### Application1: Run a PL acceleration application
