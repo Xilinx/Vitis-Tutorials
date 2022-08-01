@@ -107,7 +107,7 @@ Utilize XSCT tool to execute one command to generate device tree files:
    pl.dtsi:9.21-71.4: Warning (unique_unit_address): /amba_pl@0: duplicate unit-address (also used in node /memory@0)
    ```
 
-   > Note: Createdts is a command executing in XSCT console to generate device files. This command needs several inputs to generate the device tree files. Regarding the meaning of every option you can execute help command to check the details. Besides XSCT is a Console tool of Vitis. You can start it by typing `xsct` in Linux terminal to start it according to above operation. Or, you can select menu **Xilinx > XSCT Console ** to start the XSCT tool after you launch Vitis.
+   > Note: 'createdts' is a command executing in XSCT console to generate device files. This command needs several inputs to generate the device tree files. Regarding the meaning of every option you can execute help command to check the details. Besides XSCT is a Console tool of Vitis. You can start it by typing `xsct` in Linux terminal to start it according to above operation. Or, you can select menu **Xilinx > XSCT Console ** to start the XSCT tool after you launch Vitis.
 
    Execute the following command to exit XSCT console.
 

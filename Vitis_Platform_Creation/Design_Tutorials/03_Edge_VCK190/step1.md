@@ -14,14 +14,6 @@
 # limitations under the License.
 -->
 
-
-<table width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
-    </td>
- </tr>
-</table>
-
 ## Step 1: Create a hardware platform for customer's VCK190
 
 In this step, we will utilize Versal Extensible Embedded Part_Support Example Platform to create a hardware design for customer's vck190 board (as mentioned we will regard vck190 as a customer's board). As a part support design for Versal it has already added the CIPS, NOC, NOC DDR, AI engine and other platform required IPs and leaves the board level configurations, e.g. PS side peripherals, clock and DDR related parameters for user to configure due to different boards have different peripherals. After we config the PS side of the CIPS, DDR related parameters and other platform related properties, XSA file will be exported. At last we will do three tests to validate the output of this step.
