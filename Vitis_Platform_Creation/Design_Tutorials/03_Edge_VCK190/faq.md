@@ -15,7 +15,7 @@
 -->
 
 
-<table class="sphinxhide" width="100%">
+<table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
     </td>
@@ -33,7 +33,15 @@ The Versal platform has various boot stages. We need to isolate the failing stag
 
 ### Why can't my platform boot on hardware emulation?
 
-- Please make sure the SELECTED_SIM_MODEL is set to TLM for CIPS, NOC and AI Engine.
+Please make sure the SELECTED_SIM_MODEL is set to TLM for CIPS, NOC and AI Engine.
+
+### Why can't my platform support hardware emulation?
+
+Please select hardware emulation when you export the XSA file.
+
+### PLM IPI issue
+
+If you encounter PLM IPI issue please check whether you add any peripheral which are not enabled in CPIS PS side.
 
 ### When is the AIE app and PL kernel being programmed?
 
@@ -46,7 +54,7 @@ AI Engine has two run methods: configure during boot or load graph in host appli
 
 ### Why my AIE system application hangs?
 
-If you test the platform with PL+AIE system application and it hangs on the board with following error message, pressing Ctrl+C reports command stall, you are probably using the **sd_card.img** in **package** directory rather than **package_no_aie_debug** directory. The application in package directory is used for debugging. It will stop after loading and wait for debugger to connect to it. 
+If you test the platform with PL+AIE system application and it hangs on the board with following error message, pressing Ctrl+C reports command stall, you are probably using the **sd_card.img** in **package_aie_debug** directory rather than **package** directory. The application in package directory is used for debugging. It will stop after loading and wait for debugger to connect to it. 
 
 ```
 [   52.262013] [drm] Pid 715 opened device
@@ -97,4 +105,4 @@ Loading: 'binary_container_1.xclbin'
 ```
 
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
