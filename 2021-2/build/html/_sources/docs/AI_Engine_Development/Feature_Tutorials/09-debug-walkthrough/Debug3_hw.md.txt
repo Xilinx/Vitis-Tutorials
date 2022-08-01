@@ -54,11 +54,12 @@ Launch PS application with xclbin (or PS application expected variables), so it 
 After PS application is running and waiting to be debugged, launch Vitis IDE debugger.
 <img src="images/hw_ta_run.png">
 
-Debugger launched, expected to see AI Engine cores, source code window that allows debug (step-into, step-through, step-return), variables view, breakpoint view, register view... Application is ready to be debugged.
+Debugger launched, expected to see AI Engine cores, source code window that allows debug (step-into, step-through, step-return), variables view, breakpoint view, register view. Application is ready to be debugged.
 <img src="images/hw_ta_run1.png">
 
 From Vitis IDE, the application is being debugged during run time.
-<img src="images/hw_ta_run3.png">
+
+<img src="images/hw_ta_run3.png" width="450">
 
 From Vitis IDE, click on **resume** for all AI Engine cores, and final “TEST PASSED” is displayed.
 <img src="images/hw_ta_run4.png" width="450">
@@ -122,6 +123,9 @@ vitis -debug -h
 4. Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in variables view for those optimized variables' values. Limitations from <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> applies.
 5. `printf()` is not supported in hardware debug.
 
+# Support
+
+GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
 # License
 

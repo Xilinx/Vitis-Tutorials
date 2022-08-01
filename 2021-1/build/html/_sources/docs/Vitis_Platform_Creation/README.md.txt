@@ -23,17 +23,17 @@ These tutorials introduce the basics of platform creation and provide step-by-st
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Introduction/01-Overview/README.html">Vitis Platform Overview</a></td>
+ <td align="center"><a href="./Introduction/01-Overview/README.md">Vitis Platform Overview</a></td>
  <td>This is an overview of the Vitis platform creation concepts and steps.</td>
  </tr>
 
  <tr>
- <td align="center"><a href="./Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Tutorial on MPSoC</a></td>
+ <td align="center"><a href="./Introduction/02-Edge-AI-ZCU104/README.md">Vitis Custom Embedded Platform Creation Tutorial on MPSoC</a></td>
  <td>This tutorial demonstrates how you can create a custom Vitis platform on ZCU104 demo board and validate the platform.</td>
  </tr>
 
  <tr>
- <td align="center"><a href="./Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></td>
+ <td align="center"><a href="./Introduction/03_Edge_VCK190/README.md">Versal Custom Platform Creation Tutorial</a></td>
  <td>This tutorial demonstrates how you can create a custom Vitis platform on VCK190 demo board and validate the platform.</td>
  </tr>
 
@@ -47,8 +47,8 @@ These tutorials introduce the basics of platform creation and provide step-by-st
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.html">Custom Embedded Platform Creation Example on KV260</a></td>
- <td>Extend the <a href="./Introduction/02-Edge-AI-ZCU104/README.html">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board: Kria KV260.
+ <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.md">Custom Embedded Platform Creation Example on KV260</a></td>
+ <td>Extend the <a href="./Introduction/02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board: Kria KV260.
 </td>
  </tr>
 </table>

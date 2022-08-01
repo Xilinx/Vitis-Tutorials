@@ -5,7 +5,7 @@
  </tr>
  </table>
 
-# Vitis AI Tutorials
+# Machine Learning Tutorials
 
 ## The tutorials in this repository have been moved to a [new location](https://github.com/Xilinx/Vitis-AI-Tutorials).
 

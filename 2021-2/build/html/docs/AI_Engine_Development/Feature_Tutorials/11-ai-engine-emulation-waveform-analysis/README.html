@@ -1,237 +1,48 @@
-﻿
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
-	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
 <script type="text/javascript">
 function OptanonWrapper() { }
 </script>
 <!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
-		<!-- Google Tag Manager -->
-	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
-	<!-- End Google Tag Manager -->
-	
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
-        <!-- End Google Tag Manager -->	
-
+  <title>Versal Emulation Waveform Analysis &mdash; Vitis™ Tutorials 2021.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="AXIS External Traffic Generator Feature Tutorial" href="../12-axis-traffic-generator/README.html" />
     <link rel="prev" title="Designing with the AI Engine DSPLib and Vitis Model Composer" href="../10-aie-dsp-lib-model-composer/README.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
- <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+</head>
 
-    
-    
-
-    
-
-
-
-<div class="xf-content-height">
-    
-
-<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-    
-    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
-	<header data-component="header" class="site-header">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid main-nav">
-				<div class="row">
-					<div class="navbar-column col-xs-4 col-sm-5">
-						<ul class="nav navbar-nav hidden-xs">
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-								</li>
-							</ul>
-							
-						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-							<li>
-									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
-								</li>
-							<li>
-									<button data-target="#header-container-1" data-function="toggle">Products</button>
-								</li>
-							<li>
-									<button data-target="#header-container-2" data-function="toggle">Company</button>
-								</li>
-							</ul>
-							
-						<div id="header-container-0" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-1" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-2" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							</div>
-					<div class="logo-column col-xs-4 col-sm-2">
-						<div class="logo">
-							<a target="_blank" href="https://www.xilinx.com/">
-								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</nav></header></noindex></div>
-		
-	
-</div>
-
-    
-</div>
-</div>
-
-<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
-    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
-</div>
-</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2021.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -239,31 +50,20 @@ function OptanonWrapper() { }
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
@@ -295,88 +95,42 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">This Page</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/README.md.txt"
-						rel="nofollow">Show Source</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">Vitis™ Tutorials</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../AI_Engine_Development.html">AI Engine Development</a> &raquo;</li>
-        
       <li>Versal Emulation Waveform Analysis</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/README.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -384,11 +138,11 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><div class="section" id="versal-emulation-waveform-analysis">
-<h1>Versal Emulation Waveform Analysis<a class="headerlink" href="#versal-emulation-waveform-analysis" title="Permalink to this headline">¶</a></h1>
+</table><section id="versal-emulation-waveform-analysis">
+<h1>Versal Emulation Waveform Analysis<a class="headerlink" href="#versal-emulation-waveform-analysis" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>Simulating a complete system in the Vitis™ unified software platform allows for a near-hardware run of a design without the hardware, and has the added benefit of detailed waveform analysis during hardware emulation to identify issues in the programmable logic (PL), AI Engine interfaces, and memory read/writes that might be harder to debug on hardware.</p>
 <p>This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal™  ACAP. It steps through the process of building a design for hardware emulation, launching emulation with waveform viewing, and detailed information on how to read the waveforms, as well as using the Vitis analyzer to continue the analysis with generated trace output waveforms and data.</p>
 <p>It is strongly recommended to go through the <strong>Versal Integration tutorial</strong> and the <strong>Versal System Design Clocking tutorial</strong> before running this tutorial.</p>
@@ -401,38 +155,38 @@ function OptanonWrapper() { }
 <li><p>Set up your <code class="docutils literal notranslate"><span class="pre">ROOTFS</span></code>, and <code class="docutils literal notranslate"><span class="pre">IMAGE</span></code> to point to the <code class="docutils literal notranslate"><span class="pre">xilinx-versal-common-v2021.2</span></code> directory.</p></li>
 <li><p>Set up your <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable based on where you downloaded the platform.</p></li>
 </ol>
-</div>
-<div class="section" id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h2>
 <p>After completing this tutorial you should be able to:</p>
 <ul class="simple">
 <li><p>Use XSIM as a live waveform viewer to view signals to and from the AI Engine including stream data and run-time parameters (RTP).</p></li>
 <li><p>Read/understand Transaction Level Modeling (TLM) information in a waveform.</p></li>
 <li><p>Use the Vitis analyzer to read trace and profile data.</p></li>
 </ul>
-</div>
-<div class="section" id="tutorial-overview">
-<h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="design-overview">
-<h3>Design Overview<a class="headerlink" href="#design-overview" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="tutorial-overview">
+<h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
+<section id="design-overview">
+<h3>Design Overview<a class="headerlink" href="#design-overview" title="Permalink to this heading">¶</a></h3>
 <p>The design is a simple FIR filter that takes in random noise generated by the PL kernel, <code class="docutils literal notranslate"><span class="pre">random_noise</span></code>, and gets asynchronous RTP updates to the AI Engine to update the FIR filter coefficients. To confirm the coefficients are applied, the host code reads back the coefficients.</p>
 <p><img alt="Block Diagram" src="../../../../_images/design_block_diagram.png" /></p>
-</div>
-</div>
-<div class="section" id="transaction-level-modeling">
-<h2>Transaction Level Modeling<a class="headerlink" href="#transaction-level-modeling" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="transaction-level-modeling">
+<h2>Transaction Level Modeling<a class="headerlink" href="#transaction-level-modeling" title="Permalink to this heading">¶</a></h2>
 <p>Transaction level modeling (TLM) models Control Interfaces and Processing Systems (CIPS), Network on Chip (NoC), and AI Engine blocks, using SystemC, to show transaction-level communication in the waveform. It is cycle-approximate modeling. It can provide high-level information such as the address and data of the transactions to/from DDR memory or a specific PL kernel.</p>
 <p>In the following diagram, the CIPS, NoC, and AI Engine are modeled in SystemC.</p>
 <p><img alt="Model Block Diagram" src="../../../../_images/model_block_diagram.png" /></p>
-</div>
-<div class="section" id="steps">
-<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this heading">¶</a></h2>
 <p><strong>Step 1</strong>: Building the Design</p>
 <p><strong>Step 2</strong>: Launching Emulation with the XSIM Waveform GUI</p>
 <p><strong>Step 3</strong>: Using XSIM Waveform GUI and <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/QEMU">QEMU</a></p>
 <p><strong>Step 4</strong>: Using Vitis Analyzer</p>
-<div class="section" id="step-1-build-design">
-<h3>Step 1: Build Design<a class="headerlink" href="#step-1-build-design" title="Permalink to this headline">¶</a></h3>
+<section id="step-1-build-design">
+<h3>Step 1: Build Design<a class="headerlink" href="#step-1-build-design" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>To build the design run the following commands.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make aie
@@ -465,9 +219,9 @@ make package
 </div>
 </li>
 </ol>
-</div>
-<div class="section" id="step-2-launching-emulation-with-xsim-waveform-gui">
-<h3>Step 2: Launching Emulation with XSIM Waveform GUI<a class="headerlink" href="#step-2-launching-emulation-with-xsim-waveform-gui" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step-2-launching-emulation-with-xsim-waveform-gui">
+<h3>Step 2: Launching Emulation with XSIM Waveform GUI<a class="headerlink" href="#step-2-launching-emulation-with-xsim-waveform-gui" title="Permalink to this heading">¶</a></h3>
 <p>After the building and packaging of the design is complete you can run hardware emulation on your design. Ensure that <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code> is in the <code class="docutils literal notranslate"><span class="pre">sw</span></code> directory.</p>
 <ol>
 <li><p>To launch emulation with the XSIM Waveform GUI run the following command.</p>
@@ -496,46 +250,46 @@ XSIM started. xsim_pid=3300
 <p>In this view you can select the signals you want to watch from the <strong>Scope</strong> and <strong>Objects</strong> views.</p>
 </li>
 <li><p>In the <strong>Tcl Console</strong> at the bottom of the view, run the following command.</p>
-<div class="highlight-Tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>add_waveforms.tcl
+<div class="highlight-Tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>add_waveforms.tcl
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">add_waveforms.tcl</span></code> file removes any default signals provided by the simulation environment, and adds in all the signals you want to view. There are some signals that are important to have such as: NoC, DDR memory, PL Kernel, and CIPS signals. Your design interacts with these components, and being able to trace signal changes from CIPS to the NoC to/from DDR memory, and then to your design can prove helpful in debugging any potential issue with data transfers.
 This file contains the following.</p>
 <div class="highlight-Tcl notranslate"><div class="highlight"><pre><span></span><span class="c">## Remove all waveforms before adding new ones</span>
-<span class="nv">remove_wave</span> <span class="o">-</span>of <span class="k">[</span><span class="nv">get_wave_config</span><span class="k">]</span> <span class="k">[</span><span class="nv">get_waves</span> <span class="o">-</span>of <span class="k">[</span><span class="nv">get_wave_config</span><span class="k">]</span> <span class="o">-</span>regexp <span class="s2">&quot;.*&quot;</span><span class="k">]</span>
+<span class="nv">remove_wave</span><span class="w"> </span><span class="o">-</span>of<span class="w"> </span><span class="k">[</span><span class="nv">get_wave_config</span><span class="k">]</span><span class="w"> </span><span class="k">[</span><span class="nv">get_waves</span><span class="w"> </span><span class="o">-</span>of<span class="w"> </span><span class="k">[</span><span class="nv">get_wave_config</span><span class="k">]</span><span class="w"> </span><span class="o">-</span>regexp<span class="w"> </span><span class="s2">&quot;.*&quot;</span><span class="k">]</span>
 
 <span class="c">## Set the appropriate paths based upon the platform being used</span>
-<span class="k">set</span> scope_path <span class="s2">&quot;/xilinx_vck190_base_wrapper_sim_wrapper/xilinx_vck190_base_wrapper_i/xilinx_vck190_base_i&quot;</span>
+<span class="k">set</span><span class="w"> </span>scope_path<span class="w"> </span><span class="s2">&quot;/xilinx_vck190_base_wrapper_sim_wrapper/xilinx_vck190_base_wrapper_i/xilinx_vck190_base_i&quot;</span>
 
 <span class="c">## Create a wave group called CIPS and add all signals for the CIPS_0 to it</span>
-<span class="k">set</span> CIPS <span class="k">[</span><span class="nv">add_wave_group</span> CIPS<span class="k">]</span>
-<span class="k">set</span> cips_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>CIPS_0<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$CIPS</span> <span class="nv">$cips_intf</span>
+<span class="k">set</span><span class="w"> </span>CIPS<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>CIPS<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>cips_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>CIPS_0<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$CIPS</span><span class="w"> </span><span class="nv">$cips_intf</span>
 
 <span class="c">## Create a wave group called NOISE and add all signals of the random_noise_1 to it</span>
-<span class="k">set</span> NOISE <span class="k">[</span><span class="nv">add_wave_group</span> NOISE<span class="k">]</span>
-<span class="k">set</span> noise_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>random_noise_1<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$NOISE</span> <span class="nv">$noise_intf</span>
+<span class="k">set</span><span class="w"> </span>NOISE<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>NOISE<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>noise_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>random_noise_1<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$NOISE</span><span class="w"> </span><span class="nv">$noise_intf</span>
 
 <span class="c">## Create a wave group called S2MM and add all signals of the S2MM kernel to it</span>
-<span class="k">set</span> S2MM <span class="k">[</span><span class="nv">add_wave_group</span> S2MM<span class="k">]</span>
-<span class="k">set</span> s2mm_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>s2mm_1<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$S2MM</span> <span class="nv">$s2mm_intf</span>
+<span class="k">set</span><span class="w"> </span>S2MM<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>S2MM<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>s2mm_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>s2mm_1<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$S2MM</span><span class="w"> </span><span class="nv">$s2mm_intf</span>
 
 <span class="c">## Create a wave group called CIPS_NOC and all signals of the CIPS NoC to it</span>
-<span class="k">set</span> CIPS_NOC <span class="k">[</span><span class="nv">add_wave_group</span> CIPS_NOC<span class="k">]</span>
-<span class="k">set</span> cips_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>cips_noc<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$CIPS_NOC</span> <span class="nv">$cips_intf</span>
+<span class="k">set</span><span class="w"> </span>CIPS_NOC<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>CIPS_NOC<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>cips_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>cips_noc<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$CIPS_NOC</span><span class="w"> </span><span class="nv">$cips_intf</span>
 
 <span class="c">## Create a wave group called DDR4 and all signals to/from DDR4</span>
-<span class="k">set</span> DDR4 <span class="k">[</span><span class="nv">add_wave_group</span> DDR4<span class="k">]</span>
-<span class="k">set</span> ddr4_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>noc_ddr4<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$DDR4</span> <span class="nv">$ddr4_intf</span>
+<span class="k">set</span><span class="w"> </span>DDR4<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>DDR4<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>ddr4_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>noc_ddr4<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$DDR4</span><span class="w"> </span><span class="nv">$ddr4_intf</span>
 
 <span class="c">## Create a wave group called AIENGINE and all signals of the AI Engine block to it</span>
-<span class="k">set</span> AIENGINE <span class="k">[</span><span class="nv">add_wave_group</span> AIENGINE<span class="k">]</span>
-<span class="k">set</span> aie_intf <span class="k">[</span><span class="nv">get_objects</span> <span class="o">-</span>r <span class="nv">$scope_path</span><span class="o">/</span>ai_engine_0<span class="o">/*</span> <span class="o">-</span>filter <span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
-<span class="nv">add_wave</span> <span class="o">-</span>into <span class="nv">$AIENGINE</span> <span class="nv">$aie_intf</span>
+<span class="k">set</span><span class="w"> </span>AIENGINE<span class="w"> </span><span class="k">[</span><span class="nv">add_wave_group</span><span class="w"> </span>AIENGINE<span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>aie_intf<span class="w"> </span><span class="k">[</span><span class="nv">get_objects</span><span class="w"> </span><span class="o">-</span>r<span class="w"> </span><span class="nv">$scope_path</span><span class="o">/</span>ai_engine_0<span class="o">/*</span><span class="w"> </span><span class="o">-</span>filter<span class="w"> </span><span class="k">{</span><span class="nv">type</span><span class="o">==</span>proto_inst<span class="k">}]</span>
+<span class="nv">add_wave</span><span class="w"> </span><span class="o">-</span>into<span class="w"> </span><span class="nv">$AIENGINE</span><span class="w"> </span><span class="nv">$aie_intf</span>
 </pre></div>
 </div>
 <p><strong>NOTE</strong>: This file can be executed automatically from the <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code> command by using the <code class="docutils literal notranslate"><span class="pre">-user-pre-sim-script</span> <span class="pre">add_waveforms.tcl</span></code>.</p>
@@ -553,9 +307,9 @@ This file contains the following.</p>
 </li>
 </ol>
 <p><strong>NOTE</strong>: For more information about this simulator view and how to use it, see the <a class="reference external" href="https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug900-vivado-logic-simulation.pdf">UG900 Vivado Design Suite User Guide: Logic Simulation</a>.</p>
-</div>
-<div class="section" id="step-3-using-xsim-waveform-gui-and-qemu">
-<h3>Step 3: Using XSIM Waveform GUI and QEMU<a class="headerlink" href="#step-3-using-xsim-waveform-gui-and-qemu" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step-3-using-xsim-waveform-gui-and-qemu">
+<h3>Step 3: Using XSIM Waveform GUI and QEMU<a class="headerlink" href="#step-3-using-xsim-waveform-gui-and-qemu" title="Permalink to this heading">¶</a></h3>
 <p>A great benefit of having a waveform viewer showing live data is so you can see how the signals interact with each other. This includes the programming of the AI Engine and device traffic to/from the DDR memory, traffic to/from the PL kernels, as well as seeing RTP data being written to the AI Engine.</p>
 <ol>
 <li><p>Click the <strong>Run All</strong> button (<img alt="run all" src="../../../../_images/run_all.png" />).</p></li>
@@ -586,16 +340,16 @@ xinit: server error
 <li><p>Navigate back to the XSIM Waveform GUI and notice that signals are toggling. Scroll up and down to see all the signals that are starting to display data.</p></li>
 <li><p>Pause the execution of the design when you see all signals in the view stop toggling.</p></li>
 </ol>
-<div class="section" id="exploring-the-waveforms">
-<h4>Exploring the Waveforms<a class="headerlink" href="#exploring-the-waveforms" title="Permalink to this headline">¶</a></h4>
+<section id="exploring-the-waveforms">
+<h4>Exploring the Waveforms<a class="headerlink" href="#exploring-the-waveforms" title="Permalink to this heading">¶</a></h4>
 <p>One of the things the waveform viewer can help with is figuring out the order in which data is transferred from a source to a destination. In the following sections you can see how to explore the various waveforms specific to certain communication/data transfer.</p>
 <p><strong>NOTE</strong>: If AI Engine kernels contain <code class="docutils literal notranslate"><span class="pre">printf</span></code> statements, the output will show up in the XSIM Waveform GUI in the <strong>Tcl Console</strong> and will be written to the <code class="docutils literal notranslate"><span class="pre">simulate.log</span></code> file after emulation is closed.</p>
-<div class="section" id="checking-proper-boot-up-using-pmc">
-<h5>Checking Proper Boot-up Using PMC<a class="headerlink" href="#checking-proper-boot-up-using-pmc" title="Permalink to this headline">¶</a></h5>
+<section id="checking-proper-boot-up-using-pmc">
+<h5>Checking Proper Boot-up Using PMC<a class="headerlink" href="#checking-proper-boot-up-using-pmc" title="Permalink to this heading">¶</a></h5>
 <p>The first key step to ensure emulation is operating correctly is making sure that the PS is able to program the platform management controller (PMC). This system is responsible for booting and configuring the device. Seeing the signal through the CIPS, NoC, and the AI Engine is a sign that things are operating normally.</p>
 <ol>
 <li><p>To see this signal only run the following Tcl script.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>bootup_signals.tcl
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>bootup_signals.tcl
 </pre></div>
 </div>
 <p><img alt="Bootup Signals" src="../../../../_images/bootup_signals.png" /></p>
@@ -607,13 +361,13 @@ xinit: server error
 </li>
 <li><p>Zoom the window to full by clicking the mouse on the lower right side, and drag to the upper left.</p></li>
 </ol>
-</div>
-<div class="section" id="pl-to-ai-engine">
-<h5>PL to AI Engine<a class="headerlink" href="#pl-to-ai-engine" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="pl-to-ai-engine">
+<h5>PL to AI Engine<a class="headerlink" href="#pl-to-ai-engine" title="Permalink to this heading">¶</a></h5>
 <p>After bootup and the device is configured, the application can begin to run. In this design, there is a PL kernel called <code class="docutils literal notranslate"><span class="pre">random</span> <span class="pre">noise</span></code> that is generating data that is being fed directly into the AI Engine. The key here is looking at the <code class="docutils literal notranslate"><span class="pre">s_axi_control</span></code> interface to see when the PS sends the <code class="docutils literal notranslate"><span class="pre">run</span></code> signal.</p>
 <ol>
 <li><p>To view the specific signals controlling the PL kernel, run the following.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>pl_to_aie.tcl
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>pl_to_aie.tcl
 </pre></div>
 </div>
 </li>
@@ -633,13 +387,13 @@ xinit: server error
 <li><p>Notice after the <code class="docutils literal notranslate"><span class="pre">random_noise</span></code> kernel starts, you see the large green-line. This is a series of many transactions of the PL kernel transferring data to the AI Engine. There are a few red sections in the waveform. This is a link stall, or where the kernel has been stalled and is caused by the AI Engine.</p></li>
 <li><p>Zoom to fit by clicking the <strong>Zoom Fit</strong> button.</p></li>
 </ol>
-</div>
-<div class="section" id="ai-engine-rtp-signals">
-<h5>AI Engine RTP Signals<a class="headerlink" href="#ai-engine-rtp-signals" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="ai-engine-rtp-signals">
+<h5>AI Engine RTP Signals<a class="headerlink" href="#ai-engine-rtp-signals" title="Permalink to this heading">¶</a></h5>
 <p>As mentioned in the <strong>Overview</strong> this design is sending RTP values to the AI Engine through the <code class="docutils literal notranslate"><span class="pre">graph.update()</span></code> host application. From the host code, you can see that there are two updates being done, both with an array size of 12. Because these only apply to the AI Engine kernel, these will write signals to the <code class="docutils literal notranslate"><span class="pre">AIENGINE/S00_AXI</span></code> interface. However, there are other signals that show the same values because these are the interfaces the data traverses to the destination.</p>
 <ol>
 <li><p>Run the following Tcl script to see only the AI Engine signal.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>rtp_signals.tcl
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>rtp_signals.tcl
 </pre></div>
 </div>
 </li>
@@ -657,13 +411,13 @@ xinit: server error
 </li>
 <li><p>Click the <strong>Zoom to Fit</strong> button.</p></li>
 </ol>
-</div>
-<div class="section" id="ai-engine-to-pl-to-ddr-memory">
-<h5>AI Engine to PL to DDR Memory<a class="headerlink" href="#ai-engine-to-pl-to-ddr-memory" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="ai-engine-to-pl-to-ddr-memory">
+<h5>AI Engine to PL to DDR Memory<a class="headerlink" href="#ai-engine-to-pl-to-ddr-memory" title="Permalink to this heading">¶</a></h5>
 <p>After the RTP update has been sent, you can start to see output data being written to DDR memory. In this design, the AI Engine is sending data from the <code class="docutils literal notranslate"><span class="pre">S00_AXIS</span></code> interface and getting it to the <code class="docutils literal notranslate"><span class="pre">s2mm</span></code> kernel. This kernel is a FIFO written in HLS and is used to write the output to DDR memory.</p>
 <ol>
 <li><p>To view these signals run the following.</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>aie_to_ddr.tcl
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>..<span class="o">/</span>tcl<span class="o">/</span>aie_to_ddr.tcl
 </pre></div>
 </div>
 <p>You should see something similar to the following.</p>
@@ -679,20 +433,20 @@ xinit: server error
 <li><p>When emulation is finished, close the XSIM GUI, which closes the QEMU and the emulation. Discard the waveform at the pop-up prompt.</p></li>
 <li><p>Navigate back to the terminal that launched emulation.</p></li>
 </ol>
-</div>
-<div class="section" id="limitations">
-<h5>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="limitations">
+<h5>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">¶</a></h5>
 <p>Note the following limitations of the waveform viewer.</p>
 <ul class="simple">
 <li><p>Signals internal to the AI Engine can be viewed using VCD. They are not integrated in the general XSIM Waveform GUI.</p></li>
 <li><p>CIPS (QEMU model) which executes the software program is purely a functional model with no timing accuracy. The NoC, DDR memory, and AI Engine are cycle-approximate models.</p></li>
 <li><p>Bandwidth and latency estimation are approximate, based on the accuracy of the individual IP models.</p></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="section" id="step-4-using-vitis-analyzer">
-<h3>Step 4: Using Vitis Analyzer<a class="headerlink" href="#step-4-using-vitis-analyzer" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+<section id="step-4-using-vitis-analyzer">
+<h3>Step 4: Using Vitis Analyzer<a class="headerlink" href="#step-4-using-vitis-analyzer" title="Permalink to this heading">¶</a></h3>
 <p>After emulation is complete, you can look at the profiling and VCD trace data that was also generated at the same time. Note that if profiling and VCD signal features are not used, emulation runs faster.</p>
 <p>Using the XSIM Waveform GUI to view waveforms is powerful in allowing you to see the data path and flow of the design, as well as debug potential issues like a hang. However, this will only show the programmable logic side of the system. To investigate the AI Engine signals, you need to use the VCD trace in the Vitis analyzer. To use the Vitis analyzer, open up a <code class="docutils literal notranslate"><span class="pre">.aierun_summary</span></code> file.</p>
 <ol>
@@ -727,10 +481,10 @@ xinit: server error
 </li>
 <li><p>Close the Vitis analyzer.</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial you have learned:</p>
 <ul class="simple">
 <li><p>To read the waveform viewer to follow data flow pathing for a simple Versal design.</p></li>
@@ -749,81 +503,13 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD067 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
-</div>
+<p align="center"><sup>XD067 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../12-axis-traffic-generator/README.html" class="btn btn-neutral float-right" title="AXIS External Traffic Generator Feature Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../10-aie-dsp-lib-model-composer/README.html" class="btn btn-neutral float-left" title="Designing with the AI Engine DSPLib and Vitis Model Composer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        Last updated on February 10, 2022.
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -832,147 +518,64 @@ limitations under the License.</p>
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../10-aie-dsp-lib-model-composer/README.html" class="btn btn-neutral float-left" title="Designing with the AI Engine DSPLib and Vitis Model Composer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../12-axis-traffic-generator/README.html" class="btn btn-neutral float-right" title="AXIS External Traffic Generator Feature Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-														
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<div class="lang-select dropup hidden-md hidden-lg">
-		<button data-toggle="dropdown">
-			<span class="fas fa-globe" aria-hidden="true"></span>
-			<span>
-				
-					English
-				</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">Connect on LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Follow us on Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Connect on Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">Watch us on YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-																	<div class="lang-select dropup hidden-xs hidden-sm">
-	<button data-toggle="dropdown">
-		<span class="fas fa-globe" aria-hidden="true"></span>
-		<span>
-			
-				English
-			</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-															</div>
-														</div>
-														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
-															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
-														</div>
 
-													</div>
-													                    <div class="movethisrowtoleft row">
+													                    <div class="row">
                         <div class="col-xs-24">
-                            <ul class="sub-menu">
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
-								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
-                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
-                            </ul>
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="https://pages.gitenterprise.xilinx.com/techdocs/Test/vvas/build/html/index.html#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
                         </div>
                     </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
-    <span data-component="backToTopButton" class="backToTopButton loaded">
-        <ul>
-            <li>
-                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
-                    <span class="fas fa-angle-up" aria-hidden="true"></span>
-                </a>
-            </li>
-        </ul>
-    </span>
-</noindex></div>
-			</div>
-		</div>
+										
+</br>
 
 
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-			underscoreSetup();
-		</script>
-	</body>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

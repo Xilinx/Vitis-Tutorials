@@ -225,6 +225,6 @@ Given these performance numbers, architecture selection, and implementation deta
 ---------------------------------------
 
 <p align="center"><b>
-Next Lab Module: <a href="./lab2_conv_filter_kernel_design.html">Design and Analysis of Hardware Kernel Module for 2-D Video Convolution Filter</a>
+Next Lab Module: <a href="./lab2_conv_filter_kernel_design.md">Design and Analysis of Hardware Kernel Module for 2-D Video Convolution Filter</a>
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
 </b></p>

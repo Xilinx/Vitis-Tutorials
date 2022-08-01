@@ -1,13 +1,9 @@
-﻿<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/>
-   <h1>Super Sampling Rate FIR Filters</h1>
-   <h2>Implementation on the AI Engine</h2>
-   </td>
- </tr>
- <tr>
- <td align="center"><h1>Multi-Kernel FIR Filter</h1>
- </td>
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
@@ -20,6 +16,7 @@ Navigate to the `MultiKernel` directory to continue.
 ## Designing the Kernel
 
 As in the Single-kernel tutorial, this design will use streaming input and output but the performances must be improved. Limitations can come from two sources:
+
 - Limit on the bandwidth side
 - Limit in the compute performance side
 
@@ -27,15 +24,15 @@ In the single-kernel section of the tutorial the maximum throughput was 225 Msps
 
 The Single-Kernel Filter can be represented by this convolution:
 
-<img src="../Images/FourKernelDivision_1.jpg" width=1000><br>
+![missing image](../Images/FourKernelDivision_1.jpg)
 
 After subdivision into four Kernels, each one on a different AI Engine, the filter can be represented by four smaller filters in parallel running on the same data stream, except that for some of these kernels the beginning of the stream is discarded:
 
-<img src="../Images/FourKernelDivision_2.jpg" width=1000><br>
+![missing image](../Images/FourKernelDivision_2.jpg)
 
 The four AI Engines each perform the computations for a subset of the coefficients. Their results must be added together to get the overall result. The AI Engine architecture allows a number of accumulators to be sent to a neighboring AI Engine to be used as a starting point for a number of `mac` operations. For computations being performed on four lanes, the accumulator vector is `v4cacc48`, which is a 384 bit vector that can be sent to the next AI Engine in the chain in one clock cycle.
 
-<img src="../Images/FourKernels.jpg" width=800><br>
+![missing image](../Images/FourKernels.jpg)
 
 
 ## C++ Code Analysis
@@ -52,8 +49,9 @@ They have been named with respect to their cascade connection structure:
 - FIR_MultiKernel_cout
 - FIR_MultiKernel_cincout
 - FIR_MultiKernel_cincout
--
+
 The class declaration for the first one is:
+
 ```C++
 template<int NSamples,int ShiftAcc>
 class FIR_MultiKernel_cout {
@@ -82,13 +80,13 @@ public:
 
 The difference between the single-kernel case and this case is that the tap array contains eight elements and that the delay line is only 16 element deep. In the previous section you saw that there were only two `mul4` and `mac4` intrinsics for cint16 x cint16 operations.
 
-<img src="../Images/Mul4Intrinsics.jpg" width=800><br>
+![missing image](../Images/Mul4Intrinsics.jpg)
 
 More interestingly is the one that uses a `v16cint16` for the data register. Filter output compute for an eight tap filter on four lanes in parallel requires (8+3 = 11) data in the buffer. The delay-line should contain at least eight samples as the seven previous samples will be needed for the computation of the first output.
 
 The following image gives an idea of data update scheduling and how it is interleaved with `mul4`/`mac4` operations (only the first eight outputs).
 
-<img src="../Images/Scheduling8tapFilter.jpg" width=800><br>
+![missing image](../Images/Scheduling8tapFilter.jpg)
 
 The related C++ code is as follows:
 
@@ -168,6 +166,7 @@ FIRGraph_4Kernels()
     k[2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_2);
     k[3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT>>(taps4_3);
 ```
+
 The AI Engine compiler needs to know the location of the source code for the kernels:
 
 ```C++
@@ -229,6 +228,7 @@ void SingleStream::FIRinit()
 Ensure that the `InitPythonPath` has been sourced in the `Utils` directory.
 
 Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
+
 - `aie`
   - Compiles the graph and the kernels
 - `aiesim`
@@ -238,9 +238,12 @@ Navigate to the `MultiKernel` directory. In the `Makefile` three methods are def
 
 Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instantiation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
 
-To have the simulation running, input data must be generated. Change directory to `data` and type `GenerateStreams`. The following parameter should be set for this example:
+To have the simulation running, input data must be generated. There are 2 possibilities:
 
-<img src="../Images/GenerateSingleStream.jpg" width=800><br>
+1. Just type `make data`
+2. Change directory to `data` and type `GenerateStreams`. The following parameters should be set for this example:
+
+![missing image](../Images/GenerateSingleStream.jpg)
 
 Click **Generate** then **Exit**. The generated file `PhaseIn_0.txt` should contain mainly 0's, with a few 1's and 10's.
 
@@ -248,23 +251,23 @@ Type `make all` and wait for `vitis_analyzer` GUI to display. The Vitis analyzer
 
 Click **Graph** to visualize the graph of the application:
 
-<img src="../Images/Graph4Kernels.jpg" width=800><br>
+![missing image](../Images/Graph4Kernels.jpg)
 
 The four kernels and their four independent input streams are clearly visible. A single input with a FIFO of eight between each AI Engine can also be implemented.
 
 Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
 
-<img src="../Images/Array4Kernels.jpg" width=800><br>
+![missing image](../Images/Array4Kernels.jpg)
 
 In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph.
 
 Finally click **Trace** to look at how the entire simulation went through. This may be useful to track where your AI Engine stalls if performance is not as expected:
 
-<img src="../Images/Timeline4Kernels.jpg" width=1500><br>
+![missing image](../Images/Timeline4Kernels.jpg)
 
 Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
 
-<img src="../Images/GraphOutput4Kernels.jpg" width=1000><br>
+![missing image](../Images/GraphOutput4Kernels.jpg)
 
 The top graph reflects the outputs where the abscissa is the time at which this output occured. The four frames are clearly localized; there is no output for a number of clock cycles. On the bottom graph, a zoom on the output is displayed and the filter impulse response is recognizable.
 
@@ -286,10 +289,4 @@ This architecture achieves very close to 1 Gsps performance. It is slightly less
 
 
 
-
-
-
-
-
-
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p>

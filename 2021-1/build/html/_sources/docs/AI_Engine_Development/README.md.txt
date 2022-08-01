@@ -20,35 +20,35 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/01-aie_lenet_tutorial/README.html">LeNet Tutorial</a></td>
+ <td align="center"><a href="./Design_Tutorials/01-aie_lenet_tutorial/README.md">LeNet Tutorial</a></td>
  <td>This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/README.html">Super Sampling Rate FIR Filters</a></td>
+ <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/README.md">Super Sampling Rate FIR Filters</a></td>
  <td>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/03-beamforming/README.html">Beamforming Design</a></td>
+ <td align="center"><a href="./Design_Tutorials/03-beamforming/README.md">Beamforming Design</a></td>
  <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
  </tr>
 
  <tr>
- <td align="center"><a href="./Design_Tutorials/04-custom-platform-emulation/README.html">AIE Emulation on Custom Platforms</a></td>
+ <td align="center"><a href="./Design_Tutorials/04-custom-platform-emulation/README.md">AIE Emulation on Custom Platforms</a></td>
  <td>This tutorial demonstrates the creation and emulation of an AIE design including the Adaptive DataFlow (ADF) graph, RTL kernels, and a custom VCK190 platform.</td>
  </tr>
 
  <tr>
- <td align="center"><a href="./Design_Tutorials/06-fft2d_AIEvsHLS/README.html">2D-FFT</a></td>
+ <td align="center"><a href="./Design_Tutorials/06-fft2d_AIEvsHLS/README.md">2D-FFT</a></td>
  <td>This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines. </td>
  </tr>
 
   <tr>
- <td align="center"><a href="./Design_Tutorials/07-firFilter_AIEvsHLS/README.html">FIR Filter</a></td>
+ <td align="center"><a href="./Design_Tutorials/07-firFilter_AIEvsHLS/README.md">FIR Filter</a></td>
  <td>This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.</td>
  </tr>
 
   <tr>
- <td align="center"><a href="./Design_Tutorials/08-n-body-simulator/README.html">N-Body Simulator</a></td>
+ <td align="center"><a href="./Design_Tutorials/08-n-body-simulator/README.md">N-Body Simulator</a></td>
  <td>It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:
 
    <li>A Python model of an N-Body Simulator run on x86 machine

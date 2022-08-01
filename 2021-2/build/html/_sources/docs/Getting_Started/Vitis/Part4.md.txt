@@ -1,6 +1,6 @@
-﻿<table class="sphinxhide">
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ 入門 Tutorial</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Getting Started Tutorial</h1>
    <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.2">See 2020.2 Tutorials</a>
    </td>
  </tr>
@@ -224,7 +224,7 @@ export PLATFORM_REPO_PATHS=<path to the U200 platform install dir>
 cd <Path to the cloned repo>/Getting_Started/Vitis/example/u200/sw_emu
 
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-emconfigutil --platform xilinx_u200_xdma_201830_2 --nd 1
+emconfigutil --platform xilinx_u200_gen3x16_xdma_1_202110_1 --nd 1
 v++ -c -t sw_emu --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
 v++ -l -t sw_emu --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
@@ -280,7 +280,7 @@ TEST PASSED
 cd ../hw_emu
 
 g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-emconfigutil --platform xilinx_u200_xdma_201830_2 --nd 1
+emconfigutil --platform xilinx_u200_gen3x16_xdma_1_202110_1 --nd 1
 v++ -c -t hw_emu --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
 v++ -l -t hw_emu --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 ```
@@ -335,4 +335,4 @@ Now that you ran your first example, proceed to [**Part 5**](./Part5.md) of this
 
  
 
-<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

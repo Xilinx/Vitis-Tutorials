@@ -1,235 +1,46 @@
-﻿
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
-	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
 <script type="text/javascript">
 function OptanonWrapper() { }
 </script>
 <!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
-		<!-- Google Tag Manager -->
-	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
-	<!-- End Google Tag Manager -->
-	
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
-        <!-- End Google Tag Manager -->	
-
+  <title>Building the Design &mdash; Vitis™ Tutorials 2021.2 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/Searchbox.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
- <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+</head>
 
-    
-    
-
-    
-
-
-
-<div class="xf-content-height">
-    
-
-<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-    
-    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
-	<header data-component="header" class="site-header">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid main-nav">
-				<div class="row">
-					<div class="navbar-column col-xs-4 col-sm-5">
-						<ul class="nav navbar-nav hidden-xs">
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-								</li>
-							</ul>
-							
-						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-							<li>
-									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
-								</li>
-							<li>
-									<button data-target="#header-container-1" data-function="toggle">Products</button>
-								</li>
-							<li>
-									<button data-target="#header-container-2" data-function="toggle">Company</button>
-								</li>
-							</ul>
-							
-						<div id="header-container-0" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-1" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-2" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							</div>
-					<div class="logo-column col-xs-4 col-sm-2">
-						<div class="logo">
-							<a target="_blank" href="https://www.xilinx.com/">
-								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</nav></header></noindex></div>
-		
-	
-</div>
-
-    
-</div>
-</div>
-
-<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
-    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
-</div>
-</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2021.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -237,114 +48,58 @@ function OptanonWrapper() { }
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">This Page</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_03_PL_Design/README.md.txt"
-						rel="nofollow">Show Source</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../../index.html">Vitis™ Tutorials</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Building the Design</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_03_PL_Design/README.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -352,8 +107,8 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><div class="section" id="building-the-design">
-<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this headline">¶</a></h1>
+</table><section id="building-the-design">
+<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <p>The next step is to build the PL kernels (XO files). This design requires the creation of seven different RTL PL kernels. Run the following commands to build all of them.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make kernels
 </pre></div>
@@ -383,8 +138,8 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </div>
 <p>The above make command creates the xilinx object files (XO) for PL kernels used in the design (highlighted in blue below).</p>
 <p><img alt="Beamforming Block Diagram with Emphasis on PL Kernels" src="../../../../../_images/beamforming_block_diagram_pl_emphasis_3.PNG" /></p>
-<div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h2>
 <p>Each PL kernel has <code class="docutils literal notranslate"><span class="pre">run_&lt;kernel_name&gt;.tcl</span></code>, <code class="docutils literal notranslate"><span class="pre">bd_&lt;kernel_name&gt;.tcl</span></code>, <code class="docutils literal notranslate"><span class="pre">kernel_&lt;kernel_name&gt;.xml</span></code>, and <code class="docutils literal notranslate"><span class="pre">hdl/*.v</span></code> RTL code as dependencies.</p>
 <table border="1" class="docutils">
 <thead>
@@ -404,8 +159,8 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 </tr>
 </tbody>
 </table><p>The <code class="docutils literal notranslate"><span class="pre">hdl/</span></code> folder in each PL kernel folder contains the Verilog RTL that is used to create the PL kernels.</p>
-<div class="section" id="pl-master-kernels">
-<h3>PL Master Kernels<a class="headerlink" href="#pl-master-kernels" title="Permalink to this headline">¶</a></h3>
+<section id="pl-master-kernels">
+<h3>PL Master Kernels<a class="headerlink" href="#pl-master-kernels" title="Permalink to this heading">¶</a></h3>
 <p>The PL Master kernels are the <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code>, <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code>, <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code>, and <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code> kernels. The RTL for these kernels consists of the following modules:</p>
 <table border="1" class="docutils">
 <thead>
@@ -448,9 +203,9 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <td><strong>Data Master Module:</strong> Contains a control module, a RAM to AXI4-Stream module, and an XPM sync FIFO module.</td>
 </tr>
 </tbody>
-</table></div>
-<div class="section" id="pl-slave-kernels">
-<h3>PL Slave Kernels<a class="headerlink" href="#pl-slave-kernels" title="Permalink to this headline">¶</a></h3>
+</table></section>
+<section id="pl-slave-kernels">
+<h3>PL Slave Kernels<a class="headerlink" href="#pl-slave-kernels" title="Permalink to this heading">¶</a></h3>
 <p>The PL Slave kernels are the <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> kernels. The RTL for these kernels consists of the following modules:</p>
 <table border="1" class="docutils">
 <thead>
@@ -477,10 +232,10 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <td><strong>RAM Module:</strong> URAM instance used to store the output data from AI Engine.</td>
 </tr>
 </tbody>
-</table></div>
-</div>
-<div class="section" id="build-products">
-<h2>Build Products<a class="headerlink" href="#build-products" title="Permalink to this headline">¶</a></h2>
+</table></section>
+</section>
+<section id="build-products">
+<h2>Build Products<a class="headerlink" href="#build-products" title="Permalink to this heading">¶</a></h2>
 <p>Each PL kernel results in the following build products:</p>
 <table border="1" class="docutils">
 <thead>
@@ -499,12 +254,12 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <td>Directory containing the Vivado project for the PL kernel.</td>
 </tr>
 </tbody>
-</table></div>
-<div class="section" id="pl-kernels-master-and-slaves">
-<h2>PL Kernels: Master and Slaves<a class="headerlink" href="#pl-kernels-master-and-slaves" title="Permalink to this headline">¶</a></h2>
+</table></section>
+<section id="pl-kernels-master-and-slaves">
+<h2>PL Kernels: Master and Slaves<a class="headerlink" href="#pl-kernels-master-and-slaves" title="Permalink to this heading">¶</a></h2>
 <p>Now that you have an AI Engine application, the next step is to find a way to send the input data and store the output data on hardware. This is accomplished by creating PL master kernels that store the input data in block RAM and feed it to the AI Engine. Reference inputs are used in this design to mimic data flow that would come from a radio antenna. PL slave kernels, which receive AI Engine output data and store it into URAM resources, must also be created.</p>
-<div class="section" id="id1">
-<h3>PL Master Kernels<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="id1">
+<h3>PL Master Kernels<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>The PL master kernels are the <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code>, <code class="docutils literal notranslate"><span class="pre">dlbf_coeff</span></code>, <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code>, and <code class="docutils literal notranslate"><span class="pre">ulbf_coeff</span></code> kernels. A <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code> PL kernel stores the reference input data matrices for the downlink subgraph in the AI Engine graph. The <code class="docutils literal notranslate"><span class="pre">dlbf_coeff</span></code> PL kernel stores the reference input coefficients for the downlink subgraph. The <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code> PL kernel stores the input data for the uplink subgraph. The <code class="docutils literal notranslate"><span class="pre">ulbf_coeff</span></code> stores the input coefficient data for the uplink subgraph.</p>
 <p>Open the Vivado projects for these PL kernels and review their source code. They are all composed of the same modules: a AXI BRAM Controller IP, a control status register (CSR) module, a clock domain crossing (CDC) module, and multiple data master modules. The data master modules are initialized with the reference input data and input coefficients from <code class="docutils literal notranslate"><span class="pre">*_hex.mem</span></code> files in the <code class="docutils literal notranslate"><span class="pre">data/</span></code> folder.</p>
 <p><img alt="PL Master Kernel Vivado Screenshot" src="../../../../../_images/pl_master_data_kernel_vivado.png" /></p>
@@ -589,18 +344,18 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <li><p><strong>Clock Domain Crossing (CDC) Module:</strong> The control and status signals sent to the CSR module sync up with the data master modules through a clock domain crossing (CDC) module. It converts the 100 MHz control and status signals from CIPS to 400 MHz signals. The data master modules operate at 400 MHz. It also works the other way as well (converting 400 MHz signals from the data master modules to 100 MHz signals for CIPS).</p></li>
 <li><p><strong>Data Master Modules:</strong> These modules contain BRAM instances that store the input data that is sent to the AI Engine. They are initialized by <code class="docutils literal notranslate"><span class="pre">data/*_hex.mem</span></code> files with input data. There are four data master modules in the <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code> and <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code> PL kernels. There are eight data master modules in the <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code> PL kernels.</p></li>
 </ul>
-<div class="section" id="pl-master-execution-flow">
-<h4>PL Master Execution Flow<a class="headerlink" href="#pl-master-execution-flow" title="Permalink to this headline">¶</a></h4>
+<section id="pl-master-execution-flow">
+<h4>PL Master Execution Flow<a class="headerlink" href="#pl-master-execution-flow" title="Permalink to this heading">¶</a></h4>
 <p>Through the control path (highlighted in blue in the block diagram above), CIPS block requests data from specific addresses to be sent from the data master modules to the AI Engine. The data master modules then send out the data at the requested address through an AXI4-Stream interface to the AI Engine. The AI Engine receives its downlink input data matrices, downlink input coefficient data, uplink input data matrices, and uplink input coefficient data this way. The PL masters must follow a certain execution flow to function properly.</p>
-<div class="section" id="reset">
-<h5>Reset<a class="headerlink" href="#reset" title="Permalink to this headline">¶</a></h5>
+<section id="reset">
+<h5>Reset<a class="headerlink" href="#reset" title="Permalink to this heading">¶</a></h5>
 <p>First, the PL masters must be reset by asserting their RESET bits to 1’b1 and then deasserting them to 0’b1.</p>
-</div>
-<div class="section" id="configuration">
-<h5>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="configuration">
+<h5>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h5>
 <p>The PL masters must then have their BLOCK_SIZE, NITER, and ROLLOVER_ADDR registers configured.</p>
-<div class="section" id="block-size">
-<h6>BLOCK_SIZE<a class="headerlink" href="#block-size" title="Permalink to this headline">¶</a></h6>
+<section id="block-size">
+<h6>BLOCK_SIZE<a class="headerlink" href="#block-size" title="Permalink to this heading">¶</a></h6>
 <p>The value you set the BLOCK_SIZE register to is determined by the number of 32-bit complex data samples you send to the AI Engine. Because the PL interface to the AI Engine is 64 bit, you can fit two 32-bit complex data samples in a single data packet. The BLOCK_SIZE register for each PL master kernel is as follows:</p>
 <table border="1" class="docutils">
 <thead>
@@ -625,9 +380,9 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <td>256</td>
 </tr>
 </tbody>
-</table></div>
-<div class="section" id="niter-and-rollover-addr">
-<h6>NITER and ROLLOVER_ADDR<a class="headerlink" href="#niter-and-rollover-addr" title="Permalink to this headline">¶</a></h6>
+</table></section>
+<section id="niter-and-rollover-addr">
+<h6>NITER and ROLLOVER_ADDR<a class="headerlink" href="#niter-and-rollover-addr" title="Permalink to this heading">¶</a></h6>
 <p>The value of the NITER register determines the number BLOCK_SIZE chunks of input data to send of the AI Engine. Because there is a finite amount of BRAM resources, it is not possible to store a large amount of unique input data. A design choice has been made to store four BLOCK_SIZE chunks of unique data in the PL masters.</p>
 <ul class="simple">
 <li><p>When NITER &lt;=4, up to four unique BLOCK_SIZE chunks of data are sent to the AI Engine.</p></li>
@@ -656,30 +411,30 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <td>1024</td>
 </tr>
 </tbody>
-</table></div>
-</div>
-<div class="section" id="start">
-<h5>Start<a class="headerlink" href="#start" title="Permalink to this headline">¶</a></h5>
+</table></section>
+</section>
+<section id="start">
+<h5>Start<a class="headerlink" href="#start" title="Permalink to this heading">¶</a></h5>
 <p>After configuration, the PL master kernels are ready to send the data stored in their BRAMs to the AI Engine. When the GO bit is asserted, the PL traffic to the AI Engine starts. Deasserting the GO bit stops PL traffic to the AI Engine.</p>
 <p><img alt="PL Master Kernel Data Storage" src="../../../../../_images/PL_master_kernel_data_storage.png" /></p>
-</div>
-<div class="section" id="done">
-<h5>Done<a class="headerlink" href="#done" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="done">
+<h5>Done<a class="headerlink" href="#done" title="Permalink to this heading">¶</a></h5>
 <p>When the PL Master kernels have sent a BLOCK_SIZE number TDATA packets to the AI Engine for NITER number of times, then then they assert their MASTER_DONE bits.</p>
-</div>
-</div>
-<div class="section" id="ip-kernelization">
-<h4>IP Kernelization<a class="headerlink" href="#ip-kernelization" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="ip-kernelization">
+<h4>IP Kernelization<a class="headerlink" href="#ip-kernelization" title="Permalink to this heading">¶</a></h4>
 <p>Take a look at the <code class="docutils literal notranslate"><span class="pre">package_xo</span></code> command, which can be found in the last line of <code class="docutils literal notranslate"><span class="pre">run_*.tcl</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>package_xo -kernel_name ${IP_NAME} -ctrl_protocol user_managed -ip_directory [pwd]/../${IP_REPO}/${IP_NAME} -xo_path [pwd]/../${IP_REPO}/${IP_NAME}.xo -force -output_kernel_xml [pwd]/kernel_${IP_NAME}_auto.xml
 </pre></div>
 </div>
 <p>First, the IP is created. The steps can be seen in <code class="docutils literal notranslate"><span class="pre">run_*.tcl</span></code> until <code class="docutils literal notranslate"><span class="pre">update_ip_catalog</span></code>. The packaged IP is then taken from the IP directory and provided to the <code class="docutils literal notranslate"><span class="pre">package_xo</span></code> command using the <code class="docutils literal notranslate"><span class="pre">-kernel_name</span></code> keyword. When the <code class="docutils literal notranslate"><span class="pre">package_xo</span></code> command kernelizes the IP, it outputs the <code class="docutils literal notranslate"><span class="pre">${IP_NAME}.xo</span></code> in the path provided by the <code class="docutils literal notranslate"><span class="pre">-xo_path</span></code>. The <code class="docutils literal notranslate"><span class="pre">-xo_path</span></code> cannot be the same as the <code class="docutils literal notranslate"><span class="pre">-ip_directory</span></code> path. The argument <code class="docutils literal notranslate"><span class="pre">-force</span></code> overwrites if there is a pre-existing XO file. The intermediate metadata file is generated by this command and is stored as <code class="docutils literal notranslate"><span class="pre">kernel_${IP_NAME}_auto.xml</span></code>.</p>
 <p>More information can be found in this <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/package_ip.md">tutorial</a>.</p>
-</div>
-</div>
-<div class="section" id="id2">
-<h3>PL Slave Kernels<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="id2">
+<h3>PL Slave Kernels<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>The PL slave kernels are the <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> and the <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> kernels. These kernels store the output data generated from the AI Engine application. Open the Vivado projects for the PL kernels and review their source code.</p>
 <p><img alt="PL Slave Kernel Block Diagram" src="../../../../../_images/pl_slave_kernel_block_diagram.png" /></p>
 <ul class="simple">
@@ -726,18 +481,18 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <li><p><strong>CDC Module:</strong> The control and status signals sent to the CSR module sync up with the slave RAM module through a clock domain crossing (CDC) module. It converts the 100 MHz control and status signals from CIPS to 400 MHz signals. The slave RAM module operate at 400 MHz. It also works the other way as well (converting 400 MHz signals from the slave RAM modules to 100 MHz signals to send to the CIPS).</p></li>
 <li><p><strong>Data Slave RAM Module:</strong> Contains the URAM instance that stores the output data produced by the AI Engine. There is one slave RAM module in the <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> PL kernels.</p></li>
 </ul>
-<div class="section" id="pl-slave-execution-flow">
-<h4>PL Slave Execution Flow<a class="headerlink" href="#pl-slave-execution-flow" title="Permalink to this headline">¶</a></h4>
+<section id="pl-slave-execution-flow">
+<h4>PL Slave Execution Flow<a class="headerlink" href="#pl-slave-execution-flow" title="Permalink to this heading">¶</a></h4>
 <p>The control path (highlighted in blue in the preceding block diagram) is the same as the one in the PL master kernels; however, the CSR module syncs with a data slave RAM module. The AI Engine writes its output data to a data slave RAM module through an AXI4-Stream interface. The AI Engine application writes its output data from downlink and uplink subgraphs to the <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> PL kernels this way. The PL slaves must follow a certain execution flow to function properly.</p>
-<div class="section" id="id3">
-<h5>Reset<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h5>
+<section id="id3">
+<h5>Reset<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h5>
 <p>Just like the PL masters, the PL slaves must first be reset by asserting their RESET bits to 1’b1 and then deasserting them to 0’b1.</p>
-</div>
-<div class="section" id="id4">
-<h5>Configuration<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="id4">
+<h5>Configuration<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h5>
 <p>The PL slaves must then have their BLOCK_SIZE, NITER, and ROLLOVER_ADDR registers configured.</p>
-<div class="section" id="id5">
-<h6>BLOCK_SIZE<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h6>
+<section id="id5">
+<h6>BLOCK_SIZE<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h6>
 <p>Although there is no explicit BLOCK_SIZE register, PL slave kernels do receive &lt;BLOCK_SIZE&gt; chunks of data from the AI Engine as follows:</p>
 <table border="1" class="docutils">
 <thead>
@@ -759,119 +514,60 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
 <td>768</td>
 </tr>
 </tbody>
-</table></div>
-</div>
-<div class="section" id="id6">
-<h5>NITER and ROLLOVER_ADDR<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h5>
+</table></section>
+</section>
+<section id="id6">
+<h5>NITER and ROLLOVER_ADDR<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h5>
 <p>The NITER register tells the PL slave kernel how many &lt;BLOCK_SIZE&gt; chunks of data to expect and store in their URAMs.</p>
 <p>The PL slave kernels do not have a ROLLOVER_ADDR register because the aim is to keep all of the output data for functional verification. Data starts to be overwritten when NITER &gt; 4.</p>
-</div>
-<div class="section" id="id7">
-<h5>Start<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="id7">
+<h5>Start<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h5>
 <p>The PL slave kernels are slaves to the AI Engine because the AI Engine writes output data to them. Because the PL kernels must wait until the AI Engine fills their URAMs, there is no GO bit on the PL slave kernels.</p>
-</div>
-<div class="section" id="id8">
-<h5>Done<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="id8">
+<h5>Done<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h5>
 <p>When the PL slave kernels have received the &lt;BLOCK_SIZE&gt; amount of data for NITER number of times, they assert their SLAVE_DONE bits.</p>
-</div>
-</div>
-</div>
-<div class="section" id="axi4-stream-register-slice">
-<h3>AXI4-Stream Register Slice<a class="headerlink" href="#axi4-stream-register-slice" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+<section id="axi4-stream-register-slice">
+<h3>AXI4-Stream Register Slice<a class="headerlink" href="#axi4-stream-register-slice" title="Permalink to this heading">¶</a></h3>
 <p>The AXI4-Stream Register Slice IP (axi_register_slice) is available in the IP Catalog. It is a flip-flop that is used to pipeline paths. It is used during timing closure (see Module 04).</p>
-</div>
-</div>
-<div class="section" id="beamforming-design-downlink-ai-engine-graph">
-<h2>Beamforming Design: Downlink AI Engine Graph<a class="headerlink" href="#beamforming-design-downlink-ai-engine-graph" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="beamforming-design-downlink-ai-engine-graph">
+<h2>Beamforming Design: Downlink AI Engine Graph<a class="headerlink" href="#beamforming-design-downlink-ai-engine-graph" title="Permalink to this heading">¶</a></h2>
 <p>Each downlink AI Engine graph has four input data ports, 32 input coefficient ports, and eight output ports. A <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code> PL kernel has four AXI4-Stream output ports to that plug into the four input data ports of the downlink AI Engine graph. A <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code> PL kernel has four AXI4-Stream output ports. So, eight <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code> PL kernels are required to plug into the 4*8=32 input coefficient ports. A <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> PL kernel has one AXI4-Stream input port. So, eight <code class="docutils literal notranslate"><span class="pre">dlbf_slave</span></code> PL kernels are required to plug into the eight output ports.</p>
 <p>Remember, our system instantiates three downlink graphs, so the total number of DLBF PL kernels becomes: three <code class="docutils literal notranslate"><span class="pre">dlbf_data</span></code>, 24 <code class="docutils literal notranslate"><span class="pre">dlbf_coeffs</span></code>, and 24 <code class="docutils literal notranslate"><span class="pre">dlbfs_slave</span></code> PL kernels.</p>
-</div>
-<div class="section" id="beamforming-design-uplink-ai-engine-graph">
-<h2>Beamforming Design: Uplink AI Engine Graph<a class="headerlink" href="#beamforming-design-uplink-ai-engine-graph" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="beamforming-design-uplink-ai-engine-graph">
+<h2>Beamforming Design: Uplink AI Engine Graph<a class="headerlink" href="#beamforming-design-uplink-ai-engine-graph" title="Permalink to this heading">¶</a></h2>
 <p>Each uplink AI Engine graph has eight input data ports, 32 input coefficient ports, and four output ports. A <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code> PL kernel has eight AXI4-Stream output ports that plug into the eight input data ports of the uplink AI Engine graph. A <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code> PL kernel has eight AXI4-Stream output ports. So, four <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code> PL kernels are required to plug into the 8*4=32 input coefficient ports. A <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> PL kernel has one AXI4-Stream input port. So, four <code class="docutils literal notranslate"><span class="pre">ulbf_slave</span></code> PL kernels are required to plug into the four output ports.</p>
 <p>Remember, our system instantiates three uplink graphs, so the total number of ULBF PL kernels becomes: three <code class="docutils literal notranslate"><span class="pre">ulbf_data</span></code>, 12 <code class="docutils literal notranslate"><span class="pre">ulbf_coeffs</span></code>, and 12 <code class="docutils literal notranslate"><span class="pre">ulbf_slaves</span></code>.</p>
-</div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/devrtlkernel.html#qnk1504034323350">Vitis Application Acceleration Development Flow Documentation, Developing Applications, RTL Kernels</a> - This is a reference on how to create your own custom RTL kernels. Please note that the PL kernels in this design do not completely adhere to the recommended guidelines.</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
-</div>
-<div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p></div>
+<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p></section>
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        Last updated on February 10, 2022.
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -880,147 +576,61 @@ vivado -mode batch -source run_axi4s_regslice_64b.tcl -tclargs NO_SIM xcvc1902-v
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-														
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<div class="lang-select dropup hidden-md hidden-lg">
-		<button data-toggle="dropdown">
-			<span class="fas fa-globe" aria-hidden="true"></span>
-			<span>
-				
-					English
-				</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">Connect on LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Follow us on Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Connect on Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">Watch us on YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-																	<div class="lang-select dropup hidden-xs hidden-sm">
-	<button data-toggle="dropdown">
-		<span class="fas fa-globe" aria-hidden="true"></span>
-		<span>
-			
-				English
-			</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-															</div>
-														</div>
-														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
-															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
-														</div>
 
-													</div>
-													                    <div class="movethisrowtoleft row">
+													                    <div class="row">
                         <div class="col-xs-24">
-                            <ul class="sub-menu">
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
-								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
-                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
-                            </ul>
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="https://pages.gitenterprise.xilinx.com/techdocs/Test/vvas/build/html/index.html#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
                         </div>
                     </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
-    <span data-component="backToTopButton" class="backToTopButton loaded">
-        <ul>
-            <li>
-                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
-                    <span class="fas fa-angle-up" aria-hidden="true"></span>
-                </a>
-            </li>
-        </ul>
-    </span>
-</noindex></div>
-			</div>
-		</div>
+										
+</br>
 
 
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-			underscoreSetup();
-		</script>
-	</body>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

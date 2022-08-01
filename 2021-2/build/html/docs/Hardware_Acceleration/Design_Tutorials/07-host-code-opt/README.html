@@ -1,316 +1,48 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Host Code Optimization &mdash; Vitis™ Tutorials 2021.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
-	<script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="RTL カーネル入門" href="../../Feature_Tutorials/01-rtl_kernel_workflow/README.html" />
+    <link rel="next" title="Getting Started with RTL Kernels" href="../../Feature_Tutorials/01-rtl_kernel_workflow/README.html" />
     <link rel="prev" title="Vitis Hardware Acceleration on Cholesky Algorithm" href="../06-cholesky-accel/README.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="header parbase aem-GridColumn aem-GridColumn--default--12">
-								<noindex>
-									<header data-component="header">
-										<nav class="navbar navbar-default aem-Grid aem-Grid--16">
-											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-												<div class="container-fluid main-nav">
-													<div class="row">
-														<div class="col-xs-12">
-															<div class="logo-column">
-																<div class="logo">
-																	<a href="https://www.xilinx.com/">
-																	<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-																	</a>
-																</div>
-															</div>
-															<div class="navbar-column">
-																<div class="navbar navbar-collapse collapse" id="xilinx-main-menu">
-																	<div class="mobile-search-container">
-																		<div id="headerSearchBox" class="headerSearch"
-																			data-component="header-search"
-																			data-redirect-if-empty="false"
-																			data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
-																			data-coveo-organization-id="xilinxcomprode2rjoqok">
-																			<div class='coveo-search-section'>
-																				<div class="CoveoAnalytics" data-search-hub="Site"></div>
-																				<ul class="dropdown-menu options">
-																					<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site">
-																						<a href="#">
-																						All</a>
-																					</li>
-																					<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com//products/silicon-devices/si-keyword-search.html" data-search-hub="Product">
-																						<a href="#">
-																						Silicon Devices</a>
-																					</li>
-																					<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com//products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product">
-																						<a href="#">
-																						Boards and Kits</a>
-																					</li>
-																					<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com//products/intellectual-property/ip-keyword-search.html" data-search-hub="Product">
-																						<a href="#">
-																						Intellectual Property</a>
-																					</li>
-																					<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support">
-																						<a href="#">
-																						Support</a>
-																						<ul>
-																							<li data-label="Documentation" data-action-link="https://www.xilinx.com//support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document">
-																								<a href="#">
-																								Documentation</a>
-																							</li>
-																							<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com//support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord">
-																								<a href="#">
-																								Knowledge Base</a>
-																							</li>
-																							<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums">
-																								<a href="#">
-																								Community Forums</a>
-																							</li>
-																						</ul>
-																					</li>
-																					<li data-label="Partners" data-action-link="https://www.xilinx.com//alliance/member-keyword-search.html" data-search-hub="Partner">
-																						<a href="#">
-																						Partners</a>
-																					</li>
-																					<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video">
-																						<a href="#">
-																						Videos</a>
-																					</li>
-																					<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press">
-																						<a href="#">
-																						Press</a>
-																					</li>
-																				</ul>
-																				<a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a>
-																				<div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
-																			</div>
-																		</div>
-																	</div>
-																	<ul class="nav navbar-nav nav-justified">
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://www.xilinx.com/applications.html">
-																			Applications</a>
-																		</li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://www.xilinx.com/products/silicon-devices.html">
-																			Products</a>
-																		</li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://developer.xilinx.com/">
-																			Developers</a>
-																		</li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://www.xilinx.com/support.html">
-																			Support</a>
-																		</li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://www.xilinx.com/about/company-overview.html">
-																			About</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-															<script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
-															<!--<div class="mini-nav">
-																<button type="button" data-function="xilinx-mobile-menu" id="nav-toggle" class="navbar-toggle collapsed visible-xs-block" aria-expanded="false">
-																<span></span>
-																<span></span>
-																<span></span>
-																<span></span>
-																</button>
-																<ul class="list-inline">
-																	<li class="dropdown user-menu">
-																		<button data-toggle="dropdown">
-																		<span class="sr-only">Account</span>
-																		<span class="fas fa-user"></span>
-																		</button>
-																		<ul class="dropdown-menu">
-																			<li>
-																				<a href="https://www.xilinx.com/myprofile/subscriptions.html">
-																				My Account</a>
-																			</li>
-																			<li>
-																				<a href="https://www.xilinx.com/registration/create-account.html">
-																				Create Account</a>
-																			</li>
-																			<li>
-																				<a href="https://www.xilinx.com/bin/protected/en/signout">
-																				Sign Out</a>
-																			</li>
-																		</ul>
-																	</li>
-																	<li class="hidden-xs">
-																		<button data-function="search-toggle">
-																		<span class="sr-only">Search</span>
-																		<span class="far fa-search"></span>
-																		</button>
-																	</li>
-																</ul>
-															</div>
-															-->
-															<div class="search-container">
-																<div id="headerSearchBox" class="headerSearch"
-																	data-component="header-search"
-																	data-redirect-if-empty="false"
-																	data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
-																	data-coveo-organization-id="xilinxcomprode2rjoqok">
-																	<div class='coveo-search-section'>
-																		<div class="CoveoAnalytics" data-search-hub="Site"></div>
-																		<ul class="dropdown-menu options">
-																			<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site">
-																				<a href="#">
-																				All</a>
-																			</li>
-																			<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com/products/silicon-devices/si-keyword-search.html" data-search-hub="Product">
-																				<a href="#">
-																				Silicon Devices</a>
-																			</li>
-																			<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com/products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product">
-																				<a href="#">
-																				Boards and Kits</a>
-																			</li>
-																			<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com/products/intellectual-property/ip-keyword-search.html" data-search-hub="Product">
-																				<a href="#">
-																				Intellectual Property</a>
-																			</li>
-																			<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support">
-																				<a href="#">
-																				Support</a>
-																				<ul>
-																					<li data-label="Documentation" data-action-link="https://www.xilinx.com/support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document">
-																						<a href="#">
-																						Documentation</a>
-																					</li>
-																					<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com/support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord">
-																						<a href="#">
-																						Knowledge Base</a>
-																					</li>
-																					<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums">
-																						<a href="#">
-																						Community Forums</a>
-																					</li>
-																				</ul>
-																			</li>
-																			<li data-label="Partners" data-action-link="https://www.xilinx.com/alliance/member-keyword-search.html" data-search-hub="Partner">
-																				<a href="#">
-																				Partners</a>
-																			</li>
-																			<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video">
-																				<a href="#">
-																				Videos</a>
-																			</li>
-																			<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press">
-																				<a href="#">
-																				Press</a>
-																			</li>
-																		</ul>
-																		<a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a>
-																		<div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
-																	</div>
-																</div>
-																<button data-function="search-toggle">
-																<span class="sr-only">Search</span>
-																<span class="far fa-times"></span>
-																</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</nav>
-									</header>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+</head>
+
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ チュートリアル
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2021.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -318,225 +50,168 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">English</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Master</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">入門</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">アクセラレーション</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">概要</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">設計チュートリアル</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">ブルーム フィルターの例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">たたみ込みの例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL システム統合の例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">巡回セールスマン問題</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">ボトム RTL カーネルのデザイン フローの例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">コレスキー アルゴリズム アクセラレーション</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">XRT ホスト コードの最適化</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#introduction">概要</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#tutorial-overview">チュートリアルの概要</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#before-you-begin">開始前の確認事項</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#model">モデル</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#building-the-device-binary-xclbin">デバイス バイナリ  (xclbin) のビルド</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#host-code">ホスト コード</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#conclusion">まとめ</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#next-steps">次の手順</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">Bloom Filter Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">Convolution Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">Cheleskey Algorithm Acceleration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">XRT Host Code Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tutorial-overview">Tutorial Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#before-you-begin">Before You Begin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model">Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-the-device-binary-xclbin">Building the Device Binary (xclbin)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#host-code">Host Code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">機能チュートリアル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">プラットフォーム</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">その他のバージョン</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">このページ</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/07-host-code-opt/README.md.txt"
-						rel="nofollow">ソースの表示</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../../index.html">Vitis™ チュートリアル</a>
-        
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../Hardware-Acceleration.html">Vitis ハードウェア アクセラレータ</a> &raquo;</li>
-        
-      <li>ホスト コードの最適化</li>
-    
-    
+          <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
+      <li>Host Code Optimization</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
-            <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/07-host-code-opt/README.md.txt" rel="nofollow"> ページ ソースの表示</a>
-          
-        
+            <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/07-host-code-opt/README.md.txt" rel="nofollow"> View page source</a>
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
    </td>
  </tr>
  <tr>
  <td>
  </td>
  </tr>
-</table><div class="section" id="host-code-optimization">
-<h1>ホスト コードの最適化<a class="headerlink" href="#host-code-optimization" title="Permalink to this headline">¶</a></h1>
-<p><em><strong>バージョン: Vitis 2021.2</strong></em></p>
-<div class="section" id="introduction">
-<h2>概要<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>このチュートリアルでは、FPGA アクセラレーション アプリケーションに関連するホスト コードのパフォーマンスを調整する方法について説明します。ホスト コードの最適化は、パフォーマンス最適化の 1 つにすぎません。ホスト コードの最適化には、次の最適化が含まれます。</p>
+</table><section id="host-code-optimization">
+<h1>Host Code Optimization<a class="headerlink" href="#host-code-optimization" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>Version: Vitis 2021.2</strong></em></p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<p>This tutorial concentrates on performance tuning of the host code associated with an FPGA accelerated application. Host code optimization is only one aspect of performance optimization, which includes the following disciplines:</p>
 <ul class="simple">
-<li><p>ホスト プログラムの最適化</p></li>
-<li><p>カーネル コードの最適化</p></li>
-<li><p>トポロジの最適化</p></li>
-<li><p>インプリメンテーションの最適化</p></li>
+<li><p>Host program optimization</p></li>
+<li><p>Kernel code optimization</p></li>
+<li><p>Topological optimization</p></li>
+<li><p>Implementation optimization</p></li>
 </ul>
-</div>
-<div class="section" id="tutorial-overview">
-<h2>チュートリアルの概要<a class="headerlink" href="#tutorial-overview" title="Permalink to this headline">¶</a></h2>
-<p>このチュートリアルでは、1 つの単純な C++ カーネル インプリメンテーションを使用することにより、ホスト コード インプリメンテーションの解析からカーネル コードの修正、トポロジの最適化、およびインプリメンテーションの選択に関する要素を取り除いています。</p>
+</section>
+<section id="tutorial-overview">
+<h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
+<p>In this tutorial, you operate on a simple, single, generic C++ kernel implementation. This allows you to eliminate any aspects of the kernel code modifications, topological optimizations, and implementation choices from the analysis of host code implementations.</p>
 <blockquote>
-<div><p><strong>注記:</strong> このチュートリアルでは、ホスト コード最適化手法のアクセラレータの統合を最適化する点についてのみ説明します。複数の CPU コアの使用、ホスト コードでのメモリの管理など、その他のよく使用される手法については説明しません。詳細は、次を参照してください。<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-Optimizing-and-Debugging-the-Application">アプリケーションのプロファイル、最適化、およびデバッグ</a>『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの xclbinutil ユーティリティ。</p>
+<div><p><strong>NOTE:</strong> The host code optimization techniques shown in this tutorial are limited to aspects for optimizing the accelerator integration. Additional common techniques, which allow for the usage of multiple CPU cores or memory management on the host code, are not part of this discussion. For more information, refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-Optimizing-and-Debugging-the-Application">Profiling, Optimizing, and Debugging the Application</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
 </div></blockquote>
-<p>次のセクションでは、ホスト コードの最適化に関する次の注意点について説明します。</p>
+<p>The following sections focus on the following specific host code optimization concerns:</p>
 <ul class="simple">
-<li><p>ソフトウェア パイプライン/イベント キュー</p></li>
-<li><p>カーネルおよびホスト コードを同期</p></li>
-<li><p>バッファー サイズ</p></li>
+<li><p>Software Pipelining/Event Queue</p></li>
+<li><p>Kernel and Host Code Synchronization</p></li>
+<li><p>Buffer Size</p></li>
 </ul>
-</div>
-<div class="section" id="before-you-begin">
-<h2>開始前の確認事項<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
-<p>このチュートリアルでは、次を使用します。</p>
+</section>
+<section id="before-you-begin">
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
+<p>This tutorial uses:</p>
 <ul class="simple">
-<li><p>BASH Linux シェル コマンド</p></li>
-<li><p>2021.2 Vitis コア開発キット リリースおよび <em>xilinx_u200_gen3x16_xdma_1_202110_1</em> プラットフォーム<br />必要であれば、ほかのバージョンおよびプラットフォームを使用するように変更することもできます。</p></li>
+<li><p>BASH Linux shell commands</p></li>
+<li><p>2021.2 Vitis core development kit release and the <em>xilinx_u200_gen3x16_xdma_1_202110_1</em> platform.<br />If necessary, it can be easily ported to other versions and platforms.</p></li>
 </ul>
 <blockquote>
-<div><p><strong>重要:</strong></p>
+<div><p><strong>IMPORTANT:</strong></p>
 <ul class="simple">
-<li><p>例を実行する前に、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation">インストール</a>に示すように Vitis コア開発キットをインストールしておく必要があります<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation"></a>『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの xclbinutil ユーティリティ。</p></li>
-<li><p>ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、<a class="reference external" href="https://japan.xilinx.com/products/boards-and-kits/alveo.html">Alveo ポートフォリオ</a> ページの手順に従って、カードとソフトウェア ドライバーを正しくインストールしてください<a class="reference external" href="https://japan.xilinx.com/products/boards-and-kits/alveo.html"></a>.</p></li>
+<li><p>Before running any of the examples, make sure you have the Vitis core development kit as described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation">Installation</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p></li>
+<li><p>If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo.html">Alveo Portfolio page</a>.</p></li>
 </ul>
 </div></blockquote>
-<div class="section" id="accessing-the-tutorial-reference-files">
-<h3>チュートリアル リファレンス ファイルの入手<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this headline">¶</a></h3>
+<section id="accessing-the-tutorial-reference-files">
+<h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
-<li><p>リファレンス ファイルを入手するには、ターミナルに <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code> と入力します。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Design_Tutorials/07-host-code-opt</span></code> ディレクトリに移動し、<code class="docutils literal notranslate"><span class="pre">reference-files</span></code> ディレクトリにアクセスします。</p></li>
+<li><p>To access the reference files, type the following into a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
+<li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Design_Tutorials/07-host-code-opt</span></code> directory, and then access the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="model">
-<h2>モデル<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
-<p>この例では、カーネルはホスト コードを最適化するためにのみ作成します。ホスト コードの最適化の影響がわかるように、このチュートリアル全体で同じものを使用します。</p>
-<!--this could be better suited as a table--><p>C++ カーネルには、入力ポートと出力ポートが 1 つずつあります。これらのポートの幅は、AXI 帯域幅を最適に使用するため、512 ビットにしています。実行ごとにカーネルで消費される要素数は、<code class="docutils literal notranslate"><span class="pre">numInputs</span></code> パラメーターで設定できます。同様に、<code class="docutils literal notranslate"><span class="pre">processDelay</span></code> パラメーターを使用すると、カーネルのレイテンシを変更できます。このアルゴリズムは、入力値を <code class="docutils literal notranslate"><span class="pre">ProcessDelay</span></code> の値分増加しますが、これは、入力値を 1 回に 1 ずつ、<code class="docutils literal notranslate"><span class="pre">processDelay</span></code> 回増加するループを実行することによりインプリメントされます。このループはカーネル インプリメンテーション内にあるので、反復ごとに一定量のサイクル数が必要で、これを <code class="docutils literal notranslate"><span class="pre">numInputs</span></code> 値で乗算できます。</p>
-<p>カーネルでは、AXI バースト転送もイネーブルにできます。カーネルには読み出しおよび書き込みプロセスが含まれ、プロセスの終わりの方で実際のカーネル アルゴリズム (<code class="docutils literal notranslate"><span class="pre">exec</span></code>) と並列に実行されます。
-読み出しおよび書き込みプロセスは AXI トランザクションを単純なループで開始し、受信した値を内部 FIFO に書き込むか、内部 FIFO から読み出して AXI 出力に書き込みます。これらを含む <code class="docutils literal notranslate"><span class="pre">pass_dataflow</span></code> 関数に DATAFLOW プラグマが設定されているので、Vitis コンパイラでこれらのブロックが同時並列プロセスとしてインプリメントされます。</p>
-</div>
-<div class="section" id="building-the-device-binary-xclbin">
-<h2>デバイス バイナリ  (xclbin) のビルド<a class="headerlink" href="#building-the-device-binary-xclbin" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="model">
+<h2>Model<a class="headerlink" href="#model" title="Permalink to this heading">¶</a></h2>
+<p>In this example, the kernel is created solely for host code optimization. It is designed to be static throughout this tutorial, which allows you to see the effects of your optimizations on the host code.</p>
+<!--this could be better suited as a table--><p>The C++ kernel has one input and one output port. These ports are 512-bits wide to optimally use the AXI bandwidth. The number of elements consumed by kernel per execution is configurable through the <code class="docutils literal notranslate"><span class="pre">numInputs</span></code> parameter. Similarly, the <code class="docutils literal notranslate"><span class="pre">processDelay</span></code> parameter can be used to alter the latency of the kernel. The algorithm increments the input value by the value for <code class="docutils literal notranslate"><span class="pre">ProcessDelay</span></code>. However, this increment is implemented by a loop executing <code class="docutils literal notranslate"><span class="pre">processDelay</span></code> times incrementing the input value by one each time. Because this loop is present within the kernel implementation, each iteration will end up requiring a constant amount of cycles, which can be multiplied by the <code class="docutils literal notranslate"><span class="pre">processDelay</span></code> number.</p>
+<p>The kernel is also designed to enable AXI burst transfers. The kernel contains a read and a write process, executed in parallel with the actual kernel algorithm (<code class="docutils literal notranslate"><span class="pre">exec</span></code>) towards the end of the process.
+The read and the write process initiates the AXI transactions in a simple loop and writes the received values into internal FIFOs or reads from internal FIFOs and writes to the AXI outputs. The Vitis compiler implements these blocks as concurrent parallel processes, because the DATAFLOW pragma was set on the surrounding <code class="docutils literal notranslate"><span class="pre">pass_dataflow</span></code> function.</p>
+</section>
+<section id="building-the-device-binary-xclbin">
+<h2>Building the Device Binary (xclbin)<a class="headerlink" href="#building-the-device-binary-xclbin" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><strong>注記:</strong> このチュートリアルでは、すべての手順を <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> ディレクトリから実行します。</p>
+<div><p><strong>NOTE</strong>: In this tutorial, run all instructions from the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p>
 </div></blockquote>
-<p>ホスト コードにはハードウェア エミュレーションでうまく実行できるものもありますが、正確なランタイム情報の取得および大型のテスト ベクターの実行には、実際のアクセラレータ カード上でカーネルを実行する必要があります。通常、カーネルはホスト コードの最適化中には変更されないので、このチュートリアルではカーネルをハードウェアにコンパイルする必要があるのは 1 回だけです。</p>
-<p>次の make コマンドを実行して、カーネルを特定のアクセラレータ カードにコンパイルします。</p>
+<p>Although some host code optimizations perform well with the hardware emulation, accurate runtime information and the running of large test vectors require the kernel to be executed on an actual accelerator card. Generally, the kernel is not expected to change during host code optimization, so the kernel only needs to be compiled to hardware once for this tutorial.</p>
+<p>Run the following makefile command to compile the kernel to the specified accelerator card.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">DEVICE</span><span class="o">=</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="n">xclbin</span>
 </pre></div>
 </div>
 <blockquote>
-<div><p><strong>注記:</strong> このビルド プロセスには数時間かかりますが、ホスト コードの最適化がパフォーマンスにどのように影響するかを解析する前に、カーネルをコンパイルする必要があります。</p>
+<div><p><strong>NOTE:</strong> This build process can take several hours, but the kernel compilation must be completed before you can analyze the impact of optimizations on the host code performance.</p>
 </div></blockquote>
-</div>
-<div class="section" id="host-code">
-<h2>ホスト コード<a class="headerlink" href="#host-code" title="Permalink to this headline">¶</a></h2>
-<p>ホスト コードのさまざまなインプリメンテーション オプションを検証する前に、コードの構造を確認します。ホスト コード ファイルは、ホスト コード最適化の重要な点に集中できるように設計されています。</p>
-<p>共通ソース ディレクトリ (<code class="docutils literal notranslate"><span class="pre">srcCommon</span></code>) のヘッダー ファイルには、次の 3 つのクラスが含まれます。</p>
+</section>
+<section id="host-code">
+<h2>Host Code<a class="headerlink" href="#host-code" title="Permalink to this heading">¶</a></h2>
+<p>Before examining different implementation options for the host code, view the structure of the code. The host code file is designed to let you focus on the key aspects of host code optimization.</p>
+<p>The following three classes are provided through header files in the common source directory (<code class="docutils literal notranslate"><span class="pre">srcCommon</span></code>):</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">srcCommon/AlignedAllocator.h</span></code>: <code class="docutils literal notranslate"><span class="pre">AlignedAllocator</span></code> は 2 つのメソッドを含む小型の構造体です。この構造体は、テスト ベクターのメモリ アライメントされた割り当てをサポートするヘルパー クラスとして提供されています。Alveo データセンター アクセラレータ カードでは、メモリ アライメントされたデータのブロックは高速に転送でき、送信されたデータがメモリ アライメントされていない場合は OpenCL™ API ライブラリで警告が作成されます。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">srcCommon/ApiHandle.h</span></code>: 次の主な OpenCL API オブジェクトをカプセル化します。</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">srcCommon/AlignedAllocator.h</span></code>: <code class="docutils literal notranslate"><span class="pre">AlignedAllocator</span></code> is a small struct with two methods. This struct is provided as a helper class to support memory-aligned allocation for the test vectors. On Alveo Data Center accelerator cards, memory-aligned blocks of data can be transferred much more rapidly, and the OpenCL™ API library will create warnings if the data transmitted is not memory-aligned.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">srcCommon/ApiHandle.h</span></code>: This class encapsulates the main OpenCL API objects:</p>
 <ul class="simple">
 <li><p>context</p></li>
 <li><p>program</p></li>
@@ -544,355 +219,294 @@
 <li><p>execution kernel</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">command_queue</span></code></p></li>
 </ul>
-<p>これらの構造はコンストラクターで作成され、OpenCL API 関数呼び出しのデフォルト シーケンスを 1 つずつ実行します。コンストラクターには、次の 2 つの設定パラメーターがあります。</p>
+<p>These structures are populated by the constructor, which steps through the default sequence of OpenCL API function calls. There are only two configuration parameters to the constructor:</p>
 <ul class="simple">
-<li><p>FPGA をプログラムするのに使用するビットストリーム (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>) の名前を含む文字列。</p></li>
-<li><p>順不同キューを作成するか、順序どおりの実行キューを作成するかを指定するブール値。</p></li>
+<li><p>A string containing the name of the bitstream (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>) to be used to program the FPGA.</p></li>
+<li><p>A Boolean to determine if an out-of-order queue or a sequential execution queue should be created.</p></li>
 </ul>
-<p>このクラスには、バッファーの生成およびアクセラレータでのタスクのスケジューリングに必要なキュー、コンテキスト、カーネルへの補足的な関数が含まれます。また、ApiHandle デストラクターが呼び出されると、自動的に割り当てられた OpenCL API オブジェクトが解放されます。</p>
+<p>The class provides accessory functions to the queue, context, and kernel required for the generation of buffers and the scheduling of tasks on the accelerator. The class also automatically releases the allocated OpenCL API objects when the ApiHandle destructor is called.</p>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">srcCommon/Task.h</span></code>: オブジェクト クラス <code class="docutils literal notranslate"><span class="pre">Task</span></code> は、アクセラレータで実行されるワークロードの 1 つのインスタンスを示します。このクラスのオブジェクトが作成されると、バッファー サイズに基づいて入力および出力ベクターが割り当てられて初期化され、タスク呼び出しごとに転送されます。同様に、デストラクターはタスク実行中に生成されたオブジェクトの割り当てを解除します。</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">srcCommon/Task.h</span></code>: An object of class <code class="docutils literal notranslate"><span class="pre">Task</span></code> represents a single instance of the workload to be executed on the accelerator. Whenever an object of this class is constructed, the input and output vectors are allocated and initialized based on the buffer size to be transferred per task invocation. Similarly, the destructor will de-allocate any object generated during the task execution.</p>
 <blockquote>
-<div><p><strong>注記:</strong> このように 1 つのモジュールの呼び出しに 1 つのワークロードをカプセル化すると、このクラスに出力検証関数 (<code class="docutils literal notranslate"><span class="pre">outputOk</span></code>) も含めることができます。</p>
+<div><p><strong>NOTE:</strong> This encapsulation of a single workload for the invocation of a module allows this class to <em>also</em> contain an output validator function (<code class="docutils literal notranslate"><span class="pre">outputOk</span></code>).</p>
 </div></blockquote>
-<p>このクラスのコンストラクターには、次の 2 つのパラメーターが含まれます。</p>
+<p>The constructor for this class contains two parameters:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">bufferSize</span></code>: このタスクが実行されるときに転送される 512 ビット値の数を指定します。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">processDelay</span></code>: 同様の名前のカーネル パラメーターを提供します。検証中にも使用されます。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bufferSize</span></code>: Determines how many 512-bit values are transferred when this task is executed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">processDelay</span></code>: Provides the similarly-named kernel parameter, and it is also used during validation.</p></li>
 </ul>
-<p>このクラスで最も重要なメンバー関数は、<code class="docutils literal notranslate"><span class="pre">run</span></code> です。この関数は、アルゴリズムを実行するため、次の 3 つの手順をエンキューします。</p>
+<p>The most important member function of this class is the <code class="docutils literal notranslate"><span class="pre">run</span></code> function. This function enqueues three different steps for executing the algorithm:</p>
 <ol class="simple">
-<li><p>FPGA アクセラレータにデータを書き込む</p></li>
-<li><p>カーネルを設定してアクセラレータを実行</p></li>
-<li><p>FPGA アクセラレータからデータを戻す</p></li>
+<li><p>Writing data to the FPGA accelerator</p></li>
+<li><p>Setting up the kernel and running the accelerator</p></li>
+<li><p>Reading the data back from the FPGA accelerator</p></li>
 </ol>
-<p>これらを実行するため、通信用に DDR 上にバッファーが割り当てられます。また、異なるコマンド間の依存 (実行前に書き込み、読み出し前に実行) を作成するために、イベントが使用されます。</p>
-<p><code class="docutils literal notranslate"><span class="pre">run</span></code> 関数には、ApiHandle オブジェクトに加え、1 つの条件引数があります。この引数を使用すると、タスクが前に生成したイベントに依存するようにでき、このチュートリアルの後半で説明するように、ホスト コードでタスク順の依存性を構築できます。</p>
-<p>これらのヘッダー ファイルのコードは、このチュートリアルでは変更しません。主な概念は、次のフォルダーに含まれる異なる <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> ファイルに記述されています。</p>
+<p>To perform these operations, buffers are allocated on the DDR for the communication. Additionally, events are used to establish a dependency between the different commands (write before execute before read).</p>
+<p>In addition to the ApiHandle object, the <code class="docutils literal notranslate"><span class="pre">run</span></code> function has one conditional argument. This argument allows a task to be dependent on a previously-generated event. This allows the host code to establish task order dependencies, as illustrated later in this tutorial.</p>
+<p>None of the code in any of these header files is modified during this tutorial. All key concepts will be shown in different <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> files, as found in:</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">src/pipeline_host.cpp</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">src/sync_host.cpp</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">src/buf_host.cpp</span></code></p></li>
 </ul>
-<p>ただし、<code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> ファイルの main 関数は、次のセクションに説明する特別な構造に従います。</p>
-<div class="section" id="host-cpp-main-functions">
-<h3>host.cpp の main 関数<a class="headerlink" href="#host-cpp-main-functions" title="Permalink to this headline">¶</a></h3>
-<p>main 関数には、次のセクションが含まれます。</p>
+<p>However, the main function in the <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> file follows a specific structure described in the following section.</p>
+<section id="host-cpp-main-functions">
+<h3>host.cpp Main Functions<a class="headerlink" href="#host-cpp-main-functions" title="Permalink to this heading">¶</a></h3>
+<p>The main function contains the following sections marked in the source accordingly.</p>
 <ol class="simple">
 <li><p><strong>Environment / Usage Check</strong></p></li>
-<li><p><strong>Common Parameters</strong></p>
+<li><p><strong>Common Parameters</strong>:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">numBuffers</span></code>: 変更されないパラメーターです。カーネルの実行回数を指定するために使用します。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">oooQueue</span></code>: ApiHandle 内で生成される OpenCL イベント キューのタイプを宣言するために使用するブール値。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">processDelay</span></code>: カーネルで必要な計算時間を遅らせます。このパラメーターは、このバージョンのチュートリアルでは使用しません。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">bufferSize</span></code>: カーネル実行ごとに転送される 512 ビット値の数を宣言します。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">softwarePipelineInterval</span></code>: 同期の前に前もってスケジュール可能な演算の数を指定します。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numBuffers</span></code>: Not expected to be modified. This parameter is used to determine how many kernel invocations are performed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oooQueue</span></code>: This boolean value is used to declare the kind of OpenCL event queue that is generated inside the ApiHandle.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">processDelay</span></code>: This parameter can be used to artificially delay the computation time required by the kernel. This parameter is not used in this version of the tutorial.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bufferSize</span></code>: This parameter is used to declare the number of 512-bit values to be transferred per kernel invocation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">softwarePipelineInterval</span></code>: This parameter is used to determine how many operations can be pre-scheduled before synchronization occurs.</p></li>
 </ul>
 </li>
-<li><p><strong>Setup</strong>: 設定変数のステータスを通知するため、最終的な設定を表示します。</p></li>
-<li><p><strong>Execution</strong>: 複数の異なるホスト コードのパフォーマンス問題をモデル化できます。このチュートリアルでは、これらの行について説明します。</p></li>
-<li><p><strong>Testing</strong>: 実行の完了後、出力で単純なチェックを実行します。</p></li>
-<li><p><strong>Performance Statistics</strong>: モデルをエミュレーションではなく実際のアクセラレータ カードで実行した場合に、ホスト コードでシステム時間の計測に基づいてパフォーマンス統計が計算され表示されます。</p></li>
+<li><p><strong>Setup</strong>: To ensure that you are aware of the status of configuration variables, this section prints out the final configuration.</p></li>
+<li><p><strong>Execution</strong>: In this section, you can model several different host code performance issues. These are the lines you will focus on for this tutorial.</p></li>
+<li><p><strong>Testing</strong>: After execution has completed, this section performs a simple check on the output.</p></li>
+<li><p><strong>Performance Statistics</strong>: If the model is run on an actual accelerator card (not emulated), the host code will calculate and print the performance statistics based on system time measurements.</p></li>
 </ol>
 <blockquote>
-<div><p><strong>注記:</strong> setup セクションだけでなくその他のセクションでも、システム ステータスや、実行の全体的な <code class="docutils literal notranslate"><span class="pre">PASS</span></code> または <code class="docutils literal notranslate"><span class="pre">FAIL</span></code> を記録するメッセージを表示できます。</p>
+<div><p><strong>NOTE:</strong> The setup, as well as the other sections, can print additional messages recording the system status, as well as overall <code class="docutils literal notranslate"><span class="pre">PASS</span></code> or <code class="docutils literal notranslate"><span class="pre">FAIL</span></code> of the run.</p>
 </div></blockquote>
-</div>
-<div class="section" id="lab-1-pipelined-kernel-execution-using-out-of-order-event-queue">
-<h3>演習 1: 順不同イベント キューを使用してパイプライン処理済みのカーネルを実行<a class="headerlink" href="#lab-1-pipelined-kernel-execution-using-out-of-order-event-queue" title="Permalink to this headline">¶</a></h3>
-<p>この演習では、パイプライン処理されたカーネルを実行します。</p>
-<p>このビルドでは、カーネルの 1 つのインスタンス、またはハードウェアで実行する 1 つの計算ユニット (CU) のみを処理します。前述のように、カーネルの実行には、CU からデータを送受信する必要もあります。これらの操作をパイプライン処理して、カーネルのアイドル時間を最小限に抑える必要があります。</p>
-<p>ホスト コード <code class="docutils literal notranslate"><span class="pre">src/pipeline_host.cpp</span></code> を開き、55 行目から開始する実行ループを見てみます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// -- Execution -----------------------------------------------------------</span>
+</section>
+<section id="lab-1-pipelined-kernel-execution-using-out-of-order-event-queue">
+<h3>Lab 1: Pipelined Kernel Execution Using Out-of-Order Event Queue<a class="headerlink" href="#lab-1-pipelined-kernel-execution-using-out-of-order-event-queue" title="Permalink to this heading">¶</a></h3>
+<p>In this first exercise, you will look at a pipelined kernel execution.</p>
+<p>In this build you are only dealing with a single instance of the kernel, or compute unit (CU) running in the hardware. However, as previously described, the run of a kernel also requires the transmission of data to and from the CU. These activities should be pipelined to minimize the idle-time of the kernel working with the host application.</p>
+<p>Open the host code, <code class="docutils literal notranslate"><span class="pre">src/pipeline_host.cpp</span></code>, and look at the execution loop starting at line 55.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// -- Execution -----------------------------------------------------------</span>
 
-  <span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numBuffers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numBuffers</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span><span class="w"></span>
 </pre></div>
 </div>
-<p>このコードですべてのバッファーがスケジュールされて実行されます。実際に同期して完了を待つのは最後の行です。</p>
+<p>In this case, the code schedules all the buffers and lets them execute. Only at the end does it actually synchronize and wait for completion.</p>
 <ol>
-<li><p>次のコマンドを使用して、ホスト コード (<code class="docutils literal notranslate"><span class="pre">srcPipeline/host.cpp</span></code>) をコンパイルして実行します。</p>
+<li><p>Compile and run the host code (<code class="docutils literal notranslate"><span class="pre">srcPipeline/host.cpp</span></code>) using the following command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">DEVICE</span><span class="o">=</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="n">LAB</span><span class="o">=</span><span class="n">pipeline</span>
 </pre></div>
 </div>
-<p>カーネルのコンパイル時間と比べると、ビルド段階は短時間で実行されます。</p>
+<p>Compared to the kernel compilation time, this build step takes very little time.</p>
 </li>
-<li><p>アプリケーションを実行する準備が完了しました。</p>
-<p>アプリケーションでのプロファイリングのイネーブルに説明されているように、<code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> ファイルで指定した設定により、ランタイム データがホスト プログラムで生成され<a class="reference external" href="https://docs.xilinx.com/r/ja-JP/ug1393-vitis-application-acceleration/%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E3%83%97%E3%83%AD%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB-%E6%9C%80%E9%81%A9%E5%8C%96-%E3%81%8A%E3%82%88%E3%81%B3%E3%83%87%E3%83%90%E3%83%83%E3%82%B0">アプリケーションでのプロファイリングのイネーブル</a>.このファイルは <code class="docutils literal notranslate"><span class="pre">./reference-files/auxFiles/xrt.ini</span></code> にあり、<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code> コマンドで <code class="docutils literal notranslate"><span class="pre">runPipeline</span></code> ディレクトリにコピーされます。</p>
-<p><code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> ファイルには、次の設定が含まれています。</p>
+<li><p>You are now ready to run the application.</p>
+<p>The runtime data is generated by the host program due to settings specified in the <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> file, as described in <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/profilingapplication.html#vfc1586356138757">Enabling Profiling in Your Application</a>. This file is found at <code class="docutils literal notranslate"><span class="pre">./reference-files/auxFiles/xrt.ini</span></code>, and is copied to the <code class="docutils literal notranslate"><span class="pre">runPipeline</span></code> directory by the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code> command.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> file contains the following settings:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Debug</span><span class="p">]</span>
 <span class="n">opencl_summary</span><span class="o">=</span><span class="n">true</span>
 <span class="n">opencl_trace</span><span class="o">=</span><span class="n">true</span>
 <span class="n">data_transfer_trace</span><span class="o">=</span><span class="n">coarse</span>
 </pre></div>
 </div>
-<p>次のコマンドを使用してアプリケーションを実行します。</p>
+<p>Use the following command to run the application.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">DEVICE</span><span class="o">=</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="n">LAB</span><span class="o">=</span><span class="n">pipeline</span>
 </pre></div>
 </div>
-<p>実行が完了したら、Vitis アナライザーの左側のペインで [Application Timeline] を選択してアプリケーション タイムラインを開きます。</p>
+<p>After the run completes, open the Application Timeline using the Vitis analyzer, then select the Application Timeline located in left side panel.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_analyzer</span> <span class="n">runPipeline</span><span class="o">/</span><span class="k">pass</span><span class="o">.</span><span class="n">hw</span><span class="o">.</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span><span class="o">.</span><span class="n">xclbin</span><span class="o">.</span><span class="n">run_summary</span>
 </pre></div>
 </div>
-<p>[Application Timeline] ビューには、実行ファイルの実行全体が示されます。このタイムラインには、主に次の 3 つのセクションが含まれます。</p>
+<p>The Application Timeline view illustrates the full run of the executable. The three main sections of the timeline are:</p>
 <ul class="simple">
-<li><p>[OpenCL API Calls]</p></li>
-<li><p>[Data Transfer]</p></li>
-<li><p>[Kernel Enqueues]</p></li>
+<li><p>OpenCL API Calls</p></li>
+<li><p>Data Transfer</p></li>
+<li><p>Kernel Enqueues</p></li>
 </ul>
 </li>
-<li><p>実際のアクセラレータ実行を示すセクションを拡大し、<code class="docutils literal notranslate"><span class="pre">Row</span> <span class="pre">0</span></code> にあるカーネル エンキュー ブロックの 1 つを選択します。<img alt="../../../../_images/OrderedQueue_vitis.PNG" src="../../../../_images/OrderedQueue_vitis.PNG" /></p>
-<p>青の矢印は依存性を示します。すべての書き込み/実行/読み出しタスクの実行が前の書き込み/実行/読み出し演算セットに依存しており、実行は順次になります。この場合、依存性は順序どおりのキューを使用して作成されます。</p>
+<li><p>Zoom in on the section illustrating the actual accelerator execution, and select one of the kernel enqueue blocks on <code class="docutils literal notranslate"><span class="pre">Row</span> <span class="pre">0</span></code> to see an image similar to the following figure.
+<img alt="../../../../_images/OrderedQueue_vitis.PNG" src="../../../../_images/OrderedQueue_vitis.PNG" /></p>
+<p>The blue arrows identify dependencies, and you can see that every Write/Execute/Read task execution has a dependency on the previous Write/Execute/Read operation set. This effectively serializes the execution. In this case, the dependency is created by using an ordered queue.</p>
 </li>
-<li><p>テキスト エディターで <code class="docutils literal notranslate"><span class="pre">src/pipeline_host.cpp</span></code> ファイルを開きます。</p>
-<p><code class="docutils literal notranslate"><span class="pre">pipeline_host.cpp</span></code> の 27 行目の <strong>Common parameter</strong> セクションでは、<code class="docutils literal notranslate"><span class="pre">oooQueue</span></code> パラメーターが <code class="docutils literal notranslate"><span class="pre">false</span></code> に設定されています。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="kt">bool</span>         <span class="n">oooQueue</span>                 <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<li><p>Open the file <code class="docutils literal notranslate"><span class="pre">src/pipeline_host.cpp</span></code> in a text editor.</p>
+<p>In the <strong>Common Parameters</strong> section as shown at line 27 of the <code class="docutils literal notranslate"><span class="pre">pipeline_host.cpp</span></code>, the <code class="docutils literal notranslate"><span class="pre">oooQueue</span></code> parameter is set to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="kt">bool</span><span class="w">         </span><span class="n">oooQueue</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
-<p>この依存性は、順不同 (`oooQueue`) パラメーターを <code class="docutils literal notranslate"><span class="pre">true</span></code> に変更するとなくなります。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="kt">bool</span>         <span class="n">oooQueue</span>                 <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<p>You can break this dependency by changing the out-of-order parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="kt">bool</span><span class="w">         </span><span class="n">oooQueue</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
-<li><p>アプリケーションを再コンパイルし、プログラムを再実行して、Vitis アンライザーで run_summary を確認します。</p>
+<li><p>Recompile the application, rerun the program, and review the run_summary in Vitis analyze:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">DEVICE</span><span class="o">=</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="n">LAB</span><span class="o">=</span><span class="n">pipeline</span>
 <span class="n">vitis_analyzer</span> <span class="n">pipeline</span><span class="o">/</span><span class="k">pass</span><span class="o">.</span><span class="n">hw</span><span class="o">.</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span><span class="o">.</span><span class="n">xclbin</span><span class="o">.</span><span class="n">run_summary</span>
 </pre></div>
 </div>
-<p>[Application Timeline] ビューを拡大してカーネル キューの結果をクリックすると、次の図のような表示になります。<img alt="../../../../_images/OutOfOrderQueue_vitis.PNG" src="../../../../_images/OutOfOrderQueue_vitis.PNG" /></p>
-<p>ほかの pass カーネル エンキューを選択すると、10 個すべての依存性が書き込み/実行/読み出しグループ内のみに表示されるようになります。これで読み出しと書き込みをオーバーラップできるようになり、ソフトウェアの書き込み、実行、読み出しが効率的にパイプライン処理されます。通信のオーバーヘッドがアクセラレータの実行と同時に発生するので、全体的なパフォーマンスが大幅に向上します。</p>
+<p>If you zoom in on the Application Timeline, and click any kernel enqueue, you should see results similar to the following figure.
+<img alt="../../../../_images/OutOfOrderQueue_vitis.PNG" src="../../../../_images/OutOfOrderQueue_vitis.PNG" /></p>
+<p>If you select other pass kernel enqueues, you will see that all 10 are now showing dependencies only within the Write/Execute/Read group. This allows the read and write operations to overlap with the execution, and you are effectively pipelining the software write, execute, and read. This can considerably improve the overall performance because the communication overhead is occurring concurrently with the execution of the accelerator.</p>
 </li>
 </ol>
-</div>
-<div class="section" id="lab-2-kernel-and-host-code-synchronization">
-<h3>演習 2: カーネルおよびホスト コードを同期<a class="headerlink" href="#lab-2-kernel-and-host-code-synchronization" title="Permalink to this headline">¶</a></h3>
-<p>ここでは、まず <code class="docutils literal notranslate"><span class="pre">src/sync_host.cpp</span></code> のソース コードの実行ループを確認します (55 行目)。これは、このチュートリアルの前のセクションで使用したのと同じコードです。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// -- Execution -----------------------------------------------------------</span>
+</section>
+<section id="lab-2-kernel-and-host-code-synchronization">
+<h3>Lab 2: Kernel and Host Code Synchronization<a class="headerlink" href="#lab-2-kernel-and-host-code-synchronization" title="Permalink to this heading">¶</a></h3>
+<p>For this step, look at the source code in <code class="docutils literal notranslate"><span class="pre">src/sync_host.cpp</span></code> and examine the execution loop (line 55). This is the same code used in the previous section of this tutorial.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// -- Execution -----------------------------------------------------------</span>
 
-  <span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numBuffers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numBuffers</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span><span class="w"></span>
 </pre></div>
 </div>
-<p>この例では、フリーランニング パイプラインがインプリメントされます。イベント キューで <code class="docutils literal notranslate"><span class="pre">clFinish</span></code> への呼び出しが実行されるまで、同期は実行されません。これで効率的なパイプラインは作成されますが、インプリメンテーションでバッファーの割り当てと実行順序に関する問題が発生します。これは、バッファーが不要にならないとバッファーを解放できず、これが同期ポイントになるからです。</p>
-<p>たとえば、ビデオ ストリームを処理する場合など、<code class="docutils literal notranslate"><span class="pre">numBuffer</span></code> 変数を大きくすると問題となることがあります。この場合、ホスト メモリがあらかじめ割り当てられて FPGA と共有されるので、バッファーの割り当てとメモリ使用量が問題となります。この例ではメモリ不足が発生します。</p>
-<p>同様に、アクセラレータを実行する呼び出しがそれぞれ独立していて、同期されていない (順不同キュー) ので、異なる呼び出し間の実行順がエンキューの順序と一致しない可能性があります。この結果、ホスト コードが特定のブロックが終了するのを待つ場合に、実行が予測よりも遅れる可能性があります。これにより、アクセラレータが実行されているときのホスト コードの並列処理が実質的にディスエーブルになります。</p>
-<p>この問題を軽減するため、OpenCL フレームワークには 2 つの同期方法があります。</p>
+<p>In this example, the code implements a free-running pipeline. No synchronization is performed until the end, when a call to <code class="docutils literal notranslate"><span class="pre">clFinish</span></code> is performed on the event queue. While this creates an effective pipeline, this implementation has an issue related to buffer allocation, as well as execution order. This is because it is only possible to release buffers after they are no longer needed, which implies a synchronization point.</p>
+<p>For example, there could be issues if the <code class="docutils literal notranslate"><span class="pre">numBuffer</span></code> variable is increased to a large number, which would occur when processing a video stream. In this case, buffer allocation and memory usage can become problematic because the host memory is pre-allocated and shared with the FPGA. In such a case, this example will probably run out of memory.</p>
+<p>Similarly, as each of the calls to execute the accelerator are independent and un-synchronized (out-of-order queue), it is likely that the order of execution between the different invocations is not aligned with the enqueue order. As a result, if the host code is waiting for a specific block to be finished, this might not occur until much later than expected. This effectively disables any host code parallelism while the accelerator is operating.</p>
+<p>To alleviate these issues, the OpenCL framework provides two methods of synchronization.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">clFinish</span></code>  呼び出し</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">clWaitForEvents</span></code>  呼び出し</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clFinish</span></code> call</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clWaitForEvents</span></code> call</p></li>
 </ul>
 <ol>
-<li><p><code class="docutils literal notranslate"><span class="pre">src/sync_host.cpp</span></code> ファイルをテキスト エディターで開き、<code class="docutils literal notranslate"><span class="pre">Execution</span></code> 領域を確認します。この動作を確認するため、実行ループを次のように変更します。</p>
+<li><p>Open the <code class="docutils literal notranslate"><span class="pre">src/sync_host.cpp</span></code> file in an editor, and look at the <code class="docutils literal notranslate"><span class="pre">Execution</span></code> region. To illustrate the behavior, make the following modifications to the execution loop.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// -- Execution -----------------------------------------------------------</span>
 
-<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numBuffers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-  <span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numBuffers</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">count</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sync_host.cpp</span></code> コードをコンパイルして実行します。</p>
+<li><p>Compile and execute the <code class="docutils literal notranslate"><span class="pre">sync_host.cpp</span></code> code.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">DEVICE</span><span class="o">=</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="n">LAB</span><span class="o">=</span><span class="n">sync</span>
 </pre></div>
 </div>
 </li>
-<li><p>実行が完了したら、Vitis アナライザーの左側のペインで [Application Timeline] を選択してアプリケーション タイムラインを開きます。</p>
+<li><p>After the run completes, open the Application Timeline using the Vitis analyzer, then  click the Application Timeline located at left side panel.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_analyzer</span> <span class="n">sync</span><span class="o">/</span><span class="k">pass</span><span class="o">.</span><span class="n">hw</span><span class="o">.</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span><span class="o">.</span><span class="n">xclbin</span><span class="o">.</span><span class="n">run_summary</span>
 </pre></div>
 </div>
-<p>[Application Timeline] ビューを拡大すると、次のように表示されます。 <img alt="../../../../_images/clFinish_vitis.PNG" src="../../../../_images/clFinish_vitis.PNG" /></p>
-<p>この図で、<code class="docutils literal notranslate"><span class="pre">clFinish</span></code> という赤いボックスと、アクセラレータを 3 回呼び出すごとにカーネル エンキュー間のギャップが大きくなっていることに注目してください。</p>
-<p><code class="docutils literal notranslate"><span class="pre">clFinish</span></code> への呼び出しにより、全 OpenCL コマンド キューに同期ポイントが作成されます。つまり、指定のキューにエンキューされたコマンドは、<code class="docutils literal notranslate"><span class="pre">clFinish</span></code> がホスト プログラムに制御を戻す前にすべて終了している必要があります。このため、バッファーの通信を含むすべての操作を、次の 3 アクセラレータ呼び出しのセットが再開する前に終了する必要があります。これは実質的にバリア同期です。</p>
-<p>これにより、バッファーを解放できる同期ポイントをイネーブルにでき、すべてのプロセスが確実に完了するだけでなく、同期ポイントでのオーバーラップを回避できます。</p>
+<p>If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
+<img alt="../../../../_images/clFinish_vitis.PNG" src="../../../../_images/clFinish_vitis.PNG" /></p>
+<p>In the figure, the key elements are the red box named <code class="docutils literal notranslate"><span class="pre">clFinish</span></code> and the large gap between the kernel that enqueues every three invocations of the accelerator.</p>
+<p>The call to <code class="docutils literal notranslate"><span class="pre">clFinish</span></code> creates a synchronization point on the complete OpenCL command queue. This implies that all commands enqueued onto the given queue will have to be completed before <code class="docutils literal notranslate"><span class="pre">clFinish</span></code> returns control to the host program. As a result, all activities, including the buffer communication, need to be completed before the next set of three accelerator invocations can resume. This is effectively a barrier synchronization.</p>
+<p>While this enables a synchronization point where buffers can be released, and all processes are guaranteed to have completed, it also prevents overlap at the synchronization point.</p>
 </li>
-<li><p>前のアクセラレータへの呼び出しの終了に基づいて同期を実行する別の同期方法を確認します。<code class="docutils literal notranslate"><span class="pre">sync_host.cpp</span></code> ファイルで実行ループを次のように変更します。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// -- Execution -----------------------------------------------------------</span>
+<li><p>Look at an alternative synchronization scheme, where the synchronization is performed based on the completion of a previous execution of a call to the accelerator. Edit the <code class="docutils literal notranslate"><span class="pre">sync_host.cpp</span></code> file to change the execution loop as follows.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// -- Execution -----------------------------------------------------------</span>
 
-  <span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numBuffers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">,</span> <span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="mi">-3</span><span class="p">].</span><span class="n">getDoneEv</span><span class="p">());</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numBuffers</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">run</span><span class="p">(</span><span class="n">api</span><span class="p">,</span><span class="w"> </span><span class="n">tasks</span><span class="p">[</span><span class="n">i</span><span class="mi">-3</span><span class="p">].</span><span class="n">getDoneEv</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">clFinish</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">());</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
-<li><p>アプリケーションを再コンパイルし、プログラムを再実行して、Vitis アンライザーで run_summary を確認します。</p>
+<li><p>Recompile the application, rerun the program, and review the run_summary in Vitis analyze:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">DEVICE</span><span class="o">=</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="n">LAB</span><span class="o">=</span><span class="n">sync</span>
 <span class="n">vitis_analyzer</span> <span class="n">sync</span><span class="o">/</span><span class="k">pass</span><span class="o">.</span><span class="n">hw</span><span class="o">.</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span><span class="o">.</span><span class="n">xclbin</span><span class="o">.</span><span class="n">run_summary</span>
 </pre></div>
 </div>
-<p>[Application Timeline] ビューを拡大すると、次のように表示されます。 <img alt="../../../../_images/clEventSync_vitis.PNG" src="../../../../_images/clEventSync_vitis.PNG" /></p>
-<p>タイムラインの後半では、不必要な間隔なしに pass が 5 回実行されていますが、さらに注目に値するのがマーカーで示した部分でのデータ転送です。この段階では、3 つのパッケージがアクセラレータで処理されるように送信されており、既に 1 つが戻ってきています。最初のアクセラレータの呼び出しが完了したときに次の書き込み/実行/読み出しが実行されるようにしたので、3 つ目のパスが完了する前に次の書き込みが発生しています。実行がオーバーラップしているのが明確にわかります。</p>
-<p>この例では、クラス タスクの <code class="docutils literal notranslate"><span class="pre">run</span></code> メソッドの次のイベント同期を使用して、3 呼び出し前にスケジュールされた実行が完了したときに、次のアクセラレータ全体が実行されるようにしました。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="k">if</span><span class="p">(</span><span class="n">prevEvent</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">clEnqueueMigrateMemObjects</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m_inBuffer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">prevEvent</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m_inEv</span><span class="p">);</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-     <span class="n">clEnqueueMigrateMemObjects</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m_inBuffer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m_inEv</span><span class="p">);</span>
-    <span class="p">}</span>
+<p>If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
+<img alt="../../../../_images/clEventSync_vitis.PNG" src="../../../../_images/clEventSync_vitis.PNG" /></p>
+<p>In the later part of the timeline, there are five executions of pass executed without any unnecessary gaps. However, even more telling are the data transfers at the point of the marker. At this point, three packages were sent over to be processed by the accelerator, and one was already received back. Because you have synchronized the next scheduling of Write/Execute/Read on the completion of the first accelerator invocation, you now observe another write operation before the third pass has even completed. This clearly identifies an overlapping execution.</p>
+<p>In this case, you synchronized the full next accelerator execution on the completion of the execution scheduled three invocations earlier by using the following event synchronization in the <code class="docutils literal notranslate"><span class="pre">run</span></code> method of the class task.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">prevEvent</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">clEnqueueMigrateMemObjects</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">m_inBuffer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                                </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">prevEvent</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">m_inEv</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">clEnqueueMigrateMemObjects</span><span class="p">(</span><span class="n">api</span><span class="p">.</span><span class="n">getQueue</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">m_inBuffer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                                </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">m_inEv</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>これは OpenCL のエンキューされたオブジェクト間によく使用される同期化方法ですが、次の API を呼び出してホスト コードを同期化する方法もあります。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="n">clWaitForEvents</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">prevEvent</span><span class="p">);</span>
+<p>While this is the common synchronization scheme between enqueued objects in OpenCL, you can alternatively synchronize the host code by calling the following API.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">clWaitForEvents</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">prevEvent</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-<p>これにより、アクセラレータが前にエンキューされたタスクを実行している間に、追加のホスト コード計算を実行できます。これについては、詳細はここでは説明しません。</p>
+<p>This allows for additional host code computation while the accelerator is operating on earlier enqueued tasks. This is not explored further here, but rather left to you as an additional exercise.</p>
 <blockquote>
-<div><p><strong>注記:</strong> この同期方法では、イベントの完了後にホスト コードが動作できるので、バッファー管理スキームをコード記述できます。これにより、長時間実行されるアプリケーションでメモリ不足が発生しなくなります。</p>
+<div><p><strong>NOTE:</strong> Because this synchronization scheme allows the host code to operate after the completion of an event, it is possible to code up a buffer management scheme. This will avoid running out of memory for long running applications.</p>
 </div></blockquote>
 </li>
 </ol>
-</div>
-<div class="section" id="lab-3-opencl-api-buffer-size">
-<h3>演習 3: OpenCL API バッファー サイズ<a class="headerlink" href="#lab-3-opencl-api-buffer-size" title="Permalink to this headline">¶</a></h3>
-<p>このチュートリアルの最後のセクションでは、バッファー サイズが全体的なパフォーマンスにどのように影響するかを調べます。このセクションでは、<code class="docutils literal notranslate"><span class="pre">src/buf_host.cpp</span></code> のホスト コードについて説明します。</p>
-<p>実行ループは、前のセクションの最後のものと同じです。ただし、<code class="docutils literal notranslate"><span class="pre">src/buf_host.cpp</span></code> ファイルでは、処理されるタスク数を 100 に増加しています。この変更は、100 個のアクセラレータ呼び出しを取得し、100 個のバッファーを転送して、100 個のバッファーを読み込むために加えられています。これにより、転送ごとの平均スループットをより正確に見積もることができるようになります。</p>
-<p>特定の実行でのバッファー サイズを指定するため、2 つ目のコマンド ライン オプション (<code class="docutils literal notranslate"><span class="pre">SIZE=</span></code>) も追加されています。1 つの書き込みまたは読み出し中に転送される実際のバッファー サイズは、指定した引数の 2 のべき乗 (<code class="docutils literal notranslate"><span class="pre">pow(2,</span> <span class="pre">argument)</span></code>) を 512 ビットで乗算して算出されます。</p>
+</section>
+<section id="lab-3-opencl-api-buffer-size">
+<h3>Lab 3: OpenCL API Buffer Size<a class="headerlink" href="#lab-3-opencl-api-buffer-size" title="Permalink to this heading">¶</a></h3>
+<p>In the final section of this tutorial, you will investigate how the buffer size impacts the total performance. In this section you will focus on the host code in <code class="docutils literal notranslate"><span class="pre">src/buf_host.cpp</span></code>.</p>
+<p>The execution loop is the same as it was at the end of the prior section. However, in the <code class="docutils literal notranslate"><span class="pre">src/buf_host.cpp</span></code> file the number of tasks to be processed has increased to 100. The goal of this change is to get 100 accelerator calls to transfer 100 buffers and read 100 buffers. This enables the tool to get a more accurate average throughput estimate per transfer.</p>
+<p>A second command line option (<code class="docutils literal notranslate"><span class="pre">SIZE=</span></code>) has also been added to specify the buffer size for a specific run. The actual buffer size transferred during a single write or read is determined by calculating to the power of the specified argument (<code class="docutils literal notranslate"><span class="pre">pow(2,</span> <span class="pre">argument)</span></code>) multiplied by 512-bits.</p>
 <ol>
-<li><p>ホスト コードをコンパイルして実行します。</p>
+<li><p>Compile and run the host code.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">DEVICE</span><span class="o">=</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="n">SIZE</span><span class="o">=</span><span class="mi">14</span> <span class="n">LAB</span><span class="o">=</span><span class="n">buf</span>
 </pre></div>
 </div>
-<p>引数 <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> は、ホスト実行ファイルへの 2 つ目の引数として使用されます。</p>
+<p>The argument <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> is used as a second argument to the host executable.</p>
 <blockquote>
-<div><p><strong>注記:</strong> <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> が含まれない場合は、<code class="docutils literal notranslate"><span class="pre">SIZE=14</span></code> に設定されます。</p>
+<div><p><strong>NOTE</strong>: If <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> is not specified it defaults to <code class="docutils literal notranslate"><span class="pre">SIZE=14</span></code>.</p>
 </div></blockquote>
-<p>これにより、異なるバッファー サイズを使用してインプリメンテーションを実行でき、計算時間合計を監視することによりスループットを測定できるようになります。この値はテストベンチで計算され、FPGA スループット出力でレポートされます。</p>
+<p>This allows the code to execute the implementation with different buffer sizes and measure throughput by monitoring the total compute time. This number is calculated in the test bench and reported through the FPGA Throughput output.</p>
 </li>
-<li><p>実行が完了したら、Vitis アナライザーの左側のペインで [Application Timeline] を選択してアプリケーション タイムラインを開きます。</p>
+<li><p>After the run completes, open the Application Timeline using the Vitis analyzer, then  click the Application Timeline located at left side panel.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_analyzer</span> <span class="n">buf</span><span class="o">/</span><span class="k">pass</span><span class="o">.</span><span class="n">hw</span><span class="o">.</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span><span class="o">.</span><span class="n">xclbin</span><span class="o">.</span><span class="n">run_summary</span>
 </pre></div>
 </div>
-<p>タイムラインを見て演算を確認します。</p>
+<p>Examine the tmeline to review the operation.</p>
 </li>
-<li><p>異なるバッファー サイズでのスイープ実行を簡単にするため、別の makefile ターゲットが作成されており、次のコマンドを使用して実行できます。</p>
+<li><p>To ease the sweeping of different buffer sizes, an additional makefile target was created, wich can be run using the following command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">DEVICE</span><span class="o">=</span><span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="n">bufRunSweep</span>
 </pre></div>
 </div>
 <blockquote>
-<div><p><strong>注記:</strong> スイープ スクリプト (<code class="docutils literal notranslate"><span class="pre">auxFiles/run.py</span></code>) には、ほとんどのシステムで使用可能な Python をインストールする必要があります。</p>
+<div><p><strong>NOTE</strong>: The sweeping script (<code class="docutils literal notranslate"><span class="pre">auxFiles/run.py</span></code>) requires a Python installation, which is available in most systems.</p>
 </div></blockquote>
-<p>スイープが実行され、バッファーの SIZE 引数 8 ～ 19 の FPGA スループットが記録されます。計測されたスループット値は転送ごとの実際のバイト数と共に <code class="docutils literal notranslate"><span class="pre">buf/results.csv</span></code> に記録され、makefile の実行の最後に表示されます。</p>
-<p>これらの値を解析すると、次の図に示すようなステップ関数が表示されます。
-<br /><img alt="../../../../_images/stepFunc.PNG" src="../../../../_images/stepFunc.PNG" /></p>
-<p>この図から、バッファー サイズ (X 軸、転送ごとのバイト数) がパフォーマンス (Y 軸、FPGA スループット (MB/s)) に影響しており、約 2 MB で横ばいになり始めることがわかります。</p>
+<p>Executing the sweep will run and record the FPGA throughput for buffer SIZE arguments from 8 to 19. The measured throughput values are recorded together with the actual number of bytes per transfer in the <code class="docutils literal notranslate"><span class="pre">buf/results.csv</span></code> file, which is printed at the end of the makefile execution.</p>
+<p>When analyzing these numbers, a step function similar to the following image should be displayed.<br /><img alt="../../../../_images/stepFunc.PNG" src="../../../../_images/stepFunc.PNG" /></p>
+<p>This image shows that the buffer size (x-axis, bytes per transfer) clearly impacts performance (y-axis, FPGA Throughput in MB/s), and starts to level out around 2 MB.</p>
 <blockquote>
-<div><p><strong>注記:</strong> この図は、Gnuplot を使用して <code class="docutils literal notranslate"><span class="pre">results.csv</span></code>  ファイルから作成されています。Gnuplot がシステムに含まれている場合、スイープを実行すると自動的に表示されます。</p>
+<div><p><strong>NOTE</strong>: This image is created through gnuplot from the <code class="docutils literal notranslate"><span class="pre">results.csv</span></code> file, and if found on your system, it will be displayed automatically after you run the sweep.</p>
 </div></blockquote>
 </li>
 </ol>
-<p>ホスト コードのパフォーマンスについては、このステップ関数によりバッファー サイズおよび実行速度合計間の関係がわかります。この例で示すように、デフォルト インプリメンテーションが少量の入力データに基づいている場合、アルゴリズムのバッファー サイズは簡単に変更できます。ここで実行したようにランタイムで動的に決定されるようにする必要はありませんが、原則は同じです。アルゴリズムの 1 回の呼び出しに対して 1 つの値セットを送信するのではなく、複数の入力値を送信して、1 つのアクセラレータ呼び出しでアルゴリズムの実行を繰り返します。</p>
-</div>
-</div>
-<div class="section" id="conclusion">
-<h2>まとめ<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
-<p>このチュートリアルでは、ホスト コードの 3 つの最適化方法を説明しました。</p>
+<p>Concerning host code performance, this step function identifies a relationship between buffer size and total execution speed. As shown in this example, it is easy to take an algorithm and alter the buffer size when the default implementation is based on a small amount of input data. It does not have to be dynamic and runtime deterministic, as performed here, but the principle remains the same. Instead of transmitting a single value set for one invocation of the algorithm, you would transmit multiple input values and repeat the algorithm execution on a single invocation of the accelerator.</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
+<p>This tutorial illustrated three specific areas of host code optimization:</p>
 <ul class="simple">
-<li><p>順不同イベント キューを使用してパイプライン処理済みのカーネルを実行</p></li>
-<li><p>カーネルおよびホスト コードを同期</p></li>
-<li><p>OpenCL API バッファー サイズ</p></li>
+<li><p>Pipelined Kernel Execution using an Out-of-Order Event Queue</p></li>
+<li><p>Kernel and Host Code Synchronization</p></li>
+<li><p>OpenCL API Buffer Size</p></li>
 </ul>
-<p>効率的なアクセラレーション インプリメンテーションを作成するには、これらについて考慮してください。このチュートリアルでは、これらのパフォーマンス ボトルネックの解析方法と改善方法の 1 つを示しました。</p>
-<p>ホスト コードをインプリメントしてパフォーマンスを改善する方法は多数あります。これは、ホストからアクセラレータのパフォーマンス、バッファー管理などの項目の改善にも当てはまります。このチュートリアルでは、ホスト コードの最適化に関するすべての側面について説明したわけではありません。</p>
-</div>
-<div class="section" id="next-steps">
-<h2>次の手順<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
-<p>アプリケーション パフォーマンスを解析するのに使用するツールおよびプロセスの詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-Optimizing-and-Debugging-the-Application">アプリケーションのプロファイル、最適化、およびデバッグ</a>を参照してください。<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-Optimizing-and-Debugging-the-Application"></a>『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの xclbinutil ユーティリティ。
+<p>Consider these areas when trying to create an efficient acceleration implementation. The tutorial showed how these performance bottlenecks can be analyzed and shows one way of how they can be improved.</p>
+<p>In general, there are many ways to implement your host code and improve performance. This applies to improving host to accelerator performance and other areas such as buffer management. This tutorial did not cover all aspects related to host code optimization.</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p>For more information about tools and processes you can use to analyze the application performance in general, refer to the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-Optimizing-and-Debugging-the-Application">Profiling, Optimizing, and Debugging the Application</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 </br></p>
-<hr/><p>Apache ライセンス、バージョン 2.0 (以下「ライセンス」) に基づいてライセンス付与されています。本ライセンスに準拠しないと、このファイルを使用することはできません。
-ライセンスのコピーは、http://www.apache.org/licenses/LICENSE-2.0 から入手できます。</p>
-<p>適切な法律で要求されるか、書面で同意された場合を除き、本ライセンスに基づいて配布されるソフトウェアは、明示的または黙示的を問わず、いかなる種類の保証または条件もなく、「現状のまま」配布されます。
-ライセンスに基づく権限と制限を管理する特定の言語については、ライセンスを参照してください。</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020&ndash;2021 Xilinx</sup><br><sup>XD018</sup></br></p></div>
-</div>
+<hr/><p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0</p>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../../Feature_Tutorials/01-rtl_kernel_workflow/README.html" class="btn btn-neutral float-right" title="RTL カーネル入門" accesskey="n" rel="next">次の手順<span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../06-cholesky-accel/README.html" class="btn btn-neutral float-left" title="コレスキー アルゴリズムでの Vitis ハードウェア アクセラレーション" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> 前の手順</a>
-      
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        最新更新日: 2022 年 1 月 18 日
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -901,100 +515,64 @@
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../06-cholesky-accel/README.html" class="btn btn-neutral float-left" title="Vitis Hardware Acceleration on Cholesky Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../Feature_Tutorials/01-rtl_kernel_workflow/README.html" class="btn btn-neutral float-right" title="Getting Started with RTL Kernels" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-															</div>
-														</div>
-														<div class="col-md-pull-6 col-lg-pull-6 col-md-6 col-lg-6">
-															<span class="copyright">
-                                  
-                                  &copy; 2019-2022, Xilinx, Inc.
-                              </span>
-															<ul class="list-inline sub-menu">
-																<li>
-																	<a href="https://www.xilinx.com/about/privacy-policy.html">Privacy</a>
-																</li>
-																<li>
-																	<a href="https://www.xilinx.com/about/legal.html">Legal</a>
-																</li>
-																<li>
-																	<a href="https://www.xilinx.com/about/contact.html">Contact</a>
-																</li>
-															</ul>
-														</div>
-													</div>
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="https://pages.gitenterprise.xilinx.com/techdocs/Test/vvas/build/html/index.html#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="quicklinks parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<noindex>
-						<span class="quickLinks">
-							<ul>
-								<li>
-									<a href="#top" class="btn backToTop">
-									<span class="fas fa-angle-up" aria-hidden="true"></span>
-									</a>
-								</li>
-							</ul>
-						</span>
-					</noindex>
-				</div>
-			</div>
-		</div>
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+										
+</br>
 
-			underscoreSetup();
-		</script>
-	</body>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

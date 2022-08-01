@@ -1,23 +1,25 @@
-<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Packet Switching Tutorial</h1>
-   </td>
- </tr>
- <tr>
- </td>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
-## Window Based AI Engine Kernels with Mixed Data Types
+# Window Based AI Engine Kernels with Mixed Data Types
+
 This example is similar to the previous [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the difference with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. See [Prepare Data for AI Engnie Simulator](#Prepare-Data-for-AI-Engnie-Simulator). Another difference is that the PS code has to take care of the input and output data types. See [PS Application and HW Emulation Flows](#PS-Application-and-HW-Emulation-Flows).
 
 The following topics are already covered in [Window Based AI Engine Kernels](./window_based_aie_kernel.md).
+
 * [Construct Graph with Packet Switching Capability](./window_based_aie_kernel.md/#Construct-Graph-with-Packet-Switching-Capability)
 * [Packet Format](./window_based_aie_kernel.md/#Packet-Format)
 * [Example PL Kernels for Packet Switching](./window_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
 * [Example PS code for Packet Switching](./window_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
 
 ### Prepare Data for AI Engnie Simulator
+
 Change the working directory to `window_aie_mix_int32_float_cint16`. The graph code for this example is the same as the [Window Based AI Engine Kernels](./window_based_aie_kernel.md) example. The AI Engine kernel `core[2]` (`aie/aie_core3.cpp`) has floating point interfaces, and the AI Engine kernel `core[3]` (`aie/aie_core4.cpp`) has `cint16` interfaces. 
 
 When preparing the data for the AI Engnine simulator, all values should be in 32-bit integer format. The conversion is similar to the `reinterpret_cast` operation in C++. It is done manually in any language. For example, when you want to feed float data `1.0f`, `2.0f`,..., into the AI Engine kernel, the integer format can be generated in C as shown in the following code.

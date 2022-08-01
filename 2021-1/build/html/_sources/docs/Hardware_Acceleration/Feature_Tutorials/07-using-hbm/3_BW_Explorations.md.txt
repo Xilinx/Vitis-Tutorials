@@ -198,6 +198,6 @@ Congratulations! You have completed the tutorial.
 
 In this tutorial, you learned it's relatively easy to migrate a DDR-based application to HBM based application using v++ flow. You also experimented with how the HBM based application throughput varies based on the address patterns and the overall memory being accessed by the kernel.
 
-<p align="center"><b><a href="README.html">Return to Start of Tutorial</a></b></p>
+<p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p>
 
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>

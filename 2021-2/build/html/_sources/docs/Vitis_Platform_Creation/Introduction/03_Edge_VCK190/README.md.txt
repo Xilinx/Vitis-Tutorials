@@ -15,14 +15,17 @@
 -->
 
 
-<table width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
 
 # Versal Custom Platform Creation Tutorial
+
+***Version: 2021.2***
 
 In this module, we will create a custom platform to run acceleration applications for VCK190 evaluation board. 
 
@@ -51,19 +54,22 @@ Please navigate through these steps with the following table of contents links.
 
 This tutorial design supports VCK190 production board and VCK190 ES1 board.
 
-- Vitis 2021.1 supports VCK190 production board. No additional licenses and settings are needed to use this board.
-- Vitis 2021.1 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
+- Vitis 2021.2 supports VCK190 production board. No additional licenses and settings are needed to use this board.
+- Vitis 2021.2 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
 
 This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux. 
 
 ## Reference
 
-- [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/index.html)
-   - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/create_embedded_platforms.html#rjs1596051748503)
+- [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
+   - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/create_embedded_platforms.html)
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 
 
 ## Changelog
+
+### 2021.2
+- In Step 1, the Vivado project exports XSA for hardware and hardware emulation seperatedly. When creating the platform in [step3](./step3.md), it's recommended to provide seperate XSA for hardware and hardware emulation.
 
 ### 2021.1
 - Step 0: Vivado example design has more customizable options for clocks and interrupts.

@@ -1,11 +1,15 @@
-﻿<table>
- <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>AI Engine Examples</h1>
-   </td>
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
 </table>
 
 # Using Floating-Point in the AI Engine
+
+***Version: Vitis 2021.2***
 
 ## Introduction
 
@@ -22,9 +26,9 @@ Before starting to explore these examples, refer to the following documents:
   - **[Architecture Details Summary](Details.md)**
 - Tools and documentation lounge
   - **[AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)**
-  - **[UG1076: Versal ACAP AI Engine Programming Environment User Guide](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)**
+  - **[UG1076: Versal ACAP AI Engine Programming Environment User Guide](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)**
 - Also, download and install:
-  - Vitis 2020.2 **[Download Vitis](https://www.xilinx.com/support/download.html)**
+  - Vitis 2021.2 **[Download Vitis](https://www.xilinx.com/support/download.html)**
   - Licenses for AI Engine tools.
   - Base Platform **[VCK190 Vitis Platform](https://www.xilinx.com/support/download.html)**
 
@@ -35,19 +39,19 @@ Before starting to explore these examples, refer to the following documents:
 Versal adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
 Intelligent Engines are SIMD VLIW AI Engines for adaptive inference and advanced signal processing compute, and DSP Engines for fixed point, floating point, and complex MAC operations.
 
-<img src="./images/Versal.png" width=500 height=380><br>
+![missing image](./images/Versal.png")
 
 The Intelligent Engine comes as an array of AI Engines connected together using AXI-Stream interconnect blocks:
 
-
 **AI Engine array**
 
-<img src="./images/AIEngineArray.png" width=500><br>
+![missing image](./images/AIEngineArray.png")
 
 As seen in the image above, each AI Engine is connected to four memory modules on the four cardinal directions.
 The AI Engine and memory modules are both connected to the AXI-Stream interconnect.
 
 The AI Engine is  a VLIW (7-way) processor that contains:
+
 - Instruction Fetch and Decode Unit
 - A Scalar Unit
 - A Vector Unit (SIMD)
@@ -56,19 +60,19 @@ The AI Engine is  a VLIW (7-way) processor that contains:
 
 **AI Engine Module**
 
-<img src="./images/AIEngine.png" width=400><br>
+![missing image](./images/AIEngine.png")
 
 Have a look at the fixed-point unit pipeline, as well as floating-point unit pipeline within the vector unit.
 
 ### Fixed-Point Pipeline
 
-<img src="./images/FixedPointPipeline.jpg" width=800 height=500><br>
+![missing image](./images/FixedPointPipeline.jpg")
 
 In this pipeline one can see the data selection and shuffling units; PMXL, PMXR, and PMC. The pre-add (PRA) is just before the multiply block and then two lane reduction blocks (PSA, PSB) allows to perform up to 128 multiplies and get an output on 16 lanes down to two lanes. The accumulator block is fed either by its own output (AM) or by the upshift output. The feedback on the ACC block is only one clock cycle.
 
 ### Floating-point Pipeline
 
-<img src="./images/FloatingPointPipeline.jpg" width=800 height=500><br>
+![missing image](./images/FloatingPointPipeline.jpg")
 
 In this pipeline one can see that the selection and shuffling units (PMXL, PMC) are the same as in the fixed-point unit. Unlike the fixed-point pipeline there is no lane reduction unit, so the lanes that you have at the input will also be there at the output. Another difference is that the post-accumulator is on two clock cycles. If the goal is to reuse the same accumulator over and over, only one `fpmac` per two clock cycles can be issued.
 
@@ -77,6 +81,7 @@ In this pipeline one can see that the selection and shuffling units (PMXL, PMC) 
 There is a limited set of intrinsics with which a multitude of operations can be performed. All of them return either a `v8float` or  `v4cfloat`, 256-bit vectors.
 
 The basic addition, subtraction, and negation functions are as follows:
+
 - fpadd
 - fpadd_abs
 - fpsub
@@ -86,22 +91,26 @@ The basic addition, subtraction, and negation functions are as follows:
 - fpabs
 
 The simple multiplier function is available with the following options:
+
 - fpmul
 - fpabs_mul
 - fpneg_mul
 - fpneg_abs_mul
 
 The multiplication accumulation/subtraction function has the following options:
+
 - fpmac
 - fpmac_abs
 - fpmsc
 - fpmsc_abs
 
 On top of these various intrinsics you have a fully configurable version multiplier and multiply-accumulate:
+
 - fpmul_conf
 - fpmac_conf
 
 #### Start, offset
+
 In all the subsequent intrinsics, the input vector(s) go through a data shuffling function that is controlled by two parameters:
 
 - Start
@@ -303,6 +312,7 @@ Returns the multiplication result.
 ## Floating-Point Examples
 
 The purpose of this set of examples is to show how to use floating-point computations within the AI Engines in different schemes:
+
 - FIR filter
 - Matrix Multiply
 
@@ -321,6 +331,7 @@ The floating-point accumulator has a latency of two clock cycles, so two `fpmac`
 The last stage is opening `vitis_analyzer` that will allow you to visualize the graph of the design and the simulation process timeline.
 
 In this design you learned:
+
 - How to use real floating-point data and coefficients in FIR filters.
 - How to handle complex floating-point data and complex floating-points coefficients in FIR filters.
 - How to organize the compute sequence.
@@ -332,6 +343,7 @@ In this design you learned:
 In the example, the filter has 16 coefficients which do not fit within a 256-bit register. The register must be updated in the middle of the computation.
 
 For data storage a small 512-bit register is used. It is decomposed in two 256-bit parts: W0, W1.
+
 - First iteration
   - Part W0 is loaded with first 8 samples  (0...7)
   - Part W1 with the next 8 samples (8...15)
@@ -364,6 +376,7 @@ All the parameter settings for the `fpmul/mac_conf` intrinsics are explained in 
 The last stage is opening `vitis_analyzer` that will allow you to visualize the graph of the design and the simulation process timeline.
 
 In this design you learned:
+
 - How to organize matrix multiply compute sequence when using real or complex floating-point numbers.
 - How to handle complex floating-point data and complex floating-points coefficients in FIR filters.
 - How to use `fpmul_conf` and `fpmac_conf` intrinsics.
@@ -395,4 +408,4 @@ limitations under the License.
 
 
 
-<p align="center"><sup>XD021 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD021 | &copy; Copyright 2020–2021 Xilinx, Inc.</sup></p>

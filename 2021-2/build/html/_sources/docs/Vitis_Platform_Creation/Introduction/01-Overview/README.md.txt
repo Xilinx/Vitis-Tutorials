@@ -1,3 +1,11 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    </td>
+ </tr>
+</table>
+
 # Platform Creation Overview
 
 ## Introduction to Vitis Acceleration Platform
@@ -10,7 +18,7 @@ User can create custom embedded acceleration platforms by building from scratch,
 
 There are generally three steps to create a Vitis embedded platform: Setup hardware interface, setup software components and package the platform. The whole flow would require some preparation and final testing.
 
-![](./images/steps_overview.png)
+![missing image](./images/steps_overview.png)
 
 Here's a brief description of what are covered in each step.
 
@@ -28,4 +36,4 @@ The tutorials in this document will divide the chapters to follow these steps.
 
 The [next module](../02-Edge-AI-ZCU104/README.md) provides an example to create a custom platform for ZCU104 board from scratch.
 
-<p align="center"><sup>Copyright&copy; 2020-2021</sup></p>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>

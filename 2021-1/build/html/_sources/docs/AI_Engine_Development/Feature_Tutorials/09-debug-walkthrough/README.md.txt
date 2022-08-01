@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -11,11 +11,11 @@
 
 <table style="width:100%">
     <tr>
-    <td width="20%" align="center"><a href="Debug1_se.html">AI Engine Debug with Software Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug2_ai.html">AI Engine Debug with AI Engine Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug2_he.html">AI Engine Source Code Debug with Hardware Emulator</a></td>
-    <td width="20%" align="center"><a href="Debug3_hw.html">AI Engine Source Code Debug on Hardware</a></td>
-    <td width="20%" align="center"><a href="Debug5_bc.html">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
+    <td width="20%" align="center"><a href="Debug1_se.md">AI Engine Debug with Software Emulator</a></td>
+    <td width="20%" align="center"><a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a></td>
+    <td width="20%" align="center"><a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a></td>
+    <td width="20%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
+    <td width="20%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
   </tr>
 </table>
 
@@ -79,11 +79,11 @@ After the project is ready in the Vitis IDE, you can move on to the next steps t
 
 Note: The imported project specifies a hardware platform path that must be adjusted to your specific installed path to work correctly. Click on **`beamformer_system.sprj`** to update the hardware platform path in the Vitis™ IDE.
 
-* <a href="Debug1_se.html">AI Engine Debug with Software Emulator</a>
-* <a href="Debug2_ai.html">AI Engine Debug with AI Engine Emulator</a>
-* <a href="Debug2_he.html">AI Engine Source Code Debug with Hardware Emulator</a>
-* <a href="Debug3_hw.html">AI Engine Source Code Debug on Hardware</a>
-* <a href="Debug5_bc.html">AI Engine/PL Kernel Debug with XRT Utilities</a>
+* <a href="Debug1_se.md">AI Engine Debug with Software Emulator</a>
+* <a href="Debug2_ai.md">AI Engine Debug with AI Engine Emulator</a>
+* <a href="Debug2_he.md">AI Engine Source Code Debug with Hardware Emulator</a>
+* <a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a>
+* <a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a>
 
 
 ## License

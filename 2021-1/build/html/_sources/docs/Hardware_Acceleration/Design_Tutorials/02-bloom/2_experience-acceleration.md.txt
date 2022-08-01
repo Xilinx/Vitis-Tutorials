@@ -79,6 +79,6 @@ In this lab, you will experience the acceleration potential by running the appli
 In this step, you observed the acceleration that can be achieved using an FPGA. Next, you will [architect the application for the application](./3_architect-the-application.md) and dive into what functions can be accelerated by profiling the original applications. You will also define the interface boundaries and performance constraints to achieve the desired acceleration.
 
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.html">Return to Getting Started Pathway</a> — <a href="docs/README.html">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphnixhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

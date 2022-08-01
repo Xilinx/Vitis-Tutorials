@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -48,11 +48,11 @@ It takes over 60 minutes to complete the build.
 
 ![missing image](./images/he_run_aie_1.png)
 
-AI Engine only debugs within system project via hardware emulator, AI Engine emulator debug still applies. <a href="Debug2_ai.html">AI Engine debug with AIE emulator</a> are applicable at this condition.
+AI Engine only debugs within system project via hardware emulator, AI Engine emulator debug still applies. <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> are applicable at this condition.
 
 ## Hardware Emulation Source Code Debug Limitations
 
-1. Limitations from <a href="Debug2_ai.html">AI Engine debug with AIE emulator</a> applies.
+1. Limitations from <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> applies.
 2. PL debug is not supported from Vitis™ IDE.
 
 

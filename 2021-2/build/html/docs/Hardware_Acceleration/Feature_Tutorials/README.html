@@ -1,198 +1,46 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-
-<!DOCTYPE HTML><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--> <!--[if gt IE 8]><!--><html class="no-js" lang="en" ><!--<![endif]--><head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/><!-- favicon --><link rel="icon" type="image/vnd.microsoft.icon" href="../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../_static/favicon.ico"/><!-- Fonts --><link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Feature Tutorials &mdash; Vitis™ Tutorials 2021.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../_static/js/Searchbox.min.js"></script>
-	<script type="text/javascript" src="../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="header parbase aem-GridColumn aem-GridColumn--default--12">
-								<noindex>
-									<header data-component="header">
-										<nav class="navbar navbar-default aem-Grid aem-Grid--16">
-											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-												<div class="container-fluid main-nav">
-													<div class="row">
-														<div class="col-xs-12">
-															<div class="logo-column">
-																<div class="logo"><a href="https://japan.xilinx.com/"><img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/> </a></div>
-															</div>
-															<div class="navbar-column">
-																<div class="navbar navbar-collapse collapse" id="xilinx-main-menu">
-																	<div class="mobile-search-container">
-																		<div id="headerSearchBox" class="headerSearch"
-																			data-component="header-search"
-																			data-redirect-if-empty="false"
-																			data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
-																			data-coveo-organization-id="xilinxcomprode2rjoqok">
-																			<div class='coveo-search-section'>
-																				<div class="CoveoAnalytics" data-search-hub="Site"></div>
-																				<ul class="dropdown-menu options">
-																					<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site"><a href="#">All</a></li>
-																					<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com//products/silicon-devices/si-keyword-search.html" data-search-hub="Product"><a href="#">Silicon Devices</a></li>
-																					<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com//products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product"><a href="#">Boards and Kits</a></li>
-																					<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com//products/intellectual-property/ip-keyword-search.html" data-search-hub="Product"><a href="#">Intellectual Property</a></li>
-																					<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support"><a href="#">Support</a><ul>
-																							<li data-label="Documentation" data-action-link="https://www.xilinx.com//support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document"><a href="#">Documentation</a></li>
-																							<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com//support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord"><a href="#">Knowledge Base</a></li>
-																							<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums"><a href="#">Community Forums</a></li>
-																						</ul>
-																					</li>
-																					<li data-label="Partners" data-action-link="https://www.xilinx.com//alliance/member-keyword-search.html" data-search-hub="Partner"><a href="#">Partners</a></li>
-																					<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video"><a href="#">Videos</a></li>
-																					<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press"><a href="#">Press</a></li>
-																				</ul><a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a><div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
-																			</div>
-																		</div>
-																	</div>
-																	<ul class="nav navbar-nav nav-justified">
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown"><a href="https://japan.xilinx.com/applications.html">Applications</a></li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown"><a href="https://japan.xilinx.com/products/silicon-devices.html">Products</a></li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown"><a href="https://developer.xilinx.com/">Developers</a></li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown"><a href="https://japan.xilinx.com/support.html">Support</a></li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown"><a href="https://japan.xilinx.com/about/company-overview.html">About</a></li>
-																	</ul>
-																</div>
-															</div>
-															<script type="text/javascript" src="../../../_static/js/gtm.js"></script><!--<div class="mini-nav">
-																<button type="button" data-function="xilinx-mobile-menu" id="nav-toggle" class="navbar-toggle collapsed visible-xs-block" aria-expanded="false">
-																<span></span>
-																<span></span>
-																<span></span>
-																<span></span>
-																</button>
-																<ul class="list-inline">
-																	<li class="dropdown user-menu">
-																		<button data-toggle="dropdown">
-																		<span class="sr-only">Account</span>
-																		<span class="fas fa-user"></span>
-																		</button>
-																		<ul class="dropdown-menu">
-																			<li>
-																				<a href="https://www.xilinx.com/myprofile/subscriptions.html">
-																				My Account</a>
-																			</li>
-																			<li>
-																				<a href="https://www.xilinx.com/registration/create-account.html">
-																				Create Account</a>
-																			</li>
-																			<li>
-																				<a href="https://www.xilinx.com/bin/protected/en/signout">
-																				Sign Out</a>
-																			</li>
-																		</ul>
-																	</li>
-																	<li class="hidden-xs">
-																		<button data-function="search-toggle">
-																		<span class="sr-only">Search</span>
-																		<span class="far fa-search"></span>
-																		</button>
-																	</li>
-																</ul>
-															</div>
-															--><div class="search-container">
-																<div id="headerSearchBox" class="headerSearch"
-																	data-component="header-search"
-																	data-redirect-if-empty="false"
-																	data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
-																	data-coveo-organization-id="xilinxcomprode2rjoqok">
-																	<div class='coveo-search-section'>
-																		<div class="CoveoAnalytics" data-search-hub="Site"></div>
-																		<ul class="dropdown-menu options">
-																			<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site"><a href="#">All</a></li>
-																			<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com/products/silicon-devices/si-keyword-search.html" data-search-hub="Product"><a href="#">Silicon Devices</a></li>
-																			<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com/products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product"><a href="#">Boards and Kits</a></li>
-																			<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com/products/intellectual-property/ip-keyword-search.html" data-search-hub="Product"><a href="#">Intellectual Property</a></li>
-																			<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support"><a href="#">Support</a><ul>
-																					<li data-label="Documentation" data-action-link="https://www.xilinx.com/support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document"><a href="#">Documentation</a></li>
-																					<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com/support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord"><a href="#">Knowledge Base</a></li>
-																					<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums"><a href="#">Community Forums</a></li>
-																				</ul>
-																			</li>
-																			<li data-label="Partners" data-action-link="https://www.xilinx.com/alliance/member-keyword-search.html" data-search-hub="Partner"><a href="#">Partners</a></li>
-																			<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video"><a href="#">Videos</a></li>
-																			<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press"><a href="#">Press</a></li>
-																		</ul><a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a><div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
-																	</div>
-																</div>
-																<button data-function="search-toggle"><span class="sr-only">Search</span> <span class="far fa-times"></span></button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</nav>
-									</header>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+</head>
+
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" ><a href="../../../index.html" class="icon icon-home" alt="Documentation Home">Vitis™ チュートリアル</a><div class="version">2021.2</div>
-            
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2021.2
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -200,229 +48,171 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">English</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Master</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">入門</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">アクセラレーション</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI エンジン</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">プラットフォーム</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">その他のバージョン</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">このページ</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/README.md.txt"
-						rel="nofollow">ソースの表示</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation"><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
-
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Vitis™ Tutorials</a>
+      </nav>
 
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>機能チュートリアル</li>
-    
-    
-      <li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/README.md.txt" rel="nofollow">ページ ソースの表示</a></li>
-    
+      <li>Feature Tutorials</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
  </tr>
-</table><div class="section" id="feature-tutorials">
-<h1>機能チュートリアル<a class="headerlink" href="#feature-tutorials" title="Permalink to this headline">¶</a></h1>
+</table><section id="feature-tutorials">
+<h1>Feature Tutorials<a class="headerlink" href="#feature-tutorials" title="Permalink to this heading">¶</a></h1>
  <table style="width:100%">
  <tr>
- <td width="35%" align="center"><b>チュートリアル</b><td width="65%" align="center"><b>内容</b></tr>
- <tr>
- <td align="center"><a href="01-rtl_kernel_workflow/README.html">RTL カーネル入門</a></td>
- <td>Vitis コア開発キットを使用して RTL カーネルを FPGA にプログラムし、一般的な開発フローでハードウェア エミュレーションをビルドする方法を説明します。</td>
+ <td width="35%" align="center"><b>Tutorial</b>
+ <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="02-mixing-c-rtl-kernels/README.html">C と RTL の混合</a></td>
- <td>RTL および C カーネルを含むアプリケーションと、さまざまなデザイン解析機能を使用する方法を示します。</td>
+ <td align="center"><a href="./Feature_Tutorials/01-rtl_kernel_workflow/README.md">Getting Started with RTL Kernels</a></td>
+ <td>This tutorial demonstrates how to use the Vitis core development kit to program an RTL kernel into an FPGA and build a Hardware Emulation using a common development flow.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/02-mixing-c-rtl-kernels/README.md">Mixing C and RTL</a></td>
+ <td>This tutorial demonstrates how to work with an application containing RTL and C kernels, along with various design analysis features.</td>
  </tr>
 <tr>
- <td align="center"><a href="03-dataflow_debug_and_optimization/README.html">データフローのデバッグおよび最適化</a></td>
- <td>このチュートリアルでは、Vitis HLS でデータフローをデバッグおよび最適化する方法を示します。</td>
+ <td align="center"><a href="./Feature_Tutorials/03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a></td>
+ <td>This tutorial demonstrates how to debug and optimize the dataflow optimization in Vitis HLS.</td>
  </tr>
-  <td align="center"><a href="04-mult-ddr-banks/README.html">複数 DDR バンクの使用</a></td>
- <td>複数の DDR を使用してカーネルとグローバル メモリ間のデータ転送を向上する方法を説明します。</td>
- </tr>
-  <tr>
- <td align="center"><a href="05-using-multiple-cu/README.html">複数の計算ユニットの使用</a></td>
- <td>FPGA のカーネル インスタンス数を増加する柔軟なカーネル リンク プロセスを使用して、統合したホスト カーネル システムの並列処理を改善する方法を説明します。</td>
+  <td align="center"><a href="./Feature_Tutorials/04-mult-ddr-banks/README.md">Using Multiple DDR Banks</a></td>
+ <td>This tutorial demonstrates how using multiple DDRs can improve data transfer between kernels and global memory.</td>
  </tr>
   <tr>
- <td align="center"><a href="06-controlling-vivado-implementation/README.html">Vivado インプリメンテーションの制御</a></td>
- <td>プロジェクトをインプリメントする際に Vivado&reg; ツール フローを制御する方法を説明します。</td>
+ <td align="center"><a href="./Feature_Tutorials/05-using-multiple-cu/README.md">Using Multiple Compute Units</a></td>
+ <td>This tutorial demonstrates the flexible kernel linking process to increase the number of kernel instances on an FPGA, which improves the parallelism in a combined host-kernel system.</td>
  </tr>
   <tr>
- <td align="center"><a href="07-using-hbm/README.html">HBM のための最適化</a></td>
- <td>このチュートリアルでは、HBM をサポートするプラットフォームで HBM を最大限に活用する方法について説明します。</td>
+ <td align="center"><a href="./Feature_Tutorials/06-controlling-vivado-implementation/">Controlling Vivado Implementation</a></td>
+ <td>This tutorial demonstrates how you can control the Vivado&reg; tools flow when implementing your project.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/07-using-hbm/">Optimizing for HBM</a></td>
+ <td>This tutorial demonstrates how you can take best advantage of HBM on platforms that support it.</td>
  </tr>
  <tr>
-<td align="center"><a href="08-using-hostmem/README.html">ホスト メモリ アクセス</a></td>
-<td>カーネルが直接バッファー ホスト メモリにアクセスする方法をデモします。この機能には互換性のあるプラットフォームが必要です。</td>
+<td align="center"><a href="./Feature_Tutorials/08-using-hostmem/">Host Memory Access</a></td>
+<td>This tutorial demonstrates how kernels can directly access buffers host memory directly. This capability requires a compatible platform.</td>
 </tr>
- </table><p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+ </table><p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
 
 
            </div>
-           
           </div>
-          <footer> <!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template --> </footer>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
 
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="https://pages.gitenterprise.xilinx.com/techdocs/Test/vvas/build/html/index.html#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
-      </div><!-- Sphinx Page Footer block --><hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo"><span class="lastupdated">最終更新日: 2022 年 1 月 18 日</span></p><br></div>
       </div>
     </section>
-
-
-  
-
-  <script type="text/javascript">
+  </div>
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
 
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
 
-  <script type="text/javascript" id="searchindexloader"></script><!--  Xilinx template footer block --></div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex><!-- make footer fixed - NileshP --><style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style><!-- make footer fixed NileshP--><footer>
-										<div class="aem-Grid aem-Grid--16">
-											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<ul class="list-inline pull-right social-menu">
-																	<li> <a href="https://www.linkedin.com/company/xilinx"><span class="linkedin icon"></span> <span class="sr-only">Connect on LinkedIn</span></a> </li>
-																	<li> <a href="https://www.twitter.com/XilinxInc"><span class="twitter icon"></span> <span class="sr-only">Follow us on Twitter</span></a> </li>
-																	<li> <a href="https://www.facebook.com/XilinxInc"><span class="facebook icon"></span> <span class="sr-only">Connect on Facebook</span></a> </li>
-																	<li> <a href="https://www.youtube.com/XilinxInc"><span class="youtube icon"></span> <span class="sr-only">Watch us on YouTube</span></a> </li>
-																	<li> <a href="https://www.xilinx.com/registration/subscriber-signup.html"><span class="newsletter icon"></span> <span class="sr-only">Subscribe to Newsletter</span></a> </li>
-																</ul>
-															</div>
-														</div>
-														<div class="col-md-pull-6 col-lg-pull-6 col-md-6 col-lg-6"> <span class="copyright">&copy; 2019-2022, Xilinx, Inc.</span> <ul class="list-inline sub-menu">
-																<li> <a href="https://www.xilinx.com/about/privacy-policy.html">Privacy</a> </li>
-																<li> <a href="https://www.xilinx.com/about/legal.html">Legal</a> </li>
-																<li> <a href="https://www.xilinx.com/about/contact.html">Contact</a> </li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="quicklinks parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<noindex><span class="quickLinks"><ul>
-								<li><a href="#top" class="btn backToTop"><span class="fas fa-angle-up" aria-hidden="true"></span></a></li>
-							</ul></span></noindex>
-				</div>
-			</div>
-		</div>
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
-
-			underscoreSetup();
-		</script>
-	</body>
+</body>
 </html>

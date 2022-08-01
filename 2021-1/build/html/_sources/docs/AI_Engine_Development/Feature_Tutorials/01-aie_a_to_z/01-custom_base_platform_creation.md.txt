@@ -93,7 +93,7 @@ In this step, you created the platform starting with building the hardware platf
 
 In the next step, you will build an AI Engine application using this platform.
 
-<p align="center"><b><a href="./README.html">Return to Start of Tutorial</a> — <a href="./02-aie_application_creation.html">Go to Step 2</a></b></p>
+<p align="center"><b><a href="./README.md">Return to Start of Tutorial</a> — <a href="./02-aie_application_creation.md">Go to Step 2</a></b></p>
 
 
 

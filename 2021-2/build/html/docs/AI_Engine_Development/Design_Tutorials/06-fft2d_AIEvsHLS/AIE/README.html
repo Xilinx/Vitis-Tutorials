@@ -1,235 +1,46 @@
-﻿
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
-	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
 <script type="text/javascript">
 function OptanonWrapper() { }
 </script>
 <!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
-		<!-- Google Tag Manager -->
-	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
-	<!-- End Google Tag Manager -->
-	
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
-        <!-- End Google Tag Manager -->	
-
+  <title>AI Engine Implementation &mdash; Vitis™ Tutorials 2021.2 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/Searchbox.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
- <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+</head>
 
-    
-    
-
-    
-
-
-
-<div class="xf-content-height">
-    
-
-<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-    
-    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
-	<header data-component="header" class="site-header">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid main-nav">
-				<div class="row">
-					<div class="navbar-column col-xs-4 col-sm-5">
-						<ul class="nav navbar-nav hidden-xs">
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-								</li>
-							</ul>
-							
-						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-							<li>
-									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
-								</li>
-							<li>
-									<button data-target="#header-container-1" data-function="toggle">Products</button>
-								</li>
-							<li>
-									<button data-target="#header-container-2" data-function="toggle">Company</button>
-								</li>
-							</ul>
-							
-						<div id="header-container-0" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-1" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-2" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							</div>
-					<div class="logo-column col-xs-4 col-sm-2">
-						<div class="logo">
-							<a target="_blank" href="https://www.xilinx.com/">
-								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</nav></header></noindex></div>
-		
-	
-</div>
-
-    
-</div>
-</div>
-
-<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
-    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
-</div>
-</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2021.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -237,140 +48,84 @@ function OptanonWrapper() { }
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">This Page</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS/AIE/README.md.txt"
-						rel="nofollow">Show Source</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../../index.html">Vitis™ Tutorials</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>AI Engine Implementation</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS/AIE/README.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <table>
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
    </td>
  </tr>
-</table><div class="section" id="ai-engine-implementation">
-<h1>AI Engine Implementation<a class="headerlink" href="#ai-engine-implementation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="table-of-contents">
-<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+</table><section id="ai-engine-implementation">
+<h1>AI Engine Implementation<a class="headerlink" href="#ai-engine-implementation" title="Permalink to this heading">¶</a></h1>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="#Building-the-Design">Building the Design</a></p>
 <p><a class="reference external" href="#Hardware-Design-Details">Hardware Design Details</a></p>
 <p><a class="reference external" href="#Software-Design-Details">Software Design Details</a></p>
 <p><a class="reference external" href="#Performance-Details">Performance Details</a></p>
-</div>
-</div>
-<div class="section" id="building-the-design">
-<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="building-the-design">
+<h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <details>
-<summary>Design Build</summary> <div class="section" id="design-build">
-<h2>Design Build<a class="headerlink" href="#design-build" title="Permalink to this headline">¶</a></h2>
+<summary>Design Build</summary> <section id="design-build">
+<h2>Design Build<a class="headerlink" href="#design-build" title="Permalink to this heading">¶</a></h2>
 <p>In this section, you will build and run the 2D-FFT design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). Review <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html">Integrating the Application Section in the AI Engine Documentation</a> for the general flow.</p>
 <p>At the end of this section, the design flow will generate a new directory (called <code class="docutils literal notranslate"><span class="pre">build/</span></code>). Underneath are sub-directories named <code class="docutils literal notranslate"><span class="pre">fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/</span></code> (for example, <code class="docutils literal notranslate"><span class="pre">fft2d_1024x2048/x1/</span></code>) depending on value of matrix dimensions <code class="docutils literal notranslate"><span class="pre">${MAT_ROWS}</span></code>, <code class="docutils literal notranslate"><span class="pre">${MAT_COLS}</span></code> and the number of instances <code class="docutils literal notranslate"><span class="pre">$(FFT_2D_INSTS)</span></code> chosen in the build. Each sub-directory contains the <code class="docutils literal notranslate"><span class="pre">hw_emu/</span></code> and/or <code class="docutils literal notranslate"><span class="pre">hw/</span></code> subfolders. The respective subfolders contain <code class="docutils literal notranslate"><span class="pre">Work/</span></code> and <code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>, outputs from the AI Engine compiler, the host app executable and the builds, targeted to <code class="docutils literal notranslate"><span class="pre">hw</span></code> or <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> respectively. The <code class="docutils literal notranslate"><span class="pre">hw_emu/</span></code> subfolder contains the build for hardware emulation. The <code class="docutils literal notranslate"><span class="pre">hw/</span></code> subfolder contains the build for hardware run on a VCK190 board.</p>
 </details><details>
-<summary>Make Steps</summary> </div>
-<div class="section" id="make-steps">
-<h2>Make Steps<a class="headerlink" href="#make-steps" title="Permalink to this headline">¶</a></h2>
+<summary>Make Steps</summary> </section>
+<section id="make-steps">
+<h2>Make Steps<a class="headerlink" href="#make-steps" title="Permalink to this heading">¶</a></h2>
 <p>To run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> steps (that is, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">kernels</span></code>, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">graph</span></code>, and so on), you must be in the <code class="docutils literal notranslate"><span class="pre">AIE/</span></code> folder. The options that can be specified in the <code class="docutils literal notranslate"><span class="pre">make</span></code> steps are as follows.</p>
 <p><code class="docutils literal notranslate"><span class="pre">TARGET:</span></code> This can be set to <code class="docutils literal notranslate"><span class="pre">hw</span></code> or <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> to build the design in the hardware or hardware emulation flow respectively. The default option is <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS:</span></code> This can be set to 1, 5, or 10 to build the design with the number of kernel instances. The default is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
@@ -399,9 +154,9 @@ WORK_DIR         := Work
 </pre></div>
 </div>
 </details><details>
-<summary>Build the Entire Design with a Single Command</summary></div>
-<div class="section" id="build-the-entire-design-with-a-single-command">
-<h2>Build the Entire Design with a Single Command<a class="headerlink" href="#build-the-entire-design-with-a-single-command" title="Permalink to this headline">¶</a></h2>
+<summary>Build the Entire Design with a Single Command</summary></section>
+<section id="build-the-entire-design-with-a-single-command">
+<h2>Build the Entire Design with a Single Command<a class="headerlink" href="#build-the-entire-design-with-a-single-command" title="Permalink to this heading">¶</a></h2>
 <p>If you are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design for each case of <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS</span></code> with one command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="o">(</span>default hardware emulation, <span class="m">1</span> instance, <span class="nv">iterations</span><span class="o">=</span><span class="m">8</span>, matrix dimentions <span class="nv">rows</span><span class="o">=</span><span class="m">1024</span> and <span class="nv">columns</span><span class="o">=</span><span class="m">2048</span>, no trace-profiling <span class="o">)</span>
 </pre></div>
@@ -413,9 +168,9 @@ WORK_DIR         := Work
 <p>This command runs the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">kernels</span></code>,<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">graph</span></code>,<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">xclbin</span></code>,<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">application</span></code>,<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package</span></code>, and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run_emu</span></code> for hardware emulation or to run on hardware (VCK190 board) depending on the <code class="docutils literal notranslate"><span class="pre">TARGET</span></code> you specify. The settings also apply to the individual make steps listed below.</p>
 <p>The generated files for each <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS</span></code> are placed under an individual directory: <code class="docutils literal notranslate"><span class="pre">$(BUILD_TARGET_DIR)/</span></code>. Each <code class="docutils literal notranslate"><span class="pre">make</span></code> step to build the design is specified in the following sections. These sections also detail the options used and the location of input and output files in each case.</p>
 </details><details>
-<summary>make kernels: Compiling PL Kernels</summary> </div>
-<div class="section" id="make-kernels-compiling-pl-kernels">
-<h2>make kernels: Compiling PL Kernels<a class="headerlink" href="#make-kernels-compiling-pl-kernels" title="Permalink to this headline">¶</a></h2>
+<summary>make kernels: Compiling PL Kernels</summary> </section>
+<section id="make-kernels-compiling-pl-kernels">
+<h2>make kernels: Compiling PL Kernels<a class="headerlink" href="#make-kernels-compiling-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (<code class="docutils literal notranslate"><span class="pre">xilinx_vck190_base_202110_1</span></code>) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default <code class="docutils literal notranslate"><span class="pre">TARGET=hw_emu</span></code>, <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS=1</span></code>, <code class="docutils literal notranslate"><span class="pre">ITER_CNT=8</span></code>, and <code class="docutils literal notranslate"><span class="pre">FFT_2D_PT=2048</span></code>).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">kernels</span>
 </pre></div>
@@ -499,9 +254,9 @@ v++ --target hw_emu --hls.clock 250000000:dma_hls --platform xilinx_vck190_base_
 </tr>
 </tbody>
 </table></details><details>
-<summary>make graph: Creating the AI Engine ADF Graph for the Vitis Compiler Flow</summary> </div>
-<div class="section" id="make-graph-creating-the-ai-engine-adf-graph-for-vitis-compiler-flow">
-<h2>make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow<a class="headerlink" href="#make-graph-creating-the-ai-engine-adf-graph-for-vitis-compiler-flow" title="Permalink to this headline">¶</a></h2>
+<summary>make graph: Creating the AI Engine ADF Graph for the Vitis Compiler Flow</summary> </section>
+<section id="make-graph-creating-the-ai-engine-adf-graph-for-vitis-compiler-flow">
+<h2>make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow<a class="headerlink" href="#make-graph-creating-the-ai-engine-adf-graph-for-vitis-compiler-flow" title="Permalink to this heading">¶</a></h2>
 <p>An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives).</p>
 <ul class="simple">
 <li><p>The AI Engine ADF C++ graph of the design contains AI Engine kernels and PL kernels.</p></li>
@@ -602,9 +357,9 @@ aiecompiler -include=$(AIE_SRC_REPO) -include=&lt;DSPLIB_ROOT&gt;/L1/include/aie
 </tr>
 </tbody>
 </table><details>
-<summary>make xclbin: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary> </div>
-<div class="section" id="make-xclbin-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform">
-<h2>make xclbin: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform<a class="headerlink" href="#make-xclbin-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform" title="Permalink to this headline">¶</a></h2>
+<summary>make xclbin: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary> </section>
+<section id="make-xclbin-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform">
+<h2>make xclbin: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform<a class="headerlink" href="#make-xclbin-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform" title="Permalink to this heading">¶</a></h2>
 <p>After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate a XCLBIN file.</p>
 <p>The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer. Alternatively, you can opt to use one of the many extensible base platforms provided by Xilinx, and use the Vitis tools to build the hardware design and integrate the AI Engine and PL kernels into it.</p>
 <p>To test this feature in this tutorial, use the base VCK190 platform to build the design. The command to run this step is shown in the following example (default <code class="docutils literal notranslate"><span class="pre">TARGET=hw_emu</span></code>, <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS=1</span></code>, <code class="docutils literal notranslate"><span class="pre">ITER_CNT=8</span></code>, <code class="docutils literal notranslate"><span class="pre">EN_TRACE=0</span></code>, <code class="docutils literal notranslate"><span class="pre">FFT_2D_PT=2048</span></code>):</p>
@@ -714,9 +469,9 @@ v++ -l --platform xilinx_vck190_base_202110_1 --save-temps \
 </table><p>The Vitis compiler calls the Vivado® IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the <code class="docutils literal notranslate"><span class="pre">-target</span></code> option set on the Vitis compiler command line.</p>
 <p>You can now view the Vivado project, which is located in the <code class="docutils literal notranslate"><span class="pre">$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj</span></code> directory. You have now have generated the XCLBIN file that will be used to execute your design on the platform.</p>
 </details><details>
-<summary>make application: Compiling the Host Application</summary> </div>
-<div class="section" id="make-application-compiling-the-host-application">
-<h2>make application: Compiling the Host Application<a class="headerlink" href="#make-application-compiling-the-host-application" title="Permalink to this headline">¶</a></h2>
+<summary>make application: Compiling the Host Application</summary> </section>
+<section id="make-application-compiling-the-host-application">
+<h2>make application: Compiling the Host Application<a class="headerlink" href="#make-application-compiling-the-host-application" title="Permalink to this heading">¶</a></h2>
 <p>You can compile the host application by following the typical cross-compilation flow for the Cortex A72. To build the application, run the following command (default <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS=1</span></code>, <code class="docutils literal notranslate"><span class="pre">ITER_CNT=8</span></code>, <code class="docutils literal notranslate"><span class="pre">FFT_2D_PT=2048</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">application</span>
 </pre></div>
@@ -829,9 +584,9 @@ aarch64-xilinx-linux-g++ -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-
 </tr>
 </tbody>
 </table></details><details>
-<summary>make package: Packaging the Design</summary> </div>
-<div class="section" id="make-package-packaging-the-design">
-<h2>make package: Packaging the Design<a class="headerlink" href="#make-package-packaging-the-design" title="Permalink to this headline">¶</a></h2>
+<summary>make package: Packaging the Design</summary> </section>
+<section id="make-package-packaging-the-design">
+<h2>make package: Packaging the Design<a class="headerlink" href="#make-package-packaging-the-design" title="Permalink to this heading">¶</a></h2>
 <p>With the AI Engine outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all the executables, bitstreams, and configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.</p>
 <p>The command to run this step is as follows (default <code class="docutils literal notranslate"><span class="pre">TARGET=hw_emu</span></code>, <code class="docutils literal notranslate"><span class="pre">EN_TRACE=0</span></code>, <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS=1</span></code>, and <code class="docutils literal notranslate"><span class="pre">FFT_2D_PT=2048</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">package</span>
@@ -948,9 +703,9 @@ v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_bas
 </tr>
 </tbody>
 </table></details><details>
-<summary>make run_emu: Running Hardware Emulation</summary></div>
-<div class="section" id="make-run-emu-running-hardware-emulation">
-<h2>make run_emu: Running Hardware Emulation<a class="headerlink" href="#make-run-emu-running-hardware-emulation" title="Permalink to this headline">¶</a></h2>
+<summary>make run_emu: Running Hardware Emulation</summary></section>
+<section id="make-run-emu-running-hardware-emulation">
+<h2>make run_emu: Running Hardware Emulation<a class="headerlink" href="#make-run-emu-running-hardware-emulation" title="Permalink to this heading">¶</a></h2>
 <p>After packaging, everything is set to run hardware emulation. To run emulation, use the following command (default <code class="docutils literal notranslate"><span class="pre">TARGET=hw_emu</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run_emu</span> 
 </pre></div>
@@ -989,9 +744,9 @@ and do:
 <p>The following figure shows a waveform view of the 32x64 - 1x design.</p>
 <p><img alt="Image of 2D-FFT AIE HW_EMU Run Waveform View For 32x64-1x Design" src="../../../../../_images/fft_2d_aie_hw_emu_waveform_view_32x64_x1.PNG" /></p>
 </details><details>
-<summary>TARGET=hw: Running on Hardware</summary></div>
-<div class="section" id="running-on-hardware">
-<h2>Running on Hardware<a class="headerlink" href="#running-on-hardware" title="Permalink to this headline">¶</a></h2>
+<summary>TARGET=hw: Running on Hardware</summary></section>
+<section id="running-on-hardware">
+<h2>Running on Hardware<a class="headerlink" href="#running-on-hardware" title="Permalink to this heading">¶</a></h2>
 <p>To run the design in hardware, rerun the following <code class="docutils literal notranslate"><span class="pre">make</span></code> steps with <code class="docutils literal notranslate"><span class="pre">TARGET=hw</span></code> and other applicable options (see the preceding <code class="docutils literal notranslate"><span class="pre">make</span></code> steps specified above).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">kernels</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span>
 <span class="n">make</span> <span class="n">xclbin</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> 
@@ -1029,20 +784,20 @@ and do:
 <span class="o">./</span><span class="n">fft_2d_aie_xrt</span><span class="o">.</span><span class="n">elf</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
 </pre></div>
 </div>
-</details></div>
-</div>
-<div class="section" id="hardware-design-details">
-<h1>Hardware Design Details<a class="headerlink" href="#hardware-design-details" title="Permalink to this headline">¶</a></h1>
+</details></section>
+</section>
+<section id="hardware-design-details">
+<h1>Hardware Design Details<a class="headerlink" href="#hardware-design-details" title="Permalink to this heading">¶</a></h1>
 <details>
-<summary>2D-FFT AI Engine Implementation Architecture and AI Engine/PL Function Partitioning</summary><div class="section" id="d-fft-ai-engine-implementation-architecture-and-ai-engine-pl-function-partitioning">
-<h2>2D-FFT AI Engine Implementation Architecture and AI Engine/PL Function Partitioning<a class="headerlink" href="#d-fft-ai-engine-implementation-architecture-and-ai-engine-pl-function-partitioning" title="Permalink to this headline">¶</a></h2>
+<summary>2D-FFT AI Engine Implementation Architecture and AI Engine/PL Function Partitioning</summary><section id="d-fft-ai-engine-implementation-architecture-and-ai-engine-pl-function-partitioning">
+<h2>2D-FFT AI Engine Implementation Architecture and AI Engine/PL Function Partitioning<a class="headerlink" href="#d-fft-ai-engine-implementation-architecture-and-ai-engine-pl-function-partitioning" title="Permalink to this heading">¶</a></h2>
 <p>The following figure shows a high-level block diagram of the design. The test harness consists of the AI Engine and data mover HLS kernels (<code class="docutils literal notranslate"><span class="pre">dma_hls</span></code>). In this setup, there is an AXI4-Stream interface between the data mover kernels and AI Engines, with a data width of 128 bits. The data mover kernels and the AI Engine array interface are running at 250 MHz.</p>
 <p>The data mover is a PL-based data generator and checker. It generates impulse input and checks the output of the row-wise FFT core for its response. It then generates the transposed pattern of the row-wise FFT output and feeds that to the col-wise FFT core and checks its output.</p>
 <p><img alt="Image of 2D-FFT AIE Implementation Architecture" src="../../../../../_images/fft_2d_aie_block_diagram.PNG" /></p>
 </details><details>
-<summary>Design Details</summary></div>
-<div class="section" id="design-details">
-<h2>Design Details<a class="headerlink" href="#design-details" title="Permalink to this headline">¶</a></h2>
+<summary>Design Details</summary></section>
+<section id="design-details">
+<h2>Design Details<a class="headerlink" href="#design-details" title="Permalink to this heading">¶</a></h2>
 <p>The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler <code class="docutils literal notranslate"><span class="pre">-l</span></code> step (see <a class="reference external" href="#make-xclbin-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform">make XCLBIN</a>) and include the following:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">libadf.a</span></code></p></li>
@@ -1057,32 +812,32 @@ and do:
 <p>In this design, the 2D FFT computation happens in two stages: the first compute is across the row vectors and the second stage is performed across the column vectors.The input data is accessed linearly and streamed to the AI Engines which perform <code class="docutils literal notranslate"><span class="pre">MAT_COLS(</span> <span class="pre">default</span> <span class="pre">2048</span> <span class="pre">)</span></code> point FFT. The data coming out of the AI Engines is streamed to a PL kernel where it is checked against the expected pattern (the first row should be 1 and the remaining should be 0). If there is a mismatch, it is recorded in the variable <code class="docutils literal notranslate"><span class="pre">stage0_errCnt</span></code>. The transposed pattern of the output of the row vectors is then linearly streamed into another AI Engine which performs <code class="docutils literal notranslate"><span class="pre">MAT_ROWS(</span> <span class="pre">default</span> <span class="pre">1024</span> <span class="pre">)</span></code> point FFT. The output is streamed into a data mover kernel again and is checked against the expected pattern (all values should be 1). If there is a mismatch, it is stored in the variable <code class="docutils literal notranslate"><span class="pre">stage1_errCnt</span></code>. Finally, the sum of <code class="docutils literal notranslate"><span class="pre">stage0_errCnt</span></code> and <code class="docutils literal notranslate"><span class="pre">stage1_errCnt</span></code> is returned from the kernel, which is read in the host app to determine whether the test has passed or failed.</p>
 <p>The system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine runtime trace data if the <code class="docutils literal notranslate"><span class="pre">EN_TRACE</span></code> option is enabled in the design. The <code class="docutils literal notranslate"><span class="pre">dma_hls</span></code> kernel and the AI Engine array interface are both operating at 250 MHz. Unlike the HLS/DSP implementation, there is no clock domain crossing in the PL region in this design.</p>
 </details><details>
-<summary>AI Engine and PL Kernels</summary></div>
-<div class="section" id="ai-engine-and-pl-kernels">
-<h2>AI Engine and PL Kernels<a class="headerlink" href="#ai-engine-and-pl-kernels" title="Permalink to this headline">¶</a></h2>
+<summary>AI Engine and PL Kernels</summary></section>
+<section id="ai-engine-and-pl-kernels">
+<h2>AI Engine and PL Kernels<a class="headerlink" href="#ai-engine-and-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>The top-level AI Engine graph, <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code>, contains two sub-graphs: <code class="docutils literal notranslate"><span class="pre">FFTrows_graph</span></code> and <code class="docutils literal notranslate"><span class="pre">FFTcols_graph</span></code>. Each sub-graph contains the individual AI Engine kernel, <code class="docutils literal notranslate"><span class="pre">*FFTrow_gr.getKernels()</span></code>, and <code class="docutils literal notranslate"><span class="pre">*FFTcol_gr.getKernels()</span></code>, which performs <code class="docutils literal notranslate"><span class="pre">MAT_COLS</span></code> and <code class="docutils literal notranslate"><span class="pre">MAT_ROWS</span></code> point FFT respectively.</p>
-<div class="section" id="dma-hls">
-<h3>dma_hls<a class="headerlink" href="#dma-hls" title="Permalink to this headline">¶</a></h3>
+<section id="dma-hls">
+<h3>dma_hls<a class="headerlink" href="#dma-hls" title="Permalink to this heading">¶</a></h3>
 <p>The PL-based data movers consist of the <code class="docutils literal notranslate"><span class="pre">dma_hls</span></code> kernel, which generates impulse input and checks the output of each FFT stage for the expected pattern.</p>
 <ul class="simple">
 <li><p>It internally comprises four loops (<code class="docutils literal notranslate"><span class="pre">mm2s0</span></code>, <code class="docutils literal notranslate"><span class="pre">s2mm0</span></code>, <code class="docutils literal notranslate"><span class="pre">mm2s1</span></code>, and <code class="docutils literal notranslate"><span class="pre">s2mm1</span></code>), with <code class="docutils literal notranslate"><span class="pre">s2mm0</span></code> - <code class="docutils literal notranslate"><span class="pre">mm2s1</span></code> sequenced one after the other and wrapped into the <code class="docutils literal notranslate"><span class="pre">dmaHls_rowsToCols</span></code> function. <code class="docutils literal notranslate"><span class="pre">mm2s0</span></code>, <code class="docutils literal notranslate"><span class="pre">dmaHls_rowsToCols</span></code>, and <code class="docutils literal notranslate"><span class="pre">s2mm1</span></code> are concurrently scheduled.</p></li>
 <li><p>The data width is 128 bits at both the AXI4-stream I/O sides, running at 250 MHz.</p></li>
 </ul>
-</details></div>
-</div>
-</div>
-<div class="section" id="software-design-details">
-<h1>Software Design Details<a class="headerlink" href="#software-design-details" title="Permalink to this headline">¶</a></h1>
+</details></section>
+</section>
+</section>
+<section id="software-design-details">
+<h1>Software Design Details<a class="headerlink" href="#software-design-details" title="Permalink to this heading">¶</a></h1>
 <p>The software design in the AI Engine 2D-FFT tutorial consists of the following sections:</p>
 <details>
-<summary>Methodology</summary><div class="section" id="methodology">
-<h2>Methodology<a class="headerlink" href="#methodology" title="Permalink to this headline">¶</a></h2>
+<summary>Methodology</summary><section id="methodology">
+<h2>Methodology<a class="headerlink" href="#methodology" title="Permalink to this heading">¶</a></h2>
 <p>The following figure elaborates on the AI Engine implementation methodology.</p>
 <p><img alt="Image of 2D-FFT AIE Implementation Methodology" src="../../../../../_images/fft_2d_aie_block_diagram_methodology.PNG" /></p>
-<div class="section" id="ai-engine">
-<h3>AI Engine<a class="headerlink" href="#ai-engine" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="independent-cores">
-<h4>Independent Cores<a class="headerlink" href="#independent-cores" title="Permalink to this headline">¶</a></h4>
+<section id="ai-engine">
+<h3>AI Engine<a class="headerlink" href="#ai-engine" title="Permalink to this heading">¶</a></h3>
+<section id="independent-cores">
+<h4>Independent Cores<a class="headerlink" href="#independent-cores" title="Permalink to this heading">¶</a></h4>
 <p>Both AI Engine graphs for <code class="docutils literal notranslate"><span class="pre">FFTrows_graph</span></code> and <code class="docutils literal notranslate"><span class="pre">FFTcols_graph</span></code> are to be configured to be independent, with runtime ratios set to &gt;= 0.6 so that each can be run independently of the other.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">FFTrow_gr</span><span class="o">.</span><span class="n">getKernels</span><span class="p">())</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">;</span>
@@ -1091,9 +846,9 @@ and do:
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="window-streaming-buffer-config">
-<h4>Window Streaming Buffer Config<a class="headerlink" href="#window-streaming-buffer-config" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="window-streaming-buffer-config">
+<h4>Window Streaming Buffer Config<a class="headerlink" href="#window-streaming-buffer-config" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">FFTrows_graph</span></code> graph performs <code class="docutils literal notranslate"><span class="pre">MAT_COLS</span></code> point FFT and runs for <code class="docutils literal notranslate"><span class="pre">MAT_ROWS</span></code> number of iterations. For the <code class="docutils literal notranslate"><span class="pre">FFTcols_graph</span></code> graph, increase the <code class="docutils literal notranslate"><span class="pre">TP_WINDOW_VSIZE</span></code> to <code class="docutils literal notranslate"><span class="pre">MAT_COLS</span></code> instead of <code class="docutils literal notranslate"><span class="pre">MAT_ROWS</span></code> and it does <code class="docutils literal notranslate"><span class="pre">MAT_ROWS</span></code> point FFT, but runs for <code class="docutils literal notranslate"><span class="pre">MAT_ROWS</span></code> number of iterations instead of <code class="docutils literal notranslate"><span class="pre">MAT_COLS</span></code>. This reduces the ping-pong overhead which improves the overall throughput.</p>
 <p>Large windows may result in mapper errors due to excessive memory usage. The increased <code class="docutils literal notranslate"><span class="pre">TP_WINDOW_VSIZE</span></code> reduces ping-pong overhead, but increases the utilization of AIE cores and thereby the power consumption. In this design due to rows to cols ratio being 1:2 the <code class="docutils literal notranslate"><span class="pre">TP_WINDOW_VSIZE</span></code> of both graphs are also in the same ratio. Which gives an additional increase in throughput with minimal increase in utilization.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
@@ -1112,16 +867,16 @@ and do:
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="data-mover">
-<h3>Data Mover<a class="headerlink" href="#data-mover" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="data-generation-checking-and-sequencing">
-<h4>Data Generation/Checking and Sequencing<a class="headerlink" href="#data-generation-checking-and-sequencing" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="data-mover">
+<h3>Data Mover<a class="headerlink" href="#data-mover" title="Permalink to this heading">¶</a></h3>
+<section id="data-generation-checking-and-sequencing">
+<h4>Data Generation/Checking and Sequencing<a class="headerlink" href="#data-generation-checking-and-sequencing" title="Permalink to this heading">¶</a></h4>
 <p>The data mover comprises four loops: <code class="docutils literal notranslate"><span class="pre">mm2s0</span></code>, <code class="docutils literal notranslate"><span class="pre">s2mm0</span></code>, <code class="docutils literal notranslate"><span class="pre">mm2s1</span></code>, and <code class="docutils literal notranslate"><span class="pre">s2mm1</span></code>. The <code class="docutils literal notranslate"><span class="pre">s2mm0</span></code> and <code class="docutils literal notranslate"><span class="pre">mm2s1</span></code> functions are wrapped into a single function, <code class="docutils literal notranslate"><span class="pre">dmaHls_rowsToCols</span></code>. Within that the execution sequence, <code class="docutils literal notranslate"><span class="pre">s2mm0</span></code> is followed by <code class="docutils literal notranslate"><span class="pre">mm2s1</span></code>. The <code class="docutils literal notranslate"><span class="pre">s2mm0</span></code> and <code class="docutils literal notranslate"><span class="pre">s2mm1</span></code> functions check the output of the row-wise and col-wise FFT respectively against the expected golden output.</p>
-</div>
-<div class="section" id="concurrent-scheduling">
-<h4>Concurrent Scheduling<a class="headerlink" href="#concurrent-scheduling" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="concurrent-scheduling">
+<h4>Concurrent Scheduling<a class="headerlink" href="#concurrent-scheduling" title="Permalink to this heading">¶</a></h4>
 <p>Concurrent scheduling is required so that each function runs independently and the execution of one function is not blocking the other. The concurrent scheduling of the three functions <code class="docutils literal notranslate"><span class="pre">mm2s0</span></code>, <code class="docutils literal notranslate"><span class="pre">dmaHls_rowsToCols</span></code>, and <code class="docutils literal notranslate"><span class="pre">s2mm1</span></code> is achieved using <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">HLS</span> <span class="pre">DATAFLOW</span></code> as shown in the following example.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma HLS DATAFLOW</span>
 <span class="o">...</span>
@@ -1149,40 +904,40 @@ and do:
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="vitis-hls-scheduling-and-dataflow-view">
-<h4>Vitis HLS Scheduling and Dataflow View<a class="headerlink" href="#vitis-hls-scheduling-and-dataflow-view" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="vitis-hls-scheduling-and-dataflow-view">
+<h4>Vitis HLS Scheduling and Dataflow View<a class="headerlink" href="#vitis-hls-scheduling-and-dataflow-view" title="Permalink to this heading">¶</a></h4>
 <p>The following figure shows the data mover scheduler view.</p>
 <p><img alt="Image of Datamover Scheduler View" src="../../../../../_images/dma_hls_scheduler_view.PNG" /></p>
 <p>The following figure shows the data mover dataflow view.</p>
 <p><img alt="Image of Datamover Dataflow View" src="../../../../../_images/dma_hls_dataflow_view.PNG" /></p>
-</div>
-</div>
-<div class="section" id="streaming-interface-data-width">
-<h3>Streaming Interface Data Width<a class="headerlink" href="#streaming-interface-data-width" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="streaming-interface-data-width">
+<h3>Streaming Interface Data Width<a class="headerlink" href="#streaming-interface-data-width" title="Permalink to this heading">¶</a></h3>
 <p>The streaming interface data width is kept at 128 bits to reduce read/write overhead while processing data.</p>
-</div>
-<div class="section" id="frequency-selection">
-<h3>Frequency Selection<a class="headerlink" href="#frequency-selection" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="frequency-selection">
+<h3>Frequency Selection<a class="headerlink" href="#frequency-selection" title="Permalink to this heading">¶</a></h3>
 <p>AI Engine kernels are configured for <code class="docutils literal notranslate"><span class="pre">cint16</span> <span class="pre">/</span> <span class="pre">4bytes</span></code> and the streaming interface is at <code class="docutils literal notranslate"><span class="pre">128bit</span> <span class="pre">/</span> <span class="pre">16bytes</span></code>. The frequency of the AI Engine array is 1000 MHz and the data mover is kept at 250 MHz, maintaining a 1:4 ratio.</p>
 </details><details>
-<summary>AI Engine Kernels and Graph Representation</summary></div>
-</div>
-<div class="section" id="ai-engine-kernels-and-graph-representation">
-<h2>AI Engine Kernels and Graph Representation<a class="headerlink" href="#ai-engine-kernels-and-graph-representation" title="Permalink to this headline">¶</a></h2>
+<summary>AI Engine Kernels and Graph Representation</summary></section>
+</section>
+<section id="ai-engine-kernels-and-graph-representation">
+<h2>AI Engine Kernels and Graph Representation<a class="headerlink" href="#ai-engine-kernels-and-graph-representation" title="Permalink to this heading">¶</a></h2>
 <p>An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review the <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html">AI Engine Kernel Programming</a> section in the AI Engine documentation for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results. You can view the graph by running the following command:</p>
 <p><code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span> <span class="pre">$(BUILD_TARGET_DIR)/Work/graph.aiecompile_summary</span></code></p>
 <p>The following figures show the graph representation of the AI Engine kernels (default FFT 2048 point and FFT 1024 point, <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS=1</span></code>). In addition to the compute units, there are also the twiddle factor LUTs (<code class="docutils literal notranslate"><span class="pre">fft_lut_tw*</span></code>) and temporary buffers for FFT stages (<code class="docutils literal notranslate"><span class="pre">fft_2048/1024_tmp*</span></code>).</p>
 <p><img alt="Image of 2D-FFT AI Engine 2K point Graph" src="../../../../../_images/fft_2d_aie_fft_rows_graph_for_2kpt_1x.PNG" />
 <img alt="Image of 2D-FFT AI Engine 1K point Graph" src="../../../../../_images/fft_2d_aie_fft_cols_graph_for_1kpt_1x.PNG" /></p>
 </details><details>
-<summary>Adaptive Data Flow (ADF) Graph</summary></div>
-<div class="section" id="adaptive-data-flow-adf-graph">
-<h2>Adaptive Data Flow (ADF) Graph<a class="headerlink" href="#adaptive-data-flow-adf-graph" title="Permalink to this headline">¶</a></h2>
+<summary>Adaptive Data Flow (ADF) Graph</summary></section>
+<section id="adaptive-data-flow-adf-graph">
+<h2>Adaptive Data Flow (ADF) Graph<a class="headerlink" href="#adaptive-data-flow-adf-graph" title="Permalink to this heading">¶</a></h2>
 <p>This section describes the overall data flow graph specification of the 2D-FFT design using AI Engine which is compiled by the AI Engine compiler. Refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html">this page</a> in the AI Engine documentation for information on ADF graphs.</p>
 <p>The overall graph definition of the design is contained in the <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> file. The top-level graph contains two sub-graphs, <code class="docutils literal notranslate"><span class="pre">FFTrows_graph</span></code> and <code class="docutils literal notranslate"><span class="pre">FFTcols_graph</span></code>, each with a <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS</span></code> number of objects. The following describes the definition of the sub-graphs (the <code class="docutils literal notranslate"><span class="pre">FFTrows_graph</span></code> is used as illustration).</p>
-<div class="section" id="defining-the-graph-class">
-<h3>Defining the Graph Class<a class="headerlink" href="#defining-the-graph-class" title="Permalink to this headline">¶</a></h3>
+<section id="defining-the-graph-class">
+<h3>Defining the Graph Class<a class="headerlink" href="#defining-the-graph-class" title="Permalink to this heading">¶</a></h3>
 <p>Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and <a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/dsp/2021.1/user_guide/L2/2-dsp-lib-func.html#fft-ifft">Vitis DSP Library</a> for FFIT. A general specification is put in for the ADF namespace:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma once</span>
 
@@ -1246,9 +1001,9 @@ and do:
 <span class="p">};</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="top-level-application">
-<h3>Top-Level Application<a class="headerlink" href="#top-level-application" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="top-level-application">
+<h3>Top-Level Application<a class="headerlink" href="#top-level-application" title="Permalink to this heading">¶</a></h3>
 <p>Define a top-level application file (<code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> in this design) that contains an instance of the graph class and connect the graph to a simulation platform to provide file input and output (in the case of <code class="docutils literal notranslate"><span class="pre">FFT2D_INSTS</span> <span class="pre">=</span> <span class="pre">1</span></code> to the two sub-graphs):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;graph.h&quot;</span>
 
@@ -1313,16 +1068,16 @@ and do:
 </pre></div>
 </div>
 </details><details>
-<summary>PL Data Mover Kernel</summary></div>
-</div>
-<div class="section" id="pl-data-mover-kernel">
-<h2>PL Data Mover Kernel<a class="headerlink" href="#pl-data-mover-kernel" title="Permalink to this headline">¶</a></h2>
+<summary>PL Data Mover Kernel</summary></section>
+</section>
+<section id="pl-data-mover-kernel">
+<h2>PL Data Mover Kernel<a class="headerlink" href="#pl-data-mover-kernel" title="Permalink to this heading">¶</a></h2>
 <p>In addition to the kernels operating in the AI Engine array, this design specifies a data mover kernel to run in the PL region of the device (written in HLS C++). The data mover kernel is brought into the design during the Vitis kernel compilation, which is further replicated based on the <code class="docutils literal notranslate"><span class="pre">FFT_2D_INSTS</span></code> value. The software design of the data mover kernel is described in the following sections.</p>
-<div class="section" id="dma-hls-dma-hls-cpp">
-<h3>dma_hls (dma_hls.cpp)<a class="headerlink" href="#dma-hls-dma-hls-cpp" title="Permalink to this headline">¶</a></h3>
+<section id="dma-hls-dma-hls-cpp">
+<h3>dma_hls (dma_hls.cpp)<a class="headerlink" href="#dma-hls-dma-hls-cpp" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">dma_hls</span></code> kernel reads data from a memory mapped AXI4 (MM-AXI4) interface and writes it to an AXI4-Stream interface.</p>
-<div class="section" id="top-function-declaration">
-<h4>Top Function Declaration<a class="headerlink" href="#top-function-declaration" title="Permalink to this headline">¶</a></h4>
+<section id="top-function-declaration">
+<h4>Top Function Declaration<a class="headerlink" href="#top-function-declaration" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">dma_hls</span></code> kernel takes the following arguments:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">dma_hls</span><span class="p">(</span>
       <span class="n">hls</span><span class="p">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">qdma_axis</span><span class="o">&lt;</span><span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">strmOut_to_rowiseFFT</span><span class="p">,</span>
@@ -1337,9 +1092,9 @@ and do:
 <li><p><code class="docutils literal notranslate"><span class="pre">ap_int&lt;N&gt;</span></code> is an arbitrary precision integer data type defined in <code class="docutils literal notranslate"><span class="pre">ap_int.h</span></code> where <code class="docutils literal notranslate"><span class="pre">N</span></code> is a bit size from 1-1024. In this design, the bit size is set to 128.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hls::stream&lt;qdma_axis&lt;D,0,0,0&gt;&gt;</span></code> is a data type defined in <code class="docutils literal notranslate"><span class="pre">ap_axi_sdata.h</span></code>. It is a special data class used for data transfer when using a streaming platform. The parameter <code class="docutils literal notranslate"><span class="pre">&lt;D&gt;</span></code> is the data width of the streaming interface, which is set to 128. The remaining three parameters should be set to 0.</p></li>
 </ul>
-</div>
-<div class="section" id="top-function-definition">
-<h4>Top Function Definition<a class="headerlink" href="#top-function-definition" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="top-function-definition">
+<h4>Top Function Definition<a class="headerlink" href="#top-function-definition" title="Permalink to this heading">¶</a></h4>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">dataflow</span></code> pragma for concurrently scheduling the three functions <code class="docutils literal notranslate"><span class="pre">mm2s0</span></code>, <code class="docutils literal notranslate"><span class="pre">dmaHls_rowsToCols</span></code>, and <code class="docutils literal notranslate"><span class="pre">s2mm1</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">dma_hls</span><span class="p">(</span>
       <span class="n">hls</span><span class="p">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">qdma_axis</span><span class="o">&lt;</span><span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">strmOut_to_rowiseFFT</span><span class="p">,</span>
@@ -1424,11 +1179,11 @@ and do:
 </tbody>
 </table>
 </details><details>
-<summary>PS Host Application</summary></div>
-</div>
-</div>
-<div class="section" id="ps-host-application">
-<h2>PS Host Application<a class="headerlink" href="#ps-host-application" title="Permalink to this headline">¶</a></h2>
+<summary>PS Host Application</summary></section>
+</section>
+</section>
+<section id="ps-host-application">
+<h2>PS Host Application<a class="headerlink" href="#ps-host-application" title="Permalink to this heading">¶</a></h2>
 <p>The 2D-FFT AI Engine tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html">Programming the PS Host Application</a> section in the AI Engine documentation to understand the process to create a host application.</p>
 <p>In addition to the PS host application (<code class="docutils literal notranslate"><span class="pre">fft_2d_aie_app.cpp</span></code>), the AI Engine control code must also be compiled. This control code (<code class="docutils literal notranslate"><span class="pre">aie_control_xrt.cpp</span></code>) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code. The AI Engine control code is used by the PS host application for the following purposes:</p>
 <ul class="simple">
@@ -1524,14 +1279,14 @@ and do:
 </li>
 <li><p>Release allocated resources. After post-processing the data, release the allocated objects and handles using the <code class="docutils literal notranslate"><span class="pre">xrtRunClose</span></code>, <code class="docutils literal notranslate"><span class="pre">xrtKernelClose</span></code>, <code class="docutils literal notranslate"><span class="pre">xrtGraphClose</span></code>, and <code class="docutils literal notranslate"><span class="pre">xrtDeviceClose</span></code> functions.</p></li>
 </ol>
-</details></div>
-</div>
-<div class="section" id="performance-details">
-<h1>Performance Details<a class="headerlink" href="#performance-details" title="Permalink to this headline">¶</a></h1>
+</details></section>
+</section>
+<section id="performance-details">
+<h1>Performance Details<a class="headerlink" href="#performance-details" title="Permalink to this heading">¶</a></h1>
 <p>For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements with respect to their available resources, latency, throughput, performance, and power. In this section, it is outlined how to measure those characteristics for the AI Engine implementation in this tutorial.</p>
 <details>
-<summary>Resource Utilization and Power</summary> <div class="section" id="resource-utilization-and-power">
-<h2>Resource Utilization and Power<a class="headerlink" href="#resource-utilization-and-power" title="Permalink to this headline">¶</a></h2>
+<summary>Resource Utilization and Power</summary> <section id="resource-utilization-and-power">
+<h2>Resource Utilization and Power<a class="headerlink" href="#resource-utilization-and-power" title="Permalink to this heading">¶</a></h2>
 <p>Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2020.3 version) tools.</p>
 <p>The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:</p>
 <ol class="simple">
@@ -1770,9 +1525,9 @@ vcdanalyze --vcd x$(FFT_2D_INSTS).vcd --xpe
 </tr>
 </tbody>
 </table></details><details>
-<summary>Throughput and Latency</summary> </div>
-<div class="section" id="throughput-and-latency">
-<h2>Throughput and Latency<a class="headerlink" href="#throughput-and-latency" title="Permalink to this headline">¶</a></h2>
+<summary>Throughput and Latency</summary> </section>
+<section id="throughput-and-latency">
+<h2>Throughput and Latency<a class="headerlink" href="#throughput-and-latency" title="Permalink to this heading">¶</a></h2>
 <p>Throughput is measured in mega-samples transferred per second (MSPS). Latency is defined as the time between the first sample being sent by the data mover into the row-wise FFT kernel and the first sample from the col-wise FFT kernel being received by the data mover. It is measured by viewing the runtime generated trace texts using Vitis analyzer. The steps to measure throughput and latency are listed below:</p>
 <ol>
 <li><p>Compile the design using <code class="docutils literal notranslate"><span class="pre">EN_TRACE=1</span></code>. It automatically includes a <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> file while packaging, which comprises the following:</p>
@@ -1964,9 +1719,9 @@ Throughput = (Samples transferred) / execution time
 </tr>
 </tbody>
 </table></details><details>
-<summary>Performance per Watt</summary> </div>
-<div class="section" id="performance-per-watt">
-<h2>Performance per Watt<a class="headerlink" href="#performance-per-watt" title="Permalink to this headline">¶</a></h2>
+<summary>Performance per Watt</summary> </section>
+<section id="performance-per-watt">
+<h2>Performance per Watt<a class="headerlink" href="#performance-per-watt" title="Permalink to this heading">¶</a></h2>
 <p>Performance per Watt is represented as throughput in MSPS/power in Watts. The following example shows the calculation for the 1024 x 2048 point 1-instance design:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Performance</span> <span class="n">per</span> <span class="n">Watt</span> <span class="o">=</span> <span class="n">Throughput</span><span class="p">(</span><span class="n">MSPS</span><span class="p">)</span> <span class="o">/</span> <span class="n">Power</span><span class="p">(</span><span class="n">Watt</span><span class="p">)</span>
                      <span class="o">=</span> <span class="p">(</span><span class="mf">498.065</span> <span class="o">/</span> <span class="mf">0.950</span><span class="p">)</span> <span class="n">MSPS</span><span class="o">/</span><span class="n">Watt</span>
@@ -2060,9 +1815,9 @@ Throughput = (Samples transferred) / execution time
 </tr>
 </tbody>
 </table></details><details>
-<summary>Consolidated Summary</summary> </div>
-<div class="section" id="consolidated-summary">
-<h2>Consolidated Summary<a class="headerlink" href="#consolidated-summary" title="Permalink to this headline">¶</a></h2>
+<summary>Consolidated Summary</summary> </section>
+<section id="consolidated-summary">
+<h2>Consolidated Summary<a class="headerlink" href="#consolidated-summary" title="Permalink to this heading">¶</a></h2>
 <p>A consolidated summary of observations for all the point sizes and all the corresponding instance variations is shown in the following table.</p>
 <table border="1" class="docutils">
 <thead>
@@ -2279,82 +2034,23 @@ Throughput = (Samples transferred) / execution time
 </tbody>
 </table><p>From these observations it can be seen that with the increase in the FFT point size, the window buffer size used in the AI Engines increases, and with that the throughput increases as well. By increasing the <code class="docutils literal notranslate"><span class="pre">TP_WINDOW_VSIZE</span></code> parameter in the FFT AI Engine graph, the throughput can be further increased, especially for the lower point sizes, but the AI Engine mapper/router could encounter issues due to the higher memory requirement.</p>
 <p>Furthermore, the FFT point sizes increase, the power does <em>not</em> increase proportionately, so the performance per Watt maintains an increasing trend in the beginning and saturates towards the end.</p>
-</details></div>
-</div>
-<div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+</details></section>
+</section>
+<section id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
-</div>
-<div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p align="center"> XD073 | &copy; Copyright 2021 Xilinx, Inc.</p></div>
+<p align="center"> XD073 | &copy; Copyright 2021 Xilinx, Inc.</p></section>
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        Last updated on February 10, 2022.
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -2363,147 +2059,61 @@ Throughput = (Samples transferred) / execution time
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-														
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<div class="lang-select dropup hidden-md hidden-lg">
-		<button data-toggle="dropdown">
-			<span class="fas fa-globe" aria-hidden="true"></span>
-			<span>
-				
-					English
-				</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">Connect on LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Follow us on Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Connect on Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">Watch us on YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-																	<div class="lang-select dropup hidden-xs hidden-sm">
-	<button data-toggle="dropdown">
-		<span class="fas fa-globe" aria-hidden="true"></span>
-		<span>
-			
-				English
-			</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-															</div>
-														</div>
-														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
-															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
-														</div>
 
-													</div>
-													                    <div class="movethisrowtoleft row">
+													                    <div class="row">
                         <div class="col-xs-24">
-                            <ul class="sub-menu">
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
-								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
-                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
-                            </ul>
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="https://pages.gitenterprise.xilinx.com/techdocs/Test/vvas/build/html/index.html#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
                         </div>
                     </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
-    <span data-component="backToTopButton" class="backToTopButton loaded">
-        <ul>
-            <li>
-                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
-                    <span class="fas fa-angle-up" aria-hidden="true"></span>
-                </a>
-            </li>
-        </ul>
-    </span>
-</noindex></div>
-			</div>
-		</div>
+										
+</br>
 
 
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-			underscoreSetup();
-		</script>
-	</body>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>
