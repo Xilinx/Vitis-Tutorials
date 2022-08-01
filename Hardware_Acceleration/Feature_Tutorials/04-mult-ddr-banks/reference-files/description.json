@@ -6,6 +6,7 @@
     "platform_allowlist": ["u200"],
  
     "testinfo": {
+        "test_name": "HW_F_04-mult-ddr-bnk",
         "jobs": [
             {
                 "max_memory_MB": 32768,

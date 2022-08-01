@@ -6,6 +6,7 @@
     "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
     "testinfo": {
+        "test_name": "AIE_F_07-aie-fp_FIR",
         "jobs": [
             {
                 "max_memory_MB": 32768,

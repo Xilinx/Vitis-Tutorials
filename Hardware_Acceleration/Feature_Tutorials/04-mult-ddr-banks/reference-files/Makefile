@@ -15,17 +15,15 @@ XOS := vadd.$(TARGET).xo
 XCLBIN := vadd.$(TARGET).xclbin
 EMCONFIG_FILE := emconfig.json
 
+VPP_LINK_OPTS := --profile.data all:all:all
 # Linker options to map kernel ports to DDR banks
-ifeq ($(LAB),$(filter $(LAB),run1))
-   VPP_LINK_OPTS := --profile.data all:all:all
-else
-   VPP_LINK_OPTS := --config connectivity.cfg
+ifneq ($(LAB),$(filter $(LAB),run1))
+   VPP_LINK_OPTS += --config connectivity.cfg
 endif
 
-
 VPP_COMMON_OPTS := -s -t $(TARGET) --platform $(PLATFORM)
-CFLAGS := -g -std=c++11 -I$(XILINX_XRT)/include
-LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -pthread -lrt
+CFLAGS := -g -std=c++17 -I$(XILINX_XRT)/include
+LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -pthread -lrt -lxrt_coreutil
 NUMDEVICES := 1
 
 # run time args

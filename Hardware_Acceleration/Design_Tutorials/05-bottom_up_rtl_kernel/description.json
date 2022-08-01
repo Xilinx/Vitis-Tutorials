@@ -8,6 +8,7 @@
     "platform_blocklist": [],
      
     "testinfo": {
+        "test_name": "HW_D_05-bottom-up-rtl-krnl",
         "disable": false, 
         "jobs": [
             {

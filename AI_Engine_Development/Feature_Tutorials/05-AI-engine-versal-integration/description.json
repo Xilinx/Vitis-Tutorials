@@ -7,6 +7,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
+        "test_name": "AIE_F_05-versal-INTG",
         "disable": false,
         "jobs": [
             {
@@ -37,6 +38,9 @@
             "HOST_ARCH=aarch64",
             "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
             "SYSROOT=${SYSROOT}",
+            "SDKTARGETSYSROOT=${SYSROOT}",
+            "ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
+            "IMAGE=${EDGE_COMMON_SW}/Image",
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh\\\"",
             "EMBEDDED_PACKAGE_OUT=./sw", 
             "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"

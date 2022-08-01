@@ -311,7 +311,7 @@ Scripts are provided to create the Vitis platform. To use these scripts, please 
    ```
    # cd to the step directory, e.g.
    cd step2_pfm
-   make all COMMON_IMAGE_PATH=<path/to/common_image/>
+   make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>
    ```
 
 2. To clean the generated files, please run

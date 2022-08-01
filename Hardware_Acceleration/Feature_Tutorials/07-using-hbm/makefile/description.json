@@ -6,6 +6,7 @@
     "platform_allowlist": ["u200", "U50"],
  
     "testinfo": {
+        "test_name": "HW_F_07-use-hbm",
         "disable": 0,
         "jobs": [
             {

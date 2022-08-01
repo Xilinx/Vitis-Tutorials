@@ -6,6 +6,7 @@
     "platform_allowlist": ["zcu102"], 
  
     "testinfo": {
+        "test_name": "GS_vitis_zcu102",
         "disable": 0,
         "jobs": [
             {

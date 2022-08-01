@@ -6,6 +6,7 @@
     "platform_allowlist": ["u200"],
  
     "testinfo": {
+        "test_name": "HW_F_03-dataflow-dbg-opt",
         "disable": false,
         "user": {
             "negative": 1,

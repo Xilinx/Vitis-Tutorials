@@ -6,6 +6,7 @@
     "platform_allowlist": ["u200"],
  
     "testinfo": {
+        "test_name": "HW_D_01-convolution",
         "tasks": {
         "build": {
                    "pre_exec": "/proj/xtools/dsv/projects/sdx_libs/cpp_libs/opencv/set_opencv_os.sh"

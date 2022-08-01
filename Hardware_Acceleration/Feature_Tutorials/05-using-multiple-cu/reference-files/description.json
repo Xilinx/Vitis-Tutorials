@@ -6,6 +6,7 @@
     "platform_allowlist": ["u200"],
  
     "testinfo": {
+        "test_name": "HW_F_05-use-mult-cu",
         "jobs": [
             {
                 "max_memory_MB": 32768,

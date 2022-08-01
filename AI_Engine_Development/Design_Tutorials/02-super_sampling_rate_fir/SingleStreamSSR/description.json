@@ -6,6 +6,7 @@
     "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
     "testinfo": {
+        "test_name": "AIE_D_02-SSR-FIR_SingleStream",
         "jobs": [
             {
                 "max_memory_MB": 32768,

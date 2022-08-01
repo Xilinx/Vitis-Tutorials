@@ -4,9 +4,18 @@
     "description": "Creating a custom kv260 platform from scratch",
     "gui": "false",
     "flow": "vitis",
-    "platform_allowlist": [],
+    "platform_allowlist": ["zcu"],
     "platform_blocklist": [],
     "testinfo": {
+        "test_name": "PFM_D_01-KV260",
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_zynqmp.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_zynqmp.sh"
+            }
+         },
         "jobs": [
             {
                 "max_memory_MB": 32768,

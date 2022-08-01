@@ -8,6 +8,7 @@
     "platform_blocklist": [],
      
     "testinfo": {
+        "test_name": "HW_D_03-rtl-strm-krnl",
         "disable": false, 
         "jobs": [
             {
