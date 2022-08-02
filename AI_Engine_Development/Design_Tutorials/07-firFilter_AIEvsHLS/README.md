@@ -126,8 +126,6 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
-
 * Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 * [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
@@ -140,21 +138,15 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 <summary>Environment: Setting Up the Shell Environment</summary>
 
 ## Environment: Setting Up the Shell Environment
-When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system specific paths.
+When the elements of the Vitis software platform are installed, update the shell environment script. 
 
-Edit `env_setup.sh` script with your file paths:
-```bash
-export XILINX_XRT=<XRT-LOCATION>
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
-export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
+1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
+2. Set up your `XLNX_VERSAL` to point to the `xilinx-versal-common-v2022.1` directory.
+3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+4. Set up your `DSPLIB_ROOT`  environment variable based upon where you downloaded the Library
+5. Set up Vitis: ```bash source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh```
 
-source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh
-source $XILINX_XRT/setup.sh
-```
-Then source the environment script:
-```bash
-source env_setup.sh
-```  
+
 
 </details>
 
