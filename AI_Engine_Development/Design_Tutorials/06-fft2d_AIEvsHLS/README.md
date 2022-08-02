@@ -171,7 +171,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2022.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
-This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.
+This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the Xilinx Website and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.
 
 </details>
 
@@ -182,11 +182,6 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
 
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system-specific paths.
 
-To set up XRT, if you have not done this already, run the following command:
-
-```
-* source \<XRT-Location\>/setup.sh
-```
 
 In the design directory of each implementation, edit `env_setup.sh` script with your file paths, then source the environment script: 
 

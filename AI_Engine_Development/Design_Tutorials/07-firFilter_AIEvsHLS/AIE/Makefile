@@ -110,7 +110,9 @@ help::
 print-%  : ; @echo $* = $($*)
 
 # For SPRITE
-DSPLIB_ROOT=$(DSPLIB_VITIS)/dsp
+ifeq (,$(DSPLIB_ROOT))
+	DSPLIB_ROOT=$(DSPLIB_VITIS)/dsp
+endif
 
 # =========================================================
 # TARGET can be set as:
@@ -208,6 +210,11 @@ AIESIM_INPUT_FILE := $(AIESIM_DATA_DIR)/input_impulse.txt
 ###########################################################
 # Variable Definitions...
 #
+# =========================================================
+# Platform
+# =========================================================
+PLATFORM := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+
 # =========================================================
 # Kernel Source Files repository
 # =========================================================
