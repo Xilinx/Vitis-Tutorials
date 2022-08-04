@@ -28,7 +28,7 @@
         ],
         "tasks": {
             "build": {
-                "pre_exec": "/proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/tool/petalinux-v2022.1-final/settings.sh"
+                "pre_exec": "/proj/petalinux/2022.2/petalinux-v2022.2_daily_latest/tool/petalinux-v2022.2-final/settings.sh"
             }
         }
     }

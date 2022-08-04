@@ -30,7 +30,7 @@ AUTO_CONF_SRC             := ./src/conf/auto.conf
 AUTO_CONF                 := ${PROJ_DIR}/conf/auto.conf
 
 XSA_DIR                   := ${CURR_DIR}/../../platform/hw/build
-XSA                       := $(shell basename ${XSA_DIR}/*.xsa)
+XSA_FILE                  := $(shell basename ${XSA_DIR}/*.xsa)
 
 IMAGE                     := petalinux-image-minimal
 
@@ -49,7 +49,7 @@ BUILD_IMAGES_DIR          := ${PROJ_DIR}/images/linux
 
 all: ${PROJ_DIR} 
 
-${PROJ_DIR}: ${XSA_DIR} ${AUTO_CONF_SRC}
+${PROJ_DIR}: ${XSA_DIR}/${XSA_FILE} ${AUTO_CONF_SRC}
 	make clean
 	make create
 	make update_config
@@ -78,7 +78,7 @@ update_config:
 	@echo -e "MACHINE           = \"${LINUX_MACHINE}\""                   >> ${AUTO_CONF}
 	@echo -e ""                                                           >> ${AUTO_CONF}
 	@echo -e "HDF_BASE          = \"file://\""                            >> ${AUTO_CONF}
-	@echo -e "HDF_PATH          = \"${XSA_DIR}/${XSA}\""                  >> ${AUTO_CONF}
+	@echo -e "HDF_PATH          = \"${XSA_DIR}/${XSA_FILE}\""             >> ${AUTO_CONF}
 	@echo -e ""                                                           >> ${AUTO_CONF}
 
 update_eth:

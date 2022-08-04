@@ -20,7 +20,7 @@ ECHO                               = @echo
 ################################################################################
 # Variables needed for AMD/XILINX tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
-REQUIRED_VERSION                   = 2022.1
+REQUIRED_VERSION                   = 2022.2
 VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "Vivado ")
 VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 

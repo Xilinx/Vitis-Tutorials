@@ -21,7 +21,7 @@
 #define CL_HPP_MINIMUM_OPENCL_VERSION 120
 #define CL_HPP_ENABLE_PROGRAM_CONSTRUCTION_FROM_ARRAY_COMPATIBILITY 1
 
-#include <CL/cl2.hpp>
+#include <CL/opencl.hpp>
 
 //Customized buffer allocation for 4K boundary alignment
 template <typename T>

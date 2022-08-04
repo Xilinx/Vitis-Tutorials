@@ -6,13 +6,13 @@
 </table>
 
 # Versal Custom Thin Platform Extensible System
-This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2022.1.
+This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2022.2.
 
 ## Getting Started
 ### Build-flow
 The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
-  1. version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.1
+  1. version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.2
   2. board_repo:    Downloads the board files from the Xilinx GitHub 
   3. xsa:           Building the thin platform xsa (only pre-synth)
   4. linux:         Building linux and sysroot (with Petalinux or Yocto)
@@ -32,7 +32,7 @@ The following diagram explains the build-flow dependencies.
  
 ### Build & Prerequisites
 In the `[project-root]` you can start the full build with `make all` or `make all_targets` **after** taking following prerequisites into account:
-  - **Before starting the build, please correctly setup the 2022.1 version of Vivado, Vitis and Petalinux/Yocto**
+  - **Before starting the build, please correctly setup the 2022.2 version of Vivado, Vitis and Petalinux/Yocto**
     - If the tools are not setup correctly the build will stop with an ERROR message telling you what is not correctly setup!
       - REMARK: The Yocto Tool setup is not verified!
       - REMARK: The Petalinux Tool and Version check is skipped when targetting Yocto!
@@ -86,12 +86,12 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
       - **ONLY** used when `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
       - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnx-workspace/downloads`.
-      - Change to the directory where you extracted the [downloads_2022.1.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - Change to the directory where you extracted the [downloads_2022.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
       - This can be shared amoungst different users.
     - `LINUX_LOCAL_SSTATE_DIR`:
       - **ONLY** used when `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
-      - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2022.1/aarch64`.
-      - Change to the **WRITABLE** directory where you extracted the [sstate_aarch64_2022.1.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2022.2/aarch64`.
+      - Change to the **WRITABLE** directory where you extracted the [sstate_aarch64_2022.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
       - This can be shared amoungst different users.
     - `LINUX_ETH_CONFIG`:
       - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
@@ -138,7 +138,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 <details>
  <summary> make version_check </summary>
  
- -  Checks if the Vivado, Petalinux (Only when `export LINUX_BUILD_TOOL := petalinux`) and Vitis tools are setup and if the versions are 2022.1.
+ -  Checks if the Vivado, Petalinux (Only when `export LINUX_BUILD_TOOL := petalinux`) and Vitis tools are setup and if the versions are 2022.2.
  
 </details>
 <details>
@@ -539,7 +539,7 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2022.1 Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2022.2 Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/index.html)
 The following are links to Vitis related information referenced in this tutorial:
 
 * [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/kme1569523964461.html)
@@ -551,7 +551,15 @@ The following are links to Vitis related information referenced in this tutorial
 ## Revision History
 Click on each item below to see the detailed Revision History:
 
-<details>
+ <details>
+  <summary> June 2022 </summary>
+  
+ - general:
+   - Updated tutoral to 2022.2
+ 
+ </details>
+
+ <details>
   <summary> April 2022 </summary>
   
  - platform/hw:
