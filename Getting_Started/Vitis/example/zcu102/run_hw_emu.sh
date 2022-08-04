@@ -7,8 +7,6 @@
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
 
-export XILINX_XRT=/usr
-export XILINX_VITIS=/mnt
 export XCL_EMULATION_MODE=hw_emu
 
 ./app.exe 

@@ -112,8 +112,7 @@ This command will launch software emulation, start the Xilinx Quick Emulation (Q
 Once Linux has finished booting, enter the following commands from within the QEMU environment to run the example program:
 
 ```bash
-cd /media/sd-mmcblk0p1
-export XILINX_XRT=/usr
+cd /run/media/mmcblk0p1
 export XCL_EMULATION_MODE=sw_emu
 ./app.exe
 ```
@@ -138,7 +137,7 @@ If you look at the directory contents for the `zcu104/sw_emu` directory you shou
 These files and reports are the results of the build and run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform), for example:
 
 ```bash
-scp -P 1440 root@127.0.0.1:/media/sd-mmcblk0p1/xrt.run_summary ./xrt.run_summary
+scp -P 1440 root@127.0.0.1:/run/media/mmcblk0p1/xrt.run_summary ./xrt.run_summary
 ```
 
 Press Ctrl+a+x to exit QEMU and return to your bash shell. 
@@ -177,8 +176,7 @@ Building for hardware emulation takes more time than for software emulation, but
 Once Linux has finished booting, enter the following commands at the QEMU command prompt to run the example program:
 
 ```bash
-cd /media/sd-mmcblk0p1
-export XILINX_XRT=/usr
+cd /run/media/mmcblk0p1
 export XCL_EMULATION_MODE=hw_emu
 ./app.exe
 ```
@@ -188,7 +186,7 @@ You should see messages that say TEST PASSED indicating that the run completed s
 Running the application in the QEMU generates some report files during the run. These files and reports are the results of the run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform), for example:
 
 ```bash
-scp -P 1440 root@127.0.0.1:/media/sd-mmcblk0p1/xrt.run_summary ./xrt.run_summary
+scp -P 1440 root@127.0.0.1:/run/media/mmcblk0p1/xrt.run_summary ./xrt.run_summary
 ```
 
 Press Ctrl+a x to exit QEMU and return to your bash shell.
@@ -223,8 +221,7 @@ Building for hardware targets can take a couple of hours, or more significant ti
 After the build process completes, copy the `sd_card` directory to an SD card and plug it into the platform and boot until you see the Linux prompt. At that point, enter the following commands to run the accelerated application on the Embedded Processor platform:
 
 ```bash
-cd /media/sd-mmcblk0p1
-export XILINX_XRT=/usr
+cd /run/media/mmcblk0p1
 ./app.exe
 ```
 
