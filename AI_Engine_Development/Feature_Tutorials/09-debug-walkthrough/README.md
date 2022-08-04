@@ -32,7 +32,7 @@ Before starting this tutorial run the following steps:
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you download the platform.
 
 This tutorial targets VCK190 production board, PLATFORM variable in the Makefile(s) is:
-`PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm`
+`PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm`
 
 ## Example Design: Beamformer
 

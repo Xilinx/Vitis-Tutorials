@@ -39,7 +39,7 @@ help::
 	$(ECHO) "  xilinx_u55c_gen3x16_xdma_3_202210_1"
 	$(ECHO) ""
 
-PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
+PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
 TARGET := hw
 
 XOCCFLAGS := --platform $(PLATFORM) -t $(TARGET)  -s -g

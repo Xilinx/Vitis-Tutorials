@@ -4,7 +4,7 @@ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Get
 CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 
 TARGET := hw_emu
-PLATFORM := xilinx_zcu102_base_202210_1
+PLATFORM ?= xilinx_zcu102_base_202220_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
 EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)/package

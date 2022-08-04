@@ -14,7 +14,7 @@
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=vck190_custom
-PLATFORM = $(ROOT_DIR)/../step3_pfm/platform_repo/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
+PLATFORM ?= $(ROOT_DIR)/../step3_pfm/platform_repo/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
 SW_COMP = $(ROOT_DIR)/../step3_pfm/sw_comp/
 
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/

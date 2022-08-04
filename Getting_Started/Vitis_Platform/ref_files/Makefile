@@ -27,7 +27,7 @@ SW_COMP=sw_comp
 SYSROOT=sysroot
 XSA_NAME=vck190_custom
 PLATFORM_NAME=vck190_custom
-PLATFORM = $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
+PLATFORM ?= $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 SYSROOTDIR=$(ROOT_DIR)/$(SYSROOT)
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 

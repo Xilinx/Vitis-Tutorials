@@ -19,7 +19,7 @@
 # =========================================================
 # Platform Selection...
 # =========================================================
-export PFM_NAME=xilinx_vck190_base_202210_1
+export PFM_NAME=xilinx_vck190_base_202220_1
 
 # =========================================================
 # Do not change anything below this line unless necessary

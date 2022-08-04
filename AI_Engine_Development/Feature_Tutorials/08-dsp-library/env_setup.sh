@@ -23,7 +23,7 @@ export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
 # =========================================================
 # Platform Selection...
 # =========================================================
-export PFM_NAME=xilinx_vck190_base_202210_1
+export PFM_NAME=xilinx_vck190_base_202220_1
 
 
 # Source XRT, VITIS, and Aietools...

@@ -29,7 +29,7 @@ RM = rm -f
 RMDIR = rm -rf
 SRC_LOG_FILE_PATH = ${AIE_TOP_DIR}/Module2.build.log
 DST_LOG_FILE_PATH = ${AIE_BUILD_DIR}/build.log
-PLATFORM = xilinx_vck190_base_202210_1
+PLATFORM ?= xilinx_vck190_base_202220_1
 
 # AIE compiler settings
 AIE_FLAGS = -v -dataflow -include="${XILINX_VITIS_AIE_TOOLS}/include" -include="${XILINX_VITIS_AIE_TOOLS}/../include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/aie" -include="${AIE_TOP_DIR}/aie/aie_kernels" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=${PLATFORM_REPO_PATHS}/${PLATFORM}/${PLATFORM}.xpfm -workdir=$(AIE_OUT_DIR) --xlopt=0

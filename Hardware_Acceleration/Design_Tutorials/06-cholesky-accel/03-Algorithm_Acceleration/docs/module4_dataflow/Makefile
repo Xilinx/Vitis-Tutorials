@@ -33,7 +33,7 @@ help::
 ## Several supported platforms are liste here. You may choose the one you want and comment out the others
 ## Or you can add other platfom and set PLATFORM variable to it
 
-PLATFORM := xilinx_u50_gen3x16_xdma_201920_3
+PLATFORM ?= xilinx_u50_gen3x16_xdma_201920_3
 
 
 ## TARGET can be set as:

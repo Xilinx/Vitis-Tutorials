@@ -20,7 +20,7 @@ ifeq ($(STEP), kernel_16)
 PF   := 16
 endif
 
-PLATFORM :=xilinx_u200_gen3x16_xdma_2_202110_1
+PLATFORM ?=xilinx_u200_gen3x16_xdma_2_202110_1
 
 #SRCDIR := ./../reference_files
 ifeq ($(SPRITE),true)

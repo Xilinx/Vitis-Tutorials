@@ -125,7 +125,7 @@ Generic Versal and specific platform directories are defined in the `Makefile`:
 ```Makefile
 # Platform
 VERSAL_SW := ${PLATFORM_DIR}/sw/versal/xilinx-versal-common-v2022.1
-BASE_PLATFORM := ${PLATFORM_DIR}/$(PFM_NAME)/$(PFM_NAME).xpfm
+BASE_PLATFORM ?= ${PLATFORM_DIR}/$(PFM_NAME)/$(PFM_NAME).xpfm
 PLATFORM_SW := ${PLATFORM_DIR}/$(PFM_NAME)/sw/$(PFM_NAME)
 
 IMAGE   := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image

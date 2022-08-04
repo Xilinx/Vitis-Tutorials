@@ -19,7 +19,7 @@ help:
 	@echo ""
 #######################################################################################
 TARGET := sw_emu
-PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
+PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
 HOST_EXE := dct_top
 XO := dct.$(TARGET).$(PLATFORM).xo
 XCLBIN := dct.$(TARGET).$(PLATFORM).xclbin

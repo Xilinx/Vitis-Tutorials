@@ -29,7 +29,7 @@ Before you begin this tutorial, run the following steps:
 
 This tutorial targets the VCK190 production board. The `PLATFORM` variable in the Makefile(s) is as follows:
 
-	PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
 
 
 ### Objectives

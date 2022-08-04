@@ -30,7 +30,7 @@ VERSAL_SW := ${PLATFORM_DIR}/sw/versal/xilinx-versal-common-v2022.1
 BASE_PLATFORM := ${PLATFORM_DIR}/$(PFM_NAME)/$(PFM_NAME).xpfm
 PLATFORM_SW := ${PLATFORM_DIR}/$(PFM_NAME)/sw/$(PFM_NAME)
 
-IMAGE   := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image
+IMAGE   := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.2/Image
 
 # New platform
 PFM := Phase1_container
@@ -85,10 +85,10 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202210_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202220_1)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2022.2/environment-setup-aarch64-xilinx-linux)
 
 
 ########################################################

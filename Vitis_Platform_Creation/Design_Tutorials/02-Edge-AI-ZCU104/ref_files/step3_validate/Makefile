@@ -14,7 +14,7 @@
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=zcu104_custom
-PLATFORM = $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
+PLATFORM ?= $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 SW_COMP = $(ROOT_DIR)/../step2_pfm/sw_comp/
 SYSROOT=$(ROOT_DIR)/../step2_pfm/sysroot/
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/

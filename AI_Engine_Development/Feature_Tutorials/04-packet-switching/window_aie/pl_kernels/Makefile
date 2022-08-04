@@ -10,7 +10,7 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 #
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm
 
 .PHONY: clean
 

@@ -1,7 +1,7 @@
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Getting_Started/Vitis/example/src/*}')
 
 TARGET := hw_emu
-PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
+PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
 
