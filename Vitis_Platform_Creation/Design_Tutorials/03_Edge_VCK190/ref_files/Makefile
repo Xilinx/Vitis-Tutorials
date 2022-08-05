@@ -12,40 +12,49 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ---------------------------------
-# Target all: Generate the Vitis platform and verify it including base bootable design
-# ---------------------------------
+XSA=step1_vivado/build/vivado/custom_hardware_platform_hw.xsa
+XPFM=step2_pfm/custom_platform/export/custom_platform/custom_platform.xpfm
+VERSION				?=2022.1
+COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 
-# Board: VCK190, VCK190_ES1
-export BOARD=VCK190
+.PHONY: help
 
-XSA=step0_bootable_design/build/vivado/vck190_custom_hw.xsa
-IMG=step2_petalinux/build/petalinux/images/linux/image.ub
-XPFM=step3_pfm/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm
+help:
+	@echo "Makefile usage"
+	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/> 	## to generate platform with pre-built software components and do sw emulation with running vadd application to test this platform "
 
-.PHONY: all clean step0 step2 step3 
-all: step0 step2 step3 step4
 
-step0: $(XSA)
+all: check-common-image step1 step2 step3 
+
+#target : check  whether the common image is ready 
+check-common-image:
+ifeq ($(wildcard $(COMMON_IMAGE_VERSAL)/Image),)
+	@echo "'COMMON_IMAGE_VERSAL' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
+	@make help
+	@echo "exit ....." && exit 1
+endif
+
+# Step 1: Generate XSA with Vivado
+step1: $(XSA)
 
 $(XSA):
-	$(MAKE) -C step0_bootable_design all
+	$(MAKE) -C step1_vivado all
 
-step2: $(IMG)
 
-$(IMG): $(XSA) 
-	$(MAKE) -C step2_petalinux all
+# Step 2: Generate Platform
+step2: $(XPFM)
 
+$(XPFM): $(XSA) 
+	$(MAKE) -C step2_pfm all
+
+# Step 3: Validate Design
 step3: $(XPFM)
-
-$(XPFM): $(XSA) $(IMG)
-	$(MAKE) -C step3_pfm all
-
-step4: $(XPFM) $(IMG)
-	$(MAKE) -C step4_validate all
+	$(MAKE) -C step3_application all
 
 clean:
-	$(MAKE) -C step0_bootable_design clean
-	$(MAKE) -C step2_petalinux clean
-	$(MAKE) -C step3_pfm clean
-	$(MAKE) -C step4_validate clean
+	$(MAKE) -C step1_vivado clean
+	$(MAKE) -C step2_pfm clean
+	$(MAKE) -C step3_application clean
+ultraclean:clean
+	$(MAKE) -C step2_pfm ultraclean
+	$(MAKE) -C step3_application ultraclean
