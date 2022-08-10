@@ -152,7 +152,16 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 &nbsp;
             </td>
         </tr>
-    </tbody>
+	<tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API
+                    :new: </a>
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+	</tbody>
 </table>
 
 
