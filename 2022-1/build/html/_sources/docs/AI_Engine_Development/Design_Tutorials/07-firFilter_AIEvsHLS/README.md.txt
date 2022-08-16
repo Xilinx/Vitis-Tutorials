@@ -11,7 +11,7 @@
 
 ***Version: Vitis 2021.2***
 
-## Table of Contents
+### Table of Contents
 [Introduction](#introduction)
 
 [Before You Begin](#before-you-begin)
@@ -28,7 +28,7 @@
 
 [Revision History](#revision-history)
 
-# Introduction
+## Introduction
 The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully software-programmable, heterogeneous compute platform that combines the processor system (PS) (Scalar Engines that include the Arm® processors), programmable logic (PL) (Adaptable Engines that include the programmable logic blocks and memory) and the Intelligent Engines comprising of both the AI and DSP Engines.
 
 This tutorial is one of several to perform two implementations of a system-level design using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs. In each implementation, the tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal ACAP system design. A makefile is provided so that you can modify it to suit your needs in a different context.
@@ -40,7 +40,7 @@ A frequently asked question is whether using AI Engines, HLS or RTL targeting DS
 <details>
 <summary>Objectives</summary>
 
-## Objectives
+### Objectives
 After completing the tutorial, you should be able to:
 * Develop a system level design (FIR filter in this case) by identifying the algorithm and deploying the same algorithm on AI Engine and DSP Engines using Vitis HLS.
 * Build a complete system design by going through the various steps in the Vitis unified software platform flow, including creating the AI Engine adaptive data flow (ADF) API graph, compiling the A72 host application, and compiling PL kernels, using the Vitis compiler (`v++`) to link the AI Engine and HLS kernels with the platform, and packaging the design. You will also be able to run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator
@@ -53,7 +53,7 @@ After completing the tutorial, you should be able to:
 <details>
 <summary>Overview</summary>
 
-## Overview
+### Overview
 This tutorial implements a FIR filter chain, one implementation targeted at AI Engines and another targeted at DSP Engines using Vitis HLS.
 
 FIR filters provide a large design space to explore. For the purposes of this tutorial, the following parameters are held fixed/constant:
@@ -73,7 +73,7 @@ The makefile based  build process can be directed to build different length chai
 <details>
   <summary>Directory Structure</summary>
 
-## Directory Structure
+### Directory Structure
 ```
 filter_AIEvsHLS
 +-- AIE......................contains AI Engine implementation
@@ -94,12 +94,12 @@ filter_AIEvsHLS
 
 </details>
 
-# Before You Begin
+## Before You Begin
 
 <details>
 <summary>Documentation: Explore AI Engine Architecture</summary>
 
-## *Documentation*: Explore AI Engine Architecture
+### *Documentation*: Explore AI Engine Architecture
 
 * [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
 
@@ -113,7 +113,7 @@ filter_AIEvsHLS
 
 <summary>Tools: Installing the Tools</summary>
 
-## *Tools*: Installing the Tools
+### *Tools*: Installing the Tools
 
 Tools Documentation:
 
@@ -140,7 +140,7 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 <details>
 <summary>Environment: Setting Up the Shell Environment</summary>
 
-## Environment: Setting Up the Shell Environment
+### Environment: Setting Up the Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system specific paths.
 
 Edit `env_setup.sh` script with your file paths:
@@ -162,7 +162,7 @@ source env_setup.sh
 <details>
 <summary>Validation: Confirming Tool Installation</summary>
 
-## Validation: Confirming Tool Installation
+### Validation: Confirming Tool Installation
 ```bash
 which vitis
 which aiecompiler
@@ -187,7 +187,7 @@ Output of the previous command should be as follows:
 
 </details>
 
-# Design Implementations
+## Design Implementations
 The Makefile and source files for the AI Engine and HLS implementations are in the respective directories "AIE" and "HLS". For the documentation of the flow to build the design and details of the hardware and software design, click on each of the following links:
 
 [AI Engines design implementation](AIE)
@@ -195,7 +195,7 @@ The Makefile and source files for the AI Engine and HLS implementations are in t
 [HLS with DSP Engines design implementation](HLS)
 
 
-# Choosing between AI Engine and HLS Implementations
+## Choosing between AI Engine and HLS Implementations
 The choice of which engine (AI or DSP) to use for implementing a specific function in your design or application is not always a simple one. This decision should be taken based on specific requirements of your application with respect to performance requirements and resources. There are some high-level guidelines which can help with architecting your design to a Xilinx Versal device with AI Engines. For example, small functions with modest amounts of computation will most likely be more efficient targeting the PL and DSP Engines. However, as the computational needs start to increase, moving those functions to the AI Engine will provide better efficiency.
 
 It is important not to take that decision in isolation at the function level, but to look at the problem in relation to the complete dataflow path. For instance, an inefficient function implemented in the AI Engine may offer better total efficiency when preceded and followed in the dataflow by large amounts of efficient compute functions. It is likely that it will offer overall better throughput and latency than moving the data to the PL for that specific function and back into the AI Engine array.
@@ -207,7 +207,7 @@ Typically, one of the first steps of a design is deciding on an architecture/imp
 <details>
 <summary>Meeting Throughput Requirements</summary>
 
-## Meeting Throughput Requirements
+### Meeting Throughput Requirements
 
 For DSP based design, the designer begins with an estimate of the system clock rate that the PL is capable of, and divides that by the desired filter throughput to determine how many clock cycles can be used to process a sample. By feeding this number into the FIR Compiler, the FIR is constructed with the minimum resources required to implement the design; the higher the clock cycles per sample, the fewer resources used.
 
@@ -231,7 +231,7 @@ The previous table shows the achieved throughput using one AI Engine per FIR. It
 <details>
 <summary>Resource Utilization</summary>
 
-## Resource Utilization
+### Resource Utilization
 
 The AI Engine can reduce the overall requirement on the PL and DSPs in a design with a lot of vectorizable compute. For example, the following shows the required resources for the same 64-Tap FIR filter implemented in both AI Engine and PL with DSPs:
 
@@ -251,7 +251,7 @@ It is clear that the AI Engine implementation offers significant savings of PL r
 <details>
 <summary>Power Utilization</summary>
 
-## Power Utilization
+### Power Utilization
 In general, smaller designs are more power efficient in the PL than in AI Engines, but the advantage switches over to AI Engines as the design becomes larger.
 
 This can be seen in the following dynamic power graph for 240-tap FIR chains with 1, 5, and 10 FIR filters connected sequentially. In the case of the HLS or DSP implementation, the power slope is a straight line which would go through the origin. For the AI Engine implementation, a single filter starts off with a much higher dynamic power, but the slope is shallower, so in a 5 filter chain, the power is similar  the HLS implementation, and the advantage starts to move towards the AI Engine implementations, and then at ten FIR filters in the chain, the power of the AI Engine implementation is using ~1 Watt less than that of the HLS and DSP based FIR filter chain.
@@ -264,7 +264,7 @@ This can be seen in the following dynamic power graph for 240-tap FIR chains wit
 <details>
 <summary>Computational Efficiency</summary>
 
-## Computational Efficiency
+### Computational Efficiency
 Computational efficiency is a very common and important metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (MegaSamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240-tap FIR filter chain with 1, 5, and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.
 
 ![Image of 240 Tap FIR computational efficiency](images/fir_graph_240tap_efficiency.png)
@@ -273,12 +273,12 @@ Computational efficiency is a very common and important metric for comparing two
 
 </details>
 
-# AI Engine Specific Design Considerations
+## AI Engine Specific Design Considerations
 
 <details>
 <summary>Assigning Multiple AI Engines per Filter</summary>
 
-## Assigning Multiple AI Engines per Filter
+### Assigning Multiple AI Engines per Filter
 For a HLS implementation, specifying the number of clocks per sample establishes the throughput and is the primary factor in determining how many resources are required, and the relationship is quite linear.
 
 For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter called cascade length (CASC_LEN), which can be used to assign multiple AI Engines to a particular filter kernel. This results in increased throughput, but the relationship is not linear. The following graphs show the results for a single 129 tap FIR filter, with CASC_LENs of 1,2, and 4.
@@ -304,7 +304,7 @@ The following table provides some additional information on data on throughput f
 <details>
 <summary>Window Size</summary>
 
-## Window Size
+### Window Size
 The AI Engine processes data in bursts and these data bursts are transferred between AI Engines utilizing ping-pong buffers. The data from one engine is written into one of the two buffers and when it is filled, the buffers are swapped and the data read out by the downstream engine. The size of these data bursts is referred to as the window size, and establishing the optimum window size is a balancing act between throughput and latency. Larger window sizes provide higher throughput because there the burst overhead is less of an influence on the performance. However, latency increases proportionately to the window size.
 
 Thus, the window size should be chosen to be just large enough such that the desired throughput target is met.
@@ -321,12 +321,12 @@ If, for example, our throughput requirements were 250 MSPS, a window size of 256
 
 </details>
 
-# Measuring Resources, Throughput, Latency, and Power
+## Measuring Resources, Throughput, Latency, and Power
 
 <details>
 <summary>Measuring Resources, Throughput, Latency, and Power</summary>
 
-## Resource and Power Utilization
+### Resource and Power Utilization
 The power and resource utilization information can be found in the report_dir directory, with the file name: fir_[aie|dsp]_<number_of_fir_filters>firs_<number_of_filter_taps>taps_utilization.txt
 
 Or, if you wish to extract this information from the design yourself, open the project in Vivado tools:
@@ -349,7 +349,7 @@ The utilization and power observations are shown in the following table.
 <details>
 <summary>Throughput and Latency Measurements</summary>
 
-## Throughput and Latency Measurements
+### Throughput and Latency Measurements
 To maintain consistency between the AI Engine and DSP implementation, the same flow to measure throughput is used to run the design in hardware and capture trace data in run time. Refer to the [Vitis Unified Software Development Platform documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation) for more information.
 To setup the flow to measure throughput, refer to the section "Run on Hardware" in the AI Engine and HLS implementation documentation, and run the application.
 
@@ -382,20 +382,20 @@ Latency = 1.264 us
 
 </details>
 
-# Conclusion
+## Conclusion
 
 In this tutorial, we have demonstrated how to implement FIR filter chains in both the AI Engine and PL with(DSPs) using HLS using the Vitis kernel based flow.
 
 Also, we explored the AI Engine implementation and how design decisions can affect the overall performance for a FIR filter chain with respect to throughput, resources and performance. Part of this exercise was to show that small FIRs taken in isolation may not be that efficient an implementation when targeting AI Engine but as the FIRs increase in size and the number of instances increase, it becomes apparent that AI Engine becomes the most efficient solution. It can also be seen from the results, how even more compute, beyond this example, and a larger data path will enable greater efficiency of implementation and performance than the traditional FPGA programmable logic and DSP engines, if that is what your application needs.
 
-# Revision History
+## Revision History
 * Dec 2021 Release
 
-# Support
+## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

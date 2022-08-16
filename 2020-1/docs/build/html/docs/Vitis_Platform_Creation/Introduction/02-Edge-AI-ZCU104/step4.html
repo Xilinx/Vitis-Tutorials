@@ -1,0 +1,543 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Step 4: Test the Platform &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../README.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../README.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../README.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Step 4: Test the Platform</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/step4.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="step-4-test-the-platform">
+<h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="test-1-read-platform-info">
+<h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this heading">¶</a></h2>
+<p>With Vitis environment setup, platforminfo tool can report XPFM platform information.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in zcu104_custom_pkg directory</span>
+<span class="n">platforminfo</span> <span class="o">./</span><span class="n">zcu104_custom</span><span class="o">/</span><span class="n">export</span><span class="o">/</span><span class="n">zcu104_custom</span><span class="o">/</span><span class="n">zcu104_custom</span><span class="o">.</span><span class="n">xpfm</span>
+<span class="o">==========================</span>
+<span class="n">Basic</span> <span class="n">Platform</span> <span class="n">Information</span>
+<span class="o">==========================</span>
+<span class="n">Platform</span><span class="p">:</span>           <span class="n">zcu104_custom</span>
+<span class="n">File</span><span class="p">:</span>               <span class="o">/</span><span class="n">scratch</span><span class="o">/</span><span class="n">rickys</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">idt_platform</span><span class="o">/</span><span class="n">zcu104_custom_pkg</span><span class="o">/</span><span class="n">zcu104_custom</span><span class="o">/</span><span class="n">export</span><span class="o">/</span><span class="n">zcu104_custom</span><span class="o">/</span><span class="n">zcu104_custom</span><span class="o">.</span><span class="n">xpfm</span>
+<span class="n">Description</span><span class="p">:</span>
+<span class="n">zcu104_custom</span>
+
+
+<span class="o">=====================================</span>
+<span class="n">Hardware</span> <span class="n">Platform</span> <span class="p">(</span><span class="n">Shell</span><span class="p">)</span> <span class="n">Information</span>
+<span class="o">=====================================</span>
+<span class="n">Vendor</span><span class="p">:</span>                           <span class="n">xilinx</span>
+<span class="n">Board</span><span class="p">:</span>                            <span class="n">zcu104_custom_platform</span>
+<span class="n">Name</span><span class="p">:</span>                             <span class="n">zcu104_custom_platform</span>
+<span class="n">Version</span><span class="p">:</span>                          <span class="mf">0.0</span>
+<span class="n">Generated</span> <span class="n">Version</span><span class="p">:</span>                <span class="mf">2020.1</span>
+<span class="n">Software</span> <span class="n">Emulation</span><span class="p">:</span>               <span class="mi">1</span>
+<span class="n">Hardware</span> <span class="n">Emulation</span><span class="p">:</span>               <span class="mi">0</span>
+<span class="n">FPGA</span> <span class="n">Family</span><span class="p">:</span>                      <span class="n">zynquplus</span>
+<span class="n">FPGA</span> <span class="n">Device</span><span class="p">:</span>                      <span class="n">xczu7ev</span>
+<span class="n">Board</span> <span class="n">Vendor</span><span class="p">:</span>                     <span class="n">xilinx</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Board</span> <span class="n">Name</span><span class="p">:</span>                       <span class="n">xilinx</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">zcu104</span><span class="p">:</span><span class="mf">1.1</span>
+<span class="n">Board</span> <span class="n">Part</span><span class="p">:</span>                       <span class="n">xczu7ev</span><span class="o">-</span><span class="n">ffvc1156</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">e</span>
+<span class="n">Maximum</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">Compute</span> <span class="n">Units</span><span class="p">:</span>  <span class="mi">60</span>
+
+<span class="o">=================</span>
+<span class="n">Clock</span> <span class="n">Information</span>
+<span class="o">=================</span>
+  <span class="n">Default</span> <span class="n">Clock</span> <span class="n">Index</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="n">Clock</span> <span class="n">Index</span><span class="p">:</span>         <span class="mi">2</span>
+    <span class="n">Frequency</span><span class="p">:</span>         <span class="mf">100.000000</span>
+  <span class="n">Clock</span> <span class="n">Index</span><span class="p">:</span>         <span class="mi">0</span>
+    <span class="n">Frequency</span><span class="p">:</span>         <span class="mf">200.000000</span>
+  <span class="n">Clock</span> <span class="n">Index</span><span class="p">:</span>         <span class="mi">1</span>
+    <span class="n">Frequency</span><span class="p">:</span>         <span class="mf">400.000000</span>
+
+<span class="o">==================</span>
+<span class="n">Memory</span> <span class="n">Information</span>
+<span class="o">==================</span>
+  <span class="n">Bus</span> <span class="n">SP</span> <span class="n">Tag</span><span class="p">:</span> <span class="n">HP0</span>
+  <span class="n">Bus</span> <span class="n">SP</span> <span class="n">Tag</span><span class="p">:</span> <span class="n">HP1</span>
+  <span class="n">Bus</span> <span class="n">SP</span> <span class="n">Tag</span><span class="p">:</span> <span class="n">HP2</span>
+  <span class="n">Bus</span> <span class="n">SP</span> <span class="n">Tag</span><span class="p">:</span> <span class="n">HP3</span>
+  <span class="n">Bus</span> <span class="n">SP</span> <span class="n">Tag</span><span class="p">:</span> <span class="n">HPC0</span>
+  <span class="n">Bus</span> <span class="n">SP</span> <span class="n">Tag</span><span class="p">:</span> <span class="n">HPC1</span>
+<span class="o">=======================</span>
+<span class="n">Feature</span> <span class="n">ROM</span> <span class="n">Information</span>
+<span class="o">=======================</span>
+<span class="o">=============================</span>
+<span class="n">Software</span> <span class="n">Platform</span> <span class="n">Information</span>
+<span class="o">=============================</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">Runtimes</span><span class="p">:</span>            <span class="mi">1</span>
+<span class="n">Default</span> <span class="n">System</span> <span class="n">Configuration</span><span class="p">:</span>  <span class="n">zcu104_custom</span>
+<span class="n">System</span> <span class="n">Configurations</span><span class="p">:</span>
+  <span class="n">System</span> <span class="n">Config</span> <span class="n">Name</span><span class="p">:</span>                      <span class="n">zcu104_custom</span>
+  <span class="n">System</span> <span class="n">Config</span> <span class="n">Description</span><span class="p">:</span>               <span class="n">zcu104_custom</span>
+  <span class="n">System</span> <span class="n">Config</span> <span class="n">Default</span> <span class="n">Processor</span> <span class="n">Group</span><span class="p">:</span>   <span class="n">linux_domain</span>
+  <span class="n">System</span> <span class="n">Config</span> <span class="n">Default</span> <span class="n">Boot</span> <span class="n">Image</span><span class="p">:</span>        <span class="n">standard</span>
+  <span class="n">System</span> <span class="n">Config</span> <span class="n">Is</span> <span class="n">QEMU</span> <span class="n">Supported</span><span class="p">:</span>         <span class="mi">0</span>
+  <span class="n">System</span> <span class="n">Config</span> <span class="n">Processor</span> <span class="n">Groups</span><span class="p">:</span>
+    <span class="n">Processor</span> <span class="n">Group</span> <span class="n">Name</span><span class="p">:</span>      <span class="n">linux</span> <span class="n">on</span> <span class="n">psu_cortexa53</span>
+    <span class="n">Processor</span> <span class="n">Group</span> <span class="n">CPU</span> <span class="n">Type</span><span class="p">:</span>  <span class="n">cortex</span><span class="o">-</span><span class="n">a53</span>
+    <span class="n">Processor</span> <span class="n">Group</span> <span class="n">OS</span> <span class="n">Name</span><span class="p">:</span>   <span class="n">linux</span>
+  <span class="n">System</span> <span class="n">Config</span> <span class="n">Boot</span> <span class="n">Images</span><span class="p">:</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">Name</span><span class="p">:</span>           <span class="n">standard</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">Type</span><span class="p">:</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">BIF</span><span class="p">:</span>            <span class="n">zcu104_custom</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">linux</span><span class="o">.</span><span class="n">bif</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">Data</span><span class="p">:</span>           <span class="n">zcu104_custom</span><span class="o">/</span><span class="n">linux_domain</span><span class="o">/</span><span class="n">image</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">Boot</span> <span class="n">Mode</span><span class="p">:</span>      <span class="n">sd</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">RootFileSystem</span><span class="p">:</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">Mount</span> <span class="n">Path</span><span class="p">:</span>     <span class="o">/</span><span class="n">mnt</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">Read</span> <span class="n">Me</span><span class="p">:</span>        <span class="n">zcu104_custom</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">generic</span><span class="o">.</span><span class="n">readme</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">QEMU</span> <span class="n">Args</span><span class="p">:</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">QEMU</span> <span class="n">Boot</span><span class="p">:</span>
+    <span class="n">Boot</span> <span class="n">Image</span> <span class="n">QEMU</span> <span class="n">Dev</span> <span class="n">Tree</span><span class="p">:</span>
+<span class="n">Supported</span> <span class="n">Runtimes</span><span class="p">:</span>
+  <span class="n">Runtime</span><span class="p">:</span> <span class="n">OpenCL</span>
+</pre></div>
+</div>
+<p>We can verify clock information and memory information are set as expected.</p>
+</div>
+<div class="section" id="test-2-run-vector-addition-application">
+<h2>Test 2: Run Vector Addition Application<a class="headerlink" href="#test-2-run-vector-addition-application" title="Permalink to this heading">¶</a></h2>
+<p>Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface and interrupt setting in platform are working properly.</p>
+<div class="section" id="creating-vector-addition-application">
+<h3>Creating Vector Addition Application<a class="headerlink" href="#creating-vector-addition-application" title="Permalink to this heading">¶</a></h3>
+<ol class="simple">
+<li><p>Open Vitis workspace you were using before.<br /></p></li>
+<li><p>Select <em><strong>File -&gt; New -&gt; Application Project</strong></em>.<br /></p></li>
+<li><p>Click <em><strong>next</strong></em><br /></p></li>
+<li><p>Select <em><strong>zcu104_custom</strong></em> as platform, click <em><strong>next</strong></em>.<br /></p></li>
+<li><p>Name the project <em><strong>vadd</strong></em>, click <em><strong>next</strong></em>.<br /></p></li>
+<li><p>Set Domain to <em><strong>linux on psu_cortexa53</strong></em>, set <em><strong>Sys_root path</strong></em> to <code class="docutils literal notranslate"><span class="pre">&lt;full_pathname_to_zcu104_custom_pkg&gt;/pfm/sysroots/aarch64-xilinx-linux</span></code>(as you created by running <em><strong>sdk.sh</strong></em>). Set the <em><strong>Root FS</strong></em> to rootfs.ext4 and <em><strong>Kernel Image</strong></em> to Image. These files are loated in <code class="docutils literal notranslate"><span class="pre">zcu104_custom_plnx/images</span></code> directory, which are generated in Step 2. click <em><strong>next</strong></em>.<br /></p></li>
+<li><p>Select <em><strong>System Optimization Examples -&gt; Vector Addition</strong></em> and click <em><strong>finish</strong></em> to generate the application.<br /></p></li>
+<li><p>In the Explorer window double click the <em><strong>vadd.prj</strong></em> file to open it, change the <em><strong>Active Build configuration</strong></em> from <em><strong>Emulation-SW</strong></em> to <em><strong>Hardware</strong></em>.<br /></p></li>
+<li><p>Select <em><strong>vadd_system</strong></em> in Explorer window and Click <em><strong>Build</strong></em> icon in toolbar.</p></li>
+</ol>
+<p><em><strong>Note</strong></em>: If you cannot see the <em><strong>zcu104_custom</strong></em> platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to <em><strong>zcu104_custom_pkg/zcu104_custom</strong></em> directory.</p>
+<p><em><strong>Note</strong></em>: If you’d like to test this application in emulation mode, plese change  <em><strong>Active Build configuration</strong></em> from <em><strong>Emulation-SW</strong></em> to <em><strong>Emulation-HW</strong></em> on Step 8.</p>
+</div>
+<div class="section" id="running-vector-addition-application-on-the-board">
+<h3>Running Vector Addition Application on the Board<a class="headerlink" href="#running-vector-addition-application-on-the-board" title="Permalink to this heading">¶</a></h3>
+<ol>
+<li><p>Copy <em><strong>zcu104_custom_pkg/vadd_system/Hardware/package/sd_card.img</strong></em> to local if Vitis is running on a remote server.</p></li>
+<li><p>Write <em><strong>sd_card.img</strong></em> into SD Card with SD Card image writer applications like Etcher on Windows or dd on Linux.</p></li>
+<li><p>Boot ZCU104 board with the SD card in SD boot mode.</p></li>
+<li><p>Login with username <em><strong>root</strong></em> and password <em><strong>root</strong></em>.</p></li>
+<li><p>Go to auto mounted FAT32 partition</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /mnt/sd-mmcblk0p1
+</pre></div>
+</div>
+</li>
+<li><p>Initialize XRT running environment</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ./init.sh
+</pre></div>
+</div>
+</li>
+<li><p>Run vadd appliation</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./vadd vadd.xclbin
+</pre></div>
+</div>
+</li>
+<li><p>It should show program prints and XRT debug info.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="test-vector-addition-application-in-emulation-mode">
+<h2>Test Vector Addition Application in Emulation Mode<a class="headerlink" href="#test-vector-addition-application-in-emulation-mode" title="Permalink to this heading">¶</a></h2>
+<p><em><strong>Note</strong></em>: If you’re on Ubuntu, set environment variable LIBRARY_PATH to /usr/lib to workaround a known issue on Vitis 2020.1. It’s fixed in 2020.2.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">LIBRARY_PATH</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Use <em><strong>Vitis menu -&gt; Xilinx -&gt; Start/Stop Emulator</strong></em> to launch QEMU. Project is vadd, configuration is Emulation-HW. Click Start. Wait for Linux to boot. Log in with root/root.</p></li>
+<li><p>Righ click <em><strong>vadd</strong></em> project (not the vadd_system system project), select <em><strong>Run as -&gt; Launch on Emulator</strong></em></p></li>
+</ol>
+<p>The result will show on Console tab.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Loading</span><span class="p">:</span> <span class="s1">&#39;./binary_container_1.xclbin&#39;</span>
+<span class="n">TEST</span> <span class="n">PASSED</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-3-run-a-dnndk-demo">
+<h2>Test 3: Run a DNNDK Demo<a class="headerlink" href="#test-3-run-a-dnndk-demo" title="Permalink to this heading">¶</a></h2>
+<p>This test will run a simple DNNDK test application to test DPU function.</p>
+<div class="section" id="prepare-for-the-dpu-kernel">
+<h3>Prepare for the DPU Kernel<a class="headerlink" href="#prepare-for-the-dpu-kernel" title="Permalink to this heading">¶</a></h3>
+<ol class="simple">
+<li><p>Download Vitis AI by calling command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-AI.git</span></code>.<br /></p></li>
+<li><p>Navigate to the repository:<code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">Vitis-AI</span></code>, set the tag to proper tag(here we use <strong>v1.2</strong>) by typing: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">v1.2</span></code>.<br /></p></li>
+<li><p>If you don’t want to destroy the TRD reference design. Copy <em><strong>DPU-TRD</strong></em> folder into another directory. For example I would copy that into my <em><strong>zcu104_custom_pkg</strong></em> folder: <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">-r</span> <span class="pre">DPU-TRD</span> <span class="pre">./zcu104_custom_pkg/</span></code><br /></p></li>
+<li><p>Source Vitis tools setting sh file: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;vitis</span> <span class="pre">install</span> <span class="pre">path&gt;/Vitis/2020.1/settings64.sh</span></code>.<br /></p></li>
+<li><p>Source XRT sh file:<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">opt/xilinx/xrt/setup.sh</span></code>.<br /></p></li>
+<li><p>Export <em><strong>PLATFORM_REPO_PATHS</strong></em> with the directory of the custom platform xpfm file which you created before so that it can be found by Vitis. Here in my project it would be: <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PLATFORM_REPO_PATHS=&lt;path_to/zcu104_custom_pkg/zcu104_custom/export/zcu104_custom&gt;</span></code>. Remember now this custom platform name is <em><strong>zcu104_custom</strong></em>.<br /></p></li>
+<li><p>Navigate to the copy of the <em><strong>DPU-TRD</strong></em> folder, then go to the <em><strong>./prj/Vitis</strong></em> folder.<br />
+There are 2 files can be used to modify the DPU settings: The <em><strong>config_file/prj_config</strong></em> file is for DPU connection in Vitis project and the <em><strong>dpu_conf.vh</strong></em> is for other DPU configurations. Here we would modify the <em><strong>prj_config</strong></em> so that 2 DPU cores are enabled. And then we modify <em><strong>dpu_conf.vh</strong></em> as <a class="reference external" href="https://github.com/Xilinx/Vitis-AI/blob/v1.2/DPU-TRD/README.md">DPU-TRD readme</a> suggested.<br /></p></li>
+<li><p>Modify the <em><strong>config_file/prj_config</strong></em> like below:<br /></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">clock</span><span class="p">]</span>
+
+<span class="nb">id</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">aclk</span>
+<span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">ap_clk_2</span>
+<span class="nb">id</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">aclk</span>
+<span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">ap_clk_2</span>
+
+<span class="p">[</span><span class="n">connectivity</span><span class="p">]</span>
+
+<span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">M_AXI_GP0</span><span class="p">:</span><span class="n">HPC0</span>
+<span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">M_AXI_HP0</span><span class="p">:</span><span class="n">HP0</span>
+<span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">M_AXI_HP2</span><span class="p">:</span><span class="n">HP1</span>
+<span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">M_AXI_GP0</span><span class="p">:</span><span class="n">HPC1</span>
+<span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">M_AXI_HP0</span><span class="p">:</span><span class="n">HP2</span>
+<span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">M_AXI_HP2</span><span class="p">:</span><span class="n">HP3</span>
+
+<span class="p">[</span><span class="n">advanced</span><span class="p">]</span>
+<span class="n">misc</span><span class="o">=</span><span class="p">:</span><span class="n">solution_name</span><span class="o">=</span><span class="n">link</span>
+<span class="c1">#param=compiler.addOutputTypes=sd_card</span>
+
+<span class="c1">#param=compiler.skipTimingCheckAndFrequencyScaling=1</span>
+
+<span class="p">[</span><span class="n">vivado</span><span class="p">]</span>
+<span class="n">prop</span><span class="o">=</span><span class="n">run</span><span class="o">.</span><span class="n">impl_1</span><span class="o">.</span><span class="n">strategy</span><span class="o">=</span><span class="n">Performance_Explore</span>
+<span class="c1">#param=place.runPartPlacer=0</span>
+</pre></div>
+</div>
+<p>​	Here clock ID 0 is 200MHz, clock ID 1 is 400MHz.</p>
+<p>​	This file describes the link connections between DPU and the platform. It will be used by Vitis application in next step.</p>
+<p>​	<em><strong>Note</strong></em>: an example of prj_config file is provided in <em><strong>ref_files/step4_test3/app_src</strong></em>.</p>
+<ol class="simple">
+<li><p>Modify <em><strong>dpu_conf.vh</strong></em> to enable URAM because ZU7EV device on ZCU104 board has URAM resources. Change from:<br /></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`define URAM_DISABLE
+</pre></div>
+</div>
+<p>to<br /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`define URAM_ENABLE
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Generate the XO file by typing: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">binary_container_1/dpu.xo</span> <span class="pre">DEVICE=zcu104_custom</span></code>.<br /></p></li>
+<li><p>Verify if the XO file is generated here: <em><strong>&lt;zcu104_custom_pkg directory&gt;/DPU-TRD/prj/Vitis/binary_container_1/dpu.xo</strong></em>.<br /></p></li>
+</ol>
+</div>
+<div class="section" id="create-and-build-a-vitis-application">
+<h3>Create and Build a Vitis Application<a class="headerlink" href="#create-and-build-a-vitis-application" title="Permalink to this heading">¶</a></h3>
+<ol class="simple">
+<li><p>Open Vitis workspace you were using before.<br /></p></li>
+<li><p>Select <em><strong>File -&gt; New -&gt; Application Project</strong></em>.<br /></p></li>
+<li><p>Click <em><strong>next</strong></em><br /></p></li>
+<li><p>Select <em><strong>zcu104_custom</strong></em> as platform, click <em><strong>next</strong></em>.<br /></p></li>
+<li><p>Name the project <code class="docutils literal notranslate"><span class="pre">hello_dpu</span></code>, click <em><strong>next</strong></em>.<br /></p></li>
+<li><p>Set Domain to <em><strong>linux on psu_cortexa53</strong></em></p></li>
+<li><p>Set <em><strong>Sys_root path</strong></em> to <code class="docutils literal notranslate"><span class="pre">&lt;full_pathname_to_zcu104_custom_pkg&gt;/pfm/sysroots/aarch64-xilinx-linux</span></code>(as you created by running <em><strong>sdk.sh</strong></em>)</p></li>
+<li><p>Set the <em><strong>Kernel Image</strong></em> to <em><strong>zcu104_custom_plnx/images/linux/Image</strong></em></p></li>
+<li><p>Set Root Filesystem to <em><strong>zcu104_custom_plnx/images/linux/rootfs.ext4</strong></em> and click <em><strong>next</strong></em>.<br /></p></li>
+<li><p>Select <em><strong>System Optimization Examples -&gt; Empty application</strong></em> and click <em><strong>finish</strong></em> to generate the application.<br /></p></li>
+<li><p>Right click on the <em><strong>src</strong></em> folder under your <em><strong>hello_dpu</strong></em> application  in the Explorer window, and select “Import Sources”
+<img alt="import_sources.png" src="../../../../_images/import_sources.png" /><br /><br /></p></li>
+<li><p>Choose from directory <em><strong>&lt;zcu104_custom_pkg directory&gt;/DPU-TRD/prj/Vitis/binary_container_1/</strong></em> as the target location, and import the <em><strong>dpu.xo</strong></em> file that we just created.<br /></p></li>
+<li><p>Import sources again, and add all files from <em><strong>ref_files/step4_test3/app_src</strong></em> folder provided by this Git repository, including prj_config.</p></li>
+<li><p>In the Explorer window double click the hello_dpu.prj file to open it, change the <em><strong>Active Build configuration</strong></em> from <em><strong>Emulation-SW</strong></em> to <em><strong>Hardware</strong></em>.<br /></p></li>
+<li><p>Under Hardware Functions, click the lightning bolt logo to <em><strong>Add Hardware Function</strong></em>.<br />
+<img alt="add_hardware_function.png" src="../../../../_images/add_hardware_function.png" /><br /><br /></p></li>
+<li><p>Select the “DPUCZDX8G” included as part of the dpu.xo file that we included earlier.<br /></p></li>
+<li><p>Click on binary_container_1 to change the name to dpu.<br /></p></li>
+<li><p>Click on <em><strong>DPUCZDX8G</strong></em> and change the <em><strong>Compute Units</strong></em> from <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">2</span></code> because we have 2 dpu cores involved.<br /></p></li>
+<li><p>Right click on “dpu”, select <em><strong>Edit V++ Options</strong></em>, add <code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">../src/prj_config</span> <span class="pre">-s</span></code> as <em><strong>V++ Options</strong></em>, then click <em><strong>OK</strong></em>.<br /></p></li>
+<li><p>Go back to the <em><strong>Explorer</strong></em> window, right click on the <em><strong>hello_dpu</strong></em> project folder select <em><strong>C/C++ Building Settings</strong></em>.<br /></p></li>
+<li><p>In <em><strong>Properties for hello_dpu</strong></em> dialog box, select <em><strong>C/C++ Build-&gt;Settings-&gt;Tool Settings-&gt;GCC Host Linker-&gt;Libraries</strong></em>
+, click the green “+” to add the following libraries:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">opencv_core</span>
+<span class="n">opencv_imgcodecs</span>
+<span class="n">opencv_highgui</span>
+<span class="n">opencv_imgproc</span>
+<span class="n">opencv_videoio</span>
+<span class="n">n2cube</span>
+<span class="n">hineon</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>In the same page, Check the <em><strong>Library search path</strong></em> to makesure the <code class="docutils literal notranslate"><span class="pre">${SYSROOT}/usr/lib/</span></code> is added, click <em><strong>Apply</strong></em><br />
+<img alt="vitis_lib_settings.png" src="../../../../_images/vitis_lib_settings.png" /><br /><br /></p></li>
+<li><p>Then go to <em><strong>C/C++ Build-&gt;Settings-&gt;Tool Settings-&gt;GCC Host Compiler-&gt;Includes</strong></em>, remove the HLS include directory and add <code class="docutils literal notranslate"><span class="pre">${SYSROOT}/usr/include/</span></code> like below, then click <em><strong>Apply and Close</strong></em> to save the changes.<br />
+<img alt="vitis_include_settings.png" src="../../../../_images/vitis_include_settings.png" />These steps are used to make sure your application can call libs in rootfs directly on Vitis application build***</p></li>
+<li><p>Right click the <em><strong>hello_dpu</strong></em> project folder and select <em><strong>Build Project</strong></em><br /></p></li>
+</ol>
+</div>
+<div class="section" id="prepare-the-network-deployment-file">
+<h3>Prepare the Network Deployment File<a class="headerlink" href="#prepare-the-network-deployment-file" title="Permalink to this heading">¶</a></h3>
+<ol class="simple">
+<li><p>Find HWH file from your Vitis application folder <em><strong>hello_dpu/Hardware/dpu.build/link/vivado/vpl/prj/prj.srcs/sources_1/bd/system/hw_handoff/system.hwh</strong></em><br />
+Or go to your Vitis application folder use command <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">-name</span> <span class="pre">*.hwh</span></code> to search for the file.<br /></p></li>
+<li><p>Copy the <em><strong>ref_files/step4_test3/Tool-Example</strong></em> folder provided by this Github repository to your Vitis AI download directory.<br /></p></li>
+<li><p>Copy this HWH file into <em><strong>&lt;Vitis-AI-download_directory&gt;/Tool-Example</strong></em> folder.<br /></p></li>
+<li><p>Go to <em><strong>&lt;Vitis-AI-download_directory&gt;</strong></em> folder and launch the docker.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">docker_run</span><span class="o">.</span><span class="n">sh</span> <span class="n">xilinx</span><span class="o">/</span><span class="n">vitis</span><span class="o">-</span><span class="n">ai</span><span class="p">:</span><span class="n">latest</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Use following command to activate TensorFlow tool conda environment:<br /></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">vitis</span><span class="o">-</span><span class="n">ai</span><span class="o">-</span><span class="n">tensorflow</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Go to <em><strong>/workspace/Tool-Example</strong></em> folder and run <code class="docutils literal notranslate"><span class="pre">dlet</span> <span class="pre">-f</span> <span class="pre">./system.hwh</span></code>.<br />
+You should get the running log like below:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ dlet -f ./system.hwh
+[DLet]Generate DPU DCF file dpu-06-18-2020-12-00.dcf successfully.&lt;br /&gt;
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Open the <em><strong>arch.json</strong></em> file and make sure the <em><strong>“dcf”</strong></em> parameter is set with the name you got on the previous step:<br />
+<code class="docutils literal notranslate"><span class="pre">&quot;dcf&quot;</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">:</span> <span class="pre">&quot;./dpu-06-18-2020-12-00.dcf&quot;,</span></code><br /></p></li>
+<li><p>Run command <code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">download_model.sh</span></code> to download the Xilinx Model Zoo files for resnet-50.<br /></p></li>
+<li><p>Run command <code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">custom_platform_compile.sh</span></code>, you’ll get the result at <em><strong>tf_resnetv1_50_imagenet_224_224_6.97G/vai_c_output_ZCU104/dpu_resnet50_0.elf</strong></em> .<br /></p></li>
+<li><p>Copy that file to the <em><strong>src</strong></em> folder of Vitis application <em><strong>hello_dpu</strong></em><br /></p></li>
+<li><p>Right click on the <em><strong>hello_dpu</strong></em> project folder in Vitis select *<strong>C/C++ Building Settings</strong>.<br /></p></li>
+<li><p>In <em><strong>Properties for Hello_DPU</strong></em> dialog box, select <em><strong>C/C++ Build-&gt;Settings-&gt;Tool Settings-&gt;GCC Host Linker-&gt;Miscellaneous-&gt;Other objects</strong></em>, add a new object: <code class="docutils literal notranslate"><span class="pre">${workspace_loc:/${ProjName}/src/dpu_resnet50_0.elf}</span></code>, click <em><strong>Apply and Close</strong></em>.<br /></p></li>
+<li><p>Right click the <em><strong>hello_dpu</strong></em> project folder and select <em><strong>Build Project</strong></em><br />
+<em><strong>Now you should get an updated hello_dpu with a size of about 20MB(the ConvNet model is involved).</strong></em></p></li>
+</ol>
+</div>
+<div class="section" id="run-application-on-board">
+<h3>Run Application on Board<a class="headerlink" href="#run-application-on-board" title="Permalink to this heading">¶</a></h3>
+<ol>
+<li><p>If you have run Test 2 vadd application, copy all the files from <em><strong>sd_card folder</strong></em> inside your Vitis application like <em><strong>&lt;hello_dpu_application_directory&gt;/Hardware/sd_card/</strong></em> to SD card FAT32 partition. It’s not necessary to write sd_card.img again because the EXT4 partition is the same.</p>
+<p>If you haven’t run Test 2 vadd application, please copy ./hello_dpu_system/Hardware/package/sd_card.img to local and write it to SD card with tools like Etcher on Windows or dd on Linux.</p>
+</li>
+<li><p>Download dnndk installer <a class="reference external" href="https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.2_dnndk.tar.gz">vitis-ai_v1.2_dnndk.tar.gz</a> , dnndk sample image package <a class="reference external" href="https://www.xilinx.com/bin/public/openDownload?filename=vitis-ai_v1.2_dnndk_sample_img.tar.gz">vitis-ai_v1.2_dnndk_sample_img.tar.gz</a>  and [DPU specific board optimization scripts](https://github.com/Xilinx/Vitis-AI/raw/b3773aa2f21ca9afaa9656ce7ec3f74242eb74f1/DPU-TRD/app/dpu_sw_optimize.tar.gz
+cp ) to host and copy them to FAT32 partition on SD card. For more information about these packages, please refer to  <a class="reference external" href="https://github.com/Xilinx/Vitis-AI/blob/v1.2/mpsoc/README.md">DNNDK example readme file</a></p></li>
+<li><p>Set ZCU104 to SD boot mode and boot up the board, connect the board with serial port.<br /></p></li>
+<li><p>Connect SSH:<br />
+a) Connect Ethernet cable.</p>
+<p>b) Run <code class="docutils literal notranslate"><span class="pre">ifconfig</span></code> on ZCU104 board to get the IP address, here we take <code class="docutils literal notranslate"><span class="pre">172.16.75.189</span></code> as example.<br />c) Using SSH terminal to connect ZCU104 with SSH: <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-x</span> <span class="pre">root&#64;172.16.75.189</span></code>, or use MobaXterm in Windows.<br /></p>
+</li>
+<li><p>Go to auto-mounted SD card partition /mnt/sd-mmcblk0p1 folder and copy these files to home directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">sd</span><span class="o">-</span><span class="n">mmcblk0p1</span>
+<span class="n">cp</span> <span class="n">dpu_sw_optimize</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">vitis</span><span class="o">-</span><span class="n">ai_v1</span><span class="mf">.2</span><span class="n">_dnndk</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">vitis</span><span class="o">-</span><span class="n">ai_v1</span><span class="mf">.2</span><span class="n">_dnndk_sample_img</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="o">~</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run DPU Software Optimization</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~
+tar -xzf dpu_sw_optimize.tar.gz
+<span class="nb">cd</span> dpu_sw_optimize/zynqmp/
+./zynqmp_dpu_optimize.sh
+</pre></div>
+</div>
+<p>It will show the optimization results</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Auto resize ext4 partition ...[✔]
+Start QoS config ...[✔]
+Config PMIC irps5401 ...Successful[✔]
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Auto resize scripts expands the EXT4 partition to rest of the SD card so that we can store more contents.</p></li>
+<li><p>QoS config makes AXI interface for DPU has higher priority.</p></li>
+<li><p>PMIC config makes ZCU104 can use more power when running Vitis-AI applications.</p></li>
+</ul>
+</li>
+<li><p>Install DNNDK package like below:<br /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">vitis</span><span class="o">-</span><span class="n">ai_v1</span><span class="mf">.2</span><span class="n">_dnndk</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">vitis</span><span class="o">-</span><span class="n">ai_v1</span><span class="mf">.2</span><span class="n">_dnndk</span><span class="o">/</span>
+<span class="o">./</span><span class="n">install</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p><em><strong>install.sh</strong></em> copies <em><strong>dpu.xclbin</strong></em> from FAT32 partition to /usr/lib because DNNDK requires xclbin to be placed in this location.</p>
+<p><em><strong>Note: Vitis-AI Library has the similar installation method. Please refer to Vitis-AI user guide for more info.</strong></em></p>
+</li>
+<li><p>Extract vitis_ai_dnndk_samples and put hello_dpu into it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">vitis</span><span class="o">-</span><span class="n">ai_v1</span><span class="mf">.2</span><span class="n">_dnndk_sample_img</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">vitis_ai_dnndk_samples</span>
+<span class="n">mkdir</span> <span class="n">test</span>
+<span class="n">cd</span> <span class="n">test</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">sd</span><span class="o">-</span><span class="n">mmcblk0p1</span><span class="o">/</span><span class="n">hello_dpu</span> <span class="o">./</span>
+<span class="o">./</span><span class="n">hello_dpu</span>
+</pre></div>
+</div>
+<p><em><strong>We store the hello_dpu to vitis_ai_dnndk_samples/test folder to suit the relative path in my code, you can do that according to your code context. The hello_dpu is generated in Vitis application build and was copied to sd card from previous operation.</strong></em><br /></p>
+</li>
+<li><p>You should see the result like below:<br />
+<img alt="test_result.PNG" src="../../../../_images/test_result.PNG" /></p></li>
+</ol>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

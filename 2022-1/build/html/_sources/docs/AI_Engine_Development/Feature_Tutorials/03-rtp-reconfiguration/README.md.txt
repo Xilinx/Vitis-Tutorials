@@ -61,11 +61,11 @@ __Hint:__ In this tutorial, the designs are self-contained in each step. You can
 
 ==========
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

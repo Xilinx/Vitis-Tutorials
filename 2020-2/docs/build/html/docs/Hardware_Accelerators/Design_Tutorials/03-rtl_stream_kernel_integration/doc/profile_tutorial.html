@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Profiling the Application &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Introduction/README.html">Introduction to Vitis Hardware Accelerators Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01-convolution-tutorial/README.html">Accelerating Video Convolution Filtering Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04-traveling-salesperson/README.html">The Travelling Salesman Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05-bottom_up_rtl_kernel/README.html">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Feature_Tutorials/03-dataflow_debug_and_optimization/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm/README.html">Using HBM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Profiling the Application</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docs/Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/doc/profile_tutorial.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="profiling-the-application">
+<h1>Profiling the Application<a class="headerlink" href="#profiling-the-application" title="Permalink to this heading">¶</a></h1>
+<p>Vitis generates various system and kernel resource performance reports during compilation, XRT also collects profiling data during application execution in both software and hardware emulation and system run mode. A run summary report linked lots of reports from compilation and execution is automatically generated after running the active build, and can be viewed in <em>Vitis Analyzer</em>.</p>
+<p>Profiling reports and data can be used to isolate performance bottlenecks in the application, identify problems in the system, and optimize the design to improve performance. To obtain profiling reports, make sure associated switches are turned on at the <em>xrt.ini</em> file, which should be placed at the same directory as the host executable file. We already delivered a working <em>xrt.ini</em> with this tutorial, you can check it under <em>./sw/build/</em> directory. For more details, refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/obl1532064985142.html">xrt.ini File</a> from Vitis online documentation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Debug</span><span class="p">]</span>
+<span class="n">profile</span><span class="o">=</span><span class="n">true</span>
+<span class="n">timeline_trace</span><span class="o">=</span><span class="n">true</span>
+<span class="n">data_transfer_trace</span><span class="o">=</span><span class="n">fine</span>
+</pre></div>
+</div>
+<p>Let’s take the Hardware Run result of <em>rtc_alpha_tb</em> on U200 card as an example. There are reports of 6 categories listed with run summary, waveform will not be available because this is a run summary from system run.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_analyzer</span> <span class="n">rtc_alpha_hw</span><span class="o">.</span><span class="n">xclbin</span><span class="o">.</span><span class="n">run_summary</span>
+</pre></div>
+</div>
+<div class="section" id="run-guidance">
+<h2>Run Guidance<a class="headerlink" href="#run-guidance" title="Permalink to this heading">¶</a></h2>
+<p>Guidance includes message for reported violations, a brief suggested resolution, and a detailed resolution provided as a web link. The rules are generic rules based on an extensive set of reference designs, thus might not be applicable for every design. You need to understand the specific guidance rules and take appropriate action based on your specific algorithm and requirements.</p>
+<div align="center">
+<img src="./images/hw_guidance.PNG" alt="Hardware Run Guidance" >
+</div></div>
+<div class="section" id="platform-and-system-diagrams">
+<h2>Platform and System Diagrams<a class="headerlink" href="#platform-and-system-diagrams" title="Permalink to this heading">¶</a></h2>
+<p>The Platform and System Diagrams display a representation of the platform resources and the kernel code integrated onto the platform. The System Diagram shows memory banks or PLRAMs used by the XCLBIN, how the function arguments of CUs are connected to AXI4 interfaces. It includes profile data from the run, and the resource information from the bottom table can also be displayed in a box next to each kernel or CU in the System Diagram.</p>
+<p>Please use upper right <strong>Settings</strong> button to display or hide Unused Memory, Interface Ports, Profile Info, and Resource info.</p>
+<div align="center">
+<img src="./images/hw_sys_diagram.PNG" alt="Hardware System Diagram" >
+</div></div>
+<div class="section" id="profile-summary">
+<h2>Profile Summary<a class="headerlink" href="#profile-summary" title="Permalink to this heading">¶</a></h2>
+<p>Enabling profile data capturing for traffic between the kernels and host consumes additional resources and may impact performance, so we cleared those elements out of the sources as we delivered the pre-built XCLBIN files with this tutorial.</p>
+<p>You could add <code class="docutils literal notranslate"><span class="pre">--profile_kernel</span></code> option during the Vitis compiler linking process to enable data profiling for kernels by adding Acceleration Monitors and AXI Performance Monitors to kernels. See below modification on <em>./hw/Makefile</em> as an example, detailed description can be found in the <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vitiscommandcompiler.html#wrj1504034328013">Vitis Compiler Command</a> from Vitis online documentation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rtc_alpha_$(TARGET).xclbin: $(XOS_RTC_ALPHA)
+	v++ -l $(XOCCFLAGS) $(XOCCLFLAGS) --config xclbin_rtc_alpha.ini --profile_kernel data:all:all:all  -o $@ $(XOS_RTC_ALPHA)
+
+rtc_gen_test_$(TARGET).xclbin: $(XOS_RTC_GEN_TEST)
+	v++ -l $(XOCCFLAGS) $(XOCCLFLAGS) --config xclbin_rtc_gen_test.ini --profile_kernel data:all:all:all  -o $@ $(XOS_RTC_GEN_TEST)
+</pre></div>
+</div>
+<div align="center">
+<img src="./images/hw_profile_summary.PNG" alt="Profile Summary" >
+</div><p>Even without <code class="docutils literal notranslate"><span class="pre">--profile_kernel</span></code> option added while generating XCLBIN files, most of the profiling reports are still available, only few sections like the Kernel Data Transfers will show no data.</p>
+<div align="center">
+<img src="./images/no_kernel_data.PNG" alt="No Kernel Data" >
+</div></div>
+<div class="section" id="application-timeline">
+<h2>Application Timeline<a class="headerlink" href="#application-timeline" title="Permalink to this heading">¶</a></h2>
+<p>Application Timeline collects and displays host and kernel events on a common timeline, it helps to understand and visualize the overall health and performance of the systems. The graphical display makes it easy to discover issues regarding kernel synchronization and efficient concurrent execution.</p>
+<div align="center">
+<img src="./images/hw_timeline.PNG" alt="Application Timeline" >
+</div><p>If you are looking for more details of Profiling and how to use <em>Vitis Analyzer</em>, check on <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/profilingapplication.html">Profiling the Application</a> from Vitis online documentation.</p>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on August 5, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

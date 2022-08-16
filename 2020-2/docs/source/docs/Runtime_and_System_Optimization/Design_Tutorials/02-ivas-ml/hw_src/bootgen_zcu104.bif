@@ -1,0 +1,8 @@
+the_ROM_image:
+{
+	[bootloader, destination_cpu=a53-0] ./pfm_sw/zynqmp_fsbl.elf
+	[pmufw_image] ./pfm_sw/pmufw.elf
+	[destination_device=pl] ./_x/link/vivado/vpl/prj/prj.runs/impl_1/zcu104_xdf_wrapper.bit
+	[destination_cpu=a53-0, exception_level=el-3, trustzone] ./pfm_sw/bl31.elf
+	[destination_cpu=a53-0, exception_level=el-2] ./pfm_sw/u-boot.elf
+}

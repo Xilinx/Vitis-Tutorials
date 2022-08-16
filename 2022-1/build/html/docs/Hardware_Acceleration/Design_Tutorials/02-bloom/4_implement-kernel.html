@@ -1,235 +1,45 @@
-﻿
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
-	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
 <script type="text/javascript">
 function OptanonWrapper() { }
 </script>
 <!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
-		<!-- Google Tag Manager -->
-	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
-	<!-- End Google Tag Manager -->
-	
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
-        <!-- End Google Tag Manager -->	
-
+  <title>Implementing the Kernel &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
- <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+</head>
 
-    
-    
-
-    
-
-
-
-<div class="xf-content-height">
-    
-
-<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-    
-    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
-	<header data-component="header" class="site-header">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid main-nav">
-				<div class="row">
-					<div class="navbar-column col-xs-4 col-sm-5">
-						<ul class="nav navbar-nav hidden-xs">
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-								</li>
-							</ul>
-							
-						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-							<li>
-									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
-								</li>
-							<li>
-									<button data-target="#header-container-1" data-function="toggle">Products</button>
-								</li>
-							<li>
-									<button data-target="#header-container-2" data-function="toggle">Company</button>
-								</li>
-							</ul>
-							
-						<div id="header-container-0" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-1" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-2" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							</div>
-					<div class="logo-column col-xs-4 col-sm-2">
-						<div class="logo">
-							<a target="_blank" href="https://www.xilinx.com/">
-								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</nav></header></noindex></div>
-		
-	
-</div>
-
-    
-</div>
-</div>
-
-<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
-    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
-</div>
-</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2022.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -237,39 +47,28 @@ function OptanonWrapper() { }
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
@@ -277,75 +76,30 @@ function OptanonWrapper() { }
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">This Page</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/02-bloom/4_implement-kernel.md.txt"
-						rel="nofollow">Show Source</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">Vitis™ Tutorials</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Implementing the Kernel</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/02-bloom/4_implement-kernel.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
@@ -353,10 +107,10 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="implementing-the-kernel">
-<h1>Implementing the Kernel<a class="headerlink" href="#implementing-the-kernel" title="Permalink to this headline">¶</a></h1>
+<h1>Implementing the Kernel<a class="headerlink" href="#implementing-the-kernel" title="Permalink to this heading">¶</a></h1>
 <p>In this lab, you will create an optimized kernel with 4, 8, and 16 words to be processed in parallel. All 100,000 documents worth 1.4 GB are sent from the host CPU to the kernel using a single buffer from the host CPU.</p>
 <div class="section" id="bloom4x-kernel-implementation-using-4-words-in-parallel">
-<h2>Bloom4x: Kernel Implementation Using 4 Words in Parallel<a class="headerlink" href="#bloom4x-kernel-implementation-using-4-words-in-parallel" title="Permalink to this headline">¶</a></h2>
+<h2>Bloom4x: Kernel Implementation Using 4 Words in Parallel<a class="headerlink" href="#bloom4x-kernel-implementation-using-4-words-in-parallel" title="Permalink to this heading">¶</a></h2>
 <p>Processing 4 words in parallel will require 32-bits*4 = 128-bits in parallel, but you should access the DDR with 512-bits because the data is contiguous. This will require smaller number of memory accesses.</p>
 <p>Use the following interface requirements to create kernel:</p>
 <ul class="simple">
@@ -367,7 +121,7 @@ function OptanonWrapper() { }
 </ul>
 <p>Refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Methodology-for-Accelerating-Data-Center-Applications-with-the-Vitis-Software-Platform">Methodology for Accelerating Applications with the Vitis Software</a> in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
 <div class="section" id="macro-architecture-implementation">
-<h3>Macro Architecture Implementation<a class="headerlink" href="#macro-architecture-implementation" title="Permalink to this headline">¶</a></h3>
+<h3>Macro Architecture Implementation<a class="headerlink" href="#macro-architecture-implementation" title="Permalink to this heading">¶</a></h3>
 <p>Navigate to the function <code class="docutils literal notranslate"><span class="pre">runOnfpga</span></code> in <code class="docutils literal notranslate"><span class="pre">02-bloom/reference_files/compute_score_fpga_kernel.cpp</span></code>.</p>
 <p>The algorithm has been updated to receive 512-bits of words from the DDR with the following arguments:</p>
 <ul class="simple">
@@ -428,38 +182,38 @@ function OptanonWrapper() { }
 </div>
 </li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">#pragmas</span> <span class="pre">HLS</span> <span class="pre">DATAFLOW</span></code> is added to enable task-level pipelining. This enables DATAFLOW and will instruct the Vitis High-Level Synthesis (HLS) compiler to run all the functions simultaneously, creating a pipeline of concurrently running tasks.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">compute_hash_flags_dataflow</span><span class="p">(</span>
-      <span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">512</span><span class="o">&gt;*</span>   <span class="n">output_flags</span><span class="p">,</span>
-      <span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">512</span><span class="o">&gt;*</span>   <span class="n">input_words</span><span class="p">,</span>
-      <span class="kt">unsigned</span> <span class="kt">int</span>    <span class="n">bloom_filter</span><span class="p">[</span><span class="n">PARALLELIZATION</span><span class="p">][</span><span class="n">bloom_filter_size</span><span class="p">],</span>
-      <span class="kt">unsigned</span> <span class="kt">int</span>    <span class="n">total_size</span><span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">compute_hash_flags_dataflow</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">512</span><span class="o">&gt;*</span><span class="w">   </span><span class="n">output_flags</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">512</span><span class="o">&gt;*</span><span class="w">   </span><span class="n">input_words</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">    </span><span class="n">bloom_filter</span><span class="p">[</span><span class="n">PARALLELIZATION</span><span class="p">][</span><span class="n">bloom_filter_size</span><span class="p">],</span><span class="w"></span>
+<span class="w">      </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">    </span><span class="n">total_size</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
 <span class="cp">#pragma HLS DATAFLOW</span>
 
-    <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">512</span><span class="o">&gt;</span> <span class="o">&gt;</span>    <span class="n">data_from_gmem</span><span class="p">;</span>
-    <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">parallel_words_t</span><span class="o">&gt;</span> <span class="n">word_stream</span><span class="p">;</span>
-    <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">parallel_flags_t</span><span class="o">&gt;</span> <span class="n">flag_stream</span><span class="p">;</span>
-    <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">512</span><span class="o">&gt;</span> <span class="o">&gt;</span>    <span class="n">data_to_gmem</span><span class="p">;</span>
-    <span class="p">.</span> <span class="p">.</span> <span class="p">.</span> <span class="p">.</span> 
-<span class="p">}</span>
+<span class="w">    </span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">512</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w">    </span><span class="n">data_from_gmem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">parallel_words_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">word_stream</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">parallel_flags_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">flag_stream</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">512</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w">    </span><span class="n">data_to_gmem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
 </ol>
 </div>
 <div class="section" id="micro-architecture-implementation">
-<h3>Micro Architecture Implementation<a class="headerlink" href="#micro-architecture-implementation" title="Permalink to this headline">¶</a></h3>
+<h3>Micro Architecture Implementation<a class="headerlink" href="#micro-architecture-implementation" title="Permalink to this heading">¶</a></h3>
 <p>Now that you have the top-level function, <code class="docutils literal notranslate"><span class="pre">runOnfpga</span></code> updated with the proper datawidths and interface types, you need to identify the loops to optimize to improve latency and throughput.</p>
 <ol>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">runOnfpga</span></code> function reads the Bloom filter coefficients from the DDR using <code class="docutils literal notranslate"><span class="pre">maxiport1</span></code> and saves the coefficients into the <code class="docutils literal notranslate"><span class="pre">bloom_filter_local</span></code> local array. This only needs to be read one time.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">if</span><span class="p">(</span><span class="n">load_filter</span><span class="o">==</span><span class="nb">true</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="nl">read_bloom_filter</span><span class="p">:</span> <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">index</span><span class="o">&lt;</span><span class="n">bloom_filter_size</span><span class="p">;</span> <span class="n">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="cp">#pragma HLS PIPELINE II=1</span>
-    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">bloom_filter</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">PARALLELISATION</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">bloom_filter_local</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
-  <span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">load_filter</span><span class="o">==</span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nl">read_bloom_filter</span><span class="p">:</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">index</span><span class="o">&lt;</span><span class="n">bloom_filter_size</span><span class="p">;</span><span class="w"> </span><span class="n">index</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#pragma HLS PIPELINE II=1</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bloom_filter</span><span class="p">[</span><span class="n">index</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">&lt;</span><span class="n">PARALLELISATION</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">bloom_filter_local</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmp</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -468,38 +222,38 @@ function OptanonWrapper() { }
 </ul>
 </li>
 <li><p>Within the <code class="docutils literal notranslate"><span class="pre">compute_hash_flags</span></code> function, the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is rearchitected as nested for the loop to compute 4 words in parallel.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">compute_hash_flags</span> <span class="p">(</span>
-    <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">parallel_flags_t</span><span class="o">&gt;&amp;</span> <span class="n">flag_stream</span><span class="p">,</span>
-    <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">parallel_words_t</span><span class="o">&gt;&amp;</span> <span class="n">word_stream</span><span class="p">,</span>
-    <span class="kt">unsigned</span> <span class="kt">int</span>                   <span class="n">bloom_filter_local</span><span class="p">[</span><span class="n">PARALLELISATION</span><span class="p">][</span><span class="n">bloom_filter_size</span><span class="p">],</span>
-    <span class="kt">unsigned</span> <span class="kt">int</span>                   <span class="n">total_size</span><span class="p">)</span>
-    <span class="p">{</span>
-      <span class="nl">compute_flags</span><span class="p">:</span> <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">total_size</span><span class="o">/</span><span class="n">PARALLELISATION</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-      <span class="p">{</span>
-        <span class="cp">#pragma HLS LOOP_TRIPCOUNT min=1 max=10000</span>
-        <span class="n">parallel_words_t</span> <span class="n">parallel_entries</span> <span class="o">=</span> <span class="n">word_stream</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
-        <span class="n">parallel_flags_t</span> <span class="n">inh_flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">compute_hash_flags</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">parallel_flags_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">flag_stream</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">parallel_words_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">word_stream</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">                   </span><span class="n">bloom_filter_local</span><span class="p">[</span><span class="n">PARALLELISATION</span><span class="p">][</span><span class="n">bloom_filter_size</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">                   </span><span class="n">total_size</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nl">compute_flags</span><span class="p">:</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">total_size</span><span class="o">/</span><span class="n">PARALLELISATION</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="cp">#pragma HLS LOOP_TRIPCOUNT min=1 max=10000</span>
+<span class="w">        </span><span class="n">parallel_words_t</span><span class="w"> </span><span class="n">parallel_entries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word_stream</span><span class="p">.</span><span class="n">read</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">parallel_flags_t</span><span class="w"> </span><span class="n">inh_flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 
-        <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">PARALLELISATION</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-        <span class="p">{</span>
-          <span class="cp">#pragma HLS UNROLL</span>
-          <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">curr_entry</span> <span class="o">=</span> <span class="n">parallel_entries</span><span class="p">(</span><span class="mi">31</span><span class="o">+</span><span class="n">j</span><span class="o">*</span><span class="mi">32</span><span class="p">,</span> <span class="n">j</span><span class="o">*</span><span class="mi">32</span><span class="p">);</span>
-          <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">frequency</span> <span class="o">=</span> <span class="n">curr_entry</span> <span class="o">&amp;</span> <span class="mh">0x00ff</span><span class="p">;</span>
-          <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">word_id</span> <span class="o">=</span> <span class="n">curr_entry</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>
-          <span class="kt">unsigned</span> <span class="n">hash_pu</span> <span class="o">=</span> <span class="n">MurmurHash2</span><span class="p">(</span><span class="n">word_id</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-          <span class="kt">unsigned</span> <span class="n">hash_lu</span> <span class="o">=</span> <span class="n">MurmurHash2</span><span class="p">(</span><span class="n">word_id</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
-          <span class="kt">bool</span> <span class="n">doc_end</span><span class="o">=</span> <span class="p">(</span><span class="n">word_id</span><span class="o">==</span><span class="n">docTag</span><span class="p">);</span>
-          <span class="kt">unsigned</span> <span class="n">hash1</span> <span class="o">=</span> <span class="n">hash_pu</span><span class="o">&amp;</span><span class="n">hash_bloom</span><span class="p">;</span>
-          <span class="kt">bool</span> <span class="n">inh1</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">doc_end</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">bloom_filter_local</span><span class="p">[</span><span class="n">j</span><span class="p">][</span> <span class="n">hash1</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">hash1</span> <span class="o">&amp;</span> <span class="mh">0x1f</span><span class="p">)));</span>
-          <span class="kt">unsigned</span> <span class="n">hash2</span><span class="o">=</span><span class="p">(</span><span class="n">hash_pu</span><span class="o">+</span><span class="n">hash_lu</span><span class="p">)</span><span class="o">&amp;</span><span class="n">hash_bloom</span><span class="p">;</span>
-          <span class="kt">bool</span> <span class="n">inh2</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">doc_end</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">bloom_filter_local</span><span class="p">[</span><span class="n">j</span><span class="p">][</span> <span class="n">hash2</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">hash2</span> <span class="o">&amp;</span> <span class="mh">0x1f</span><span class="p">)));</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">&lt;</span><span class="n">PARALLELISATION</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="cp">#pragma HLS UNROLL</span>
+<span class="w">          </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parallel_entries</span><span class="p">(</span><span class="mi">31</span><span class="o">+</span><span class="n">j</span><span class="o">*</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">*</span><span class="mi">32</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">frequency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00ff</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">word_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curr_entry</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">hash_pu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MurmurHash2</span><span class="p">(</span><span class="n">word_id</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">hash_lu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MurmurHash2</span><span class="p">(</span><span class="n">word_id</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="kt">bool</span><span class="w"> </span><span class="n">doc_end</span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">word_id</span><span class="o">==</span><span class="n">docTag</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">hash1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash_pu</span><span class="o">&amp;</span><span class="n">hash_bloom</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="kt">bool</span><span class="w"> </span><span class="n">inh1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">doc_end</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">bloom_filter_local</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="w"> </span><span class="n">hash1</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">hash1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x1f</span><span class="p">)));</span><span class="w"></span>
+<span class="w">          </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">hash2</span><span class="o">=</span><span class="p">(</span><span class="n">hash_pu</span><span class="o">+</span><span class="n">hash_lu</span><span class="p">)</span><span class="o">&amp;</span><span class="n">hash_bloom</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="kt">bool</span><span class="w"> </span><span class="n">inh2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">doc_end</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">bloom_filter_local</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="w"> </span><span class="n">hash2</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">hash2</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x1f</span><span class="p">)));</span><span class="w"></span>
 
-          <span class="n">inh_flags</span><span class="p">(</span><span class="mi">7</span><span class="o">+</span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="p">,</span> <span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">inh1</span> <span class="o">&amp;&amp;</span> <span class="n">inh2</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="p">}</span>
+<span class="w">          </span><span class="n">inh_flags</span><span class="p">(</span><span class="mi">7</span><span class="o">+</span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">inh1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">inh2</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">flag_stream</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">inh_flags</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">        </span><span class="n">flag_stream</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">inh_flags</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -519,7 +273,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="build-the-kernel-using-the-vitis-tool-flow">
-<h3>Build the Kernel Using the Vitis Tool Flow<a class="headerlink" href="#build-the-kernel-using-the-vitis-tool-flow" title="Permalink to this headline">¶</a></h3>
+<h3>Build the Kernel Using the Vitis Tool Flow<a class="headerlink" href="#build-the-kernel-using-the-vitis-tool-flow" title="Permalink to this heading">¶</a></h3>
 <p>Now, build the kernel using the Vitis compiler. The Vitis compiler will call the Vitis HLS tool to synthesize the C++ kernel code into an RTL kernel. You will also review the reports to confirm if the kernel meets the latency/throughput requirements for your performance goals.</p>
 <ol>
 <li><p>Use the following command to build the kernel.</p>
@@ -546,7 +300,7 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="review-the-initial-host-code">
-<h3>Review the Initial Host Code<a class="headerlink" href="#review-the-initial-host-code" title="Permalink to this headline">¶</a></h3>
+<h3>Review the Initial Host Code<a class="headerlink" href="#review-the-initial-host-code" title="Permalink to this heading">¶</a></h3>
 <p>The initial version of the accelerated application code structure follows the structure of the original software version. The entire input buffer is transferred from the host to the FPGA in a single transaction. Then, the FPGA accelerator performs the computation. Finally, the results are read back from the FPGA to the host before being post-processed.</p>
 <p>The following figure shows the sequential process of the host writing data on the device, compute by the accelerator on the FPGA, and read flags back to host, implemented in this first step. The Profile score is calculated sequentially on CPU after all the flags are received by the host.</p>
 <p><img alt="missing image" src="../../../../_images/overlap_single_buffer.PNG" /></p>
@@ -564,7 +318,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="run-software-emulation-hardware-emulation-and-hw">
-<h3>Run Software Emulation, Hardware Emulation and Hw<a class="headerlink" href="#run-software-emulation-hardware-emulation-and-hw" title="Permalink to this headline">¶</a></h3>
+<h3>Run Software Emulation, Hardware Emulation and Hw<a class="headerlink" href="#run-software-emulation-hardware-emulation-and-hw" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>To ensure the application passes Software Emulation with your changes, run the following command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=single_buffer TARGET=sw_emu 
@@ -617,7 +371,7 @@ function OptanonWrapper() { }
 <p>At this point, review the Profile reports and Timeline Trace to extract information, such as how much time it takes to transfer the data between host and kernel and how much time it takes to compute on the FPGA.</p>
 </div>
 <div class="section" id="visualize-the-resources-utilized">
-<h3>Visualize the Resources Utilized<a class="headerlink" href="#visualize-the-resources-utilized" title="Permalink to this headline">¶</a></h3>
+<h3>Visualize the Resources Utilized<a class="headerlink" href="#visualize-the-resources-utilized" title="Permalink to this heading">¶</a></h3>
 <p>Use the Vitis analyzer to visualize the HLS Synthesis Report. You will need to build the kernel without <code class="docutils literal notranslate"><span class="pre">SOLUTION=1</span></code> to <code class="docutils literal notranslate"><span class="pre">generate</span> <span class="pre">link_summary</span></code> as this is not provided as part of tutorial. You can skip this step as well.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin.link_summary
 </pre></div>
@@ -626,7 +380,7 @@ function OptanonWrapper() { }
 <p><img alt="missing image" src="../../../../_images/kernel_4_util.PNG" /></p>
 </div>
 <div class="section" id="review-profile-reports-and-timeline-trace">
-<h3>Review Profile Reports and Timeline Trace<a class="headerlink" href="#review-profile-reports-and-timeline-trace" title="Permalink to this headline">¶</a></h3>
+<h3>Review Profile Reports and Timeline Trace<a class="headerlink" href="#review-profile-reports-and-timeline-trace" title="Permalink to this heading">¶</a></h3>
 <p>Use the Vitis analyzer to visualize the <code class="docutils literal notranslate"><span class="pre">run_summary</span></code> report.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin.run_summary
 </pre></div>
@@ -634,7 +388,7 @@ function OptanonWrapper() { }
 <p>The Profile Summary and Timeline Trace reports are useful tools to analyze the performance of the FPGA-accelerated application.</p>
 </div>
 <div class="section" id="review-profile-summary-report">
-<h3>Review Profile Summary Report<a class="headerlink" href="#review-profile-summary-report" title="Permalink to this headline">¶</a></h3>
+<h3>Review Profile Summary Report<a class="headerlink" href="#review-profile-summary-report" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p><em>Kernels &amp; Compute Unit: Kernel Execution</em> indicates that the Total Time by kernel enqueue is about 292 ms.</p>
 <p><img alt="missing image" src="../../../../_images/kernel_4_profile_1.PNG" /></p>
@@ -656,7 +410,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="review-the-timeline-trace">
-<h3>Review the Timeline Trace<a class="headerlink" href="#review-the-timeline-trace" title="Permalink to this headline">¶</a></h3>
+<h3>Review the Timeline Trace<a class="headerlink" href="#review-the-timeline-trace" title="Permalink to this heading">¶</a></h3>
 <p>The Timeline Trace shows the data transfer from the host to the FPGA and back to the host as they appear. The Timeline Trace can be visualized so that the transfer from the host to the FPGA and the FPGA compute and transfer from the FPGA to host occur sequentially.</p>
 <p><img alt="missing image" src="../../../../_images/Kernel_4_time_1.PNG" /></p>
 <ul class="simple">
@@ -666,11 +420,11 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="throughput-achieved">
-<h3>Throughput Achieved<a class="headerlink" href="#throughput-achieved" title="Permalink to this headline">¶</a></h3>
+<h3>Throughput Achieved<a class="headerlink" href="#throughput-achieved" title="Permalink to this heading">¶</a></h3>
 <p>Based on the results, the throughput of the application is 1399 MB/838 ms = approx 1.66 GBs. This is your first attempt to run the application on hardware, and you have four times the performance results compared to the software-only version.</p>
 </div>
 <div class="section" id="opportunities-for-performance-improvements">
-<h3>Opportunities for Performance Improvements<a class="headerlink" href="#opportunities-for-performance-improvements" title="Permalink to this headline">¶</a></h3>
+<h3>Opportunities for Performance Improvements<a class="headerlink" href="#opportunities-for-performance-improvements" title="Permalink to this heading">¶</a></h3>
 <p>Because there is no external memory access contention for accessing memory, this is the best possible performance for the Kernel computing four words in parallel.</p>
 <ul class="simple">
 <li><p>The kernel is reading 512-bits of data, but only 128-bits are used to compute 4 words in parallel. The kernel has the potential to compute more words because you have resources available on the FPGA. You can increase the number of words to be processed in parallel and can experiment with 8 words and 16 words in parallel.</p></li>
@@ -680,11 +434,11 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="bloom8x-kernel-implementation-using-8-words-in-parallel">
-<h2>Bloom8x: Kernel Implementation Using 8 Words in Parallel<a class="headerlink" href="#bloom8x-kernel-implementation-using-8-words-in-parallel" title="Permalink to this headline">¶</a></h2>
+<h2>Bloom8x: Kernel Implementation Using 8 Words in Parallel<a class="headerlink" href="#bloom8x-kernel-implementation-using-8-words-in-parallel" title="Permalink to this heading">¶</a></h2>
 <p>For config Bloom4x, you read 512-bit input values from the DDR and computed 4 words in parallel which uses only 128-bit input values. This steps enables you to run 8 words in parallel.</p>
 <p>You can achieve this by using <code class="docutils literal notranslate"><span class="pre">PF=8</span></code> on the command line. Use the following steps to compute 8 words in parallel.</p>
 <div class="section" id="run-hardware-on-the-fpga">
-<h3>Run Hardware on the FPGA<a class="headerlink" href="#run-hardware-on-the-fpga" title="Permalink to this headline">¶</a></h3>
+<h3>Run Hardware on the FPGA<a class="headerlink" href="#run-hardware-on-the-fpga" title="Permalink to this heading">¶</a></h3>
 <p>Use the following command to run the hardware on the FPGA.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=single_buffer ITER=1 PF=8 
 </pre></div>
@@ -704,7 +458,7 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="id1">
-<h3>Visualize the Resources Utilized<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Visualize the Resources Utilized<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>Use the Vitis analyzer to visualize the HLS Synthesis Report. You will need to build the kernel without <code class="docutils literal notranslate"><span class="pre">SOLUTION=1</span></code> to generate link_summary; this is not provided as part of tutorial. You can skip this step.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin.link_summary
 </pre></div>
@@ -713,7 +467,7 @@ function OptanonWrapper() { }
 <p><img alt="missing image" src="../../../../_images/kernel_8_util.PNG" /></p>
 </div>
 <div class="section" id="review-profile-summary-report-and-timeline-trace">
-<h3>Review Profile Summary Report and Timeline Trace<a class="headerlink" href="#review-profile-summary-report-and-timeline-trace" title="Permalink to this headline">¶</a></h3>
+<h3>Review Profile Summary Report and Timeline Trace<a class="headerlink" href="#review-profile-summary-report-and-timeline-trace" title="Permalink to this heading">¶</a></h3>
 <p>Use the Vitis analyzer to visualize the run_summary report.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin.run_summary
 </pre></div>
@@ -728,17 +482,17 @@ function OptanonWrapper() { }
 </ol>
 </div>
 <div class="section" id="id2">
-<h3>Throughput Achieved<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>Throughput Achieved<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Based on the results, the throughput of the application is 1399 MB/739 ms = approximately 1.9 GBs. You have now 4x performance results compared to software-only version.</p></li>
 </ul>
 </div>
 </div>
 <div class="section" id="bloom16x-kernel-implementation-using-16-words-in-parallel">
-<h2>Bloom16x : Kernel Implementation Using 16 Words in Parallel<a class="headerlink" href="#bloom16x-kernel-implementation-using-16-words-in-parallel" title="Permalink to this headline">¶</a></h2>
+<h2>Bloom16x : Kernel Implementation Using 16 Words in Parallel<a class="headerlink" href="#bloom16x-kernel-implementation-using-16-words-in-parallel" title="Permalink to this heading">¶</a></h2>
 <p>In the previous step, you read 512-bit input values from the DDR and computed 8 words in parallel. You can compute 16 words in parallel by setting <code class="docutils literal notranslate"><span class="pre">PF=16</span></code> on the command line. Use the following steps to compute 16 words in parallel.</p>
 <div class="section" id="id3">
-<h3>Run Hardware on the FPGA<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3>Run Hardware on the FPGA<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=single_buffer ITER=1 PF=16
 </pre></div>
 </div>
@@ -755,12 +509,12 @@ function OptanonWrapper() { }
 <p>As previous steps, you can also review profile and timeline trace reports. This is left out as an homework exercise.</p>
 </div>
 <div class="section" id="id4">
-<h3>Opportunities for Performance Improvements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3>Opportunities for Performance Improvements<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <p>In this lab, you focused on building on an optimal kernel with 4, 8 and 16 words in parallel using a single buffer and reviewed the reports. As you observed from the Timeline Report that the kernel cannot start until the whole buffer is transferred to the DDR, which is about 145 ms when the single buffer is used. This is a substantial time delay considering the <code class="docutils literal notranslate"><span class="pre">Kernel</span> <span class="pre">execution</span> <span class="pre">time</span></code> is even smaller than the total host transfer time.</p>
 </div>
 </div>
 <div class="section" id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>In the next lab, you <a class="reference internal" href="5_data-movement.html"><span class="doc">explore sending documents in multiple buffers</span></a> rather than sending all of the documents at once from the host and explore how this improves the overall application performance. You will also use the configuration <code class="docutils literal notranslate"><span class="pre">Bloom8x</span></code> kernel and <code class="docutils literal notranslate"><span class="pre">Bloom16x</span></code> kernel for exploration in the next step.</p>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="docs/bloom/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
@@ -768,67 +522,8 @@ function OptanonWrapper() { }
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        Last updated on May 16, 2022.
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -837,147 +532,61 @@ function OptanonWrapper() { }
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-														
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<div class="lang-select dropup hidden-md hidden-lg">
-		<button data-toggle="dropdown">
-			<span class="fas fa-globe" aria-hidden="true"></span>
-			<span>
-				
-					English
-				</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">Connect on LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Follow us on Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Connect on Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">Watch us on YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-																	<div class="lang-select dropup hidden-xs hidden-sm">
-	<button data-toggle="dropdown">
-		<span class="fas fa-globe" aria-hidden="true"></span>
-		<span>
-			
-				English
-			</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-															</div>
-														</div>
-														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
-															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
-														</div>
 
-													</div>
-													                    <div class="movethisrowtoleft row">
+													                    <div class="row">
                         <div class="col-xs-24">
-                            <ul class="sub-menu">
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
-								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
-                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
-                            </ul>
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
                         </div>
                     </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
-    <span data-component="backToTopButton" class="backToTopButton loaded">
-        <ul>
-            <li>
-                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
-                    <span class="fas fa-angle-up" aria-hidden="true"></span>
-                </a>
-            </li>
-        </ul>
-    </span>
-</noindex></div>
-			</div>
-		</div>
+										
+</br>
 
 
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-			underscoreSetup();
-		</script>
-	</body>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

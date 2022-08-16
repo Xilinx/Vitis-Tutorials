@@ -1,237 +1,48 @@
-﻿
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
-	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
 <script type="text/javascript">
 function OptanonWrapper() { }
 </script>
 <!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
-		<!-- Google Tag Manager -->
-	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
-	<!-- End Google Tag Manager -->
-	
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
-        <!-- End Google Tag Manager -->	
-
+  <title>Host Memory Access &mdash; Vitis™ Tutorials 2021.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="AI Engine Development" href="../../../AI_Engine_Development/AI_Engine_Development.html" />
     <link rel="prev" title="Using HBM" href="../07-using-hbm/README.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
- <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+</head>
 
-    
-    
-
-    
-
-
-
-<div class="xf-content-height">
-    
-
-<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-    
-    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
-	<header data-component="header" class="site-header">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid main-nav">
-				<div class="row">
-					<div class="navbar-column col-xs-4 col-sm-5">
-						<ul class="nav navbar-nav hidden-xs">
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-								</li>
-							</ul>
-							
-						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-							<li>
-									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
-								</li>
-							<li>
-									<button data-target="#header-container-1" data-function="toggle">Products</button>
-								</li>
-							<li>
-									<button data-target="#header-container-2" data-function="toggle">Company</button>
-								</li>
-							</ul>
-							
-						<div id="header-container-0" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-1" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-2" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							</div>
-					<div class="logo-column col-xs-4 col-sm-2">
-						<div class="logo">
-							<a target="_blank" href="https://www.xilinx.com/">
-								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</nav></header></noindex></div>
-		
-	
-</div>
-
-    
-</div>
-</div>
-
-<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
-    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
-</div>
-</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2021.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -239,27 +50,16 @@ function OptanonWrapper() { }
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
@@ -284,94 +84,48 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">This Page</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/08-using-hostmem/README.rst.txt"
-						rel="nofollow">Show Source</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">Vitis™ Tutorials</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
-        
       <li>Host Memory Access</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/08-using-hostmem/README.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="host-memory-access">
-<h1>Host Memory Access<a class="headerlink" href="#host-memory-access" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="host-memory-access">
+<h1>Host Memory Access<a class="headerlink" href="#host-memory-access" title="Permalink to this heading">¶</a></h1>
 <p><strong>Version:</strong> Vitis 2021.2</p>
 <p>Some of the recent Xilinx Platforms have an XDMA feature to bypass the DMA operation and allow the kernels to directly access the host memory. The direct host memory access provides an alternate data transfer mechanism compared to XDMA based data transfer and can be useful in some of the scenarios.</p>
 <ul class="simple">
@@ -380,18 +134,18 @@ function OptanonWrapper() { }
 <li><p>The data transfer burden can be freed from the host server. As a result, the host can spend time on other tasks that might even help in overall application performance.</p></li>
 </ul>
 <p>For more details about the host memory access feature please refer <a class="reference external" href="https://xilinx.github.io/XRT/master/html/hm.html">https://xilinx.github.io/XRT/master/html/hm.html</a></p>
-<div class="section" id="xrt-and-platform-version">
-<h2>XRT and Platform version<a class="headerlink" href="#xrt-and-platform-version" title="Permalink to this headline">¶</a></h2>
+<section id="xrt-and-platform-version">
+<h2>XRT and Platform version<a class="headerlink" href="#xrt-and-platform-version" title="Permalink to this heading">¶</a></h2>
 <p>The following XRT and U250 platform versions are used for this tutorial design.</p>
 <p><strong>XRT Version</strong>:    2021.2</p>
 <p><strong>Platform</strong>: xilinx_u250_gen3x16_xdma_shell_3_1</p>
-</div>
-<div class="section" id="tutorial-description">
-<h2>Tutorial Description<a class="headerlink" href="#tutorial-description" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="tutorial-description">
+<h2>Tutorial Description<a class="headerlink" href="#tutorial-description" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial attempts to demonstrate a scenario where adopting a host memory access data transfer scheme helped to improve overall performance. This is not a full-fledged application, rather a small example showing potential performance benefit by letting direct host memory access by the kernels.</p>
 <p>A word of caution is that the performance numbers can greatly varied from one host server to another host server, so performance numbers demonstrated in this example should only be used as sample data that may not match when you are running this tutorial.</p>
-<div class="section" id="kernel-structure">
-<h3>Kernel structure<a class="headerlink" href="#kernel-structure" title="Permalink to this headline">¶</a></h3>
+<section id="kernel-structure">
+<h3>Kernel structure<a class="headerlink" href="#kernel-structure" title="Permalink to this heading">¶</a></h3>
 <p>This tutorial is created from a simple vector-add kernel. The vector-add kernel has 15 CUs on the FPGA. As the U250 card contains four SLRs, the 15 CUs are distributed in the following manner</p>
 <table class="docutils align-default">
 <colgroup>
@@ -418,9 +172,9 @@ function OptanonWrapper() { }
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="host-code">
-<h3>Host code<a class="headerlink" href="#host-code" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="host-code">
+<h3>Host code<a class="headerlink" href="#host-code" title="Permalink to this heading">¶</a></h3>
 <p>The functionality of the host code is described as below:</p>
 <ul class="simple">
 <li><p>Creates dedicated 15 CU handles for 15 CUs</p></li>
@@ -431,9 +185,9 @@ function OptanonWrapper() { }
 </ul>
 <p>The greater number of CU executions in a given time interval signifies the more work done with increased throughput.</p>
 <p>As a side note, for brevity, the host code is simplified by using the same data input per CU execution. As the host code is solely focusing on CU execution, it is a simplified version without implementing other typical host functionalities such as verification of returned data from the CUs, error checking, etc.</p>
-</div>
-<div class="section" id="kernel-compilation">
-<h3>Kernel compilation<a class="headerlink" href="#kernel-compilation" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="kernel-compilation">
+<h3>Kernel compilation<a class="headerlink" href="#kernel-compilation" title="Permalink to this heading">¶</a></h3>
 <p>All the tutorial design files are self-contained inside the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p>
 <p>This tutorial needs two kernel XCLBINs with different connectivities.</p>
 <ul class="simple">
@@ -492,12 +246,12 @@ function OptanonWrapper() { }
 </div>
 <p>Upon completion, you will get the XCLBIN file <code class="docutils literal notranslate"><span class="pre">vadd.hw.run2.xclbin</span></code>.</p>
 <p>Once you have two XCLBINs ready you can simply focus on running the application for the rest of this tutorial.</p>
-</div>
-</div>
-<div class="section" id="running-the-application">
-<h2>Running the application<a class="headerlink" href="#running-the-application" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="ddr-based-run">
-<h3>DDR Based Run<a class="headerlink" href="#ddr-based-run" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="running-the-application">
+<h2>Running the application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h2>
+<section id="ddr-based-run">
+<h3>DDR Based Run<a class="headerlink" href="#ddr-based-run" title="Permalink to this heading">¶</a></h3>
 <p>You will start with the DDR-based application to see the result.</p>
 <p>Compile and run the host code</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">exe</span>
@@ -542,21 +296,21 @@ function OptanonWrapper() { }
 <p>Now select the <strong>Application Timeline</strong> section from the left panel. The application timeline also shows the large data transfers initiated by the host server that supposed to keep the host server busy. As shown below hovering the mouse on one of the data transfers showing a typical DMA writes for 4MB data from the host is taking approximately 1ms.</p>
 <img alt="../../../../_images/at_ddr.JPG" class="align-center" src="../../../../_images/at_ddr.JPG" />
 <p>This is also interesting to note the number of parallel requests by the host to submit the CU execution commands. For example, the above Application timeline snapshot shows 4 such parallel execution command requests (under <strong>Kernel Enqueues</strong> Row 0, Row 1, Row 2, and Row 3).</p>
-</div>
-<div class="section" id="host-memory-based-run">
-<h3>Host Memory Based Run<a class="headerlink" href="#host-memory-based-run" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="host-memory-based-run">
+<h3>Host Memory Based Run<a class="headerlink" href="#host-memory-based-run" title="Permalink to this heading">¶</a></h3>
 <p>The host code used for the host memory-based run is <code class="docutils literal notranslate"><span class="pre">host_hm.cpp</span></code>. The only host code change is specifying the buffers as host memory buffers as below. The host code sets <code class="docutils literal notranslate"><span class="pre">cl_mem_ext_ptr_t.flag</span></code> to <code class="docutils literal notranslate"><span class="pre">XCL_MEM_EXT_HOST_ONLY</span></code> to denote a host memory buffer.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">cl_mem_ext_ptr_t</span> <span class="n">host_buffer_ext</span><span class="p">;</span>
-<span class="n">host_buffer_ext</span><span class="p">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">XCL_MEM_EXT_HOST_ONLY</span><span class="p">;</span>
-<span class="n">host_buffer_ext</span><span class="p">.</span><span class="n">obj</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<span class="n">host_buffer_ext</span><span class="p">.</span><span class="n">param</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">cl_mem_ext_ptr_t</span><span class="w"> </span><span class="n">host_buffer_ext</span><span class="p">;</span><span class="w"></span>
+<span class="n">host_buffer_ext</span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XCL_MEM_EXT_HOST_ONLY</span><span class="p">;</span><span class="w"></span>
+<span class="n">host_buffer_ext</span><span class="p">.</span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
+<span class="n">host_buffer_ext</span><span class="p">.</span><span class="n">param</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">in1</span> <span class="o">=</span> <span class="n">clCreateBuffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_READ_ONLY</span><span class="o">|</span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">,</span><span class="n">bytes</span><span class="p">,</span><span class="o">&amp;</span><span class="n">host_buffer_ext</span>
-<span class="n">throw_if_error</span><span class="p">(</span><span class="n">err</span><span class="p">,</span><span class="s">&quot;failed to allocate in buffer&quot;</span><span class="p">);</span>
-<span class="n">in2</span> <span class="o">=</span> <span class="n">clCreateBuffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_READ_ONLY</span><span class="o">|</span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">,</span><span class="n">bytes</span><span class="p">,</span><span class="o">&amp;</span><span class="n">host_buffer_ext</span>
-<span class="n">throw_if_error</span><span class="p">(</span><span class="n">err</span><span class="p">,</span><span class="s">&quot;failed to allocate in buffer&quot;</span><span class="p">);</span>
-<span class="n">io</span> <span class="o">=</span> <span class="n">clCreateBuffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="o">|</span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">,</span><span class="n">bytes</span><span class="p">,</span><span class="o">&amp;</span><span class="n">host_buffer_ext</span>
-<span class="n">throw_if_error</span><span class="p">(</span><span class="n">err</span><span class="p">,</span><span class="s">&quot;failed to allocate io buffer&quot;</span><span class="p">);</span>
+<span class="n">in1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clCreateBuffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_READ_ONLY</span><span class="o">|</span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">,</span><span class="n">bytes</span><span class="p">,</span><span class="o">&amp;</span><span class="n">host_buffer_ext</span><span class="w"></span>
+<span class="n">throw_if_error</span><span class="p">(</span><span class="n">err</span><span class="p">,</span><span class="s">&quot;failed to allocate in buffer&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">in2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clCreateBuffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_READ_ONLY</span><span class="o">|</span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">,</span><span class="n">bytes</span><span class="p">,</span><span class="o">&amp;</span><span class="n">host_buffer_ext</span><span class="w"></span>
+<span class="n">throw_if_error</span><span class="p">(</span><span class="n">err</span><span class="p">,</span><span class="s">&quot;failed to allocate in buffer&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">io</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clCreateBuffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="o">|</span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">,</span><span class="n">bytes</span><span class="p">,</span><span class="o">&amp;</span><span class="n">host_buffer_ext</span><span class="w"></span>
+<span class="n">throw_if_error</span><span class="p">(</span><span class="n">err</span><span class="p">,</span><span class="s">&quot;failed to allocate io buffer&quot;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Before running the host memory-based application ensure that you have preconfigured and preallocated the host memory for CU access. For this testcase setting a host memory size of 1G is sufficient.</p>
@@ -604,10 +358,10 @@ function OptanonWrapper() { }
 <p>You can review Application timeline as below</p>
 <img alt="../../../../_images/at_hm.jpg" class="align-center" src="../../../../_images/at_hm.jpg" />
 <p>Hovering the mouse on one of the data transfers shows the type of Data transfer is <strong>Host Memory Synchronization</strong>. This signifies the data transfer is merely a cache synchronization operation from the host operation perspective. As this cache invalidate/flush is very fast it has very little overhead on the host machine. The snapshot also shows under the <strong>Kernel Enqueues</strong> section there are now a greater number of rows (ROW0 to ROW9) signifying the host is now able to submit more kernel execution requests in parallel.</p>
-</div>
-</div>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In summary, you have reviewed the following takeaways in this tutorial</p>
 <ul class="simple">
 <li><p>Easy migration from a DDR based application to a host memory-based application</p></li>
@@ -630,81 +384,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 <p>Copyright 2020–2021 Xilinx</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../../../AI_Engine_Development/AI_Engine_Development.html" class="btn btn-neutral float-right" title="AI Engine Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../07-using-hbm/README.html" class="btn btn-neutral float-left" title="Using HBM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        Last updated on February 10, 2022.
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -713,147 +399,64 @@ limitations under the License.</p>
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../07-using-hbm/README.html" class="btn btn-neutral float-left" title="Using HBM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../../AI_Engine_Development/AI_Engine_Development.html" class="btn btn-neutral float-right" title="AI Engine Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-														
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<div class="lang-select dropup hidden-md hidden-lg">
-		<button data-toggle="dropdown">
-			<span class="fas fa-globe" aria-hidden="true"></span>
-			<span>
-				
-					English
-				</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">Connect on LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Follow us on Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Connect on Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">Watch us on YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-																	<div class="lang-select dropup hidden-xs hidden-sm">
-	<button data-toggle="dropdown">
-		<span class="fas fa-globe" aria-hidden="true"></span>
-		<span>
-			
-				English
-			</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-															</div>
-														</div>
-														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
-															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
-														</div>
 
-													</div>
-													                    <div class="movethisrowtoleft row">
+													                    <div class="row">
                         <div class="col-xs-24">
-                            <ul class="sub-menu">
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
-								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
-                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
-                            </ul>
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
                         </div>
                     </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
-    <span data-component="backToTopButton" class="backToTopButton loaded">
-        <ul>
-            <li>
-                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
-                    <span class="fas fa-angle-up" aria-hidden="true"></span>
-                </a>
-            </li>
-        </ul>
-    </span>
-</noindex></div>
-			</div>
-		</div>
+										
+</br>
 
 
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-			underscoreSetup();
-		</script>
-	</body>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

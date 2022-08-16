@@ -282,11 +282,11 @@ By default, the Makefiles build the design for the VCK190 Production board (i.e.
 Let's get started with running the python model of the N-Body simulator on an x86 machine in [Module 01 - Python Simulations on x86](Module_01_python_sims).
 
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

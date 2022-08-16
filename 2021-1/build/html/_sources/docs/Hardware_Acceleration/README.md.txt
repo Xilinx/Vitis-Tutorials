@@ -16,7 +16,7 @@
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Introduction/README.html">Introduction to Vitis Hardware Acceleration</a></td>
+ <td align="center"><a href="./Introduction/README.md">Introduction to Vitis Hardware Acceleration</a></td>
  <td>This tutorial provides you with an easy-to-follow, guided introduction to accelerating applications with Xilinx technology. We will begin from the first principles of acceleration: understanding the fundamental architectural approaches, identifying suitable code for acceleration, and interacting with the software APIs for managing memory and interacting with the target device in an optimal way.</td>
  </tr>
  </table>
@@ -34,23 +34,23 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/02-bloom/README.html">Bloom Filter Example</a></td>
+ <td align="center"><a href="./Design_Tutorials/02-bloom/README.md">Bloom Filter Example</a></td>
  <td>This tutorial shows how to achieve a 10x speed-up on a data analytics application using a combination of kernel and host code optimization techniques.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/01-convolution-tutorial/README.html">Convolution Example</a></td>
+ <td align="center"><a href="./Design_Tutorials/01-convolution-tutorial/README.md">Convolution Example</a></td>
  <td>This tutorial walks through the process of analyzing and optimizing a 2D convolution used for real-time processing of a video stream.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></td>
+ <td align="center"><a href="./Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
  <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
  </tr>
 <tr>
- <td align="center"><a href="./Design_Tutorials/04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></td>
+ <td align="center"><a href="./Design_Tutorials/04-traveling-salesperson/README.md">Traveling Salesperson Problem</a></td>
  <td>This tutorial demonstrates the full flow to implement a HLS kernel from algorithm model to hardware.</td>
 </tr>
 <tr>
- <td align="center"><a href="./Design_Tutorials/05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></td>
+ <td align="center"><a href="./Design_Tutorials/05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a></td>
  <td>This tutorial demonstrates how to develope a complex RTL kernel from scratch via batch mode without GUI environment.</td>
  </tr>
  <tr>
@@ -77,22 +77,22 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></td>
+ <td align="center"><a href="./Feature_Tutorials/01-rtl_kernel_workflow/README.md">Getting Started with RTL Kernels</a></td>
  <td>This tutorial demonstrates how to use the Vitis core development kit to program an RTL kernel into an FPGA and build a Hardware Emulation using a common development flow.</td>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C and RTL</a></td>
+ <td align="center"><a href="./Feature_Tutorials/02-mixing-c-rtl-kernels/README.md">Mixing C and RTL</a></td>
  <td>This tutorial demonstrates how to work with an application containing RTL and C kernels, along with various design analysis features.</td>
  </tr>
 <tr>
- <td align="center"><a href="./Feature_Tutorials/03-dataflow_debug_and_optimization/README.html">Dataflow Debug and Optimization</a></td>
+ <td align="center"><a href="./Feature_Tutorials/03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a></td>
  <td>This tutorial demonstrates how to debug and optimize the dataflow optimization in Vitis HLS.</td>
  </tr>
-  <td align="center"><a href="./Feature_Tutorials/04-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></td>
+  <td align="center"><a href="./Feature_Tutorials/04-mult-ddr-banks/README.md">Using Multiple DDR Banks</a></td>
  <td>This tutorial demonstrates how using multiple DDRs can improve data transfer between kernels and global memory.</td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/05-using-multiple-cu/README.html">Using Multiple Compute Units</a></td>
+ <td align="center"><a href="./Feature_Tutorials/05-using-multiple-cu/README.md">Using Multiple Compute Units</a></td>
  <td>This tutorial demonstrates the flexible kernel linking process to increase the number of kernel instances on an FPGA, which improves the parallelism in a combined host-kernel system.</td>
  </tr>
   <tr>

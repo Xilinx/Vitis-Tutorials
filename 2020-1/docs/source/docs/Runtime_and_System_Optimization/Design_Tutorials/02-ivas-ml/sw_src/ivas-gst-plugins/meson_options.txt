@@ -1,0 +1,7 @@
+# Feature options for plugins without external deps
+option('metaaffixer', type : 'feature', value : 'auto')
+option('filter', type : 'feature', value : 'auto')
+option('m2m', type : 'feature', value : 'auto')
+
+# Common feature options
+option('examples', type : 'feature', value : 'auto', yield : true)

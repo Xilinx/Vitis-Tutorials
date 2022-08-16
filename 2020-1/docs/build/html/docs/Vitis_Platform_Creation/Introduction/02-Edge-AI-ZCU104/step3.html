@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Step 3: Create the Vitis Platform &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../README.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../README.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../README.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Step 3: Create the Vitis Platform</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/step3.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="step-3-create-the-vitis-platform">
+<h1>Step 3: Create the Vitis Platform<a class="headerlink" href="#step-3-create-the-vitis-platform" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="prepare-files-for-platform-packaging">
+<h2>Prepare Files for Platform Packaging<a class="headerlink" href="#prepare-files-for-platform-packaging" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>We would store all the necessary files for Vitis platform creation flow. Here we name it <code class="docutils literal notranslate"><span class="pre">zcu104_custom_pkg</span> </code>. Then we create a <code class="docutils literal notranslate"><span class="pre">pfm</span></code> folder inside to hold platform creation source components.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">zcu104_custom_pkg</span>
+<span class="n">cd</span> <span class="n">zcu104_custom_pkg</span>
+<span class="n">mkdir</span> <span class="n">pfm</span>
+</pre></div>
+</div>
+<p>After this step, your directory hierarchy looks like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">zcu104_custom_platform</span> <span class="c1"># Vivado Project Directory</span>
+<span class="o">-</span> <span class="n">zcu104_custom_plnx</span>     <span class="c1"># PetaLinux Project Directory</span>
+<span class="o">-</span> <span class="n">zcu104_custom_pkg</span>      <span class="c1"># Platform Packaging Directory</span>
+  <span class="o">-</span> <span class="n">pfm</span>                  <span class="c1"># Platform Packaging Sources</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install sysroot:</p>
+<p>a) Go to <PetaLinux Project>/images/linux directory.</p>
+<p>b) Type <code class="docutils literal notranslate"><span class="pre">./sdk.sh</span> <span class="pre">-d</span> <span class="pre">&lt;Install</span> <span class="pre">Target</span> <span class="pre">Dir&gt;</span></code> to install PetaLinux SDK. use the <code class="docutils literal notranslate"><span class="pre">-d</span></code> option to provide a full pathname to the output directory <em><strong>zcu104_custom_pkg/pfm</strong></em> (This is an example ) and confirm.</p>
+<ul class="simple">
+<li><p>Note: The environment variable <em><strong>LD_LIBRARY_PATH</strong></em> must not be set when running this command</p></li>
+</ul>
+</li>
+</ol>
+<p>We would install Vitis AI library and DNNDK into this rootfs during test phase.</p>
+<ol>
+<li><p>Create <code class="docutils literal notranslate"><span class="pre">boot</span></code> directory and <code class="docutils literal notranslate"><span class="pre">image</span></code> directory inside pfm directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> zcu104_custom_pkg/pfm
+mkdir boot
+mkdir image
+</pre></div>
+</div>
+<p>After this step, your directory hierarchy looks like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">zcu104_custom_platform</span> <span class="c1"># Vivado Project Directory</span>
+<span class="o">-</span> <span class="n">zcu104_custom_plnx</span>     <span class="c1"># PetaLinux Project Directory</span>
+<span class="o">-</span> <span class="n">zcu104_custom_pkg</span>      <span class="c1"># Platform Packaging Directory</span>
+  <span class="o">-</span> <span class="n">sysroots</span>             <span class="c1"># Extracted Sysroot Directory</span>
+  <span class="o">-</span> <span class="n">pfm</span>                  <span class="c1"># Platform Packaging Sources</span>
+    <span class="o">-</span> <span class="n">boot</span>               <span class="c1"># Platform boot components</span>
+    <span class="o">-</span> <span class="n">image</span>              <span class="c1"># Files to be put in FAT32 partition</span>
+</pre></div>
+</div>
+<p>We’ll prepare BIF file and the files it refers to into <em><strong>boot</strong></em> directory; we’ll prepare all files needed for FAT32 partition to <em><strong>image</strong></em> directory.</p>
+</li>
+<li><p>Copy the generated Linux software boot components from <em><strong>&lt;your_petalinux_dir&gt;/images/linux directory</strong></em> to the <em><strong>&lt;full_pathname_to_zcu104_custom_pkg&gt;/pfm/boot</strong></em> directory to prepare for running the Vitis platform packaging flow:</p>
+<ul class="simple">
+<li><p>zynqmp_fsbl.elf: <em><strong>rename as fsbl.elf</strong></em> as a workaround of a Vitis known issue.</p></li>
+<li><p>pmufw.elf</p></li>
+<li><p>bl31.elf</p></li>
+<li><p>u-boot.elf</p></li>
+</ul>
+</li>
+</ol>
+<p>Note: These files are the sources of creating BOOT.BIN.</p>
+<ol class="simple">
+<li><p>Add a BIF file (linux.bif) to the <em><strong>&lt;full_pathname_to_zcu104_custom_pkg&gt;/pfm/boot</strong></em> directory with the contents shown below. The file names should match the contents of the boot directory. The Vitis tool expands these pathnames relative to the sw directory of the platform at v++ link time or when generating an SD card. However, if the bootgen command is used directly to create a BOOT.BIN file from a BIF file, full pathnames in the BIF are necessary. Bootgen does not expand the names between the &lt;&gt; symbols.<br /></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/*</span> <span class="n">linux</span> <span class="o">*/</span>
+ <span class="n">the_ROM_image</span><span class="p">:</span>
+ <span class="p">{</span>
+ 	<span class="p">[</span><span class="n">fsbl_config</span><span class="p">]</span> <span class="n">a53_x64</span>
+ 	<span class="p">[</span><span class="n">bootloader</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">fsbl</span><span class="o">.</span><span class="n">elf</span><span class="o">&gt;</span>
+ 	<span class="p">[</span><span class="n">pmufw_image</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">pmufw</span><span class="o">.</span><span class="n">elf</span><span class="o">&gt;</span>
+ 	<span class="p">[</span><span class="n">destination_device</span><span class="o">=</span><span class="n">pl</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">bitstream</span><span class="o">&gt;</span>
+ 	<span class="p">[</span><span class="n">destination_cpu</span><span class="o">=</span><span class="n">a53</span><span class="o">-</span><span class="mi">0</span><span class="p">,</span> <span class="n">exception_level</span><span class="o">=</span><span class="n">el</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="n">trustzone</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">bl31</span><span class="o">.</span><span class="n">elf</span><span class="o">&gt;</span>
+ 	<span class="p">[</span><span class="n">destination_cpu</span><span class="o">=</span><span class="n">a53</span><span class="o">-</span><span class="mi">0</span><span class="p">,</span> <span class="n">exception_level</span><span class="o">=</span><span class="n">el</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">u</span><span class="o">-</span><span class="n">boot</span><span class="o">.</span><span class="n">elf</span><span class="o">&gt;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The file names in <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code> are placeholders. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when buiding the final application would expand it further to the full path during image packaging.</p></li>
+<li><p>Filename placeholders point to the files in boot directory. The filenames in boot directory need to match with placeholders in BIF file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;bitstream&gt;</span></code> is a reserved keyword. V++ packager will replace it with the final system bit file.</p></li>
+<li><p>It’s a known issue that v++ packager only recognizes FSBL with <code class="docutils literal notranslate"><span class="pre">&lt;fsbl.elf&gt;</span></code>. So for MPSoC, it’s needed to copy <code class="docutils literal notranslate"><span class="pre">zynqmp_fsbl.elf</span></code> that PetaLinux generates to <code class="docutils literal notranslate"><span class="pre">fsbl.elf</span></code> in image directory. This issue is fixed in 2020.2.</p></li>
+</ul>
+<ol>
+<li><p>Prepare image directory. Contents in this directory will be packaged to FAT32 partition by v++ package tool.</p>
+<p>a) Copy the generated Linux software components from <em><strong>&lt;your_petalinux_dir&gt;/images/linux directory</strong></em> to the <em><strong>&lt;full_pathname_to_zcu104_custom_pkg&gt;/pfm/image</strong></em> directory.</p>
+<ul class="simple">
+<li><p>boot.scr: script for u-boot initialization</p></li>
+<li><p>system.dtb: device tree file for Linux to boot</p></li>
+</ul>
+<p>b) Copy <em><strong>init.sh</strong></em> and <em><strong>platform_desc.txt</strong></em> from <em><strong>ref_files/step3_pfm/image</strong></em> to <em><strong>&lt;full_pathname_to_zcu104_custom_pkg&gt;/image</strong></em> directory.</p>
+<ul class="simple">
+<li><p>init.sh will set environment variable XILINX_XRT for XRT and copy platform_desc.txt to /etc/xocl.txt</p></li>
+<li><p>platform_desc.txt has the platform name. XRT OpenCL API can check the platform name before loading xclbin file to make sure they match.</p></li>
+<li><p>User needs to run <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/mnt/sd-mmcblk0p1/init.sh</span></code> manually on the target platform.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="optional-prepare-files-to-enable-emulation">
+<h2>(Optional) Prepare Files to Enable Emulation<a class="headerlink" href="#optional-prepare-files-to-enable-emulation" title="Permalink to this heading">¶</a></h2>
+<p>To run software emulation or software emulation with Vitis, we’ll need to prepare some emulation configuration files.</p>
+<ul class="simple">
+<li><p>QEMU Data: boot components used by QEMU. It can reuse the boot directory that we’ve prepared</p></li>
+<li><p>QEMU Arguments: QEMU arguments for launching Linux on ARM Cortex-A53</p></li>
+<li><p>PMU QEMU Arguments: QEMU arguments for launching PMUFW on PMU</p></li>
+</ul>
+<ol>
+<li><p>Create directory <em><strong>zcu104_custom_pkg/pfm/qemu</strong></em></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> zcu104_custom_pkg/pfm
+mkdir qemu
+</pre></div>
+</div>
+<p>After this step, your directory hierarchy looks like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">zcu104_custom_platform</span> <span class="c1"># Vivado Project Directory</span>
+<span class="o">-</span> <span class="n">zcu104_custom_plnx</span>     <span class="c1"># PetaLinux Project Directory</span>
+<span class="o">-</span> <span class="n">zcu104_custom_pkg</span>      <span class="c1"># Platform Packaging Directory</span>
+  <span class="o">-</span> <span class="n">pfm</span>                  <span class="c1"># Platform Packaging Sources</span>
+    <span class="o">-</span> <span class="n">boot</span>               <span class="c1"># Platform boot components</span>
+    <span class="o">-</span> <span class="n">image</span>              <span class="c1"># Files to be put in FAT32 partition</span>
+    <span class="o">-</span> <span class="n">qemu</span>               <span class="c1"># Emulation configuration files</span>
+</pre></div>
+</div>
+</li>
+<li><p>Copy <em><strong>pmu_args.txt</strong></em> and <em><strong>qemu_args.txt</strong></em> from <em><strong>ref_files/step3_pfm/qemu/</strong></em> to your qemu directory</p></li>
+</ol>
+<p>Example of <em><strong>qemu_args.txt</strong></em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">M</span>
+<span class="n">arm</span><span class="o">-</span><span class="n">generic</span><span class="o">-</span><span class="n">fdt</span>
+<span class="o">-</span><span class="n">serial</span>
+<span class="n">mon</span><span class="p">:</span><span class="n">stdio</span>
+<span class="o">-</span><span class="k">global</span>
+<span class="n">xlnx</span><span class="p">,</span><span class="n">zynqmp</span><span class="o">-</span><span class="n">boot</span><span class="o">.</span><span class="n">cpu</span><span class="o">-</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span>
+<span class="o">-</span><span class="k">global</span>
+<span class="n">xlnx</span><span class="p">,</span><span class="n">zynqmp</span><span class="o">-</span><span class="n">boot</span><span class="o">.</span><span class="n">use</span><span class="o">-</span><span class="n">pmufw</span><span class="o">=</span><span class="n">true</span>
+<span class="o">-</span><span class="n">net</span>
+<span class="n">nic</span>
+<span class="o">-</span><span class="n">net</span>
+<span class="n">nic</span>
+<span class="o">-</span><span class="n">net</span>
+<span class="n">nic</span>
+<span class="o">-</span><span class="n">net</span>
+<span class="n">nic</span>
+<span class="o">-</span><span class="n">net</span>
+<span class="n">user</span>
+<span class="o">-</span><span class="n">m</span>
+<span class="mi">4</span><span class="n">G</span>
+<span class="o">-</span><span class="n">device</span>
+<span class="n">loader</span><span class="p">,</span><span class="n">file</span><span class="o">=&lt;</span><span class="n">xrt</span><span class="o">/</span><span class="n">qemu</span><span class="o">/</span><span class="n">bl31</span><span class="o">.</span><span class="n">elf</span><span class="o">&gt;</span><span class="p">,</span><span class="n">cpu</span><span class="o">-</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span>
+<span class="o">-</span><span class="n">device</span>
+<span class="n">loader</span><span class="p">,</span><span class="n">file</span><span class="o">=&lt;</span><span class="n">xrt</span><span class="o">/</span><span class="n">qemu</span><span class="o">/</span><span class="n">u</span><span class="o">-</span><span class="n">boot</span><span class="o">.</span><span class="n">elf</span><span class="o">&gt;</span>
+<span class="o">-</span><span class="n">boot</span>
+<span class="n">mode</span><span class="o">=</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>Example of <em><strong>pmu_args.txt</strong></em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">M</span>
+<span class="n">microblaze</span><span class="o">-</span><span class="n">fdt</span>
+<span class="o">-</span><span class="n">device</span>
+<span class="n">loader</span><span class="p">,</span><span class="n">file</span><span class="o">=&lt;</span><span class="n">xrt</span><span class="o">/</span><span class="n">qemu</span><span class="o">/</span><span class="n">pmufw</span><span class="o">.</span><span class="n">elf</span><span class="o">&gt;</span>
+<span class="o">-</span><span class="n">machine</span><span class="o">-</span><span class="n">path</span>
+<span class="o">.</span>
+<span class="o">-</span><span class="n">display</span>
+<span class="n">none</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-vitis-platform">
+<h2>Create a Vitis Platform<a class="headerlink" href="#create-a-vitis-platform" title="Permalink to this heading">¶</a></h2>
+<p>First we create a Vitis platform project with the XSA file generated by Vivado from Step 1.</p>
+<ol>
+<li><p>Go to the <em><strong>zcu104_custom_pkg</strong></em> folder you created:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">&lt;</span><span class="n">full_pathname_to_zcu104_custom_pkg</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Launch Vitis by typing <code class="docutils literal notranslate"><span class="pre">vitis</span></code> in the console.</p></li>
+<li><p>Select <em><strong>zcu104_custom_pkg</strong></em> folder as workspace directory.</p></li>
+<li><p>In the Vitis IDE, select <em><strong>File &gt; New &gt; Platform Project</strong></em> to create a platform project.<br /></p></li>
+<li><p>Enter the project name. For this example, type <code class="docutils literal notranslate"><span class="pre">zcu104_custom</span></code>, click <em><strong>Next</strong></em>.</p></li>
+<li><p>In the Platform page,</p>
+<p>a) Click <em><strong>Browse</strong></em> button, select the XSA file generated by the Vivado. In this case, it is <code class="docutils literal notranslate"><span class="pre">zcu104_custom_platform.xsa</span></code>.</br>
+b) Set the operating system to <em><strong>linux</strong></em>.</br>
+c) Set the processor to <em><strong>psu_cortexa53</strong></em>.</br>
+d) Architecture: <em><strong>64-bit</strong></em></br>
+e) <em><strong>Uncheck</strong></em> option <em><strong>Generate boot components</strong></em>, because we’ll use PetaLinux generated boot components.</br>
+f) Click <em><strong>Finish</strong></em>.</p>
+</li>
+</ol>
+<p>Next we setup software settings in Platform Settings view.</p>
+<ol>
+<li><p>In the Platform Settings view, observe the following:</p>
+<ul class="simple">
+<li><p>The name of the Platform Settings view matches the platform project name of <em><strong>zcu104_custom</strong></em>.<br /></p></li>
+<li><p>A psu_cortexa53 device icon is shown, containing a <em><strong>Linux on psu_cortexa53</strong></em> domain.</p></li>
+</ul>
+</li>
+<li><p>Click the <em><strong>linux on psu_cortexa53</strong></em> domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:</p>
+<ul class="simple">
+<li><p><em><strong>Bif file</strong></em>: Browse to <em><strong>zcu104_custom_pkg/pfm/boot/linux.bif</strong></em> file and click OK.</p></li>
+<li><p><em><strong>Boot Components Direcotory</strong></em>: Browse to <em><strong>zcu104_custom_pkg/boot</strong></em> and click OK.</p></li>
+<li><p><em><strong>Linux Image Directory</strong></em>: Browse to <em><strong>zcu104_custom_pkg/image</strong></em> and click OK.</p></li>
+</ul>
+</li>
+<li><p>(Optional) Setup emulation related files</p>
+<p>If you’ve already enabled TLM simulation model for PS in Vivado design and prepared emulation arguments, please set the arguments to platform properties to enable emulation features.</p>
+<ul class="simple">
+<li><p>QEMU Data: Browse to <em><strong>zcu104_custom_pkg/pfm/boot</strong></em> and click OK</p></li>
+<li><p>QEMU Arguments: Browse to <em><strong>qemu_args.txt</strong></em> and click OK</p></li>
+<li><p>PMU QEMU Arguments: Browse to <em><strong>pmu_args.txt</strong></em> and click OK</p></li>
+</ul>
+</li>
+</ol>
+<p><img alt="vitis_linux_config.png" src="../../../../_images/vitis_linux_config.png" /></p>
+<ol>
+<li><p>Click <em><strong>zcu104_custom</strong></em> project in the Vitis Explorer view, click the <em><strong>Build</strong></em> button to generate the platform.</p>
+<p><img alt="../../../../_images/build_vitis_platform.png" src="../../../../_images/build_vitis_platform.png" /></p>
+</li>
+</ol>
+<p><em><strong>Note: The generated platform is placed in the export directory. BSP and source files are also provided for re-building the FSBL and PMU if desired and are associated with the platform. The platform is ready to be used for application development.</strong></em></p>
+<p><img alt="../../../../_images/vitis_platform_output.png" src="../../../../_images/vitis_platform_output.png" /></p>
+<p>If you’d create an Vitis application in the same workspace as this platform, you can find this platform available in the platform selection page in platform creation wizard. If you’d like to reuse this platform in another workspace, add its path to PLATFORM_REPO_PATHS environment variable before launching Vitis GUI, or use “Add” button in platform selection page of Vitis GUI to add its path.</p>
+<p><em><strong><a class="reference internal" href="step4.html"><span class="doc">Next let’s try to build some applications on this platform and test them.</span></a></strong></em></p>
+</div>
+<div class="section" id="fast-track">
+<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
+<p>Scripts are provided to create the Vitis platform. To use these scripts, please run the following steps.</p>
+<ol>
+<li><p>Run build</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># cd to the step directory, e.g.</span>
+<span class="n">cd</span> <span class="n">step3_pfm</span>
+<span class="n">make</span> <span class="nb">all</span>
+</pre></div>
+</div>
+</li>
+<li><p>To clean the generated files, please run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean
+</pre></div>
+</div>
+</li>
+</ol>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,235 +1,45 @@
-﻿
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
-	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
 <script type="text/javascript">
 function OptanonWrapper() { }
 </script>
 <!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
-		<!-- Google Tag Manager -->
-	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
-	<!-- End Google Tag Manager -->
-	
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
-        <!-- End Google Tag Manager -->	
-
+  <title>Super Sampling Rate FIR Filter with Dual-Stream Input &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/Searchbox.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
- <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+</head>
 
-    
-    
-
-    
-
-
-
-<div class="xf-content-height">
-    
-
-<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-    
-    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
-	<header data-component="header" class="site-header">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid main-nav">
-				<div class="row">
-					<div class="navbar-column col-xs-4 col-sm-5">
-						<ul class="nav navbar-nav hidden-xs">
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-								</li>
-							</ul>
-							
-						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-							<li>
-									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
-								</li>
-							<li>
-									<button data-target="#header-container-1" data-function="toggle">Products</button>
-								</li>
-							<li>
-									<button data-target="#header-container-2" data-function="toggle">Company</button>
-								</li>
-							</ul>
-							
-						<div id="header-container-0" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-1" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-2" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							</div>
-					<div class="logo-column col-xs-4 col-sm-2">
-						<div class="logo">
-							<a target="_blank" href="https://www.xilinx.com/">
-								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</nav></header></noindex></div>
-		
-	
-</div>
-
-    
-</div>
-</div>
-
-<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
-    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
-</div>
-</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2022.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -237,39 +47,28 @@ function OptanonWrapper() { }
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
@@ -277,75 +76,30 @@ function OptanonWrapper() { }
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">This Page</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/DualStreamSSR/README.md.txt"
-						rel="nofollow">Show Source</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../../index.html">Vitis™ Tutorials</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Super Sampling Rate FIR Filter with Dual-Stream Input</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/DualStreamSSR/README.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -354,12 +108,12 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><div class="section" id="super-sampling-rate-fir-filter-with-dual-stream-input">
-<h1>Super Sampling Rate FIR Filter with Dual-Stream Input<a class="headerlink" href="#super-sampling-rate-fir-filter-with-dual-stream-input" title="Permalink to this headline">¶</a></h1>
+<h1>Super Sampling Rate FIR Filter with Dual-Stream Input<a class="headerlink" href="#super-sampling-rate-fir-filter-with-dual-stream-input" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2022.1</strong></em></p>
 <p>The purpose of this fourth part of the tutorial is to understand how to improve upon the performance already achieved using the two input and output stream connections to the AI Engine.</p>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">DualStreamSSR</span></code> directory to continue.</p>
 <div class="section" id="dual-stream-input-impact">
-<h2>Dual-Stream Input Impact<a class="headerlink" href="#dual-stream-input-impact" title="Permalink to this headline">¶</a></h2>
+<h2>Dual-Stream Input Impact<a class="headerlink" href="#dual-stream-input-impact" title="Permalink to this heading">¶</a></h2>
 <p>In the last two sections (Multi-kernel and Single-Stream SSR) showed that when a single input stream is used, the balance between stream bandwidth and compute performance for <code class="docutils literal notranslate"><span class="pre">cint16</span> <span class="pre">x</span> <span class="pre">cint16</span></code> is obtained for an 8-tap filter implementation in an AI Engine. This can be easily computed. For the slowest speed grade of the versal AI core, the entire AI Engine array (processors, AXI-Stream connections, memory modules, …) is clocked &#64; 1 GHz. The input stream can transfer 32 bits per clock and a <code class="docutils literal notranslate"><span class="pre">cint16</span></code> variable is 32-bit wide, hence a rate of 1 Gsps (Giga samples per second). The processor by itself is capable of eight <code class="docutils literal notranslate"><span class="pre">cint16xcint16</span></code> operations per clock cycle. The result is that the processor can perform 8-tap filter processing per clock cycle.</p>
 <p>If the two input streams are used in an efficient way, the input sample rate can increase to 2 Gsps (1 Gsps per stream). As the processor performance does not change, it is able to process only four taps per clock cycle at the input sample rate.</p>
 <p>This means that in the case of a single-stream implementation, the filter length should be a multiple of eight to have the maximum performance extracted from the AI Engine array. In the case of a dual-stream implementation, the filter length should be a multiple of four to achieve this maximum performance. This lower granularity allows more freedom in the filter length. Take as an example a 12 tap filter, with input sample rate at 2 Gsps.</p>
@@ -387,7 +141,7 @@ function OptanonWrapper() { }
 <p>On top of this, if the coefficient phase is longer than four, four elements need to be discarded. If it is longer than eight, eight need to be discarded etc. The first four elements must be read from Stream 0, the next four from Stream 1 and then again from Stream 0. If more blocks of four elements are read from Stream 0 than from Stream 1, then the first stream to read within the kernel is Stream 1.</p>
 </div>
 <div class="section" id="designing-the-graph">
-<h2>Designing the Graph<a class="headerlink" href="#designing-the-graph" title="Permalink to this headline">¶</a></h2>
+<h2>Designing the Graph<a class="headerlink" href="#designing-the-graph" title="Permalink to this heading">¶</a></h2>
 <p>With the input data rate being 2 Gsps on each AI Engine and the filter having 32 taps, the data stream and coefficient can be split into eight phases as each AI Engine is capable of 4-tap filter processing. This leads to 2 Gsps x 8 Phases = 16 Gsps input sample rate, the maximum performance for the filter you will now design.</p>
 <p>The same recommendations as in the previous section will apply:</p>
 <ul class="simple">
@@ -397,155 +151,155 @@ function OptanonWrapper() { }
 </ul>
 </div>
 <div class="section" id="c-code-analysis">
-<h2>C++ Code Analysis<a class="headerlink" href="#c-code-analysis" title="Permalink to this headline">¶</a></h2>
+<h2>C++ Code Analysis<a class="headerlink" href="#c-code-analysis" title="Permalink to this heading">¶</a></h2>
 <p>The kernel definition is now different from the single-stream implementation. The class definition is close, but there is now one more parameter in the template:</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">NSamples</span><span class="p">,</span><span class="kt">int</span> <span class="n">ShiftAcc</span><span class="p">,</span><span class="kt">bool</span> <span class="n">DiscardSample</span><span class="p">,</span><span class="kt">bool</span> <span class="n">SwapRead</span><span class="o">&gt;</span>
-<span class="k">class</span> <span class="nc">FIR_MultiKernel_cout</span> <span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-	<span class="k">alignas</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="n">cint16</span> <span class="n">weights</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
-	<span class="k">alignas</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="n">cint16</span> <span class="n">delay_line</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span><span class="w"> </span><span class="n">NSamples</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">ShiftAcc</span><span class="p">,</span><span class="kt">bool</span><span class="w"> </span><span class="n">DiscardSample</span><span class="p">,</span><span class="kt">bool</span><span class="w"> </span><span class="n">SwapRead</span><span class="o">&gt;</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FIR_MultiKernel_cout</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="k">alignas</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="n">cint16</span><span class="w"> </span><span class="n">weights</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="w"></span>
+<span class="w">	</span><span class="k">alignas</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="n">cint16</span><span class="w"> </span><span class="n">delay_line</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"></span>
 
-<span class="k">public</span><span class="o">:</span>
-	<span class="n">FIR_MultiKernel_cout</span><span class="p">(</span><span class="k">const</span> <span class="n">cint16</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">taps</span><span class="p">)[</span><span class="mi">4</span><span class="p">])</span>
-	<span class="p">{</span>
-		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">taps</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">delay_line</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">cint16</span><span class="p">){</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">};</span>
-	<span class="p">};</span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="n">FIR_MultiKernel_cout</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cint16</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">taps</span><span class="p">)[</span><span class="mi">4</span><span class="p">])</span><span class="w"></span>
+<span class="w">	</span><span class="p">{</span><span class="w"></span>
+<span class="w">		</span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">taps</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">		</span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">delay_line</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">cint16</span><span class="p">){</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">};</span><span class="w"></span>
+<span class="w">	</span><span class="p">};</span><span class="w"></span>
 
-	<span class="kt">void</span> <span class="nf">filter</span><span class="p">(</span><span class="n">input_stream_cint16</span><span class="o">*</span>  <span class="k">restrict</span> <span class="n">sin1</span><span class="p">,</span><span class="n">input_stream_cint16</span><span class="o">*</span>  <span class="k">restrict</span> <span class="n">sin2</span><span class="p">,</span><span class="n">output_stream_cacc48</span><span class="o">*</span>  <span class="n">cout</span><span class="p">);</span>
+<span class="w">	</span><span class="kt">void</span><span class="w"> </span><span class="nf">filter</span><span class="p">(</span><span class="n">input_stream_cint16</span><span class="o">*</span><span class="w">  </span><span class="k">restrict</span><span class="w"> </span><span class="n">sin1</span><span class="p">,</span><span class="n">input_stream_cint16</span><span class="o">*</span><span class="w">  </span><span class="k">restrict</span><span class="w"> </span><span class="n">sin2</span><span class="p">,</span><span class="n">output_stream_cacc48</span><span class="o">*</span><span class="w">  </span><span class="n">cout</span><span class="p">);</span><span class="w"></span>
 
-	<span class="k">static</span> <span class="kt">void</span> <span class="nf">registerKernelClass</span><span class="p">()</span>
-	<span class="p">{</span>
-		<span class="n">REGISTER_FUNCTION</span><span class="p">(</span><span class="n">FIR_MultiKernel_cout</span><span class="o">::</span><span class="n">filter</span><span class="p">);</span>
-	<span class="p">};</span>
-<span class="p">};</span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerKernelClass</span><span class="p">()</span><span class="w"></span>
+<span class="w">	</span><span class="p">{</span><span class="w"></span>
+<span class="w">		</span><span class="n">REGISTER_FUNCTION</span><span class="p">(</span><span class="n">FIR_MultiKernel_cout</span><span class="o">::</span><span class="n">filter</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="p">};</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The template contains two more boolean parameters: <code class="docutils literal notranslate"><span class="pre">DiscardSample</span></code>and <code class="docutils literal notranslate"><span class="pre">SwapRead</span></code>. These parameters provide control overe whether or not the computation is started at sample 1 or 2 (<code class="docutils literal notranslate"><span class="pre">DiscardSample</span></code>), and whether the stream read should start with Stream 0 or Stream 1 (<code class="docutils literal notranslate"><span class="pre">SwapRead</span></code>).</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="kt">int</span> <span class="n">NSamples</span><span class="p">,</span><span class="kt">int</span> <span class="n">ShiftAcc</span><span class="p">,</span><span class="kt">bool</span> <span class="n">DiscardSample</span><span class="p">,</span><span class="kt">bool</span> <span class="n">SwapRead</span><span class="o">&gt;</span>
-<span class="kt">void</span> <span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="n">NSamples</span><span class="p">,</span><span class="n">ShiftAcc</span><span class="p">,</span><span class="n">DiscardSample</span><span class="p">,</span><span class="n">SwapRead</span><span class="o">&gt;::</span><span class="n">filter</span><span class="p">(</span><span class="n">input_stream_cint16</span><span class="o">*</span> <span class="k">restrict</span> <span class="n">sin1</span><span class="p">,</span><span class="n">input_stream_cint16</span><span class="o">*</span> <span class="k">restrict</span> <span class="n">sin2</span><span class="p">,</span><span class="n">output_stream_cacc48</span><span class="o">*</span> <span class="n">cout</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">v8cint16</span> <span class="n">taps</span> <span class="o">=</span>  <span class="o">*</span><span class="p">(</span><span class="n">v8cint16</span><span class="o">*</span><span class="p">)</span> <span class="n">weights</span><span class="p">;</span>
-	<span class="n">v16cint16</span> <span class="o">*</span><span class="n">ptr_delay_line</span> <span class="o">=</span> <span class="p">(</span><span class="n">v16cint16</span> <span class="o">*</span><span class="p">)</span><span class="n">delay_line</span><span class="p">;</span>
-	<span class="n">v16cint16</span> <span class="n">data</span> <span class="o">=</span> <span class="o">*</span><span class="n">ptr_delay_line</span><span class="p">;</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="kt">int</span><span class="w"> </span><span class="n">NSamples</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">ShiftAcc</span><span class="p">,</span><span class="kt">bool</span><span class="w"> </span><span class="n">DiscardSample</span><span class="p">,</span><span class="kt">bool</span><span class="w"> </span><span class="n">SwapRead</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="n">NSamples</span><span class="p">,</span><span class="n">ShiftAcc</span><span class="p">,</span><span class="n">DiscardSample</span><span class="p">,</span><span class="n">SwapRead</span><span class="o">&gt;::</span><span class="n">filter</span><span class="p">(</span><span class="n">input_stream_cint16</span><span class="o">*</span><span class="w"> </span><span class="k">restrict</span><span class="w"> </span><span class="n">sin1</span><span class="p">,</span><span class="n">input_stream_cint16</span><span class="o">*</span><span class="w"> </span><span class="k">restrict</span><span class="w"> </span><span class="n">sin2</span><span class="p">,</span><span class="n">output_stream_cacc48</span><span class="o">*</span><span class="w"> </span><span class="n">cout</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">	</span><span class="n">v8cint16</span><span class="w"> </span><span class="n">taps</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="o">*</span><span class="p">(</span><span class="n">v8cint16</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">weights</span><span class="p">;</span><span class="w"></span>
+<span class="w">	</span><span class="n">v16cint16</span><span class="w"> </span><span class="o">*</span><span class="n">ptr_delay_line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v16cint16</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">delay_line</span><span class="p">;</span><span class="w"></span>
+<span class="w">	</span><span class="n">v16cint16</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">ptr_delay_line</span><span class="p">;</span><span class="w"></span>
 
-	<span class="n">v4cacc48</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">undef_v4cacc48</span><span class="p">();</span>
+<span class="w">	</span><span class="n">v4cacc48</span><span class="w"> </span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">undef_v4cacc48</span><span class="p">();</span><span class="w"></span>
 
-    <span class="c1">// These values must be constants in the intrinsic, hence these pre-declaration</span>
-	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">Start_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">2</span><span class="o">:</span><span class="mi">1</span><span class="p">);</span>
-	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">Start_3</span> <span class="o">=</span> <span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">4</span><span class="o">:</span><span class="mi">3</span><span class="p">);</span>
-	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">Start_5</span> <span class="o">=</span> <span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">6</span><span class="o">:</span><span class="mi">5</span><span class="p">);</span>
-	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">Start_7</span> <span class="o">=</span> <span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">8</span><span class="o">:</span><span class="mi">7</span><span class="p">);</span>
-	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">Start_9</span> <span class="o">=</span> <span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">10</span><span class="o">:</span><span class="mi">9</span><span class="p">);</span>
-	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">Start_11</span> <span class="o">=</span> <span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">12</span><span class="o">:</span><span class="mi">11</span><span class="p">);</span>
-	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">Start_13</span> <span class="o">=</span> <span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">14</span><span class="o">:</span><span class="mi">13</span><span class="p">);</span>
-	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">Start_15</span> <span class="o">=</span> <span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">0</span><span class="o">:</span><span class="mi">15</span><span class="p">);</span>
-
-
-	<span class="c1">// Computes 16 samples per iteration</span>
-	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-	<span class="n">chess_prepare_for_pipelining</span>
-	<span class="n">chess_loop_range</span><span class="p">(</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">,</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">)</span>
-	<span class="p">{</span>
-        <span class="c1">// Change read order depending on &#39;SwapRead&#39; flag</span>
-		<span class="k">if</span><span class="p">(</span><span class="n">SwapRead</span><span class="p">)</span>
-			<span class="n">data</span> <span class="o">=</span> <span class="n">upd_w</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">concat</span><span class="p">(</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">0</span><span class="p">)));</span>
-		<span class="k">else</span>
-			<span class="n">data</span> <span class="o">=</span> <span class="n">upd_w</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">concat</span><span class="p">(</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
-
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">Start_1</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">Start_3</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-		<span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span>
-
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">Start_5</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">Start_7</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-		<span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// These values must be constants in the intrinsic, hence these pre-declaration</span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Start_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">2</span><span class="o">:</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Start_3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">4</span><span class="o">:</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Start_5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">6</span><span class="o">:</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Start_7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">8</span><span class="o">:</span><span class="mi">7</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Start_9</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">10</span><span class="o">:</span><span class="mi">9</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Start_11</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">12</span><span class="o">:</span><span class="mi">11</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Start_13</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">14</span><span class="o">:</span><span class="mi">13</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Start_15</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DiscardSample</span><span class="o">?</span><span class="mi">0</span><span class="o">:</span><span class="mi">15</span><span class="p">);</span><span class="w"></span>
 
 
-		<span class="k">if</span><span class="p">(</span><span class="n">SwapRead</span><span class="p">)</span>
-			<span class="n">data</span> <span class="o">=</span> <span class="n">upd_w</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">concat</span><span class="p">(</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">0</span><span class="p">)));</span>
-		<span class="k">else</span>
-			<span class="n">data</span> <span class="o">=</span> <span class="n">upd_w</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">concat</span><span class="p">(</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="w">	</span><span class="c1">// Computes 16 samples per iteration</span>
+<span class="w">	</span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">	</span><span class="n">chess_prepare_for_pipelining</span><span class="w"></span>
+<span class="w">	</span><span class="n">chess_loop_range</span><span class="p">(</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">,</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">)</span><span class="w"></span>
+<span class="w">	</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Change read order depending on &#39;SwapRead&#39; flag</span>
+<span class="w">		</span><span class="k">if</span><span class="p">(</span><span class="n">SwapRead</span><span class="p">)</span><span class="w"></span>
+<span class="w">			</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_w</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">0</span><span class="p">)));</span><span class="w"></span>
+<span class="w">		</span><span class="k">else</span><span class="w"></span>
+<span class="w">			</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_w</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span><span class="w"></span>
 
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">Start_9</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">Start_11</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-		<span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">Start_1</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">Start_3</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span><span class="w"></span>
 
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">Start_13</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-		<span class="n">acc</span> <span class="o">=</span> <span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">Start_15</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-		<span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">Start_5</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">Start_7</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span><span class="w"></span>
 
-	<span class="p">}</span>
 
-	<span class="o">*</span><span class="n">ptr_delay_line</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">		</span><span class="k">if</span><span class="p">(</span><span class="n">SwapRead</span><span class="p">)</span><span class="w"></span>
+<span class="w">			</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_w</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">0</span><span class="p">)));</span><span class="w"></span>
+<span class="w">		</span><span class="k">else</span><span class="w"></span>
+<span class="w">			</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_w</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">getc_wss</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span><span class="w"></span>
+
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">Start_9</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">Start_11</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">Start_13</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">Start_15</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">	</span><span class="p">}</span><span class="w"></span>
+
+<span class="w">	</span><span class="o">*</span><span class="n">ptr_delay_line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>You can see that the stream read is done using the raw access intrinsic to the streams intrinsic. This is due to the fact that if the stream name given in the parameter list is used (even with restrict) the compiler is unable to schedule them on the same clock cycle.</p>
 <p>At the graph level, all kernels are first declared in a class:</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FIRGraph_SSR8</span><span class="o">:</span> <span class="k">public</span> <span class="n">adf</span><span class="o">::</span><span class="n">graph</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="n">kernel</span> <span class="n">k</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="mi">8</span><span class="p">];</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">FIRGraph_SSR8</span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">graph</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">kernel</span><span class="w"> </span><span class="n">k</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="mi">8</span><span class="p">];</span><span class="w"></span>
 
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">input_port</span> <span class="n">in</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span> <span class="c1">// 8 columns, 2 streams per kernel</span>
-    <span class="n">output_port</span> <span class="n">out</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span> <span class="c1">// 8 columns, 2 streams per kernel</span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">input_port</span><span class="w"> </span><span class="n">in</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"> </span><span class="c1">// 8 columns, 2 streams per kernel</span>
+<span class="w">    </span><span class="n">output_port</span><span class="w"> </span><span class="n">out</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"> </span><span class="c1">// 8 columns, 2 streams per kernel</span>
 </pre></div>
 </div>
 <p>The constructor takes charge of the next operations. The first operation is to create the kernels; the complete grid of 8x8 kernels is defined within a nested loop. Because template parameters must be constant, there are two parts in the inner loop, one for <code class="docutils literal notranslate"><span class="pre">(DiscardSample,</span> <span class="pre">SwapRead)</span> <span class="pre">=</span> <span class="pre">(true,</span> <span class="pre">false)</span></code> and the other for <code class="docutils literal notranslate"><span class="pre">(DiscardSample,</span> <span class="pre">SwapRead)</span> <span class="pre">=</span> <span class="pre">(false,</span> <span class="pre">false)</span></code></p>
 <p>The source and header locations are then defined for the AI Engine. The location of the first AI Engine in each row must also be constrained to facilitate the placer work. To shorten the place time by a few seconds, you can constrain the core location. A single one is necessary because all the others will be constrained by the <strong>cascade</strong> connection.</p>
 <p>All the kernels need to discard a specific number of elements. In this dual-stream implementation this is handled by the kernel itself. To be sure that this is correctly done, the instantiation line can be extracted from the AI Engine source code. Navigate to <code class="docutils literal notranslate"><span class="pre">Emulation-AIE/Work/aie/</span></code>. In this directory all the AI Engines used in the design have their own directory. Open the first one: <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">23_0/src</span></code>, and look at the source code. The instantiation of the kernel can be viewed:</p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Declare Kernel objects and external arrays</span>
-<span class="cp">#include</span> <span class="cpf">&quot;aie_kernels/FirDoubleStream.cpp&quot;</span><span class="cp"></span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i48</span><span class="p">({{</span><span class="mi">-82</span><span class="p">,</span> <span class="mi">-253</span><span class="p">},</span> <span class="p">{</span><span class="mi">643</span><span class="p">,</span> <span class="mi">467</span><span class="p">},</span> <span class="p">{</span><span class="mi">9582</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">-192</span><span class="p">,</span> <span class="mi">140</span>
-<span class="p">}});</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;aie_kernels/FirDoubleStream.cpp&quot;</span><span class="cp"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i48</span><span class="p">({{</span><span class="mi">-82</span><span class="p">,</span><span class="w"> </span><span class="mi">-253</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">643</span><span class="p">,</span><span class="w"> </span><span class="mi">467</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">9582</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-192</span><span class="p">,</span><span class="w"> </span><span class="mi">140</span><span class="w"></span>
+<span class="p">}});</span><span class="w"></span>
 
 <span class="c1">// Declare shared memory buffers</span>
-<span class="p">...</span>
+<span class="p">...</span><span class="w"></span>
 </pre></div>
 </div>
 <p>It would be tedious to repeat this for every AI Engine, so a utility has been created that will extract this information for all AI Engines. Navigate back to <code class="docutils literal notranslate"><span class="pre">Emulation-AIE/Work/aie</span></code>, and type <code class="docutils literal notranslate"><span class="pre">GetDeclare.sh</span></code>. The output starts as follows:</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">Row</span> <span class="mi">0</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i48</span><span class="p">({{</span><span class="mi">-82</span><span class="p">,</span> <span class="mi">-253</span><span class="p">},</span> <span class="p">{</span><span class="mi">643</span><span class="p">,</span> <span class="mi">467</span><span class="p">},</span> <span class="p">{</span><span class="mi">9582</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">-192</span><span class="p">,</span> <span class="mi">140</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i49</span><span class="p">({{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">-204</span><span class="p">},</span> <span class="p">{</span><span class="mi">984</span><span class="p">,</span> <span class="mi">1355</span><span class="p">},</span> <span class="p">{</span><span class="mi">7421</span><span class="p">,</span> <span class="mi">2411</span><span class="p">},</span> <span class="p">{</span><span class="mi">-882</span><span class="p">,</span> <span class="mi">287</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i50</span><span class="p">({{</span><span class="mi">11</span><span class="p">,</span> <span class="mi">-35</span><span class="p">},</span> <span class="p">{</span><span class="mi">550</span><span class="p">,</span> <span class="mi">1691</span><span class="p">},</span> <span class="p">{</span><span class="mi">3936</span><span class="p">,</span> <span class="mi">2860</span><span class="p">},</span> <span class="p">{</span><span class="mi">-1079</span><span class="p">,</span> <span class="mi">0</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i51</span><span class="p">({{</span><span class="mi">-198</span><span class="p">,</span> <span class="mi">273</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">647</span><span class="p">},</span> <span class="p">{</span><span class="mi">1023</span><span class="p">,</span> <span class="mi">1409</span><span class="p">},</span> <span class="p">{</span><span class="mi">-755</span><span class="p">,</span> <span class="mi">-245</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i52</span><span class="p">({{</span><span class="mi">-642</span><span class="p">,</span> <span class="mi">467</span><span class="p">},</span> <span class="p">{</span><span class="mi">538</span><span class="p">,</span> <span class="mi">-1656</span><span class="p">},</span> <span class="p">{</span><span class="mi">-200</span><span class="p">,</span> <span class="mi">-615</span><span class="p">},</span> <span class="p">{</span><span class="mi">-273</span><span class="p">,</span> <span class="mi">-198</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i53</span><span class="p">({{</span><span class="mi">-1026</span><span class="p">,</span> <span class="mi">333</span><span class="p">},</span> <span class="p">{</span><span class="mi">2860</span><span class="p">,</span> <span class="mi">-3936</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">-1778</span><span class="p">},</span> <span class="p">{</span><span class="mi">22</span><span class="p">,</span> <span class="mi">30</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i54</span><span class="p">({{</span><span class="mi">-927</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">6313</span><span class="p">,</span> <span class="mi">-4587</span><span class="p">},</span> <span class="p">{</span><span class="mi">517</span><span class="p">,</span> <span class="mi">-1592</span><span class="p">},</span> <span class="p">{</span><span class="mi">63</span><span class="p">,</span> <span class="mi">194</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cin</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i55</span><span class="p">({{</span><span class="mi">-226</span><span class="p">,</span> <span class="mi">-73</span><span class="p">},</span> <span class="p">{</span><span class="mi">9113</span><span class="p">,</span> <span class="mi">-2961</span><span class="p">},</span> <span class="p">{</span><span class="mi">467</span><span class="p">,</span> <span class="mi">-643</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">266</span><span class="p">}});</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">Row</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i48</span><span class="p">({{</span><span class="mi">-82</span><span class="p">,</span><span class="w"> </span><span class="mi">-253</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">643</span><span class="p">,</span><span class="w"> </span><span class="mi">467</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">9582</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-192</span><span class="p">,</span><span class="w"> </span><span class="mi">140</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i49</span><span class="p">({{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-204</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">984</span><span class="p">,</span><span class="w"> </span><span class="mi">1355</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">7421</span><span class="p">,</span><span class="w"> </span><span class="mi">2411</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-882</span><span class="p">,</span><span class="w"> </span><span class="mi">287</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i50</span><span class="p">({{</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">-35</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">550</span><span class="p">,</span><span class="w"> </span><span class="mi">1691</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">3936</span><span class="p">,</span><span class="w"> </span><span class="mi">2860</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-1079</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i51</span><span class="p">({{</span><span class="mi">-198</span><span class="p">,</span><span class="w"> </span><span class="mi">273</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">647</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">1023</span><span class="p">,</span><span class="w"> </span><span class="mi">1409</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-755</span><span class="p">,</span><span class="w"> </span><span class="mi">-245</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i52</span><span class="p">({{</span><span class="mi">-642</span><span class="p">,</span><span class="w"> </span><span class="mi">467</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">538</span><span class="p">,</span><span class="w"> </span><span class="mi">-1656</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-200</span><span class="p">,</span><span class="w"> </span><span class="mi">-615</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-273</span><span class="p">,</span><span class="w"> </span><span class="mi">-198</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i53</span><span class="p">({{</span><span class="mi">-1026</span><span class="p">,</span><span class="w"> </span><span class="mi">333</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">2860</span><span class="p">,</span><span class="w"> </span><span class="mi">-3936</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1778</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">22</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i54</span><span class="p">({{</span><span class="mi">-927</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">6313</span><span class="p">,</span><span class="w"> </span><span class="mi">-4587</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">517</span><span class="p">,</span><span class="w"> </span><span class="mi">-1592</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">194</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cin</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i55</span><span class="p">({{</span><span class="mi">-226</span><span class="p">,</span><span class="w"> </span><span class="mi">-73</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">9113</span><span class="p">,</span><span class="w"> </span><span class="mi">-2961</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">467</span><span class="p">,</span><span class="w"> </span><span class="mi">-643</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">266</span><span class="p">}});</span><span class="w"></span>
 
-<span class="n">Row</span> <span class="mi">1</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cin</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i56</span><span class="p">({{</span><span class="mi">-226</span><span class="p">,</span> <span class="mi">-73</span><span class="p">},</span> <span class="p">{</span><span class="mi">9113</span><span class="p">,</span> <span class="mi">-2961</span><span class="p">},</span> <span class="p">{</span><span class="mi">467</span><span class="p">,</span> <span class="mi">-643</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">266</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i57</span><span class="p">({{</span><span class="mi">-82</span><span class="p">,</span> <span class="mi">-253</span><span class="p">},</span> <span class="p">{</span><span class="mi">643</span><span class="p">,</span> <span class="mi">467</span><span class="p">},</span> <span class="p">{</span><span class="mi">9582</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">-192</span><span class="p">,</span> <span class="mi">140</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i58</span><span class="p">({{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">-204</span><span class="p">},</span> <span class="p">{</span><span class="mi">984</span><span class="p">,</span> <span class="mi">1355</span><span class="p">},</span> <span class="p">{</span><span class="mi">7421</span><span class="p">,</span> <span class="mi">2411</span><span class="p">},</span> <span class="p">{</span><span class="mi">-882</span><span class="p">,</span> <span class="mi">287</span><span class="p">}});</span>
-<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span> <span class="n">i59</span><span class="p">({{</span><span class="mi">11</span><span class="p">,</span> <span class="mi">-35</span><span class="p">},</span> <span class="p">{</span><span class="mi">550</span><span class="p">,</span> <span class="mi">1691</span><span class="p">},</span> <span class="p">{</span><span class="mi">3936</span><span class="p">,</span> <span class="mi">2860</span><span class="p">},</span> <span class="p">{</span><span class="mi">-1079</span><span class="p">,</span> <span class="mi">0</span><span class="p">}});</span>
-<span class="p">...</span>
+<span class="n">Row</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cin</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i56</span><span class="p">({{</span><span class="mi">-226</span><span class="p">,</span><span class="w"> </span><span class="mi">-73</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">9113</span><span class="p">,</span><span class="w"> </span><span class="mi">-2961</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">467</span><span class="p">,</span><span class="w"> </span><span class="mi">-643</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">266</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i57</span><span class="p">({{</span><span class="mi">-82</span><span class="p">,</span><span class="w"> </span><span class="mi">-253</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">643</span><span class="p">,</span><span class="w"> </span><span class="mi">467</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">9582</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-192</span><span class="p">,</span><span class="w"> </span><span class="mi">140</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i58</span><span class="p">({{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-204</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">984</span><span class="p">,</span><span class="w"> </span><span class="mi">1355</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">7421</span><span class="p">,</span><span class="w"> </span><span class="mi">2411</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-882</span><span class="p">,</span><span class="w"> </span><span class="mi">287</span><span class="p">}});</span><span class="w"></span>
+<span class="n">DoubleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i59</span><span class="p">({{</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">-35</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">550</span><span class="p">,</span><span class="w"> </span><span class="mi">1691</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">3936</span><span class="p">,</span><span class="w"> </span><span class="mi">2860</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">-1079</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}});</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In row 0, no kernel should discard any sample, in row 1, only the first kernel discards one sample, etc…</p>
 <p>Finally, all kernels must be connected together with the cascade stream in between them, and the input streams for all of them. In this example, the DMA FIFOs are shared. There are two DMA FIFOs in row 0 for all the even rows, and two DMA FIFOs on row 1 for all odd rows:</p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Input Streams connections</span>
-<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">row</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="p">;</span><span class="n">row</span><span class="o">++</span><span class="p">)</span>
-<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">col</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="p">;</span><span class="n">col</span><span class="o">++</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">col1</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="o">%</span><span class="mi">2</span><span class="o">?</span><span class="n">NPhases</span><span class="o">-</span><span class="n">col</span><span class="mi">-1</span><span class="o">:</span><span class="n">col</span><span class="p">);</span> <span class="c1">// kernel col is inverted on odd rows</span>
-    <span class="kt">int</span> <span class="n">fiforow</span> <span class="o">=</span> <span class="n">row</span><span class="o">%</span><span class="mi">2</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="n">row</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="p">;</span><span class="n">row</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">col</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="p">;</span><span class="n">col</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">col1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">row</span><span class="o">%</span><span class="mi">2</span><span class="o">?</span><span class="n">NPhases</span><span class="o">-</span><span class="n">col</span><span class="mi">-1</span><span class="o">:</span><span class="n">col</span><span class="p">);</span><span class="w"> </span><span class="c1">// kernel col is inverted on odd rows</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">fiforow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="o">%</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
 
-    <span class="n">connect</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span> <span class="n">n0</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">col</span><span class="p">],</span><span class="n">k</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col1</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-    <span class="n">connect</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span> <span class="n">n1</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">k</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col1</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-    <span class="n">fifo_depth</span><span class="p">(</span><span class="n">n0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
-    <span class="n">fifo_depth</span><span class="p">(</span><span class="n">n1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
+<span class="w">    </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span><span class="w"> </span><span class="n">n0</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">col</span><span class="p">],</span><span class="n">k</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col1</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span><span class="w"> </span><span class="n">n1</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">k</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col1</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">fifo_depth</span><span class="p">(</span><span class="n">n0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">512</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">fifo_depth</span><span class="p">(</span><span class="n">n1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">512</span><span class="p">;</span><span class="w"></span>
 
-    <span class="n">location</span><span class="o">&lt;</span><span class="n">fifo</span><span class="o">&gt;</span><span class="p">(</span><span class="n">n0</span><span class="p">)</span> <span class="o">=</span> <span class="n">dma_fifo</span><span class="p">(</span><span class="n">aie_tile</span><span class="p">,</span> <span class="n">FirstCol</span><span class="o">+</span><span class="n">col</span><span class="p">,</span> <span class="n">fiforow</span><span class="p">,</span> <span class="mh">0x0000</span><span class="p">,</span> <span class="mi">512</span><span class="p">);</span>
-    <span class="n">location</span><span class="o">&lt;</span><span class="n">fifo</span><span class="o">&gt;</span><span class="p">(</span><span class="n">n1</span><span class="p">)</span> <span class="o">=</span> <span class="n">dma_fifo</span><span class="p">(</span><span class="n">aie_tile</span><span class="p">,</span> <span class="n">FirstCol</span><span class="o">+</span><span class="n">col</span><span class="p">,</span> <span class="n">fiforow</span><span class="p">,</span> <span class="mh">0x2000</span><span class="p">,</span> <span class="mi">512</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="n">location</span><span class="o">&lt;</span><span class="n">fifo</span><span class="o">&gt;</span><span class="p">(</span><span class="n">n0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dma_fifo</span><span class="p">(</span><span class="n">aie_tile</span><span class="p">,</span><span class="w"> </span><span class="n">FirstCol</span><span class="o">+</span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="n">fiforow</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0000</span><span class="p">,</span><span class="w"> </span><span class="mi">512</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">location</span><span class="o">&lt;</span><span class="n">fifo</span><span class="o">&gt;</span><span class="p">(</span><span class="n">n1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dma_fifo</span><span class="p">(</span><span class="n">aie_tile</span><span class="p">,</span><span class="w"> </span><span class="n">FirstCol</span><span class="o">+</span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="n">fiforow</span><span class="p">,</span><span class="w"> </span><span class="mh">0x2000</span><span class="p">,</span><span class="w"> </span><span class="mi">512</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="compilation-and-analysis">
-<h2>Compilation and Analysis<a class="headerlink" href="#compilation-and-analysis" title="Permalink to this headline">¶</a></h2>
+<h2>Compilation and Analysis<a class="headerlink" href="#compilation-and-analysis" title="Permalink to this heading">¶</a></h2>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">MultiKernel</span></code> directory. In the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> three methods are defined:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">aie</span></code></p>
@@ -615,7 +369,7 @@ function OptanonWrapper() { }
 </div>
 </div>
 <div class="section" id="vitis-model-composer-implementation">
-<h1>Vitis Model Composer Implementation<a class="headerlink" href="#vitis-model-composer-implementation" title="Permalink to this headline">¶</a></h1>
+<h1>Vitis Model Composer Implementation<a class="headerlink" href="#vitis-model-composer-implementation" title="Permalink to this heading">¶</a></h1>
 <p>In the <code class="docutils literal notranslate"><span class="pre">vitis_model_composer</span></code> directory, launch Vitis Model Composer with the <code class="docutils literal notranslate"><span class="pre">model_composer</span></code> command. There is currently one design in this directory, <code class="docutils literal notranslate"><span class="pre">DualStreamSSR.slx</span></code>.</p>
 <p>This is an 8-phase SSR built in the AI Engine array using the AI Engine blockset of Vitis Model Composer. The design is fed from pure Simulink blocks and the result is diplayed in a scope to verify that the difference with the pure floating-point Simulink implementation is not too high. At the same time, the signal is sent through a spectrumscope to verify the output spectrum.</p>
 <p><img alt="SSR8_VMC" src="../../../../../_images/SSR8_VMC.jpg" /></p>
@@ -623,67 +377,8 @@ function OptanonWrapper() { }
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        Last updated on May 16, 2022.
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -692,147 +387,61 @@ function OptanonWrapper() { }
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-														
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<div class="lang-select dropup hidden-md hidden-lg">
-		<button data-toggle="dropdown">
-			<span class="fas fa-globe" aria-hidden="true"></span>
-			<span>
-				
-					English
-				</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">Connect on LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Follow us on Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Connect on Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">Watch us on YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-																	<div class="lang-select dropup hidden-xs hidden-sm">
-	<button data-toggle="dropdown">
-		<span class="fas fa-globe" aria-hidden="true"></span>
-		<span>
-			
-				English
-			</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-															</div>
-														</div>
-														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
-															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
-														</div>
 
-													</div>
-													                    <div class="movethisrowtoleft row">
+													                    <div class="row">
                         <div class="col-xs-24">
-                            <ul class="sub-menu">
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
-								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
-                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
-                            </ul>
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
                         </div>
                     </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
-    <span data-component="backToTopButton" class="backToTopButton loaded">
-        <ul>
-            <li>
-                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
-                    <span class="fas fa-angle-up" aria-hidden="true"></span>
-                </a>
-            </li>
-        </ul>
-    </span>
-</noindex></div>
-			</div>
-		</div>
+										
+</br>
 
 
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-			underscoreSetup();
-		</script>
-	</body>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

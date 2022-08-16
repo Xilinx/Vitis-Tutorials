@@ -1,0 +1,411 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Step 1: Create the Vivado Hardware Design and Generate XSA &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../README.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../README.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../README.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Step 1: Create the Vivado Hardware Design and Generate XSA</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/step1.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="step-1-create-the-vivado-hardware-design-and-generate-xsa">
+<h1>Step 1: Create the Vivado Hardware Design and Generate XSA<a class="headerlink" href="#step-1-create-the-vivado-hardware-design-and-generate-xsa" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="create-base-vivado-project-from-preset">
+<h2>Create Base Vivado Project from Preset<a class="headerlink" href="#create-base-vivado-project-from-preset" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>Source &lt;Vitis_Install_Directory&gt;/settings64.sh, and call Vivado out by typing “vivado” in the console.<br /></p></li>
+<li><p>Create a Vivado project named zcu104_custom_platform.</p>
+<p>a) Select <em><strong>File-&gt;Project-&gt;New</strong></em>.<br />
+b) Click <em><strong>Next</strong></em>.<br />
+c) In Project Name dialog set Project name to <code class="docutils literal notranslate"><span class="pre">zcu104_custom_platform</span></code>.<br />
+d) Click <em><strong>Next</strong></em>.<br />
+e) Leaving all the setting to default until you goto the Default Part dialog.<br />
+f) Select <em><strong>Boards</strong></em> tab and then select <em><strong>Zynq UltraScale+ ZCU104 Evaluation Board</strong></em><br />
+g) Click <em><strong>Next</strong></em>, and your project summary should like below:<br />
+<img alt="vivado_project_summary.png" src="../../../../_images/vivado_project_summary.png" /><br />
+h) Then click <em><strong>Finish</strong></em><br /></p>
+</li>
+<li><p>Create a block design named system.</p>
+<p>a) In <em><strong>Project Manager</strong></em>, under <em><strong>IP INTEGRATOR</strong></em>, select <em><strong>Create Block Design</strong></em>.<br />
+b) Change the design name to <code class="docutils literal notranslate"><span class="pre">system</span></code>.<br />
+c) Click <em><strong>OK</strong></em>.<br /></p>
+</li>
+<li><p>Add MPSoC IP and run block automation to configure it.</p>
+<p>a) Right click Diagram view and select <em><strong>Add IP</strong></em>.<br />
+b) Search for <code class="docutils literal notranslate"><span class="pre">zynq</span></code> and then double-click the <em><strong>Zynq UltraScale+ MPSoC</strong></em> from the IP search results.<br />
+c) Click the <em><strong>Run Block Automation</strong></em> link to apply the board presets.<br />
+In the Run Block Automation dialog, ensure the following is check marked:<br /></p>
+<ul class="simple">
+<li><p>All Automation</p></li>
+<li><p>Zynq_ultra_ps_e_0</p></li>
+<li><p>Apply Board Presets</p></li>
+</ul>
+<p>d) Click <em><strong>OK</strong></em>. You should get MPSoC block configured like below:<br />
+<img alt="block_automation_result.png" src="../../../../_images/block_automation_result.png" /><br /></p>
+</li>
+</ol>
+<p><em><strong>Note: At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. For a custom board, please double click MPSoC block and setup parameters according to the board hardware. Next we’ll add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.</strong></em></p>
+</div>
+<div class="section" id="customize-system-design-for-clock-and-reset">
+<h2>Customize System Design for Clock and Reset<a class="headerlink" href="#customize-system-design-for-clock-and-reset" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>Re-Customizing the Processor IP Block</p>
+<p>a) Double-click the Zynq UltraScale+ MPSoC block in the IP integrator diagram.<br />
+b) Select <em><strong>Page Navigator &gt; PS-PL Configuration</strong></em>.<br />
+c) Expand <em><strong>PS-PL Configuration &gt; PS-PL Interfaces</strong></em> by clicking the <em><strong>&gt;</strong></em> symbol.<br />
+d) Expand <em><strong>Master Interface</strong></em>.<br />
+e) Uncheck the <em><strong>AXI HPM0 FPD</strong></em> and <em><strong>AXI HPM1 FPD</strong></em> interfaces.<br />
+f) Click OK.<br />
+g) Confirm that the IP block interfaces were removed from the Zynq UltraScale+ MPSoC symbol in your block design.<br />
+<img alt="hp_removed.png" src="../../../../_images/hp_removed.png" /><br /></p>
+</li>
+</ol>
+<p><em><strong>Note: This is a little different from traditional Vivado design flow. In order to make AXI interfaces available in Vitis platform, you should disable these interfaces at Vivado IPI platform and enable them at platform interface properties. We will show you how to do that later</strong></em></p>
+<ol>
+<li><p>Add clock block:</p>
+<p>a) Right click Diagram view and select <em><strong>Add IP</strong></em>.<br />
+b) Search for and add a <em><strong>Clocking Wizard</strong></em> from the IP Search dialog.<br />
+c) Double-click the <em><strong>clk_wiz_0</strong></em> IP block to open the Re-Customize IP dialog box.<br />
+d) Click the <em><strong>Output Clocks</strong></em> tab.<br />
+e) Enable clk_out1 through clk_out3 in the Output Clock column, rename them as <code class="docutils literal notranslate"><span class="pre">clk_100m</span></code>, <code class="docutils literal notranslate"><span class="pre">clk_200m</span></code>, <code class="docutils literal notranslate"><span class="pre">clk_400m</span></code> in the Port Name column, and set the Requested Output Freq as follows:<br /></p>
+<ul class="simple">
+<li><p><em><strong>clk_100m</strong></em> to <em><strong>100</strong></em> MHz.</p></li>
+<li><p><em><strong>clk_200m</strong></em> to <em><strong>200</strong></em> MHz.</p></li>
+<li><p><em><strong>clk_400m</strong></em> to <em><strong>400</strong></em> MHz.</p></li>
+</ul>
+<p>f) At the bottom of the dialog box set the <em><strong>Reset Type</strong></em> to <em><strong>Active Low</strong></em>.<br />
+g) Click <em><strong>OK</strong></em> to close the dialog.<br />
+The settings should like below:<br />
+<img alt="clock_settings.png" src="../../../../_images/clock_settings.png" /><br />
+<em><strong>Note: So now we have set up the clock system for our design. This clock wizard uses the pl_clk as input clock and generates clocks needed for the whole logic design. In this simple design, we would use 100MHz clock as the axi_lite control bus clock. 200MHz and 400MHz clocks are reserved for DPU AXI interface clock and DPU core clock during design linking phase. You are free to modify the clock quantities and frequency to fit your target design. We’ll setup the clock export in future steps. Before that, we need to create reset signals for each clock because they are needed in clock export setup.</strong></em></p>
+</li>
+<li><p>Add the Processor System Reset blocks:</p>
+<p>a) Right click Diagram view and select <em><strong>Add IP</strong></em>.<br />
+b) Search for and add a <em><strong>Processor System Reset</strong></em> from the IP Search dialog<br />
+c) Add 2 more <em><strong>Processor System Reset</strong></em> blocks, using the previous steps; or select the <em><strong>proc_sys_reset_0</strong></em> block and Copy (Ctrl-C) and Paste (Ctrl-V) it twice in the block diagram<br />
+d) Rename them as <code class="docutils literal notranslate"><span class="pre">proc_sys_reset_100m</span></code>, <code class="docutils literal notranslate"><span class="pre">proc_sys_reset_200m</span></code>, <code class="docutils literal notranslate"><span class="pre">proc_sys_reset_400m</span></code> by selecting the block and update <em><strong>Name</strong></em> in <em><strong>Block Properties</strong></em> window.</p>
+</li>
+<li><p>Connect Clocks and Resets:</p>
+<p>a) Click <em><strong>Run Connection Automation</strong></em>, which will open a dialog that will help connect the proc_sys_reset blocks to the clocking wizard clock outputs.<br />
+b) Enable All Automation on the left side of the Run Connection Automation dialog box.<br />
+c) Select <em><strong>clk_in1</strong></em> on clk_wiz_0, and set the Clock Source to <em><strong>/zynq_ultra_ps_e_0/pl_clk0</strong></em>.<br />
+d) For each <em><strong>proc_sys_reset</strong></em> instance, select the <em><strong>slowest_sync_clk</strong></em>, and set the Clock Source as follows:<br /></p>
+<ul class="simple">
+<li><p><em><strong>proc_sys_reset_100m</strong></em> with <em><strong>/clk_wiz_0/clk_100m</strong></em><br /></p></li>
+<li><p><em><strong>proc_sys_reset_200m</strong></em> with <em><strong>/clk_wiz_0/clk_200m</strong></em><br /></p></li>
+<li><p><em><strong>proc_sys_reset_400m</strong></em> with <em><strong>/clk_wiz_0/clk_400m</strong></em><br /></p></li>
+</ul>
+<p>e) On each proc_sys_reset instance, select the <em><strong>ext_reset_in</strong></em>, set <em><strong>Board Part Interface</strong></em> to <em><strong>Custom</strong></em> and set the <em><strong>Select Manual Source</strong></em> to <em><strong>/zynq_ultra_ps_e_0/pl_resetn0</strong></em>.<br />
+f) Make sure all checkboxes are enabled, and click <em><strong>OK</strong></em> to close the dialog and create the connections.<br />
+g) Connect all the <em><strong>dcm_locked</strong></em> signals on each proc_sys_reset instance to the locked signal on <em><strong>clk_wiz_0</strong></em>.<br />
+Then the connection should like below:<br />
+<img alt="clk_rst_connection.png" src="../../../../_images/clk_rst_connection.png" /></p>
+</li>
+<li><p>Click <em><strong>Window-&gt;Platform interfaces</strong></em>, and then click <em><strong>Enable platform interfaces</strong></em> link to open the <em><strong>Platform Interfaces</strong></em> Window.</p></li>
+<li><p>Setup properties for clock outputs of clk_wiz_0.</p>
+<p>a) Select each clock under clk_wiz_0 in the Platform Interface Properties<br />
+b) In the General tab, enable it<br />
+c) In the Options tab, set the <em><strong>id</strong></em>’s of clk_{100,200,400}m to {2,1,0}, and enable <em><strong>is_default</strong></em> for clk_200m only<br />
+<img alt="../../../../_images/platform_clock.png" src="../../../../_images/platform_clock.png" /></p>
+<p><em><strong>Now we have added clock and reset IPs and enabled them for kernels to use</strong></em></p>
+</li>
+</ol>
+</div>
+<div class="section" id="add-interrupt-support">
+<h2>Add Interrupt Support<a class="headerlink" href="#add-interrupt-support" title="Permalink to this heading">¶</a></h2>
+<p>V++ linker can automatically link the interrupt signals between kernel and platform, as long as interrupt signals are exported by <em><strong>PFM.IRQ</strong></em> property in the platform. For simple designs, interrupt signals can be sourced by processor’s <em><strong>pl_ps_irq</strong></em>. We’ll use AXI Interrupt Controller here because it can provide phase aligned clocks for DPU. We’ll enable <em><strong>AXI HPM0 LPD</strong></em> to control AXI Interrupt Controller, add AXI Interrupt Controller and enable interrupt signals for <em><strong>PFM.IRQ</strong></em>. Here are the detailed steps.</p>
+<ol>
+<li><p>In the block diagram, double-click the <em><strong>Zynq UltraScale+ MPSoC</strong></em> block.</p></li>
+<li><p>Select <em><strong>PS-PL Configuration &gt; PS-PL interfaces &gt; Master interface</strong></em>.</p></li>
+<li><p>Select the <em><strong>AXI HPM0 LPD</strong></em> check box, keep the <em><strong>AXI HPM0 LPD Data width</strong></em> settings as default <em><strong>32</strong></em>.</p>
+<p><em><strong>We use AXI HPM0 LPD mainly for controlling purpose. It only needs to read write 32 bit control registers.</strong></em></p>
+</li>
+<li><p>Click <em><strong>OK</strong></em> to finish the configuration.</p></li>
+<li><p>Connect <em><strong>maxihpm0_lpd_aclk</strong></em> to <em><strong>/clk_wiz_0/clk_100m</strong></em>.</p></li>
+<li><p>Right click Diagram view and select <em><strong>Add IP</strong></em>, search and add <em><strong>AXI Interrupt Controller</strong></em> IP.</p></li>
+<li><p>Double click the AXI Interrupt Controller block, make sure <em><strong>Interrupts type</strong></em> is set to <code class="docutils literal notranslate"><span class="pre">Level</span> <span class="pre">Interrupt</span></code>, and <em><strong>Level type</strong></em> is set to <code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">High</span></code>. Click <em><strong>OK</strong></em>.</br>
+<img alt="intc_settings.png" src="../../../../_images/intc_settings.png" /></p></li>
+<li><p>Click the AXI Interrupt Controller block and go to <em><strong>Block Properties -&gt; Properties</strong></em>, configure or make sure the parameters are set as following:
+<em><strong>C_ASYNC_INTR</strong></em>: <code class="docutils literal notranslate"><span class="pre">0xFFFFFFFF</span></code>.</p>
+<p><img alt="async_intr.png" src="../../../../_images/async_intr.png" /></p>
+<p><em><strong>When interrupts generated from kernels are clocked by different clock domains, this option is useful to capture the interrupt signals properly. For the platform that has only one clock domain, this step can be skipped.</strong></em></p>
+</li>
+<li><p>Click <em><strong>Run Connection Automation</strong></em></p></li>
+<li><p>Use the default values for Master interface and Bridge IP.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Master interface default is <em><strong>/zynq_ultra_ps_e_0/M_AXI_HPM0_LPD</strong></em>.</p></li>
+<li><p>Bridge IP default is New AXI interconnect.</p></li>
+<li><p>Click <em><strong>OK</strong></em>.</p></li>
+</ul>
+<ol>
+<li><p>Expand output interface Interrupt of <em><strong>axi_intc_0</strong></em> to show the port irq, connect this irq port to <em><strong>zynq_ultra_ps_e_0.pl_ps_irq0[0:0]</strong></em></p></li>
+<li><p>Setup <strong>PFM_IRQ</strong> property by typing following command in Vivado console:<br />
+<code class="docutils literal notranslate"><span class="pre">set_property</span> <span class="pre">PFM.IRQ</span> <span class="pre">{intr</span> <span class="pre">{id</span> <span class="pre">0</span> <span class="pre">range</span> <span class="pre">32}}</span> <span class="pre">[get_bd_cells</span> <span class="pre">/axi_intc_0]</span></code></p>
+<p><em><strong>The IPI design connection would like below:</strong></em>
+<img alt="ipi_fully_connection.png" src="../../../../_images/ipi_fully_connection.png" /></p>
+</li>
+</ol>
+</div>
+<div class="section" id="configuring-platform-interface-properties">
+<h2>Configuring Platform Interface Properties<a class="headerlink" href="#configuring-platform-interface-properties" title="Permalink to this heading">¶</a></h2>
+<ol class="simple">
+<li><p>Click <em><strong>Window-&gt;Platform interfaces</strong></em>, and then click <em><strong>Enable platform interfaces</strong></em> link to open the <em><strong>Platform Interfaces</strong></em> Window.</p></li>
+<li><p>Select <em><strong>Platform-system-&gt;zynq_ultra_ps_e_0-&gt;S_AXI_HP0_FPD</strong></em>, in <em><strong>Platform interface Properties</strong></em> tab enable the <em><strong>Enabled</strong></em> option like below:<br />
+<img alt="enable_s_axi_hp0_fpd.png" src="../../../../_images/enable_s_axi_hp0_fpd.png" /></p></li>
+<li><p>Select <em><strong>Options</strong></em> tab, set <em><strong>memport</strong></em> to <code class="docutils literal notranslate"><span class="pre">S_AXI_HP</span></code> and set <em><strong>sptag</strong></em> to <code class="docutils literal notranslate"><span class="pre">HP0</span></code> like below:
+<img alt="set_s_axi_hp0_fpd_options.png" src="../../../../_images/set_s_axi_hp0_fpd_options.png" /></br>
+<em><strong>Note</strong></em>: changing sptag requires you to hit ENTER or move to another line in order for it to be saved.</p></li>
+<li><p>Do the same operations for <em><strong>S_AXI_HP1_FPD, S_AXI_HP2_FPD, S_AXI_HP3_FPD, S_AXI_HPC0_FPD, S_AXI_HPC1_FPD</strong></em> and set <em><strong>sptag</strong></em> to <code class="docutils literal notranslate"><span class="pre">HP1</span></code>, <code class="docutils literal notranslate"><span class="pre">HP2</span></code>, <code class="docutils literal notranslate"><span class="pre">HP3</span></code>, <code class="docutils literal notranslate"><span class="pre">HPC0</span></code>, <code class="docutils literal notranslate"><span class="pre">HPC1</span></code>. And be noticed that for HPC0/HPC1 ports the <em><strong>memport</strong></em> is set to <code class="docutils literal notranslate"><span class="pre">S_AXI_HPC</span></code> in default, but actually we would use these ports without data coherency function enabled to get a high performance. So please modify it into <code class="docutils literal notranslate"><span class="pre">S_AXI_HP</span></code> manually.<br />
+<img alt="set_s_axi_hpc0_fpd_options.png" src="../../../../_images/set_s_axi_hpc0_fpd_options.png" /><br /></p></li>
+<li><p>Enable the M01_AXI ~ M08_AXI ports of ps8_0_axi_periph IP(The AXI Interconnect between M_AXI_HPM0_LPD and axi_intc_0), and set these ports with the same <em><strong>sptag</strong></em> name to <code class="docutils literal notranslate"><span class="pre">HPM0_LPD</span></code> and <em><strong>memport</strong></em> type to <code class="docutils literal notranslate"><span class="pre">M_AXI_GP</span></code></p></li>
+<li><p>Enable the <em><strong>M_AXI_HPM0_FPD</strong></em> and <em><strong>M_AXI_HPM1_FPD</strong></em> ports, set <em><strong>sptag</strong></em> name to <code class="docutils literal notranslate"><span class="pre">HPM0_FPD</span></code>, <code class="docutils literal notranslate"><span class="pre">HPM1_FPD</span></code> and <em><strong>memport</strong></em> to <code class="docutils literal notranslate"><span class="pre">M_AXI_GP</span></code>.</p></li>
+<li><p>Save the design with <em><strong>Ctrl+S</strong></em>.</p></li>
+</ol>
+<p><em><strong>Now we have enabled AXI master/slave interfaces that can be used for Vitis tools on the platform</strong></em></p>
+</div>
+<div class="section" id="emulation-setup-optional">
+<h2>Emulation Setup (Optional)<a class="headerlink" href="#emulation-setup-optional" title="Permalink to this heading">¶</a></h2>
+<p>This step is only needed when creating an emulation-capable platform.</p>
+<p>When a component comes with multiple types of simulation models, selecting SystemC TLM (Transaction-level Modeling) model would run much faster than RTL model. For Processing System component, it’s mandatory to use TLM for Hardware Emulation.</p>
+<p>In Vivado GUI, select the PS instance, check the <em><strong>Block Properties</strong></em> window. In <em><strong>Properties</strong></em> tab, it shows <code class="docutils literal notranslate"><span class="pre">ALLOWED_SIM_MODELS=tlm,rtl</span></code>. It means this component supports two types of simulation models.</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">SELECTED_SIM_MODEL</span></code> property to <code class="docutils literal notranslate"><span class="pre">tlm</span></code> to use TLM as target simulation model.</p>
+<p>The equvalent Tcl command is:</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">set_property</span><span class="w"> </span>SELECTED_SIM_MODEL<span class="w"> </span>tlm<span class="w"> </span><span class="k">[</span><span class="nv">get_bd_cells</span><span class="w"> </span><span class="o">/</span>zynq_ultra_ps_e_0<span class="k">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="export-hardware-xsa">
+<h2>Export Hardware XSA<a class="headerlink" href="#export-hardware-xsa" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>Validate the block design by clicking <em><strong>Validate Design</strong></em> button</p>
+<p><em><strong>Note</strong></em>: During validation, Vivado reports a critical warning that <em><strong>/axi_intc_0/intr</strong></em> is not connected. This warning can be safely ignored because v++ linker will link kernel interrupt signals to this floating intr signal.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CRITICAL</span> <span class="n">WARNING</span><span class="p">:</span> <span class="p">[</span><span class="n">BD</span> <span class="mi">41</span><span class="o">-</span><span class="mi">759</span><span class="p">]</span> <span class="n">The</span> <span class="nb">input</span> <span class="n">pins</span> <span class="p">(</span><span class="n">listed</span> <span class="n">below</span><span class="p">)</span> <span class="n">are</span> <span class="n">either</span> <span class="ow">not</span> <span class="n">connected</span> <span class="ow">or</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">have</span> <span class="n">a</span> <span class="n">source</span> <span class="n">port</span><span class="p">,</span> <span class="ow">and</span> <span class="n">they</span> <span class="n">don</span><span class="s1">&#39;t have a tie-off specified. These pins are tied-off to all 0&#39;</span><span class="n">s</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">Implementation</span> <span class="n">flow</span><span class="o">.</span>
+<span class="n">Please</span> <span class="n">check</span> <span class="n">your</span> <span class="n">design</span> <span class="ow">and</span> <span class="n">connect</span> <span class="n">them</span> <span class="k">as</span> <span class="n">needed</span><span class="p">:</span> 
+<span class="o">/</span><span class="n">axi_intc_0</span><span class="o">/</span><span class="n">intr</span>
+</pre></div>
+</div>
+</li>
+<li><p>In <em><strong>Source</strong></em> tab, right click <em><strong>system.bd</strong></em>, select <em><strong>Create HDL Wrapper…</strong></em></p></li>
+<li><p>Select <em><strong>Let Vivado manage wrapper and auto-update</strong></em>. Click OK to generate wrapper for block design.</p></li>
+<li><p>Select <em><strong>Generate Block Design</strong></em> from Flow Navigator</p></li>
+<li><p>Select <em><strong>Synthesis Options</strong></em> to <em><strong>Global</strong></em> and click <em><strong>Generate</strong></em>. This will skip IP synthesis.</p></li>
+<li><p>Click menu <em><strong>File -&gt; Export -&gt; Export Hardware</strong></em> to Export Platform from Vitis GUI</p></li>
+<li><p>Select Platform Type: <em><strong>Expandable</strong></em>, click Next</p></li>
+<li><p>Select Platform Stage: <em><strong>Pre-synthesis</strong></em>, click Next</p></li>
+<li><p>Input Platform Properties and click <em><strong>Next</strong></em>. For example,</p>
+<ul class="simple">
+<li><p>Name: zcu104_custom_platform</p></li>
+<li><p>Vendor: xilinx</p></li>
+<li><p>Board: zcu104</p></li>
+<li><p>Version: 0.0</p></li>
+<li><p>Description: This platform provides high PS DDR bandwidth and three clocks: 100MHz, 200MHz and 400MHz.</p></li>
+</ul>
+</li>
+<li><p>Fill in XSA file name: <em><strong>zcu104_custom_platform</strong></em>, export directory: <em><strong>&lt;your_vivado_design_dir&gt;</strong></em></p></li>
+<li><p>Click <em><strong>Finish</strong></em>. zcu104_custom_platform.xsa will be generated. You can exit Vivado now.</p></li>
+</ol>
+<p>Alternatively, the above export can be done in Tcl scripts</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># Setting platform properties</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.default_output_type<span class="w"> </span><span class="s2">&quot;sd_card&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.design_intent.embedded<span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.design_intent.server_managed<span class="w"> </span><span class="s2">&quot;false&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.design_intent.external_host<span class="w"> </span><span class="s2">&quot;false&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="nv">set_property</span><span class="w"> </span>platform.design_intent.datacenter<span class="w"> </span><span class="s2">&quot;false&quot;</span><span class="w"> </span><span class="k">[</span><span class="nv">current_project</span><span class="k">]</span>
+<span class="c"># Write pre-synthesis expandable XSA</span>
+<span class="nv">write_hw_platform</span><span class="w"> </span><span class="o">-</span>force<span class="w"> </span><span class="o">-</span>file<span class="w"> </span>.<span class="o">/</span>zcu104_custom_platform.xsa
+<span class="c"># Or uncomment command below to write post-implementation expandable XSA</span>
+<span class="c"># write_hw_platform -unified -include_bit ./zcu104_custom_platform.xsa</span>
+</pre></div>
+</div>
+<p><em><strong>Now we finish the Hardware platform creation flow, then we should go to the <a class="reference internal" href="step2.html"><span class="doc">Step2: Software platform creation</span></a></strong></em></p>
+</div>
+<div class="section" id="fast-track">
+<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
+<p>Scripts are provided to re-create projects and generate outputs. To use these scripts, please run the following steps.</p>
+<ol>
+<li><p>Run build</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># cd to the step directory, e.g.</span>
+<span class="n">cd</span> <span class="n">step1_vivado</span>
+<span class="n">make</span>
+</pre></div>
+</div>
+</li>
+<li><p>To clean the generated files, please run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean
+</pre></div>
+</div>
+</li>
+</ol>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

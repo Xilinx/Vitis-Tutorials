@@ -120,6 +120,6 @@ This tutorial demonstrates how to package RTL IPs as Vitis kernels (`.xo`), and 
 
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.html">Return to Main Page</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

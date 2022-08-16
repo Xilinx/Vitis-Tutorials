@@ -1,0 +1,546 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>xbutil &amp; xbutil2 &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Introduction/README.html">Introduction to Vitis Hardware Accelerators Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.html">Accelerating Video Convolution Filtering Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/04-traveling-salesperson/README.html">The Travelling Salesman Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/05-bottom_up_rtl_kernel/README.html">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/03-dataflow_debug_and_optimization/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm/README.html">Using HBM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>xbutil &amp; xbutil2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/Debug5_bc.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
+   </td>
+ </tr>
+ <tr>
+ <td align="center"><h1>AI Engine/PL Kernel Debug with XRT Utilities</h1>
+ </td>
+ </tr>
+</table> <p><a class="reference external" href="#xbutil-xbutil2">xbutil xbutil2</a></p>
+<ul class="simple">
+<li><p><a class="reference external" href="#xbutil-xbutil2-limitations">xbutil xbutil2 limitations</a></p></li>
+</ul>
+<p><a class="reference external" href="#XRT-error-codes">XRT error codes</a></p>
+<ul class="simple">
+<li><p><a class="reference external" href="#Asynchronous-error">Asynchronous error</a></p></li>
+<li><p><a class="reference external" href="#Synchronous-error">Synchronous error</a></p></li>
+</ul>
+<div class="section" id="xbutil-xbutil2">
+<h1>xbutil &amp; xbutil2<a class="headerlink" href="#xbutil-xbutil2" title="Permalink to this heading">¶</a></h1>
+<p>The two utilities, <code class="docutils literal notranslate"><span class="pre">xbutil</span></code> and <code class="docutils literal notranslate"><span class="pre">xbutil2</span></code> are supported for PL/AI Engine kernels debug. It provides information for PL/AI Engine kernels.</p>
+<p>To use the tools, binary container, for example, xclbin is required to be loaded first then issue commands to obtain information from, or, configure the kernels.</p>
+<p>A few command examples:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xbutil program -p a.xclbin
+xbutil scan
+xbutil2 examine -r aie
+</pre></div>
+</div>
+<p>Step 1: Load binary container</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xbutil program -p a.xclbin
+</pre></div>
+</div>
+<img src="images/bc_run.png" width="600"><p>Step 2: Get detailed status information for the device. Where ARG can be all, memory, error, compute-units, aie, and debug-ip-status.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xbutil2 examine -r ARG
+</pre></div>
+</div>
+<img src="images/bc_run1.png" width="600">
+<img src="images/bc_run2.png" width="600">
+<img src="images/bc_run3.png" width="600"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>root@versal-rootfs-common-2020_2:/mnt/sd-mmcblk0p1# xbutil2 examine -r all
+System Configuration
+  OS Name              : Linux
+  Release              : <span class="m">5</span>.4.0-xilinx-v2020.2
+  Version              : <span class="c1">#1 SMP Thu Nov 19 05:25:16 UTC 2020</span>
+  Machine              : aarch64
+  CPU Cores            : <span class="m">2</span>
+  Memory               : <span class="m">7954</span> MB
+  Distribution         : N/A
+  GLIBC                : <span class="m">2</span>.30
+  Model                : Xilinx Versal vck190 Eval board revA <span class="o">(</span>QSPI<span class="o">)</span>
+
+XRT
+  Version              : <span class="m">2</span>.8.0
+  Branch               : <span class="m">2020</span>.2
+  Hash                 : f19a872233fbfe2eb933f25fa3d9a780ced774e5
+  Hash Date            : <span class="m">2020</span>-11-15 <span class="m">11</span>:20:06
+  ZOCL                 : <span class="m">2</span>.8.0, f19a872233fbfe2eb933f25fa3d9a780ced774e5
+
+Devices present
+  <span class="o">[</span><span class="m">0000</span>:00:00.0<span class="o">]</span> : xilinx_vck190_es1_base_202020_1
+
+-----------------------------------------------------
+<span class="m">1</span>/1 <span class="o">[</span><span class="m">0000</span>:00:00.0<span class="o">]</span> : xilinx_vck190_es1_base_202020_1
+-----------------------------------------------------
+Aie
+  Aie_Metadata
+  GRAPH<span class="o">[</span> <span class="m">0</span><span class="o">]</span> Name      : dut
+            Status    : idle
+    SNo.  Core <span class="o">[</span>C:R<span class="o">]</span>          Iteration_Memory <span class="o">[</span>C:R<span class="o">]</span>        Iteration_Memory_Addresses
+    <span class="o">[</span> <span class="m">0</span><span class="o">]</span>   <span class="m">6</span>:0                 <span class="m">6</span>:0                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">1</span><span class="o">]</span>   <span class="m">6</span>:1                 <span class="m">6</span>:1                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">2</span><span class="o">]</span>   <span class="m">6</span>:2                 <span class="m">6</span>:2                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">3</span><span class="o">]</span>   <span class="m">6</span>:3                 <span class="m">6</span>:3                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">4</span><span class="o">]</span>   <span class="m">7</span>:0                 <span class="m">7</span>:0                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">5</span><span class="o">]</span>   <span class="m">7</span>:1                 <span class="m">7</span>:1                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">6</span><span class="o">]</span>   <span class="m">7</span>:2                 <span class="m">7</span>:2                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">7</span><span class="o">]</span>   <span class="m">7</span>:3                 <span class="m">7</span>:3                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">8</span><span class="o">]</span>   <span class="m">8</span>:0                 <span class="m">8</span>:0                           <span class="m">6116</span>
+    <span class="o">[</span> <span class="m">9</span><span class="o">]</span>   <span class="m">8</span>:1                 <span class="m">8</span>:1                           <span class="m">6116</span>
+    <span class="o">[</span><span class="m">10</span><span class="o">]</span>   <span class="m">8</span>:2                 <span class="m">8</span>:2                           <span class="m">6116</span>
+    <span class="o">[</span><span class="m">11</span><span class="o">]</span>   <span class="m">8</span>:3                 <span class="m">8</span>:3                           <span class="m">6116</span>
+    <span class="o">[</span><span class="m">12</span><span class="o">]</span>   <span class="m">9</span>:0                 <span class="m">9</span>:0                           <span class="m">6116</span>
+    <span class="o">[</span><span class="m">13</span><span class="o">]</span>   <span class="m">9</span>:1                 <span class="m">9</span>:1                           <span class="m">6116</span>
+    <span class="o">[</span><span class="m">14</span><span class="o">]</span>   <span class="m">9</span>:2                 <span class="m">9</span>:2                           <span class="m">6116</span>
+    <span class="o">[</span><span class="m">15</span><span class="o">]</span>   <span class="m">9</span>:3                 <span class="m">9</span>:3                           <span class="m">6116</span>
+    <span class="o">[</span><span class="m">16</span><span class="o">]</span>   <span class="m">10</span>:0                <span class="m">10</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">17</span><span class="o">]</span>   <span class="m">10</span>:1                <span class="m">10</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">18</span><span class="o">]</span>   <span class="m">10</span>:2                <span class="m">10</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">19</span><span class="o">]</span>   <span class="m">10</span>:3                <span class="m">10</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">20</span><span class="o">]</span>   <span class="m">11</span>:0                <span class="m">11</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">21</span><span class="o">]</span>   <span class="m">11</span>:1                <span class="m">11</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">22</span><span class="o">]</span>   <span class="m">11</span>:2                <span class="m">11</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">23</span><span class="o">]</span>   <span class="m">11</span>:3                <span class="m">11</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">24</span><span class="o">]</span>   <span class="m">12</span>:0                <span class="m">12</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">25</span><span class="o">]</span>   <span class="m">12</span>:1                <span class="m">12</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">26</span><span class="o">]</span>   <span class="m">12</span>:2                <span class="m">12</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">27</span><span class="o">]</span>   <span class="m">12</span>:3                <span class="m">12</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">28</span><span class="o">]</span>   <span class="m">13</span>:0                <span class="m">13</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">29</span><span class="o">]</span>   <span class="m">13</span>:1                <span class="m">13</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">30</span><span class="o">]</span>   <span class="m">13</span>:2                <span class="m">13</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">31</span><span class="o">]</span>   <span class="m">13</span>:3                <span class="m">13</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">32</span><span class="o">]</span>   <span class="m">14</span>:0                <span class="m">14</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">33</span><span class="o">]</span>   <span class="m">14</span>:1                <span class="m">14</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">34</span><span class="o">]</span>   <span class="m">14</span>:2                <span class="m">14</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">35</span><span class="o">]</span>   <span class="m">14</span>:3                <span class="m">14</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">36</span><span class="o">]</span>   <span class="m">15</span>:0                <span class="m">15</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">37</span><span class="o">]</span>   <span class="m">15</span>:1                <span class="m">15</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">38</span><span class="o">]</span>   <span class="m">15</span>:2                <span class="m">15</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">39</span><span class="o">]</span>   <span class="m">15</span>:3                <span class="m">15</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">40</span><span class="o">]</span>   <span class="m">16</span>:0                <span class="m">16</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">41</span><span class="o">]</span>   <span class="m">16</span>:1                <span class="m">16</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">42</span><span class="o">]</span>   <span class="m">16</span>:2                <span class="m">16</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">43</span><span class="o">]</span>   <span class="m">16</span>:3                <span class="m">16</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">44</span><span class="o">]</span>   <span class="m">17</span>:0                <span class="m">17</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">45</span><span class="o">]</span>   <span class="m">17</span>:1                <span class="m">17</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">46</span><span class="o">]</span>   <span class="m">17</span>:2                <span class="m">17</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">47</span><span class="o">]</span>   <span class="m">17</span>:3                <span class="m">17</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">48</span><span class="o">]</span>   <span class="m">18</span>:0                <span class="m">18</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">49</span><span class="o">]</span>   <span class="m">18</span>:1                <span class="m">18</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">50</span><span class="o">]</span>   <span class="m">18</span>:2                <span class="m">18</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">51</span><span class="o">]</span>   <span class="m">18</span>:3                <span class="m">18</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">52</span><span class="o">]</span>   <span class="m">19</span>:0                <span class="m">19</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">53</span><span class="o">]</span>   <span class="m">19</span>:1                <span class="m">19</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">54</span><span class="o">]</span>   <span class="m">19</span>:2                <span class="m">19</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">55</span><span class="o">]</span>   <span class="m">19</span>:3                <span class="m">19</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">56</span><span class="o">]</span>   <span class="m">20</span>:0                <span class="m">20</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">57</span><span class="o">]</span>   <span class="m">20</span>:1                <span class="m">20</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">58</span><span class="o">]</span>   <span class="m">20</span>:2                <span class="m">20</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">59</span><span class="o">]</span>   <span class="m">20</span>:3                <span class="m">20</span>:3                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">60</span><span class="o">]</span>   <span class="m">21</span>:0                <span class="m">21</span>:0                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">61</span><span class="o">]</span>   <span class="m">21</span>:1                <span class="m">21</span>:1                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">62</span><span class="o">]</span>   <span class="m">21</span>:2                <span class="m">21</span>:2                          <span class="m">6116</span>
+    <span class="o">[</span><span class="m">63</span><span class="o">]</span>   <span class="m">21</span>:3                <span class="m">21</span>:3                          <span class="m">6116</span>
+
+    Pl Kernel Instances <span class="k">in</span> Graph:
+
+
+
+Memory Information
+
+  Memory Topology
+         Tag         Type        Temp<span class="o">(</span>C<span class="o">)</span>  Size      Base Address
+    <span class="o">[</span> <span class="m">0</span><span class="o">]</span> DDR         MEM_DRAM    N/A      <span class="m">2</span> GB      0x0
+    <span class="o">[</span> <span class="m">1</span><span class="o">]</span> DDR         MEM_DRAM    N/A      <span class="m">6144</span> MB   0x800000000
+    <span class="o">[</span> <span class="m">2</span><span class="o">]</span> LPDDR       MEM_DRAM    N/A      <span class="m">8</span> GB      0x50000000000
+
+Compute Units
+Index   Name                    Base_Address    Usage   Status
+<span class="m">0</span>       mm2s_v4:mm2s_v4_1       0xa4010000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">1</span>       mm2s_v8:mm2s_v8_1       0xa4020000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">2</span>       mm2s_v8:mm2s_v8_2       0xa4030000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">3</span>       mm2s_v8:mm2s_v8_3       0xa4040000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">4</span>       mm2s_v8:mm2s_v8_4       0xa4050000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">5</span>       mm2s_v8:mm2s_v8_5       0xa4060000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">6</span>       mm2s_v8:mm2s_v8_6       0xa4070000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">7</span>       mm2s_v8:mm2s_v8_7       0xa4080000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">8</span>       mm2s_v8:mm2s_v8_8       0xa4090000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">9</span>       mm2s_v8:mm2s_v8_9       0xa40a0000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">10</span>      s2mm_v4:s2mm_v4_1       0xa40b0000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">11</span>      s2mm_v4:s2mm_v4_2       0xa40c0000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+<span class="m">12</span>      s2mm_v4:s2mm_v4_3       0xa40d0000      <span class="m">0</span>       <span class="o">(</span>IDLE<span class="o">)</span>
+
+Debug IP Status
+Number of IPs found :: <span class="m">0</span>
+IPs found <span class="o">[</span>&lt;ipname &lt;<span class="o">(</span>element filter option<span class="o">)</span>&gt;&gt; :&lt;count&gt;<span class="o">)]</span>:
+
+root@versal-rootfs-common-2020_2:/mnt/sd-mmcblk0p1#
+</pre></div>
+</div>
+<div class="section" id="xbutil-xbutil2-limitations">
+<h2>xbutil &amp; xbutil2 Limitations<a class="headerlink" href="#xbutil-xbutil2-limitations" title="Permalink to this heading">¶</a></h2>
+<ol class="simple">
+<li><p>Certain commands are under development and will be available in future releases.</p></li>
+<li><p>Commands not applicable to the VCK190 platform:</p></li>
+</ol>
+<ul class="simple">
+<li><p>validate: This command is for DFX base platform.</p></li>
+<li><p>reset: Requires clearer definitions for VCK190 platforms. For example, reset command to PS/PL/AI Engine are under review.</p></li>
+<li><p>top: A useful command, however, subcommands/options are being determined.</p></li>
+</ul>
+<ol class="simple">
+<li><p>Utility could show false errors that are no harm to prior-loaded xclbin.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="xrt-error-codes">
+<h1>XRT Error Codes<a class="headerlink" href="#xrt-error-codes" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="asynchronous-error">
+<h2>Asynchronous Error<a class="headerlink" href="#asynchronous-error" title="Permalink to this heading">¶</a></h2>
+<p>Error that happens asynchronously. It may or may not related to the XRT function call or the application which is running.</p>
+<div class="section" id="report-mechanism-with-xrt-apis">
+<h3>Report Mechanism with XRT APIs<a class="headerlink" href="#report-mechanism-with-xrt-apis" title="Permalink to this heading">¶</a></h3>
+<p>Asynchronous errors are cached in driver subsystems and can be accessed by user application through APIs.
+Asynchronous errors retrieved from the driver are encoded errors defined in <code class="docutils literal notranslate"><span class="pre">xrt_error_code.h</span></code> which is shared between user space and kernel space.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xrt_error_code.h
+/**
+ * xrtErrorCode layout
+ *
+ * This layout is internal to XRT <span class="o">(</span>akin to a POSIX error code<span class="o">)</span>, 
+ * it is populated by driver and consumed by XRT implementation where
+ * it is translated into an actual error / info / warning that is propagated 
+ * to the end user.
+ *
+ * <span class="m">63</span> - <span class="m">48</span>  <span class="m">47</span> - <span class="m">40</span>   <span class="m">39</span> - <span class="m">32</span>   <span class="m">31</span> - <span class="m">24</span>   <span class="m">16</span> - <span class="m">23</span>    <span class="m">15</span> - <span class="m">0</span>
+ * --------------------------------------------------------
+ * <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>----<span class="p">|</span> xrtErrorNum
+ * <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>----<span class="p">|</span>---------- xrtErrorDriver
+ * <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>----<span class="p">|</span>-------------------- xrtErrorSeverity
+ * <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>----<span class="p">|</span>------------------------------ xrtErrorModule
+ * <span class="p">|</span>    <span class="p">|</span>    <span class="p">|</span>----<span class="p">|</span>---------------------------------------- xrtErrorClass
+ * <span class="p">|</span>----<span class="p">|</span>-------------------------------------------------- reserved
+ */
+typedef uint64_t xrtErrorCode<span class="p">;</span>
+</pre></div>
+</div>
+<p>Error Code APIs:
+The API header file <code class="docutils literal notranslate"><span class="pre">xrt_error.h</span></code> defines the APIs for accessing current cached errors.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>///// C APIs, will have simplified C++ equivalents.
+/**
+ * xrtErrorGetLast - Get the last error code and its timestamp of a given error class.
+ *
+ * @handle:       Device handle.
+ * @class:        Error Class <span class="k">for</span> the last error to get.
+ * @error:        Returned XRT error code.
+ * @timestamp:    The timestamp when the error generated
+ *
+ * Return:        <span class="m">0</span> on success or appropriate XRT error code.
+ */
+int
+xrtErrorGetLast<span class="o">(</span>xclDeviceHandle handle, xrtErrorClass class, xrtErrorCode *error, uint64_t *timestamp<span class="o">)</span><span class="p">;</span>
+
+/**
+ * xrtErrorGetString - Get the description string of a given error code.
+ *
+ * @handle:       Device handle.
+ * @error:        XRT error code.
+ * @out:          Preallocated output buffer <span class="k">for</span> the error string.
+ * @len:          Length of output buffer.
+ * @out_len:      Optional output of length of message.
+ *
+ * Return:        <span class="m">0</span> on success or appropriate XRT error code.
+ * 
+ * Specifying out_len <span class="k">while</span> passing nullptr <span class="k">for</span> output buffer will <span class="k">return</span> the message length,
+ * which can <span class="k">then</span> be used to allocate the output buffer itself.
+ */
+int
+xrtErrorGetString<span class="o">(</span>xclDeviceHandle handle, xrtErrorCode error, char* out, size_t len, size_t* <span class="nv">out_len</span><span class="o">=</span><span class="m">0</span><span class="o">)</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Example using XRT APIs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xrtGraphHandle ghdl<span class="p">;</span>
+<span class="nv">ghdl</span> <span class="o">=</span> xrtGraphOpen<span class="o">(</span>dhdl, top-&gt;m_header.uuid, <span class="s2">&quot;dut&quot;</span><span class="o">)</span><span class="p">;</span>
+<span class="nv">rval</span> <span class="o">=</span> xrtGraphRun<span class="o">(</span>ghdl, <span class="m">100</span><span class="o">)</span><span class="p">;</span>
+<span class="k">if</span> <span class="o">(</span>rval !<span class="o">=</span> <span class="m">0</span><span class="o">)</span>
+<span class="o">{</span>   
+    std::cout &lt;&lt; <span class="s2">&quot;RUN error = 0x%x\n&quot;</span> <span class="s">&lt;&lt; rval &lt;&lt; std::endl;</span>
+<span class="s">}</span>
+<span class="s">rval</span> <span class="o">=</span> xrtGraphWait<span class="o">(</span>ghdl, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="k">if</span> <span class="o">(</span>rval !<span class="o">=</span> <span class="m">0</span><span class="o">)</span>
+<span class="o">{</span>
+    std::cout &lt;&lt; <span class="s2">&quot;WAIT error = 0x%x\n&quot;</span> <span class="s">&lt;&lt; rval &lt;&lt; std::endl;</span>
+
+<span class="s">    if (rval</span> <span class="o">==</span> -ETIME<span class="o">)</span>
+    <span class="o">{</span>
+        /* <span class="nb">wait</span> <span class="k">for</span> Graph <span class="k">done</span> timeout */
+        xrtErrorCode errCode<span class="p">;</span>
+        uint64_t timestamp<span class="p">;</span>
+
+        <span class="nv">rval</span> <span class="o">=</span> xrtErrorGetLast<span class="o">(</span>dhdl, XRT_ERROR_CLASS_AIE, <span class="p">&amp;</span>errCode, <span class="p">&amp;</span>timestamp<span class="o">)</span><span class="p">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nv">rval</span> <span class="o">==</span> <span class="m">0</span><span class="o">)</span>
+        <span class="o">{</span>
+            size_t len<span class="p">;</span>
+            std::vector&lt;char&gt; buf<span class="o">(</span><span class="m">256</span><span class="o">)</span><span class="p">;</span>
+            <span class="k">if</span> <span class="o">(</span>xrtErrorGetString<span class="o">(</span>dhdl, errCode, buf.data<span class="o">()</span>, buf.size<span class="o">()</span>, <span class="p">&amp;</span>len<span class="o">))</span>
+            <span class="o">{</span>
+                std::cout &lt;&lt; <span class="s2">&quot;xrtErrorGetString() error!&quot;</span> <span class="s">&lt;&lt; std::endl;</span>
+<span class="s">            } else {</span>
+<span class="s">                std</span>::cout <span class="s">&lt;&lt; buf.data() &lt;&lt; std::endl;</span>
+<span class="s">            }</span>
+<span class="s">        }</span>
+<span class="s">    }</span>
+<span class="s">}</span>
+
+<span class="s">/* more code can b</span>e added here to check other error class */
+</pre></div>
+</div>
+<p>Step 1: Replace <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> with <code class="docutils literal notranslate"><span class="pre">host.cpp.error_code</span></code> that is available from this tutorial.</p>
+<p>Step 2: Compile the <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> code and package to <code class="docutils literal notranslate"><span class="pre">sd_card.img</span></code> by issue commands,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp <span class="si">${</span><span class="nv">PROJECT_PATH</span><span class="si">}</span>/sw/host.cpp.error_code <span class="si">${</span><span class="nv">PROJECT_PATH</span><span class="si">}</span>/sw/host.cpp
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PROJECT_PATH</span><span class="si">}</span>
+make host.exe
+make package
+</pre></div>
+</div>
+<p>Step 3: Burn the generated <code class="docutils literal notranslate"><span class="pre">sd_card.img</span></code> to the SD card, insert SD card into SD card slot of the VCK190 board and power up.</p>
+<p>Step 4: After VCK190 is powered up, run the binaries.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /mnt/sd-mmcblk0p1
+<span class="nb">source</span> ./init.sh
+<span class="nb">export</span> <span class="nv">XILINX_XRT</span><span class="o">=</span>/usr
+./host.exe a.xclbin
+</pre></div>
+</div>
+<p>Step 5: Expected result:</p>
+<img src="images/bc_err0.png" width="600"></div>
+<div class="section" id="report-mechanism-with-xbutil">
+<h3>Report Mechanism with xbutil<a class="headerlink" href="#report-mechanism-with-xbutil" title="Permalink to this heading">¶</a></h3>
+<p>Issue command <code class="docutils literal notranslate"><span class="pre">xbutil2</span> <span class="pre">examine</span> <span class="pre">--report</span> <span class="pre">error</span></code> or/and with formatted output <code class="docutils literal notranslate"><span class="pre">xbutil2</span> <span class="pre">examine</span> <span class="pre">--report</span> <span class="pre">error</span> <span class="pre">--format</span> <span class="pre">JSON-2020.2</span></code> to VCK190 console to get output from console.</p>
+<img src="images/bc_err.png" width="600"></div>
+</div>
+<div class="section" id="synchronous-error">
+<h2>Synchronous Error<a class="headerlink" href="#synchronous-error" title="Permalink to this heading">¶</a></h2>
+<p>Synchronous errors are errors that can be detected during the XRT runtime function all.</p>
+<div class="section" id="report-mechanism">
+<h3>Report Mechanism<a class="headerlink" href="#report-mechanism" title="Permalink to this heading">¶</a></h3>
+<ol class="simple">
+<li><p>Return system error (POSIX) code from</p></li>
+</ol>
+<ul class="simple">
+<li><p>Kernel driver IOCTL call.</p></li>
+<li><p>System libraries including shim level library, for example, xrt_core, AI Engine driver, FPGA manager, etc.</p></li>
+<li><p>On error, ioctl returns -1 and errno contains the system error code.</p></li>
+</ul>
+<ol class="simple">
+<li><p>Translate returned POSIX error code into an XRT specific error which is returned to end user.</p></li>
+</ol>
+<ul class="simple">
+<li><p>In C++ APIs the error is propagated as an xrt::error exception embedded with a description of the error and the XRT error.</p></li>
+<li><p>In C APIs an exception message is printed and the XRT error code is returned to end-user.</p></li>
+</ul>
+<ol class="simple">
+<li><p>The verbosity and target (display) of error reporting are following the message infrastructure already used.
+Example:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">rval</span> <span class="o">=</span> xclSyncBO<span class="o">(</span>devHandle, boHandle, XCL_BO_SYNC_BO_TO_DEVICE, size, offset<span class="o">)</span><span class="p">;</span>  // Syncronous error captured by xclSyncBO call
+<span class="k">if</span> <span class="o">(</span>rval !<span class="o">=</span> <span class="m">0</span><span class="o">)</span> <span class="o">{</span>                                                                //    -EINVAL:     Invalid arguments, e.g. invalid sync  dir, invalid size or offset
+    /* code to handle xclSyncBO fail */                                         //    -ENOENT:     No such file or directory, e.g.  invalid bo handle       
+<span class="o">}</span>                                                                               //    -EOPNOTSUPP: Operation not supported, e.g. BO is  not syncable
+                                                                                //    -EBUSY:      Device or resource busy, e.g. No  available DMA channel
+                                                                                //    -ENOMEM:     Out of memory, e.g. No available free memory <span class="k">for</span> sync BO
+                                                                                //    -EIO:        I/O error, e.g. DMA error
+                                                                                // <span class="s2">&quot;dmesg&quot;</span> or look at system log file <span class="o">(</span>/var/log/syslog<span class="o">)</span>  might give you more information
+</pre></div>
+</div>
+<p>Note: Supported error codes are listed in <a class="reference external" href="https://www.xilinx.com/member/versal_ai_core_docs_ea.html">UG1076 Versal ACAP AI Engine Programming Environment</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on August 5, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

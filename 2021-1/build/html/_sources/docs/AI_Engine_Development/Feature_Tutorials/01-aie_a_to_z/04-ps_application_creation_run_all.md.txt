@@ -109,7 +109,7 @@ There are two options to enable an AI Engine graph from a system:
 In this tutorial, you have performed an end-to-end flow to create a platform based on the VCK190 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to run on it.
 
 
-<p align="center"><b><a href="./03-pl_application_creation.html">Return to Step 3</a> — <a href="./README.html">Go back to main page</a> — <a href="./05-RPU version[optional].html">Check out the RPU version design (optional)</a></b></p>
+<p align="center"><b><a href="./03-pl_application_creation.md">Return to Step 3</a> — <a href="./README.md">Go back to main page</a> — <a href="./05-RPU version[optional].md">Check out the RPU version design (optional)</a></b></p>
 
 
 

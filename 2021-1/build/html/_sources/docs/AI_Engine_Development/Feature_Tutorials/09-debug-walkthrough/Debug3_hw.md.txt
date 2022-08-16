@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -132,7 +132,7 @@ vitis -debug -h
 1. There are maximum four breakpoints available for each tile. One of these four breakpoints is assigned to first line of main() by default and can be cleared and then assigned to other lines during debug.
 2. Due to compiler, `-O0` option is not supported, non-sequential execution when stepping through source code is expected.
 3. If an individual kernel is highlighted, select resume button to continue execution until next breakpoint or blocked to wait for I/O. If the beamformer design is highlighted, select resume button to resume all kernels execution until meet each kernel's breakpoint or blocked  waiting for each kernel's I/O operation.
-4. Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in variables view for those optimized variables' values. Limitations from <a href="Debug2_ai.html">AI Engine debug with AIE emulator</a> applies.
+4. Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in variables view for those optimized variables' values. Limitations from <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> applies.
 5. `printf()` is not supported in hardware debug.
 
 
