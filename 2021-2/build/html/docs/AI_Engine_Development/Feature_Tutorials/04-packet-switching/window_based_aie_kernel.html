@@ -1,235 +1,46 @@
-﻿
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
-	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
 <script type="text/javascript">
 function OptanonWrapper() { }
 </script>
 <!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
-		<!-- Google Tag Manager -->
-	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
-	<!-- End Google Tag Manager -->
-	
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
-        <!-- End Google Tag Manager -->	
-
+  <title>Window Based AI Engine Kernels &mdash; Vitis™ Tutorials 2021.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
- <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+</head>
 
-    
-    
-
-    
-
-
-
-<div class="xf-content-height">
-    
-
-<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-    
-    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
-	<header data-component="header" class="site-header">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid main-nav">
-				<div class="row">
-					<div class="navbar-column col-xs-4 col-sm-5">
-						<ul class="nav navbar-nav hidden-xs">
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-								</li>
-							</ul>
-							
-						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-							<li>
-									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
-								</li>
-							<li>
-									<button data-target="#header-container-1" data-function="toggle">Products</button>
-								</li>
-							<li>
-									<button data-target="#header-container-2" data-function="toggle">Company</button>
-								</li>
-							</ul>
-							
-						<div id="header-container-0" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-1" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-2" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							</div>
-					<div class="logo-column col-xs-4 col-sm-2">
-						<div class="logo">
-							<a target="_blank" href="https://www.xilinx.com/">
-								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</nav></header></noindex></div>
-		
-	
-</div>
-
-    
-</div>
-</div>
-
-<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
-    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
-</div>
-</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2021.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -237,114 +48,58 @@ function OptanonWrapper() { }
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">This Page</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/04-packet-switching/window_based_aie_kernel.md.txt"
-						rel="nofollow">Show Source</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">Vitis™ Tutorials</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Window Based AI Engine Kernels</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/04-packet-switching/window_based_aie_kernel.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -352,8 +107,8 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><div class="section" id="window-based-ai-engine-kernels">
-<h1>Window Based AI Engine Kernels<a class="headerlink" href="#window-based-ai-engine-kernels" title="Permalink to this headline">¶</a></h1>
+</table><section id="window-based-ai-engine-kernels">
+<h1>Window Based AI Engine Kernels<a class="headerlink" href="#window-based-ai-engine-kernels" title="Permalink to this heading">¶</a></h1>
 <p>This example shows you how to construct a graph with packet switching capability. In the first section, <a class="reference external" href="#Construct-Graph-with-Packet-Switching-Capability">Construct Graph with Packet Switching Capability</a>, the example graph features:</p>
 <ul class="simple">
 <li><p>Four parallel AI Engine kernels, with all four kernels sharing the same input and output ports to the PL.</p></li>
@@ -367,8 +122,8 @@ function OptanonWrapper() { }
 <li><p>Shows PS code for the system design in <a class="reference external" href="#Example-PS-code-for-Packet-Switching">Example PS code for Packet Switching</a>.</p></li>
 <li><p>Shows how to <a class="reference external" href="#Run-Hardware-Emulation-and-Hardware-flows">Run Hardware Emulation and Hardware flows</a>.</p></li>
 </ul>
-<div class="section" id="construct-graph-with-packet-switching-capability">
-<h2>Construct Graph with Packet Switching Capability<a class="headerlink" href="#construct-graph-with-packet-switching-capability" title="Permalink to this headline">¶</a></h2>
+<section id="construct-graph-with-packet-switching-capability">
+<h2>Construct Graph with Packet Switching Capability<a class="headerlink" href="#construct-graph-with-packet-switching-capability" title="Permalink to this heading">¶</a></h2>
 <p>To explicitly control the multiplexing and de-multiplexing of packets, two new templated node classes are added to the ADF graph library: <code class="docutils literal notranslate"><span class="pre">pktsplit&lt;n&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">pktmerge&lt;n&gt;</span></code>. A node instance of class <code class="docutils literal notranslate"><span class="pre">pktmerge&lt;n&gt;</span></code> is a n:1 multiplexer of n packet streams producing a single packet stream. A node instance of class <code class="docutils literal notranslate"><span class="pre">pktsplit&lt;n&gt;</span></code> is a 1:n de-multiplexer of a packet stream producing n different packet streams.</p>
 <p><strong>Note: The maximum number of allowable packet streams is thirty-two on a single physical channel (<strong>n≤32</strong>).</strong></p>
 <p>The data from the PLIO is first connected to the <code class="docutils literal notranslate"><span class="pre">pktsplit&lt;n&gt;</span></code> instance, which splits the packet depending on the packet ID. It automatically discards the packet header and fills the window input buffers. It automatically discards the <code class="docutils literal notranslate"><span class="pre">TLAST</span></code> signal of the packet when the window data is fully filled.</p>
@@ -426,9 +181,9 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>The macro names <code class="docutils literal notranslate"><span class="pre">Datain0_0</span></code>, …, <code class="docutils literal notranslate"><span class="pre">Dataout0_3</span></code> do not change between different compilations. You can see how these macros are used in the PL kernels in this test case in a later section.</p>
-</div>
-<div class="section" id="packet-format">
-<h2>Packet Format<a class="headerlink" href="#packet-format" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="packet-format">
+<h2>Packet Format<a class="headerlink" href="#packet-format" title="Permalink to this heading">¶</a></h2>
 <p>The first 32-bit word of a packet must always be a packet header which encodes several bit fields, as shown in the following table.</p>
 <table border="1" class="docutils">
 <thead>
@@ -475,9 +230,9 @@ function OptanonWrapper() { }
 <p>The last 32-bit word should have its <code class="docutils literal notranslate"><span class="pre">TLAST</span></code> set High. Other words should set their <code class="docutils literal notranslate"><span class="pre">TLAST</span></code> Low.</p>
 <p>When the packet originates from the PL, the packet header should be constructed by the PL kernels manually. When the AI Engine receives the packet, it is decoded and routed to the destination corresponding to the packet ID in the header.</p>
 <p>When the packet originates from the AI Engine, the first 32-bit word should be decoded by the PL kernels manually. By decoding the packet ID from the packet, and reading the packet switching header files (<code class="docutils literal notranslate"><span class="pre">Work/temp/packet_ids_c.h</span></code> and <code class="docutils literal notranslate"><span class="pre">Work/temp/packet_ids_v.h</span></code>) by the compiler, the PL kernels should be able to route the packet to the correct destination.</p>
-</div>
-<div class="section" id="prepare-data-and-run-ai-engine-simulator">
-<h2>Prepare Data and Run AI Engine Simulator<a class="headerlink" href="#prepare-data-and-run-ai-engine-simulator" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="prepare-data-and-run-ai-engine-simulator">
+<h2>Prepare Data and Run AI Engine Simulator<a class="headerlink" href="#prepare-data-and-run-ai-engine-simulator" title="Permalink to this heading">¶</a></h2>
 <p>When constructing the input data file for the AI Engine simulator, the data file should contain the sequence of packets. Each packet contains the packet header, follwed by the data. The last data has the <code class="docutils literal notranslate"><span class="pre">TLAST</span></code> keyword in a separate line just above the data. The data is in 32-bit integer format, including the header. The following is an example of a packet in the data file (<code class="docutils literal notranslate"><span class="pre">data/input.txt</span></code>).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2415853568</span>
 <span class="mi">0</span>
@@ -532,9 +287,9 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>Here, Dataout0_<strong>3</strong> denotes that the packet ID 0 comes from <code class="docutils literal notranslate"><span class="pre">pktmerge.in[3]</span></code>. By looking at the graph code (<code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code>) or graph view in Vitis analyzer, you can find which AI Engine kernel actually produced it. In this example result, it is kernel <code class="docutils literal notranslate"><span class="pre">core[3]</span></code> (<code class="docutils literal notranslate"><span class="pre">aie/aie_core4.cpp</span></code>).</p>
-</div>
-<div class="section" id="example-pl-kernels-for-packet-switching">
-<h2>Example PL Kernels for Packet Switching<a class="headerlink" href="#example-pl-kernels-for-packet-switching" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="example-pl-kernels-for-packet-switching">
+<h2>Example PL Kernels for Packet Switching<a class="headerlink" href="#example-pl-kernels-for-packet-switching" title="Permalink to this heading">¶</a></h2>
 <p>This section describes how the PL kernels can generate and decode packet headers, and how to distribute packets to the corresponding destinations. HLS example code is provided, and hardware emulation and hardware flows can be run.</p>
 <p>The packet switching feature does not have a dependency on the PL kernel types (HLS, Verilog, etc) and their design structure. It just has requirements around the packet format and how the packet ID works as described in the previous sections.</p>
 <p>The system design structure of the example is as shown in the following image.</p>
@@ -644,10 +399,10 @@ void hls_packet_sender(hls::stream&lt;ap_axiu&lt;32,0,0,0&gt;&gt; &amp;s0,hls::s
       <span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">PACKET_LEN</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
         <span class="n">tmp</span><span class="o">=</span><span class="ow">in</span><span class="o">.</span><span class="n">read</span><span class="p">();</span>
         <span class="n">switch</span><span class="p">(</span><span class="n">channel</span><span class="p">){</span>
-        <span class="n">case</span> <span class="mi">0</span><span class="p">:</span><span class="n">out0</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span><span class="k">break</span><span class="p">;</span>
-        <span class="n">case</span> <span class="mi">1</span><span class="p">:</span><span class="n">out1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span><span class="k">break</span><span class="p">;</span>
-        <span class="n">case</span> <span class="mi">2</span><span class="p">:</span><span class="n">out2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span><span class="k">break</span><span class="p">;</span>
-        <span class="n">case</span> <span class="mi">3</span><span class="p">:</span><span class="n">out3</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">0</span><span class="p">:</span><span class="n">out0</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">1</span><span class="p">:</span><span class="n">out1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">2</span><span class="p">:</span><span class="n">out2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">3</span><span class="p">:</span><span class="n">out3</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span><span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
       <span class="p">}</span>
   <span class="p">}</span>
@@ -655,9 +410,9 @@ void hls_packet_sender(hls::stream&lt;ap_axiu&lt;32,0,0,0&gt;&gt; &amp;s0,hls::s
 </pre></div>
 </div>
 <p>Note that for both packet sender and packet receiver, the packet IDs are read from <code class="docutils literal notranslate"><span class="pre">packet_ids_c.h</span></code>, which is generated by the AI Engine compiler. Therefore, it requires that the AI Engine compilation is completed before the PL kernel compilation. Or, if packet IDs are changed when the AI Engine side has had any change, it requires the PL kernels to be re-compiled.</p>
-</div>
-<div class="section" id="example-ps-code-for-packet-switching">
-<h2>Example PS code for Packet Switching<a class="headerlink" href="#example-ps-code-for-packet-switching" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="example-ps-code-for-packet-switching">
+<h2>Example PS code for Packet Switching<a class="headerlink" href="#example-ps-code-for-packet-switching" title="Permalink to this heading">¶</a></h2>
 <p>The PS code for hardware emulation and hardware flows is in <code class="docutils literal notranslate"><span class="pre">sw/host.cpp</span></code>. You can review the code. It opens the XCLBIN using the following code.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">//</span> <span class="n">Open</span> <span class="n">xclbin</span>
  <span class="n">auto</span> <span class="n">dhdl</span> <span class="o">=</span> <span class="n">xrtDeviceOpen</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="o">//</span><span class="n">device</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span>
@@ -735,9 +490,9 @@ void hls_packet_sender(hls::stream&lt;ap_axiu&lt;32,0,0,0&gt;&gt; &amp;s0,hls::s
 </div>
 <p>Then, finally, it performs post-processing and releases objects.</p>
 <p>Note that there is no special packet switching handling in the PS code. It is already done on the AI Engine and PL side.</p>
-</div>
-<div class="section" id="run-hardware-emulation-and-hardware-flows">
-<h2>Run Hardware Emulation and Hardware flows<a class="headerlink" href="#run-hardware-emulation-and-hardware-flows" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="run-hardware-emulation-and-hardware-flows">
+<h2>Run Hardware Emulation and Hardware flows<a class="headerlink" href="#run-hardware-emulation-and-hardware-flows" title="Permalink to this heading">¶</a></h2>
 <p>Run HW emulation with the following make command (it builds the HW system and host application).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run_hw_emu</span>
 </pre></div>
@@ -766,9 +521,9 @@ void hls_packet_sender(hls::stream&lt;ap_axiu&lt;32,0,0,0&gt;&gt; &amp;s0,hls::s
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you learned about the following concepts.</p>
 <ul class="simple">
 <li><p>Constructing packet switching graph</p></li>
@@ -788,72 +543,13 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p></div>
-</div>
+<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p></section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        Last updated on February 10, 2022.
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -862,147 +558,61 @@ limitations under the License.</p>
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-														
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<div class="lang-select dropup hidden-md hidden-lg">
-		<button data-toggle="dropdown">
-			<span class="fas fa-globe" aria-hidden="true"></span>
-			<span>
-				
-					English
-				</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">Connect on LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Follow us on Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Connect on Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">Watch us on YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-																	<div class="lang-select dropup hidden-xs hidden-sm">
-	<button data-toggle="dropdown">
-		<span class="fas fa-globe" aria-hidden="true"></span>
-		<span>
-			
-				English
-			</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-															</div>
-														</div>
-														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
-															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
-														</div>
 
-													</div>
-													                    <div class="movethisrowtoleft row">
+													                    <div class="row">
                         <div class="col-xs-24">
-                            <ul class="sub-menu">
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
-								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
-                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
-                            </ul>
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
                         </div>
                     </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
-    <span data-component="backToTopButton" class="backToTopButton loaded">
-        <ul>
-            <li>
-                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
-                    <span class="fas fa-angle-up" aria-hidden="true"></span>
-                </a>
-            </li>
-        </ul>
-    </span>
-</noindex></div>
-			</div>
-		</div>
+										
+</br>
 
 
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-			underscoreSetup();
-		</script>
-	</body>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

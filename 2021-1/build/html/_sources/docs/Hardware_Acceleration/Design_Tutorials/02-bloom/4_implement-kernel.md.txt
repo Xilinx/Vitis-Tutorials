@@ -433,6 +433,6 @@ In this lab, you focused on building on an optimal kernel with 4, 8 and 16 words
 In the next lab, you [explore sending documents in multiple buffers](./5_data-movement.md) rather than sending all of the documents at once from the host and explore how this improves the overall application performance. You will also use the configuration `Bloom8x` kernel and `Bloom16x` kernel for exploration in the next step.
 
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.html">Return to Getting Started Pathway</a> — <a href="docs/bloom/README.html">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/bloom/README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

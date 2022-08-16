@@ -225,11 +225,11 @@ At the receiving end, the antenna data (Y<sub>0,0</sub>-Y<sub>0,5</sub>) can be 
 
 ![Uplink Generalized Formulas](images/uplink_generalized_formulas.PNG)
 
-# Support
+#### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

@@ -283,7 +283,7 @@ This tutorial shows how to:
 * Modify the ADF graph to handle more PLIO interfacing.
 * Build and execute the design in emulation.
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

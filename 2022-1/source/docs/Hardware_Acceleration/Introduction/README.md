@@ -7,7 +7,7 @@
 </table>
 
 
-## Introduction
+# Introduction
 
 ***Version: Vitis 2022.1***
 

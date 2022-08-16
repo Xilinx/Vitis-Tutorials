@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Vivado Design Suite — RTL Design &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../README.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/01-convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../README.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../README.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Vivado Design Suite — RTL Design</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/vivado_ip.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="vivado-design-suite-rtl-design">
+<h1>Vivado Design Suite — RTL Design<a class="headerlink" href="#vivado-design-suite-rtl-design" title="Permalink to this heading">¶</a></h1>
+<p>When the Vivado Design Suite IDE opens, the <strong>Sources</strong> window displays the source files automatically generated by the RTL Kernel Wizard. These are placeholder files to show yo u the structure of RTL files needed for creating an RTL Kernel. You can use these example files to help build your own RTL modules, or replace these files with an existing design.</p>
+<div class="section" id="remove-the-example-files">
+<h2>Remove the Example Files<a class="headerlink" href="#remove-the-example-files" title="Permalink to this heading">¶</a></h2>
+<p>Before adding your design files to the project, you need to remove the example files generated by the RTL Kernel Wizard.</p>
+<ol>
+<li><p>In the Vivado Design Suite IDE, in the Sources window, select <strong>Compile Order</strong> &gt; <strong>Synthesis</strong>, and then expand the Design Sources tree.</p></li>
+<li><p>Select all eight source files, right-click, and then select <strong>Remove File from Project…</strong>.</p></li>
+<li><p>In the displayed Remove Sources dialog box, to remove the files from the project, click <strong>OK</strong>.</p>
+<p>The Invalid Top Module dialog box opens.</p>
+</li>
+<li><p>Click <strong>OK</strong> to continue.</p></li>
+<li><p>In the same window, change the sources to simulation and delete <em>only</em> the <code class="docutils literal notranslate"><span class="pre">Vadd_A_B_tb.sv</span></code> file.</p></li>
+<li><p>Repeat steps 3 and 4.</p></li>
+</ol>
+</div>
+<div class="section" id="add-your-rtl-sources-to-the-project">
+<h2>Add Your RTL Sources to the Project<a class="headerlink" href="#add-your-rtl-sources-to-the-project" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><p><strong>IMPORTANT</strong>: After removing the automatically generated RTL files from the RTL kernel project, you are ready to add your own RTL IP files back into the project. The RTL IP files have been provided for you in this tutorial, but this is the point at which you would insert your own RTL IP and the supporting file hierarchy.</p>
+</div></blockquote>
+<ol>
+<li><p>Right-click <strong>Design Sources</strong>, and then click <strong>Add Sources</strong>. The Add Sources window is displayed.</p></li>
+<li><p>Click <strong>Add or create design sources</strong>, and then click <strong>Next</strong>.</p></li>
+<li><p>Click <strong>Add Directories</strong>, browse to <code class="docutils literal notranslate"><span class="pre">reference-files</span></code>, select the <code class="docutils literal notranslate"><span class="pre">src</span></code> directory and then select the <code class="docutils literal notranslate"><span class="pre">IP</span></code> directory (which contains the RTL sources).</p>
+<blockquote>
+<div><p><strong>NOTE</strong>: To add your own RTL IP, specify the required folder or files.</p>
+</div></blockquote>
+</li>
+<li><p>Click <strong>Add Files</strong>, browse to <code class="docutils literal notranslate"><span class="pre">testbench</span></code>, and then select <strong>Vadd_A_B_tb.sv</strong>:<br /><img alt="Add Design Sources" src="../../../../_images/add_design_sources.PNG" /></p></li>
+<li><p>To add the files to the current project, click <strong>Finish</strong>.</p></li>
+<li><p>To view the hierarchy of the project, in the Sources window, select the <strong>Hierarchy</strong> tab.</p>
+<blockquote>
+<div><p><strong>IMPORTANT</strong>: The test bench is selected as the top-level design file. While this is technically correct because the test bench includes the IP; in this case the test bench should not be the top-level of the RTL kernel.</p>
+</div></blockquote>
+</li>
+<li><p>Right-click <strong>Vadd_A_B_tb.sv</strong>, and then select <strong>Move to Simulation Sources</strong>.</p>
+<p>This defines the test bench for use in simulation and enables the Vivado Design Suite to identify the <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.v</span></code> file as the new top level of the design. This RTL IP has an interface which is compatible with the requirements for RTL kernels in the Vitis core development kit. This can be seen in the module <code class="docutils literal notranslate"><span class="pre">Vadd_A_B</span></code> definition, as shown in the following code.</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">Vadd_A_B</span><span class="w"> </span><span class="p">#(</span><span class="w"></span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="k">integer</span><span class="w"> </span><span class="n">C_S_AXI_CONTROL_ADDR_WIDTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">12</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="k">integer</span><span class="w"> </span><span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">32</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="k">integer</span><span class="w"> </span><span class="n">C_M00_AXI_ADDR_WIDTH</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mh">64</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="k">integer</span><span class="w"> </span><span class="n">C_M00_AXI_DATA_WIDTH</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mh">512</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="k">integer</span><span class="w"> </span><span class="n">C_M01_AXI_ADDR_WIDTH</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mh">64</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="k">integer</span><span class="w"> </span><span class="n">C_M01_AXI_DATA_WIDTH</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mh">512</span><span class="w"></span>
+<span class="p">)</span><span class="w"></span>
+<span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">ap_clk</span><span class="w">               </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_awvalid</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_awready</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M00_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">         </span><span class="n">m00_axi_awaddr</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">                            </span><span class="n">m00_axi_awlen</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_wvalid</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_wready</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M00_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">         </span><span class="n">m00_axi_wdata</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M00_AXI_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">       </span><span class="n">m00_axi_wstrb</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_wlast</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_bvalid</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_bready</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_arvalid</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_arready</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M00_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">         </span><span class="n">m00_axi_araddr</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">                            </span><span class="n">m00_axi_arlen</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_rvalid</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_rready</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M00_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">         </span><span class="n">m00_axi_rdata</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m00_axi_rlast</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// AXI4 master interface m01_axi</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_awvalid</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_awready</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M01_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">         </span><span class="n">m01_axi_awaddr</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">                            </span><span class="n">m01_axi_awlen</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_wvalid</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_wready</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M01_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">         </span><span class="n">m01_axi_wdata</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M01_AXI_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">       </span><span class="n">m01_axi_wstrb</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_wlast</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_bvalid</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_bready</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_arvalid</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_arready</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M01_AXI_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">         </span><span class="n">m01_axi_araddr</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">                            </span><span class="n">m01_axi_arlen</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_rvalid</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_rready</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_M01_AXI_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">         </span><span class="n">m01_axi_rdata</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">m01_axi_rlast</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// AXI4-Lite slave interface</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_awvalid</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_awready</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_S_AXI_CONTROL_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">   </span><span class="n">s_axi_control_awaddr</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_wvalid</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_wready</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">   </span><span class="n">s_axi_control_wdata</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">/</span><span class="mh">8</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">s_axi_control_wstrb</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_arvalid</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_arready</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_S_AXI_CONTROL_ADDR_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">   </span><span class="n">s_axi_control_araddr</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_rvalid</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_rready</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">   </span><span class="n">s_axi_control_rdata</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="mh">2</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">                            </span><span class="n">s_axi_control_rresp</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_bvalid</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">s_axi_control_bready</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="mh">2</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">                            </span><span class="n">s_axi_control_bresp</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w">                                    </span><span class="n">interrupt</span><span class="w"></span>
+<span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The XML file and the RTL sources can now be used to package the kernel into an XO file.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="rtl-verification">
+<h2>RTL Verification<a class="headerlink" href="#rtl-verification" title="Permalink to this heading">¶</a></h2>
+<p>Before packaging an RTL design as a kernel XO file, ensure that it is fully verified using standard RTL verification techniques, such as verification IP, randomization, and/or protocol checkers.</p>
+<p>In this tutorial, the RTL code for the Vector-Accumulate kernel has already been independently verified.</p>
+<p>If you want to skip this step and begin packaging the RTL kernel IP, go to the next section.</p>
+<blockquote>
+<div><p><strong>NOTE:</strong> The AXI Verification IP (AXI VIP) is available in the Vivado IP catalog to help with verification of AXI interfaces. The test bench included with this tutorial incorporates this AXI VIP.</p>
+</div></blockquote>
+<p>To use this test bench for verifying the Vector addition kernel:</p>
+<ol>
+<li><p>In the Flow Navigator, right-click <strong>Run Simulation</strong>, and then select <strong>Simulation Settings</strong>.</p></li>
+<li><p>In the Settings dialog box, select <strong>Simulation</strong>.</p></li>
+<li><p>Change the <strong>xsim.simulate.runtime</strong> value to <code class="docutils literal notranslate"><span class="pre">all</span></code> as shown in the following figure.</p>
+<p><img alt="Simulation Settings" src="../../../../_images/simulation_settings.PNG" /></p>
+</li>
+<li><p>Click <strong>OK</strong>.</p></li>
+<li><p>In the Flow Navigator, click <strong>Run Simulation</strong>, and then select <strong>Run Behavioral Simulation</strong>.</p>
+<p>The Vivado simulator runs the test bench to completion, and then displays messages in the Tcl Console window. Ignore any error messages.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Test</span> <span class="pre">Completed</span> <span class="pre">Successfully</span></code> confirms that the verification of the kernel is successful.</p>
+<blockquote>
+<div><p><strong>NOTE</strong>: You might need to scroll up in the Tcl Console to see the confirmation message.</p>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="package-the-rtl-kernel-ip">
+<h2>Package the RTL Kernel IP<a class="headerlink" href="#package-the-rtl-kernel-ip" title="Permalink to this heading">¶</a></h2>
+<p>The Vivado Design Suite project is now ready to package as a kernel XO file for use with the Vitis IDE.</p>
+<ol>
+<li><p>From the Flow Navigator, click <strong>Generate RTL Kernel</strong>.
+The Generate RTL Kernel dialog box is opened, as shown in the following figure.</p>
+<p><img alt="Generate RTL Kernel" src="../../../../_images/192_vitis_generate_rtl_kernel.PNG" /></p>
+<blockquote>
+<div><p><strong>Packaging Option Details</strong></p>
+<ul class="simple">
+<li><p><strong>Sources-only kernel</strong>: Packages the kernel using the RTL design sources directly.</p></li>
+<li><p><strong>Pre-synthesized kernel</strong>: Packages the kernel with the RTL design sources, and a synthesized cached output that can be used later in the linking flow to avoid re-synthesizing the kernel and improve runtime.</p></li>
+<li><p><strong>Netlist (DCP) based kernel</strong>: Packages the kernel as a block box, using the netlist generated by the synthesized output of the kernel. This output can be optionally encrypted to provide to third-parties while protecting your IP.</p></li>
+<li><p><strong>Software Emulation Sources</strong> (<em>Optional</em>): Packages the RTL kernel with a software model that can be used in software emulation. In this  tutorial, a software model is not used; leave this option empty.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>For this tutorial, select <strong>Sources-only</strong>.</p></li>
+<li><p>Click <strong>OK</strong>.<br />The Vivado tool uses the following <code class="docutils literal notranslate"><span class="pre">package_xo</span></code> command to generate an XO file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package_xo</span> <span class="o">-</span><span class="n">xo_path</span> <span class="n">Vadd_A_B</span><span class="o">.</span><span class="n">xo</span> <span class="o">-</span><span class="n">kernel_name</span> <span class="n">Vadd_A_B</span> <span class="o">-</span><span class="n">kernel_xml</span> <span class="n">kernel</span><span class="o">.</span><span class="n">xml</span> <span class="o">-</span><span class="n">ip_directory</span> <span class="o">./</span><span class="n">ip</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>You can examine the Tcl Console for a transcript of the process.</p>
+</li>
+<li><p>When prompted, exit the Vivado Design Suite.</p>
+<p>The Vivado tool closes and returns control to the Vitis IDE. The RTL kernel is imported into the open Vitis IDE project, which opens the Kernel Wizard dialog box.</p>
+</li>
+<li><p>Click <strong>OK</strong>.</p></li>
+</ol>
+</div>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p>Now you have created an RTL Kernel (.xo) file from a Vivado IP, you can <a class="reference internal" href="using_the_rtl_kernel.html"><span class="doc">test the RTL Kernel in a Vitis Application</span></a>.
+</br></p>
+<hr/>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

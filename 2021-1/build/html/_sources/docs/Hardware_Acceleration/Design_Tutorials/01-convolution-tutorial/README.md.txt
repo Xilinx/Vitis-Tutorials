@@ -142,6 +142,6 @@ FPGA Speedup      :    68.1764 x
 ---------------------------------------
 
 <p align="center"><b>
-Next Lab Module: <a href="./lab1_app_introduction_performance_estimation.html">Video Convolution Filter : Introduction and Performance Estimation</a>
+Next Lab Module: <a href="./lab1_app_introduction_performance_estimation.md">Video Convolution Filter : Introduction and Performance Estimation</a>
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
 </b></p>

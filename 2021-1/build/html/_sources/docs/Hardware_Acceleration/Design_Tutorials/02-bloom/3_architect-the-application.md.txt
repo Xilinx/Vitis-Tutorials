@@ -235,6 +235,6 @@ In this lab, you profiled an application and determined which parts were best-su
 In the next section, you will [implement the kernel](./4_implement-kernel.md) by applying the "Methodology for Developing C/C++ Kernels" to create an optimized kernel to meet the requirements of the kernel specification.
 
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.html">Return to Getting Started Pathway</a> — <a href="docs/bloom/README.html">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/bloom/README.md">Return to Start of Tutorial</a></b></p>
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

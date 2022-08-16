@@ -74,11 +74,11 @@ Please refer to the ./makefile/Makefile for more information.
 
 
 <p align="center"><b>
-Start the next step: <a href="1_overview.html"> HBM Overview
+Start the next step: <a href="1_overview.md"> HBM Overview
 </b></p>
 </br>
 <hr/>
-<p align="center"><b><a href="docs/README.html">Return to Start of Tutorial</a></b></p>
+<p align="center"><b><a href="docs/README.md">Return to Start of Tutorial</a></b></p>
 
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
 

@@ -11,7 +11,7 @@
 
 ***Version: Vitis 2021.2***
 
-## Table of Contents
+### Table of Contents
 
 [Introduction](#introduction)
 
@@ -25,7 +25,7 @@
 
 [Known Issues](#Known-Issues)
 
-# Introduction
+## Introduction
 
 The Versal® ACAP is a a fully software programmable, heterogeneous compute platform that combines the following:
 
@@ -42,7 +42,7 @@ The design documentation demonstrates hardware and software design details inclu
 <details>
   <summary>Objectives</summary> 
 	
-## Objectives
+### Objectives
 
 After completing the tutorial, you should be able to:
 
@@ -63,7 +63,7 @@ After completing the tutorial, you should be able to:
 <details>
   <summary>Design Overview</summary> 
  
-## Design Overview
+### Design Overview
 
 This design aims to implement a 2D-FFT algorithm performed on (for example) a 1024 x 2048 matrix using 1024- and 2048-point 1D-FFT kernels. The pseudo-code to implement the algorithm is shown in the following example:
 
@@ -96,7 +96,7 @@ A similar set of harnesses is developed and maintained between the two implement
 <details>
   <summary>Directory Structure</summary> 
 	
-## Directory Structure
+### Directory Structure
 
 ```
 fft2d_AIEvsHLS
@@ -127,13 +127,13 @@ fft2d_AIEvsHLS
 ```
 </details>
 
-# Before You Begin
+## Before You Begin
 
 <details>
 	
 <summary>Documentation: Explore AI Engine Architecture</summary> 
 
-## Documentation: Explore AI Engine Architecture
+### Documentation: Explore AI Engine Architecture
 
 * [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
 
@@ -146,7 +146,7 @@ fft2d_AIEvsHLS
 <details>
 <summary>Installing the Tools</summary> 
 	
-## Installing the Tools
+### Installing the Tools
 
 * [AI Engine Tools Lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
@@ -167,7 +167,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 <details>
 <summary>Platform</summary> 
 
-## Platform
+### Platform
 
 Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2021.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
@@ -178,7 +178,7 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
 <details>
 <summary>Setting Up the Environment</summary>
  
-## Setting up the Environment
+### Setting up the Environment
 
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system-specific paths.
 
@@ -209,7 +209,7 @@ The script sets up the environment variables and sources scripts explained below
 <details>
 <summary>Confirming Tool Installation</summary> 
 	
-## Confirming Tool Installation
+### Confirming Tool Installation
 
 To confirm that you have installed the correct tools, run the following command: 
 
@@ -240,14 +240,14 @@ The output of the above command should be as follows:
 
 </details>
 
-# Design Implementations
+## Design Implementations
 
 The Makefile and source files for the AI Engine and HLS implementations are in the `AIE` and `DSP` directories respectively. For the documentation of the flow to build the design and details of the hardware and software design, follow each of the links below:
 
 * [AI Engine design implementation](AIE)
 * [HLS design implementation with DSP Engines](HLS)
 
-# AI Engine and HLS Implementation Comparison
+## AI Engine and HLS Implementation Comparison
 
 The following table shows a comparison between a 1024 x 2048 point 10-instance FFT-2D design implemented using the AI Engines and HLS with DSP Engines respectively. It lists the throughput, resource utilization, power consumption, and performance in throughput/Watt for `cint16` implementations.
 
@@ -275,17 +275,17 @@ Additionally, further increasing the number of instances in the AI Engine design
 
 For detailed instructions on taking measurements of the parameters, refer to the individual implementation section.
 
-# References
+## References
 
-### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
+#### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
 
-### [Vitis DSP Libraries](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
+#### [Vitis DSP Libraries](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
 * [Vitis DSP Libraries Comprehensive Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2021.2/) 
 
-### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
+#### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
 
 Below are links to the XRT information used by this tutorial: 
 
@@ -297,7 +297,7 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug1451-xrt-release-notes.pdf)
 
-### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html)
+#### [Vitis Unified Software Development Platform 2021.2 Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/index.html)
 
 Below are links to Vitis related information referenced in this tutorial:
 
@@ -307,15 +307,15 @@ Below are links to Vitis related information referenced in this tutorial:
 
 * [Vitis HLS](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
 
-# Known Issues
+## Known Issues
 
 The timestamps represented in the hardware execution generated trace, have known a issue due to which they are scaled compared to the actual. This issue will be fixed in the subsequent tool versions. All calculations/observations in this tutorial are based on the hw_emu runs.
 
-# Support
+## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

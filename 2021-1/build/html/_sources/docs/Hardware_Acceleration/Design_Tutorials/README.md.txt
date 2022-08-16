@@ -18,23 +18,23 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./01-convolution-tutorial/README.html">Convolution Example</a></td>
+ <td align="center"><a href="./01-convolution-tutorial/README.md">Convolution Example</a></td>
  <td>This tutorial walks through the process of analyzing and optimizing a 2D convolution used for real-time processing of a video stream.</td>
  </tr>
  <tr>
- <td align="center"><a href="./02-bloom/README.html">Bloom Filter Example</a></td>
+ <td align="center"><a href="./02-bloom/README.md">Bloom Filter Example</a></td>
  <td>This tutorial shows how to achieve a 10x speed-up on a data analytics application using a combination of kernel and host code optimization techniques.</td>
  </tr>
  <tr>
- <td align="center"><a href="./03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></td>
+ <td align="center"><a href="./03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
  <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
  </tr>
 <tr>
- <td align="center"><a href="./04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></td>
+ <td align="center"><a href="./04-traveling-salesperson/README.md">Traveling Salesperson Problem</a></td>
  <td>This tutorial demonstrates the full flow to implement a HLS kernel from algorithm model to hardware.</td>
 </tr>
 <tr>
- <td align="center"><a href="./05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></td>
+ <td align="center"><a href="./05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a></td>
  <td>This tutorial demonstrates how to develope a complex RTL kernel from scratch via batch mode without GUI environment.</td>
  </tr>
  <tr>

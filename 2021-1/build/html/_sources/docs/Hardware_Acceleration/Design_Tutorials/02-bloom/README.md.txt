@@ -77,6 +77,6 @@ This tutorial guides you to run the designed accelerator on the FPGA; therefore,
 -->
 
 <hr/>
-<p align= center class="sphinxhide"><b><a href="/README.html">Return to Main Page</a> — <a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a></b></p>
+<p align= center class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a></b></p>
 </br><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
 

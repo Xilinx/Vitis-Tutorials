@@ -1,235 +1,46 @@
-﻿
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
-	<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="37701bd4-e5c0-4ee3-9329-e7475d0b13a7" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
 <script type="text/javascript">
 function OptanonWrapper() { }
 </script>
 <!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
-		<!-- Google Tag Manager -->
-	<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
-	<!-- End Google Tag Manager -->
-	
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
-        <!-- End Google Tag Manager -->	
-
+  <title>RTL Kernel: krnl_aes &mdash; Vitis™ Tutorials 2021.2 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/Searchbox.min.js"></script>
-    <script type="text/javascript" src="../../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/css/pro.min.css" media="all" />
+    <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
- <div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
+</head>
 
-    
-    
-
-    
-
-
-
-<div class="xf-content-height">
-    
-
-<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-    
-    <div class="header parbase aem-GridColumn aem-GridColumn--default--12"><noindex>
-	<header data-component="header" class="site-header">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid main-nav">
-				<div class="row">
-					<div class="navbar-column col-xs-4 col-sm-5">
-						<ul class="nav navbar-nav hidden-xs">
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-								</li>
-							<li>
-									<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-								</li>
-							</ul>
-							
-						<ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-							<li>
-									<button data-target="#header-container-0" data-function="toggle">Solutions</button>
-								</li>
-							<li>
-									<button data-target="#header-container-1" data-function="toggle">Products</button>
-								</li>
-							<li>
-									<button data-target="#header-container-2" data-function="toggle">Company</button>
-								</li>
-							</ul>
-							
-						<div id="header-container-0" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-1" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							<div id="header-container-2" class="menu-container">
-								<div class="navbar-nav-container">
-									<ul class="nav navbar-nav">
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/applications.html&#39;;">Solutions</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/products/silicon-devices.html&#39;;">Products</button>
-												</li>
-										<li>
-												<button onclick="window.location.href=&#39;https://www.xilinx.com/about/company-overview.html&#39;;">Company</button>
-												</li>
-										</ul>
-									<button data-function="close-menu">
-										<span class="fal fa-times" aria-hidden="true"></span>
-									</button>
-								</div>
-							</div>
-							</div>
-					<div class="logo-column col-xs-4 col-sm-2">
-						<div class="logo">
-							<a target="_blank" href="https://www.xilinx.com/">
-								<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</nav></header></noindex></div>
-		
-	
-</div>
-
-    
-</div>
-</div>
-
-<div class="calloutBanner parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><div class="callout-banner">
-    Xilinx is now a part of <a target="_blank" href="https://www.amd.com/en/corporate/xilinx-acquisition">AMD</a> |  <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Learn More</a>
-</div>
-</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ Tutorials
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 2021.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -237,122 +48,66 @@ function OptanonWrapper() { }
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">日本語版</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Master</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Introduction</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Acceleration</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI Engine</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Platforms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other Versions</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">This Page</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel/doc/krnl_aes.md.txt"
-						rel="nofollow">Show Source</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../../index.html">Vitis™ Tutorials</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>RTL Kernel: krnl_aes</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel/doc/krnl_aes.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="rtl-kernel-krnl-aes">
-<h1>RTL Kernel: krnl_aes<a class="headerlink" href="#rtl-kernel-krnl-aes" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="rtl-kernel-krnl-aes">
+<h1>RTL Kernel: krnl_aes<a class="headerlink" href="#rtl-kernel-krnl-aes" title="Permalink to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>In this part of the tutorial, you will start with the Aes module you created in <a class="reference internal" href="aes.html"><span class="doc">RTL Module: Aes</span></a>. You will add RTL logics, then pack them into Vivado® IP and Vitis Kernel (XO) file. This Vitis™ Kernel file can be used directly in the Vitis v++ flow to build XCLBIN overlay files, and the user can use the XRT library to realize the kernel control and data transfer between the host and the kernel.</p>
-</div>
-<div class="section" id="kernel-features">
-<h2>Kernel Features<a class="headerlink" href="#kernel-features" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="kernel-features">
+<h2>Kernel Features<a class="headerlink" href="#kernel-features" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel includes four Aes modules, each of which are connected outside with AXI stream slave and master ports. There is also an AXI slave port for kernel control. To simplify the design, all Aes modules use the same settings (encrypt/decrypt mode, key length and key value).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> actually uses two clocks inside: one for external AXI ports and the other for internal AXI ports and AES cores. The AES cores run at a higher frequency than the platform AXI interconnections.</p>
 <p>There are two methods to get the higher clock for the kernel.
@@ -452,9 +207,9 @@ One method is to use the secondary platform clock provided, namely <code class="
 <td>AES key word 0. When key length is 128/192bit, this word is not used</td>
 </tr>
 </tbody>
-</table></div>
-<div class="section" id="ip-generation">
-<h2>IP Generation<a class="headerlink" href="#ip-generation" title="Permalink to this headline">¶</a></h2>
+</table></section>
+<section id="ip-generation">
+<h2>IP Generation<a class="headerlink" href="#ip-generation" title="Permalink to this heading">¶</a></h2>
 <p>This example design uses three kinds of design IP and two kinds of verification IP:</p>
 <ul class="simple">
 <li><p>Clock generator MMCM</p></li>
@@ -465,12 +220,12 @@ One method is to use the secondary platform clock provided, namely <code class="
 <li><p>AXIS Slave VIP</p></li>
 </ul>
 <p>These IPs are all generated by a Tcl script <strong>~/krnl_aes/gen_ip.tcl</strong>. The script runs in non-project mode and mainly uses three Tcl command <em>create_ip</em>, <em>set_property</em> and <em>generate_target</em> to finish the IP generation. You could refer to the script and relevant IP documents for more details.</p>
-</div>
-<div class="section" id="pack-the-design-into-vivado-ip-and-vitis-kernel">
-<h2>Pack the Design into Vivado IP and Vitis Kernel<a class="headerlink" href="#pack-the-design-into-vivado-ip-and-vitis-kernel" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pack-the-design-into-vivado-ip-and-vitis-kernel">
+<h2>Pack the Design into Vivado IP and Vitis Kernel<a class="headerlink" href="#pack-the-design-into-vivado-ip-and-vitis-kernel" title="Permalink to this heading">¶</a></h2>
 <p>One key step for the RTL kernel design for Vitis is to package the RTL design into Vitis kernel file (XO file). The user can utilize the GUI version <em>RTL Kernel Wizard</em> tool to help to create the Vitis kernel. The user can also use GUI version <em>IP Packager</em> in Vivado to package the design into Vivado IP then generate the XO file. Vivado also provides command line flow for Vitis kernel generation which provides the same jobs as GUI version. In this tutorial, we will use the Vivado Tcl command to finish the <em>krnl_aes</em> IP packaging and XO file generation in batch mode. The complete kernel generation script for this design is in <strong>~/krnl_aes/pack_kernel.tcl</strong>, the main steps are explained below and please see the details in the script. Actually each step in the script has its counterpart in GUI tool, refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/devrtlkernel.html">RTL Kernels</a> for GUI version IP packaging tool usage.</p>
-<div class="section" id="step-1-create-vivado-project-and-add-design-sources">
-<h3>Step 1: Create Vivado project and add design sources<a class="headerlink" href="#step-1-create-vivado-project-and-add-design-sources" title="Permalink to this headline">¶</a></h3>
+<section id="step-1-create-vivado-project-and-add-design-sources">
+<h3>Step 1: Create Vivado project and add design sources<a class="headerlink" href="#step-1-create-vivado-project-and-add-design-sources" title="Permalink to this heading">¶</a></h3>
 <p>Firstly we need to create a Vivado project containing the source files. The script use the Tcl command <em>create_project</em>, <em>add_files</em> and <em>update_compiler_order</em> to finish this step. All RTL source codes, generated IP file (xci file) and XDC file should be added into the newly created project.</p>
 <p>Finally the <em>ipx::package_project</em> Tcl command is used to initialize the IP packaging process.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>create_project krnl_aes ./krnl_aes
@@ -486,9 +241,9 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
 </pre></div>
 </div>
 <p>In this step, you may see a warning information like: <em>WARNING: [IP_Flow 19-5101] Packaging a component with a SystemVerilog top file is not fully supported. Please refer to UG1118 ‘Creating and Packaging Custom IP’</em>. Currently the Vitis tool chain requires the port definition of the top module be traditional Verilog style. Though the top level module <em>krnl_aes.sv</em> uses some SystemVerilog syntax (SystemVerilog <em>interface</em> objects), but it uses the traditional Verilog style port definition, so you could omit this warning.</p>
-</div>
-<div class="section" id="step-2-infer-clock-reset-axi-interfaces-and-associate-them-with-clock">
-<h3>Step 2: Infer clock, reset, AXI interfaces and associate them with clock<a class="headerlink" href="#step-2-infer-clock-reset-axi-interfaces-and-associate-them-with-clock" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step-2-infer-clock-reset-axi-interfaces-and-associate-them-with-clock">
+<h3>Step 2: Infer clock, reset, AXI interfaces and associate them with clock<a class="headerlink" href="#step-2-infer-clock-reset-axi-interfaces-and-associate-them-with-clock" title="Permalink to this heading">¶</a></h3>
 <p>Here we first use <em>ipx::infer_bus_interface</em> command to infer <em>ap_clk</em> and <em>ap_rst_n</em> as AXI bus signals. Generally if <em>ap_clk</em> is the only clock we used in the RTL kernel, this command can be omitted. If we use more clocks (ap_clk_2, ap_clk_3, …) in the design, we must use the <em>ipx::infer_bus_interface</em> command to infer the ports explicitly.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ipx</span><span class="p">::</span><span class="n">infer_bus_interface</span> <span class="n">ap_clk</span> <span class="n">xilinx</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">signal</span><span class="p">:</span><span class="n">clock_rtl</span><span class="p">:</span><span class="mf">1.0</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
 <span class="n">ipx</span><span class="p">::</span><span class="n">infer_bus_interface</span> <span class="n">ap_rst_n</span> <span class="n">xilinx</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">signal</span><span class="p">:</span><span class="n">reset_rtl</span><span class="p">:</span><span class="mf">1.0</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
@@ -504,9 +259,9 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
 <span class="n">ipx</span><span class="p">::</span><span class="n">associate_bus_interfaces</span> <span class="o">-</span><span class="n">clock</span> <span class="n">ap_clk</span> <span class="o">-</span><span class="n">reset</span> <span class="n">ap_rst_n</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="step-3-set-the-definition-of-axi-control-slave-registers-including-ctrl-and-user-kernel-arguments">
-<h3>Step 3: Set the definition of AXI control slave registers, including CTRL and user kernel arguments<a class="headerlink" href="#step-3-set-the-definition-of-axi-control-slave-registers-including-ctrl-and-user-kernel-arguments" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step-3-set-the-definition-of-axi-control-slave-registers-including-ctrl-and-user-kernel-arguments">
+<h3>Step 3: Set the definition of AXI control slave registers, including CTRL and user kernel arguments<a class="headerlink" href="#step-3-set-the-definition-of-axi-control-slave-registers-including-ctrl-and-user-kernel-arguments" title="Permalink to this heading">¶</a></h3>
 <p>Here we use <em>ipx::add_register</em> command to add the registers to inferred <em>s_axi_control</em> interface and use <em>set_property</em> command to set the property of the registers, for example the kernel argument <em>KEY_LEN</em>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ipx</span><span class="p">::</span><span class="n">add_register</span> <span class="n">KEY_LEN</span>   <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_address_blocks</span> <span class="n">reg0</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_memory_maps</span> <span class="n">s_axi_control</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]]]</span>
 <span class="n">set_property</span> <span class="n">description</span>    <span class="p">{</span><span class="n">AES</span> <span class="n">key</span> <span class="n">length</span><span class="p">}</span>    <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_registers</span> <span class="n">KEY_LEN</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_address_blocks</span> <span class="n">reg0</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_memory_maps</span> <span class="n">s_axi_control</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]]]]</span>
@@ -517,9 +272,9 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
 <p>Here <em>KEY_LEN</em> is the kernel argument name; “AES key length” is the register description; “0x018” is the address offset the the register and “32” is the data width of the register (all scalar kernel arguments should be 32-bit width).</p>
 <p>You can see in the provided Tcl script that all the registers defined in the previous table are added and defined accordingly.</p>
 <p>Since the <em>krnl_aes</em> kernel doesn’t have AXI master ports, so we don’t need to configure them. The description of setting AXI master can be found in <em>krnl_cbc</em> kernel part next.</p>
-</div>
-<div class="section" id="step-4-package-vivado-ip-and-generate-vitis-kernel-file">
-<h3>Step 4: Package Vivado IP and generate Vitis kernel file<a class="headerlink" href="#step-4-package-vivado-ip-and-generate-vitis-kernel-file" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step-4-package-vivado-ip-and-generate-vitis-kernel-file">
+<h3>Step 4: Package Vivado IP and generate Vitis kernel file<a class="headerlink" href="#step-4-package-vivado-ip-and-generate-vitis-kernel-file" title="Permalink to this heading">¶</a></h3>
 <p>Here we use <em>set_property</em> command to set two required property <em>sdx_kernel</em> and <em>sdx_kernel_type</em>. Then we issue <em>ipx::update_source_project_archive</em> and <em>ipx::save_core</em> commands to package the Vivado project into Vivado IP. Finally we use <em>package_xo</em> command to generate the Vitis XO file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">set_property</span> <span class="n">sdx_kernel</span> <span class="n">true</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
 <span class="n">set_property</span> <span class="n">sdx_kernel_type</span> <span class="n">rtl</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
@@ -533,61 +288,61 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
 </pre></div>
 </div>
 <p>In this way, the kernel execution model is specified in the XML file with <em>hwControlProtocol</em> property instead of in <em>package_xo</em> command line option.</p>
-</div>
-</div>
-<div class="section" id="testbench">
-<h2>Testbench<a class="headerlink" href="#testbench" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="testbench">
+<h2>Testbench<a class="headerlink" href="#testbench" title="Permalink to this heading">¶</a></h2>
 <p>We provides a simple SystemVerilog testbench for the <em>krnl_aes</em> module with Xilinx AXI VIPs. The testbench sources are in <strong>~/krnl_aes/tbench</strong> directory. Since <em>krnl_aes</em> has four completely identical AES engines, so we only test two of the four engines. Two AXI stream master VIPs are used to send input data to the kernel, two AXI stream slave VIPs are used to receive output data from the kernel, and an AXI master are used to configure the kernel arguments and control the kernel execution in <em>ap_ctrl_hs</em> fashion for AES key expansion operation. You could read the <strong>tb_krnl_aes.sv</strong> file for more details on the usages of AXI VIP to interaction with the kernel.</p>
 <p>The input random data to the testbench is generated by a perl script <strong>~/common/plain_gen.pl</strong>, and the reference data for output check is generated by OpenSSL tools. The shell script <strong>~/krnl_aes/runsim_krnl_aes_xsim.sh</strong> is used to generate the input stimulus, output reference and run the simulation with Vivado XSIM.</p>
-</div>
-<div class="section" id="kernel-test-system-and-overlay-xclbin-generation">
-<h2>Kernel Test System and Overlay (XCLBIN) Generation<a class="headerlink" href="#kernel-test-system-and-overlay-xclbin-generation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="kernel-test-system-and-overlay-xclbin-generation">
+<h2>Kernel Test System and Overlay (XCLBIN) Generation<a class="headerlink" href="#kernel-test-system-and-overlay-xclbin-generation" title="Permalink to this heading">¶</a></h2>
 <p>To build a test system overlay for <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code>, we need AXI stream master and AXI stream slave to provide and receive data from <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code>. To do this, we write a simple memory-mapped AXI-to-AXIS kernel and a AXIS-to-AXI memory-mapped kernel with HLS C language. These are located in the <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/hls</span></code> directory, and they are called <code class="docutils literal notranslate"><span class="pre">strm_issue.cpp</span></code> and <code class="docutils literal notranslate"><span class="pre">strm_dump.cpp</span></code>, respectively.</p>
 <p>The HLS C implementation of these two kernels is as below. Note that the for-loop with variable <code class="docutils literal notranslate"><span class="pre">j</span></code> is for endian conversion: the input/output data is transferred as little-endian via 128-bit data width AXI bus, and the 128-bit data is considered a integral word in big-endian.</p>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#define PTR_WIDTH 128</span>
 
-<span class="kt">void</span> <span class="nf">strm_issue</span> <span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;&gt;&amp;</span> <span class="n">data_output</span><span class="p">,</span>
-                <span class="n">ap_uint</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">data_input</span><span class="p">,</span>
-                <span class="kt">int</span> <span class="n">byte_size</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">byte_size</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">/</span> <span class="n">PTR_WIDTH</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// clang-format off</span>
-    <span class="cp">#pragma HLS PIPELINE II = 1</span>
-    <span class="c1">// clang-format on</span>
-        <span class="n">ap_uint</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="o">&gt;</span> <span class="n">data_in</span><span class="p">,</span> <span class="n">data_out</span><span class="p">;</span>
-        <span class="n">ap_axiu</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;</span> <span class="n">temp</span><span class="p">;</span>
-        <span class="n">data_in</span> <span class="o">=</span> <span class="n">data_input</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">PTR_WIDTH</span> <span class="o">/</span> <span class="mi">8</span><span class="p">);</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">data_out</span><span class="p">.</span><span class="n">range</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span> <span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span> <span class="o">=</span> <span class="n">data_in</span><span class="p">.</span><span class="n">range</span><span class="p">((</span><span class="n">PTR_WIDTH</span><span class="o">/</span><span class="mi">8-1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span> <span class="p">(</span><span class="n">PTR_WIDTH</span><span class="o">/</span><span class="mi">8-1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="n">temp</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data_out</span><span class="p">;</span>
-        <span class="n">data_output</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">strm_issue</span><span class="w"> </span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">data_output</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">data_input</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">byte_size</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">byte_size</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">PTR_WIDTH</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// clang-format off</span>
+<span class="w">    </span><span class="cp">#pragma HLS PIPELINE II = 1</span>
+<span class="w">    </span><span class="c1">// clang-format on</span>
+<span class="w">        </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data_in</span><span class="p">,</span><span class="w"> </span><span class="n">data_out</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">&gt;</span><span class="w"> </span><span class="n">temp</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">data_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data_input</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">PTR_WIDTH</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">data_out</span><span class="p">.</span><span class="n">range</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data_in</span><span class="p">.</span><span class="n">range</span><span class="p">((</span><span class="n">PTR_WIDTH</span><span class="o">/</span><span class="mi">8-1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">PTR_WIDTH</span><span class="o">/</span><span class="mi">8-1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">temp</span><span class="p">.</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data_out</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">data_output</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kt">void</span> <span class="nf">strm_dump</span> <span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;&gt;&amp;</span> <span class="n">data_input</span><span class="p">,</span>
-                <span class="n">ap_uint</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">data_output</span><span class="p">,</span>
-                <span class="kt">int</span> <span class="n">byte_size</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">byte_size</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">/</span> <span class="n">PTR_WIDTH</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// clang-format off</span>
-    <span class="cp">#pragma HLS PIPELINE II = 1</span>
-    <span class="c1">// clang-format on</span>
-        <span class="n">ap_axiu</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">data_input</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
-        <span class="n">ap_uint</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="o">&gt;</span> <span class="n">data_in</span><span class="p">,</span> <span class="n">data_out</span><span class="p">;</span>
-        <span class="n">data_in</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="n">data</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">PTR_WIDTH</span> <span class="o">/</span> <span class="mi">8</span><span class="p">);</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">data_out</span><span class="p">.</span><span class="n">range</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span> <span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span> <span class="o">=</span> <span class="n">data_in</span><span class="p">.</span><span class="n">range</span><span class="p">((</span><span class="n">PTR_WIDTH</span><span class="o">/</span><span class="mi">8-1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span> <span class="p">(</span><span class="n">PTR_WIDTH</span><span class="o">/</span><span class="mi">8-1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="p">);</span>
-        <span class="p">}</span>            
-        <span class="n">data_output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_out</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>          
+<span class="kt">void</span><span class="w"> </span><span class="nf">strm_dump</span><span class="w"> </span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">data_input</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">data_output</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">byte_size</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">byte_size</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">PTR_WIDTH</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// clang-format off</span>
+<span class="w">    </span><span class="cp">#pragma HLS PIPELINE II = 1</span>
+<span class="w">    </span><span class="c1">// clang-format on</span>
+<span class="w">        </span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">&gt;</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data_input</span><span class="p">.</span><span class="n">read</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="n">PTR_WIDTH</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data_in</span><span class="p">,</span><span class="w"> </span><span class="n">data_out</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">data_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp</span><span class="p">.</span><span class="n">data</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">PTR_WIDTH</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">data_out</span><span class="p">.</span><span class="n">range</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data_in</span><span class="p">.</span><span class="n">range</span><span class="p">((</span><span class="n">PTR_WIDTH</span><span class="o">/</span><span class="mi">8-1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">PTR_WIDTH</span><span class="o">/</span><span class="mi">8-1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w">            </span>
+<span class="w">        </span><span class="n">data_output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data_out</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w">          </span>
 </pre></div>
 </div>
 <p>In total, four <code class="docutils literal notranslate"><span class="pre">strm_issue</span></code> and four <code class="docutils literal notranslate"><span class="pre">strm_dump</span></code> kernels are integrated with <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> in the test system, and the linking operation is scribed in the <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/Makefile</span></code>. The  <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/krnl_aes_test.cfg</span></code> file provides the necessary Vitis linking option for this design. This configuration file includes an additional XDC file, <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/krnl_aes_test.xdc</span></code>, to waive the critical warning encountered in the linking stage for the customized MMCM in the <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel.</p>
-</div>
-<div class="section" id="host-programming">
-<h2>Host Programming<a class="headerlink" href="#host-programming" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="host-programming">
+<h2>Host Programming<a class="headerlink" href="#host-programming" title="Permalink to this heading">¶</a></h2>
 <p>For host programming, you can use XRT Native C++ APIs to control the kernel execution in the FPGA. XRT Native APIs are very straightforward and intuitive. They provide higher efficiency compared to XRT OpenCL, especially in those cases needing very frequent host-kernel interactions. For more details on XRT Native APIs, refer to <a class="reference external" href="https://xilinx.github.io/XRT/master/html/xrt_native_apis.html">XRT Native APIs</a>.</p>
 <p>The host program generates the random data as plain input, then uses the OpenSSL AES API to generate the reference cipher data. It supports the hardware emulation (<code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>) flow as well, and will select the correct XCLBIN files for <code class="docutils literal notranslate"><span class="pre">hw</span></code> or <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> mode.</p>
 <p>The host program uses a <code class="docutils literal notranslate"><span class="pre">run.start()</span></code> function followed by a <code class="docutils literal notranslate"><span class="pre">run.wait()</span></code> function in a single thread way; this is the common usage for <em>ap_ctrl_hs</em> execution model.</p>
@@ -600,21 +355,21 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
 <p>Here is the code snippet for these two methods:</p>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// Method 1 to configure krnl_aes to decryption mode</span>
 <span class="c1">//   use run instance to set kernel argument. The kernel register will not be updated until run()</span>
-  <span class="n">run_key_exp</span><span class="p">.</span><span class="n">set_arg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>                       <span class="c1">// index for argument MODE is 0</span>
-  <span class="n">run_key_exp</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
-  <span class="n">run_key_exp</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="w">  </span><span class="n">run_key_exp</span><span class="p">.</span><span class="n">set_arg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="w">                       </span><span class="c1">// index for argument MODE is 0</span>
+<span class="w">  </span><span class="n">run_key_exp</span><span class="p">.</span><span class="n">start</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">run_key_exp</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
 
 <span class="c1">// Method 2 to configrue krnl_aes to decryption mode</span>
 <span class="c1">//   use kernel write_register() to access the register directly</span>
-  <span class="kt">int</span> <span class="n">reg_offset</span> <span class="o">=</span> <span class="n">kernel_krnl_aes</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>     <span class="c1">// reg_offset = 0x10 for krnl_aes kernel register MODE</span>
-  <span class="n">kernel_krnl_aes</span><span class="p">.</span><span class="n">write_register</span><span class="p">(</span><span class="n">reg_offset</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>  <span class="c1">// set MODE = 0</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">reg_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel_krnl_aes</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">     </span><span class="c1">// reg_offset = 0x10 for krnl_aes kernel register MODE</span>
+<span class="w">  </span><span class="n">kernel_krnl_aes</span><span class="p">.</span><span class="n">write_register</span><span class="p">(</span><span class="n">reg_offset</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">  </span><span class="c1">// set MODE = 0</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="tutorial-usage">
-<h2>Tutorial Usage<a class="headerlink" href="#tutorial-usage" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="before-you-begin">
-<h3>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="tutorial-usage">
+<h2>Tutorial Usage<a class="headerlink" href="#tutorial-usage" title="Permalink to this heading">¶</a></h2>
+<section id="before-you-begin">
+<h3>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h3>
 <p>This tutorial uses files in the <code class="docutils literal notranslate"><span class="pre">~/krnl_aes</span></code> directory.</p>
 <p>All steps except for host program execution in this tutorial are finished by the GNU Make. This example design supports four Alveo cards (U200, U250, U50, U280), and you must make the necessary adjustments to the <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/Makefile</span></code> for each card by uncommenting the line matching your Alveo card.</p>
 <div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span> <span class="m">41</span> <span class="c1"># PART setting: uncomment the line matching your Alveo card</span>
@@ -639,32 +394,32 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
 <span class="nb">source</span> /tools/Xilinx/Vitis/2020.2/settings64.sh
 </pre></div>
 </div>
-</div>
-<div class="section" id="tutorial-steps">
-<h3>Tutorial Steps<a class="headerlink" href="#tutorial-steps" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="generate-ips">
-<h4>1. Generate IPs<a class="headerlink" href="#generate-ips" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="tutorial-steps">
+<h3>Tutorial Steps<a class="headerlink" href="#tutorial-steps" title="Permalink to this heading">¶</a></h3>
+<section id="generate-ips">
+<h4>1. Generate IPs<a class="headerlink" href="#generate-ips" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">gen_ip</span>
 </pre></div>
 </div>
 <p>This starts Vivado in batch mode and calls <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/gen_ip.tcl</span></code> to generate all needed design and verification IPs.</p>
-</div>
-<div class="section" id="run-standalone-simulation">
-<h4>2. Run Standalone Simulation<a class="headerlink" href="#run-standalone-simulation" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="run-standalone-simulation">
+<h4>2. Run Standalone Simulation<a class="headerlink" href="#run-standalone-simulation" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">runsim</span>
 </pre></div>
 </div>
 <p>This calls <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/runsim_krnl_aes_xsim.sh</span></code> to run the simulation with Vivado XSIM.</p>
-</div>
-<div class="section" id="package-vivado-ip-and-generate-vitis-kernel-file">
-<h4>3. Package Vivado IP and Generate Vitis Kernel File<a class="headerlink" href="#package-vivado-ip-and-generate-vitis-kernel-file" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="package-vivado-ip-and-generate-vitis-kernel-file">
+<h4>3. Package Vivado IP and Generate Vitis Kernel File<a class="headerlink" href="#package-vivado-ip-and-generate-vitis-kernel-file" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">pack_kernel</span>
 </pre></div>
 </div>
 <p>This starts Vivado in batch mode and calls <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/pack_kernel.tcl</span></code> to package the RTL sources, generated IP XCI files, and XDC files into Vivado IP. It then generates the Vitis kernel file <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/krnl_aes.xo</span></code>.</p>
-</div>
-<div class="section" id="build-kernel-testing-system-overlay-files">
-<h4>4. Build Kernel Testing System Overlay Files<a class="headerlink" href="#build-kernel-testing-system-overlay-files" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="build-kernel-testing-system-overlay-files">
+<h4>4. Build Kernel Testing System Overlay Files<a class="headerlink" href="#build-kernel-testing-system-overlay-files" title="Permalink to this heading">¶</a></h4>
 <p><strong>Note:</strong> If you are using <code class="docutils literal notranslate"><span class="pre">xilinx_u200_xdma_201830_2</span></code>, <code class="docutils literal notranslate"><span class="pre">xilinx_u250_xdma_201830_2</span></code>, or <code class="docutils literal notranslate"><span class="pre">xilinx_u280_xdma_201920_3</span></code> platforms, you must uncomment line 2, line 5, or line 8 in <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/krnl_aes_test.xdc</span></code>, respectively.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  <span class="m">1</span> <span class="c1"># if you are using xilinx_u200_xdma_201830_2 platform, please uncomment following line</span>
   <span class="m">2</span> <span class="c1"># set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets pfm_top_i/static_region/slr1/base_clocking/clkwiz_kernel/inst/CLK_CORE_DRP_I/clk_inst/clk_out1]</span>
@@ -676,31 +431,31 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
   <span class="m">8</span> <span class="c1">#set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets pfm_top_i/static_region/base_clocking/clkwiz_kernel/inst/CLK_CORE_DRP_I/clk_inst/clk_out1]</span>
 </pre></div>
 </div>
-<div class="section" id="for-a-hardware-target">
-<h5>For a hardware target<a class="headerlink" href="#for-a-hardware-target" title="Permalink to this headline">¶</a></h5>
+<section id="for-a-hardware-target">
+<h5>For a hardware target<a class="headerlink" href="#for-a-hardware-target" title="Permalink to this heading">¶</a></h5>
 <p>For a hardware target, use the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">build_hw</span>
 </pre></div>
 </div>
 <p>This first compiles the two HLS kernels into XO files, then builds the total system overlay files <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/krnl_aes_test_hw.xclbin</span></code>.</p>
-</div>
-<div class="section" id="for-a-hardware-emulation-target">
-<h5>For a hardware emulation target<a class="headerlink" href="#for-a-hardware-emulation-target" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="for-a-hardware-emulation-target">
+<h5>For a hardware emulation target<a class="headerlink" href="#for-a-hardware-emulation-target" title="Permalink to this heading">¶</a></h5>
 <p>For a hardware emulation target, use the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">build_hw</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw_emu</span>
 </pre></div>
 </div>
 <p>This first compiles the two HLS kernels into XO files, then builds the total system overlay files <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/krnl_aes_test_hw_emu.xclbin</span></code>.</p>
-</div>
-</div>
-<div class="section" id="compile-host-program">
-<h4>5. Compile Host Program<a class="headerlink" href="#compile-host-program" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="compile-host-program">
+<h4>5. Compile Host Program<a class="headerlink" href="#compile-host-program" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">build_sw</span>
 </pre></div>
 </div>
 <p>This finishes the compilation of the host C++ program. An executable,  <code class="docutils literal notranslate"><span class="pre">~/krnl_aes/host_krnl_aes_test</span></code>, is generated for both <code class="docutils literal notranslate"><span class="pre">hw</span></code> and <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> modules.</p>
-<div class="section" id="finding-the-device-id-of-your-target-card">
-<h5>Finding the Device ID of Your Target Card<a class="headerlink" href="#finding-the-device-id-of-your-target-card" title="Permalink to this headline">¶</a></h5>
+<section id="finding-the-device-id-of-your-target-card">
+<h5>Finding the Device ID of Your Target Card<a class="headerlink" href="#finding-the-device-id-of-your-target-card" title="Permalink to this heading">¶</a></h5>
 <p>If you have multiple Alveo cards installed on the host machine, use the <code class="docutils literal notranslate"><span class="pre">xbutil</span> <span class="pre">list</span></code> command to find the device ID of your target card. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xbutil</span> <span class="nb">list</span>
 <span class="o">...</span>
@@ -715,10 +470,10 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
  30 #define DEVICE_ID   2
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="run-hardware-emulation-optional">
-<h4>6. Run Hardware Emulation (Optional)<a class="headerlink" href="#run-hardware-emulation-optional" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="run-hardware-emulation-optional">
+<h4>6. Run Hardware Emulation (Optional)<a class="headerlink" href="#run-hardware-emulation-optional" title="Permalink to this heading">¶</a></h4>
 <p>When the XCLBIN file for hardware emulation (<code class="docutils literal notranslate"><span class="pre">~/krnl_aes/krnl_aes_test_hw_emu.xclbin</span></code>) is generated, you can run hardware emulation to verify the kernel in the platform environment for debug or details profiling purposes. Refer to the following commands.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> setup_emu.sh -s on -p PLATFORM_NAME
 ./host_krnl_aes_test -w <span class="m">32</span>
@@ -749,9 +504,9 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
 <div align="center">
 <img src="./images/ap_ctrl_hs_waveform.png" alt="ap_ctrl_hs waveform" >
 </div>
-<br/></div>
-<div class="section" id="run-host-program-in-hardware-mode">
-<h4>7. Run Host Program in Hardware Mode<a class="headerlink" href="#run-host-program-in-hardware-mode" title="Permalink to this headline">¶</a></h4>
+<br/></section>
+<section id="run-host-program-in-hardware-mode">
+<h4>7. Run Host Program in Hardware Mode<a class="headerlink" href="#run-host-program-in-hardware-mode" title="Permalink to this heading">¶</a></h4>
 <p>If you have tried hardware emulation in the previous step, you must run the following command to disable the <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> mode:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> setup_emu.sh -s off
 </pre></div>
@@ -807,74 +562,15 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
 </div>
 <hr class="docutils" />
 <p>Now you have a Vitis RTL kernel file, <code class="docutils literal notranslate"><span class="pre">krnl_aes.xo</span></code>, with <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code> execution model. In the next session, you will learn about another RTL kernel, <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code>, which supports <code class="docutils literal notranslate"><span class="pre">ap_ctrl_chain</span></code> model, and integrates these two kernel into a hardware overlay (XCLBIN) to form a complete AES-CBC acceleration application. This is described in the next section: <a class="reference internal" href="krnl_cbc.html"><span class="doc">RTL Kernel: krnl_cbc</span></a>.</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        Last updated on February 10, 2022.
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -883,147 +579,61 @@ ipx::package_project -root_dir ./krnl_aes_ip -vendor xilinx.com -library user -t
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-														
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<div class="lang-select dropup hidden-md hidden-lg">
-		<button data-toggle="dropdown">
-			<span class="fas fa-globe" aria-hidden="true"></span>
-			<span>
-				
-					English
-				</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a target="_blank" href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">Connect on LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Follow us on Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Connect on Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">Watch us on YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a target="_blank" href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-																	<div class="lang-select dropup hidden-xs hidden-sm">
-	<button data-toggle="dropdown">
-		<span class="fas fa-globe" aria-hidden="true"></span>
-		<span>
-			
-				English
-			</span>
-		<span class="far fa-angle-down" aria-hidden="true"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li>
-				<a target="_blank" href="https://japan.xilinx.com/" target="_self">
-					日本語
-				</a>
-			</li>
-		<li>
-				<a target="_blank" href="https://china.xilinx.com/" target="_self">
-					简体中文
-				</a>
-			</li>
-		</ul>
-	</div>
-															</div>
-														</div>
-														<div class="col-md-pull-5 col-lg-pull-5 col-md-5 col-lg-5">
-															<span class="copyright">©2022 Advanced Micro Devices, Inc</span>
-														</div>
 
-													</div>
-													                    <div class="movethisrowtoleft row">
+													                    <div class="row">
                         <div class="col-xs-24">
-                            <ul class="sub-menu">
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a></li>
-                                <li><a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a></li>
-								<li><a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a></li>
-                                <li><a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></li>
-                            </ul>
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
                         </div>
                     </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-<div class="backToTop parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16"><noindex>
-    <span data-component="backToTopButton" class="backToTopButton loaded">
-        <ul>
-            <li>
-                <a href="https://www.author.xilinx.com/xx/rebrand/amd/en-amd-xilinx-header-footer.html#top" class="btn top">
-                    <span class="fas fa-angle-up" aria-hidden="true"></span>
-                </a>
-            </li>
-        </ul>
-    </span>
-</noindex></div>
-			</div>
-		</div>
+										
+</br>
 
 
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-			underscoreSetup();
-		</script>
-	</body>
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

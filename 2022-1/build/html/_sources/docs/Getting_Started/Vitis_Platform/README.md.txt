@@ -17,10 +17,12 @@
 
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal Platform Creation Quick Start</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/>
     </td>
  </tr>
 </table>
+
+# Versal Platform Creation Quick Start
 
 ***Version: 2022.1***   
 ***Board: VCK190***

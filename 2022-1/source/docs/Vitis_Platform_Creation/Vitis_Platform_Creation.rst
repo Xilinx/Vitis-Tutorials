@@ -19,6 +19,7 @@ Design Tutorials
 .. toctree::
    :maxdepth: 3
    :caption: Design Tutorials
+   :hidden:
 
    Custom Platform Creation Tutorial on MPSoC <./Design_Tutorials/02-Edge-AI-ZCU104/README>
    Custom Platform Creation Tutorial on Versal <./Design_Tutorials/03_Edge_VCK190/README>

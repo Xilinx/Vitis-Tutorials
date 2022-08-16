@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Event Trace Considerations &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Introduction/README.html">Introduction to Vitis Hardware Accelerators Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.html">Accelerating Video Convolution Filtering Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/04-traveling-salesperson/README.html">The Travelling Salesman Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/05-bottom_up_rtl_kernel/README.html">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/03-dataflow_debug_and_optimization/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm/README.html">Using HBM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Event Trace Considerations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/Debug4_et.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
+   </td>
+ </tr>
+ <tr>
+ <td align="center"><h2>System Project Debug with Event Trace</h2>
+ </td>
+ </tr>
+</table><p>Event trace running on hardware is considered EA (Early Access) in 2020.2 release.</p>
+<p><a class="reference external" href="#Event-trace-considerations">Event Trace Considerations</a></p>
+<p><a class="reference external" href="#Event-trace-build-and-generation">Event Trace Build and Generation</a></p>
+<p><a class="reference external" href="#Event-trace-limitations">Event Trace Limitations</a></p>
+<div class="section" id="event-trace-considerations">
+<h1>Event Trace Considerations<a class="headerlink" href="#event-trace-considerations" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="event-trace-choice-considerations">
+<h2>Event Trace Choice Considerations<a class="headerlink" href="#event-trace-choice-considerations" title="Permalink to this heading">¶</a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left"></th>
+<th align="center">Baremetal</th>
+<th align="center">Petalinux</th>
+<th align="center">Bandwidth</th>
+<th align="left">PL resources used</th>
+<th align="left">PS ARM used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">PLIO/XSDB</td>
+<td align="center">O</td>
+<td align="center">O</td>
+<td align="center">pl clock-rate * 64</td>
+<td align="left">Yes</td>
+<td align="left">No</td>
+</tr>
+<tr>
+<td align="left">PLIO/XRT</td>
+<td align="center"></td>
+<td align="center">O</td>
+<td align="center">pl clock-rate * 64</td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="number-of-event-trace-streams-methodology">
+<h2>Number of Event Trace Streams Methodology<a class="headerlink" href="#number-of-event-trace-streams-methodology" title="Permalink to this heading">¶</a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Number of cores</th>
+<th align="left">Recommended number of streams</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Less than 10</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">Between 10 and 20</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">Between 20 and 40</td>
+<td align="left">4</td>
+</tr>
+<tr>
+<td align="left">Between 40 and 80</td>
+<td align="left">8</td>
+</tr>
+<tr>
+<td align="left">Larger than 80</td>
+<td align="left">16</td>
+</tr>
+<tr>
+<td align="left">Intense debug</td>
+<td align="left">16</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">Not recommend using more than 16 streams due to resource constrains</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section" id="event-trace-build-and-generation">
+<h1>Event Trace Build and Generation<a class="headerlink" href="#event-trace-build-and-generation" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="step-1-enable-event-trace-options-in-ai-engine-compiler">
+<h2>Step 1. Enable Event Trace Options in AI Engine Compiler<a class="headerlink" href="#step-1-enable-event-trace-options-in-ai-engine-compiler" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--event-trace<span class="o">=</span>functions<span class="p">|</span>functions_partial_stalls<span class="p">|</span>functions_all_stalls<span class="p">|</span>runtime
+--num-trace-streams<span class="o">=[</span>int<span class="o">]</span>, where int is number of trace streams to be used to collect generated event trace data.
+--event-trace-advanced-mapping<span class="o">=[</span>int<span class="o">]</span>, this option is considered hidden and int will be <span class="nb">set</span> to same as value from --num-trace-streams option.
+--event-trace-bounding-box<span class="o">=[</span>string<span class="o">]</span>, string to specify tiles are <span class="k">in</span> scope to collect event trace data.
+</pre></div>
+</div>
+<p>Issue command <code class="docutils literal notranslate"><span class="pre">aiecompiler</span> <span class="pre">-h</span></code> to show AI Engine Compiler options include event trace.</p>
+<p>Makefile is currently configured to build event trace generation with <code class="docutils literal notranslate"><span class="pre">--event-trace=functions</span></code> option. This option generates events corresponding to entry into and exit out of kernel functions.</p>
+</div>
+<div class="section" id="step-2-event-trace-generation">
+<h2>Step 2. Event Trace Generation<a class="headerlink" href="#step-2-event-trace-generation" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="step-2-1-event-trace-with-xsdb">
+<h3>Step 2.1. Event Trace with XSDB<a class="headerlink" href="#step-2-1-event-trace-with-xsdb" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xsdb
+%xsdb connect -url TCP:<span class="si">${</span><span class="nv">COMPUTER</span><span class="p"> NAME/IP</span><span class="si">}</span>:3121
+%xsdb <span class="nb">source</span> /proj/xbuilds/2020.2_daily_latest/installs/lin64/Vitis/2020.2/scripts/vitis/util/aie_trace_profile.tcl
+%xsdb aietrace::initialize <span class="si">${</span><span class="nv">PROJECT</span><span class="si">}</span>/<span class="si">${</span><span class="nv">DESIGN</span><span class="si">}</span>.xclbin.link_summary 0x800000000 0x800000
+</pre></div>
+</div>
+<p>Note</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x800000000</span></code> is the address that needs to avoid collision with your design.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x800000</span></code> is the size of event trace file. Please adjust accordingly with your design size and amount of event trace data.</p></li>
+</ol>
+</div>
+<div class="section" id="step-2-2-event-trace-with-xrt">
+<h3>Step 2.2. Event Trace with XRT<a class="headerlink" href="#step-2-2-event-trace-with-xrt" title="Permalink to this heading">¶</a></h3>
+<p>Create an <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> file on SD card using the following lines.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>Debug<span class="o">]</span>
+<span class="nv">aie_trace</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">aie_trace_buffer_size</span><span class="o">=</span>100M
+</pre></div>
+</div>
+</div>
+<div class="section" id="steps-to-run-application-after-petalinux-boots-up-on-board">
+<h3>Steps to Run Application after Petalinux Boots up on Board<a class="headerlink" href="#steps-to-run-application-after-petalinux-boots-up-on-board" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /mnt/sd-mmcblk0p1
+<span class="nb">export</span> <span class="nv">XILINX_XRT</span><span class="o">=</span>/usr
+./ps_app.exe a.xclbin
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="step-3-generate-event-trace-files">
+<h2>Step 3. Generate Event Trace Files<a class="headerlink" href="#step-3-generate-event-trace-files" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="step-3-1-xsdb-flow">
+<h3>Step 3.1. XSDB Flow<a class="headerlink" href="#step-3-1-xsdb-flow" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%xsdb aietrace::offload
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">aie_trace_N.txt</span></code> files are created and transferred to host computer that launched XSDB. Make sure those files are at same level as design’s Work directory.</p>
+</div>
+<div class="section" id="step-3-2-xrt-flow">
+<h3>Step 3.2. XRT Flow<a class="headerlink" href="#step-3-2-xrt-flow" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">aie_trace_N.txt</span></code> files are created by the SD card.
+Transfer <code class="docutils literal notranslate"><span class="pre">aie_trace_N.txt</span></code> files from SD card back to where design is at same level as design’s Work directory.</p>
+</div>
+</div>
+<div class="section" id="step-4-launch-vitis-analyzer-to-examine-event-trace-files">
+<h2>Step 4. Launch Vitis Analyzer to Examine Event Trace Files<a class="headerlink" href="#step-4-launch-vitis-analyzer-to-examine-event-trace-files" title="Permalink to this heading">¶</a></h2>
+<p>Launch Vitis Analyzer tool.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis_analyzer
+</pre></div>
+</div>
+<p>Select <strong>file-&gt;Open Summary</strong>, then browse to the design’s run_summary file.
+<img src="images/et_va_init.png">
+<img src="images/et_va_init1.png" width="600"></p>
+<p>Select <strong>Trace</strong> from Vitis analyzer. Initially details of events are not shown.
+<img src="images/et_va_init2.png"></p>
+<p>Zoom in to see detailed information for each state of tiles.
+<img src="images/et_va_run.png"></p>
+</div>
+</div>
+<div class="section" id="event-trace-limitations">
+<h1>Event Trace Limitations<a class="headerlink" href="#event-trace-limitations" title="Permalink to this heading">¶</a></h1>
+<ol class="simple">
+<li><p>Due to limited resources, overruns may be seen from event trace. Follow <a class="reference external" href="#Number-of-event-trace-streams-methodology">Number of event trace streams methodology</a> to configure number of trace streams minimize overruns issue.</p></li>
+<li><p>There is a time sync issue in 2020.2, where start time of each tile is increased by ~100ns or more.</p></li>
+</ol>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on August 5, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
