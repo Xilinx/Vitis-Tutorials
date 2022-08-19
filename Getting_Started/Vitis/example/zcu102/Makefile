@@ -11,6 +11,25 @@ EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_$(TARGET).sh
 SDKTARGETSYSROOT := $(SYSROOT)
 ROOTFS ?= $(EDGE_COMMON_SW)
+CXXFLAGS := -g -std=c++17 -Wall -O0 -fmessage-length=0
+
+#Check OS and setting env for xrt c++ api
+OSDIST = $(shell lsb_release -i |awk -F: '{print tolower($$2)}' | tr -d ' 	' )
+OSREL = $(shell lsb_release -r |awk -F: '{print tolower($$2)}' |tr -d ' 	')
+# for centos and redhat
+ifneq ($(findstring centos,$(OSDIST)),)
+ifeq (7,$(shell echo $(OSREL) | awk -F. '{print tolower($$1)}' ))
+ifeq ($(HOST_ARCH), x86)
+CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+endif
+endif
+else ifneq ($(findstring redhat,$(OSDIST)),)
+ifeq (7,$(shell echo $(OSREL) | awk -F. '{print tolower($$1)}' ))
+ifeq ($(HOST_ARCH), x86)
+CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+endif
+endif
+endif
 
 run: build
 ifeq ($(TARGET),hw)
@@ -30,10 +49,10 @@ $(BUILD_DIR)/app.exe:
 	mkdir -p $(BUILD_DIR)
 	cp xrt.ini $(BUILD_DIR)
 	cp run_$(TARGET).sh $(BUILD_DIR)
-	$(CXX) $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe -Wall -O0 -g -std=c++1y -fmessage-length=0 \
+	$(CXX) $(CXXFLAGS) $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe \
 		-I$(SDKTARGETSYSROOT)/usr/include/xrt -L$(SDKTARGETSYSROOT)/usr/lib \
-		-I$XILINX_VIVADO/include \
-		-lOpenCL -pthread -lrt -lstdc++ --sysroot=$(SDKTARGETSYSROOT)
+		-I$(XILINX_VIVADO)/include \
+                -lxrt_coreutil -pthread --sysroot=$(SDKTARGETSYSROOT)
 
 xo: $(BUILD_DIR)/vadd.xo
 $(BUILD_DIR)/vadd.xo:
