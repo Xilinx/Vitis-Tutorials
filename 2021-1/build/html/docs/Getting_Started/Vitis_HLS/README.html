@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -123,16 +124,16 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="vitis-hls-analysis-and-optimization">
+--><div class="section" id="vitis-hls-analysis-and-optimization">
 <h1>Vitis HLS Analysis and Optimization<a class="headerlink" href="#vitis-hls-analysis-and-optimization" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>Vitis High-Level Synthesis (HLS) is a key part of the Vitis application acceleration development flow. The tool is responsible for compiling C/C++ and OpenCL code into a kernel for acceleration in the programmable logic (PL) region of Xilinx devices. Thus, it is the tool that compiles the hardware kernels for the Vitis tools by performing high-level synthesis.</p>
 <blockquote>
 <div><p><strong>TIP:</strong> Vitis HLS can also be used to generate Vivado IP from C/C++ code, but that flow is not the subject of this tutorial. Although similar, there are some significant differences between producing Vitis XO kernels and Vivado RTL IP. However, you can use this tutorial as a general introduction to the Vitis HLS tool.</p>
 </div></blockquote>
 <p>In this tutorial, you will work through the Vitis HLS tool GUI to build, analyze, and optimize a hardware kernel. You are working through the Vitis kernel flow in the Vitis tool. For more information, refer to <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1%3Bt=vitis+doc%3Bd=vitis_hls_process.html%3Ba=uiy1584905571731">Enabling the Vitis Kernel Flow</a> in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
-<section id="before-you-begin">
+<div class="section" id="before-you-begin">
 <h3>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h3>
 <p>The labs in this tutorial use:</p>
 <ul class="simple">
@@ -146,8 +147,8 @@ function OptanonWrapper() { }
 <li><p>If you run applications on the Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions To complete installation, follow the instructions on the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo.html">Alveo Product Documentation tab</a>.</p></li>
 </ul>
 </div></blockquote>
-</section>
-<section id="setup-the-environment-to-run-vitis">
+</div>
+<div class="section" id="setup-the-environment-to-run-vitis">
 <h3>Setup the environment to run Vitis<a class="headerlink" href="#setup-the-environment-to-run-vitis" title="Permalink to this heading">¶</a></h3>
 <p>To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;Vitis_install_path&gt;/Vitis/2021.1/settings64.sh
@@ -164,16 +165,16 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>For more information see <a class="reference external" href="https://www.xilinx.com/support/answers/73698.html">Xilinx AR 73698</a>.</p>
-</section>
-<section id="accessing-the-tutorial-reference-files">
+</div>
+<div class="section" id="accessing-the-tutorial-reference-files">
 <h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>To access the reference files, type the following into a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Getting_Started/Vitis_HLS</span></code> directory, and then access the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p></li>
 </ol>
-</section>
-</section>
-<section id="next-steps">
+</div>
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>Complete the labs in the following order:</p>
 <ul class="simple">
@@ -194,8 +195,8 @@ function OptanonWrapper() { }
 
 --></br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a> — <a href="./../README.md">Return to Getting Started Pathway</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a> — <a href="./../README.md">Return to Getting Started Pathway</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -105,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="overview">
+</table><div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>We looked at a straightforward bilateral resize algorithm in the last example.  While we saw that it wasn’t
 an amazing candidate for acceleration, perhaps you might want to simultaneously convert a buffer to a number
@@ -133,8 +134,8 @@ basically a “free” operation, as we’ll see in the next example).</p></li>
 and a square gaussian window of width <code class="docutils literal notranslate"><span class="pre">k</span></code>, our computation time for the entire pipeline would be roughly:</p>
 <p><img alt="Image Processing Time" src="../../../_images/08-formula-1.jpg" /></p>
 <p>For fun, let’s make <code class="docutils literal notranslate"><span class="pre">k</span></code> relatively large without going overboard: we’ll choose a 7 × 7 window.</p>
-</section>
-<section id="key-code">
+</div>
+<div class="section" id="key-code">
 <h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>For this algorithm we’ll continue to use of the <strong>Vitis Vision</strong>libraries.</p>
 <p>As before, we’ll configure the library (in the hardware, via templates in our hardware source files) to process eight pixels per clock cycle.  Functionally, our hardware algorithm is now equivalent to this in standard software OpenCV:</p>
@@ -144,8 +145,8 @@ and a square gaussian window of width <code class="docutils literal notranslate"
 </div>
 <p>We’re resizing as in <a class="reference internal" href="07-image-resizing-with-vitis-vision.html"><span class="doc">Example 7</span></a>, and as we mentioned are applying a
 7 × 7 window to the Gaussian blur function.  We have also (arbitrarily) selected σx = σy =3.0</p>
-</section>
-<section id="running-the-application">
+</div>
+<div class="section" id="running-the-application">
 <h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./08_opencv_resize</span> <span class="pre">alveo_examples</span> <span class="pre">&lt;path_to_image&gt;</span></code></p>
@@ -234,8 +235,8 @@ The comparison column will compare the “Scale Up” results from
 </tr>
 </tbody>
 </table><p>We hope you can see the advantage!</p>
-</section>
-<section id="extra-exercises">
+</div>
+<div class="section" id="extra-exercises">
 <h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
@@ -243,8 +244,8 @@ The comparison column will compare the “Scale Up” results from
 more?  Where is the crossover point where it no longer makes sense to use an accelerator in this case?</p></li>
 <li><p>What is the extra hardware latency?</p></li>
 </ul>
-</section>
-<section id="key-takeaways">
+</div>
+<div class="section" id="key-takeaways">
 <h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Pipelining and streaming from one operation to the next in the fabric is beneficial.</p></li>
@@ -257,7 +258,7 @@ documentation for the library function(s) you choose before you implement the ha
 <p>That concludes our runtime introductory tutorial! We certainly hope you found it useful! Please
 take the opportunity to smash that like button and subscr… wait, wrong venue. But do take the
 time to review our <a class="reference internal" href="../README.html"><span class="doc">many other tutorials</span></a>, and thanks for reading!</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
 
 
            </div>

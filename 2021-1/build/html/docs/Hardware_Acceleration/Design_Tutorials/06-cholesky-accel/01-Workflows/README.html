@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -105,12 +106,12 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="workflows">
+</table><div class="section" id="workflows">
 <h1>Workflows<a class="headerlink" href="#workflows" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><strong><em>In this section…:</em></strong>  <em>Quick overview of the Vitis flow and description of the host/kernel paradigm.</em></p>
 </div></blockquote>
-<section id="the-vitis-flow">
+<div class="section" id="the-vitis-flow">
 <h2>The Vitis Flow<a class="headerlink" href="#the-vitis-flow" title="Permalink to this heading">¶</a></h2>
 <p>To enable hardware acceleration, the code is split between an host and one or several kernels.  The host program, written in C/C++ uses API abstractions like OpenCL, runs on a host processor (a x86 server or an ARM processor in the case of embedded platforms).  The hardware accelerated kernels run onto the programmable logic of a Xilinx device.</p>
 <p>The API calls, processed by Xilinx runtime (XRT), manage process transactions between the host program and the hardware accelerators (kernels). Communication between the host and the kernel(s), including control and data transfers, occurs across the PCIe® bus or an AXI bus for embedded platforms.</p>
@@ -123,8 +124,8 @@ function OptanonWrapper() { }
 <p>Here is a diagram of the functional blocks involved for a x86 server connected to an Alveo acceleration card:</p>
 <p><img alt="flow" src="../../../../../_images/host-kernel.png" /></p>
 <p>In the next <a class="reference internal" href="../02-System_Setup/README.html"><span class="doc">section</span></a>, you’ll learn how to prepare your environment to run the tutorial.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

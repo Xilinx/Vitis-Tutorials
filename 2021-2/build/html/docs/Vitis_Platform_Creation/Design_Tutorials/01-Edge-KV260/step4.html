@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -120,7 +120,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
-</table><section id="step-4-test-the-platform">
+</table><div class="section" id="step-4-test-the-platform">
 <h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference external" href="#step-4-test-the-platform">Step 4: Test the Platform</a></p>
@@ -135,7 +135,7 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-<section id="test-1-read-platform-info">
+<div class="section" id="test-1-read-platform-info">
 <h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this heading">¶</a></h2>
 <p>With Vitis environment setup, <strong>platforminfo</strong> tool can report XPFM platform information.</p>
 <details><summary><strong>Click for detailed logs</strong></summary>  <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># in kv260_custom_pkg directory</span>
@@ -220,7 +220,7 @@ Supported Runtimes:
 </pre></div>
 </div>
 </details><p>We can verify clock information and memory information are set as expected.</p>
-<section id="test-2-run-vector-addition-application">
+<div class="section" id="test-2-run-vector-addition-application">
 <h3>Test 2: Run Vector Addition Application<a class="headerlink" href="#test-2-run-vector-addition-application" title="Permalink to this heading">¶</a></h3>
 <p>Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface and interrupt setting in platform are working properly.</p>
 <ol>
@@ -306,22 +306,22 @@ sudo xmutil loadapp vadd
 </div>
 </li>
 </ol>
-</section>
-<section id="congratulations">
+</div>
+<div class="section" id="congratulations">
 <h3>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this heading">¶</a></h3>
 <p>We have completed creating a custom platform from scratch and verifying it with a simple vadd application.</p>
 <p>Please feel free to check more tutorials in this repository.</p>
-</section>
-<section id="fast-track">
+</div>
+<div class="section" id="fast-track">
 <h3>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h3>
 <p>If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> in ref_files directory to generate the reference design and compare with your design.</p>
 <p>The command line flow has slight differences comparing to Vitis IDE flow.</p>
 <ul class="simple">
 <li><p>The vector addition application is called <code class="docutils literal notranslate"><span class="pre">vadd</span></code> and <code class="docutils literal notranslate"><span class="pre">binary_container_1.xclbin</span></code> in Vitis IDE flow. The generated files in command line flow are called <code class="docutils literal notranslate"><span class="pre">simple_vadd</span></code> and <code class="docutils literal notranslate"><span class="pre">krnl_vadd.xclbin</span></code>.</p></li>
 </ul>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
+</div>
 
 
            </div>

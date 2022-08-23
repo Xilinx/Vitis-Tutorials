@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -100,9 +99,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -137,10 +137,10 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="versal-integration-for-hardware-emulation-and-hardware">
+</table><div class="section" id="versal-integration-for-hardware-emulation-and-hardware">
 <h1>Versal Integration for Hardware Emulation and Hardware<a class="headerlink" href="#versal-integration-for-hardware-emulation-and-hardware" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>Versal™ adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.</p>
 <p>This tutorial demonstrates creating a system design running on the AI Engine, PS, and Programmable logic. The AI Engine domain contains a simple graph consisting of 3 kernels. These kernels are connected by both windows and streams. The PL domain contains data movers that provide input and capture output from the AI Engine. The PS domain contains a host application that controls the entire system. You’ll validate the design running on these heterogeneous domains by first emulating the hardware and then running on actual hardware.</p>
@@ -153,8 +153,8 @@ function OptanonWrapper() { }
 <li><p>Set up your <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable based upon where you downloaded the platform.</p></li>
 </ol>
 <p>This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.</p>
-</section>
-<section id="objectives">
+</div>
+<div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h2>
 <p>After completing this tutorial, you should be able to:</p>
 <ul class="simple">
@@ -165,8 +165,8 @@ function OptanonWrapper() { }
 <li><p>Create a software application that runs on Linux.</p></li>
 <li><p>Package the design to run on hardware emulation and an easy-to-boot SD card image to run on hardware.</p></li>
 </ul>
-</section>
-<section id="tutorial-overview">
+</div>
+<div class="section" id="tutorial-overview">
 <h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
 <p><strong>Section 1</strong>: Compile AI Engine code using the AI Engine compiler, viewing compilation results in Vitis Analyzer.</p>
 <p><strong>Section 2</strong>: Simulate the AI Engine graph using the <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code> and viewing trace, and profile results in Vitis Analyzer</p>
@@ -212,12 +212,12 @@ function OptanonWrapper() { }
 <td>Stream to Memory Map HLS kernel to feed output result data from AI Engine classifier kernel to DDR via the PL DMA.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="section-1-compile-ai-engine-code-using-the-ai-engine-compiler-viewing-compilation-results-in-vitis-analyzer">
+</table></div>
+<div class="section" id="section-1-compile-ai-engine-code-using-the-ai-engine-compiler-viewing-compilation-results-in-vitis-analyzer">
 <h2>Section 1: Compile AI Engine code using the AI Engine compiler, viewing compilation results in Vitis Analyzer.<a class="headerlink" href="#section-1-compile-ai-engine-code-using-the-ai-engine-compiler-viewing-compilation-results-in-vitis-analyzer" title="Permalink to this heading">¶</a></h2>
 <p>The first step is to take any v++ kernels (HLS C), AI Engine Kernels and graph, then compile them into their respective <code class="docutils literal notranslate"><span class="pre">.xo</span></code> and <code class="docutils literal notranslate"><span class="pre">.o</span></code> files. You can compile the kernels and graph in parallel because they do not rely on each other at this step.</p>
 <p>This tutorial design has 3 AI Engine kernels (interpolator, polar_clip and classifier) and two HLS PL kernels (<code class="docutils literal notranslate"><span class="pre">s2mm</span></code> and <code class="docutils literal notranslate"><span class="pre">mm2s</span></code>).</p>
-<section id="compiling-hls-kernels-using-v">
+<div class="section" id="compiling-hls-kernels-using-v">
 <h3>Compiling HLS Kernels Using v++<a class="headerlink" href="#compiling-hls-kernels-using-v" title="Permalink to this heading">¶</a></h3>
 <p>To compile the <code class="docutils literal notranslate"><span class="pre">mm2s</span></code>, and <code class="docutils literal notranslate"><span class="pre">s2mm</span></code> PL HLS kernels, use the <code class="docutils literal notranslate"><span class="pre">v++</span></code> compiler command - which takes in an HLS kernel source and produces an <code class="docutils literal notranslate"><span class="pre">.xo</span></code> file.</p>
 <ol>
@@ -266,8 +266,8 @@ v++ -c --platform <span class="nv">$PLATFORM_REPO_PATHS</span>/xilinx_vck190_es1
 <td>Saves the generated output process in the <code>_x</code> directory.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="compiling-an-ai-engine-adf-graph-for-v-flow">
+</table></div>
+<div class="section" id="compiling-an-ai-engine-adf-graph-for-v-flow">
 <h3>Compiling an AI Engine ADF Graph for V++ Flow<a class="headerlink" href="#compiling-an-ai-engine-adf-graph-for-v-flow" title="Permalink to this heading">¶</a></h3>
 <p>An ADF Graph can be connected to an extensible Vitis platform. That is, the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through the <code class="docutils literal notranslate"><span class="pre">v++</span></code> connectivity directives.</p>
 <ul class="simple">
@@ -314,8 +314,8 @@ v++ -c --platform <span class="nv">$PLATFORM_REPO_PATHS</span>/xilinx_vck190_es1
 </tr>
 </tbody>
 </table><p>The generated output from <code class="docutils literal notranslate"><span class="pre">aiecompiler</span></code> is the <code class="docutils literal notranslate"><span class="pre">Work</span></code> directory, and the <code class="docutils literal notranslate"><span class="pre">libadf.a</span></code> file. This file contains the compiled AI Engine configuration, graph, and Kernel <code class="docutils literal notranslate"><span class="pre">.elf</span></code> files.</p>
-</section>
-<section id="vitis-analyzer-compile-summary">
+</div>
+<div class="section" id="vitis-analyzer-compile-summary">
 <h3>Vitis Analyzer Compile Summary<a class="headerlink" href="#vitis-analyzer-compile-summary" title="Permalink to this heading">¶</a></h3>
 <p>Vitis Analyzer is used to view the AI Engine compilation results. It highlights the state of compilation, display the graph solution in both the <strong>Graph</strong> and <strong>Array</strong> views, provides guidance around the kernel code, and allow you to open various reports produced by <code class="docutils literal notranslate"><span class="pre">aiecompiler</span></code>. Below is the <code class="docutils literal notranslate"><span class="pre">graph.aiecompile_summary</span></code> file generated by the <code class="docutils literal notranslate"><span class="pre">aiecompiler</span></code>, which is located in the <code class="docutils literal notranslate"><span class="pre">Work</span></code> directory.</p>
 <p>The <strong>Summary View</strong> displays compilation runtime,  version of the compiler was used, the platform targeted, kernels created, and the exact command-line used for the compilation.</p>
@@ -342,8 +342,8 @@ v++ -c --platform <span class="nv">$PLATFORM_REPO_PATHS</span>/xilinx_vck190_es1
 </li>
 </ol>
 <p><strong>Note</strong>: The <strong>Graph View</strong> and <strong>Array View</strong> are presented in the next section.</p>
-</section>
-<section id="section-2-simulating-graph-and-using-vitis-analyzer">
+</div>
+<div class="section" id="section-2-simulating-graph-and-using-vitis-analyzer">
 <h3>Section 2: Simulating Graph and using Vitis Analyzer<a class="headerlink" href="#section-2-simulating-graph-and-using-vitis-analyzer" title="Permalink to this heading">¶</a></h3>
 <p>After the graph has been compiled, you can simulate your design with the <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code> command. This uses a cycle approximate model to test your graph and get preliminary throughput information early in the design cycle, while the PL developers continue to work on the platform for the application.</p>
 <p><strong>Note</strong>: Simulating the design with VCD will increase simulation runtime. To learn more about this feature you can read this section here: <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021.2/vitis_doc/simulate_graph_application.html#pmy1512608736116">AI Engine SystemC Simulator</a>.</p>
@@ -374,7 +374,7 @@ profile_funct_24_0.txt  profile_funct_25_0.txt  profile_instr_24_0.txt  profile_
 </ol>
 <p>As you can see a variety of files, the ones prefixed with <code class="docutils literal notranslate"><span class="pre">profile_</span></code> are the outputs of the profiling and calculated per tile. In this tutorial, the profiling is done for all tiles that are utilized, but you can limit to specific tiles by providing the row and column of the tile. To see more info about profiling with <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code> go <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021.2/vitis_doc/simulate_graph_application.html#yfx1512608800495">here</a>. You can open up these files to see what was calculated, but it is better to view it in Vitis Analyzer where it is all curated. The <code class="docutils literal notranslate"><span class="pre">data</span></code> directory is generated here with the output file(s) you have in the <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> for the PLIO objects. Lastly, the <code class="docutils literal notranslate"><span class="pre">default.aierun_summary</span></code> is generated, which contains all the information generated by <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code> with profiling and trace info, and when opening this file in Vitis Analyzer will allow you to browse all the output files, and profile/trace data.</p>
 <p><strong>NOTE</strong>: The <code class="docutils literal notranslate"><span class="pre">tutorial.vcd</span></code> is generated on the same level as the <code class="docutils literal notranslate"><span class="pre">./Work</span></code> directory.</p>
-<section id="vitis-analyzer">
+<div class="section" id="vitis-analyzer">
 <h4>Vitis Analyzer<a class="headerlink" href="#vitis-analyzer" title="Permalink to this heading">¶</a></h4>
 <p>You can then open up the generated <code class="docutils literal notranslate"><span class="pre">default.aierun_summary</span></code> from the <code class="docutils literal notranslate"><span class="pre">aiesimulator_output</span></code> directory for Vitis Analyzer.</p>
 <ol>
@@ -385,15 +385,15 @@ profile_funct_24_0.txt  profile_funct_25_0.txt  profile_instr_24_0.txt  profile_
 </li>
 </ol>
 <p>With this tool you can look at a variety of views to debug, and potentially, optimize your graph.</p>
-<section id="summary">
+<div class="section" id="summary">
 <h5><strong>Summary</strong><a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h5>
 <p>This a general overview summary of running <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code>. As you can see in the following screenshot, it tells you the status, what version is used, time, what platform is used, and the command-line used to execute.</p>
 <p><img alt="Vitis Analyzer Summary" src="../../../../_images/vitis_analyzer_summary.png" /></p>
 <ol class="simple">
 <li><p>Click on <strong>Profile</strong>.</p></li>
 </ol>
-</section>
-<section id="profile">
+</div>
+<div class="section" id="profile">
 <h5><strong>Profile</strong><a class="headerlink" href="#profile" title="Permalink to this heading">¶</a></h5>
 <p>The <strong>Profile View</strong> provides detailed information collected during the simulation to give you an idea on cycle count, total instructions executed, program memory, and specific info per functions in the two tiles that the kernels are programmed.</p>
 <p><img alt="Vitis Analyzer Profile" src="../../../../_images/vitis_analyzer_profile.png" /></p>
@@ -406,8 +406,8 @@ profile_funct_24_0.txt  profile_funct_25_0.txt  profile_instr_24_0.txt  profile_
 <ol class="simple">
 <li><p>Click on <strong>Graph</strong>.</p></li>
 </ol>
-</section>
-<section id="graph">
+</div>
+<div class="section" id="graph">
 <h5><strong>Graph</strong><a class="headerlink" href="#graph" title="Permalink to this heading">¶</a></h5>
 <p>This view gives an overview of your graph and how the graph is designed in a logical fashion. In this view, you can see all the PLIO Ports, kernels, buffers, and net connections for the entire ADF Graph.</p>
 <p><strong>Note</strong>: This view as well as the <strong>Array View</strong> have cross-probe selection. Meaning selecting an object in this view will select it in the other and vice versa.</p>
@@ -415,8 +415,8 @@ profile_funct_24_0.txt  profile_funct_25_0.txt  profile_instr_24_0.txt  profile_
 <ol class="simple">
 <li><p>Click on <strong>Array</strong>.</p></li>
 </ol>
-</section>
-<section id="array">
+</div>
+<div class="section" id="array">
 <h5><strong>Array</strong><a class="headerlink" href="#array" title="Permalink to this heading">¶</a></h5>
 <p>The <strong>Array View</strong> gives you a logical device view of the AI Engine and how the kernels are placed and how they are connected to each other as well as the shim.</p>
 <p><img alt="Vitis Analyzer Array" src="../../../../_images/vitis_analyzer_array.png" /></p>
@@ -443,8 +443,8 @@ profile_funct_24_0.txt  profile_funct_25_0.txt  profile_instr_24_0.txt  profile_
 <ol class="simple">
 <li><p>Click on <strong>Simulator Output</strong>.</p></li>
 </ol>
-</section>
-<section id="simulator-output">
+</div>
+<div class="section" id="simulator-output">
 <h5><strong>Simulator Output</strong><a class="headerlink" href="#simulator-output" title="Permalink to this heading">¶</a></h5>
 <p>Lastly, the <strong>Simulator Output</strong> view and will print out the <code class="docutils literal notranslate"><span class="pre">output.txt</span></code> generated by the graph. This is a timestamped output.</p>
 <p><strong>Note</strong>: If you need to compare this file to a golden one, you’ll have to remove the -<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">####ns</span></code>- from the file.</p>
@@ -453,10 +453,10 @@ profile_funct_24_0.txt  profile_funct_25_0.txt  profile_instr_24_0.txt  profile_
 <ol class="simple">
 <li><p>Once you’re done with the Vitis Analyzer, close it by going to <strong>File</strong> &gt; <strong>Exit</strong>.</p></li>
 </ol>
-</section>
-</section>
-</section>
-<section id="section-3-use-v-to-link-ai-engine-hls-kernels-with-the-platform">
+</div>
+</div>
+</div>
+<div class="section" id="section-3-use-v-to-link-ai-engine-hls-kernels-with-the-platform">
 <h3>Section 3: Use V++ to Link AI Engine, HLS Kernels with the Platform<a class="headerlink" href="#section-3-use-v-to-link-ai-engine-hls-kernels-with-the-platform" title="Permalink to this heading">¶</a></h3>
 <p>After the AI Engine kernels, graph, PL kernel, and HLS kernels have been compiled, and simulated you can use <code class="docutils literal notranslate"><span class="pre">v++</span></code> to link them with the platform to generate an <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>.</p>
 <p><img alt="Section 2" src="../../../../_images/tutorial_step_2.png" /></p>
@@ -526,9 +526,9 @@ profile_funct_24_0.txt  profile_funct_25_0.txt  profile_instr_24_0.txt  profile_
 </tr>
 </tbody>
 </table><p>Now you have a generated <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code> that will be used to execute your design on the platform.</p>
-</section>
-</section>
-<section id="section-4-compile-the-a72-host-application">
+</div>
+</div>
+<div class="section" id="section-4-compile-the-a72-host-application">
 <h2>Section 4: Compile the A72 Host Application<a class="headerlink" href="#section-4-compile-the-a72-host-application" title="Permalink to this heading">¶</a></h2>
 <p>After all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code uses <a class="reference external" href="http://www.github.com/Xilinx/XRT">XRT</a> (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker, it is using the libraries: <code class="docutils literal notranslate"><span class="pre">-ladf_api_xrt</span> <span class="pre">-lxrt_coreutil</span></code>.</p>
 <ol>
@@ -581,7 +581,7 @@ aarch64-xilinx-linux-g++ main.o aie_control_xrt.o -ladf_api_xrt -lxrt_coreutil -
 <td>This is required for Linux applications using XRT.</td>
 </tr>
 </tbody>
-</table><section id="section-5-package-the-design">
+</table><div class="section" id="section-5-package-the-design">
 <h3>Section 5: Package the Design<a class="headerlink" href="#section-5-package-the-design" title="Permalink to this heading">¶</a></h3>
 <p>With all the AI Engine outputs and the new platform created, you can now generate the Programmable Device Image (PDI) and a package to be used on an SD card. The PDI contains all executables, bitstreams, and configurations of every element of the device, and the packaged SD card directory contains everything to boot Linux and have your generated application and <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>.</p>
 <ol>
@@ -639,8 +639,8 @@ v++ --package -t hw_emu <span class="se">\</span>
 <td>Tell the packager what file is to be packaged in the <code>sd_card</code> directory. You'll have to specify this multiple times for all the files you want packaged.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="section-6-run-hardware-emulation">
+</table></div>
+<div class="section" id="section-6-run-hardware-emulation">
 <h3>Section 6: Run Hardware Emulation<a class="headerlink" href="#section-6-run-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <p>After packaging, everything is set to run emulation. Since you ran <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code> with profiling enabled, you can bring that to hardware emulation. You can pass the <code class="docutils literal notranslate"><span class="pre">aiesim_options.txt</span></code> to the <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code> which will enable the profiling options used in <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code> to be applied to hardware emulation. To do this, you will just add the <code class="docutils literal notranslate"><span class="pre">-aie-sim-options</span> <span class="pre">../aiesimulator_output/aiesim_options.txt</span></code>.</p>
 <ol>
@@ -699,8 +699,8 @@ dmesg -n <span class="m">4</span> <span class="o">&amp;&amp;</span> <span class=
 <ol class="simple">
 <li><p>Close out of the <strong>Vitis Analyzer</strong> and build for hardware.</p></li>
 </ol>
-</section>
-<section id="section-7-build-and-run-on-hardware">
+</div>
+<div class="section" id="section-7-build-and-run-on-hardware">
 <h3>Section 7: Build and Run on Hardware<a class="headerlink" href="#section-7-build-and-run-on-hardware" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>To build for hardware run the following command:</p>
@@ -744,8 +744,8 @@ v++ --package -t hw <span class="se">\</span>
 </ol>
 <p>You should see <strong>TEST PASSED</strong>. You have successfully run your design on hardware.</p>
 <p><strong>IMPORTANT</strong>: To rerun the application you need to power cycle the board.</p>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h3>Summary<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>In this tutorial you learned the following:</p>
 <ul class="simple">
@@ -769,9 +769,9 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD002 | © Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
-</section>
+<p align="center"><sup>XD002 | © Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="overview">
+</table><div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>We’ve made some big gains in our overall system throughput, but the bottleneck is now very clearly the
 accelerator itself.  Remember that there are two axes on which we can optimize a design: we can throw more
@@ -119,8 +119,8 @@ over PCIe) it’s always been able to beat us.  Now it’s time to turn the tabl
 <p>Our DDR controller natively has a 512-bit wide interface internally.  If we parallelize the data flow in the
 accelerator, that means we’ll be able to process 16 array elements per clock tick instead of one. So, we
 should be able to get an instant 16x speed-up by just vectorizing the input.</p>
-</section>
-<section id="key-code">
+</div>
+<div class="section" id="key-code">
 <h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>In this example, if we continue to focus on the host software and treat the kernel as a black box we wind up
 with code that’s essentially identical to the code from Example 3.  All we need to do is change the kernel
@@ -172,8 +172,8 @@ optimization for very heavy workloads.</p>
 <p>Otherwise, aside from switching to the <code class="docutils literal notranslate"><span class="pre">wide_vadd</span></code> kernel the code here is exactly unchanged other than
 increasing the buffer size to 1 GiB.  This was done to better accentuate the differences between the hardware
 and software.</p>
-</section>
-<section id="running-the-application">
+</div>
+<div class="section" id="running-the-application">
 <h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./04_wide_vadd</span> <span class="pre">alveo_examples</span></code></p>
@@ -353,8 +353,8 @@ architecture rather than trying to apply hardware acceleration.</p>
 beat the CPU our entire kernel would need to run to completion in only about 120 ms.  For that to work we
 would need to run four times faster (not likely), process four times as much data per clock, or run four
 accelerators in parallel. Which one should we pick?  Let’s leave that for the next example.</p>
-</section>
-<section id="extra-exercises">
+</div>
+<div class="section" id="extra-exercises">
 <h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
@@ -362,8 +362,8 @@ accelerators in parallel. Which one should we pick?  Let’s leave that for the 
 <li><p>Try to capture the Vitis Timeline Trace and view this for yourself.  The instructions for doing so are
 found in the <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx_2020_1/vitis_doc/index.html">Vitis Documentation</a></p></li>
 </ul>
-</section>
-<section id="key-takeaways">
+</div>
+<div class="section" id="key-takeaways">
 <h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Parallelizing the kernel can provide great results, but you need to take care that your data transfer
@@ -378,7 +378,7 @@ hitting your overall performance target even if your kernels are highly optimize
 <p>Now we’ve seen that just parallelizing the data path isn’t quite enough.  Let’s see what we can do about
 those transfer times.</p>
 <p>Read <a class="reference internal" href="05-optimizing-compute-and-transfer.html"><span class="doc">Example 5: Optimizing Compute and Transfer</span></a></p>
-<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></section>
+<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
 
 
            </div>

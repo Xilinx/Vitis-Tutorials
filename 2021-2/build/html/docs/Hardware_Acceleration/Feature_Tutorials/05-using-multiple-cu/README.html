@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -95,9 +94,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -134,14 +134,14 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="using-multiple-compute-units">
+</table><div class="section" id="using-multiple-compute-units">
 <h1>Using Multiple Compute Units<a class="headerlink" href="#using-multiple-compute-units" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial demonstrates a flexible kernel linking process to increase the number of kernel instances on an FPGA. Each specified instance of a kernel is also known as a compute unit (CU). This process of increasing number of CU improves the parallelism in a combined host-kernel system.</p>
-</section>
-<section id="tutorial-overview">
+</div>
+<div class="section" id="tutorial-overview">
 <h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
 <p>By default, the Vitis™ core development kit creates one CU for each kernel. A host program can use the same kernel multiple times for different sets of data. In these cases, it is useful to generate multiple CUs of the kernel to let those CUs run concurrently and improve the performance of the overall system.</p>
 <p>For more information, see <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1%3Bt=vitis+doc%3Bd=buildingdevicebinary.html%3Ba=yzb1524519238289">Creating Multiple Instances of a Kernel</a> in the Application Acceleration
@@ -154,8 +154,8 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).<
 <li><p>Re-run the hardware emulation and confirm the parallel execution of the CUs.</p></li>
 </ol>
 <p>This tutorial uses an image filter example to demonstrate the multiple CU feature. The host application processes the image, extracts Y, U, and V planes, and then runs the kernel three times to filter each plane of an image. By default, these three kernels run sequentially, using the same hardware resources because the FPGA only contains a single CU of the kernel. This tutorial demonstrates how to increase the number of CU, and then executing the kernel runs in parallel.</p>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial uses:</p>
 <ul class="simple">
@@ -176,15 +176,15 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).<
 </li>
 </ul>
 </div></blockquote>
-<section id="accessing-the-tutorial-reference-files">
+<div class="section" id="accessing-the-tutorial-reference-files">
 <h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>To access the reference files, enter the following in a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">http://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
 <li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu</span></code> directory, and then access the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p></li>
 </ol>
-</section>
-</section>
-<section id="makefile-flow">
+</div>
+</div>
+<div class="section" id="makefile-flow">
 <h2>Makefile Flow<a class="headerlink" href="#makefile-flow" title="Permalink to this heading">¶</a></h2>
 <p>You can observe the Makefile used for this tutorial in <code class="docutils literal notranslate"><span class="pre">reference-files/Makefile</span></code>. The top-level settings include:</p>
 <ul>
@@ -198,7 +198,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).<
 </li>
 <li><p><strong>EXE_OPT</strong>: The runtime options passed as command line arguments: Compiled kernel <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> file, input image.</p></li>
 </ul>
-<section id="run-hardware-emulation">
+<div class="section" id="run-hardware-emulation">
 <h3>Run Hardware Emulation<a class="headerlink" href="#run-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <p>Run hardware emulation with the following command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw_emu</span>
@@ -208,8 +208,8 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).<
 <blockquote>
 <div><p><strong>NOTE:</strong> For instructions on how to build the host software and hardware, refer to the <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/tree/master/Getting_Started">Vitis Getting Started</a> tutorial.</p>
 </div></blockquote>
-</section>
-<section id="inspect-the-host-code">
+</div>
+<div class="section" id="inspect-the-host-code">
 <h3>Inspect the Host Code<a class="headerlink" href="#inspect-the-host-code" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>While the emulation run is executing, in another terminal, open the <code class="docutils literal notranslate"><span class="pre">src/host/host.cpp</span></code> file.</p></li>
@@ -250,8 +250,8 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).<
 </div>
 </li>
 </ol>
-</section>
-<section id="emulation-result">
+</div>
+<div class="section" id="emulation-result">
 <h3>Emulation Result<a class="headerlink" href="#emulation-result" title="Permalink to this heading">¶</a></h3>
 <p>Review the generated Timeline Trace report (<code class="docutils literal notranslate"><span class="pre">opencl_trace.csv</span></code>).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_analyzer</span> <span class="n">filter2d</span><span class="o">.</span><span class="n">hw_emu</span><span class="o">.</span><span class="n">xclbin</span><span class="o">.</span><span class="n">run_summary</span>
@@ -266,8 +266,8 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).<
 <li><p>After the blue bars, you can see three green bars, one for each kernel execution. They are working on the FPGA sequentially.
 <img alt="Serial kernel enqueue" src="../../../../_images/serial_kernel_enqueue_vitis.JPG" /></p></li>
 </ul>
-</section>
-<section id="improve-the-host-code-for-concurrent-kernel-enqueuing">
+</div>
+<div class="section" id="improve-the-host-code-for-concurrent-kernel-enqueuing">
 <h3>Improve the Host Code for Concurrent Kernel Enqueuing<a class="headerlink" href="#improve-the-host-code-for-concurrent-kernel-enqueuing" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Edit the <code class="docutils literal notranslate"><span class="pre">src/host/host.cpp</span></code> host file to change line 75. You will change this line to declare the command queue as an <em>out-of-order</em> command queue.</p>
@@ -285,16 +285,16 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).<
 <p>However, though the host scheduled all these executions concurrently, second and third execution requests are delayed as there is only one CU on the FPGA (the FPGA still executes the kernels sequentially).<br /><img alt="Sequential kernels" src="../../../../_images/sequential_kernels_2.JPG" /><br />In the next step, you will increase the number of CU on the FPGA to allow three host kernel executions concurrently.</p>
 </li>
 </ol>
-</section>
-<section id="increasing-the-number-of-cus">
+</div>
+<div class="section" id="increasing-the-number-of-cus">
 <h3>Increasing the Number of CUs<a class="headerlink" href="#increasing-the-number-of-cus" title="Permalink to this heading">¶</a></h3>
 <p>Now, build the kernel xclbin again by altering the link step to generate three CUs of the same kernel.</p>
 <p>Open the <code class="docutils literal notranslate"><span class="pre">link.cfg</span></code> file, and change the <code class="docutils literal notranslate"><span class="pre">nk</span></code> setting.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nk</span> <span class="o">=</span> <span class="n">Filter2DKernel</span><span class="p">:</span><span class="mi">3</span>
 </pre></div>
 </div>
-</section>
-<section id="run-hardware-emulation-and-inspect-the-change">
+</div>
+<div class="section" id="run-hardware-emulation-and-inspect-the-change">
 <h3>Run Hardware Emulation and Inspect the Change<a class="headerlink" href="#run-hardware-emulation-and-inspect-the-change" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Regenerate the <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> file. You need to do <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span></code> to delete the existing xclbin with one CU and to create a new xclbin with three kernel CUs.</p>
@@ -307,16 +307,16 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).<
 </ol>
 <p>You can now see that the application takes advantage of the three CUs, and that the kernel executions overlaps and executes in parallel, speeding up the overall application.
 <img alt="missing image" src="../../../../_images/overlapping_kernels_vitis_2.JPG" /></p>
-</section>
-</section>
-<section id="conclusion">
+</div>
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>You have learned how to alter the kernel linking process to execute same kernel functions concurrently on an FPGA.
 </br></p>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

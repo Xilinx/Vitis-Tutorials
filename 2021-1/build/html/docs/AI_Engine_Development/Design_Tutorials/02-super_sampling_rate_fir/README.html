@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -112,8 +111,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -148,10 +149,10 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="super-sampling-rate-fir-filters-implementation-on-the-ai-engine">
+</table><div class="section" id="super-sampling-rate-fir-filters-implementation-on-the-ai-engine">
 <h1>Super Sampling Rate FIR Filters: Implementation on the AI Engine<a class="headerlink" href="#super-sampling-rate-fir-filters-implementation-on-the-ai-engine" title="Permalink to this heading">¶</a></h1>
 <p>This design has been tested using the Vitis software development platform 2020.2.</p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>Versal™ ACAP AI Core Series are heterogeneous devices containing many domains with compute capabilities. With respect to Digital Signal Processing (DSP), and particularly Finite Impulse Response (FIR) filters, the two domains of interest are:</p>
 <ul class="simple">
@@ -160,8 +161,8 @@ function OptanonWrapper() { }
 </ul>
 <p>FIR filter architecture is a rich and fruitful electrical engineering domain, especially when the input sampling rate becomes higher than the clock rate of the device (Super Sampling Rate aka. SSR). For the PL there exists a number of solutions that are already available using turnkey IP solution (FIR Compiler). The AI Engine array is a completely new processor and processor array architecture with enormous compute capabilities, so an efficient filtering architecture has to be found using all the capabilities of the AI Engine array, but also all the communications that are possible with the PL.</p>
 <p>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal ACAP AI Engine processor array.</p>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>Before beginning this tutorial you should be familiar with Versal ACAP architecture and more specifically on the AI Engine array processor and interconnect architecture.</p>
 <ul class="simple">
@@ -174,16 +175,16 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html">Vitis</a></p></li>
 <li><p><a class="reference external" href="https://www.python.org/downloads/">Python 3</a></p></li>
 </ul>
-<section id="accessing-the-tutorial-reference-files">
+<div class="section" id="accessing-the-tutorial-reference-files">
 <h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>To access the reference files, type the following into a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials.git</span></code>.</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/Utils/</span></code> directory, and type <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">InitPythonPath</span></code> to have this directory in your path for Python libraries and executable search path.</p></li>
 </ol>
 <p>You can now start the tutorial.</p>
-</section>
-</section>
-<section id="ssr-fir-tutorial">
+</div>
+</div>
+<div class="section" id="ssr-fir-tutorial">
 <h2>SSR FIR Tutorial<a class="headerlink" href="#ssr-fir-tutorial" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial is decomposed into multiple steps:</p>
 <ol class="simple">
@@ -200,8 +201,8 @@ function OptanonWrapper() { }
 </li>
 </ol>
 <p><a name="AIE_Architecture"></a></p>
-</section>
-<section id="summary-of-ai-engine-architecture">
+</div>
+<div class="section" id="summary-of-ai-engine-architecture">
 <h2>Summary of AI Engine Architecture<a class="headerlink" href="#summary-of-ai-engine-architecture" title="Permalink to this heading">¶</a></h2>
 <p>You should have already read the <a class="reference external" href="https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf">AI Engine Detailed Architecture</a>, so the purpose of this chapter is simply to highlight the features of the AI Engine that will be useful for this tutorial.</p>
 <p>Versal™ Adaptive Compute Acceleration Platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.</p>
@@ -212,7 +213,7 @@ function OptanonWrapper() { }
 <p><img alt="missing image" src="../../../../_images/AIEngineArray.jpg" /></p>
 <p>All arrays (processors, memory modules, AXI interconnects) are driven by a single clock. The slowest speed grade device can run &#64;1 GHz. The highest speedgrade will allow 1.3 GHz clock rates. The AI Engine allows for numerous connection possibilities with the surrounding environment as shown in the following figure.</p>
 <p><img alt="missing image" src="../../../../_images/AIEngine.jpg" /></p>
-<section id="memory-interface">
+<div class="section" id="memory-interface">
 <h3>Memory interface<a class="headerlink" href="#memory-interface" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/AIE_MemIF.jpg" /></p>
 <p>Each AI Engine is surrounded by 4x 32 kB memories, each one being divided in four pairs of banks. The bandwidth is very high:</p>
@@ -229,8 +230,8 @@ function OptanonWrapper() { }
 </li>
 <li><p>Be aware that you need also to feed the memories using DMAs or other AI Engines</p></li>
 </ul>
-</section>
-<section id="streaming-interface">
+</div>
+<div class="section" id="streaming-interface">
 <h3>Streaming interface<a class="headerlink" href="#streaming-interface" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/AIE_Streams.jpg" /></p>
 <p>The streaming interface is based on two incoming streams and two outgoing streams, each one on 32 bits per clock cycle. These four streams are handled by a stream FIFO that allows the processor to use different bitwidths to access these streams:</p>
@@ -259,8 +260,8 @@ function OptanonWrapper() { }
 </li>
 </ul>
 <p>Accessing the data to/from the streams using the 128 bit interface does not increase the bandwidth, but limits the number of accesses that must be scheduled within the microcode of the VLIW processor.</p>
-</section>
-<section id="cascade-streams">
+</div>
+<div class="section" id="cascade-streams">
 <h3>Cascade Streams<a class="headerlink" href="#cascade-streams" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/AIE_Cascade.jpg" /></p>
 <p>The cascade stream allows an AI Engine processor to transfer the value of some of its accumulator register (384 bits) to its neighbor (on the left or on the right depending on the row):</p>
@@ -270,9 +271,9 @@ function OptanonWrapper() { }
 <li><p>If the transfer concerns a 768 bit register, it will take 2 clock cycles.</p></li>
 </ul>
 <p><a name="FIR_Filter"></a></p>
-</section>
-</section>
-<section id="what-is-a-fir-filter">
+</div>
+</div>
+<div class="section" id="what-is-a-fir-filter">
 <h2>What is a FIR Filter?<a class="headerlink" href="#what-is-a-fir-filter" title="Permalink to this heading">¶</a></h2>
 <p>The purpose of this tutorial is not to train you to be an expert in Digital Signal Processing, however to grasp the basics of FIR filtering it is necessary to understand the computations that are required, and the data that are consumed and produced by the compute block.</p>
 <p>A digital signal is an analog signal (audio, radio frequencies, …) that has been received by a converter (Analog to Digital Converter: ADC) which performs two operations:</p>
@@ -296,13 +297,13 @@ function OptanonWrapper() { }
 </div>
 <p>The first line is the taps vector definition in the correct order for a DSP expert, and the second line defines the vector that will be used in the AI Engine implementation as the same vector but in the reverse order.</p>
 <p><a name="UtilsDirectory"></a></p>
-</section>
-<section id="utils-directory">
+</div>
+<div class="section" id="utils-directory">
 <h2>“Utils” Directory<a class="headerlink" href="#utils-directory" title="Permalink to this heading">¶</a></h2>
 <p>For this tutorial a number of utilities have been created that you are free to reuse for your own purposes.</p>
 <p>First, to allow these utilities to be called from anywhere during this tutorial you need to add this directory in your <strong><em>PATH</em></strong> but also indicate to <code class="docutils literal notranslate"><span class="pre">python</span></code> that this directory contains some libraries and should be checked during imports.</p>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Utils</span></code> directory, and type <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">InitPythonPath</span></code> to have this directory in your path for Python libraries and executable search path.</p>
-<section id="generatestreams">
+<div class="section" id="generatestreams">
 <h3>GenerateStreams<a class="headerlink" href="#generatestreams" title="Permalink to this heading">¶</a></h3>
 <p>This utility will use a library <strong><em>GenerationLib.py</em></strong> to generate input data suitable for the cases you want to test. It is called by typing: <code class="docutils literal notranslate"><span class="pre">GenerateStreams</span></code>. This displays a GUI in which you can select the appropriate parameters to generate the correct input data files:</p>
 <p><img alt="missing image" src="../../../../_images/GenerateStreams.jpg" /></p>
@@ -322,8 +323,8 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-</section>
-<section id="processaieoutput">
+</div>
+<div class="section" id="processaieoutput">
 <h3>ProcessAIEOutput<a class="headerlink" href="#processaieoutput" title="Permalink to this heading">¶</a></h3>
 <p>This utility takes all generated outputs and displays the reconstructed signal. For Single Stream/Single Phase it will display a signal using the timestamps written in the file.</p>
 <p>If your output signals are stored in files named <code class="docutils literal notranslate"><span class="pre">output_0.txt</span></code> … then navigate to the output directory and type <code class="docutils literal notranslate"><span class="pre">ProcessAIEOutput</span> <span class="pre">output_*</span></code> to process the output of the AI Engines.</p>
@@ -332,17 +333,17 @@ function OptanonWrapper() { }
 <li><p><code class="docutils literal notranslate"><span class="pre">Atot.txt</span></code> which is the output phase by phase</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">out.txt</span></code> which is the textfile of the reconstructed signal</p></li>
 </ul>
-</section>
-<section id="streamthroughput">
+</div>
+<div class="section" id="streamthroughput">
 <h3>StreamThroughput<a class="headerlink" href="#streamthroughput" title="Permalink to this heading">¶</a></h3>
 <p>This utility computes the throughput concerning all AI Engine output files given in an argument.</p>
-</section>
-<section id="getdeclare-sh">
+</div>
+<div class="section" id="getdeclare-sh">
 <h3>GetDeclare.sh<a class="headerlink" href="#getdeclare-sh" title="Permalink to this heading">¶</a></h3>
 <p>This utility has been created to view the template arguments that were used for kernel declaration in the Double Stream SSR case. It can be easily modified to be adapted to different cases.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p></section>
-</section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p></div>
+</div>
+</div>
 
 
            </div>

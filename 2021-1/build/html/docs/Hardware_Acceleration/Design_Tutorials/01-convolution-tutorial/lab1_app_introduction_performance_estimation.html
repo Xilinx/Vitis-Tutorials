@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,7 +110,7 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="video-convolution-filter-introduction-and-performance-estimation">
+</table><div class="section" id="video-convolution-filter-introduction-and-performance-estimation">
 <h1>Video Convolution Filter: Introduction and Performance Estimation<a class="headerlink" href="#video-convolution-filter-introduction-and-performance-estimation" title="Permalink to this heading">¶</a></h1>
 <p>This lab will explore a 2D video convolution filter and measure its performance on the host machine. These measurements will establish a performance baseline. The amount of acceleration that should be provided by hardware implementation is calculated based on the required performance constraints. In the next lab, we will estimate the performance of the FPGA accelerator. In a nutshell, during this lab, you will:</p>
 <ul class="simple">
@@ -118,7 +119,7 @@ function OptanonWrapper() { }
 <li><p>Calculate required acceleration vs. software implementation for given performance constraints</p></li>
 <li><p>Estimate the performance of hardware accelerator before implementation</p></li>
 </ul>
-<section id="video-filtering-applications-and-2-d-convolution-filters">
+<div class="section" id="video-filtering-applications-and-2-d-convolution-filters">
 <h2>Video Filtering Applications and 2-D Convolution Filters<a class="headerlink" href="#video-filtering-applications-and-2-d-convolution-filters" title="Permalink to this heading">¶</a></h2>
 <p>Video applications use different types of filters extensively for multiple reasons: filter noise, manipulate motion blur, enhance color and contrast, edge detection, creative effects, etc. At its core, a convolution video filter carries out some form of data average around a pixel, which redefines the amount and type of correlation any pixel has to its surrounding area. Such filtering is carried out for all the pixels in a video frame.</p>
 <p>A matrix of coefficients defines a convolution filter. The convolution operation is essentially a sum of products performed on a pixel set (a frame/image sub-matrix centered around a given pixel) and a coefficients matrix. The figure below illustrates how convolution is calculated for a pixel; it is highlighted in yellow. Here the filter has a coefficient matrix that is 3x3 in size. The figure also displays how the whole output image is generated during the filtering process. The index of the output pixel being generated is the index of the input pixel highlighted in yellow that is being filtered. In algorithmic terms, the process of filtering consists of:</p>
@@ -129,7 +130,7 @@ function OptanonWrapper() { }
 <li><p>Placing the sum-of-product as output pixel in output image/frame on the same index as the input pixel</p></li>
 </ul>
 <p><img alt="Convolution Filter" src="../../../../_images/convolution.jpg" /></p>
-<section id="performance-requirements-for-1080p-hd-video">
+<div class="section" id="performance-requirements-for-1080p-hd-video">
 <h3>Performance Requirements for 1080p HD Video<a class="headerlink" href="#performance-requirements-for-1080p-hd-video" title="Permalink to this heading">¶</a></h3>
 <p>You can easily calculate the application performance requirements given the standard performance specs for 1080p High Definition (HD) video. Then these top-level requirements can be translated into constraints for hardware implementation or software throughput requirements. For 1080p HD video at 60 frames per seconds(FPS) the specs are listed below as well as required throughput in terms of pixels per second is calculated:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Video <span class="nv">Resolution</span>        <span class="o">=</span> <span class="m">1920</span> x <span class="m">1080</span>
@@ -144,9 +145,9 @@ Throughput <span class="o">(</span>MB/s<span class="o">)</span>     <span class=
 </pre></div>
 </div>
 <p>The required throughput to meet 60 FPS performance turns out to be 373 MB/s ( since each pixel is 8-bits).</p>
-</section>
-</section>
-<section id="software-implementation">
+</div>
+</div>
+<div class="section" id="software-implementation">
 <h2>Software Implementation<a class="headerlink" href="#software-implementation" title="Permalink to this heading">¶</a></h2>
 <p>This section will discuss the baseline software implementation and performance measurements, which will be used to gauge the acceleration requirements given the performance constraints.</p>
 <p>The convolution filter is implemented in software using a typical multi-level nested loop structure. Outer two loops define the pixel to be processed(iterating over each pixel). The inner two loops perform the sum-of-product (SOP) operation, actual convolution filtering between the coefficient matrix and the selected sub-matrix from the image centered around the processed pixel.</p>
@@ -205,7 +206,7 @@ Throughput <span class="o">(</span>MB/s<span class="o">)</span>     <span class=
 <span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<section id="running-the-software-application">
+<div class="section" id="running-the-software-application">
 <h3>Running the Software Application<a class="headerlink" href="#running-the-software-application" title="Permalink to this heading">¶</a></h3>
 <p>To run the software application, go to the directory called “sw_run” and launch the application as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>/sw_run
@@ -238,9 +239,9 @@ CPU  Throughput   :    <span class="m">14</span>.5617 MB/s
 </pre></div>
 </div>
 <p>So to meet the required performance of processing 60 frames per second, the software implementation needs to be accelerated by a factor of 26x.</p>
-</section>
-</section>
-<section id="hardware-implementation">
+</div>
+</div>
+<div class="section" id="hardware-implementation">
 <h2>Hardware Implementation<a class="headerlink" href="#hardware-implementation" title="Permalink to this heading">¶</a></h2>
 <p>To understand what kind of hardware implementation is needed given the performance constraints, you can examine the convolution kernel in some detail:</p>
 <ul class="simple">
@@ -249,7 +250,7 @@ CPU  Throughput   :    <span class="m">14</span>.5617 MB/s
 <li><p>These two loops are essentially doing the sum-of-product on a coefficient matrix and image sub-matrix. The matrix sizes are defined by the coefficient matrix, which is 15x15.</p></li>
 <li><p>The inner two loops are performing a dot product of size 225(15x15). In other words, the two inner loops perform 225 multiply-accumulate (MAC) operations for every output pixel produced.</p></li>
 </ul>
-<section id="baseline-hardware-implementation-performance">
+<div class="section" id="baseline-hardware-implementation-performance">
 <h3>Baseline Hardware Implementation Performance<a class="headerlink" href="#baseline-hardware-implementation-performance" title="Permalink to this heading">¶</a></h3>
 <p>The simplest and most straightforward hardware implementation can be achieved by passing this current kernel source code through the Vitis HLS tool. It will pipeline the innermost loop with II=1, performing only one multiply-accumulate(MAC) per cycle. The performance can be estimated based on the MACs as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> MACs per <span class="nv">Cycle</span> <span class="o">=</span> <span class="m">1</span>
@@ -268,8 +269,8 @@ As you have seen in previous sections, the throughput required for 60FPS 1080p H
 Acceleration Factor to Meet SW <span class="nv">Performance</span>    <span class="o">=</span> <span class="m">14</span>.5/1.33 <span class="o">=</span> <span class="m">10</span>.9x
 </pre></div>
 </div>
-</section>
-<section id="performance-estimation-for-optimized-hardware-implementations">
+</div>
+<div class="section" id="performance-estimation-for-optimized-hardware-implementations">
 <h3>Performance Estimation for Optimized Hardware Implementations<a class="headerlink" href="#performance-estimation-for-optimized-hardware-implementations" title="Permalink to this heading">¶</a></h3>
 <p>From the above calculations, it is clear that you need to improve the performance of a baseline hardware implementation by 280x to process 60 FPS. One of the paths you can take is to start unrolling the inner loops and pipeline. For example, by unrolling the innermost loop, which iterates 15 times, you can improve the performance by 15x. With that one change, the hardware performance will already be better than software-only implementation, but not yet good enough to meet the required video performance. Another approach you can follow is to unroll the inner two loops and gain in performance by 15*15=225, which means a throughput of 1-output pixel per cycle. The performance and memory bandwidth requirements will be as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">Throughput</span>  <span class="o">=</span> Fmax * Pixels produced per <span class="nv">cycle</span> <span class="o">=</span> <span class="m">300</span> * <span class="nv">1</span> <span class="o">=</span> <span class="m">300</span> MB/s
@@ -297,9 +298,9 @@ Input Memory <span class="nv">Bandwidth</span> <span class="o">=</span> Fmax * I
 <p align="center"><b>
 Next Lab Module: <a href="./lab2_conv_filter_kernel_design.md">Design and Analysis of Hardware Kernel Module for 2-D Video Convolution Filter</a>
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
-</b></p></section>
-</section>
-</section>
+</b></p></div>
+</div>
+</div>
 
 
            </div>
