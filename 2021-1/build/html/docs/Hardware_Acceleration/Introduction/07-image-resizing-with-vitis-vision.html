@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -105,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="overview">
+</table><div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>Image processing is a great area for acceleration in an FPGA, and there are a few reasons for it.  First and foremost, if you’re doing any kind of pixel-level processing as the images get larger and larger, the amount of computation goes up with it.  But, more importantly, they map very nicely to our train analogy from earlier.</p>
 <p>Let’s look at a very simple example: a bilateral resize algorithm.  This algorithm takes an input image and scales it to a new, arbitrary resolution.  The steps to do that might look something like this:</p>
@@ -132,8 +133,8 @@ to implement.</p>
 many images in parallel with multiple pipelines - <strong>Gustafson’s Law</strong>.  Ideally, you’ll optimize on both
 axes: build a kernel that can process your algorithm as efficiently as possible, and then put as many kernels
 as you can take advantage of in the FPGA fabric.</p>
-</section>
-<section id="key-code">
+</div>
+<div class="section" id="key-code">
 <h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>For this algorithm we’ll make use of the Vitis Vision libraries.  These are hardware-optimized libraries
 implementing many commonly-used vision functions (conceptually similar to OpenCV) functions that you can
@@ -145,8 +146,8 @@ and  then do something with the results.  All of that can be done on the FPGA wi
 the host memory at all, and all of these operations can be done in parallel.  Imagine building a pipelined
 stream of functionality whose only fundamental contention is bandwidth, not register space.</p>
 <p>In the Vitis Vision library, you configure things such as the number of pixels to process per clock, etc. via templates.  I won’t go into detail here, but please refer to <a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/vision/2020.1/index.html">Vitis Vision Libraries Documentation</a> for more information.</p>
-</section>
-<section id="running-the-application">
+</div>
+<div class="section" id="running-the-application">
 <h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./07_opencv_resize</span> <span class="pre">alveo_examples</span> <span class="pre">&lt;path_to_image&gt;</span></code></p>
@@ -241,8 +242,8 @@ you can see that you would have almost used all of your time already.</p>
 </table><p>And the best part: remember that color conversion step I mentioned earlier?  In an FPGA that’s basically a
 <em>free operation</em> - we get a few extra clock cycles (nanoseconds) of latency, but it’s fundamentally another
 O(N) operation, and a simple one at that with just a few multiplications and additions on the pixel values.</p>
-</section>
-<section id="extra-exercises">
+</div>
+<div class="section" id="extra-exercises">
 <h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
@@ -263,7 +264,7 @@ documentation for the library function(s) you choose before you implement the ha
 </ul>
 <p>We mentioned briefly earlier that doing additional processing in the FPGA fabric is very “cheap”, time-wise.  In the next section let’s do an experiment to see if that’s true.</p>
 <p>Read <a class="reference internal" href="08-vitis-vision-pipeline.html"><span class="doc">Example 8: Pipelining Operations with Vitis Vision</span></a></p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
 
 
            </div>

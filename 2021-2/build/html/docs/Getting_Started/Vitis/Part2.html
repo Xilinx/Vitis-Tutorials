@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -88,9 +87,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -128,22 +128,22 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="vitis-getting-started-tutorial">
+</table><div class="section" id="vitis-getting-started-tutorial">
 <h1>Vitis Getting Started Tutorial<a class="headerlink" href="#vitis-getting-started-tutorial" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="part-2-installation-and-configuration">
+<div class="section" id="part-2-installation-and-configuration">
 <h2>Part 2 : Installation and Configuration<a class="headerlink" href="#part-2-installation-and-configuration" title="Permalink to this heading">¶</a></h2>
 <p>To develop and deploy applications with Vitis, you need to install the Vitis unified software environment, the Xilinx Runtime library (XRT) and the platform files specific to the acceleration card used in your project.</p>
-<section id="step-1-review-the-installation-requirements">
+<div class="section" id="step-1-review-the-installation-requirements">
 <h3>Step 1 – Review the Installation Requirements<a class="headerlink" href="#step-1-review-the-installation-requirements" title="Permalink to this heading">¶</a></h3>
 <p>Prior to starting the installation process, make sure to check the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements">Vitis installation requirements</a>.</p>
 <p><em>NOTE: Windows OS support is limited to the Vitis embedded software development flow. The Vitis application acceleration flow is only supported on Linux.</em></p>
-</section>
-<section id="step-2-download-vitis">
+</div>
+<div class="section" id="step-2-download-vitis">
 <h3>Step 2 – Download Vitis<a class="headerlink" href="#step-2-download-vitis" title="Permalink to this heading">¶</a></h3>
 <p>Download the latest version of the Vitis from the <a class="reference external" href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html">Xilinx download website</a>. Make sure to download the Linux Self-Extracting web installer or the Single-File installer.</p>
-</section>
-<section id="step-3-install-downloaded-packages">
+</div>
+<div class="section" id="step-3-install-downloaded-packages">
 <h3>Step 3 – Install Downloaded Packages<a class="headerlink" href="#step-3-install-downloaded-packages" title="Permalink to this heading">¶</a></h3>
 <p>After downloading the Vitis, XRT and platform packages, install them in the following order and according to the provided instructions:</p>
 <ol class="simple">
@@ -153,10 +153,10 @@ function OptanonWrapper() { }
 <blockquote>
 <div><p><em>Note: Installing XRT is not required when targeting Arm-based embedded platforms. The Vitis compiler has its own copy of xclbinutil for hardware generation; and for software compilation you can use the XRT from the sysroot on the Embedded Processor platform.</em></p>
 </div></blockquote>
-</section>
-<section id="step-4-download-and-install-the-required-platform-files">
+</div>
+<div class="section" id="step-4-download-and-install-the-required-platform-files">
 <h3>Step 4 – Download and Install the Required Platform files<a class="headerlink" href="#step-4-download-and-install-the-required-platform-files" title="Permalink to this heading">¶</a></h3>
-<section id="step-4a-installing-data-center-platform-files">
+<div class="section" id="step-4a-installing-data-center-platform-files">
 <h4>Step 4A - Installing Data Center Platform Files<a class="headerlink" href="#step-4a-installing-data-center-platform-files" title="Permalink to this heading">¶</a></h4>
 <p>Xilinx provides base platforms for the Alveo U200, U250, U50 and U280 data-center acceleration cards. Before installing a platform, you need to download the following packages:</p>
 <ol class="simple">
@@ -171,8 +171,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo/u50.html#gettingStarted">U50</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo/u280.html#gettingStarted">U280</a></p></li>
 </ul>
-</section>
-<section id="step-4b-installing-embedded-processor-platform-files">
+</div>
+<div class="section" id="step-4b-installing-embedded-processor-platform-files">
 <h4>Step 4B - Installing Embedded Processor Platform Files<a class="headerlink" href="#step-4b-installing-embedded-processor-platform-files" title="Permalink to this heading">¶</a></h4>
 <p>Xilinx provides base platforms for the ZCU102 and ZCU104 cards. Before installing a platform, you need to download the following packages:</p>
 <ol class="simple">
@@ -184,9 +184,9 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html">ZCU102</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html">ZCU104</a></p></li>
 </ul>
-</section>
-</section>
-<section id="step-5-setup-the-environment-to-run-vitis">
+</div>
+</div>
+<div class="section" id="step-5-setup-the-environment-to-run-vitis">
 <h3>Step 5 – Setup the environment to run Vitis<a class="headerlink" href="#step-5-setup-the-environment-to-run-vitis" title="Permalink to this heading">¶</a></h3>
 <p>To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;Vitis_install_path&gt;/Vitis/2021.2/settings64.sh
@@ -203,9 +203,9 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>For more information see <a class="reference external" href="https://www.xilinx.com/support/answers/73698.html">Xilinx AR 73698</a>.</p>
-</section>
-</section>
-<section id="next-step">
+</div>
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p><strong>Click here to <a class="reference internal" href="#"><span class="doc">Review the Host and Kernel Code</span></a></strong></p>
 <hr class="docutils" />
@@ -218,8 +218,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

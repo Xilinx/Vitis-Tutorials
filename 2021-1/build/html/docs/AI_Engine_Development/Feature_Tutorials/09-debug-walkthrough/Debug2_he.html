@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="ai-engine-source-code-debug-with-hardware-emulator">
+</table><div class="section" id="ai-engine-source-code-debug-with-hardware-emulator">
 <h1>AI Engine Source Code Debug with Hardware Emulator<a class="headerlink" href="#ai-engine-source-code-debug-with-hardware-emulator" title="Permalink to this heading">¶</a></h1>
 <p>A system project includes PS, PL, and AI Engine development and additionally a system wide configuration that requires to be configured correctly. Hardware emulator supports the system project debug needs and is capable of debug PS and AI Engine domains. PL domain debug is not supported currently.</p>
 <p>The following showcase features of the hardware emulator:</p>
@@ -115,45 +116,45 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="#Hardware-emulation-source-code-debug-limitations">Hardware emulation source code debug limitations</a></p></li>
 </ul>
 <p><a class="reference external" href="#Command-line-project-source-code-debug-with-hardware-emulator"> Command-Line Project Source Code Debug with Hardware Emulator</a></p>
-<section id="hardware-emulation-source-code-debug">
+<div class="section" id="hardware-emulation-source-code-debug">
 <h2>Hardware Emulation Source Code Debug<a class="headerlink" href="#hardware-emulation-source-code-debug" title="Permalink to this heading">¶</a></h2>
-<section id="step-1-build">
+<div class="section" id="step-1-build">
 <h3>Step 1. Build<a class="headerlink" href="#step-1-build" title="Permalink to this heading">¶</a></h3>
 <p>Select the build configuration to be <strong>Emulation-HW</strong>.</p>
 <p><img alt="missing image" src="../../../../_images/he_run_cfg.png" /></p>
 <p>Highlight beamformer system project and right-click to select <strong>build project</strong>.
 It takes over 60 minutes to complete the build.</p>
-</section>
-<section id="step-2-launch-hardware-emulator">
+</div>
+<div class="section" id="step-2-launch-hardware-emulator">
 <h3>Step 2. Launch Hardware Emulator<a class="headerlink" href="#step-2-launch-hardware-emulator" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/he_run_init.png" /></p>
 <p><strong>Note:</strong> It takes a couple of minutes to launch the emulator and boot up Petalinux.</p>
-</section>
-<section id="step-3-during-debug">
+</div>
+<div class="section" id="step-3-during-debug">
 <h3>Step 3. During Debug<a class="headerlink" href="#step-3-during-debug" title="Permalink to this heading">¶</a></h3>
-<section id="step-3-1-debug-ps">
+<div class="section" id="step-3-1-debug-ps">
 <h4>Step 3.1. Debug - PS<a class="headerlink" href="#step-3-1-debug-ps" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_run_ps.png" /></p>
-</section>
-<section id="step-3-2-debug-ai-engine">
+</div>
+<div class="section" id="step-3-2-debug-ai-engine">
 <h4>Step 3.2. Debug - AI Engine<a class="headerlink" href="#step-3-2-debug-ai-engine" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_run_aie.png" /></p>
 <p><img alt="missing image" src="../../../../_images/he_run_aie_1.png" /></p>
 <p>AI Engine only debugs within system project via hardware emulator, AI Engine emulator debug still applies. <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> are applicable at this condition.</p>
-</section>
-</section>
-</section>
-<section id="hardware-emulation-source-code-debug-limitations">
+</div>
+</div>
+</div>
+<div class="section" id="hardware-emulation-source-code-debug-limitations">
 <h2>Hardware Emulation Source Code Debug Limitations<a class="headerlink" href="#hardware-emulation-source-code-debug-limitations" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Limitations from <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> applies.</p></li>
 <li><p>PL debug is not supported from Vitis™ IDE.</p></li>
 </ol>
-</section>
-<section id="command-line-project-source-code-debug-with-hardware-emulator">
+</div>
+<div class="section" id="command-line-project-source-code-debug-with-hardware-emulator">
 <h2>Command-Line Project Source Code Debug with Hardware Emulator<a class="headerlink" href="#command-line-project-source-code-debug-with-hardware-emulator" title="Permalink to this heading">¶</a></h2>
 <p>Use cases that involve using Vitis IDE functionalities without migrating to Vitis IDE are permitted.</p>
-<section id="step-1-build-project-to-be-debugged">
+<div class="section" id="step-1-build-project-to-be-debugged">
 <h3>Step 1. Build Project to be Debugged<a class="headerlink" href="#step-1-build-project-to-be-debugged" title="Permalink to this heading">¶</a></h3>
 <p>If the project is not built already, use this tutorial’s <code class="docutils literal notranslate"><span class="pre">Makefile.emu</span></code> that has <code class="docutils literal notranslate"><span class="pre">--package.enable_aie_debug</span></code> option in the packaging step. This option inserts configuration data object (CDO) that generates stop requests for the AI Engine cores, so that they stop at the reset vector. This option is required to add debug capabilities. Issue command <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package_dbg</span></code> with this tutorial’s <code class="docutils literal notranslate"><span class="pre">Makefile.emu</span></code> to package binaries that can be debugged.
 Note: The packaged binaries that have debug capabilities require to run with debugger. Run without debugger will see execution hang due to wait for debugger invocation. Run command <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package</span></code> to package back regular binaries.</p>
@@ -162,8 +163,8 @@ make
 make package_dbg
 </pre></div>
 </div>
-</section>
-<section id="step-2-launch-hardware-emulator-and-boot-petalinux">
+</div>
+<div class="section" id="step-2-launch-hardware-emulator-and-boot-petalinux">
 <h3>Step 2. Launch Hardware Emulator and Boot Petalinux<a class="headerlink" href="#step-2-launch-hardware-emulator-and-boot-petalinux" title="Permalink to this heading">¶</a></h3>
 <p>From terminal 1, setup tool path properly and issue this command to launch hardware emulator and boot up Petalinux.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./launch_hw_emu.sh -add-env <span class="nv">ENABLE_RDWR_DEBUG</span><span class="o">=</span><span class="nb">true</span> -add-env <span class="nv">RDWR_DEBUG_PORT</span><span class="o">=</span><span class="m">10100</span> -pid-file emulation.pid -no-reboot -forward-port <span class="m">1440</span> <span class="m">1534</span>
@@ -182,8 +183,8 @@ make package_dbg
 <li><p>Previous command takes a few minutes to complete due to both hardware emulator and Petalinux are required to boot up properly.</p></li>
 <li><p>Wait until both hardware server and Petalinux boot up BEFORE moving to next steps.</p></li>
 </ol>
-</section>
-<section id="step-3-launch-vitis-ide-and-xrt-server">
+</div>
+<div class="section" id="step-3-launch-vitis-ide-and-xrt-server">
 <h3>Step 3. Launch Vitis IDE and XRT server<a class="headerlink" href="#step-3-launch-vitis-ide-and-xrt-server" title="Permalink to this heading">¶</a></h3>
 <p>From terminal 2, setup tool path properly and issue this command to launch XRT server and Vitis IDE.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis -debug -flow embedded_accel -target hw_emu -exe ./host.exe -program-args ./a.xclbin -port <span class="m">1440</span>
@@ -205,43 +206,43 @@ xrt_server -I30000 -S -s tcp::4352
 <p>Expected result
 <img alt="missing image" src="../../../../_images/he_temp_run.png" /></p>
 <p><strong>Note:</strong> The previously listed step takes a couple of minutes to complete.</p>
-</section>
-<section id="step-4-setup-vitis-ai-engine-debug-configuration">
+</div>
+<div class="section" id="step-4-setup-vitis-ai-engine-debug-configuration">
 <h3>Step 4. Setup Vitis AI Engine Debug Configuration<a class="headerlink" href="#step-4-setup-vitis-ai-engine-debug-configuration" title="Permalink to this heading">¶</a></h3>
-<section id="step-4-1-configure-debug-using-click-on-debug-icon">
+<div class="section" id="step-4-1-configure-debug-using-click-on-debug-icon">
 <h4>Step 4.1. Configure Debug using Click-on Debug Icon<a class="headerlink" href="#step-4-1-configure-debug-using-click-on-debug-icon" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_cl_config0.png" /></p>
-</section>
-<section id="step-4-2-under-single-application-debug-to-create-a-new-debug-configuration">
+</div>
+<div class="section" id="step-4-2-under-single-application-debug-to-create-a-new-debug-configuration">
 <h4>Step 4.2. Under “Single Application Debug” to Create a New Debug Configuration<a class="headerlink" href="#step-4-2-under-single-application-debug-to-create-a-new-debug-configuration" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_cl_config1.png" /></p>
-</section>
-<section id="step-4-3-setup-new-debug-type-name-and-connection">
+</div>
+<div class="section" id="step-4-3-setup-new-debug-type-name-and-connection">
 <h4>Step 4.3. Setup New Debug Type Name and Connection<a class="headerlink" href="#step-4-3-setup-new-debug-type-name-and-connection" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_cl_config2.png" /></p>
-</section>
-<section id="step-4-4-setup-new-connection-name-host-and-port">
+</div>
+<div class="section" id="step-4-4-setup-new-connection-name-host-and-port">
 <h4>Step 4.4. Setup New Connection Name, Host, and Port<a class="headerlink" href="#step-4-4-setup-new-connection-name-host-and-port" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_cl_config3.png" /></p>
-</section>
-<section id="step-4-5-setup-execute-script-of-newly-created-debug-type">
+</div>
+<div class="section" id="step-4-5-setup-execute-script-of-newly-created-debug-type">
 <h4>Step 4.5. Setup Execute Script of Newly Created Debug Type<a class="headerlink" href="#step-4-5-setup-execute-script-of-newly-created-debug-type" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_cl_config4.png" /></p>
 <p><strong>Note:</strong> The script, <strong>aie_app_debug_em.tcl</strong> is provided in this tutorial and needs to be updated to match your environment settings. The <code class="docutils literal notranslate"><span class="pre">aie_work_dir</span></code> variable should be the Work folder inside this lab –e.g. <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">aie_work_dir</span> <span class="pre">&quot;${PROJECT_PATH}/beamformer/Work/&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">vitis_install</span> <span class="pre">&quot;${XILINX_VITIS_PATH}/Xilinx/Vitis/2021.1&quot;</span></code></p>
-</section>
-<section id="step-4-6-close-the-debug-configuration">
+</div>
+<div class="section" id="step-4-6-close-the-debug-configuration">
 <h4>Step 4.6. Close the debug configuration<a class="headerlink" href="#step-4-6-close-the-debug-configuration" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_cl_config5.png" /></p>
-</section>
-<section id="step-4-7-run-ps-by-resume-application-so-ai-engine-can-be-initialized-and-debugged">
+</div>
+<div class="section" id="step-4-7-run-ps-by-resume-application-so-ai-engine-can-be-initialized-and-debugged">
 <h4>Step 4.7. Run PS (by resume) Application so AI Engine can be Initialized and Debugged<a class="headerlink" href="#step-4-7-run-ps-by-resume-application-so-ai-engine-can-be-initialized-and-debugged" title="Permalink to this heading">¶</a></h4>
 <p>![missing image](./images/he_cl_config6.png” width=”450” &gt;</p>
-</section>
-<section id="step-4-8-wait-until-ps-has-initialized-ai-engine-and-observe-starting-graph-run-from-console">
+</div>
+<div class="section" id="step-4-8-wait-until-ps-has-initialized-ai-engine-and-observe-starting-graph-run-from-console">
 <h4>Step 4.8. Wait until PS has Initialized AI Engine and Observe “Starting graph run” from Console<a class="headerlink" href="#step-4-8-wait-until-ps-has-initialized-ai-engine-and-observe-starting-graph-run-from-console" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_cl_config6_1.png" /></p>
-</section>
-<section id="step-4-9-launch-ai-engine-debugger-to-debug-the-ai-engine-sub-project">
+</div>
+<div class="section" id="step-4-9-launch-ai-engine-debugger-to-debug-the-ai-engine-sub-project">
 <h4>Step 4.9. Launch AI Engine Debugger to Debug the AI Engine Sub-project<a class="headerlink" href="#step-4-9-launch-ai-engine-debugger-to-debug-the-ai-engine-sub-project" title="Permalink to this heading">¶</a></h4>
 <p><img alt="missing image" src="../../../../_images/he_cl_config0.png" /></p>
 <p><img alt="missing image" src="../../../../_images/he_cl_config7.png" /></p>
@@ -251,22 +252,22 @@ xrt_server -I30000 -S -s tcp::4352
 <li><p>Step 4.7 requires to start PS application BEFORE launching debugger to debug AI Engine sub-project. Will see issues if above step sequence is not followed.</p></li>
 <li><p>It takes some time depends on number of times in design to launch AI Engine debugger completely. Beamformer design contains 64 tiles that needs several minutes to complete.</p></li>
 </ol>
-</section>
-</section>
-<section id="step-5-expected-vitis-ide">
+</div>
+</div>
+<div class="section" id="step-5-expected-vitis-ide">
 <h3>Step 5. Expected Vitis IDE<a class="headerlink" href="#step-5-expected-vitis-ide" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/he_cl_run.png" /></p>
-</section>
-<section id="step-6-clean-up-launched-processes">
+</div>
+<div class="section" id="step-6-clean-up-launched-processes">
 <h3>Step 6. Clean up Launched Processes<a class="headerlink" href="#step-6-clean-up-launched-processes" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>killall -9 pllauncher<span class="p">;</span> killall -9 qemu-system-aarch64<span class="p">;</span> killall -9 xrt_server
 </pre></div>
 </div>
 <p>These commands kill leftover processes for this debug run.</p>
-</section>
-</section>
-</section>
-<section id="license">
+</div>
+</div>
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -279,7 +280,7 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

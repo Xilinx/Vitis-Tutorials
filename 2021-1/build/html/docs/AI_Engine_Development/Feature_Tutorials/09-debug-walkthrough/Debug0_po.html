@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="migrate-command-line-based-projects-to-vitis-ide">
+</table><div class="section" id="migrate-command-line-based-projects-to-vitis-ide">
 <h1>Migrate Command-Line Based Projects to Vitis IDE<a class="headerlink" href="#migrate-command-line-based-projects-to-vitis-ide" title="Permalink to this heading">¶</a></h1>
 <p>This section documents the necessary steps to migrate command-line based projects to Vitis™ IDE.</p>
 <p><a class="reference external" href="./#Step-1-Create-project">Step 1. Create project</a></p>
@@ -117,7 +118,7 @@ function OptanonWrapper() { }
 <p><a class="reference external" href="./#Step-3_3-Configure-hardware-kernels">Step 3.3. Configure hardware kernels</a></p>
 <p><a class="reference external" href="./#Step-3_4-Configure-PS-sub-project">Step 3.4. Configure PS sub-project</a></p>
 <p><a class="reference external" href="./#Step-4-Configure-system-project-in-packaging-options">Step 4. Configure system project in packaging options</a></p>
-<section id="step-1-create-project">
+<div class="section" id="step-1-create-project">
 <h2>Step 1. Create project<a class="headerlink" href="#step-1-create-project" title="Permalink to this heading">¶</a></h2>
 <p>Launch Vitis IDE by issuing the command, <code class="docutils literal notranslate"><span class="pre">vitis</span></code>.</p>
 <p><img alt="missing image" src="../../../../_images/po_new.png" /></p>
@@ -134,34 +135,34 @@ function OptanonWrapper() { }
 <p>Select “Empty Application” under “Acceleration templates with PL and AIE accelerators” for PS sub-project.
 After the previously listed steps are completed, you should have AI Engine, PS, PL and hardware link sub-projects under system project.</p>
 <p><img alt="missing image" src="../../../../_images/po_expect_project.png" /></p>
-</section>
-<section id="step-2-import-project-source-code">
+</div>
+<div class="section" id="step-2-import-project-source-code">
 <h2>Step 2. Import project source code<a class="headerlink" href="#step-2-import-project-source-code" title="Permalink to this heading">¶</a></h2>
 <p>Import source code for AI Engine sub-projects.</p>
 <p><img alt="missing image" src="../../../../_images/po_import.png" /></p>
 <p><img alt="missing image" src="../../../../_images/po_import1.png" /></p>
 <p>Continue to import source code/data for PS, PL, and hardware link sub-projects.</p>
 <p><strong>Note:</strong> If the PS sub-project requires <code class="docutils literal notranslate"><span class="pre">defer-aie-run</span></code> option in packaging, <code class="docutils literal notranslate"><span class="pre">aie_control_xrt.cpp</span></code> is required to be imported in the PS sub-project.</p>
-</section>
-<section id="step-3-configure-project">
+</div>
+<div class="section" id="step-3-configure-project">
 <h2>Step 3. Configure project<a class="headerlink" href="#step-3-configure-project" title="Permalink to this heading">¶</a></h2>
-<section id="step-3-1-configure-ai-engine-sub-project">
+<div class="section" id="step-3-1-configure-ai-engine-sub-project">
 <h3>Step 3.1. Configure AI Engine sub-project<a class="headerlink" href="#step-3-1-configure-ai-engine-sub-project" title="Permalink to this heading">¶</a></h3>
 <p>Configure top level graph.
 <img alt="missing image" src="../../../../_images/po_graph.png" /></p>
 <p>Configure include paths.</p>
 <p><img alt="missing image" src="../../../../_images/po_aie_c_config.png" /></p>
 <p><img alt="missing image" src="../../../../_images/po_aie_c_config1.png" /></p>
-</section>
-<section id="step-3-2-configure-hardware-link">
+</div>
+<div class="section" id="step-3-2-configure-hardware-link">
 <h3>Step 3.2. Configure hardware link<a class="headerlink" href="#step-3-2-configure-hardware-link" title="Permalink to this heading">¶</a></h3>
 <p>Configure hardware link with <code class="docutils literal notranslate"><span class="pre">v++</span></code> option</p>
 <p><img alt="missing image" src="../../../../_images/po_hw_config.png" /></p>
 <p><img alt="missing image" src="../../../../_images/po_hw_config1.png" /></p>
 <p>Import <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file to the proper project/location.</p>
 <p><img alt="missing image" src="../../../../_images/po_hw_config2.png" /></p>
-</section>
-<section id="step-3-3-configure-hardware-kernels">
+</div>
+<div class="section" id="step-3-3-configure-hardware-kernels">
 <h3>Step 3.3. Configure hardware kernels<a class="headerlink" href="#step-3-3-configure-hardware-kernels" title="Permalink to this heading">¶</a></h3>
 <p>Add hardware functions to project.</p>
 <p><img alt="missing image" src="../../../../_images/po_hw_config3.png" /></p>
@@ -170,17 +171,17 @@ After the previously listed steps are completed, you should have AI Engine, PS, 
 <img alt="missing image" src="../../../../_images/po_hw_config4.png" /></p>
 <p>Update (comment out) <code class="docutils literal notranslate"><span class="pre">nk=kernel:1:kernel_n</span></code> line from the <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file. This is because the Vitis IDE relies on the previous step to determine the number of instances for each PL kernel. Redundant configuration of number of kernels in <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> results compilation errors.
 <img alt="missing image" src="../../../../_images/po_hw_config5.png" /></p>
-</section>
-<section id="step-3-4-configure-ps-sub-project">
+</div>
+<div class="section" id="step-3-4-configure-ps-sub-project">
 <h3>Step 3.4. Configure PS sub-project<a class="headerlink" href="#step-3-4-configure-ps-sub-project" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/po_ps_c_config.png" /></p>
 <p>Configure PS application include paths.</p>
 <p><img alt="missing image" src="../../../../_images/po_ps_c_config2.png" /></p>
 <p>Configure PS application link libraries.</p>
 <p><img alt="missing image" src="../../../../_images/po_ps_c_config3.png" /></p>
-</section>
-</section>
-<section id="step-4-configure-system-project-in-packaging-options">
+</div>
+</div>
+<div class="section" id="step-4-configure-system-project-in-packaging-options">
 <h2>Step 4. Configure system project in packaging options<a class="headerlink" href="#step-4-configure-system-project-in-packaging-options" title="Permalink to this heading">¶</a></h2>
 <p><img alt="missing image" src="../../../../_images/po_system_config.png" /></p>
 <p><strong>Note:</strong> This configuration is optional and depends on the design.</p>
@@ -188,9 +189,9 @@ After the previously listed steps are completed, you should have AI Engine, PS, 
 <li><p>If initialize is required, run, and end from PS, then use the <code class="docutils literal notranslate"><span class="pre">--package.defer_aie_run</span></code> option.</p></li>
 <li><p>If data files need to be packaged to the sd_card, then use the <code class="docutils literal notranslate"><span class="pre">--package.sd_dir</span> <span class="pre">${PROJECT_PATH}/data</span></code> option.</p></li>
 </ol>
-</section>
-</section>
-<section id="license">
+</div>
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License);
 you may not use this file except in compliance with the License.
@@ -203,7 +204,7 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

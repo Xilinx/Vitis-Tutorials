@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -122,7 +123,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="load-the-project-into-vitis-hls">
+</table><div class="section" id="load-the-project-into-vitis-hls">
 <h1>Load the project into Vitis HLS<a class="headerlink" href="#load-the-project-into-vitis-hls" title="Permalink to this heading">¶</a></h1>
 <p>Open a terminal and navigate to the <code class="docutils literal notranslate"><span class="pre">build</span></code> directory. Launch the following command which will open the graphical interface of Vitis HLS and configure the project based on the settings included in the hls_opt.tcl Tcl file:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@server:~$ </span><span class="nb">cd</span> ./build
@@ -131,8 +132,8 @@ function OptanonWrapper() { }
 </div>
 <p>Once the tool comes up, on the left-hand side, locate the <em>Explorer</em> pane, expand <code class="docutils literal notranslate"><span class="pre">proj-&gt;Source</span></code> and double-click on <code class="docutils literal notranslate"><span class="pre">tsp_opt.cpp</span></code> to inspect the source code.
 The testbench is found below in <code class="docutils literal notranslate"><span class="pre">proj-&gt;TestBench</span></code> in the file is <code class="docutils literal notranslate"><span class="pre">tsp_TB.cpp</span></code>.</p>
-</section>
-<section id="review-code-changes">
+</div>
+<div class="section" id="review-code-changes">
 <h1>Review Code Changes<a class="headerlink" href="#review-code-changes" title="Permalink to this heading">¶</a></h1>
 <p>There are now 4 arrays for the distances:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_0</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
@@ -170,8 +171,8 @@ The testbench is found below in <code class="docutils literal notranslate"><span
 <span class="w">                                  </span><span class="n">candidate2</span><span class="p">,</span><span class="w"> </span><span class="n">candidate3</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
-</section>
-<section id="running-c-simulation-and-c-synthesis">
+</div>
+<div class="section" id="running-c-simulation-and-c-synthesis">
 <h1>Running C-simulation and C-synthesis<a class="headerlink" href="#running-c-simulation-and-c-synthesis" title="Permalink to this heading">¶</a></h1>
 <p>First you will run C simulation to confirm the optimized design works as expected. Edit the <code class="docutils literal notranslate"><span class="pre">tsp.h</span></code> file to make sure the number of cities is small (<code class="docutils literal notranslate"><span class="pre">N=5</span></code>) for faster simulation run times, and <strong>Run C Simulation</strong>.</p>
 <p>After reviewing the results of simulation, increase the number of cities again (<code class="docutils literal notranslate"><span class="pre">N=13</span></code>) in the <code class="docutils literal notranslate"><span class="pre">tsp.h</span></code> file for C synthesis so that you can compare results with the original design. <strong>Run C Synthesis</strong>.</p>
@@ -183,7 +184,7 @@ The testbench is found below in <code class="docutils literal notranslate"><span
 <li><p>The tripcount for the main loop (<code class="docutils literal notranslate"><span class="pre">loop_compute</span></code>) is now a fourth of factorial 12 (12!/4) thanks to the parallel execution of the <code class="docutils literal notranslate"><span class="pre">compute</span></code> function</p></li>
 <li><p>The new <code class="docutils literal notranslate"><span class="pre">Loop</span> <span class="pre">3</span></code> originates from the final std::min call that returns the smallest of the 4 results obtained</p></li>
 </ul>
-</section>
+</div>
 
 
            </div>

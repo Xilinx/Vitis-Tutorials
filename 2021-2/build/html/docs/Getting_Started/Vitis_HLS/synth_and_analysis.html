@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -89,9 +88,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -144,9 +144,9 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="running-simulation-synthesis-and-analyzing-results">
+--><div class="section" id="running-simulation-synthesis-and-analyzing-results">
 <h1>2. Running Simulation, Synthesis and Analyzing Results<a class="headerlink" href="#running-simulation-synthesis-and-analyzing-results" title="Permalink to this heading">¶</a></h1>
-<section id="run-the-c-simulation">
+<div class="section" id="run-the-c-simulation">
 <h2>Run the C Simulation<a class="headerlink" href="#run-the-c-simulation" title="Permalink to this heading">¶</a></h2>
 <p>With the source code and testbench added to the project, you can now run the C simulation.</p>
 <blockquote>
@@ -198,8 +198,8 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-</section>
-<section id="run-c-synthesis">
+</div>
+<div class="section" id="run-c-synthesis">
 <h2>Run C Synthesis<a class="headerlink" href="#run-c-synthesis" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>To run synthesis, simply click the <strong>C Synthesis</strong> toolbar button.</p>
@@ -232,8 +232,8 @@ function OptanonWrapper() { }
 <p>The Vitis HLS tool also automatically pipelined loops that have fewer than a specified number of iterations. Pipelining loops with fewer than 64 iterations is the default setting. When pipelining, the tool tries to achieve an II of 1. The II is the number of clock cycles before the next iteration of the loop is processed. When pipelining the loop with <code class="docutils literal notranslate"><span class="pre">II=1</span></code>, you want the next iteration to start at the next clock cycle.</p>
 </li>
 </ol>
-</section>
-<section id="analyze-the-results">
+</div>
+<div class="section" id="analyze-the-results">
 <h2>Analyze the Results<a class="headerlink" href="#analyze-the-results" title="Permalink to this heading">¶</a></h2>
 <p>The Synthesis Summary report displays the results of synthesis, including performance and utilization estimates, and data related to interfaces and data transfer in the design. Now you can analyze the design to examine any reported issues.</p>
 <ol>
@@ -250,14 +250,14 @@ function OptanonWrapper() { }
 <p><img alt="Schedule Viewer" src="../../../_images/schedule-viewer-ii-violation.png" /></p>
 </li>
 </ol>
-</section>
-<section id="next-step">
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Next, learn about <a class="reference internal" href="optimization_techniques.html"><span class="doc">using optimization techniques</span></a> to achieve your desired performance.
 </br></p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

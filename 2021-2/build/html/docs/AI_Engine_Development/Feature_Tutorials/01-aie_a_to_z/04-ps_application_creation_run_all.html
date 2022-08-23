@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -107,10 +107,10 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="introduction">
+</table><div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
 <p>In this section of the tutorial, you will learn how to build a PS bare-metal application using the XSA created in the previous step and then build, as well as run the complete system.</p>
-<section id="step-1-create-a-new-platform-in-the-bare-metal-domain">
+<div class="section" id="step-1-create-a-new-platform-in-the-bare-metal-domain">
 <h2>Step 1. Create a New Platform in the Bare-metal Domain<a class="headerlink" href="#step-1-create-a-new-platform-in-the-bare-metal-domain" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Open the Vitis software platform 2021.1 in the same workspace directory as the previous step. Click <em><strong>File → New →  Platform Project</strong></em>.</p></li>
@@ -118,8 +118,8 @@ function OptanonWrapper() { }
 <li><p>Use the XSA generated in the previous step that you can find in <code class="docutils literal notranslate"><span class="pre">workspace/simple_application_system_hw_link/Hardware/binary_container_1.xsa</span></code>, set <em><strong>standalone</strong></em> as <em><strong>Operating system</strong></em> and <em><strong>CIPS_0_pspmc_0_psv_cortexa72_0</strong></em> as <em><strong>Processor</strong></em>, and click <em><strong>Finish</strong></em>.</p></li>
 <li><p>Build the platform.</p></li>
 </ol>
-</section>
-<section id="step-2-build-the-baremetal-ai-engine-control-application">
+</div>
+<div class="section" id="step-2-build-the-baremetal-ai-engine-control-application">
 <h2>Step 2. Build the Baremetal AI Engine Control Application<a class="headerlink" href="#step-2-build-the-baremetal-ai-engine-control-application" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Create a new application by clicking on <em><strong>New → Application Project</strong></em>.</p></li>
@@ -168,8 +168,8 @@ function OptanonWrapper() { }
 <ol class="simple">
 <li><p>Build the A72 PS application (<code class="docutils literal notranslate"><span class="pre">A-to-Z_app</span></code>) .</p></li>
 </ol>
-</section>
-<section id="step-3-build-the-full-system">
+</div>
+<div class="section" id="step-3-build-the-full-system">
 <h2>Step 3. Build the Full System<a class="headerlink" href="#step-3-build-the-full-system" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Click <em><strong>simple_application_system.sprj</strong></em>. Add the following options in the <em><strong>Packaging options</strong></em> box:</p></li>
@@ -184,8 +184,8 @@ function OptanonWrapper() { }
 <ol class="simple">
 <li><p>Build the <em><strong>simple_application_system</strong></em> project.</p></li>
 </ol>
-</section>
-<section id="step-4-run-the-system">
+</div>
+<div class="section" id="step-4-run-the-system">
 <h2>Step 4. Run the System<a class="headerlink" href="#step-4-run-the-system" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Make sure your VCK190 board is connected to your PC.</p></li>
@@ -196,8 +196,8 @@ function OptanonWrapper() { }
 <p><img alt="missing image" src="../../../../_images/hw_output.png" /></p>
 </li>
 </ol>
-</section>
-<section id="summary">
+</div>
+<div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, you have performed an end-to-end flow to create a platform based on the VCK190 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to run on it.</p>
 <p align="center"><b><a href="./03-pl_application_creation.md">Return to Step 3</a> — <a href="./README.md">Go back to main page</a> — <a href="./05-RPU version[optional].md">Check out the RPU version design (optional)</a></b></p><p>Licensed under the Apache License, Version 2.0 (the “License”);
@@ -211,8 +211,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></div>
+</div>
 
 
            </div>

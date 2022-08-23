@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -97,8 +96,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -126,7 +127,7 @@ function OptanonWrapper() { }
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="host-memory-access">
+  <div class="section" id="host-memory-access">
 <h1>Host Memory Access<a class="headerlink" href="#host-memory-access" title="Permalink to this heading">¶</a></h1>
 <p>Some of the recent Xilinx Platforms have an XDMA feature to bypass the DMA operation and allow the kernels to directly access the host memory. The direct host memory access provides an alternate data transfer mechanism compared to XDMA based data transfer and can be useful in some of the scenarios.</p>
 <ul class="simple">
@@ -135,17 +136,17 @@ function OptanonWrapper() { }
 <li><p>The data transfer burden can be freed from the host server. As a result, the host can spend time on other tasks that might even help in overall application performance.</p></li>
 </ul>
 <p>For more details about the host memory access feature please refer <a class="reference external" href="https://xilinx.github.io/XRT/master/html/hm.html">https://xilinx.github.io/XRT/master/html/hm.html</a></p>
-<section id="xrt-and-platform-version">
+<div class="section" id="xrt-and-platform-version">
 <h2>XRT and Platform version<a class="headerlink" href="#xrt-and-platform-version" title="Permalink to this heading">¶</a></h2>
 <p>The following XRT and U250 platform versions are used for this tutorial design.</p>
 <p><strong>XRT Version</strong>:    2.9.317 (2020.2_PU1)</p>
 <p><strong>Platform</strong>: xilinx_u250_gen3x16_xdma_shell_3_1</p>
-</section>
-<section id="tutorial-description">
+</div>
+<div class="section" id="tutorial-description">
 <h2>Tutorial Description<a class="headerlink" href="#tutorial-description" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial attempts to demonstrate a scenario where adopting a host memory access data transfer scheme helped to improve overall performance. This is not a full-fledged application, rather a small example showing potential performance benefit by letting direct host memory access by the kernels.</p>
 <p>A word of caution is that the performance numbers can greatly varied from one host server to another host server, so performance numbers demonstrated in this example should only be used as sample data that may not match when you are running this tutorial.</p>
-<section id="kernel-structure">
+<div class="section" id="kernel-structure">
 <h3>Kernel structure<a class="headerlink" href="#kernel-structure" title="Permalink to this heading">¶</a></h3>
 <p>This tutorial is created from a simple vector-add kernel. The vector-add kernel has 15 CUs on the FPGA. As the U250 card contains four SLRs, the 15 CUs are distributed in the following manner</p>
 <table class="docutils align-default">
@@ -173,8 +174,8 @@ function OptanonWrapper() { }
 </tr>
 </tbody>
 </table>
-</section>
-<section id="host-code">
+</div>
+<div class="section" id="host-code">
 <h3>Host code<a class="headerlink" href="#host-code" title="Permalink to this heading">¶</a></h3>
 <p>The functionality of the host code is described as below:</p>
 <ul class="simple">
@@ -186,8 +187,8 @@ function OptanonWrapper() { }
 </ul>
 <p>The greater number of CU executions in a given time interval signifies the more work done with increased throughput.</p>
 <p>As a side note, for brevity, the host code is simplified by using the same data input per CU execution. As the host code is solely focusing on CU execution, it is a simplified version without implementing other typical host functionalities such as verification of returned data from the CUs, error checking, etc.</p>
-</section>
-<section id="kernel-compilation">
+</div>
+<div class="section" id="kernel-compilation">
 <h3>Kernel compilation<a class="headerlink" href="#kernel-compilation" title="Permalink to this heading">¶</a></h3>
 <p>All the tutorial design files are self-contained inside the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p>
 <p>This tutorial needs two kernel XCLBINs with different connectivities.</p>
@@ -247,9 +248,9 @@ function OptanonWrapper() { }
 </div>
 <p>You can also change the XCLBIN name (Makefile line 13) to provide a new name for this host memory connected XCLBIN. Generate new XCLBIN by the same makefile command as before.</p>
 <p>Once we have two XCLBINs ready we can simply focus on running the application for the rest of this tutorial.</p>
-</section>
-</section>
-<section id="running-the-application">
+</div>
+</div>
+<div class="section" id="running-the-application">
 <h2>Running the application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h2>
 <p><strong>DDR Based Run</strong></p>
 <p>We will start with the DDR-based application to see the result.</p>
@@ -349,8 +350,8 @@ function OptanonWrapper() { }
 <p>We can review Application timeline as below</p>
 <img alt="../../../../_images/at_hm.jpg" class="align-center" src="../../../../_images/at_hm.jpg" />
 <p>Hovering the mouse on one of the data transfers shows the type of Data transfer is <strong>Host Memory Synchronization</strong>. This signifies the data transfer is merely a cache synchronization operation from the host operation perspective. As this cache invalidate/flush is very fast it has very little overhead on the host machine. The snapshot also shows under the <strong>Kernel Enqueues</strong> section there are now a greater number of rows (ROW0 to ROW9) signifying the host is now able to submit more kernel execution requests in parallel.</p>
-</section>
-<section id="summary">
+</div>
+<div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In summary, we have reviewed the following takeaways in this tutorial</p>
 <ul class="simple">
@@ -365,8 +366,8 @@ function OptanonWrapper() { }
 <li><p>A host memory-based paradigm can help to eliminate the data transfer burden from the host. In some usecases this might help to boost overall application performance.</p></li>
 </ul>
 <p>Thank you!</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

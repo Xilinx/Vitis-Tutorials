@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,7 +110,7 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="package-ip-package-xo-flow">
+</table><div class="section" id="package-ip-package-xo-flow">
 <h1>Package IP/Package XO Flow<a class="headerlink" href="#package-ip-package-xo-flow" title="Permalink to this heading">¶</a></h1>
 <p>The process described in this lab follows the Package IP/Package XO flow as described in the <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1%3Bt=vitis+doc%3Bd=devrtlkernel.html%3Ba=rzv1504034325561">RTL Kernel Development Flow</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
 <blockquote>
@@ -121,7 +122,7 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 </div></blockquote>
-<section id="create-a-new-project">
+<div class="section" id="create-a-new-project">
 <h2>Create a New Project<a class="headerlink" href="#create-a-new-project" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Change directory to the tutorial folder: <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">./01-rtl_kernel_workflow</span></code>.</p></li>
@@ -155,8 +156,8 @@ function OptanonWrapper() { }
 <p><img alt="New Project Summary" src="../../../../_images/new_project_open.png" /></p>
 </li>
 </ol>
-</section>
-<section id="add-kernel-sources">
+</div>
+<div class="section" id="add-kernel-sources">
 <h2>Add Kernel Sources<a class="headerlink" href="#add-kernel-sources" title="Permalink to this heading">¶</a></h2>
 <p>You are ready to add RTL files into the project to package as an IP. The RTL files have been provided for you in this tutorial, but this is the point at which you would insert your own RTL code.</p>
 <ol>
@@ -183,8 +184,8 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ol>
-</section>
-<section id="open-the-ip-packager">
+</div>
+<div class="section" id="open-the-ip-packager">
 <h2>Open the IP Packager<a class="headerlink" href="#open-the-ip-packager" title="Permalink to this heading">¶</a></h2>
 <p>With the files added to your project, you can package the IP for use as a kernel.</p>
 <ol>
@@ -200,8 +201,8 @@ The Create and Package IP summary page is displayed.
 <p><img alt="Package IP Window" src="../../../../_images/package_ip_interface.png" /></p>
 </li>
 </ol>
-</section>
-<section id="specify-the-control-protocol">
+</div>
+<div class="section" id="specify-the-control-protocol">
 <h2>Specify the Control Protocol<a class="headerlink" href="#specify-the-control-protocol" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Under Packaging Steps, select <strong>Compatibility</strong>. This lets package the IP as a kernel object (.xo) for use in the Vitis tool flow, and also configures the specific Xilinx parts or device families compatible with your custom IP.</p></li>
@@ -220,8 +221,8 @@ The Create and Package IP summary page is displayed.
 </pre></div>
 </div>
 <p>Notice that the <strong>Ports and Interfaces</strong> tab now shows a DRC error because of this setting. The error in this case is that the <code class="docutils literal notranslate"><span class="pre">s_axi_control</span></code> interface does not have a defined register which you will add shortly.</p>
-</section>
-<section id="edit-ports-and-interfaces">
+</div>
+<div class="section" id="edit-ports-and-interfaces">
 <h2>Edit Ports and Interfaces<a class="headerlink" href="#edit-ports-and-interfaces" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Under Packaging Steps, select <strong>Ports and Interfaces</strong>. This displays the Ports and Interfaces window.</p></li>
@@ -232,8 +233,8 @@ The Create and Package IP summary page is displayed.
 <li><p>Repeat the process to associate <code class="docutils literal notranslate"><span class="pre">ap_clk</span></code> with the <code class="docutils literal notranslate"><span class="pre">m01_axi</span></code> interface, the <code class="docutils literal notranslate"><span class="pre">s_axi_control</span></code> interface.</p></li>
 <li><p>Click <strong>OK</strong> to close the Edit Interface dialog box.</p></li>
 </ol>
-</section>
-<section id="add-control-registers-and-address-offsets">
+</div>
+<div class="section" id="add-control-registers-and-address-offsets">
 <h2>Add Control Registers and Address Offsets<a class="headerlink" href="#add-control-registers-and-address-offsets" title="Permalink to this heading">¶</a></h2>
 <p>You must also add the control registers and address offsets for the interfaces in the design. This can be done through the Addressing and Memory section of the Package IP window.  This requires a number of control registers to be added with the following attributes.</p>
 <table border="1" class="docutils">
@@ -326,8 +327,8 @@ This displays the Addressing and Memory window.</p></li>
 </li>
 </ol>
 <p>Notice that the DRC error on the Ports and Interfaces goes away as you define the registers for the RTL kernel.</p>
-</section>
-<section id="check-integrity-assign-properties-and-package-ip">
+</div>
+<div class="section" id="check-integrity-assign-properties-and-package-ip">
 <h2>Check Integrity, Assign Properties, and Package IP<a class="headerlink" href="#check-integrity-assign-properties-and-package-ip" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Under the Packaging Steps, Select <strong>Review and Package</strong>.
@@ -361,14 +362,14 @@ This displays the Review and Package window. You are now ready to package the IP
 <ol class="simple">
 <li><p>After the <code class="docutils literal notranslate"><span class="pre">package_xo</span></code> command returns, navigate to the <code class="docutils literal notranslate"><span class="pre">reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports</span></code> folder and look at the <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code> file. You can use this file in Vitis application acceleration flow as explained later in this tutorial.</p></li>
 </ol>
-</section>
-<section id="next-steps">
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>Next, you will work through the <a class="reference internal" href="vitis_ide.html"><span class="doc">RTL Kernel Wizard Flow</span></a> flow. This recreates the Vitis kernel (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) file you just created, but you will use an alternative approach.
 </br></p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

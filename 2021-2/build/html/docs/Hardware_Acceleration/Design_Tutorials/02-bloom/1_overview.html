@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
-</table><section id="overview-of-the-original-application">
+</table><div class="section" id="overview-of-the-original-application">
 <h1>Overview of the Original Application<a class="headerlink" href="#overview-of-the-original-application" title="Permalink to this heading">¶</a></h1>
 <p>Document filtering is the process in which a system monitors a stream of incoming documents, classifies them according to their content, and selects documents relevant to a specific user or topic. Document filtering is used extensively in the everyday querying, retrieval, and analysis of information that helps to identify relevant documents of interest.</p>
 <p>In practical scenarios, the number of documents to search through for an event can be very large and because the monitoring of events must run in real-time, a smaller execution time is required for processing all the documents. In this tutorial, you compute a score for each document, which represents the document’s relevance.</p>
@@ -119,7 +119,7 @@ function OptanonWrapper() { }
 <li><p>The element <code class="docutils literal notranslate"><span class="pre">w</span></code> is not in the set <code class="docutils literal notranslate"><span class="pre">{x,</span> <span class="pre">y,</span> <span class="pre">z}</span></code> because it hashes to a one bit-array position containing 0.</p></li>
 <li><p>The number of elements are 18 and the number of hash functions computed for each element is 3.</p></li>
 </ul>
-<section id="tutorial-implementation">
+<div class="section" id="tutorial-implementation">
 <h2>Tutorial Implementation<a class="headerlink" href="#tutorial-implementation" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, each document consists of an array of words where: each word is a 32-bit unsigned integer comprised of a 24-bit word ID and an 8-bit integer representing the frequency. The search array consists of words of interest to the user, and represents a smaller set of 24-bit word IDs, where each word ID has a weight associated with it, determining the importance of the word.</p>
 <ol>
@@ -129,16 +129,16 @@ function OptanonWrapper() { }
 <p>The score for each document is obtained by the cumulative product of multiplying the weight of word ID with its frequency. The greater the score, the more relevant the document that matches the search array.</p>
 </li>
 </ol>
-</section>
-<section id="next-steps">
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>In the next step, you will <a class="reference internal" href="2_experience-acceleration.html"><span class="doc">experience the acceleration potential</span></a> before creating and optimizing a kernel.</p>
 <p align="center" class="sphinxhide"><b>
 </b></p>
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,40 +107,40 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="building-the-design">
+</table><div class="section" id="building-the-design">
 <h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <p>The next step is to create the Linux PS host application.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">exe</span>
 </pre></div>
 </div>
 <p>The individual commands are explained later on in this module.</p>
-<section id="introduction-programming-the-ps-host-application">
+<div class="section" id="introduction-programming-the-ps-host-application">
 <h2>Introduction: Programming the PS Host Application<a class="headerlink" href="#introduction-programming-the-ps-host-application" title="Permalink to this heading">¶</a></h2>
 <p>A top-level PS application running on the Cortex-A72 processor controls the AI Engine graph and the PL kernels. In Module 05, you created a PS host application for a bare-metal system. In this module, you will create a PS host application that runs on a Linux operating system (built in Module 07).</p>
 <p>Detailed descriptions of compiler flags, include directories, and linker flags are available in <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#ariaid-title7">AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Compile the Embedded Application for the Cortex-A72 Processor</a>.</p>
 <p>Linux host applications use the Xilinx Runtime (XRT) API to control the PL and AI Engine kernels. In this tutorial, XRT is used to access the AI Engine graph and generic UIO drivers to access the PL kernels.</p>
-</section>
-<section id="execution-flow-chart">
+</div>
+<div class="section" id="execution-flow-chart">
 <h2>Execution Flow Chart<a class="headerlink" href="#execution-flow-chart" title="Permalink to this heading">¶</a></h2>
 <p>The Linux PS host application is the <code class="docutils literal notranslate"><span class="pre">beamformer.cpp</span></code> file. The following figure shows the execution flow diagram implemented by the <code class="docutils literal notranslate"><span class="pre">beamformer.cpp</span></code>.</p>
 <p><img alt="Linux PS Host Application Execution Flow" src="../../../../../_images/Linux_Host_Application_Execution_Flow.png" /></p>
 <p>The following sections detail the important steps in the execution flow.</p>
-</section>
-<section id="bind-uio-drivers-with-pl-kernels">
+</div>
+<div class="section" id="bind-uio-drivers-with-pl-kernels">
 <h2>Bind UIO Drivers with PL Kernels<a class="headerlink" href="#bind-uio-drivers-with-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In Module 07, you created the PetaLinux software platform with a custom DTSI file that listed out the generic UIO drivers for each PL kernel instance. Each UIO driver in the DTSI file has the same name as each PL kernel instance name specified in the <code class="docutils literal notranslate"><span class="pre">config_2regslice.ini</span></code> file in Module 04.</p>
 <p>One of the first things the host application does is bind the UIO drivers to the PL kernels. It searches for the UIO devices in the system for the known PL kernel names. This is done by calling the <code class="docutils literal notranslate"><span class="pre">dlbf_assign_addr</span></code> and <code class="docutils literal notranslate"><span class="pre">ulbf_assign_addr</span></code> functions defined in the <code class="docutils literal notranslate"><span class="pre">src/utils/utils_dlbf.cpp</span></code> and <code class="docutils literal notranslate"><span class="pre">src/utils/utils_ulbf.cpp</span></code> files.</p>
 <p>These functions call the <code class="docutils literal notranslate"><span class="pre">mmap</span></code> function to bind the physical address of the PL kernels to a memory pointer. The host application uses the memory pointer to access the register maps of the PL kernels.</p>
-<section id="changes-in-2021-1">
+<div class="section" id="changes-in-2021-1">
 <h3>Changes in 2021.1<a class="headerlink" href="#changes-in-2021-1" title="Permalink to this heading">¶</a></h3>
 <p>All AIE related APIs are handled through XRT APIs. XRT APIs provide this flexibility by parsing the metadata in aie.xclbin and corresponding binding code in compiled aie_control_xrt.cpp. Hence, it is no longer necessary to include graph.h or graph.cpp into host application compilation. Instead, only the PLIOs needed for performance measurements need to be included in host_app.cpp. These changes are implemented in the source code in this module.</p>
 <p>Thus, host application is agnostic to AIE source code starting 2021.1.</p>
-</section>
-</section>
-<section id="load-aie-xclbin">
+</div>
+</div>
+<div class="section" id="load-aie-xclbin">
 <h2>Load AIE XCLBIN<a class="headerlink" href="#load-aie-xclbin" title="Permalink to this heading">¶</a></h2>
 <p>The host application resets the AI Engine array, loads the AI Engine array, and enables the AI Engine graph.</p>
-<section id="reset-ai-engine">
+<div class="section" id="reset-ai-engine">
 <h3>Reset AI Engine<a class="headerlink" href="#reset-ai-engine" title="Permalink to this heading">¶</a></h3>
 <p>The host application can reset and reload the AIE array whenever required. To do this, XRT must be built into the PetaLinux build. In the host application, you can use the following API to reset the AI Engine with the <code class="docutils literal notranslate"><span class="pre">xrtResetAIEArray</span></code> function:</p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">dhdl</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">xrtDeviceOpen</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
@@ -160,8 +161,8 @@ function OptanonWrapper() { }
 </div>
 <p>If the <code class="docutils literal notranslate"><span class="pre">xrtResetAIEArray</span></code> function fails, the AI Engine reset has not been accomplished successfully and a system reboot might be required. See the <a class="reference external" href="https://github.com/Xilinx/XRT/blob/a155e1630d18884c9f82d71f3a0b4e8a91074069/src/runtime_src/core/include/experimental/xrt_aie.h">API Documentation</a>.</p>
 <p>This function does not orchestrate system reset but <em>only</em> resets the AI Engine array.</p>
-</section>
-<section id="load-ai-engine-with-xclbin">
+</div>
+<div class="section" id="load-ai-engine-with-xclbin">
 <h3>Load AI Engine with XCLBIN<a class="headerlink" href="#load-ai-engine-with-xclbin" title="Permalink to this heading">¶</a></h3>
 <p>The host application loads the AI Engine with the XCLBIN with the <code class="docutils literal notranslate"><span class="pre">xclloadxclbin()</span></code> function.</p>
 <p>The following snippet of code shows usage in the application shows how to load AIE. See the <a class="reference external" href="https://xilinx.github.io/XRT/master/html/xrt.main.html?highlight=xclloadxclbin#c.xclLoadXclBin">API Documentation</a>.</p>
@@ -173,8 +174,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>If the AI Engine load fails, the <code class="docutils literal notranslate"><span class="pre">load_xclbin()</span></code> function throws an exception. A system reboot might be required.</p>
-</section>
-<section id="reset-ai-engine-in-the-middle-of-execution">
+</div>
+<div class="section" id="reset-ai-engine-in-the-middle-of-execution">
 <h3>Reset AI Engine in the Middle of Execution<a class="headerlink" href="#reset-ai-engine-in-the-middle-of-execution" title="Permalink to this heading">¶</a></h3>
 <p>Sometimes it is necessary to stop a running execution of the system and start over. To restart the system and start again, there is a flow to follow. These steps can be performed any number of times in the host application.</p>
 <p><strong>1. Quiesce PL kernels (that is to say, stop PL&lt;-&gt;AIE data paths)</strong></p>
@@ -185,8 +186,8 @@ function OptanonWrapper() { }
 <p>Reload the AI Engine with the XCLBIN using the <code class="docutils literal notranslate"><span class="pre">xclloadxclbin()</span></code> function. Verify the return value and proceed if it is <code class="docutils literal notranslate"><span class="pre">SUCCESSFUL</span></code>. Otherwise, reboot the system.</p>
 <p><strong>4. Re-start PL kernels</strong></p>
 <p>Lastly, restart the PL kernels to send/receive PL traffic to/from the AI Engine.</p>
-</section>
-<section id="command-line-arguments">
+</div>
+<div class="section" id="command-line-arguments">
 <h3>Command-Line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">beamformer.cpp</span></code> file takes two command line arguments:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">beamformer</span><span class="o">.</span><span class="n">exe</span> <span class="o">&lt;</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
@@ -226,9 +227,9 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>

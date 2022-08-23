@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="asynchronous-array-rtp-update-and-read-for-ai-engine-kernel">
+</table><div class="section" id="asynchronous-array-rtp-update-and-read-for-ai-engine-kernel">
 <h1>Asynchronous Array RTP Update and Read for AI Engine Kernel<a class="headerlink" href="#asynchronous-array-rtp-update-and-read-for-ai-engine-kernel" title="Permalink to this heading">¶</a></h1>
 <p>This step demonstrates:</p>
 <ul class="simple">
@@ -119,7 +120,7 @@ function OptanonWrapper() { }
 <p>The system to be implemented is as follows:</p>
 <p><img alt="missing image" src="../../../../_images/figure9.PNG" /></p>
 <p><strong>Note</strong>: The default working directory in this step is “step5”, unless explicitly specified otherwise.</p>
-<section id="review-graph-and-rtp-code">
+<div class="section" id="review-graph-and-rtp-code">
 <h2>Review Graph and RTP Code<a class="headerlink" href="#review-graph-and-rtp-code" title="Permalink to this heading">¶</a></h2>
 <p>In the AI Engine kernel code (<code class="docutils literal notranslate"><span class="pre">aie/kernels/hb24.cc</span></code>), the interface is declared as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">fir24_sym</span><span class="p">(</span><span class="n">input_window_cint16</span> <span class="o">*</span><span class="n">iwin</span><span class="p">,</span> <span class="n">output_window_cint16</span> <span class="o">*</span><span class="n">owin</span><span class="p">,</span>  <span class="n">const</span>  <span class="n">int32</span>  <span class="p">(</span><span class="o">&amp;</span><span class="n">coeffs</span><span class="p">)[</span><span class="mi">12</span><span class="p">],</span> <span class="n">int32</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">coeffs_readback</span><span class="p">)[</span><span class="mi">12</span><span class="p">]);</span>
@@ -160,8 +161,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>Because the RTP read is asynchronous, it can not ensure that reads are happening in between kernels running. Only after graph <code class="docutils literal notranslate"><span class="pre">wait()</span></code> runs (which is a synchronization point), are the coefficients updated and can be read back.</p>
-</section>
-<section id="run-ai-engine-compiler-and-ai-engine-simulator">
+</div>
+<div class="section" id="run-ai-engine-compiler-and-ai-engine-simulator">
 <h2>Run AI Engine Compiler and AI Engine Simulator<a class="headerlink" href="#run-ai-engine-compiler-and-ai-engine-simulator" title="Permalink to this heading">¶</a></h2>
 <p>Compile the AI Engine graph (<code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>) using the AI Engine compiler:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aie</span>
@@ -175,8 +176,8 @@ function OptanonWrapper() { }
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
 </pre></div>
 </div>
-</section>
-<section id="run-hardware-cosimulation-and-hardware-flow">
+</div>
+<div class="section" id="run-hardware-cosimulation-and-hardware-flow">
 <h2>Run Hardware Cosimulation and Hardware Flow<a class="headerlink" href="#run-hardware-cosimulation-and-hardware-flow" title="Permalink to this heading">¶</a></h2>
 <p>The Makefile rule targets introduced in <a class="reference internal" href="step1_sync_scalar.html"><span class="doc">Synchronous update of Scalar RTP</span></a>, <a class="reference internal" href="step2_async_scalar.html"><span class="doc">Asynchronous Update of Scalar RTP</span></a> and <a class="reference internal" href="step3_async_array.html"><span class="doc">Asynchronous Update of Array RTP</span></a> still apply here.</p>
 <p>Details about tool options and host code in <a class="reference internal" href="step2_async_scalar.html"><span class="doc">Asynchronous Update of Scalar RTP for PL inside a Graph</span></a>, and <a class="reference internal" href="step4_async_aie_array.html"><span class="doc">Array RTP Update for AI Engine Kernel</span></a> are similar. This section only focuses on the different part.</p>
@@ -284,7 +285,7 @@ function OptanonWrapper() { }
 <span class="n">TEST</span> <span class="n">PASSED</span>
 </pre></div>
 </div>
-<section id="conclusion">
+<div class="section" id="conclusion">
 <h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>In this tutorial you learned about:</p>
 <ul class="simple">
@@ -293,9 +294,9 @@ function OptanonWrapper() { }
 <li><p>Asynchronous array RTP read</p></li>
 <li><p>Launching AI Engine simulator, HW cosimulation, and HW</p></li>
 </ul>
-   <p align="center"><sup>XD001 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
-</section>
+   <p align="center"><sup>XD001 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
+</div>
 
 
            </div>

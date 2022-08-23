@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,13 +106,13 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
-</table><section id="design-and-analysis-of-hardware-kernel-module-for-2-d-video-convolution-filter">
+</table><div class="section" id="design-and-analysis-of-hardware-kernel-module-for-2-d-video-convolution-filter">
 <h1>Design and Analysis of Hardware Kernel Module for 2-D Video Convolution Filter<a class="headerlink" href="#design-and-analysis-of-hardware-kernel-module-for-2-d-video-convolution-filter" title="Permalink to this heading">¶</a></h1>
 <p>This lab is designed to demonstrate the design of a convolution filter module, do performance analysis, and analyze hardware resource utilization. A bottom-up approach is followed by first developing the hardware kernel and analyzing its performance before integrating it with the host application. You will use Vitis HLS to build and estimate the performance of the kernel.</p>
-<section id="d-convolution-filter-implementation">
+<div class="section" id="d-convolution-filter-implementation">
 <h2>2-D Convolution Filter Implementation<a class="headerlink" href="#d-convolution-filter-implementation" title="Permalink to this heading">¶</a></h2>
 <p>This section discusses the design of a convolution filter in detail. It goes through its top-level structure, optimizations performed, and implementation details.</p>
-<section id="top-level-structure-of-kernel">
+<div class="section" id="top-level-structure-of-kernel">
 <h3>Top Level Structure of Kernel<a class="headerlink" href="#top-level-structure-of-kernel" title="Permalink to this heading">¶</a></h3>
 <p>The top-level of the convolution filter is modeled using a dataflow process. The dataflow consists of four different functions as given below. For full implementation details please refer to source file  <strong>“src/filter2d_hw.cpp”</strong> in convolutional tutorial directory.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Filter2DKernel</span><span class="p">(</span><span class="w"></span>
@@ -157,8 +157,8 @@ function OptanonWrapper() { }
 <p>Two functions at the input and output read and write data from the device’s global memory. The <code class="docutils literal notranslate"><span class="pre">ReadFromMem</span></code> function reads data and streams it for filtering. The <code class="docutils literal notranslate"><span class="pre">WriteToMem</span></code> function at the end of the chain writes processed pixel data to the device memory. The input data(pixels) read from the main memory is passed to the <code class="docutils literal notranslate"><span class="pre">Window2D</span></code> function, which creates a local cache and, on every cycle, provides a 15x15 pixel sample to the filter function/block. The <code class="docutils literal notranslate"><span class="pre">Filter2D</span></code> function can consume the 15x15 pixel sample in a single cycle to perform 225(15x15) MACs per cycle.</p>
 <p>Please open the <strong>“src/filter2d_hw.cpp”</strong> source file  from convolutioanl tutorial directory and examine the implementation details of these individual functions. In the next section, you will elaborate on the implementation details of Window2D and Filter2D functions. The following figure shows how data flows between different functions (dataflow modules).</p>
 <p><img alt="Datflow" src="../../../../_images/filterBlkDia.jpg" /></p>
-</section>
-<section id="data-mover">
+</div>
+<div class="section" id="data-mover">
 <h3>Data Mover<a class="headerlink" href="#data-mover" title="Permalink to this heading">¶</a></h3>
 <p>One of the key advantages of custom design hardware accelerators, for which FPGAs are well suited, is the choice and architecture of custom data movers. These customized data movers facilitate efficient access to global device memory and optimize bandwidth utilization by reusing data.  Specialized data movers at the interface with main memory can be built at the input and output of the data processing engine or processing elements. The convolution filter is an excellent example of this. Looking from a pure software implementation point of view, it seems that to produce a single sample at the output side requires 450 memory accesses at the input side and 1 write access to the output.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Memory Accesses to Read filter Co-efficients <span class="o">=</span> <span class="nv">15x15</span> <span class="o">=</span> <span class="m">225</span>
@@ -168,7 +168,7 @@ Total Memory <span class="nv">Accesses</span>                       <span class=
 </pre></div>
 </div>
 <p>For a pure software implementation, even though many of these accesses can become fast because of caching, a large number of memory accesses will be a performance bottleneck. But designing on FPGA allows efficient data movement and access schemes to be easily built. One of the key and major advantages is the availability of substantial on-chip memory bandwidth (distributed and block memory) and the choice of a custom configuration of this bandwidth. This custom configuration choice essentially allows you to create an on-demand cache architecture tailored explicitly for the given algorithm. The next section elaborates on the design of the <code class="docutils literal notranslate"><span class="pre">Window2D</span></code> block.</p>
-<section id="window2d-line-and-window-buffers">
+<div class="section" id="window2d-line-and-window-buffers">
 <h4>Window2D: Line and Window Buffers<a class="headerlink" href="#window2d-line-and-window-buffers" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Window2D</span></code> block is essentially built from two basic blocks: the first is called a “line buffer”, and the second is called a “Window”.</p>
 <ul class="simple">
@@ -182,13 +182,13 @@ Total Memory <span class="nv">Accesses</span>                       <span class=
 <p>Step <code class="docutils literal notranslate"><span class="pre">B</span></code> in the figure highlights what is required for producing pixel number 11. Another 3x3 block, but it has a significant overlap with the previous input block. Essentially a column moves out from the left, and a column moves in from the right. One important thing to notice in steps A, B, and C, is that from the input side, it only needs one new pixel to produce one output pixel(ignoring the initial latency of filling the line buffer with multiple pixels, which is one time only).</p>
 <p>The line buffer holds FILTER_V_SIZE-1 lines. In general, it requires FILTER_V_SIZE lines, but a line is reduced by using the line buffer in a circular fashion and by exploiting the fact that pixels at the start of the first line buffer can be used to write new incoming pixels since they are no longer needed. The window buffer is implemented as FILTER_V_SIZE * FILTER_H_SIZE storage fully partitioned, giving parallel access to all elements inside the window. The data moves as a column vector of size FILTER_V_SIZE from line buffer to window buffer, and then this whole widow is passed through a stream to the <code class="docutils literal notranslate"><span class="pre">Filter2D</span></code> function for processing.</p>
 <p>The overall scheme (data mover) is built to maximize the data reuse providing maximum parallel data to the processing element. For a deeper understanding of the modeling style and minute details of the data mover examine the <code class="docutils literal notranslate"><span class="pre">Window2D</span></code> function details in the source code. The function can be found in the <strong>“src/filter2d_hw.cpp”</strong> source file in convolutioanl tutorial directory .</p>
-</section>
-</section>
-</section>
-<section id="building-and-simulating-the-kernel-using-vitis-hls">
+</div>
+</div>
+</div>
+<div class="section" id="building-and-simulating-the-kernel-using-vitis-hls">
 <h2>Building and Simulating the Kernel using Vitis HLS<a class="headerlink" href="#building-and-simulating-the-kernel-using-vitis-hls" title="Permalink to this heading">¶</a></h2>
 <p>In this section, you will build and simulate the 2D convolution filter using Vitis HLS. You will also look at the performance estimates and measured results after co-simulation for comparison with target performance settings.</p>
-<section id="building-the-kernel-module">
+<div class="section" id="building-the-kernel-module">
 <h3>Building the Kernel Module<a class="headerlink" href="#building-the-kernel-module" title="Permalink to this heading">¶</a></h3>
 <p>Now you will build the kernel module as a standalone kernel with AXI interfaces to memory, which are also used for simulation. To do this, please follow the steps listed below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>  <span class="nb">cd</span>  <span class="nv">$CONV_TUTORIAL_DIR</span>/hls_build
@@ -235,9 +235,9 @@ Total Memory <span class="nv">Accesses</span>                       <span class=
 <p align="center"><b>
 Next Lab Module: <a href="./lab3_build_app_kernel.md">Building the 2-D convolutional Kernel and Host Application</a>
 <p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
-</b></p></section>
-</section>
-</section>
+</b></p></div>
+</div>
+</div>
 
 
            </div>

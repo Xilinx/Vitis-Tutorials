@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -89,9 +88,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -130,7 +130,7 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="vitis-flow-101-part-4-build-and-run-the-example">
+</table><div class="section" id="vitis-flow-101-part-4-build-and-run-the-example">
 <h1>Vitis Flow 101 – Part 4 : Build and Run the Example<a class="headerlink" href="#vitis-flow-101-part-4-build-and-run-the-example" title="Permalink to this heading">¶</a></h1>
 <p>In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow (software emulation, hardware emulation and hardware).</p>
 <ul class="simple">
@@ -143,9 +143,9 @@ function OptanonWrapper() { }
 <div><p>IMPORTANT: This tutorial requires Vitis 2021.1 or later to run.</p>
 </div></blockquote>
 <details>
-<summary><b>Instructions for the ZCU102 platform, click here</b></summary><section id="building-and-running-on-an-embedded-platform-zcu102">
+<summary><b>Instructions for the ZCU102 platform, click here</b></summary><div class="section" id="building-and-running-on-an-embedded-platform-zcu102">
 <h2>Building and Running on an Embedded Platform (ZCU102)<a class="headerlink" href="#building-and-running-on-an-embedded-platform-zcu102" title="Permalink to this heading">¶</a></h2>
-<section id="setting-up-the-environment">
+<div class="section" id="setting-up-the-environment">
 <h3>Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this heading">¶</a></h3>
 <p><em>NOTE: The instructions provided below assume that you are running in a bash shell.</em></p>
 <ul class="simple">
@@ -169,8 +169,8 @@ where you extracted the SDK source.</p>
 </pre></div>
 </div>
 <p><em>NOTE: The ZYNQMP common image file can be downloaded from the <a class="reference external" href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html">Vitis Embedded Platforms</a> page, and contains the Sysroot, Rootfs, and boot Image for Xilinx Zynq MPSoC devices.</em></p>
-</section>
-<section id="targeting-software-emulation">
+</div>
+<div class="section" id="targeting-software-emulation">
 <h3>Targeting Software Emulation<a class="headerlink" href="#targeting-software-emulation" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>To build for software emulation, enter the following commands:</p></li>
@@ -227,8 +227,8 @@ TEST PASSED
 <ul class="simple">
 <li><p>Press Ctrl+a x to exit QEMU and return to your bash shell.</p></li>
 </ul>
-</section>
-<section id="targeting-hardware-emulation">
+</div>
+<div class="section" id="targeting-hardware-emulation">
 <h3>Targeting Hardware Emulation<a class="headerlink" href="#targeting-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>To build for hardware emulation, enter the following commands:</p></li>
@@ -261,8 +261,8 @@ v++ -p -t hw_emu --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir p
 <li><p>You should see messages that say TEST PASSED indicating that the run completed successfully</p></li>
 <li><p>Press Ctrl+a x to exit QEMU and return to your bash shell.</p></li>
 </ul>
-</section>
-<section id="targeting-hardware">
+</div>
+<div class="section" id="targeting-hardware">
 <h3>Targeting Hardware<a class="headerlink" href="#targeting-hardware" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>To build for hardware, enter the following commands:</p></li>
@@ -290,11 +290,11 @@ v++ -p -t hw --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir packa
 <li><p>Congratulations, you just completed your first run of a Vitis accelerated application on the ZCU102 card!</p></li>
 </ul>
 </details><details>
-<summary><b>Instructions for the Alveo U200 platform, click here</b></summary></section>
-</section>
-<section id="building-and-running-on-a-data-center-platform-u200">
+<summary><b>Instructions for the Alveo U200 platform, click here</b></summary></div>
+</div>
+<div class="section" id="building-and-running-on-a-data-center-platform-u200">
 <h2>Building and Running on a Data-Center Platform (U200)<a class="headerlink" href="#building-and-running-on-a-data-center-platform-u200" title="Permalink to this heading">¶</a></h2>
-<section id="id1">
+<div class="section" id="id1">
 <h3>Setting up the environment<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p><em>NOTE: The instructions provided below assume that you are running in a bash shell.</em></p>
 <ul class="simple">
@@ -310,8 +310,8 @@ v++ -p -t hw --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir packa
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PLATFORM_REPO_PATHS</span><span class="o">=</span>&lt;path to the U200 platform install dir&gt;
 </pre></div>
 </div>
-</section>
-<section id="id2">
+</div>
+<div class="section" id="id2">
 <h3>Targeting Software Emulation<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>To build for software emulation, enter the following commands:</p></li>
@@ -362,8 +362,8 @@ INFO: Loading <span class="s1">&#39;vadd.xclbin&#39;</span>
 TEST PASSED
 </pre></div>
 </div>
-</section>
-<section id="id3">
+</div>
+<div class="section" id="id3">
 <h3>Targeting Hardware Emulation<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>To build for hardware emulation, enter the following commands:</p></li>
@@ -387,8 +387,8 @@ v++ -l -t hw_emu --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 <ul class="simple">
 <li><p>When the run completes, you should see the TEST PASSED message indicating that the run completed successfully</p></li>
 </ul>
-</section>
-<section id="id4">
+</div>
+<div class="section" id="id4">
 <h3>Targeting Hardware<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>To build for the hardware, enter the following commands:</p></li>
@@ -413,13 +413,13 @@ v++ -l -t hw --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 <li><p>You should see the same TEST PASSED message indicating that the run completed successfully.</p></li>
 <li><p>Congratulations, you just completed your first run of a Vitis accelerated application on the Alveo U200 card!</p></li>
 </ul>
-</details></section>
-</section>
-<section id="next-step">
+</details></div>
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Now that you ran your first example, proceed to <a class="reference internal" href="Part5.html"><span class="doc">Part 5</span></a> of this tutorial to learn how to visualize and profile your application with Vitis Analyzer.</p>
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

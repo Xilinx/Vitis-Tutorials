@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -91,8 +90,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -131,9 +132,9 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="optimizing-accelerated-fpga-applications-bloom-filter-example">
+</table><div class="section" id="optimizing-accelerated-fpga-applications-bloom-filter-example">
 <h1>Optimizing Accelerated FPGA Applications: Bloom Filter Example<a class="headerlink" href="#optimizing-accelerated-fpga-applications-bloom-filter-example" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The methodology for accelerating applications on an FPGA is comprised of multiple phases:</p>
 <ul class="simple">
@@ -143,8 +144,8 @@ function OptanonWrapper() { }
 </ul>
 <p>You begin this tutorial with a baseline application, and you profile the application to examine the potential for hardware acceleration. The tutorial application involves searching through an incoming stream of documents to find the documents that closely match a user’s interest based on a search profile.</p>
 <p>In general, a Bloom filter application has use cases in data analytics, such as browsing through unstructured email and text file data to identify the documents that are closely associated with a specific user and send notifications accordingly.</p>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>TIP</strong>: This tutorial takes approximately two hours to complete.</p>
@@ -162,7 +163,7 @@ function OptanonWrapper() { }
 <li><p>If you run applications on Alveo cards, ensure the card and software drivers have been correctly installed by following the instructions on the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo.html">Alveo Portfolio page</a>.</p></li>
 </ul>
 </div></blockquote>
-<section id="accessing-the-tutorial-reference-files">
+<div class="section" id="accessing-the-tutorial-reference-files">
 <h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>To access the tutorial content, enter the following in a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">http://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
@@ -182,8 +183,8 @@ tar -xvzf  xclbin_save.tar.gz
 <p><strong>TIP:</strong> The <code class="docutils literal notranslate"><span class="pre">xclbin_save</span></code> contains the saved <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> files that can be used directly for running on hardware by setting <code class="docutils literal notranslate"><span class="pre">SOLUTION=1</span></code> for the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code> commands.</p>
 </li>
 </ol>
-</section>
-<section id="tutorial-outline">
+</div>
+<div class="section" id="tutorial-outline">
 <h3>Tutorial Outline<a class="headerlink" href="#tutorial-outline" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="1_overview.html"><span class="doc">Overview of the Original Application</span></a></p></li>
@@ -202,9 +203,9 @@ tar -xvzf  xclbin_save.tar.gz
 6. [Using Multiple DDR Banks](6_using-multiple-ddr): Configure multiple DDR banks to improve the kernel performance.
 --><hr/>
 <p align= center class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a></b></p>
-</br><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
-</section>
+</br><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+</div>
 
 
            </div>

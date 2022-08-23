@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -110,7 +110,7 @@ function OptanonWrapper() { }
 <blockquote>
 <div><p><strong><em>In this module…</em></strong><br /><em>1&gt; Review the OpenCL API for the host/kernel paradigm<br />2&gt; Run Vitis via the GUI or make to execute software and hardware emulation<br />3&gt; Run Vitis Analyzer to review the application timeline<br />4&gt; Run Vitis HLS to identify the throughput bottleneck<br />5&gt; Insert a testbench into HLS to iterate quickly and verify kernel code changes</em></p>
 </div></blockquote>
-<section id="understanding-code-setup-with-host-and-kernel">
+<div class="section" id="understanding-code-setup-with-host-and-kernel">
 <h1>Understanding Code Setup with Host and Kernel<a class="headerlink" href="#understanding-code-setup-with-host-and-kernel" title="Permalink to this heading">¶</a></h1>
 <p>The source code for each module is located under their local <code>./src</code> directory:</p>
 <ul>
@@ -132,13 +132,13 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ul>
-</section>
+</div>
 <hr class="docutils" />
-<section id="build-and-emulate-with-vitis">
+<div class="section" id="build-and-emulate-with-vitis">
 <h1>Build and Emulate with Vitis<a class="headerlink" href="#build-and-emulate-with-vitis" title="Permalink to this heading">¶</a></h1>
 <p>For each module of this tutorial, Vitis can be run via the GUI <strong>or</strong> at the command line (more efficient in the context of this tutorial):</p>
 <details>
-  <summary><b>Click to expand! (<code>Vitis GUI</code> instructions)</b></summary><section id="using-vitis-via-the-gui">
+  <summary><b>Click to expand! (<code>Vitis GUI</code> instructions)</b></summary><div class="section" id="using-vitis-via-the-gui">
 <h2>Using Vitis via the GUI<a class="headerlink" href="#using-vitis-via-the-gui" title="Permalink to this heading">¶</a></h2>
 <p>TIP: when following the links below, use right-click “open in another tab” to avoid losing the context for these instructions…</p>
 <ol class="simple">
@@ -150,15 +150,15 @@ function OptanonWrapper() { }
 <li><p>Select the vitis_export_archive.ide.zip and click “Okay” <a href="../images/gui4_zip.png">(image)</a></p></li>
 <li><p>Next window click “Finish” <a href="../images/gui5_finish.png">(image)</a></p></li>
 </ol>
-</section>
-<section id="setting-up-the-platform">
+</div>
+<div class="section" id="setting-up-the-platform">
 <h2>Setting up the Platform<a class="headerlink" href="#setting-up-the-platform" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>On the center window pane, click on the triple dot icon <code>[…]</code> right after the platform link <a href="../images/gui6_platform.png">(image)</a></p></li>
 <li><p>Navigate to specify the platform accessible from your system</p></li>
 </ol>
-</section>
-<section id="building-and-emulating-the-design">
+</div>
+<div class="section" id="building-and-emulating-the-design">
 <h2>Building and Emulating the Design<a class="headerlink" href="#building-and-emulating-the-design" title="Permalink to this heading">¶</a></h2>
 <p>Notice the “Assistant” window pane with its 3 main flow steps</p>
 <ol class="simple">
@@ -171,8 +171,8 @@ function OptanonWrapper() { }
 <p>Once hardware emulation has completed, go to the Vitis Analyzer section below…</p>
 </details><p><em><strong>OR</strong></em></p>
 <details>
-  <summary><b>Click to expand! (instructions for <code>make</code>)</b></summary></section>
-<section id="using-make">
+  <summary><b>Click to expand! (instructions for <code>make</code>)</b></summary></div>
+<div class="section" id="using-make">
 <h2>Using <strong>make</strong><a class="headerlink" href="#using-make" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Open a terminal</p></li>
@@ -185,10 +185,10 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-</details></section>
-</section>
+</details></div>
+</div>
 <hr class="docutils" />
-<section id="vitis-analyzer-for-application-end-to-end-timeline-analysis">
+<div class="section" id="vitis-analyzer-for-application-end-to-end-timeline-analysis">
 <h1>Vitis Analyzer for Application End-to-end Timeline Analysis<a class="headerlink" href="#vitis-analyzer-for-application-end-to-end-timeline-analysis" title="Permalink to this heading">¶</a></h1>
 <p>Vitis Analyzer is a graphical tool which lets you browse many aspects of the design starting from the whole system down to the details of the kernel.</p>
 <details>
@@ -232,9 +232,9 @@ Name of the compute unit (a.k.a., Accelerator) on the FPGA.</p></li>
 </ul>
 </li>
 </ul>
-</details></section>
+</details></div>
 <hr class="docutils" />
-<section id="vitis-hls-for-kernel-optimizations">
+<div class="section" id="vitis-hls-for-kernel-optimizations">
 <h1>Vitis HLS for Kernel Optimizations<a class="headerlink" href="#vitis-hls-for-kernel-optimizations" title="Permalink to this heading">¶</a></h1>
 <p>The C++ kernels destined implemented onto the device LUTs and flops (a.k.a the “fabric”) are automatically compiled with the high-level synthesis tool Vitis HLS. In this tutorial we run Vitis HLS “manually” to gain additional insights about the underlying synthesis technology and the Cholesky kernel algorithm.</p>
 <details>
@@ -252,7 +252,7 @@ Name of the compute unit (a.k.a., Accelerator) on the FPGA.</p></li>
 <li><p>Right click on the <strong>II violation</strong> as shown in this clip to locate it in the code: <a class="reference external" href="../images/HLS_anim.gif"><strong>50s HLS looping GIF</strong></a></p></li>
 </ol>
 <p>Note: you can restore the original Vitis HLS window layout via the “Window” menu -&gt; “Reset Perspective”.</p>
-<section id="initiation-interval">
+<div class="section" id="initiation-interval">
 <h2>Initiation Interval<a class="headerlink" href="#initiation-interval" title="Permalink to this heading">¶</a></h2>
 <p>We see an II violation of 8 for two loops in this function.
 One of them looks like this:</p>
@@ -265,8 +265,8 @@ One of them looks like this:</p>
 </pre></div>
 </div>
 <p>Since this version of the algorithm uses double data types with an accumulation, the silicon needs 8 cycles at 300MHz to perform and complete the operation before starting the next. So we can only compute samples one after another by intervals of 8 cycles…  This is the first bottleneck that we’ll tackle in the next module.</p>
-</section>
-<section id="kernel-latency">
+</div>
+<div class="section" id="kernel-latency">
 <h2>Kernel Latency<a class="headerlink" href="#kernel-latency" title="Permalink to this heading">¶</a></h2>
 <p>Let’s now look at latency.</p>
 <p><code class="docutils literal notranslate"><span class="pre">cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</span></code></p>
@@ -299,8 +299,8 @@ Last loop also requires N iterations like the first one.</p>
 <p>Some we can roughly estimate the duration to be:
 <code> N(18N+N(18N+residual1)+residual2) = 18N<sup>3</sup> + (18+residual1)N<sup>2</sup> + residual2.N </code></p>
 <p>So essentially the algorithm latency goes by the cube of N, the size of the matrix.</p>
-</section>
-<section id="adding-a-c-testbench-for-the-kernel">
+</div>
+<div class="section" id="adding-a-c-testbench-for-the-kernel">
 <h2>Adding a C++ testbench for the kernel<a class="headerlink" href="#adding-a-c-testbench-for-the-kernel" title="Permalink to this heading">¶</a></h2>
 <p>For this tutorial we provide a pre-made C++ “main” program to wrap around the kernel and simulate in the Vitis HLS environment.</p>
 <p><strong>Instructions:</strong></p>
@@ -327,10 +327,10 @@ This runs a purely functional simulation called “Csim”, none of what HLS syn
 <li><p>Run “Solution” -&gt; “Run C/RTL Cosimulation”.  In the popup window select Okay.</p></li>
 </ol>
 <p>The Vitis HLS Cosimulation runs a cycle accurate RTL simulation which shows the actual latency in clock cycles.  In the test bench the matrix is a 16x16.</p>
-</details></section>
-</section>
+</details></div>
+</div>
 <hr class="docutils" />
-<section id="wrap-up-for-module-1">
+<div class="section" id="wrap-up-for-module-1">
 <h1>Wrap-up for module 1<a class="headerlink" href="#wrap-up-for-module-1" title="Permalink to this heading">¶</a></h1>
 <p><strong>Key points:</strong></p>
 <ul class="simple">
@@ -340,12 +340,12 @@ This runs a purely functional simulation called “Csim”, none of what HLS syn
 <li><p>Vitis HLS is a compiler technology that transforms the C code algorithm into an hardware language to implement onto the Xilinx device</p></li>
 </ul>
 <hr class="docutils" />
-<section id="next">
+<div class="section" id="next">
 <h2>Next<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h2>
 <p>You can now proceed to <a class="reference internal" href="../module2_pipeline/README.html"><span class="doc">module 2</span></a>.</p>
 <hr class="docutils" />
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

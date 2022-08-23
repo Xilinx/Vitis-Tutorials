@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
-</table><section id="data-movement-between-the-host-and-kernel">
+</table><div class="section" id="data-movement-between-the-host-and-kernel">
 <h1>Data Movement Between the Host and Kernel<a class="headerlink" href="#data-movement-between-the-host-and-kernel" title="Permalink to this heading">¶</a></h1>
 <p>In the previous step, you implemented a sequential execution of the written words from the host, computing hash functions on the FPGA, and reading flags by the host.</p>
 <p>The compute does not start until the entire input is read into the FPGA, and similarly, the host read from the FPGA does not start until compute is done on the FPGA.</p>
@@ -129,11 +129,11 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-<section id="overlap-of-host-data-transfer-and-compute-with-split-buffers">
+<div class="section" id="overlap-of-host-data-transfer-and-compute-with-split-buffers">
 <h2>Overlap of Host Data Transfer and Compute with Split Buffers<a class="headerlink" href="#overlap-of-host-data-transfer-and-compute-with-split-buffers" title="Permalink to this heading">¶</a></h2>
 <p>The following figure illustrates the use case where the input data is split into two sub-buffers.</p>
 <p><img alt="missing image" src="../../../../_images/overlap_split_buffer.PNG" /></p>
-<section id="host-code-modifications">
+<div class="section" id="host-code-modifications">
 <h3>Host Code Modifications<a class="headerlink" href="#host-code-modifications" title="Permalink to this heading">¶</a></h3>
 <p>Navigate to <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/reference_files</span></code>, and with a file editor, open <code class="docutils literal notranslate"><span class="pre">run_split_buffer.cpp</span></code>.</p>
 <p>Lines 64 through 148 are modified to optimize the host code to send the input buffer in two iterations which enables the overlap of data transfers with the accelerator execution. The following steps explain the process in detail:</p>
@@ -243,8 +243,8 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ol>
-</section>
-<section id="run-the-application-using-the-bloom8x-kernel">
+</div>
+<div class="section" id="run-the-application-using-the-bloom8x-kernel">
 <h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#run-the-application-using-the-bloom8x-kernel" title="Permalink to this heading">¶</a></h3>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> directory, and run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> cd $LAB_WORK_DIR/makefile; make run STEP=split_buffer TARGET=hw PF=8 
@@ -260,9 +260,9 @@ function OptanonWrapper() { }
 <span class="n">Verification</span><span class="p">:</span> <span class="n">PASS</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="review-profile-report-and-timeline-trace-for-the-bloom8x-kernel">
+</div>
+</div>
+<div class="section" id="review-profile-report-and-timeline-trace-for-the-bloom8x-kernel">
 <h2>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#review-profile-report-and-timeline-trace-for-the-bloom8x-kernel" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Run the following commands to view the Timeline Trace report with Bloom8x kernel.</p>
@@ -290,7 +290,7 @@ function OptanonWrapper() { }
 <li><p><em>Kernels &amp; Compute Unit: Kernel Execution</em> shows that the kernel execution time (calculated by enqueing both compute times) is also higher than when you used a single buffer. When overlapping the host data transfer and kernel, the DDR memory is not exclusive to either the host or kernel which results in a lower performance data transfer. However, you can see that the overall performance is better here compared to the earlier results without splitting words.</p></li>
 </ol>
 <p>When the Bloom8x kernel is used, you can also confirm from the reports that the kernel enqueue time for each compute is smaller than each host transfer. Therefore, there is no real benefit of using the Bloom16x kernel because you are limited by the transfer time from the host. The execution time of the Bloom16x kernel will be faster, but the kernel does not improve the overall application performance. You can confirm this fact by using the Bloom16x kernel in the next step.</p>
-<section id="run-the-application-using-the-bloom16x-kernel">
+<div class="section" id="run-the-application-using-the-bloom16x-kernel">
 <h3>Run the Application Using the Bloom16x Kernel<a class="headerlink" href="#run-the-application-using-the-bloom16x-kernel" title="Permalink to this heading">¶</a></h3>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> directory, and run the <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=split_buffer TARGET=hw PF=16
@@ -309,16 +309,16 @@ function OptanonWrapper() { }
 <p>You can see that if the documents are split into two buffers, the overall application execution time using the Bloom8x kernel and Bloom16x kernel are very close. As expected, using the Bloom16x kernel rather than the Bloom8x kernel has no benefit.</p>
 <p>While developing your own application, these attributes can be explored to make trade-offs and pick the optimal kernel implementation optimized for resources/performance.</p>
 <p>You will continue this lab with the Bloom8x kernel.</p>
-</section>
-<section id="conclusion">
+</div>
+<div class="section" id="conclusion">
 <h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>The total execution time on the FPGA has been improved because of the overlapping computation with data transfers. The execution time of the first kernel run and the first data read have been eliminated.</p>
-</section>
-</section>
-<section id="overlap-of-host-data-transfer-and-compute-with-multiple-buffers">
+</div>
+</div>
+<div class="section" id="overlap-of-host-data-transfer-and-compute-with-multiple-buffers">
 <h2>Overlap of Host Data Transfer and Compute with Multiple Buffers<a class="headerlink" href="#overlap-of-host-data-transfer-and-compute-with-multiple-buffers" title="Permalink to this heading">¶</a></h2>
 <p>In the previous step, you split the input buffer into two sub-buffers and overlapped the first compute with the second data transfer. In this step, you will write generic code, so the input data is split and processed in an arbitrary number of iterations to achieve the optimal execution time.</p>
-<section id="id1">
+<div class="section" id="id1">
 <h3>Host Code Modifications<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>Open <code class="docutils literal notranslate"><span class="pre">run_generic_buffer.cpp</span></code> in <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/reference_files</span></code> with a file editor.</p>
 <p>Lines 67 through 139 are modified to optimize the host code to send the input buffer in multiple iterations to enable the overlapping of the data transfer and compute. The process is explained in detail as follows:</p>
@@ -413,8 +413,8 @@ function OptanonWrapper() { }
 <p>The code is generic enough to split the data into an arbitrary number of multiple buffers.</p>
 </li>
 </ol>
-</section>
-<section id="id2">
+</div>
+<div class="section" id="id2">
 <h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>In this step, you will explore the Bloom8x kernel with 100,000 documents split into 2, 4, 8, 16, 32, 64, and 128 chunks, and explore which option results in the best performance.</p>
 <ol>
@@ -450,8 +450,8 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ol>
-</section>
-<section id="id3">
+</div>
+<div class="section" id="id3">
 <h3>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Run the following commands to view the Timeline Trace report with Bloom8x kernel.</p>
@@ -471,14 +471,14 @@ function OptanonWrapper() { }
 <ul class="simple">
 <li><p>Bloom8x kernel with the words split in 8 sub-buffers (<code class="docutils literal notranslate"><span class="pre">ITER=8</span></code>).</p></li>
 </ul>
-</section>
-</section>
-<section id="overlap-between-the-host-cpu-and-fpga">
+</div>
+</div>
+<div class="section" id="overlap-between-the-host-cpu-and-fpga">
 <h2>Overlap Between the Host CPU and FPGA<a class="headerlink" href="#overlap-between-the-host-cpu-and-fpga" title="Permalink to this heading">¶</a></h2>
 <p>In the previous steps, you looked at optimizing the execution time of the FPGA by overlapping the data transfer from the host to FPGA and compute on the FPGA. After the FPGA compute is complete, the CPU computes the document scores based on the output from the FPGA. Until now, the FPGA processing and CPU post-processing executed sequentially.</p>
 <p>If you look at the previous Timeline Trace reports, you can see red segments on the very first row that shows the OpenCL API Calls made by the host application. This indicates that the host is waiting, staying idle while the FPGA computes the hash and flags. In this step, you will overlap the FPGA processing with the CPU post-processing.</p>
 <p>Because the total compute is split into multiple iterations, you can start post-processing on the host CPU after the corresponding iteration is complete, allowing the overlap between the CPU and FPGA processing. The performance increases because the CPU is also processing in parallel with the FPGA, which reduces the execution time.</p>
-<section id="id4">
+<div class="section" id="id4">
 <h3>Host Code Modifications<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Open <code class="docutils literal notranslate"><span class="pre">run_sw_overlap.cpp</span></code> in <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/reference_files</span></code> with a file editor.</p>
@@ -530,8 +530,8 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ol>
-</section>
-<section id="id5">
+</div>
+<div class="section" id="id5">
 <h3>Run the Application Using the Bloom8x Kernel<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
 <p>Go to the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> directory, and run the <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=sw_overlap TARGET=hw PF=8 ITER=8
@@ -547,8 +547,8 @@ function OptanonWrapper() { }
   <span class="n">Verification</span><span class="p">:</span> <span class="n">PASS</span>
 </pre></div>
 </div>
-</section>
-<section id="id6">
+</div>
+<div class="section" id="id6">
 <h3>Review Profile Report and Timeline Trace for the Bloom8x Kernel<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Run the following commands to view the Timeline Trace with Bloom8x kernel.</p>
@@ -566,8 +566,8 @@ Device transfer.</p></li>
 </ul>
 </li>
 </ol>
-</section>
-<section id="review-profile-summary-report-for-the-bloom8x-kernel">
+</div>
+<div class="section" id="review-profile-summary-report-for-the-bloom8x-kernel">
 <h3>Review Profile Summary Report for the Bloom8x Kernel<a class="headerlink" href="#review-profile-summary-report-for-the-bloom8x-kernel" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p><em>Kernels &amp; Compute Unit:Kernel Execution</em> reports 168ms. This should be same as when Bloom8x kernel run with ITER=8.</p></li>
@@ -584,20 +584,20 @@ Device transfer.</p></li>
 </li>
 </ul>
 <p>In the next lab, you will compare the results for “Host Data Transfer Rates” and “CU Utilization”.</p>
-</section>
-<section id="throughput-achieved">
+</div>
+<div class="section" id="throughput-achieved">
 <h3>Throughput Achieved<a class="headerlink" href="#throughput-achieved" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Based on the results, the throughput of the application is 1399 MB/427 ms = approx 3.27 GBs.` You have now approximately 7.2 times (=3057 ms/427 ms) the performance results compared to the software results.</p></li>
 </ul>
-</section>
-<section id="opportunities-for-performance-improvements">
+</div>
+<div class="section" id="opportunities-for-performance-improvements">
 <h3>Opportunities for Performance Improvements<a class="headerlink" href="#opportunities-for-performance-improvements" title="Permalink to this heading">¶</a></h3>
 <p>The host and kernel are trying to access the same DDR bank at the same time which resulted in an external memory stall of 20.045 ms. These accesses cause memory contention and limits the speed-up of application execution. In the next module, you will <a class="reference internal" href="6_using-multiple-ddr.html"><span class="doc">make use of additional bank</span></a> to minimize the memory contentions.</p>
 <hr class="docutils" />
-<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
+</div>
 
 
            </div>

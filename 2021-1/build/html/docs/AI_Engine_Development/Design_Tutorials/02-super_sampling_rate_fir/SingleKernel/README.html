@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,11 +107,11 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="single-kernel-fir-filter-implementation">
+</table><div class="section" id="single-kernel-fir-filter-implementation">
 <h1>Single-Kernel FIR Filter Implementation<a class="headerlink" href="#single-kernel-fir-filter-implementation" title="Permalink to this heading">¶</a></h1>
 <p>In this first part of the tutorial you will use a basic filtering application and analyze the performance that can be achieved.</p>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">SingleKernel</span></code> directory to continue.</p>
-<section id="filter-description">
+<div class="section" id="filter-description">
 <h2>Filter Description<a class="headerlink" href="#filter-description" title="Permalink to this heading">¶</a></h2>
 <p>Thoughout this tutorial you will use and reuse the same filter with complex coefficients. This filter has 32 coefficients (or taps) and has no symmetry characteristics.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>   <span class="o">-</span><span class="mi">82</span><span class="p">,</span>  <span class="o">-</span><span class="mi">253</span><span class="p">},{</span>     <span class="mi">0</span><span class="p">,</span>  <span class="o">-</span><span class="mi">204</span><span class="p">},{</span>    <span class="mi">11</span><span class="p">,</span>   <span class="o">-</span><span class="mi">35</span><span class="p">},{</span>  <span class="o">-</span><span class="mi">198</span><span class="p">,</span>   <span class="mi">273</span><span class="p">},</span>
@@ -125,8 +126,8 @@ function OptanonWrapper() { }
 </div>
 <p><img alt="missing image" src="../../../../../_images/ImpulseResponse.jpg" /></p>
 <p>The output of this filter will have a much higher amplitude than the input. A scaling factor of <code class="docutils literal notranslate"><span class="pre">2^15</span></code> should be applied to get back to normalized data. On debugging phase, when only impulses are given to the filter, the scaling factor can be reduced to <code class="docutils literal notranslate"><span class="pre">1</span></code> so that we can verify that the output looks like the impulse response of the filter.</p>
-</section>
-<section id="designing-the-kernel">
+</div>
+<div class="section" id="designing-the-kernel">
 <h2>Designing the Kernel<a class="headerlink" href="#designing-the-kernel" title="Permalink to this heading">¶</a></h2>
 <p>Before building a kernel to implement FIR filtering, consider the following:</p>
 <ul class="simple">
@@ -139,22 +140,22 @@ function OptanonWrapper() { }
 </li>
 <li><p>When will I schedule data reading and writing?</p></li>
 </ul>
-<section id="interfaces">
+<div class="section" id="interfaces">
 <h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this heading">¶</a></h3>
 <p>There are two types of interfaces: windows and streams. The bandwidth of the memory (where windows are stored) access is much higher than the streams: 2x32 GB/s vs. 2x4 GB/s. Even if the memory bandwidth from the processor is very high, they must be filled in either by another AI Engine (bandwidth 32 GB/s) or streams (2x4GB/s). Either way, somewhere in the cascade  of kernels the origin of the data will be outside of the AI Engine array (PL, DDR, …) implying a stream source.</p>
 <p>Window interfaces are used in a ‘ping-pong’ manner to allow for continuous data transfer while maintaining continuous processing. When multiple kernels are mapped to the same AI Engine and they communicate through windows, these windows use a single buffer because the kernels do not run at the same time. Ping-pong buffering means that the data are processed only when the buffer is completely filled in, incurring a minimum latency of the duration of this buffer filling. When an AI Engine kernel uses window interfaces, it must acquire a lock to gain access ownership to this memory. Lock acquisition and release takes a minimum of seven cycles per lock, which reduces the time allowed for processing.</p>
 <p>As a rule of thumb, 750 Msps is the maximum sample rate for which window interfaces are a viable solution. When the kernel processing duration is just a fraction of the time it takes to fill in the input window, this is reflected by a <strong>utilization ratio</strong> much below 1 and multiple kernels can be mapped onto a single AI Engine.</p>
 <p>In this tutorial, the goal is to achieve the maximum performance filter implementation, leading to a streaming interface at the input and the output.</p>
-</section>
-<section id="data-and-coefficients-management">
+</div>
+<div class="section" id="data-and-coefficients-management">
 <h3>Data and Coefficients Management<a class="headerlink" href="#data-and-coefficients-management" title="Permalink to this heading">¶</a></h3>
 <p>The data register is limited to 1024 bits (<code class="docutils literal notranslate"><span class="pre">v32cint16</span></code>) and the coefficient register maximum bitwidth is 512 bits (<code class="docutils literal notranslate"><span class="pre">v16cint16</span></code>). Having a streaming interface (single stream to start with), four <code class="docutils literal notranslate"><span class="pre">cint16</span></code> can be read in one instruction, but it takes four clock cycles to be able to perform the same operation again. Reading four samples at a time allows the use of <code class="docutils literal notranslate"><span class="pre">mul4</span></code> and <code class="docutils literal notranslate"><span class="pre">mac4</span></code> intrinsics.</p>
 <p>Not all intrinics exist for the AI Engine. Only two intrinsics will handle four lanes for complex 16 bits x complex 16 bits:</p>
 <p><img alt="missing image" src="../../../../../_images/Mul4Intrinsics.jpg" /></p>
 <p>In this tutorial finite length loops (by default 512 input/ouput samples) are assumed for ease of debugging. This number of iterations can be increased as desired up to infinite loops (<code class="docutils literal notranslate"><span class="pre">while(1)</span> <span class="pre">{</span> <span class="pre">...}</span></code>). Between two calls of the kernel, the status of the delay-line of the filter needs to be maintained. This delay-line must be at least 31 samples for a 32-tap filter. 32 samples fit in a Y register that’s why we will use a <code class="docutils literal notranslate"><span class="pre">v32cint16</span></code> variable to keep this delay-line. At the beginning of the kernel call this delay-line will be loaded from the memory, and at the end it will be stored there. For the coefficients there is no option: it will be <code class="docutils literal notranslate"><span class="pre">v8cint16</span></code>.</p>
 <p>A <code class="docutils literal notranslate"><span class="pre">mul4</span></code> operating on <code class="docutils literal notranslate"><span class="pre">cint16</span></code> x <code class="docutils literal notranslate"><span class="pre">cint16</span></code> can perform eight operations in one clock cycle, leading to two operations per lane.</p>
-</section>
-<section id="coefficients-and-data-update-scheduling">
+</div>
+<div class="section" id="coefficients-and-data-update-scheduling">
 <h3>Coefficients and Data Update Scheduling<a class="headerlink" href="#coefficients-and-data-update-scheduling" title="Permalink to this heading">¶</a></h3>
 <p>Before the first iteration the delay-line, the status is read to update the Y register. It will contain all the necessary previous data: <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">d(-32),</span> <span class="pre">d(-31),</span> <span class="pre">...</span> <span class="pre">,</span> <span class="pre">d(-2),</span> <span class="pre">d(-1)}</span></code>. The first output will be the result of the following operation:</p>
 <p><code class="docutils literal notranslate"><span class="pre">y(0)</span> <span class="pre">=</span> <span class="pre">d(-31).c(0)</span> <span class="pre">+</span> <span class="pre">d(-30).c(1)</span> <span class="pre">+</span> <span class="pre">...</span> <span class="pre">+</span> <span class="pre">d(-1).c(30)</span> <span class="pre">+</span> <span class="pre">d(0).c(31)</span></code></p>
@@ -269,9 +270,9 @@ function OptanonWrapper() { }
 <span class="cp">		acc = mac4(acc,data,N+6,0x3210,1,taps,6,0x0000,1)</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="compilation-and-analysis">
+</div>
+</div>
+<div class="section" id="compilation-and-analysis">
 <h2>Compilation and Analysis<a class="headerlink" href="#compilation-and-analysis" title="Permalink to this heading">¶</a></h2>
 <p>Ensure that the <code class="docutils literal notranslate"><span class="pre">InitPythonPath</span></code> has been sourced in the <code class="docutils literal notranslate"><span class="pre">Utils</span></code> directory.</p>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">SingleKernel</span></code> directory. In the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, three methods are defined:</p>
@@ -315,8 +316,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>Each four output samples need 16 <code class="docutils literal notranslate"><span class="pre">mul4</span></code>/<code class="docutils literal notranslate"><span class="pre">mac4</span></code> instructions, so the maximum throughput attainable is 250 Msps which is in line with what was achieved.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p></div>
+</div>
 
 
            </div>
