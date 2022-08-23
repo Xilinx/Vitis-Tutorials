@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -105,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="overview">
+</table><div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>You didn’t think you were getting out of here quite so fast, did you?   As I said at the beginning: <em>vadd
 will never beat the processor</em>.  It’s too simple; if you don’t have to transfer data and you can burn through
@@ -114,8 +115,8 @@ of the basement to run this test.</p>
 <p>The results from the previous session look good - on paper.  I get it, I’m in marketing.  I want to call it a
 day.  But I seem to recall also having a degree with the word “engineering” on it gathering dust somewhere,
 so - as a fellow engineer - let me break it to you.</p>
-</section>
-<section id="key-code">
+</div>
+<div class="section" id="key-code">
 <h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>For simple algorithms, an accelerator just won’t win.  Let’s use OpenMP to parallelize the processor loop.
 We include the header omp.h, and then apply an OpenMP pragma to the CPU code as in listing 3.19.</p>
@@ -131,8 +132,8 @@ We include the header omp.h, and then apply an OpenMP pragma to the CPU code as 
 <p>And that’s it.  There are some command line flags to pass to GCC, but CMake will take care of those (assuming
 you have OpenMP installed), so we can directly build and run.  The code for this example is otherwise
 identical to the code from Example 5.</p>
-</section>
-<section id="running-the-application">
+</div>
+<div class="section" id="running-the-application">
 <h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./06_wide_processor</span> <span class="pre">alveo_examples</span></code></p>
@@ -192,23 +193,23 @@ Wait for kernel to complete :       618.231 ms
 </tbody>
 </table><p>The accelerator runtime fluctuation is primarily a result of running these tests in a virtualized cloud
 environment, but that’s not the point of the exercise.</p>
-</section>
-<section id="extra-exercises">
+</div>
+<div class="section" id="extra-exercises">
 <h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
 <li><p>Try to beat the processor at vector addition!</p></li>
 <li><p>Play with the OpenMP pragmas; how many CPU cores are needed to beat a hardware accelerator?</p></li>
 </ul>
-</section>
-<section id="key-takeaways">
+</div>
+<div class="section" id="key-takeaways">
 <h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>I’ve said it before and I’ll say it again: simple O(N) will never win.</p></li>
 </ul>
 <p>But despair not!  Now it’s time to look at something real.</p>
 <p>Read <a class="reference internal" href="07-image-resizing-with-vitis-vision.html"><span class="doc">Example 7: Image Resizing with Vitis Vision</span></a></p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
 
 
            </div>

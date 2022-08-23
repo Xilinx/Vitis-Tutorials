@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -116,8 +115,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -152,9 +153,9 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="custom-platform-emulation-with-rtl-kernel">
+</table><div class="section" id="custom-platform-emulation-with-rtl-kernel">
 <h1>Custom Platform Emulation with RTL Kernel<a class="headerlink" href="#custom-platform-emulation-with-rtl-kernel" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial demonstrates the following two features of the Vitis™ unified software platform flow:</p>
 <ol class="simple">
@@ -163,8 +164,8 @@ function OptanonWrapper() { }
 </ol>
 <p>The ability to control your platform, and convert your RTL IP to an RTL kernel allows for a more streamlined process for creating the design you need.</p>
 <p>Prior to starting this tutorial read and execute the platform creation tutorial https://github.com/Xilinx/Vitis-Tutorials/tree/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190.</p>
-</section>
-<section id="overview">
+</div>
+<div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial you will learn:</p>
 <ul class="simple">
@@ -172,8 +173,8 @@ function OptanonWrapper() { }
 <li><p>How to modify the ADF graph code to incorporate the RTL kernel as a PLIO kernel.</p></li>
 <li><p>How to build and emulate the design with a custom platform.</p></li>
 </ul>
-</section>
-<section id="step-1-creating-custom-rtl-ip-with-the-vivado-design-suite">
+</div>
+<div class="section" id="step-1-creating-custom-rtl-ip-with-the-vivado-design-suite">
 <h2>Step 1 - Creating Custom RTL IP with the Vivado® Design Suite<a class="headerlink" href="#step-1-creating-custom-rtl-ip-with-the-vivado-design-suite" title="Permalink to this heading">¶</a></h2>
 <p>After creating the custom platform from the previous tutorial, the next step is to package your RTL code as a Vivado IP and generate a Vitis RTL kernel.</p>
 <ol>
@@ -215,8 +216,8 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ol>
-</section>
-<section id="step-2-interfacing-plio-kernels-to-graph">
+</div>
+<div class="section" id="step-2-interfacing-plio-kernels-to-graph">
 <h2>Step 2 - Interfacing PLIO Kernels to graph<a class="headerlink" href="#step-2-interfacing-plio-kernels-to-graph" title="Permalink to this heading">¶</a></h2>
 <p>To set up the ADF graph to interface with the <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code> RTL kernel, you must add other connections to PLIOs that represent the RTL kernel.</p>
 <ol>
@@ -274,8 +275,8 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ol>
-</section>
-<section id="step-3-building-input-output-plio-kernels">
+</div>
+<div class="section" id="step-3-building-input-output-plio-kernels">
 <h2>Step 3 - Building Input/Output PLIO Kernels<a class="headerlink" href="#step-3-building-input-output-plio-kernels" title="Permalink to this heading">¶</a></h2>
 <p>Similar to the <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code> kernel, the <code class="docutils literal notranslate"><span class="pre">mm2s</span></code> and <code class="docutils literal notranslate"><span class="pre">s2mm</span></code> kernels are not part of the ADF graph. Unlike the <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code> (RTL kernel), these are HLS-based kernels and use the Vitis compiler to compile them into XO files. Remember that instead of targeting a Xilinx provided platform, you are targeting the custom platform created in the previous tutorial.</p>
 <p>To build these kernels run the following commands:</p>
@@ -287,8 +288,8 @@ v++ -c --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_f
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make kernels
 </pre></div>
 </div>
-</section>
-<section id="step-4-building-xclbin">
+</div>
+<div class="section" id="step-4-building-xclbin">
 <h2>Step 4 - Building XCLBIN<a class="headerlink" href="#step-4-building-xclbin" title="Permalink to this heading">¶</a></h2>
 <p>Because there is no HLS kernel in the ADF graph, the <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file, which is used to determine connectivity, needs to reflect the new AI Engine interfacing.</p>
 <ol>
@@ -312,8 +313,8 @@ v++ -c --platform ../../../Versal_Platform_Creation/Tutorial-VCK190_Custom/ref_f
 </div>
 </li>
 </ol>
-</section>
-<section id="step-5-build-host-application">
+</div>
+<div class="section" id="step-5-build-host-application">
 <h2>Step 5 - Build Host Application<a class="headerlink" href="#step-5-build-host-application" title="Permalink to this heading">¶</a></h2>
 <p>Building the host application follows a similar procedure, regardless of whether it is targeting a base platform or custom platform. Make sure to use the appropriate <code class="docutils literal notranslate"><span class="pre">SYSROOT</span></code> path for the design. Also make sure to adjust the path based upon where you cloned the repositories.</p>
 <p>Build the host application:</p>
@@ -339,8 +340,8 @@ aarch64-linux-gnu-g++ *.o -ladf_api_xrt -lxrt_coreutil <span class="se">\</span>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make host
 </pre></div>
 </div>
-</section>
-<section id="step-6-package">
+</div>
+<div class="section" id="step-6-package">
 <h2>Step 6 - Package<a class="headerlink" href="#step-6-package" title="Permalink to this heading">¶</a></h2>
 <p>When packaging the design, make sure that the <code class="docutils literal notranslate"><span class="pre">rootfs</span></code>, <code class="docutils literal notranslate"><span class="pre">kernel_image</span></code>, and <code class="docutils literal notranslate"><span class="pre">platform</span></code> all point to the custom platform with the custom Linux build. If any of these items are not correct, packaging can throw an error, or, if it does package, then the emulation will malfunction.</p>
 <p>To package the design run:</p>
@@ -360,8 +361,8 @@ v++ -p -t hw_emu <span class="se">\</span>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make package
 </pre></div>
 </div>
-</section>
-<section id="step-7-run-emulation">
+</div>
+<div class="section" id="step-7-run-emulation">
 <h2>Step 7 - Run Emulation<a class="headerlink" href="#step-7-run-emulation" title="Permalink to this heading">¶</a></h2>
 <p>After packaging, everything is ready to run emulation or to run on hardware.</p>
 <ol>
@@ -391,7 +392,7 @@ v++ -p -t hw_emu <span class="se">\</span>
 </li>
 </ol>
 <p>You should see an output displaying <strong>TEST PASSED</strong>. When this is shown, run the keyboard command: <code class="docutils literal notranslate"><span class="pre">Ctrl+A</span> <span class="pre">x</span></code> to end the QEMU instance.</p>
-<section id="to-view-emulation-waveforms">
+<div class="section" id="to-view-emulation-waveforms">
 <h3>To View Emulation Waveforms<a class="headerlink" href="#to-view-emulation-waveforms" title="Permalink to this heading">¶</a></h3>
 <p>The following image shows a debug waveform to show the data movement through the system. The general flow of data is as follows:</p>
 <ul class="simple">
@@ -407,9 +408,9 @@ v++ -p -t hw_emu <span class="se">\</span>
 <li><p>When the GUI opens up, add waveforms to the waveform viewer or you can use the existing <code class="docutils literal notranslate"><span class="pre">.wcfg</span></code> file in the repo by selecting <strong>File &gt; Simulation Waveform &gt; Open Configuration</strong>, locate the <code class="docutils literal notranslate"><span class="pre">custom.wcfg</span></code>, and click <strong>OK</strong>.</p></li>
 <li><p>Click <strong>Run &gt; Run All</strong> or <strong>F3</strong>.</p></li>
 </ol>
-</section>
-</section>
-<section id="summary">
+</div>
+</div>
+<div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial shows how to:</p>
 <ul class="simple">
@@ -417,15 +418,15 @@ v++ -p -t hw_emu <span class="se">\</span>
 <li><p>Modify the ADF graph to handle more PLIO interfacing.</p></li>
 <li><p>Build and execute the design in emulation.</p></li>
 </ul>
-<section id="license">
+<div class="section" id="license">
 <h3>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h3>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at</p>
 <p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD012</sup></br></p></section>
-</section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD012</sup></br></p></div>
+</div>
+</div>
 
 
            </div>

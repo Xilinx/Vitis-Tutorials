@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,69 +107,69 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="ai-engine-debug-with-software-emulator">
+</table><div class="section" id="ai-engine-debug-with-software-emulator">
 <h1>AI Engine Debug with Software Emulator<a class="headerlink" href="#ai-engine-debug-with-software-emulator" title="Permalink to this heading">¶</a></h1>
 <p>Software emulation supports fast emulation execution and <code class="docutils literal notranslate"><span class="pre">printf()</span></code> to help verify the kernel’s functionalities. Users can check the output by examining design output files in the <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data</span></code> directory.</p>
 <p>Hardware constraints such as heap/stack sizes and program memory size are not verified in software emulator.</p>
 <p>The following steps outline the procedure:</p>
 <p><a class="reference external" href="#1-Launch-and-Verify-Software-Emulation-in-Vitis-IDE">1. Launch and Verify Software Emulation in Vitis IDE</a></p>
 <p><a class="reference external" href="#2-printf-support">2. Printf() support</a></p>
-<section id="launch-and-verify-software-emulation-in-vitis-ide">
+<div class="section" id="launch-and-verify-software-emulation-in-vitis-ide">
 <h2>1. Launch and Verify Software Emulation in Vitis IDE<a class="headerlink" href="#launch-and-verify-software-emulation-in-vitis-ide" title="Permalink to this heading">¶</a></h2>
-<section id="step-1-1-select-software-emulation-configuration">
+<div class="section" id="step-1-1-select-software-emulation-configuration">
 <h3>Step 1.1. Select Software Emulation Configuration<a class="headerlink" href="#step-1-1-select-software-emulation-configuration" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/se_config.png" /></p>
-</section>
-<section id="step-1-2-build-with-software-emulator">
+</div>
+<div class="section" id="step-1-2-build-with-software-emulator">
 <h3>Step 1.2. Build with Software Emulator<a class="headerlink" href="#step-1-2-build-with-software-emulator" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/se_build.png" /></p>
-</section>
-<section id="step-1-3-run-with-software-emulator">
+</div>
+<div class="section" id="step-1-3-run-with-software-emulator">
 <h3>Step 1.3. Run with Software Emulator<a class="headerlink" href="#step-1-3-run-with-software-emulator" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/se_run.png" /></p>
 <p>Note: Launching the software emulator run from system project is not supported. This error from Vitis™ IDE is expected when the launch software emulator for system project option is selected.</p>
 <p><img alt="missing image" src="../../../../_images/se_run_err.png" /></p>
-</section>
-<section id="step-1-4-verify-run-result">
+</div>
+<div class="section" id="step-1-4-verify-run-result">
 <h3>Step 1.4: Verify Run Result<a class="headerlink" href="#step-1-4-verify-run-result" title="Permalink to this heading">¶</a></h3>
 <p>Software emulator output files from design are located at <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data</span></code>. Verify the output files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/dlbf_out[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/ulbf_out[0-3].txt</span></code> against golden files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/dlbf_gold[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold[0-3].txt</span></code> to ensure that the design’s I/O functionalities are correct. Vitis IDE supports <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> feature to compare two files, highlight two files to be compared then right click one of highlighted file and select <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> then <code class="docutils literal notranslate"><span class="pre">each</span> <span class="pre">other</span></code>.</p>
 <p>For example, Compare <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold3.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/ulbf_out3.txt</span></code></p>
 <p><img alt="missing image" src="../../../../_images/se_compare.png" /></p>
-</section>
-</section>
-<section id="printf-support">
+</div>
+</div>
+<div class="section" id="printf-support">
 <h2>2. <code class="docutils literal notranslate"><span class="pre">printf</span></code> Support<a class="headerlink" href="#printf-support" title="Permalink to this heading">¶</a></h2>
 <p>The simplest form of tracing is to use a formatted <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. No additional include files are necessary for using <code class="docutils literal notranslate"><span class="pre">printf()</span></code> other than standard C/C++ includes (<code class="docutils literal notranslate"><span class="pre">stdio.h</span></code>). You can add <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements to your code to be processed during simulation, or hardware emulation, and remove them or comment them out for hardware builds.</p>
-<section id="step-2-1-add-printf-statement">
+<div class="section" id="step-2-1-add-printf-statement">
 <h3>Step 2.1. Add <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement<a class="headerlink" href="#step-2-1-add-printf-statement" title="Permalink to this heading">¶</a></h3>
 <p>Select <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code> file in Vitis IDE to be edited. Add <code class="docutils literal notranslate"><span class="pre">printf(&quot;prbcnt=%d\n&quot;,</span> <span class="pre">prbcnt);</span></code> statement at line 32 of <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code> file.
 <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code> can be found from Vitis IDE’s explorer, browse to <code class="docutils literal notranslate"><span class="pre">beamformer</span></code> sub-project, click on <code class="docutils literal notranslate"><span class="pre">src</span></code> then <code class="docutils literal notranslate"><span class="pre">kernel</span></code> to expand the directory, and click on <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code>. The file will be displayed at the center of the Vitis IDE.</p>
-</section>
-<section id="step-2-2-compile-the-project">
+</div>
+<div class="section" id="step-2-2-compile-the-project">
 <h3>Step 2.2. Compile the Project<a class="headerlink" href="#step-2-2-compile-the-project" title="Permalink to this heading">¶</a></h3>
 <p>Highlight the beamformer sub-project, right-click to enable pull-down menu, and select <strong>Build Project</strong> to build the beamformer project.</p>
-</section>
-<section id="step-2-3-run-the-project">
+</div>
+<div class="section" id="step-2-3-run-the-project">
 <h3>Step 2.3. Run the Project<a class="headerlink" href="#step-2-3-run-the-project" title="Permalink to this heading">¶</a></h3>
 <p>Highlight the beamformer sub-project, right-click to enable pull-down menu, select <strong>Run As</strong>, and then <strong>Launch SW Emulator</strong> to run the project in Vitis IDE.</p>
-</section>
-<section id="step-2-4-expected-result">
+</div>
+<div class="section" id="step-2-4-expected-result">
 <h3>Step 2.4. Expected Result<a class="headerlink" href="#step-2-4-expected-result" title="Permalink to this heading">¶</a></h3>
 <p>Expect to observe the output of <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement displayed at Vitis IDE console window.
 <img alt="missing image" src="../../../../_images/aie_sw_printf.png" />
 Note: A predefined marco <code class="docutils literal notranslate"><span class="pre">defined(__PTHREAD_API__)</span></code> can be used to wrap around printf statements in software emulation to improve code portability.</p>
-</section>
-</section>
-<section id="limitations">
+</div>
+</div>
+<div class="section" id="limitations">
 <h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>System project run with software emulator is not supported.</p></li>
 <li><p>Source code debug in software emulator is not supported hence <strong>Launch SW Emulator</strong> option from the “Debug As” pulldown menu is not available.</p></li>
 <li><p>Hardware constraints check is not supported in software emulator. Functionalities verified in software emulator need to check resource constraints in AI Engine emulator before running on the hardware board.</p></li>
 </ol>
-</section>
-</section>
-<section id="license">
+</div>
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License);
 you may not use this file except in compliance with the License.
@@ -181,7 +182,7 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

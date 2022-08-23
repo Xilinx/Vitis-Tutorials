@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -105,24 +105,24 @@ function OptanonWrapper() { }
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
    </td>
  </tr>
-</table><section id="table-of-contents">
+</table><div class="section" id="table-of-contents">
 <h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference external" href="#building-the-design">Building the Design</a></p>
 <p><a class="reference external" href="#hardware-design-details">Hardware Design Details</a></p>
 <p><a class="reference external" href="#software-design-details">Software Design Details</a></p>
 <p><a class="reference external" href="#references">References</a></p>
 <p><a class="reference external" href="#revision-history">Revision History</a></p>
-</section>
-<section id="building-the-design">
+</div>
+<div class="section" id="building-the-design">
 <h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <details>
-<summary>Design Build</summary><section id="design-build">
+<summary>Design Build</summary><div class="section" id="design-build">
 <h2>Design Build<a class="headerlink" href="#design-build" title="Permalink to this heading">¶</a></h2>
 <p>In this section, you will build and run the FIR filter design using the DSP implementation. The difference between this implementation and the AI Engine implementation, where users compile the AI Engine design and integrate it into a larger system design (including the programmable logic (PL) kernels and processing system (PS) host application), is that the FIR filter is now implemented in PL using DSP Engines.</p>
 <p>At the end of this section, the design flow will generate a new directory (called <code class="docutils literal notranslate"><span class="pre">build/</span></code>). Underneath are sub-directories named <code class="docutils literal notranslate"><span class="pre">fir_dsp_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps</span></code> (for example, fir_dsp_1firs_15taps) depending on value of <code class="docutils literal notranslate"><span class="pre">N_FIR_FILTERS</span></code> and <code class="docutils literal notranslate"><span class="pre">N_FIR_TAPS</span></code> chosen in the build. Each sub-directory contains the <code class="docutils literal notranslate"><span class="pre">hw_emu/</span></code> and <code class="docutils literal notranslate"><span class="pre">hw/</span></code> subfolders. The <code class="docutils literal notranslate"><span class="pre">hw_emu/</span></code> subfolder contains the build for hardware emulation. The <code class="docutils literal notranslate"><span class="pre">hw/</span></code> subfolder contains the build for the hardware run on a VCK190 board.</p>
 </details><details>
-<summary>Make Steps</summary></section>
-<section id="make-steps">
+<summary>Make Steps</summary></div>
+<div class="section" id="make-steps">
 <h2>Make Steps<a class="headerlink" href="#make-steps" title="Permalink to this heading">¶</a></h2>
 <p>To run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> steps (e.g. <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">kernels</span></code>, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">graph</span></code>, etc), you must be in the <code class="docutils literal notranslate"><span class="pre">Makefiles/</span></code> folder.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> Makefiles
@@ -136,8 +136,8 @@ function OptanonWrapper() { }
 <li><p>EN_TRACE: Flag to enable trace data to be captured. 0 is disabled and 1 is enabled. Default is 0.</p></li>
 </ul>
 </details><details>
-<summary>Build the Entire Design with a Single Command</summary></section>
-<section id="build-the-entire-design-with-a-single-command">
+<summary>Build the Entire Design with a Single Command</summary></div>
+<div class="section" id="build-the-entire-design-with-a-single-command">
 <h2>Build the Entire Design with a Single Command<a class="headerlink" href="#build-the-entire-design-with-a-single-command" title="Permalink to this heading">¶</a></h2>
 <p>If you are already familiar with the AI Engine and Vitis™ accelerated kernel compilation flows, you can build the entire design with one command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="o">(</span>default hardware emulation, <span class="m">1</span> filter <span class="m">15</span> taps, no trace enabled<span class="o">)</span>
@@ -163,8 +163,8 @@ In the file <code class="docutils literal notranslate"><span class="pre">\&lt;pr
 </ol>
 </details><p>The individual make steps to build the design with the options that applied to them are specified as follows.</p>
 <details>
-<summary>make kernels: Compile PL Kernels</summary></section>
-<section id="make-kernels-compile-pl-kernels">
+<summary>make kernels: Compile PL Kernels</summary></div>
+<div class="section" id="make-kernels-compile-pl-kernels">
 <h2>make kernels: Compile PL Kernels<a class="headerlink" href="#make-kernels-compile-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (<code class="docutils literal notranslate"><span class="pre">xilinx_vck190_base_202110_1</span></code>) and compiles them into their respective XO files.</p>
 <p>The following commands compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):</p>
@@ -269,8 +269,8 @@ v++ 	--target hw_emu					\
 </tr>
 </tbody>
 </table></details><details>
-<summary>make xclbin: Use Vitis Tools to Link HLS Kernels with the Platform</summary></section>
-<section id="make-xclbin-use-vitis-tools-to-link-hls-kernels-with-the-platform">
+<summary>make xclbin: Use Vitis Tools to Link HLS Kernels with the Platform</summary></div>
+<div class="section" id="make-xclbin-use-vitis-tools-to-link-hls-kernels-with-the-platform">
 <h2>make xclbin: Use Vitis Tools to Link HLS Kernels with the Platform<a class="headerlink" href="#make-xclbin-use-vitis-tools-to-link-hls-kernels-with-the-platform" title="Permalink to this heading">¶</a></h2>
 <p>After the PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XCLBIN file.</p>
 <p>The Vitis tools allow you to integrate the HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx and the Vitis tools build the hardware design and integrate the PL kernels into the design).</p>
@@ -403,8 +403,8 @@ v++ 	-l 						\
 </tr>
 </tbody>
 </table></details> <details>
-<summary>make application: Compile the Host Application</summary></section>
-<section id="make-application-compile-the-host-application">
+<summary>make application: Compile the Host Application</summary></div>
+<div class="section" id="make-application-compile-the-host-application">
 <h2>make application: Compile the Host Application<a class="headerlink" href="#make-application-compile-the-host-application" title="Permalink to this heading">¶</a></h2>
 <p>You can compile the host application by following the typical cross-compilation flow for the Cortex-A72. To build the application run the following command (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">application</span>
@@ -489,8 +489,8 @@ aarch64-linux-gnu-g++ 	../fir_dsp_app.o			\
 </tr>
 </tbody>
 </table></details><details>
-<summary>make package: Package the Design</summary></section>
-<section id="make-package-package-the-design">
+<summary>make package: Package the Design</summary></div>
+<div class="section" id="make-package-package-the-design">
 <h2>make package: Package the Design<a class="headerlink" href="#make-package-package-the-design" title="Permalink to this heading">¶</a></h2>
 <p>With the HLS kernel outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all executables, bitstreams, configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications, and <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>.</p>
 <p>The command to run this step is as follows (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):</p>
@@ -619,8 +619,8 @@ v++	-p  							\
 </tr>
 </tbody>
 </table></details><details>
-<summary>make run_emu: Run Hardware Emulation</summary></section>
-<section id="make-run-emu-run-hardware-emulation">
+<summary>make run_emu: Run Hardware Emulation</summary></div>
+<div class="section" id="make-run-emu-run-hardware-emulation">
 <h2>make run_emu: Run Hardware Emulation<a class="headerlink" href="#make-run-emu-run-hardware-emulation" title="Permalink to this heading">¶</a></h2>
 <p>After packaging, everything is set to run emulation or hardware.
 To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):</p>
@@ -668,8 +668,8 @@ To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS
 <p>The XSIM Waveform Viewer is launched. Drag and drop the signals into the Viewer and click Play to start the emulation. Go back to the terminal and wait for the Linux prompt to show up.</p>
 <p>In the XSIM Waveform Viewer, you will see the signals you added to the waveform adjusting over the execution of the design. Once done, hit the pause button and close the window to end the emulation.</p>
 </details><details>
-<summary>TARGET=hw: Run on Hardware</summary></section>
-<section id="run-on-hardware">
+<summary>TARGET=hw: Run on Hardware</summary></div>
+<div class="section" id="run-on-hardware">
 <h2>Run on Hardware<a class="headerlink" href="#run-on-hardware" title="Permalink to this heading">¶</a></h2>
 <p>To run the design in hardware, re-run the following “make” steps with TARGET=hw and other applicable options (see the make steps above)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">kernels</span>     <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span>
@@ -708,18 +708,18 @@ To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS
 </pre></div>
 </div>
 <p>After execution completes and the testcase passes data integrity check, ‘TEST PASSED’ should appear on the terminal.</p>
-</details></section>
-</section>
-<section id="hardware-design-details">
+</details></div>
+</div>
+<div class="section" id="hardware-design-details">
 <h1>Hardware Design Details<a class="headerlink" href="#hardware-design-details" title="Permalink to this heading">¶</a></h1>
 <details>
-<summary>FIR Filter HLS Implementation Architecture</summary><section id="fir-filter-hls-implementation-architecture">
+<summary>FIR Filter HLS Implementation Architecture</summary><div class="section" id="fir-filter-hls-implementation-architecture">
 <h2>FIR Filter HLS Implementation Architecture<a class="headerlink" href="#fir-filter-hls-implementation-architecture" title="Permalink to this heading">¶</a></h2>
 <p>The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR memory to store input and output vectors. This setup is maintained in the two implementations (using HLS with DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and the FIR filter chain PL kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels is 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.</p>
 <p><img alt="Image of FIR Filter DSP implementation architecture" src="../../../../../_images/fir_dsp_block_diagram.png" /></p>
 </details><details>
-<summary>Design Details</summary></section>
-<section id="design-details">
+<summary>Design Details</summary></div>
+<div class="section" id="design-details">
 <h2>Design Details<a class="headerlink" href="#design-details" title="Permalink to this heading">¶</a></h2>
 <p>The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, and AI Engine and the interfaces among them. The v++ linker step builds on top of the base platform by adding the PL kernels. To add the various functions in a system level design, PL kernels are added to the base platform depending on the application, that is, the PL kernels present in each design may vary. In the design, the components are added by v++ -l step (make XCLBIN in the tool flow section above) and include the following:</p>
 <ul class="simple">
@@ -733,8 +733,8 @@ To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS
 <p>The actual FIR filter chain itself is implemented in a HLS PL kernel, which connects the specified number of filters together in a chain.  For purposes of simplicity in comparing the designs, all the filters in the chain are identical, though it is unlikely such a chain would be used in a practical application.</p>
 <p>Notice the system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine run-time trace data if the EN_TRACE option is enabled in the design. The mm2s/s2mm kernels and the AI Engine array interface are both operating at 300 MHz.</p>
 </details><details>
-<summary>HLS PL Kernels</summary></section>
-<section id="hls-pl-kernels">
+<summary>HLS PL Kernels</summary></div>
+<div class="section" id="hls-pl-kernels">
 <h2>HLS PL Kernels<a class="headerlink" href="#hls-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In the HLS implementation of the FIR Filter design, the AI Engine is not used and therefore there are no AI Engine-related kernels and graphs. The compute and datamover functions are implemented as HLS kernels in the PL region.</p>
 <p>The PL kernel <code class="docutils literal notranslate"><span class="pre">fir_dsp</span></code> implements the FIR filter chain.  It contains a single AXI-stream input port and a single AXI-stream output port.  Since the FIR function requires no initialization, no additional control/status ports are required.</p>
@@ -750,16 +750,16 @@ Some additional details regarding the data mover kernels include:</p>
 <li><p>The data width is 128 bits</p></li>
 <li><p>To avoid bandwidth limitation resulting in back pressure which causes performance degradation, the HLS pragma <code class="docutils literal notranslate"><span class="pre">max_write_burst_length</span></code> is set higher than the default to 256 bits.</p></li>
 </ul>
-</details></section>
-</section>
-<section id="software-design-details">
+</details></div>
+</div>
+<div class="section" id="software-design-details">
 <h1>Software Design Details<a class="headerlink" href="#software-design-details" title="Permalink to this heading">¶</a></h1>
 <p>The software design in the FIR Filter HLS implementation consists of the following sections:</p>
 <details>
-<summary>PL Kernels</summary><section id="pl-kernels">
+<summary>PL Kernels</summary><div class="section" id="pl-kernels">
 <h2>PL Kernels<a class="headerlink" href="#pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>For the HLS implementation of this design, the data mover kernels and the FIR filter chain are all implmented in HLS.</p>
-<section id="fir-dsp-fir-dsp-cpp">
+<div class="section" id="fir-dsp-fir-dsp-cpp">
 <h3>fir_dsp (fir_dsp.cpp)<a class="headerlink" href="#fir-dsp-fir-dsp-cpp" title="Permalink to this heading">¶</a></h3>
 <p>The fir_filter kernel consists of a single AXI-stream input and AXI-stream output.  The kernel makes use of the FIR Compiler IP, the same one that can be instantiated as an IP in Vivado tools. In HLS, it is instantiated as an object in the HLS code, and then cascaded together into a chain by the design.</p>
 <p>The following include allows us to utilize the FIR Compiler interface provided in the HLS IP libraries from the Vitis HLS Libraries Reference:</p>
@@ -865,23 +865,23 @@ Some additional details regarding the data mover kernels include:</p>
 </pre></div>
 </div>
 <p>Finally, the <code class="docutils literal notranslate"><span class="pre">fir_dsp</span></code> function it a top-level module / kernel available to be linked together to the other HLS kernels.</p>
-<section id="arguments">
+<div class="section" id="arguments">
 <h4>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading">¶</a></h4>
 <p>The FIR kernel takes the following arguments:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">hls::stream&lt;ap_axiu&lt;32,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0&gt;&gt;</span></code> is a data type defined in <code class="docutils literal notranslate"><span class="pre">ap_axi_sdata.h</span></code>. It is a special data class used for data transfer when using a streaming platform. The parameter <code class="docutils literal notranslate"><span class="pre">&lt;D&gt;</span></code> is the data width of the streaming interface which is set to 32. The remaining three parameters should be set to 0.</p></li>
 </ul>
 <p>The fir_dsp kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:</p>
-</section>
-<section id="pragma-hls-interface-ap-ctrl-none-port-return">
+</div>
+<div class="section" id="pragma-hls-interface-ap-ctrl-none-port-return">
 <h4>pragma HLS interface ap_ctrl_none port=return<a class="headerlink" href="#pragma-hls-interface-ap-ctrl-none-port-return" title="Permalink to this heading">¶</a></h4>
 <p>This kernel requires no additional control/status interfaces.</p>
-</section>
-</section>
-<section id="mm2s-mm2s-cpp">
+</div>
+</div>
+<div class="section" id="mm2s-mm2s-cpp">
 <h3>mm2s (mm2s.cpp)<a class="headerlink" href="#mm2s-mm2s-cpp" title="Permalink to this heading">¶</a></h3>
 <p>The mm2s kernel reads data from a Memory Mapped AXI4 (MM-AXI4) interface and writes it to an AXI4-Stream Interface</p>
-<section id="id1">
+<div class="section" id="id1">
 <h4>Arguments<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
 <p>The mm2s kernel takes the following arguments:</p>
 <ul class="simple">
@@ -889,28 +889,28 @@ Some additional details regarding the data mover kernels include:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">hls::stream&lt;qdma_axis&lt;D,0,0,0&gt;&gt;</span></code> is a data type defined in <code class="docutils literal notranslate"><span class="pre">ap_axi_sdata.h</span></code>. It is a special data class used for data transfer when using a streaming platform. The parameter <code class="docutils literal notranslate"><span class="pre">&lt;D&gt;</span></code> is the data width of the streaming interface which is set to 128. The remaining three parameters should be set to 0.</p></li>
 </ul>
 <p>The mm2s kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols</p>
-</section>
-<section id="pragma-hls-interface-s-axilite">
+</div>
+<div class="section" id="pragma-hls-interface-s-axilite">
 <h4>pragma HLS INTERFACE s_axilite<a class="headerlink" href="#pragma-hls-interface-s-axilite" title="Permalink to this heading">¶</a></h4>
 <p>The mm2s kernels has one <code class="docutils literal notranslate"><span class="pre">s_axilite</span></code> interface (specifying a AXI4-Lite slave I/O protocol) with <code class="docutils literal notranslate"><span class="pre">bundle=control</span></code> associated with all the arguments (<code class="docutils literal notranslate"><span class="pre">mem</span></code>,<code class="docutils literal notranslate"><span class="pre">s</span></code>, and <code class="docutils literal notranslate"><span class="pre">size</span></code>). This interface is also associated with <code class="docutils literal notranslate"><span class="pre">return</span></code>.</p>
-<section id="pragma-hls-interface-m-axi">
+<div class="section" id="pragma-hls-interface-m-axi">
 <h5>pragma HLS INTERFACE m_axi<a class="headerlink" href="#pragma-hls-interface-m-axi" title="Permalink to this heading">¶</a></h5>
 <p>The mm2s kernel has one <code class="docutils literal notranslate"><span class="pre">m_axi</span></code> interface (specifying a AXI4 master I/O protocol) with <code class="docutils literal notranslate"><span class="pre">offset=slave</span> <span class="pre">bundle=gmem</span></code>. This interface also has <code class="docutils literal notranslate"><span class="pre">max_read_burst_length=256</span></code>. Part of this AXI4 interface is the Read Address Channel containing the signals <code class="docutils literal notranslate"><span class="pre">ARBURST</span></code> and <code class="docutils literal notranslate"><span class="pre">ARLEN</span></code>. This interface has a burst type <code class="docutils literal notranslate"><span class="pre">ARBURST=INCR</span></code> and can support burst length <code class="docutils literal notranslate"><span class="pre">ARLEN</span></code> of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The <code class="docutils literal notranslate"><span class="pre">max_read_burst_length=256</span></code> sets the burst length <code class="docutils literal notranslate"><span class="pre">ARLEN=256</span></code> transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of 16 bytes (128-bits from the <code class="docutils literal notranslate"><span class="pre">mem</span></code> argument) is the previous address plus 16.</p>
-</section>
-</section>
-<section id="pragma-hls-interface-axis">
+</div>
+</div>
+<div class="section" id="pragma-hls-interface-axis">
 <h4>pragma HLS INTERFACE axis<a class="headerlink" href="#pragma-hls-interface-axis" title="Permalink to this heading">¶</a></h4>
 <p>The mm2s kernel has one <code class="docutils literal notranslate"><span class="pre">axis</span></code> interface (specifying a AXI4-Stream I/O protocol)</p>
-</section>
-<section id="pragma-hls-pipeline-ii-1">
+</div>
+<div class="section" id="pragma-hls-pipeline-ii-1">
 <h4>pragma HLS PIPELINE II=1<a class="headerlink" href="#pragma-hls-pipeline-ii-1" title="Permalink to this heading">¶</a></h4>
 <p>The mm2s kernel has a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (<code class="docutils literal notranslate"><span class="pre">ARBURST=INCR</span></code>). To pipeline this <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, you can use this pragma by setting the initiation interval (<code class="docutils literal notranslate"><span class="pre">II</span></code>) = 1.</p>
-</section>
-</section>
-<section id="s2mm-s2mm-cpp">
+</div>
+</div>
+<div class="section" id="s2mm-s2mm-cpp">
 <h3>s2mm (s2mm.cpp)<a class="headerlink" href="#s2mm-s2mm-cpp" title="Permalink to this heading">¶</a></h3>
 <p>The s2mm kernel reads 128 bits of data from an AXI4-Stream interface and writes it to an AXI Memory mapped interface.</p>
-<section id="id2">
+<div class="section" id="id2">
 <h4>Arguments<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel takes the following arguments:</p>
 <ul class="simple">
@@ -918,32 +918,32 @@ Some additional details regarding the data mover kernels include:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">hls::stream&lt;qdma_axis&lt;D,0,0,0&gt;&gt;</span></code> is a data type defined in <code class="docutils literal notranslate"><span class="pre">ap_axi_sdata.h</span></code>. It is a special data class used for data transfer when using a streaming platform. The parameter <code class="docutils literal notranslate"><span class="pre">&lt;D&gt;</span></code> is the data width of the streaming interface and is set to 128 (same as the <code class="docutils literal notranslate"><span class="pre">mem</span></code> argument). The remaining three parameters should be set to 0.</p></li>
 </ul>
 <p>The s2mm kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols</p>
-</section>
-<section id="id3">
+</div>
+<div class="section" id="id3">
 <h4>pragma HLS INTERFACE s_axilite<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel has one <code class="docutils literal notranslate"><span class="pre">s_axilite</span></code> interface  (specifying a AXI4-Lite slave I/O protocol) with <code class="docutils literal notranslate"><span class="pre">bundle=control</span></code> associated with all the arguments (<code class="docutils literal notranslate"><span class="pre">mem</span></code>,<code class="docutils literal notranslate"><span class="pre">s</span></code>, and <code class="docutils literal notranslate"><span class="pre">size</span></code>). This interface is also associated with <code class="docutils literal notranslate"><span class="pre">return</span></code>.</p>
-</section>
-<section id="id4">
+</div>
+<div class="section" id="id4">
 <h4>pragma HLS INTERFACE m_axi<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel has one <code class="docutils literal notranslate"><span class="pre">m_axi</span></code> interface (specifying an AXI4 master I/O protocol) with <code class="docutils literal notranslate"><span class="pre">offset=slave</span> <span class="pre">bundle=gmem</span></code>. This interface also has <code class="docutils literal notranslate"><span class="pre">max_write_burst_length=256</span></code>. Part of this AXI4 interface is the Write Address channel containing the signals <code class="docutils literal notranslate"><span class="pre">AWBURST</span></code> and <code class="docutils literal notranslate"><span class="pre">AWLEN</span></code>. This interface has a burst type <code class="docutils literal notranslate"><span class="pre">AWBURST=INCR</span></code> and can support burst length <code class="docutils literal notranslate"><span class="pre">AWLEN</span></code> of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The <code class="docutils literal notranslate"><span class="pre">max_write_burst_length=256</span></code> sets the burst length <code class="docutils literal notranslate"><span class="pre">AWLEN=256</span></code> transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of 16 bytes (128-bits from the mem argument) is the previous address plus 16.</p>
-</section>
-<section id="id5">
+</div>
+<div class="section" id="id5">
 <h4>pragma HLS INTERFACE axis<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel has one <code class="docutils literal notranslate"><span class="pre">axis</span></code> interface (specifying an AXI4-Stream I/O protocol)</p>
-</section>
-<section id="id6">
+</div>
+<div class="section" id="id6">
 <h4>pragma HLS PIPELINE II=1<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel has a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop that is a candidate for burst write because the memory addresses (mem[i]) are contiguous (memory accesses across loop iterations are consecutive). To pipeline this <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, you can use this pragma by setting the initiation interval (<code class="docutils literal notranslate"><span class="pre">II</span></code>) = 1.</p>
 </details><details>
-<summary>PS Host Application</summary></section>
-</section>
-</section>
-<section id="ps-host-application">
+<summary>PS Host Application</summary></div>
+</div>
+</div>
+<div class="section" id="ps-host-application">
 <h2>PS Host Application<a class="headerlink" href="#ps-host-application" title="Permalink to this heading">¶</a></h2>
 <p>The FIR filter HLS(DSP) tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernels. Review <a class="reference external" href="#ai-engine-documentation">Programming the PS Host Application Section in the AI Engine Documentation</a> to understand the process to create a host application. Note that unlike the AI Engine implementation, there are no AI Engine graphs and associated control code.</p>
 <p>Within the PS host application, two classes are defined ((mm2s_class and s2mm_class), which defines methods used to control and monitor the corresponding kernels.</p>
 <p>The main sections of the PS host application code is described in the following subsections:</p>
-<section id="define-input-and-output-files">
+<div class="section" id="define-input-and-output-files">
 <h3>Define Input and Output Files<a class="headerlink" href="#define-input-and-output-files" title="Permalink to this heading">¶</a></h3>
 <p>A single data file is provides data to stimulate the filter chain.  However, the output data will depend on the value of the makefile parameters N_FIR_FILTERS and N_FIR_TAPS. Data files have been generated for the four corner cases (1 FILTERS / 15 TAPS, 10 FILTERS / 15 TAPS, 1 FILTERS / 240 TAPS, 10 FILTERS / 240 TAPS).  For other configurations, the data is not checked.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;input_data.h&quot;</span>
@@ -961,8 +961,8 @@ Some additional details regarding the data mover kernels include:</p>
 <span class="c1">#endif</span>
 </pre></div>
 </div>
-</section>
-<section id="define-data-sizes">
+</div>
+<div class="section" id="define-data-sizes">
 <h3>Define Data Sizes<a class="headerlink" href="#define-data-sizes" title="Permalink to this heading">¶</a></h3>
 <p>To enable comparing of the 2 implementations of this design, i.e. AIE and HLS implementation, it is desirable to have a small data set to be able to run it through simulation, and a large data set to run through hardware to minimize the effects of measurement errors on determining the performance metrics.  This has been done by providing a small 8k sample of input data (I and Q samples) in which the data repeats twice. The application code then copies the data into potentially much larger buffer, using REPEAT_OFFSET to determine where the data begins to repeat itself, and REPETITIONS to copy from this point forward to the end of the buffer the specified number of times.  Having two cycles of data and a fixed offset (REPEAT_OFFSET) is necessary to allow the filter’s start-up transient to settle out and reach a steady state for subsequent cycles. Likewise, FLUSH_SAMPLES specifies the number of zero samples to add to the end of the buffer to clear out the FIR filter, so the application can be run multiple times.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define SAMPLES_PER_WORD   4</span>
@@ -973,12 +973,12 @@ Some additional details regarding the data mover kernels include:</p>
 <span class="c1">#define FLUSH_SAMPLES   4096</span>
 </pre></div>
 </div>
-</section>
-<section id="load-xclbin-function">
+</div>
+<div class="section" id="load-xclbin-function">
 <h3>load_xclbin Function<a class="headerlink" href="#load-xclbin-function" title="Permalink to this heading">¶</a></h3>
 <p>This function is responsible for loading the XCLBIN file into the device.</p>
-</section>
-<section id="mm2s-class">
+</div>
+<div class="section" id="mm2s-class">
 <h3>mm2s Class<a class="headerlink" href="#mm2s-class" title="Permalink to this heading">¶</a></h3>
 <p>This class provides the following methods for controlling / monitoring this kernel:</p>
 <ul class="simple">
@@ -988,8 +988,8 @@ Some additional details regarding the data mover kernels include:</p>
 <li><p>close(): closes the input data buffer object and kernel</p></li>
 <li><p>load(): loads data from the input file into the data buffer, using REPEAT_OFFSET, REPETITIONS and FLUSH_SAMPLES to potentially generate a much larger data set than the input file (see #define-data-sizes).</p></li>
 </ul>
-</section>
-<section id="s2mm-class">
+</div>
+<div class="section" id="s2mm-class">
 <h3>s2mm Class<a class="headerlink" href="#s2mm-class" title="Permalink to this heading">¶</a></h3>
 <p>This class provides the following methods for controlling / monitoring this kernel:</p>
 <ul class="simple">
@@ -1000,69 +1000,69 @@ Note: This call will only return once it receives the number of samples specifie
 <li><p>close(): closes the output data buffer object and kernel</p></li>
 <li><p>golden_check():  Compare data in the output data buffer object with the data from the output file, using REPEAT_OFFSET and REPETITIONS to compare the data correctly(see #define-data-sizes).</p></li>
 </ul>
-</section>
-<section id="main-function">
+</div>
+<div class="section" id="main-function">
 <h3>Main Function<a class="headerlink" href="#main-function" title="Permalink to this heading">¶</a></h3>
 <p>This is the main PS application code that controls the kernels and runs data through the design. The various steps this code goes through is described in the following subsections.</p>
-<section id="check-command-line-argument">
+<div class="section" id="check-command-line-argument">
 <h4>1. Check Command Line Argument<a class="headerlink" href="#check-command-line-argument" title="Permalink to this heading">¶</a></h4>
 <p>The beginning of the A72 application is represented by the main function. It takes in one command line argument: an XCLBIN file.</p>
-</section>
-<section id="open-xclbin">
+</div>
+<div class="section" id="open-xclbin">
 <h4>2. Open XCLBIN<a class="headerlink" href="#open-xclbin" title="Permalink to this heading">¶</a></h4>
 <p>The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device.</p>
-</section>
-<section id="create-and-initialize-data-mover-kernels">
+</div>
+<div class="section" id="create-and-initialize-data-mover-kernels">
 <h4>3. Create and Initialize Data Mover Kernels<a class="headerlink" href="#create-and-initialize-data-mover-kernels" title="Permalink to this heading">¶</a></h4>
 <p>Create the kernel objects, initialize them, and load the input data from the constant array into the input buffer.</p>
-</section>
-<section id="run-data-mover-kernels">
+</div>
+<div class="section" id="run-data-mover-kernels">
 <h4>4. Run Data Mover Kernels<a class="headerlink" href="#run-data-mover-kernels" title="Permalink to this heading">¶</a></h4>
 <p>Start execution of the mm2s/s2mm kernels.</p>
-</section>
-<section id="wait-for-data-mover-kernels-to-complete">
+</div>
+<div class="section" id="wait-for-data-mover-kernels-to-complete">
 <h4>5. Wait for Data Mover Kernels to Complete<a class="headerlink" href="#wait-for-data-mover-kernels-to-complete" title="Permalink to this heading">¶</a></h4>
 <p>Wait for the mm2s and s2mm kernels to complete.</p>
-</section>
-<section id="verify-output-results">
+</div>
+<div class="section" id="verify-output-results">
 <h4>6. Verify Output Results<a class="headerlink" href="#verify-output-results" title="Permalink to this heading">¶</a></h4>
 <p>Compare data in <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">buffer</span></code> object with the reference golden data.</p>
-</section>
-<section id="release-allocated-resources">
+</div>
+<div class="section" id="release-allocated-resources">
 <h4>7. Release Allocated Resources<a class="headerlink" href="#release-allocated-resources" title="Permalink to this heading">¶</a></h4>
 <p>Close the mm2s and s2mm kernel objects.</p>
-</details></section>
-</section>
-</section>
-</section>
-<section id="references">
+</details></div>
+</div>
+</div>
+</div>
+<div class="section" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h1>
 <p>The following documents provide supplemental information for this tutorial.</p>
-<section id="ai-engine-documentation">
+<div class="section" id="ai-engine-documentation">
 <h2><a class="reference external" href="https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&amp;content-lang=en-US">AI Engine Documentation</a><a class="headerlink" href="#ai-engine-documentation" title="Permalink to this heading">¶</a></h2>
 <p>Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.</p>
-</section>
-<section id="fir-compiler-v7-2">
+</div>
+<div class="section" id="fir-compiler-v7-2">
 <h2><a class="reference external" href="https://www.xilinx.com/support/documentation/ip_documentation/fir_compiler/v7_2/pg149-fir-compiler.pdf"> FIR Compiler v7.2</a><a class="headerlink" href="#fir-compiler-v7-2" title="Permalink to this heading">¶</a></h2>
 <p>Describes the FIR Compiler IP describes all of the parameters and settings and how they control the final filter implementation.</p>
-</section>
-</section>
-<section id="revision-history">
+</div>
+</div>
+<div class="section" id="revision-history">
 <h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Jul 2021 - Initial Release</p></li>
 </ul>
-</section>
-<section id="support">
+</div>
+<div class="section" id="support">
 <h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p align="center"><sup>XD061 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD061 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

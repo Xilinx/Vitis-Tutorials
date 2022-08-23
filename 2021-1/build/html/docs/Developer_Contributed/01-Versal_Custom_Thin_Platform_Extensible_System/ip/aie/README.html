@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -104,12 +105,12 @@ function OptanonWrapper() { }
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ In-Depth Tutorials</h1>
     </td>
  </tr>
-</table><section id="ai-engine-datamover-examples">
+</table><div class="section" id="ai-engine-datamover-examples">
 <h1>AI Engine datamover examples<a class="headerlink" href="#ai-engine-datamover-examples" title="Permalink to this heading">¶</a></h1>
 <p>These AI Engine kernel examples demonstrate a few different coding techniques using datamovers as case study.
 They also show how to optimize the kernel processing to allow for efficient processing of data with the inner loops.
 By modifying the graph and constraints file, the kernel examples can be put in different comparison contexts for learning purpose.</p>
-<section id="description-of-the-aie-kernels">
+<div class="section" id="description-of-the-aie-kernels">
 <h2>Description of the AIE kernels<a class="headerlink" href="#description-of-the-aie-kernels" title="Permalink to this heading">¶</a></h2>
 <p>The current graph create 4 individual data paths each moving data from PL through an instance of a datamover kernel back to PL.
 The kernels are indexed from 0 to 3 using the following kernels:</p>
@@ -126,8 +127,8 @@ The kernels are indexed from 0 to 3 using the following kernels:</p>
                                 <span class="n">clock</span> <span class="n">cycle</span> <span class="ow">and</span> <span class="n">the</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span> <span class="n">conversion</span> <span class="n">to</span> <span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">stream</span><span class="o">.</span>
 </pre></div>
 </div>
-</section>
-<section id="short-description-of-vector-datamover-optimizations">
+</div>
+<div class="section" id="short-description-of-vector-datamover-optimizations">
 <h2>Short description of vector datamover optimizations<a class="headerlink" href="#short-description-of-vector-datamover-optimizations" title="Permalink to this heading">¶</a></h2>
 <p>To make efficient use of vector read and write operations, MUL/MAC operations,  and scalar commands some considerations are needed.
 The AI Engine core has the capability of processing two 256-bit reads, one 256-bit write, one DSP MUL/MAC operation, and a scalar
@@ -137,7 +138,7 @@ For this to be scheduled properly, first consider the inner loop in terms of dat
 we only need to refresh 256-bit vector of input data. To give room for the input data to be stored on the vector register,
 it will have to use a 256-bit vector ahead of the output 256-bit vector. This also avoids read and write access on the same
 address of the vector register.</p>
-<section id="special-note-on-preparing-the-loop">
+<div class="section" id="special-note-on-preparing-the-loop">
 <h3>Special note on preparing the loop<a class="headerlink" href="#special-note-on-preparing-the-loop" title="Permalink to this heading">¶</a></h3>
 <p>The inner loop is where the main work takes place with VLIW keeping the AI Engine busy with processing.
 Upon entering the loop, the first operation must have valid data to process. For the vector reg datamover,
@@ -147,14 +148,14 @@ This is because we process 8 lanes of data each clock cycle and the permutation 
 register according to the figure below.</p>
 <img src="../../documentation/readme_files/datamover_mul_one_8_lanes.png"><p>To complete the full circle, the inner loop is unrolled manually so the for loop always starts in the same position.
 This is possible due to that the vector register will automatically wrap around according to its type declaration.</p>
-</section>
-</section>
-<section id="compile-and-build-aie-design">
+</div>
+</div>
+<div class="section" id="compile-and-build-aie-design">
 <h2>Compile and build AIE design<a class="headerlink" href="#compile-and-build-aie-design" title="Permalink to this heading">¶</a></h2>
 <p>For the global project settings and paths to work, always build the AIE ip from the design root directory.
 Use build instructions in step 7.</p>
-</section>
-<section id="simulating-and-checking-the-aie-kernels">
+</div>
+<div class="section" id="simulating-and-checking-the-aie-kernels">
 <h2>Simulating and checking the AIE kernels<a class="headerlink" href="#simulating-and-checking-the-aie-kernels" title="Permalink to this heading">¶</a></h2>
 <p>Simulating the kernel is done from the ip/aie directory. For convenience this command can be issued from root dir:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">cd</span> <span class="n">ip</span><span class="o">/</span><span class="n">aie</span><span class="p">;</span><span class="n">make</span> <span class="n">sim_analyzer</span><span class="p">;</span><span class="n">cd</span> <span class="o">-</span>
@@ -164,19 +165,19 @@ Use build instructions in step 7.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">vitis_analyzer</span> <span class="n">ip</span><span class="o">/</span><span class="n">aie</span><span class="o">/</span><span class="n">aiesimulator_output</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">aierun_summary</span>
 </pre></div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <p>The following documents provide supplemental information for this tutorial.</p>
-<section id="ai-engine-documentation">
+<div class="section" id="ai-engine-documentation">
 <h3><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html">AI Engine Documentation</a><a class="headerlink" href="#ai-engine-documentation" title="Permalink to this heading">¶</a></h3>
 <p>Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.</p>
-</section>
-<section id="vitis-unified-software-development-platform-2021-1-documentation">
+</div>
+<div class="section" id="vitis-unified-software-development-platform-2021-1-documentation">
 <h3><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html">Vitis Unified Software Development Platform 2021.1 Documentation</a><a class="headerlink" href="#vitis-unified-software-development-platform-2021-1-documentation" title="Permalink to this heading">¶</a></h3>
-</section>
-</section>
-<section id="revision-history">
+</div>
+</div>
+<div class="section" id="revision-history">
 <h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>October   2021 - Updated AI Engine Datamovers</p></li>
@@ -193,8 +194,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD106 | © Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
+<p align="center"><sup>XD106 | © Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
 
 
            </div>

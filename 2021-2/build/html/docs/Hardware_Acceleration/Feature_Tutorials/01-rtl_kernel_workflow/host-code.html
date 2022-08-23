@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,7 +109,7 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="host-code-programming">
+</table><div class="section" id="host-code-programming">
 <h1>Host Code Programming<a class="headerlink" href="#host-code-programming" title="Permalink to this heading">¶</a></h1>
 <p>User-managed RTL kernels are only supported in host applications written with the XRT native API, as described in the <a class="reference external" href="https://xilinx.github.io/XRT/master/html/xrt_native_apis.html">XRT documentation</a>. The XRT native API provides a rich set of class objects and functions for XRT-managed kernels, as discussed in the <em>XRT Native API Host Application</em> tutorial, and for user-managed kernels as described here.</p>
 <p>Open the <code class="docutils literal notranslate"><span class="pre">reference-files/src/host/user-host.cpp</span></code> file to examine its content and structure. As decribed in <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devhostapp.html#vpy1519742402284">Host Programming</a> in the Vitis Application Acceleration Development Flow Documentation (UG1393), there are several key steps the host application must follow:</p>
@@ -120,7 +120,7 @@ function OptanonWrapper() { }
 <li><p>Running the kernel and returning results</p></li>
 </ol>
 <p>This tutorial will walk you through each of these, and discuss the requirements of these steps when working with user-managed RTL kernels.</p>
-<section id="setting-up-the-xrt-native-api">
+<div class="section" id="setting-up-the-xrt-native-api">
 <h2>Setting Up the XRT Native API<a class="headerlink" href="#setting-up-the-xrt-native-api" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;iostream&gt;</span>
 <span class="c1">#include &lt;cstring&gt;</span>
@@ -134,8 +134,8 @@ function OptanonWrapper() { }
 </div>
 <p>The XRT native API requires some <code class="docutils literal notranslate"><span class="pre">#include</span></code> statements to support the various class objects and functions of the different elements of the system. In the code sample above you can see the inclusion of header files for the Xilinx device, the device binary (<code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>), the buffer objects (<code class="docutils literal notranslate"><span class="pre">xrt_bo</span></code>), and the user-managed kernel (<code class="docutils literal notranslate"><span class="pre">xrt_ip</span></code>). This last is an important difference in the XRT native API when working with XRT-managed kernels and user-managed kernels.</p>
 <p>XRT managed kernels (<code class="docutils literal notranslate"><span class="pre">xrt::kernel</span></code>) meet specific requirements of control protocols and interfaces, as described in <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devrtlkernel.html#qbh1504034323531">Requirements of an RTL Kernel</a> and as such have a richer feature set in the XRT API. User-managed kernels are a bit more unstructured, and so are represented in the IP class with limited features.</p>
-</section>
-<section id="specifying-the-device-id-and-loading-the-xclbin">
+</div>
+<div class="section" id="specifying-the-device-id-and-loading-the-xclbin">
 <h2>Specifying the Device ID and Loading the XCLBIN<a class="headerlink" href="#specifying-the-device-id-and-loading-the-xclbin" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="o">//</span> <span class="n">Read</span> <span class="n">settings</span>
     <span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">binaryFile</span> <span class="o">=</span> <span class="s2">&quot;./vadd.xclbin&quot;</span><span class="p">;</span>
@@ -156,8 +156,8 @@ function OptanonWrapper() { }
 <li><p>Opens the device: <code class="docutils literal notranslate"><span class="pre">xrt::device(device_index)</span></code></p></li>
 <li><p>Loads the xclbin into the device: <code class="docutils literal notranslate"><span class="pre">device.load_xclbin(binaryFile)</span></code></p></li>
 </ol>
-</section>
-<section id="setting-up-the-kernel-and-kernel-arguments">
+</div>
+<div class="section" id="setting-up-the-kernel-and-kernel-arguments">
 <h2>Setting up the kernel and kernel arguments<a class="headerlink" href="#setting-up-the-kernel-and-kernel-arguments" title="Permalink to this heading">¶</a></h2>
 <p>For XRT-managed kernels the kernel is identified as an xrt::kernel object. However, for user-managed RTL kernels the host application uses the <code class="docutils literal notranslate"><span class="pre">xrt::ip</span></code> object to identify the kernel in the <code class="docutils literal notranslate"><span class="pre">xclbin</span></code>, as shown in the code example below. In addition, the host application identifies any compute units (CUs) of the kernel in the <code class="docutils literal notranslate"><span class="pre">xclbin</span></code>. The CU is an instance of the kernel, as described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel">Creating Multiple Instances of a Kernel</a>. In the code example below there are three user-managed kernels identified by the host application: ip1, ip2, and ip3. This enables the host to run multiple instances of the kernel at the same time when available in the <code class="docutils literal notranslate"><span class="pre">xclbin</span></code>.</p>
 <blockquote>
@@ -188,8 +188,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>This information is hard-coded in this <code class="docutils literal notranslate"><span class="pre">user-host.cpp</span></code> application. However, there are examples of different coding techniques demonstrated in the <a class="reference external" href="https://github.com/Xilinx/Vitis_Accel_Examples">Vitis_Accel_Examples</a>.</p>
-</section>
-<section id="transferring-data">
+</div>
+<div class="section" id="transferring-data">
 <h2>Transferring Data<a class="headerlink" href="#transferring-data" title="Permalink to this heading">¶</a></h2>
 <p>After creatng and filling the buffers with data from the host application, you must then sync the buffer to the Xilinx device to make the data accessible to the device binary (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>). The data is transferred from the host computer to the Xilinx device and accelerator card where it is available for the kernel to use, as shown in the code example below:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="o">//</span> <span class="n">Map</span> <span class="n">the</span> <span class="n">contents</span> <span class="n">of</span> <span class="n">the</span> <span class="n">buffer</span> <span class="nb">object</span> <span class="n">into</span> <span class="n">host</span> <span class="n">memory</span>
@@ -220,8 +220,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>In the example code, you can see that the addresses of the buffers are captured in the <code class="docutils literal notranslate"><span class="pre">buf_addr</span></code> vector. This information will be needed when writing or reading to the registers associated with the kernel arguments.</p>
-</section>
-<section id="running-the-kernel-and-returning-results">
+</div>
+<div class="section" id="running-the-kernel-and-returning-results">
 <h2>Running the kernel and returning results<a class="headerlink" href="#running-the-kernel-and-returning-results" title="Permalink to this heading">¶</a></h2>
 <p>For XRT managed kernels, running the kernel is a simple matter of creating a run object as shown in the code below. XRT manages the start and stop of the kernel. You simply need to wait for the results.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="o">//</span><span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;Execution of the kernel</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
@@ -260,14 +260,14 @@ function OptanonWrapper() { }
     <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="next-steps">
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>Now you have created the RTL Kernel (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) file from a Vivado IP, and examined the host coding requirements of the native XRT API. Now you can create a Vitis application project to <a class="reference internal" href="using_the_rtl_kernel.html"><span class="doc">test the RTL Kernel</span></a>.
 </br></p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

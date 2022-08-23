@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -100,10 +100,10 @@ function OptanonWrapper() { }
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rtc-gen-rtl-kernel-creation">
+  <div class="section" id="rtc-gen-rtl-kernel-creation">
 <h1>RTC_GEN RTL Kernel Creation<a class="headerlink" href="#rtc-gen-rtl-kernel-creation" title="Permalink to this heading">¶</a></h1>
 <p>It is very easy for the user to use Vitis/Vivado RTL Kernel Wizard to create and develop RTL based kernel which could be seamlessly integrated with other HLS C or Vitis Vision library based kernel with Vitis. This tutorial will show the detailed steps to create <em>rtc_gen</em> kernel. We use Alveo U200 as the target platform for the tutorial.</p>
-<section id="determine-top-level-design-specification">
+<div class="section" id="determine-top-level-design-specification">
 <h2>Determine Top Level Design Specification<a class="headerlink" href="#determine-top-level-design-specification" title="Permalink to this heading">¶</a></h2>
 <p>The <em>rtc_gen</em> kernel is required to read font library from global memory into on-chip SRAM, then output the clock image via AXI stream port. Considerting the font library reading is a one-time job, and no global memory bandwidth requirement exists during normal work, so we use 32-bit (data bus) AXI4 master interface for the font reading port to save resources. In the downstream processing pipeline, we will use <em>XF_NPP8</em> format (processing 8 pixels in each clock cycle), so we select the AXI stream width as 64-bit, which could transfer eight pixels in each AXI stream transaction. For control register, we will use an AXI slave interface compatible with XRT, so we could use the standard OpenCL API to program and control the kernel.</p>
 <p>Thus we generalize the top level design specification for <em>rtc_gen</em> kernel as below:</p>
@@ -169,8 +169,8 @@ function OptanonWrapper() { }
 </tbody>
 </table><div align="center">
 <img src="./images/rtc_gen_block.png" alt="RTL Kernel" >
-</div><br/></section>
-<section id="use-rtl-kernel-wizard-to-create-kernel-frame">
+</div><br/></div>
+<div class="section" id="use-rtl-kernel-wizard-to-create-kernel-frame">
 <h2>Use RTL Kernel Wizard to Create Kernel Frame<a class="headerlink" href="#use-rtl-kernel-wizard-to-create-kernel-frame" title="Permalink to this heading">¶</a></h2>
 <p>Now we use RTL Kernel Wizard to create the frame for <em>rtc_gen</em> kernel. We will launch the Wizard from Vivado. Please refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/devrtlkernel.html#qnk1504034323350">Vitis Application Acceleration Development Flow Documentation</a> for detailed user guide of RTL kernel and RTL Kernel Wizard.</p>
 <p>Please change to <em>./rtc_gen</em> directory of the git repo, create a directory named <em>vivado_project</em>, then enter this directory.</p>
@@ -222,8 +222,8 @@ function OptanonWrapper() { }
 <p>In the <em>Sources</em> view, <em>Hierarchy</em> tab, we can see the HDL file hierarchy. Now we have finished the kernel framework creation.</p>
 <div align="center">
 <img src="./images/rtl_kernel_wiz_9.png" alt="RTL Kernel" >
-</div><br/></section>
-<section id="rtc-gen-kernel-development">
+</div><br/></div>
+<div class="section" id="rtc-gen-kernel-development">
 <h2>RTC_GEN Kernel Development<a class="headerlink" href="#rtc-gen-kernel-development" title="Permalink to this heading">¶</a></h2>
 <p>We will use following generated RTL files in our <em>rtc_gen</em> kernel:</p>
 <ul>
@@ -265,8 +265,8 @@ It is an example testbench using Xilinx AXI Verification IP. We can modify this 
 <div align="center">
 <img src="./images/rtl_kernel_wiz_11.png" alt="RTL Kernel" >
 </div><br/><p>Now you can simulation the design and go through normal RTL design flow with standard Vivado design methodology. A text format font library file <em>font_sim_data.txt</em> in <em>./rtc_gen</em> directory is provided, which could be read in by testbench <em>rtc_gen_tb.sv</em> for simulation. Please copy it to <em>./rtc_gen/vivado_project/rtc_gen_ex/rtc_gen_ex.sim/sim_1/behav/xsim/</em> for simulation runs.</p>
-</section>
-<section id="package-the-rtl-kernel">
+</div>
+<div class="section" id="package-the-rtl-kernel">
 <h2>Package the RTL Kernel<a class="headerlink" href="#package-the-rtl-kernel" title="Permalink to this heading">¶</a></h2>
 <p>After you confirm the design is OK, select <em>Generate RTL Kernel</em> from <em>Flow</em> Menu, then select <em>Sources-only kernel</em> in the pop-up window, click <em>OK</em> button to finish the <em>rtc_gen</em> RTL kernel creation.</p>
 <div align="center">
@@ -279,8 +279,8 @@ It is an example testbench using Xilinx AXI Verification IP. We can modify this 
 </pre></div>
 </div>
 <p><em>./rtc_gen/vivado_project/rtc_gen_ex/rtc_gen</em> is the folder for <em>rtc_gen</em> IP, and <em>./rtc_gen/vivado_project/rtc_gen_ex/imports/kernel.xml</em> is the kernel description file. So we could copy out these items to standlone directory and just use the command line above to package the kernel. This is also where the <em>./hw/rtc_gen_ip</em> directory and <em>./hw/rtc_gen_kernel.xml</em> file come from.</p>
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

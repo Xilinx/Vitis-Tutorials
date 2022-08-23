@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -90,8 +89,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -130,7 +131,7 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="vitis-flow-101-part-1-essential-concepts">
+</table><div class="section" id="vitis-flow-101-part-1-essential-concepts">
 <h1>Vitis Flow 101 – Part 1 : Essential Concepts<a class="headerlink" href="#vitis-flow-101-part-1-essential-concepts" title="Permalink to this heading">¶</a></h1>
 <p>The Vitis unified software platform provides a framework for developing and delivering FPGA accelerated applications using standard programming languages. Vitis offers all of the features of a standard software development environment, including:</p>
 <ul class="simple">
@@ -139,7 +140,7 @@ function OptanonWrapper() { }
 <li><p>Debugging environment to help identify and resolve issues in the code</p></li>
 <li><p>Performance profilers to identify bottlenecks and help you optimize the application</p></li>
 </ul>
-<section id="understanding-the-vitis-programming-and-execution-model">
+<div class="section" id="understanding-the-vitis-programming-and-execution-model">
 <h2>Understanding the Vitis Programming and Execution Model<a class="headerlink" href="#understanding-the-vitis-programming-and-execution-model" title="Permalink to this heading">¶</a></h2>
 <p>A Vitis accelerated application consists of two distinct components: a software program and an FPGA binary containing hardware accelerated kernels.</p>
 <ul class="simple">
@@ -162,8 +163,8 @@ function OptanonWrapper() { }
 <li><p>The kernel notifies the host that it has completed its task.</p></li>
 <li><p>The host program can transfer the data from global memory to host memory or can give ownership of the data to another kernel.</p></li>
 </ol>
-</section>
-<section id="understanding-the-vitis-build-process">
+</div>
+<div class="section" id="understanding-the-vitis-build-process">
 <h2>Understanding the Vitis Build Process<a class="headerlink" href="#understanding-the-vitis-build-process" title="Permalink to this heading">¶</a></h2>
 <p>The Vitis build process follows a standard compilation and linking process for both the host program and the kernel code:</p>
 <ul class="simple">
@@ -171,8 +172,8 @@ function OptanonWrapper() { }
 <li><p>The FPGA binary is built using the Vitis compiler. First the kernels are compiled into a Xilinx object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the FPGA binary (.xclbin) file. The Vitis compiler and linker accepts a wide range of options to tailor and optimize the results.</p></li>
 </ul>
 <p><img alt="img" src="../../../_images/part1_build_flow.png" /></p>
-</section>
-<section id="understanding-vitis-build-targets">
+</div>
+<div class="section" id="understanding-vitis-build-targets">
 <h2>Understanding Vitis Build Targets<a class="headerlink" href="#understanding-vitis-build-targets" title="Permalink to this heading">¶</a></h2>
 <p>The Vitis compiler provides three different build targets: two emulation targets used for debug and validation purposes, and the default hardware target used to generate the actual FPGA binary:</p>
 <ul class="simple">
@@ -180,12 +181,12 @@ function OptanonWrapper() { }
 <li><p>Hardware Emulation - The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates.</p></li>
 <li><p>Hardware - The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA.</p></li>
 </ul>
-</section>
-<section id="next-step">
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Theory is useful, but nothing beats practice! Proceed to <a class="reference internal" href="Part2.html"><span class="doc">Part 2</span></a> to install the Vitis tools before starting your first example project.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

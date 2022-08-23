@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -92,8 +91,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -131,10 +132,10 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="bottom-up-rtl-kernel-flow-with-vitis-for-acceleration">
+</table><div class="section" id="bottom-up-rtl-kernel-flow-with-vitis-for-acceleration">
 <h1>Bottom-up RTL Kernel Flow with Vitis for Acceleration<a class="headerlink" href="#bottom-up-rtl-kernel-flow-with-vitis-for-acceleration" title="Permalink to this heading">¶</a></h1>
 <p>RTL design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a timing consuming and error-prone process. The Xilinx® Vitis™ unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included Vivado® Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-FPGA communication, DMA, and other supporting tasks.</p>
-<section id="about-this-tutorial">
+<div class="section" id="about-this-tutorial">
 <h2>About This Tutorial<a class="headerlink" href="#about-this-tutorial" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial introduces a bottom-up Vitis-based RTL kernel construct and wrap-up process, as well as the host-kernel interaction with <a class="reference external" href="https://xilinx.github.io/XRT/">Xilinx Runtime library (XRT)</a>. All the steps in this tutorial use the command-line interface, except those needed to view waveform or system diagram.</p>
 <p>This tutorial uses an example design to illustrate the relevant concept and steps. The following image shows the block diagram of this design. It is a simple AES accelerator design and comprises two kernels, <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> and <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code>. The <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel is the core AES computation core with AXI streams slave and master ports. The <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code> kernel handles the host-kernel data exchange, and the implementation of AES-ECB and AES-CBD modes along with the krnl_aes module.</p>
@@ -151,8 +152,8 @@ function OptanonWrapper() { }
 <li><p>Using Vitis hardware emulation to get an insight look of the RTL kernel operation</p></li>
 </ul>
 <p><strong>Note</strong>: This is not a detailed tools usage guideline, so only basic ideas and steps are shown. You will need to refer to other documents for details.</p>
-</section>
-<section id="device-and-software-requirements">
+</div>
+<div class="section" id="device-and-software-requirements">
 <h2>Device and Software Requirements<a class="headerlink" href="#device-and-software-requirements" title="Permalink to this heading">¶</a></h2>
 <p>The designs have been verified with the following software/hardware environment and tool chain versions:</p>
 <ul class="simple">
@@ -176,7 +177,7 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-<section id="additional-requirements-for-redhat-centos">
+<div class="section" id="additional-requirements-for-redhat-centos">
 <h3>Additional Requirements for RedHat/CentOS<a class="headerlink" href="#additional-requirements-for-redhat-centos" title="Permalink to this heading">¶</a></h3>
 <p>If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the  following command to install and switch to GCC 7 before compiling the host program.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install centos-release-scl
@@ -188,16 +189,16 @@ scl <span class="nb">enable</span> devtoolset-7 bash
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install openssl-devel
 </pre></div>
 </div>
-</section>
-<section id="additional-requirements-for-ubuntu">
+</div>
+<div class="section" id="additional-requirements-for-ubuntu">
 <h3>Additional Requirements for Ubuntu<a class="headerlink" href="#additional-requirements-for-ubuntu" title="Permalink to this heading">¶</a></h3>
 <p>To install OpenSSL library for Ubuntu, use:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install libssl-dev
 </pre></div>
 </div>
-</section>
-</section>
-<section id="tutorial-contents">
+</div>
+</div>
+<div class="section" id="tutorial-contents">
 <h2>Tutorial Contents<a class="headerlink" href="#tutorial-contents" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial is separated into three parts, and are intended to be used in order.</p>
 <ol class="simple">
@@ -264,8 +265,8 @@ An MMCM IP is used in this kernel to generate required core clock, while the AXI
 └── README.md
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

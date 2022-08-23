@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -89,8 +88,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -143,10 +144,10 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="using-optimization-techniques">
+--><div class="section" id="using-optimization-techniques">
 <h1>3. Using Optimization Techniques<a class="headerlink" href="#using-optimization-techniques" title="Permalink to this heading">¶</a></h1>
 <p>This lab discusses various optimization techniques that you can use to reconcile any performance concerns with regard to your design.</p>
-<section id="configure-the-pipeline-loops-threshold">
+<div class="section" id="configure-the-pipeline-loops-threshold">
 <h2>Configure the Pipeline Loops Threshold<a class="headerlink" href="#configure-the-pipeline-loops-threshold" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>In the Explorer view, right-click the project solution, or <code class="docutils literal notranslate"><span class="pre">solution1</span></code>, and select <strong>Solution Settings</strong>.
@@ -160,8 +161,8 @@ This opens the Solution Settings dialog box.</p></li>
 <p>This configuration might be an acceptable response to II violations when the loops are not in the critical path of the design, or they represent a small problem relative to some larger problems that must be resolved. In other words, not all violations need to be resolved, and in some cases, not all violations can be resolved. They are simply artifacts of performance.</p>
 </li>
 </ol>
-</section>
-<section id="configure-the-pipeline-initiation-interval">
+</div>
+<div class="section" id="configure-the-pipeline-initiation-interval">
 <h2>Configure the Pipeline Initiation Interval<a class="headerlink" href="#configure-the-pipeline-initiation-interval" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>ACTION</strong>: Back out the change before proceeding, right-click on the solution. Select <strong>Solution Settings</strong> command, and reset the <code class="docutils literal notranslate"><span class="pre">config_compile</span> <span class="pre">pipeline_loop</span></code> command to its default value.</p>
@@ -197,8 +198,8 @@ The <code class="docutils literal notranslate"><span class="pre">HLS</span> <spa
 <p><img alt="Pipeline Defined II" src="../../../_images/pipeline-defined-ii.png" /></p>
 </li>
 </ol>
-</section>
-<section id="assign-dual-port-rams-with-bind-storage">
+</div>
+<div class="section" id="assign-dual-port-rams-with-bind-storage">
 <h2>Assign Dual-Port RAMs with BIND_STORAGE<a class="headerlink" href="#assign-dual-port-rams-with-bind-storage" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>ACTION</strong>: Back out the change before proceeding. Select the source code tab to make it active and display the Directive view. Right-click <strong>HLS PIPELINE II=4</strong> and select <strong>Remove Directive</strong>.</p>
@@ -224,8 +225,8 @@ The <code class="docutils literal notranslate"><span class="pre">HLS</span> <spa
 </li>
 <li><p>Click <strong>Run C Synthesis</strong> to rerun synthesis to see the results.</p></li>
 </ol>
-</section>
-<section id="assign-an-array-partition">
+</div>
+<div class="section" id="assign-an-array-partition">
 <h2>Assign an Array Partition<a class="headerlink" href="#assign-an-array-partition" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>ACTION:</strong> Back out the change before proceeding. Select the Source Code tab to make it active and display the Directive view. Right-click on <strong>HLS BIND_STORAGE</strong> pragmas and select <strong>Remove Directive</strong>.</p>
@@ -256,14 +257,14 @@ The <code class="docutils literal notranslate"><span class="pre">HLS</span> <spa
 <p>The reason for choosing a cyclic partition with a factor of 8 has to do with the code structures involved. The loop is processing an 8x8 matrix, which requires taking eight passes through the outer loop, and eight passes through the inner loop. By selecting a cyclic array partition, with a factor of 8, you are creating eight separate arrays that each get read one time per iteration. This eliminates any contention for accessing the memory during the pipeline of the loop.</p>
 </li>
 </ol>
-</section>
-<section id="next-step">
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Now that you have examined different optimizations for different issues in the design, there is one more optimization to explore: <a class="reference internal" href="dataflow_design.html"><span class="doc">the DATAFLOW optimization</span></a>.
 </br></p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

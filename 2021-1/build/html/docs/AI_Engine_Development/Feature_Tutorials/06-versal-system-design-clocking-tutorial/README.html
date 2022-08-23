@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -104,8 +103,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -140,9 +141,9 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="versal-system-design-clocking">
+</table><div class="section" id="versal-system-design-clocking">
 <h1>Versal System Design Clocking<a class="headerlink" href="#versal-system-design-clocking" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>Developing an accelerated AI Engine design for the VCK190, can be done using the Vitis™ compiler (<code class="docutils literal notranslate"><span class="pre">v++</span></code>). This compiler can be used to compile programmable logic (PL) kernels and connect these PL kernels to the AI Engine and PS device.</p>
 <p>In this tutorial you will learn clocking concepts for the Vitis compiler and how to define clocking for ADF Graph, as well as PL kernels using clocking automation functionality. The design being used is a simple classifier design as shown in the following figure.</p>
@@ -182,16 +183,16 @@ function OptanonWrapper() { }
 <li><p>Set up your <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable based upon where you downloaded the platform.</p></li>
 </ol>
 <p>This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.</p>
-</section>
-<section id="objectives">
+</div>
+<div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h2>
 <p>You will learn the following:</p>
 <ul class="simple">
 <li><p>Clocking of PL kernels</p></li>
 <li><p>Introduction of datawidth converters, clock-domain crossing, and FIFOs in <code class="docutils literal notranslate"><span class="pre">v++</span></code></p></li>
 </ul>
-</section>
-<section id="step-1-building-adf-graph">
+</div>
+<div class="section" id="step-1-building-adf-graph">
 <h2>Step 1 - Building ADF Graph<a class="headerlink" href="#step-1-building-adf-graph" title="Permalink to this heading">¶</a></h2>
 <p>The ADF graph has connections to the PL through the PLIO interfaces. These interfaces can have reference clocking either from the <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> through the <code class="docutils literal notranslate"><span class="pre">PLIO()</span></code> constructor or through the <code class="docutils literal notranslate"><span class="pre">--pl-freq</span></code>. This will help with determining what kind of clock can be set on the PL Kernels that are going to connect to the PLIO. Here you will set the reference frequency to be 200 MHz for all PLIO interfaces.</p>
 <p><strong>NOTE</strong>: If you do not specify the <code class="docutils literal notranslate"><span class="pre">--pl-freq</span></code> it will be set to 1/4 the frequency of the AI Engine frequency.</p>
@@ -227,8 +228,8 @@ function OptanonWrapper() { }
 <td>The location of where the work directory will be created</td>
 </tr>
 </tbody>
-</table></section>
-<section id="step-2-clocking-the-pl-kernels">
+</table></div>
+<div class="section" id="step-2-clocking-the-pl-kernels">
 <h2>Step 2 - Clocking the PL Kernels<a class="headerlink" href="#step-2-clocking-the-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In this design you will use three kernels called: <strong>MM2S</strong>, <strong>S2MM</strong>, and <strong>Polar_Clip</strong>, to connect to the PLIO. The <strong>MM2S</strong> and <strong>S2MM</strong> are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The <strong>Polar_Clip</strong> is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels is separate from the ADF Graph and these are specified when compiling the kernel, and when linking the design together.</p>
 <p>Run the following commands:
@@ -276,8 +277,8 @@ make kernels
 </tbody>
 </table><p>For additional information, see <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html">Vitis Compiler Command</a>.</p>
 <p>After completion, you will have the <code class="docutils literal notranslate"><span class="pre">mm2s.xo</span></code>, <code class="docutils literal notranslate"><span class="pre">s2mm.xo</span></code>, <code class="docutils literal notranslate"><span class="pre">polar_clip.xo</span></code> files ready to be used by <code class="docutils literal notranslate"><span class="pre">v++</span></code>. The host application will communicate with these kernels to read/write data into memory.</p>
-</section>
-<section id="step-3-v-linker-building-the-system">
+</div>
+<div class="section" id="step-3-v-linker-building-the-system">
 <h2>Step 3 - <code class="docutils literal notranslate"><span class="pre">v++</span></code> linker – Building the System<a class="headerlink" href="#step-3-v-linker-building-the-system" title="Permalink to this heading">¶</a></h2>
 <p>Now that you have a compiled graph (<code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>), the PLIO kernels (<code class="docutils literal notranslate"><span class="pre">mm2s.xo</span></code>, <code class="docutils literal notranslate"><span class="pre">s2mm.xo</span></code>, and <code class="docutils literal notranslate"><span class="pre">polar_clip.xo</span></code>), you can link everything up for the VCK190 platform.</p>
 <p>A few things to remember in this step:</p>
@@ -354,8 +355,8 @@ make kernels
 </li>
 </ol>
 <p><strong>NOTE: Any change to the <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitiscommandcompiler.html">here</a>.</strong></p>
-</section>
-<section id="step-4-compiling-host-code">
+</div>
+<div class="section" id="step-4-compiling-host-code">
 <h2>Step 4 - Compiling Host Code<a class="headerlink" href="#step-4-compiling-host-code" title="Permalink to this heading">¶</a></h2>
 <p>When the <code class="docutils literal notranslate"><span class="pre">v++</span></code> linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the <strong>SDKTARGETSYSROOT</strong> or representation of the root file system, that can be used to cross-compile the host code.</p>
 <ol>
@@ -375,8 +376,8 @@ make kernels
 <li><p>Close the makefile and run the command: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">host</span></code>.</p></li>
 </ol>
 <p>With the host application fully compiled, you can now move to packaging the entire system.</p>
-</section>
-<section id="step-5-packaging-design-and-running-on-board">
+</div>
+<div class="section" id="step-5-packaging-design-and-running-on-board">
 <h2>Step 5 - Packaging Design and Running on Board<a class="headerlink" href="#step-5-packaging-design-and-running-on-board" title="Permalink to this heading">¶</a></h2>
 <p>To run the design on hardware using an SD card, you need to package all the files created. For a Linux application, you must make sure that the generated <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>, <code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>, and all Linux info from the platform are in an easy to copy directory.</p>
 <ol>
@@ -423,15 +424,15 @@ make kernels
 <li><p>You should see a <strong>TEST PASSED</strong> which means that the application ran successfully!</p></li>
 </ol>
 <p><strong>IMPORTANT</strong>: To re-run the application, you must power cycle the board.</p>
-</section>
-<section id="challenge-optional">
+</div>
+<div class="section" id="challenge-optional">
 <h2>Challenge (Optional)<a class="headerlink" href="#challenge-optional" title="Permalink to this heading">¶</a></h2>
-<section id="build-the-design-for-hardware-emulation">
+<div class="section" id="build-the-design-for-hardware-emulation">
 <h3>Build the design for Hardware Emulation<a class="headerlink" href="#build-the-design-for-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <p>Modifying the target for both <strong>Step 3</strong> and <strong>Step 4</strong>, link and package a design for hardware emulation, and run the emulation with the generated script, <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code>.</p>
-</section>
-</section>
-<section id="summary">
+</div>
+</div>
+<div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial you learned the following:</p>
 <ul class="simple">
@@ -451,8 +452,8 @@ make kernels
 <p>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
 <p>See the License for the specific language governing permissions and</p>
 <p>limitations under the License.</p>
-<p align="center"><sup>XD004</sup></p></section>
-</section>
+<p align="center"><sup>XD004</sup></p></div>
+</div>
 
 
            </div>

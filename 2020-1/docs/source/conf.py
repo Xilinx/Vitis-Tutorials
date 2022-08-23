@@ -29,10 +29,10 @@ copyright = '2019-2022, Xilinx, Inc. Xilinx is now a part of AMD'
 author = 'Xilinx, Inc.'
 
 # The short X.Y version
-version = '2022.1'
+version = '2020.1'
 # The full version, including alpha/beta/rc tags
-release = '2022.1'
-html_last_updated_fmt = 'May 16, 2022'
+release = '2020.1'
+html_last_updated_fmt = 'August 23, 2022'
 
 
 # -- General configuration ---------------------------------------------------

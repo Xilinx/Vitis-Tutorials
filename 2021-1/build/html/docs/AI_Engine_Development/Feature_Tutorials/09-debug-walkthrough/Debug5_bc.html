@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="ai-engine-pl-kernel-debug-with-xrt-utilities">
+</table><div class="section" id="ai-engine-pl-kernel-debug-with-xrt-utilities">
 <h1>AI Engine/PL Kernel Debug with XRT Utilities<a class="headerlink" href="#ai-engine-pl-kernel-debug-with-xrt-utilities" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference external" href="#xbutil-xbutil2">xbutil xbutil2</a></p>
 <ul class="simple">
@@ -117,7 +118,7 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="#Asynchronous-error">Asynchronous error</a></p></li>
 <li><p><a class="reference external" href="#Synchronous-error">Synchronous error</a></p></li>
 </ul>
-<section id="xbutil-xbutil2">
+<div class="section" id="xbutil-xbutil2">
 <h2>xbutil &amp; xbutil2<a class="headerlink" href="#xbutil-xbutil2" title="Permalink to this heading">¶</a></h2>
 <p>The two utilities, <code class="docutils literal notranslate"><span class="pre">xbutil</span></code> and <code class="docutils literal notranslate"><span class="pre">xbutil2</span></code> are supported for PL/AI Engine kernels debug. It provides information for PL/AI Engine kernels.</p>
 <p>To use the tools, binary container, for example, xclbin is required to be loaded first then issue commands to obtain information from, or, configure the kernels.</p>
@@ -181,7 +182,7 @@ GLOBAL OPTIONS:
 <li><p>Each tile’s information such as program counter values, stack pointer are provided.</p></li>
 <li><p>MM2S and S2MM states are available.</p></li>
 </ol>
-<section id="xbutil-xbutil2-limitations">
+<div class="section" id="xbutil-xbutil2-limitations">
 <h3>xbutil &amp; xbutil2 Limitations<a class="headerlink" href="#xbutil-xbutil2-limitations" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>Commands not applicable to the VCK190 platform:</p></li>
@@ -194,14 +195,14 @@ GLOBAL OPTIONS:
 <ol class="simple">
 <li><p>Utility could show false errors that are no harm to prior-loaded xclbin.</p></li>
 </ol>
-</section>
-</section>
-<section id="xrt-error-codes">
+</div>
+</div>
+<div class="section" id="xrt-error-codes">
 <h2>XRT Error Codes<a class="headerlink" href="#xrt-error-codes" title="Permalink to this heading">¶</a></h2>
-<section id="asynchronous-error">
+<div class="section" id="asynchronous-error">
 <h3>Asynchronous Error<a class="headerlink" href="#asynchronous-error" title="Permalink to this heading">¶</a></h3>
 <p>An error that occurs asynchronously. It may or may not be related to the XRT function call or the application which is running.</p>
-<section id="report-mechanism-with-xrt-apis">
+<div class="section" id="report-mechanism-with-xrt-apis">
 <h4>Report Mechanism with XRT APIs<a class="headerlink" href="#report-mechanism-with-xrt-apis" title="Permalink to this heading">¶</a></h4>
 <p>Asynchronous errors are cached in driver subsystems and can be accessed by user application through APIs.
 Asynchronous errors retrieved from the driver are encoded errors defined in <code class="docutils literal notranslate"><span class="pre">xrt_error_code.h</span></code> which is shared between user space and kernel space.</p>
@@ -315,17 +316,17 @@ make package
 </div>
 <p>Step 5: Expected result is as follows.</p>
 <p><img alt="missing image" src="../../../../_images/bc_err0.png" /></p>
-</section>
-<section id="report-mechanism-with-xbutil">
+</div>
+<div class="section" id="report-mechanism-with-xbutil">
 <h4>Report Mechanism with xbutil<a class="headerlink" href="#report-mechanism-with-xbutil" title="Permalink to this heading">¶</a></h4>
 <p>Issue command <code class="docutils literal notranslate"><span class="pre">xbutil2</span> <span class="pre">examine</span> <span class="pre">--report</span> <span class="pre">error</span></code> or/and with formatted output <code class="docutils literal notranslate"><span class="pre">xbutil2</span> <span class="pre">examine</span> <span class="pre">--report</span> <span class="pre">error</span> <span class="pre">--format</span> <span class="pre">JSON-2020.2</span></code> to VCK190 console to get output from console.</p>
 <p><img alt="missing image" src="../../../../_images/bc_err.png" /></p>
-</section>
-</section>
-<section id="synchronous-error">
+</div>
+</div>
+<div class="section" id="synchronous-error">
 <h3>Synchronous Error<a class="headerlink" href="#synchronous-error" title="Permalink to this heading">¶</a></h3>
 <p>Synchronous errors are errors that can be detected during the XRT runtime function call.</p>
-<section id="report-mechanism">
+<div class="section" id="report-mechanism">
 <h4>Report Mechanism<a class="headerlink" href="#report-mechanism" title="Permalink to this heading">¶</a></h4>
 <ol class="simple">
 <li><p>Return system error (POSIX) code from</p></li>
@@ -357,10 +358,10 @@ For example:</p></li>
 </pre></div>
 </div>
 <p>Note: Supported error codes are listed in <a class="reference external" href="https://www.xilinx.com/member/versal_ai_core_docs_ea.html">UG1076 Versal ACAP AI Engine Programming Environment</a>.</p>
-</section>
-</section>
-</section>
-<section id="license">
+</div>
+</div>
+</div>
+<div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -373,8 +374,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
 
 
            </div>

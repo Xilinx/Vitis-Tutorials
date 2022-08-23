@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -101,8 +100,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -137,13 +138,13 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="using-floating-point-in-the-ai-engine">
+</table><div class="section" id="using-floating-point-in-the-ai-engine">
 <h1>Using Floating-Point in the AI Engine<a class="headerlink" href="#using-floating-point-in-the-ai-engine" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The purpose of this set of examples is to understand floating-point vector computations within the AI Engine.</p>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>Before starting to explore these examples, refer to the following documents:</p>
 <ul class="simple">
@@ -168,8 +169,8 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-</section>
-<section id="ai-engine-architecture-details">
+</div>
+<div class="section" id="ai-engine-architecture-details">
 <h2>AI Engine Architecture Details<a class="headerlink" href="#ai-engine-architecture-details" title="Permalink to this heading">¶</a></h2>
 <p>Versal adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
 Intelligent Engines are SIMD VLIW AI Engines for adaptive inference and advanced signal processing compute, and DSP Engines for fixed point, floating point, and complex MAC operations.</p>
@@ -190,18 +191,18 @@ The AI Engine and memory modules are both connected to the AXI-Stream interconne
 <p><strong>AI Engine Module</strong></p>
 <p><img alt="missing image" src="docs/AI_Engine_Development/Feature_Tutorials/07-AI-Engine-Floating-Point/images/AIEngine.png%22" /></p>
 <p>Have a look at the fixed-point unit pipeline, as well as floating-point unit pipeline within the vector unit.</p>
-<section id="fixed-point-pipeline">
+<div class="section" id="fixed-point-pipeline">
 <h3>Fixed-Point Pipeline<a class="headerlink" href="#fixed-point-pipeline" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="docs/AI_Engine_Development/Feature_Tutorials/07-AI-Engine-Floating-Point/images/FixedPointPipeline.jpg%22" /></p>
 <p>In this pipeline one can see the data selection and shuffling units; PMXL, PMXR, and PMC. The pre-add (PRA) is just before the multiply block and then two lane reduction blocks (PSA, PSB) allows to perform up to 128 multiplies and get an output on 16 lanes down to two lanes. The accumulator block is fed either by its own output (AM) or by the upshift output. The feedback on the ACC block is only one clock cycle.</p>
-</section>
-<section id="floating-point-pipeline">
+</div>
+<div class="section" id="floating-point-pipeline">
 <h3>Floating-point Pipeline<a class="headerlink" href="#floating-point-pipeline" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="docs/AI_Engine_Development/Feature_Tutorials/07-AI-Engine-Floating-Point/images/FloatingPointPipeline.jpg%22" /></p>
 <p>In this pipeline one can see that the selection and shuffling units (PMXL, PMC) are the same as in the fixed-point unit. Unlike the fixed-point pipeline there is no lane reduction unit, so the lanes that you have at the input will also be there at the output. Another difference is that the post-accumulator is on two clock cycles. If the goal is to reuse the same accumulator over and over, only one <code class="docutils literal notranslate"><span class="pre">fpmac</span></code> per two clock cycles can be issued.</p>
-</section>
-</section>
-<section id="floating-point-intrinsics">
+</div>
+</div>
+<div class="section" id="floating-point-intrinsics">
 <h2>Floating-point intrinsics<a class="headerlink" href="#floating-point-intrinsics" title="Permalink to this heading">¶</a></h2>
 <p>There is a limited set of intrinsics with which a multitude of operations can be performed. All of them return either a <code class="docutils literal notranslate"><span class="pre">v8float</span></code> or  <code class="docutils literal notranslate"><span class="pre">v4cfloat</span></code>, 256-bit vectors.</p>
 <p>The basic addition, subtraction, and negation functions are as follows:</p>
@@ -233,7 +234,7 @@ The AI Engine and memory modules are both connected to the AXI-Stream interconne
 <li><p>fpmul_conf</p></li>
 <li><p>fpmac_conf</p></li>
 </ul>
-<section id="start-offset">
+<div class="section" id="start-offset">
 <h3>Start, offset<a class="headerlink" href="#start-offset" title="Permalink to this heading">¶</a></h3>
 <p>In all the subsequent intrinsics, the input vector(s) go through a data shuffling function that is controlled by two parameters:</p>
 <ul class="simple">
@@ -359,10 +360,10 @@ The AI Engine and memory modules are both connected to the AXI-Stream interconne
 <td align="center">E</td>
 </tr>
 </tbody>
-</table></section>
-<section id="fpneg-fpabs-fpadd-fpsub">
+</table></div>
+<div class="section" id="fpneg-fpabs-fpadd-fpsub">
 <h3>fpneg, fpabs, fpadd, fpsub<a class="headerlink" href="#fpneg-fpabs-fpadd-fpsub" title="Permalink to this heading">¶</a></h3>
-<section id="fpneg">
+<div class="section" id="fpneg">
 <h4>fpneg<a class="headerlink" href="#fpneg" title="Permalink to this heading">¶</a></h4>
 <p>Output is the opposite of its input. Input can be either <code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">cfloat</span></code> forming a 512-bit or a 1024-bit buffer (<code class="docutils literal notranslate"><span class="pre">v32float,</span> <span class="pre">v16float,</span> <span class="pre">v16cfloat,</span> <span class="pre">v8cfloat</span></code>). The output is a 256-bit buffer as all the floating-point operators (<code class="docutils literal notranslate"><span class="pre">v8float,</span> <span class="pre">v4cfloat</span></code>).</p>
 <p><em>v8float</em> 	<strong>fpneg</strong> (<em>v32float</em> <strong>xbuf</strong>, <em>int</em> <strong>xstart</strong>, <em>unsigned int</em> <strong>xoffs</strong>)</p>
@@ -370,18 +371,18 @@ The AI Engine and memory modules are both connected to the AXI-Stream interconne
   <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">xbuf</span><span class="p">[</span><span class="n">xstart</span> <span class="o">+</span> <span class="n">xoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
 </pre></div>
 </div>
-</section>
-<section id="fpabs">
+</div>
+<div class="section" id="fpabs">
 <h4>fpabs<a class="headerlink" href="#fpabs" title="Permalink to this heading">¶</a></h4>
 <p>Output is the absolute value of the input.
 It takes only real floating-point input vectors.</p>
-</section>
-<section id="fpneg-abs">
+</div>
+<div class="section" id="fpneg-abs">
 <h4>fpneg_abs<a class="headerlink" href="#fpneg-abs" title="Permalink to this heading">¶</a></h4>
 <p>Output is the negation of the absolute value of the input.
 It takes only real floating-point input vectors.</p>
-</section>
-<section id="fpadd-fpsub">
+</div>
+<div class="section" id="fpadd-fpsub">
 <h4>fpadd, fpsub<a class="headerlink" href="#fpadd-fpsub" title="Permalink to this heading">¶</a></h4>
 <p>Output is the sum (the subtraction) of the input buffers.</p>
 <p><em>v8float</em> 	<strong>fpadd</strong> (<em>v8float</em> <strong>acc</strong>, <em>v32float</em> <strong>xbuf</strong>, <em>int</em> <strong>xstart</strong>, <em>unsigned int</em> <strong>xoffs</strong>)</p>
@@ -420,17 +421,17 @@ It takes only real floating-point input vectors.</p>
 <li><p><strong>acc</strong>: <code class="docutils literal notranslate"><span class="pre">v8float,</span> <span class="pre">v4cfloat</span></code></p></li>
 <li><p><strong>xbuf</strong>: <code class="docutils literal notranslate"><span class="pre">v32float,</span> <span class="pre">v16float,</span> <span class="pre">v16cfloat,</span> <span class="pre">v8cfloat</span></code></p></li>
 </ul>
-</section>
-<section id="fpadd-abs-fpsub-abs">
+</div>
+<div class="section" id="fpadd-abs-fpsub-abs">
 <h4>fpadd_abs, fpsub_abs<a class="headerlink" href="#fpadd-abs-fpsub-abs" title="Permalink to this heading">¶</a></h4>
 <p>Adds or subtracts the absolute value of the second buffer to the first one.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
   <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">acc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+/-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">xbuf</span><span class="p">[</span><span class="n">xstart</span> <span class="o">+</span> <span class="n">xoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="fpmul">
+</div>
+</div>
+<div class="section" id="fpmul">
 <h3>fpmul<a class="headerlink" href="#fpmul" title="Permalink to this heading">¶</a></h3>
 <p>The simple floating-point multiplier comes in many different flavors mixing or not <code class="docutils literal notranslate"><span class="pre">float</span></code> and <code class="docutils literal notranslate"><span class="pre">cfloat</span></code> vector data types. When two <code class="docutils literal notranslate"><span class="pre">cfloat</span></code> are involved, the intrinsic results in two microcode instructions that must be scheduled. The first buffer can be either 512 or 1024-bit long (<code class="docutils literal notranslate"><span class="pre">v32float,</span> <span class="pre">v16float,</span> <span class="pre">v16cfloat,</span> <span class="pre">v8cfloat</span></code>), the second buffer is always 256-bit long (<code class="docutils literal notranslate"><span class="pre">v8float,</span> <span class="pre">v4cfloat</span></code>). Any combination is allowed.</p>
 <p><em>v8float</em> <strong>fpmul</strong>(<em>v32float</em> <strong>xbuf</strong>, <em>int</em> <strong>xstart</strong>, <em>unsigned int</em> <strong>xoffs</strong>, <em>v8float</em> <strong>zbuf</strong>, <em>int</em> <strong>zstart</strong>, <em>unsigned int</em> <strong>zoffs</strong>)</p>
@@ -472,8 +473,8 @@ It takes only real floating-point input vectors.</p>
   <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span>  <span class="n">xbuf</span><span class="p">[</span><span class="n">xstart</span> <span class="o">+</span> <span class="n">xoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="n">zbuf</span><span class="p">[</span><span class="n">zstart</span> <span class="o">+</span> <span class="n">zoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
 </pre></div>
 </div>
-</section>
-<section id="fpabs-mul">
+</div>
+<div class="section" id="fpabs-mul">
 <h3>fpabs_mul<a class="headerlink" href="#fpabs-mul" title="Permalink to this heading">¶</a></h3>
 <p>Only for real arguments. Signature is identical to <code class="docutils literal notranslate"><span class="pre">fpmul</span></code>:</p>
 <p><em>v8float</em> <strong>fpabs_mul</strong>(<em>v32float</em> <strong>xbuf</strong>, <em>int</em> <strong>xstart</strong>, <em>unsigned int</em> <strong>xoffs</strong>, <em>v8float</em> <strong>zbuf</strong>, <em>int</em> <strong>zstart</strong>, <em>unsigned int</em> <strong>zoffs</strong>)</p>
@@ -482,8 +483,8 @@ It takes only real floating-point input vectors.</p>
   <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span>  <span class="nb">abs</span><span class="p">(</span><span class="n">xbuf</span><span class="p">[</span><span class="n">xstart</span> <span class="o">+</span> <span class="n">xoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="n">zbuf</span><span class="p">[</span><span class="n">zstart</span> <span class="o">+</span> <span class="n">zoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
 </pre></div>
 </div>
-</section>
-<section id="fpneg-mul">
+</div>
+<div class="section" id="fpneg-mul">
 <h3>fpneg_mul<a class="headerlink" href="#fpneg-mul" title="Permalink to this heading">¶</a></h3>
 <p>Signature is identical to <code class="docutils literal notranslate"><span class="pre">fpmul</span></code>:</p>
 <p><em>v8float</em> <strong>fpneg_mul</strong>(<em>v32float</em> <strong>xbuf</strong>, <em>int</em> <strong>xstart</strong>, <em>unsigned int</em> <strong>xoffs</strong>, <em>v8float</em> <strong>zbuf</strong>, <em>int</em> <strong>zstart</strong>, <em>unsigned int</em> <strong>zoffs</strong>)</p>
@@ -492,8 +493,8 @@ It takes only real floating-point input vectors.</p>
   <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span>  <span class="o">-</span> <span class="n">xbuf</span><span class="p">[</span><span class="n">xstart</span> <span class="o">+</span> <span class="n">xoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="n">zbuf</span><span class="p">[</span><span class="n">zstart</span> <span class="o">+</span> <span class="n">zoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
 </pre></div>
 </div>
-</section>
-<section id="fpneg-abs-mul">
+</div>
+<div class="section" id="fpneg-abs-mul">
 <h3>fpneg_abs_mul<a class="headerlink" href="#fpneg-abs-mul" title="Permalink to this heading">¶</a></h3>
 <p>Only for real arguments. Signature is identical to <code class="docutils literal notranslate"><span class="pre">fpmul</span></code>:</p>
 <p><em>v8float</em> <strong>fpneg_mul</strong>(<em>v32float</em> <strong>xbuf</strong>, <em>int</em> <strong>xstart</strong>, <em>unsigned int</em> <strong>xoffs</strong>, <em>v8float</em> <strong>zbuf</strong>, <em>int</em> <strong>zstart</strong>, <em>unsigned int</em> <strong>zoffs</strong>)</p>
@@ -502,8 +503,8 @@ It takes only real floating-point input vectors.</p>
   <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span>  <span class="o">-</span> <span class="n">xbuf</span><span class="p">[</span><span class="n">xstart</span> <span class="o">+</span> <span class="n">xoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="n">zbuf</span><span class="p">[</span><span class="n">zstart</span> <span class="o">+</span> <span class="n">zoffs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
 </pre></div>
 </div>
-</section>
-<section id="fpmac-fpmsc-fpmac-abs-fpmsc-abs">
+</div>
+<div class="section" id="fpmac-fpmsc-fpmac-abs-fpmsc-abs">
 <h3>fpmac, fpmsc, fpmac_abs, fpmsc_abs<a class="headerlink" href="#fpmac-fpmsc-fpmac-abs-fpmsc-abs" title="Permalink to this heading">¶</a></h3>
 <p>For all these functions there is one more argument compared to the <code class="docutils literal notranslate"><span class="pre">fpmul</span></code> function. This is the previous value of the accumulator.</p>
 <p><em>v8float</em> <strong>fpmac</strong>(<em>v8float</em> <strong>acc</strong>, <em>v32float</em> <strong>xbuf</strong>, <em>int</em> <strong>xstart</strong>, <em>unsigned int</em> <strong>xoffs</strong>, <em>v8float</em> <strong>zbuf</strong>, <em>int</em> <strong>zstart</strong>, <em>unsigned int</em> <strong>zoffs</strong>)</p>
@@ -514,8 +515,8 @@ It takes only real floating-point input vectors.</p>
 <li><p><strong>fpmsc_abs</strong> : multiply operands and subtract the absolute value from the accumulator</p></li>
 </ul>
 <p>The two “abs” variants are available only for real arguments.</p>
-</section>
-<section id="fpmul-conf-fpmac-conf">
+</div>
+<div class="section" id="fpmul-conf-fpmac-conf">
 <h3>fpmul_conf, fpmac_conf<a class="headerlink" href="#fpmul-conf-fpmac-conf" title="Permalink to this heading">¶</a></h3>
 <p>These functions are fully configurable <code class="docutils literal notranslate"><span class="pre">fpmul</span></code> and <code class="docutils literal notranslate"><span class="pre">fpmac</span></code>  functions. The output can be considered to always have eight values because each part of the complex float is treated differently A <code class="docutils literal notranslate"><span class="pre">v4cfloat</span></code> will have the loop interating over real0 - complex0 - real1 - complex1 … This capability is introduced to allow flexibility and implement operations on conjugates.</p>
 <p><em>v8float</em> <strong>fpmac_conf</strong>(<em>v8float</em> <strong>acc</strong>, <em>v32float</em> <strong>xbuf</strong>, <em>int</em> <strong>xstart</strong>, <em>unsigned int</em> <strong>xoffs</strong>, <em>v8float</em> <strong>zbuf</strong>, <em>int</em> <strong>zstart</strong>, <em>unsigned int</em> <strong>zoffs</strong>, <em>bool</em> <strong>ones</strong>, <em>bool</em> <strong>abs</strong>, <em>unsigned int</em> <strong>addmode</strong>, <em>unsigned int</em> <strong>addmask</strong>, <em>unsigned int</em> <strong>cmpmode</strong>, <em>unsigned int &amp;</em> <strong>cmp</strong>)</p>
@@ -581,16 +582,16 @@ It takes only real floating-point input vectors.</p>
 <td align="left"><strong>Optional</strong> 8 x 1 LSB bits: When using fpcmp_ge or fpcmp_lt in "cmpmode", it sets a bit if accumulator was chosen (per lane).</td>
 </tr>
 </tbody>
-</table></section>
-</section>
-<section id="floating-point-examples">
+</table></div>
+</div>
+<div class="section" id="floating-point-examples">
 <h2>Floating-Point Examples<a class="headerlink" href="#floating-point-examples" title="Permalink to this heading">¶</a></h2>
 <p>The purpose of this set of examples is to show how to use floating-point computations within the AI Engines in different schemes:</p>
 <ul class="simple">
 <li><p>FIR filter</p></li>
 <li><p>Matrix Multiply</p></li>
 </ul>
-<section id="fir-filter">
+<div class="section" id="fir-filter">
 <h3>FIR Filter<a class="headerlink" href="#fir-filter" title="Permalink to this heading">¶</a></h3>
 <p>As there is no post-add lane reduction hardware in the floating-point pipeline of the AI Engine, all outputs will always be on eight lanes (<code class="docutils literal notranslate"><span class="pre">float</span></code>) or four lanes (<code class="docutils literal notranslate"><span class="pre">cfloat</span></code>). This means that we can compute eight (four) lanes in parallel, each time with a single coefficient, using <code class="docutils literal notranslate"><span class="pre">fpmul</span></code> and then <code class="docutils literal notranslate"><span class="pre">fpmac</span></code> for all the coefficients, one by one.</p>
 <p>The floating-point accumulator has a latency of two clock cycles, so two <code class="docutils literal notranslate"><span class="pre">fpmac</span></code> instructions using the same accumulator cannot be used back to back, but only every other cycle. Code can be optimized by using two accumulators, used in turn, that get added at the end to get the final result.</p>
@@ -612,7 +613,7 @@ It takes only real floating-point input vectors.</p>
 <li><p>How to organize the compute sequence.</p></li>
 <li><p>How to use: <code class="docutils literal notranslate"><span class="pre">fpmul</span></code>, <code class="docutils literal notranslate"><span class="pre">fpmac</span></code>, and <code class="docutils literal notranslate"><span class="pre">fpadd</span></code> in the real and complex case.</p></li>
 </ul>
-<section id="real-floating-point-filter">
+<div class="section" id="real-floating-point-filter">
 <h4>Real Floating-Point Filter<a class="headerlink" href="#real-floating-point-filter" title="Permalink to this heading">¶</a></h4>
 <p>In the example, the filter has 16 coefficients which do not fit within a 256-bit register. The register must be updated in the middle of the computation.</p>
 <p>For data storage a small 512-bit register is used. It is decomposed in two 256-bit parts: W0, W1.</p>
@@ -632,14 +633,14 @@ It takes only real floating-point input vectors.</p>
 </ul>
 </li>
 </ul>
-</section>
-<section id="complex-floating-point-filter">
+</div>
+<div class="section" id="complex-floating-point-filter">
 <h4>Complex Floating-Point Filter<a class="headerlink" href="#complex-floating-point-filter" title="Permalink to this heading">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">cfloat</span> <span class="pre">x</span> <span class="pre">cfloat</span></code> multiplications take two cycles to perform due to the abscence of the post add. These two parts can be interleaved with the two cycle latency of the accumulator.</p>
 <p>There are still 16 coefficients but now they are complex, hence double the size. The coefficients have to be updated four times for a complete iteration. The data transfer is also slightly more complex.</p>
-</section>
-</section>
-<section id="matrix-multiply">
+</div>
+</div>
+<div class="section" id="matrix-multiply">
 <h3>Matrix Multiply<a class="headerlink" href="#matrix-multiply" title="Permalink to this heading">¶</a></h3>
 <p>In this example, a matrix multiply (A<em>B) example is shown with the simple fpmul and fpmac intrinsics in the real and complex case. In the complex case there are also two other examples using the fpmul_conf and fpmac_conf intrinsics to compute A</em>B and A*conj(B).</p>
 <p>Intrinsics being lane by lane computation oriented, this feature will be used to compute a number of consecutive columns of the output matrix. The latency of two of the accumulator is absorbed by computing two rows of the output matrix.</p>
@@ -661,9 +662,9 @@ It takes only real floating-point input vectors.</p>
 <li><p>How to handle complex floating-point data and complex floating-points coefficients in FIR filters.</p></li>
 <li><p>How to use <code class="docutils literal notranslate"><span class="pre">fpmul_conf</span></code> and <code class="docutils literal notranslate"><span class="pre">fpmac_conf</span></code> intrinsics.</p></li>
 </ul>
-</section>
-</section>
-<section id="license">
+</div>
+</div>
+<div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);</p>
 <p>you may not use this file except in compliance with the License.</p>
@@ -676,8 +677,8 @@ It takes only real floating-point input vectors.</p>
 <p>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
 <p>See the License for the specific language governing permissions and</p>
 <p>limitations under the License.</p>
-<p align="center"><sup>XD021 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
+<p align="center"><sup>XD021 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
 
 
            </div>

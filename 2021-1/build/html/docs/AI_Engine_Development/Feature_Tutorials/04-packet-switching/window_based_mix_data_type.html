@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="window-based-ai-engine-kernels-with-mixed-data-types">
+</table><div class="section" id="window-based-ai-engine-kernels-with-mixed-data-types">
 <h1>Window Based AI Engine Kernels with Mixed Data Types<a class="headerlink" href="#window-based-ai-engine-kernels-with-mixed-data-types" title="Permalink to this heading">¶</a></h1>
 <p>This example is similar to the previous <a class="reference internal" href="window_based_aie_kernel.html"><span class="doc">Window Based AI Engine Kernels</span></a> example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has <code class="docutils literal notranslate"><span class="pre">cint16</span></code> interfaces. It will focus on the difference with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between <code class="docutils literal notranslate"><span class="pre">float</span></code>/<code class="docutils literal notranslate"><span class="pre">cint16</span></code> and integer data types. See <a class="reference external" href="#Prepare-Data-for-AI-Engnie-Simulator">Prepare Data for AI Engnie Simulator</a>. Another difference is that the PS code has to take care of the input and output data types. See <a class="reference external" href="#PS-Application-and-HW-Emulation-Flows">PS Application and HW Emulation Flows</a>.</p>
 <p>The following topics are already covered in <a class="reference internal" href="window_based_aie_kernel.html"><span class="doc">Window Based AI Engine Kernels</span></a>.</p>
@@ -116,7 +117,7 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="./window_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching">Example PL Kernels for Packet Switching</a></p></li>
 <li><p><a class="reference external" href="./window_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching">Example PS code for Packet Switching</a></p></li>
 </ul>
-<section id="prepare-data-for-ai-engnie-simulator">
+<div class="section" id="prepare-data-for-ai-engnie-simulator">
 <h2>Prepare Data for AI Engnie Simulator<a class="headerlink" href="#prepare-data-for-ai-engnie-simulator" title="Permalink to this heading">¶</a></h2>
 <p>Change the working directory to <code class="docutils literal notranslate"><span class="pre">window_aie_mix_int32_float_cint16</span></code>. The graph code for this example is the same as the <a class="reference internal" href="window_based_aie_kernel.html"><span class="doc">Window Based AI Engine Kernels</span></a> example. The AI Engine kernel <code class="docutils literal notranslate"><span class="pre">core[2]</span></code> (<code class="docutils literal notranslate"><span class="pre">aie/aie_core3.cpp</span></code>) has floating point interfaces, and the AI Engine kernel <code class="docutils literal notranslate"><span class="pre">core[3]</span></code> (<code class="docutils literal notranslate"><span class="pre">aie/aie_core4.cpp</span></code>) has <code class="docutils literal notranslate"><span class="pre">cint16</span></code> interfaces.</p>
 <p>When preparing the data for the AI Engnine simulator, all values should be in 32-bit integer format. The conversion is similar to the <code class="docutils literal notranslate"><span class="pre">reinterpret_cast</span></code> operation in C++. It is done manually in any language. For example, when you want to feed float data <code class="docutils literal notranslate"><span class="pre">1.0f</span></code>, <code class="docutils literal notranslate"><span class="pre">2.0f</span></code>,…, into the AI Engine kernel, the integer format can be generated in C as shown in the following code.</p>
@@ -181,8 +182,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>The output data is in <code class="docutils literal notranslate"><span class="pre">aiesimulator_output/data/output.txt</span></code>. Similarly, the output data can be converted from integer to <code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">cint16</span></code> to be human-readable.</p>
-</section>
-<section id="ps-application-and-hw-emulation-flows">
+</div>
+<div class="section" id="ps-application-and-hw-emulation-flows">
 <h2>PS Application and HW Emulation Flows<a class="headerlink" href="#ps-application-and-hw-emulation-flows" title="Permalink to this heading">¶</a></h2>
 <p>The difference in the PS application from <a class="reference internal" href="window_based_aie_kernel.html"><span class="doc">Window Based AI Engine Kernels</span></a> is that the input buffers and output buffers for different data types should be modified accordingly. Take a look at the code in <code class="docutils literal notranslate"><span class="pre">sw/host.cpp</span></code>. Note how <code class="docutils literal notranslate"><span class="pre">float</span></code> and complex type (for <code class="docutils literal notranslate"><span class="pre">cint16</span></code>) is used in the code.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">output</span> <span class="n">memory</span>
@@ -227,8 +228,8 @@ function OptanonWrapper() { }
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span>
 </pre></div>
 </div>
-</section>
-<section id="conclusion">
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you learned about the following concepts.</p>
 <ul class="simple">
@@ -247,8 +248,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p></section>
-</section>
+<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p></div>
+</div>
 
 
            </div>

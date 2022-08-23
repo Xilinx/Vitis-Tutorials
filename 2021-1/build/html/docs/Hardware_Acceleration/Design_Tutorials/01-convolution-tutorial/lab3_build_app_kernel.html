@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,14 +110,14 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="building-the-2-d-convolution-kernel-and-host-application">
+</table><div class="section" id="building-the-2-d-convolution-kernel-and-host-application">
 <h1>Building the 2-D Convolution Kernel and Host Application<a class="headerlink" href="#building-the-2-d-convolution-kernel-and-host-application" title="Permalink to this heading">¶</a></h1>
 <p>This lab will focus on building a hardware kernel using the Vitis application acceleration development flow, targeting the Xilinx Alveo U200 accelerator card. A host-side application will be implemented to coordinate all the data movements and execution triggers for invoking the kernel. During this lab, real performance measurements will be taken and compared to estimated performance and the CPU-only performance.</p>
-<section id="host-application">
+<div class="section" id="host-application">
 <h2>Host Application<a class="headerlink" href="#host-application" title="Permalink to this heading">¶</a></h2>
 <p>This section briefly discusses how the host application is written to orchestrate the execution of a convolution kernel. It was estimated in the previous lab that multiple compute units will be needed to meet the 60 FPS performance target for processing 1080p HD Video. The host application is designed to be agnostic to the number of compute units. More specifically, if the compute units are symmetric ( instance of the same kernel and memory connectivity to device DDR banks is identical), the host application can deal with any number of compute units.</p>
 <p><strong>TIP:</strong> Additional <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">tutorials</a> and <a class="reference external" href="https://github.com/Xilinx/Vitis_Accel_Examples">examples</a> about host programming and Vitis tools are available.</p>
-<section id="host-application-variants">
+<div class="section" id="host-application-variants">
 <h3>Host Application Variants<a class="headerlink" href="#host-application-variants" title="Permalink to this heading">¶</a></h3>
 <p>Please go to the top-level folder for the convolution tutorial and change the directory to <code class="docutils literal notranslate"><span class="pre">src</span></code>, and list the files:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span>  <span class="nv">$CONV_TUTORIAL_DIR</span>/src
@@ -124,8 +125,8 @@ ls
 </pre></div>
 </div>
 <p>There are two files namely “<strong>host.cpp</strong>” and “<strong>host_randomized.cpp</strong>”. They can be used to build two different versions of the host application. The way they interact with the kernel compute unit is exactly the same except that one uses the <strong>pgm</strong> image file as input. This file is repeated multiple times to emulate an image sequence(video). The randomized host uses a randomly generated image sequence. The host with random input image generation has no dependencies. In contrast, the host code in “<strong>host.cpp</strong>” uses OpenCV libraries, specifically using <strong>OpenCV 2.4</strong> libraries to load, unload and convert between raw image formats.</p>
-</section>
-<section id="host-application-details">
+</div>
+<div class="section" id="host-application-details">
 <h3>Host Application Details<a class="headerlink" href="#host-application-details" title="Permalink to this heading">¶</a></h3>
 <p>The host application starts by parsing command line arguments. Following are the command-line options provided by the host that takes the input image and uses OpenCV (in source file <code class="docutils literal notranslate"><span class="pre">src/host.cpp</span></code>):</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">CmdLineParser</span><span class="w"> </span><span class="n">parser</span><span class="p">;</span><span class="w"></span>
@@ -145,22 +146,22 @@ ls
 <p>Different options can be used to launch the application and for performance measurements. In this lab, you will set most of these command-line inputs to the application using a makefile, <code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> in the top-level directory. This file lets you set most of these options.</p>
 <p>After parsing the command-line options, the host application creates an OpenCL context, reads and loads the <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>, and creates a command queue with out-of-order execution and profiling enabled. After that, memory allocation is done, and the input image is read (or randomly generated).</p>
 <p>After the setup is complete, the application creates a <code class="docutils literal notranslate"><span class="pre">Filter2DDispatcher</span></code> object and uses it to dispatch filtering requests on several images. Timers are used to capture execution time measurements for both software and hardware execution. Finally, the host application prints the summary of performance results. Most of the heavy lifting is done by <code class="docutils literal notranslate"><span class="pre">Filter2DDispatcher</span></code> and <code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code>. These classes manage and coordinate the execution of filtering operations on multiple compute units. Both versions of the host application are based on these classes.</p>
-</section>
-<section id="d-filtering-requests">
+</div>
+<div class="section" id="d-filtering-requests">
 <h3>2D Filtering Requests<a class="headerlink" href="#d-filtering-requests" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> class is used by the filtering request dispatcher class. An object of this class encapsulates a single request to process a single color channel (YUV) for a given image. It essentially allocates and holds handles to OpenCL resources needed for enqueueing 2-D convolution filtering requests. These resources include OpenCL buffers, event lists, and handles to kernel and command queue. The application creates a single command queue that is passed down to enqueue every kernel enqueue command.</p>
 <p>After an object of the <code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> class is created, it can be used to make a call to the <code class="docutils literal notranslate"><span class="pre">Filter2D</span></code> method. This call will enqueue all the operations, moving input data or filter coefficients, kernel calls, and reading of output data back to the host. The same API call will create a list of dependencies between these transfers and also creates an output event that signals the completion of output data transfer to the host.</p>
-</section>
-<section id="d-filter-dispatcher">
+</div>
+<div class="section" id="d-filter-dispatcher">
 <h3>2D Filter Dispatcher<a class="headerlink" href="#d-filter-dispatcher" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Filter2DDispatcher</span></code> class is the top-level class that provides an end-user API to schedule kernel calls. Every call schedules a kernel enqueue and related data transfers using the <code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> object, as explained previously.  The <code class="docutils literal notranslate"><span class="pre">Filter2DDispatcher</span></code> is a container class that essentially holds a vector of request objects. The number of <code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> objects that are instantiated is defined as the <strong>max</strong> parameter for the dispatcher class at construction time. This parameter’s minimum value can be as small as the number of compute units to allow at least one kernel enqueue call per compute unit to happen in parallel. But a larger value is desired since it will allow overlap between input and output data transfers happening between host and device.</p>
-</section>
-</section>
-<section id="building-the-application">
+</div>
+</div>
+<div class="section" id="building-the-application">
 <h2>Building the Application<a class="headerlink" href="#building-the-application" title="Permalink to this heading">¶</a></h2>
 <p>The host application can be built using the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> that is provided with the tutorial. As mentioned earlier, the host application has two versions: the first version takes input images to process, the second can generate random data that will be processed as images.</p>
 <p>The top-level <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> includes a file called <code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code>. This file provides most of the options that can be used to generate different host builds and kernel versions for emulation modes. It also provides a way to launch emulation with a specific number of test images. The details of the options provided by this file are as follows:</p>
-<section id="kernel-build-options">
+<div class="section" id="kernel-build-options">
 <h3>Kernel Build Options<a class="headerlink" href="#kernel-build-options" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>TARGET: selects build target; the choices are <code class="docutils literal notranslate"><span class="pre">hw</span></code>, <code class="docutils literal notranslate"><span class="pre">sw_emu</span></code>, <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>.</p></li>
@@ -172,16 +173,16 @@ ls
 <li><p>VPP_LOG_DIRS: log directory for <code class="docutils literal notranslate"><span class="pre">v++</span></code>.</p></li>
 <li><p>USE_PRE_BUILT_XCLBIN: enables the use of pre-built FPGA binary file to speed the use of this tutorial</p></li>
 </ul>
-</section>
-<section id="host-build-options">
+</div>
+<div class="section" id="host-build-options">
 <h3>Host Build Options<a class="headerlink" href="#host-build-options" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>ENABLE_PROF: Enables OpenCL profiling for the host application</p></li>
 <li><p>OPENCV_INCLUDE: OpenCV include directory path</p></li>
 <li><p>OPENCV_LIB: OpenCV lib directory path</p></li>
 </ul>
-</section>
-<section id="application-runtime-options">
+</div>
+<div class="section" id="application-runtime-options">
 <h3>Application Runtime Options<a class="headerlink" href="#application-runtime-options" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>FILTER_TYPE: selects between 6 different filter types: choices are 0-6(Identity, Blur, Motion Blur, Edges, Sharpen, Gaussian, Emboss)</p></li>
@@ -230,8 +231,8 @@ vim make_options.mk
 </pre></div>
 </div>
 <p>It will build <code class="docutils literal notranslate"><span class="pre">host.exe</span></code> inside a <code class="docutils literal notranslate"><span class="pre">build</span></code> folder. By building the host application separate from the kernel code, you can make sure the host code compiles correctly and all library paths have been set.</p>
-</section>
-<section id="running-software-emulation">
+</div>
+<div class="section" id="running-software-emulation">
 <h3>Running Software Emulation<a class="headerlink" href="#running-software-emulation" title="Permalink to this heading">¶</a></h3>
 <p>To build and run the kernel in software emulation mode, please run the following bash command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="nv">TARGET</span><span class="o">=</span>sw_emu
@@ -290,8 +291,8 @@ Test PASSED: Output matches reference
 <p>The input and the output images are shown below for filter type selection set to 3 which performs edge detection:</p>
 <p><img alt="missing image" src="../../../../_images/inputImage50.jpg" />
 <img alt="missing image" src="../../../../_images/outputImage.jpg" /></p>
-</section>
-<section id="running-hardware-emulation">
+</div>
+<div class="section" id="running-hardware-emulation">
 <h3>Running Hardware Emulation<a class="headerlink" href="#running-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <p>The application can be run in hardware emulation mode in a similar way as software emulation. The only change needed is TARGET, which should be set to  <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>.</p>
 <p><strong>NOTE</strong>: Hardware Emulation may take a long time. The <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> default setting will make sure it simulates only a single image, but it is recommended in case of the random input image that image size be set smaller by keeping image height in the range of 30-100 pixels. The height and width of the image can be specified in the <code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> file.</p>
@@ -302,12 +303,12 @@ Test PASSED: Output matches reference
 </pre></div>
 </div>
 <p>It will build the hardware kernel in emulation mode and then launch the host application. The output printed in the console window will be similar to the <code class="docutils literal notranslate"><span class="pre">sw_emu</span></code> case. But after hardware emulation, you can analyze different synthesis reports and view different waveforms using Vitis Analyzer.</p>
-</section>
-</section>
-<section id="system-run">
+</div>
+</div>
+<div class="section" id="system-run">
 <h2>System Run<a class="headerlink" href="#system-run" title="Permalink to this heading">¶</a></h2>
 <p>In this section, you will run the host application using FPGA hardware and analyze the overall system’s performance using Vitis Analyzer and host application console output.</p>
-<section id="building-the-kernel-xclbin">
+<div class="section" id="building-the-kernel-xclbin">
 <h3>Building the Kernel Xclbin<a class="headerlink" href="#building-the-kernel-xclbin" title="Permalink to this heading">¶</a></h3>
 <p><strong>NOTE</strong>: This section describes an optional step required when the user wants to build its own <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> for the system run instead of using the pre-built <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> provided as part of this tutorial.</p>
 <p>Once the kernel functionality is verified, and its resource usage is satisfactory (as a single module as synthesized in the previous lab) kernel build process can be started. The kernel build process will create an xclbin file. It is an FPGA executable file that can be read and loaded by the host to the FPGA card. Building xclbin takes few hours, and to avoid this delay during the lab, a built-in xclbin file is provided. It is present in the folder called “xclbin”. During hardware run by default, a pre-built xclbin file will be used. But if it is required to build a new xclbin, please set the following options in the make_options.mk file as shown below:</p>
@@ -323,8 +324,8 @@ Test PASSED: Output matches reference
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make build <span class="nv">TARGET</span><span class="o">=</span>hw
 </pre></div>
 </div>
-</section>
-<section id="application-run-using-fpga-kernel">
+</div>
+<div class="section" id="application-run-using-fpga-kernel">
 <h3>Application Run Using FPGA Kernel<a class="headerlink" href="#application-run-using-fpga-kernel" title="Permalink to this heading">¶</a></h3>
 <p>If you are using a pre-built <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> file, make sure <strong>USE_PRE_BUILT_XCLBIN := 1</strong> is set to “1”, otherwise build the xclbin as described in the last step and keep <strong>USE_PRE_BUILT_XCLBIN := 0</strong>. You can also enable the performance comparison with CPU by setting “ENABLE_PROF?=yes”.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
@@ -371,8 +372,8 @@ FPGA Speedup      :    <span class="m">68</span>.1764 x
 </pre></div>
 </div>
 <p>From the console output, it is clear that acceleration achieved when compared to CPU is 68x. The achieved throughput is 839 MB/s, which is close to the estimated throughput of 900 MB/s; it only differs by 6.66 percent.</p>
-</section>
-<section id="profile-summary">
+</div>
+<div class="section" id="profile-summary">
 <h3>Profile Summary<a class="headerlink" href="#profile-summary" title="Permalink to this heading">¶</a></h3>
 <p>This section will analyze the system performance using Vitis Analyzer by looking at different performance parameters and traces.</p>
 <p>When the application is run, whether in emulation mode or on actual hardware, a trace file of runtime activities can be generated. This trace file can be viewed within Vitis Analyzer. For additional details, refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/jfn1567005096685.html">Using Vitis Analyzer</a>.</p>
@@ -394,8 +395,8 @@ FPGA Speedup      :    <span class="m">68</span>.1764 x
 </li>
 </ol>
 <p><img alt="missing image" src="../../../../_images/bwKernel.jpg" /></p>
-</section>
-<section id="application-timeline">
+</div>
+<div class="section" id="application-timeline">
 <h3>Application Timeline<a class="headerlink" href="#application-timeline" title="Permalink to this heading">¶</a></h3>
 <p>The Application Timeline can also be used to examine performance parameters like CU latency per invocation and bandwidth utilization.</p>
 <ol>
@@ -414,15 +415,15 @@ FPGA Speedup      :    <span class="m">68</span>.1764 x
 <li><p>How to write an optimized host-side application for multi CU designs</p></li>
 <li><p>How to estimate kernel performance and compare it with measured performance</p></li>
 </ul>
-</section>
-</section>
-<section id="conclusion">
+</div>
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>Congratulations! You have successfully completed the tutorial. In this tutorial, you have learned how to estimate the performance and acceleration requirements for the hardware implementation of a Vitis Kernel. You have analyzed kernel performance using different tools and compared measured and estimated performance, to see how close both performance number are. You have also seen that you can create an optimized memory cache or hierarchy for FPGA based implementation easily that significantly boost application performance. Finally you have learnt how to write optimized host code to get best performance out of multiple CUs for a given kernel.</p>
 <hr class="docutils" />
 <p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p>
-</b></p></section>
-</section>
+</b></p></div>
+</div>
 
 
            </div>

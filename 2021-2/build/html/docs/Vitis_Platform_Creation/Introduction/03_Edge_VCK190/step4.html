@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -119,9 +119,9 @@ function OptanonWrapper() { }
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
     </td>
  </tr>
-</table><section id="step-4-test-the-platform">
+</table><div class="section" id="step-4-test-the-platform">
 <h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this heading">¶</a></h1>
-<section id="test-1-read-platform-info">
+<div class="section" id="test-1-read-platform-info">
 <h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this heading">¶</a></h2>
 <p>With Vitis environment setup, <strong>platforminfo</strong> tool can report XPFM platform information.</p>
 <p>We can verify hardware configuration (clocks, memory) and software configuration (domain) are set as expected.</p>
@@ -208,8 +208,8 @@ function OptanonWrapper() { }
  Runtime: OpenCL
 </pre></div>
 </div>
-</details></section>
-<section id="test-2-run-a-pl-acceleration-application">
+</details></div>
+<div class="section" id="test-2-run-a-pl-acceleration-application">
 <h2>Test 2: Run a PL acceleration application<a class="headerlink" href="#test-2-run-a-pl-acceleration-application" title="Permalink to this heading">¶</a></h2>
 <p>To verify the platform functionality, we will create an acceleation project with PL kernel. We will use Vitis built-in Vector Addition template to do this test.</p>
 <ol>
@@ -258,7 +258,7 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-<section id="optional-test-the-application-on-hardware-emulation">
+<div class="section" id="optional-test-the-application-on-hardware-emulation">
 <h3>(Optional) Test the Application on Hardware Emulation<a class="headerlink" href="#optional-test-the-application-on-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Launch Emulator for PS</p>
@@ -290,8 +290,8 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-</section>
-<section id="test-the-application-on-hardware">
+</div>
+<div class="section" id="test-the-application-on-hardware">
 <h3>Test the Application on Hardware<a class="headerlink" href="#test-the-application-on-hardware" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Copy <code class="docutils literal notranslate"><span class="pre">vadd_system/Hardware/package/sd_card.img</span></code> to local if you build the project on a remote server or virtual machine.</p></li>
@@ -353,9 +353,9 @@ function OptanonWrapper() { }
 </div>
 <p><strong>What Just Happened?</strong></p>
 <p>Vitis runs PS emulation in QEMU, PL and AIE emulation in XSIM. They can communicate with each other. When running the emulation, Vitis downloads executable and xclbin to Remote Working Directory and launch it.</p>
-</section>
-</section>
-<section id="test-3-run-an-aie-pl-acceleration-application-project">
+</div>
+</div>
+<div class="section" id="test-3-run-an-aie-pl-acceleration-application-project">
 <h2>Test 3: Run an AIE + PL acceleration application project<a class="headerlink" href="#test-3-run-an-aie-pl-acceleration-application-project" title="Permalink to this heading">¶</a></h2>
 <p>To verify the platform functionality, we will create a project with AIE + PL kernel and PS application and run it on VCK190 board.</p>
 <ol class="simple">
@@ -384,7 +384,7 @@ function OptanonWrapper() { }
 </li>
 <li><p>After a successful build, <strong>sd_card.img</strong> is generated in <code class="docutils literal notranslate"><span class="pre">plaie_system/Hardware/package</span></code> and <code class="docutils literal notranslate"><span class="pre">plaie_system/Hardware/package_no_aie_debug</span></code> directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the <strong>sd_card.img</strong> in <strong>package</strong> directory has a package parameter <code class="docutils literal notranslate"><span class="pre">enable_aie_debug=1</span></code>. It’s used for debugging. The one in <strong>package_no_aie_debug</strong> can work for free running.</p></li>
 </ol>
-<section id="id1">
+<div class="section" id="id1">
 <h3>Test the Application on Hardware<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Copy the <strong>sd_card.img</strong> from <code class="docutils literal notranslate"><span class="pre">plaie_system/Hardware/package_no_aie_debug</span></code> directory to local, if the project is run on a server or virtual machine.</p>
@@ -441,8 +441,8 @@ function OptanonWrapper() { }
 <span class="p">[</span>  <span class="mf">382.045158</span><span class="p">]</span> <span class="p">[</span><span class="n">drm</span><span class="p">]</span> <span class="n">Pid</span> <span class="mi">693</span> <span class="n">closed</span> <span class="n">device</span>
 </pre></div>
 </div>
-</details></section>
-<section id="id2">
+</details></div>
+<div class="section" id="id2">
 <h3>(Optional) Test the Application on Hardware Emulation<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Launch Emulator for PS</p>
@@ -474,9 +474,9 @@ function OptanonWrapper() { }
 </div></blockquote>
 <p>Congratulations now you’ve created a custom platform that PL acceleration kernel and AIE applications can work on it.</p>
 <p><a class="reference internal" href="faq.html"><span class="doc">In next chapter</span></a>, we’ll list some frequently encountered problems and frequently asked questions. Please take a look if you’d like to understand more of platform creation.</p>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
-</section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
+</div>
 
 
            </div>
