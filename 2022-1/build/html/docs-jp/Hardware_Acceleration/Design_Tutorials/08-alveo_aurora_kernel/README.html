@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Vitis フローを使用した Alveo での Aurora IP の使用- Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Getting Started with RTL Kernels" href="../../Feature_Tutorials/01-rtl_kernel_workflow/README.html" />
+    <link rel="prev" title="Host Code Optimization" href="../07-host-code-opt/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">入門</a></li><li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">設計チュートリアル</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">ブルーム フィルターの例</a></li><li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">たたみ込みの例</a></li><li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL システム統合の例</a></li><li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">巡回セールスパーソン問題</a></li><li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">ボトム RTL カーネルのデザイン フローの例</a></li><li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">コレスキー アルゴリズム アクセラレーション</a></li><li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT ホスト コードの最適化</a></li><li class="toctree-l3 current"><a class="current reference internal" href="#">Alveo での Aurora カーネル</a><ul><li class="toctree-l4"><a class="reference internal" href="#入門チュートリアル">入門</a></li><li class="toctree-l4"><a class="reference internal" href="#develop-krnl-aurora-kernel"><em>krnl_aurora</em> カーネルの開発</a></li><li class="toctree-l4"><a class="reference internal" href="#strm-issue-and-strm-dump-kernel"><em>Strm_issue</em> および <em>strm_dump</em> カーネル</a></li><li class="toctree-l4"><a class="reference internal" href="#kernel-integration-linking">カーネルの統合 (リンキング)</a></li><li class="toctree-l4"><a class="reference internal" href="#host-program">ホスト プログラム</a></li><li class="toctree-l4"><a class="reference internal" href="#one-more-thing">追加事項</a></li><li class="toctree-l4"><a class="reference internal" href="#summary">サマリ</a></li><li class="toctree-l4"><a class="reference internal" href="#revision-history">改訂履歴</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">機能チュートリアル</a></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Hardware-Acceleration.html">Vitis ハードウェア アクセラレータ</a> &raquo;</li><li>Vitis フローを使用した Alveo での Aurora IP の使用</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="using-aurora-ip-in-alveo-with-vitis-flow">
+<h1>Vitis フローを使用した Alveo での Aurora IP の使用<a class="headerlink" href="#using-aurora-ip-in-alveo-with-vitis-flow" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<div class="section" id="introduction">
+<h2>入門チュートリアル<a class="headerlink" href="#入門チュートリアル" title="Permalink to this heading"></a></h2>
+<p>Aurora 64B/66B は、マルチギガビット リンク向けの軽いシリアル通信プロトコルです。Alveo カードでは、Aurora IP が GT トランシーバー (GTY など) を利用して高速データ転送を実現します。Alveo アクセラレータ カードには、1 つまたは 2 つの QSFP28 ポートがあり、FPGA の GT トランシーバーに接続されています。Alveo カードに Aurora IP を統合させ、各 QSFP28 ポートで最大 100 Gbps のデータ スループットで、カード間の全二重通信を実現できます。Aurora IP は、データ転送用の標準的な AXI Stream ポートをユーザー アプリケーションに提供します。またユーザーは、Vitis フローを用いて、Aurora IP を Vitis のターゲット プラットフォームに基づいたアクセラレータ デザインに簡単に統合できます。</p>
+<p>Aurora 64B/66B の通信チャネルのブロック図は次のとおりです。</p>
+<p><img alt="Aurora Channel" src="../../../../_images/aurora.png" /></p>
+<p>Aurora 64B/66B プロトコルの詳細は、<a class="reference external" href="https://docs.xilinx.com/v/u/en-US/aurora_64b66b_protocol_spec_sp011">Aurora 64B/66B プロトコル仕様</a>を参照してください。<br/>Aurora 64B/66B IP の詳細は、<a class="reference external" href="https://docs.xilinx.com/v/u/en-US/pg074-aurora-64b66b">Aurora 64B/66B IP 製品ガイド</a>を参照してください。</p>
+<p>このチュートリアルでは、提供のサンプル デザインを使用して、Vitis フローを用いた Aurora IP を Alveo アクセラレータ カードに統合するための手順を順番に説明します。このサンプル デザインには、レーン レートが 10 Gbps の 4 レーンの Aurora カーネルが統合されています (合計 40 Gbps のスループットを達成)。このチュートリアルでは、Aurora IP の生成から、Aurora IP のリファレンス RTL 最上位モジュール、サンプルのテスト システムの統合、サンプルの x86 ホスト プログラムまでのステップを説明します。次はサンプル デザインのハードウェア ブロック図です。</p>
+<p><img alt="Block Diagram" src="../../../../_images/diagram.png" /></p>
+<p>ハードウェア デザインには 3 つのカーネルがあります。</p><ul class="simple"> <li><p><strong>krnl_aurora</strong>: これは RTL カーネルです。<strong>krnl_aurora</strong> は、Aurora コア IP、データ送信用 AXIS データ FIFO、データ受信用 AXIS データ FIFO、Aurora IP ステータス リードバック用 AXI コントロール スレーブをインスタンシエートします。</p></li> <li><p><strong>strm_issue</strong>: これは HLS カーネルで、データ送信用に AXI マスターから AXI ストリームへの単純なブリッジをインプリメントします。オンボード グローバル メモリからデータを読み出して Aurora コアに送信します。</p></li> <li><p><strong>strm_dump</strong>: これは HLS カーネルで、データ受信用に AXI ストリームから AXI マスターへの単純なブリッジをインプリメントします。Aurora コアからデータを受信して、オンボード グローバル メモリへ書き込みます。</p></li> </ul>
+<p>このサンプル デザインでは、ホストがブロック データをオンボード グローバル メモリに転送して、Aurora コアにロードした後、ループバックデータをオンボード グローバル メモリに格納して整合性チェックを実行します。デザインを実際にハードウェア上でテストするには、Alveo カードの QSFP ポートに挿入した 40 Gbps QSFP+ (0dB、0W) ループバック モジュールが必要です。Alveo カードに QSFP ポートが 2 つある場合は、モジュールを QSFP 0 に挿入してください。ループバック モジュールは次の画像のようになります。</p>
+<p><img alt="Loopback" src="../../../../_images/loopback.jpg" /></p>
+<p>このデザインは Ubuntu 18.04/20.04 と Redhat/CentOS 7/8 システムに対応し、次の XRT とターゲットプラットフォームのバージョンで検証されています。</p><ul class="simple"> <li><p>XRT 2.13.466</p></li> <li><p>Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1</p></li> <li><p>Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1</p></li> </ul>
+<p>サンプル デザインのすべてのフローはマンド ラインとして提供され、Makefile と Tcl スクリプトを利用します。このチュートリアルのいくつかのステップでは、明確に説明するために GUI 操作が使用されています。デザイン ディレクトリにあるファイルは次のとおりです。</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span>├── hls
+│   ├── strm_dump.cpp                   # HLS C source code for strm_dump kernel
+│   └── strm_issue.cpp                  # HLS C source code for strm_issue kernel
+├── host
+│   └── host_krnl_aurora_test.cpp       # x86 host program
+├── krnl_aurora_test.cfg                # Vitis link configuration file
+├── Makefile                            # Makefile for full flow
+├── README.md
+├── rtl
+│   ├── krnl_aurora_control_s_axi.v     # Verilog source code for AXI control slave module
+│   └── krnl_aurora.v                   # Verilog source code for top level of krnl_aurora
+├── tcl
+│   ├── gen_aurora_ip.tcl               # Tcl script to generate Aurora IP
+│   ├── gen_fifo_ip.tcl                 # Tcl script to generate AXI stream data FIFO
+│   └── pack_kernel.tcl                 # Tcl script to package the RTL kernel krnl_aurora
+└── xdc
+    └── aurora_64b66b_0.xdc             # additional XDC file for krnl_aurora
+</pre></div>
+</div>
+<p><strong>注記:</strong> RedHat/CentOS 7 を使用している場合、デフォルトでインストールされる GCC のバージョンは 4.x.x です。x86 ホスト プログラムをコンパイルする前に、次のコマンドで GCC 7 をインストールし、GCC 7 に切り替えておく必要があります。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install centos-release-scl
+sudo yum install devtoolset-7-gcc-c++
+scl <span class="nb">enable</span> devtoolset-7 bash
+</pre></div>
+</div>
+</div>
+<div class="section" id="develop-krnl-aurora-kernel">
+<h2><em>krnl_aurora</em> カーネルの開発<a class="headerlink" href="#develop-krnl-aurora-kernel" title="Permalink to this heading">¶</a></h2>
+<p><strong>krnl_aurora</strong> はサンプル デザイン用の中心になるカーネルです。前述のブロック図から、<strong>krnl_aurora</strong> には、Aurora 64B/66B IP、データ送信用 AXI Stream Data FIFO IP、データ受信用 AXI Stream Data FIFO IP、Aurora ステータス モニター用 AXI コントロール スレーブの 3 つのサブモジュールが含まれています。</p>
+<div class="section" id="generate-aurora-64b-66b-core-ip">
+<h3>Aurora 64B/66B IP<a class="headerlink" href="#generate-aurora-64b-66b-core-ip" title="Permalink to this heading">¶</a></h3>
+<p>それでは、Aurora IP を生成してみましょう。IP コンフィギュレーション オプションをより明確に説明するため、まず、U200 カードを例として、Vivado GUI で Aurora IP コンフィギュレーション オプションを確認します。</p>
+<p><em></em>Vivado GUI を起動し、Tcl コンソール ウィンドウで次のコマンド例を入力し、Alveo カードに対応する FPGA パーツを使用してプロジェクトを作成してください。<em></em>次のコマンド ラインでは、xcu200-fsgd2104-2-e が U200 カードの FPGA パーツ名となります。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create_project</span> <span class="n">aurora_test</span> <span class="o">-</span><span class="n">part</span> <span class="n">xcu200</span><span class="o">-</span><span class="n">fsgd2104</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">e</span>
+</pre></div>
+</div>
+<p><em></em><em></em><em></em>プロジェクト作成後、左側のプロジェクト マネージャーの IP カタログをクリックし、リストの中から Aurora 64B66B IP を検索して、ダブルクリックします。その後、Aurora 64B66B IP コンフィギュレーション ウィンドウが開くので、次に説明するようにオプションを確認し、必要なオプションを選択します。</p>
+<p><em></em>[Core Options] タブを次のように設定します。</p><ul class="simple"> <li><p>[Physical Layer]</p><ul> <li><p><strong>GT Type</strong>: GTY (デフォルト)</p></li> <li><p><strong>Line Rate (Gbps)</strong>: 10.3125 (デフォルト)</p></li> <li><p><strong>Column Used</strong>: right (デフォルト)</p></li> <li><p><strong>Lanes</strong>: 4 (サンプル デザインでは 4 レーンを使用しています)。</p></li> <li><p><strong>Starting GT Quad</strong>: Quad X1Y5 (デフォルト。Vitis のリンク プロセスにより適切な GT クアッドが選択されます)。</p></li> <li><p><strong>Starting GT Lane</strong>: X1Y20 (デフォルト。Vitis のリンク プロセスにより適切な GT レーンが選択されます)。</p></li> <li><p><strong>GT Refclk Selection</strong>: MGTREFCLK0 of Quad X1Y5 (デフォルト。Vitis のリンク プロセスにより適切な GT Refclk が選択されます)。</p></li> <li><p><strong>GT Refclk (MHz)</strong>: 161.1328125 (Alveo カード上の GT クロック ソース)</p></li> <li><p><strong>INIT clk (MHz)</strong>: 100 (U200 ターゲット プラットフォームで提供されている 100 MHz クロックを INIT クロックとして使用します)。</p></li> <li><p><strong>Generate Aurora without GT</strong>: 何も選択せずにそのままにしておきます (Aurora IP に GT トランシーバーを含める必要があります)。</p></li> </ul>
+</li>
+<li><p>[Link Layer]</p><ul> <li><p><strong>Dataflow Mode</strong>: Duplex (デフォルト)</p></li> <li><p><strong>Interface</strong>: Streaming (このサンプル デザインでは、ストリーミング モードを使用します)。</p></li> <li><p><strong>Flow Control</strong>: None (デフォルト)</p></li> <li><p><strong>USER K</strong>: 何も選択せずにそのままにしておきます (サンプル デザインでは USER-K を使用していません)。</p></li> <li><p><strong>Little Endian Support</strong>: 何も選択せずにそのままにしておきます (サンプル デザインではリトル エンディアンのサポートは不要です)。</p></li> </ul>
+</li>
+<li><p>エラー検出</p><ul> <li><p><strong>CRC</strong>: 何も選択せずにそのままにしておきます (サンプル デザインでは CRC を使用していません)。</p></li> </ul>
+</li>
+<li><p>[Debug and Control]</p><ul> <li><p><strong>DRP Mode</strong>: Native (実際には、このサンプル デザインでは DRP 関数は使用されません)。</p></li> <li><p><strong>Vivado Lab Tools</strong>: 何も選択せずにそのままにしておきます (サンプル デザインでは、この機能を使用する必要はありません)。</p></li> <li><p><strong>Additional transceiver control and status ports</strong>: 何も選択せずにそのままにしておきます (サンプル デザインでは、この機能を使用する必要はありません)。</p></li> </ul>
+</li>
+</ul>
+<p><em></em>[Shared Logic] タブを次のように設定します。</p><ul class="simple"> <li><p>[Shared Logic]</p><ul> <li><p>共有ロジックをコアに含めます (サンプル デザインでは、単一の Aurora モジュールを使用します)。</p></li> </ul>
+</li>
+</ul>
+<p>以上の設定で、Aurora 64B66B の IP コンフィギュレーション ウィンドウは次のようになります。</p>
+<p><img alt="Block Diagram" src="../../../../_images/aurora_ip.png" /></p>
+<p>コンフィギュレーションされた IP には、AXI ストリーム スレーブ ポートと AXI ストリーム マスター ポートがあり、データ幅は 256 ビット、すなわち 1 レーンあたり 64 ビットとなります。<em></em>これら 2 つの AXI ストリーム ポートは 161.1328125 MHz の user_clk ドメインで動作し、これはレーン速度 10.3125 Gbps の 1/64 に相当します。</p>
+<p><em></em>[OK] をクリックすると、Aurora IP のコンフィギュレーションが完了します。<em></em>実際に必要なのは、生成された aurora_64b66b_0.xci ファイルで、これはあとの IP パッケージング段階で使用されます。<em></em>前述したように、このチュートリアルでは Aurora IP の生成ステップは Vivado Tcl スクリプトで処理されます。そこで、上記の GUI フローと同じファイルを生成するために使用するスクリプト ファイル ./tcl/gen_aurora_ip.tcl を見てみましょう。このスクリプトの主な部分は次のようになっています。</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span>create_ip -name aurora_64b66b \
+          -vendor xilinx.com \
+          -library ip \
+          -version 12.0 \
+          -module_name aurora_64b66b_0 \
+          -dir ./ip_generation
+
+set_property -dict [list CONFIG.C_AURORA_LANES {4} \
+                         CONFIG.C_LINE_RATE {10.3125} \
+                         CONFIG.C_REFCLK_FREQUENCY {161.1328125} \
+                         CONFIG.C_INIT_CLK {100} \
+                         CONFIG.interface_mode {Streaming} \
+                         CONFIG.drp_mode {Native} \
+                         CONFIG.SupportLevel {1}] \
+             [get_ips aurora_64b66b_0]
+</pre></div>
+</div>
+<p>このスクリプトを使うと、次のコマンド ラインで Aurora IP を生成できます (u200 カードを使用した例です)。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vivado</span> <span class="o">-</span><span class="n">mode</span> <span class="n">batch</span> <span class="o">-</span><span class="n">source</span> <span class="o">./</span><span class="n">tcl</span><span class="o">/</span><span class="n">pack_kernel</span><span class="o">.</span><span class="n">tcl</span> <span class="o">-</span><span class="n">tclargs</span> <span class="n">xcu200</span><span class="o">-</span><span class="n">fsgd2104</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">e</span>
+</pre></div>
+</div>
+<p><em></em>フロー全体を管理するための Makefile が用意されているので、ここで、make コマンドを使ってすべてのステップを終了させてみましょう。</p>
+</div>
+<div class="section" id="generate-axi-stream-data-fifo-ip">
+<h3>AXI Stream Data FIFO IP の生成<a class="headerlink" href="#generate-axi-stream-data-fifo-ip" title="Permalink to this heading">¶</a></h3>
+<p>AXI Stream Data FIFO IP は、Aurora AXI ストリーム ポートと Alveo プラットフォーム AXI システムのクロック ドメインを隔離し、特に RX (受信) チャネル用のデータ バッファーを提供するために使用されます。<em></em>この IP は単純で、これを生成するための Tcl スクリプト ./tcl/gen_fifo_ip.tcl が提供されています。2 つのオプションを修正する必要があります。一つは、AXI ストリームのデータ幅を 32 バイト (256 ビット) にし、もう一つは、IP が非同期クロックを提供するよう変更します。このスクリプト ファイルの主な部分は次のようになっています。</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span>create_ip -name axis_data_fifo \
+          -vendor xilinx.com \
+          -library ip \
+          -version 2.0 \
+          -module_name axis_data_fifo_0 \
+          -dir ./ip_generation
+
+set_property -dict [list CONFIG.TDATA_NUM_BYTES {32} \
+                         CONFIG.IS_ACLK_ASYNC {1}] \
+             [get_ips axis_data_fifo_0]
+</pre></div>
+</div>
+<p><em></em>同様に、あとで make コマンドで IP を生成します。</p>
+</div>
+<div class="section" id="axi-control-slave-module">
+<h3>AXI コントロール スレーブ モジュール<a class="headerlink" href="#axi-control-slave-module" title="Permalink to this heading">¶</a></h3>
+<p>このサンプル デザインでは、Aurora IP をダイナミックにコンフィギュレーションせず、Aurora IP から出力されるいくつかのステータス信号をモニターするだけです。一方、<strong>krnl_aurora</strong> は常時実行されるカーネルとして設計されており、ホストによってこのカーネルの実行が制御されることはありません。したがって、ここでは単純な AXI スレーブ RTL モジュールが使用されています。これは、読み取り専用の AXI スレーブ レジスタを 1 つインプリメントして、Aurora IP からの出力ステータス信号に接続します。</p>
+<p><em></em>このモジュールの RTL ソースは、./rtl/krnl_aurora_control_s_axi.v にあります。</p>
+</div>
+<div class="section" id="krnl-aurora-top-module">
+<h3><em>krnl_aurora</em> 最上位モジュール<a class="headerlink" href="#krnl-aurora-top-module" title="Permalink to this heading">¶</a></h3>
+<p><strong>krnl_aurora</strong> の最上位 Verilog ファイルは、./rtl/krnl_aurora.v にあります。<em></em>Aurora IP、AXI Stream Data FIFO I、AXI コントロール スレーブ モジュールをインスタンシエートするときに、最上位モジュールにより、Aurora IP と AXI コントロール スレーブの間に CDC モジュールが挿入されます。この CDC モジュールは異なるドメインで動作します。<em></em><em></em>この最上位モジュールにより、Aurora IP の reset_pb と pma_init 信号も生成されます。詳細は、Aurora 64B/66B IP の資料を参照してください。</p>
+</div>
+<div class="section" id="package-krnl-aurora-kernel">
+<h3><em>krnl_aurora</em> カーネルのパッケージ<a class="headerlink" href="#package-krnl-aurora-kernel" title="Permalink to this heading">¶</a></h3>
+<p><em></em>Tcl スクリプト ./tcl/pack_kernel.tcl は、前述の IP ファイルと RTL モジュールを Vitis カーネル ファイルにパッケージするために提供されています。いくつか注意点があります。</p><ul class="simple"> <li><p><em></em>最上位の init_clk 信号はクロック インターフェイスとして自動推論されますが、ここではスクリプト内で手動でインターフェイスから削除します。その理由は、このクロック ピンを指定されたクロック ソース ピンに手動で接続する必要があるので、Vitis のリンク ステージで自動接続されるのを避けるためです。</p></li> <li><p><em></em>自動推論された AXI/AXI ストリーム インターフェイスに加え、あらかじめ定義された差動 gt_port 型のインターフェイスを手動で推論し、最上位の GT TX/RX 信号をそれに接続させます。こうすると、GT インターフェイスと Alveo ターゲット プラットフォームで提供されている QSFP インターフェイスとを簡単に接続できます。</p></li> <li><p><em></em>自動推論された標準クロックに加え、あらかじめ定義された差動 gt_refclk 型のインターフェイスを手動で推論し、最上位の GT 基準クロック信号をそのインターフェイスに接続させます。こうすると、GT 基準クロック インターフェイスと Alveo ターゲット プラットフォームで提供されている QSFP インターフェイスとを簡単に接続できます。</p></li> <li><p><em></em>生成された Aurora IP では、最上位統合用の基準クロックが定義されていないため、追加の XDC ファイル ./xdc/aurora_64b66b_0.xdc がカーネル ファイルにパックされています。</p></li> </ul>
+<p><em></em>あとで、このスクリプトを make コマンドで呼び出して、カーネル ファイル <strong>krnl_aurora.xo</strong> を生成します。</p>
+</div>
+</div>
+<div class="section" id="strm-issue-and-strm-dump-kernel">
+<h2><em></em>strm_issue および <em></em>strm_dump カーネル<a class="headerlink" href="#strm-issue-and-strm-dump-kernel" title="Permalink to this heading">¶</a></h2>
+<p>これら 2 つのカーネルは、256 ビットの AXI-to-AXIS および AXIS-to-AXI 変換機能のインプリメンテーションに HLS を使用しています。AXI ストリーム データ幅 256 は、<strong>krnl_aurora</strong> の AXI ストリーム ポートのものと一致するため、あとのリンク ステージで直接接続できます。この 2 つのカーネルのソース コードは、./hls/strm_issue.cpp と ./hls/strm_dump.cpp で確認できます。<em></em><em></em></p>
+<p><em></em><em></em>サンプル デザインのフローでは、これら 2 つのカーネルを <strong>strm_issue.xo</strong> と <strong>strm_dump.xo</strong> の XO ファイルにコンパイルするため、Vitis のコマンド v++ が make ツールで使用されます。</p>
+</div>
+<div class="section" id="kernel-integration-linking">
+<h2>カーネルの統合 (リンキング)<a class="headerlink" href="#kernel-integration-linking" title="Permalink to this heading">¶</a></h2>
+<p><em></em><em></em>3 つのカーネルの準備ができたら、make ツールにより Vitis v++ コマンドが呼び出され、リンク作業を終了させます。<em></em>コンフィギュレーション ファイル krnl_aurora_test.cfg は、カーネルの接続トポロジを指定します。</p>
+<p>コンフィギュレーション ファイルの主要部分は次のとおりです (例として U200 を使用)。</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span>[connectivity]
+nk=krnl_aurora:1:krnl_aurora_0
+nk=strm_issue:1:strm_issue_0
+nk=strm_dump:1:strm_dump_0
+
+# AXI connection
+stream_connect=krnl_aurora_0.rx_axis:strm_dump_0.data_input
+stream_connect=strm_issue_0.data_output:krnl_aurora_0.tx_axis
+
+# ---------------------------------------
+# Aurora signal connection (GT / clock)
+# ---------------------------------------
+# uncomment following lines for xilinx_u200_gen3x16_xdma_1_202110_1
+connect=io_clk_qsfp_refclka_00:krnl_aurora_0/gt_refclk
+connect=krnl_aurora_0/gt_port:io_gt_qsfp_00
+connect=krnl_aurora_0/init_clk:ii_level0_wire/ulp_m_aclk_freerun_ref_00
+</pre></div>
+</div>
+<p>コンフィギュレーション ファイルの最後の部分、Aurora/GT 関連の接続に注目してください。<em></em><em></em><em></em>上記の抜粋では、io_clk_qsfp_refclka_00 と io_gt_qsfp_00 がそれぞれ GT 基準クロック インターフェイスと GT ポート インターフェイスで、ii_level0_wire/ulp_m_aclk_freerun_ref_00 が 100MHz クロックの出力ピンです。<em></em>これらのインターフェイスやクロック ピンの情報は、Vivado のコマンド platforminfo -verbose で取得できます。また、自動作成された Vivado プロジェクトの ULP ブロック デザインを開いて、これらのポート/インターフェイス/信号の名前を確認することもできます。<em></em>krnl_aurora_test.cfg ファイルのデフォルトの行 (コメントのない行) は、Alveo U200 カード用である点に留意してください。ほかのサポートされている Alveo カードを使用している場合は、カードのモデルに応じて該当する行のコメントをはずす必要があります。</p>
+<p>もう一つ、注意が必要な点があります。Aurora IP の AXI ストリーム ポートは 256 ビットで約 161 MHz で動作することがわかっており、<strong>krnl_aurora</strong> の外部 AXI ストリーム ポートはリンク ステージでデフォルトで 300 MHz カーネル クロックに接続されるので、ここでパフォーマンスのボトルネックが起きることはないはずです。レーン速度がこれよりも速い場合は、ボトルネックが起きる可能性がありますが、それについてはのちほど説明します。</p>
+<p>このコマンドにより、ハードウェアのリンク ステップが終了します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make xclbin <span class="nv">PART</span><span class="o">=</span>xxxx <span class="nv">PLATFORM</span><span class="o">=</span>xxx
+</pre></div>
+</div>
+<p><em></em><em></em>ここでの PLATFORM は、使用している Alveo のターゲット プラットフォーム、PART はそれに対応する FPGA のパーツ番号です。<em></em><em></em><em></em>該当する PLATFORM と PART の文字列は、Makefile に記載されています。<em></em><em></em><em></em><em></em><em></em>PART 変数と PLATFORM 変数が明示的に割り当てられていない場合、Makefile のデフォルトの PART と PLATFORM の文字列は Alveo U200 カード用になります。<strong><em></em>U200 カードを使用しない場合は、krnl_aurora_test.cfg ファイルの該当行を忘れずに変更してください。</strong></p>
+<p><em></em>make コマンドを出力したあと、ハードウェア構築の完全フローが最初から始まり、依存関係に従って、IP の生成、RTL カーネルのパッケージ、HLS カーネルのコンパイル、そして最後にリンクしてハードウェア コンテナー (XCLBIN) ファイルの生成までが実行されます。</p>
+<p>ビルド終了後、次のコマンドで Vivado を起動し、自動生成されたリンク プロジェクトを開いて、ブロック デザイン、タイミング、フロアプランなどのインプリメンテーション結果を確認できます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>vivado ./_x/link/vivado/vpl/prj/prj.xpr <span class="p">&amp;</span>
+</pre></div>
+</div>
+<p>次は、U200 カードを例としたユーザー レベル パーティション (ULP) のブロック デザインの一部です。<strong>krnl_aurora</strong> のすべてのポートが正しく接続されていることを確認できます。</p>
+<p><img alt="ULP Block Design " src="../../../../_images/ulp_bd.png" /></p>
+<p>次は、U200 の例でインプリメントしたハードウェアのタイミング結果および配置情報です。</p>
+<p><img alt="ULP Block Design " src="../../../../_images/impl_result.png" /></p>
+</div>
+<div class="section" id="host-program">
+<h2>ホスト プログラム<a class="headerlink" href="#host-program" title="Permalink to this heading">¶</a></h2>
+<p>この例のホスト プログラムは ./host/host_krnl_aurora_test.cpp にあります。<em></em>XRT Native API を使用して、XCLBIN ファイルの読み込み、カードとのデータ転送、<strong>strm_dump</strong> と <strong>strm_issue</strong> の開始と終了を制御します。<strong>krnl_aurora</strong><em></em> は常時実行のカーネルなので、ホストは API の read_register 関数のみを使用して Aurora のステータスを確認します。</p>
+<p>ホスト プログラムをコンパイルするには、次のコマンドを入力するだけです。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">host</span></pre></div>
+</div>
+<p><em></em>これで、GNU g++ ツールが起動し、ホストプログラムがコンパイルされ、実行ファイル <strong>host_krnl_aurora_test</strong> が生成されます。次のコマンドを使用して実行します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">host_krnl_aurora_test</span> <span class="p">[</span><span class="o">-</span><span class="n">m</span> <span class="n">MEGABYTES</span><span class="p">]</span></pre></div>
+</div>
+<p><em></em>MEGABYTES は転送する必要のあるデータ ブロックのサイズで、デフォルト値は 100 です。</p>
+<p>ホスト プログラムは受信データと送信データを比較し、データ転送のスループットとデータ検証結果をレポートします。<em></em>10 Gbps × 4 レーンのコンフィギュレーションの場合、測定される Aurora のデータ転送スループットは約 4.6 GB/s になります。次の実行ログの例を参照してください。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ ./host_krnl_aurora_test 
+
+------------------------ krnl_aurora loopback <span class="nb">test</span> ------------------------
+Transfer size: <span class="m">100</span> MB
+
+Generate TX data block.
+Program running <span class="k">in</span> hardware mode
+Load krnl_aurora_test_hw.xclbin
+Create kernels
+Create TX and RX device buffer
+Transfer TX data into device buffer
+Check whether startup status of Aurora kernel is ready...
+Aurora kernel startup status is GOOD: <span class="m">1000111111111</span>
+<span class="o">[</span><span class="m">12</span><span class="o">]</span>channel_up <span class="o">[</span><span class="m">11</span><span class="o">]</span>soft_err <span class="o">[</span><span class="m">10</span><span class="o">]</span>hard_err <span class="o">[</span><span class="m">9</span><span class="o">]</span>mmcm_not_locked_out <span class="o">[</span><span class="m">8</span><span class="o">]</span>gt_pll_lock <span class="o">[</span><span class="m">7</span>:4<span class="o">]</span>line_up <span class="o">[</span><span class="m">3</span>:0<span class="o">]</span>gt_powergood
+Begin data loopback transfer
+Data loopback transfer finish
+Transfer <span class="nb">time</span> <span class="o">=</span> <span class="m">21</span>.805 ms
+Fetch RX data from device buffer and verification
+Data loopback transfer <span class="nv">throughput</span> <span class="o">=</span> <span class="m">4586</span>.1 MB/s
+Aurora Error Status:
+SOFT_ERR: <span class="m">0</span>
+HARD_ERR: <span class="m">0</span>
+
+Data verfication SUCCEED
+</pre></div>
+</div>
+</div>
+<div class="section" id="one-more-thing">
+<h2>追加事項<a class="headerlink" href="#one-more-thing" title="Permalink to this heading">¶</a></h2>
+<p><em></em>このサンプル デザインでは 10Gbps × 4 レーンをインプリメントしていますが、Aurora 転送のスループット最大値、25 Gbps/レーンをインプリメントする必要がある場合は、次の作業が必要になります。</p>
+<div class="section" id="about-aurora-ip">
+<h3>1.Aurora IP について<a class="headerlink" href="#about-aurora-ip" title="Permalink to this heading">¶</a></h3>
+<p>Aurora IP を設定する際に唯一異なるオプションは <strong>C_LINE_RATE</strong> で、これを 25.78125 Gbps に設定し、161.1328125 MHz の基準クロックで生成できるようにする必要があります。<em></em></p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span>set_property -dict [list CONFIG.C_AURORA_LANES {4} \
+                         CONFIG.C_LINE_RATE {25.78125} \
+                         CONFIG.C_REFCLK_FREQUENCY {161.1328125} \
+                         CONFIG.C_INIT_CLK {100} \
+                         CONFIG.interface_mode {Streaming} \
+                         CONFIG.drp_mode {Native} \
+                         CONFIG.SupportLevel {1}] \
+             [get_ips aurora_64b66b_0]
+</pre></div>
+</div>
+<p>この場合、1 レーンあたりのデータ幅は 64 ビットのままなので、25.78125 GHz/64 = 402.8 MHz で AXI4-Stream インターフェイスは動作することになります。</p>
+</div>
+<div class="section" id="rtl-kernel-krnl-aurora">
+<h3>2.RTL カーネル <em>krnl_aurora</em> カーネルの開発<a class="headerlink" href="#rtl-kernel-krnl-aurora" title="Permalink to this heading">¶</a></h3>
+<p>4 レーン コンフィギュレーションの Aurora IP AXI ストリーム ポートが、256 ビット@402.8 MHz で動作することはご存知のとおりです。ただし、外部 AXI ストリーム ポート (AXI ストリームデータ FIFO に接続) に供給されるデフォルトのカーネル クロックは、リンク ステージでは 300 MHz です。<em></em>そのため、ここでスループットの不一致の問題が発生し、データ損失につながります (RX 用の Aurora IP AXI ストリーム ポートでは TREADY 信号がサポートされていません)。この問題の解決策として、<strong>krnl_aurora</strong> カーネルの外部 AXI ストリーム ポートのデータ幅を拡張することが考えられます。たとえば、外部 AXI ストリームのデータ幅を 512 ビットに拡張し、データ幅が 512 ビットの AXI ストリーム データ FIFO を生成します。そこで、<strong>krnl_aurora</strong> カーネルの最上位モジュールに、256 ビットから 512 ビットへ、また 512 ビットから 256 ビットへの変換をする AXI Stream Data Width Converter IP も必要になります。次は、レーン速度が 25 Gbps の <strong>krnl_aurora</strong> デザインのブロック図です。</p>
+<p><img alt="Block Diagram 25 Gbps" src="../../../../_images/25g_kernel.png" /></p>
+</div>
+<div class="section" id="hls-kernel-strm-issue-and-strm-dump">
+<h3>3.<em></em><em></em>HLS カーネル strm_issue および strm_dump <a class="headerlink" href="#hls-kernel-strm-issue-and-strm-dump" title="Permalink to this heading">¶</a></h3>
+<p>上記の説明から、これら 2 つのムーバー カーネルも、<strong>krnl_aurora</strong> に合わせるために、もともとの 256 ビットではなく、512 ビットの AXI ストリーム データ幅にする必要があります。</p>
+</div>
+<div class="section" id="top-level-linking-consideration">
+<h3>4.最上位のリンクに関する注意事項<a class="headerlink" href="#top-level-linking-consideration" title="Permalink to this heading">¶</a></h3>
+<p>DDR ベースの Alveo カード (U200 や U250 など) の場合、シングル DDR バンクで約 19.2 GB/s の帯域幅を提供します。25 Gbps × 4 レーンの Aurora IP の場合、単方向のスループットは約 12.5 GB/s です。そのため、レーン速度が 25 Gbps のループバックのサンプル デザインをインプリメントする際、<strong>strm_dump</strong> と <strong>strm_issue</strong> の両カーネルを同じ DDR バンクにアクセスさせると、DDR バンド幅の制限によりパフォーマンスが低下します。そこで、最高のパフォーマンスを得るために、2 つの HLS カーネルの AXI マスターを異なる DDR バンクに接続することが可能です。<em></em><em></em>v++ のリンク コンフィギュレーション ファイルで、カーネルの slr と sp の割り当てを制御できます。<em></em>たとえば、U200 の場合は、krnl_aurora_test.cfg ファイルの最後に次の行を追加します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">slr</span><span class="o">=</span>strm_issue_0:SLR1
+<span class="nv">slr</span><span class="o">=</span>strm_dump_0:SLR1
+<span class="nv">slr</span><span class="o">=</span>krnl_aurora_0:SLR2
+<span class="nv">sp</span><span class="o">=</span>strm_issue_0.m_axi_gmem:DDR<span class="o">[</span><span class="m">1</span><span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>strm_dump_0.m_axi_gmem:DDR<span class="o">[</span><span class="m">2</span><span class="o">]</span>
+</pre></div>
+</div>
+<br/><p>上記の 4 つの調整を行った上で、U200 カードでテスト デザインをインプリメントし、次の実行ログにあるように、約 11.5 GB/s のスループットを確認できます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ ./host_krnl_aurora_test
+
+------------------------ krnl_aurora loopback <span class="nb">test</span> ------------------------
+Transfer size: <span class="m">100</span> MB
+
+Generate TX data block.
+Program running <span class="k">in</span> hardware mode
+Load krnl_aurora_test_hw.xclbin
+Create kernels
+Create TX and RX device buffer
+Transfer TX data into device buffer
+Check whether startup status of Aurora kernel is ready...
+Aurora kernel startup status is GOOD: <span class="m">1000111111111</span>
+<span class="o">[</span><span class="m">12</span><span class="o">]</span>channel_up <span class="o">[</span><span class="m">11</span><span class="o">]</span>soft_err <span class="o">[</span><span class="m">10</span><span class="o">]</span>hard_err <span class="o">[</span><span class="m">9</span><span class="o">]</span>mmcm_not_locked_out <span class="o">[</span><span class="m">8</span><span class="o">]</span>gt_pll_lock <span class="o">[</span><span class="m">7</span>:4<span class="o">]</span>line_up <span class="o">[</span><span class="m">3</span>:0<span class="o">]</span>gt_powergood
+Begin data loopback transfer
+Data loopback transfer finish
+Transfer <span class="nb">time</span> <span class="o">=</span> <span class="m">8</span>.723 ms
+Fetch RX data from device buffer and verification
+Data loopback transfer <span class="nv">throughput</span> <span class="o">=</span> <span class="m">11463</span>.9 MB/s
+Aurora Error Status:
+SOFT_ERR: <span class="m">0</span>
+HARD_ERR: <span class="m">0</span>
+
+Data verification SUCCEED
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>まとめ<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
+<p>ザイリンクス Aurora プロトコルおよび IP は、Alveo アクセラレータ カード上で軽くて使いやすい、高性能なポイント ツー ポイント通信ソリューションを提供します。Vitis フローを使用すると、Alveo カード上で Aurora IP を利用して、PCIe やホストを介さずに高速なカード間通信を簡単に実現できます。これにより、多様で柔軟な分散型またはパイプライン型のハードウェア アクセラレーション アプリケーションが可能になります。</p>
+</div>
+<div class="section" id="revision-history">
+<h2>改訂履歴<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
+<details>
+  <summary>2022.1</summary><ul class="simple"> <li><p>初版</p></li> </ul>
+ </details><p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../07-host-code-opt/README.html" class="btn btn-neutral float-left" title="Host Code Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../../Feature_Tutorials/01-rtl_kernel_workflow/README.html" class="btn btn-neutral float-right" title="Getting Started with RTL Kernels" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

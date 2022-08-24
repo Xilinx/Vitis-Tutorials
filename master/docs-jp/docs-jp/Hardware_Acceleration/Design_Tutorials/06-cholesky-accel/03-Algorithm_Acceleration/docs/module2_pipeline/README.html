@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>スループットのパイプライン処理 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../../../../" id="documentation_options" src="../../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../../../_static/doctools.js"></script>
+    <script src="../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>スループットのパイプライン処理</li><li class="wy-breadcrumbs-aside"><a href="../../../../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/06-cholesky-accel/03-Algorithm_Acceleration/docs/module2_pipeline/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><p><strong>モジュール 2</strong> のコード、ファイル、および手順 (<a class="reference external" href="../module1_baseline"><b>モジュール 1</b></a> と同じ手順 で Vitis ツールを設定および実行)</p>
+<blockquote>
+<div><p><strong>このモジュールの内容:<em></em></strong><br />1. スループットのパイプライン処理<em></em><br /><em></em>2.<code class="docutils literal notranslate"><span class="pre">PIPELINE</span></code> の一般的な説明<em></em><br /><em>3. <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> プラグマ入門</em></p>
+</div></blockquote>
+<p>このモジュールでは、<code class="docutils literal notranslate"><span class="pre">pipeline</span></code> プラグマに焦点を当て、次について説明します。プラグマの付いたループを含むカーネル ソース コードは、<strong>モジュール 1</strong> と同じ結果を生成します。これは、単純なループと内部ループ (入れ子のループ) がツールで自動的にパイプライン処理されるためです。このバージョンでは、<code>interface</code> プラグマも追加され、カーネルの C ポートの接続と設定を明確に記述します。</p>
+<div class="section" id="pipelining-for-throughput">
+<h1>スループットのパイプライン処理<a class="headerlink" href="#pipelining-for-throughput" title="Permalink to this heading">¶</a></h1>
+<p>デフォルトでは、高位合成は非常に保守的です。たとえば、ループ本体の命令は、交互方式で実行されるのではなく、反復ごとに全体が実行されます。この後者の実行方式は、明示的に <code>PIPELINE</code> プラグマでイネーブルになり、異なる操作を並列実行を可能にすることで、関数またはループの開始間隔 (II) を減らします (このチュートリアルでは、ループに適用します)。これで、パイプライン処理された関数またはループが、N クロック サイクルごとに新しい入力を処理できます。N はループまたは関数の II です。<code>PIPELINE</code> プラグマのデフォルトの II は 1 で、クロック サイクルごとに 1 つの入力を処理します。開始間隔は、II オプションを使用しても指定できます。</p>
+<p>ループをパイプライン処理すると、次のアニメーションのように、これらの操作が同時に実行されるように操作をインプリメントできます。この例およびデフォルトでは、各入力読み出し間に 3 クロック サイクルあり (つまり、II = 3)、プラグマが使用されると、ループを完全に実行するには、6 クロック サイクルではなく 12 クロック サイクル必要です。</p>
+<p><img alt="Pipeline" src="../../../../../../../_images/anim_pipeline.gif" /></p>
+<p>Vitis HLS (高位合成) ツールではユーザーが指定した開始間隔 (II) でデザインを作成できない場合は、警告メッセージが表示され、最短の達成可能な II でデザインが作成されます。警告メッセージを参考にデザインを解析し、必要な開始間隔を満たしてデザインを作成するためにどの手順が必要なのかを判断します。</p>
+<p>プラグマを C ソースでイネーブルにするには、その関数の本体またはループ内に挿入します。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="cp">#pragma HLS pipeline II=&lt;int&gt; enable_flush rewind</span></pre></div>
+</div>
+<p>II=int は、パイプラインの各開始間隔間に必要なクロック サイクル数を指定します。HLS ツールでこの指定を満たすよう試みられますが、データ依存性によって実際の開始間隔 (II) がこれより大きくなる場合があります。enable_flush 修飾子はオプションであり、パイプラインの入力で有効なデータが非アクティブになった場合に、データを押し出し続けます。rewind もオプションで、1 つのループ反復の終了と次の反復の開始の間に一時停止のない連続ループ パイプライン処理 (巻き戻し) をイネーブルにします。巻き戻しは、最上位関数内に 1 つのループしかない (完全なループ ネスト) 場合にのみ効果的です。</p>
+<p>次の例では関数 <code>foo</code> が開始間隔 1 でパイプライン処理fされます。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="w"></span> <span class="w"></span><span class="cp">#pragma HLS pipeline II=1</span> <span class="w"></span><span class="p">...</span><span class="w"></span> <span class="p">}</span><span class="w"></span></pre></div>
+</div>
+<p>カーネルのソース コードを見てください。コード内の複数のループに <code>PIPELINE</code> 指示子がどのように適用されるかが確認できます。Vitis HLS では最も内側のループが自動的にパイプライン処理されるため、結果は前のモジュール (ベースライン) とは異なりません。</p>
+</div>
+<div class="section" id="the-code-interface-code-pragma">
+<h1><code>INTERFACE</code> プラグマ<a class="headerlink" href="#the-code-interface-code-pragma" title="Permalink to this heading">¶</a></h1>
+<p><code>INTERFACE</code> プラグマでは、カーネル C ポートの物理アダプターと、HLS で「インターフェイス合成」と呼ばれる処理中のプラットフォームへの接続方法を指定します。</p>
+<p>これらの物理アダプターとそれに関連する RTL インプリメンテーションは、次から派生します。</p><ul class="simple"> <li><p>指定されている任意の関数レベルのプロトコル: 関数レベルのプロトコルは、ブロック レベルの I/O プロトコルとも呼ばれ、関数の演算が開始したときに制御する信号と、関数の演算が終了したこと、アイドル状態であること、新しい入力を受信できる状態であることを通知する信号を提供します。関数レベルのプロトコルのインプリメンテーションは、ap_ctrl_none、ap_ctrl_hs または ap_ctrl_chain の &lt;mode&gt; 値で指定されます。デフォルトはブロック レベルの I/O プロトコル、ap_ctrl_hs です。関数名に関連付けられています。</p></li> <li><p>関数引数: 各関数引数は、有効ハンドシェイク (ap_vld) や肯定応答ハンドシェイク (ap_ack) などの独自のポート レベル (I/O) インターフェイス プロトコルを持つように指定できます。ポート レベル インターフェイス プロトコルは、最上位関数の各引数および関数の戻り値 (関数が値を返す場合) に対して作成されます。作成されるデフォルトの I/O プロトコルは、C 引数のタイプによって異なります。ブロック レベルのプロトコルが使用されてブロックの演算が開始したら、ポート レベルの I/O プロトコルを使用して、データをブロック内外に順に送信できます。</p></li> <li><p>最上位関数によりアクセスされ、スコープ外部で定義されるグローバル変数:</p></li> <li><p>グローバル変数がアクセスされても、すべての読み出しおよび書き込みが関数のローカルである場合は、リソースは RTL 内に作成されます。RTL に I/O ポートは必要ありません。グローバル変数が外部ソースまたはデスティネーションである場合は、インターフェイスは標準関数引数と同様の方法で指定します。次の例を参照してください。</p></li> </ul>
+<p><code>INTERFACE</code> プラグマがサブ関数に使用されている場合は、レジスタ オプションのみを使用できます。&lt;mode&gt; オプションは、サブ関数ではサポートされません。</p><p><b>ヒント:</b> サブ関数で使用される I/O プロトコルは Vivado 高位合成 (HLS) ツールにより自動的に決定されます。ポートにレジスタを付けるかどうかを指定することを除き、これらのポートを制御することはできません。</p>
+<p><strong>バースト モードの指定</strong></p>
+<p>構文セクションに説明されているように max_read_burst_length または max_write_burst_length オプションを使用してインターフェイスのバースト モードを指定する場合は、AXI 規格に関連する制限と考慮事項があります。</p>
+<p>ARLEN および AWLEN は 8 ビットで、実際のバースト長は AxLEN+1 なので、トランザクションごとのバースト長は 256 ワード以下にする必要があります。バースト トランザクションごとに転送される量は合計 4 KB 未満です。4 KB アドレス境界を超えないようにしてください。バス幅は、32 ～ 512 ビットの間の 2 のべき乗数 (32、64、128、256、512 ビット) または 4、8、16、32、64 バイトに指定します。</p>
+<p>4 KB の制限があるので、1 つのバス幅の単一トランザクションの最大バースト長は次のようになります。</p><ul class="simple"> <li><p>32 ビットは 256 ワードで、トランザクションごとに転送される合計バイト数は 1024 です。</p></li> <li><p>64 ビットは 256 ワードで、トランザクションごとに転送される合計バイト数は 2048 です。</p></li> <li><p>128 ビットは 256 ワードで、トランザクションごとに転送される合計バイト数は 4096 です。</p></li> <li><p>256 ビットは 128 ワードで、トランザクションごとに転送される合計バイト数は 4096 です。</p></li> <li><p>512 ビットは 64 ワードで、トランザクションごとに転送される合計バイト数は 4096 です。</p></li> </ul>
+<blockquote>
+<div><p>注記: 実際のトランザクションはデザインによって異なります。たとえば、max_read_burst_length または max_write_burst_length を 128 に設定している場合、100 回反復される for ループからのパイプライン アクセスでは最大バースト長は達成されません。ただし、アクセスが指定された最大バースト長よりも長い場合、アクセスは小さいバーストに分割されます。<br />たとえば、100 回アクセスされるパイプライン for ループで max_read_burst_length または max_write_burst_length が 64 に設定される場合、最大バースト長 (または 64) のトランザクションと残りのデータのトランザクション (36 ワードのバースト) に分割されます。</p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="section" id="next">
+<h2>次の手順<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h2>
+<p>次は<a class="reference internal" href="../module3_datatype/README.html"><span class="doc">モジュール 3</span></a> に進むか、このバージョンのデザインを実行して、モジュール 1 と同じように動作するかどうか検証します。</p>
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

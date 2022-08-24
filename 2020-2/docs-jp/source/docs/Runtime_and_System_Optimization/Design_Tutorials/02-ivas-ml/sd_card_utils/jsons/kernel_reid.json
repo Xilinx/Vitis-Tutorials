@@ -1,0 +1,18 @@
+{
+  "xclbin-location": "/usr/lib/dpu.xclbin",
+  "ivas-library-repo": "/usr/lib/ivas",
+  "element-mode": "passthrough",
+  "kernels": [
+    {
+      "library-name": "libivas_xreid.so",
+      "config": {
+        "threshold": 100,
+        "first_frame_ref": false,
+        "print_reid": false,
+        "dump_frames": false,
+        "max_distance_per_frame": 100,
+        "max_face_retention": 200
+      }
+    }
+  ]
+}

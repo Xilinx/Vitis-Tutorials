@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Vitis を使用したボトムアップ RTL カーネル フローでのアクセラレーション - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="コレスキー アルゴリズムでの Vitis ハードウェア アクセラレーション" href="../06-cholesky-accel/README.html" />
+    <link rel="prev" title="巡回セールスマン問題" href="../04-traveling-salesperson/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">入門</a></li><li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">設計チュートリアル</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">ブルーム フィルターの例</a></li><li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">たたみ込みの例</a></li><li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL システム統合の例</a></li><li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">巡回セールスパーソン問題</a></li><li class="toctree-l3 current"><a class="current reference internal" href="#">ボトム RTL カーネルのデザイン フローの例</a><ul><li class="toctree-l4"><a class="reference internal" href="#about-this-tutorial">このチュートリアルについて</a></li><li class="toctree-l4"><a class="reference internal" href="#device-and-software-requirements">デバイスおよびソフトウェア要件</a></li><li class="toctree-l4"><a class="reference internal" href="#tutorial-contents">チュートリアルの内容</a></li><li class="toctree-l4"><a class="reference internal" href="#revision-history">改訂履歴</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">コレスキー アルゴリズム アクセラレーション</a></li><li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT ホスト コードの最適化</a></li><li class="toctree-l3"><a class="reference internal" href="../08-alveo_aurora_kernel/README.html">Alveo での Aurora カーネル</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">機能チュートリアル</a></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Hardware-Acceleration.html">Vitis ハードウェア アクセラレータ</a> &raquo;</li><li>Vitis を使用したボトムアップ RTL カーネル フローでのアクセラレーション</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="bottom-up-rtl-kernel-flow-with-vitis-for-acceleration">
+<h1>Vitis を使用したボトムアップ RTL カーネル フローでのアクセラレーション<a class="headerlink" href="#bottom-up-rtl-kernel-flow-with-vitis-for-acceleration" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<p>RTL デザインは、従来の FPGA のハードウェア アクセラレータ開発手法として重要なものです。RTL モジュールは柔軟性と効率性に優れていますが、設計工程は時間を要し、エラーが発生しやすくなっています。ザイリンクス Vitis™ ユニファイド ソフトウェア プラットフォームは、長年の実証済み RTL カーネル設計手法を提供します。Vitis と、付属の Vivado® Design Suite を使用すれば、統合、ホスト FPGA との通信、DMA、およびその他のサポート タスクに多くの時間をかけることなく、コア アクセラレーション モジュールに集中できます。</p>
+<div class="section" id="about-this-tutorial">
+<h2>このチュートリアルについて<a class="headerlink" href="#about-this-tutorial" title="Permalink to this heading">¶</a></h2>
+<p>このチュートリアルでは、ボトムアップの Vitis ベース RTL カーネル構築とラップアップ プロセス、および<a class="reference external" href="https://xilinx.github.io/XRT/">ザイリンクス ランタイム ライブラリ (XRT)</a> を使用したホストとカーネルの対話について説明します。このチュートリアルでは、波形やシステム図の確認に必要な手順をのぞく、すべての手順でコマンドライン インターフェイスを使用します。</p>
+<p>このチュートリアルでは、関連するコンセプトと手順を説明するため、サンプル デザインを使用します。次の図は、このデザインのブロック図です。これは単純な AES アクセラレータ デザインで、<code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> と <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code> の 2 つのカーネルで構成されています。<code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> カーネルは、AXI ストリームのスレーブ ポートとマスター ポートを持つ AES 演算コアです。<code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code> カーネルは、ホストとカーネルとの間のデータ交換、および AES-ECB と AES-CBD の 2 つのモードの実装を krnl_aes モジュールと共に処理します。</p>
+<div align="center"><img src="./doc/images/block_diagram-top.svg" alt="top block diagram" > </div><p>このチュートリアルでは、Alveo™ データセンター アクセラレータ カードをターゲット プラットフォームに設定し、次の作業について説明します。</p><ul class="simple"> <li><p>RTL デザインを Vitis 準拠の RTL カーネルにコマンドライン インターフェイスを使用したパッキング</p></li> <li><p>RTL カーネルでの MMCM/PLL の使用</p></li> <li><p>Vivado XSIM を使用したデザインのシミュレーション</p></li> <li><p>ザイリンクス AXI VIP を使用した AXI インターフェイスによる RTL デザインの検証</p></li> <li><p>XRT を使用した、<code class="docutils literal notranslate"><span class="pre">ap_ctrl_none</span></code>、<code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code>、<code class="docutils literal notranslate"><span class="pre">ap_ctrl_chain</span></code> の 3 つのカーネル制御モードの使用</p></li> <li><p>XRT ネイティブ API による RTL カーネル用ホスト プログラミング</p></li> <li><p>Vitis ハードウェア エミュレーションを使用した RTL カーネル操作のインサイト ルックの取得</p></li> </ul>
+<p><strong>注記</strong>: これは詳細なツールの使用方法のガイドラインではないので、基本概念や手順のみを紹介しています。詳細は、ほかの資料を参照してください。</p>
+</div>
+<div class="section" id="device-and-software-requirements">
+<h2>デバイスおよびソフトウェア要件<a class="headerlink" href="#device-and-software-requirements" title="Permalink to this heading">¶</a></h2>
+<p>デザインは、次のソフトウェア/ハードウェア環境およびツール チェーン バージョンで検証されています。</p><ul class="simple"> <li><p>オペレーティング システム:</p><ul> <li><p>Redhat/CentOS 7 (<a class="reference external" href="#additional-requirements-for-redhatcentos">RedHat/CentOS の追加要件</a>を参照)</p></li> <li><p>Ubuntu 18.04/20.04 (<a class="reference external" href="#additional-requirements-for-ubuntu">Ubuntu の追加要件</a>を参照)</p></li> <li><p>Verilog シミュレーション用にインストールされた Perl パッケージ (<strong>必須</strong>)</p></li> <li><p>ハードウェア出力の検証用にインストールされた OpenSSL ライブラリ (<strong>必須</strong>)</p></li> <li><p>GCC 7</p></li> </ul>
+</li>
+<li><p>Vitis: 2022.1</p></li> <li><p>XRT: 2.13.466</p></li> <li><p>Alveo カードのハードウェアとプラットフォーム (運用プラットフォームと開発プラットフォームの両方が必要):</p><ul> <li><p>Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1</p></li> <li><p>Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1</p></li> <li><p>Alveo U50: xilinx_u50_gen3x16_xdma_5_202210_1</p></li> <li><p>Alveo U55C: xilinx_u55c_gen3x16_xdma_3_202210_1</p></li> </ul>
+</li>
+</ul>
+<div class="section" id="additional-requirements-for-redhat-centos">
+<h3>RedHat/CentOS の追加要件<a class="headerlink" href="#additional-requirements-for-redhat-centos" title="Permalink to this heading">¶</a></h3>
+<p>RedHat/CentOS 7 を使用している場合、デフォルトでインストールされる GCC のバージョンは 4.x.x です。ホスト プログラムをコンパイルする前に、次のコマンドを使用して GCC 7 をインストールする必要があります。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install centos-release-scl
+sudo yum install devtoolset-7-gcc-c++
+scl <span class="nb">enable</span> devtoolset-7 bash
+</pre></div>
+</div>
+<p>CentOS/Redhat の OpenSSL ライブラリをインストールするには、次のコマンドを使用します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install openssl-devel</pre></div>
+</div>
+</div>
+<div class="section" id="additional-requirements-for-ubuntu">
+<h3>Ubuntu の追加要件<a class="headerlink" href="#additional-requirements-for-ubuntu" title="Permalink to this heading">¶</a></h3>
+<p>Ubuntu の OpenSSL ライブラリをインストールするには、次のコマンドを使用します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install libssl-dev</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tutorial-contents">
+<h2>チュートリアルの内容<a class="headerlink" href="#tutorial-contents" title="Permalink to this heading">¶</a></h2>
+<p>このチュートリアルは 3 つのパートに分かれており、最初から順番に進めていってください。</p>
+<ol class="simple"><li><p><a class="reference internal" href="doc/aes.html"><span class="doc">AES の概要および主な AES 演算 RTL モジュール</span></a></p></li></ol>
+<p>このパートでは、AES アルゴリズムと AES アクセラレーション用の主な RTL モジュールについて簡単に紹介します。RTL AES モジュールは、ネイティブ Verilog インターフェイスを使用します。RTL モジュールの機能を検証するための簡単な Verilog テストベンチが提供されています。</p>
+<ol class="simple"><li><p><a class="reference internal" href="doc/krnl_aes.html"><span class="doc">Vitis と互換性のある RTL カーネル krnl_aes の作成およびパッケージ</span></a></p></li></ol>
+<p>このパートでは、最初のパートで説明した RTL モジュールを <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> という Vitis のカーネルにパッキングし、Vitis に統合できるようにします。<code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> カーネルは、4 つの内部 AES パイプラインを持ち、AXI コントロール スレーブと AXI ストリーム マスター/スレーブポートを備えています。</p>
+<p><code class="docutils literal notranslate"><span class="pre">krn_aes</span></code> カーネルには <code class="docutils literal notranslate"><span class="pre">ap_ctrl_none</span></code> と <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code> の混合制御モデルがあります。このカーネルでは、必要なコア クロックの生成に MMCM IP が使用され、AXI インターフェイスには標準のプラットフォーム クロックが使用されます。カーネルの機能を検証するための簡単な Verilog テストベンチが、ザイリンクスの AXI VIP と共に提供されています。</p>
+<p>また、このパートでは、<code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> カーネルをいくつかの HLS カーネルと統合し、使用可能な XCLBIN ファイルを生成します。XRT ネイティブ API を使用したホスト テスト プログラムで、<code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> カーネルの機能をテストできます。</p>
+<ol class="simple"><li><p><a class="reference internal" href="doc/krnl_cbc.html"><span class="doc">Vitis と互換性のある RTL カーネル krnl_cbc の作成およびパッケージ</span></a></p></li></ol>
+<p>このパートでは、AXI マスター インターフェイスだけでなく、AXI ストリーム インターフェイスも持っている、<code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code> という新しい RTL カーネルを紹介します。このカーネルは、AES-ECB モードと AES-CBC モードの暗号化/復号化機能を実装するため、<code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> カーネルと接続されます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code> カーネルは <code class="docutils literal notranslate"><span class="pre">ap_ctrl_chain</span></code> 制御モデルをサポートしています。提供されている AXI VIP ベースのテストベンチ、ハードウェア エミュレーション、ホスト プログラムを使って、<code class="docutils literal notranslate"><span class="pre">ap_ctrl_chain</span></code> モデルと <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code> モデルの動作やパフォーマンスの違いを調べて比較できます。</p>
+<p>デザイン レポジトリのディレクトリ構造と、その簡単な説明は次のとおりです。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── aes                                         # Directory for first part: aes
+│   ├── rtl/                                    #   Verilog sources
+│   ├── tbench/                                 #   Verilog/SystemVerilog testbench files
+│   ├── filelist_aes.f                          #   file list file for xsim simulation
+│   ├── Makefile                                #   Makefile for all operation
+│   ├── runsim_aes_xsim.sh                      #   shell script to run the simulation with xsim
+│   └── xsim.tcl                                #   xsim tcl script for simulation
+│
+├── common                                      # common resources
+│   └── plain_gen.pl                                # Perl script to generate input data for RTL simulation
+│
+├── doc                                         # documents
+│
+├── krnl_aes                                    # Directory for second part: krnl_aes
+│   ├── hls                                     #   HLS sources
+│   ├── host/                                   #   Host test program    
+│   ├── rtl/                                    #   Verilog sources
+│   ├── tbench/                                 #   Verilog/SystemVerilog testbench files
+│   ├── filelist_krnl_cbc.f                     #   xsim simulation command file
+│   ├── gen_ip.tcl                              #   Vivado tcl script to generate required IPs
+│   ├── krnl_aes_test.cfg                       #   Vitis v++ link config file
+│   ├── krnl_aes.xdc                            #   constraint for kernel krnl_aes
+│   ├── Makefile                                #   Makefile for all operation
+│   ├── pack_kernel.tcl                         #   Vivado tcl script to pack the kernel
+│   ├── runsim_krnl_aes_xsim.sh                 #   shell script to run the simulation with xsim   
+│   ├── setup_emu.sh                            #   shell script to enable/disable hw_emu emulation mode
+│   └── xrt.ini                                 #   XRT config file for emulation/profiling
+│
+├── krnl_cbc                                    # Directory for third pard: krnl_cbc
+│   ├── host/                                   #   Host test program  
+│   ├── rtl/                                    #   Verilog sources
+│   ├── tbench/                                 #   Verilog/SystemVerilog testbench files
+│   ├── filelist_krnl_cbc.f                     #   xsim simulation command file
+│   ├── gen_ip.tcl                              #   Vivado tcl script to generate required IPs
+│   ├── krnl_cbc_test.cfg                       #   Vitis v++ link config file
+│   ├── Makefile                                #   Makefile for all operation
+│   ├── pack_kernel.tcl                         #   Vivado tcl script to pack the kernel
+│   ├── runsim_krnl_cbc_xsim.sh                 #   shell script to run the simulation with xsim   
+│   ├── setup_emu.sh                            #   shell script to enable/disable hw_emu emulation mode
+│   ├── xrt.ini                                 #   XRT config file for emulation/profiling
+│   └── xsim.tcl                                #   xsim tcl script to set hw_emu simulation options
+│
+└── README.md
+</pre></div>
+</div>
+</div>
+<div class="section" id="revision-history">
+<h2>改訂履歴<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
+<details>
+  <summary>2022.1</summary><ul class="simple"> <li><p>Vitis のターゲット プラットフォームのサポートを更新</p></li> <li><p>Vivado クロック配線の XDC を削除</p></li> </ul>
+</details><details>
+  <summary>2020.2</summary><ul class="simple"> <li><p>初版</p></li> </ul>
+ </details><p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../04-traveling-salesperson/README.html" class="btn btn-neutral float-left" title="The Traveling Salesperson Problem" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../06-cholesky-accel/README.html" class="btn btn-neutral float-right" title="Vitis Hardware Acceleration on Cholesky Algorithm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

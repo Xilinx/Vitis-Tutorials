@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>複数の計算ユニットの使用 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Vivado インプリメンテーションの制御" href="../06-controlling-vivado-implementation/README.html" />
+    <link rel="prev" title="複数 DDR バンクの使用" href="../04-mult-ddr-banks/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">入門</a></li><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">設計チュートリアル</a></li><li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">機能チュートリアル</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="../01-rtl_kernel_workflow/README.html">RTL カーネル入門</a></li><li class="toctree-l3"><a class="reference internal" href="../02-mixing-c-rtl-kernels/README.html">C と RTL の混合</a></li><li class="toctree-l3"><a class="reference internal" href="../03-dataflow_debug_and_optimization/README.html">データフローのデバッグおよび最適化</a></li><li class="toctree-l3"><a class="reference internal" href="../04-mult-ddr-banks/README.html">複数 DDR バンクの使用</a></li><li class="toctree-l3 current"><a class="current reference internal" href="#">複数の計算ユニットの使用</a><ul><li class="toctree-l4"><a class="reference internal" href="#入門チュートリアル">入門</a></li><li class="toctree-l4"><a class="reference internal" href="#tutorial-overview">チュートリアルの概要</a></li><li class="toctree-l4"><a class="reference internal" href="#before-you-begin">開始前の確認事項</a></li><li class="toctree-l4"><a class="reference internal" href="#makefile-flow">makefile フロー</a></li><li class="toctree-l4"><a class="reference internal" href="#conclusion">まとめ</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="../06-controlling-vivado-implementation/README.html">Vivado インプリメンテーションの制御</a></li><li class="toctree-l3"><a class="reference internal" href="../07-using-hbm/README.html">HBM のための最適化</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html">ホスト メモリ アクセス</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#xrt-and-platform-version">XRT およびプラットフォーム バージョン</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#tutorial-description">チュートリアルの説明</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#running-the-application">アプリケーションの実行</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#summary">サマリ</a></li><li class="toctree-l3"><a class="reference internal" href="../09-using-ethernet-on-alveo/README.html">Alveo での GT カーネルおよびイーサネット IP の使用</a></li></ul></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Hardware-Acceleration.html">Vitis ハードウェア アクセラレータ</a> &raquo;</li><li>複数の計算ユニットの使用</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="using-multiple-compute-units">
+<h1>複数の計算ユニットの使用<a class="headerlink" href="#using-multiple-compute-units" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<div class="section" id="introduction">
+<h2>入門チュートリアル<a class="headerlink" href="#入門チュートリアル" title="Permalink to this heading"></a></h2>
+<p>このチュートリアルでは、FPGA 上のカーネル インスタンスの数を増やすための柔軟なカーネル リンク プロセスを示します。カーネルの各インスタンスは、計算ユニット (CU) とも呼ばれます。CU 数を増加するこのプロセスを使用すると、統合されたホスト/カーネル システムの並列処理が向上します。</p>
+</div>
+<div class="section" id="tutorial-overview">
+<h2>チュートリアルの概要<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
+<p>Vitis™ コア開発キットでは、デフォルトでカーネルごとに CU が 1 つずつ作成されます。ホスト プログラムは、異なるデータ セットに対して同じカーネルを複数回使用できます。この場合、カーネルに対して複数の CU を生成して、これらの CU を同時実行すると、システム全体のパフォーマンスを向上できます。</p>
+<p>詳細は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel">複数のカーネル インスタンスの作成</a>を参照してください。</p>
+<p>このチュートリアルでは、次を実行します。</p>
+<ol class="simple"><li><p>ハードウェア エミュレーションを実行し、エミュレーション レポートを参照して、カーネルが順に複数回実行されることを確認します。</p></li> <li><p>コマンドを順不同に実行できるようにホスト コードを変更します。</p></li> <li><p>カーネル リンク プロセスを変更し、同じカーネルの CU を複数作成します。</p></li> <li><p>ハードウェア エミュレーションを再実行し、CU が同時実行されることを確認します。</p></li></ol>
+<p>このチュートリアルでは、画像フィルター例を使用して複数 CU の利点を示します。このチュートリアルでは、デザインをシンプルにするために、ホスト アプリケーションは実画像ではなく、ランダム データを画素に使用します。デフォルトでは、FPGA にはカーネルの CU が 1 つしか含まれないので、これら 3 つのカーネルは同じハードウェア リソースを使用して順次実行されます。このチュートリアルでは、CU の数を増加し、このカーネルを並列実行する方法を示します。</p>
+<p>ホスト コードの OpenCV バージョンは、ソース コード ディレクトリ <code class="docutils literal notranslate"><span class="pre">src/host/host_opencv.cpp</span></code> でも提供されていますが、このチュートリアルでは OpenCV バージョンを使用する方法は説明しません。ホスト コードの OpenCV バージョンは、OpenCV ライブラリをインストールし、<code class="docutils literal notranslate"><span class="pre">Makefile</span></code> で OpenCV の設定に関連する必要な変更をした後に使用できます。</p>
+</div>
+<div class="section" id="before-you-begin">
+<h2>開始前の確認事項<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
+<p>このチュートリアルでは、次を使用します。</p><ul class="simple"> <li><p>BASH Linux シェル コマンド</p></li> <li><p>2022.1 Vitis コア開発キット リリースおよび <em>xilinx_u200_gen3x16_xdma_2_202110_1</em> プラットフォーム。必要であれば、ほかのバージョンおよびプラットフォームを使用するように変更することもできます。</p></li> </ul>
+<blockquote>
+<div><p><strong>重要:</strong></p><ul class="simple"> <li><p>例を実行する前に、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation">インストール</a>の手順に従って、Vitis コア開発キットをインストールしておく必要があります。</p></li> <li><p>ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、<a class="reference external" href="https://japan.xilinx.com/products/boards-and-kits/alveo.html">Alveo ポートフォリオ</a> ページの手順に従って、カードとソフトウェア ドライバーを正しくインストールしてください。</p></li> </ul>
+</div></blockquote>
+<div class="section" id="accessing-the-tutorial-reference-files">
+<h3>チュートリアル リファレンス ファイルの入手<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
+<ol class="simple"><li><p>リファレンス ファイルを入手するには、ターミナルに <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">http://github.com/Xilinx/Vitis-Tutorials</span></code> と入力します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu</span></code> ディレクトリに移動し、<code class="docutils literal notranslate"><span class="pre">reference-files</span></code> ディレクトリにアクセスします。</p></li></ol>
+</div>
+</div>
+<div class="section" id="makefile-flow">
+<h2>makefile フロー<a class="headerlink" href="#makefile-flow" title="Permalink to this heading">¶</a></h2>
+<p>このチュートリアルで使用する makefile は、<code class="docutils literal notranslate"><span class="pre">reference-files/Makefile</span></code> に含まれます。最上位設定には、次が含まれます。</p><ul class="simple"> <li><p><strong>VPP</strong>: カーネル コードをコンパイルする Vitis コンパイラ パス。</p></li> <li><p><strong>EMCONFIGUTIL</strong>: エミュレーション コンフィギュレーション ファイル <code class="docutils literal notranslate"><span class="pre">emconfig.json</span></code> を作成するユーティリティのパス。</p></li> <li><p><strong>DEVICE</strong>: ターゲット プラットフォーム。</p></li> <li><p><strong>EXE_OPT</strong>: コマンド ライン引数として渡されるランタイム オプション: コンパイル済みカーネル <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> ファイル。</p></li> </ul>
+<div class="section" id="run-hardware-emulation">
+<h3>ハードウェア エミュレーションの実行<a class="headerlink" href="#run-hardware-emulation" title="Permalink to this heading">¶</a></h3>
+<p>次のコマンドでハードウェア エミュレーションを実行します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw_emu</span></pre></div>
+</div>
+<p>ハードウェア エミュレーション (<code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>) では、カーネル コードはハードウェア モデル (RTL) にコンパイルされ、ハードウェア シミュレータで実行されますが、システムの残りの部分には C シミュレータが使用されます。ビルドおよび実行にかかる時間は長くなりますが、詳細でサイクル精度のカーネル アクティビティが表示されます。このターゲットは、FPGA で実行されるロジックの機能をテストして、初期パフォーマンス見積もりを取得する場合に便利です。</p>
+<blockquote>
+<div><p><strong>注記:</strong> ホスト ソフトウェアおよびハードウェアのビルド方法は、<a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/tree/master/Getting_Started">Vitis 入門</a>チュートリアルを参照してください。</p>
+</div></blockquote>
+</div>
+<div class="section" id="inspect-the-host-code">
+<h3>ホスト コードの確認<a class="headerlink" href="#inspect-the-host-code" title="Permalink to this heading">¶</a></h3>
+<ol><li><p>エミュレーション run を実行中、別のターミナルで <code class="docutils literal notranslate"><span class="pre">src/host/host.cpp</span></code> ファイルを開きます。</p></li> <li><p>234 ～ 236 行目を確認します。Y、U、および V チャネルを処理するためにフィルター関数が 3 回呼び出されています。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">request</span><span class="p">[</span><span class="n">xx</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">coeff</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">y_src</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">y_dst</span><span class="o">.</span><span class="n">data</span><span class="p">());</span>
+<span class="n">request</span><span class="p">[</span><span class="n">xx</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">coeff</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">u_src</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">u_dst</span><span class="o">.</span><span class="n">data</span><span class="p">());</span>
+<span class="n">request</span><span class="p">[</span><span class="n">xx</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">coeff</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">v_src</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">v_dst</span><span class="o">.</span><span class="n">data</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>この関数は、78 行目から記述されています。次の抜粋部分で、カーネル引数が設定され、カーネルが <code class="docutils literal notranslate"><span class="pre">clEnqueueTask</span></code> コマンドにより実行されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">//</span> <span class="n">Set</span> <span class="n">the</span> <span class="n">kernel</span> <span class="n">arguments</span>
+ <span class="n">clSetKernelArg</span><span class="p">(</span><span class="n">mKernel</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">cl_mem</span><span class="p">),</span>       <span class="o">&amp;</span><span class="n">mSrcBuf</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+ <span class="n">clSetKernelArg</span><span class="p">(</span><span class="n">mKernel</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">cl_mem</span><span class="p">),</span>       <span class="o">&amp;</span><span class="n">mSrcBuf</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+ <span class="n">clSetKernelArg</span><span class="p">(</span><span class="n">mKernel</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">);</span>
+ <span class="n">clSetKernelArg</span><span class="p">(</span><span class="n">mKernel</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">);</span>
+ <span class="n">clSetKernelArg</span><span class="p">(</span><span class="n">mKernel</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">stride</span><span class="p">);</span>
+ <span class="n">clSetKernelArg</span><span class="p">(</span><span class="n">mKernel</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">cl_mem</span><span class="p">),</span>       <span class="o">&amp;</span><span class="n">mDstBuf</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+
+<span class="o">//</span> <span class="n">Schedule</span> <span class="n">the</span> <span class="n">writing</span> <span class="n">of</span> <span class="n">the</span> <span class="n">inputs</span>
+<span class="n">clEnqueueMigrateMemObjects</span><span class="p">(</span><span class="n">mQueue</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">mSrcBuf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">nullptr</span><span class="p">,</span>  <span class="o">&amp;</span><span class="n">req</span><span class="o">-&gt;</span><span class="n">mEvent</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+
+<span class="o">//</span> <span class="n">Schedule</span> <span class="n">the</span> <span class="n">execution</span> <span class="n">of</span> <span class="n">the</span> <span class="n">kernel</span>
+<span class="n">clEnqueueTask</span><span class="p">(</span><span class="n">mQueue</span><span class="p">,</span> <span class="n">mKernel</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="o">&amp;</span><span class="n">req</span><span class="o">-&gt;</span><span class="n">mEvent</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">req</span><span class="o">-&gt;</span><span class="n">mEvent</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>これら 3 つの <code class="docutils literal notranslate"><span class="pre">clEnqueueTask</span></code> コマンドは、1 つの順序どおりのコマンド キューを使用してキューに追加されます (73 行目)。この結果、すべてのコマンドがキューに追加された順序で実行されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Filter2DDispatcher</span><span class="p">(</span>
+        <span class="n">cl_device_id</span>     <span class="o">&amp;</span><span class="n">Device</span><span class="p">,</span>
+        <span class="n">cl_context</span>       <span class="o">&amp;</span><span class="n">Context</span><span class="p">,</span>
+        <span class="n">cl_program</span>       <span class="o">&amp;</span><span class="n">Program</span> <span class="p">)</span>
+  <span class="p">{</span>
+        <span class="n">mKernel</span>  <span class="o">=</span> <span class="n">clCreateKernel</span><span class="p">(</span><span class="n">Program</span><span class="p">,</span> <span class="s2">&quot;Filter2DKernel&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mErr</span><span class="p">);</span>
+        <span class="n">mQueue</span>   <span class="o">=</span> <span class="n">clCreateCommandQueue</span><span class="p">(</span><span class="n">Context</span><span class="p">,</span> <span class="n">Device</span><span class="p">,</span> <span class="n">CL_QUEUE_PROFILING_ENABLE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mErr</span><span class="p">);</span>
+        <span class="n">mContext</span> <span class="o">=</span> <span class="n">Context</span><span class="p">;</span>
+        <span class="n">mCounter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="emulation-result">
+<h3>エミュレーション結果<a class="headerlink" href="#emulation-result" title="Permalink to this heading">¶</a></h3>
+<p>生成されたタイムライン トレース レポート (<code class="docutils literal notranslate"><span class="pre">opencl_trace.csv</span></code>) を確認します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_analyzer</span> <span class="n">xrt</span><span class="o">.</span><span class="n">run_summary</span></pre></div>
+</div>
+<blockquote>
+<div><p><strong>注記:</strong> run ディレクトリには、<code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> というファイルが含まれます。このファイルには、プロファイル サマリ レポートおよびタイムライン トレースなどの追加レポートを生成するランタイム オプションが含まれています。</p>
+</div></blockquote>
+<p>Vitis アナライザーが開いたら、左パネルの <strong>[Timeline Trace]</strong> をクリックします。アプリケーション タイムライン レポートは、ホストとデバイスのイベント情報を収集し、共通のタイムラインに表示します。これは、システムの全体的な状態とパフォーマンスを視覚的に表示して理解するのに役立ちます。</p><ul class="simple"> <li><p>タイムラインの最下部に、ホストからキューに追加された各カーネルに 1 本ずつ、合計 3 本の青いバーがあります。1 つの順序どおりのコマンド キューが使用されているので、ホストはカーネル実行を順にキューに追加します。</p></li> <li><p>青いバーの下に、各カーネル実行に 1 本ずつ、合計 3 本の緑色のバーがあります。これらは、FPGA で順に実行されます。 <img alt="Serial kernel enqueue" src="../../../../_images/serial_kernel_enqueue_vitis.JPG" /></p></li> </ul>
+</div>
+<div class="section" id="improve-the-host-code-for-concurrent-kernel-enqueuing">
+<h3>カーネルを同時にエンキューするためのホスト コードの改善<a class="headerlink" href="#improve-the-host-code-for-concurrent-kernel-enqueuing" title="Permalink to this heading">¶</a></h3>
+<ol><li><p><code class="docutils literal notranslate"><span class="pre">src/host/host.cpp</span></code> ホスト ファイルの 73 行目を変更します。この行を変更してコマンド キューを順不同コマンド キューとして宣言します。<em></em></p>
+<p>コード変更前:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mQueue</span>   <span class="o">=</span> <span class="n">clCreateCommandQueue</span><span class="p">(</span><span class="n">Context</span><span class="p">,</span> <span class="n">Device</span><span class="p">,</span> <span class="n">CL_QUEUE_PROFILING_ENABLE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mErr</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>コード変更後:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mQueue</span>   <span class="o">=</span> <span class="n">clCreateCommandQueue</span><span class="p">(</span><span class="n">Context</span><span class="p">,</span> <span class="n">Device</span><span class="p">,</span> <span class="n">CL_QUEUE_PROFILING_ENABLE</span> <span class="o">|</span> <span class="n">CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mErr</span><span class="p">);</span>
+</pre></div>
+</div>
+</li> <li><p>(オプション) 変更したホスト コードでハードウェア エミュレーションを実行します。</p>
+<p>ハードウェア エミュレーションを実行する場合、タイムライン トレースを使用して、順不同コマンド キューを使用することによりカーネルがほぼ同時に実行されるように要求できまることを確認します (青のバーはホストでスケジュールされるカーネル エンキュー要求)。</p>
+<p>ホストはこれらの実行を同時にスケジューリングできますが、FPGA 上には 1 つしか CU がなく、カーネルは順次実行されるので、2 つ目および 3 つ目の実行要求は遅れます。<br /><img alt="Sequential kernels" src="../../../../_images/sequential_kernels_2.JPG" /><br />次の手順では、FPGA 上の CU の数を増やして、ホスト カーネルを同時に実行できるようにします。</p></li></ol>
+</div>
+<div class="section" id="increasing-the-number-of-cus">
+<h3>CU 数の増加<a class="headerlink" href="#increasing-the-number-of-cus" title="Permalink to this heading">¶</a></h3>
+<p>次に、同じカーネルの CU を 3 つ生成するようにリンク手順を変更して、カーネル xclbin をビルドし直します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">link.cfg</span></code> を開いて <code class="docutils literal notranslate"><span class="pre">nk</span></code> 設定を変更します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nk</span> <span class="o">=</span> <span class="n">Filter2DKernel</span><span class="p">:</span><span class="mi">3</span></pre></div>
+</div>
+</div>
+<div class="section" id="run-hardware-emulation-and-inspect-the-change">
+<h3>ハードウェア エミュレーションの実行と変更の確認<a class="headerlink" href="#run-hardware-emulation-and-inspect-the-change" title="Permalink to this heading">¶</a></h3>
+<ol><li><p><code class="docutils literal notranslate"><span class="pre">xclbin</span></code> ファイルを生成し直します。<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> を実行して 1 つの CU を含む既存の xclbin を削除してから、<code class="docutils literal notranslate"><span class="pre">make</span></code> を実行して 3 つのカーネル CU を含む新しい xclbin を作成する必要があります。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">clean</span> <span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw_emu</span></pre></div>
+</div></li> <li><p>Vitis アナライザーで新しい <code class="docutils literal notranslate"><span class="pre">xrt.run_summary</span></code> を表示します。</p></li></ol>
+<p>アプリケーションで 3 つの CU が使用され、カーネル実行が並列実行されるようになったので、アプリケーションの実行速度が上がりました。<img alt="missing image" src="../../../../_images/overlapping_kernels_vitis_2.JPG" /></p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>まとめ<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
+<p>カーネル リンク プロセスを変更して、FPGA 上の同じカーネル インスタンスを同時に実行する方法を学びました。 </br></p>
+<hr/>
+<p align="center" class="sphinxhide"><b><a href="/README.html">メイン ページに戻る</a></b></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../04-mult-ddr-banks/README.html" class="btn btn-neutral float-left" title="Using Multiple DDR Banks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../06-controlling-vivado-implementation/README.html" class="btn btn-neutral float-right" title="Controlling Vivado Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

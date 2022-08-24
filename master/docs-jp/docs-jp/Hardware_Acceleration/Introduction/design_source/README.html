@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>UG1352: Alveo を使用する開発 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>UG1352: Alveo を使用する開発</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Introduction/design_source/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="ug1352-get-moving-with-alveo">
+<h1>UG1352: Alveo を使用する開発<a class="headerlink" href="#ug1352-get-moving-with-alveo" title="Permalink to this heading">¶</a></h1>
+<p>このリポジトリには、『Alveo を使用する開発』 (UG1352) の演習および Vitis 入門チュートリアルの「ランタイムおよびシステム最適化」のソース ファイルが含まれます。</p>
+<p>Git サブモジュールを使用して、Vitis ビジョン ハードウェア アクセラレーション ライブラリなどのその他のリポジトリを含めます。このリポジトリを正しくクローンするには、<code class="docutils literal notranslate"><span class="pre">--recurse-submodules</span></code> コマンドライン オプションを含める必要があります。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone --recurse-submodules https://github.com/Xilinx/Vitis-In-Depth-Tutorial.git
+</pre></div>
+</div>
+<p>このリポジトリには、ハードウェアおよびソフトウェアの両方のソースが含まれています。</p>
+<p>このリポジトリは、Vitis 統合開発環境の 2020.1 リリースを使用して、次のプラットフォームに対してハードウェア検証されています。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Alveo カード</th>
+<th align="center">プラットフォーム</th>
+<th align="center">XRT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">U200</td>
+<td align="center">xilinx_u200_xdma_201830_2</td>
+<td align="center">2.6.655</td>
+</tr>
+<tr>
+<td align="left">U250</td>
+<td align="center">xilinx_u250_xdma_201830_2</td>
+<td align="center">2.6.655</td>
+</tr>
+<tr>
+<td align="left">U50</td>
+<td align="center">xilinx_u50_gen3x16_xdma_201920_3</td>
+<td align="center">2.6.655</td>
+</tr>
+</tbody>
+</table><div class="section" id="building-the-hardware-design">
+<h2>ハードウェア デザインを構築する<a class="headerlink" href="#building-the-hardware-design" title="Permalink to this heading">¶</a></h2>
+<p>このデザインのすべてのハードウェア ソースは <code class="docutils literal notranslate"><span class="pre">hw_src</span></code> ディレクトリの下にあり、
+<code class="docutils literal notranslate"><span class="pre">make</span></code> を実行すると構築できます。その前に、config.mk を編集するか、特定のシステムを指定するようにコマンド ラインでこれらの値を上書きします。</p>
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="c"># Options for TARGET: sw_emu, hw_emu and hw</span>
+<span class="nv">TARGET</span> <span class="o">?=</span> hw
+<span class="c"># Options for DEVICE: u200, u250. Default platform is XDMA, defined by PLATFORM</span>
+<span class="nv">DEVICE</span> <span class="o">?=</span> u250
+<span class="c"># If other some specific platforms needs to be used, provide platform path directly</span>
+<span class="nv">PLATFORM</span> <span class="o">?=</span> xilinx_<span class="k">$(</span>DEVICE<span class="k">)</span>_xdma_201830_2
+<span class="c"># If your platform is not in the standard install area edit this line</span>
+<span class="nv">PLATFORM_REPO_PATH</span> <span class="o">?=</span> /opt/xilinx/platforms/
+</pre></div>
+</div>
+<p>この後、プラットフォームをビルドします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> hw_src make</pre></div>
+</div>
+<p>または、コマンド ラインで特定のプラットフォームを指定する場合は、次のコマンドを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> hw_src <span class="nv">PLATFORM</span><span class="o">=</span>xilinx_u50_gen3x16_xdma_201920_3 make</pre></div>
+</div>
+<p>プラットフォーム名は必要に応じて変更します。</p>
+</div>
+<div class="section" id="building-the-software-design">
+<h2>ソフトウェア デザインの構築<a class="headerlink" href="#building-the-software-design" title="Permalink to this heading">¶</a></h2>
+<p>これらのリファレンス用のソフトウェアはすべて CMake を使用して構築されています。一部の例では、外部ライブラリ、特に OpenCV と OpenMP に依存しています。これらのライブラリがシステムに存在しない場合、依存関係のある例は構築されません。</p>
+<p>このアーカイブのルート ディレクトリからソフトウェアを構築します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir build <span class="nb">cd</span> build cmake .. make -j</pre></div>
+</div>
+<p><strong>注記:</strong> これは、.xclbinファイルが存在する、ハードウェア構築後に実行する必要があります。</p>
+<p>結果の例を実行する場合は、『Alveo を使用する開発』 (UG1352) またはそれに付随するチュートリアルに示すように直接実行してください。一部の例 (7 と 8) では、追加のコマンド ライン引数が必要です。コマンド ライン引数を指定せずにこれらの例を実行すると、詳細な指示を含むヘルプ メッセージが表示されます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./00_load_kernels</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

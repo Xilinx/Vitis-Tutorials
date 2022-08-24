@@ -1,0 +1,21 @@
+{
+  "xclbin-location":"/usr/lib/dpu.xclbin",
+  "ivas-library-repo": "/usr/lib/ivas/",
+  "element-mode":"inplace",
+  "kernels" :[
+    {
+      "library-name":"libivas_xdpuinfer.so",
+      "config": {
+	"model-name" : "densebox_640_360",
+	"model-class" : "FACEDETECT",
+	"model-path" : "/usr/share/vitis_ai_library/models/",
+	"need_preprocess" : false,
+	"run_time_model" : 0,
+	"performance_test" : 1,
+	"max_num" : -1,
+	"prob_cutoff" : 0.0,
+	"debug_level" : 1
+      }
+    }
+  ]
+}

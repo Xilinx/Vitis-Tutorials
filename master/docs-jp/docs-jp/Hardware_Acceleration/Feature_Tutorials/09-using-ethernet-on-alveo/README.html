@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Vitis フローを使用した Alveo での GT カーネルの使用 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="AI エンジン開発" href="../../../AI_Engine_Development/AI_Engine_Development.html" />
+    <link rel="prev" title="ホスト メモリ アクセス" href="../08-using-hostmem/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">入門</a></li><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">設計チュートリアル</a></li><li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">機能チュートリアル</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="../01-rtl_kernel_workflow/README.html">RTL カーネル入門</a></li><li class="toctree-l3"><a class="reference internal" href="../02-mixing-c-rtl-kernels/README.html">C と RTL の混合</a></li><li class="toctree-l3"><a class="reference internal" href="../03-dataflow_debug_and_optimization/README.html">データフローのデバッグおよび最適化</a></li><li class="toctree-l3"><a class="reference internal" href="../04-mult-ddr-banks/README.html">複数 DDR バンクの使用</a></li><li class="toctree-l3"><a class="reference internal" href="../05-using-multiple-cu/README.html">複数の計算ユニットの使用</a></li><li class="toctree-l3"><a class="reference internal" href="../06-controlling-vivado-implementation/README.html">Vivado インプリメンテーションの制御</a></li><li class="toctree-l3"><a class="reference internal" href="../07-using-hbm/README.html">HBM のための最適化</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html">ホスト メモリ アクセス</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#xrt-and-platform-version">XRT およびプラットフォーム バージョン</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#tutorial-description">チュートリアルの説明</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#running-the-application">アプリケーションの実行</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#summary">サマリ</a></li><li class="toctree-l3 current"><a class="current reference internal" href="#">Alveo での GT カーネルおよびイーサネット IP の使用</a><ul><li class="toctree-l4"><a class="reference internal" href="#features-and-design-overview">機能とデザインの概要</a></li><li class="toctree-l4"><a class="reference internal" href="#design-flow-and-tutorial-steps">デザイン フローとチュートリアルの手順</a></li><li class="toctree-l4"><a class="reference internal" href="#summary">サマリ</a></li></ul></li></ul></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Hardware-Acceleration.html">Vitis ハードウェア アクセラレータ</a> &raquo;</li><li>Vitis フローを使用した Alveo での GT ーネルの使用</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="using-gt-kernel-in-alveo-with-vitis-flow">
+<h1>Vitis フローを使用した Alveo での GT ーネルの使用<a class="headerlink" href="#using-gt-kernel-in-alveo-with-vitis-flow" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<p>ザイリンクス Alveo データセンター アクセラレータ カードには、カードによって 1 つまたは 2 つの QSFP28 ポートなどのネットワーク接続が含まれます。QSFP28 インターフェイスでは、10GbE、25GbE、40GbE、100GbE などのさまざまなイーサネット設定がサポートされています。1 つのレーンのイーサネット プロトコルを複数インスタンシエーションすることも可能です。Vitis フローと最新のプラットフォームを使用すると、GTY トランシーバーを含む RTL カーネルを作成でき、HLS 計算ユニットを含むその他のカーネルへのストリーミング接続、DRAM メモリへのデータパス バッファリング、Vitis ツールによるホストと FPGA 間のデータ移動用ドライバー アクセスなど、完全に統合されたデザインを実現するための機能が提供されます。</p>
+<p>このチュートリアルでは、GTY トランシーバーを RTL カーネルに含め、Vitis を使用してトップレベルのハードウェア オーバーレイ デザインに統合する手順を説明します。Alveo U200 カードを例にしていますが、同様の手順をほかの Alveo カードにも簡単に適用できます。このチュートリアルのサンプル デザインは、現実的な機能を持たず、ここでは方法を示すためだけに使用されています。ここでは、2 つのレーン番号設定 (x1 および x4) を用意しています。</p>
+<div class="section" id="features-and-design-overview">
+<h2>機能とデザインの概要<a class="headerlink" href="#features-and-design-overview" title="Permalink to this heading">¶</a></h2>
+<p>次は、2 つの RTL カーネルで構成されるデザインのブロック図です。</p><ul class="simple"> <li><p><strong>ethernet_krnl_axis_x1/4</strong>: このカーネルには、1 つのシングル チャンネルまたは 4 チャンネルの 10G イーサネット サブシステム IP、1 つの AXI 制御スレーブ、2 つまたは 8 つの AXI ストリーム データ FIFO モジュールが含まれます。GT トランシーバーとの間では、データが AXI ストリーム データ FIFO にストリーミングされ、外部に接続されます。カーネルは XRT の <em>ap_ctrl_hs</em> の実行モデルを使用します。ホスト プログラムは、AXI 制御スレーブを介してイーサネット IP を制御できます。</p></li> <li><p><strong>data_fifo_krnl</strong>: このカーネルには 2 つの AXI ストリーム データ FIFO モジュールが含まれており、これらは一緒に接続されて外部 AXI ストリーム ポートへのループバック データパスを形成します。カーネルは XRT の <em>ap_ctrl_none</em> を使用します。</p></li> </ul>
+<p>トップ レベルのハードウェア トポロジでは、これら 2 つまたは 5 つのカーネル (レーン番号に依存) が AXI ストリーム接続を介してスティッチングされます。また、<strong>ethernet_krnl_axis_x1/4</strong> カーネルの AXI 制御スレーブもプラットフォームに接続されています。GT トランシーバー用のこれらを含む必要なリセット信号とクロック信号は、プラットフォームの提供する関連リソースに接続されます。</p>
+<p><img alt="Blocks" src="../../../../_images/diagram.svg" /></p>
+<p>前述のように、この設計トポロジから意味のある機能はないので、ホスト プログラム コードは提供されていません。</p>
+</div>
+<div class="section" id="design-flow-and-tutorial-steps">
+<h2>デザイン フローとチュートリアルの手順<a class="headerlink" href="#design-flow-and-tutorial-steps" title="Permalink to this heading">¶</a></h2>
+<p>まず、次に示すこのチュートリアルの重要なファイルを確認してください。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+├── connectivity_x1/4.cfg                 Vitis linking configuration file
+├── gen_ip_x1/4.tcl                       Vivado script to generate IP                     
+├── Makefile                              Makefile for every steps
+├── pack_data_fifo_kernel.tcl             Vivado script to pack data fifo kernel
+├── pack_eth_x1/4_kernel.tcl              Vivado script to pack ethernet kernel
+└── rtl/                                  RTL sources code for two kernels
+</pre></div>
+</div>
+<p>この 2 つのカーネルの RTL ラッパー ファイルは、<em>./rtl</em> ディレクトリに含まれています。すべての手順はコマンドライン インターフェイスで実行され、そのフローを制御するために <em>Makefile</em> が使用されます。<em>Makefile</em> の次の行では、Alveo U200 をデザインのターゲット カードとして指定していますが、ほかの Alveo カード用に変更することもできます。また、レーン番号の設定も変更できます (デフォルトは 1)。</p>
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="c"># Target hardware setting, uncomment appropriate lines</span>
+<span class="nv">BOARD</span>    <span class="o">:=</span> u200
+<span class="nv">PLATFORM</span> <span class="o">:=</span> xilinx_u200_gen3x16_xdma_2_202110_1
+<span class="nv">PART</span>     <span class="o">:=</span> xcu200-fsgd2104-2-e
+</pre></div>
+</div>
+<p>では、チュートリアルのルート パスを入力し、チュートリアルを順を追って説明します。</p>
+<div class="section" id="generate-ip">
+<h3>1.IP の生成<a class="headerlink" href="#generate-ip" title="Permalink to this heading">¶</a></h3>
+<p>前述のように、イーサネット サブシステム (<strong>xxv_ethernet</strong>) と AXI ストリーム FIFO (<strong>axis_data_fifo</strong>) の 2 つの IP がデザインに必要です。これらは、Vivado の GUI モードまたは Tcl スクリプトを使用したバッチ モードで生成できます。ここでは、次のコマンドを使用して、Vivado のバッチモードで生成します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">gen_ip</span></pre></div>
+</div>
+<p>これにより、Vivado が起動し、Tcl スクリプト <em>gen_ip.tcl</em> が実行されます。生成された IP は、作成された <strong>ip_generation</strong> ディレクトリに含まれます。Vivado GUI モードを使用している場合は、Tcl スクリプトを確認してダイアログ ボックスの設定を推測できます。IP <strong>xxv_ethernet</strong> の設定の中には、使用するターゲット Alveo カードに関係するものがあります。</p>
+</div>
+<div class="section" id="package-kernels">
+<h3>2.カーネルのパッケージ<a class="headerlink" href="#package-kernels" title="Permalink to this heading">¶</a></h3>
+<p>ここでは、RTL デザイン ファイルは既に <em>./rtl</em> ディレクトリにあるので、IP (<em>.xci</em> files) と共に 2 つの Vitis カーネル (<em>.xo</em> ファイル) にパッケージする必要があります。Vivado GUI バージョンの<em> </em>IP パッケージャーを使って IP をパッケージすることはできますが、ここではコマンドラインと Tcl スクリプトを使ってみます。次のコマンドでカーネルをパッケージすると、2 つのカーネル ファイル (<em>ethernet_krnl_axis_x1.xo</em> および <em>data_fifo_krnl.xo</em>) が、その後の Vitis リンキング ジョブ用に生成されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">pack_kernel</span></pre></div>
+</div>
+<p>Tcl スクリプト <em>pack_eth_kernel.tcl</em> および <em>pack_data_fifo_kernel.tcl</em> からは、GUI モードの Vivado ダイアログ ボックスに対応するカーネル パッケージ設定を確認できます。イーサネット カーネルのパッケージ手順では、標準の AXI バス インターフェイスに加えて、後の Vitis <em>v++</em> 自動接続機能用にさらに 2 つのバス インターフェイス (GT トランシーバーのデータ バス用の <strong>gt_port</strong>、GT トランシーバーの差動クロック用の <strong>gt_refclk</strong>) が作成されていることがわかります。</p>
+</div>
+<div class="section" id="vitis-linking">
+<h3>3.Vitis のリンキング<a class="headerlink" href="#vitis-linking" title="Permalink to this heading">¶</a></h3>
+<p>ここでは、Vitis <em>v++</em> ツールを使ってハードウェア リンキングを終了し、<em>.xclbin</em> ファイルを生成します。次のコマンドを実行します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">build_hw</span></pre></div>
+</div>
+<p>これにより、 <em>connectivity_x1.cfg</em> をリンキング コンフィギュレーション ファイルとして <em>v++</em> コマンドが実行されます。コンフィギュレーション ファイルの次の行では、Vitis に <strong>xilinx_u200_gen3x16_xdma_1_202110_1</strong> プラットフォームの GT トランシーバー固有の信号を接続するよう指示しています。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># For xilinx_u200_gen3x16_xdma_1_202110_1 platform</span>
+<span class="n">connect</span><span class="o">=</span><span class="n">eth0</span><span class="o">/</span><span class="n">clk_gt_freerun</span><span class="p">:</span><span class="n">ss_ucs</span><span class="o">/</span><span class="n">aclk_kernel_00</span>
+<span class="n">connect</span><span class="o">=</span><span class="n">io_clk_qsfp_refclka_00</span><span class="p">:</span><span class="n">eth0</span><span class="o">/</span><span class="n">gt_refclk</span>
+<span class="n">connect</span><span class="o">=</span><span class="n">eth0</span><span class="o">/</span><span class="n">gt_port</span><span class="p">:</span><span class="n">io_gt_qsfp_00</span>
+</pre></div>
+</div>
+<p>ほかのカードやプラットフォームを使用している場合、信号やポート名が異なる場合がありますので、それに応じて調整する必要があります。これらのプラットフォーム固有の GT 信号/ポート名については、<strong>platforminfo</strong> コマンドでレポートされるプラットフォーム情報を参照してください。次に例を示します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">platforminfo</span> <span class="o">-</span><span class="n">p</span> <span class="n">xilinx_u200_gen3x16_xdma_1_202110_1</span> <span class="o">-</span><span class="n">v</span>
+</pre></div>
+</div>
+<p><em>v++</em> のリンキング ジョブが終了したら、Vivado GUI で Vivado プロジェクト <em>./_x/link/vivado/vpl/prj/prj.xpr</em> を開き、ブロック デザイン <strong>ulp</strong> を開きます。次のスクリーンショットのように、2 つのカーネル (インスタンス名 <strong>df0</strong> と <strong>eth0</strong>) のすべての信号、特に GT トランシーバーの信号が正しく接続されていることがわかります。</p>
+<p><img alt="Blocks" src="../../../../_images/kernel_connection.png" /></p>
+<p><em>v++</em> のリンキングが終了すると、XCLBIN ファイル <strong>top_level.xclbin</strong> ができます。また、Vivado を使用してプロジェクト <em>./_x/link/vivado/vpl/prj/prj.xpr</em> を開き、最終的にインプリメントされたデザインを開いて、レポートやシリコン フロアプランを確認することもできます。</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>サマリ<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
+<p>Vitis フローで Alveo カードに GTY トランシーバーを使用するのは、非常にシンプルで簡単です。通常の RTL カーネルとして処理して、GT トランシーバー固有の信号用の特別な設定をするだけです。Vitis の強力で柔軟な機能を使用することで、効率的に統合できるようになっています。</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../08-using-hostmem/README.html" class="btn btn-neutral float-left" title="Host Memory Access" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../../../AI_Engine_Development/AI_Engine_Development.html" class="btn btn-neutral float-right" title="AI Engine Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

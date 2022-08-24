@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="Vitis, チュートリアル, コア, 開発, tutorials, core, development" name="keywords" />
+<meta content="Vitis 統合ソフトウェア プラットフォームでは、FPGA、SoC、Versal ACAP を含むヘテロジニアス ザイリンクス プラットフォームでエンベデッド ソフトウェアおよびアクセラレーション アプリケーションを開発できます。" name="description" />
+<meta content="Document" name="xlnxdocumentclass" />
+<meta content="Tutorials" name="xlnxdocumenttype" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Vitis™ Tutorials &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="docs/Getting_Started/Vitis-Getting-Started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="#" class="icon icon-home"> Vitis™ チュートリアル
+            <img src="_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div>
+      
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+            
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">English version</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Master</a></li>
+</ul>
+<p class="caption"><span class="caption-text">入門</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Getting_Started/Vitis/README.html">Vitis フロー 101 チュートリアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Getting_Started/Vitis_HLS/README.html">Vitis HLS の解析および最適化</a></li>
+</ul>
+<p class="caption"><span class="caption-text">機械学習 (英語版)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Machine_Learning/README.html">Introduction to Machine Learning with Vitis AI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Machine_Learning/README.html#design-tutorials">Design Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Machine_Learning/README.html#feature-tutorials">Feature Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">アクセラレーション</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Hardware_Accelerators/README.html">Vitis ハードウェア アクセラレータの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Hardware_Accelerators/README.html#id1">設計チュートリアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Hardware_Accelerators/README.html#id2">機能チュートリアル</a></li>
+</ul>
+<p class="caption"><span class="caption-text">AI エンジン開発 (英語版)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="AI_Engine_Development/README.html">Design Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AI_Engine_Development/README.html#feature-tutorials">Feature Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">プラットフォーム作成チュートリアル</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Vitis_Platform_Creation/README.html">プラットフォームの作成</a></li>
+</ul>
+<p class="caption"><span class="caption-text">XRT および Vitis システム最適化</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Runtime_and_System_Optimization/README.html">設計チュートリアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Runtime_and_System_Optimization/README.html#id2">機能チュートリアル</a></li>
+</ul>
+<p class="caption"><span class="caption-text">バージョン</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/index.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/Vitis-Tutorials-2019.2-Hotfix1/README.md">2019.2</a></li>
+</ul>
+
+            
+			
+			<p class="caption"><span class="caption-text">This Page</span></p>
+				<ul class="current">
+				  <li class="toctree-l1"><a href="_sources/index.rst.txt"
+						rel="nofollow">Show Source</a></li>
+				</ul>
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Vitis チュートリアル</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Vitis™ チュートリアル</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vitis">
+<h1>Vitis™ チュートリアル<a class="headerlink" href="#vitis" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound" id="jp">
+</div>
+<p id="overview"><a class="reference external" href="http://www.youtube.com/watch?v=vFPNlcXAeWI"><img alt="intro_video" src="_images/intro_video.png" /></a></p>
+<div class="section" id="unlocking-a-new-design">
+<span id="id1"></span><h2>すべての開発者に新しい設計経験を提供<a class="headerlink" href="#unlocking-a-new-design" title="Permalink to this headline">¶</a></h2>
+<p>Vitis 統合ソフトウェア プラットフォームを使用すると、FPGA、SoC、Versal ACAP などのヘテロジニアス ザイリンクス プラットフォームのエンベデッド ソフトウェアおよびアクセラレーション アプリケーションの開発ができます。エッジ、クラウド、ハイブリッド計算アプリケーションをアクセラレーションする統合プログラミング モデルが提供されます。</p>
+<p>ハイレベル フレームワークとの統合に使用したり、アクセラレーションされたライブラリを使用して C、C++、Python で開発したり、RTL ベースのアクセラレータおよび下位レベルのランタイム API を使用して、インプリメンテーションをより詳細に制御できます。抽象度のレベルは、選択できます。</p>
+</div>
+<div class="section" id="tutorials">
+<span id="id2"></span><h2>チュートリアル<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h2>
+<p>Vitis 詳細チュートリアルでは、すべてのザイリンクス プラットフォームでアクセラレーションされたアプリケーションを運用する設計手法およびプログラミング モデルを使用して説明します。</p>
+<p><img alt="vitis-landing-graphic-boards-u50" src="_images/vitis-landing-graphic-boards-u50.png" /></p>
+<div class="section" id="getting-started-readme">
+<span id="introduction"></span><h3><a class="reference internal" href="Getting_Started/README.html"><span class="doc">入門</span></a><a class="headerlink" href="#getting-started-readme" title="Permalink to this headline">¶</a></h3>
+<p>ここから開始してください。初めてのアプリケーションをまとめて Vitis プログラミング モデルの基礎を学びます。経験は必要ありません。</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="machine-learning-readme">
+<span id="machine-learning-tutorial"></span><h3><a class="reference internal" href="Machine_Learning/README.html"><span class="doc">Vitis AI
+ を使用した機械学習の概要 (英語版)</span></a><a class="headerlink" href="#machine-learning-readme" title="Permalink to this headline">¶</a></h3>
+<p>Vitis、Vitis AI、および Vitis アクセラレーション ライブラリを使用して、純粋なソフトウェア定義フローを使用して完全なエンド ツー エンドのアクセラレーションされたアプリケーションをインプリメントする方法を学びます。ハードウェアの専門知識は必要ありません。</p>
+<p>Tensorflow フレームワークを使用してザイリンクス ハードウェアをコンフィギュレーションするには、Vitis AI を使用します。Vitis AI を使用すると、ユーザーは推論モデルを数分で量子化、コンパイル、運用できます。</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="hardware-accelerators-readme">
+<span id="acceleration-tutorial"></span><h3><a class="reference internal" href="Hardware_Accelerators/README.html"><span class="doc">Vitis ハードウェア アクセラレータの概要</span></a><a class="headerlink" href="#hardware-accelerators-readme" title="Permalink to this headline">¶</a></h3>
+<p>Vitis コア開発キットを使用して、C++、OpenCL、さらには Verilog や VHDL などの下位レベルのハードウェア記述言語 (HDL) で開発されたアクセラレーション アルゴリズムをビルド、解析、最適化する方法を説明します。</p>
+<p>Vitis HLS、コンパイラ、アナライザー、デバッガーを使用してパフォーマンスのボトルネックを特定し、Alveo カードを使用してアルゴリズムの効率とパフォーマンスを向上させる方法について説明します。</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="ai-engine-development-readme">
+<span id="ai-engine-development"></span><h3><a class="reference internal" href="AI_Engine_Development/README.html"><span class="doc">AI
+ エンジン開発 (英語版)</span></a><a class="headerlink" href="#ai-engine-development-readme" title="Permalink to this headline">¶</a></h3>
+<p>ザイリンクス初の ACAP (Adaptive Compute Acceleration Platform) デバイスである Versal を開発するための Vitis コア ツールの使用方法を説明します。</p>
+<p>Versal の AI エンジン アレイと PL IP/カーネルおよびエンベデッド プロセッサ上で動作するソフトウェア アプリケーションを組み合わせて使用し、高度なアルゴリズムをターゲットにし、開発、運用する方法について説明します。</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="vitis-platform-creation-readme">
+<span id="platform-creation"></span><h3><a class="reference internal" href="Vitis_Platform_Creation/README.html"><span class="doc">プラットフォームの作成</span></a><a class="headerlink" href="#vitis-platform-creation-readme" title="Permalink to this headline">¶</a></h3>
+<p>独自のボードをターゲットにしたカスタム プラットフォームのビルド方法と、既存のプラットフォームの変更と拡張方法について説明します。</p>
+<p>プラットフォームのハードウェア ソースの設定方法、ランタイム ソフトウェア環境の構築方法、ソフトウェアおよびハードウェア エミュレーションのサポートの追加方法などを説明します。</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="runtime-and-system-optimization-readme">
+<span id="xilinx-runtime-xrt-and-vitis-system-optimization-tutorials"></span><h3><a class="reference internal" href="Runtime_and_System_Optimization/README.html"><span class="doc">ランタイムおよびシステムの最適化</span></a><a class="headerlink" href="#runtime-and-system-optimization-readme" title="Permalink to this headline">¶</a></h3>
+<p>アプリケーションの CPU 側を最適化して効率的にメモリを割り当てる方法、システム レベルのイベントを順番に並べる方法などについて説明します。</p>
+<p>また、システム レベルのトポロジと下位レベルのハードウェア インプリメンテーションを制御する方法について説明します。</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+         <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="docs/Getting_Started/Vitis-Getting-Started.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on July 27, 2022. 内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

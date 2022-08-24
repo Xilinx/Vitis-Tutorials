@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Super Sampling Rate FIR Filter &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Introduction/README.html">Introduction to Vitis Hardware Accelerators Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.html">Accelerating Video Convolution Filtering Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/04-traveling-salesperson/README.html">The Travelling Salesman Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/05-bottom_up_rtl_kernel/README.html">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Feature_Tutorials/03-dataflow_debug_and_optimization/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm/README.html">Using HBM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Super Sampling Rate FIR Filter</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/SingleStreamSSR/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/>
+   <h1>Super Sampling Rate FIR Filters</h1>
+   <h2>Implementation on the AI Engine</h2>
+   </td>
+ </tr>
+ <tr>
+ <td align="center"><h1>Single-Stream Interface</h1>
+ <h2></h2>
+ </td>
+ </tr>
+</table><div class="section" id="super-sampling-rate-fir-filter">
+<h1>Super Sampling Rate FIR Filter<a class="headerlink" href="#super-sampling-rate-fir-filter" title="Permalink to this heading">¶</a></h1>
+<p>The purpose of this third part of the tutorial is to understand how to implement a FIR filter that has an input sample rate above the clock frequency of the AI Engine array.</p>
+<p>Navigate to the <code class="docutils literal notranslate"><span class="pre">SingleStreamSSR</span></code> directory to continue.</p>
+<div class="section" id="super-sampling-rate-and-polyphase">
+<h2>Super Sampling Rate and Polyphase<a class="headerlink" href="#super-sampling-rate-and-polyphase" title="Permalink to this heading">¶</a></h2>
+<p>When the input sampling Rate is above the clock frequency of the processor (Super Sampling Rate), samples must be acquired in parallel. For a 2 Gsps input sample rate, you can specify that the filter should receive two samples at a 1 GHz rate which can be seen as two data streams (Polyphase decomposition), each one at 1 Gsps. Because the AI Engine array AXI-Stream network is limited to 1 GHz (slowest speed grade), the high sampling rate input (above 1 Gsps) will need to be decomposed into multiple phases to be processed.</p>
+<p>As a first example, suppose there is a 2 Gsps data stream to be processed, it can be split in two phases to be routed to the AI Engine array:</p>
+<p><img src="../Images/PolyphaseOrder2.jpg" width=1000><br></p>
+<p>A 5 Gsps data stream must be split into 5 phases:</p>
+<p><img src="../Images/PolyphaseOrder5.jpg" width=1000><br></p>
+</div>
+<div class="section" id="organize-computation-for-a-2-gsps-data-stream-in-2-phases">
+<h2>Organize Computation for a 2 Gsps Data Stream in 2 Phases<a class="headerlink" href="#organize-computation-for-a-2-gsps-data-stream-in-2-phases" title="Permalink to this heading">¶</a></h2>
+<p>For a single-rate filter, a 2 Gsps input sample rate means also a 2 Gsps output sample rate. Because the input stream is separated into two (even, odd) streams, the output stream must be split the same way.</p>
+<p>Take a look at how <strong>y0</strong> is computed:</p>
+<p><img src="../Images/Y0Compute.jpg" width=1000><br></p>
+<p>If the data stream is split into two phases, it can be seen that the coefficients also have to be split into two phases.</p>
+<p><img src="../Images/Y0Compute2Phases.jpg" width=1000><br></p>
+<p>Take a look also at how <strong>y2</strong> is computed:</p>
+<p><img src="../Images/Y2Compute.jpg" width=1000><br></p>
+<p><img src="../Images/Y2Compute2Phases.jpg" width=1000><br></p>
+<p>For the even output stream, the data and coefficient phases should match:</p>
+<ul class="simple">
+<li><p>Even data phase sent through a filter built with the even phase coefficients</p></li>
+<li><p>Odd data phase sent through a filter built with the odd phase coefficients</p></li>
+</ul>
+<p>Take a look at how this is modified for the odd outputs:</p>
+<p><img src="../Images/YoddCompute.jpg" width=1000><br></p>
+<p>In this case the phases of the data and coefficients should be mixed:</p>
+<ul class="simple">
+<li><p>Even data phase sent through a filter built with the odd phase coefficients</p></li>
+<li><p>Odd data phase sent through a filter built with the even phase coefficients</p></li>
+</ul>
+<p>There is a further difference between the two; in the odd output case the (even data, odd coefficients) should discard one data at the beginning of the stream.</p>
+<p>In the previous section the balance between data transfer and compute performance of the AI Engine was obtained for a 1 Gsps data stream going through an eight tap filter. The balance is identical here. As we have eight different filters, we can process 4x 1 Gsps streams in parallel.</p>
+<p>The data stream and the coefficients must be split into four phases and then recombined. In the following figures, the various colors correspond to a different phase for the data (blue) and the coefficients(red):</p>
+<ul class="simple">
+<li><p>Output phase 0, will be split and recombined as follows:</p></li>
+</ul>
+<p><img src="../Images/Phase0Out.jpg" width=1000><br></p>
+<p><img src="../Images/Phase0OutDetail.jpg" width=1000><br></p>
+<ul class="simple">
+<li><p>Output phase 1, will be split and recombined as follows:</p></li>
+</ul>
+<p><img src="../Images/Phase1Out.jpg" width=1000><br></p>
+<p><img src="../Images/Phase1OutDetail.jpg" width=1000><br></p>
+<ul class="simple">
+<li><p>Output phase 2, will be split and recombined as follows:</p></li>
+</ul>
+<p><img src="../Images/Phase2Out.jpg" width=1000><br></p>
+<p><img src="../Images/Phase2OutDetail.jpg" width=1000><br></p>
+<ul class="simple">
+<li><p>Output phase 3, will be split and recombined as follows:</p></li>
+</ul>
+<p><img src="../Images/Phase3Out.jpg" width=1000><br></p>
+<p><img src="../Images/Phase3OutDetail.jpg" width=1000><br></p>
+<p>The Data and the Coefficients being split into <em>N</em> Phases (four in this case), the resulting architecture requires <em>N</em>Phases x <em>N</em>Phases (4x4 = 16) to be implemented.</p>
+</div>
+<div class="section" id="designing-the-graph">
+<h2>Designing the Graph<a class="headerlink" href="#designing-the-graph" title="Permalink to this heading">¶</a></h2>
+<p>The kernels created in the previous section can be reused here as the only difference will be the way that thay are connected together. In the preceding images, you can see that there are 16 associations <strong>(Data Phase, Coefficient Phase)</strong>. Also, it can clearly be seen that some of the data streams will have the first data discarded before the computation starts:</p>
+<ul class="simple">
+<li><p>Output phase 0: no input data phase will have discarded samples</p></li>
+<li><p>Output phase 1: Input data phase 0 will have 1 discarded sample</p></li>
+<li><p>Output phase 2: Input data phase 0 and 1 will have 1 discarded sample</p></li>
+<li><p>Output phase 3: Input data phase 0, 1 and 2 will have 1 discarded sample</p></li>
+</ul>
+<p>To minimize the data routing, all blocks using the same data stream should be placed in the same column. This leads to the following architecture:</p>
+<p><img src="../Images/FourPhasesSingleStream.jpg" width=1000><br></p>
+<p>In the AI Engine array the direction of the cascade stream is flipped from one row to the next.</p>
+<p><img src="../Images/CascadeDir2.jpg" width=1000><br></p>
+<p>This feature needs to be taken into account when placing the kernels to get the cascade connections correct in the graph:</p>
+<p><img src="../Images/FourPhasesSingleStreamPlaced.jpg" width=1000><br></p>
+<p>The kernels highlighted in the following figure will need to discard one sample within the initialization function:</p>
+<p><img src="../Images/FourPhasesSingleStreamDiscard.jpg" width=1000><br></p>
+<p>At this point consider latencies within the kernels. In the operation scheduling, data is first read from the stream, a <code class="docutils literal notranslate"><span class="pre">mul4</span></code> and three <code class="docutils literal notranslate"><span class="pre">mac4</span></code> are performed and the accumulator is then sent to the cascade stream. All in all the latency from ‘read’ to ‘write’ is approximately 20-25 clock cycles (call it L, L~25). In the left hand side column this means that the data input from the first row to the second row should enter a FIFO of length ~75 (3L). The Input to row two is approximately the same as row zero, and row three should be fed at the same time as row 1. the following table shows the latencies in multiple of L:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="right"></th>
+<th align="center">Column 0</th>
+<th align="center">Column 1</th>
+<th align="center">Column 2</th>
+<th align="center">Column 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right"><strong>Row 3</strong></td>
+<td align="center">3L</td>
+<td align="center">2L</td>
+<td align="center">L</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="right"><strong>Row 2</strong></td>
+<td align="center">0</td>
+<td align="center">L</td>
+<td align="center">2L</td>
+<td align="center">3L</td>
+</tr>
+<tr>
+<td align="right"><strong>Row 1</strong></td>
+<td align="center">3L</td>
+<td align="center">2L</td>
+<td align="center">L</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="right"><strong>Row 0</strong></td>
+<td align="center">0</td>
+<td align="center">L</td>
+<td align="center">2L</td>
+<td align="center">3L</td>
+</tr>
+</tbody>
+</table><p>Depending on the row, the latencies are completely different. A latency of less than 32 colock cycle usually gets implemented into the FIFOs included in the AXI-Stream interconnect. Above that number, it gets implemented in a memory module, with an AI Engine serving the inputs and outputs. This would drastically reduce performance. Another possibility is to have these FIFOs implemented in the PL, and have two streams coming from the PL for each column, one serving the even rows and the other serving the odd rows. A single FIFO is required on the first and last columns, but two are necessary for the inner columns:</p>
+<p><img src="../Images/FourPhasesDualStreams.jpg" width=1000><br></p>
+</div>
+<div class="section" id="c-code-analysis">
+<h2>C++ Code Analysis<a class="headerlink" href="#c-code-analysis" title="Permalink to this heading">¶</a></h2>
+<p>The kernel definition is exactly the same as the previous part of this tutorial. The only difference is in the graph to encode this 16 kernel four-phase filter.</p>
+<p>At the graph level, all the kernels are first declared in a class:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">FIRGraph_4Kernels</span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">graph</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="n">kernel</span><span class="w"> </span><span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span><span class="w"></span>
+
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="n">input_port</span><span class="w"> </span><span class="n">in</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="w"></span>
+<span class="w">	</span><span class="n">output_port</span><span class="w"> </span><span class="n">out</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The constructor takes charge in the next operations. The first operation is to create the kernels. The complete grid of 4x4 kernels is defined as follows:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">FIRGraph_SSR4</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// k[N][0] is always the first in the cascade stream</span>
+<span class="w">    </span><span class="c1">// Topology of the TopGraph</span>
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="c1">//      3,3   3,2   3,1   3,0 &lt;--</span>
+<span class="w">    </span><span class="c1">//  --&gt; 2,0   2,1   2,2   2,3</span>
+<span class="w">    </span><span class="c1">//      1,3   1,2   1,1   1,0 &lt;--</span>
+<span class="w">    </span><span class="c1">//  --&gt; 0,0   0,1   0,2   0,3</span>
+
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_p0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_p1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_p2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cin</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_p3</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="p">.</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_p0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_p3</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_p2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cin</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_p1</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The source and header locations are then defined for the AI Engine. The location of the first AI Engine in each row must also be constrained to facilitate the placer work:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Constraints: location of the first kernel in the cascade</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="o">?</span><span class="mi">28</span><span class="o">:</span><span class="mi">25</span><span class="p">);</span><span class="w"> </span><span class="c1">// 25 on even rows and 28 on odd rows</span>
+<span class="w">    </span><span class="n">location</span><span class="o">&lt;</span><span class="n">kernel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tile</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To shorten the place time by a few seconds, you can constrain the core location. A single one is necessary because all the others will be constrained by the <strong>cascade</strong> connection:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Constraints: location of the first kernel in the cascade</span>
+<span class="n">location</span><span class="o">&lt;</span><span class="n">kernel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tile</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>All kernels need to discard a specific number of elements, this will be handled by the initialization function as this must be done beforehand and only once. This can be done in a loop on the column and rows with two initialization functions:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SingleStream::FIRinit&lt;0&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SingleStream::FIRinit&lt;1&gt;</span></code></p></li>
+</ul>
+<p>Finally, the kernels must be connected together with the cascade stream in between them, and the input streams for all of them.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cascade Connections</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">row</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="p">;</span><span class="n">row</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="mi">-1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">cascade</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">].</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">k</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="mi">3</span><span class="p">].</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">out</span><span class="p">[</span><span class="n">row</span><span class="p">]);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Input Streams connections</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="n">row</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="p">;</span><span class="n">row</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">col</span><span class="o">&lt;</span><span class="n">NPhases</span><span class="p">;</span><span class="n">col</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">col1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">row</span><span class="o">%</span><span class="mi">2</span><span class="o">?</span><span class="n">NPhases</span><span class="o">-</span><span class="n">col</span><span class="mi">-1</span><span class="o">:</span><span class="n">col</span><span class="p">);</span><span class="w"> </span><span class="c1">// kernel col is inverted on odd rows</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">row</span><span class="o">%</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">col</span><span class="o">+</span><span class="n">offset</span><span class="p">],</span><span class="n">k</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col1</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="compilation-and-analysis">
+<h2>Compilation and Analysis<a class="headerlink" href="#compilation-and-analysis" title="Permalink to this heading">¶</a></h2>
+<p>Ensure the <code class="docutils literal notranslate"><span class="pre">InitPythonPath</span></code> has been sourced in the <code class="docutils literal notranslate"><span class="pre">Utils</span></code> directory.</p>
+<p>Navigate to the <code class="docutils literal notranslate"><span class="pre">MultiKernel</span></code> directory. In the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> three methods are defined:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">compile</span></code></p>
+<ul>
+<li><p>Compiles the graph and the kernels</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">simulate</span></code></p>
+<ul>
+<li><p>Runs the AI Engine System C simulator</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">visualize</span></code></p>
+<ul>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code>on the output summary</p></li>
+</ul>
+</li>
+</ul>
+<p>Take a look at the source code (kernel and graph) to familiarize yourself with the C++ instanciation of kernels. In <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.</p>
+<p>To have the simulation running, input data must be generated. Change directory to <code class="docutils literal notranslate"><span class="pre">data</span></code> and type <code class="docutils literal notranslate"><span class="pre">GenerateStreams</span></code>. The following parameter should be set for this example:</p>
+<p><img src="../Images/generateSingleStreamSSR4.jpg" width=800><br></p>
+<p>Click <strong>Generate</strong> then <strong>Exit</strong>. The generated files <code class="docutils literal notranslate"><span class="pre">PhaseIn_0.txt</span></code> … <code class="docutils literal notranslate"><span class="pre">PhaseIn_3.txt</span></code> should contain mainly 0’s, with a few 1’s and 2’s.</p>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> and wait for the <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code> GUI to display. The Vitis analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this specific case the graph is very simple (a single kernel) and the implementation is on a single AI Engine.</p>
+<p>Click <strong>Graph</strong> to visualize the graph of the application:</p>
+<p><img src="../Images/Graph4Phases.jpg" width=800><br></p>
+<p>The 16 kernels and their eight independent input streams are clearly visible. The top graph is for the output phases 0 and 2, the phases where the cascade stream is from left to right on the physical device. The bottom graph is for phases 1 and 3 where the cascade stream is from right to left.</p>
+<p>Click <strong>Array</strong> to visualize where the kernel has been placed, and how it is fed from the the PL:</p>
+<p><img src="../Images/Array4Phases.jpg" width=500><br></p>
+<p>In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph. With the four location constraints that were added, the placer had only one solution for the kernel placement: this square. The router had an easy job to feed all these kernels by simply using the south-north AXI-Stream. The path back to the PL from the extremities also uses only the vertical AXI-Streams.</p>
+<p>Finally click <strong>Trace</strong> to look at how the entire simulation went through. This may be useful to track where your AI Engine stalls if performance is not as expected:</p>
+<p><img src="../Images/Timeline4Phases.jpg" width=1500><br></p>
+<p>Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to <code class="docutils literal notranslate"><span class="pre">Emulation-AIE/aiesimulator_output/data</span></code> and look at the <code class="docutils literal notranslate"><span class="pre">output_0.txt</span></code>. You can see that you have two complex outputs per line which is prepended with a time stamp.  <code class="docutils literal notranslate"><span class="pre">ProcessAIEOutput</span> <span class="pre">output_*</span></code>.</p>
+<p><img src="../Images/GraphOutput4Phases.jpg" width=1000><br></p>
+<p>The top graph reflects the real part of the output. The bottom graph this is the imaginary part. On both, the filter impulse response is recognizable.</p>
+<p>The performance of this architecture can be measured using the timestamped output. In the same directory (<code class="docutils literal notranslate"><span class="pre">Emulation-AIE/aiesimulator_output/data</span></code>) type <code class="docutils literal notranslate"><span class="pre">StreamThroughput</span> <span class="pre">output_*</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output_0</span><span class="o">.</span><span class="n">txt</span> <span class="o">--&gt;</span>   <span class="mf">950.35</span> <span class="n">Msps</span>
+<span class="n">output_1</span><span class="o">.</span><span class="n">txt</span> <span class="o">--&gt;</span>   <span class="mf">949.91</span> <span class="n">Msps</span>
+<span class="n">output_2</span><span class="o">.</span><span class="n">txt</span> <span class="o">--&gt;</span>   <span class="mf">950.79</span> <span class="n">Msps</span>
+<span class="n">output_3</span><span class="o">.</span><span class="n">txt</span> <span class="o">--&gt;</span>   <span class="mf">950.35</span> <span class="n">Msps</span>
+
+<span class="o">-----------------------</span>
+
+<span class="n">Total</span> <span class="n">Throughput</span> <span class="o">--&gt;</span>    <span class="mf">3801.39</span> <span class="n">Msps</span>
+</pre></div>
+</div>
+<p>This architecture achieves very close to 4 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.</p>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on August 5, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

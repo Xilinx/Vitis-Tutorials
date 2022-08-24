@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>RTL Kernel Wizard Flow &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Introduction/README.html">Introduction to Vitis Hardware Accelerators Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/01-convolution-tutorial/README.html">Accelerating Video Convolution Filtering Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/04-traveling-salesperson/README.html">The Travelling Salesman Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/05-bottom_up_rtl_kernel/README.html">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-dataflow_debug_and_optimization/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm/README.html">Using HBM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>RTL Kernel Wizard Flow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/vitis_ide.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/tree/2020.1">See 2020.1 Vitis Application Acceleration Development Flow Tutorials</a>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="rtl-kernel-wizard-flow">
+<h1>RTL Kernel Wizard Flow<a class="headerlink" href="#rtl-kernel-wizard-flow" title="Permalink to this heading">¶</a></h1>
+<p>The process described in this lab follows the flow described in <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/rtl_kernel_wizard.html#ouz1504034324041">RTL Kernel Wizard</a> of the Vitis Unified Software Platform Documentation (UG1416).</p>
+<blockquote>
+<div><p><strong>IMPORTANT:</strong> Before running the tutorial commands, you must set up the tool environment by running the following commands, as described in <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/settingupvitisenvironment.html#zks1565446519267">Setting up the Vitis Environment</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> <span class="c1">#setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.</span>
+ <span class="nb">source</span> &lt;VITIS_install_path&gt;/settings64.sh
+ <span class="c1">#Setup Xilinx runtime. XILINX_XRT will be set in this step.</span>
+ <span class="nb">source</span> &lt;XRT_install_path&gt;/setup.sh
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="simple">
+<li><p>Change directory to the tutorial folder: <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">./01-rtl_kernel_workflow</span></code>.</p></li>
+<li><p>To launch the Vitis IDE, enter the <code class="docutils literal notranslate"><span class="pre">vitis</span></code> command in a Linux terminal window.<br />The Workspace Launcher dialog box is displayed.<br /><img alt="Vitis Workspace" src="../../../../_images/192_vitis_launcher.png" /></p></li>
+<li><p>Select a project location for your workspace, and click <strong>Launch</strong>.</p></li>
+<li><p>The Vitis IDE opens. Click <strong>File</strong> &gt; <strong>New</strong> &gt; <strong>Application Project</strong>.<br />The New Vitis Application Project window opens.<br /><img alt="New Application Project" src="../../../../_images/rtl_kernel-new_application_project.png" /></p></li>
+<li><p>The New Application Project wizard is displayed, with the overview page showing a brief overview of the process. Click <strong>Next</strong>.</p></li>
+<li><p>The Plaform page is displayed. Select <code class="docutils literal notranslate"><span class="pre">xilinx_u200_xdma_201830_2</span></code>, and then click <strong>Next</strong> to proceed.<br /><img alt="Platform page" src="../../../../_images/rtl_kernel-platform_page.png" /></p></li>
+<li><p>The Application Project Details page is displayed. Make the following selections:</p>
+<ol class="simple">
+<li><p>Enter a project name, such as <code class="docutils literal notranslate"><span class="pre">rtl_ke_t2</span></code>.</p></li>
+<li><p>Create New System Project is enabled, and the System project name is generated from the project name. You can edit it if needed.</p></li>
+<li><p>The Processor is selected automatically from the platform you selected.</p></li>
+<li><p>Click <strong>Next</strong> to proceed.<br />The Templates page opens, showing application templates you can use to start your project.</p></li>
+</ol>
+</li>
+<li><p>Select the <strong>Empty Application</strong> and click <strong>Finish</strong> to create your Vitis application project.</p></li>
+</ol>
+<p>The new project wizard closes and opens the Vitis IDE with your new project loaded.
+<img alt="Default Perspective" src="../../../../_images/rtl_kernel-default_perspective.png" /></p>
+</div>
+<div class="section" id="configuration-with-the-rtl-kernel-wizard">
+<h1>Configuration with the RTL Kernel Wizard<a class="headerlink" href="#configuration-with-the-rtl-kernel-wizard" title="Permalink to this heading">¶</a></h1>
+<p>From the top menu bar of the Vitis IDE, click <strong>Xilinx &gt; Launch RTL Kernel Wizard &gt; rtl_ke_t2_kernels</strong>.</p>
+<p>The RTL Kernel wizard opens to the Welcome page, which offers a brief introduction to the process used for defining RTL kernels. You will be following that process in this tutorial. Take a minute to read the instructions, and then click <strong>Next</strong> to proceed.</p>
+<p>The RTL Kernel wizard guides you through the process of specifying the interface characteristics for an RTL kernel. Using the RTL Kernel wizard ensures that the RTL IP is packaged into a valid kernel that can be integrated into a system by the Vitis IDE. The wizard also has an added benefit of automating some necessary tasks for packaging the RTL IP into a kernel.</p>
+<p>The RTL Kernel wizard generates the following:</p>
+<ul class="simple">
+<li><p>An XML file necessary to package the RTL design as an Vitis core development kit kernel XO file</p></li>
+<li><p>A sample kernel (RTL code, test bench, and host code) performing <code class="docutils literal notranslate"><span class="pre">A[i]</span> <span class="pre">=</span> <span class="pre">A[i]</span> <span class="pre">+</span> <span class="pre">1</span></code></p></li>
+<li><p>A Vivado Design Suite project for the kernel</p></li>
+</ul>
+<p>As you continue through this tutorial, you will replace the sample kernel with the existing Vector-Accumulate IP, and package it as an XO file.</p>
+<div class="section" id="general-settings">
+<h2>General Settings<a class="headerlink" href="#general-settings" title="Permalink to this heading">¶</a></h2>
+<p>The General Settings page is displayed as shown below.</p>
+<p><img alt="Default perspective" src="../../../../_images/rtl_kernel-general_settings.png" /></p>
+<ul class="simple">
+<li><p><strong>Kernel Identification</strong>: Specifies the vendor, kernel name, and library, known as the “Vendor:Library:Name:Version” (VLNV) of the IP. The kernel name should match the top module name of the IP you are using for the RTL kernel.</p></li>
+<li><p><strong>Kernel Options</strong>: Specifies the design type.</p>
+<ul>
+<li><p><strong>RTL</strong> (default): Generates the associated files in a Verilog format.</p></li>
+<li><p><strong>Block design</strong>: Generates a block design for the Vivado tools IP integrator. The block design consists of a MicroBlaze™ subsystem that uses a block RAM exchange memory to emulate the control registers.</p></li>
+</ul>
+</li>
+<li><p><strong>Clock and Reset Options</strong>: Specifies the number of clocks used by the kernel and whether the kernel needs a top-level reset port.</p></li>
+</ul>
+<p>Make the following selections:</p>
+<ol class="simple">
+<li><p>For <strong>Kernel name</strong> specify <code class="docutils literal notranslate"><span class="pre">Vadd_A_B</span></code>.</p></li>
+<li><p>For <strong>Kernel control interface</strong> select <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code>.</p></li>
+<li><p>For the remaining options, keep the default values, and click <strong>Next</strong> to proceed.</p></li>
+</ol>
+</div>
+<div class="section" id="scalars">
+<h2>Scalars<a class="headerlink" href="#scalars" title="Permalink to this heading">¶</a></h2>
+<p>Scalar arguments are used to pass input parameters from the host application to the kernel. For the number of input arguments specified, a corresponding register is created to facilitate passing the argument from software to hardware. Each argument is assigned an ID value that is used to access that argument from the host application. This ID value can be found on the Summary page of the wizard.</p>
+<ul class="simple">
+<li><p><strong>Argument name</strong>: Name of the argument.</p></li>
+<li><p><strong>Argument type</strong>: Type of the scalar argument expressed as a native C/C++ datatype. For example, (u)char, (u)short, or (u)int.</p></li>
+</ul>
+<p>Keep the default values, and then click <strong>Next</strong>.<br /><img alt="Scalar Page" src="../../../../_images/rtl_kernel-scalar_page.png" /></p>
+</div>
+<div class="section" id="global-memory">
+<h2>Global Memory<a class="headerlink" href="#global-memory" title="Permalink to this heading">¶</a></h2>
+<p>Global memory is used to pass large data sets between the host and kernels and between kernels to other kernels. This memory can be accessed by the kernel through an AXI4 master interface. For each AXI4 master interface, you can customize the interface name, data width, and the number of associated arguments.</p>
+<ul>
+<li><p><strong>Number of AXI master interfaces</strong>: Specifies the number of AXI interfaces in the kernel.</p></li>
+<li><p><strong>AXI master definition</strong>: Specifies the interface name, the data width (in bytes) and the number of arguments associated with each AXI4 interface.</p></li>
+<li><p><strong>Argument definition</strong>: Specifies the pointer arguments assigned to each AXI4 interface. Each argument is assigned an ID value, that can be used to access the argument from the host application. This ID value assignment can be found on the Summary page of the wizard.</p>
+<p><img alt="HGlobal Memory" src="../../../../_images/rtl_kernel-global_memory.png" /><br />Make the following selections:</p>
+</li>
+</ul>
+<ol class="simple">
+<li><p>For Number of AXI master interfaces, select <strong>2</strong> because the Vector-Accumulate kernel has two AXI4 interfaces.</p></li>
+<li><p>In the AXI master definition section:</p>
+<ol class="simple">
+<li><p>Do not modify the interface names.</p></li>
+<li><p>Do not modify the width.</p></li>
+<li><p>For Number of arguments, select <strong>1</strong> since each AXI4 interface is dedicated to a single pointer argument.</p></li>
+</ol>
+</li>
+<li><p>In the Argument definition section, under Argument name:</p>
+<ol class="simple">
+<li><p>For m00_axi, enter <code class="docutils literal notranslate"><span class="pre">A</span></code>.<br />Dataset A is accessed through this AXI4 interface.</p></li>
+<li><p>For m01_axi, enter <code class="docutils literal notranslate"><span class="pre">B</span></code>.<br />Dataset B is accessed through this AXI4 interface.</p></li>
+</ol>
+</li>
+<li><p>Click <strong>Next</strong> to proceed.</p></li>
+</ol>
+</div>
+<div class="section" id="streaming-interfaces">
+<h2>Streaming Interfaces<a class="headerlink" href="#streaming-interfaces" title="Permalink to this heading">¶</a></h2>
+<p>You do not need streaming interface for this design. Keep the default value and click <strong>Next</strong>.</p>
+</div>
+<div class="section" id="example-summary-page">
+<h2>Example Summary Page<a class="headerlink" href="#example-summary-page" title="Permalink to this heading">¶</a></h2>
+<p>The Summary page displays the summary of the various other pages you just stepped through t define the RTL Kernel. Review the summary page for correctness.</p>
+<ul>
+<li><p><strong>Target platform</strong>: Specifies what platform the RTL kernel will be compiled for. The RTL kernel must be recompiled to support different platforms.</p></li>
+<li><p><strong>Function prototype</strong>: Conveys what a kernel call would be like if it was a C function.</p></li>
+<li><p><strong>Register map</strong>: Displays the relationship between the host software ID, argument name, hardware register offset, datatype, and associated AXI interface.
+<img alt="Summary Page" src="../../../../_images/rtl_kernel-summary_page.png" /></p>
+<p>The RTL Kernel Wizard uses the specification captured through the various steps and summarized in the Summary page to generate:</p>
+<ul class="simple">
+<li><p>A kernel description XML file, <code class="docutils literal notranslate"><span class="pre">kernel.xml</span></code>, located in <code class="docutils literal notranslate"><span class="pre">/reference-files/src/xml</span></code>, that defines the attributes of the kernel needed by the Vitis core development kit and the Xilinx Runtime (XRT), such as the register map.</p></li>
+<li><p>A sample kernel called VADD implementing <code class="docutils literal notranslate"><span class="pre">A[i]=A[i]+1</span></code>, including:</p>
+<ul>
+<li><p>RTL code</p></li>
+<li><p>Verification test bench</p></li>
+<li><p>Host code</p></li>
+<li><p>A Vivado Design Suite project for the VADD sample kernel</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Click <strong>OK</strong> to launch Vivado Design Suite to package the RTL IP and create the kernel.</p>
+</div>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p>Next you will take an RTL design and <a class="reference internal" href="vivado_ip.html"><span class="doc">package it as an IP in the Vivado Design Suite</span></a>.
+</br></p>
+<hr/>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on August 5, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

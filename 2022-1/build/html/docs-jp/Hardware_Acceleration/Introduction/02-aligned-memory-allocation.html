@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>概要 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>概要</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Hardware_Acceleration/Introduction/02-aligned-memory-allocation.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーションの入門チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="overview">
+<h1>概要<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<p>前の例では、単純にメモリを割り当てただけですが、DMA エンジンでは、バッファーが 4 KiB のページ境界に揃えられていることが必要です。バッファーが境界に揃えられていない場合、ランタイムによりバッファーがその内容が境界に揃うようにコピーされます。</p>
+<p>これは時間のかかる操作ですが、具体的にどの程度の時間がかかるのでしょうか。そして、境界に揃えられたメモリはどのように割り当てることができるでしょうか。</p>
+</div>
+<div class="section" id="key-code">
+<h1>キー コード<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
+<p>この例は、バッファーを割り当てた例 1 のコードを 4 行変更するだけなので、比較的短いです。境界に揃えられたメモリを割り当てるにはさまざまな方法がありますが、ここでは POSIX 関数 <code class="docutils literal notranslate"><span class="pre">posix_memalign()</span></code> を使用します。この変更では、先ほどの割り当てを次に示すコードに置き換えます。また、<code class="docutils literal notranslate"><span class="pre">memory</span></code> のコード例には示されていない追加ヘッダーを含める必要もあります。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="o">*</span><span class="n">c</span><span class="p">,</span><span class="o">*</span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
+<span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+<span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+<span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+<span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">posix_memalign()</span></code> への呼び出しでは、前述のとおり、要求されたアライメント (この例では 4 KiB) を渡します。</p>
+<p>変更はこれだけです。CPU ベースラインの VADD 関数によってのみ使用されるバッファー <code class="docutils literal notranslate"><span class="pre">d</span></code> も含め、すべてのバッファーの割り当てが変更されています。これがアクセラレータと CPU の両方のランタイム パフォーマンスに与える影響を確認してみましょう。</p>
+</div>
+<div class="section" id="running-the-application">
+<h1>アプリケーションの実行<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
+<p>XRT ランタイムが初期化されたら、ビルド ディレクトリから次のコマンドを実行してアプリケーションを実行します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">./02_aligned_malloc</span> <span class="pre">alveo_examples</span></code></p>
+<p>プログラムにより、次のようなメッセージが表示されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Example 2: Vector Add with Aligned Allocation --
+
+Loading XCLBin to program the Alveo board:
+
+Found Platform
+Platform Name: Xilinx
+XCLBIN File Name: alveo_examples
+INFO: Importing ./alveo_examples.xclbin
+Loading: &#39;./alveo_examples.xclbin&#39;
+Running kernel test with aligned virtual buffers
+
+Simple malloc vadd example complete!
+
+--------------- Key execution times ---------------
+OpenCL Initialization:                 256.254 ms
+Allocating memory buffer:              0.055 ms
+Populating buffer inputs:              47.884 ms
+Software VADD run:                     35.808 ms
+Map host buffers to OpenCL buffers :   9.103 ms
+Memory object migration enqueue:       6.615 ms
+Set kernel arguments:                  0.014 ms
+OCL Enqueue task:                      0.116 ms
+Wait for kernel to complete:           92.110 ms
+Read back computation results:         2.479 ms
+</pre></div>
+</div>
+<p>一見したところでは、パフォーマンスがかなり向上しているようです。これらの結果を例 1 の結果と比較して、どのように変化したかを確認します。次の表に詳細を示します。わかりやすくするため、実行ごとの変動は含めていません。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>操作</th>
+<th align="center">例 1</th>
+<th align="center">例 2</th>
+<th align="center">&Delta;1&rarr;2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OCL の初期化</td>
+<td align="center">247.371 ms</td>
+<td align="center">256.254 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>バッファーの割り当て</td>
+<td align="center">30 &micro;s</td>
+<td align="center">55 &micro;s</td>
+<td align="center">25 &micro;s</td>
+</tr>
+<tr>
+<td>バッファーへの値の挿入</td>
+<td align="center">47.955 ms</td>
+<td align="center">47.884 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>ソフトウェア VADD</td>
+<td align="center">35.706 ms</td>
+<td align="center">35.808 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>バッファーのマップ</td>
+<td align="center">64.656 ms</td>
+<td align="center">9.103 ms</td>
+<td align="center">-55.553 ms</td>
+</tr>
+<tr>
+<td>バッファーの書き出し</td>
+<td align="center">24.829 ms</td>
+<td align="center">6.615 ms</td>
+<td align="center">-18.214 ms</td>
+</tr>
+<tr>
+<td>カーネル引数の設定</td>
+<td align="center">9 &micro;s</td>
+<td align="center">14 &micro;s</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>カーネルの実行時間</td>
+<td align="center">92.118 ms</td>
+<td align="center">92.110 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>バッファーの読み込み</td>
+<td align="center">24.887 ms</td>
+<td align="center">2.479 ms</td>
+<td align="center">-22.408 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU</td>
+<td align="center">-418.228 ms</td>
+<td align="center">-330.889 ms</td>
+<td align="center">87.339 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU (アルゴリズムのみ)</td>
+<td align="center">-170.857 ms</td>
+<td align="center">-74.269 ms</td>
+<td align="center">96.588 ms</td>
+</tr>
+</tbody>
+</table><p>良い結果です。たった 4 行のコードを変更しただけで、実行時間を約 100 ms 短縮できました。それでもまだ CPU のほうが高速ですが、メモリの割り当て方法を少し変えただけで、非常に大きな改善が見られました。これで、アライメントに必要なのはメモリ コピーだけになりました。バッファーを割り当てるとき、数マイクロ秒余分に時間をかけてバッファーが境界に揃えられるようすると、後でこれらのバッファーが使用されるときにその何十倍もの時間を節約できます。</p>
+<p>このユース ケースでは、想定どおり、ソフトウェアの実行時間は同じです。割り当てられたメモリのアライメントを変更しているだけで、ユーザー空間のメモリ割り当ては通常のものです。</p>
+</div>
+<div class="section" id="extra-exercises">
+<h1>追加演習<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
+<p>この演習に、追加で次のことを試してみてください。</p><ul class="simple"> <li><p>割り当てるバッファーのサイズを変えてみます。前の例から導かれた関係は、この例でも有効ですか。</p></li> <li><p>境界が揃えられたメモリを割り当てる OCL API ではない別の方法でも試してみます。実行ごとの変動以上の違いはありますか。</p></li> </ul>
+</div>
+<div class="section" id="key-takeaways">
+<h1>学習ポイント<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1><ul class="simple"> <li><p>境界に揃えられていないメモリを使用すると、パフォーマンスが低下します。Alveo カードと共有するバッファーは、常に境界に揃えるようにします。</p></li> </ul>
+<p>改善が見られたので、今度は OpenCL API を使用してメモリを割り当ててみましょう。</p>
+<p><span class="doc"><a class="reference internal" href="03-xrt-memory-allocation.html">例 3: XRT を使用したメモリ割り当て</a></span></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

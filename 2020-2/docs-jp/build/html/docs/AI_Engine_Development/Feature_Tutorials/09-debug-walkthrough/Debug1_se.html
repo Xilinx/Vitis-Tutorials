@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>1. Launch and Verify Software Emulation in Vitis IDE &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Introduction/README.html">Introduction to Vitis Hardware Accelerators Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.html">Accelerating Video Convolution Filtering Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/04-traveling-salesperson/README.html">The Travelling Salesman Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Design_Tutorials/05-bottom_up_rtl_kernel/README.html">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Accelerators/Feature_Tutorials/03-dataflow_debug_and_optimization/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm/README.html">Using HBM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>1. Launch and Verify Software Emulation in Vitis IDE</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/Debug1_se.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
+   </td>
+ </tr>
+ <tr>
+ <td align="center"><h2>AI Engine Debug with Software Emulator</h2>
+ </td>
+ </tr>
+</table><p>Software emulation supports fast emulation execution and <code class="docutils literal notranslate"><span class="pre">printf()</span></code> to help verify the kernel’s functionalities. Users can check the output by examining design output files in the <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data</span></code> directory.</p>
+<p>Hardware constraints such as heap/stack sizes and program memory size are not verified in software emulator.</p>
+<p>The following steps outline the procedure:</p>
+<p><a class="reference external" href="#1-Launch-and-Verify-Software-Emulation-in-Vitis-IDE">1. Launch and Verify Software Emulation in Vitis IDE</a></p>
+<p><a class="reference external" href="#2-printf-support">2. Printf() support</a></p>
+<div class="section" id="launch-and-verify-software-emulation-in-vitis-ide">
+<h1>1. Launch and Verify Software Emulation in Vitis IDE<a class="headerlink" href="#launch-and-verify-software-emulation-in-vitis-ide" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="step-1-1-select-software-emulation-configuration">
+<h2>Step 1.1. Select Software Emulation Configuration<a class="headerlink" href="#step-1-1-select-software-emulation-configuration" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_config.png"></div>
+<div class="section" id="step-1-2-build-with-software-emulator">
+<h2>Step 1.2. Build with Software Emulator<a class="headerlink" href="#step-1-2-build-with-software-emulator" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_build.png" width="300"></div>
+<div class="section" id="step-1-3-run-with-software-emulator">
+<h2>Step 1.3. Run with Software Emulator<a class="headerlink" href="#step-1-3-run-with-software-emulator" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_run.png" width="450"><p>Note: Launching the software emulator run from system project is not supported. This error from Vitis™ IDE is expected when the launch software emulator for system project option is selected.</p>
+<img src="images/se_run_err.png" width="450"><img src="images/se_run.png" width="450"></div>
+<div class="section" id="step-1-4-verify-run-result">
+<h2>Step 1.4: Verify Run Result<a class="headerlink" href="#step-1-4-verify-run-result" title="Permalink to this heading">¶</a></h2>
+<p>Software emulator output files from design are located at <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data</span></code>. Verify the output files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/dlbf_out[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/ulbf_out[0-3].txt</span></code> against golden files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/dlbf_gold[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold[0-3].txt</span></code> to ensure that the design’s I/O functionalities are correct. IDE supports <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> feature to compare two files, highlight two files to be compared then right click one of highlighted file and select <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> then <code class="docutils literal notranslate"><span class="pre">each</span> <span class="pre">other</span></code>.
+Example: Compare <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold3.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/ulbf_out3.txt</span></code></p>
+<img src="images/se_compare.png" width="600"></div>
+</div>
+<div class="section" id="printf-support">
+<h1>2. <code class="docutils literal notranslate"><span class="pre">printf</span></code> Support<a class="headerlink" href="#printf-support" title="Permalink to this heading">¶</a></h1>
+<p>The simplest form of tracing is to use a formatted <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. No additional include files are necessary for using <code class="docutils literal notranslate"><span class="pre">printf()</span></code> other than standard C/C++ includes (<code class="docutils literal notranslate"><span class="pre">stdio.h</span></code>). You can add <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements to your code to be processed during simulation, or hardware emulation, and remove them or comment them out for hardware builds.</p>
+<div class="section" id="step-2-1-add-printf-statement">
+<h2>Step 2.1. Add <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement<a class="headerlink" href="#step-2-1-add-printf-statement" title="Permalink to this heading">¶</a></h2>
+<p>Select <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code> file in Vitis IDE to be edited. Add <code class="docutils literal notranslate"><span class="pre">printf(&quot;prbcnt=%d\n&quot;,</span> <span class="pre">prbcnt);</span></code> statement at line 32 of <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code> file.
+<code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code> can be found from IDE’s explorer, browse to <code class="docutils literal notranslate"><span class="pre">beamformer</span></code> sub-project and click on <code class="docutils literal notranslate"><span class="pre">src</span></code> then <code class="docutils literal notranslate"><span class="pre">kernel</span></code> to expand the directory and click on <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code>. File will be displayed at center of IDE.</p>
+</div>
+<div class="section" id="step-2-2-compile-the-project">
+<h2>Step 2.2. Compile the Project<a class="headerlink" href="#step-2-2-compile-the-project" title="Permalink to this heading">¶</a></h2>
+<p>Highlight the beamformer sub-project, right-click to enable pull-down menu, and select <strong>Build Project</strong> to build the beamformer project.</p>
+</div>
+<div class="section" id="step-2-3-run-the-project">
+<h2>Step 2.3. Run the Project<a class="headerlink" href="#step-2-3-run-the-project" title="Permalink to this heading">¶</a></h2>
+<p>Highlight the beamformer sub-project, right-click to enable pull-down menu, select <strong>Run As</strong>, and then <strong>Launch SW Emulator</strong> to run the project in Vitis IDE.</p>
+</div>
+<div class="section" id="step-2-4-expected-result">
+<h2>Step 2.4. Expected Result<a class="headerlink" href="#step-2-4-expected-result" title="Permalink to this heading">¶</a></h2>
+<p>Expect to observe the output of <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement displayed at Vitis IDE console window.
+<img src="images/aie_sw_printf.png">
+Note: A predefined marco <code class="docutils literal notranslate"><span class="pre">defined(__PTHREAD_API__)</span></code> can be used to wrap around printf statements in software emulation to improve code portability.</p>
+</div>
+</div>
+<div class="section" id="limitations">
+<h1>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">¶</a></h1>
+<ol class="simple">
+<li><p>System project run with software emulator is not supported.</p></li>
+<li><p>Source code debug in software emulator is not supported hence <strong>Launch SW Emulator</strong> option from the “Debug As” pulldown menu is not available.</p></li>
+<li><p>Hardware constraints check is not supported in software emulator. Functionalities verified in software emulator need to check resource constraints in AI Engine emulator before running on the hardware board.</p></li>
+</ol>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on August 5, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
